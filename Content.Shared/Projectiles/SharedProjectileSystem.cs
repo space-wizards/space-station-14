@@ -5,6 +5,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Sound.Components;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Ranged.Components;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics;
@@ -20,6 +21,7 @@ namespace Content.Shared.Projectiles
         public const string ProjectileFixture = "projectile";
 
         [Dependency] private readonly INetManager _netManager = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -27,6 +29,7 @@ namespace Content.Shared.Projectiles
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
             SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileCollideEvent>(OnEmbedProjectileCollide);
             SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
@@ -103,6 +106,11 @@ namespace Content.Shared.Projectiles
             if (component.Offset != Vector2.Zero)
             {
                 _transform.SetLocalPosition(xform, xform.LocalPosition + xform.LocalRotation.RotateVec(component.Offset));
+            }
+
+            if (component.Sound != null)
+            {
+                _audio.PlayPredicted(component.Sound, uid, null);
             }
         }
 
