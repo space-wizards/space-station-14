@@ -37,6 +37,11 @@ namespace Content.Shared.Maps
         public string BaseTurf { get; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
+		
+        /// <summary>
+        /// Whether this tile can be pried by an advanced prying tool if not pryable otherwise.
+        /// </summary>
+        [DataField("canAxe")] public bool CanAxe { get; private set; }
 
         [DataField("canWirecutter")] public bool CanWirecutter { get; private set; }
 
@@ -74,6 +79,11 @@ namespace Content.Shared.Maps
         /// Can weather affect this tile.
         /// </summary>
         [DataField("weather")] public bool Weather = false;
+
+        /// <summary>
+        /// Is this tile immune to RCD deconstruct.
+        /// </summary>
+        [DataField("indestructible")] public bool Indestructible = false;
 
         public void AssignTileId(ushort id)
         {

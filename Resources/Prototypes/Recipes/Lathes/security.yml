@@ -21,13 +21,21 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Truncheon
+  result: Truncheon
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
-  completetime: 5
+  completetime: 8
   materials:
-    Steel: 750
-    Glass: 500
-    Plastic: 250
+    Steel: 2000
+    Glass: 800
+    Plastic: 500
 
 - type: latheRecipe
   id: WeaponAdvancedLaser

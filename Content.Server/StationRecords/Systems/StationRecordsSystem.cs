@@ -59,7 +59,7 @@ public sealed class StationRecordsSystem : EntitySystem
         string? jobId, StationRecordsComponent? records = null)
     {
         if (!Resolve(station, ref records)
-            || String.IsNullOrEmpty(jobId)
+            || string.IsNullOrEmpty(jobId)
             || !_prototypeManager.HasIndex<JobPrototype>(jobId))
         {
             return;
@@ -204,7 +204,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         if (!Resolve(station, ref records))
         {
-            return new (StationRecordKey, T)[]{};
+            return Array.Empty<(StationRecordKey, T)>();
         }
 
         return records.Records.GetRecordsOfType<T>();

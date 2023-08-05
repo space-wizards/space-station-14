@@ -853,6 +853,8 @@
   id: FloorGlass
   name: tiles-glass-floor
   sprite: /Textures/Tiles/glass.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true
@@ -865,6 +867,8 @@
   id: FloorRGlass
   name: tiles-reinforced-glass-floor
   sprite: /Textures/Tiles/rglass.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
   baseTurf: Plating
   isSubfloor: false
   canCrowbar: true

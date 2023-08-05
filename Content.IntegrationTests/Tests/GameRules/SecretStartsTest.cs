@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -37,7 +35,7 @@ public sealed class SecretStartsTest
         {
             foreach (var rule in gameTicker.GetAddedGameRules())
             {
-                Assert.That(gameTicker.GetActiveGameRules().Contains(rule));
+                Assert.That(gameTicker.GetActiveGameRules(), Does.Contain(rule));
             }
 
             // End all rules

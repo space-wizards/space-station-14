@@ -17,7 +17,7 @@
   graph: GhostSheet
   startNode: start
   targetNode: ghost_sheet
-  category: construction-category-misc
+  category: construction-category-clothing
   description: Become a spooky ghost. Boo!
   icon:
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
@@ -88,12 +88,25 @@
     state: icon
 
 - type: construction
+  name: hairflower
+  id: hairflower
+  graph: hairflower
+  startNode: start
+  targetNode: hairflower
+  category: construction-category-clothing
+  description: "A red flower for beautiful ladies."
+  icon:
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: flower crown
   id: flowercrown
   graph: flowercrown
   startNode: start
   targetNode: flowercrown
-  category: construction-category-misc
+  category: construction-category-clothing
   description: "A coronet of fresh and fragrant flowers."
   icon:
     sprite: Clothing/Head/Misc/flower-crown.rsi
@@ -112,3 +125,29 @@
   icon:
     sprite: Objects/Specific/Janitorial/rag.rsi
     state: rag
+
+- type: construction
+  name: improvised shotgun
+  id: improvisedshotgun
+  graph: ImprovisedShotgunGraph
+  startNode: start
+  targetNode: shotgun
+  category: construction-category-weapons
+  objectType: Item
+  description: A shitty, single-shot shotgun made from salvaged and hand-crafted gun parts. Ammo not included.
+  icon:
+    sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
+    state: icon
+
+- type: construction
+  name: rifle stock
+  id: riflestock
+  graph: RifleStockGraph
+  startNode: start
+  targetNode: riflestock
+  category: construction-category-weapons
+  objectType: Item
+  description: A stock carved out of wood, vital for improvised firearms.
+  icon:
+    sprite: Objects/Misc/rifle_stock.rsi
+    state: icon

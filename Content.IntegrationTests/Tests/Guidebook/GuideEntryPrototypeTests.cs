@@ -1,10 +1,8 @@
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
-using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 

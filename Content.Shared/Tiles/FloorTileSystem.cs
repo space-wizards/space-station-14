@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
 using Content.Shared.Database;
@@ -34,6 +35,8 @@ public sealed class FloorTileSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
+    private static readonly Vector2 CheckRange = new(1f, 1f);
+
     public override void Initialize()
     {
         base.Initialize();
@@ -68,7 +71,7 @@ public sealed class FloorTileSystem : EntitySystem
         // so we're just gon with this for now.
         const bool inRange = true;
         var state = (inRange, location.EntityId);
-        _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - 1f, map.Position + 1f), ref state,
+        _mapManager.FindGridsIntersecting(map.MapId, new Box2(map.Position - CheckRange, map.Position + CheckRange), ref state,
             static (EntityUid entityUid, MapGridComponent grid, ref (bool weh, EntityUid EntityId) tuple) =>
             {
                 if (tuple.EntityId == entityUid)
@@ -89,10 +92,10 @@ public sealed class FloorTileSystem : EntitySystem
         var userPos = transformQuery.GetComponent(args.User).Coordinates.ToMapPos(EntityManager, _transform);
         var dir = userPos - map.Position;
         var canAccessCenter = false;
-        if (dir.LengthSquared > 0.01)
+        if (dir.LengthSquared() > 0.01)
         {
-            var ray = new CollisionRay(map.Position, dir.Normalized, (int) CollisionGroup.Impassable);
-            var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length, returnOnFirstHit: true);
+            var ray = new CollisionRay(map.Position, dir.Normalized(), (int) CollisionGroup.Impassable);
+            var results = _physics.IntersectRay(locationMap.MapId, ray, dir.Length(), returnOnFirstHit: true);
             canAccessCenter = !results.Any();
         }
 

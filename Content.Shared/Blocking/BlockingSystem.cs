@@ -161,6 +161,13 @@ public sealed partial class BlockingSystem : EntitySystem
                 return false;
             }
 
+            // Don't allow someone to block if they're not holding the shield
+            if(!_handsSystem.IsHolding(user, item, out _))
+            {
+                CantBlockError(user);
+                return false;
+            }
+
             //Don't allow someone to block if someone else is on the same tile
             var playerTileRef = xform.Coordinates.GetTileRef();
             if (playerTileRef != null)

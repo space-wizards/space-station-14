@@ -36,7 +36,7 @@
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_syndicate.rsi
- 
+
 #Cosmonaut Helmet
 - type: entity
   parent: ClothingHeadEVAHelmetBase

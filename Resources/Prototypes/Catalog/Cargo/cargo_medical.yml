@@ -104,7 +104,7 @@
     sprite: Structures/Storage/Crates/chemcrate_secure.rsi
     state: icon
   product: CrateChemistryP
-  cost: 750
+  cost: 850
   category: Medical
   group: market
 

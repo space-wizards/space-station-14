@@ -1,10 +1,7 @@
 #nullable enable
 using System.Linq;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Client.ResourceManagement;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests
@@ -24,7 +21,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.NoSpawn || proto.Abstract || !proto.Components.ContainsKey("Sprite"))
+                    if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto) || !proto.Components.ContainsKey("Sprite"))
                         continue;
 
                     Assert.DoesNotThrow(() =>

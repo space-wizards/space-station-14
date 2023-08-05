@@ -140,13 +140,6 @@ namespace Content.Shared.Maps
             return IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<TurfSystem>().IsTileBlocked(turf, mask);
         }
 
-        public static EntityCoordinates GridPosition(this TileRef turf, IMapManager? mapManager = null)
-        {
-            mapManager ??= IoCManager.Resolve<IMapManager>();
-
-            return turf.GridIndices.ToEntityCoordinates(turf.GridUid, mapManager);
-        }
-
         /// <summary>
         /// Creates a box the size of a tile, at the same position in the world as the tile.
         /// </summary>

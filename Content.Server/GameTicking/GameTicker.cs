@@ -39,6 +39,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly GhostSystem _ghost = default!;
         [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
 
         [ViewVariables] private bool _initialized;
@@ -56,6 +57,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(!_postInitialized);
 
             _sawmill = _logManager.GetSawmill("ticker");
+            _sawmillReplays = _logManager.GetSawmill("ticker.replays");
 
             // Initialize the other parts of the game ticker.
             InitializeStatusShell();
@@ -67,6 +69,7 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(_prototypeManager.Index<JobPrototype>(FallbackOverflowJob).Name == FallbackOverflowJobName,
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
+            InitializeReplays();
             _initialized = true;
         }
 
@@ -90,7 +93,8 @@ namespace Content.Server.GameTicking
 
         private void SendServerMessage(string message)
         {
-            _chatManager.ChatMessageToAll(ChatChannel.Server, message, "", default, false, true);
+            var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+            _chatManager.ChatMessageToAll(ChatChannel.Server, message, wrappedMessage, default, false, true);
         }
 
         public override void Update(float frameTime)
@@ -119,7 +123,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly StationJobsSystem _stationJobs = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly GhostSystem _ghosts = default!;
-        [Dependency] private readonly RoleBanManager _roleBanManager = default!;
+        [Dependency] private readonly IBanManager _banManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
         [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;

@@ -20,6 +20,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public event Action<string, IAtmosDeviceData>? AtmosDeviceDataChanged;
     public event Action<string, AtmosMonitorThresholdType, AtmosAlarmThreshold, Gas?>? AtmosAlarmThresholdChanged;
     public event Action<AirAlarmMode>? AirAlarmModeChanged;
+    public event Action<bool>? AutoModeChanged;
     public event Action<string>? ResyncDeviceRequested;
     public event Action? ResyncAllRequested;
     public event Action<AirAlarmTab>? AirAlarmTabChange;
@@ -44,7 +45,9 @@ public sealed partial class AirAlarmWindow : FancyWindow
 
     private OptionButton _modes => CModeButton;
 
-    public AirAlarmWindow(ClientUserInterfaceComponent component)
+    private CheckBox _autoMode => AutoModeCheckBox;
+
+    public AirAlarmWindow(BoundUserInterface owner)
     {
         RobustXamlLoader.Load(this);
 
@@ -68,6 +71,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
             AirAlarmModeChanged!.Invoke((AirAlarmMode) args.Id);
         };
 
+        _autoMode.OnToggled += args =>
+        {
+            AutoModeChanged!.Invoke(_autoMode.Pressed);
+        };
+
         _tabContainer.SetTabTitle(0, Loc.GetString("air-alarm-ui-window-tab-vents"));
         _tabContainer.SetTabTitle(1, Loc.GetString("air-alarm-ui-window-tab-scrubbers"));
         _tabContainer.SetTabTitle(2, Loc.GetString("air-alarm-ui-window-tab-sensors"));
@@ -88,7 +96,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
             ResyncAllRequested!.Invoke();
         };
 
-        EntityView.Sprite = IoCManager.Resolve<IEntityManager>().GetComponent<SpriteComponent>(component.Owner);
+        EntityView.SetEntity(owner.Owner);
     }
 
     public void UpdateState(AirAlarmUIState state)
@@ -101,6 +109,7 @@ public sealed partial class AirAlarmWindow : FancyWindow
                     ("color", ColorForAlarm(state.AlarmType)),
                     ("state", $"{state.AlarmType}")));
         UpdateModeSelector(state.Mode);
+        UpdateAutoMode(state.AutoMode);
         foreach (var (addr, dev) in state.DeviceData)
         {
             UpdateDeviceData(addr, dev);
@@ -112,6 +121,11 @@ public sealed partial class AirAlarmWindow : FancyWindow
     public void UpdateModeSelector(AirAlarmMode mode)
     {
         _modes.SelectId((int) mode);
+    }
+
+    public void UpdateAutoMode(bool enabled)
+    {
+        _autoMode.Pressed = enabled;
     }
 
     public void UpdateDeviceData(string addr, IAtmosDeviceData device)

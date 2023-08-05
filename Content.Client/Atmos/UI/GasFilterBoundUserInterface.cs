@@ -12,10 +12,13 @@ namespace Content.Client.Atmos.UI
     [UsedImplicitly]
     public sealed class GasFilterBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
+        private const float MaxTransferRate = Atmospherics.MaxTransferRate;
 
+        [ViewVariables]
         private GasFilterWindow? _window;
 
-        public GasFilterBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public GasFilterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -23,11 +26,11 @@ namespace Content.Client.Atmos.UI
         {
             base.Open();
 
-            var atmosSystem = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
+            var atmosSystem = EntMan.System<AtmosphereSystem>();
 
             _window = new GasFilterWindow(atmosSystem.Gases);
 
-            if(State != null)
+            if (State != null)
                 UpdateState(State);
 
             _window.OpenCentered();
@@ -81,7 +84,7 @@ namespace Content.Client.Atmos.UI
             _window.SetTransferRate(cast.TransferRate);
             if (cast.FilteredGas is not null)
             {
-                var atmos = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
+                var atmos = EntMan.System<AtmosphereSystem>();
                 var gas = atmos.GetGas((Gas) cast.FilteredGas);
                 var gasName = Loc.GetString(gas.Name);
                 _window.SetGasFiltered(gas.ID, gasName);

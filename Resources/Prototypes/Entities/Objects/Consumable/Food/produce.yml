@@ -8,6 +8,9 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
@@ -238,7 +241,10 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
-      state: primed
+      layers:
+      - state: peel
+      - state: primed
+        shader: unshaded
     - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -861,7 +867,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - Flower
+    - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
 
 - type: entity
   name: lingzhi
@@ -924,6 +930,9 @@
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     slots:
     - HEAD
+  - type: Tag
+    tags:
+    - Ambrosia
 
 - type: entity
   name: galaxythistle
@@ -975,6 +984,7 @@
     seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
+  - type: BadFood
 
 - type: entity
   name: gatfruit

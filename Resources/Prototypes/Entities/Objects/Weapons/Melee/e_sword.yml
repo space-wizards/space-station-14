@@ -2,7 +2,7 @@
   name: energy sword
   parent: BaseItem
   id: EnergySword
-  description: Very loud and very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off.
+  description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: EnergySword
     litDamageBonus:
@@ -65,8 +65,8 @@
     secret: true
     litDamageBonus:
         types:
-            Slash: 7.5
-            Heat: 7.5
+            Slash: 9
+            Heat: 9
             Blunt: -1
     litDisarmMalus: 0.4
     activateSound: !type:SoundPathSpecifier

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Construction.Components;
 using Content.Shared.Construction.Components;
-using NUnit.Framework;
 using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests;
@@ -40,7 +38,10 @@ public sealed class MachineBoardTest
 
         await server.WaitAssertion(() =>
         {
-            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>().Where(p => !p.Abstract && !_ignoredPrototypes.Contains(p.ID)))
+            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
+                         .Where(p => !p.Abstract)
+                         .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                         .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<MachineBoardComponent>(out var mbc))
                     continue;
@@ -76,7 +77,10 @@ public sealed class MachineBoardTest
 
         await server.WaitAssertion(() =>
         {
-            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>().Where(p => !p.Abstract && !_ignoredPrototypes.Contains(p.ID)))
+            foreach (var p in protoMan.EnumeratePrototypes<EntityPrototype>()
+                         .Where(p => !p.Abstract)
+                         .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                         .Where(p => !_ignoredPrototypes.Contains(p.ID)))
             {
                 if (!p.TryGetComponent<ComputerBoardComponent>(out var cbc))
                     continue;
