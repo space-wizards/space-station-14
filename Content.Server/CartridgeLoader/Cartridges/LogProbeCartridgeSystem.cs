@@ -1,8 +1,8 @@
 using Content.Shared.Access.Components;
+using Content.Shared.Audio;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
 using Robust.Shared.Random;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
@@ -35,12 +35,11 @@ public sealed class LogProbeCartridgeSystem : EntitySystem
         var target = args.InteractEvent.Target.Value;
         AccessReaderComponent? accessReaderComponent = default;
 
-        if (!Resolve(target, ref accessReaderComponent, false))
+        if (!TryComp(target, out accessReaderComponent))
             return;
 
         //Play scanning sound with slightly randomized pitch
-        var audioParams = AudioParams.Default.WithVolume(-2f).WithPitchScale((float)_random.Next(12, 21) / 10);
-        _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, audioParams);
+        _audioSystem.PlayEntity(component.SoundScan, args.InteractEvent.User, target, AudioHelpers.WithVariation(0.25f, _random));
         _popupSystem.PopupCursor(Loc.GetString("log-probe-scan", ("device", target)), args.InteractEvent.User);
 
         component.PulledAccessLogs.Clear();
