@@ -58,7 +58,7 @@ public sealed class SpawnPointSystem : EntitySystem
             }
             else
             {
-                Logger.ErrorS("spawning", "No spawn points were available!");
+                Log.Error("No spawn points were available!");
                 return;
             }
         }
