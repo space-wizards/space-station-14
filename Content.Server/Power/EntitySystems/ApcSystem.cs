@@ -67,29 +67,30 @@ namespace Content.Server.Power.EntitySystems
             }
             UpdateApcState(uid, component);
         }
+
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
+            if (args.Session.AttachedEntity == null)
+                return;
+
+            var user = args.Session.AttachedEntity.Value;
             var attemptEv = new ApcToggleMainBreakerAttemptEvent();
             RaiseLocalEvent(uid, ref attemptEv);
             if (attemptEv.Cancelled)
             {
-                _popup.PopupCursor(Loc.GetString("apc-component-on-toggle-cancel"),
-                    args.Session, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("apc-component-on-toggle-cancel"), uid, user, PopupType.Medium);
                 return;
             }
 
             TryComp<AccessReaderComponent>(uid, out var access);
-            if (args.Session.AttachedEntity == null)
-                return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            if (access == null || _accessReader.IsAllowed(user, access))
             {
                 ApcToggleBreaker(uid, component);
             }
             else
             {
-                _popup.PopupCursor(Loc.GetString("apc-component-insufficient-access"),
-                    args.Session, PopupType.Medium);
+                _popup.PopupEntity(Loc.GetString("apc-component-insufficient-access"), uid, user, PopupType.Medium);
             }
         }
 
