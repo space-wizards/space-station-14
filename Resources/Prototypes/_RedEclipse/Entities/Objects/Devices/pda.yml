@@ -17,7 +17,7 @@
   description: Fixing everything except the boss's coffee cravings!
   components:
     - type: Pda
-      id: TechnicalAssistantIDCard
+      id: EngineersAideIDCard
       state: pda-syndicate-interntech
     - type: PdaBorderColor
       borderColor: "#740000"
@@ -32,7 +32,7 @@
   description:  Subtly fixing problems the way only a 'Clandestine Engineer' can.
   components:
     - type: Pda
-      id: EngineeringIDCard
+      id: ClandestineEngineerIDCard
       state: pda-syndicate-engineer
     - type: PdaBorderColor
       borderColor: "#2f0000"
