@@ -1,6 +1,7 @@
 using Content.Server.Body.Systems;
 using Content.Server.Doors.Systems;
 using Content.Server.Shuttles.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.Stunnable;
 using Content.Shared.GameTicking;
@@ -118,6 +119,13 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
         if (!EntityManager.TryGetComponent(uid, out PhysicsComponent? physicsComponent))
         {
             return;
+        }
+
+        // Automatically anchor station grids
+        if (HasComp<BecomesStationComponent>(uid))
+        {
+            component.LinearDamping = 10000f; // tug with 10 thrusters can push this at 1 tile/sec
+            component.AngularDamping = 10000f;
         }
 
         if (component.Enabled)
