@@ -1,6 +1,7 @@
 using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
+
 /// <summary>
 /// Used for assigning the Revolutionary role.
 /// </summary>

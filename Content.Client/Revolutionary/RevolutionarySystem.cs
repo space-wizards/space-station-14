@@ -1,11 +1,14 @@
-using System.Linq;
-using Content.Shared.Revolutionary;
+using Content.Shared.Revolutionary.Components;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Revolutionary;
+
+/// <summary>
+/// Used for the client to get status icons from other revs.
+/// </summary>
 public sealed class RevolutionarySystem : EntitySystem
 {
     [Dependency] private readonly IPlayerManager _player = default!;

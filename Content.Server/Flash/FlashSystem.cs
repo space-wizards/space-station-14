@@ -26,7 +26,7 @@ using Robust.Shared.Prototypes;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 using Content.Server.Roles;
 using Content.Shared.Roles;
-using Content.Shared.Revolutionary;
+using Content.Shared.Revolutionary.Components;
 using Content.Server.NPC.Systems;
 using Content.Shared.Stunnable;
 using Content.Server.Revolutionary;
@@ -35,6 +35,7 @@ using Content.Server.Mindshield.Components;
 using Content.Shared.Sound.Components;
 using Content.Shared.Hands;
 using Content.Shared.Item;
+using Robust.Shared.Log;
 
 namespace Content.Server.Flash
 {
@@ -59,6 +60,7 @@ namespace Content.Server.Flash
         public override void Initialize()
         {
             base.Initialize();
+
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
@@ -67,7 +69,7 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
-            //SubscribeLocalEvent<AfterFlashedEvent>(OnPostFlash);
+            SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
@@ -142,38 +144,35 @@ namespace Content.Server.Flash
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
 
+            var ev = new AfterFlashedEvent(target, user, used);
+            if (user != null)
+                RaiseLocalEvent(user.Value, ev);
+
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
                 user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
                     ("user", Identity.Entity(user.Value, EntityManager))));
             }
 
-            var ev = new AfterFlashedEvent(target, user, used);
-            if (used != null)
-                RaiseLocalEvent(used.Value, ev);
-            if (user != null)
-                RaiseLocalEvent(user.Value, ev);
-
-
         }
         /// <summary>
         /// Called when a Head Rev uses a flash in melee to convert somebody else.
         /// </summary>
 
-        public void OnPostFlash(EntityUid target, EntityUid? user, EntityUid? used)
+        public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, AfterFlashedEvent ev)
         {
             var stunTime = TimeSpan.FromSeconds(3);
-            if (!HasComp<RevolutionaryComponent>(target) && !HasComp<HeadRevolutionaryComponent>(target) && !HasComp<MindShieldComponent>(target))
+            if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target))
             {
-                var mind = _mind.GetMind(target);
-                if (mind != null && mind.OwnedEntity != null && used != null)
+                var mind = _mind.GetMind(ev.Target);
+                if (mind != null && mind.OwnedEntity != null && ev.Used != null)
                 {
                     _mind.AddRole(mind, new RevolutionaryRole(mind, _prototype.Index<AntagPrototype>("Rev")));
                     _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
                     _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
-                    AddComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                    AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                    _charges.AddCharges(used.Value, 1);
+                    EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
+                    EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                    _charges.AddCharges(ev.Used.Value, 1);
                     _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
                     if (mind.Session != null)
                     {

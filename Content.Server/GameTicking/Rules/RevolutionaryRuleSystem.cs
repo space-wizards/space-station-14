@@ -11,7 +11,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Preferences;
-using Content.Shared.Revolutionary;
+using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
@@ -23,11 +23,18 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
+using Content.Server.Mindshield;
+using Content.Server.Shuttles.Systems;
+using Content.Server.Objectives;
+using Content.Server.Objectives.Interfaces;
+using Content.Server.Objectives.Conditions;
 
 namespace Content.Server.GameTicking.Rules;
+
 /// <summary>
 /// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for game the game to end.)
 /// </summary>
+
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -36,8 +43,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly MindShieldSystem _mindShield = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
@@ -46,8 +56,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
-    private List<string> _headRoles = new() { "Captain", "Research Director", "Chief Engineer", "Quartermaster", "Chief Medical Officer", "Head Of Security", "Head Of Personnel" };
+    private TimeSpan _timerWait = TimeSpan.FromSeconds(10);
 
+    private TimeSpan _endRoundCheck = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -57,27 +68,43 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<RevolutionaryRuleComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
     }
-    //Commented out to get feedback on this as this might not be a good idea to put into active tick.
-    //protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
-    //{
-    //    base.ActiveTick(uid, component, gameRule, frameTime);
 
-    //    var headsOffStation = AllEntityQuery<CommandComponent>();
-    //    while (headsOffStation.MoveNext(out var id, out var comp))
-    //    {
-    //        if (_stationSystem.GetOwningStation(id) == null)
-    //        {
-    //            EnsureComp<ExiledComponent>(id);
-    //        }
-    //        else if (HasComp<ExiledComponent>(id))
-    //        {
-    //            RemComp<ExiledComponent>(id);
-    //        }
-    //    }
-    //}
+    protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    {
+        base.Started(uid, component, gameRule, args);
+        _endRoundCheck = _timing.CurTime + _timerWait;
+    }
+
+    /// <summary>
+    /// Checks if any command staff are in space and basically count them as dead. Also checks for round end and if someone has an implanted mindshield.
+    /// </summary>
+
+    protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
+    {
+        base.ActiveTick(uid, component, gameRule, frameTime);
+        if (GameTicker.IsGameRuleAdded(uid, gameRule) && _endRoundCheck <= _timing.CurTime)
+        {
+            var headsOffStation = AllEntityQuery<CommandComponent>();
+            while (headsOffStation.MoveNext(out var id, out var comp))
+            {
+                if (_stationSystem.GetOwningStation(id) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                {
+                    EnsureComp<CheckForHeadsInSpaceComponent>(id);
+                }
+                else if (HasComp<CheckForHeadsInSpaceComponent>(id))
+                {
+                    RemComp<CheckForHeadsInSpaceComponent>(id);
+                }
+            }
+            _endRoundCheck = _timing.CurTime + _timerWait;
+            _mindShield.MindShieldCheck();
+            CheckFinish();
+        }
+    }
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
+
         foreach (var headrev in EntityQuery<RevolutionaryRuleComponent>())
         {
             if (headrev.HeadsDied && !headrev.RevsLost)
@@ -108,7 +135,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
-            if (!ev.Forced || ev.Players.Length < revs.MinPlayers)
+            if (!ev.Forced && ev.Players.Length < revs.MinPlayers)
             {
                 _chatManager.SendAdminAnnouncement(Loc.GetString("rev-not-enough-ready-players",
                     ("readyPlayersCount", ev.Players.Length),
@@ -138,7 +165,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gets the list of players currently spawned in and checks if they are eligible to become a Head Rev.
     /// </summary>
-    /// <param name="comp"></param>
 
     private void AssignHeadRevs(RevolutionaryRuleComponent comp)
     {
@@ -149,13 +175,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var mind = player.GetMind();
             if (!player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false)
-            {
                 continue;
-            }
+
             if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
-            {
                 playerList.Add(player);
-            }
             else
                 continue;
 
@@ -248,6 +271,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (mind != null && mind.CurrentJob != null)
             {
                 var currentJob = mind.CurrentJob.Name;
+                currentJob = currentJob.Replace(" ", "");
                 if (mind.OwnedEntity != null && jobs.Roles.Contains(currentJob))
                 {
                     if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
@@ -333,7 +357,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             // Checks if all heads are dead to finish the round.
 
             var heads = EntityQuery<CommandComponent, MobStateComponent>(true);
-            var headsOffStation = EntityQuery<CommandComponent, ExiledComponent, MobStateComponent>();
+            var headsOffStation = EntityQuery<CommandComponent, CheckForHeadsInSpaceComponent, MobStateComponent>();
             inRound = 0;
             dead = 0;
             foreach (var head in heads)
@@ -374,11 +398,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var mind = ev.Player.GetMind();
         if (mind != null && HasComp<PendingClockInComponent>(mind.OwnedEntity) && mind.CurrentJob != null)
         {
-            if (_headRoles.Contains(mind.CurrentJob.Name))
-            {
-                AddComp<CommandComponent>(mind.OwnedEntity.Value);
-                AddComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-            }
+            AssignCommandStaff();
         }
     }
 }

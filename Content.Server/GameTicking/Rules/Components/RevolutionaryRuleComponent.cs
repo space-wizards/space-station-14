@@ -2,6 +2,7 @@ using Content.Shared.Roles;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
+
 /// <summary>
 /// Stores mostly info for starting the gamerule and for passing info at the end of the round.
 /// </summary>
@@ -52,7 +53,7 @@ public sealed class RevolutionaryRuleComponent : Component
     /// </summary>
 
     [DataField("minPlayers")]
-    public int MinPlayers = 1;
+    public int MinPlayers = 15;
 
     /// <summary>
     /// Max Head Revs allowed during selection.
