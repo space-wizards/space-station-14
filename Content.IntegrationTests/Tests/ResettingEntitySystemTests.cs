@@ -30,7 +30,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ResettingEntitySystemResetTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();

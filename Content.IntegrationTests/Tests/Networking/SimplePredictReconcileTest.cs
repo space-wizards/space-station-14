@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new() { DummyTicker = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true, DummyTicker = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 

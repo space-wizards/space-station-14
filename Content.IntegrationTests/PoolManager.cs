@@ -312,7 +312,7 @@ public static partial class PoolManager
 
                     // Ensure client is 1 tick ahead of server? I don't think theres a real reason for why it should be
                     // 1 tick specifically, I am just ensuring consistency with CreateServerClientPair()
-                    if (!pair.Settings.Disconnected)
+                    if (pair.Settings.Connected)
                         await SyncTicks(pair, targetDelta: 1);
                 }
                 else
@@ -354,14 +354,14 @@ public static partial class PoolManager
 
     private static void ValidateFastRecycle(Pair pair)
     {
-        if (pair.Settings.Disconnected || pair.Settings.Disconnected)
+        if (!pair.Settings.Connected)
             return;
 
         var baseClient = pair.Client.ResolveDependency<IBaseClient>();
         var netMan = pair.Client.ResolveDependency<INetManager>();
-        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.Disconnected));
+        Assert.That(netMan.IsConnected, Is.Not.EqualTo(!pair.Settings.Connected));
 
-        if (pair.Settings.Disconnected)
+        if (!pair.Settings.Connected)
             return;
 
         Assert.That(baseClient.RunLevel, Is.EqualTo(ClientRunLevel.InGame));
@@ -473,7 +473,7 @@ public static partial class PoolManager
         configManager.SetCVar(CCVars.GameDummyTicker, poolSettings.DummyTicker);
         await pair.Server.WaitPost(() => gameTicker.RestartRound());
 
-        if (!poolSettings.Disconnected)
+        if (poolSettings.Connected)
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
@@ -536,7 +536,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             throw;
         }
 
-        if (!poolSettings.Disconnected)
+        if (poolSettings.Connected)
         {
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Client.WaitPost(() =>
@@ -567,10 +567,7 @@ we are just going to end this here to save a lot of time. This is the exception 
         var settings = pairTracker.Pair.Settings;
         var mapManager = server.ResolveDependency<IMapManager>();
         var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var xformSystem = entityManager.System<SharedTransformSystem>();
 
-        if (settings.Disconnected) throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
@@ -585,7 +582,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
             mapData.Tile = mapData.MapGrid.GetAllTiles().First();
         });
-        if (!settings.Disconnected)
+        if (settings.Connected)
         {
             await RunTicksSync(pairTracker.Pair, 10);
         }
@@ -771,9 +768,10 @@ public sealed class PoolSettings
     public bool DummyTicker { get; init; }
 
     /// <summary>
-    /// Set to true if the given server/client pair should be disconnected from each other.
+    /// Set to true if the given server/client pair should be connected from each other.
+    /// Defaults to disconnected as it makes dirty recycling slightly faster.
     /// </summary>
-    public bool Disconnected { get; init; }
+    public bool Connected { get; init; } = false;
 
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
@@ -831,7 +829,7 @@ public sealed class PoolSettings
             return false;
 
         // Check that certain settings match.
-        return Disconnected == nextSettings.Disconnected
+        return !Connected == !nextSettings.Connected
                && DummyTicker == nextSettings.DummyTicker
                && Map == nextSettings.Map
                && InLobby == nextSettings.InLobby;

@@ -15,11 +15,7 @@ public sealed class StartEndGameRulesTest
     [Test]
     public async Task TestAllConcurrent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
-        {
-            Disconnected = true,
-            Dirty = true,
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();

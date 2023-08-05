@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
         [Test]
         public async Task AlertsTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 

@@ -12,7 +12,7 @@ public sealed class NPCTest
     [Test]
     public async Task CompoundRecursion()
     {
-        var pool = await PoolManager.GetServerClient(new PoolSettings() { Disconnected = true });
+        var pool = await PoolManager.GetServerClient();
         var server = pool.Pair.Server;
 
         await server.WaitIdleAsync();

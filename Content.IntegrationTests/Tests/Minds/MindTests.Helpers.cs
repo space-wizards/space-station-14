@@ -25,7 +25,7 @@ public sealed partial class MindTests
     /// </remarks>
     private static async Task<PairTracker> SetupPair()
     {
-        var pairTracker = await PoolManager.GetServerClient();
+        var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
