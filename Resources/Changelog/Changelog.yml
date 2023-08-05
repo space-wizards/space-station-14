@@ -1,14 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: shields by default now block 50% of damage when not blocking and 100%
-      of damage when blocking., type: Tweak}
-  - {message: fixed shields affected by owner damage modifiers, type: Fix}
-  - {message: fixed shields taking damage from pressure if owner taking damage from
-      pressure (and etc.), type: Fix}
-  - {message: fixed shields making owner less resistant to damage, type: Fix}
-  id: 3944
-  time: '2023-06-05T02:23:55.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Added a new evacuation shuttle for Cluster, type: Add}
@@ -2988,3 +2978,8 @@ Entries:
   - {message: Dragons on expeditions do less damage now., type: Tweak}
   id: 4443
   time: '2023-08-05T07:02:07.0000000+00:00'
+- author: Phill101
+  changes:
+  - {message: The crew manifest is now a PDA cartridge program., type: Tweak}
+  id: 4444
+  time: '2023-08-05T08:37:08.0000000+00:00'
