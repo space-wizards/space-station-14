@@ -5,10 +5,10 @@
   playTimeTracker: JobSyndicateEngineersAide
   requirements:
     - !type:DepartmentTimeRequirement
-      department: Engineering
+      department: SyndicateEngineering
       time: 54000 #15 hrs
       inverted: true # stop playing intern if you're good at engineering!
-  startingGear: TechnicalAssistantGear
+  startingGear: SyndicateEngineersAideGear
   icon: "JobIconSyndicateEngineersAide"
   supervisors: job-supervisors-engineering
   canBeAntag: false
@@ -18,7 +18,7 @@
     - External
 
 - type: startingGear
-  id: TechnicalAssistantGear
+  id: SyndicateEngineersAideGear
   equipment:
     head: ClothingHeadHatWelding
     jumpsuit: ClothingUniformJumpsuitColorYellow
