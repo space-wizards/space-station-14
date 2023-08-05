@@ -1,0 +1,1 @@
+department-SyndicateEngineering-description = Safeguard the Syndicate's covert operations by maintaining seamless functionality across the station's advanced systems and infrastructure, ensuring the shadows conceal our endeavors from prying eyes.
