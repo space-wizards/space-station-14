@@ -41,9 +41,6 @@ namespace Content.Server.GameTicking
 #endif
 
         [ViewVariables]
-        public TimeSpan RoundStartTimeSpan;
-
-        [ViewVariables]
         private bool _startingRound;
 
         [ViewVariables]
@@ -63,11 +60,6 @@ namespace Content.Server.GameTicking
 
                 RaiseLocalEvent(new GameRunLevelChangedEvent(old, value));
             }
-        }
-
-        public override TimeSpan GetRoundStartTimeSpan()
-        {
-            return RoundStartTimeSpan;
         }
 
         /// <summary>

@@ -40,7 +40,6 @@ namespace Content.Client.GameTicking.Managers
         [ViewVariables] public bool DisallowedLateJoin { get; private set; }
         [ViewVariables] public string? ServerInfoBlob { get; private set; }
         [ViewVariables] public TimeSpan StartTime { get; private set; }
-        [ViewVariables] public TimeSpan RoundStartTimeSpan { get; private set; }
         [ViewVariables] public new bool Paused { get; private set; }
 
         [ViewVariables] public IReadOnlyDictionary<EntityUid, Dictionary<string, uint?>> JobsAvailable => _jobsAvailable;
@@ -70,11 +69,6 @@ namespace Content.Client.GameTicking.Managers
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(RoundRestartCleanup);
 
             _initialized = true;
-        }
-
-        public override TimeSpan GetRoundStartTimeSpan()
-        {
-            return RoundStartTimeSpan;
         }
 
         private void LateJoinStatus(TickerLateJoinStatusEvent message)
