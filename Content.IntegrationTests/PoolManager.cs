@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using Content.Client.IoC;
@@ -133,6 +134,8 @@ public static partial class PoolManager
         {
             pair.Kill();
         }
+
+        _initialized = false;
     }
 
     public static string DeathReport()
@@ -715,13 +718,13 @@ we are just going to end this here to save a lot of time. This is the exception 
         return list;
     }
 
-    public static void Startup()
+    public static void Startup(Assembly? assembly = null)
     {
         if (_initialized)
-            return;
+            throw new InvalidOperationException("Already initialized");
 
         _initialized = true;
-        DiscoverTestPrototypes();
+        DiscoverTestPrototypes(assembly);
     }
 }
 

@@ -15,13 +15,14 @@ public static partial class PoolManager
                                        | BindingFlags.Public
                                        | BindingFlags.DeclaredOnly;
 
-    public static void DiscoverTestPrototypes()
+    private static void DiscoverTestPrototypes(Assembly? assembly = null)
     {
+
+        assembly ??= typeof(PoolManager).Assembly;
         _testPrototypes.Clear();
 
-        foreach (var type in typeof(PoolManager).Assembly.GetTypes())
+        foreach (var type in assembly.GetTypes())
         {
-
             foreach (var field in type.GetFields(Flags))
             {
                 if (!field.HasCustomAttribute<TestPrototypesAttribute>())

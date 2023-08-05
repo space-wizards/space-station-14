@@ -86,6 +86,12 @@ public class DeviceNetworkingBenchmark
         });
     }
 
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        await _pair.DisposeAsync();
+    }
+
     [Benchmark(Baseline = true, Description = "Entity Events")]
     public async Task EventSentBaseline()
     {
