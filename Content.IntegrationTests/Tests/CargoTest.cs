@@ -109,6 +109,7 @@ public sealed class CargoTest
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
+                .Where(p => !pairTracker.Pair.IsTestPrototype(p))
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
                 .Select(p => p.ID)
                 .ToList();
@@ -144,10 +145,9 @@ public sealed class CargoTest
         await pairTracker.CleanReturnAsync();
     }
 
-    [Test]
-    public async Task StackPrice()
-    {
-        const string stackProto = @"
+
+    [TestPrototypes]
+    private const string StackProto = @"
 - type: entity
   id: A
 
@@ -165,7 +165,11 @@ public sealed class CargoTest
     count: 5
 ";
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = stackProto });
+    [Test]
+    public async Task StackPrice()
+    {
+
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true } );
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

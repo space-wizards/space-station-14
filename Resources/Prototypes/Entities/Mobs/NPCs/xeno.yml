@@ -10,7 +10,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: XenoCompound
+    rootTask:
+      task: XenoCompound
     blackboard:
       NavInteract: !type:Bool
         true
@@ -330,8 +331,24 @@
     thresholds:
       0: Alive
       75: Dead
+  - type: HTN
+    rootTask:
+      task: SimpleRangedHostileCompound
   - type: Stamina
     excess: 300
+  - type: RechargeBasicEntityAmmo
+    rechargeCooldown: 0.75
+  - type: BasicEntityAmmoProvider
+    proto: BulletAcid
+    capacity: 1
+    count: 1
+  - type: Gun
+    fireRate: 0.75
+    useKey: false
+    selectedMode: FullAuto
+    availableModes:
+      - FullAuto
+    soundGunshot: /Audio/Weapons/Xeno/alien_spitacid.ogg
   - type: SlowOnDamage
     speedModifierThresholds:
       50: 0.4
@@ -374,7 +391,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - Xeno

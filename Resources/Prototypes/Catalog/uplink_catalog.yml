@@ -100,7 +100,22 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
+- type: listing
+  id: UplinkDisposableTurret
+  name: uplink-disposable-turret-name
+  description: uplink-disposable-turret-desc
+  productEntity: ToolboxElectricalTurretFilled
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
 # Explosives
 
 - type: listing
@@ -216,6 +231,23 @@
     Telecrystal: 1
   categories:
   - UplinkAmmo
+
+# For the C20R
+- type: listing
+  id: UplinkMagazinePistolSubMachineGun
+  name: uplink-pistol-magazine-c20r-name
+  description: uplink-pistol-magazine-c20r-desc
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Pistol/smg_mag.rsi, state: red-icon }
+  productEntity: MagazinePistolSubMachineGun
+  cost:
+    Telecrystal: 3
+  categories:
+  - UplinkAmmo
+  conditions:
+  - !type:StoreWhitelistCondition
+    whitelist:
+      tags:
+      - NukeOpsUplink
 
 # For the Cobra
 - type: listing
@@ -352,7 +384,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -925,26 +957,8 @@
     whitelist:
     - Zookeeper
     - Scientist
-    - SeniorResearcher      
+    - SeniorResearcher
     - Chef
-
-- type: listing
-  id: UplinkDisposableTurret
-  name: uplink-disposable-turret-name
-  description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkJob
-  conditions:
-    - !type:BuyerJobCondition
-      whitelist:
-        - StationEngineer
-        - AtmosphericTechnician
-        - Scientist
-        - SeniorEngineer
-        - SeniorResearcher
 
 # Armor
 
@@ -1088,7 +1102,7 @@
   id: UplinkUltrabrightLantern
   name: uplink-ultrabright-lantern-name
   description: uplink-ultrabright-lantern-desc
-  productEntity: lanternextrabright #why is this item id not capitalized???
+  productEntity: LanternFlash
   cost:
     Telecrystal: 2
   categories:
@@ -1291,3 +1305,17 @@
     Telecrystal: 1
   categories:
     - UplinkPointless
+
+- type: listing
+  id: UplinkSyndicatePersonalAI
+  name: uplink-syndicate-pai-name
+  description: uplink-syndicate-pai-desc
+  icon: { sprite: /Textures/Objects/Fun/pai.rsi, state: syndicate-icon-pai-off }
+  productEntity: SyndicatePersonalAI
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

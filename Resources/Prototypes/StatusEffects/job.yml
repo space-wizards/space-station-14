@@ -2,6 +2,7 @@
   id: JobIcon
   abstract: true
   priority: 1
+  locationPreference: Left
 
 - type: statusIcon
   parent: JobIcon
@@ -337,7 +338,7 @@
   id: JobIconSeniorPhysician
   icon:
     sprite: Interface/Misc/job_icons.rsi
-    state: SeniorPhysician 
+    state: SeniorPhysician
 
 - type: statusIcon
   parent: JobIcon

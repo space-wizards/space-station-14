@@ -94,9 +94,6 @@
   - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
-  - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
   - type: Sprite
     noRot: true
     drawdepth: Mobs

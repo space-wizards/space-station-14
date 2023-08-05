@@ -50,7 +50,7 @@ public abstract partial class SharedGunSystem
         Audio.PlayPredicted(component.SoundInsert, uid, args.User);
         args.Handled = true;
         UpdateBallisticAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBallisticAfterInteract(EntityUid uid, BallisticAmmoProviderComponent component, AfterInteractEvent args)
@@ -130,15 +130,14 @@ public abstract partial class SharedGunSystem
 
     private void OnBallisticVerb(EntityUid uid, BallisticAmmoProviderComponent component, GetVerbsEvent<Verb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+        if (!args.CanAccess || !args.CanInteract || args.Hands == null || !component.Cycleable)
             return;
-        if (component.Cycleable == true)
-            args.Verbs.Add(new Verb()
-            {
-                Text = Loc.GetString("gun-ballistic-cycle"),
-                Disabled = GetBallisticShots(component) == 0,
-                Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
-            });
+        args.Verbs.Add(new Verb()
+        {
+            Text = Loc.GetString("gun-ballistic-cycle"),
+            Disabled = GetBallisticShots(component) == 0,
+            Act = () => ManualCycle(uid, component, Transform(uid).MapPosition, args.User),
+        });
     }
 
     private void OnBallisticExamine(EntityUid uid, BallisticAmmoProviderComponent component, ExaminedEvent args)
@@ -151,6 +150,9 @@ public abstract partial class SharedGunSystem
 
     private void ManualCycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates, EntityUid? user = null, GunComponent? gunComp = null)
     {
+        if (!component.Cycleable)
+            return;
+
         // Reset shotting for cycling
         if (Resolve(uid, ref gunComp, false) &&
             gunComp is { FireRate: > 0f } &&
@@ -159,7 +161,7 @@ public abstract partial class SharedGunSystem
             gunComp.NextFire = Timing.CurTime + TimeSpan.FromSeconds(1 / gunComp.FireRate);
         }
 
-        Dirty(component);
+        Dirty(uid, component);
         Audio.PlayPredicted(component.SoundRack, uid, user);
 
         var shots = GetBallisticShots(component);
@@ -188,7 +190,7 @@ public abstract partial class SharedGunSystem
         if (component.FillProto != null)
         {
             component.UnspawnedCount = Math.Max(0, component.Capacity - component.Container.ContainedEntities.Count);
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 
@@ -250,7 +252,7 @@ public abstract partial class SharedGunSystem
         }
 
         UpdateBallisticAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBallisticAmmoCount(EntityUid uid, BallisticAmmoProviderComponent component, ref GetAmmoCountEvent args)
