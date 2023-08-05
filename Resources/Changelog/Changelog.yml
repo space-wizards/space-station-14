@@ -1,10 +1,4 @@
 Entries:
-- author: Equivocateur
-  changes:
-  - {message: Nanotrasen has remembered that they had built a therapy room for a reason
-      and is now allowing psychologists to board Origin Station., type: Fix}
-  id: 3939
-  time: '2023-06-04T20:11:15.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: 'Adds Medical Doctor, Cryo, and Cloning Guidebooks', type: Add}
@@ -2986,3 +2980,8 @@ Entries:
       with shields., type: Tweak}
   id: 4438
   time: '2023-08-05T03:47:32.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Uplinks can now purchase a Syndicate pAI., type: Add}
+  id: 4439
+  time: '2023-08-05T04:26:26.0000000+00:00'
