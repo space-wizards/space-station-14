@@ -408,7 +408,7 @@ namespace Content.Shared.Access.Systems
             /// <summary>
             /// Adds access tags to the list of providable tags
             /// </summary>
-            /// <param name="provider">Provider of the tagss</param>
+            /// <param name="provider">Provider of the tags</param>
             /// <param name="accessTags">Tags being provided</param>
             /// <param name="bypassLogging">Determines if the access provider provide access without being logged</param>
             public void AddAccessTags(string provider, IEnumerable<string> accessTags, bool bypassLogging)
