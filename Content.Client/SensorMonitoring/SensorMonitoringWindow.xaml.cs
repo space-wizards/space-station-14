@@ -1,5 +1,7 @@
-﻿using System.Numerics;
+﻿using System.Linq;
+using System.Numerics;
 using Content.Client.Computer;
+using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.SensorMonitoring;
 using JetBrains.Annotations;
@@ -18,6 +20,7 @@ namespace Content.Client.SensorMonitoring;
 public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindow<ConsoleUIState>
 {
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private readonly ILocalizationManager _loc = default!;
 
     private TimeSpan _retentionTime;
     private readonly Dictionary<int, SensorData> _sensorData = new();
@@ -38,6 +41,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
             var sensor = new SensorData
             {
                 Name = netSensor.Name,
+                Address = netSensor.Address,
                 DeviceType = netSensor.DeviceType
             };
 
@@ -105,21 +109,60 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
         foreach (var sensor in _sensorData.Values)
         {
-            Asdf.AddChild(new Label { Text = sensor.Name });
+            var labelName = new Label { Text = sensor.Name, StyleClasses = { StyleBase.StyleClassLabelHeading } };
+            var labelAddress = new Label
+            {
+                Text = sensor.Address,
+                Margin = new Thickness(4, 0),
+                VerticalAlignment = VAlignment.Bottom,
+                StyleClasses = { StyleNano.StyleClassLabelSecondaryColor }
+            };
+
+            Asdf.AddChild(new BoxContainer
+            {
+                Orientation = BoxContainer.LayoutOrientation.Horizontal, Children =
+                {
+                    labelName,
+                    labelAddress
+                }
+            });
 
             foreach (var stream in sensor.Streams.Values)
             {
                 var maxValue = stream.Unit switch
                 {
-                    SensorUnit.Pressure => 5000,
+                    SensorUnit.PressureKpa => 5000, // 5 MPa
                     SensorUnit.Ratio => 1,
+                    SensorUnit.PowerW => 1_000_000, // 1 MW
+                    SensorUnit.EnergyJ => 2_000_000, // 2 MJ
                     _ => 1000
                 };
 
-                Asdf.AddChild(new Label { Text = stream.Name });
+                // TODO: Better way to do this?
+                var lastSample = stream.Samples.Last();
+
+                Asdf.AddChild(new BoxContainer
+                {
+                    Orientation = BoxContainer.LayoutOrientation.Horizontal,
+                    Children =
+                    {
+                        new Label { Text = stream.Name, StyleClasses = { "monospace" }, HorizontalExpand = true },
+                        new Label { Text = FormatValue(stream.Unit, lastSample.Value) }
+                    }
+                });
+
                 Asdf.AddChild(new GraphView(stream.Samples, startTime, curTime, maxValue) { MinHeight = 150 });
+                Asdf.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
             }
         }
+    }
+
+    private string FormatValue(SensorUnit unit, float value)
+    {
+        return _loc.GetString(
+            "sensor-monitoring-value-display",
+            ("unit", unit.ToString()),
+            ("value", value));
     }
 
     private void CullOldSamples()
@@ -141,6 +184,7 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
     private sealed class SensorData
     {
         public string Name = "";
+        public string Address = "";
         public SensorDeviceType DeviceType;
 
         public readonly Dictionary<int, SensorStream> Streams = new();
@@ -195,10 +239,10 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 }
 
 [UsedImplicitly]
-public sealed class SensorMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<SensorMonitoringWindow, ConsoleUIState>
+public sealed class
+    SensorMonitoringConsoleBoundUserInterface : ComputerBoundUserInterface<SensorMonitoringWindow, ConsoleUIState>
 {
     public SensorMonitoringConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 }
-

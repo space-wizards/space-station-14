@@ -102,6 +102,14 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_pump.ogg
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+      prefix: device-address-prefix-volume-pump
+    - type: WiredNetworkConnection
 
 - type: entity
   parent: GasBinaryBase

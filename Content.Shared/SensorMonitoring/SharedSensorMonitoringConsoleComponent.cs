@@ -14,6 +14,7 @@ public sealed class SensorMonitoringConsoleBoundInterfaceState : BoundUserInterf
     {
         public int NetId;
         public string Name = "";
+        public string Address = "";
         public SensorDeviceType DeviceType;
 
         public SensorStream[] Streams = Array.Empty<SensorStream>();
@@ -68,12 +69,12 @@ public enum SensorUnit : byte
     /// <summary>
     /// A pressure value in kilopascals (kPa).
     /// </summary>
-    Pressure,
+    PressureKpa,
 
     /// <summary>
     /// A temperature value in Kelvin (K).
     /// </summary>
-    Temperature,
+    TemperatureK,
 
     /// <summary>
     /// An amount of matter in moles.
@@ -88,7 +89,12 @@ public enum SensorUnit : byte
     /// <summary>
     /// Power in Watts (W).
     /// </summary>
-    Power,
+    PowerW,
+
+    /// <summary>
+    /// Energy in Joules (J).
+    /// </summary>
+    EnergyJ
 }
 
 [Serializable, NetSerializable]
@@ -96,7 +102,9 @@ public enum SensorDeviceType
 {
     Unknown = 0,
     Teg,
-    AtmosSensor
+    AtmosSensor,
+    ThermoMachine,
+    VolumePump,
 }
 
 [Serializable, NetSerializable]

@@ -93,5 +93,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartTemperature = "Capacitor";
 
+        /// <summary>
+        /// Last amount of energy added/removed from the attached pipe network
+        /// </summary>
+        [DataField("lastEnergyDelta")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LastEnergyDelta;
     }
 }

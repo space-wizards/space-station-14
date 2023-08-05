@@ -26,6 +26,9 @@ device-address-prefix-scrubber = SCR-
 device-address-prefix-sensor = SNS-
 # Damn bet you couldn't see this one coming.
 device-address-prefix-teg = TEG-
+device-address-prefix-heater = HTR-
+device-address-prefix-freezer = FZR-
+device-address-prefix-volume-pump = VPP-
 
 #PDAs and terminals
 device-address-prefix-console = CLS-

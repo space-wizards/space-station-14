@@ -1,11 +1,15 @@
 ﻿using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Monitor.Systems;
+using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Monitor;
+using Content.Shared.Atmos.Piping.Binary.Components;
+using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
@@ -105,6 +109,12 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         if (HasComp<AtmosMonitorComponent>(entity))
             return SensorDeviceType.AtmosSensor;
 
+        if (HasComp<GasThermoMachineComponent>(entity))
+            return SensorDeviceType.ThermoMachine;
+
+        if (HasComp<GasVolumePumpComponent>(entity))
+            return SensorDeviceType.VolumePump;
+
         return SensorDeviceType.Unknown;
     }
 
@@ -127,17 +137,17 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     return;
 
                 // @formatter:off
-                WriteSample(component, sensorData, "teg_last_generated",         SensorUnit.Power,       tegData.LastGeneration);
+                WriteSample(component, sensorData, "teg_last_generated",         SensorUnit.EnergyJ,      tegData.LastGeneration);
 
-                WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorA.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.Temperature, tegData.CirculatorA.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorA.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.Temperature, tegData.CirculatorA.OutletTemperature);
+                WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorA.InletPressure);
+                WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorA.InletTemperature);
+                WriteSample(component, sensorData, "teg_circ_a_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorA.OutletPressure);
+                WriteSample(component, sensorData, "teg_circ_a_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorA.OutletTemperature);
 
-                WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.Pressure,    tegData.CirculatorB.InletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.Temperature, tegData.CirculatorB.InletTemperature);
-                WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.Pressure,    tegData.CirculatorB.OutletPressure);
-                WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.Temperature, tegData.CirculatorB.OutletTemperature);
+                WriteSample(component, sensorData, "teg_circ_b_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorB.InletPressure);
+                WriteSample(component, sensorData, "teg_circ_b_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorB.InletTemperature);
+                WriteSample(component, sensorData, "teg_circ_b_out_pressure",    SensorUnit.PressureKpa,  tegData.CirculatorB.OutletPressure);
+                WriteSample(component, sensorData, "teg_circ_b_out_temperature", SensorUnit.TemperatureK, tegData.CirculatorB.OutletTemperature);
                 // @formatter:on
                 break;
 
@@ -149,8 +159,32 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     return;
 
                 // @formatter:off
-                WriteSample(component, sensorData, "atmo_pressure",    SensorUnit.Pressure,    atmosData.Pressure);
-                WriteSample(component, sensorData, "atmo_temperature", SensorUnit.Temperature, atmosData.Temperature);
+                WriteSample(component, sensorData, "atmo_pressure",    SensorUnit.PressureKpa,    atmosData.Pressure);
+                WriteSample(component, sensorData, "atmo_temperature", SensorUnit.TemperatureK, atmosData.Temperature);
+                // @formatter:on
+                break;
+
+            case SensorDeviceType.ThermoMachine:
+                if (command != AtmosDeviceNetworkSystem.SyncData)
+                    return;
+
+                if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out GasThermoMachineData? thermoData))
+                    return;
+
+                // @formatter:off
+                WriteSample(component, sensorData, "abs_energy_delta", SensorUnit.EnergyJ, MathF.Abs(thermoData.EnergyDelta));
+                // @formatter:on
+                break;
+
+            case SensorDeviceType.VolumePump:
+                if (command != AtmosDeviceNetworkSystem.SyncData)
+                    return;
+
+                if (!args.Data.TryGetValue(AtmosDeviceNetworkSystem.SyncData, out GasVolumePumpData? volumePumpData))
+                    return;
+
+                // @formatter:off
+                WriteSample(component, sensorData, "moles_transferred", SensorUnit.Moles, volumePumpData.LastMolesTransferred);
                 // @formatter:on
                 break;
         }
@@ -196,6 +230,8 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     break;
 
                 case SensorDeviceType.AtmosSensor:
+                case SensorDeviceType.ThermoMachine:
+                case SensorDeviceType.VolumePump:
                     payload = new NetworkPayload
                     {
                         [DeviceNetworkConstants.Command] = AtmosDeviceNetworkSystem.SyncData

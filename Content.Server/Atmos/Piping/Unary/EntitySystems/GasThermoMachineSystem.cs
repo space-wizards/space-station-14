@@ -1,7 +1,11 @@
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Atmos.Monitor.Systems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Construction;
+using Content.Server.DeviceNetwork;
+using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
@@ -22,6 +26,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+        [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+
 
         public override void Initialize()
         {
@@ -35,6 +41,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             // UI events
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineToggleMessage>(OnToggleMessage);
             SubscribeLocalEvent<GasThermoMachineComponent, GasThermomachineChangeTemperatureMessage>(OnChangeTemperature);
+
+            // Device network
+            SubscribeLocalEvent<GasThermoMachineComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
         }
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
@@ -50,10 +59,14 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
             var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
 
+            var startEnergy = inlet.Air.Temperature * airHeatCapacity;
+
             if (!MathHelper.CloseTo(combinedHeatCapacity, 0, 0.001f))
             {
                 var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
                 inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
+
+                thermoMachine.LastEnergyDelta = inlet.Air.Temperature * airHeatCapacity - startEnergy;
             }
         }
 
@@ -136,6 +149,26 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                ))
 
                 args.PushMarkup(str);
+        }
+
+        private void OnPacketRecv(EntityUid uid, GasThermoMachineComponent component, DeviceNetworkPacketEvent args)
+        {
+            if (!EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)
+                || !args.Data.TryGetValue(DeviceNetworkConstants.Command, out var cmd))
+                return;
+
+            var payload = new NetworkPayload();
+
+            switch (cmd)
+            {
+                case AtmosDeviceNetworkSystem.SyncData:
+                    payload.Add(DeviceNetworkConstants.Command, AtmosDeviceNetworkSystem.SyncData);
+                    payload.Add(AtmosDeviceNetworkSystem.SyncData, new GasThermoMachineData(component.LastEnergyDelta));
+
+                    _deviceNetwork.QueuePacket(uid, args.SenderAddress, payload, device: netConn);
+
+                    return;
+            }
         }
     }
 }
