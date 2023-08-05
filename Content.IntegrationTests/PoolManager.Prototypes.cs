@@ -1,6 +1,6 @@
+#nullable enable
 using System.Collections.Generic;
 using System.Reflection;
-using Robust.Shared.Reflection;
 using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests;
@@ -17,7 +17,6 @@ public static partial class PoolManager
 
     private static void DiscoverTestPrototypes(Assembly? assembly = null)
     {
-
         assembly ??= typeof(PoolManager).Assembly;
         _testPrototypes.Clear();
 

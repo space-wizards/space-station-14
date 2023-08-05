@@ -1,3 +1,4 @@
+#nullable enable
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -69,7 +70,7 @@ public static partial class PoolManager
     // Pair, IsBorrowed
     private static readonly Dictionary<Pair, bool> Pairs = new();
     private static bool _dead;
-    private static Exception _poolFailureReason;
+    private static Exception? _poolFailureReason;
 
     private static async Task<(RobustIntegrationTest.ServerIntegrationInstance, PoolTestLogHandler)> GenerateServer(
         PoolSettings poolSettings,
@@ -248,7 +249,7 @@ public static partial class PoolManager
     /// </summary>
     /// <param name="poolSettings">See <see cref="PoolSettings"/></param>
     /// <returns></returns>
-    public static async Task<PairTracker> GetServerClient(PoolSettings poolSettings = null)
+    public static async Task<PairTracker> GetServerClient(PoolSettings? poolSettings = null)
     {
         return await GetServerClientPair(poolSettings ?? new PoolSettings());
     }
@@ -271,7 +272,7 @@ public static partial class PoolManager
         var currentTestName = poolSettings.TestName ?? GetDefaultTestName(testContext);
         var poolRetrieveTimeWatch = new Stopwatch();
         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Called by test {currentTestName}");
-        Pair pair = null;
+        Pair? pair = null;
         try
         {
             poolRetrieveTimeWatch.Start();
@@ -378,11 +379,11 @@ public static partial class PoolManager
         Assert.That(status, Is.EqualTo(expected));
     }
 
-    private static Pair GrabOptimalPair(PoolSettings poolSettings)
+    private static Pair? GrabOptimalPair(PoolSettings poolSettings)
     {
         lock (PairLock)
         {
-            Pair fallback = null;
+            Pair? fallback = null;
             foreach (var pair in Pairs.Keys)
             {
                 if (Pairs[pair])
@@ -821,7 +822,7 @@ public sealed class PoolSettings
     /// <summary>
     /// Overrides the test name detection, and uses this in the test history instead
     /// </summary>
-    public string TestName { get; set; }
+    public string? TestName { get; set; }
 
     /// <summary>
     /// Tries to guess if we can skip recycling the server/client pair.
@@ -855,7 +856,7 @@ public sealed class TestMapData
     public EntityUid MapUid { get; set; }
     public EntityUid GridUid { get; set; }
     public MapId MapId { get; set; }
-    public MapGridComponent MapGrid { get; set; }
+    public MapGridComponent MapGrid { get; set; } = default!;
     public EntityCoordinates GridCoords { get; set; }
     public MapCoordinates MapCoords { get; set; }
     public TileRef Tile { get; set; }
@@ -869,12 +870,12 @@ public sealed class Pair
     public bool Dead { get; private set; }
     public int PairId { get; init; }
     public List<string> TestHistory { get; set; } = new();
-    public PoolSettings Settings { get; set; }
-    public RobustIntegrationTest.ServerIntegrationInstance Server { get; init; }
-    public RobustIntegrationTest.ClientIntegrationInstance Client { get; init; }
+    public PoolSettings Settings { get; set; } = default!;
+    public RobustIntegrationTest.ServerIntegrationInstance Server { get; init; } = default!;
+    public RobustIntegrationTest.ClientIntegrationInstance Client { get; init; } = default!;
 
-    public PoolTestLogHandler ServerLogHandler { get; init; }
-    public PoolTestLogHandler ClientLogHandler { get; init; }
+    public PoolTestLogHandler ServerLogHandler { get; init; } = default!;
+    public PoolTestLogHandler ClientLogHandler { get; init; } = default!;
 
     private Dictionary<Type, HashSet<string>> _loadedPrototypes = new();
     private HashSet<string> _loadedEntityPrototypes = new();
@@ -957,8 +958,8 @@ public sealed class PairTracker : IAsyncDisposable
 {
     private readonly TextWriter _testOut;
     private int _disposed;
-    public Stopwatch UsageWatch { get; set; }
-    public Pair Pair { get; init; }
+    public Stopwatch UsageWatch { get; set; } = default!;
+    public Pair Pair { get; init; } = default!;
 
     public PairTracker(TextWriter testOut)
     {
