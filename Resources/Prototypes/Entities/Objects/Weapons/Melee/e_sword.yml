@@ -58,8 +58,7 @@
   name: energy dagger
   parent: EnergySword
   id: EnergyDagger
-  suffix: E-Dagger
-  description: A small energy dagger, disguised as a pen, but it doesnt fool syndies.
+  description: A very loud & dangerous dagger with a beam made of pure, concentrated plasma. Occasionally mistaken for a pen.
   components:
   - type: EnergySword
     secret: true
