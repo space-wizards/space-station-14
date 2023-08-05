@@ -53,7 +53,9 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
     {
         var minTime = _gameTiming.CurTime - comp.RetentionTime;
 
-        foreach (var (ent, data) in comp.Sensors)
+        SensorUpdate(uid, comp);
+
+        foreach (var data in comp.Sensors.Values)
         {
             // Cull old data.
             foreach (var stream in data.Streams.Values)
@@ -114,6 +116,9 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 
         if (HasComp<GasVolumePumpComponent>(entity))
             return SensorDeviceType.VolumePump;
+
+        if (HasComp<BatterySensorComponent>(entity))
+            return SensorDeviceType.Battery;
 
         return SensorDeviceType.Unknown;
     }
@@ -187,6 +192,26 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                 WriteSample(component, sensorData, "moles_transferred", SensorUnit.Moles, volumePumpData.LastMolesTransferred);
                 // @formatter:on
                 break;
+
+            case SensorDeviceType.Battery:
+                if (command != BatterySensorSystem.DeviceNetworkCommandSyncData)
+                    return;
+
+                if (!args.Data.TryGetValue(BatterySensorSystem.DeviceNetworkCommandSyncData, out BatterySensorData? batteryData))
+                    return;
+
+                // @formatter:off
+                WriteSample(component, sensorData, "charge",        SensorUnit.EnergyJ, batteryData.Charge);
+                WriteSample(component, sensorData, "charge_max",    SensorUnit.EnergyJ, batteryData.MaxCharge);
+
+                WriteSample(component, sensorData, "receiving",     SensorUnit.PowerW,  batteryData.Receiving);
+                WriteSample(component, sensorData, "receiving_max", SensorUnit.PowerW,  batteryData.MaxReceiving);
+
+                WriteSample(component, sensorData, "supplying",     SensorUnit.PowerW,  batteryData.Supplying);
+                WriteSample(component, sensorData, "supplying_max", SensorUnit.PowerW,  batteryData.MaxSupplying);
+                // @formatter:on
+
+                break;
         }
     }
 
@@ -235,6 +260,31 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     payload = new NetworkPayload
                     {
                         [DeviceNetworkConstants.Command] = AtmosDeviceNetworkSystem.SyncData
+                    };
+                    break;
+
+                default:
+                    // Unknown device type, don't do anything.
+                    continue;
+            }
+
+            var address = _deviceNetworkQuery.GetComponent(ent);
+            _deviceNetwork.QueuePacket(uid, address.Address, payload);
+        }
+    }
+
+    private void SensorUpdate(EntityUid uid, SensorMonitoringConsoleComponent comp)
+    {
+        foreach (var (ent, data) in comp.Sensors)
+        {
+            // Send network requests for new data!
+            NetworkPayload payload;
+            switch (data.DeviceType)
+            {
+                case SensorDeviceType.Battery:
+                    payload = new NetworkPayload
+                    {
+                        [DeviceNetworkConstants.Command] = BatterySensorSystem.DeviceNetworkCommandSyncData
                     };
                     break;
 

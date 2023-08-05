@@ -105,6 +105,7 @@ public enum SensorDeviceType
     AtmosSensor,
     ThermoMachine,
     VolumePump,
+    Battery,
 }
 
 [Serializable, NetSerializable]
