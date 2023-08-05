@@ -19,3 +19,7 @@
   copyright: "User Mystovski on freesound.org. Modified by LankLTE on github."
   source: "https://freesound.org/people/Mystovski/sounds/201111/"
 
+- files: ["star_hit.ogg"]
+  license: "CC0-1.0"
+  copyright: "Based on genhit3.ogg, modified by deltanedas on github."
+  source: "https://github.com/deltanedas"
