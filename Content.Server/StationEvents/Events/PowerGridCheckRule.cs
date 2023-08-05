@@ -1,27 +1,27 @@
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Power.Components;
-using JetBrains.Annotations;
+using Content.Server.Power.EntitySystems;
+using Content.Server.Station.Systems;
+using Content.Server.StationEvents.Components;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Threading;
-using Content.Server.Power.EntitySystems;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Station.Components;
-using Content.Server.StationEvents.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-[UsedImplicitly]
 public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
 {
-    [Dependency] private readonly ApcSystem _apcSystem = default!;
+    [Dependency] private readonly ApcSystem _apc = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PowerGridCheckDisabledComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
+        // sus subscription but if it uses a special component added by the event, (re)constructed apcs bypass it
+        SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerAttemptEvent>(OnApcToggleMainBreaker);
     }
 
     protected override void Started(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -31,16 +31,20 @@ public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleCo
         if (!TryGetRandomStation(out var chosenStation))
             return;
 
-        var query = AllEntityQuery<ApcComponent, TransformComponent>();
-        while (query.MoveNext(out var target, out var apc, out var transform))
+        EnsureComp<PowerGridCheckDisabledComponent>(chosenStation.Value);
+        var query = EntityQueryEnumerator<ApcComponent, TransformComponent>();
+        while (query.MoveNext(out var entity, out var apc, out var transform))
         {
-            if (apc.MainBreakerEnabled && CompOrNull<StationMemberComponent>(transform.GridUid)?.Station == chosenStation)
-                component.Powered.Add(target);
+            if (apc.MainBreakerEnabled && _station.GetOwningStation(entity, transform) == chosenStation)
+            {
+                component.Powered.Add(entity);
+            }
         }
 
         RobustRandom.Shuffle(component.Powered);
 
         component.NumberPerSecond = Math.Max(1, (int)(component.Powered.Count / component.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
+        component.Station = chosenStation.Value;
     }
 
     protected override void Ended(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
@@ -52,12 +56,11 @@ public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleCo
             if (Deleted(entity))
                 continue;
 
-            if (TryComp(entity, out ApcComponent? apcComponent))
+            if (TryComp(entity, out ApcComponent? apc))
             {
-                if (!apcComponent.MainBreakerEnabled)
-                    _apcSystem.ApcToggleBreaker(entity, apcComponent);
+                if (!apc.MainBreakerEnabled)
+                    _apc.ApcToggleBreaker(entity, apc);
             }
-            RemComp<PowerGridCheckDisabledComponent>(entity);
         }
 
         // Can't use the default EndAudio
@@ -68,6 +71,7 @@ public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleCo
             Audio.PlayGlobal("/Audio/Announcements/power_on.ogg", Filter.Broadcast(), true, AudioParams.Default.WithVolume(-4f));
         }, component.AnnounceCancelToken.Token);
         component.Unpowered.Clear();
+        RemComp<PowerGridCheckDisabledComponent>(component.Station);
     }
 
     protected override void ActiveTick(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -90,18 +94,23 @@ public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleCo
             var selected = component.Powered.Pop();
             if (Deleted(selected))
                 continue;
-            if (TryComp<ApcComponent>(selected, out var apcComponent))
+
+            if (TryComp<ApcComponent>(selected, out var apc))
             {
-                if (apcComponent.MainBreakerEnabled)
-                    _apcSystem.ApcToggleBreaker(selected, apcComponent);
+                if (apc.MainBreakerEnabled)
+                    _apc.ApcToggleBreaker(selected, apc);
             }
-            EnsureComp<PowerGridCheckDisabledComponent>(selected);
+
             component.Unpowered.Add(selected);
         }
     }
 
-    private void OnApcToggleMainBreaker(EntityUid uid, PowerGridCheckDisabledComponent component, ref ApcToggleMainBreakerAttemptEvent args)
+    private void OnApcToggleMainBreaker(EntityUid uid, ApcComponent component, ref ApcToggleMainBreakerAttemptEvent args)
     {
-        args.Cancelled = true;
+        // can't turn on apcs while the stations' power is disabled
+        // also prevents reconstruction as newly constructed apcs start disabled
+        var station = _station.GetOwningStation(uid);
+        if (HasComp<PowerGridCheckDisabledComponent>(station))
+            args.Cancelled = true;
     }
 }
