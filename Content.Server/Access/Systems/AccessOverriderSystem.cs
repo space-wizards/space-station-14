@@ -9,6 +9,8 @@ using Robust.Shared.Containers;
 using System.Linq;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 using Content.Server.Popups;
+using Content.Shared.AirlockPainter;
+using Content.Shared.DoAfter;
 
 namespace Content.Server.Access.Systems;
 
@@ -21,6 +23,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -31,23 +34,54 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         SubscribeLocalEvent<AccessOverriderComponent, EntInsertedIntoContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
+        SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<AccessOverriderComponent, BoundUIClosedEvent>(OnClose);
+        SubscribeLocalEvent<AccessOverriderComponent, BoundUIOpenedEvent>(UpdateUserInterface);
     }
 
     private void AfterInteractOn(EntityUid uid, AccessOverriderComponent component, AfterInteractEvent args)
     {
-        if (!TryComp(args?.User, out ActorComponent? actor))
+        if (args.Target == null || !TryComp(args.Target, out AccessReaderComponent? accessReader))
             return;
 
-        if (!TryComp(args?.Target, out AccessReaderComponent? accessReader))
+        if (!_interactionSystem.InRangeUnobstructed(args.User, (EntityUid) args.Target))
             return;
 
-        if (!_interactionSystem.InRangeUnobstructed(uid, args.Target.Value))
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.DoAfterTime, new AccessOverriderDoAfterEvent(), uid, target: args.Target, used: uid)
+        {
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
+    }
+
+    private void OnDoAfter(EntityUid uid, AccessOverriderComponent component, AccessOverriderDoAfterEvent args)
+    {
+        if (!TryComp(args.User, out ActorComponent? actor))
             return;
 
-        component.TargetAccessReaderId = args.Target.Value;
+        if (args.Handled || args.Cancelled)
+            return;
 
-        _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.PlayerSession);
-        UpdateUserInterface(uid, component, args);
+        if (args.Args.Target != null)
+        {
+            component.TargetAccessReaderId = args.Args.Target.Value;
+            _userInterface.TryOpen(uid, AccessOverriderUiKey.Key, actor.PlayerSession);
+            UpdateUserInterface(uid, component, args);
+        }
+
+        args.Handled = true;
+    }
+
+    private void OnClose(EntityUid uid, AccessOverriderComponent component, BoundUIClosedEvent args)
+    {
+        if (args.UiKey.Equals(AccessOverriderUiKey.Key))
+        {
+            component.TargetAccessReaderId = new();
+        }
     }
 
     private void OnWriteToTargetAccessReaderIdMessage(EntityUid uid, AccessOverriderComponent component, WriteToTargetAccessReaderIdMessage args)
@@ -66,19 +100,29 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return;
 
         var privilegedIdName = string.Empty;
+        var targetLabel = Loc.GetString("access-overrider-window-no-target");
+        var targetLabelColor = Color.Red;
+
         string[]? possibleAccess = null;
         string[]? currentAccess = null;
+
+        if (component.TargetAccessReaderId is { Valid: true } accessReader)
+        {
+            targetLabel = Loc.GetString("access-overrider-window-target-label") + " " + EntityManager.GetComponent<MetaDataComponent>(component.TargetAccessReaderId).EntityName;
+            targetLabelColor = Color.White;
+
+            List<HashSet<string>> currentAccessHashsets = EntityManager.GetComponent<AccessReaderComponent>(accessReader).AccessLists;
+            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToArray();
+        }
 
         if (component.PrivilegedIdSlot.Item is { Valid: true } idCard)
         {
             privilegedIdName = EntityManager.GetComponent<MetaDataComponent>(idCard).EntityName;
-            possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
-        }
 
-        if (component.TargetAccessReaderId is { Valid: true } accessReader)
-        {
-            List<HashSet<string>> currentAccessHashsets = EntityManager.GetComponent<AccessReaderComponent>(accessReader).AccessLists;
-            currentAccess = ConvertAccessHashSetsToList(currentAccessHashsets)?.ToArray();
+            if (component.TargetAccessReaderId is { Valid: true })
+            {
+                possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
+            }
         }
 
         AccessOverriderBoundUserInterfaceState newState;
@@ -88,7 +132,9 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             PrivilegedIdIsAuthorized(uid, component),
             currentAccess,
             possibleAccess,
-            privilegedIdName);
+            privilegedIdName,
+            targetLabel,
+            targetLabelColor);
 
         _userInterface.TrySetUiState(uid, AccessOverriderUiKey.Key, newState);
     }

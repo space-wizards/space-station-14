@@ -59,10 +59,12 @@ namespace Content.Client.Access.UI
         public void UpdateState(AccessOverriderBoundUserInterfaceState state)
         {
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
-                ? Loc.GetString("id-card-console-window-eject-button")
-                : Loc.GetString("id-card-console-window-insert-button");
+                ? Loc.GetString("access-overrider-window-eject-button")
+                : Loc.GetString("access-overrider-window-insert-button");
 
             PrivilegedIdLabel.Text = state.PrivilegedIdName;
+            TargetNameLabel.Text = state.TargetLabel;
+            TargetNameLabel.FontColorOverride = state.TargetLabelColor;
 
             var interfaceEnabled = state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized;
 

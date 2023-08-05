@@ -1,5 +1,6 @@
 using Content.Shared.Access.Components;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -56,6 +57,16 @@ namespace Content.Shared.Access.Systems
             {
                 AccessLevels = accessLevels;
             }
+        }
+
+        [Serializable, NetSerializable]
+        public sealed class AccessOverriderDoAfterEvent : DoAfterEvent
+        {
+            public AccessOverriderDoAfterEvent()
+            {
+            }
+
+            public override DoAfterEvent Clone() => this;
         }
     }
 }

@@ -34,41 +34,17 @@ public sealed class AccessOverriderComponent : Component
     }
 
     [DataField("accessLevels", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-    public List<string> AccessLevels = new()
-    {
-        "Armory",
-        "Atmospherics",
-        "Bar",
-        "Brig",
-        "Detective",
-        "Captain",
-        "Cargo",
-        "Chapel",
-        "Chemistry",
-        "ChiefEngineer",
-        "ChiefMedicalOfficer",
-        "Command",
-        "Engineering",
-        "External",
-        "HeadOfPersonnel",
-        "HeadOfSecurity",
-        "Hydroponics",
-        "Janitor",
-        "Kitchen",
-        "Maintenance",
-        "Medical",
-        "Quartermaster",
-        "Research",
-        "ResearchDirector",
-        "Salvage",
-        "Security",
-        "Service",
-        "Theatre",
-    };
+    public List<string> AccessLevels = new();
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("doAfter")]
+    public float DoAfterTime = 0f;
 
     [Serializable, NetSerializable]
     public sealed class AccessOverriderBoundUserInterfaceState : BoundUserInterfaceState
     {
+        public readonly string TargetLabel;
+        public readonly Color TargetLabelColor;
         public readonly string PrivilegedIdName;
         public readonly bool IsPrivilegedIdPresent;
         public readonly bool IsPrivilegedIdAuthorized;
@@ -79,13 +55,17 @@ public sealed class AccessOverriderComponent : Component
             bool isPrivilegedIdAuthorized,
             string[]? targetAccessReaderIdAccessList,
             string[]? allowedModifyAccessList,
-            string privilegedIdName)
+            string privilegedIdName,
+            string targetLabel,
+            Color targetLabelColor)
         {
             IsPrivilegedIdPresent = isPrivilegedIdPresent;
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
             TargetAccessReaderIdAccessList = targetAccessReaderIdAccessList;
             AllowedModifyAccessList = allowedModifyAccessList;
             PrivilegedIdName = privilegedIdName;
+            TargetLabel = targetLabel;
+            TargetLabelColor = targetLabelColor;
         }
     }
 
