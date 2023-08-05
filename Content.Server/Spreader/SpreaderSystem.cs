@@ -1,6 +1,7 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Atmos;
@@ -24,6 +25,7 @@ public sealed class SpreaderSystem : EntitySystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
     private static readonly TimeSpan SpreadCooldown = TimeSpan.FromSeconds(1);
 
@@ -138,13 +140,13 @@ public sealed class SpreaderSystem : EntitySystem
             foreach (var sGroup in _spreaderGroups)
             {
                 // Cleanup
-                if (!nodeQuery.TryGetComponent(uid, out var nodeComponent))
+                if (!nodeQuery.TryGetComponent(uid, out var nodeContainer))
                 {
                     RemCompDeferred<EdgeSpreaderComponent>(uid);
                     continue;
                 }
 
-                if (!nodeComponent.TryGetNode<SpreaderNode>(sGroup, out var node))
+                if (!_nodeContainer.TryGetNode<SpreaderNode>(nodeContainer, sGroup, out var node))
                     continue;
 
                 // Not allowed this tick?

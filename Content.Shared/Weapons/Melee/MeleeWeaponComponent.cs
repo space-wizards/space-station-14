@@ -15,6 +15,14 @@ namespace Content.Shared.Weapons.Melee;
 [RegisterComponent, NetworkedComponent]
 public sealed class MeleeWeaponComponent : Component
 {
+    // TODO: This is becoming bloated as shit.
+    // This should just be its own component for alt attacks.
+    /// <summary>
+    /// Does this entity do a disarm on alt attack.
+    /// </summary>
+    [DataField("altDisarm"), ViewVariables(VVAccess.ReadWrite)]
+    public bool AltDisarm = true;
+
     /// <summary>
     /// Should the melee weapon's damage stats be examinable.
     /// </summary>

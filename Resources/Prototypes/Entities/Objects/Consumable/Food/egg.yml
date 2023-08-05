@@ -15,7 +15,6 @@
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    netsync: false
     size: 1
   - type: SolutionContainerManager
     solutions:

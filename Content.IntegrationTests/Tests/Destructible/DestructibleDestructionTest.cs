@@ -1,13 +1,9 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.IntegrationTests.Tests.Destructible.DestructibleTestPrototypes;
 
@@ -18,7 +14,11 @@ namespace Content.IntegrationTests.Tests.Destructible
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                NoClient = true,
+                ExtraPrototypes = Prototypes
+            });
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -43,27 +43,35 @@ namespace Content.IntegrationTests.Tests.Destructible
             {
                 var coordinates = sEntityManager.GetComponent<TransformComponent>(sDestructibleEntity).Coordinates;
                 var bruteDamageGroup = sPrototypeManager.Index<DamageGroupPrototype>("TestBrute");
-                DamageSpecifier bruteDamage = new(bruteDamageGroup,50);
+                DamageSpecifier bruteDamage = new(bruteDamageGroup, 50);
 
+#pragma warning disable NUnit2045 // Interdependent assertions.
                 Assert.DoesNotThrow(() =>
                 {
-                    EntitySystem.Get<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
+                    sEntityManager.System<DamageableSystem>().TryChangeDamage(sDestructibleEntity, bruteDamage, true);
                 });
 
-                Assert.That(sTestThresholdListenerSystem.ThresholdsReached.Count, Is.EqualTo(1));
+                Assert.That(sTestThresholdListenerSystem.ThresholdsReached, Has.Count.EqualTo(1));
+#pragma warning restore NUnit2045
 
                 var threshold = sTestThresholdListenerSystem.ThresholdsReached[0].Threshold;
 
-                Assert.That(threshold.Triggered, Is.True);
-                Assert.That(threshold.Behaviors.Count, Is.EqualTo(3));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(threshold.Triggered, Is.True);
+                    Assert.That(threshold.Behaviors, Has.Count.EqualTo(3));
+                });
 
                 var spawnEntitiesBehavior = (SpawnEntitiesBehavior) threshold.Behaviors.Single(b => b is SpawnEntitiesBehavior);
 
-                Assert.That(spawnEntitiesBehavior.Spawn.Count, Is.EqualTo(1));
-                Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
-                Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax {Min = 1, Max = 1}));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(spawnEntitiesBehavior.Spawn, Has.Count.EqualTo(1));
+                    Assert.That(spawnEntitiesBehavior.Spawn.Keys.Single(), Is.EqualTo(SpawnedEntityId));
+                    Assert.That(spawnEntitiesBehavior.Spawn.Values.Single(), Is.EqualTo(new MinMax { Min = 1, Max = 1 }));
+                });
 
-                var entitiesInRange = EntitySystem.Get<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
+                var entitiesInRange = sEntityManager.System<EntityLookupSystem>().GetEntitiesInRange(coordinates, 2);
                 var found = false;
 
                 foreach (var entity in entitiesInRange)

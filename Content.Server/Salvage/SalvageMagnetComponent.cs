@@ -1,4 +1,5 @@
 using Content.Shared.Radio;
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -13,32 +14,18 @@ namespace Content.Server.Salvage
     public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
-        /// Offset relative to magnet used as centre of the placement circle.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("offset")]
-        public Vector2 Offset = Vector2.Zero; // TODO: Maybe specify a direction, and find the nearest edge of the magnets grid the salvage can fit at
-
-        /// <summary>
-        /// Minimum distance from the offset position that will be used as a salvage's spawnpoint.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("offsetRadiusMin")]
-        public float OffsetRadiusMin = 24f;
-
-        /// <summary>
         /// Maximum distance from the offset position that will be used as a salvage's spawnpoint.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("offsetRadiusMax")]
-        public float OffsetRadiusMax = 48f;
+        public float OffsetRadiusMax = 32;
 
         /// <summary>
         /// The entity attached to the magnet
         /// </summary>
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("attachedEntity")]
-        public EntityUid? AttachedEntity = null;
+        public EntityUid? AttachedEntity;
 
         /// <summary>
         /// Current state of this magnet
@@ -95,18 +82,34 @@ namespace Content.Server.Salvage
         /// <summary>
         /// Current how much charge the magnet currently has
         /// </summary>
+        [DataField("chargeRemaining")]
         public int ChargeRemaining = 5;
 
         /// <summary>
         /// How much capacity the magnet can hold
         /// </summary>
+        [DataField("chargeCapacity")]
         public int ChargeCapacity = 5;
 
         /// <summary>
         /// Used as a guard to prevent spamming the appearance system
         /// </summary>
+        [DataField("previousCharge")]
         public int PreviousCharge = 5;
 
+        /// <summary>
+        /// The chance that a random procgen asteroid will be
+        /// generated rather than a static salvage prototype.
+        /// </summary>
+        [DataField("asteroidChance"), ViewVariables(VVAccess.ReadWrite)]
+        public float AsteroidChance = 0.6f;
+
+        /// <summary>
+        /// A weighted random prototype corresponding to
+        /// what asteroid entities will be generated.
+        /// </summary>
+        [DataField("asteroidPool", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        public string AsteroidPool = "RandomAsteroidPool";
     }
 
     [CopyByRef, DataRecord]

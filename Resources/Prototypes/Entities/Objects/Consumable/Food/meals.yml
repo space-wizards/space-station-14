@@ -517,7 +517,6 @@
             Quantity: 6
 # What do Europeans eat instead of enchiladas? 25.4 millimeter-iladas.
 
-
 - type: entity
   name: melon fruit bowl
   parent: FoodMealBase
@@ -545,3 +544,18 @@
           Quantity: 5
         - ReagentId: Kelotane
           Quantity: 5
+
+- type: entity
+  name: taco
+  parent: FoodMealBase
+  id: FoodMealTaco
+  description: Take a bite!
+  components:
+  - type: FlavorProfile
+    flavors:
+      - cheesy
+      - tomato
+      - meaty
+      - onion
+  - type: Sprite
+    state: taco

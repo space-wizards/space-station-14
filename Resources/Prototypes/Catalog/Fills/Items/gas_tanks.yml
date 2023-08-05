@@ -1,14 +1,37 @@
+# Moles calculation
+#
+#   moles = 1000 / (8.31446261 * 293.15 / volume)
+#
+#   More practically:
+#
+#   moles = volume * 0.41027581
+#
+#   Yes, you do need all those digits or your pressure wont end up exactly 1000
+#
+#
+# The number 1000 comes from the default MaxReleasePressure for a GasCanister,
+# which is 10 * Atmospherics.OneAtmosphere, rounded down.
+#
+# 8.31446261 is the universal gas constant
+#
+# 293.15 is our default atmospheric temperature
+#
+
+# If you change the mole amounts, you can calculate the new gas supply times with:
+# minutes = (moles / outputPressure) * 325
+
 - type: entity
   id: OxygenTankFilled
   parent: OxygenTank
   suffix: Filled
   components: &oxyTankFill
   - type: GasTank
-    outputPressure: 21.27825
+    outputPressure: 21.3
     air:
-      volume: 70
+      # 94 minutes
+      volume: 15
       moles:
-        - 22.6293856 # oxygen
+        - 6.154137219 # oxygen
       temperature: 293.15
 
 - type: entity
@@ -23,11 +46,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
+        # 13 minutes
         volume: 2
         moles:
-          - 0.323460326 # oxygen
+          - 0.820551629 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -36,11 +60,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
+        # 38 minutes
         volume: 6
         moles:
-          - 0.969830813 # oxygen
+          - 2.461654887 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -49,11 +74,12 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 21.27825
+      outputPressure: 21.3
       air:
+        # 63 minutes
         volume: 10
         moles:
-          - 1.61721219 # oxygen
+          - 4.102758145 # oxygen
         temperature: 293.15
 
 - type: entity
@@ -62,12 +88,14 @@
   suffix: Filled
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
-        volume: 70
+        # 20 minutes due to output pressure
+        volume: 15
         moles:
-          - 4.75217098 # oxygen
-          - 17.8772147 # nitrogen
+          - 1.353910188 # 22% oxygen
+          - 4.800227031 # 78% nitrogen
+          # 6.154137219       total
         temperature: 293.15
 
 - type: entity
@@ -77,12 +105,13 @@
   name: nitrogen tank
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 21.3
       air:
-        volume: 70
+        # 94 minutes
+        volume: 15
         moles:
-          - 0 # oxygen
-          - 22.6293856 # nitrogen
+          - 0           # oxygen not included
+          - 6.154137219 # nitrogen
         temperature: 293.15
 
 - type: entity
@@ -92,35 +121,41 @@
   name: nitrous oxide tank
   components:
     - type: GasTank
-      outputPressure: 101.325
+      #      0.21  | % oxygen in normal atmosphere
+      #  /   0.7   | % oxygen in this mixture
+      #  * 101.325 | one atmosphere
+      # __________
+      #    30.3975   optimal output pressure
+      outputPressure: 30.4
       air:
-        volume: 70
+        # only 66 minutes due to pressure
+        volume: 15
         moles:
-          - 20.5 # oxygen
-          - 0 # Nitrogen
+          - 4.30789605 # 70% oxygen
+          - 0 # nitrogen
           - 0 # CO2
-          - 0 # Plasma
-          - 0 # Tritium
-          - 0 # Water vapor
-          - 0 # Miasma
-          - 2 # N2O
+          - 0 # plasma
+          - 0 # tritium
+          - 0 # water vapor
+          - 0 # miasma
+          - 1.84624116 # 30% N2O
+          # 6.15413721       total
         temperature: 293.15
-
 
 - type: entity
   id: PlasmaTankFilled
   parent: PlasmaTank
   name: plasma tank
   suffix: Filled
-  description: "Contains dangerous plasma. Do not inhale. Warning: extremely flammable."
   components:
     - type: GasTank
-      outputPressure: 101.325
+      outputPressure: 101.3
       air:
-        volume: 70
+        # 20 minutes of agony
+        volume: 15
         moles:
-          - 0
-          - 0
-          - 0
-          - 11.3146928 # plasma
+          - 0           # oxygen
+          - 0           # nitrogen
+          - 0           # CO2
+          - 6.154137219 # plasma
         temperature: 293.15

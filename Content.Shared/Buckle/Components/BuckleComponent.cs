@@ -94,7 +94,7 @@ public sealed class BuckleComponentState : ComponentState
 }
 
 [ByRefEvent]
-public record struct BuckleAttemptEvent(EntityUid StrapEntity, EntityUid BuckledEntity, bool Buckling, bool Cancelled = false);
+public record struct BuckleAttemptEvent(EntityUid StrapEntity, EntityUid BuckledEntity, EntityUid UserEntity, bool Buckling, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct BuckleChangeEvent(EntityUid StrapEntity, EntityUid BuckledEntity, bool Buckling);

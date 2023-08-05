@@ -29,7 +29,7 @@
         shape:
           !type:PhysShapeAabb
           bounds: "-0.4,-0.4,0.4,0.29"
-        density: 190
+        density: 50
         mask:
         - SmallMobMask #this is so they can go under plastic flaps
         layer:

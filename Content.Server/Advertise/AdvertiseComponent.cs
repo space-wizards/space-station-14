@@ -24,7 +24,7 @@ namespace Content.Server.Advertise
         /// <summary>
         ///     The identifier for the advertisements pack prototype.
         /// </summary>
-        [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<AdvertisementsPackPrototype>))]
+        [DataField("pack", customTypeSerializer:typeof(PrototypeIdSerializer<AdvertisementsPackPrototype>), required: true)]
         public string PackPrototypeId { get; } = string.Empty;
 
         /// <summary>

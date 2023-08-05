@@ -1,8 +1,5 @@
-using System.Threading.Tasks;
-using Content.Server.Storage.Components;
 using Content.Shared.Item;
 using Content.Shared.Stacks;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 
@@ -14,7 +11,7 @@ public sealed class StackTest
     [Test]
     public async Task StackCorrectItemSize()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();

@@ -1,11 +1,8 @@
-using System.Threading.Tasks;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
-using NUnit.Framework;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -17,7 +14,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var entMgr = server.ResolveDependency<IEntityManager>();

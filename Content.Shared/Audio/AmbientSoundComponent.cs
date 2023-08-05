@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.GameStates;
@@ -24,6 +25,8 @@ public sealed class AmbientSoundComponent : Component, IComponentTreeEntry<Ambie
     [ViewVariables(VVAccess.ReadWrite)] // only for map editing
     [DataField("range")]
     public float Range = 2f;
+
+    public Vector2 RangeVector => new Vector2(Range, Range);
 
     /// <summary>
     /// Applies this volume to the sound being played.

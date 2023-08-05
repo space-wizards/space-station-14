@@ -98,3 +98,23 @@
     steps: 7
     zeroVisible: false
   - type: Appearance
+
+- type: entity
+  id: SpeedLoaderMagnumAP
+  name: "speed loader (.45 magnum armor-piercing)"
+  parent: BaseSpeedLoaderMagnum
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumAP
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
+    layers:
+      - state: base
+        map: [ "enum.GunVisualLayers.Base" ]
+      - state: base-6
+        map: [ "enum.GunVisualLayers.Mag" ]
+  - type: MagazineVisuals
+    magState: base
+    steps: 7
+    zeroVisible: false
+  - type: Appearance

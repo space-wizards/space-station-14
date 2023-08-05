@@ -1,14 +1,9 @@
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Server.RoundEnd;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Network;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -44,14 +39,18 @@ namespace Content.IntegrationTests.Tests
             await server.WaitAssertion(() =>
             {
                 var bus = entManager.EventBus;
-                bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ => {
+                bus.SubscribeEvent<RoundEndSystemChangedEvent>(EventSource.Local, this, _ =>
+                {
                     Interlocked.Increment(ref eventCount);
                 });
 
                 // Press the shuttle call button
                 roundEndSystem.RequestRoundEnd();
-                Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was called, but countdown time was not set");
-                Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Started the shuttle, but didn't have to wait cooldown to press cancel button");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was called, but countdown time was not set");
+                    Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Started the shuttle, but didn't have to wait cooldown to press cancel button");
+                });
                 // Check that we can't recall the shuttle yet
                 roundEndSystem.CancelRoundEndCountdown();
                 Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "Shuttle was cancelled, even though the button was on cooldown");
@@ -61,12 +60,18 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
-                Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "We were waiting for the cooldown, but the round also ended");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
+                    Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "We were waiting for the cooldown, but the round also ended");
+                });
                 // Recall the shuttle, which should trigger the cooldown again
                 roundEndSystem.CancelRoundEndCountdown();
-                Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Null, "Recalled shuttle, but countdown has not ended");
-                Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Recalled shuttle, but cooldown has not been enabled");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Null, "Recalled shuttle, but countdown has not ended");
+                    Assert.That(roundEndSystem.CanCallOrRecall(), Is.False, "Recalled shuttle, but cooldown has not been enabled");
+                });
             });
 
             await WaitForEvent(); // Wait for Cooldown
@@ -82,8 +87,11 @@ namespace Content.IntegrationTests.Tests
 
             await server.WaitAssertion(() =>
             {
-                Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
-                Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "The countdown ended, but we just wanted the cooldown to end");
+                Assert.Multiple(() =>
+                {
+                    Assert.That(roundEndSystem.CanCallOrRecall(), Is.True, "We waited a while, but the cooldown is not expired");
+                    Assert.That(roundEndSystem.ExpectedCountdownEnd, Is.Not.Null, "The countdown ended, but we just wanted the cooldown to end");
+                });
             });
 
             await WaitForEvent(); // Wait for countdown to end round

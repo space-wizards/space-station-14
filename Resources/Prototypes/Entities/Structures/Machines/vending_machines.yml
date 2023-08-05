@@ -1711,6 +1711,32 @@
 
 - type: entity
   parent: VendingMachine
+  id: VendingMachineSyndieDrobe
+  name: SyndieDrobe
+  description: Wardrobe machine encoded by the syndicate, contains elite outfits for various operations.
+  components:
+  - type: VendingMachine
+    pack: SyndieDrobeInventory
+    offState: off
+    brokenState: broken
+    normalState: normal-unshaded
+  - type: Advertise
+    pack: SyndieDrobeAds
+  - type: Sprite
+    sprite: Structures/Machines/VendingMachines/syndiedrobe.rsi
+    layers:
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.Base"]
+    - state: "off"
+      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
+      shader: unshaded
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
+  parent: VendingMachine
   id: VendingMachineRoboDrobe
   name: RoboDrobe
   description: A vending machine designed to dispense clothing known only to roboticists.

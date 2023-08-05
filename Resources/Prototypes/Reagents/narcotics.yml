@@ -257,13 +257,6 @@
   metabolisms:
     Narcotic:
       effects:
-      - !type:HealthChange
-        conditions:
-        - !type:ReagentThreshold
-          min: 60
-        damage:
-          types:
-            Poison: 1
       - !type:GenericStatusEffect
         conditions:
         - !type:ReagentThreshold

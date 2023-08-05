@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Text;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -36,6 +37,13 @@ namespace Content.Client.HealthAnalyzer.UI
 
                 text.Append($"{Loc.GetString("health-analyzer-window-entity-health-text", ("entityName", entityName))}\n");
 
+
+                text.Append($"{Loc.GetString("health-analyzer-window-entity-temperature-text", ("temperature", float.IsNaN(msg.Temperature) ? "N/A" : $"{msg.Temperature - 273f:F1} °C"))}\n");
+
+
+                text.Append($"{Loc.GetString("health-analyzer-window-entity-blood-level-text", ("bloodLevel", float.IsNaN(msg.BloodLevel) ? "N/A" : $"{msg.BloodLevel * 100:F1} %"))}\n");
+
+
                 // Damage
                 text.Append($"\n{Loc.GetString("health-analyzer-window-entity-damage-total-text", ("amount", damageable.TotalDamage))}\n");
 
@@ -64,12 +72,12 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.AppendLine();
                 }
                 Diagnostics.Text = text.ToString();
-                SetSize = (250, 600);
+                SetSize = new Vector2(250, 600);
             }
             else
             {
                 Diagnostics.Text = Loc.GetString("health-analyzer-window-no-patient-data-text");
-                SetSize = (250, 100);
+                SetSize = new Vector2(250, 100);
             }
         }
     }

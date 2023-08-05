@@ -42,10 +42,13 @@
           True: { visible: true }
           False: { visible: false }
   - type: PowerCellDraw
-    drawRate: 5
+    drawRate: 1
     useRate: 0
   - type: ProximityBeeper
     component: Anomaly
+    maximumDistance: 20
+    minBeepInterval: 0.15
+    maxBeepInterval: 1.00
     beepSound:
       path: "/Audio/Items/locator_beep.ogg"
       params:

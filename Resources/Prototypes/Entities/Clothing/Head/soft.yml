@@ -30,6 +30,10 @@
     sprite: Clothing/Head/Soft/cargosoft.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/cargosoft.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBaseButcherable
@@ -184,6 +188,10 @@
     sprite: Clothing/Head/Soft/purplesoft.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/purplesoft.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHeadBaseButcherable
@@ -294,7 +302,11 @@
     sprite: Clothing/Head/Soft/paramedicsoft.rsi
   - type: Clothing
     sprite: Clothing/Head/Soft/paramedicsoft.rsi
-    
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+
 - type: entity
   parent: ClothingHeadBaseButcherable
   id: ClothingHeadHatParamedicsoftFlipped

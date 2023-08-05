@@ -30,6 +30,10 @@
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 1.9
+  - type: LeechOnMarker
+    leech:
+      groups:
+        Brute: -10
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
     fireRate: 0.5
@@ -89,6 +93,10 @@
     fireRate: 1
   - type: RechargeBasicEntityAmmo
     rechargeCooldown: 0.5
+  - type: LeechOnMarker
+    leech:
+      groups:
+        Brute: -15
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher_glaive.rsi
   - type: MeleeWeapon

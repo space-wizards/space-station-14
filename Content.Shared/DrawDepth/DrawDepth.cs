@@ -9,32 +9,34 @@ namespace Content.Shared.DrawDepth
         /// <summary>
         ///     This is for sub-floors, the floors you see after prying off a tile.
         /// </summary>
-        LowFloors = DrawDepthTag.Default - 10,
+        LowFloors = DrawDepthTag.Default - 11,
 
         // various entity types that require different
         // draw depths, as to avoid hiding
         #region SubfloorEntities
-        ThickPipe = DrawDepthTag.Default - 9,
-        ThickWire = DrawDepthTag.Default - 8,
-        ThinPipe = DrawDepthTag.Default - 7,
-        ThinWire = DrawDepthTag.Default - 6,
+        ThickPipe = DrawDepthTag.Default - 10,
+        ThickWire = DrawDepthTag.Default - 9,
+        ThinPipe = DrawDepthTag.Default - 8,
+        ThinWire = DrawDepthTag.Default - 7,
         #endregion
 
         /// <summary>
         ///     Things that are beneath regular floors.
         /// </summary>
-        BelowFloor = DrawDepthTag.Default - 6,
+        BelowFloor = DrawDepthTag.Default - 7,
 
         /// <summary>
         ///     Used for entities like carpets.
         /// </summary>
-        FloorTiles = DrawDepthTag.Default - 5,
+        FloorTiles = DrawDepthTag.Default - 6,
 
         /// <summary>
         ///     Things that are actually right on the floor, like puddles. This does not mean objects like
         ///     tables, even though they are technically "on the floor".
         /// </summary>
-        FloorObjects = DrawDepthTag.Default - 4,
+        FloorObjects = DrawDepthTag.Default - 5,
+
+        DeadMobs = DrawDepthTag.Default - 4,
 
         /// <summary>
         ///     Allows small mobs like mice and drones to render under tables and chairs but above puddles and vents

@@ -93,7 +93,7 @@
   name: emergency medipen
   parent: ChemicalMedipen
   id: EmergencyMedipen
-  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexmic acid.
+  description: A rapid and safe way to stabilize patients in critical condition for personnel without advanced medical knowledge. Beware, as it's easy to overdose on epinephrine and tranexamic acid.
   components:
   - type: SolutionContainerManager
     solutions:
@@ -214,6 +214,37 @@
           Quantity: 15
   - type: StaticPrice
     price: 100
+  - type: Tag
+    tags: []
+
+- type: entity
+  name: combat medipen
+  parent: ChemicalMedipen
+  id: CombatMedipen
+  description: A single-use medipen containing chemicals that regenerate most types of damage.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/medipen.rsi
+    layers:
+    - state: morphen
+      map: ["enum.SolutionContainerLayers.Fill"]
+  - type: Item
+    sprite: Objects/Specific/Medical/medipen.rsi
+    size: 5
+  - type: SolutionContainerManager
+    solutions:
+      pen:
+        maxVol: 30
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 25
+        - ReagentId: TranexamicAcid
+          Quantity: 5
+  - type: Hypospray
+    solutionName: pen
+    transferAmount: 30
+  - type: StaticPrice
+    price: 500
   - type: Tag
     tags: []
 

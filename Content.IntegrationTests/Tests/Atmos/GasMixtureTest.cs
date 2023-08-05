@@ -1,8 +1,6 @@
-﻿using System.Threading.Tasks;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.Atmos;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.Atmos
@@ -14,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestMerge()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
@@ -28,23 +26,35 @@ namespace Content.IntegrationTests.Tests.Atmos
                 b.AdjustMoles(Gas.Nitrogen, 50);
 
                 // a now has 50 moles of oxygen
-                Assert.That(a.TotalMoles, Is.EqualTo(50));
-                Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(a.TotalMoles, Is.EqualTo(50));
+                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+                });
 
                 // b now has 50 moles of nitrogen
-                Assert.That(b.TotalMoles, Is.EqualTo(50));
-                Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(b.TotalMoles, Is.EqualTo(50));
+                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+                });
 
                 atmosphereSystem.Merge(b, a);
 
                 // b now has its contents and the contents of a
-                Assert.That(b.TotalMoles, Is.EqualTo(100));
-                Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(50));
-                Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(b.TotalMoles, Is.EqualTo(100));
+                    Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(50));
+                });
 
                 // a should be the same, however.
-                Assert.That(a.TotalMoles, Is.EqualTo(50));
-                Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(a.TotalMoles, Is.EqualTo(50));
+                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(50));
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -59,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(Atmospherics.BreathPercentage)]
         public async Task RemoveRatio(float ratio)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             await server.WaitAssertion(() =>
@@ -75,14 +85,23 @@ namespace Content.IntegrationTests.Tests.Atmos
                 var b = a.RemoveRatio(ratio);
 
                 // check that the amount of moles in the original and the new mixture are correct.
-                Assert.That(b.TotalMoles, Is.EqualTo(origTotal * ratio));
-                Assert.That(a.TotalMoles, Is.EqualTo(origTotal - b.TotalMoles));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(b.TotalMoles, Is.EqualTo(origTotal * ratio));
+                    Assert.That(a.TotalMoles, Is.EqualTo(origTotal - b.TotalMoles));
+                });
 
-                Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(100 * ratio));
-                Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(100 * ratio));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(b.GetMoles(Gas.Oxygen), Is.EqualTo(100 * ratio));
+                    Assert.That(b.GetMoles(Gas.Nitrogen), Is.EqualTo(100 * ratio));
+                });
 
-                Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(100 - b.GetMoles(Gas.Oxygen)));
-                Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
+                Assert.Multiple(() =>
+                {
+                    Assert.That(a.GetMoles(Gas.Oxygen), Is.EqualTo(100 - b.GetMoles(Gas.Oxygen)));
+                    Assert.That(a.GetMoles(Gas.Nitrogen), Is.EqualTo(100 - b.GetMoles(Gas.Nitrogen)));
+                });
             });
 
             await pairTracker.CleanReturnAsync();

@@ -8,10 +8,7 @@
   },
   "states": [
     {
-      "name": "icon-0"
-    },
-    {
-      "name": "icon-1"
+      "name": "icon"
     },
     {
       "name": "inhand-left",

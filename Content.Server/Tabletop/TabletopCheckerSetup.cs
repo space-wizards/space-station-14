@@ -8,14 +8,12 @@ namespace Content.Server.Tabletop
     [UsedImplicitly]
     public sealed class TabletopCheckerSetup : TabletopSetup
     {
-        [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string CheckerBoardPrototype { get; } = "CheckerBoardTabletop";
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var checkerboard = entityManager.SpawnEntity(CheckerBoardPrototype, session.Position.Offset(-1, 0));
+            var checkerboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
 
             session.Entities.Add(checkerboard);
 

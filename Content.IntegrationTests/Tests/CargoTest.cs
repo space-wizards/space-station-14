@@ -1,12 +1,9 @@
-using System.Threading.Tasks;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Cargo.Components;
 using Content.Server.Cargo.Systems;
 using Content.Shared.Cargo.Prototypes;
-using Content.Shared.CCVar;
 using Content.Shared.Stacks;
-using NUnit.Framework;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
@@ -20,7 +17,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -54,7 +51,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoBountyArbitageTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() {NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -95,7 +92,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -111,7 +108,7 @@ public sealed class CargoTest
             var coord = new EntityCoordinates(grid.Owner, 0, 0);
 
             var protoIds = protoManager.EnumeratePrototypes<EntityPrototype>()
-                .Where(p=>!p.Abstract)
+                .Where(p => !p.Abstract)
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // Grids are not for sale.
                 .Select(p => p.ID)
                 .ToList();
@@ -150,7 +147,7 @@ public sealed class CargoTest
     [Test]
     public async Task StackPrice()
     {
-        const string StackProto = @"
+        const string stackProto = @"
 - type: entity
   id: A
 
@@ -168,7 +165,7 @@ public sealed class CargoTest
     count: 5
 ";
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = StackProto});
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = stackProto });
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

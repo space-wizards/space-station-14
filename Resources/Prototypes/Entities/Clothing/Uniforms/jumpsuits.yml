@@ -358,6 +358,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitKimono
+  name: kimono
+  description: traditional chinese clothing
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/kimono.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitMedicalDoctor
   name: medical doctor jumpsuit
   description: It's made of a special fiber that provides minor protection against biohazards. It has a cross on the chest denoting that the wearer is trained medical personnel.
@@ -1162,6 +1173,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSyndieFormal
+  name: syndicate formal suit
+  description: "The syndicate's uniform is made in an elegant style, it's even a pity to do dirty tricks in this."
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/syndieformal.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitFlannel
   name: flannel jumpsuit
   description: Smells like someones been grillin'.
@@ -1170,3 +1192,47 @@
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
     - type: Clothing
       sprite: Clothing/Uniforms/Jumpsuit/flannel.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorEngineer
+  name: senior engineer jumpsuit
+  description: A sign of skill and prestige within the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_engineer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorResearcher
+  name: senior researcher jumpsuit
+  description: A sign of skill and prestige within the science department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_researcher.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorPhysician
+  name: senior physician jumpsuit
+  description: A sign of skill and prestige within the medical department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_physician.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitSeniorOfficer
+  name: senior officer jumpsuit
+  description: A sign of skill and prestige within the security department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi

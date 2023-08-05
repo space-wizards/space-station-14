@@ -8,9 +8,26 @@
   - type: MobMover
   - type: Loadout
     prototypes: [PassengerGear]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen
+
+- type: entity
+  name: Salvager
+  parent: BaseMobHuman
+  id: MobSalvager
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SalvageSpecialistGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
 
 - type: entity
   name: Spirate
@@ -18,13 +35,17 @@
   id: MobSpirate
   description: Yarr!
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - Syndicate
+  - type: Loadout
+    prototypes:
+      - PirateGear
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: RangedCombatCompound
+    rootTask:
+      task: SimpleHumanoidHostileCompound
 
 - type: entity
   parent: BaseMobHuman

@@ -234,7 +234,7 @@ public abstract partial class SharedBuckleSystem
 
             if (!buckled.Buckled || buckled.LastEntityBuckledTo != uid)
             {
-                Logger.Error($"A moving strap entity {ToPrettyString(uid)} attempted to re-parent an entity that does not 'belong' to it {ToPrettyString(buckledEntity)}");
+                Log.Error($"A moving strap entity {ToPrettyString(uid)} attempted to re-parent an entity that does not 'belong' to it {ToPrettyString(buckledEntity)}");
                 continue;
             }
 

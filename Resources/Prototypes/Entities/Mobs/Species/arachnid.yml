@@ -22,7 +22,10 @@
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: full
   - type: Hunger
-    baseDecayRate: 0.05 # Probably faster than humans?
+    starvationDamage:
+      types:
+        Cold: 0.5
+        Bloodloss: 0.5
   - type: Thirst
   # Damage and speed
   - type: Bloodstream

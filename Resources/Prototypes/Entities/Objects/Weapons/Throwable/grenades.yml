@@ -1,4 +1,3 @@
-# TODO probably needs a base grenade
 - type: entity
   abstract: true
   parent: BaseItem
@@ -80,24 +79,26 @@
   components:
     - type: PointLight
       enabled: true
-      netsync: false
       radius: 5
       energy: 8
+      netsync: false
     - type: LightFade
       duration: 0.5
     - type: TimedDespawn
       lifetime: 0.5
 
+#The explosive values for these are pretty god damn mediocre, but SS14's explosion system is hard to understand - this is a good enough approximation of how it was in SS13.
+#Ideally, there should be a weak radius around the bomb outside of its gibbing / spacing range capable of dealing fair damage to players / structures.
 - type: entity
   name: syndicate minibomb
-  description: A precision sabotage explosive for quickly destroying a machine, dead body, or whatever else needs to go.
+  description: A syndicate-manufactured explosive used to stow destruction and cause chaos.
   parent: GrenadeBase
   id: SyndieMiniBomb
   components:
   - type: Sprite
     sprite: Objects/Weapons/Grenades/syndgrenade.rsi
   - type: OnUseTimerTrigger
-    delay: 10
+    delay: 5
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Minibomb
@@ -108,6 +109,8 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12
 
 - type: entity
   name: the nuclear option
@@ -184,8 +187,8 @@
     price: 25
 
 - type: entity
-  name: emp grenade
-  description: Releases electromagnetic pulses that disrupt or damage many electronic devices or drain power cells.
+  name: EMP grenade
+  description: A grenade designed to wreak havoc on electronic systems.
   parent: GrenadeBase
   id: EmpGrenade
   components:
@@ -199,3 +202,28 @@
   - type: TimerTriggerVisuals
     primingSound:
       path: /Audio/Effects/countdown.ogg
+
+- type: entity
+  name: holy hand grenade
+  description: O Lord, bless this thy hand grenade, that with it thou mayst blow thine enemies to tiny bits, in thy mercy.
+  parent: GrenadeBase
+  id: HolyHandGrenade
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/holyhandgrenade.rsi
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default # same as macrobomb
+    totalIntensity: 3500
+    intensitySlope: 15
+    maxIntensity: 70
+    canCreateVacuum: true
+  - type: OnUseTimerTrigger
+    delay: 3 # by canon
+  - type: PointLight
+    radius: 7
+    energy: 3
+    netsync: false
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/hallelujah.ogg

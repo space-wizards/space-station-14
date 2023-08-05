@@ -30,6 +30,6 @@
   - type: CameraRecoil
   - type: Examiner
   - type: CanHostGuardian
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - NanoTrasen

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Gravity;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Components;
@@ -99,7 +100,7 @@ public sealed class ThrowingSystem : EntitySystem
         float pushbackRatio = PushbackDefault,
         bool playSound = true)
     {
-        if (strength <= 0 || direction == Vector2.Infinity || direction == Vector2.NaN || direction == Vector2.Zero)
+        if (strength <= 0 || direction == Vector2Helpers.Infinity || direction == Vector2Helpers.NaN || direction == Vector2.Zero)
             return;
 
         if ((physics.BodyType & (BodyType.Dynamic | BodyType.KinematicController)) == 0x0)
@@ -123,11 +124,11 @@ public sealed class ThrowingSystem : EntitySystem
         if (user != null)
             _interactionSystem.ThrownInteraction(user.Value, uid);
 
-        var impulseVector = direction.Normalized * strength * physics.Mass;
+        var impulseVector = direction.Normalized() * strength * physics.Mass;
         _physics.ApplyLinearImpulse(uid, impulseVector, body: physics);
 
         // Estimate time to arrival so we can apply OnGround status and slow it much faster.
-        var time = direction.Length / strength;
+        var time = direction.Length() / strength;
 
         if (time < FlyTime)
         {
