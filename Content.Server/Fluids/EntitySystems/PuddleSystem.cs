@@ -29,6 +29,7 @@ using Robust.Shared.Timing;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Maps;
+using Content.Shared.Effects;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -495,6 +496,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (solution.Volume == 0)
             return false;
 
+        var targets = new List<EntityUid>();
         // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
         foreach (var ent in _lookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
         {
@@ -511,9 +513,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
             }
 
+            targets.Add(owner);
             _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
             _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
+
+        RaiseNetworkEvent(new ColorFlashEffectEvent(solution.GetColor(_prototypeManager), targets), Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
