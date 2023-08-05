@@ -22,14 +22,26 @@ public sealed class ItemToggleComponent : Component
     public SoundSpecifier? DeactivateSound;
 }
 
+/// <summary>
+/// Raised directed on an entity when its ItemToggle is attempted to be activated.
+/// </summary>
 [ByRefEvent]
 public readonly record struct ItemToggleActivateAttemptEvent(bool Cancelled = false);
 
+/// <summary>
+/// Raised directed on an entity when its ItemToggle is activated.
+/// </summary>
 [ByRefEvent]
 public readonly record struct ItemToggleActivatedEvent;
 
+/// <summary>
+/// Raised directed on an entity when its ItemToggle is attempted to be deactivated.
+/// </summary>
 [ByRefEvent]
 public readonly record struct ItemToggleDeactivateAttemptEvent(bool Cancelled = false);
 
+/// <summary>
+/// Raised directed on an entity when its ItemToggle is deactivated.
+/// </summary>
 [ByRefEvent]
 public readonly record struct ItemToggleDeactivatedEvent;
