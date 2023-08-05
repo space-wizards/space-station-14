@@ -42,6 +42,26 @@ namespace Content.IntegrationTests.Tests
             "/Maps/infiltrator.yml",
         };
 
+        private static readonly string[] GameMaps =
+        {
+            "Dev",
+            "Fland",
+            "Meta",
+            "Packed",
+            "Aspid",
+            "Cluster",
+            "Omega",
+            "Bagel",
+            "Origin",
+            "CentComm",
+            "Box",
+            "Barratry",
+            "Saltern",
+            "Core",
+            "Marathon",
+            "Kettle"
+        };
+
         /// <summary>
         /// Asserts that specific files have been saved as grids and not maps.
         /// </summary>
@@ -128,53 +148,7 @@ namespace Content.IntegrationTests.Tests
             await pairTracker.CleanReturnAsync();
         }
 
-        private static string[] GetGameMapNames()
-        {
-            Task<string[]> task;
-            using (ExecutionContext.SuppressFlow())
-            {
-                task = Task.Run(static async () =>
-                {
-                    await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(
-                        new PoolSettings
-                        {
-                            Disconnected = true,
-                            TestName = $"{nameof(PostMapInitTest)}.{nameof(GetGameMapNames)}"
-                        }
-                    );
-                    var server = pairTracker.Pair.Server;
-                    var protoManager = server.ResolveDependency<IPrototypeManager>();
-
-                    var maps = protoManager.EnumeratePrototypes<GameMapPrototype>().ToList();
-                    var mapNames = new List<string>();
-                    var naughty = new HashSet<string>()
-                    {
-                        PoolManager.TestMap,
-                        "Infiltrator",
-                        "Pirate",
-                    };
-
-                    foreach (var map in maps)
-                    {
-                        // AAAAAAAAAA
-                        // Why are they stations!
-                        if (naughty.Contains(map.ID))
-                            continue;
-
-                        mapNames.Add(map.ID);
-                    }
-
-                    await pairTracker.CleanReturnAsync();
-                    return mapNames.ToArray();
-                });
-                Task.WaitAny(task);
-            }
-
-            return task.GetAwaiter().GetResult();
-        }
-
-        [Test, TestCaseSource(nameof(GetGameMapNames))]
+        [Test, TestCaseSource(nameof(GameMaps))]
         public async Task GameMapsLoadableTest(string mapProto)
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
@@ -306,86 +280,89 @@ namespace Content.IntegrationTests.Tests
             await pairTracker.CleanReturnAsync();
         }
 
-        /// <summary>
-        /// Get the non-game map maps.
-        /// </summary>
-        private static string[] GetMaps()
+        [Test]
+        public async Task AllMapsTested()
         {
-            Task<string[]> task;
-            using (ExecutionContext.SuppressFlow())
-            {
-                task = Task.Run(static async () =>
-                {
-                    await Task.Yield();
-                    await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
-                    var server = pairTracker.Pair.Server;
-                    var resourceManager = server.ResolveDependency<IResourceManager>();
-                    var protoManager = server.ResolveDependency<IPrototypeManager>();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = true});
+            var server = pairTracker.Pair.Server;
+            var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-                    var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
+            var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
+                .Where(x => !pairTracker.Pair.IsTestPrototype(x))
+                .Select(x => x.ID)
+                .ToHashSet();
 
-                    var mapFolder = new ResPath("/Maps");
-                    var maps = resourceManager
-                        .ContentFindFiles(mapFolder)
-                        .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
-                        .ToArray();
-                    var mapNames = new List<string>();
-                    foreach (var map in maps)
-                    {
-                        var rootedPath = map.ToRootedPath();
+            Assert.That(gameMaps.Remove(PoolManager.TestMap));
 
-                        // ReSharper disable once RedundantLogicalConditionalExpressionOperand
-                        if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal) ||
-                            gameMaps.Contains(map))
-                        {
-                            continue;
-                        }
-                        mapNames.Add(rootedPath.ToString());
-                    }
+            CollectionAssert.AreEquivalent(GameMaps.ToHashSet(), gameMaps, "Game map prototype missing from test cases.");
 
-                    await pairTracker.CleanReturnAsync();
-                    return mapNames.ToArray();
-                });
-                Task.WaitAny(task);
-            }
-
-            return task.GetAwaiter().GetResult();
+            await pairTracker.CleanReturnAsync();
         }
 
-        [Test, TestCaseSource(nameof(GetMaps))]
-        public async Task MapsLoadableTest(string mapName)
+        [Test]
+        public async Task NonGameMapsLoadableTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
+            var resourceManager = server.ResolveDependency<IResourceManager>();
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
             Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
+            var gameMaps = protoManager.EnumeratePrototypes<GameMapPrototype>().Select(o => o.MapPath).ToHashSet();
+
+            var mapFolder = new ResPath("/Maps");
+            var maps = resourceManager
+                .ContentFindFiles(mapFolder)
+                .Where(filePath => filePath.Extension == "yml" && !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
+                .ToArray();
+
+            var mapNames = new List<string>();
+            foreach (var map in maps)
+            {
+                if (gameMaps.Contains(map))
+                    continue;
+
+                var rootedPath = map.ToRootedPath();
+                if (SkipTestMaps && rootedPath.ToString().StartsWith(TestMapsPath, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+                mapNames.Add(rootedPath.ToString());
+            }
+
             await server.WaitPost(() =>
             {
-                var mapId = mapManager.CreateMap();
-                try
+                Assert.Multiple(() =>
                 {
-                    Assert.That(mapLoader.TryLoad(mapId, mapName, out _));
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to load map {mapName}", ex);
-                }
+                    foreach (var mapName in mapNames)
+                    {
+                        var mapId = mapManager.CreateMap();
+                        try
+                        {
+                            Assert.That(mapLoader.TryLoad(mapId, mapName, out _));
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Failed to load map {mapName}", ex);
+                        }
 
-                try
-                {
-                    mapManager.DeleteMap(mapId);
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Failed to delete map {mapName}", ex);
-                }
+                        try
+                        {
+                            mapManager.DeleteMap(mapId);
+                        }
+                        catch (Exception ex)
+                        {
+                            throw new Exception($"Failed to delete map {mapName}", ex);
+                        }
+                    }
+                });
             });
-            await server.WaitRunTicks(1);
 
+            await server.WaitRunTicks(1);
             await pairTracker.CleanReturnAsync();
         }
     }

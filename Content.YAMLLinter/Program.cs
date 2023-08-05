@@ -15,6 +15,7 @@ namespace Content.YAMLLinter
     {
         private static async Task<int> Main(string[] _)
         {
+            PoolManager.Startup(null);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -42,6 +43,7 @@ namespace Content.YAMLLinter
             }
 
             Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            PoolManager.Shutdown();
             return -1;
         }
 

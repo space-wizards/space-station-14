@@ -61,8 +61,8 @@
 - type: entity
   parent: PersonalAI
   id: SyndicatePersonalAI
-  name: Syndicate ai device
-  description: Your electronic pal made by the Syndicate!
+  name: Syndicate personal ai device
+  description: Your Syndicate pal who's fun to be with!
   components:
   - type: Sprite
     netsync: false

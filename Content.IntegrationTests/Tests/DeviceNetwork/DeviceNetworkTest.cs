@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(WirelessNetworkComponent))]
     public sealed class DeviceNetworkTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DummyNetworkDevice
@@ -36,8 +37,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     - type: ApcPowerReceiver
 
 - type: entity
-  name: DummyWirelessNetworkDevice
-  id: DummyWirelessNetworkDevice
+  name: WirelessNetworkDeviceDummy
+  id: WirelessNetworkDeviceDummy
   components:
     - type: DeviceNetwork
       transmitFrequency: 100
@@ -52,8 +53,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -116,8 +116,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -144,7 +143,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", coordinates);
+                device1 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", coordinates);
 
                 Assert.Multiple(() =>
                 {
@@ -157,7 +156,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
                 });
 
-                device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
+                device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
 
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
@@ -205,8 +204,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
