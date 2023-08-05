@@ -2,7 +2,7 @@
   id: BaseFactoryMachine
   parent: BaseLathe
   name: base factory machine
-  description: this isnt going to last long
+  description: debug item
   components:
   - type: Sprite
     sprite: Structures/Machines/autolathe.rsi
@@ -28,30 +28,40 @@
   - type: Lathe
     idleState: icon
     runningState: building
+    staticRecipes:
+     - Wrench
 
 - type: entity
-  id: ExplosiveAssemblerFactoryMachine
+  id: FactoryExplosiveAssembler
   parent: BaseLathe
   name: explosive assembler
-  description: CyberSun official explosive assembling machine. stand back.
+  description: Official CyberSun-Explosive-Assembler, stand back.
   components:
   - type: Sprite
-  sprite: Structures/Machines/autolathe.rsi
-  snapCardinals: true
-  layers:
-  - state: icon
-    map: ["enum.LatheVisualLayers.IsRunning"]
-  - state: unlit
-    shader: unshaded
-    map: ["enum.PowerDeviceVisualLayers.Powered"]
-  - state: inserting
-    map: ["enum.MaterialStorageVisualLayers.Inserting"]
-  - state: panel
-    map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    sprite: Structures/Machines/autolathe.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
     board: ExplosiveAssemblerMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+        - RawMaterial
+        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
     staticRecipes:
-      - Minibomb
+     - SyndieMinibomb
+     - SyndieMegabomb
+     - SyndieReallyMegabomb

@@ -1,6 +1,20 @@
 - type: latheRecipe
-  id: Minibomb
-  result: Minibomb
-  completetime: 2
+  id: SyndieMinibomb
+  result: SyndieMiniBomb
+  completetime: 1
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: SyndieMegabomb
+  result: SyndieMegabomb
+  completetime: 1
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: SyndieReallyMegabomb
+  result: SyndieReallyMegabomb
+  completetime: 1
   materials:
     Steel: 200
