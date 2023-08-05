@@ -45793,6 +45793,28 @@ entities:
     - pos: -20.5,-23.5
       parent: 31
       type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 982
+    components:
+    - pos: -26.5,18.5
+      parent: 31
+      type: Transform
+  - uid: 1018
+    components:
+    - pos: -22.5,-19.5
+      parent: 31
+      type: Transform
+  - uid: 1019
+    components:
+    - pos: 27.5,-6.5
+      parent: 31
+      type: Transform
+  - uid: 1020
+    components:
+    - pos: -0.5,21.5
+      parent: 31
+      type: Transform
 - proto: MaintenanceToolSpawner
   entities:
   - uid: 976

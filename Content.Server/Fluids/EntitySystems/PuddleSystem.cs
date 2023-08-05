@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
+using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -511,7 +512,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             }
 
             _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
-            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", owner)), owner, PopupType.SmallCaution);
+            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);

@@ -16,6 +16,7 @@ namespace Content.IntegrationTests.Tests.Power
     [TestFixture]
     public sealed class PowerTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: GeneratorDummy
@@ -163,8 +164,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -228,8 +228,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -289,8 +288,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -380,8 +378,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -483,7 +480,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             // checks that batteries and supplies properly ramp down if the load is disconnected/disabled.
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -581,8 +578,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -641,8 +637,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -722,8 +717,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -803,8 +797,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -901,7 +894,7 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestSupplyPrioritized()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -1001,8 +994,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -1092,8 +1084,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -1180,8 +1171,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -1249,8 +1239,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -1308,8 +1297,7 @@ namespace Content.IntegrationTests.Tests.Power
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
