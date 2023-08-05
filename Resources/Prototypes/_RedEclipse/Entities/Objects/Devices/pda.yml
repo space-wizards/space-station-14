@@ -1,0 +1,25 @@
+- type: entity
+  parent: BasePDA
+  abstract: true
+  id: BaseSyndicatePDA
+  name: Syndicate PDA
+  description: Syndicate Personal Data Assistant.
+  components:
+  - type: Sprite
+    sprite: _RedEclipse/Objects/Devices/syndicate-pda.rsi
+
+- type: entity
+  parent: BaseSyndicatePDA
+  id: EngineersAidePDA
+  name: engineer's aide PDA
+  description: Fixing everything except the boss's coffee cravings!
+  components:
+    - type: Pda
+      id: TechnicalAssistantIDCard
+      state: pda-syndicate-interntech
+    - type: PdaBorderColor
+      borderColor: "#740000"
+      accentVColor: "#949137"
+    - type: Icon
+      sprite: _RedEclipse/Objects/Devices/syndicate-pda.rsi
+      state: pda-syndicate-interntech

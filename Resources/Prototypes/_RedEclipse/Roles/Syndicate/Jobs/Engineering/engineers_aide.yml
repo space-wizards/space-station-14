@@ -24,7 +24,7 @@
     jumpsuit: ClothingUniformJumpsuitColorYellow
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
-    id: TechnicalAssistantPDA
+    id: EngineersAidePDA
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtColorYellow
