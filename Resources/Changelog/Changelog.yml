@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed several reagents showing up in the "other" section of the chem
-      guidebook when they shouldn't have been., type: Fix}
-  id: 3947
-  time: '2023-06-05T21:08:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Added a guide for the bartender, including all the drinks and their
       recipes.', type: Add}
   id: 3948
@@ -2984,3 +2978,9 @@ Entries:
       taxis to drive people around the station at high speed.', type: Add}
   id: 4446
   time: '2023-08-05T18:36:32.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Syndicate lobbying bundle: briefcase containing 5,000 spacebucks has
+      been added to the uplink!', type: Add}
+  id: 4447
+  time: '2023-08-05T21:10:21.0000000+00:00'
