@@ -1,0 +1,97 @@
+- type: entity
+  id: BaseFactoryMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: base factory machine board
+  description: debug item
+  components:
+    - type: MachineBoard
+      prototype: BaseFactoryMachine
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: ExplosiveAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: explosive assember machine board
+  description: It smells like sulfur.
+  components:
+    - type: MachineBoard
+      prototype: FactoryExplosiveAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: FactoryFirearmAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory firearm assembler machine board
+  description: it smells like freedom.
+  components:
+    - type: MachineBoard
+      prototype: FactoryFirearmAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: FactoryEnergyBladeAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory energy blade assembler machine board
+  description: it is hot to the touch.
+  components:
+    - type: MachineBoard
+      prototype: FactoryEnergyBladeAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: FactoryGearAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory gear assembler machine board
+  description: it has a floppy disk port.
+  components:
+    - type: MachineBoard
+      prototype: FactoryGearAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: FactoryClownAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory clown assembler machine board
+  description: does not assemble new clowns.
+  components:
+    - type: MachineBoard
+      prototype: FactoryClownAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
+
+- type: entity
+  id: FactoryMedicalAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory medical machine board
+  description: it is spotless.
+  components:
+    - type: MachineBoard
+      prototype: FactoryMedicalAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
