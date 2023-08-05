@@ -319,3 +319,5 @@ uplink-scarf-syndie-red-desc = A stylish striped syndicate red scarf. The perfec
 uplink-scarf-syndie-green-name = striped syndicate green scarf
 uplink-scarf-syndie-green-desc = A stylish striped syndicate green scarf. The perfect winter accessory for those with a keen fashion sense, and those who are in the mood to steal something.
 
+uplink-syndicate-pai-name = Syndicate personal ai device
+uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Syndicate radio channel. We do not guarantee their usefulness.
