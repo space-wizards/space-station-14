@@ -163,7 +163,5 @@
   # half damage, spread evenly
   - type: MeleeWeapon
     damage:
-      types:
+      groups:
         Brute: 5
-        Piercing: 5
-        Slash: 5
