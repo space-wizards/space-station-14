@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added a guide for the bartender, including all the drinks and their
-      recipes.', type: Add}
-  id: 3948
-  time: '2023-06-05T22:44:43.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Added a Chemist Guidebook with a medical subsection., type: Add}
@@ -2984,3 +2978,9 @@ Entries:
       been added to the uplink!', type: Add}
   id: 4447
   time: '2023-08-05T21:10:21.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Nuclear fission devices need enough floor around them to anchor now.,
+    type: Tweak}
+  id: 4448
+  time: '2023-08-05T21:28:07.0000000+00:00'
