@@ -6,7 +6,8 @@
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile

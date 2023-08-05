@@ -3,7 +3,6 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -167,6 +166,7 @@ namespace Content.Shared.Stacks
             amount = Math.Min(amount, GetMaxCount(component));
             amount = Math.Max(amount, 0);
 
+            // Server-side override deletes the entity if count == 0
             component.Count = amount;
             Dirty(component);
 
@@ -225,6 +225,17 @@ namespace Content.Shared.Stacks
                     break;
             }
             return merged;
+        }
+
+        /// <summary>
+        /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public int GetCount(EntityUid uid, StackComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) ? component.Count : 1;
         }
 
         /// <summary>

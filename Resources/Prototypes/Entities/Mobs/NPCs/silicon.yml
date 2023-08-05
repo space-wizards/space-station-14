@@ -227,7 +227,8 @@
     baseSprintSpeed: 3
   - type: NoSlip
   - type: HTN
-    rootTask: CleanbotCompound
+    rootTask:
+      task: CleanbotCompound
   - type: DrainableSolution
     solution: drainBuffer
   - type: InteractionPopup
@@ -256,7 +257,8 @@
     state: medibot
   - type: Speech
   - type: HTN
-    rootTask: MedibotCompound
+    rootTask:
+      task: MedibotCompound
   - type: Construction
     graph: MediBot
     node: bot

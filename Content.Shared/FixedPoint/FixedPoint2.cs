@@ -199,6 +199,21 @@ namespace Content.Shared.FixedPoint
             return a > b ? a : b;
         }
 
+        public static int Sign(FixedPoint2 value)
+        {
+            if (value < Zero)
+            {
+                return -1;
+            }
+
+            if (value > Zero)
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+
         public static FixedPoint2 Abs(FixedPoint2 a)
         {
             return FixedPoint2.New(Math.Abs(a.Value));

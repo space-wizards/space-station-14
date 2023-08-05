@@ -10,6 +10,7 @@ public sealed class OrganComponent : Component
     [DataField("body")]
     public EntityUid? Body;
 
-    [DataField("parent")]
+    // TODO use containers. See comments in BodyPartComponent.
+    // Do not rely on this in client-side code.
     public OrganSlot? ParentSlot;
 }

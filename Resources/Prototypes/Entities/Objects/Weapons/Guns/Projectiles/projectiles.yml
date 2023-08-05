@@ -144,6 +144,18 @@
   - type: IgniteOnCollide
     fireStacks: 1
 
+- type: entity
+  id: BaseBulletAP
+  name: base bullet armor-piercing
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 11 # 20% decrease
+    ignoreResistances: true
+
 # Energy projectiles
 - type: entity
   name: taser bolt
@@ -693,7 +705,9 @@
   noSpawn: true
   components:
     - type: EmbeddableProjectile
+      deleteOnRemove: true
     - type: Clickable
+    - type: InteractionOutline
     - type: Sprite
       noRot: false
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi

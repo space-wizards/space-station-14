@@ -8,7 +8,7 @@
       department: Science
       time: 216000 #60 hrs
   startingGear: SeniorResearcherGear
-  icon: "SeniorResearcher"
+  icon: "JobIconSeniorResearcher"
   supervisors: job-supervisors-rd
   access:
   - Research

@@ -21,6 +21,27 @@
 
 - type: entity
   parent: BaseItem
+  id: NewsReadCartridge
+  name: News Cartridge
+  description: A program for reading news
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: Icon
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:NewsReadUi
+  - type: Cartridge
+    programName: news-read-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: news_read
+  - type: NewsReadCartridge
+
+- type: entity
+  parent: BaseItem
   id: NetProbeCartridge
   name: NetProbe cartridge
   description: A program for getting the address and frequency of network devices

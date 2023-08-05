@@ -204,16 +204,8 @@ public sealed class AddTests
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, InLobby = true });
         var server = pairTracker.Pair.Server;
-
-        var configManager = server.ResolveDependency<IConfigurationManager>();
-        await server.WaitPost(() =>
-        {
-            configManager.SetCVar(CCVars.GameLobbyEnabled, true);
-            var command = new RestartRoundNowCommand();
-            command.Execute(null, string.Empty, Array.Empty<string>());
-        });
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();

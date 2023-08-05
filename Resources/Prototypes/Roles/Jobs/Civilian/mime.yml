@@ -7,7 +7,7 @@
     - !type:OverallPlaytimeRequirement
       time: 14400 #4 hrs
   startingGear: MimeGear
-  icon: "Mime"
+  icon: "JobIconMime"
   supervisors: job-supervisors-hop
   access:
   - Theatre

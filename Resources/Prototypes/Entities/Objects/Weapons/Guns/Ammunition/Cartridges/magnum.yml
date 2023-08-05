@@ -1,4 +1,3 @@
-#.45 rounds
 - type: entity
   id: BaseCartridgeMagnum
   name: cartridge (.45 magnum)
@@ -61,20 +60,14 @@
   - type: CartridgeAmmo
     proto: BulletMagnumIncendiary
 
-#.357 rounds (used in the syndicate Python revolver)
 - type: entity
-  id: CartridgeMagnum357
-  name: cartridge (.357 magnum)
+  id: CartridgeMagnumAP
+  name: cartridge (.45 magnum armor-piercing)
   parent: BaseCartridgeMagnum
   components:
-  - type: Tag
-    tags:
-      - Cartridge
-      - CartridgeMagnum357
   - type: CartridgeAmmo
-    proto: BulletMagnum357
+    proto: BulletMagnumAP
 
-#C.H.I.M.P
 - type: entity
   id: BaseAnomalousCartridge
   parent: BaseCartridgeMagnum
@@ -147,4 +140,3 @@
       color: green
   - type: CartridgeAmmo
     proto: AnomalousParticleOmegaStrong
-

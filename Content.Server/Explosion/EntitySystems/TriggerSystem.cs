@@ -22,7 +22,7 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Player;
+using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -77,6 +77,7 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
+            SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
@@ -184,6 +185,11 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
         {
             Trigger(uid, args.Slipped);
+        }
+
+        private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
+        {
+            Trigger(uid, args.EmptyGun);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

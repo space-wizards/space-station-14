@@ -449,7 +449,7 @@ public sealed class StationSystem : EntitySystem
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.
     /// </summary>
-    /// </remarks
+    /// <remarks>
     /// If there are multiple stations on a map it is probably arbitrary which one is returned.
     /// </remarks>
     public EntityUid? GetStationInMap(MapId map)
