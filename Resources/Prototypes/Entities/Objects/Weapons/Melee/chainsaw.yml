@@ -4,7 +4,6 @@
   id: Chainsaw
   description: A very large chainsaw. Usually you use this for cutting down trees... usually.
   components:
-  - type: MeleeRequiresWield
   - type: Wieldable
     wieldTime: 1
     wieldSound: !type:SoundPathSpecifier
@@ -18,12 +17,19 @@
   - type: MeleeWeapon
     damage:
       types:
-        Slash: 3
-        Blunt: 3
+        Slash: 5
+        Blunt: 5
+        Structural: 10
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
       params:
         volume: -3
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 5
+        Blunt: 5
+        Structural: 20
   - type: Item
     size: 50
     sprite: Objects/Weapons/Melee/chainsaw.rsi
