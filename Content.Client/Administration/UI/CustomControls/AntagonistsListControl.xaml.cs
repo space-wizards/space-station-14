@@ -13,62 +13,62 @@ using Robust.Shared.Input;
 namespace Content.Client.Administration.UI.CustomControls
 {
     [GenerateTypedNameReferences]
-    public sealed partial class GameRulesListControl : BoxContainer
+    public sealed partial class AntagonistsListControl : BoxContainer
     {
         private readonly AdminSystem _adminSystem;
 
-        private List<GameRuleInfo> _gameRulesList = new();
+        private List<PlayerInfo> _antagonistsList = new();
 
-        public event Action<GameRuleInfo?>? OnSelectionChanged;
+        public event Action<PlayerInfo?>? OnSelectionChanged;
 
-        public Func<GameRuleInfo, string, string>? OverrideText;
-        public Comparison<GameRuleInfo>? Comparison;
+        public Func<PlayerInfo, string, string>? OverrideText;
+        public Comparison<PlayerInfo>? Comparison;
 
-        public GameRulesListControl()
+        public AntagonistsListControl()
         {
             _adminSystem = EntitySystem.Get<AdminSystem>();
             IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
             // Fill the Option data
-            GameRulesListContainer.ItemPressed += GameRulesListItemPressed;
-            GameRulesListContainer.GenerateItem += GenerateButton;
+            AntagonistsListContainer.ItemPressed += AntagonistsListItemPressed;
+            AntagonistsListContainer.GenerateItem += GenerateButton;
 
-            PopulateList(_adminSystem.GameRulesList);
-            _adminSystem.GameRulesListChanged += PopulateList;
+            PopulateList(_adminSystem.PlayerList);
+            _adminSystem.PlayerListChanged += PopulateList;
             BackgroundPanel.PanelOverride = new StyleBoxFlat { BackgroundColor = new Color(32, 32, 40) };
         }
 
-        private void GameRulesListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
+        private void AntagonistsListItemPressed(BaseButton.ButtonEventArgs args, ListData data)
         {
-            if (data is not GameRuleListData { Info: var selectedGameRule })
+            if (data is not AntagonistsListData { Info: var selectedAntagonist })
                 return;
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                OnSelectionChanged?.Invoke(selectedGameRule);
+                OnSelectionChanged?.Invoke(selectedAntagonist);
 
                 // update label text. Only required if there is some override (e.g. unread bwoink count).
                 if (OverrideText != null && args.Button.Children.FirstOrDefault()?.Children?.FirstOrDefault() is Label label)
-                    label.Text = GetText(selectedGameRule);
+                    label.Text = GetText(selectedAntagonist);
             }
-            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedGameRule.EntityUid != null)
+            else if (args.Event.Function == EngineKeyFunctions.UseSecondary && selectedAntagonist.EntityUid != null)
             {
-                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedGameRule.EntityUid.Value);
+                IoCManager.Resolve<IUserInterfaceManager>().GetUIController<VerbMenuUIController>().OpenVerbMenu(selectedAntagonist.EntityUid.Value);
             }
         }
 
-        private void PopulateList(IReadOnlyList<GameRuleInfo>? gameRules = null)
+        private void PopulateList(IReadOnlyList<PlayerInfo>? players = null)
         {
-            gameRules ??= _adminSystem.GameRulesList;
+            players ??= _adminSystem.PlayerList;
 
-            _gameRulesList = gameRules.ToList();
+            _antagonistsList = players.Where(x => x.Antag).ToList();
 
-            if (_gameRulesList is not null)
-                GameRulesListContainer.PopulateList(_gameRulesList.Select(info => new GameRuleListData(info)).ToList());
+            if (_antagonistsList is not null)
+                AntagonistsListContainer.PopulateList(_antagonistsList.Select(info => new AntagonistsListData(info)).ToList());
         }
 
-        private string GetText(GameRuleInfo info)
+        private string GetText(PlayerInfo info)
         {
-            var text = $"{info.EntityUid} - {info.Name}";
+            var text = $"{info.CharacterName} ({info.Username})";
             if (OverrideText != null)
                 text = OverrideText.Invoke(info, text);
             return text;
@@ -76,7 +76,7 @@ namespace Content.Client.Administration.UI.CustomControls
 
         private void GenerateButton(ListData data, ListContainerButton button)
         {
-            if (data is not GameRuleListData { Info: var info })
+            if (data is not AntagonistsListData { Info: var info })
                 return;
 
             button.AddChild(new BoxContainer
@@ -96,5 +96,5 @@ namespace Content.Client.Administration.UI.CustomControls
         }
     }
 
-    public record GameRuleListData(GameRuleInfo Info) : ListData;
+    public record AntagonistsListData(PlayerInfo Info) : ListData;
 }
