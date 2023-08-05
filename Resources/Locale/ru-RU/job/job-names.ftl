@@ -43,6 +43,10 @@ job-name-boxer = Боксёр
 job-name-zookeeper = Зоотехник
 job-name-brigmedic = Бригмед
 job-name-paramedic = Парамедик
+job-name-senior-engineer = Ведущий инженер
+job-name-senior-researcher = Старший научный сотрудник
+job-name-senior-physician = Ведущий врач
+job-name-senior-officer = Старший офицер
 
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Атмосферный техник
@@ -83,6 +87,10 @@ JobSalvageSpecialist = Утилизатор
 JobScientist = Учёный
 JobSecurityCadet = Кадет СБ
 JobSecurityOfficer = Офицер СБ
+JobSeniorEngineer = Ведущий инженер
+JobSeniorOfficer = Старший офицер
+JobSeniorPhysician = Ведущий врач
+JobSeniorResearcher = Старший научный сотрудник
 JobServiceWorker = Сервисный работник
 JobStationEngineer = Инженер станции
 JobTechnicalAssistant = Технический ассистент
