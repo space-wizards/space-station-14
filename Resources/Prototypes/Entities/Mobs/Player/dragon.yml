@@ -159,3 +159,8 @@
     spawned:
     - id: FoodMeatDragon
       amount: 1
+  # half damage, spread evenly
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 15

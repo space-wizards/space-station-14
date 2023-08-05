@@ -15,6 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
     [TestOf(typeof(RejuvenateSystem))]
     public sealed class RejuvenateTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DamageableDummy
@@ -34,8 +35,7 @@ namespace Content.IntegrationTests.Tests.Commands
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
