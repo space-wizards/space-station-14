@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Advanced tools now has the recipe for the Experimental welding tool
-      instead of the Industrial welding tool, type: Fix}
-  id: 3942
-  time: '2023-06-04T22:23:27.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: Spears and Bats are bigger now, type: Tweak}
@@ -2988,3 +2982,9 @@ Entries:
       few jobs.', type: Tweak}
   id: 4441
   time: '2023-08-05T04:32:25.0000000+00:00'
+- author: Jesse
+  changes:
+  - {message: New chainsaw sprites, type: Add}
+  - {message: New chainsaw sounds. It goes vroom., type: Add}
+  id: 4442
+  time: '2023-08-05T04:49:56.0000000+00:00'
