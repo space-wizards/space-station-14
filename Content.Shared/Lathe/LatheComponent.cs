@@ -88,22 +88,6 @@ namespace Content.Shared.Lathe
         #endregion
     }
 
-    [RegisterComponent]
-    public sealed class EmagLatheRecipesComponent : Component
-    {
-        /// <summary>
-        /// All of the dynamic recipes that the lathe is capable to get using EMAG
-        /// </summary>
-        [DataField("emagDynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> EmagDynamicRecipes = new();
-
-        /// <summary>
-        /// All of the static recipes that the lathe is capable to get using EMAG
-        /// </summary>
-        [DataField("emagStaticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> EmagStaticRecipes = new();
-    }
-
     public sealed class LatheGetRecipesEvent : EntityEventArgs
     {
         public readonly EntityUid Lathe;

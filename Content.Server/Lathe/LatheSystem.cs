@@ -208,17 +208,15 @@ namespace Content.Server.Lathe
                 return;
             if (!HasComp<EmaggedComponent>(uid))
                 return;
+            foreach (var recipe in component.EmagDynamicRecipes)
             {
-                foreach (var recipe in component.EmagDynamicRecipes)
-                {
-                    if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
-                        continue;
-                    args.Recipes.Add(recipe);
-                }
-                foreach (var recipe in component.EmagStaticRecipes)
-                {
-                    args.Recipes.Add(recipe);
-                }
+                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
+            foreach (var recipe in component.EmagStaticRecipes)
+            {
+                args.Recipes.Add(recipe);
             }
         }
 
