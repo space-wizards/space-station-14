@@ -1,50 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: 'Handcuffs don''t eat all interaction events anymore, so you can put
-      them in disposal bins, backpacks, etc.', type: Fix}
-  id: 3921
-  time: '2023-06-02T00:48:43.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: 'Ghosts can perform interactions, like fully examining things, at any
-      range', type: Tweak}
-  id: 3922
-  time: '2023-06-02T00:50:17.0000000+00:00'
-- author: icesickleone
-  changes:
-  - {message: Cowelding tool no longer heals blunt damage when lit, type: Fix}
-  id: 3923
-  time: '2023-06-02T00:53:25.0000000+00:00'
-- author: PJB3005
-  changes:
-  - {message: Avoid doing actions like placing wires if you fail to insert something
-      into a backpack., type: Tweak}
-  - {message: Improved error messages for storage items., type: Tweak}
-  - {message: Stacks don't get dropped on the ground anymore if they can't fit in
-      a storage item., type: Fix}
-  id: 3924
-  time: '2023-06-02T01:13:56.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added bruise packs and ointment to medical techfab., type: Add}
-  id: 3925
-  time: '2023-06-02T01:36:33.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: 'Toy Box has been added, it is filled with new toys.', type: Add}
-  id: 3926
-  time: '2023-06-03T03:31:48.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: Swords no longer clank, type: Tweak}
-  id: 3927
-  time: '2023-06-03T10:17:15.0000000+00:00'
-- author: Renlou
-  changes:
-  - {message: Added hampter plushie based on discord emoji/sticker, type: Add}
-  id: 3928
-  time: '2023-06-03T18:50:53.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Added GuideHelp tags to some Janitorial items., type: Add}
@@ -2989,3 +2943,52 @@ Entries:
       brute-force attacks on their uplinks unfeasible.', type: Fix}
   id: 4420
   time: '2023-08-03T11:13:17.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Added Syndicate pAI., type: Add}
+  - {message: Syndicate pAI's can be found on the Nukie planet., type: Tweak}
+  id: 4421
+  time: '2023-08-03T20:48:40.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: NT has issued a unique anti-balloon weapon to security personnel. Use
+      it to destroy syndicate balloons and crush their morale!, type: Add}
+  id: 4422
+  time: '2023-08-04T01:53:06.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'A few changes to some chemical recipes, namely Dexalin, Lexorin, Ultravasculine,
+      Ammonia, Acetone, Sodium Carbonate, and Sigynate, have been reverted. They are
+      now like what they used to be.', type: Tweak}
+  - {message: Sigynate heals 3 Caustic per unit again., type: Tweak}
+  id: 4423
+  time: '2023-08-04T02:30:37.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Fixed the incorrect ammo count in the China Lake bundle's description.,
+    type: Fix}
+  id: 4424
+  time: '2023-08-04T02:57:02.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'Added Moth People as a playable race. These friends can move around
+      in zero gravity easily and love the cold, but are significantly weaker against
+      high temperatures and won''t be caught eating anything not made of cloth.',
+    type: Add}
+  id: 4425
+  time: '2023-08-04T05:21:28.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Added insulated gloves to emaged youtool, type: Add}
+  id: 4426
+  time: '2023-08-04T08:39:34.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Updated dirty steel & plastic floor tiles to match the new style., type: Tweak}
+  id: 4427
+  time: '2023-08-04T08:55:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Spears can now embed into things and require removing., type: Add}
+  id: 4428
+  time: '2023-08-04T08:56:39.0000000+00:00'

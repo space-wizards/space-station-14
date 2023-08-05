@@ -20,8 +20,8 @@ SERVER_FILES = [
 ]
 
 VERSION = os.environ['GITHUB_SHA']
-FORK_ID = "wizards"
-BUILD_URL = f"https://cdn.centcomm.spacestation14.com/builds/wizards/builds/{{FORK_VERSION}}/{FILE}"
+FORK_ID = "red_eclipse"
+BUILD_URL = f"https://github.com/Operation-Eclipse/red-eclipse-14/releases/download/release/{FILE}"
 MANIFEST_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/manifest"
 MANIFEST_DOWNLOAD_URL = f"https://cdn.centcomm.spacestation14.com/cdn/version/{{FORK_VERSION}}/download"
 
