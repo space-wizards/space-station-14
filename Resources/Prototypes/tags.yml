@@ -168,6 +168,9 @@
   id: CigPack
 
 - type: Tag
+  id: ClothMade
+
+- type: Tag
   id: ClownMask
 
 - type: Tag
@@ -586,8 +589,6 @@
 - type: Tag
   id: Multitool
 
-- type: Tag
-  id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring
