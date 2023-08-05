@@ -289,7 +289,7 @@ namespace Content.Shared.CCVar
         /// Whether or not coordinates on the Debug overlay should only be available to admins.
         /// </summary>
         public static readonly CVarDef<bool> DebugCoordinatesAdminOnly =
-            CVarDef.Create("game.debug_coordinates_admin_only", false, CVar.SERVER | CVar.REPLICATED);
+            CVarDef.Create("game.debug_coordinates_admin_only", true, CVar.SERVER | CVar.REPLICATED);
 
 #if EXCEPTION_TOLERANCE
         /// <summary>
@@ -305,6 +305,12 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<int> GameAlertLevelChangeDelay =
             CVarDef.Create("game.alert_level_change_delay", 30, CVar.SERVERONLY);
+
+        /// <summary>
+        /// How many times per second artifacts when the round is over.
+        /// If set to 0, they won't activate (on a timer) when the round ends.
+        /// </summary>
+        public static readonly CVarDef<float> ArtifactRoundEndTimer = CVarDef.Create("game.artifact_round_end_timer", 0.5f, CVar.NOTIFY | CVar.REPLICATED);
 
         /*
          * Discord
@@ -392,12 +398,6 @@ namespace Content.Shared.CCVar
 
         public static readonly CVarDef<int> ZombieMinPlayers =
             CVarDef.Create("zombie.min_players", 20);
-
-        public static readonly CVarDef<int> ZombieMaxInitialInfected =
-            CVarDef.Create("zombie.max_initial_infected", 6);
-
-        public static readonly CVarDef<int> ZombiePlayersPerInfected =
-            CVarDef.Create("zombie.players_per_infected", 10);
 
         /*
          * Pirates
@@ -641,7 +641,7 @@ namespace Content.Shared.CCVar
             CVarDef.Create("net.gasoverlaythresholds", 20);
 
         /*
-         * Admin stuff
+         * Admin
          */
 
         public static readonly CVarDef<bool> AdminAnnounceLogin =
@@ -651,10 +651,66 @@ namespace Content.Shared.CCVar
             CVarDef.Create("admin.announce_logout", true, CVar.SERVERONLY);
 
         /// <summary>
+        /// Should users be able to see their own notes? Admins will be able to see and set notes regardless
+        /// </summary>
+        public static readonly CVarDef<bool> SeeOwnNotes =
+            CVarDef.Create("admin.see_own_notes", false, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note starts fading. It will slowly lose opacity until it reaches stale. Set to 0 to disable.
+        /// </summary>
+        public static readonly CVarDef<double> NoteFreshDays =
+            CVarDef.Create("admin.note_fresh_days", 91.31055, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// The amount of days before the note completely fades, and can only be seen by admins if they press "see more notes". Set to 0
+        /// if you want the note to immediately disappear without fading.
+        /// </summary>
+        public static readonly CVarDef<double> NoteStaleDays =
+            CVarDef.Create("admin.note_stale_days", 365.2422, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// How much time does the user have to wait in seconds before confirming that they saw an admin message?
+        /// </summary>
+        public static readonly CVarDef<float> MessageWaitTime =
+            CVarDef.Create("admin.message_wait_time", 3f, CVar.ARCHIVE | CVar.REPLICATED | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for role bans
+        /// </summary>
+        public static readonly CVarDef<string> RoleBanDefaultSeverity =
+            CVarDef.Create("admin.role_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for department bans
+        /// </summary>
+        public static readonly CVarDef<string> DepartmentBanDefaultSeverity =
+            CVarDef.Create("admin.department_ban_default_severity", "medium", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
+        /// Default severity for server bans
+        /// </summary>
+        public static readonly CVarDef<string> ServerBanDefaultSeverity =
+            CVarDef.Create("admin.server_ban_default_severity", "high", CVar.ARCHIVE | CVar.SERVER);
+
+        /// <summary>
         ///     Minimum explosion intensity to create an admin alert message. -1 to disable the alert.
         /// </summary>
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
             CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
+
+
+        /// <summary>
+        ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
+        public static readonly CVarDef<bool> AdminShowPIIOnBan =
+            CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If an admin joins a round by reading up or using the late join button, automatically
+        /// de-admin them.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminDeadminOnJoin =
+            CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
 
         /*
          * Explosions
@@ -970,6 +1026,12 @@ namespace Content.Shared.CCVar
         /// False: Dead player LOOC gets redirected to dead chat
         /// </summary>
         public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// True: Crit players can use LOOC
+        /// False: Crit player LOOC gets redirected to dead chat
+        /// </summary>
+        public static readonly CVarDef<bool> CritLoocEnabled = CVarDef.Create("looc.enabled_crit", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /*
          * Entity Menu Grouping Types
@@ -1627,5 +1689,32 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool> ReplayRecordAdminChat =
             CVarDef.Create("replay.record_admin_chat", false, CVar.ARCHIVE);
+
+        /// <summary>
+        /// Automatically record full rounds as replays.
+        /// </summary>
+        public static readonly CVarDef<bool> ReplayAutoRecord =
+            CVarDef.Create("replay.auto_record", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// The file name to record automatic replays to. The path is relative to <see cref="CVars.ReplayDirectory"/>.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// If the path includes slashes, directories will be automatically created if necessary.
+        /// </para>
+        /// <para>
+        /// A number of substitutions can be used to automatically fill in the file name: <c>{year}</c>, <c>{month}</c>, <c>{day}</c>, <c>{hour}</c>, <c>{minute}</c>, <c>{round}</c>.
+        /// </para>
+        /// </remarks>
+        public static readonly CVarDef<string> ReplayAutoRecordName =
+            CVarDef.Create("replay.auto_record_name", "{year}_{month}_{day}-{hour}_{minute}-round_{round}.zip", CVar.SERVERONLY);
+
+        /// <summary>
+        /// Path that, if provided, automatic replays are initially recorded in.
+        /// When the recording is done, the file is moved into its final destination.
+        /// </summary>
+        public static readonly CVarDef<string> ReplayAutoRecordTempDir =
+            CVarDef.Create("replay.auto_record_temp_dir", "", CVar.SERVERONLY);
     }
 }

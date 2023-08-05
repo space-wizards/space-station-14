@@ -8,7 +8,7 @@ public sealed class TargetInLOSPrecondition : HTNPrecondition
     private InteractionSystem _interaction = default!;
 
     [DataField("targetKey")]
-    public string TargetKey = "CombatTarget";
+    public string TargetKey = "Target";
 
     [DataField("rangeKey")]
     public string RangeKey = "RangeKey";

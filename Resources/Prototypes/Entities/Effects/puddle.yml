@@ -4,9 +4,9 @@
   parent: Puddle
   abstract: true
   components:
-    - type: Transform
-      anchored: true
-      noRot: false
+  - type: Transform
+    anchored: true
+    noRot: false
 
 - type: entity
   id: PuddleSmear
@@ -16,67 +16,67 @@
   id: PuddleVomit
   parent: PuddleTemporary
   components:
-    - type: SolutionContainerManager
-      solutions:
-        puddle:
-          maxVol: 1000
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 5
-            - ReagentId: Water
-              Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
 
 - type: entity
   id: PuddleEgg
   parent: PuddleTemporary
   components:
-    - type: SolutionContainerManager
-      solutions:
-        puddle:
-          maxVol: 1000
-          reagents:
-            - ReagentId: Egg
-              Quantity: 6 # same as when cooking
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Egg
+          Quantity: 6 # same as when cooking
 
 - type: entity
   id: PuddleTomato
   parent: PuddleTemporary
   components:
-    - type: SolutionContainerManager
-      solutions:
-        puddle:
-          maxVol: 1000
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 5
-            - ReagentId: Water
-              Quantity: 5
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Water
+          Quantity: 5
 
 - type: entity
   id: PuddleWatermelon
   parent: PuddleTemporary
   components:
-    - type: SolutionContainerManager
-      solutions:
-        puddle:
-          maxVol: 1000
-          reagents:
-            - ReagentId: Nutriment
-              Quantity: 15
-            - ReagentId: Water
-              Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 15
+        - ReagentId: Water
+          Quantity: 15
 
 - type: entity
   id: PuddleFlour
   parent: PuddleTemporary
   components:
-    - type: SolutionContainerManager
-      solutions:
-        puddle:
-          maxVol: 1000
-          reagents:
-            - ReagentId: Flour
-              Quantity: 15
+  - type: SolutionContainerManager
+    solutions:
+      puddle:
+        maxVol: 1000
+        reagents:
+        - ReagentId: Flour
+          Quantity: 15
 
 - type: entity
   id: PuddleSparkle
@@ -105,57 +105,58 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: FootstepModifier
-      footstepSoundCollection:
-        collection: FootstepWater
-        params:
-          volume: 6
-    - type: Slippery
-      launchForwardsMultiplier: 2.0
-    - type: Transform
-      noRot: true
-      anchored: true
-    - type: Sprite
-      layers:
-        - sprite: Fluids/puddle.rsi
-          state: splat0
-      drawdepth: FloorObjects
-      color: "#FFFFFF80"
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        slipFixture:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.4,-0.4,0.4,0.4"
-          mask:
-            - ItemMask
-          layer:
-            - SlipLayer
-          hard: false
-    - type: IconSmooth
-      key: puddles
-      base: splat
-      mode: CardinalFlags
-    - type: SolutionContainerManager
-      solutions:
-        puddle: { maxVol: 1000 }
-    - type: Puddle
-    - type: Appearance
-    - type: EdgeSpreader
-    - type: StepTrigger
-    - type: NodeContainer
-      nodes:
-        puddle:
-          !type:SpreaderNode
-          nodeGroupID: Spreader
-    - type: Drink
-      isOpen: true
-      delay: 3
-      transferAmount: 1
-      solution: puddle
-      examinable: false
-    - type: ExaminableSolution
-      solution: puddle
+  - type: Clickable
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepWater
+      params:
+        volume: 6
+  - type: Slippery
+    launchForwardsMultiplier: 2.0
+  - type: Transform
+    noRot: true
+    anchored: true
+  - type: Sprite
+    layers:
+    - sprite: Fluids/puddle.rsi
+      state: splat0
+    drawdepth: FloorObjects
+    color: "#FFFFFF80"
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      slipFixture:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        mask:
+        - ItemMask
+        layer:
+        - SlipLayer
+        hard: false
+  - type: IconSmooth
+    key: puddles
+    base: splat
+    mode: CardinalFlags
+  - type: SolutionContainerManager
+    solutions:
+      puddle: { maxVol: 1000 }
+  - type: Puddle
+  - type: Appearance
+  - type: EdgeSpreader
+  - type: StepTrigger
+  - type: NodeContainer
+    nodes:
+      puddle:
+        !type:SpreaderNode
+        nodeGroupID: Spreader
+  - type: Drink
+    isOpen: true
+    delay: 3
+    transferAmount: 1
+    solution: puddle
+    examinable: false
+  - type: ExaminableSolution
+    solution: puddle
+  - type: BadDrink

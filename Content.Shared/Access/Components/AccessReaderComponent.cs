@@ -38,6 +38,14 @@ public sealed class AccessReaderComponent : Component
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
 
+
+    /// <summary>
+    ///     The name of the container in which additional
+    ///     AccessReaderComponents may be found.
+    /// </summary>
+    [DataField("containerAccessProvider")]
+    public string? ContainerAccessProvider = null;
+
     /// <summary>
     /// A list of past authentications
     /// </summary>
@@ -79,4 +87,3 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessLogLimit = accessLogLimit;
     }
 }
-

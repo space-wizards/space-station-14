@@ -1,10 +1,5 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Content.Shared.Follower;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Log;
 using Robust.Shared.Map;
 
@@ -19,7 +14,7 @@ public sealed class FollowerSystemTest
     [Test]
     public async Task FollowerMapDeleteTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new (){NoClient = true});
+        await using var pairTracker = await PoolManager.GetServerClient(new() { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();

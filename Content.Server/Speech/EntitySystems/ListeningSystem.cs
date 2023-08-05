@@ -42,7 +42,7 @@ public sealed class ListeningSystem : EntitySystem
 
             // range checks
             // TODO proper speech occlusion
-            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared;
+            var distance = (sourcePos - _xforms.GetWorldPosition(xform, xformQuery)).LengthSquared();
             if (distance > listener.Range * listener.Range)
                 continue;
 
@@ -53,7 +53,7 @@ public sealed class ListeningSystem : EntitySystem
                 continue;
             }
 
-            if (obfuscatedEv != null && distance > ChatSystem.WhisperRange)
+            if (obfuscatedEv != null && distance > ChatSystem.WhisperClearRange)
                 RaiseLocalEvent(listenerUid, obfuscatedEv);
             else
                 RaiseLocalEvent(listenerUid, ev);
