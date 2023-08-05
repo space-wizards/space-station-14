@@ -294,8 +294,9 @@
   satchel: ClothingBackpackSatchelBrigmedicFilled
   duffelbag: ClothingBackpackDuffelBrigmedicFilled
 
+  #Head Rev Gear
+
 - type: startingGear
   id: HeadRevGear
   equipment:
     pocket1: Flash
-    eyes: ClothingEyesGlassesSunglasses

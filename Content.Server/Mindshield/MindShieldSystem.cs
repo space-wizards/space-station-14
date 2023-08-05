@@ -22,17 +22,19 @@ public sealed class MindShieldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
+
+        //Commenting this stuff out as it isn't really needed unless Revs are active and I want to find a better solution anyway.
+        //SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+        //SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
     }
-    private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
-    {
-        MindShieldCheck();
-    }
-    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
-    {
-        MindShieldCheck();
-    }
+    //private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
+    //{
+    //    MindShieldCheck();
+    //}
+    //private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
+    //{
+    //    MindShieldCheck();
+    //}
 
     /// <summary>
     /// Checks for Mindshields at the start to give component and removes component from head revs for identification.

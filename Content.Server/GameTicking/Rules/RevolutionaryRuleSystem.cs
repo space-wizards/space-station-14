@@ -54,6 +54,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
     private TimeSpan _timerWait = TimeSpan.FromSeconds(10);
@@ -239,6 +240,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
                 comp.HeadRevs.Add(inCharacterName, headRev.Name);
+                _audioSystem.PlayGlobal(comp.HeadRevStartSound, mind.OwnedEntity.Value);
             }
             if (mind.Session != null)
             {
@@ -311,6 +313,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private void CheckFinish()
     {
         var stunTime = TimeSpan.FromSeconds(4);
+        var headJobs = _prototypeManager.Index<DepartmentPrototype>("Command");
+        var secJobs = _prototypeManager.Index<DepartmentPrototype>("Security");
 
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var revs, out var gameRule))
@@ -377,13 +381,23 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
 
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
+            //Also now should set all command and sec jobs to zero.
 
-            if (dead == inRound && revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
+            if (dead == inRound && !revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
             {
                 revs.HeadsDied = true;
                 foreach (var station in _stationSystem.GetStations())
                 {
-                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), colorOverride: Color.FromHex("#5e9cff"));
+                    var jobs = _stationJobs.GetJobs(station).Keys.ToList();
+                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
+                    foreach (var job in jobs)
+                    {
+                        var currentJob = job.Replace(" ", "");
+                        if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
+                        {
+                            _stationJobs.TrySetJobSlot(station, job, 0);
+                        }
+                    }
                 }
             }
 

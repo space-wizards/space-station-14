@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -47,6 +48,13 @@ public sealed class RevolutionaryRuleComponent : Component
 
     [DataField("revPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string RevPrototypeId = "Rev";
+
+    /// <summary>
+    /// Sound that plays when you are chosen as Rev. (Placeholder until I find something cool I guess)
+    /// </summary>
+
+    [DataField("headRevStartSound")]
+    public SoundSpecifier HeadRevStartSound = new SoundPathSpecifier("/Audio/Ambience/Antag/traitor_start.ogg");
 
     /// <summary>
     /// Min players needed for Revolutionary gamemode to start.
