@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Due to carp budget cuts, the Chief Space Carp can no longer send the
-      strongest carp and dragons to expedition dungeons.', type: Tweak}
-  id: 3938
-  time: '2023-06-04T11:06:13.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: Nanotrasen has remembered that they had built a therapy room for a reason
@@ -2986,3 +2980,9 @@ Entries:
   - {message: Added the Dr. Gibb Vendor, type: Add}
   id: 4437
   time: '2023-08-05T02:07:41.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed the swat crate to only contain non-lethal shells; now it comes
+      with shields., type: Tweak}
+  id: 4438
+  time: '2023-08-05T03:47:32.0000000+00:00'

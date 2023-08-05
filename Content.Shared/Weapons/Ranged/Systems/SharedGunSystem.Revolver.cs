@@ -127,7 +127,7 @@ public partial class SharedGunSystem
 
                 if (ent == null)
                 {
-                    Sawmill.Error($"Tried to load hitscan into a revolver which is unsupported");
+                    Log.Error($"Tried to load hitscan into a revolver which is unsupported");
                     continue;
                 }
 
@@ -141,7 +141,7 @@ public partial class SharedGunSystem
             DebugTools.Assert(ammo.Count == 0);
             UpdateRevolverAppearance(revolverUid, component);
             UpdateAmmoCount(uid);
-            Dirty(component);
+            Dirty(uid, component);
 
             Audio.PlayPredicted(component.SoundInsert, revolverUid, user);
             Popup(Loc.GetString("gun-revolver-insert"), revolverUid, user);

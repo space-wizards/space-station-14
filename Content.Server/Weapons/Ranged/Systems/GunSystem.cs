@@ -59,7 +59,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         if (!ProtoManager.TryIndex<EntityPrototype>(component.FillProto, out var proto))
         {
-            Sawmill.Error($"Unable to find fill prototype for price on {component.FillProto} on {ToPrettyString(uid)}");
+            Log.Error($"Unable to find fill prototype for price on {component.FillProto} on {ToPrettyString(uid)}");
             return;
         }
 
