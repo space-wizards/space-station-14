@@ -732,8 +732,6 @@ we are just going to end this here to save a lot of time. This is the exception 
 /// </summary>
 public sealed class PoolSettings
 {
-    // TODO: We can make more of these pool-able, if we need enough of them for it to matter
-
     /// <summary>
     /// If the returned pair must not be reused
     /// </summary>

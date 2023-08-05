@@ -10,22 +10,19 @@ public static partial class PoolManager
 {
     private static List<string> _testPrototypes = new();
 
+    private const BindingFlags Flags = BindingFlags.Static
+                                       | BindingFlags.NonPublic
+                                       | BindingFlags.Public
+                                       | BindingFlags.DeclaredOnly;
+
     public static void DiscoverTestPrototypes()
     {
         _testPrototypes.Clear();
 
         foreach (var type in typeof(PoolManager).Assembly.GetTypes())
         {
-            var attribute = (ReflectAttribute?)Attribute.GetCustomAttribute(type, typeof(ReflectAttribute));
-            if (!(attribute?.Discoverable ?? ReflectAttribute.DEFAULT_DISCOVERABLE))
-                continue;
 
-            const BindingFlags flags = BindingFlags.Static
-                                       | BindingFlags.NonPublic
-                                       | BindingFlags.Public
-                                       | BindingFlags.DeclaredOnly;
-
-            foreach (var field in type.GetFields(flags))
+            foreach (var field in type.GetFields(Flags))
             {
                 if (!field.HasCustomAttribute<TestPrototypesAttribute>())
                     continue;
