@@ -14,7 +14,7 @@ public sealed class FilterTests
     [TestCase(DateOrder.Descending)]
     public async Task Date(DateOrder order)
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(AddTests.LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();

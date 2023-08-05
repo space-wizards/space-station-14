@@ -36,7 +36,6 @@ namespace Content.IntegrationTests.Tests.Commands
             await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var damSystem = entManager.EntitySysManager.GetEntitySystem<DamageableSystem>();

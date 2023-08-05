@@ -15,7 +15,7 @@ public sealed class QueryTests
     [Test]
     public async Task QuerySingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        await using var pairTracker = await PoolManager.GetServerClient(AddTests.LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();

@@ -168,8 +168,7 @@ public sealed class CargoTest
     [Test]
     public async Task StackPrice()
     {
-
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() );
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

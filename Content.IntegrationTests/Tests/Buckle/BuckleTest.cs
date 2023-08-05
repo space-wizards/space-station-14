@@ -49,8 +49,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         [Test]
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
-            await using var pairTracker =
-                await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);

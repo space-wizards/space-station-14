@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Lobby
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true, InLobby = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
