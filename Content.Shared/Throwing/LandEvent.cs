@@ -1,5 +1,3 @@
-using JetBrains.Annotations;
-
 namespace Content.Shared.Throwing
 {
     /// <summary>

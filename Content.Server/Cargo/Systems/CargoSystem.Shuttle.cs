@@ -369,6 +369,7 @@ public sealed partial class CargoSystem
 
     private void OnRoundRestart(RoundRestartCleanupEvent ev)
     {
+        Reset();
         CleanupCargoShuttle();
 
         if (_cfgManager.GetCVar(CCVars.GridFill))

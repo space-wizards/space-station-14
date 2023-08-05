@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Administration.Commands;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.UI;
@@ -64,13 +63,18 @@ namespace Content.Server.Administration.Systems
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAdminVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddDebugVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddSmiteVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddTricksVerbs);
-            SubscribeLocalEvent<GetVerbsEvent<Verb>>(AddAntagVerbs);
+            SubscribeLocalEvent<GetVerbsEvent<Verb>>(GetVerbs);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(Reset);
             SubscribeLocalEvent<SolutionContainerManagerComponent, SolutionChangedEvent>(OnSolutionChanged);
+        }
+
+        private void GetVerbs(GetVerbsEvent<Verb> ev)
+        {
+            AddAdminVerbs(ev);
+            AddDebugVerbs(ev);
+            AddSmiteVerbs(ev);
+            AddTricksVerbs(ev);
+            AddAntagVerbs(ev);
         }
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
