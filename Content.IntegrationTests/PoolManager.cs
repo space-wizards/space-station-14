@@ -376,6 +376,8 @@ public static class PoolManager
         var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
         Assert.That(ticker.DummyTicker, Is.EqualTo(pair.Settings.DummyTicker));
 
+        var cfg = pair.Server.ResolveDependency<IConfigurationManager>();
+        Assert.That(cfg.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(pair.Settings.InLobby));
         var status = ticker.PlayerGameStatuses[sPlayer.Sessions.Single().UserId];
         var expected = pair.Settings.InLobby
             ? PlayerGameStatus.NotReadyToPlay
