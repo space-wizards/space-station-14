@@ -335,9 +335,8 @@
   reactants:
     GargleBlaster:
       amount: 1
-    THCOil:
+    THC:
       amount: 1
-      # TODO replace THCOil with Mushroom Hallucinogen once added
   products:
     HippiesDelight: 2
 

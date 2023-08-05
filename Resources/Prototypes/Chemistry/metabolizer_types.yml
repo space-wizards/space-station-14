@@ -32,3 +32,7 @@
 - type: metabolizerType
   id: Dwarf
   name: dwarf
+
+- type: metabolizerType
+  id: Moth
+  name: moth

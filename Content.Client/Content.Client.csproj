@@ -23,18 +23,6 @@
     <ProjectReference Include="..\RobustToolbox\Robust.Client\Robust.Client.csproj" />
     <ProjectReference Include="..\Content.Shared\Content.Shared.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Update="UserInterface\Systems\MenuBar\Widgets\GameTopMenuBar.xaml.cs">
-      <DependentUpon>GameTopMenuBar.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="UserInterface\Systems\HotBar\Widgets\HotbarGui.xaml.cs">
-      <DependentUpon>HotbarGui.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="UserInterface\Systems\Inventory\Windows\StrippingWindow.xaml.cs">
-      <DependentUpon>StrippingWindow.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
   <Import Project="..\RobustToolbox\MSBuild\Robust.Properties.targets" />
   <Import Project="..\RobustToolbox\MSBuild\XamlIL.targets" />
 </Project>

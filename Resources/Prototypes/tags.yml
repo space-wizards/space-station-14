@@ -23,6 +23,9 @@
   id: Baguette
 
 - type: Tag
+  id: Balloon
+
+- type: Tag
   id: BaseballBat
 
 - type: Tag
@@ -163,6 +166,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClothMade
 
 - type: Tag
   id: ClownMask
@@ -583,8 +589,6 @@
 - type: Tag
   id: Multitool
 
-- type: Tag
-  id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring

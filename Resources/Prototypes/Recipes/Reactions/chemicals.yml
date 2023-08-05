@@ -6,7 +6,7 @@
     Nitrogen:
       amount: 1
   products:
-    Ammonia: 3
+    Ammonia: 4
 
 - type: reaction
   id: Diethylamine
@@ -40,7 +40,7 @@
     Oxygen:
       amount: 1
   products:
-    Acetone: 3
+    Acetone: 2
 
 - type: reaction
   id: FoamingAgent
@@ -358,6 +358,8 @@
   id: SodiumCarbonate
   impact: Medium
   reactants:
+    Ammonia:
+      amount: 1
     TableSalt:
       amount: 1
     Carbon:
@@ -365,4 +367,4 @@
     Oxygen:
       amount: 1
   products:
-    SodiumCarbonate: 3
+    SodiumCarbonate: 4

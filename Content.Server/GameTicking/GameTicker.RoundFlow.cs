@@ -114,6 +114,17 @@ namespace Content.Server.GameTicking
                 throw new Exception("invalid config; couldn't select a valid station map!");
             }
 
+            if (CurrentPreset?.MapPool != null &&
+                _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
+                pool.Maps.Contains(mainStationMap.ID))
+            {
+                var msg = Loc.GetString("game-ticker-start-round-invalid-map",
+                    ("map", mainStationMap.MapName),
+                    ("mode", Loc.GetString(CurrentPreset.ModeTitle)));
+                Log.Debug(msg);
+                SendServerMessage(msg);
+            }
+
             // Let game rules dictate what maps we should load.
             RaiseLocalEvent(new LoadingMapsEvent(maps));
 
@@ -292,7 +303,7 @@ namespace Content.Server.GameTicking
             _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
 
             //Tell every client the round has ended.
-            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
@@ -306,7 +317,7 @@ namespace Content.Server.GameTicking
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = Get<MindTrackerSystem>().AllMinds;
+            var allMinds = _mindTracker.AllMinds;
             foreach (var mind in allMinds)
             {
                 // TODO don't list redundant observer roles?
@@ -447,6 +458,7 @@ namespace Content.Server.GameTicking
 
             // Clear up any game rules.
             ClearGameRules();
+            CurrentPreset = null;
 
             _allPreviousGameRules.Clear();
 
@@ -514,7 +526,7 @@ namespace Content.Server.GameTicking
 
         private void AnnounceRound()
         {
-            if (Preset == null) return;
+            if (CurrentPreset == null) return;
 
             var options = _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>().ToList();
 

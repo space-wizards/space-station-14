@@ -21,6 +21,7 @@ using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Components;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Hands.Components;
@@ -117,7 +118,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/AdminActions/rejuvenate.png")),
                     Act = () =>
                     {
-                        RejuvenateCommand.PerformRejuvenate(args.Target);
+                        _rejuvenate.PerformRejuvenate(args.Target);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-rejuvenate-description"),
@@ -135,7 +136,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
                     Act = () =>
                     {
-                        _godmodeSystem.EnableGodmode(args.Target);
+                        _sharedGodmodeSystem.EnableGodmode(args.Target);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-indestructible-description"),
@@ -152,7 +153,7 @@ public sealed partial class AdminVerbSystem
                     Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/plus.svg.192dpi.png")),
                     Act = () =>
                     {
-                        _godmodeSystem.DisableGodmode(args.Target);
+                        _sharedGodmodeSystem.DisableGodmode(args.Target);
                     },
                     Impact = LogImpact.Extreme,
                     Message = Loc.GetString("admin-trick-make-vulnerable-description"),

@@ -90,7 +90,8 @@
     factions:
       - PetsNT
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
@@ -487,7 +488,8 @@
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Physics
   - type: Fixtures
     fixtures:
