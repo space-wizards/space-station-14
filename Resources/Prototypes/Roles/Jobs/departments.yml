@@ -55,6 +55,14 @@
   - TechnicalAssistant
 
 - type: department
+  id: SyndicateEngineering
+  description: department-Engineering-description
+  color: "#b51e0e"
+  roles:
+    - EngineersAide
+
+
+- type: department
   id: Medical
   description: department-Medical-description
   color: "#52B4E9"
