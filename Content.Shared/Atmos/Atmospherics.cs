@@ -198,7 +198,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     This is calculated to help prevent singlecap bombs (Overpowered tritium/oxygen single tank bombs)
         /// </summary>
-        public const float MinimumTritiumOxyburnEnergy = 430000f;
+        public const float MinimumTritiumOxyburnEnergy = 143000f;
 
         public const float TritiumBurnOxyFactor = 100f;
         public const float TritiumBurnTritFactor = 10f;

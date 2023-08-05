@@ -168,7 +168,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatChef
-  name: chefs hat
+  name: chef's hat
   description: "It's a hat used by chefs to keep hair out of your food. Judging by the food in the mess, they don't work."
   components:
   - type: Sprite
@@ -482,7 +482,7 @@
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatTrucker
-  name: truckers hat
+  name: trucker hat
   description: Formerly Chucks, this hat is yours now.
   components:
   - type: Sprite
@@ -730,7 +730,7 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
-      
+
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCapcap
