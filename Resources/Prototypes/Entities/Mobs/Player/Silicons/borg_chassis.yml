@@ -21,4 +21,4 @@
     hasMindState: robot_e
     noMindState: robot_e_r
   - type: Construction
-    node: Generic
+    node: generic

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Mind.Components;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -20,10 +21,13 @@ public sealed partial class BorgSystem
 
     private void OnMMIInit(EntityUid uid, MMIComponent component, ComponentInit args)
     {
-        if (ItemSlots.TryGetSlot(uid, component.BrainSlotId, out var slot))
+        if (!TryComp<ItemSlotsComponent>(uid, out var itemSlots))
+            return;
+
+        if (ItemSlots.TryGetSlot(uid, component.BrainSlotId, out var slot, itemSlots))
             component.BrainSlot = slot;
         else
-            ItemSlots.AddItemSlot(uid, component.BrainSlotId, component.BrainSlot);
+            ItemSlots.AddItemSlot(uid, component.BrainSlotId, component.BrainSlot, itemSlots);
     }
 
     private void OnMMIEntityInserted(EntityUid uid, MMIComponent component, EntInsertedIntoContainerMessage args)
