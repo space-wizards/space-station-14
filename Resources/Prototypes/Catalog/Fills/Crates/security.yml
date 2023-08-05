@@ -42,11 +42,12 @@
         amount: 2
       - id: ClothingHeadHelmetRiot
         amount: 2
-      - id: WeaponShotgunEnforcer
+      - id: WeaponShotgunEnforcerRubber
         amount: 2
       - id: BoxBeanbag
         amount: 2
-#      - ShieldRiot
+      - id: RiotShield
+        amount: 2
 #      - SecGasmask
 
 - type: entity
