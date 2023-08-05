@@ -55,11 +55,10 @@
     enabled: false
 
 - type: entity
-  name: pen
+  name: energy dagger
   parent: EnergySword
   id: EnergyDagger
-  suffix: E-Dagger
-  description: 'A dark ink pen.'
+  description: A very loud & dangerous dagger with a beam made of pure, concentrated plasma. Occasionally mistaken for a pen.
   components:
   - type: EnergySword
     secret: true
