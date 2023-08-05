@@ -164,4 +164,4 @@
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 5
+        Brute: 15
