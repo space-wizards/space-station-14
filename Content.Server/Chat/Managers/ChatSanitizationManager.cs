@@ -116,8 +116,11 @@ public sealed class ChatSanitizationManager : IChatSanitizationManager
             }
         }
 
+        var ntAllowed = sanitized.Replace("NanoTrasen", string.Empty, StringComparison.OrdinalIgnoreCase);
+        ntAllowed = ntAllowed.Replace("nt", string.Empty, StringComparison.OrdinalIgnoreCase);
+
         // Remember, no English
-        if (Regex.Matches(sanitized, @"[a-zA-Z]").Any())
+        if (Regex.Matches(ntAllowed, @"[a-zA-Z]").Any())
         {
             sanitized = string.Empty;
             emote = "кашляет";
