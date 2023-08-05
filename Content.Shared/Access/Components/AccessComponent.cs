@@ -21,6 +21,9 @@ namespace Content.Shared.Access.Components
         [DataField("groups", readOnly: true, customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessGroupPrototype>))]
         public readonly HashSet<string> Groups = new();
 
+        /// <summary>
+        ///     Determines if accesses from this component should be logged by <see cref="AccessReaderComponent"/>
+        /// </summary>
         [DataField("bypassLogging")] [ViewVariables(VVAccess.ReadWrite)]
         public bool BypassLogging;
     }
