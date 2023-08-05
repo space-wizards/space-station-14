@@ -24,6 +24,7 @@ namespace Content.Benchmarks
             var pair = await PoolManager.GetServerClient();
             var gameMaps = pair.Pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
             MapLoadBenchmark.MapsSource = gameMaps.Select(x => x.ID);
+            await pair.CleanReturnAsync();
 
 #if DEBUG
             Console.ForegroundColor = ConsoleColor.Red;
