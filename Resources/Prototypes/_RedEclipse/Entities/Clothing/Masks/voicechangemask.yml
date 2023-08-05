@@ -1,0 +1,14 @@
+type: entity
+parent: ClothingMaskBase
+id: ClothingVoiceChangeMask
+name: voice changing mask
+description: A gas mask with a voice changer hidden, you knew just where to check.
+components:
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gas.rsi
+  - type: BreathMask
+  - type: IdentityBlocker
+  - type: VoiceMasker
+    default: ClothingMaskGas

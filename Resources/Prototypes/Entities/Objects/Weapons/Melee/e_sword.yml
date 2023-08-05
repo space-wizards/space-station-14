@@ -55,11 +55,11 @@
     enabled: false
 
 - type: entity
-  name: pen
+  name: energy dagger
   parent: EnergySword
   id: EnergyDagger
   suffix: E-Dagger
-  description: 'A dark ink pen.'
+  description: A small energy dagger, disguised as a pen, but it doesnt fool syndies.
   components:
   - type: EnergySword
     secret: true
