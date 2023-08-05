@@ -1,3 +1,4 @@
+using Content.Shared.Damage;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -10,10 +11,16 @@ namespace Content.Shared.Zombies
     public sealed class PassiveHealComponent : Component
     {
         /// <summary>
-        /// How many points of damage are healed each second
+        /// How many flat points of damage are healed each second
         /// </summary>
-        [DataField("pointsPerSec"), ViewVariables(VVAccess.ReadOnly)]
-        public float PointsPerSec = 0.6f;
+        [DataField("FlatPerSec"), ViewVariables(VVAccess.ReadOnly)]
+        public float FlatPerSec = 0.6f;
+
+        /// <summary>
+        /// Specific healing points per second. Specify negative values to heal.
+        /// </summary>
+        [DataField("healPerSec")]
+        public DamageSpecifier? healPerSec;
 
         /// <summary>
         /// Next time we are going to apply a heal

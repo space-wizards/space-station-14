@@ -11,13 +11,10 @@ namespace Content.Shared.Zombies;
 public sealed class PendingZombieComponent : Component
 {
     /// <summary>
-    /// Damage dealt every second to infected individuals.
-    /// </summary>
-    /// <summary>
-    /// The amount of time before the infected begins to take damage.
+    /// The amount of time before the infected begins to take damage in seconds.
     /// </summary>
     [DataField("gracePeriod"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan GracePeriod = TimeSpan.Zero;
+    public float GracePeriod = 0f;
 
     /// <summary>
     /// A multiplier for <see cref="Damage"/> applied when the entity is in critical condition.

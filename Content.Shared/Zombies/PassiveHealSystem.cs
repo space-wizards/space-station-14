@@ -33,10 +33,11 @@ public class PassiveHealSystem : EntitySystem
         }
     }
 
-    public void BeginHealing(EntityUid uid, float pointsPerSec)
+    public void BeginHealing(EntityUid uid, float flatPerSec, DamageSpecifier? healPerSec)
     {
         var heal = EnsureComp<PassiveHealComponent>(uid);
-        heal.PointsPerSec = pointsPerSec;
+        heal.FlatPerSec = flatPerSec;
+        heal.healPerSec = healPerSec;
     }
 
     public override void Update(float frameTime)
@@ -55,8 +56,15 @@ public class PassiveHealSystem : EntitySystem
 
             if (damage.TotalDamage > 0.01)
             {
+                if (heal.healPerSec != null)
+                {
+                    // Do specific healing first
+                    _damageable.TryChangeDamage(uid, heal.healPerSec, true, false, damage);
+                }
+
+                // Now apply a flat heal across all damage types
                 // Autoheal a mix of damage to achieve a health improvement of heal.PointsPerSec
-                var multiplier = Math.Min(1.0f, (float) (heal.PointsPerSec / damage.TotalDamage ));
+                var multiplier = Math.Min(1.0f, (float) (heal.FlatPerSec / damage.TotalDamage ));
                 _damageable.TryChangeDamage(uid, -damage.Damage * multiplier, true, false, damage);
 
                 // Don't heal again for a while.

@@ -63,16 +63,10 @@ public abstract class SharedPendingZombieSystem : EntitySystem
                 continue;
             }
 
-            // Pain of becoming a zombie grows over time
-            // By scaling the number of seconds we have an accessible way to scale this exponential function.
-            //   The function was hand tuned to 120 seconds, hence the 120 constant here.
-            var scaledSeconds = (120.0f / pending.MaxInfectionLength) * infectedSecs;
-
-            // 1x at 30s, 3x at 60s, 6x at 90s, 10x at 120s. Limit at 20x so we don't gib you.
-            // var painMultiple = Math.Min(20f, 0.1f + 0.02f * scaledSeconds + 0.0005f * scaledSeconds * scaledSeconds);
             var painMultiple = mobState.CurrentState == MobState.Critical
                 ? pending.CritDamageMultiplier
                 : 1f;
+
             _damageable.TryChangeDamage(uid, pending.VirusDamage * painMultiple, true, false, damage);
         }
     }

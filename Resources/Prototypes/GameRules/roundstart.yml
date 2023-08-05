@@ -71,38 +71,13 @@
   parent: BaseGameRule
   noSpawn: true
   components:
-  - type: StationEvent
-    minimumPlayers: 20
   - type: ZombieRule
     winEndsRoundAbove: -1.0 # Always end round when zombies are wiped out.
     earlySettings:
-      permadeathChance: 0.6
-      reviveTime: 5
-      reviveTimeMax: 30
-      maxInfectionChance: 0.40
-      minInfectionChance: 0.10
+      permadeathChance: 0.8
+      maxInfectionChance: 0.50
+      minInfectionChance: 0.20
       infectionTurnTime: 240.0
-      deadMinTurnTime: 10.0
-      healingPerSec: 0.6
-      attackDamage:
-        types:
-          Slash: 13
-          Piercing: 7
-          Structural: 10
-    victimSettings:
-      permadeathChance: 0.9
-      reviveTime: 20
-      reviveTimeMax: 60
-      maxInfectionChance: 0.10
-      minInfectionChance: 0.02
-      infectionTurnTime: 480.0
-      deadMinTurnTime: 20.0
-      healingPerSec: 0.4
-      attackDamage:
-        types:
-          Blunt: 10
-          Piercing: 4
-          Structural: 5
 
 # event schedulers
 - type: entity

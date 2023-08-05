@@ -6,14 +6,6 @@ using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using System.Text;
-using System.Linq;
-using Content.Shared.GameTicking;
-using Content.Server.Station.Components;
-using Robust.Server.Player;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
-using Robust.Shared.Players;
-using System.Text;
 
 namespace Content.Server.GameTicking
 {

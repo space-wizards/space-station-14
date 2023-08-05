@@ -1,6 +1,4 @@
-﻿using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
-using Content.Shared.Mobs;
+﻿using Content.Server.Ghost.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Zombies;
 

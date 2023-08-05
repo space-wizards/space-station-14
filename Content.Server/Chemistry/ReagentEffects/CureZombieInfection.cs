@@ -1,7 +1,7 @@
 using Content.Shared.Chemistry.Reagent;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Configuration;
 using Content.Server.Zombies;
+using Content.Shared.Zombies;
 
 
 namespace Content.Server.Chemistry.ReagentEffects;
@@ -26,8 +26,10 @@ public sealed class CureZombieInfection : ReagentEffect
         if (entityManager.HasComponent<IncurableZombieComponent>(args.SolutionEntity))
             return;
 
-        entityManager.RemoveComponent<ZombifyOnDeathComponent>(args.SolutionEntity);
+        entityManager.RemoveComponent<LivingZombieComponent>(args.SolutionEntity);
+        entityManager.RemoveComponent<ZombieComponent>(args.SolutionEntity);
         entityManager.RemoveComponent<PendingZombieComponent>(args.SolutionEntity);
+        entityManager.RemoveComponent<InitialInfectedComponent>(args.SolutionEntity);
 
         if (Innoculate)
         {
