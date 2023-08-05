@@ -88,7 +88,7 @@ namespace Content.Shared.Lathe
         #endregion
     }
 
-    [RegisterComponent, NetworkedComponent]
+    [RegisterComponent]
     public sealed class EmagLatheRecipesComponent : Component
     {
         /// <summary>
