@@ -13,3 +13,5 @@ news-write-ui-delete-text = Delete
 news-write-ui-share-text = Publish
 news-write-ui-article-name-label = Heading:
 news-write-ui-article-content-label = Content:
+news-write-no-access-popup = No access
+

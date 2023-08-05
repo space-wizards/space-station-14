@@ -32,7 +32,8 @@ public sealed partial class NewsWriteMenu : DefaultWindow
 
         for (int i = 0; i < articles.Length; i++)
         {
-            var mini = new MiniArticleCardControl(articles[i].Name);
+            var article = articles[i];
+            var mini = new MiniArticleCardControl(article.Name, (article.Author != null ? article.Author : Loc.GetString("news-read-ui-no-author")));
             mini.ArtcileNum = i;
             mini.OnDeletePressed += () => DeleteButtonPressed?.Invoke(mini.ArtcileNum);
 

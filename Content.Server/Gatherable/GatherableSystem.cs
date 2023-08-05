@@ -25,25 +25,29 @@ public sealed partial class GatherableSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<GatherableComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<GatherableComponent, GatherableDoAfterEvent>(OnDoAfter);
         InitializeProjectile();
     }
 
-    private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
+    private void Gather(EntityUid gatheredUid, EntityUid user, EntityUid used, GatheringToolComponent? tool = null, GatherableComponent? component = null)
     {
-        if (!TryComp<GatheringToolComponent>(args.Used, out var tool) || component.ToolWhitelist?.IsValid(args.Used) == false)
+        if (!Resolve(used, ref tool, false) || !Resolve(gatheredUid, ref component, false) ||
+            component.ToolWhitelist?.IsValid(used) == false)
+        {
             return;
+        }
 
         // Can't gather too many entities at once.
         if (tool.MaxGatheringEntities < tool.GatheringEntities.Count + 1)
             return;
 
-        var damageRequired = _destructible.DestroyedAt(uid);
+        var damageRequired = _destructible.DestroyedAt(gatheredUid);
         var damageTime = (damageRequired / tool.Damage.Total).Float();
         damageTime = Math.Max(1f, damageTime);
 
-        var doAfter = new DoAfterArgs(args.User, damageTime, new GatherableDoAfterEvent(), uid, target: uid, used: args.Used)
+        var doAfter = new DoAfterArgs(user, damageTime, new GatherableDoAfterEvent(), gatheredUid, target: gatheredUid, used: used)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,
@@ -52,6 +56,16 @@ public sealed partial class GatherableSystem : EntitySystem
         };
 
         _doAfterSystem.TryStartDoAfter(doAfter);
+    }
+
+    private void OnActivate(EntityUid uid, GatherableComponent component, ActivateInWorldEvent args)
+    {
+        Gather(uid, args.User, args.User);
+    }
+
+    private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
+    {
+        Gather(uid, args.User, args.Used, component: component);
     }
 
     private void OnDoAfter(EntityUid uid, GatherableComponent component, GatherableDoAfterEvent args)

@@ -13,7 +13,7 @@ using Robust.Shared.Utility;
 namespace Content.IntegrationTests.Tests
 {
     /// <summary>
-    ///     Tests that the
+    ///     Tests that a map's yaml does not change when saved consecutively.
     /// </summary>
     [TestFixture]
     public sealed class SaveLoadSaveTest
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Fresh = true, Disconnected = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
             var server = pairTracker.Pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entManager.System<MapLoaderSystem>();

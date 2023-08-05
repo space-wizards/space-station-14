@@ -5,6 +5,8 @@ using Content.Shared.Audio;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -27,15 +29,20 @@ public abstract class SharedReflectSystem : EntitySystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly InventorySystem _inventorySystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
         SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
 
         SubscribeLocalEvent<ReflectComponent, ProjectileCollideEvent>(OnReflectCollide);
         SubscribeLocalEvent<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
+
+        SubscribeLocalEvent<ReflectComponent, GotEquippedEvent>(OnReflectEquipped);
+        SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
     }
 
     private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileCollideEvent args)
@@ -159,5 +166,50 @@ public abstract class SharedReflectSystem : EntitySystem
             _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(reflector)} reflected hitscan from {ToPrettyString(shotSource)}");
 
         return true;
+    }
+
+    private void OnReflectEquipped(EntityUid uid, ReflectComponent comp, GotEquippedEvent args)
+    {
+
+        if (!TryComp(args.Equipee, out ReflectComponent? reflection))
+            return;
+
+        reflection.Enabled = true;
+
+        // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
+        // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
+        reflection.ReflectProb += (1 - reflection.ReflectProb) * comp.ReflectProb;
+
+    }
+
+    private void OnReflectUnequipped(EntityUid uid, ReflectComponent comp, GotUnequippedEvent args)
+    {
+
+        if (!TryComp(args.Equipee, out ReflectComponent? reflection))
+            return;
+
+        if (!_inventorySystem.TryGetSlots(args.Equipee, out var slotDef))
+            return;
+
+        // you could recalculate reflectprob with new = (old - component) / (1 - component), but component=1 introduces loss
+        // still need to either maintain a counter or loop through all slots to determine reflection.enabled anyway?
+        float newProb = 1;
+        var reflecting = false;
+
+        foreach (var slot in slotDef)
+        {
+            if (!_inventorySystem.TryGetSlotEntity(args.Equipee, slot.Name, out var slotEnt))
+                continue;
+
+            if (!TryComp(slotEnt, out ReflectComponent? refcomp))
+                continue;
+
+            reflecting = true;
+            var prob = refcomp.ReflectProb;
+            newProb -= newProb * prob;
+        }
+
+        reflection.ReflectProb = 1 - newProb;
+        reflection.Enabled = reflecting;
     }
 }

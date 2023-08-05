@@ -38,6 +38,7 @@
         mask:
         - MobMask
         layer:
+        - MobLayer # can be hit by bullets and lasers
         - TableLayer
   - type: Appearance
   - type: Repairable

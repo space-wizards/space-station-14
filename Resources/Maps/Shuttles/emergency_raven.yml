@@ -11414,7 +11414,7 @@ entities:
       type: AmbientSound
     - color: '#0055CCFF'
       type: AtmosPipeColor
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 609
     components:

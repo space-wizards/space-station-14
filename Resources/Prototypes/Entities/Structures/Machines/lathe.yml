@@ -227,6 +227,7 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - ClothingEyesGlassesChemical
 
 - type: entity
   id: CircuitImprinter
@@ -455,6 +456,7 @@
       - SignalTrigger
       - VoiceTrigger
       - TimerTrigger
+      - Truncheon
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine

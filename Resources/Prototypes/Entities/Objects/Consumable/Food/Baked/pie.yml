@@ -25,7 +25,6 @@
     count: 4
   - type: Tag
     tags:
-    - NoSpinOnThrow
     - Pie
 
 - type: entity
@@ -50,9 +49,6 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
-  - type: Tag
-    tags:
-    - NoSpinOnThrow
 
 # Pie
 

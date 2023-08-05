@@ -83,8 +83,6 @@
       amount: 1
     Acetone:
       amount: 1
-    Diethylamine:
-      amount: 1
     Oxygen:
       amount: 1
     Chlorine:
@@ -92,7 +90,7 @@
     Hydrogen:
       amount: 1
   products:
-    Epinephrine: 6
+    Epinephrine: 5
 
 - type: reaction
   id: Dermaline
@@ -112,7 +110,7 @@
     Oxygen:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Dexalin: 3
@@ -193,7 +191,7 @@
     Copper:
       amount: 1
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Leporazine: 2
@@ -332,7 +330,7 @@
     Histamine:
       amount: 2
     Plasma:
-      amount: 5
+      amount: 1
       catalyst: true
   products:
     Ultravasculine: 2

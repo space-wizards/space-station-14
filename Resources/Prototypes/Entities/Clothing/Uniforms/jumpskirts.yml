@@ -41,10 +41,6 @@
     sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/ce.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Radiation: 0.8
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -166,11 +162,6 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.9
-        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -182,11 +173,6 @@
     sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/hos_alt.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.9
-        Piercing: 0.9
 
 - type: entity
   parent: ClothingUniformSkirtBase

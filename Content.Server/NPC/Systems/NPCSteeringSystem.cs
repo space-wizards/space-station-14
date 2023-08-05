@@ -65,8 +65,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
-    private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<MovementSpeedModifierComponent> _modifierQuery;
+    private EntityQuery<NpcFactionMemberComponent> _factionQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TransformComponent> _xformQuery;
 
     /// <summary>
@@ -89,8 +90,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         base.Initialize();
 
         _fixturesQuery = GetEntityQuery<FixturesComponent>();
-        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
+        _factionQuery = GetEntityQuery<NpcFactionMemberComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
 
 #if DEBUG
@@ -238,8 +240,16 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             return;
 
         // Not every mob has the modifier component so do it as a separate query.
-        var npcs = EntityQuery<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>()
-            .Select(o => (o.Item1.Owner, o.Item2, o.Item3, o.Item4)).ToArray();
+        var npcs = new (EntityUid, NPCSteeringComponent, InputMoverComponent, TransformComponent)[Count<ActiveNPCComponent>()];
+
+        var query = EntityQueryEnumerator<ActiveNPCComponent, NPCSteeringComponent, InputMoverComponent, TransformComponent>();
+        var index = 0;
+
+        while (query.MoveNext(out var uid, out _, out var steering, out var mover, out var xform))
+        {
+            npcs[index] = (uid, steering, mover, xform);
+            index++;
+        }
 
         // Dependency issues across threads.
         var options = new ParallelOptions
@@ -248,7 +258,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         };
         var curTime = _timing.CurTime;
 
-        Parallel.For(0, npcs.Length, options, i =>
+        Parallel.For(0, index, options, i =>
         {
             var (uid, steering, mover, xform) = npcs[i];
             Steer(uid, steering, mover, xform, frameTime, curTime);
@@ -257,10 +267,12 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
         if (_subscribedSessions.Count > 0)
         {
-            var data = new List<NPCSteeringDebugData>(npcs.Length);
+            var data = new List<NPCSteeringDebugData>(index);
 
-            foreach (var (uid, steering, mover, _) in npcs)
+            for (var i = 0; i < index; i++)
             {
+                var (uid, steering, mover, _) = npcs[i];
+
                 data.Add(new NPCSteeringDebugData(
                     uid,
                     mover.CurTickSprintMovement,
@@ -341,7 +353,9 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
             steering.Danger[i] = 0f;
         }
 
-        var ev = new NPCSteeringEvent(steering, interest, danger, agentRadius, offsetRot, worldPos);
+        steering.CanSeek = true;
+
+        var ev = new NPCSteeringEvent(steering, xform, worldPos, offsetRot);
         RaiseLocalEvent(uid, ref ev);
         // If seek has arrived at the target node for example then immediately re-steer.
         var forceSteer = true;

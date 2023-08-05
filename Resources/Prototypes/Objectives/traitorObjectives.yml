@@ -115,6 +115,22 @@
     owner: job-name-rd
 
 - type: objective
+  id: SecretDocumentsStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - DieCondition
+  - !type:NotRoleRequirement
+    roleId: HeadOfSecurity
+  conditions:
+  - !type:StealCondition
+    prototype: BookSecretDocuments
+    owner: job-name-hos
+
+- type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
   requirements:
