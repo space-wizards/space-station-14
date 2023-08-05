@@ -3,6 +3,9 @@ notekeeper-program-name = Notekeeper
 news-read-program-name = Station news
 messenger-program-name = Messenger
 
+crew-manifest-program-name = Crew manifest
+crew-manifest-cartridge-loading = Loading ...
+
 net-probe-program-name = NetProbe
 net-probe-scan = Scanned {$device}!
 net-probe-label-name = Name

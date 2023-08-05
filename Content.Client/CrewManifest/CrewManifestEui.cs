@@ -43,7 +43,6 @@ public sealed class CrewManifestEui : BaseEui
             return;
         }
 
-        _window.SetSourceEntries(cast.Entries ?? new CrewManifestEntries());
         _window.Populate(cast.StationName, cast.Entries);
     }
 }

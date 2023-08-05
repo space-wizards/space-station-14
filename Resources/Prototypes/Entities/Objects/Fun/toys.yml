@@ -721,6 +721,11 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: synb
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
 
 - type: entity
   parent: BaseItem
@@ -735,6 +740,11 @@
     size: 24
     sprite: Objects/Fun/toys.rsi
     heldPrefix: corgib
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Tag
+    tags:
+    - Balloon
 
 - type: entity
   parent: BaseItem

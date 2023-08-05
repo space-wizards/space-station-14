@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy
@@ -30,8 +31,7 @@ namespace Content.IntegrationTests.Tests.Body
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 

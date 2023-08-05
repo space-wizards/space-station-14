@@ -8,6 +8,9 @@
   - type: SolutionContainerManager
   - type: Sprite
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
@@ -981,6 +984,7 @@
     seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
+  - type: BadFood
 
 - type: entity
   name: gatfruit
