@@ -53,7 +53,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
             {
-                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { otherEntity }), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { target }), Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
