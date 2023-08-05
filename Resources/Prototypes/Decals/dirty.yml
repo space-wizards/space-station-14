@@ -29,6 +29,13 @@
     state: dirtheavy
 
 - type: decal
+  id: DirtHeavyMonotile
+  tags: ["station", "dirty"]
+  sprite:
+    sprite: Decals/dirty.rsi
+    state: dirtheavy-mono
+
+- type: decal
   id: Damaged
   tags: ["station", "dirty"]
   sprite:

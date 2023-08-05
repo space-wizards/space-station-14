@@ -60,6 +60,30 @@
     node: steeltile
 
 - type: entity
+  name: steel dark checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerDark
+  components:
+  - type: Sprite
+    state: checker-dark
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerDark
+
+- type: entity
+  name: steel light checker tile
+  parent: FloorTileItemSteel
+  id: FloorTileItemSteelCheckerLight
+  components:
+  - type: Sprite
+    state: checker-light
+  - type: FloorTile
+    outputs:
+      - Plating
+      - FloorSteelCheckerLight
+
+- type: entity
   name: steel tile
   parent: FloorTileItemBase
   id: FloorTileItemMetalDiamond
