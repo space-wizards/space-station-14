@@ -115,7 +115,6 @@
       - id: IDComputerCircuitboard
       - id: WeaponDisabler
       - id: ClothingShoesColorBlack
-        prob: 0.7
       - id: CigarGoldCase
         prob: 0.30
         # Fuck the HoP they don't deserve fucking cigars.
