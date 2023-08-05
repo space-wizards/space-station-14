@@ -198,7 +198,7 @@
 
 - type: latheRecipe
   id: FactoryVoiceMask
-  result: ClothingVoiceChangeMask
+  result: ClothingMaskGasVoice
   completetime: 1
   materials:
     Steel: 200
