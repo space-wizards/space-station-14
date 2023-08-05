@@ -718,7 +718,11 @@ we are just going to end this here to save a lot of time. This is the exception 
         return list;
     }
 
-    public static void Startup(Assembly? assembly = null)
+    /// <summary>
+    /// Initialize the pool manager.
+    /// </summary>
+    /// <param name="assembly">Assembly to search for to discover extra test prototypes.</param>
+    public static void Startup(Assembly? assembly)
     {
         if (_initialized)
             throw new InvalidOperationException("Already initialized");
