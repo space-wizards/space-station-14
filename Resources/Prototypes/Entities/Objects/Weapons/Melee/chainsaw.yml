@@ -11,11 +11,6 @@
       path: /Audio/Weapons/chainsawwield.ogg
       params:
         volume: -3
-  - type: AmbientSound
-    volume: -6
-    range: 4
-    sound:
-      path: /Audio/Weapons/chainsawidle.ogg
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/chainsaw.rsi
@@ -27,7 +22,7 @@
         Blunt: 3
     soundHit:
       path: /Audio/Weapons/chainsaw.ogg
-      params: 
+      params:
         volume: -3
   - type: Item
     size: 50
@@ -43,12 +38,3 @@
         - ReagentId: WeldingFuel
           Quantity: 300
         maxVol: 300
-  - type: Tool
-  - type: Welder
-    fuelConsumption: 1
-    fuelLitCost: 5
-    litMeleeDamageBonus:
-      types:
-        Slash: 20
-        Blunt: 2
-        Structural: 3
