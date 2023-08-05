@@ -14,7 +14,8 @@ namespace Content.IntegrationTests.Tests.Damageable
     [TestOf(typeof(DamageableSystem))]
     public sealed class DamageableTest
     {
-        public const string Prototypes = @"
+        [TestPrototypes]
+        private const string Prototypes = @"
 # Define some damage groups
 - type: damageType
   id: TestDamage1
@@ -74,8 +75,7 @@ namespace Content.IntegrationTests.Tests.Damageable
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 

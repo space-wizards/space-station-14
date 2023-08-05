@@ -54,3 +54,5 @@ command-description-tag-addmany =
     Adds a list of tags to the given entities.
 command-description-tag-rmmany =
     Removes a list of tags from the given entities.
+command-description-solution-get =
+    Returns a solution stored in an entity's solution container.

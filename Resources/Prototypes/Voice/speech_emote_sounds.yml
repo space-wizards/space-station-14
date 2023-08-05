@@ -255,6 +255,18 @@
     variation: 0.125
     pitchscale: 0.75
 
+- type: emoteSounds
+  id: UnisexMoth
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Voice/Moth/moth_scream.ogg
+    Laugh:
+      path: /Audio/Voice/Moth/moth_laugh.ogg
+    Chitter:
+      path: /Audio/Voice/Moth/moth_chitter.ogg
+
 # body emotes
 - type: emoteSounds
   id: GeneralBodyEmotes

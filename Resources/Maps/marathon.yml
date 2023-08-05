@@ -106750,6 +106750,28 @@ entities:
     - pos: -41.5,-26.5
       parent: 30
       type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 20805
+    components:
+    - pos: -47.5,26.5
+      parent: 30
+      type: Transform
+  - uid: 20806
+    components:
+    - pos: 20.5,52.5
+      parent: 30
+      type: Transform
+  - uid: 20807
+    components:
+    - pos: 2.5,-13.5
+      parent: 30
+      type: Transform
+  - uid: 20808
+    components:
+    - pos: -63.5,-64.5
+      parent: 30
+      type: Transform
 - proto: MaintenanceToolSpawner
   entities:
   - uid: 9197
