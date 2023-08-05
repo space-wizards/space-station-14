@@ -49,7 +49,7 @@ public sealed partial class LogProbeUiFragment : BoxContainer
         row.Margin = new Thickness(4);
 
         var timeLabel = new Label();
-        timeLabel.Text = log.Time.ToString();
+        timeLabel.Text = TimeSpan.FromSeconds(Math.Truncate(log.Time.TotalSeconds)).ToString();
         timeLabel.HorizontalExpand = false;
         timeLabel.SetWidth = 75;
         timeLabel.ClipText = true;
