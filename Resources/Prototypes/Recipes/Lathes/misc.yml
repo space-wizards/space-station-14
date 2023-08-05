@@ -99,7 +99,6 @@
   completetime: 5
   materials:
     Steel: 500
-    Plastic: 
 
 - type: latheRecipe
   id: ExtendedEmergencyOxygenTank
@@ -107,7 +106,6 @@
   completetime: 5
   materials:
     Steel: 750
-    Plastic: 
 
 - type: latheRecipe
   id: DoubleEmergencyOxygenTank
@@ -115,4 +113,3 @@
   completetime: 5
   materials:
     Steel: 1000
-    Plastic: 
