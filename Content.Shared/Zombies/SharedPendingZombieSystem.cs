@@ -39,12 +39,7 @@ public abstract class SharedPendingZombieSystem : EntitySystem
                 continue;
 
             // Don't hurt again for a while.
-            pending.NextTick += TimeSpan.FromSeconds(1);
-            if (pending.NextTick < curTime)
-            {
-                // If the component is far behind the current time, reinitialize it.
-                pending.NextTick = curTime + TimeSpan.FromSeconds(1);
-            }
+            pending.NextTick = curTime + TimeSpan.FromSeconds(1);
 
             var infectedSecs = (int)(curTime - pending.InfectionStarted).TotalSeconds;
 
