@@ -17,7 +17,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoOrderArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -51,7 +51,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoCargoBountyArbitageTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings() { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -92,7 +92,7 @@ public sealed class CargoTest
     [Test]
     public async Task NoStaticPriceAndStackPrice()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -169,7 +169,7 @@ public sealed class CargoTest
     public async Task StackPrice()
     {
 
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true } );
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true } );
         var server = pairTracker.Pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();

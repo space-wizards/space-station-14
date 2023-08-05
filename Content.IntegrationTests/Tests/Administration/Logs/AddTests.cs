@@ -21,7 +21,7 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
@@ -68,7 +68,7 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
@@ -135,7 +135,7 @@ public sealed class AddTests
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();

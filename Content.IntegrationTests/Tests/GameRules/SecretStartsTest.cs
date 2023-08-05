@@ -15,7 +15,7 @@ public sealed class SecretStartsTest
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
         {
-            NoClient = true,
+            Disconnected = true,
             Dirty = true,
         });
 

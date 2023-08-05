@@ -149,7 +149,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
 

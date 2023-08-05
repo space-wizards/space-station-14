@@ -17,7 +17,7 @@ public sealed class StartEndGameRulesTest
     {
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
         {
-            NoClient = true,
+            Disconnected = true,
             Dirty = true,
         });
         var server = pairTracker.Pair.Server;

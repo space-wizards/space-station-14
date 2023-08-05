@@ -60,6 +60,9 @@ public static partial class PoolManager
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
         (CCVars.WorldgenEnabled.Name,         "false"),
+        (CCVars.ReplayClientRecordingEnabled.Name, "false"),
+        (CCVars.ReplayServerRecordingEnabled.Name, "false"),
+
         // @formatter:on
     };
 
@@ -309,7 +312,7 @@ public static partial class PoolManager
 
                     // Ensure client is 1 tick ahead of server? I don't think theres a real reason for why it should be
                     // 1 tick specifically, I am just ensuring consistency with CreateServerClientPair()
-                    if (!pair.Settings.NotConnected)
+                    if (!pair.Settings.Disconnected)
                         await SyncTicks(pair, targetDelta: 1);
                 }
                 else
@@ -351,14 +354,14 @@ public static partial class PoolManager
 
     private static void ValidateFastRecycle(Pair pair)
     {
-        if (pair.Settings.NoClient || pair.Settings.NoServer)
+        if (pair.Settings.Disconnected || pair.Settings.Disconnected)
             return;
 
         var baseClient = pair.Client.ResolveDependency<IBaseClient>();
         var netMan = pair.Client.ResolveDependency<INetManager>();
-        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.NotConnected));
+        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.Disconnected));
 
-        if (pair.Settings.NotConnected)
+        if (pair.Settings.Disconnected)
             return;
 
         Assert.That(baseClient.RunLevel, Is.EqualTo(ClientRunLevel.InGame));
@@ -470,7 +473,7 @@ public static partial class PoolManager
         configManager.SetCVar(CCVars.GameDummyTicker, poolSettings.DummyTicker);
         await pair.Server.WaitPost(() => gameTicker.RestartRound());
 
-        if (!poolSettings.NotConnected)
+        if (!poolSettings.Disconnected)
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
             await ReallyBeIdle(pair);
@@ -533,7 +536,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             throw;
         }
 
-        if (!poolSettings.NotConnected)
+        if (!poolSettings.Disconnected)
         {
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Client.WaitPost(() =>
@@ -567,7 +570,7 @@ we are just going to end this here to save a lot of time. This is the exception 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var xformSystem = entityManager.System<SharedTransformSystem>();
 
-        if (settings.NoServer) throw new Exception("Cannot setup test map without server");
+        if (settings.Disconnected) throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
@@ -753,11 +756,6 @@ public sealed class PoolSettings
     public bool MustBeNew => Fresh || NoLoadContent || NoLoadTestPrototypes;
 
     /// <summary>
-    /// If the given pair must not be connected
-    /// </summary>
-    public bool NotConnected => NoClient || NoServer || Disconnected;
-
-    /// <summary>
     /// Set to true if the test will ruin the server/client pair.
     /// </summary>
     public bool Destructive { get; init; }
@@ -812,16 +810,6 @@ public sealed class PoolSettings
     public string Map { get; init; } = PoolManager.TestMap;
 
     /// <summary>
-    /// Set to true if the test won't use the client (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoClient { get; init; }
-
-    /// <summary>
-    /// Set to true if the test won't use the server (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoServer { get; init; }
-
-    /// <summary>
     /// Overrides the test name detection, and uses this in the test history instead
     /// </summary>
     public string? TestName { get; set; }
@@ -843,7 +831,7 @@ public sealed class PoolSettings
             return false;
 
         // Check that certain settings match.
-        return NotConnected == nextSettings.NotConnected
+        return Disconnected == nextSettings.Disconnected
                && DummyTicker == nextSettings.DummyTicker
                && Map == nextSettings.Map
                && InLobby == nextSettings.InLobby;

@@ -60,7 +60,7 @@ namespace Content.YAMLLinter
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateServer()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
             var server = pairTracker.Pair.Server;
             var result = await ValidateInstance(server);
             await pairTracker.CleanReturnAsync();

@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         [Test]
         public async Task TestSerializable()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Disconnected = true });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
             var refMan = server.ResolveDependency<IReflectionManager>();
@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
@@ -94,7 +94,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();

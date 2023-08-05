@@ -42,7 +42,7 @@ public abstract class ToolshedTest : IInvocationContext
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = NoClient});
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings {Disconnected = NoClient});
         Server = PairTracker.Pair.Server;
 
         if (!NoClient)

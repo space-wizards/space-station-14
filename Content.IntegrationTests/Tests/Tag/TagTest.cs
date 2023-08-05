@@ -46,7 +46,7 @@ namespace Content.IntegrationTests.Tests.Tag
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
 

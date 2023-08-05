@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -116,7 +116,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -204,7 +204,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true
+                Disconnected = true
             });
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
