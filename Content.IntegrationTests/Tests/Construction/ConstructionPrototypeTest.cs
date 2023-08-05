@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.TryGetValue(name, out var reg))
+                    if (proto.Abstract || pairTracker.Pair.IsTestPrototype(proto) || !proto.Components.TryGetValue(name, out var reg))
                         continue;
 
                     var comp = (ConstructionComponent) reg.Component;

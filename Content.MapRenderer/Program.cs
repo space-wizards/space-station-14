@@ -29,6 +29,7 @@ namespace Content.MapRenderer
             if (!CommandLineArguments.TryParse(args, out var arguments))
                 return;
 
+            PoolManager.Startup(null);
             if (arguments.Maps.Count == 0)
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
@@ -135,6 +136,7 @@ namespace Content.MapRenderer
             }
 
             await Run(arguments);
+            PoolManager.Shutdown();
         }
 
         private static async Task Run(CommandLineArguments arguments)

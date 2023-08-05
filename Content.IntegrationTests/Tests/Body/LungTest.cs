@@ -19,10 +19,11 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(LungSystem))]
     public sealed class LungTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanBodyDummy
-  id: HumanBodyDummy
+  name: HumanLungDummy
+  id: HumanLungDummy
   components:
   - type: SolutionContainerManager
   - type: Body
@@ -54,8 +55,7 @@ namespace Content.IntegrationTests.Tests.Body
             // --- Setup
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -104,7 +104,7 @@ namespace Content.IntegrationTests.Tests.Body
             {
                 var coords = new Vector2(0.5f, -1f);
                 var coordinates = new EntityCoordinates(grid.Value, coords);
-                human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
                 respSys = entityManager.System<RespiratorSystem>();
                 metaSys = entityManager.System<MetabolizerSystem>();
                 relevantAtmos = entityManager.GetComponent<GridAtmosphereComponent>(grid.Value);
@@ -143,8 +143,7 @@ namespace Content.IntegrationTests.Tests.Body
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -179,7 +178,7 @@ namespace Content.IntegrationTests.Tests.Body
                 var center = new Vector2(0.5f, 0.5f);
 
                 var coordinates = new EntityCoordinates(grid.Value, center);
-                human = entityManager.SpawnEntity("HumanBodyDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanLungDummy", coordinates);
 
                 var mixture = entityManager.System<AtmosphereSystem>().GetContainingMixture(human);
 #pragma warning disable NUnit2045
