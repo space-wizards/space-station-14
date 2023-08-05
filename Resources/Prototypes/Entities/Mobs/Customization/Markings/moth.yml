@@ -6,7 +6,7 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_antennas.rsi
-    state: antenna_default
+    state: default
 
 # Wings
 - type: marking
