@@ -29,22 +29,6 @@ public sealed class PendingZombieComponent : Component
     public TimeSpan InfectionStarted;
 
     /// <summary>
-    /// The chance each second that a warning will be shown.
-    /// </summary>
-    [DataField("infectionWarningChance")]
-    public float InfectionWarningChance = 0.0166f;
-
-    /// <summary>
-    /// Infection warnings shown as popups
-    /// </summary>
-    [DataField("infectionWarnings")]
-    public List<string> InfectionWarnings = new()
-    {
-        "zombie-infection-warning",
-        "zombie-infection-underway"
-    };
-
-    /// <summary>
     /// Minimum time this zombie victim will lie dead before rising as a zombie.
     /// </summary>
     [DataField("deadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]

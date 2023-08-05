@@ -17,11 +17,6 @@ namespace Content.Shared.Zombies;
     public sealed class ZombieSettings
 {
     /// <summary>
-    /// The coefficient of the damage reduction applied when a zombie
-    [ViewVariables]
-    public float OtherZombieDamageCoefficient = 0.25f;
-
-    /// <summary>
     /// When zombie drops into crit, what is the chance they will die permanently?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
@@ -56,7 +51,7 @@ namespace Content.Shared.Zombies;
 
     /// <summary>
     [DataField("infectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float InfectionTurnTime = 480.0f;
+    public float InfectionTurnTime = 30.0f;
     /// <summary>
     /// Minimum time a zombie victim will lie dead before rising as a zombie.
     /// </summary>

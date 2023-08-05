@@ -77,7 +77,7 @@
       permadeathChance: 0.8
       maxInfectionChance: 0.50
       minInfectionChance: 0.20
-      infectionTurnTime: 240.0
+      infectionTurnTime: 30.0
 
 # event schedulers
 - type: entity

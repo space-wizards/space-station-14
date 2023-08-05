@@ -42,7 +42,6 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             pending.NextTick = curTime + TimeSpan.FromSeconds(1);
 
             var infectedSecs = (int)(curTime - pending.InfectionStarted).TotalSeconds;
-
             // See if there should be a warning popup for the player.
             if (zombie.Settings.InfectionWarnings.TryGetValue(infectedSecs, out var popupStr))
             {
@@ -52,10 +51,16 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             // If the zombie is dead, consider converting then continue to next zombie
             if (mobState.CurrentState == MobState.Dead)
             {
-                // NB: This removes PendingZombieComponent
+                // DeadMinTurnTime is enforced to give the living a moment to realize their ally is converting
                 if (infectedSecs > pending.DeadMinTurnTime)
-                    ZombifyNow(uid, pending, zombie, mobState);
+                    ZombifyNow(uid, pending, zombie, mobState);  // NB: This removes PendingZombieComponent
                 continue;
+            }
+
+            if (infectedSecs < pending.GracePeriod && mobState.CurrentState == MobState.Alive)
+            {
+                // Don't hurt this zombie yet.
+                return;
             }
 
             var painMultiple = mobState.CurrentState == MobState.Critical
