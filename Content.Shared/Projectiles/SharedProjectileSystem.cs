@@ -5,73 +5,74 @@ using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Projectiles;
-
-public abstract class SharedProjectileSystem : EntitySystem
+namespace Content.Shared.Projectiles
 {
-    public const string ProjectileFixture = "projectile";
-
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-
-    public override void Initialize()
+    public abstract class SharedProjectileSystem : EntitySystem
     {
-        base.Initialize();
-        SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<EmbeddableProjectileComponent, StartCollideEvent>(OnEmbedCollide);
-    }
+        public const string ProjectileFixture = "projectile";
 
-    private void OnEmbedCollide(EntityUid uid, EmbeddableProjectileComponent component, ref StartCollideEvent args)
-    {
-        if (!TryComp<ProjectileComponent>(uid, out var projectile))
-            return;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
-        _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
-        _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
-        _transform.SetParent(uid, args.OtherEntity);
-        var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
-        RaiseLocalEvent(uid, ref ev);
-    }
-
-    private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
-    {
-        if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
+        public override void Initialize()
         {
-            args.Cancelled = true;
+            base.Initialize();
+            SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
+            SubscribeLocalEvent<EmbeddableProjectileComponent, StartCollideEvent>(OnEmbedCollide);
+        }
+
+        private void OnEmbedCollide(EntityUid uid, EmbeddableProjectileComponent component, ref StartCollideEvent args)
+        {
+            if (!TryComp<ProjectileComponent>(uid, out var projectile))
+                return;
+
+            _physics.SetLinearVelocity(uid, Vector2.Zero, body: args.OurBody);
+            _physics.SetBodyType(uid, BodyType.Static, body: args.OurBody);
+            _transform.SetParent(uid, args.OtherEntity);
+            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
+            RaiseLocalEvent(uid, ref ev);
+        }
+
+        private void PreventCollision(EntityUid uid, ProjectileComponent component, ref PreventCollideEvent args)
+        {
+            if (component.IgnoreShooter && args.OtherEntity == component.Shooter)
+            {
+                args.Cancelled = true;
+            }
+        }
+
+        public void SetShooter(ProjectileComponent component, EntityUid uid)
+        {
+            if (component.Shooter == uid)
+                return;
+
+            component.Shooter = uid;
+            Dirty(component);
         }
     }
 
-    public void SetShooter(ProjectileComponent component, EntityUid uid)
+    [Serializable, NetSerializable]
+    public sealed class ImpactEffectEvent : EntityEventArgs
     {
-        if (component.Shooter == uid)
-            return;
+        public string Prototype;
+        public EntityCoordinates Coordinates;
 
-        component.Shooter = uid;
-        Dirty(component);
+        public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
+        {
+            Prototype = prototype;
+            Coordinates = coordinates;
+        }
     }
+
+    /// <summary>
+    /// Raised when entity is just about to be hit with projectile but can reflect it
+    /// </summary>
+    [ByRefEvent]
+    public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
+
+    /// <summary>
+    /// Raised when projectile hits other entity
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct ProjectileHitEvent(EntityUid Target);
 }
-
-[Serializable, NetSerializable]
-public sealed class ImpactEffectEvent : EntityEventArgs
-{
-    public string Prototype;
-    public EntityCoordinates Coordinates;
-
-    public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
-    {
-        Prototype = prototype;
-        Coordinates = coordinates;
-    }
-}
-
-/// <summary>
-/// Raised when entity is just about to be hit with projectile but can reflect it
-/// </summary>
-[ByRefEvent]
-public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
-
-/// <summary>
-/// Raised when projectile hits other entity
-/// </summary>
-[ByRefEvent]
-public readonly record struct ProjectileHitEvent(EntityUid Target);
