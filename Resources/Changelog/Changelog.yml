@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Added Chef Guidebook, type: Add}
-  id: 3941
-  time: '2023-06-04T21:34:29.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Advanced tools now has the recipe for the Experimental welding tool
@@ -2986,3 +2981,10 @@ Entries:
       will cause electromagnetic pulse.', type: Add}
   id: 4440
   time: '2023-08-05T04:31:14.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: 'The Syndicate Disposable Turret is now approved for use by all syndicate
+      agents (with the exception of nuclear operatives), instead of those from a select
+      few jobs.', type: Tweak}
+  id: 4441
+  time: '2023-08-05T04:32:25.0000000+00:00'
