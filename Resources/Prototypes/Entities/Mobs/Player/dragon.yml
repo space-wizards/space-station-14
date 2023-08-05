@@ -102,6 +102,7 @@
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
+  - type: MeleeWeapon
     damage:
       types:
         Piercing: 15
@@ -159,3 +160,10 @@
     spawned:
     - id: FoodMeatDragon
       amount: 1
+  # half damage, spread evenly
+  - type: MeleeWeapon
+    damage:
+      types:
+        Brute: 5
+        Piercing: 5
+        Slash: 5
