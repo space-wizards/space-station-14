@@ -77,7 +77,6 @@
         - Sheet
         - RawMaterial
         - Ingot
-     
   - type: Lathe
     idleState: icon
     runningState: building
