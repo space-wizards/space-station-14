@@ -21,7 +21,8 @@ namespace Content.IntegrationTests.Tests.Buckle
         private const string StrapDummyId = "StrapDummy";
         private const string ItemDummyId = "ItemDummy";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: entity
   name: {BuckleDummyId}
   id: {BuckleDummyId}
@@ -49,7 +50,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         public async Task BuckleUnbuckleCooldownRangeTest()
         {
             await using var pairTracker =
-                await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+                await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -244,8 +245,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 
@@ -341,8 +341,7 @@ namespace Content.IntegrationTests.Tests.Buckle
         {
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
+                NoClient = true
             });
             var server = pairTracker.Pair.Server;
 

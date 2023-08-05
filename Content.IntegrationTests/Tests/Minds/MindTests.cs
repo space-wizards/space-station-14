@@ -24,6 +24,7 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed partial class MindTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: MindTestEntityDamageable
@@ -109,7 +110,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
