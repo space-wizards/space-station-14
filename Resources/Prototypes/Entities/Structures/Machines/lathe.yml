@@ -276,7 +276,7 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponTaser
-      
+
 - type: entity
   id: CircuitImprinter
   parent: BaseLathe
