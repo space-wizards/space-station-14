@@ -145,13 +145,13 @@
     state: pointy
 
 - type: marking
-  id: MothWingsPsyho
+  id: MothWingsPsycho
   bodyPart: Tail
   markingCategory: Tail
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/moth_wings.rsi
-    state: psyho
+    state: psycho
 
 - type: marking
   id: MothWingsRoyal
