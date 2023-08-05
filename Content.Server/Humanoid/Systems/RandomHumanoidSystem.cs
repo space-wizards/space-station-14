@@ -16,6 +16,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
@@ -43,9 +44,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
         var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
         var humanoid = Spawn(speciesProto.Prototype, coordinates);
 
-        MetaData(humanoid).EntityName = prototype.RandomizeName
-            ? profile.Name
-            : name;
+        _metaData.SetEntityName(humanoid, prototype.RandomizeName ? profile.Name : name);
 
         _humanoid.LoadProfile(humanoid, profile);
 
