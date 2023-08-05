@@ -23,8 +23,6 @@
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
@@ -56,8 +54,6 @@
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
@@ -93,13 +89,11 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: BaseFactoryMachineCircuitboard
+    board: FactoryFirearmAssemblerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
@@ -135,13 +129,11 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: BaseFactoryMachineCircuitboard
+    board: FactoryEnergyBladeAssemblerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
@@ -171,27 +163,21 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: BaseFactoryMachineCircuitboard
+    board: FactoryGearAssemblerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
     staticRecipes:
      - FactoryShoulderHolster
      - FactoryStealthBox
-     - FactoryNoSlipShoes
-     - FactoryTheivingGloves
      - FactoryWebVest
      - FactoryEmag
-     - FactoryAgentIDCard
      - FactoryVoiceMask
-     - FactoryStorageImplanter
-     - FactoryFreedomImplanter
+     - FactoryCyberSunPen
 
 - type: entity
   id: FactoryClownAssembler
@@ -213,13 +199,11 @@
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: Machine
-    board: BaseFactoryMachineCircuitboard
+    board: FactoryClownAssemblerMachineCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
         - Sheet
-        - RawMaterial
-        - Ingot
   - type: Lathe
     idleState: icon
     runningState: building
@@ -232,5 +216,40 @@
      - FactorySyndieBalloon
      - FactoryExplosiveBananaPeel
      - FactoryExplosiveWetFloorSign
-     - FactoryHypoPen
 
+- type: entity
+  id: FactoryMedicalAssembler
+  parent: BaseLathe
+  name: medical assembler
+  description: Offical CyberSun-Medical-Assembler, its spotless.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/autolathe.rsi
+    snapCardinals: true
+    layers:
+    - state: icon
+      map: ["enum.LatheVisualLayers.IsRunning"]
+    - state: unlit
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+    - state: inserting
+      map: ["enum.MaterialStorageVisualLayers.Inserting"]
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: Machine
+    board: FactoryMedicalAssemblerMachineCircuitboard
+  - type: MaterialStorage
+    whitelist:
+      tags:
+        - Sheet
+  - type: Lathe
+    idleState: icon
+    runningState: building
+    staticRecipes:
+     - FactoryHypopenBox
+     - FactoryMacroBombImplanter
+     - FactoryStorageImplanter
+     - FactoryFreedomImplanter
+     - FactoryHypopenBox
+     - FactorySyndicateSmokesPacket
+     - FactoryStimpack
