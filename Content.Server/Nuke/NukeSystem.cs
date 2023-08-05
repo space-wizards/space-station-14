@@ -5,7 +5,6 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
-using Content.Shared.Construction.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.DoAfter;
@@ -57,9 +56,6 @@ public sealed class NukeSystem : EntitySystem
         SubscribeLocalEvent<NukeComponent, EntInsertedIntoContainerMessage>(OnItemSlotChanged);
         SubscribeLocalEvent<NukeComponent, EntRemovedFromContainerMessage>(OnItemSlotChanged);
 
-        // anchoring logic
-        SubscribeLocalEvent<NukeComponent, AnchorAttemptEvent>(OnAnchorAttempt);
-        SubscribeLocalEvent<NukeComponent, UnanchorAttemptEvent>(OnUnanchorAttempt);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<NukeComponent, AnchorStateChangedEvent>(OnAnchorChanged);
 
@@ -136,28 +132,6 @@ public sealed class NukeSystem : EntitySystem
     }
 
     #region Anchor
-
-    private void OnAnchorAttempt(EntityUid uid, NukeComponent component, AnchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void OnUnanchorAttempt(EntityUid uid, NukeComponent component, UnanchorAttemptEvent args)
-    {
-        CheckAnchorAttempt(uid, component, args);
-    }
-
-    private void CheckAnchorAttempt(EntityUid uid, NukeComponent component, BaseAnchoredAttemptEvent args)
-    {
-        // cancel any anchor attempt if armed
-        if (component.Status == NukeStatus.ARMED)
-        {
-            var msg = Loc.GetString("nuke-component-cant-anchor");
-            _popups.PopupEntity(msg, uid, args.User);
-
-            args.Cancel();
-        }
-    }
 
     private void OnAnchorChanged(EntityUid uid, NukeComponent component, ref AnchorStateChangedEvent args)
     {

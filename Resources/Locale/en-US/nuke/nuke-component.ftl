@@ -1,4 +1,3 @@
-nuke-component-cant-anchor = The bolts seems to be blocked without disk!
 nuke-component-cant-anchor-floor = The anchoring bolts fail to lock into the floor!
 nuke-component-announcement-sender = Nuclear Fission Explosive
 nuke-component-announcement-armed = Attention! The station's self-destruct mechanism has been engaged at global coordinates {$position}. {$time} seconds until detonation. If this was made in error, the mechanism may still be disarmed.
