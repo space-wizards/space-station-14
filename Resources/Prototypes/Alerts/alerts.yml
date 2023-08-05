@@ -1,4 +1,4 @@
-﻿- type: alertOrder
+- type: alertOrder
   # Defines ordering in alert tab, higher up = higher in tab.
   # List below can contain alert type or category, if both are present the id will take precedence.
   # If item is not in list it will go at the bottom (ties broken by alert type enum value)
@@ -22,6 +22,7 @@
     - category: Hunger
     - category: Thirst
     - alertType: Magboots
+    - alertType: Pacified
 
 - type: alert
   id: LowOxygen
@@ -322,6 +323,14 @@
   description: alerts-bleed-desc
   minSeverity: 0
   maxSeverity: 10
+
+- type: alert
+  id: Pacified
+  icons:
+  - sprite: /Textures/Interface/Alerts/pacified.rsi
+    state: icon
+  name: alerts-pacified-name
+  description: alerts-pacified-desc
 
 - type: alert
   id: Debug1
