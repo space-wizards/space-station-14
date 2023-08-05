@@ -7,7 +7,7 @@
     - !type:DepartmentTimeRequirement
       department: SyndicateEngineering
       time: 54000 #15 hrs
-      inverted: true # stop playing intern if you're good at engineering!
+      inverted: true # stop playing aide if you're good at engineering!
   startingGear: SyndicateEngineersAideGear
   icon: "JobIconSyndicateEngineersAide"
   supervisors: job-supervisors-engineering
