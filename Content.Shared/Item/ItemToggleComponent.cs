@@ -1,34 +1,35 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
-namespace Content.Server.Weapons.Melee.ItemToggle;
+namespace Content.Shared.Item;
 
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+/// Handles generic item toggles, like a welder turning on and off, or an esword.
+/// </summary>
+/// <remarks>
+/// If you need extended functionality (e.g. requiring power) then add a new component and use events.
+/// </remarks>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed class ItemToggleComponent : Component
 {
-    public bool Activated = false;
+    [ViewVariables(VVAccess.ReadWrite), DataField("activated"), AutoNetworkedField]
+    public bool Activated;
 
-    [DataField("activateSound")]
-    public SoundSpecifier ActivateSound { get; set; } = default!;
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundActivate"), AutoNetworkedField]
+    public SoundSpecifier? ActivateSound;
 
-    [DataField("deActivateSound")]
-    public SoundSpecifier DeActivateSound { get; set; } = default!;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("activatedDisarmMalus")]
-    public float ActivatedDisarmMalus = 0.6f;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("offSize")]
-    public int OffSize = 1;
-
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("onSize")]
-    public int OnSize = 9999;
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundDeactivate"), AutoNetworkedField]
+    public SoundSpecifier? DeactivateSound;
 }
 
 [ByRefEvent]
-public readonly record struct ItemToggleActivatedEvent();
+public readonly record struct ItemToggleActivateAttemptEvent(bool Cancelled = false);
 
 [ByRefEvent]
-public readonly record struct ItemToggleDeactivatedEvent();
+public readonly record struct ItemToggleActivatedEvent;
+
+[ByRefEvent]
+public readonly record struct ItemToggleDeactivateAttemptEvent(bool Cancelled = false);
+
+[ByRefEvent]
+public readonly record struct ItemToggleDeactivatedEvent;

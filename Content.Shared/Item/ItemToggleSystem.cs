@@ -1,12 +1,10 @@
-using Content.Server.CombatMode.Disarm;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Item;
 using Content.Shared.Toggleable;
 using Content.Shared.Tools.Components;
 using Robust.Shared.Player;
 
-namespace Content.Server.Weapons.Melee.ItemToggle;
+namespace Content.Shared.Item;
 
 public sealed class ItemToggleSystem : EntitySystem
 {
@@ -24,25 +22,33 @@ public sealed class ItemToggleSystem : EntitySystem
         SubscribeLocalEvent<ItemToggleComponent, ItemToggleActivatedEvent>(TurnOn);
     }
 
-    private void OnUseInHand(EntityUid uid, ItemToggleComponent comp, UseInHandEvent args)
+    public bool TryActivate(EntityUid uid, ItemToggleComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (component.Activated)
+            return true;
+
+        var attempt = new ItemToggleActivateAttemptEvent();
+
+        RaiseLocalEvent(uid, ref attempt);
+
+        if (attempt.Cancelled)
+            return false;
+
+        UpdateAppearance(uid, comp);
+    }
+
+    private void OnUseInHand(EntityUid uid, ItemToggleComponent component, UseInHandEvent args)
     {
         if (args.Handled)
             return;
 
+
         args.Handled = true;
 
-        if (comp.Activated)
-        {
-            var ev = new ItemToggleDeactivatedEvent();
-            RaiseLocalEvent(uid, ref ev);
-        }
-        else
-        {
-            var ev = new ItemToggleActivatedEvent();
-            RaiseLocalEvent(uid, ref ev);
-        }
-
-        UpdateAppearance(uid, comp);
+        Toggle(uid, component);
     }
 
     private void TurnOff(EntityUid uid, ItemToggleComponent comp, ref ItemToggleDeactivatedEvent args)
@@ -53,7 +59,7 @@ public sealed class ItemToggleSystem : EntitySystem
         if (TryComp<DisarmMalusComponent>(uid, out var malus))
             malus.Malus -= comp.ActivatedDisarmMalus;
 
-        _audio.Play(comp.DeActivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeActivateSound.Params);
+        _audio.Play(comp.DeactivateSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, comp.DeactivateSound.Params);
 
         comp.Activated = false;
     }

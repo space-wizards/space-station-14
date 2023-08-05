@@ -1,5 +1,5 @@
 using Content.Server.Weapons.Melee.EnergySword;
-using Content.Server.Weapons.Melee.ItemToggle;
+using Content.Shared.Item;
 using Content.Shared.Weapons.Reflect;
 
 namespace Content.Server.Weapons.Reflect;
