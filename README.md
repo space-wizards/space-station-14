@@ -25,8 +25,8 @@ Space Station 14 это ремейк SS13, который работает на 
 [Более подробная инструкция по запуску проекта.](https://docs.spacestation14.io/getting-started/dev-setup)
 
 ## Лицензия
+Весь код репозитория лицензирован под [MIT](https://github.com/ss14-ganimed/GS14-Master/blob/master/LICENSE.TXT).
 
-Весь код репозитория лицензирован под [CC-BY-SA](https://github.com/space-syndicate/space-station-14/blob/master/LICENSE.TXT).
-И вы так-же можете использовать этот проект в коммерческих целях.
+Большинство ассетов лицензированы под [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/), если не указано иное. Ассеты имеют свою лицензию и авторские права в файле метаданных. [Пример](https://github.com/space-syndicate/space-station-14/blob/master/Resources/Textures/Objects/Tools/crowbar.rsi/meta.json). 
 
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Лицензия Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />Этот репозиторий доступен по <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">лицензии Creative Commons «Attribution-ShareAlike» («Атрибуция-СохранениеУсловий») 4.0 Всемирная</a>.
+Обратите внимание, что некоторые ассеты лицензированы на некоммерческой основе [CC-BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/) или аналогичной некоммерческой лицензией, и их необходимо удалить, если вы хотите использовать этот проект в коммерческих целях.
