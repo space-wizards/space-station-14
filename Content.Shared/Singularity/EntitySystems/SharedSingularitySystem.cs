@@ -5,6 +5,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 using Content.Shared.Radiation.Components;
+using Content.Shared.Radiation.Systems;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.Events;
 
@@ -20,6 +21,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     [Dependency] private readonly SharedContainerSystem _containers = default!;
     [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedRadiationSystem _radiation = default!;
     [Dependency] protected readonly IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
@@ -150,9 +152,10 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="rads">The state of the radioactivity of the singularity to update.</param>
     private void UpdateRadiation(EntityUid uid, SingularityComponent? singularity = null, RadiationSourceComponent? rads = null)
     {
-        if(!Resolve(uid, ref singularity, ref rads, logMissing: false))
+        if (!Resolve(uid, ref singularity, ref rads, logMissing: false))
             return;
-        rads.Intensity = singularity.Level * singularity.RadsPerLevel;
+
+        _radiation.SetIntensity(uid, singularity.Level * singularity.RadsPerLevel, rads);
     }
 
 #endregion Getters/Setters
