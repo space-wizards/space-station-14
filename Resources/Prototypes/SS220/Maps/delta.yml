@@ -1,5 +1,5 @@
 ﻿- type: gameMap
-  id: SS220Delta
+  id: 220Delta
   mapName: 'SS220 Delta Station'
   mapPath: /Maps/220_delta.yml
   minPlayers: 0 # для ротации
