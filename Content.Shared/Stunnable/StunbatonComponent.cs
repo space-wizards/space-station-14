@@ -17,9 +17,6 @@ public sealed partial class StunbatonComponent : Component
     [AutoNetworkedField]
     public float EnergyPerUse = 350;
 
-    [DataField("stunSound", required: true)]
-    public SoundSpecifier StunSound = default!;
-
     [DataField("sparksSound")]
     public SoundSpecifier SparksSound = new SoundCollectionSpecifier("sparks");
 

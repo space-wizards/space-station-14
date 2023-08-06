@@ -15,6 +15,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
@@ -179,7 +180,6 @@ public sealed partial class StaminaSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        args.HitSoundOverride = ev.HitSoundOverride;
         var stamQuery = GetEntityQuery<StaminaComponent>();
         var toHit = new List<(EntityUid Entity, StaminaComponent Component)>();
 
@@ -206,7 +206,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         foreach (var (ent, comp) in toHit)
         {
-            TakeStaminaDamage(ent, damage / toHit.Count, comp, source: args.User, with: args.Weapon);
+            TakeStaminaDamage(ent, damage / toHit.Count, comp, source: args.User, with: args.Weapon, sound: component.Sound);
         }
     }
 
@@ -227,11 +227,7 @@ public sealed partial class StaminaSystem : EntitySystem
         if (ev.Cancelled)
             return;
 
-        TakeStaminaDamage(target, component.Damage, source: uid);
-        if (_net.IsServer)
-        {
-            _audio.PlayPvs(component.Sound, target);
-        }
+        TakeStaminaDamage(target, component.Damage, source: uid, sound: component.Sound);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
@@ -263,7 +259,8 @@ public sealed partial class StaminaSystem : EntitySystem
         return true;
     }
 
-    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, bool visual = true)
+    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -332,6 +329,11 @@ public sealed partial class StaminaSystem : EntitySystem
         if (visual)
         {
             RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
+        }
+
+        if (_net.IsServer)
+        {
+            _audio.PlayPvs(sound, uid);
         }
     }
 
