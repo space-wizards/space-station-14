@@ -252,11 +252,11 @@ public sealed partial class StaminaSystem : EntitySystem
         if (oldStam + value > component.CritThreshold || component.Critical)
             return false;
 
-        TakeStaminaDamage(uid, value, component, source, with);
+        TakeStaminaDamage(uid, value, component, source, with, visual: false);
         return true;
     }
 
-    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
+    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, bool visual = true)
     {
         if (!Resolve(uid, ref component, false))
             return;
@@ -322,7 +322,10 @@ public sealed partial class StaminaSystem : EntitySystem
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(uid):target} took {value} stamina damage");
         }
 
-        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
+        if (visual)
+        {
+            RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
+        }
     }
 
     public override void Update(float frameTime)
