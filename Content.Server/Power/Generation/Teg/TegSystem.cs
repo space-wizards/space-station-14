@@ -7,11 +7,24 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generation.Teg;
 
+/// <summary>
+/// Handles processing logic for the thermo-electric generator (TEG).
+/// </summary>
+/// <remarks>
+/// <para>
+/// The TEG generates power by exchanging heat between gases flowing through its sides.
+/// </para>
+/// <para>
+/// Unlike in SS13, the TEG actually adjusts gas heat exchange to match the energy demand of the power network.
+/// To achieve this, the TEG implements its own ramping logic instead of using the built-in
+/// </para>
+/// </remarks>
+/// <seealso cref="TegGeneratorComponent"/>
+/// <seealso cref="TegCirculatorComponent"/>
 public sealed class TegSystem : EntitySystem
 {
     private const string NodeNameTeg = "teg";
@@ -23,9 +36,7 @@ public sealed class TegSystem : EntitySystem
     [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
-    [Dependency] private readonly BatterySystem _battery = default!;
 
-    private EntityQuery<TransformComponent> _xformQuery;
     private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
 
     public override void Initialize()
@@ -35,7 +46,6 @@ public sealed class TegSystem : EntitySystem
         SubscribeLocalEvent<TegGeneratorComponent, AtmosDeviceUpdateEvent>(GeneratorUpdate);
         SubscribeLocalEvent<TegGeneratorComponent, DeviceNetworkPacketEvent>(DeviceNetworkPacketReceived);
 
-        _xformQuery = GetEntityQuery<TransformComponent>();
         _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
     }
 
@@ -45,7 +55,7 @@ public sealed class TegSystem : EntitySystem
         if (!circulators.HasValue)
             return;
 
-        var battery = Comp<BatteryComponent>(uid);
+        var supplier = Comp<PowerSupplierComponent>(uid);
 
         var (circA, circB) = circulators.Value;
 
@@ -58,33 +68,51 @@ public sealed class TegSystem : EntitySystem
         var cA = _atmosphere.GetHeatCapacity(airA);
         var cB = _atmosphere.GetHeatCapacity(airB);
 
+        // Shift ramp position based on demand and generation from previous tick.
+        var curRamp = component.RampPosition;
+        var lastDraw = supplier.CurrentSupply;
+        // Limit amount lost/gained based on power factor.
+        curRamp = MathHelper.Clamp(lastDraw, curRamp / component.RampFactor, curRamp * component.RampFactor);
+        curRamp = MathF.Max(curRamp, component.RampMinimum);
+        component.RampPosition = curRamp;
+
+        var electricalEnergy = 0f;
+
         if (airA.Pressure > 0 && airB.Pressure > 0)
         {
-            // Clamp energy transfer to battery capacity.
-            var batteryAvailable = battery.MaxCharge - battery.CurrentCharge;
-            var transferMax = batteryAvailable / (component.ThermalEfficiency * component.PowerFactor);
+            // Calculate maximum amount of energy to generate this tick based on ramping above.
+            // This clamps the thermal energy transfer as well.
+            var targetEnergy = curRamp / _atmosphere.AtmosTickRate;
+            var transferMax = targetEnergy / (component.ThermalEfficiency * component.PowerFactor);
 
+            // Calculate thermal and electrical energy transfer between the two sides.
             var deltaT = MathF.Abs(airA.Temperature - airB.Temperature);
+            // TODO: account for electrical energy when equalizing.
             var transfer = Math.Min(deltaT * cA * cB / (cA + cB), transferMax);
-            var electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
-            var realTransfer = transfer * (1 - component.ThermalEfficiency);
+            electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
+            var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
+            // Adjust thermal energy in transferred gas mixtures.
             if (airA.Temperature > airB.Temperature)
             {
                 // A -> B
                 airA.Temperature -= transfer / cA;
-                airB.Temperature += realTransfer / cB;
+                airB.Temperature += outTransfer / cB;
             }
             else
             {
                 // B -> A
-                airA.Temperature += realTransfer / cA;
+                airA.Temperature += outTransfer / cA;
                 airB.Temperature -= transfer / cB;
             }
-
-            _battery.SetCharge(uid, battery.Charge + electricalEnergy, battery);
-            component.LastGeneration = electricalEnergy;
         }
+
+        component.LastGeneration = electricalEnergy;
+
+        // Turn energy (at atmos tick rate) into wattage.
+        var power = electricalEnergy * _atmosphere.AtmosTickRate;
+        // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
+        supplier.MaxSupply = power * component.RampFactor;
 
         _atmosphere.Merge(outletA.Air, airA);
         _atmosphere.Merge(outletB.Air, airB);
@@ -165,7 +193,8 @@ public sealed class TegSystem : EntitySystem
                     {
                         CirculatorA = GetCirculatorSensorData(circA),
                         CirculatorB = GetCirculatorSensorData(circB),
-                        LastGeneration = component.LastGeneration
+                        LastGeneration = component.LastGeneration,
+                        RampPosition = component.RampPosition
                     }
                 };
 

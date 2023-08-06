@@ -12,6 +12,13 @@ public sealed class SensorMonitoringConsoleComponent : Component
     /// </summary>
     public int IdCounter;
 
+    /// <summary>
+    /// If enabled, additional data streams are shown intended to only be visible for debugging.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("debug_streams")]
+    public bool DebugStreams = false;
+
     [ViewVariables(VVAccess.ReadWrite)]
     public Dictionary<EntityUid, SensorData> Sensors = new();
 

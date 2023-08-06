@@ -161,7 +161,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                     return;
 
                 // @formatter:off
-                WriteSample(component, sensorData, "teg_last_generated",         SensorUnit.EnergyJ,      tegData.LastGeneration);
+                WriteSample(component, sensorData, "teg_last_generated", SensorUnit.EnergyJ, tegData.LastGeneration);
+                WriteSample(component, sensorData, "teg_power",          SensorUnit.PowerW,  tegData.PowerOutput);
+                if (component.DebugStreams)
+                    WriteSample(component, sensorData, "teg_ramp_pos", SensorUnit.PowerW, tegData.RampPosition);
 
                 WriteSample(component, sensorData, "teg_circ_a_in_pressure",     SensorUnit.PressureKpa,  tegData.CirculatorA.InletPressure);
                 WriteSample(component, sensorData, "teg_circ_a_in_temperature",  SensorUnit.TemperatureK, tegData.CirculatorA.InletTemperature);

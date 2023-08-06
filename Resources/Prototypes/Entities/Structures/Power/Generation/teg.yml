@@ -49,16 +49,12 @@
       examinableAddress: true
     - type: WiredNetworkConnection
 
-    # The TEG stores power in an internal buffer to output it over the wire.
-    - type: Battery
-      maxCharge: 1000000
-      startingCharge: 0
-    - type: BatteryDischarger
-    - type: PowerNetworkBattery
-      # Just needs to be REALLY BIG! This would just be a hard-cap on the TEG output.
-      # TODO: Revise this!
-      maxSupply: 100000000000
-      SupplyRampTolerance: 100000000
+    - type: PowerSupplier
+      # Have practically irrelevant supply ramping.
+      # Ramping is effectively implemented by the TEG manually,
+      # due to how power output is handled.
+      supplyRampRate: 100000000
+      supplyRampTolerance: 10000000000
 
 - type: entity
   id: TegCirculator
