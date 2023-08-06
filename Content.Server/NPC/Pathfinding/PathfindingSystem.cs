@@ -85,12 +85,18 @@ namespace Content.Server.NPC.Pathfinding
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            UpdateGrid();
+            var options = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
+
+            UpdateGrid(options);
             _stopwatch.Restart();
             var amount = Math.Min(PathTickLimit, _pathRequests.Count);
             var results = ArrayPool<PathResult>.Shared.Rent(amount);
 
-            Parallel.For(0, amount, i =>
+
+            Parallel.For(0, amount, options, i =>
             {
                 // If we're over the limit (either time-sliced or hard cap).
                 if (_stopwatch.Elapsed >= PathTime)

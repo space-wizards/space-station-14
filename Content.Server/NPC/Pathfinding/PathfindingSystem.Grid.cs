@@ -84,7 +84,7 @@ public sealed partial class PathfindingSystem
         component.Chunks.Clear();
     }
 
-    private void UpdateGrid()
+    private void UpdateGrid(ParallelOptions options)
     {
         if (PauseUpdating)
             return;
@@ -94,10 +94,6 @@ public sealed partial class PathfindingSystem
         var updateCount = 0;
 #endif
         _stopwatch.Restart();
-        var options = new ParallelOptions()
-        {
-            MaxDegreeOfParallelism = 1,
-        };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
         // Still run even when paused.
@@ -157,10 +153,9 @@ public sealed partial class PathfindingSystem
                 var doorQuery = GetEntityQuery<DoorComponent>();
                 var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
-                var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
                 BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
-                    fixturesQuery, physicsQuery, xformQuery);
+                    fixturesQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -427,7 +422,6 @@ public sealed partial class PathfindingSystem
         EntityQuery<DoorComponent> doorQuery,
         EntityQuery<ClimbableComponent> climbableQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
         var sw = new Stopwatch();
