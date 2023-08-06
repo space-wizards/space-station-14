@@ -9,7 +9,6 @@ using Robust.Shared.Containers;
 using System.Linq;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
 using Content.Server.Popups;
-using Content.Shared.AirlockPainter;
 using Content.Shared.DoAfter;
 
 namespace Content.Server.Access.Systems;
@@ -35,8 +34,8 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
         SubscribeLocalEvent<AccessOverriderComponent, EntRemovedFromContainerMessage>(UpdateUserInterface);
         SubscribeLocalEvent<AccessOverriderComponent, AfterInteractEvent>(AfterInteractOn);
         SubscribeLocalEvent<AccessOverriderComponent, AccessOverriderDoAfterEvent>(OnDoAfter);
-        SubscribeLocalEvent<AccessOverriderComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AccessOverriderComponent, BoundUIOpenedEvent>(UpdateUserInterface);
+        SubscribeLocalEvent<AccessOverriderComponent, BoundUIClosedEvent>(OnClose);
     }
 
     private void AfterInteractOn(EntityUid uid, AccessOverriderComponent component, AfterInteractEvent args)
@@ -105,6 +104,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
 
         string[]? possibleAccess = null;
         string[]? currentAccess = null;
+        string[]? missingAccess = null;
 
         if (component.TargetAccessReaderId is { Valid: true } accessReader)
         {
@@ -123,6 +123,11 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             {
                 possibleAccess = _accessReader.FindAccessTags(idCard).ToArray();
             }
+
+            if (currentAccess != null && possibleAccess != null)
+            {
+                missingAccess = currentAccess.Except(possibleAccess).ToArray();
+            }
         }
 
         AccessOverriderBoundUserInterfaceState newState;
@@ -132,6 +137,7 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             PrivilegedIdIsAuthorized(uid, component),
             currentAccess,
             possibleAccess,
+            missingAccess,
             privilegedIdName,
             targetLabel,
             targetLabelColor);

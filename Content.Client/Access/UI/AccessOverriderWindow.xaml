@@ -15,5 +15,9 @@
             <!-- Access level buttons are added here by the C# code -->
 
         </GridContainer>
+        <Control MinSize="0 8"/>
+        <Label Name="MissingPrivilegesLabel" />
+        <Control MinSize="0 4"/>
+        <Label Name="MissingPrivilegesText" />
     </BoxContainer>
 </DefaultWindow>

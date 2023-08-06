@@ -14,6 +14,7 @@ namespace Content.Client.Access.UI
     public sealed partial class AccessOverriderWindow : DefaultWindow
     {
         [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         private readonly ISawmill _logMill = default!;
         private readonly AccessOverriderBoundUserInterface _owner;
@@ -58,13 +59,33 @@ namespace Content.Client.Access.UI
 
         public void UpdateState(AccessOverriderBoundUserInterfaceState state)
         {
+            PrivilegedIdLabel.Text = state.PrivilegedIdName;
             PrivilegedIdButton.Text = state.IsPrivilegedIdPresent
                 ? Loc.GetString("access-overrider-window-eject-button")
                 : Loc.GetString("access-overrider-window-insert-button");
 
-            PrivilegedIdLabel.Text = state.PrivilegedIdName;
             TargetNameLabel.Text = state.TargetLabel;
             TargetNameLabel.FontColorOverride = state.TargetLabelColor;
+
+            MissingPrivilegesLabel.Text = "";
+            MissingPrivilegesLabel.FontColorOverride = Color.Yellow;
+
+            MissingPrivilegesText.Text = "";
+            MissingPrivilegesText.FontColorOverride = Color.Yellow;
+
+            if (state.MissingPrivilegesList != null && state.MissingPrivilegesList.Any())
+            {
+                List<string> missingPrivileges = new List<string>();
+
+                foreach (string tag in state.MissingPrivilegesList)
+                {
+                    string privilege = Loc.GetString(_prototypeManager.Index<AccessLevelPrototype>(tag)?.Name ?? "generic-unknown");
+                    missingPrivileges.Add(privilege);
+                }
+
+                MissingPrivilegesLabel.Text = Loc.GetString("access-overrider-window-missing-privileges");
+                MissingPrivilegesText.Text = string.Join(", ", missingPrivileges);
+            }
 
             var interfaceEnabled = state.IsPrivilegedIdPresent && state.IsPrivilegedIdAuthorized;
 

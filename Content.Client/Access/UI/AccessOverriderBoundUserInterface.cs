@@ -22,12 +22,13 @@ namespace Content.Client.Access.UI
         protected override void Open()
         {
             base.Open();
+
             List<string> accessLevels;
-        
+
             if (EntMan.TryGetComponent<AccessOverriderComponent>(Owner, out var accessOverrider))
             {
-                    accessLevels = accessOverrider.AccessLevels;
-                    accessLevels.Sort();
+                accessLevels = accessOverrider.AccessLevels;
+                accessLevels.Sort();
             }
 
             else

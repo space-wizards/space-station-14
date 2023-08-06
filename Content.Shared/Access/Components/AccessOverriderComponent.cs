@@ -50,11 +50,13 @@ public sealed class AccessOverriderComponent : Component
         public readonly bool IsPrivilegedIdAuthorized;
         public readonly string[]? TargetAccessReaderIdAccessList;
         public readonly string[]? AllowedModifyAccessList;
+        public readonly string[]? MissingPrivilegesList;
 
         public AccessOverriderBoundUserInterfaceState(bool isPrivilegedIdPresent,
             bool isPrivilegedIdAuthorized,
             string[]? targetAccessReaderIdAccessList,
             string[]? allowedModifyAccessList,
+            string[]? missingPrivilegesList,
             string privilegedIdName,
             string targetLabel,
             Color targetLabelColor)
@@ -63,6 +65,7 @@ public sealed class AccessOverriderComponent : Component
             IsPrivilegedIdAuthorized = isPrivilegedIdAuthorized;
             TargetAccessReaderIdAccessList = targetAccessReaderIdAccessList;
             AllowedModifyAccessList = allowedModifyAccessList;
+            MissingPrivilegesList = missingPrivilegesList;
             PrivilegedIdName = privilegedIdName;
             TargetLabel = targetLabel;
             TargetLabelColor = targetLabelColor;
