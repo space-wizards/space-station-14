@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
   name: aberrant flesh
@@ -9,6 +9,8 @@
     rootTask:
       task: SimpleHostileCompound
     blackboard:
+      NavClimb: !type:Bool
+        true
       NavSmash: !type:Bool
         true
   - type: NpcFactionMember
