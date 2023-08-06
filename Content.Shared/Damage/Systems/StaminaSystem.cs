@@ -172,7 +172,6 @@ public sealed partial class StaminaSystem : EntitySystem
 
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
-
         if (ev.Cancelled)
             return;
 
@@ -209,11 +208,21 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
+        var ev = new StaminaDamageOnHitAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
+            return;
+
         TakeStaminaDamage(args.Target, component.Damage, source: uid);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
+        var ev = new StaminaDamageOnHitAttemptEvent();
+        RaiseLocalEvent(uid, ref ev);
+        if (ev.Cancelled)
+            return;
+
         TakeStaminaDamage(args.Target, component.Damage, source: uid);
     }
 
