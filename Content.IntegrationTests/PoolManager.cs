@@ -32,7 +32,7 @@ using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using Robust.UnitTesting;
 
-[assembly: LevelOfParallelism(3)]
+[assembly: LevelOfParallelism(6)]
 
 namespace Content.IntegrationTests;
 
