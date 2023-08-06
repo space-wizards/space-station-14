@@ -1,0 +1,14 @@
+ent-BaseMagazineBoxLightRifle = коробка патронов (.30 винтовочные)
+    .desc = { ent-BaseItem.desc }
+ent-MagazineBoxLightRifleBig = ящик патронов (.30 винтовочные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifle = коробка патронов (.30 винтовочные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleHighVelocity = коробка патронов (.30 винтовочные высокоскоростные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRiflePractice = коробка патронов (.30 винтовочные учебные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleRubber = коробка патронов (.30 винтовочные резиновые)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }
+ent-MagazineBoxLightRifleIncendiary = коробка патронов (.30 винтовочные зажигательные)
+    .desc = { ent-BaseMagazineBoxLightRifle.desc }

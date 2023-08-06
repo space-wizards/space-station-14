@@ -1,0 +1,14 @@
+ent-GasTrinaryBase = { ent-GasPipeBase }
+    .desc = { ent-GasPipeBase.desc }
+ent-GasFilter = газовый фильтр
+    .desc = Очень полезен для фильтрации газов.
+ent-GasFilterFlipped = газовый фильтр
+    .suffix = Перевёрнутый
+    .desc = { ent-GasFilter.desc }
+ent-GasMixer = газовый смеситель
+    .desc = Очень полезен для смешивания газов.
+ent-GasMixerFlipped = газовый смеситель
+    .suffix = Перевёрнутый
+    .desc = { ent-GasMixer.desc }
+ent-PressureControlledValve = пневматический клапан
+    .desc = Клапан, регулируемый давлением.
