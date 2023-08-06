@@ -5,6 +5,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Events;
 using Content.Shared.Database;
+using Content.Shared.Effects;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
@@ -272,11 +273,6 @@ public sealed partial class StaminaSystem : EntitySystem
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
 
-        if (component.StaminaDamage.Equals(oldDamage))
-        {
-            _popup.PopupEntity(Loc.GetString("stamina-resist"), uid);
-        }
-
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
         {
@@ -324,6 +320,15 @@ public sealed partial class StaminaSystem : EntitySystem
         else
         {
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(uid):target} took {value} stamina damage");
+        }
+
+        if (component.StaminaDamage.Equals(oldDamage))
+        {
+            _popup.PopupEntity(Loc.GetString("stamina-resist"), uid);
+        }
+        else
+        {
+            RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
         }
     }
 
