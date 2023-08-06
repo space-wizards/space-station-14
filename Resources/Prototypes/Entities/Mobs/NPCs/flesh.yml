@@ -34,7 +34,7 @@
       0: Alive
       75: Dead
   - type: Stamina
-    excess: 50
+    critThreshold: 50
   - type: Butcherable
     spawned:
     - id: FoodMeat

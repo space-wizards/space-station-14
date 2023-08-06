@@ -96,7 +96,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1353,7 +1353,7 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
-      
+
 - type: entity
   name: monkey
   id: MobMonkeySyndicateAgent
@@ -1442,7 +1442,6 @@
   - type: GhostTakeoverAvailable
   - type: IdExaminable
   - type: Loadout
-    prototype: SyndicateOperativeGearMonkey
     prototypes: [SyndicateOperativeGearMonkey]
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
