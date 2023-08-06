@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Access
         [Test]
         public async Task TestProtoTags()
         {
-            await using var pair = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
+            await using var pair = await PoolManager.GetServerClient();
             var server = pair.Pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests.Access
         [Test]
         public async Task TestTags()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
 

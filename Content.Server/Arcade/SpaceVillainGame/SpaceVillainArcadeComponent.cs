@@ -3,8 +3,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
-// TODO: ECS.
-
 namespace Content.Server.Arcade.SpaceVillain;
 
 [RegisterComponent]
@@ -93,16 +91,7 @@ public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeCompon
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("possibleRewards", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> PossibleRewards = new()
-    {
-        "ToyMouse", "ToyAi", "ToyNuke", "ToyAssistant", "ToyGriffin", "ToyHonk", "ToyIan",
-        "ToyMarauder", "ToyMauler", "ToyGygax", "ToyOdysseus", "ToyOwlman", "ToyDeathRipley",
-        "ToyPhazon", "ToyFireRipley", "ToyReticence", "ToyRipley", "ToySeraph", "ToyDurand", "ToySkeleton",
-        "FoamCrossbow", "RevolverCapGun", "PlushieHampter", "PlushieLizard", "PlushieAtmosian", "PlushieSpaceLizard",
-        "PlushieNuke", "PlushieCarp", "PlushieRatvar", "PlushieNar", "PlushieSnake", "Basketball", "Football",
-        "PlushieRouny", "PlushieBee", "PlushieSlime", "BalloonCorgi", "ToySword", "CrayonBox", "BoxDonkSoftBox", "BoxCartridgeCap",
-        "HarmonicaInstrument", "OcarinaInstrument", "RecorderInstrument", "GunpetInstrument", "BirdToyInstrument", "PlushieXeno", "BeachBall"
-    };
+    public List<string> PossibleRewards = new();
 
     /// <summary>
     /// The minimum number of prizes the arcade machine can have.

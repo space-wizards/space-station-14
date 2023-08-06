@@ -42,7 +42,7 @@
   minOreYield: 2
   maxOreYield: 4
 
-- type: weightedRandom
+- type: weightedRandomOre
   id: RandomOreDistributionStandard
   weights:
     OreSteel: 10

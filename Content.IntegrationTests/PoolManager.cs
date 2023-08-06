@@ -43,7 +43,7 @@ public static partial class PoolManager
 {
     public const string TestMap = "Empty";
 
-    private static readonly (string cvar, string value)[] ServerTestCvars =
+    private static readonly (string cvar, string value)[] TestCvars =
     {
         // @formatter:off
         (CCVars.DatabaseSynchronous.Name,     "true"),
@@ -60,6 +60,17 @@ public static partial class PoolManager
         (CCVars.EmergencyShuttleEnabled.Name, "false"),
         (CCVars.ProcgenPreload.Name,          "false"),
         (CCVars.WorldgenEnabled.Name,         "false"),
+        (CVars.ReplayClientRecordingEnabled.Name, "false"),
+        (CVars.ReplayServerRecordingEnabled.Name, "false"),
+        (CCVars.GameDummyTicker.Name, "true"),
+        (CCVars.GameLobbyEnabled.Name, "false"),
+        (CCVars.ConfigPresetDevelopment.Name, "false"),
+        (CCVars.AdminLogsEnabled.Name, "false"),
+
+        // This breaks some tests.
+        // TODO: Figure out which tests this breaks.
+        (CVars.NetBufferSize.Name, "0")
+
         // @formatter:on
     };
 
@@ -109,10 +120,10 @@ public static partial class PoolManager
                 .OnValueChanged(RTCVars.FailureLogLevel, value => logHandler.FailureLevel = value, true);
         };
 
-        SetupCVars(poolSettings, options);
-
+        SetDefaultCVars(options);
         var server = new RobustIntegrationTest.ServerIntegrationInstance(options);
         await server.WaitIdleAsync();
+        await SetupCVars(server, poolSettings);
         return (server, logHandler);
     }
 
@@ -206,42 +217,44 @@ public static partial class PoolManager
             });
         };
 
-        SetupCVars(poolSettings, options);
-
+        SetDefaultCVars(options);
         var client = new RobustIntegrationTest.ClientIntegrationInstance(options);
         await client.WaitIdleAsync();
+        await SetupCVars(client, poolSettings);
         return (client, logHandler);
     }
 
-    private static void SetupCVars(PoolSettings poolSettings, RobustIntegrationTest.IntegrationOptions options)
+    private static async Task  SetupCVars(RobustIntegrationTest.IntegrationInstance instance, PoolSettings settings)
     {
-        foreach (var (cvar, value) in ServerTestCvars)
+        var cfg = instance.ResolveDependency<IConfigurationManager>();
+        await instance.WaitPost(() =>
+        {
+            if (cfg.IsCVarRegistered(CCVars.GameDummyTicker.Name))
+                cfg.SetCVar(CCVars.GameDummyTicker, settings.UseDummyTicker);
+
+            if (cfg.IsCVarRegistered(CCVars.GameLobbyEnabled.Name))
+                cfg.SetCVar(CCVars.GameLobbyEnabled, settings.InLobby);
+
+            if (cfg.IsCVarRegistered(CVars.NetInterp.Name))
+                cfg.SetCVar(CVars.NetInterp, settings.DisableInterpolate);
+
+            if (cfg.IsCVarRegistered(CCVars.GameMap.Name))
+                cfg.SetCVar(CCVars.GameMap, settings.Map);
+
+            if (cfg.IsCVarRegistered(CCVars.AdminLogsEnabled.Name))
+                cfg.SetCVar(CCVars.AdminLogsEnabled, settings.AdminLogsEnabled);
+
+            if (cfg.IsCVarRegistered(CVars.NetInterp.Name))
+                cfg.SetCVar(CVars.NetInterp, !settings.DisableInterpolate);
+        });
+    }
+
+    private static void SetDefaultCVars(RobustIntegrationTest.IntegrationOptions options)
+    {
+        foreach (var (cvar, value) in TestCvars)
         {
             options.CVarOverrides[cvar] = value;
         }
-
-        if (poolSettings.DummyTicker)
-        {
-            options.CVarOverrides[CCVars.GameDummyTicker.Name] = "true";
-        }
-
-        options.CVarOverrides[CCVars.GameLobbyEnabled.Name] = poolSettings.InLobby.ToString();
-
-        if (poolSettings.DisableInterpolate)
-        {
-            options.CVarOverrides[CVars.NetInterp.Name] = "false";
-        }
-
-        if (poolSettings.Map != null)
-        {
-            options.CVarOverrides[CCVars.GameMap.Name] = poolSettings.Map;
-        }
-
-        options.CVarOverrides[CCVars.ConfigPresetDevelopment.Name] = "false";
-
-        // This breaks some tests.
-        // TODO: Figure out which tests this breaks.
-        options.CVarOverrides[CVars.NetBufferSize.Name] = "0";
     }
 
     /// <summary>
@@ -281,6 +294,11 @@ public static partial class PoolManager
                 await testOut.WriteLineAsync(
                     $"{nameof(GetServerClientPair)}: Creating pair, because settings of pool settings");
                 pair = await CreateServerClientPair(poolSettings, testOut);
+
+                // Newly created pairs should always be in a valid state.
+                await RunTicksSync(pair, 5);
+                await SyncTicks(pair, targetDelta: 1);
+                ValidateFastRecycle(pair, poolSettings);
             }
             else
             {
@@ -293,13 +311,12 @@ public static partial class PoolManager
                     await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Suitable pair found");
                     var canSkip = pair.Settings.CanFastRecycle(poolSettings);
 
-                    var cCfg = pair.Client.ResolveDependency<IConfigurationManager>();
-                    cCfg.SetCVar(CCVars.NetInterp, !poolSettings.DisableInterpolate);
-
                     if (canSkip)
                     {
-                        ValidateFastRecycle(pair);
                         await testOut.WriteLineAsync($"{nameof(GetServerClientPair)}: Cleanup not needed, Skipping cleanup of pair");
+                        await SetupCVars(pair.Client, poolSettings);
+                        await SetupCVars(pair.Server, poolSettings);
+                        await RunTicksSync(pair, 1);
                     }
                     else
                     {
@@ -307,10 +324,9 @@ public static partial class PoolManager
                         await CleanPooledPair(poolSettings, pair, testOut);
                     }
 
-                    // Ensure client is 1 tick ahead of server? I don't think theres a real reason for why it should be
-                    // 1 tick specifically, I am just ensuring consistency with CreateServerClientPair()
-                    if (!pair.Settings.NotConnected)
-                        await SyncTicks(pair, targetDelta: 1);
+                    await RunTicksSync(pair, 5);
+                    await SyncTicks(pair, targetDelta: 1);
+                    ValidateFastRecycle(pair, poolSettings);
                 }
                 else
                 {
@@ -349,32 +365,38 @@ public static partial class PoolManager
         };
     }
 
-    private static void ValidateFastRecycle(Pair pair)
+    private static void ValidateFastRecycle(Pair pair, PoolSettings settings)
     {
-        if (pair.Settings.NoClient || pair.Settings.NoServer)
-            return;
+        var cfg = pair.Server.ResolveDependency<IConfigurationManager>();
+        Assert.That(cfg.GetCVar(CCVars.AdminLogsEnabled), Is.EqualTo(settings.AdminLogsEnabled));
+        Assert.That(cfg.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(settings.InLobby));
+        Assert.That(cfg.GetCVar(CCVars.GameDummyTicker), Is.EqualTo(settings.UseDummyTicker));
+
+        var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
+        Assert.That(ticker.DummyTicker, Is.EqualTo(settings.UseDummyTicker));
+
+        var expectPreRound = settings.InLobby | settings.DummyTicker;
+        var expectedLevel = expectPreRound ? GameRunLevel.PreRoundLobby : GameRunLevel.InRound;
+        Assert.That(ticker.RunLevel, Is.EqualTo(expectedLevel));
 
         var baseClient = pair.Client.ResolveDependency<IBaseClient>();
         var netMan = pair.Client.ResolveDependency<INetManager>();
-        Assert.That(netMan.IsConnected, Is.Not.EqualTo(pair.Settings.NotConnected));
+        Assert.That(netMan.IsConnected, Is.Not.EqualTo(!settings.ShouldBeConnected));
 
-        if (pair.Settings.NotConnected)
+        if (!settings.ShouldBeConnected)
             return;
 
         Assert.That(baseClient.RunLevel, Is.EqualTo(ClientRunLevel.InGame));
-
         var cPlayer = pair.Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
         var sPlayer = pair.Server.ResolveDependency<IPlayerManager>();
         Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
-        Assert.That(cPlayer.LocalPlayer?.Session?.UserId, Is.EqualTo(sPlayer.Sessions.Single().UserId));
+        Assert.That(cPlayer.LocalPlayer?.Session.UserId, Is.EqualTo(sPlayer.Sessions.Single().UserId));
 
-        var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
-        Assert.That(ticker.DummyTicker, Is.EqualTo(pair.Settings.DummyTicker));
+        if (ticker.DummyTicker)
+            return;
 
-        var cfg = pair.Server.ResolveDependency<IConfigurationManager>();
-        Assert.That(cfg.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(pair.Settings.InLobby));
         var status = ticker.PlayerGameStatuses[sPlayer.Sessions.Single().UserId];
-        var expected = pair.Settings.InLobby
+        var expected = settings.InLobby
             ? PlayerGameStatus.NotReadyToPlay
             : PlayerGameStatus.JoinedGame;
 
@@ -426,64 +448,59 @@ public static partial class PoolManager
         }
     }
 
-    private static async Task CleanPooledPair(PoolSettings poolSettings, Pair pair, TextWriter testOut)
+    private static async Task CleanPooledPair(PoolSettings settings, Pair pair, TextWriter testOut)
     {
+        pair.Settings = default!;
         var methodWatch = new Stopwatch();
         methodWatch.Start();
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
+        await testOut.WriteLineAsync($"Recycling...");
+
         var configManager = pair.Server.ResolveDependency<IConfigurationManager>();
         var entityManager = pair.Server.ResolveDependency<IEntityManager>();
         var gameTicker = entityManager.System<GameTicker>();
-
-        configManager.SetCVar(CCVars.GameLobbyEnabled, poolSettings.InLobby);
-        configManager.SetCVar(CCVars.GameMap, TestMap);
-
         var cNetMgr = pair.Client.ResolveDependency<IClientNetManager>();
-        if (!cNetMgr.IsConnected)
+
+        await RunTicksSync(pair, 1);
+
+        // Disconnect the client if they are connected.
+        if (cNetMgr.IsConnected)
         {
-            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client, and restarting server");
-            pair.Client.SetConnectTarget(pair.Server);
-            await pair.Server.WaitPost(() =>
-            {
-                gameTicker.RestartRound();
-            });
-            await pair.Client.WaitPost(() =>
-            {
-                cNetMgr.ClientConnect(null!, 0, null!);
-            });
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client.");
+            await pair.Client.WaitPost(() => cNetMgr.ClientDisconnect("Test pooling cleanup disconnect"));
+            await RunTicksSync(pair, 1);
         }
-        await ReallyBeIdle(pair, 5);
+        Assert.That(cNetMgr.IsConnected, Is.False);
 
-        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Disconnecting client, and restarting server");
-
-        await pair.Client.WaitPost(() =>
+        // Move to pre-round lobby. Required to toggle dummy ticker on and off
+        if (gameTicker.RunLevel != GameRunLevel.PreRoundLobby)
         {
-            cNetMgr.ClientDisconnect("Test pooling cleanup disconnect");
-        });
+            await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server.");
+            Assert.That(gameTicker.DummyTicker, Is.False);
+            configManager.SetCVar(CCVars.GameLobbyEnabled, true);
+            await pair.Server.WaitPost(() => gameTicker.RestartRound());
+            await RunTicksSync(pair, 1);
+        }
 
-        await ReallyBeIdle(pair, 5);
+        //Apply Cvars
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Setting CVar ");
+        await SetupCVars(pair.Client, settings);
+        await SetupCVars(pair.Server, settings);
+        await RunTicksSync(pair, 1);
 
-        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
+        // Restart server.
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Restarting server again");
-
-        configManager.SetCVar(CCVars.GameMap, poolSettings.Map);
-        configManager.SetCVar(CCVars.GameDummyTicker, poolSettings.DummyTicker);
         await pair.Server.WaitPost(() => gameTicker.RestartRound());
+        await RunTicksSync(pair, 1);
 
-        if (!poolSettings.NotConnected)
+        // Connect client
+        if (settings.ShouldBeConnected)
         {
             await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Connecting client");
-            await ReallyBeIdle(pair);
             pair.Client.SetConnectTarget(pair.Server);
-            var netMgr = pair.Client.ResolveDependency<IClientNetManager>();
-            await pair.Client.WaitPost(() =>
-            {
-                if (!netMgr.IsConnected)
-                {
-                    netMgr.ClientConnect(null!, 0, null!);
-                }
-            });
+            await pair.Client.WaitPost(() => cNetMgr.ClientConnect(null!, 0, null!));
         }
+
+        await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Idling");
         await ReallyBeIdle(pair);
         await testOut.WriteLineAsync($"Recycling: {methodWatch.Elapsed.TotalMilliseconds} ms: Done recycling");
     }
@@ -533,7 +550,13 @@ we are just going to end this here to save a lot of time. This is the exception 
             throw;
         }
 
-        if (!poolSettings.NotConnected)
+        if (!poolSettings.UseDummyTicker)
+        {
+            var gameTicker = pair.Server.ResolveDependency<IEntityManager>().System<GameTicker>();
+            await pair.Server.WaitPost(() => gameTicker.RestartRound());
+        }
+
+        if (poolSettings.ShouldBeConnected)
         {
             pair.Client.SetConnectTarget(pair.Server);
             await pair.Client.WaitPost(() =>
@@ -564,10 +587,7 @@ we are just going to end this here to save a lot of time. This is the exception 
         var settings = pairTracker.Pair.Settings;
         var mapManager = server.ResolveDependency<IMapManager>();
         var tileDefinitionManager = server.ResolveDependency<ITileDefinitionManager>();
-        var entityManager = server.ResolveDependency<IEntityManager>();
-        var xformSystem = entityManager.System<SharedTransformSystem>();
 
-        if (settings.NoServer) throw new Exception("Cannot setup test map without server");
         var mapData = new TestMapData();
         await server.WaitPost(() =>
         {
@@ -582,7 +602,7 @@ we are just going to end this here to save a lot of time. This is the exception 
             mapData.MapCoords = new MapCoordinates(0, 0, mapData.MapId);
             mapData.Tile = mapData.MapGrid.GetAllTiles().First();
         });
-        if (!settings.Disconnected)
+        if (settings.ShouldBeConnected)
         {
             await RunTicksSync(pairTracker.Pair, 10);
         }
@@ -753,11 +773,6 @@ public sealed class PoolSettings
     public bool MustBeNew => Fresh || NoLoadContent || NoLoadTestPrototypes;
 
     /// <summary>
-    /// If the given pair must not be connected
-    /// </summary>
-    public bool NotConnected => NoClient || NoServer || Disconnected;
-
-    /// <summary>
     /// Set to true if the test will ruin the server/client pair.
     /// </summary>
     public bool Destructive { get; init; }
@@ -768,19 +783,33 @@ public sealed class PoolSettings
     public bool Fresh { get; init; }
 
     /// <summary>
-    /// Set to true if the given server should be using a dummy ticker.
+    /// Set to true if the given server should be using a dummy ticker. Ignored if <see cref="InLobby"/> is true.
     /// </summary>
-    public bool DummyTicker { get; init; }
+    public bool DummyTicker { get; init; } = true;
+
+    public bool UseDummyTicker => !InLobby && DummyTicker;
 
     /// <summary>
-    /// Set to true if the given server/client pair should be disconnected from each other.
+    /// If true, this enables the creation of admin logs during the test.
     /// </summary>
-    public bool Disconnected { get; init; }
+    public bool AdminLogsEnabled { get; init; }
+
+    /// <summary>
+    /// Set to true if the given server/client pair should be connected from each other.
+    /// Defaults to disconnected as it makes dirty recycling slightly faster.
+    /// If <see cref="InLobby"/> is true, this option is ignored.
+    /// </summary>
+    public bool Connected { get; init; }
+
+    public bool ShouldBeConnected => InLobby || Connected;
 
     /// <summary>
     /// Set to true if the given server/client pair should be in the lobby.
     /// If the pair is not in the lobby at the end of the test, this test must be marked as dirty.
     /// </summary>
+    /// <remarks>
+    /// If this is enabled, the value of <see cref="DummyTicker"/> is ignored.
+    /// </remarks>
     public bool InLobby { get; init; }
 
     /// <summary>
@@ -812,16 +841,6 @@ public sealed class PoolSettings
     public string Map { get; init; } = PoolManager.TestMap;
 
     /// <summary>
-    /// Set to true if the test won't use the client (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoClient { get; init; }
-
-    /// <summary>
-    /// Set to true if the test won't use the server (so we can skip cleaning it up)
-    /// </summary>
-    public bool NoServer { get; init; }
-
-    /// <summary>
     /// Overrides the test name detection, and uses this in the test history instead
     /// </summary>
     public string? TestName { get; set; }
@@ -843,8 +862,8 @@ public sealed class PoolSettings
             return false;
 
         // Check that certain settings match.
-        return NotConnected == nextSettings.NotConnected
-               && DummyTicker == nextSettings.DummyTicker
+        return !ShouldBeConnected == !nextSettings.ShouldBeConnected
+               && UseDummyTicker == nextSettings.UseDummyTicker
                && Map == nextSettings.Map
                && InLobby == nextSettings.InLobby;
     }

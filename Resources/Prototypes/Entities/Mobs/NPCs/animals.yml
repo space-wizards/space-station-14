@@ -96,7 +96,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: DamageStateVisuals
     states:
       Alive:

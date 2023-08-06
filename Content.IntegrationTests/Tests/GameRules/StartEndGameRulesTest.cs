@@ -15,10 +15,10 @@ public sealed class StartEndGameRulesTest
     [Test]
     public async Task TestAllConcurrent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
             Dirty = true,
+            DummyTicker = false
         });
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();

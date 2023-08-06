@@ -2,7 +2,6 @@ using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
@@ -180,6 +179,9 @@ namespace Content.Server.GameTicking
                 return;
 
             _startingRound = true;
+
+            if (RoundId == 0)
+                IncrementRoundNumber();
 
             ReplayStartRound();
 
@@ -502,7 +504,8 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (RunLevel != GameRunLevel.PreRoundLobby ||
+            if (_roundStartTime == TimeSpan.Zero ||
+                RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
                 _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
