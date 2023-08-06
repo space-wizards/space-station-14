@@ -414,3 +414,17 @@
     layers:
       - state: box
       - state: syringe
+
+- type: entity
+  name: cardboard box
+  parent: BoxCardboard
+  id: BoxSuitAndTie
+  description: A cardboard box for storing things.
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: ClothingNeckTieRed
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingUniformJumpsuitLawyerBlack
+      - id: ClothingShoesBootsLaceup

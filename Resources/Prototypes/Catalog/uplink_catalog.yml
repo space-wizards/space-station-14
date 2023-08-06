@@ -1194,6 +1194,16 @@
   categories:
     - UplinkMisc
 
+- type: listing
+  id: UplinkSuitAndTie
+  name: uplink-suitandtie-name
+  description: uplink-suitandtie-desc
+  productEntity: BoxSuitAndTie
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkMisc
+
  # Pointless
 
 - type: listing
