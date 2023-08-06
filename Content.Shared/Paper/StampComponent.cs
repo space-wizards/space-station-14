@@ -6,13 +6,16 @@ namespace Content.Shared.Paper
     /// <summary>
     ///     Set of required information to draw a stamp in UIs, where
     ///     representing the state of the stamp at the point in time
-    ///     when it was applied to a ppaer. These fields mirror the
+    ///     when it was applied to a paper. These fields mirror the
     ///     equivalent in the component.
     /// </summary>
-    [Serializable, NetSerializable]
+    [DataDefinition, Serializable, NetSerializable]
     public struct StampDisplayInfo
     {
+        [DataField("stampedName")]
         public string StampedName;
+
+        [DataField("stampedColor")]
         public Color StampedColor;
     };
 
