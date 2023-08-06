@@ -23,7 +23,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly DamageExamineSystem _examineDamage = default!;
+        [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
 
         public override void Initialize()
         {
@@ -56,7 +56,7 @@ namespace Content.Server.Damage.Systems
 
         private void OnDamageExamine(EntityUid uid, DamageOtherOnHitComponent component, ref DamageExamineEvent args)
         {
-            var markup = _examineDamage.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
+            var markup = _damageExamine.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
             args.Message.AddMessage(markup);
         }
     }

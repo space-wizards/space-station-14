@@ -24,7 +24,7 @@ public sealed partial class GunSystem
         if (damageSpec == null)
             return;
 
-        var markup = _examineDamage.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
+        var markup = _damageExamine.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
         args.Message.AddMessage(markup);
     }
 

@@ -73,7 +73,7 @@ public sealed partial class GunSystem
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        var markup = _examineDamage.GetDamageExamine(damageSpec, damageType);
+        var markup = _damageExamine.GetDamageExamine(damageSpec, damageType);
         args.Message.AddMessage(markup);
     }
 

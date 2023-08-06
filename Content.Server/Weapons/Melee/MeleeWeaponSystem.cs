@@ -46,7 +46,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly DamageExamineSystem _examineDamage = default!;
+    [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
 
     public override void Initialize()
     {
@@ -66,7 +66,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var markup = _examineDamage.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+        var markup = _damageExamine.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
         args.Message.AddMessage(markup);
     }
 
