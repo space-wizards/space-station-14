@@ -98,8 +98,6 @@ public sealed class SpreaderSystem : EntitySystem
         var spreadable = new ValueList<EntityUid>();
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
-        // The following while() and if() essentially just let execution continue
-        // one time every second (SpreadCooldown)
         while (spreadGrids.MoveNext(out var uid, out var grid))
         {
             if (grid.NextUpdate > curTime)
