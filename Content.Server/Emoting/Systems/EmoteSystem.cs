@@ -54,6 +54,12 @@ public sealed class EmoteSystem : EntitySystem
 
             foreach (var prototype in _proto.EnumeratePrototypes<EmotePrototype>())
             {
+                // NOTE: Maybe need make some value in configuration.
+                // If TRUE, we can put in menu next emotes, like: Meows, Honk, Heezes and something.
+                // Or we can put only those emotes, what we can trigger with chat
+                if (prototype.ChatTriggers.Count <= 0)
+                    continue;
+
                 switch (prototype.Category)
                 {
                     case EmoteCategory.General:
