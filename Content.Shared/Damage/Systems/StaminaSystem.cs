@@ -189,10 +189,11 @@ public sealed partial class StaminaSystem : EntitySystem
             toHit.Add((ent, stam));
         }
 
+        var damage = component.Damage / toHit.Count;
         foreach (var (ent, comp) in toHit)
         {
             var oldDamage = comp.StaminaDamage;
-            TakeStaminaDamage(ent, component.Damage / toHit.Count, comp, source: args.User, with: args.Weapon);
+            TakeStaminaDamage(ent, damage, comp, source: args.User, with: args.Weapon);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
                 _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);
