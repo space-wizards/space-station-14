@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Mice are no longer blood based juice boxes., type: Tweak}
-  id: 3957
-  time: '2023-06-07T03:53:41.0000000+00:00'
 - author: Rincew1nd
   changes:
   - {message: All the antag roles have briefing sounds now., type: Add}
@@ -2988,3 +2983,10 @@ Entries:
   - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
   id: 4456
   time: '2023-08-06T06:08:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix taxibots incorrectly pushing entities., type: Fix}
+  - {message: Nerf taxibot speed from 10 to 6 and reduce their volume significantly.,
+    type: Tweak}
+  id: 4457
+  time: '2023-08-06T06:37:42.0000000+00:00'
