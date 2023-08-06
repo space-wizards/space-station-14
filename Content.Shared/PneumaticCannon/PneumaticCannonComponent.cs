@@ -30,7 +30,7 @@ public sealed class PneumaticCannonComponent : Component
     /// </summary>
     [DataField("gasUsage")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float GasUsage = 2f;
+    public float GasUsage = 0.142f;
 
     /// <summary>
     ///     Base projectile speed at default power.

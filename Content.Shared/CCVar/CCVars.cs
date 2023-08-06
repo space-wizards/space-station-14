@@ -938,6 +938,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Heat loss per tile due to radiation at 20 degC, in W.
+        /// </summary>
+        public static readonly CVarDef<float> SuperconductionTileLoss =
+            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether excited groups will be processed and created.
         /// </summary>
         public static readonly CVarDef<bool> ExcitedGroups =

@@ -31,55 +31,52 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
             return;
 
-        var otherEntity = args.OtherEntity;
+        var target = args.OtherEntity;
         // it's here so this check is only done once before possible hit
         var attemptEv = new ProjectileReflectAttemptEvent(uid, component, false);
-        RaiseLocalEvent(otherEntity, ref attemptEv);
+        RaiseLocalEvent(target, ref attemptEv);
         if (attemptEv.Cancelled)
         {
-            SetShooter(component, otherEntity);
+            SetShooter(component, target);
             return;
         }
 
-        var otherName = ToPrettyString(otherEntity);
+        var ev = new ProjectileHitEvent(target);
+        RaiseLocalEvent(uid, ref ev);
+
+        var otherName = ToPrettyString(target);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(otherEntity, component.Damage, component.IgnoreResistances, origin: component.Shooter);
-        var deleted = Deleted(otherEntity);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target, component.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var deleted = Deleted(target);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))
         {
             if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
             {
-                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { otherEntity }), Filter.Pvs(otherEntity, entityManager: EntityManager));
+                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { target }), Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
-                HasComp<ActorComponent>(otherEntity) ? LogImpact.Extreme : LogImpact.High,
+                HasComp<ActorComponent>(target) ? LogImpact.Extreme : LogImpact.High,
                 $"Projectile {ToPrettyString(uid):projectile} shot by {ToPrettyString(component.Shooter):user} hit {otherName:target} and dealt {modifiedDamage.Total:damage} damage");
         }
 
         if (!deleted)
         {
-            _guns.PlayImpactSound(otherEntity, modifiedDamage, component.SoundHit, component.ForceSound);
-            _sharedCameraRecoil.KickCamera(otherEntity, direction);
+            _guns.PlayImpactSound(target, modifiedDamage, component.SoundHit, component.ForceSound);
+            _sharedCameraRecoil.KickCamera(target, direction);
         }
 
-        var ev = new ProjectileCollideEvent(uid, false);
-        RaiseLocalEvent(args.OtherEntity, ref ev);
+        component.DamagedEntity = true;
 
-        if (!ev.Cancelled)
+        if (component.DeleteOnCollide)
         {
-            component.DamagedEntity = true;
+            QueueDel(uid);
+        }
 
-            if (component.DeleteOnCollide)
-            {
-                QueueDel(uid);
-            }
-
-            if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
-            {
-                RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
-            }
+        if (component.ImpactEffect != null && TryComp<TransformComponent>(uid, out var xform))
+        {
+            RaiseNetworkEvent(new ImpactEffectEvent(component.ImpactEffect, xform.Coordinates), Filter.Pvs(xform.Coordinates, entityMan: EntityManager));
         }
     }
 }
