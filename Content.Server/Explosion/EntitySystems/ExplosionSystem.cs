@@ -111,6 +111,16 @@ public sealed partial class ExplosionSystem : EntitySystem
         _pathfindingSystem.PauseUpdating = false;
     }
 
+    public void SetExplosionResistance(EntityUid entityUid, float newCoefficient, ExplosionResistanceComponent? component = null)
+    {
+        if (!Resolve(entityUid, ref component))
+            return;
+
+        component.DamageCoefficient = newCoefficient;
+
+        Dirty(component);
+    }
+
     private void OnGetResistance(EntityUid uid, ExplosionResistanceComponent component, GetExplosionResistanceEvent args)
     {
         args.DamageCoefficient *= component.DamageCoefficient;
