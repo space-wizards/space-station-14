@@ -73,8 +73,7 @@ public sealed partial class GunSystem
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        var markup = _damageExamine.GetDamageExamine(damageSpec, damageType);
-        args.Message.AddMessage(markup);
+        _damageExamine.AddDamageExamine(args.Message, damageSpec, damageType);
     }
 
     private DamageSpecifier? GetDamage(BatteryAmmoProviderComponent component)

@@ -64,8 +64,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var markup = _damageExamine.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
-        args.Message.AddMessage(markup);
+        _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-melee"));
     }
 
     protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,

@@ -35,10 +35,20 @@ public sealed class DamageExamineSystem : EntitySystem
         }
     }
 
+    public void AddDamageExamine(FormattedMessage message, DamageSpecifier damageSpecifier, string? type = null)
+    {
+        var markup = GetDamageExamine(damageSpecifier, type);
+        if (!message.IsEmpty)
+        {
+            message.PushNewline();
+        }
+        message.AddMessage(markup);
+    }
+
     /// <summary>
     /// Retrieves the damage examine values.
     /// </summary>
-    public FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
+    private FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
     {
         var msg = new FormattedMessage();
 

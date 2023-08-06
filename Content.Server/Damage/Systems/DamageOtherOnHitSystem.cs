@@ -56,8 +56,7 @@ namespace Content.Server.Damage.Systems
 
         private void OnDamageExamine(EntityUid uid, DamageOtherOnHitComponent component, ref DamageExamineEvent args)
         {
-            var markup = _damageExamine.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
-            args.Message.AddMessage(markup);
+            _damageExamine.AddDamageExamine(args.Message, component.Damage, Loc.GetString("damage-throw"));
         }
     }
 }
