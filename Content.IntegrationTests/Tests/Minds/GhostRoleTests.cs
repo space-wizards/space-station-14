@@ -13,6 +13,7 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed class GhostRoleTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: GhostRoleTestEntity
@@ -29,7 +30,11 @@ public sealed class GhostRoleTests
     [Test]
     public async Task TakeRoleAndReturn()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true
+        });
         var server = pairTracker.Pair.Server;
         var client = pairTracker.Pair.Client;
 
