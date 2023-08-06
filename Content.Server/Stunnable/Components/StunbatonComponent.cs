@@ -1,29 +1,27 @@
 using Content.Server.Stunnable.Systems;
-using Content.Shared.Timing;
 using Robust.Shared.Audio;
 
-namespace Content.Server.Stunnable.Components
+namespace Content.Server.Stunnable.Components;
+
+[RegisterComponent, Access(typeof(StunbatonSystem))]
+public sealed class StunbatonComponent : Component
 {
-    [RegisterComponent, Access(typeof(StunbatonSystem))]
-    public sealed class StunbatonComponent : Component
-    {
-        public bool Activated = false;
+    public bool Activated = false;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("energyPerUse")]
-        public float EnergyPerUse { get; set; } = 350;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("energyPerUse")]
+    public float EnergyPerUse = 350;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("onThrowStunChance")]
-        public float OnThrowStunChance { get; set; } = 0.20f;
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("onThrowStunChance")]
+    public float OnThrowStunChance = 0.20f;
 
-        [DataField("stunSound")]
-        public SoundSpecifier StunSound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/egloves.ogg");
+    [DataField("stunSound", required: true)]
+    public SoundSpecifier StunSound = default!;
 
-        [DataField("sparksSound")]
-        public SoundSpecifier SparksSound { get; set; } = new SoundCollectionSpecifier("sparks");
+    [DataField("sparksSound")]
+    public SoundSpecifier SparksSound = new SoundCollectionSpecifier("sparks");
 
-        [DataField("turnOnFailSound")]
-        public SoundSpecifier TurnOnFailSound { get; set; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
-    }
+    [DataField("turnOnFailSound")]
+    public SoundSpecifier TurnOnFailSound = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }

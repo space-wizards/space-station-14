@@ -16,6 +16,7 @@ using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -32,6 +33,8 @@ public sealed partial class StaminaSystem : EntitySystem
     [Dependency] private readonly MetaDataSystem _metadata = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly INetManager _net = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -209,22 +212,26 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
-        var ev = new StaminaDamageOnHitAttemptEvent();
-        RaiseLocalEvent(uid, ref ev);
-        if (ev.Cancelled)
-            return;
-
-        TakeStaminaDamage(args.Target, component.Damage, source: uid);
+        OnCollide(uid, component, args.Target);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
+    {
+        OnCollide(uid, component, args.Target);
+    }
+
+    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
             return;
 
-        TakeStaminaDamage(args.Target, component.Damage, source: uid);
+        TakeStaminaDamage(target, component.Damage, source: uid);
+        if (_net.IsServer)
+        {
+            _audio.PlayPvs(component.Sound, target);
+        }
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
