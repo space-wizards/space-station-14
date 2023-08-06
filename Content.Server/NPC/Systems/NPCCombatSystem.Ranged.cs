@@ -1,6 +1,7 @@
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
 using Content.Shared.Weapons.Ranged.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
@@ -132,13 +133,20 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f);
+                // For consistency with NPC steering.
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, Transform(comp.Target).Coordinates, distance + 0.1f);
             }
 
             if (!comp.TargetInLOS)
             {
                 comp.ShootAccumulator = 0f;
                 comp.Status = CombatStatus.NotInSight;
+
+                if (TryComp(uid, out steering))
+                {
+                    steering.ForceMove = true;
+                }
+
                 continue;
             }
 
@@ -188,8 +196,14 @@ public sealed partial class NPCCombatSystem
                 targetCordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
             }
 
-            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
             comp.Status = CombatStatus.Normal;
+
+            if (gun.NextFire > _timing.CurTime)
+            {
+                return;
+            }
+
+            _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);
         }
     }
 }

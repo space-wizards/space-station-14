@@ -20,6 +20,7 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Roles;
 using Content.Shared.StatusIcon;
+using Content.Shared.Station;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
 using Robust.Shared.Map;
@@ -34,15 +35,13 @@ namespace Content.Server.Station.Systems;
 /// Also provides helpers for spawning in the player's mob.
 /// </summary>
 [PublicAPI]
-public sealed class StationSpawningSystem : EntitySystem
+public sealed class StationSpawningSystem : SharedStationSpawningSystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    [Dependency] private readonly HandsSystem _handsSystem = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
@@ -116,7 +115,7 @@ public sealed class StationSpawningSystem : EntitySystem
         if (_randomizeCharacters)
         {
             var weightId = _configurationManager.GetCVar(CCVars.ICRandomSpeciesWeights);
-            var weights = _prototypeManager.Index<WeightedRandomPrototype>(weightId);
+            var weights = _prototypeManager.Index<WeightedRandomSpeciesPrototype>(weightId);
             speciesId = weights.Pick(_random);
         }
         else if (profile != null)
@@ -170,39 +169,6 @@ public sealed class StationSpawningSystem : EntitySystem
     }
 
     /// <summary>
-    /// Equips starting gear onto the given entity.
-    /// </summary>
-    /// <param name="entity">Entity to load out.</param>
-    /// <param name="startingGear">Starting gear to use.</param>
-    /// <param name="profile">Character profile to use, if any.</param>
-    public void EquipStartingGear(EntityUid entity, StartingGearPrototype startingGear, HumanoidCharacterProfile? profile)
-    {
-        if (_inventorySystem.TryGetSlots(entity, out var slotDefinitions))
-        {
-            foreach (var slot in slotDefinitions)
-            {
-                var equipmentStr = startingGear.GetGear(slot.Name, profile);
-                if (!string.IsNullOrEmpty(equipmentStr))
-                {
-                    var equipmentEntity = EntityManager.SpawnEntity(equipmentStr, EntityManager.GetComponent<TransformComponent>(entity).Coordinates);
-                    _inventorySystem.TryEquip(entity, equipmentEntity, slot.Name, true);
-                }
-            }
-        }
-
-        if (!TryComp(entity, out HandsComponent? handsComponent))
-            return;
-
-        var inhand = startingGear.Inhand;
-        var coords = EntityManager.GetComponent<TransformComponent>(entity).Coordinates;
-        foreach (var (hand, prototype) in inhand)
-        {
-            var inhandEntity = EntityManager.SpawnEntity(prototype, coords);
-            _handsSystem.TryPickup(entity, inhandEntity, hand, checkActionBlocker: false, handsComp: handsComponent);
-        }
-    }
-
-    /// <summary>
     /// Equips an ID card and PDA onto the given entity.
     /// </summary>
     /// <param name="entity">Entity to load out.</param>
@@ -211,7 +177,7 @@ public sealed class StationSpawningSystem : EntitySystem
     /// <param name="station">The station this player is being spawned on.</param>
     public void EquipIdCard(EntityUid entity, string characterName, JobPrototype jobPrototype, EntityUid? station)
     {
-        if (!_inventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
+        if (!InventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
 
         if (!EntityManager.TryGetComponent(idUid, out PdaComponent? pdaComponent) || !TryComp<IdCardComponent>(pdaComponent.ContainedId, out var card))

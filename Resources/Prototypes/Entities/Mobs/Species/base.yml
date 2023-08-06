@@ -34,10 +34,6 @@
   - type: Polymorphable
   - type: Identity
   - type: Hands
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
@@ -88,6 +84,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: Blindable
   # Other
   - type: Inventory
@@ -372,7 +369,6 @@
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
     - type: Physics
-      bodyType: Dynamic
     - type: Fixtures
       fixtures:
         fix1:

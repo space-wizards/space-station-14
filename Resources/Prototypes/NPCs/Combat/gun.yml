@@ -71,6 +71,7 @@
 
         - !type:HTNPrimitiveTask
           preconditions:
+            - !type:ActiveHandFreePrecondition
             - !type:TargetInRangePrecondition
               targetKey: Target
               rangeKey: InteractRange
