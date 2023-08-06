@@ -23,23 +23,26 @@
   parent: BaseWeaponCrusher
   id: WeaponCrusher
   components:
+  - type: Tag
+    tags:
+      - Pickaxe
   - type: Sprite
     sprite: Objects/Weapons/Melee/crusher.rsi
     state: icon
   - type: AmmoCounter
   - type: UseDelayOnShoot
   - type: UseDelay
-    delay: 1.9
+    delay: 0.9
   - type: LeechOnMarker
     leech:
       groups:
         Brute: -10
   - type: Gun
     soundGunshot: /Audio/Weapons/plasma_cutter.ogg
-    fireRate: 0.5
+    fireRate: 1
     useKey: false
   - type: RechargeBasicEntityAmmo
-    rechargeCooldown: 1.5
+    rechargeCooldown: 0.5
     rechargeSound:
       path: /Audio/Weapons/Guns/MagIn/kinetic_reload.ogg
   - type: BasicEntityAmmoProvider
@@ -47,7 +50,6 @@
     capacity: 1
     count: 1
   - type: MeleeWeapon
-    attackRate: 0.75
     damage:
       types:
         Blunt: 10
@@ -86,6 +88,9 @@
   id: WeaponCrusherGlaive
   description: An early design of the proto-kinetic accelerator, in glaive form.
   components:
+  - type: Tag
+    tags:
+      - Pickaxe
   - type: UseDelayOnShoot
   - type: UseDelay
     delay: 1.9
