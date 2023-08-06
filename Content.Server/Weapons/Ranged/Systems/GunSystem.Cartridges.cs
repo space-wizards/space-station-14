@@ -1,8 +1,8 @@
 using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Projectiles;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
 
@@ -14,26 +14,18 @@ public sealed partial class GunSystem
     {
         base.InitializeCartridge();
         SubscribeLocalEvent<CartridgeAmmoComponent, ExaminedEvent>(OnCartridgeExamine);
-        SubscribeLocalEvent<CartridgeAmmoComponent, GetVerbsEvent<ExamineVerb>>(OnCartridgeVerbExamine);
+        SubscribeLocalEvent<CartridgeAmmoComponent, DamageExamineEvent>(OnCartridgeDamageExamine);
     }
 
-    private void OnCartridgeVerbExamine(EntityUid uid, CartridgeAmmoComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnCartridgeDamageExamine(EntityUid uid, CartridgeAmmoComponent component, ref DamageExamineEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess)
-            return;
-
         var damageSpec = GetProjectileDamage(component.Prototype);
 
         if (damageSpec == null)
             return;
 
-        var type = Loc.GetString("damage-projectile");
-        var markup = _examineDamage.GetDamageExamine(damageSpec, type);
-        _examine.AddDetailedExamineVerb(args, component, markup,
-            Loc.GetString("damage-examinable-verb-text", ("type", type)),
-            "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
-            Loc.GetString("damage-examinable-verb-message")
-        );
+        var markup = _examineDamage.GetDamageExamine(damageSpec, Loc.GetString("damage-projectile"));
+        args.Message.AddMessage(markup);
     }
 
     private DamageSpecifier? GetProjectileDamage(string proto)

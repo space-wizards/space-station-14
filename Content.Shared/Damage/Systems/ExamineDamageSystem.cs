@@ -1,13 +1,38 @@
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Events;
+using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Verbs;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
 public sealed class ExamineDamageSystem : EntitySystem
 {
+    [Dependency] private readonly ExamineSystemShared _examine = default!;
+
     public override void Initialize()
     {
         base.Initialize();
+
+        SubscribeLocalEvent<DamageExaminableComponent, GetVerbsEvent<ExamineVerb>>(OnGetExamineVerbs);
+    }
+
+    private void OnGetExamineVerbs(EntityUid uid, DamageExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var ev = new DamageExamineEvent(new FormattedMessage(), args.User);
+        RaiseLocalEvent(uid, ref ev);
+        if (!ev.Message.IsEmpty)
+        {
+            _examine.AddDetailedExamineVerb(args, component, ev.Message,
+                Loc.GetString("damage-examinable-verb-text"),
+                "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
+                Loc.GetString("damage-examinable-verb-message")
+            );
+        }
     }
 
     /// <summary>

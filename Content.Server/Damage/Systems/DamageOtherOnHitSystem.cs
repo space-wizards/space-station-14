@@ -1,15 +1,14 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Damage.Components;
-using Content.Server.Examine;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
+using Content.Shared.Damage.Events;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
-using Content.Shared.Verbs;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -23,14 +22,13 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
         [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly ExamineSystem _examine = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly ExamineDamageSystem _examineDamage = default!;
 
         public override void Initialize()
         {
             SubscribeLocalEvent<DamageOtherOnHitComponent, ThrowDoHitEvent>(OnDoHit);
-            SubscribeLocalEvent<DamageOtherOnHitComponent, GetVerbsEvent<ExamineVerb>>(OnExamine);
+            SubscribeLocalEvent<DamageOtherOnHitComponent, DamageExamineEvent>(OnDamageExamine);
         }
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
@@ -56,18 +54,10 @@ namespace Content.Server.Damage.Systems
             }
         }
 
-        private void OnExamine(EntityUid uid, DamageOtherOnHitComponent component, GetVerbsEvent<ExamineVerb> args)
+        private void OnDamageExamine(EntityUid uid, DamageOtherOnHitComponent component, ref DamageExamineEvent args)
         {
-            if (!args.CanInteract || !args.CanAccess)
-                return;
-
-            var type = Loc.GetString("damage-throw");
-            var markup = _examineDamage.GetDamageExamine(component.Damage, type);
-            _examine.AddDetailedExamineVerb(args, component, markup,
-                Loc.GetString("damage-examinable-verb-text", ("type", type)),
-                "/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png",
-                Loc.GetString("damage-examinable-verb-message")
-            );
+            var markup = _examineDamage.GetDamageExamine(component.Damage, Loc.GetString("damage-throw"));
+            args.Message.AddMessage(markup);
         }
     }
 }

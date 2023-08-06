@@ -12,6 +12,7 @@ using Content.Server.Movement.Systems;
 using Content.Shared.Administration.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -21,7 +22,6 @@ using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.Player;
@@ -53,12 +53,12 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
-        SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
+        SubscribeLocalEvent<MeleeWeaponComponent, DamageExamineEvent>(OnMeleeExamineDamage);
     }
 
-    private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnMeleeExamineDamage(EntityUid uid, MeleeWeaponComponent component, ref DamageExamineEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
+        if (component.HideFromExamine)
             return;
 
         var damageSpec = GetDamage(uid, args.User, component);
@@ -66,13 +66,8 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var type = Loc.GetString("damage-melee");
-        var markup = _examineDamage.GetDamageExamine(damageSpec, type);
-        _examine.AddDetailedExamineVerb(args, component, markup,
-            Loc.GetString("damage-examinable-verb-text", ("type", type)),
-            "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
-            Loc.GetString("damage-examinable-verb-message")
-        );
+        var markup = _examineDamage.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
+        args.Message.AddMessage(markup);
     }
 
     protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,

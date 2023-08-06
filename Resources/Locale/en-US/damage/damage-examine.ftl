@@ -1,5 +1,5 @@
 # Damage examines
-damage-examinable-verb-text = {CAPITALIZE($type)} damage
+damage-examinable-verb-text = Damage
 damage-examinable-verb-message = Examine the damage values.
 
 damage-hitscan = hitscan
