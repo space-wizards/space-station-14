@@ -61,7 +61,7 @@
   - type: Welder
     fuelConsumption: 0.01
     fuelLitCost: 0.1
-    litMeleeDamageBonus:
+    litDamage: # While the flame is on, lit damage REPLACES base damage
       types:
         Heat: 1
     tankSafe: true

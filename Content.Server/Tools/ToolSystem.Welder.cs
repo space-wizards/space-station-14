@@ -18,8 +18,8 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Tools
-{
+namespace Content.Server.Tools;
+
     public sealed partial class ToolSystem
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
@@ -49,7 +49,7 @@ namespace Content.Server.Tools
         private void OnGetMeleeDamage(EntityUid uid, WelderComponent component, ref GetMeleeDamageEvent args)
         {
             if (component.Lit)
-                args.Damage += component.LitMeleeDamageBonus;
+                args.Damage = component.LitDamage;
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
@@ -326,4 +326,3 @@ namespace Content.Server.Tools
             WelderOn = welderOn;
         }
     }
-}

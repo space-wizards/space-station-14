@@ -48,10 +48,9 @@
       collection: Welder
     qualities: Welding
   - type: Welder
-    litMeleeDamageBonus:
+    litDamage: # While the flame is on, lit damage REPLACES base damage
       types:
         Heat: 8
-        Blunt: -5
   - type: PointLight
     enabled: false
     radius: 1.5

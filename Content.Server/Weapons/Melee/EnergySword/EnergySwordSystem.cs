@@ -49,11 +49,8 @@ public sealed class EnergySwordSystem : EntitySystem
 
     private void OnGetMeleeDamage(EntityUid uid, EnergySwordComponent comp, ref GetMeleeDamageEvent args)
     {
-        if (!comp.Activated)
-            return;
-
-        // Adjusts base damage when the energy blade is active, by values set in yaml
-        args.Damage += comp.LitDamageBonus;
+        if (comp.Activated)
+            args.Damage = comp.LitDamage;
     }
 
     private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)

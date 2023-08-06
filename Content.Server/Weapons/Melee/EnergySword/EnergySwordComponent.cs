@@ -48,9 +48,11 @@ internal sealed class EnergySwordComponent : Component
         Color.MediumSpringGreen,
         Color.MediumOrchid
     };
-
-    [DataField("litDamageBonus")]
-    public DamageSpecifier LitDamageBonus = new();
+    /// <summary>
+    ///     While the energy blade is active this damage REPLACES the base melee weapon damage.
+    /// </summary>
+    [DataField("litDamage")]
+    public DamageSpecifier LitDamage = new();
 
     [DataField("litDisarmMalus")]
     public float LitDisarmMalus = 0.6f;

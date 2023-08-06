@@ -5,12 +5,11 @@
   description: A very loud & dangerous sword with a beam made of pure, concentrated plasma. Cuts through unarmored targets like butter.
   components:
   - type: EnergySword
-    litDamageBonus:
+    litDamage: # While the blade is active lit damage REPLACES base damage
         types:
             Slash: 15
             Heat: 15
             Structural: 4
-            Blunt: -4.5
     litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_sword.rsi
@@ -63,11 +62,10 @@
   components:
   - type: EnergySword
     secret: true
-    litDamageBonus:
+    litDamage: # While the blade is active lit damage REPLACES base damage
         types:
             Slash: 9
             Heat: 9
-            Blunt: -1
     litDisarmMalus: 0.4
     activateSound: !type:SoundPathSpecifier
       path: /Audio/Weapons/ebladeon.ogg
@@ -143,11 +141,10 @@
   components:
   - type: EnergySword
     secret: true
-    litDamageBonus:
+    litDamage: # While the blade is active lit damage REPLACES base damage
         types:
             Slash: 7.5
             Heat: 7.5
-            Blunt: -1
     litDisarmMalus: 0.6
   - type: Sprite
     sprite: Objects/Weapons/Melee/e_cutlass.rsi
@@ -171,12 +168,11 @@
   - type: Wieldable
     wieldTime: 0
   - type: EnergySword
-    litDamageBonus:
+    litDamage: # While the blade is active lit damage REPLACES base damage
         types:
             Slash: 9
             Heat: 9
             Structural: 20
-            Blunt: -4.5
     litDisarmMalus: 0.7
   - type: MeleeWeapon
     attackRate: 1.5
