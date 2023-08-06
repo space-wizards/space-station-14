@@ -21,6 +21,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     float tileLoss;
 
@@ -46,7 +47,8 @@ public sealed class HeatExchangerSystem : EntitySystem
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+        if (!TryComp(uid, out NodeContainerComponent? nodeContainer)
+                || !TryComp(uid, out AtmosDeviceComponent? device)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
         {
@@ -54,7 +56,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         }
 
         // Positive dN flows from inlet to outlet
-        var dt = 1/_atmosphereSystem.AtmosTickRate;
+        var dt = (float)(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
         var dN = comp.G*dP*dt;
 
@@ -68,7 +70,7 @@ public sealed class HeatExchangerSystem : EntitySystem
 
         // Convection
         var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
-        if (environment != null)
+        if (environment != null && environment.TotalMoles != 0)
         {
             radTemp = environment.Temperature;
 
