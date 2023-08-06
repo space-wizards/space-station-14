@@ -1,9 +1,11 @@
+using Content.Shared.Radiation.Systems;
+
 namespace Content.Shared.Radiation.Components;
 
 /// <summary>
 ///     Irradiate all objects in range.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedRadiationSystem))]
 public sealed class RadiationSourceComponent : Component
 {
     /// <summary>
