@@ -36,9 +36,9 @@
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
-    totalIntensity: 20
+    totalIntensity: 3
     intensitySlope: 40
-    maxIntensity: 20
+    maxIntensity: 3
   - type: Appearance
   - type: TimerTriggerVisuals
     primingSound:
