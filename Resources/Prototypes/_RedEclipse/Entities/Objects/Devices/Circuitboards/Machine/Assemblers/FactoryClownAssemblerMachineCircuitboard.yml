@@ -1,13 +1,8 @@
 - type: entity
   id: FactoryClownAssemblerMachineCircuitboard
-  parent: BaseMachineCircuitboard
+  parent: BaseFactoryMachineCircuitboard
   name: factory clown assembler machine board
   description: does not assemble new clowns.
   components:
     - type: MachineBoard
       prototype: FactoryClownAssembler
-      requirements:
-        MatterBin: 1
-        Manipulator: 1
-      materialRequirements:
-        Steel: 1
