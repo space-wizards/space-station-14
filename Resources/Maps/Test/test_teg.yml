@@ -237,6 +237,19 @@ entities:
     - type: RadiationGridResistance
     - id: TEG
       type: BecomesStation
+- proto: AirAlarm
+  entities:
+  - uid: 436
+    components:
+    - pos: -2.5,5.5
+      parent: 2
+      type: Transform
+    - ShutdownSubscribers:
+      - 437
+      type: DeviceNetwork
+    - devices:
+      - 437
+      type: DeviceList
 - proto: AirlockEngineeringGlass
   entities:
   - uid: 128
@@ -249,6 +262,16 @@ entities:
     - pos: 3.5,7.5
       parent: 2
       type: Transform
+- proto: AirSensor
+  entities:
+  - uid: 437
+    components:
+    - pos: -5.5,1.5
+      parent: 2
+      type: Transform
+    - ShutdownSubscribers:
+      - 436
+      type: DeviceNetwork
 - proto: Bed
   entities:
   - uid: 371
@@ -1411,16 +1434,27 @@ entities:
       pos: -1.5,5.5
       parent: 2
       type: Transform
+    - ShutdownSubscribers:
+      - 3
+      - 6
+      - 146
+      - 7
+      - 147
+      - 29
+      type: DeviceNetwork
+    - devices:
+      - 3
+      - 6
+      - 146
+      - 7
+      - 147
+      - 29
+      type: DeviceList
 - proto: DebugAPC
   entities:
   - uid: 38
     components:
     - pos: -1.5,8.5
-      parent: 2
-      type: Transform
-  - uid: 239
-    components:
-    - pos: -2.5,9.5
       parent: 2
       type: Transform
 - proto: DebugGenerator
@@ -1605,8 +1639,11 @@ entities:
     - pos: 4.5,3.5
       parent: 2
       type: Transform
-    - targetTemperature: 593.15
+    - targetTemperature: 73.15
       type: GasThermoMachine
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
 - proto: GasThermoMachineHeater
   entities:
   - uid: 146
@@ -1614,8 +1651,11 @@ entities:
     - pos: -3.5,3.5
       parent: 2
       type: Transform
-    - targetTemperature: 73.15
+    - targetTemperature: 593.15
       type: GasThermoMachine
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
 - proto: GasVolumePump
   entities:
   - uid: 6
@@ -1624,12 +1664,18 @@ entities:
       pos: -1.5,3.5
       parent: 2
       type: Transform
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
   - uid: 7
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,1.5
       parent: 2
       type: Transform
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
   - uid: 17
     components:
     - rot: 3.141592653589793 rad
@@ -2604,8 +2650,13 @@ entities:
     - pos: 0.5,5.5
       parent: 2
       type: Transform
-    - maxCharge: 8E+09
+    - maxCharge: 8E+11
       type: Battery
+    - maxChargeRate: 5E+09
+      type: PowerNetworkBattery
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
 - proto: SpawnPointChiefEngineer
   entities:
   - uid: 145
@@ -2619,6 +2670,13 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 0.5,0.5
+      parent: 2
+      type: Transform
+- proto: SuitStorageCE
+  entities:
+  - uid: 239
+    components:
+    - pos: 4.5,8.5
       parent: 2
       type: Transform
 - proto: Table
@@ -2662,6 +2720,9 @@ entities:
       pos: 0.5,2.5
       parent: 2
       type: Transform
+    - ShutdownSubscribers:
+      - 433
+      type: DeviceNetwork
 - proto: TegCirculator
   entities:
   - uid: 4
