@@ -11,4 +11,4 @@ ent-SyndicateSpongeBox = { ent-MonkeyCubeBox }
 
 ent-SyndicateSpongeWrapped = { ent-MonkeyCubeWrapped }
     .desc = { ent-MonkeyCubeWrapped.desc }
-    .suffix Завёрнутый Синдикат
+    .suffix = Завёрнутый Синдикат

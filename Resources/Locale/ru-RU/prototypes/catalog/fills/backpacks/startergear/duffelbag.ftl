@@ -61,3 +61,7 @@ ent-ClothingBackpackDuffelDetectiveFilled = { ent-ClothingBackpackDuffel }
 ent-ClothingBackpackDuffelSalvageFilled = { ent-ClothingBackpackDuffelSalvage }
     .desc = { ent-ClothingBackpackDuffelSalvage.desc }
     .suffix = { "" }
+ent-ClothingBackpackDuffelAtmosphericsFilled = { ent-ClothingBackpackDuffelAtmospherics }
+    .desc = { ent-ClothingBackpackDuffelAtmospherics.desc }
+ent-ClothingBackpackDuffelCargoFilled = { ent-ClothingBackpackDuffelCargo }
+    .desc = { ent-ClothingBackpackDuffelCargo.desc }

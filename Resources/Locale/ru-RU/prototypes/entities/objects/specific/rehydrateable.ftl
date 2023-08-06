@@ -6,4 +6,4 @@ ent-DehydratedSpaceCarp = обезвоженный космический кар
     .suffix = { "" }
 ent-SyndicateSponge = { ent-MonkeyCube }
     .desc = { ent-MonkeyCube.desc }
-    .suffix Синдикат
+    .suffix = Синдикат

@@ -57,3 +57,7 @@ ent-ClothingBackpackDuffelHolding = бездонный вещмешок
     .suffix = { "" }
 ent-ClothingBackpackDuffelBrigmedic = вещмешок бригмедика
     .desc = Большая спортивная сумка для хранения дополнительных медицинских принадлежностей.
+ent-ClothingBackpackDuffelAtmospherics = вещмешок атмосферного техника
+    .desc = Большой вещмешок, изготовленный из огнеупорных волокон. Пахнет плазмой.
+ent-ClothingBackpackDuffelCargo = вещмешок карго
+    .desc = большой вещмешок для кражи драгоценного груза карго.

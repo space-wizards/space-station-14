@@ -68,3 +68,7 @@ ent-ClothingBackpackBrigmedic = рюкзак бригмедика
     .desc = Очень стерильный рюкзак
 ent-ClothingBackpackMerc = рюкзак наёмника
     .desc = Надежный боевой рюкзак, побывавший во многих опасных местах.
+ent-ClothingBackpackAtmospherics = рюкзак атмосферного техника
+    .desc = Это рюкзак, изготовленный из огнеупорных волокон. Пахнет плазмой.
+ent-ClothingBackpackCargo = рюкзак карго
+    .desc = Надежный рюкзак для кражи заказов отдела снабжения.
