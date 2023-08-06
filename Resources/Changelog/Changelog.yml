@@ -1,12 +1,4 @@
 Entries:
-- author: Kit0vras
-  changes:
-  - {message: 'Added new reagent: Fat.', type: Add}
-  - {message: Added reactions for creating soap and meat., type: Add}
-  - {message: 'Added the ability to get fat from raw meat, cutlets, body parts, mice
-      and hamster using a grinder.', type: Add}
-  id: 3961
-  time: '2023-06-07T13:04:37.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: The PDA ringtone now permits deleting/rewriting notes instead of requiring
@@ -2995,3 +2987,9 @@ Entries:
     type: Add}
   id: 4460
   time: '2023-08-06T08:21:05.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added external hull plating tiles & hardened reinforced tiles. They
+      can only be normally destroyed using bombs., type: Add}
+  id: 4461
+  time: '2023-08-06T08:27:48.0000000+00:00'
