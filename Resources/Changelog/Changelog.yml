@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed microwaves defaulting to 5 seconds when the ui said instant.,
-    type: Fix}
-  id: 3966
-  time: '2023-06-07T19:44:42.0000000+00:00'
 - author: lzk
   changes:
   - {message: Changed sprites for some medipens., type: Tweak}
@@ -2994,3 +2988,8 @@ Entries:
   - {message: Primary/Single-target melee attacks deal +25% damage., type: Tweak}
   id: 4465
   time: '2023-08-06T16:01:44.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Increase radiator heat transfer rate., type: Tweak}
+  id: 4466
+  time: '2023-08-06T17:23:43.0000000+00:00'
