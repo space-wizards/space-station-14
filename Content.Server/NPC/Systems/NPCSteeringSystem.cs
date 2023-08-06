@@ -254,7 +254,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         // Dependency issues across threads.
         var options = new ParallelOptions
         {
-            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            MaxDegreeOfParallelism = 1,
         };
         var curTime = _timing.CurTime;
 
