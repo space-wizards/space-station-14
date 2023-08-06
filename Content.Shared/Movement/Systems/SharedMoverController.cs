@@ -147,11 +147,21 @@ namespace Content.Shared.Movement.Systems
             LerpRotation(uid, mover, frameTime);
 
             if (!canMove
-                || physicsComponent.BodyStatus != BodyStatus.OnGround
                 || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
             {
                 UsedMobMovement[uid] = false;
                 return;
+            }
+            
+            if (physicsComponent.BodyStatus != BodyStatus.OnGround)
+            {
+                var ev = new CanInAirMoveEvent(uid);
+				RaiseLocalEvent(uid, ref ev, true);
+                if (!ev.CanMove)
+                {
+                    UsedMobMovement[uid] = false;
+                    return;
+                }
             }
 
             UsedMobMovement[uid] = true;

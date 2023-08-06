@@ -11,9 +11,15 @@ public sealed class MovementIgnoreGravitySystem : EntitySystem
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<MovementIgnoreGravityComponent, ComponentHandleState>(HandleState);
         SubscribeLocalEvent<MovementAlwaysTouchingComponent, CanWeightlessMoveEvent>(OnWeightless);
+        SubscribeLocalEvent<MovementIgnoreInAirComponent, CanInAirMoveEvent>(OnInAir);
     }
 
     private void OnWeightless(EntityUid uid, MovementAlwaysTouchingComponent component, ref CanWeightlessMoveEvent args)
+    {
+        args.CanMove = true;
+    }
+
+    private void OnInAir(EntityUid uid, MovementIgnoreInAirComponent component, ref CanInAirMoveEvent args)
     {
         args.CanMove = true;
     }

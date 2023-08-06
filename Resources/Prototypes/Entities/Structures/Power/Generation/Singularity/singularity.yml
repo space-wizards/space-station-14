@@ -11,6 +11,7 @@
       path: /Audio/Effects/singularity.ogg
   - type: Physics
     bodyType: Dynamic
+    bodyStatus: InAir
   - type: EventHorizon # To make the singularity consume things.
     radius: 0.5
     canBreachContainment: false
@@ -86,8 +87,29 @@
           5:
             sprite: Structures/Power/Generation/Singularity/singularity_5.rsi
             state: singularity_5
-            scale: 1.5,1.5
+            scale: 1.1,1.1
           6:
             sprite: Structures/Power/Generation/Singularity/singularity_6.rsi
             state: singularity_6
             scale: .9,.9
+
+- type: entity
+  id: SingularitySentient
+  parent: Singularity
+  suffix: sentient
+  components:
+  - type: MovementAlwaysTouching
+  - type: MovementIgnoreInAir
+  - type: MovementIgnoreGravity
+    gravityState: true
+  - type: InputMover
+  - type: MovementSpeedModifier
+  - type: GhostRole
+    allowMovement: true
+    allowSpeech: true
+    makeSentient: true
+    name: gravitational singularity
+    description: Praise the lord.
+  - type: GhostTakeoverAvailable
+  - type: Eye
+    zoom: 1.6,1.6
