@@ -39,7 +39,18 @@ namespace Content.Server.Atmos.Piping.Components
     }
 
     public sealed class AtmosDeviceUpdateEvent : EntityEventArgs
-    {}
+    {
+        /// <summary>
+        /// Time elapsed since last update, in seconds. Multiply values used in the update handler
+        /// by this number to make them tickrate-invariant. Use this number instead of AtmosphereSystem.AtmosTime.
+        /// </summary>
+        public float dt;
+
+        public AtmosDeviceUpdateEvent(float dt)
+        {
+            this.dt = dt;
+        }
+    }
 
     public sealed class AtmosDeviceEnabledEvent : EntityEventArgs
     {}

@@ -11,8 +11,6 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
-
         private float _timer = 0f;
 
         // Set of atmos devices that are off-grid but have JoinSystem set.
@@ -118,7 +116,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var time = _gameTiming.CurTime;
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device.Owner, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime), false);
                 device.LastProcess = time;
             }
         }
