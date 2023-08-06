@@ -21,6 +21,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     float tileLoss;
 
@@ -47,6 +48,7 @@ public sealed class HeatExchangerSystem : EntitySystem
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
     {
         if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
         {
