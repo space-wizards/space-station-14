@@ -129,7 +129,6 @@
   suffix: "Grav"
   components:
   - type: GravityAnomaly
-  - type: RadiationSource
 
 - type: entity
   name: behonker
