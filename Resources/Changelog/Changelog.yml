@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that allowed traitors to duplicate TCs., type: Fix}
-  id: 3955
-  time: '2023-06-07T03:53:11.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Added Bingus and Space Cat spawners!, type: Add}
@@ -2988,3 +2983,8 @@ Entries:
       meat., type: Tweak}
   id: 4454
   time: '2023-08-06T03:05:44.0000000+00:00'
+- author: Bixkitts
+  changes:
+  - {message: Candy bowls for waiting lines, type: Add}
+  id: 4455
+  time: '2023-08-06T03:10:47.0000000+00:00'
