@@ -11,6 +11,7 @@ using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Rounding;
 using Content.Shared.Stunnable;
+using Content.Shared.Throwing;
 using Content.Shared.Weapons.Melee.Events;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -51,6 +52,7 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
@@ -211,6 +213,11 @@ public sealed partial class StaminaSystem : EntitySystem
     }
 
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
+    {
+        TakeStaminaDamage(args.Target, component.Damage, source: uid);
+    }
+
+    private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         TakeStaminaDamage(args.Target, component.Damage, source: uid);
     }
