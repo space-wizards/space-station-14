@@ -2981,6 +2981,7 @@ Entries:
 - author: metalgearsloth
   changes:
   - {message: Fix taxibots incorrectly pushing entities., type: Fix}
+  - {message: Taxibots were equipped with noslip tires., type: Tweak}
   - {message: Nerf taxibot speed from 10 to 6 and reduce their volume significantly.,
     type: Tweak}
   id: 4457
