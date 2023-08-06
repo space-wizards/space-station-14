@@ -21,8 +21,8 @@
       board: FactoryExplosiveAssemblerMachineCircuitboard
     - type: MaterialStorage
       whitelist:
-        tags
-        - FactoryParts
+        tags:
+          - FactoryParts
     - type: Lathe
       idleState: icon
       runningState: building
