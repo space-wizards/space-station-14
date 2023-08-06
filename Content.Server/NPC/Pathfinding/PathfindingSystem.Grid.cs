@@ -96,7 +96,7 @@ public sealed partial class PathfindingSystem
         _stopwatch.Restart();
         var options = new ParallelOptions()
         {
-            MaxDegreeOfParallelism = 1,
+            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
         };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
