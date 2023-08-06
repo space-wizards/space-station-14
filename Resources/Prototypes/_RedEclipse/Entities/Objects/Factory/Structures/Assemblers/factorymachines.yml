@@ -1,6 +1,7 @@
 - type: entity
   id: BaseFactoryMachine
   parent: BaseLathe
+  abstract: true
   name: base factory machine
   description: debug item
   components:
