@@ -368,7 +368,6 @@
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
     - type: Physics
-      bodyType: Dynamic
     - type: Fixtures
       fixtures:
         fix1:
