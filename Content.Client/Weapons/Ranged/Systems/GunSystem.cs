@@ -2,6 +2,7 @@ using System.Numerics;
 using Content.Client.Items;
 using Content.Client.Weapons.Ranged.Components;
 using Content.Shared.Camera;
+using Content.Shared.CombatMode;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
@@ -126,7 +127,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
         var entityNull = _player.LocalPlayer?.ControlledEntity;
 
-        if (entityNull == null)
+        if (entityNull == null || !TryComp<CombatModeComponent>(entityNull, out var combat) || !combat.IsInCombatMode)
         {
             return;
         }
@@ -163,7 +164,7 @@ public sealed partial class GunSystem : SharedGunSystem
         // Define target coordinates relative to gun entity, so that network latency on moving grids doesn't fuck up the target location.
         var coordinates = EntityCoordinates.FromMap(entity, mousePos, TransformSystem, EntityManager);
 
-        Sawmill.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
+        Log.Debug($"Sending shoot request tick {Timing.CurTick} / {Timing.CurTime}");
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {

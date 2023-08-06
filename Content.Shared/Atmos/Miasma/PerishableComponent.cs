@@ -29,7 +29,7 @@ public sealed class PerishableComponent : Component
 
     /// <summary>
     /// How often the rotting ticks.
-    /// Feel free to weak this if there are perf concerns.
+    /// Feel free to tweak this if there are perf concerns.
     /// </summary>
     [DataField("perishUpdateRate"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan PerishUpdateRate = TimeSpan.FromSeconds(5);

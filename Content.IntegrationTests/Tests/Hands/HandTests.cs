@@ -13,7 +13,11 @@ public sealed class HandTests
     [Test]
     public async Task TestPickupDrop()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();

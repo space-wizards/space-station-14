@@ -918,7 +918,7 @@
       - !type:HealthChange
         damage:
           types:
-            Caustic: -1
+            Caustic: -3
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold

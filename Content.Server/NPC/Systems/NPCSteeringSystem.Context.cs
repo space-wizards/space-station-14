@@ -81,7 +81,7 @@ public sealed partial class NPCSteeringSystem
 
         // Check if we're in LOS if that's required.
         // TODO: Need something uhh better not sure on the interaction between these.
-        if (steering.ArriveOnLineOfSight)
+        if (!steering.ForceMove && steering.ArriveOnLineOfSight)
         {
             // TODO: use vision range
             inLos = _interaction.InRangeUnobstructed(uid, steering.Coordinates, 10f);
@@ -105,6 +105,7 @@ public sealed partial class NPCSteeringSystem
         else
         {
             steering.LineOfSightTimer = 0f;
+            steering.ForceMove = false;
         }
 
         // We've arrived, nothing else matters.

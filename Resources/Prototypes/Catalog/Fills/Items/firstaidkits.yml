@@ -113,10 +113,10 @@
       - id: HandheldHealthAnalyzer
       - id: MedicatedSuture
       - id: RegenerativeMesh
+      - id: BruteAutoInjector
+      - id: BurnAutoInjector
       - id: SyringeEphedrine
       - id: SyringeTranexamicAcid
-      - id: SyringeBicaridine
-      - id: SyringeDermaline
       - id: AntiPoisonMedipen
       - id: Bloodpack
 

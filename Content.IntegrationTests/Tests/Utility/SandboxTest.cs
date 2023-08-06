@@ -27,9 +27,9 @@ public sealed class SandboxTest
             ContentAssemblies = new[]
             {
                 typeof(Shared.Entry.EntryPoint).Assembly,
-                typeof(Client.Entry.EntryPoint).Assembly,
+                typeof(Client.Entry.EntryPoint).Assembly
             },
-            Options = new GameControllerOptions { LoadConfigAndUserData = false },
+            Options = new GameControllerOptions { LoadConfigAndUserData = false }
         };
 
         options.BeforeStart += () =>
