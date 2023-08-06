@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests
             "CorvaxBox",
             "CorvaxDelta",
             "CorvaxIshimura",
-            "SS220Delta"
+            "220Delta"
         };
 
         /// <summary>
