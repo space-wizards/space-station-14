@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Added GuideHelp tags to some Medical and Kitchen objects., type: Add}
-  id: 3950
-  time: '2023-06-05T22:47:15.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed the lobby's "Observe" button not working., type: Fix}
@@ -2982,3 +2977,10 @@ Entries:
   - {message: Changed the plating sprite to be a little less blue., type: Tweak}
   id: 4449
   time: '2023-08-06T00:04:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
+      speed from lowest to fastest in that order. Additionally buffed crusher attackrate
+      and pickaxe structural damage.', type: Tweak}
+  id: 4450
+  time: '2023-08-06T01:23:38.0000000+00:00'
