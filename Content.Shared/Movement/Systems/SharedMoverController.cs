@@ -156,7 +156,7 @@ namespace Content.Shared.Movement.Systems
             if (physicsComponent.BodyStatus != BodyStatus.OnGround)
             {
                 var ev = new CanInAirMoveEvent(uid);
-				RaiseLocalEvent(uid, ref ev, true);
+                RaiseLocalEvent(uid, ref ev, true);
                 if (!ev.CanMove)
                 {
                     UsedMobMovement[uid] = false;
