@@ -100,6 +100,8 @@ namespace Content.Server.GameTicking
 
         public override void Update(float frameTime)
         {
+            if (DummyTicker)
+                return;
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
         }
