@@ -1,4 +1,4 @@
-﻿using Content.Server.Buckle.Systems;
+﻿using Content.Shared.Buckle;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Traits.Assorted;
@@ -7,7 +7,7 @@ namespace Content.Server.Traits.Assorted;
 
 public sealed class BrokenLegsSystem : SharedBrokenLegsSystem
 {
-    [Dependency] private readonly BuckleSystem _buckleSystem = default!;
+    [Dependency] private readonly SharedBuckleSystem _buckleSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
 
     public override void Initialize()
