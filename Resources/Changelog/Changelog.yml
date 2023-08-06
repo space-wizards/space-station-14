@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Fixed slime and diona brute damage color., type: Fix}
-  id: 3959
-  time: '2023-06-07T08:57:49.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed missing text for the cogchamp effect in the bar guide., type: Fix}
@@ -2992,3 +2987,10 @@ Entries:
     type: Tweak}
   id: 4458
   time: '2023-08-06T06:50:00.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Active energy swords no longer heal small amounts of blunt damage on
+      every hit. Cybersun CEO reportedly thrown out an airlock over "Bluntgate" scandal.,
+    type: Fix}
+  id: 4459
+  time: '2023-08-06T08:19:32.0000000+00:00'
