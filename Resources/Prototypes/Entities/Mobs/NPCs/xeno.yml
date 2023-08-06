@@ -39,8 +39,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: running
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       fix1:

@@ -176,8 +176,6 @@
     launchForwardsMultiplier: 2
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
       slips:
