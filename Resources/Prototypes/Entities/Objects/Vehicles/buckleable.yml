@@ -82,10 +82,10 @@
 
 
 - type: entity
-  id: Carriage
+  id: Wheelchair
   parent: BaseVehicle
-  name: Сarriage
-  description: Don't take it away from those who need it.
+  name: Wheelchair
+  description: A chair with big wheels. It looks like you can move in this on your own.
   components:
     - type: Vehicle
       northOver: true

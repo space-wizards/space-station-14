@@ -8,6 +8,6 @@ namespace Content.Shared.Traits.Assorted;
 public sealed class WheelchairBoundComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("carriagePrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string CarriagePrototype = "Carriage";
+    [DataField("wheelchairPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string WheelchairPrototype = "Wheelchair";
 }

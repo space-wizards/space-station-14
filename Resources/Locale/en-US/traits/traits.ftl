@@ -30,4 +30,4 @@ trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 
 trait-wheelchair-bound-name = Wheelchair Bound
-trait-wheelchair-bound-desc = You cannot move without your wheelchair. Carriage included.
+trait-wheelchair-bound-desc = You cannot move without your wheelchair. Wheelchair included.

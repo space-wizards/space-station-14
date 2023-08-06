@@ -56,7 +56,3 @@
   description: trait-wheelchair-bound-desc
   components:
     - type: WheelchairBound
-      walkSpeedModifier: 0
-      sprintSpeedModifier: 0
-      accelerationSpeedModifier: 1
-      carriageId: Carriage
