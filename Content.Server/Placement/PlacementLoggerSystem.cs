@@ -1,8 +1,7 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Shared.Database;
-using Robust.Server.Player;
+using Robust.Server.GameObjects;
 using Robust.Shared.Map;
-using Robust.Shared.Network;
 using Robust.Shared.Placement;
 
 namespace Content.Server.Placement;
@@ -10,8 +9,8 @@ namespace Content.Server.Placement;
 public sealed class PlacementLoggerSystem : EntitySystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private readonly ActorSystem _actorSystem = default!;
 
     public override void Initialize()
     {
@@ -20,22 +19,9 @@ public sealed class PlacementLoggerSystem : EntitySystem
         SubscribeLocalEvent<PlacementTileEvent>(OnTilePlacement);
     }
 
-    private (IPlayerSession? actor, EntityUid? actorEntity) GetActor(NetUserId? userId)
-    {
-        IPlayerSession? actor = null;
-        EntityUid? actorEntity = null;
-        if (userId != null)
-        {
-            actor = _playerManager.GetSessionByUserId(userId.Value);
-            actorEntity = actor.AttachedEntity;
-        }
-
-        return (actor, actorEntity);
-    }
-
     private void OnEntityPlacement(PlacementEntityEvent ev)
     {
-        var (actor, actorEntity) = GetActor(ev.PlacerNetUserId);
+        var (actor, actorEntity) = _actorSystem.GetActorFromUserId(ev.PlacerNetUserId);
 
         var logType = ev.PlacementEventAction switch
         {
@@ -57,7 +43,7 @@ public sealed class PlacementLoggerSystem : EntitySystem
 
     private void OnTilePlacement(PlacementTileEvent ev)
     {
-        var (actor, actorEntity) = GetActor(ev.PlacerNetUserId);
+        var (actor, actorEntity) = _actorSystem.GetActorFromUserId(ev.PlacerNetUserId);
 
         if (actorEntity != null)
             _adminLogger.Add(LogType.Tile, LogImpact.High,
