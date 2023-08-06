@@ -21,3 +21,39 @@
       path: /Audio/Effects/minibombcountdown.ogg
       params:
         volume: 12
+
+- type: entity
+  name: tiny bomb
+  description: A tiny bomb capable of being hidden in many places
+  parent: [MaterialBase, GrenadeBase]
+  id: MaterialFactoryTinyBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    scale: 0.5, 0.5
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    totalIntensity: 20
+    intensitySlope: 40
+    maxIntensity: 20
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12
+  - type: Material
+  - type: Stack
+    stackType: FactoryTinyBombParts
+    count: 1
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryTinyBomb: 1
