@@ -1,7 +1,7 @@
 - type: entity
   id: FactoryEnergyBladeAssembler
   parent: BaseFactoryMachine
-  name: energy blade assembler
+  name: factory energy blade assembler
   description: Offical CyberSun-EnergyBlade-Assembler, it is hot to the touch.
   components:
     - type: Sprite

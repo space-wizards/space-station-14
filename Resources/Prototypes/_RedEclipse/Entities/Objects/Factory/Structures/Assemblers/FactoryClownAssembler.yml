@@ -1,7 +1,7 @@
 - type: entity
   id: FactoryClownAssembler
   parent: BaseFactoryMachine
-  name: clown assembler
+  name: factory clown assembler
   description: Not official in the slightest, it is held together with glitter glue.
   components:
     - type: Sprite

@@ -1,7 +1,7 @@
 - type: entity
   id: FactoryExplosiveAssembler
   parent: BaseFactoryMachine
-  name: explosive assembler
+  name: factory explosive assembler
   description: Official CyberSun-Explosive-Assembler, stand back.
   components:
     - type: Sprite

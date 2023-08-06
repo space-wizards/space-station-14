@@ -1,7 +1,7 @@
 - type: entity
   id: FactoryFirearmAssembler
   parent: BaseFactoryMachine
-  name: firearm assembler
+  name: factory firearm assembler
   description: Official CyberSun-Firearm-Assembler, it smells like freedom.
   components:
     - type: Sprite

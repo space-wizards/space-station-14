@@ -2,7 +2,7 @@
   id: BaseFactoryMachine
   parent: BaseLathe
   abstract: true
-  name: base factory machine
+  name: factory base machine
   description: debug item
   components:
     - type: Sprite
