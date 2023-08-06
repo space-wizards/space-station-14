@@ -85,6 +85,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: Blindable
   # Other
   - type: Inventory
