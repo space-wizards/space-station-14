@@ -96,7 +96,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: DamageStateVisuals
     states:
       Alive:
@@ -133,7 +133,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -470,7 +471,8 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: RuminantCompound
+    rootTask:
+      task: RuminantCompound
   - type: GuideHelp
     guides:
     - Chef
@@ -588,7 +590,8 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: RuminantCompound
+    rootTask:
+      task: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -763,7 +766,8 @@
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -906,7 +910,8 @@
     factions:
       - Mouse
   - type: HTN
-    rootTask: MouseCompound
+    rootTask:
+      task: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -1286,7 +1291,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -1347,7 +1353,7 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
-      
+
 - type: entity
   name: monkey
   id: MobMonkeySyndicateAgent
@@ -1436,7 +1442,6 @@
   - type: GhostTakeoverAvailable
   - type: IdExaminable
   - type: Loadout
-    prototype: SyndicateOperativeGearMonkey
     prototypes: [SyndicateOperativeGearMonkey]
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
@@ -1562,7 +1567,8 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask:
+        task: SimpleHostileCompound
     - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name
@@ -1866,7 +1872,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile

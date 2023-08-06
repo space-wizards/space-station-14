@@ -12,8 +12,8 @@
   - type: ItemStatus
   - type: Tag
     tags:
-      - RawMaterial
       - DroneUsable
+      - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -69,11 +69,6 @@
   name: cloth
   suffix: Full
   components:
-  - type: Tag
-    tags:
-    - RawMaterial
-    - DroneUsable
-    - Gauze
   - type: Healing
     damageContainers:
       - Biological
@@ -110,6 +105,22 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - Gauze
+      - RawMaterial
+      
 
 - type: entity
   parent: MaterialCloth
@@ -149,6 +160,20 @@
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 - type: entity
   parent: MaterialDurathread
@@ -304,6 +329,20 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 
 - type: entity

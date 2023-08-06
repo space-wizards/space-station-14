@@ -36,12 +36,12 @@ public sealed class StaminaComponent : Component
     /// <summary>
     /// How much stamina damage is required to entire stam crit.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("excess")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("critThreshold")]
     public float CritThreshold = 100f;
 
     /// <summary>
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
-    [DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 }

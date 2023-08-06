@@ -1,22 +1,9 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: BaseMobArachnid
+  parent: [BaseMobArachnid, BaseMob]
   id: MobArachnid
   components:
-  - type: CombatMode
-    canDisarm: true
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-    messagePerceivedByOthers: hugging-success-generic-others
-  - type: MindContainer
-    showExamineInfo: true
-  - type: Input
-    context: "human"
-  - type: MobMover
-  - type: InputMover
   - type: Respirator
     damage:
       types:
@@ -24,12 +11,3 @@
     damageRecovery:
       types:
         Asphyxiation: -0.5 # Recovery will suck without chems
-  - type: Alerts
-  - type: Actions
-  - type: Eye
-  - type: CameraRecoil
-  - type: Examiner
-  - type: CanHostGuardian
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen

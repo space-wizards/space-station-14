@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/b4424d7e79cadb258a65aec2e1bc16cf3d4021dc, https://github.com/tgstation/tgstation/blob/master/icons/obj/weapons/guns/ammo.dmi", 
+    "copyright": "https://github.com/tgstation/tgstation/pull/1684/commits/19e51caef09e78ca1122d26455b539ff5968d334, https://github.com/tgstation/tgstation/blob/master/icons/obj/weapons/guns/ammo.dmi",
     "states": [
         {
             "name": "base"
@@ -84,33 +84,6 @@
         },
         {
             "name": "rubber-6"
-        },
-        {
-            "name": "base-357"
-        },
-        {
-            "name": "icon-357"
-        },
-        {
-            "name": "threefiftyseven-1"
-        },
-        {
-            "name": "threefiftyseven-2"
-        },
-        {
-            "name": "threefiftyseven-3"
-        },
-        {
-            "name": "threefiftyseven-4"
-        },
-        {
-            "name": "threefiftyseven-5"
-        },
-        {
-            "name": "threefiftyseven-6"
-        },
-        {
-            "name": "threefiftyseven-7"
         }
     ]
 }

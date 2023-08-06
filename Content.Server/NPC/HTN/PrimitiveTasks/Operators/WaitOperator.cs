@@ -25,9 +25,9 @@ public sealed class WaitOperator : HTNOperator
         return timer <= 0f ? HTNOperatorStatus.Finished : HTNOperatorStatus.Continuing;
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
 
         // The replacement plan may want this value so only dump it if we're successful.
         if (status != HTNOperatorStatus.BetterPlan)

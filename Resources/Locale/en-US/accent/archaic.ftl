@@ -224,35 +224,11 @@ accent-archaic-replacement-71 = cozen
 accent-archaic-replaced-72 = swindler
 accent-archaic-replacement-72 = cog
 
-accent-archaic-replaced-73 = swindle
-accent-archaic-replacement-73 = cozen
-
-accent-archaic-replaced-74 = cheating
-accent-archaic-replacement-74 = cozenage
-
-accent-archaic-replaced-75 = decieving
-accent-archaic-replacement-75 = cozenage
-
-accent-archaic-replaced-76 = duping
-accent-archaic-replacement-76 = cozenage
-
-accent-archaic-replaced-77 = scheming
-accent-archaic-replacement-77 = cozenage
-
-accent-archaic-replaced-78 = trickery
-accent-archaic-replacement-78 = cozenage
-
-accent-archaic-replaced-79 = company
-accent-archaic-replacement-79 = consort
-
 accent-archaic-replaced-80 = ilk
 accent-archaic-replacement-80 = consort
 
 accent-archaic-replaced-81 = partnership
 accent-archaic-replacement-81 = consort
-
-accent-archaic-replaced-82 = group
-accent-archaic-replacement-82 = consort
 
 accent-archaic-replaced-83 = crown
 accent-archaic-replacement-83 = coronal
@@ -562,9 +538,6 @@ accent-archaic-replacement-184 = traitor
 
 accent-archaic-replaced-185 = good
 accent-archaic-replacement-185 = well
-
-accent-archaic-replaced-186 = like
-accent-archaic-replacement-186 = enjoy
 
 accent-archaic-replaced-187 = fate
 accent-archaic-replacement-187 = doom

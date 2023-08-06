@@ -699,6 +699,19 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
             CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
+
+        /// <summary>
+        ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
+        public static readonly CVarDef<bool> AdminShowPIIOnBan =
+            CVarDef.Create("admin.show_pii_onban", false, CVar.SERVERONLY);
+
+        /// <summary>
+        /// If an admin joins a round by reading up or using the late join button, automatically
+        /// de-admin them.
+        /// </summary>
+        public static readonly CVarDef<bool> AdminDeadminOnJoin =
+            CVarDef.Create("admin.deadmin_on_join", false, CVar.SERVERONLY);
+
         /*
          * Explosions
          */
@@ -925,6 +938,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Heat loss per tile due to radiation at 20 degC, in W.
+        /// </summary>
+        public static readonly CVarDef<float> SuperconductionTileLoss =
+            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
+
+        /// <summary>
         ///     Whether excited groups will be processed and created.
         /// </summary>
         public static readonly CVarDef<bool> ExcitedGroups =
@@ -1013,6 +1032,12 @@ namespace Content.Shared.CCVar
         /// False: Dead player LOOC gets redirected to dead chat
         /// </summary>
         public static readonly CVarDef<bool> DeadLoocEnabled = CVarDef.Create("looc.enabled_dead", false, CVar.NOTIFY | CVar.REPLICATED);
+
+        /// <summary>
+        /// True: Crit players can use LOOC
+        /// False: Crit player LOOC gets redirected to dead chat
+        /// </summary>
+        public static readonly CVarDef<bool> CritLoocEnabled = CVarDef.Create("looc.enabled_crit", false, CVar.NOTIFY | CVar.REPLICATED);
 
         /*
          * Entity Menu Grouping Types

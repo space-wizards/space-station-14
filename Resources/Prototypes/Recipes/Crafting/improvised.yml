@@ -17,7 +17,7 @@
   graph: GhostSheet
   startNode: start
   targetNode: ghost_sheet
-  category: construction-category-misc
+  category: construction-category-clothing
   description: Become a spooky ghost. Boo!
   icon:
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
@@ -88,12 +88,25 @@
     state: icon
 
 - type: construction
+  name: hairflower
+  id: hairflower
+  graph: hairflower
+  startNode: start
+  targetNode: hairflower
+  category: construction-category-clothing
+  description: "A red flower for beautiful ladies."
+  icon:
+    sprite: Clothing/Head/Misc/hairflower.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
   name: flower crown
   id: flowercrown
   graph: flowercrown
   startNode: start
   targetNode: flowercrown
-  category: construction-category-misc
+  category: construction-category-clothing
   description: "A coronet of fresh and fragrant flowers."
   icon:
     sprite: Clothing/Head/Misc/flower-crown.rsi

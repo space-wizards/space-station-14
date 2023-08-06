@@ -4,7 +4,7 @@
   description: job-description-librarian
   playTimeTracker: JobLibrarian
   startingGear: LibrarianGear
-  icon: "Librarian"
+  icon: "JobIconLibrarian"
   supervisors: job-supervisors-hop
   access:
   - Service

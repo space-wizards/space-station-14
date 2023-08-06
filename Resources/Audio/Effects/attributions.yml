@@ -1,3 +1,8 @@
+- files: ["balloon-pop"]
+  license: "CC-BY-4.0"
+  copyright: "Taken from Aesterial-Arts on freesound.org and converted to mono by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/Aesterial-Arts/sounds/633835/"
+
 - files: ["pill_insert.ogg", "pill_remove.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Amateur foley and audio editing by Bright0."

@@ -20,9 +20,11 @@ namespace Content.Benchmarks
 
         public static async Task MainAsync(string[] args)
         {
+            PoolManager.Startup(typeof(Program).Assembly);
             var pair = await PoolManager.GetServerClient();
             var gameMaps = pair.Pair.Server.ResolveDependency<IPrototypeManager>().EnumeratePrototypes<GameMapPrototype>().ToList();
             MapLoadBenchmark.MapsSource = gameMaps.Select(x => x.ID);
+            await pair.CleanReturnAsync();
 
 #if DEBUG
             Console.ForegroundColor = ConsoleColor.Red;
@@ -33,6 +35,8 @@ namespace Content.Benchmarks
             var config = Environment.GetEnvironmentVariable("ROBUST_BENCHMARKS_ENABLE_SQL") != null ? DefaultSQLConfig.Instance : null;
             BenchmarkSwitcher.FromAssembly(typeof(Program).Assembly).Run(args, config);
 #endif
+
+            PoolManager.Shutdown();
         }
     }
 }
