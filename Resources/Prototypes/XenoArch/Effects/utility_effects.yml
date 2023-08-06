@@ -113,12 +113,6 @@
     components:
     - Item
   permanentComponents:
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 125
-    gatheringTime: 0.50
-    MaxGatheringEntities: 3
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:

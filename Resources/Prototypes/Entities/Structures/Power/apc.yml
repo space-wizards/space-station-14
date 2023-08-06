@@ -175,14 +175,10 @@
 - type: entity
   parent: BaseAPC
   id: APCConstructed
-  suffix: "Open, Off"
+  suffix: Open
   components:
   - type: WiresPanel
     open: true
-  - type: Apc
-    enabled: false
-  - type: PowerNetworkBattery
-    canDischarge: false
 
 # APCs in use
 - type: entity

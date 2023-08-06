@@ -12,7 +12,7 @@ public sealed class ResearchTest
     [Test]
     public async Task DisciplineValidTierPrerequesitesTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -48,7 +48,7 @@ public sealed class ResearchTest
     [Test]
     public async Task AllTechPrintableTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -60,6 +60,9 @@ public sealed class ResearchTest
             foreach (var proto in allEnts)
             {
                 if (proto.Abstract)
+                    continue;
+
+                if (pairTracker.Pair.IsTestPrototype(proto))
                     continue;
 
                 if (!proto.TryGetComponent<LatheComponent>(out var lathe))

@@ -16,6 +16,4 @@ public sealed class PowerGridCheckRuleComponent : Component
     public int NumberPerSecond = 0;
     public float UpdateRate => 1.0f / NumberPerSecond;
     public float FrameTimeAccumulator = 0.0f;
-
-    public EntityUid Station;
 }

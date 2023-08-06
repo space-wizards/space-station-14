@@ -1,0 +1,46 @@
+- type: entity
+  name: chainsaw
+  parent: BaseItem
+  id: Chainsaw
+  description: A very large chainsaw. Usually you use this for cutting down trees... usually.
+  components:
+  - type: Wieldable
+    wieldTime: 1
+    wieldSound: !type:SoundPathSpecifier
+      path: /Audio/Weapons/chainsawwield.ogg
+      params:
+        volume: -3
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5
+        Blunt: 5
+        Structural: 10
+    soundHit:
+      path: /Audio/Weapons/chainsaw.ogg
+      params:
+        volume: -3
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Slash: 5
+        Blunt: 5
+        Structural: 20
+  - type: Item
+    size: 50
+    sprite: Objects/Weapons/Melee/chainsaw.rsi
+  - type: DisarmMalus
+  - type: ItemStatus
+  - type: RefillableSolution
+    solution: Welder
+  - type: SolutionContainerManager
+    solutions:
+      Welder:
+        reagents:
+        - ReagentId: WeldingFuel
+          Quantity: 300
+        maxVol: 300

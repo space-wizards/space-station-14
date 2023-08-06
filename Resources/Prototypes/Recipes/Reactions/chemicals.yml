@@ -178,6 +178,24 @@
         path: /Audio/Effects/extinguish.ogg
 
 - type: reaction
+  id: UraniumEmpExplosion
+  impact: High
+  priority: 20
+  reactants:
+    Iron:
+      amount: 1
+    Uranium:
+      amount: 1
+    Aluminium:
+      amount: 1
+  effects:
+    - !type:EmpReactionEffect
+      rangePerUnit: 0.2
+      maxRange: 6
+      energyConsumption: 12500
+      duration: 15
+
+- type: reaction
   id: TableSalt
   reactants:
     Chlorine:
