@@ -1,7 +1,6 @@
 using Content.Server.Emp;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.Events;
 using Content.Server.Power.Pow3r;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -37,7 +36,6 @@ namespace Content.Server.Power.EntitySystems
             SubscribeLocalEvent<ApcComponent, ChargeChangedEvent>(OnBatteryChargeChanged);
             SubscribeLocalEvent<ApcComponent, ApcToggleMainBreakerMessage>(OnToggleMainBreaker);
             SubscribeLocalEvent<ApcComponent, GotEmaggedEvent>(OnEmagged);
-            SubscribeLocalEvent<ApcComponent, BreakerPoppedEvent>(OnBreakerPopped);
 
             SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
         }
@@ -111,18 +109,6 @@ namespace Content.Server.Power.EntitySystems
         {
             // no fancy conditions
             args.Handled = true;
-        }
-
-        private void OnBreakerPopped(EntityUid uid, ApcComponent comp, BreakerPoppedEvent args)
-        {
-            // already disabled, do nothing
-            if (!comp.MainBreakerEnabled)
-                return;
-
-            ApcToggleBreaker(uid, comp);
-
-            // popup so its clear what happened
-            _popup.PopupEntity(Loc.GetString("apc-component-breaker-popped"), uid);
         }
 
         public void UpdateApcState(EntityUid uid,

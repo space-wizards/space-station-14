@@ -84,7 +84,7 @@ namespace Content.Shared.Pulling.Systems
 
         private void RefreshMovementSpeed(SharedPullerComponent component)
         {
-            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers((component).Owner);
+            _movementSpeedModifierSystem.RefreshMovementSpeedModifiers(component.Owner);
         }
     }
 }

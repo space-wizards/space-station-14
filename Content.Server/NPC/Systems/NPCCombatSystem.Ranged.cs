@@ -1,6 +1,9 @@
 using Content.Server.NPC.Components;
 using Content.Shared.CombatMode;
 using Content.Shared.Interaction;
+using Content.Shared.Physics;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
 
@@ -10,6 +13,12 @@ public sealed partial class NPCCombatSystem
 {
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
     [Dependency] private readonly RotateToFaceSystem _rotate = default!;
+
+    private EntityQuery<CombatModeComponent> _combatQuery;
+    private EntityQuery<NPCSteeringComponent> _steeringQuery;
+    private EntityQuery<RechargeBasicEntityAmmoComponent> _rechargeQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     // TODO: Don't predict for hitscan
     private const float ShootSpeed = 20f;
@@ -21,6 +30,12 @@ public sealed partial class NPCCombatSystem
 
     private void InitializeRanged()
     {
+        _combatQuery = GetEntityQuery<CombatModeComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
+        _rechargeQuery = GetEntityQuery<RechargeBasicEntityAmmoComponent>();
+        _steeringQuery = GetEntityQuery<NPCSteeringComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentStartup>(OnRangedStartup);
         SubscribeLocalEvent<NPCRangedCombatComponent, ComponentShutdown>(OnRangedShutdown);
     }
@@ -47,9 +62,6 @@ public sealed partial class NPCCombatSystem
 
     private void UpdateRanged(float frameTime)
     {
-        var bodyQuery = GetEntityQuery<PhysicsComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-        var combatQuery = GetEntityQuery<CombatModeComponent>();
         var query = EntityQueryEnumerator<NPCRangedCombatComponent, TransformComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var xform))
@@ -57,8 +69,15 @@ public sealed partial class NPCCombatSystem
             if (comp.Status == CombatStatus.Unspecified)
                 continue;
 
-            if (!xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
-                !bodyQuery.TryGetComponent(comp.Target, out var targetBody))
+            if (_steeringQuery.TryGetComponent(uid, out var steering) && steering.Status == SteeringStatus.NoPath)
+            {
+                comp.Status = CombatStatus.TargetUnreachable;
+                comp.ShootAccumulator = 0f;
+                continue;
+            }
+
+            if (!_xformQuery.TryGetComponent(comp.Target, out var targetXform) ||
+                !_physicsQuery.TryGetComponent(comp.Target, out var targetBody))
             {
                 comp.Status = CombatStatus.TargetUnreachable;
                 comp.ShootAccumulator = 0f;
@@ -72,7 +91,7 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
-            if (combatQuery.TryGetComponent(uid, out var combatMode))
+            if (_combatQuery.TryGetComponent(uid, out var combatMode))
             {
                 _combat.SetInCombatMode(uid, true, combatMode);
             }
@@ -84,13 +103,29 @@ public sealed partial class NPCCombatSystem
                 continue;
             }
 
+            var ammoEv = new GetAmmoCountEvent();
+            RaiseLocalEvent(gunUid, ref ammoEv);
+
+            if (ammoEv.Count == 0)
+            {
+                // Recharging then?
+                if (_rechargeQuery.HasComponent(gunUid))
+                {
+                    continue;
+                }
+
+                comp.Status = CombatStatus.Unspecified;
+                comp.ShootAccumulator = 0f;
+                continue;
+            }
+
             comp.LOSAccumulator -= frameTime;
 
-            var (worldPos, worldRot) = _transform.GetWorldPositionRotation(xform, xformQuery);
-            var (targetPos, targetRot) = _transform.GetWorldPositionRotation(targetXform, xformQuery);
+            var worldPos = _transform.GetWorldPosition(xform);
+            var targetPos = _transform.GetWorldPosition(targetXform);
 
             // We'll work out the projected spot of the target and shoot there instead of where they are.
-            var distance = (targetPos - worldPos).Length;
+            var distance = (targetPos - worldPos).Length();
             var oldInLos = comp.TargetInLOS;
 
             // TODO: Should be doing these raycasts in parallel
@@ -98,13 +133,20 @@ public sealed partial class NPCCombatSystem
             if (comp.LOSAccumulator < 0f)
             {
                 comp.LOSAccumulator += UnoccludedCooldown;
-                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, comp.Target, distance + 0.1f);
+                // For consistency with NPC steering.
+                comp.TargetInLOS = _interaction.InRangeUnobstructed(uid, Transform(comp.Target).Coordinates, distance + 0.1f);
             }
 
             if (!comp.TargetInLOS)
             {
                 comp.ShootAccumulator = 0f;
-                comp.Status = CombatStatus.TargetUnreachable;
+                comp.Status = CombatStatus.NotInSight;
+
+                if (TryComp(uid, out steering))
+                {
+                    steering.ForceMove = true;
+                }
+
                 continue;
             }
 
@@ -152,6 +194,13 @@ public sealed partial class NPCCombatSystem
             else
             {
                 targetCordinates = new EntityCoordinates(xform.MapUid!.Value, targetSpot);
+            }
+
+            comp.Status = CombatStatus.Normal;
+
+            if (gun.NextFire > _timing.CurTime)
+            {
+                return;
             }
 
             _gun.AttemptShoot(uid, gunUid, gun, targetCordinates);

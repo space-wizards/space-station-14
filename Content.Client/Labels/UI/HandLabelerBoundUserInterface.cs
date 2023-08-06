@@ -1,6 +1,5 @@
 using Content.Shared.Labels;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.Labels.UI
 {
@@ -9,9 +8,10 @@ namespace Content.Client.Labels.UI
     /// </summary>
     public sealed class HandLabelerBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private HandLabelerWindow? _window;
 
-        public HandLabelerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public HandLabelerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

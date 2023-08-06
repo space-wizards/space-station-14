@@ -10,20 +10,11 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
 
-    [ViewVariables]
-    public float Timer = 0f;
-
-    [ViewVariables]
-    public int BatchesDropped = 0;
-
-    [ViewVariables]
-    public int LaggedBatches = 0;
-
-    [ViewVariables]
-    public int MidiEventCount = 0;
-
-    [ViewVariables]
-    public uint LastSequencerTick = 0;
+    [ViewVariables] public float Timer = 0f;
+    [ViewVariables] public int BatchesDropped = 0;
+    [ViewVariables] public int LaggedBatches = 0;
+    [ViewVariables] public int MidiEventCount = 0;
+    [ViewVariables] public uint LastSequencerTick = 0;
 
     // TODO Instruments: Make this ECS
     public IPlayerSession? InstrumentPlayer =>
@@ -34,4 +25,6 @@ public sealed class InstrumentComponent : SharedInstrumentComponent
 }
 
 [RegisterComponent]
-public sealed class ActiveInstrumentComponent : Component {}
+public sealed class ActiveInstrumentComponent : Component
+{
+}

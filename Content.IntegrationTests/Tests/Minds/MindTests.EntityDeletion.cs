@@ -1,9 +1,7 @@
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Players;
-using NUnit.Framework;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -45,17 +43,22 @@ public sealed partial class MindTests
             mindSystem.TransferTo(mind, playerEnt);
             mindSystem.Visit(mind, visitEnt);
 
-            Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
-            Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
+            Assert.Multiple(() =>
+            {
+                Assert.That(player.AttachedEntity, Is.EqualTo(visitEnt));
+                Assert.That(mind.VisitingEntity, Is.EqualTo(visitEnt));
+            });
         });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
         await server.WaitPost(() => entMan.DeleteEntity(visitEnt));
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-        Assert.IsNull(mind.VisitingEntity);
+#pragma warning disable NUnit2045 // Interdependent assertions.
+        Assert.That(mind.VisitingEntity, Is.Null);
         Assert.That(entMan.EntityExists(mind.OwnedEntity));
         Assert.That(mind.OwnedEntity, Is.EqualTo(playerEnt));
+#pragma warning restore NUnit2045
 
         // This used to throw so make sure it doesn't.
         await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
@@ -97,8 +100,10 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
-            Assert.That(entMan.EntityExists(mind.CurrentEntity!.Value), Is.True);
+#pragma warning disable NUnit2045 // Interdependent assertions.
+            Assert.That(entMan.EntityExists(mind.CurrentEntity), Is.True);
             Assert.That(mind.CurrentEntity, Is.Not.EqualTo(playerEnt));
+#pragma warning restore NUnit2045
         });
 
         await pairTracker.CleanReturnAsync();
@@ -119,7 +124,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         Assert.That(!entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player was initially a ghost?");
 
@@ -154,8 +159,10 @@ public sealed partial class MindTests
         var mind = GetMind(pairTracker.Pair);
 
         var player = playerMan.ServerSessions.Single();
-        Assert.NotNull(player.AttachedEntity);
+#pragma warning disable NUnit2045 // Interdependent assertions.
+        Assert.That(player.AttachedEntity, Is.Not.Null);
         Assert.That(entMan.EntityExists(player.AttachedEntity));
+#pragma warning restore NUnit2045
         var originalEntity = player.AttachedEntity.Value;
 
         EntityUid ghost = default!;
@@ -165,10 +172,13 @@ public sealed partial class MindTests
             mindSystem.Visit(mind, ghost);
         });
 
-        Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
-        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
-        Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
-        Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
+        Assert.Multiple(() =>
+        {
+            Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
+            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
+            Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
+            Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
+        });
 
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
         await server.WaitAssertion(() => entMan.DeleteEntity(originalEntity));
@@ -178,10 +188,13 @@ public sealed partial class MindTests
         // Check that the player is still in control of the ghost
         mind = GetMind(pairTracker.Pair);
         Assert.That(!entMan.Deleted(ghost), "ghost has been deleted");
-        Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
-        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
-        Assert.IsNull(mind.VisitingEntity);
-        Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
+        Assert.Multiple(() =>
+        {
+            Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
+            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
+            Assert.That(mind.VisitingEntity, Is.Null);
+            Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
+        });
 
         await pairTracker.CleanReturnAsync();
     }
@@ -213,13 +226,16 @@ public sealed partial class MindTests
         await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
         Assert.That(entMan.Deleted(ghost), "old ghost was not deleted");
-        Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost), "Player is still attached to the old ghost");
-        Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity!.Value), "Player did not become a new ghost");
-        Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
+        Assert.Multiple(() =>
+        {
+            Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost), "Player is still attached to the old ghost");
+            Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a new ghost");
+            Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
+        });
 
         var mind = player.ContentData()?.Mind;
-        Assert.NotNull(mind);
-        Assert.Null(mind.VisitingEntity);
+        Assert.That(mind, Is.Not.Null);
+        Assert.That(mind.VisitingEntity, Is.Null);
 
         await pairTracker.CleanReturnAsync();
     }
@@ -241,7 +257,7 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        IPlayerSession player = playerMan.ServerSessions.Single();
+        var player = playerMan.ServerSessions.Single();
 
         EntityUid ghost = default!;
 
@@ -272,9 +288,11 @@ public sealed partial class MindTests
 
         await server.WaitAssertion(() =>
         {
+#pragma warning disable NUnit2045 // Interdependent assertions.
             Assert.That(entMan.Deleted(ghost));
             Assert.That(player.AttachedEntity, Is.Not.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity!.Value));
+#pragma warning restore NUnit2045
         });
 
         await pairTracker.CleanReturnAsync();

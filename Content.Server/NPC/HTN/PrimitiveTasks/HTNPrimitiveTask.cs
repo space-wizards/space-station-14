@@ -4,7 +4,6 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks;
 
-[Prototype("htnPrimitive")]
 public sealed class HTNPrimitiveTask : HTNTask
 {
     /// <summary>

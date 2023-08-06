@@ -44,7 +44,8 @@
     layers:
     - state: rods_5
       map: ["base"]
-#  - type: Item
+  - type: Item
+    size: 30
 #    heldPrefix: rods
   - type: Construction
     graph: MetalRod
@@ -73,3 +74,5 @@
     state: rods
   - type: Stack
     count: 1
+  - type: Item
+    size: 1

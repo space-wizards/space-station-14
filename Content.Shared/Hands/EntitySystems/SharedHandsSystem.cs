@@ -4,6 +4,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
+using Content.Shared.Item;
 using Robust.Shared.Containers;
 using Robust.Shared.Input.Binding;
 
@@ -12,9 +13,10 @@ namespace Content.Shared.Hands.EntitySystems;
 public abstract partial class SharedHandsSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly SharedItemSystem _items = default!;
 
     protected event Action<HandsComponent?>? OnHandSetActive;
 
@@ -25,6 +27,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         InitializeInteractions();
         InitializeDrop();
         InitializePickup();
+        InitializeVirtual();
     }
 
     public override void Shutdown()

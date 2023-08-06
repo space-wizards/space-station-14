@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using Content.Shared.NPC;
 using Robust.Client.Graphics;
@@ -173,7 +174,7 @@ namespace Content.Client.NPC
         {
             var mousePos = _inputManager.MouseScreenPosition;
             var mouseWorldPos = _eyeManager.ScreenToMap(mousePos);
-            var aabb = new Box2(mouseWorldPos.Position - SharedPathfindingSystem.ChunkSize, mouseWorldPos.Position + SharedPathfindingSystem.ChunkSize);
+            var aabb = new Box2(mouseWorldPos.Position - SharedPathfindingSystem.ChunkSizeVec, mouseWorldPos.Position + SharedPathfindingSystem.ChunkSizeVec);
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             if ((_system.Modes & PathfindingDebugMode.Crumb) != 0x0 &&
@@ -207,7 +208,7 @@ namespace Content.Client.NPC
                         foreach (var crumb in chunk.Value)
                         {
                             var crumbMapPos = worldMatrix.Transform(_system.GetCoordinate(chunk.Key, crumb.Coordinates));
-                            var distance = (crumbMapPos - mouseWorldPos.Position).Length;
+                            var distance = (crumbMapPos - mouseWorldPos.Position).Length();
 
                             if (distance < nearestDistance)
                             {
@@ -334,7 +335,9 @@ namespace Content.Client.NPC
                 {
                     if (!_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) ||
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                    {
                         continue;
+                    }
 
                     var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
@@ -357,6 +360,7 @@ namespace Content.Client.NPC
                             }
 
                             const float edge = 1f / SharedPathfindingSystem.SubStep / 4f;
+                            var edgeVec = new Vector2(edge, edge);
 
                             var masked = crumb.Data.CollisionMask != 0 || crumb.Data.CollisionLayer != 0;
                             Color color;
@@ -375,7 +379,7 @@ namespace Content.Client.NPC
                             }
 
                             var coordinate = _system.GetCoordinate(chunk.Key, crumb.Coordinates);
-                            worldHandle.DrawRect(new Box2(coordinate - edge, coordinate + edge), color.WithAlpha(0.25f));
+                            worldHandle.DrawRect(new Box2(coordinate - edgeVec, coordinate + edgeVec), color.WithAlpha(0.25f));
                         }
                     }
                 }

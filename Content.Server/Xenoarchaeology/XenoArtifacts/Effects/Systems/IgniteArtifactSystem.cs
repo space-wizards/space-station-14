@@ -22,22 +22,12 @@ public sealed class IgniteArtifactSystem : EntitySystem
     private void OnActivate(EntityUid uid, IgniteArtifactComponent component, ArtifactActivatedEvent args)
     {
         var flammable = GetEntityQuery<FlammableComponent>();
-        var targets = new HashSet<EntityUid>();
-        if (args.Activator != null)
-        {
-            targets.Add(args.Activator.Value);
-        }
-        else
-        {
-            targets = _lookup.GetEntitiesInRange(uid, component.Range);
-        }
-
-        foreach (var target in targets)
+        foreach (var target in _lookup.GetEntitiesInRange(uid, component.Range))
         {
             if (!flammable.TryGetComponent(target, out var fl))
                 continue;
             fl.FireStacks += _random.Next(component.MinFireStack, component.MaxFireStack);
-            _flammable.Ignite(target, fl);
+            _flammable.Ignite(target, uid, fl);
         }
     }
 }

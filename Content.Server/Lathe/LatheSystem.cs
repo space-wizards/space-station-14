@@ -46,7 +46,7 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
 
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
@@ -55,12 +55,12 @@ namespace Content.Server.Lathe
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
-            while(query.MoveNext(out var uid, out var comp, out var lathe))
+            while (query.MoveNext(out var uid, out var comp, out var lathe))
             {
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
+                if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(uid, lathe);
             }
         }
@@ -70,7 +70,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<string>();
-            var recipes =  GetAllBaseRecipes(component);
+            var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
@@ -108,7 +108,7 @@ namespace Content.Server.Lathe
             return ev.Recipes;
         }
 
-        public List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<string> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
@@ -186,7 +186,7 @@ namespace Content.Server.Lathe
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
-            _uiSys.SetUiState(ui, state);
+            UserInterfaceSystem.SetUiState(ui, state);
         }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)

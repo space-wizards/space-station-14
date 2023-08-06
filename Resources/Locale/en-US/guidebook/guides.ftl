@@ -41,3 +41,9 @@ guide-entry-robotics = Robotics
 
 guide-entry-security = Security
 guide-entry-dna = DNA
+
+guide-entry-antagonists = Antagonists
+guide-entry-nuclear-operatives = Nuclear Operatives
+guide-entry-traitors = Traitors
+guide-entry-zombies = Zombies
+guide-entry-minor-antagonists = Minor Antagonists

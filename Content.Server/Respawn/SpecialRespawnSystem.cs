@@ -6,6 +6,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Database;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Respawn;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
@@ -19,7 +20,7 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
     [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly TurfSystem _turf = default!;
     [Dependency] private readonly IChatManager _chat = default!;
 
     public override void Initialize()
@@ -100,10 +101,15 @@ public sealed class SpecialRespawnSystem : SharedSpecialRespawnSystem
 
             foreach (var tile in grid.GetTilesIntersecting(circle))
             {
-                if (tile.IsSpace(_tileDefinitionManager) || tile.IsBlockedTurf(true) || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value, grid.TileIndicesFor(mapPos)))
+                if (tile.IsSpace(_tileDefinitionManager)
+                    || _turf.IsTileBlocked(tile, CollisionGroup.MobMask)
+                    || !_atmosphere.IsTileMixtureProbablySafe(entityGridUid, entityMapUid.Value,
+                        grid.TileIndicesFor(mapPos)))
+                {
                     continue;
+                }
 
-                pos = tile.GridPosition();
+                pos = _turf.GetTileCenter(tile);
                 found = true;
 
                 if (found)

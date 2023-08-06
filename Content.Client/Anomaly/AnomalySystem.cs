@@ -1,4 +1,5 @@
-﻿using Content.Client.Gravity;
+﻿using System.Numerics;
+using Content.Client.Gravity;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Robust.Client.GameObjects;

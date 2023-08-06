@@ -121,6 +121,7 @@ namespace Content.Server.GameTicking
             async void SpawnWaitDb()
             {
                 await _userDb.WaitLoadComplete(session);
+
                 SpawnPlayer(session, EntityUid.Invalid);
             }
 
@@ -163,7 +164,6 @@ namespace Content.Server.GameTicking
             RaiseNetworkEvent(new TickerJoinLobbyEvent(), client);
             RaiseNetworkEvent(GetStatusMsg(session), client);
             RaiseNetworkEvent(GetInfoMsg(), client);
-            RaiseNetworkEvent(GetPlayerStatus(), client);
             RaiseLocalEvent(new PlayerJoinedLobbyEvent(session));
         }
 

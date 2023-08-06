@@ -13,7 +13,7 @@
       state: item_wall
     - type: Item
       sprite: Objects/Misc/inflatable_wall.rsi
-      size: 5
+      size: 10
     - type: SpawnAfterInteract
       prototype: InflatableWall
       doAfter: 1
@@ -39,7 +39,7 @@
       state: item_door
     - type: Item
       sprite: Objects/Misc/inflatable_door.rsi
-      size: 5
+      size: 4
     - type: SpawnAfterInteract
       prototype: InflatableDoor
       doAfter: 1
@@ -58,7 +58,7 @@
     - type: Sprite
       state: item_wall
     - type: Item
-      size: 5
+      size: 1
     - type: Stack
       count: 1
 
@@ -70,6 +70,6 @@
     - type: Sprite
       state: item_door
     - type: Item
-      size: 5
+      size: 1
     - type: Stack
       count: 1

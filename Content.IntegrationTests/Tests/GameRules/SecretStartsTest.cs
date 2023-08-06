@@ -1,7 +1,5 @@
 ﻿using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 
 namespace Content.IntegrationTests.Tests.GameRules;
@@ -15,11 +13,7 @@ public sealed class SecretStartsTest
     [Test]
     public async Task TestSecretStarts()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
-        {
-            NoClient = true,
-            Dirty = true,
-        });
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true });
 
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
@@ -37,7 +31,7 @@ public sealed class SecretStartsTest
         {
             foreach (var rule in gameTicker.GetAddedGameRules())
             {
-                Assert.That(gameTicker.GetActiveGameRules().Contains(rule));
+                Assert.That(gameTicker.GetActiveGameRules(), Does.Contain(rule));
             }
 
             // End all rules

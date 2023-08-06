@@ -77,6 +77,15 @@
       - material: ReinforcedGlass
         amount: 1
         doAfter: 2
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Prying
+        doAfter: 5
+
 
   - node: airlock
     entity: Airlock
@@ -112,6 +121,9 @@
       - !type:EntityAnchored {}
       completed:
       - !type:EmptyAllContainers {}
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
       steps:
       - tool: Prying
         doAfter: 5

@@ -93,7 +93,7 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: MagazineVisuals
     magState: mag
-    steps: 2
+    steps: 6
     zeroVisible: false
   - type: Appearance
 

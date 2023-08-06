@@ -49,3 +49,26 @@
   desc: reagent-desc-sodium-carbonate
   physicalDesc: reagent-physical-desc-powdery
   color: white
+
+- type: reagent
+  id: Artifexium
+  name: reagent-name-artifexium
+  desc: reagent-desc-artifexium
+  flavor: metallic
+  physicalDesc: reagent-physical-desc-crystalline
+  color: "#776291"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 2
+  reactiveEffects:
+    Acidic:
+      methods: [ Touch ]
+      effects:
+      - !type:ActivateArtifact
+        conditions:
+        - !type:ReagentThreshold
+          min: 5

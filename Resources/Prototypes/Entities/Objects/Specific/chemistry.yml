@@ -90,6 +90,65 @@
     price: 30
 
 - type: entity
+  parent: BaseItem
+  id: BaseBeakerMetallic
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - GlassBeaker
+  - type: Sprite
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+    layers:
+      - state: beaker
+      - state: beaker1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Item
+    sprite: Objects/Specific/Chemistry/beaker.rsi
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
+  - type: SolutionContainerManager
+    solutions:
+      beaker:
+        maxVol: 50
+        canMix: true
+  - type: FitsInDispenser
+    solution: beaker
+  - type: RefillableSolution
+    solution: beaker
+  - type: DrainableSolution
+    solution: beaker
+  - type: ExaminableSolution
+    solution: beaker
+  - type: DrawableSolution
+    solution: beaker
+  - type: InjectableSolution
+    solution: beaker
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: Drink
+    isOpen: true
+    solution: beaker
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 6
+    fillBaseName: beaker
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: StaticPrice
+    price: 30
+
+- type: entity
   name: beaker
   parent: BaseBeaker
   description: Used to contain a moderate amount of chemicals and solutions.
@@ -146,10 +205,12 @@
 
 - type: entity
   name: cryostasis beaker
-  parent: BaseBeaker
+  parent: BaseBeakerMetallic
   description: Used to contain chemicals or solutions without reactions.
   id: CryostasisBeaker
   components:
+  - type: Spillable
+    solution: beaker
   - type: Sprite
     sprite: Objects/Specific/Chemistry/beaker_cryostasis.rsi
     layers:
@@ -159,27 +220,10 @@
       beaker:
         maxVol: 60
         canReact: false
-  - type: Damageable
-    damageContainer: Inorganic
-    damageModifierSet: FlimsyMetallic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 5
-      behaviors:
-      - !type:SpillBehavior
-        solution: beaker
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: Tag
-    tags:
-    - GlassBeaker
-    - Cryobeaker
 
 - type: entity
   name: bluespace beaker
-  parent: BaseBeaker
+  parent: BaseBeakerMetallic
   description: Powered by experimental bluespace technology.
   id: BluespaceBeaker
   components:

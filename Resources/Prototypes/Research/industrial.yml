@@ -68,6 +68,7 @@
   - GeneratorUraniumMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
+  - SolarTrackerElectronics
   - EmitterCircuitboard
 
 - type: technology

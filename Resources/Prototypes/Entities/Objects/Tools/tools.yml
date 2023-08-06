@@ -142,7 +142,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 6
+        Blunt: 8
         Structural: 3
   - type: Tool
     qualities:
@@ -157,26 +157,18 @@
     price: 22
 
 - type: entity
-  name: emergency crowbar
   parent: Crowbar
   id: CrowbarRed
+  name: emergency crowbar
   components:
   - type: Tag
     tags:
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
     state: red-icon
   - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: 10
     heldPrefix: red
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 8 #free man
-        Structural: 3
 
 - type: entity
   name: multitool

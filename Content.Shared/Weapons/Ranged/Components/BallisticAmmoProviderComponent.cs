@@ -52,6 +52,13 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public bool Cycled = true;
 
     /// <summary>
+    /// Is the magazine allowed to be cycled
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
+    [AutoNetworkedField]
+    public bool Cycleable = true;
+
+    /// <summary>
     /// Is it okay for this entity to directly transfer its valid ammunition into another provider?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("mayTransfer")]
