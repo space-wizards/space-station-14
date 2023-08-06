@@ -31,7 +31,7 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new() { DummyTicker = true });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
@@ -43,6 +43,7 @@ namespace Content.IntegrationTests.Tests.Networking
             var cGameStateManager = client.ResolveDependency<IClientGameStateManager>();
             var cfg = client.ResolveDependency<IConfigurationManager>();
             var log = cfg.GetCVar(CVars.NetLogging);
+            Assert.That(cfg.GetCVar(CVars.NetInterp), Is.True);
 
             EntityUid serverEnt = default;
             PredictionTestComponent serverComponent = default!;
