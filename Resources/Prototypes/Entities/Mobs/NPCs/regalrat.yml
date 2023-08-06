@@ -218,7 +218,7 @@
       15: Critical
       30: Dead
   - type: Stamina
-    excess: 60
+    critThreshold: 60
   - type: MeleeWeapon
     hidden: true
     soundHit:
