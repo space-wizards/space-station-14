@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "https://github.com/tgstation/tgstation/commit/1d0eadcb126fc3581eed33490f4be2a88157af58#diff-69bd499bf0bc772862b15c2c9209e2eb5804a1bf72162b2ec4e75158cacb6109, modified by https://github.com/PixelTheKermit",
+  "copyright": "Taken from tgstation at commits https://github.com/tgstation/tgstation/commit/b30e2934e7585bad901dd12a35d0635f1fc292c1 and https://github.com/tgstation/tgstation/commit/6b0af0febe578f47ae280781682ea7a3d77f508a, modified by https://github.com/PixelTheKermit & https://github.com/MilenVolf",
   "size": {
     "x": 32,
     "y": 32
@@ -9,14 +9,6 @@
   "states": [
     {
       "name": "default",
-      "directions": 4
-    },
-    {
-      "name": "aphid",
-      "directions": 4
-    },
-    {
-      "name": "carpet",
       "directions": 4
     },
     {
@@ -28,6 +20,10 @@
       "directions": 4
     },
     {
+      "name": "deathhead",
+      "directions": 4
+    },
+    {
       "name": "fan",
       "directions": 4
     },
@@ -36,19 +32,19 @@
       "directions": 4
     },
     {
-      "name": "striped",
+      "name": "feathery",
       "directions": 4
     },
     {
-      "name": "dstriped",
+      "name": "firewatch",
       "directions": 4
     },
     {
-      "name": "feather",
+      "name": "gothic",
       "directions": 4
     },
     {
-      "name": "holo",
+      "name": "jungle",
       "directions": 4
     },
     {
@@ -56,11 +52,19 @@
       "directions": 4
     },
     {
-      "name": "piratecape",
+      "name": "maple",
       "directions": 4
     },
     {
-      "name": "pirateskull",
+      "name": "moffra",
+      "directions": 4
+    },
+    {
+      "name": "oakworm",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire",
       "directions": 4
     },
     {
@@ -68,15 +72,7 @@
       "directions": 4
     },
     {
-      "name": "psycho",
-      "directions": 4
-    },
-    {
       "name": "royal",
-      "directions": 4
-    },
-    {
-      "name": "shulker",
       "directions": 4
     },
     {
@@ -84,15 +80,19 @@
       "directions": 4
     },
     {
+      "name": "striped",
+      "directions": 4
+    },
+    {
       "name": "swirly",
       "directions": 4
     },
     {
-      "name": "termite",
+      "name": "whitefly",
       "directions": 4
     },
     {
-      "name": "woodland",
+      "name": "witchwing",
       "directions": 4
     }
   ]
