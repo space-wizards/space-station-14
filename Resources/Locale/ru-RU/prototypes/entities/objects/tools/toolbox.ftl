@@ -19,3 +19,7 @@ ent-ToolboxSyndicate = подозрительный ящик для инстру
 ent-ToolboxGolden = золотой ящик для инструментов
     .desc = Ящик для инструментов из чистого золота. Рэперы убили бы за него.
     .suffix = { "" }
+ent-ToolboxElectricalTurret = { ent-ToolboxElectrical }
+    .desc = { ent-ToolboxElectrical }
+    .suffix = Турель синдиката
+

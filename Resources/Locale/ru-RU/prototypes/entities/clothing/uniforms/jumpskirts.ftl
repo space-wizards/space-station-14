@@ -128,3 +128,5 @@ ent-ClothingUniformJumpskirtSeniorPhysician = юбка-комбинезон ве
     .desc = Признак мастерства и престижа в медицинском отделе.
 ent-ClothingUniformJumpskirtSeniorOfficer = юбка-комбинезон старшего офицера
     .desc = Признак мастерства и престижа в отделе безопасности.
+ent-ClothingUniformJumpskirtSyndieFormalDress = официальное платье синдиката
+    .desc = Униформа синдиката выполнена в элегантном стиле, в таком даже жалко делать пакости.

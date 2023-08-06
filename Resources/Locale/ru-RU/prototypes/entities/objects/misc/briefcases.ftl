@@ -4,3 +4,7 @@ ent-BriefcaseBase = { ent-BaseItem }
 ent-BriefcaseBrown = коричневый чемодан
     .desc = Удобный чемоданчик.
     .suffix = { "" }
+ent-BriefcaseSyndie = { ent-BriefcaseBrown }
+    .desc = { ent-BriefcaseBrown.desc }
+ent-BriefcaseSyndieSniperBundleFilled = { ent-BriefcaseBrown }
+    .desc = { ent-BriefcaseBrown.desc }

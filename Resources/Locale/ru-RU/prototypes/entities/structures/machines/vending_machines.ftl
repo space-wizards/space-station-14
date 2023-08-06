@@ -198,3 +198,5 @@ ent-VendingMachineChemicals = ХимТорг
     .suffix = { "" }
 ent-VendingMachineWinter = ЗимнеШкаф
     .desc = Лучшее место, чтобы насладиться холодом!
+ent-VendingMachineSyndieDrobe = СиндиРоб
+    .desc = Гардеробная, закодированный синдикатом, содержит элитные наряды для различных операций.

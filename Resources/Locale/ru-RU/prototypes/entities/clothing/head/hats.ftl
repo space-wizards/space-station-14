@@ -154,3 +154,7 @@ ent-ClothingHeadHatMagician = цилиндр фокусника
     .desc = Цилиндр фокусника.
 ent-ClothingHeadHatBeretMerc = берет наёмника
     .desc = Оливковый берет, на значке изображен шакал на скале.
+ent-ClothingHeadHatSyndie = кепка синдиката
+    .desc = Сувенирная шляпа от "Syndieland", их производство уже закрыто.
+ent-ClothingHeadHatSyndieMAA = шляпа оружейного мастера
+    .desc = Шляпа оружейного мастера, выглядит устрашающе, сомневаюсь, что вам понравится общаться с ее владельцем...

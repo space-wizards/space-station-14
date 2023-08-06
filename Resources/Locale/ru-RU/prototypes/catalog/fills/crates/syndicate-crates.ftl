@@ -3,3 +3,6 @@ ent-CrateSyndicateSurplusBundle = Ящик припасов
 
 ent-CrateSyndicateSuperSurplusBundle = Ящик суперприпасов
     .desc = Содержит случайное снаряжение Синдиката, общей стоимостью в 125 телекристаллов.
+
+ent-CrateSyndicate = { ent-CrateBaseWeldable }
+    .desc = { ent-CrateBaseWeldable.desc }

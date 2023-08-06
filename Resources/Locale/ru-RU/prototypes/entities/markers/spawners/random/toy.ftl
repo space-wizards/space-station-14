@@ -4,3 +4,5 @@ ent-ToySpawner = спавнер игрушки
 ent-FigureSpawner = спавнер фигурки
     .desc = { ent-MarkerBase.desc }
     .suffix = { "" }
+ent-SpacemenFigureSpawner = спавнер фигурки космонавта
+    .desc = { ent-MarkerBase.desc }

@@ -16,3 +16,7 @@ ent-WeaponTurretHostile = { ent-BaseWeaponTurret }
 ent-WeaponTurretXeno = ксено турель
     .desc = Стреляет кислотными плевками.
     .suffix = Ксено
+ent-WeaponTurretSyndicateDisposable = развёртываемая автоматическая турель
+    .desc = { ent-BaseWeaponTurret.desc }
+    .suffix = Синдикат
+
