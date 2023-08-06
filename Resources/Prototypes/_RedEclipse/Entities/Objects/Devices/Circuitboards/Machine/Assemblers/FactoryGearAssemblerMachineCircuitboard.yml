@@ -1,0 +1,13 @@
+- type: entity
+  id: FactoryGearAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory gear assembler machine board
+  description: it has a floppy disk port.
+  components:
+    - type: MachineBoard
+      prototype: FactoryGearAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1

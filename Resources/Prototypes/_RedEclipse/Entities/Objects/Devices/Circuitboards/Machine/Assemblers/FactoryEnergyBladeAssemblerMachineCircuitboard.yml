@@ -1,0 +1,13 @@
+- type: entity
+  id: FactoryEnergyBladeAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory energy blade assembler machine board
+  description: it is hot to the touch.
+  components:
+    - type: MachineBoard
+      prototype: FactoryEnergyBladeAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1

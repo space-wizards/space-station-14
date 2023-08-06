@@ -1,0 +1,13 @@
+- type: entity
+  id: FactoryFirearmAssemblerMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: factory firearm assembler machine board
+  description: it smells like freedom.
+  components:
+    - type: MachineBoard
+      prototype: FactoryFirearmAssembler
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1
