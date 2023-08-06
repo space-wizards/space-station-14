@@ -1,5 +1,5 @@
 ﻿namespace Content.Shared.Traits.Assorted;
 
-public abstract class SharedBrokenLegsSystem : EntitySystem
+public abstract class SharedWheelchairBoundSystem : EntitySystem
 {
 }

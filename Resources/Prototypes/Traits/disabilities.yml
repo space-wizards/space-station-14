@@ -51,11 +51,11 @@
     - type: Uncloneable
 
 - type: trait
-  id: BrokenLegs
-  name: trait-broken-legs-name
-  description: trait-broken-legs-desc
+  id: WheelchairBound
+  name: trait-wheelchair-bound-name
+  description: trait-wheelchair-bound-desc
   components:
-    - type: BrokenLegs
+    - type: WheelchairBound
       walkSpeedModifier: 0
       sprintSpeedModifier: 0
       accelerationSpeedModifier: 1

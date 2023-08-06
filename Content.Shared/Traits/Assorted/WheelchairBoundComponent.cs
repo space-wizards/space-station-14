@@ -3,6 +3,6 @@
 namespace Content.Shared.Traits.Assorted;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class BrokenLegsComponent : Component
+public sealed class WheelchairBoundComponent : Component
 {
 }

@@ -29,5 +29,5 @@ trait-archaic-accent-desc = You speak in a way that many others find outdated
 trait-accentless-name = Accentless
 trait-accentless-desc = You don't have the accent that your species would usually have
 
-trait-broken-legs-name = Broken legs
-trait-broken-legs-desc = You cannot move without your wheelchair. Carriage included.
+trait-wheelchair-bound-name = Wheelchair Bound
+trait-wheelchair-bound-desc = You cannot move without your wheelchair. Carriage included.
