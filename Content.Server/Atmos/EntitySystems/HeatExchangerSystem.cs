@@ -47,8 +47,8 @@ public sealed class HeatExchangerSystem : EntitySystem
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
     {
-        if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-                || !EntityManager.TryGetComponent(uid, out AtmosDeviceComponent? device)
+        if (!EntityManager.TryComp(uid, out NodeContainerComponent? nodeContainer)
+                || !EntityManager.TryComp(uid, out AtmosDeviceComponent? device)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.InletName, out PipeNode? inlet)
                 || !_nodeContainer.TryGetNode(nodeContainer, comp.OutletName, out PipeNode? outlet))
         {
@@ -56,7 +56,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         }
 
         // Positive dN flows from inlet to outlet
-        var dt = 1*(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+        var dt = 1f*(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
         var dN = comp.G*dP*dt;
 
