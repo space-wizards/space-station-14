@@ -1,6 +1,7 @@
 # vocal emotes
 - type: emote
   id: Scream
+  icon: Interface/Actions/scream.png
   category: Vocal
   chatMessages: [screams!]
   chatTriggers:

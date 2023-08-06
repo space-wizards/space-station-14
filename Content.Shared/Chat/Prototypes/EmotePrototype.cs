@@ -1,5 +1,6 @@
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat.Prototypes;
 
@@ -12,6 +13,12 @@ public sealed class EmotePrototype : IPrototype
 {
     [IdDataField]
     public string ID { get; } = default!;
+
+    /// <summary>
+    ///     Icon representing this emote in the UI.
+    /// </summary>
+    [DataField("icon")]
+    public SpriteSpecifier? Icon;
 
     /// <summary>
     ///     Different emote categories may be handled by different systems.

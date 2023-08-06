@@ -1,4 +1,11 @@
 - type: instantAction
+  id: OpenEmotes
+  icon: Interface/Actions/emotes.png
+  name: action-name-emotes
+  description: action-description-emotes
+  serverEvent: !type:OpenEmotesActionEvent
+
+- type: instantAction
   id: Scream
   useDelay: 10
   icon: Interface/Actions/scream.png
