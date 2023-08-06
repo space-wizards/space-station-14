@@ -23,7 +23,6 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Stunnable;
 
-[UsedImplicitly]
 public abstract class SharedStunSystem : EntitySystem
 {
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
@@ -50,12 +49,6 @@ public abstract class SharedStunSystem : EntitySystem
 
         SubscribeLocalEvent<StunnedComponent, ComponentStartup>(UpdateCanMove);
         SubscribeLocalEvent<StunnedComponent, ComponentShutdown>(UpdateCanMove);
-
-        SubscribeLocalEvent<SlowedDownComponent, ComponentGetState>(OnSlowGetState);
-        SubscribeLocalEvent<SlowedDownComponent, ComponentHandleState>(OnSlowHandleState);
-
-        SubscribeLocalEvent<KnockedDownComponent, ComponentGetState>(OnKnockGetState);
-        SubscribeLocalEvent<KnockedDownComponent, ComponentHandleState>(OnKnockHandleState);
 
         // helping people up if they're knocked down
         SubscribeLocalEvent<KnockedDownComponent, InteractHandEvent>(OnInteractHand);
@@ -111,34 +104,6 @@ public abstract class SharedStunSystem : EntitySystem
     private void UpdateCanMove(EntityUid uid, StunnedComponent component, EntityEventArgs args)
     {
         _blocker.UpdateCanMove(uid);
-    }
-
-    private void OnSlowGetState(EntityUid uid, SlowedDownComponent component, ref ComponentGetState args)
-    {
-        args.State = new SlowedDownComponentState(component.SprintSpeedModifier, component.WalkSpeedModifier);
-    }
-
-    private void OnSlowHandleState(EntityUid uid, SlowedDownComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is SlowedDownComponentState state)
-        {
-            component.SprintSpeedModifier = state.SprintSpeedModifier;
-            component.WalkSpeedModifier = state.WalkSpeedModifier;
-        }
-    }
-
-    private void OnKnockGetState(EntityUid uid, KnockedDownComponent component, ref ComponentGetState args)
-    {
-        args.State = new KnockedDownComponentState(component.HelpInterval, component.HelpTimer);
-    }
-
-    private void OnKnockHandleState(EntityUid uid, KnockedDownComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is KnockedDownComponentState state)
-        {
-            component.HelpInterval = state.HelpInterval;
-            component.HelpTimer = state.HelpTimer;
-        }
     }
 
     private void OnKnockInit(EntityUid uid, KnockedDownComponent component, ComponentInit args)
@@ -236,7 +201,7 @@ public abstract class SharedStunSystem : EntitySystem
 
         if (_statusEffect.TryAddStatusEffect<SlowedDownComponent>(uid, "SlowedDown", time, refresh, status))
         {
-            var slowed = EntityManager.GetComponent<SlowedDownComponent>(uid);
+            var slowed = Comp<SlowedDownComponent>(uid);
             // Doesn't make much sense to have the "TrySlowdown" method speed up entities now does it?
             walkSpeedMultiplier = Math.Clamp(walkSpeedMultiplier, 0f, 1f);
             runSpeedMultiplier = Math.Clamp(runSpeedMultiplier, 0f, 1f);
