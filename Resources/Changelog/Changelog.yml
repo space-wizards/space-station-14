@@ -1,9 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: You can clobber people with the seclite now., type: Tweak}
-  id: 3953
-  time: '2023-06-06T21:21:19.0000000+00:00'
 - author: Stealth16
   changes:
   - {message: Reduced the yield and growth rates of almost every plant., type: Tweak}
@@ -2983,3 +2978,12 @@ Entries:
       in combat medkits', type: Add}
   id: 4452
   time: '2023-08-06T02:38:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
+      stamina, stamina damage cooldown reduced from 5s to 3/s, wide attacks provide
+      a 10% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
+  - {message: Reduce desword values to standard fast weapons (left wide-attack angle
+      at 100 degrees instead of the standard 60)., type: Tweak}
+  id: 4453
+  time: '2023-08-06T02:55:38.0000000+00:00'
