@@ -257,6 +257,7 @@
       sendBroadcastAttemptEvent: true
       examinableAddress: true
     - type: WiredNetworkConnection
+    - type: PowerSwitch
 
 - type: entity
   parent: BaseGasThermoMachine

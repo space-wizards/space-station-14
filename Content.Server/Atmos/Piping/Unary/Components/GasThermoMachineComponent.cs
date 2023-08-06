@@ -11,10 +11,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("inlet")]
         public string InletName = "pipe";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled = false;
-
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
         ///     bins. The heat capacity effectively determines the rate at which the thermo machine can add or remove

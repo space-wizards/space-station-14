@@ -9,6 +9,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
+using Content.Server.Power.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
@@ -49,7 +50,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
 
-            if (!(thermoMachine.Enabled && _power.IsPowered(uid))
+            if (!(_power.IsPowered(uid))
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
             {
@@ -111,7 +112,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnToggleMessage(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineToggleMessage args)
         {
-            SetEnabled(uid, thermoMachine, _power.TogglePower(uid));
+            _power.TogglePower(uid);
             DirtyUI(uid, thermoMachine);
         }
 
@@ -128,13 +129,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!Resolve(uid, ref thermoMachine, ref ui, false))
                 return;
 
-            _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
-                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, thermoMachine.Enabled, thermoMachine.Mode), null, ui);
-        }
+            ApcPowerReceiverComponent? powerReceiver = null;
+            if (!Resolve(uid, ref powerReceiver))
+                return;
 
-        private void SetEnabled(EntityUid uid, GasThermoMachineComponent thermoMachine, bool enabled)
-        {
-            thermoMachine.Enabled = enabled;
+            _userInterfaceSystem.TrySetUiState(uid, ThermomachineUiKey.Key,
+                new GasThermomachineBoundUserInterfaceState(thermoMachine.MinTemperature, thermoMachine.MaxTemperature, thermoMachine.TargetTemperature, !powerReceiver.PowerDisabled, thermoMachine.Mode), null, ui);
         }
 
         private void OnExamined(EntityUid uid, GasThermoMachineComponent thermoMachine, ExaminedEvent args)
