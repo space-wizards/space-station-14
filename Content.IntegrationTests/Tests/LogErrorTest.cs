@@ -12,7 +12,7 @@ public sealed class LogErrorTest
     [Test]
     public async Task TestLogErrorCausesTestFailure()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pairTracker.Pair.Server;
         var client = pairTracker.Pair.Client;
 

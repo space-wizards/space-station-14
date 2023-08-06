@@ -1,8 +1,11 @@
-﻿namespace Content.Shared.Implants.Components;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Implants.Components;
+
 /// <summary>
 /// Triggers implants when the action is pressed
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class TriggerImplantActionComponent : Component
 {
 

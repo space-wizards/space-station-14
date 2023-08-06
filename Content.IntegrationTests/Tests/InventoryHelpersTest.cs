@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SpawnItemInSlotTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -87,7 +87,9 @@ namespace Content.IntegrationTests.Tests
                     ID: "InventoryIDCardDummy"
                 });
 #pragma warning restore NUnit2045
+                sEntities.DeleteEntity(human);
             });
+
             await pairTracker.CleanReturnAsync();
         }
     }
