@@ -1,0 +1,18 @@
+using Content.Shared.Damage.Systems;
+using Robust.Shared.GameStates;
+
+namespace Content.Shared.Damage.Components;
+
+/// <summary>
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(StaminaSystem))]
+public sealed partial class StaminaModifierComponent : Component
+{
+    /// <summary>
+    /// What to multiply max stamina by.
+    /// When added this scales max stamina, but not stamina damags to give you an extra boost of survability.
+    /// If you have too much damage when the modifier is removed, you suffer "withdrawl" and instantly stamcrit.
+    /// </summary>
+    [DataField("modifier"), AutoNetworkedField]
+    public float Modifier = 2f;
+}
