@@ -261,7 +261,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
     - state: tin
@@ -277,7 +277,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
     - state: plate-small
