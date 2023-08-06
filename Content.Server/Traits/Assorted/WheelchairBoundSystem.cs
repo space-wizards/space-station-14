@@ -20,7 +20,7 @@ public sealed class WheelchairBoundSystem : SharedWheelchairBoundSystem
         var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(uid);
         // TODO: Is there a better way to break legs? I don't know him, so for now, that's the way it is.
         _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20, movementSpeed);
-        var carriage = Spawn("Carriage", Transform(uid).Coordinates);
+        var carriage = Spawn(component.CarriagePrototype, Transform(uid).Coordinates);
         _buckleSystem.TryBuckle(uid, uid, carriage);
     }
 }
