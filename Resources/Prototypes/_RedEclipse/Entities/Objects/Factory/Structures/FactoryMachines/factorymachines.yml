@@ -22,8 +22,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
-        - FactoryGeneralParts
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -52,6 +51,9 @@
   - type: Machine
     board: ExplosiveAssemblerMachineCircuitboard
   - type: MaterialStorage
+    whitelist:
+      tags
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -91,7 +93,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -131,7 +133,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -165,7 +167,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -201,7 +203,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -239,7 +241,7 @@
   - type: MaterialStorage
     whitelist:
       tags:
-        - Sheet
+        - FactoryParts
   - type: Lathe
     idleState: icon
     runningState: building
