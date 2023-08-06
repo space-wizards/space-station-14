@@ -3,14 +3,12 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Database;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Commands;
 using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Robust.Server.Player;
-using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Utility;
 
 namespace Content.IntegrationTests.Tests.Administration.Logs;
 
@@ -18,14 +16,19 @@ namespace Content.IntegrationTests.Tests.Administration.Logs;
 [TestOf(typeof(AdminLogSystem))]
 public sealed class AddTests
 {
+    public static PoolSettings LogTestSettings = new()
+    {
+        AdminLogsEnabled = true,
+        DummyTicker = false,
+        Connected = true
+    };
+
     [Test]
     public async Task AddAndGetSingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
-
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
@@ -68,12 +71,11 @@ public sealed class AddTests
     [Test]
     public async Task AddAndGetUnformattedLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
@@ -135,12 +137,10 @@ public sealed class AddTests
     [TestCase(500)]
     public async Task BulkAddLogs(int amount)
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sEntities = server.ResolveDependency<IEntityManager>();
-        var sMaps = server.ResolveDependency<IMapManager>();
-
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -167,11 +167,10 @@ public sealed class AddTests
     [Test]
     public async Task AddPlayerSessionLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
 
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
         Guid playerGuid = default;
@@ -204,7 +203,14 @@ public sealed class AddTests
     [Test]
     public async Task PreRoundAddAndGetSingle()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Dirty = true, InLobby = true });
+        var setting = new PoolSettings
+        {
+            Dirty = true,
+            InLobby = true,
+            AdminLogsEnabled = true
+        };
+
+        await using var pairTracker = await PoolManager.GetServerClient(setting);
         var server = pairTracker.Pair.Server;
 
         var sDatabase = server.ResolveDependency<IServerDbManager>();
@@ -264,12 +270,10 @@ public sealed class AddTests
     [Test]
     public async Task DuplicatePlayerDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();
-        var sSystems = server.ResolveDependency<IEntitySystemManager>();
-
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
         var guid = Guid.NewGuid();
@@ -303,7 +307,7 @@ public sealed class AddTests
     [Test]
     public async Task DuplicatePlayerIdDoesNotThrowTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sPlayers = server.ResolveDependency<IPlayerManager>();

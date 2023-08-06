@@ -31,7 +31,7 @@ public abstract class SharedProjectileSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-        SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileCollideEvent>(OnEmbedProjectileCollide);
+        SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
         SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
         SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
@@ -83,14 +83,14 @@ public abstract class SharedProjectileSystem : EntitySystem
         Embed(uid, args.Target, component);
     }
 
-    private void OnEmbedProjectileCollide(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileCollideEvent args)
+    private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
     {
-        Embed(uid, args.OtherEntity, component);
+        Embed(uid, args.Target, component);
 
         // Raise a specific event for projectiles.
         if (TryComp<ProjectileComponent>(uid, out var projectile))
         {
-            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
+            var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.Target);
             RaiseLocalEvent(uid, ref ev);
         }
     }
@@ -156,3 +156,9 @@ public sealed class ImpactEffectEvent : EntityEventArgs
 /// </summary>
 [ByRefEvent]
 public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
+
+/// <summary>
+/// Raised when projectile hits other entity
+/// </summary>
+[ByRefEvent]
+public readonly record struct ProjectileHitEvent(EntityUid Target);

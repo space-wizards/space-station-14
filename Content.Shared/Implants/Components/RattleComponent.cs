@@ -1,9 +1,10 @@
 using Content.Shared.Radio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Implants.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class RattleComponent : Component
 {
     // The radio channel the message will be sent to
