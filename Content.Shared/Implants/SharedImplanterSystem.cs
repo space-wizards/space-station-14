@@ -167,11 +167,12 @@ public abstract class SharedImplanterSystem : EntitySystem
 
         else if (component.CurrentMode == ImplanterToggleMode.Inject && component.ImplantOnly)
         {
-            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
-            _appearance.SetData(uid, ImplanterImplantOnlyVisuals.ImplantOnly, component.ImplantOnly,
-                appearance);
+            if (!TryComp<MetaDataComponent>(uid, out var metadata))
+                return;
+            metadata.EntityName = Loc.GetString("ent-BaseImplanter"); // Замена на стандартное имя
+            metadata.EntityDescription = Loc.GetString("ent-BaseImplanter.desc"); // Замена на стандартное описание
+            _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance); // Ставим спрайт пустого имплантера
         }
-
         else
             _appearance.SetData(uid, ImplanterVisuals.Full, implantFound, appearance);
     }
