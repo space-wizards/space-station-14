@@ -22,10 +22,21 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
+    float tileLoss;
+
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<HeatExchangerComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
+
+        // Getting CVars is expensive, don't do it every tick
+        CacheCVars();
+        _cfg.OnValueChanged(CCVars.SuperconductionTileLoss, _ => CacheCVars());
+    }
+
+    private void CacheCVars()
+    {
+        tileLoss = _cfg.GetCVar(CCVars.SuperconductionTileLoss);
     }
 
     private void OnAtmosUpdate(EntityUid uid, HeatExchangerComponent comp, AtmosDeviceUpdateEvent args)
@@ -68,7 +79,7 @@ public sealed class HeatExchangerSystem : EntitySystem
 
         // Radiation
         float dTR = xfer.Temperature - radTemp;
-        float a0 = _cfg.GetCVar(CCVars.SuperconductionTileLoss) / MathF.Pow(Atmospherics.T20C, 4);
+        float a0 = tileLoss / MathF.Pow(Atmospherics.T20C, 4);
         float dER = comp.alpha * a0 * MathF.Pow(dTR, 4) * dt;
         _atmosphereSystem.AddHeat(xfer, -dER);
 
