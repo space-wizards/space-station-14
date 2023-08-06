@@ -70,7 +70,7 @@ public sealed class HeatExchangerSystem : EntitySystem
 
         // Convection
         var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
-        if (environment != null)
+        if (environment != null && environment.TotalMoles != 0)
         {
             radTemp = environment.Temperature;
 
