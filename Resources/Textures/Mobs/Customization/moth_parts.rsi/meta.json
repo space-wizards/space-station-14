@@ -11,7 +11,7 @@
       "directions": 4
     },
     {
-      "name": "royal_body",
+      "name": "royal_chest",
       "directions": 4
     },
     {
@@ -35,7 +35,7 @@
       "directions": 4
     },
     {
-      "name": "gothic_body",
+      "name": "gothic_chest",
       "directions": 4
     },
     {
@@ -59,7 +59,7 @@
       "directions": 4
     },
     {
-      "name": "whitefly_body",
+      "name": "whitefly_chest",
       "directions": 4
     },
     {
@@ -83,7 +83,7 @@
       "directions": 4
     },
     {
-      "name": "charred_body",
+      "name": "charred_chest",
       "directions": 4
     },
     {
@@ -107,7 +107,7 @@
       "directions": 4
     },
     {
-      "name": "firewatch_body",
+      "name": "firewatch_chest",
       "directions": 4
     },
     {
@@ -131,7 +131,7 @@
       "directions": 4
     },
     {
-      "name": "deathhead_body",
+      "name": "deathhead_chest",
       "directions": 4
     },
     {
@@ -155,7 +155,7 @@
       "directions": 4
     },
     {
-      "name": "fan_body",
+      "name": "fan_chest",
       "directions": 4
     },
     {
@@ -179,7 +179,7 @@
       "directions": 4
     },
     {
-      "name": "ragged_body",
+      "name": "ragged_chest",
       "directions": 4
     },
     {
@@ -203,7 +203,7 @@
       "directions": 4
     },
     {
-      "name": "moonfly_body",
+      "name": "moonfly_chest",
       "directions": 4
     },
     {
@@ -227,7 +227,7 @@
       "directions": 4
     },
     {
-      "name": "oakworm_body",
+      "name": "oakworm_chest",
       "directions": 4
     },
     {
@@ -251,7 +251,7 @@
       "directions": 4
     },
     {
-      "name": "jungle_body",
+      "name": "jungle_chest",
       "directions": 4
     },
     {
@@ -275,7 +275,7 @@
       "directions": 4
     },
     {
-      "name": "witchwing_body",
+      "name": "witchwing_chest",
       "directions": 4
     },
     {
@@ -299,7 +299,7 @@
       "directions": 4
     },
     {
-      "name": "pointy_body",
+      "name": "pointy_chest",
       "directions": 4
     },
     {
