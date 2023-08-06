@@ -51,5 +51,5 @@
   result: PersonalAI
   completetime: 2
   materials:
-    Steel: 200
-    Glass: 200
+    Steel: 500
+    Glass: 1000
