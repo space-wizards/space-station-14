@@ -26,6 +26,7 @@ public sealed class SericultureSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<SericultureComponent, ComponentInit>(OnCompInit);
+        SubscribeLocalEvent<SericultureComponent, ComponentShutdown>(OnCompRemove);
         SubscribeLocalEvent<SericultureComponent, SericultureActionEvent>(OnSericultureStart);
         SubscribeLocalEvent<SericultureComponent, SericultureDoAfterEvent>(OnSericultureDoAfter);
     }
@@ -36,6 +37,14 @@ public sealed class SericultureSystem : EntitySystem
             return;
 
         _actionsSystem.AddAction(uid, new InstantAction(actionProto), uid);
+    }
+
+    private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
+    {
+        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
+            return;
+
+        _actionsSystem.RemoveAction(uid, new InstantAction(actionProto));
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
