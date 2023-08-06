@@ -18,6 +18,7 @@
   - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
+  - PersonalAI
 
 - type: technology
   id: BasicAnomalousResearch

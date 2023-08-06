@@ -45,3 +45,11 @@
   materials:
     Steel: 70
     Glass: 25
+
+- type: latheRecipe
+  id: PersonalAI
+  result: PersonalAI
+  completetime: 2
+  materials:
+    Steel: 200
+    Glass: 200
