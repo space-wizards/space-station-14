@@ -1,9 +1,4 @@
 Entries:
-- author: Stealth16
-  changes:
-  - {message: Reduced the yield and growth rates of almost every plant., type: Tweak}
-  id: 3954
-  time: '2023-06-07T03:48:08.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that allowed traitors to duplicate TCs., type: Fix}
@@ -2987,3 +2982,9 @@ Entries:
       at 100 degrees instead of the standard 60)., type: Tweak}
   id: 4453
   time: '2023-08-06T02:55:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Most raw meat will now rot outside of a freezer. Please don't eat rotten
+      meat., type: Tweak}
+  id: 4454
+  time: '2023-08-06T03:05:44.0000000+00:00'
