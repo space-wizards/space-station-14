@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
@@ -155,7 +156,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         if (args.TryGetValue("Scale", out var scaleStr))
         {
-            var scale = float.Parse(scaleStr);
+            var scale = float.Parse(scaleStr, CultureInfo.InvariantCulture);
             Scale = new Vector2(scale, scale);
         }
         else

@@ -1,43 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: The PDA ringtone now permits deleting/rewriting notes instead of requiring
-      copypasting., type: Tweak}
-  id: 3962
-  time: '2023-06-07T14:22:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Defibrillators now revive people again., type: Fix}
-  id: 3963
-  time: '2023-06-07T19:12:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added cargo pallets to the cargo product console., type: Add}
-  id: 3964
-  time: '2023-06-07T19:40:30.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'APCs are now limited to 24kW of power, their breakers will pop if they
-      provide more than that.', type: Tweak}
-  id: 3965
-  time: '2023-06-07T19:43:55.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Fixed microwaves defaulting to 5 seconds when the ui said instant.,
-    type: Fix}
-  id: 3966
-  time: '2023-06-07T19:44:42.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Changed sprites for some medipens., type: Tweak}
-  id: 3967
-  time: '2023-06-07T22:18:18.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'You can now build logic gates and link them to some things, currently
-      doors and other logic gates.', type: Add}
-  id: 3968
-  time: '2023-06-07T23:48:43.0000000+00:00'
 - author: Sanchez_
   changes:
   - {message: Added new emotion sound, type: Add}
@@ -2993,3 +2954,41 @@ Entries:
       can only be normally destroyed using bombs., type: Add}
   id: 4461
   time: '2023-08-06T08:27:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Stimulants now double your stamina, making you harder to stun and letting
+      you use more heavy attacks.', type: Tweak}
+  id: 4462
+  time: '2023-08-06T11:06:23.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Centcom has increased the spring strength on the brute and burn auto
+      injectors, they should now inject the full 20 units', type: Add}
+  id: 4463
+  time: '2023-08-06T11:38:07.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: fixed reflected projectiles dealing stamina damage, type: Fix}
+  id: 4464
+  time: '2023-08-06T13:44:42.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Wide attacks no longer cost stamina, deal weapon damage.', type: Tweak}
+  - {message: Primary/Single-target melee attacks deal +25% damage., type: Tweak}
+  id: 4465
+  time: '2023-08-06T16:01:44.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Increase radiator heat transfer rate., type: Tweak}
+  id: 4466
+  time: '2023-08-06T17:23:43.0000000+00:00'
+- author: forthbridge
+  changes:
+  - {message: Spaceshrooms now spawn as a structure instead of an item, type: Fix}
+  id: 4467
+  time: '2023-08-06T17:40:43.0000000+00:00'
+- author: moony
+  changes:
+  - {message: You can turn APCs on during power grid checks again., type: Tweak}
+  id: 4468
+  time: '2023-08-06T18:39:49.0000000+00:00'
