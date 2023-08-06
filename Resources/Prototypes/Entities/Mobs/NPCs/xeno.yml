@@ -13,6 +13,8 @@
     rootTask:
       task: XenoCompound
     blackboard:
+      NavClimb: !type:Bool
+        true
       NavInteract: !type:Bool
         true
       NavPry: !type:Bool
