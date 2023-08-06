@@ -115,7 +115,6 @@ namespace Content.Server.Zombies
             _combat.SetInCombatMode(target, true, combat);
 
             // Corvax-DionaPacifist-Start: Allow dionas zombies to harm
-            RemComp<PacifistComponent>(target);
             RemComp<PacifiedComponent>(target);
             // Corvax-DionaPacifist-End
 
