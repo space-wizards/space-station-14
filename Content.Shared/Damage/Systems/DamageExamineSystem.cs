@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage.Systems;
 
-public sealed class ExamineDamageSystem : EntitySystem
+public sealed class DamageExamineSystem : EntitySystem
 {
     [Dependency] private readonly ExamineSystemShared _examine = default!;
 

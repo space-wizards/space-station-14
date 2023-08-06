@@ -23,7 +23,7 @@ namespace Content.Server.Damage.Systems
         [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly ExamineDamageSystem _examineDamage = default!;
+        [Dependency] private readonly DamageExamineSystem _examineDamage = default!;
 
         public override void Initialize()
         {

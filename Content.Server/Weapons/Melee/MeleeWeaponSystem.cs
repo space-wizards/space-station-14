@@ -46,7 +46,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly ExamineDamageSystem _examineDamage = default!;
+    [Dependency] private readonly DamageExamineSystem _examineDamage = default!;
 
     public override void Initialize()
     {
