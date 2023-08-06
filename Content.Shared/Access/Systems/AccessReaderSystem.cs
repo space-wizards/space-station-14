@@ -1,15 +1,16 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using Content.Shared.Inventory;
-using Content.Shared.Emag.Components;
-using Content.Shared.Emag.Systems;
-using Content.Shared.PDA;
 using Content.Shared.Access.Components;
 using Content.Shared.DeviceLinking.Events;
-using Robust.Shared.Prototypes;
+using Content.Shared.Emag.Components;
+using Content.Shared.Emag.Systems;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Inventory;
+using Content.Shared.PDA;
 using Content.Shared.StationRecords;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using System.Collections.ObjectModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 namespace Content.Shared.Access.Systems;
 
@@ -17,6 +18,7 @@ public sealed class AccessReaderSystem : EntitySystem
 {
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
 
     public override void Initialize()
     {
@@ -40,9 +42,9 @@ public sealed class AccessReaderSystem : EntitySystem
         if (args.Current is not AccessReaderComponentState state)
             return;
         component.Enabled = state.Enabled;
-        component.AccessKeys = new (state.AccessKeys);
-        component.AccessLists = new (state.AccessLists);
-        component.DenyTags = new (state.DenyTags);
+        component.AccessKeys = new(state.AccessKeys);
+        component.AccessLists = new(state.AccessLists);
+        component.DenyTags = new(state.DenyTags);
     }
 
     private void OnLinkAttempt(EntityUid uid, AccessReaderComponent component, LinkAttemptEvent args)
@@ -61,8 +63,31 @@ public sealed class AccessReaderSystem : EntitySystem
     }
 
     /// <summary>
+    /// Finds all AccessReaderComponents in the container of the
+    /// required entity.
+    /// </summary>
+    /// <param name="target">The entity to search for a container</param>
+    private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
+    {
+        result = new();
+        if (accessReader.ContainerAccessProvider == null)
+            return false;
+
+        if (!_containerSystem.TryGetContainer(target, accessReader.ContainerAccessProvider, out var container))
+            return false;
+
+        foreach (var entity in container.ContainedEntities)
+        {
+            if (TryComp<AccessReaderComponent>(entity, out var entityAccessReader))
+                result.Add(entityAccessReader);
+        }
+
+        return result.Any();
+    }
+
+    /// <summary>
     /// Searches the source for access tags
-    /// then compares it with the targets readers access list to see if it is allowed.
+    /// then compares it with the all targets accesses to see if it is allowed.
     /// </summary>
     /// <param name="source">The entity that wants access.</param>
     /// <param name="target">The entity to search for an access reader</param>
@@ -71,9 +96,20 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         if (!Resolve(target, ref reader, false))
             return true;
+
+        if (FindAccessReadersInContainer(target, reader, out var accessReaderList))
+        {
+            foreach (var access in accessReaderList)
+            {
+                if (IsAllowed(source, access))
+                    return true;
+            }
+
+            return false;
+        }
+
         return IsAllowed(source, reader);
     }
-
     /// <summary>
     /// Searches the given entity for access tags
     /// then compares it with the readers access list to see if it is allowed.
@@ -82,16 +118,17 @@ public sealed class AccessReaderSystem : EntitySystem
     /// <param name="reader">A reader from a different entity</param>
     public bool IsAllowed(EntityUid entity, AccessReaderComponent reader)
     {
-        var allEnts = FindPotentialAccessItems(entity);
-
         // Access reader is totally disabled, so access is always allowed.
         if (!reader.Enabled)
             return true;
 
+        var allEnts = FindPotentialAccessItems(entity);
+
         if (AreAccessTagsAllowed(FindAccessTags(entity, allEnts), reader))
             return true;
 
-        if (AreStationRecordKeysAllowed(FindStationRecordKeys(entity, allEnts), reader))
+        if (FindStationRecordKeys(entity, out var recordKeys, allEnts)
+            && AreStationRecordKeysAllowed(recordKeys, reader))
             return true;
 
         return false;
@@ -166,19 +203,19 @@ public sealed class AccessReaderSystem : EntitySystem
     /// </summary>
     /// <param name="uid">The entity that is being searched.</param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
-    public ICollection<StationRecordKey> FindStationRecordKeys(EntityUid uid, HashSet<EntityUid>? items = null)
+    public bool FindStationRecordKeys(EntityUid uid, out ICollection<StationRecordKey> recordKeys, HashSet<EntityUid>? items = null)
     {
-        HashSet<StationRecordKey> keys = new();
+        recordKeys = new HashSet<StationRecordKey>();
 
         items ??= FindPotentialAccessItems(uid);
 
         foreach (var ent in items)
         {
             if (FindStationRecordKeyItem(ent, out var key))
-                keys.Add(key.Value);
+                recordKeys.Add(key.Value);
         }
 
-        return keys;
+        return recordKeys.Any();
     }
 
     /// <summary>

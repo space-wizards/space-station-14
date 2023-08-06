@@ -363,6 +363,27 @@
     sprite: Objects/Consumable/Drinks/wineglass.rsi
     state: icon
 
+- type: reagent
+  id: Champagne
+  name: reagent-name-champagne
+  parent: BaseAlcohol
+  desc: reagent-desc-champagne
+  physicalDesc: reagent-physical-desc-strong-smelling
+  flavor: champagne
+  color: "#FCFCEE"
+  recognizable: true
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/champagneglass.rsi
+    state: icon
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+        factor: 3
+      - !type:AdjustReagent
+        reagent: Ethanol
+        amount: 0.3
+
 # Mixed Alcohol
 
 - type: reagent

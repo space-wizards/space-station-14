@@ -241,9 +241,9 @@
   name: command crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
     access: [["Command"]]
 
@@ -482,3 +482,13 @@
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base
+    
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateSyndicate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate.rsi
+    

@@ -1241,7 +1241,7 @@ entities:
       type: DeviceNetwork
     - enabled: False
       type: AmbientSound
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 41
     components:

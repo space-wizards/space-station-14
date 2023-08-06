@@ -94,6 +94,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4
+  - type: Reflect
+    reflectProb: 1
 
 - type: entity
   parent: ClothingOuterBaseLarge

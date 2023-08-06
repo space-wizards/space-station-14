@@ -1,4 +1,3 @@
-#.45 rounds
 - type: entity
   id: BaseSpeedLoaderMagnum
   name: "speed loader (.45 magnum)"
@@ -100,27 +99,22 @@
     zeroVisible: false
   - type: Appearance
 
-#.357 rounds (used in the syndicate Python revolver) 
 - type: entity
-  id: SpeedLoaderMagnum357
-  name: "speed loader (.357 magnum)"
+  id: SpeedLoaderMagnumAP
+  name: "speed loader (.45 magnum armor-piercing)"
   parent: BaseSpeedLoaderMagnum
   components:
   - type: BallisticAmmoProvider
-    proto: CartridgeMagnum357
-    capacity: 7
+    proto: CartridgeMagnumAP
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/SpeedLoaders/Magnum/magnum_speed_loader.rsi
     layers:
-      - state: base-357
+      - state: base
         map: [ "enum.GunVisualLayers.Base" ]
-      - state: threefiftyseven-7
+      - state: base-6
         map: [ "enum.GunVisualLayers.Mag" ]
   - type: MagazineVisuals
-    magState: threefiftyseven
-    steps: 8
+    magState: base
+    steps: 7
     zeroVisible: false
   - type: Appearance
-  - type: Tag
-    tags:
-      - SpeedLoaderMagnum357

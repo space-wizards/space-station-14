@@ -13,6 +13,23 @@
     - NanoTrasen
 
 - type: entity
+  name: Salvager
+  parent: BaseMobHuman
+  id: MobSalvager
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SalvageSpecialistGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
   name: Spirate
   parent: BaseMobHuman
   id: MobSpirate
@@ -21,10 +38,14 @@
   - type: NpcFactionMember
     factions:
       - Syndicate
+  - type: Loadout
+    prototypes:
+      - PirateGear
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: RangedCombatCompound
+    rootTask:
+      task: SimpleHumanoidHostileCompound
 
 - type: entity
   parent: BaseMobHuman

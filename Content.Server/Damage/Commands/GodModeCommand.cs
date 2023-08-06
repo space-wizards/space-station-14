@@ -1,6 +1,7 @@
 using Content.Server.Administration;
 using Content.Server.Damage.Systems;
 using Content.Shared.Administration;
+using Content.Shared.Damage.Systems;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -57,7 +58,7 @@ namespace Content.Server.Damage.Commands
                     return;
             }
 
-            var godmodeSystem = EntitySystem.Get<GodmodeSystem>();
+            var godmodeSystem = EntitySystem.Get<SharedGodmodeSystem>();
             var enabled = godmodeSystem.ToggleGodmode(entity);
 
             var name = entityManager.GetComponent<MetaDataComponent>(entity).EntityName;

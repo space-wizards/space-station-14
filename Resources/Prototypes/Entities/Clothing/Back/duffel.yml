@@ -41,6 +41,15 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelAtmospherics
+  name: atmospherics duffel bag
+  description: A large duffel bag made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/atmospherics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelMedical
   name: medical duffel bag
   description: A large duffel bag for holding extra medical supplies.
@@ -144,6 +153,15 @@
   components:
     - type: Sprite
       sprite: Clothing/Back/Duffels/hydroponics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelCargo
+  name: cargo duffel bag
+  description: A large duffel bag for stealing cargo's precious loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Duffels/cargo.rsi
 
 - type: entity
   parent: ClothingBackpackDuffel

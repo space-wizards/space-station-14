@@ -12,7 +12,7 @@ import os
 import psycopg2
 from uuid import UUID
 
-LATEST_DB_MIGRATION = "20230402214647_BanAutoDelete"
+LATEST_DB_MIGRATION = "20230725193102_AdminNotesImprovementsForeignKeys"
 
 def main():
     parser = argparse.ArgumentParser()

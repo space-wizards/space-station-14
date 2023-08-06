@@ -11,7 +11,13 @@
       "name": "base"
     },
     {
+      "name": "base-b"
+    },
+    {
       "name": "mag-1"
+    },
+    {
+      "name": "magb-1"
     }
   ]
 }

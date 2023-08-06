@@ -4,9 +4,27 @@
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
     - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi
@@ -79,239 +97,59 @@
 
 - type: entity
   name: reinforced spear
-  parent: BaseItem
+  parent: Spear
   id: SpearReinforced
   description: A spear with a reinforced glass shard as a tip.
   components:
-  - type: Tag
-    tags:
-    - Spear
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/reinforced_spear.rsi
-    state: spear
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 15
-    angle: 0
-    animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 18
-  - type: Item
-    size: 95
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Construction
     graph: SpearReinforced
-    node: spear
-  - type: ItemCooldown
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Piercing: 4
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30 #excess damage avoids cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
 
 - type: entity
   name: plasma spear
-  parent: BaseItem
+  parent: Spear
   id: SpearPlasma
   description: A spear with a plasma shard as a tip.
   components:
-  - type: Tag
-    tags:
-    - Spear
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/plasma_spear.rsi
-    state: spear
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 18
-    angle: 0
-    animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 21
-  - type: Item
-    size: 95
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Construction
     graph: SpearPlasma
-    node: spear
-  - type: ItemCooldown
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Piercing: 4
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30 #excess damage avoids cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5
 
 - type: entity
   name: uranium spear
-  parent: BaseItem
+  parent: Spear
   id: SpearUranium
   description: A spear with a uranium shard as a tip.
   components:
-  - type: Tag
-    tags:
-    - Spear
-  - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/uranium_spear.rsi
-    state: spear
   - type: MeleeWeapon
     damage:
       types:
         Piercing: 10
         Radiation: 8
-    angle: 0
-    animation: WeaponArcThrust
   - type: DamageOtherOnHit
     damage:
       types:
         Piercing: 12
         Radiation: 9
-  - type: Item
-    size: 95
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Construction
     graph: SpearUranium
-    node: spear
-  - type: ItemCooldown
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        maxVol: 5
-  - type: MeleeChemicalInjector
-    solution: melee
-  - type: RefillableSolution
-    solution: melee
-  - type: InjectableSolution
-    solution: melee
-  - type: SolutionTransfer
-    maxTransferAmount: 5
-  - type: Wieldable
-  - type: IncreaseDamageOnWield
-    damage:
-      types:
-        Piercing: 4
-  - type: Damageable
-    damageContainer: Inorganic
-  - type: Destructible
-    thresholds:
-    - trigger:
-        !type:DamageTrigger
-        damage: 30 #excess damage avoids cost of spawning entities.
-      behaviors:
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-    - trigger:
-        !type:DamageTrigger
-        damage: 20
-      behaviors:
-      - !type:PlaySoundBehavior
-        sound:
-          collection: GlassBreak
-      - !type:SpawnEntitiesBehavior
-        spawn:
-          PartRodMetal1:
-            min: 1
-            max: 1
-      - !type:DoActsBehavior
-        acts: [ "Destruction" ]
-  - type: DamageOnLand
-    damage:
-      types:
-        Blunt: 5

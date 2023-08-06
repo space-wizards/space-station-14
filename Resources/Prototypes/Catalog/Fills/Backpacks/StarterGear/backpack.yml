@@ -95,7 +95,7 @@
 
 - type: entity
   noSpawn: true
-  parent: ClothingBackpack
+  parent: ClothingBackpackCargo
   id: ClothingBackpackQuartermasterFilled
   components:
   - type: StorageFill
@@ -119,6 +119,15 @@
   noSpawn: true
   parent: ClothingBackpackEngineering
   id: ClothingBackpackEngineeringFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalEngineering
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackAtmospherics
+  id: ClothingBackpackAtmosphericsFilled
   components:
   - type: StorageFill
     contents:
@@ -290,6 +299,15 @@
         - id: Soap
         - id: CrowbarRed
         - id: AdvMopItem
+
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackCargo
+  id: ClothingBackpackCargoFilled
+  components:
+    - type: StorageFill
+      contents:
+        - id: BoxSurvival
 
 - type: entity
   noSpawn: true
