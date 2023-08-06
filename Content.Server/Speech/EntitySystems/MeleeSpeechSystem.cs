@@ -59,16 +59,15 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     }
 
 
-    public void TryOpenUi(EntityUid user, EntityUid storeEnt, MeleeSpeechComponent? component = null)
+    public void TryOpenUi(EntityUid user, EntityUid source, MeleeSpeechComponent? component = null)
     {
-        if (!Resolve(storeEnt, ref component))
+        if (!Resolve(source, ref component))
             return;
 
         if (!TryComp<ActorComponent>(user, out var actor))
             return;
 
-        if (!_uiSystem.TryToggleUi(storeEnt, MeleeSpeechUiKey.Key, actor.PlayerSession))
-            return;
+        _uiSystem.TryToggleUi(source, MeleeSpeechUiKey.Key, actor.PlayerSession);
     }
 
 

@@ -23,7 +23,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [DataField("configureAction")]
     public InstantAction ConfigureAction = new()
     {
-        UseDelay = TimeSpan.FromSeconds(4),
+        UseDelay = TimeSpan.FromSeconds(1),
         ItemIconStyle = ItemActionIconStyle.BigItem,
         DisplayName = "melee-speech-config",
         Description = "melee-speech-config-desc",
@@ -35,7 +35,7 @@ public sealed partial class MeleeSpeechComponent : Component
 /// <summary>
 /// Key representing which <see cref="BoundUserInterface"/> is currently open.
 /// Useful when there are multiple UI for an object. Here it's future-proofing only.
-/// </summary>/
+/// </summary>
 [Serializable, NetSerializable]
 public enum MeleeSpeechUiKey : byte
 {
