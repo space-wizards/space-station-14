@@ -10,6 +10,7 @@ using Content.Server.Power.Generation.Teg;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Binary.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceNetwork.Components;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.SensorMonitoring;
 using Robust.Server.GameObjects;
@@ -33,7 +34,10 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 
         InitUI();
 
+        UpdatesBefore.Add(typeof(UserInterfaceSystem));
+
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceListUpdateEvent>(DeviceListUpdated);
+        SubscribeLocalEvent<SensorMonitoringConsoleComponent, ComponentStartup>(ConsoleStartup);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, DeviceNetworkPacketEvent>(DevicePacketReceived);
         SubscribeLocalEvent<SensorMonitoringConsoleComponent, AtmosDeviceUpdateEvent>(AtmosUpdate);
 
@@ -70,14 +74,29 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
         UpdateConsoleUI(uid, comp);
     }
 
+    private void ConsoleStartup(EntityUid uid, SensorMonitoringConsoleComponent component, ComponentStartup args)
+    {
+        var network = Comp<DeviceListComponent>(uid);
+        UpdateDevices(uid, component, network.Devices, Array.Empty<EntityUid>());
+    }
+
     private void DeviceListUpdated(
         EntityUid uid,
         SensorMonitoringConsoleComponent component,
         DeviceListUpdateEvent args)
     {
+        UpdateDevices(uid, component, args.Devices, args.OldDevices);
+    }
+
+    private void UpdateDevices(
+        EntityUid uid,
+        SensorMonitoringConsoleComponent component,
+        IEnumerable<EntityUid> newDevices,
+        IEnumerable<EntityUid> oldDevices)
+    {
         var kept = new HashSet<EntityUid>();
 
-        foreach (var newDevice in args.Devices)
+        foreach (var newDevice in newDevices)
         {
             var deviceType = DetectDeviceType(newDevice);
             if (deviceType == SensorDeviceType.Unknown)
@@ -90,7 +109,7 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
                 sensor.NetId = MakeNetId(component);
         }
 
-        foreach (var oldDevice in args.OldDevices)
+        foreach (var oldDevice in oldDevices)
         {
             if (kept.Contains(oldDevice))
                 continue;
