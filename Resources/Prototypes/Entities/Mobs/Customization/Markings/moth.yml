@@ -126,7 +126,7 @@
     state: maple
 
 - type: marking
-  id: MothAntennasOakworm
+  id: MothAntennasRoyal
   bodyPart: HeadTop
   markingCategory: HeadTop
   speciesRestriction: [Moth]
