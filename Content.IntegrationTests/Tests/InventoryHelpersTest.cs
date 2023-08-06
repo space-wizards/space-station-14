@@ -87,7 +87,9 @@ namespace Content.IntegrationTests.Tests
                     ID: "InventoryIDCardDummy"
                 });
 #pragma warning restore NUnit2045
+                sEntities.DeleteEntity(human);
             });
+
             await pairTracker.CleanReturnAsync();
         }
     }
