@@ -1,6 +1,7 @@
 - type: entity
   id: BaseFactoryMachineCircuitboard
   parent: BaseMachineCircuitboard
+  abstract: true
   name: factory base machine board
   description: debug item
   components:
