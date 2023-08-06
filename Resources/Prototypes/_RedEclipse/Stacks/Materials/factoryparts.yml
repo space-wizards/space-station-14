@@ -17,7 +17,7 @@
     - FactoryParts
   - type: PhysicalComposition
     materialComposition:
-      MaterialFactoryBaseParts: 100
+      MaterialFactoryBaseParts: 1
 
 - type: entity
   parent: MaterialFactoryBaseParts
@@ -36,5 +36,509 @@
   name: base factory parts
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryBaseParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryCircuitry
+  name: circuitrty
+  description: some simple ciruits
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryCircuitryParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryCircuitry: 1
+
+- type: entity
+  parent: MaterialFactoryCircuitry
+  id: FactoryCircuitryParts1
+  name: circuitry
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryCircuitryParts
+    count: 1
+
+- type: stack
+  id: FactoryCircuitryParts
+  name: circuitry
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryCircuitryParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryCasing
+  name: casing
+  description: protective casings
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryCasingParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryCasing: 1
+
+- type: entity
+  parent: MaterialFactoryCasing
+  id: FactoryCasingParts1
+  name: casing
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryCasingParts
+    count: 1
+
+- type: stack
+  id: FactoryCasingParts
+  name: casing
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryCasingParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryMetalBlade
+  name: metal blade
+  description: sharp metal blades
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryMetalBladeParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryMetalBlade: 1
+
+- type: entity
+  parent: MaterialFactoryMetalBlade
+  id: FactoryMetalBladeParts1
+  name: metal blade
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryMetalBladeParts
+    count: 1
+
+- type: stack
+  id: FactoryMetalBladeParts
+  name: metal blade
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryMetalBladeParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryLaserComponent
+  name: laser component
+  description: high-tech laser components
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryLaserComponentParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryLaserComponent: 1
+
+- type: entity
+  parent: MaterialFactoryLaserComponent
+  id: FactoryLaserComponentParts1
+  name: laser component
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryLaserComponentParts
+    count: 1
+
+- type: stack
+  id: FactoryLaserComponentParts
+  name: laser component
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryLaserComponentParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryMachinery
+  name: machinery
+  description: complex machinery parts
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryMachineryParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryMachinery: 1
+
+- type: entity
+  parent: MaterialFactoryMachinery
+  id: FactoryMachineryParts1
+  name: machinery
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryMachineryParts
+    count: 1
+
+- type: stack
+  id: FactoryMachineryParts
+  name: machinery
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryMachineryParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryPayload
+  name: payload
+  description: various payloads
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryPayloadParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryPayload: 1
+
+- type: entity
+  parent: MaterialFactoryPayload
+  id: FactoryPayloadParts1
+  name: payload
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryPayloadParts
+    count: 1
+
+- type: stack
+  id: FactoryPayloadParts
+  name: payload
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryPayloadParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryTimer
+  name: timer
+  description: precise timing components
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryTimerParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryTimer: 1
+
+- type: entity
+  parent: MaterialFactoryTimer
+  id: FactoryTimerParts1
+  name: timer
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryTimerParts
+    count: 1
+
+- type: stack
+  id: FactoryTimerParts
+  name: timer
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryTimerParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryClownParts
+  name: clown parts
+  description: silly clown components
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryClownParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryClownParts: 1
+
+- type: entity
+  parent: MaterialFactoryClownParts
+  id: FactoryClownParts1
+  name: clown parts
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryClownParts
+    count: 1
+
+- type: stack
+  id: FactoryClownParts
+  name: clown parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryClownParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryTinyBomb
+  name: tiny bomb
+  description: miniature explosive devices
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryTinyBombParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryTinyBomb: 1
+
+- type: entity
+  parent: MaterialFactoryTinyBomb
+  id: FactoryTinyBombParts1
+  name: tiny bomb
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryTinyBombParts
+    count: 1
+
+- type: stack
+  id: FactoryTinyBombParts
+  name: tiny bomb
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryTinyBombParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryImplanter
+  name: implanter
+  description: advanced implantation devices
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryImplanterParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryImplanter: 1
+
+- type: entity
+  parent: MaterialFactoryImplanter
+  id: FactoryImplanterParts1
+  name: implanter
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryImplanterParts
+    count: 1
+
+- type: stack
+  id: FactoryImplanterParts
+  name: implanter
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryImplanterParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryMedicalParts
+  name: medical parts
+  description: essential medical components
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryMedicalParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryMedicalParts: 1
+
+- type: entity
+  parent: MaterialFactoryMedicalParts
+  id: FactoryMedicalParts1
+  name: medical parts
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryMedicalParts
+    count: 1
+
+- type: stack
+  id: FactoryMedicalParts
+  name: medical parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryMedicalParts1
+  maxCount: 3
+  itemSize: 10
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryChemPack
+  name: chempack
+  description: chemical packs
+  components:
+  - type: Material
+  - type: Stack
+    stackType: FactoryChemPackParts
+    count: 1
+  - type: Sprite
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Item
+    size: 10
+  - type: Tag
+    tags:
+    - FactoryParts
+  - type: PhysicalComposition
+    materialComposition:
+      MaterialFactoryChemPack: 1
+
+- type: entity
+  parent: MaterialFactoryChemPack
+  id: FactoryChemPackParts1
+  name: chempack
+  suffix: single
+  components:
+  - type: Item
+    size: 1
+  - type: Stack
+    stackType: FactoryChemPackParts
+    count: 1
+
+- type: stack
+  id: FactoryChemPackParts
+  name: chempack
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
+  spawn: FactoryChemPackParts1
   maxCount: 3
   itemSize: 10
