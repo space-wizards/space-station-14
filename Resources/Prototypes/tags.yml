@@ -14,9 +14,6 @@
   id: AppraisalTool
 
 - type: Tag
-  id: Arachnid
-
-- type: Tag
   id: ArtifactFragment
 
 - type: Tag

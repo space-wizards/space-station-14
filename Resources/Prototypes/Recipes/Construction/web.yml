@@ -15,7 +15,3 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
-    - !type:CrafterWhitelist
-      whitelist:
-        tags:
-        - Arachnid

@@ -8,8 +8,3 @@
   description: "Nice and smooth."
   icon: { sprite: Objects/Tiles/web.rsi, state: icon }
   objectType: Item
-  conditions:
-    - !type:CrafterWhitelist
-      whitelist:
-        tags:
-        - Arachnid
