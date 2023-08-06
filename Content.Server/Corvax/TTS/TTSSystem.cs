@@ -55,6 +55,9 @@ public sealed partial class TTSSystem : EntitySystem
             return;
 
         var voiceId = senderComponent.VoicePrototypeId;
+        if(voiceId == null)
+            return;
+
         var voiceEv = new TransformSpeakerVoiceEvent(args.Source, voiceId);
         RaiseLocalEvent(args.Source, voiceEv);
         voiceId = voiceEv.VoiceId;
@@ -101,11 +104,12 @@ public sealed partial class TTSSystem : EntitySystem
 
     private async void OnEntitySpoke(EntityUid uid, TTSComponent component, EntitySpokeEvent args)
     {
+        var voiceId = component.VoicePrototypeId;
         if (!_isEnabled ||
-            args.Message.Length > MaxMessageChars)
+            args.Message.Length > MaxMessageChars ||
+            voiceId == null)
             return;
 
-        var voiceId = component.VoicePrototypeId;
         var voiceEv = new TransformSpeakerVoiceEvent(uid, voiceId);
         RaiseLocalEvent(uid, voiceEv);
         voiceId = voiceEv.VoiceId;
