@@ -392,7 +392,6 @@
   - type: Transform
     noRot: false
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
     layers:
     - sprite: Structures/Piping/Atmospherics/pipe.rsi
