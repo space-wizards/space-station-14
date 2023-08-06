@@ -9,5 +9,5 @@ public sealed class WheelchairBoundComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("wheelchairPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string WheelchairPrototype = "Wheelchair";
+    public string WheelchairPrototype = "VehicleWheelchair";
 }
