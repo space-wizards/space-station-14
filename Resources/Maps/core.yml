@@ -25961,7 +25961,7 @@ entities:
       type: Transform
   - uid: 3008
     components:
-    - pos: 55.5,-23.5
+    - pos: 36.5,-4.5
       parent: 2
       type: Transform
     - enabled: True
@@ -29911,6 +29911,13 @@ entities:
   - uid: 18978
     components:
     - pos: 51.5,-20.5
+      parent: 2
+      type: Transform
+    - enabled: True
+      type: AmbientSound
+  - uid: 18989
+    components:
+    - pos: 61.5,-9.5
       parent: 2
       type: Transform
     - enabled: True
@@ -39451,6 +39458,13 @@ entities:
     - pos: -14.5,29.5
       parent: 2
       type: Transform
+  - uid: 18990
+    components:
+    - pos: 36.5,-4.5
+      parent: 2
+      type: Transform
+    - enabled: True
+      type: AmbientSound
 - proto: CableMVStack
   entities:
   - uid: 4724
@@ -88631,7 +88645,7 @@ entities:
     - pos: 44.5,7.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -15037.545
+    - SecondsUntilStateChange: -15489.894
       state: Opening
       type: Door
   - uid: 11091
@@ -88639,7 +88653,7 @@ entities:
     - pos: 62.5,21.5
       parent: 2
       type: Transform
-    - SecondsUntilStateChange: -154788.11
+    - SecondsUntilStateChange: -155240.47
       state: Opening
       type: Door
   - uid: 11092
@@ -90271,6 +90285,23 @@ entities:
   - uid: 17447
     components:
     - pos: 2.5,33.5
+      parent: 2
+      type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 18991
+    components:
+    - pos: -35.5,13.5
+      parent: 2
+      type: Transform
+  - uid: 18992
+    components:
+    - pos: 50.5,-31.5
+      parent: 2
+      type: Transform
+  - uid: 18993
+    components:
+    - pos: 59.5,27.5
       parent: 2
       type: Transform
 - proto: MaintenanceToolSpawner

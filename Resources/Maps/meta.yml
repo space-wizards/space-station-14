@@ -124951,6 +124951,28 @@ entities:
     - pos: 25.5,35.5
       parent: 5350
       type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 11184
+    components:
+    - pos: -14.5,35.5
+      parent: 5350
+      type: Transform
+  - uid: 11185
+    components:
+    - pos: 21.5,35.5
+      parent: 5350
+      type: Transform
+  - uid: 11186
+    components:
+    - pos: 33.5,-35.5
+      parent: 5350
+      type: Transform
+  - uid: 11187
+    components:
+    - pos: -35.5,-56.5
+      parent: 5350
+      type: Transform
 - proto: MaintenanceToolSpawner
   entities:
   - uid: 3250
@@ -139447,7 +139469,7 @@ entities:
     - pos: 9.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:
@@ -139458,7 +139480,7 @@ entities:
     - pos: 10.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:
@@ -139469,7 +139491,7 @@ entities:
     - pos: 11.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:
@@ -139480,7 +139502,7 @@ entities:
     - pos: 13.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:
@@ -139491,7 +139513,7 @@ entities:
     - pos: 14.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:
@@ -139502,7 +139524,7 @@ entities:
     - pos: 15.5,-47.5
       parent: 5350
       type: Transform
-    - SecondsUntilStateChange: -29641.27
+    - SecondsUntilStateChange: -29681.104
       state: Closing
       type: Door
     - links:

@@ -114,3 +114,7 @@ ForensicGloves: ClothingHandsGlovesForensic
 
 # 2023-07-24
 ClothingEyesGlassesBeer: ClothingEyesHudBeer
+
+# 2023-08-01
+lantern: Lantern
+lanternextrabright: LanternFlash

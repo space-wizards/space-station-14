@@ -29,12 +29,13 @@ namespace Content.MapRenderer
             if (!CommandLineArguments.TryParse(args, out var arguments))
                 return;
 
+            PoolManager.Startup(null);
             if (arguments.Maps.Count == 0)
             {
                 Console.WriteLine("Didn't specify any maps to paint! Loading the map list...");
 
-                await using var server = await PoolManager.GetServerClient();
-                var mapIds = server.Pair.Server
+                await using var pairTracker = await PoolManager.GetServerClient();
+                var mapIds = pairTracker.Pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
                     .Select(map => map.ID)
@@ -107,8 +108,8 @@ namespace Content.MapRenderer
                 Console.WriteLine("Retrieving map ids by map file names...");
 
                 Console.Write("Fetching map prototypes... ");
-                await using var server = await PoolManager.GetServerClient();
-                var mapPrototypes = server.Pair.Server
+                await using var pairTracker = await PoolManager.GetServerClient();
+                var mapPrototypes = pairTracker.Pair.Server
                     .ResolveDependency<IPrototypeManager>()
                     .EnumeratePrototypes<GameMapPrototype>()
                     .ToArray();
@@ -135,6 +136,7 @@ namespace Content.MapRenderer
             }
 
             await Run(arguments);
+            PoolManager.Shutdown();
         }
 
         private static async Task Run(CommandLineArguments arguments)

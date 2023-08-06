@@ -109,6 +109,8 @@
       rootTask:
         task: TurretCompound
       blackboard:
+        RotateSpeed: !type:Single
+          3.141
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
 
