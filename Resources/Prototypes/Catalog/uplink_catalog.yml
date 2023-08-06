@@ -459,6 +459,16 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkPinpointerUniversal
+  name: uplink-universal-pinpointer-name
+  description: uplink-universal-pinpointer-desc
+  productEntity: PinpointerUniversal
+  cost:
+    Telecrystal: 2
+  categories:
+  - UplinkUtility
+
 # Implants
 
 - type: listing
