@@ -95,7 +95,6 @@ public sealed class SpreaderSystem : EntitySystem
         var curTime = _timing.CurTime;
 
         // Check which grids are valid for spreading
-        // Every map seems to have a single "SpreaderGrid" component
         var spreadable = new ValueList<EntityUid>();
         var spreadGrids = EntityQueryEnumerator<SpreaderGridComponent>();
 
