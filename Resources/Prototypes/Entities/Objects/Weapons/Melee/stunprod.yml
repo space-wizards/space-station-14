@@ -15,7 +15,6 @@
     damage:
       types:
         Blunt: 9
-    bluntStaminaDamageFactor: 1.5
     angle: 60
     animation: WeaponArcThrust
   - type: StaminaDamageOnHit
