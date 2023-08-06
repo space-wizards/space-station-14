@@ -68,8 +68,9 @@
     attackRate: 1.5
     damage:
       types:
-        Slash: 3
-        Poison: 1
+        # Actually does 3 + 1 damage due to +25% damage bonus on all single target melee attacks
+        Slash: 2.4
+        Poison: 0.8
   - type: Butcherable
     butcheringType: Spike
     spawned:

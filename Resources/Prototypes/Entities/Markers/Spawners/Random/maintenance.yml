@@ -156,6 +156,6 @@
           state: structure
     - type: RandomSpawner
       prototypes:
-        - FoodSpaceshroom
+        - Spaceshroom
       chance: 0.6
       offset: 0.0
