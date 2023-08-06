@@ -1,10 +1,12 @@
-﻿using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
+﻿using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Traits.Assorted;
+namespace Content.Server.Traits.Assorted;
 
-[RegisterComponent, NetworkedComponent]
+/// <summary>
+/// On adding spawns wheelchair prototype and tries buckle player to it, then self removing
+/// </summary>
+[RegisterComponent, Access(typeof(WheelchairBoundSystem))]
 public sealed class WheelchairBoundComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
