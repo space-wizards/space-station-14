@@ -1,9 +1,4 @@
 Entries:
-- author: Rincew1nd
-  changes:
-  - {message: All the antag roles have briefing sounds now., type: Add}
-  id: 3958
-  time: '2023-06-07T07:15:23.0000000+00:00'
 - author: lzk
   changes:
   - {message: Fixed slime and diona brute damage color., type: Fix}
@@ -2990,3 +2985,9 @@ Entries:
     type: Tweak}
   id: 4457
   time: '2023-08-06T06:37:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adjusted pickaxe inhand sprites and added sprites for wielded pickaxes.,
+    type: Tweak}
+  id: 4458
+  time: '2023-08-06T06:50:00.0000000+00:00'
