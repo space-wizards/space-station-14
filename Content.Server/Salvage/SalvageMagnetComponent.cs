@@ -108,7 +108,7 @@ namespace Content.Server.Salvage
         /// A weighted random prototype corresponding to
         /// what asteroid entities will be generated.
         /// </summary>
-        [DataField("asteroidPool", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+        [DataField("asteroidPool", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomEntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
         public string AsteroidPool = "RandomAsteroidPool";
     }
 

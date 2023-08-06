@@ -74,10 +74,7 @@ public sealed class StationJobsTest
     [Test]
     public async Task AssignJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -151,10 +148,7 @@ public sealed class StationJobsTest
     [Test]
     public async Task AdjustJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -205,10 +199,7 @@ public sealed class StationJobsTest
     [Test]
     public async Task InvalidRoundstartJobsTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var prototypeManager = server.ResolveDependency<IPrototypeManager>();
