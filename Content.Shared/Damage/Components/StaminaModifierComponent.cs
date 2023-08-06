@@ -13,6 +13,6 @@ public sealed partial class StaminaModifierComponent : Component
     /// When added this scales max stamina, but not stamina damags to give you an extra boost of survability.
     /// If you have too much damage when the modifier is removed, you suffer "withdrawl" and instantly stamcrit.
     /// </summary>
-    [DataField("modifier"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("modifier"), AutoNetworkedField]
     public float Modifier = 2f;
 }

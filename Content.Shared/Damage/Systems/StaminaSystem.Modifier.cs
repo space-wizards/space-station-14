@@ -30,19 +30,20 @@ public sealed partial class StaminaSystem
     /// Change the stamina modifier for an entity.
     /// If it has <see cref="StaminaComponent"/> it will also be updated.
     /// </summary>
-    public void SetModifier(EntityUid uid, float modifier, StaminaModifierComponent? comp = null)
+    public void SetModifier(EntityUid uid, float modifier, StaminaComponent? stamina = null, StaminaModifierComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
             return;
 
         var old = comp.Modifier;
-        if (old == modifier)
+
+        if (old.Equals(modifier))
             return;
 
         comp.Modifier = modifier;
-        Dirty(comp);
+        Dirty(uid, comp);
 
-        if (TryComp<StaminaComponent>(uid, out var stamina))
+        if (Resolve(uid, ref stamina, false))
         {
             // scale to the new threshold, act as if it was removed then added
             stamina.CritThreshold *= modifier / old;
