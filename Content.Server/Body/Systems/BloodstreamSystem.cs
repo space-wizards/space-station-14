@@ -253,6 +253,7 @@ public sealed class BloodstreamSystem : EntitySystem
     {
         TryModifyBleedAmount(uid, -component.BleedAmount, component);
         TryModifyBloodLevel(uid, component.BloodSolution.AvailableVolume, component);
+        _solutionContainerSystem.RemoveAllSolution(uid, component.ChemicalSolution);
     }
 
     /// <summary>

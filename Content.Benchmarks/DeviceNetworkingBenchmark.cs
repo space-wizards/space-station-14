@@ -58,7 +58,7 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        _pair = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        _pair = await PoolManager.GetServerClient();
         var server = _pair.Pair.Server;
 
         await server.WaitPost(() =>

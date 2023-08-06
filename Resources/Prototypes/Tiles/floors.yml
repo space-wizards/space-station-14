@@ -13,6 +13,34 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelCheckerLight
+  name: tiles-steel-floor-checker-light
+  sprite: /Textures/Tiles/cafeteria.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelCheckerLight
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelCheckerDark
+  name: tiles-steel-floor-checker-dark
+  sprite: /Textures/Tiles/checker_dark.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelCheckerDark
+  heatCapacity: 10000
+
+- type: tile
   id: FloorSteelMini
   name: tiles-steel-floor-mini
   sprite: /Textures/Tiles/steel_mini.png
@@ -1181,3 +1209,42 @@
     collection: BarestepWood
   itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
+
+#Hull tiles
+- type: tile
+  id: FloorHull
+  name: tiles-hull
+  sprite: /Textures/Tiles/hull.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorHullReinforced
+  name: tiles-hull-reinforced
+  sprite: /Textures/Tiles/hull_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+
+- type: tile
+  id: FloorReinforcedHardened
+  name: tiles-super-reinforced-floor
+  sprite: /Textures/Tiles/super_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemReinforced #same case as FloorHull

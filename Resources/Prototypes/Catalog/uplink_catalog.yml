@@ -1184,6 +1184,16 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: UplinkBribe
+  name: uplink-bribe-name
+  description: uplink-bribe-desc
+  productEntity: BriefcaseSyndieLobbyingBundleFilled
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkMisc
+
  # Pointless
 
 - type: listing

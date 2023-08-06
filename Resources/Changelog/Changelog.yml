@@ -1,109 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: Added a new evacuation shuttle for Cluster, type: Add}
-  id: 3945
-  time: '2023-06-05T02:52:58.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Captain fax now captain's on Fland and Saltern, type: Tweak}
-  id: 3946
-  time: '2023-06-05T09:20:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed several reagents showing up in the "other" section of the chem
-      guidebook when they shouldn't have been., type: Fix}
-  id: 3947
-  time: '2023-06-05T21:08:31.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added a guide for the bartender, including all the drinks and their
-      recipes.', type: Add}
-  id: 3948
-  time: '2023-06-05T22:44:43.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Added a Chemist Guidebook with a medical subsection., type: Add}
-  - {message: Guidebook Helpers have been added to the Chem Dispenser and Chem Master.,
-    type: Tweak}
-  id: 3949
-  time: '2023-06-05T22:45:46.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Added GuideHelp tags to some Medical and Kitchen objects., type: Add}
-  id: 3950
-  time: '2023-06-05T22:47:15.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed the lobby's "Observe" button not working., type: Fix}
-  id: 3951
-  time: '2023-06-06T01:01:39.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Defibrillators no longer heal airloss damage on live targets., type: Tweak}
-  - {message: 'Rotting no longer outright blocks defibrillators, however, the attempt
-      to revive will still fail.', type: Tweak}
-  id: 3952
-  time: '2023-06-06T21:08:35.0000000+00:00'
-- author: HerCoyote23
-  changes:
-  - {message: You can clobber people with the seclite now., type: Tweak}
-  id: 3953
-  time: '2023-06-06T21:21:19.0000000+00:00'
-- author: Stealth16
-  changes:
-  - {message: Reduced the yield and growth rates of almost every plant., type: Tweak}
-  id: 3954
-  time: '2023-06-07T03:48:08.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that allowed traitors to duplicate TCs., type: Fix}
-  id: 3955
-  time: '2023-06-07T03:53:11.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Added Bingus and Space Cat spawners!, type: Add}
-  id: 3956
-  time: '2023-06-07T03:53:27.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Mice are no longer blood based juice boxes., type: Tweak}
-  id: 3957
-  time: '2023-06-07T03:53:41.0000000+00:00'
-- author: Rincew1nd
-  changes:
-  - {message: All the antag roles have briefing sounds now., type: Add}
-  id: 3958
-  time: '2023-06-07T07:15:23.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Fixed slime and diona brute damage color., type: Fix}
-  id: 3959
-  time: '2023-06-07T08:57:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing text for the cogchamp effect in the bar guide., type: Fix}
-  id: 3960
-  time: '2023-06-07T09:52:24.0000000+00:00'
-- author: Kit0vras
-  changes:
-  - {message: 'Added new reagent: Fat.', type: Add}
-  - {message: Added reactions for creating soap and meat., type: Add}
-  - {message: 'Added the ability to get fat from raw meat, cutlets, body parts, mice
-      and hamster using a grinder.', type: Add}
-  id: 3961
-  time: '2023-06-07T13:04:37.0000000+00:00'
-- author: TemporalOroboros
-  changes:
-  - {message: The PDA ringtone now permits deleting/rewriting notes instead of requiring
-      copypasting., type: Tweak}
-  id: 3962
-  time: '2023-06-07T14:22:19.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Defibrillators now revive people again., type: Fix}
-  id: 3963
-  time: '2023-06-07T19:12:49.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Added cargo pallets to the cargo product console., type: Add}
@@ -2983,3 +2878,119 @@ Entries:
   - {message: The crew manifest is now a PDA cartridge program., type: Tweak}
   id: 4444
   time: '2023-08-05T08:37:08.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Splash spill now has a visual effect., type: Add}
+  id: 4445
+  time: '2023-08-05T11:44:19.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: 'Added craftable TaxiBot. Robotics can now construct autonomous, ghost-powered
+      taxis to drive people around the station at high speed.', type: Add}
+  id: 4446
+  time: '2023-08-05T18:36:32.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Syndicate lobbying bundle: briefcase containing 5,000 spacebucks has
+      been added to the uplink!', type: Add}
+  id: 4447
+  time: '2023-08-05T21:10:21.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Nuclear fission devices need enough floor around them to anchor now.,
+    type: Tweak}
+  id: 4448
+  time: '2023-08-05T21:28:07.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Changed the plating sprite to be a little less blue., type: Tweak}
+  id: 4449
+  time: '2023-08-06T00:04:12.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Tweak PKA, crusher, pickaxe, and drill. Overall adjusted the mining
+      speed from lowest to fastest in that order. Additionally buffed crusher attackrate
+      and pickaxe structural damage.', type: Tweak}
+  id: 4450
+  time: '2023-08-06T01:23:38.0000000+00:00'
+- author: Derby
+  changes:
+  - {message: The guidebook now comes with more antagonists info., type: Add}
+  id: 4451
+  time: '2023-08-06T02:35:08.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'NT RND has cooked up brute and burn auto-injectors, which are now available
+      in combat medkits.', type: Add}
+  id: 4452
+  time: '2023-08-06T02:38:25.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
+      stamina, stamina damage cooldown reduced from 5s to 3/s, wide attacks provide
+      a 25% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
+  - {message: Reduce desword values to standard fast weapons (left wide-attack angle
+      at 100 degrees instead of the standard 60)., type: Tweak}
+  id: 4453
+  time: '2023-08-06T02:55:38.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Most raw meat will now rot outside of a freezer. Please don't eat rotten
+      meat., type: Tweak}
+  id: 4454
+  time: '2023-08-06T03:05:44.0000000+00:00'
+- author: Bixkitts
+  changes:
+  - {message: Add candy bowls for waiting lines., type: Add}
+  id: 4455
+  time: '2023-08-06T03:10:47.0000000+00:00'
+- author: Bixkitts
+  changes:
+  - {message: Kudzu spread falling asleep when blocked by walls, type: Fix}
+  id: 4456
+  time: '2023-08-06T06:08:07.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix taxibots incorrectly pushing entities., type: Fix}
+  - {message: Taxibots were equipped with noslip tires., type: Tweak}
+  - {message: Nerf taxibot speed from 10 to 6 and reduce their volume significantly.,
+    type: Tweak}
+  id: 4457
+  time: '2023-08-06T06:37:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Adjusted pickaxe inhand sprites and added sprites for wielded pickaxes.,
+    type: Tweak}
+  id: 4458
+  time: '2023-08-06T06:50:00.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Active energy swords no longer heal small amounts of blunt damage on
+      every hit. Cybersun CEO reportedly thrown out an airlock over "Bluntgate" scandal.,
+    type: Fix}
+  id: 4459
+  time: '2023-08-06T08:19:32.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
+    type: Add}
+  id: 4460
+  time: '2023-08-06T08:21:05.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Added external hull plating tiles & hardened reinforced tiles. They
+      can only be normally destroyed using bombs., type: Add}
+  id: 4461
+  time: '2023-08-06T08:27:48.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Stimulants now double your stamina, making you harder to stun and letting
+      you use more heavy attacks.', type: Tweak}
+  id: 4462
+  time: '2023-08-06T11:06:23.0000000+00:00'
+- author: JoeHammad
+  changes:
+  - {message: 'Centcom has increased the spring strength on the brute and burn auto
+      injectors, they should now inject the full 20 units', type: Add}
+  id: 4463
+  time: '2023-08-06T11:38:07.0000000+00:00'

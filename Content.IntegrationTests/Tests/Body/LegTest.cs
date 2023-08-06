@@ -29,10 +29,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             EntityUid human = default!;
