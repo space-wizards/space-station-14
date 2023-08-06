@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Changed sprites for some medipens., type: Tweak}
-  id: 3967
-  time: '2023-06-07T22:18:18.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'You can now build logic gates and link them to some things, currently
@@ -2993,3 +2988,8 @@ Entries:
   - {message: Increase radiator heat transfer rate., type: Tweak}
   id: 4466
   time: '2023-08-06T17:23:43.0000000+00:00'
+- author: forthbridge
+  changes:
+  - {message: Spaceshrooms now spawn as a structure instead of an item, type: Fix}
+  id: 4467
+  time: '2023-08-06T17:40:43.0000000+00:00'
