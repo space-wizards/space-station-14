@@ -1434,6 +1434,8 @@ entities:
       pos: -1.5,5.5
       parent: 2
       type: Transform
+    - debug_streams: True
+      type: SensorMonitoringConsole
     - ShutdownSubscribers:
       - 3
       - 6
@@ -2244,14 +2246,6 @@ entities:
       type: Transform
     - enabled: False
       type: AmbientSound
-  - uid: 310
-    components:
-    - rot: -1.5707963267948966 rad
-      pos: 2.5,5.5
-      parent: 2
-      type: Transform
-    - enabled: False
-      type: AmbientSound
   - uid: 312
     components:
     - rot: -1.5707963267948966 rad
@@ -2278,14 +2272,6 @@ entities:
   - uid: 315
     components:
     - pos: -2.5,4.5
-      parent: 2
-      type: Transform
-    - enabled: False
-      type: AmbientSound
-  - uid: 316
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: -1.5,5.5
       parent: 2
       type: Transform
     - enabled: False
@@ -2650,13 +2636,15 @@ entities:
     - pos: 0.5,5.5
       parent: 2
       type: Transform
-    - maxCharge: 8E+11
+    - maxCharge: 8E+12
       type: Battery
     - maxChargeRate: 5E+09
       type: PowerNetworkBattery
     - ShutdownSubscribers:
       - 433
       type: DeviceNetwork
+    missingComponents:
+    - UpgradeBattery
 - proto: SpawnPointChiefEngineer
   entities:
   - uid: 145
