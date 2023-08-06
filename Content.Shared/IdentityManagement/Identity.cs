@@ -47,6 +47,11 @@ public static class Identity
         if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
             return uid;
 
+        // SS220 damageable component test fail fix
+        // чиним хуйню хуйнёй
+        if (identity.IdentityEntitySlot is null)
+            return uid;
+
         return identity.IdentityEntitySlot.ContainedEntity ?? uid;
     }
 
