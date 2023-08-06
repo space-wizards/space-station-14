@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed missing text for the cogchamp effect in the bar guide., type: Fix}
-  id: 3960
-  time: '2023-06-07T09:52:24.0000000+00:00'
 - author: Kit0vras
   changes:
   - {message: 'Added new reagent: Fat.', type: Add}
@@ -2994,3 +2989,9 @@ Entries:
     type: Fix}
   id: 4459
   time: '2023-08-06T08:19:32.0000000+00:00'
+- author: notafet
+  changes:
+  - {message: 'Add radiators, which transfer heat from a pipe to its surroundings.',
+    type: Add}
+  id: 4460
+  time: '2023-08-06T08:21:05.0000000+00:00'
