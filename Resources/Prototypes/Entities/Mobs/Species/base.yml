@@ -263,7 +263,8 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 5
+        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
+        Blunt: 4
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
