@@ -18,7 +18,7 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: ExplosiveAssemblerMachineCircuitboard
+      board: FactoryExplosiveAssemblerMachineCircuitboard
     - type: MaterialStorage
       whitelist:
         tags

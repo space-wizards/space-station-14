@@ -1,5 +1,5 @@
 - type: entity
-  id: ExplosiveAssemblerMachineCircuitboard
+  id: FactoryExplosiveAssemblerMachineCircuitboard
   parent: BaseMachineCircuitboard
   name: factory explosive assember machine board
   description: It smells like sulfur.
