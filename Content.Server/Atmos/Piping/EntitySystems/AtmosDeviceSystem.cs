@@ -14,6 +14,8 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         private readonly AtmosDeviceUpdateEvent _updateEvent = new();
 
         private float _timer = 0f;
+
+        // Set of atmos devices that are off-grid but have JoinSystem set.
         private readonly HashSet<AtmosDeviceComponent> _joinedDevices = new();
 
         public override void Initialize()
@@ -117,6 +119,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             RejoinAtmosphere(component);
         }
 
+        /// <summary>
+        /// Update atmos devices that are off-grid but have JoinSystem set. For devices updates when
+        /// a device is on a grid, see AtmosphereSystem:UpdateProcessing().
+        /// </summary>
         public override void Update(float frameTime)
         {
             _timer += frameTime;
