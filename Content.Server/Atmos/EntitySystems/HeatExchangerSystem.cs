@@ -64,8 +64,6 @@ public sealed class HeatExchangerSystem : EntitySystem
             var dEactual = Math.Sign(dE) * Math.Min(Math.Abs(dE), Math.Min(envLim, xferLim));
             _atmosphereSystem.AddHeat(xfer, -dEactual);
             _atmosphereSystem.AddHeat(environment, dEactual);
-            if (comp.Debug)
-                Logger.InfoS("exchanger", $"({uid}) convect dN={dN} dT={dT} dE={dEactual} ({xferLim}, {envLim})");
         }
 
         // Radiation
@@ -73,8 +71,6 @@ public sealed class HeatExchangerSystem : EntitySystem
         float a0 = _cfg.GetCVar(CCVars.SuperconductionTileLoss) / MathF.Pow(Atmospherics.T20C, 4);
         float dER = comp.alpha * a0 * MathF.Pow(dTR, 4) * dt;
         _atmosphereSystem.AddHeat(xfer, -dER);
-        if (comp.Debug)
-            Logger.InfoS("exchanger", $"({uid}) radiate dN={dN} dTR={dTR} dER={dER}");
 
         if (dN > 0)
             _atmosphereSystem.Merge(outlet.Air, xfer);
