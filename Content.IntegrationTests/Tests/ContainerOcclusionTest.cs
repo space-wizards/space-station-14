@@ -9,6 +9,7 @@ namespace Content.IntegrationTests.Tests
 {
     public sealed class ContainerOcclusionTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: ContainerOcclusionA
@@ -33,7 +34,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -73,7 +74,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestB()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -113,7 +114,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAb()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 

@@ -145,3 +145,6 @@ ghost-role-information-centcom-official-description = Inspect the station, jot d
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-taxibot-name = TaxiBot
+ghost-role-information-taxibot-description = Drive the station crew to their destination.

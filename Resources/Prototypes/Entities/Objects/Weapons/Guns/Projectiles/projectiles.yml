@@ -339,7 +339,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 20
+        Blunt: 25
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4

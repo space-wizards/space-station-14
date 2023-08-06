@@ -11,7 +11,6 @@
   name: Syndicate Agent
   components:
     - type: Loadout
-      prototype: SyndicateOperativeGearExtremelyBasic
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [names_death_commando]
@@ -46,7 +45,6 @@
       randomizeName: false
     - type: NukeOperative
     - type: Loadout
-      prototype: SyndicateOperativeGearFull
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:
