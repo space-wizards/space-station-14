@@ -27,7 +27,7 @@ public sealed class StationJobsTest
   id: FooStation
   minPlayers: 0
   mapName: FooStation
-  mapPath: /Maps/Tests/empty.yml
+  mapPath: /Maps/Test/empty.yml
   stations:
     Station:
       mapNameTemplate: FooStation
@@ -35,7 +35,7 @@ public sealed class StationJobsTest
       components:
         - type: StationJobs
           overflowJobs:
-          - Assistant
+          - Passenger
           availableJobs:
             TMime: [0, -1]
             TAssistant: [-1, -1]
