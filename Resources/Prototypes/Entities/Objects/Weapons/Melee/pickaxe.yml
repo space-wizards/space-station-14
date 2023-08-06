@@ -18,7 +18,6 @@
         Blunt: 5
         Structural: 15
   - type: Wieldable
-    wieldedInhandPrefix: null
   - type: IncreaseDamageOnWield
     damage:
       types:
