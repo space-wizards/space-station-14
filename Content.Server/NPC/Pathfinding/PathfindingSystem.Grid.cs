@@ -84,7 +84,7 @@ public sealed partial class PathfindingSystem
         component.Chunks.Clear();
     }
 
-    private void UpdateGrid()
+    private void UpdateGrid(ParallelOptions options)
     {
         if (PauseUpdating)
             return;
@@ -94,10 +94,6 @@ public sealed partial class PathfindingSystem
         var updateCount = 0;
 #endif
         _stopwatch.Restart();
-        var options = new ParallelOptions()
-        {
-            MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
-        };
 
         // We defer chunk updates because rebuilding a navmesh is hella costly
         // Still run even when paused.
