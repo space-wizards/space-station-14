@@ -54,7 +54,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         }
 
         // Positive dN flows from inlet to outlet
-        var dt = 1/_atmosphereSystem.AtmosTickRate;
+        var dt = 1*(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
         var dN = comp.G*dP*dt;
 
