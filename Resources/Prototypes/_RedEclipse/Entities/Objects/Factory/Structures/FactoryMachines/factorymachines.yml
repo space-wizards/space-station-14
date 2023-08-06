@@ -23,6 +23,7 @@
     whitelist:
       tags:
         - Sheet
+        - FactoryGeneralParts
   - type: Lathe
     idleState: icon
     runningState: building
@@ -31,7 +32,7 @@
 
 - type: entity
   id: FactoryExplosiveAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: explosive assembler
   description: Official CyberSun-Explosive-Assembler, stand back.
   components:
@@ -51,9 +52,6 @@
   - type: Machine
     board: ExplosiveAssemblerMachineCircuitboard
   - type: MaterialStorage
-    whitelist:
-      tags:
-        - Sheet
   - type: Lathe
     idleState: icon
     runningState: building
@@ -71,7 +69,7 @@
 
 - type: entity
   id: FactoryFirearmAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: firearm assembler
   description: Official CyberSun-Firearm-Assembler, it smells like freedom.
   components:
@@ -111,7 +109,7 @@
 
 - type: entity
   id: FactoryEnergyBladeAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: energy blade assembler
   description: Offical CyberSun-EnergyBlade-Assembler, it is hot to the touch.
   components:
@@ -145,7 +143,7 @@
 
 - type: entity
   id: FactoryGearAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: factory gear assembler
   description: Offical CyberSun-Gear-Assembler, the gears run smoothly.
   components:
@@ -181,7 +179,7 @@
 
 - type: entity
   id: FactoryClownAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: clown assembler
   description: Not official in the slightest, it is held together with glitter glue.
   components:
@@ -219,7 +217,7 @@
 
 - type: entity
   id: FactoryMedicalAssembler
-  parent: BaseLathe
+  parent: BaseFactoryMachine
   name: medical assembler
   description: Offical CyberSun-Medical-Assembler, its spotless.
   components:

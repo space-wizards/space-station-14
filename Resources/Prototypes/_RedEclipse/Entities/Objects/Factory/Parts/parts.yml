@@ -1,0 +1,39 @@
+- type: entity
+  parent: SheetMetalBase
+  id: FactoryBaseParts
+  name: debug factory parts
+  suffix: Full
+  components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
+  - type: Stack
+    stackType: FactoryBaseParts
+    baseLayer: base
+    layerStates:
+    - steel
+    - steel_2
+    - steel_3
+  - type: Sprite
+    state: steel_3
+    layers:
+    - state: plasteel_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: steel
+  - type: Appearance
+
+- type: entity
+  parent: FactoryBaseParts
+  id: FactoryBaseParts1
+  name: debug factory parts
+  suffix: Single
+  components:
+  - type: Item
+    size: 1
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 1
