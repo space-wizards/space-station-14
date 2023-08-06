@@ -21,7 +21,7 @@ public sealed class PlacementLoggerSystem : EntitySystem
 
     private void OnEntityPlacement(PlacementEntityEvent ev)
     {
-        var (actor, actorEntity) = _actorSystem.GetActorFromUserId(ev.PlacerNetUserId);
+        _actorSystem.TryGetActorFromUserId(ev.PlacerNetUserId, out var actor, out var actorEntity);
 
         var logType = ev.PlacementEventAction switch
         {
@@ -43,7 +43,7 @@ public sealed class PlacementLoggerSystem : EntitySystem
 
     private void OnTilePlacement(PlacementTileEvent ev)
     {
-        var (actor, actorEntity) = _actorSystem.GetActorFromUserId(ev.PlacerNetUserId);
+        _actorSystem.TryGetActorFromUserId(ev.PlacerNetUserId, out var actor, out var actorEntity);
 
         if (actorEntity != null)
             _adminLogger.Add(LogType.Tile, LogImpact.High,
