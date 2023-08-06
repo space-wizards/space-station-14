@@ -1,7 +1,7 @@
 - type: entity
   id: BaseFactoryMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: base factory machine board
+  name: factory base machine board
   description: debug item
   components:
     - type: MachineBoard
@@ -15,7 +15,7 @@
 - type: entity
   id: ExplosiveAssemblerMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: explosive assember machine board
+  name: factory explosive assember machine board
   description: It smells like sulfur.
   components:
     - type: MachineBoard
