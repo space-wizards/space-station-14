@@ -192,12 +192,7 @@ public sealed partial class StaminaSystem : EntitySystem
         var damage = component.Damage / toHit.Count;
         foreach (var (ent, comp) in toHit)
         {
-            var oldDamage = comp.StaminaDamage;
             TakeStaminaDamage(ent, damage, comp, source: args.User, with: args.Weapon);
-            if (comp.StaminaDamage.Equals(oldDamage))
-            {
-                _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);
-            }
         }
     }
 
@@ -256,6 +251,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
+
+        if (component.StaminaDamage.Equals(oldDamage))
+        {
+            _popup.PopupEntity(Loc.GetString("stamina-resist"), uid);
+        }
 
         // Reset the decay cooldown upon taking damage.
         if (oldDamage < component.StaminaDamage)
