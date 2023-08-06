@@ -17,9 +17,7 @@ public sealed class PrototypeTests
         Assert.Multiple(() =>
         {
             Validate(pairTracker.Pair.Server, "server", context);
-
-            // TODO fix client serialization
-            //Validate(pairTracker.Pair.Client, "client", context);
+            Validate(pairTracker.Pair.Client, "client", context);
         });
         await pairTracker.CleanReturnAsync();
     }
