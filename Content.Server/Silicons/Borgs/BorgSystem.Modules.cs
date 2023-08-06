@@ -91,6 +91,9 @@ public sealed partial class BorgSystem
         BorgChassisComponent? chassisComp = null,
         SelectableBorgModuleComponent? moduleComp = null)
     {
+        if (Terminating(chassis) || Deleted(chassis))
+            return;
+
         if (!Resolve(chassis, ref chassisComp))
             return;
 
@@ -113,6 +116,9 @@ public sealed partial class BorgSystem
         BorgChassisComponent? chassisComp = null,
         SelectableBorgModuleComponent? moduleComp = null)
     {
+        if (Terminating(chassis) || Deleted(chassis))
+            return;
+
         if (!Resolve(chassis, ref chassisComp))
             return;
 
@@ -142,9 +148,6 @@ public sealed partial class BorgSystem
 
     private void ProvideItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ItemBorgModuleComponent? component = null)
     {
-        if (Terminating(chassis))
-            return;
-
         if (!Resolve(chassis, ref chassisComponent) || !Resolve(uid, ref component))
             return;
 
@@ -192,9 +195,6 @@ public sealed partial class BorgSystem
 
     private void RemoveProvidedItems(EntityUid chassis, EntityUid uid, BorgChassisComponent? chassisComponent = null, ItemBorgModuleComponent? component = null)
     {
-        if (Terminating(chassis))
-            return;
-
         if (!Resolve(chassis, ref chassisComponent) || !Resolve(uid, ref component))
             return;
 

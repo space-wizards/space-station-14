@@ -17,6 +17,9 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class BorgChassisComponent : Component
 {
+    [DataField("hasPlayer")]
+    public bool HasPlayer;
+
     [DataField("activated"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Activated;
 
@@ -60,6 +63,13 @@ public sealed partial class BorgChassisComponent : Component
 
     [DataField("selectedModule")]
     public EntityUid? SelectedModule;
+
+    /// <summary>
+    /// The access this cyborg has when a player is inhabiting it.
+    /// </summary>
+    [DataField("access"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public string AccessGroup = "AllAccess";
 
     #region Visuals
     [DataField("hasMindState")]

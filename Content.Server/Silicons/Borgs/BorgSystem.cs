@@ -266,16 +266,20 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)
     {
+        component.HasPlayer = true;
         Popup.PopupEntity(Loc.GetString("borg-mind-added", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, true);
         _appearance.SetData(uid, BorgVisuals.HasPlayer, true);
+        Dirty(uid, component);
     }
 
     public void BorgDeactivate(EntityUid uid, BorgChassisComponent component)
     {
+        component.HasPlayer = false;
         Popup.PopupEntity(Loc.GetString("borg-mind-removed", ("name", Identity.Name(uid, EntityManager))), uid);
         _powerCell.SetPowerCellDrawEnabled(uid, false);
         _appearance.SetData(uid, BorgVisuals.HasPlayer, false);
+        Dirty(uid, component);
     }
 
     /// <summary>
