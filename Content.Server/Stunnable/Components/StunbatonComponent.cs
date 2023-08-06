@@ -12,10 +12,6 @@ public sealed class StunbatonComponent : Component
     [DataField("energyPerUse")]
     public float EnergyPerUse = 350;
 
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("onThrowStunChance")]
-    public float OnThrowStunChance = 0.20f;
-
     [DataField("stunSound", required: true)]
     public SoundSpecifier StunSound = default!;
 
