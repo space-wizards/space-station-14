@@ -29,7 +29,7 @@ public record struct GetSiliconLawsEvent(EntityUid Entity)
 {
     public EntityUid Entity = Entity;
 
-    public readonly List<string> Laws = new();
+    public readonly List<SiliconLaw> Laws = new();
 
     public bool Handled = false;
 }
@@ -48,10 +48,10 @@ public enum SiliconLawsUiKey : byte
 [Serializable, NetSerializable]
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
-    public List<string> LawPrototypes;
+    public List<SiliconLaw> Laws;
 
-    public SiliconLawBuiState(List<string> lawPrototypes)
+    public SiliconLawBuiState(List<SiliconLaw> laws)
     {
-        LawPrototypes = lawPrototypes;
+        Laws = laws;
     }
 }

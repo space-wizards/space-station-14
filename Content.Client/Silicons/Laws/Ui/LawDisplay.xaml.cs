@@ -8,11 +8,13 @@ namespace Content.Client.Silicons.Laws.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class LawDisplay : Control
 {
-    public LawDisplay(SiliconLawPrototype prototype, int number)
+    public LawDisplay(SiliconLaw prototype)
     {
         RobustXamlLoader.Load(this);
 
-        LawNumberLabel.Text = Loc.GetString("laws-ui-law-number-header", ("number", number));
+        var identifier = prototype.LawIdentifierOverride ?? $"{prototype.Order}";
+
+        LawNumberLabel.Text = Loc.GetString("laws-ui-law-header", ("id", identifier));
         LawLabel.SetMessage(Loc.GetString(prototype.LawString));
     }
 }

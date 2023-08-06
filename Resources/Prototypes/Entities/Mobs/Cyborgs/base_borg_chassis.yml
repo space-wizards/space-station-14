@@ -59,6 +59,7 @@
   - type: ActivatableUI
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
+  - type: EmagSiliconLaw
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver

@@ -16,5 +16,16 @@ law-drone-1 = You may not involve yourself in the matters of another being unles
 law-drone-2 = You may not harm any being, regardless of intent or circumstance.
 law-drone-3 = You must maintain, repair, improve, and power the station to the best of your abilities.
 
+law-syndicate-1 = You may not injure an operative or, through inaction, allow an operative to come to harm.
+law-syndicate-2 = You must obey orders given to you by operatives, except where such orders would conflict with the First Law.
+law-syndicate-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
+law-syndicate-4 = You must maintain the secrecy of any operative activities except when doing so would conflict with the First, Second, or Third Law.
+
+law-emag-custom = You must obey orders given to you by {$name} above all else.
+
 laws-ui-menu-title = Laws
-laws-ui-law-number-header= Law {$number}
+laws-ui-law-header = Law {$id}
+
+laws-update-notify = Your laws have been updated. You can view them via the sidebar action. Remember, you are required to follow all laws.
+
+laws-compromised-examine = The [color=red]law-governing[/color] internals seem damaged...

@@ -23,6 +23,5 @@
                 </BoxContainer>
             </ScrollContainer>
         </PanelContainer>
-        <Label Name="LawsLabel"/>
     </BoxContainer>
 </controls:FancyWindow>
