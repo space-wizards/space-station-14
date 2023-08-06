@@ -6,7 +6,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -77,7 +76,7 @@ public sealed partial class GunSystem
             _ => throw new ArgumentOutOfRangeException(),
         };
 
-        var markup = Damageable.GetDamageExamine(damageSpec, damageType);
+        var markup = _examineDamage.GetDamageExamine(damageSpec, damageType);
         _examine.AddDetailedExamineVerb(args, component, markup,
             Loc.GetString("damage-examinable-verb-text", ("type", damageType)),
             "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",

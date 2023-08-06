@@ -30,8 +30,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Content.Shared.Effects;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -46,6 +46,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly ExamineDamageSystem _examineDamage = default!;
 
     public override void Initialize()
     {
@@ -66,7 +67,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
 
         var type = Loc.GetString("damage-melee");
-        var markup = Damageable.GetDamageExamine(damageSpec, type);
+        var markup = _examineDamage.GetDamageExamine(damageSpec, type);
         _examine.AddDetailedExamineVerb(args, component, markup,
             Loc.GetString("damage-examinable-verb-text", ("type", type)),
             "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",

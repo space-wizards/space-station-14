@@ -5,7 +5,6 @@ using Content.Shared.Projectiles;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
@@ -29,7 +28,7 @@ public sealed partial class GunSystem
             return;
 
         var type = Loc.GetString("damage-projectile");
-        var markup = Damageable.GetDamageExamine(damageSpec, type);
+        var markup = _examineDamage.GetDamageExamine(damageSpec, type);
         _examine.AddDetailedExamineVerb(args, component, markup,
             Loc.GetString("damage-examinable-verb-text", ("type", type)),
             "/Textures/Interface/VerbIcons/smite.svg.192dpi.png",
