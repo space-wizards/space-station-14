@@ -153,10 +153,9 @@ public sealed partial class PathfindingSystem
                 var doorQuery = GetEntityQuery<DoorComponent>();
                 var climbableQuery = GetEntityQuery<ClimbableComponent>();
                 var fixturesQuery = GetEntityQuery<FixturesComponent>();
-                var physicsQuery = GetEntityQuery<PhysicsComponent>();
                 var xformQuery = GetEntityQuery<TransformComponent>();
                 BuildBreadcrumbs(dirt[i], mapGridComp, accessQuery, destructibleQuery, doorQuery, climbableQuery,
-                    fixturesQuery, physicsQuery, xformQuery);
+                    fixturesQuery, xformQuery);
             });
 
             const int Division = 4;
@@ -423,7 +422,6 @@ public sealed partial class PathfindingSystem
         EntityQuery<DoorComponent> doorQuery,
         EntityQuery<ClimbableComponent> climbableQuery,
         EntityQuery<FixturesComponent> fixturesQuery,
-        EntityQuery<PhysicsComponent> physicsQuery,
         EntityQuery<TransformComponent> xformQuery)
     {
         var sw = new Stopwatch();
