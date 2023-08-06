@@ -50,8 +50,8 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaComponent, DisarmedEvent>(OnDisarmed);
         SubscribeLocalEvent<StaminaComponent, RejuvenateEvent>(OnRejuvenate);
 
-        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnCollide);
-        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnHit);
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
+        SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
     private void OnStamUnpaused(EntityUid uid, StaminaComponent component, ref EntityUnpausedEvent args)
@@ -159,7 +159,7 @@ public sealed partial class StaminaSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void OnHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
+    private void OnMeleeHit(EntityUid uid, StaminaDamageOnHitComponent component, MeleeHitEvent args)
     {
         if (!args.IsHit ||
             !args.HitEntities.Any() ||
@@ -210,7 +210,7 @@ public sealed partial class StaminaSystem : EntitySystem
         }
     }
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
+    private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
         TakeStaminaDamage(args.Target, component.Damage, source: uid);
     }
