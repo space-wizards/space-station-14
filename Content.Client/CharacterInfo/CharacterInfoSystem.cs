@@ -1,4 +1,4 @@
-﻿using Content.Shared.CharacterInfo;
+using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -21,13 +21,17 @@ public sealed class CharacterInfoSystem : EntitySystem
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
     }
 
-    public void RequestCharacterInfo()
+    public void RequestCharacterInfo()//EntityUid? entity = null)
     {
-        var entity = _players.LocalPlayer?.ControlledEntity;
-        if (entity == null)
-        {
-            return;
-        }
+        //if (entity == null)
+        //{
+            entity = _players.LocalPlayer?.ControlledEntity;
+
+            if (entity == null)
+            {
+                return;
+            }
+        //}
 
         RaiseNetworkEvent(new RequestCharacterInfoEvent(entity.Value));
     }
