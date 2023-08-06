@@ -93,7 +93,7 @@
       northOverride: 0
       southOverride: 0
     - type: Sprite
-      sprite: Objects/Vehicles/carriage.rsi
+      sprite: Objects/Vehicles/wheelchair.rsi
       layers:
         - state: vehicle
           map: ["enum.VehicleVisualLayers.AutoAnimate"]
