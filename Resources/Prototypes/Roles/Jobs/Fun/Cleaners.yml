@@ -1,0 +1,28 @@
+- type: job
+  id: ERTCleaners
+  name: job-name-ertcleaner
+  description: job-description-ertcleaner
+  playTimeTracker: JobERTCleaner
+  setPreference: false
+  startingGear: ERTCleanerGear
+  icon: "Nanotrasen"
+  supervisors: job-supervisors-centcom
+  canBeAntag: false
+  accessGroups:
+  - AllAccess
+
+- type: startingGear
+  id: ERTCleanerGear
+  equipment:
+    head: ClothingHeadCleanersBioHelmet
+    outerClothing: ClothingOuterBioCleaner
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackNapalmTank
+    shoes: ClothingShoesBootsCombatFilled
+    eyes: ClothingEyesGlassesSunglasses
+    gloves: ClothingHandsGlovesCombat
+    id: ERTLeaderPDA
+    ears: ClothingHeadsetAltCentCom
+    belt: 
+    pocket1: WeaponFlareGun
+    pocket2: MagazineShotgunIncendiary
