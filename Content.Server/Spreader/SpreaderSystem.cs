@@ -331,7 +331,6 @@ public sealed class SpreaderSystem : EntitySystem
         if (!EntityManager.TryGetComponent<TransformComponent>(uid, out var transform))
             return neighbors; // how did we get here?
 
-        // The entity will have been removed by the time it gets here
         if (!_mapManager.TryGetGrid(transform.GridUid, out var grid))
             return neighbors;
 
