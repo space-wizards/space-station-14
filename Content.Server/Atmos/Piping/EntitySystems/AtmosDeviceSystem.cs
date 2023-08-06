@@ -29,40 +29,23 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
-        private bool CanJoinAtmosphere(AtmosDeviceComponent component, TransformComponent transform)
-        {
-            return (!component.RequireAnchored || transform.Anchored) && transform.GridUid != null;
-        }
-
         public void JoinAtmosphere(AtmosDeviceComponent component)
         {
             var transform = Transform(component.Owner);
 
-            if (!CanJoinAtmosphere(component, transform))
-            {
+            if (component.RequireAnchored && !transform.Anchored)
                 return;
-            }
 
-            // TODO: low-hanging fruit for perf improvements around here
+            // Attempt to add device to a grid atmosphere.
+            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component);
 
-            // GridUid is not null because we can join atmosphere.
-            // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
+            if (!onGrid && component.JoinSystem)
             {
-                if (component.JoinSystem)
-                {
-                    _joinedDevices.Add(component);
-                    component.JoinedSystem = true;
-                }
-                else
-                {
-                    return;
-                }
+                _joinedDevices.Add(component);
+                component.JoinedSystem = true;
             }
-
 
             component.LastProcess = _gameTiming.CurTime;
-
             RaiseLocalEvent(component.Owner, new AtmosDeviceEnabledEvent(), false);
         }
 
