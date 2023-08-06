@@ -41,7 +41,6 @@ public sealed class AirAlarmSystem : EntitySystem
     [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
     [Dependency] private readonly DeviceListSystem _deviceList = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     #region Device Network API
@@ -238,9 +237,6 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
     {
-        if (!_interaction.InRangeUnobstructed(args.User, args.Target))
-            return;
-
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
