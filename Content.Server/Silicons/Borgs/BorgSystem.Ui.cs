@@ -31,6 +31,8 @@ public sealed partial class BorgSystem
         if (args.Session.AttachedEntity is not { } attachedEntity || component.BrainEntity is not { } brain)
             return;
 
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(attachedEntity):player} removed brain {ToPrettyString(brain)} from borg {ToPrettyString(uid)}");
         component.BrainContainer.Remove(brain, EntityManager);
         _hands.TryPickupAnyHand(attachedEntity, brain);
         UpdateUI(uid, component);
@@ -68,7 +70,7 @@ public sealed partial class BorgSystem
             name = $"{name} {identifier.FullIdentifier}";
 
         _metaData.SetEntityName(uid, name);
-        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(attachedEntity):player} set borg \"{ToPrettyString(uid)}\"'s name to {name}");
+        _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(attachedEntity):player} set borg \"{ToPrettyString(uid)}\"'s name to: {name}");
     }
 
     private void OnRemoveModuleBuiMessage(EntityUid uid, BorgChassisComponent component, BorgRemoveModuleBuiMessage args)
@@ -79,6 +81,8 @@ public sealed partial class BorgSystem
         if (!component.ModuleContainer.Contains(args.Module))
             return;
 
+        _adminLog.Add(LogType.Action, LogImpact.Medium,
+            $"{ToPrettyString(attachedEntity):player} removed module {ToPrettyString(args.Module)} from borg {ToPrettyString(uid)}");
         component.ModuleContainer.Remove(args.Module);
         _hands.TryPickupAnyHand(attachedEntity, args.Module);
 

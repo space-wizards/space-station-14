@@ -8,6 +8,7 @@ using Content.Server.Players.PlayTimeTracking;
 using Content.Server.PowerCell;
 using Content.Server.UserInterface;
 using Content.Shared.Alert;
+using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Movement.Systems;
@@ -112,6 +113,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
             }
 
             component.BrainContainer.Insert(used);
+            _adminLog.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(args.User):player} installed brain {ToPrettyString(used)} into borg {ToPrettyString(uid)}");
             args.Handled = true;
             UpdateUI(uid, component);
         }
@@ -119,6 +122,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (module != null && CanInsertModule(uid, used, component, module))
         {
             component.ModuleContainer.Insert(used);
+            _adminLog.Add(LogType.Action, LogImpact.Low,
+                $"{ToPrettyString(args.User):player} installed module {ToPrettyString(used)} into borg {ToPrettyString(uid)}");
             args.Handled = true;
             UpdateUI(uid, component);
         }
