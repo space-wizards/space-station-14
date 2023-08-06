@@ -322,14 +322,7 @@ public sealed partial class StaminaSystem : EntitySystem
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(uid):target} took {value} stamina damage");
         }
 
-        if (component.StaminaDamage.Equals(oldDamage))
-        {
-            _popup.PopupEntity(Loc.GetString("stamina-resist"), uid);
-        }
-        else
-        {
-            RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
-        }
+        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { uid }));
     }
 
     public override void Update(float frameTime)
