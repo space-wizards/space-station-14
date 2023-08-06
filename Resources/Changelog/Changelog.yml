@@ -2965,14 +2965,14 @@ Entries:
 - author: JoeHammad
   changes:
   - {message: 'NT RND has cooked up brute and burn auto-injectors, which are now available
-      in combat medkits', type: Add}
+      in combat medkits.', type: Add}
   id: 4452
   time: '2023-08-06T02:38:25.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: 'Re-balanced melee combat. Windup is removed, heavy attacks cost 15
       stamina, stamina damage cooldown reduced from 5s to 3/s, wide attacks provide
-      a 10% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
+      a 25% damage bonus, and wielding no longer grants immunity to disarms.', type: Tweak}
   - {message: Reduce desword values to standard fast weapons (left wide-attack angle
       at 100 degrees instead of the standard 60)., type: Tweak}
   id: 4453
@@ -2985,6 +2985,6 @@ Entries:
   time: '2023-08-06T03:05:44.0000000+00:00'
 - author: Bixkitts
   changes:
-  - {message: Candy bowls for waiting lines, type: Add}
+  - {message: Add candy bowls for waiting lines., type: Add}
   id: 4455
   time: '2023-08-06T03:10:47.0000000+00:00'
