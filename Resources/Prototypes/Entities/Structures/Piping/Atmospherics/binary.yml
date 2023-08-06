@@ -399,6 +399,10 @@
       state: pipeStraight
       map: [ "enum.PipeVisualLayers.Pipe" ]
     - state: heStraight
+      map: [ "enum.SubfloorLayers.FirstLayer" ]
+  - type: SubFloorHide
+    visibleLayers:
+    - enum.SubfloorLayers.FirstLayer
   - type: Appearance
   - type: PipeColorVisuals
   - type: AtmosDevice
