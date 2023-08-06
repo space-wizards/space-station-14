@@ -1,0 +1,322 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "size": {
+    "x": 45,
+    "y": 34
+  },
+  "states": [
+    {
+      "name": "royal_head",
+      "directions": 4
+    },
+    {
+      "name": "royal_body",
+      "directions": 4
+    },
+    {
+      "name": "royal_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "royal_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "royal_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "royal_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "gothic_head",
+      "directions": 4
+    },
+    {
+      "name": "gothic_body",
+      "directions": 4
+    },
+    {
+      "name": "gothic_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "gothic_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "gothic_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "gothic_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_head",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_body",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "whitefly_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "charred_head",
+      "directions": 4
+    },
+    {
+      "name": "charred_body",
+      "directions": 4
+    },
+    {
+      "name": "charred_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "charred_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "charred_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "charred_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_head",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_body",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_head",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_body",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "fan_head",
+      "directions": 4
+    },
+    {
+      "name": "fan_body",
+      "directions": 4
+    },
+    {
+      "name": "fan_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "fan_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "fan_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "fan_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "ragged_head",
+      "directions": 4
+    },
+    {
+      "name": "ragged_body",
+      "directions": 4
+    },
+    {
+      "name": "ragged_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "ragged_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "ragged_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "ragged_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_head",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_body",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "moonfly_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_head",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_body",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "oakworm_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "jungle_head",
+      "directions": 4
+    },
+    {
+      "name": "jungle_body",
+      "directions": 4
+    },
+    {
+      "name": "jungle_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "jungle_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "jungle_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "jungle_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_head",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_body",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "witchwing_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "pointy_head",
+      "directions": 4
+    },
+    {
+      "name": "pointy_body",
+      "directions": 4
+    },
+    {
+      "name": "pointy_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "pointy_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "pointy_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "pointy_l_leg",
+      "directions": 4
+    }
+  ]
+}
