@@ -141,9 +141,6 @@ public sealed class SpreaderSystem : EntitySystem
                 continue;
             }
 
-            // _spreaderGroups is a string list of the different
-            // possible spreader types, as of writing "kudzu", "puddle"
-            // or "smoke"
             foreach (var sGroup in _spreaderGroups)
             {
                 // Get the NodeContainer and Node from every EdgeSpreader entity found
