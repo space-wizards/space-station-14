@@ -53,7 +53,7 @@ public sealed class EnergySwordSystem : EntitySystem
             return;
 
         // Overrides basic blunt damage with burn+slash as set in yaml
-        args.Damage = comp.LitDamageBonus;
+        args.Damage += comp.LitDamageBonus;
     }
 
     private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)
