@@ -427,8 +427,9 @@
     mode: SensorCords
   - type: Tag
     tags:
-    - WhitelistChameleon
+    - ClothMade
     - PrisonUniform
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingUniformBase
