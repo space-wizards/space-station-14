@@ -9,3 +9,4 @@ materials-factory-timing-components = factory timing components
 materials-factory-clown-parts = factory clown parts
 materials-factory-explosive-tiny-bombs = factory explosive tiny bombs
 materials-factory-injectors = factory injectors
+aterials-factory-medical-parts = factory medical parts
