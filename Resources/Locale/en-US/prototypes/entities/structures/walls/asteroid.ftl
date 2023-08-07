@@ -45,68 +45,68 @@ ent-WallRockBasalt = { ent-WallRock }
     .desc = { ent-WallRock.desc }
 
 ent-WallRockBasaltGold = { ent-WallRock }
-    .desc = An ore vein rich with gold.
-    .suffix = Gold
+    .desc = { ent-WallRockGold.desc }
+    .suffix = { ent-WallRockGold.suffix }
 
 ent-WallRockBasaltPlasma = { ent-WallRock }
-    .desc = An ore vein rich with plasma.
-    .suffix = Plasma
+    .desc = { ent-WallRockPlasma.desc }
+    .suffix = { ent-WallRockPlasma.suffix }
 
 ent-WallRockBasaltQuartz = { ent-WallRock }
-    .desc = An ore vein rich with quartz.
-    .suffix = Quartz
+    .desc = { ent-WallRockQuartz.desc }
+    .suffix = { ent-WallRockQuartz.suffix }
 
 ent-WallRockBasaltSilver = { ent-WallRock }
-    .desc = An ore vein rich with silver.
-    .suffix = Silver
+    .desc = { ent-WallRockSilver.desc }
+    .suffix = { ent-WallRockSilver.suffix }
 
 ent-WallRockBasaltTin = { ent-WallRock }
-    .desc = An ore vein rich with steel.
-    .suffix = Steel
+    .desc = { ent-WallRockTin.desc }
+    .suffix = { ent-WallRockTin.suffix }
 
 ent-WallRockBasaltUranium = { ent-WallRock }
-    .desc = An ore vein rich with uranium.
-    .suffix = Uranium
+    .desc = { ent-WallRockUranium.desc }
+    .suffix = { ent-WallRockUranium.suffix }
 
 ent-WallRockBasaltBananium = { ent-WallRock }
-    .desc = An ore vein rich with bananium.
-    .suffix = Bananium
+    .desc = { ent-WallRockBananium.desc }
+    .suffix = { ent-WallRockBananium.suffix }
 
 ent-WallRockBasaltArtifactFragment = { ent-WallRock }
-    .desc = A rock wall. What's that sticking out of it?
-    .suffix = Artifact Fragment
+    .desc = { ent-WallRockArtifactFragment.desc }
+    .suffix = { ent-WallRockArtifactFragment.suffix }
 
 ent-WallRockSnow = { ent-WallRock }
     .desc = { ent-WallRock.desc }
 
 ent-WallRockSnowGold = { ent-WallRock }
-    .desc = An ore vein rich with gold.
-    .suffix = Gold
+    .desc = { ent-WallRockGold.desc }
+    .suffix = { ent-WallRockGold.suffix }
 
 ent-WallRockSnowPlasma = { ent-WallRock }
-    .desc = An ore vein rich with plasma.
-    .suffix = Plasma
+    .desc = { ent-WallRockPlasma.desc }
+    .suffix = { ent-WallRockPlasma.suffix }
 
 ent-WallRockSnowQuartz = { ent-WallRock }
-    .desc = An ore vein rich with quartz.
-    .suffix = Quartz
+    .desc = { ent-WallRockQuartz.desc }
+    .suffix = { ent-WallRockQuartz.suffix }
 
 ent-WallRockSnowSilver = { ent-WallRock }
-    .desc = An ore vein rich with silver.
-    .suffix = Silver
+    .desc = { ent-WallRockSilver.desc }
+    .suffix = { ent-WallRockSilver.suffix }
 
 ent-WallRockSnowTin = { ent-WallRock }
-    .desc = An ore vein rich with steel.
-    .suffix = Steel
+    .desc = { ent-WallRockTin.desc }
+    .suffix = { ent-WallRockTin.suffix }
 
 ent-WallRockSnowUranium = { ent-WallRock }
-    .desc = An ore vein rich with uranium.
-    .suffix = Uranium
+    .desc = { ent-WallRockUranium.desc }
+    .suffix = { ent-WallRockUranium.suffix }
 
 ent-WallRockSnowBananium = { ent-WallRock }
-    .desc = An ore vein rich with bananium.
-    .suffix = Bananium
+    .desc = { ent-WallRockBananium.desc }
+    .suffix = { ent-WallRockBananium.suffix }
 
 ent-WallRockSnowArtifactFragment = { ent-WallRock }
-    .desc = A rock wall. What's that sticking out of it?
-    .suffix = Artifact Fragment
+    .desc = { ent-WallRockArtifactFragment.desc }
+    .suffix = { ent-WallRockArtifactFragment.suffix }
