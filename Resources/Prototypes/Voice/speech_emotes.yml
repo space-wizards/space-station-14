@@ -2,7 +2,7 @@
 - type: emote
   id: Scream
   category: Vocal
-  chatMessages: [screams!]
+  chatMessages: [кричит!] # Corvax-Localization
   chatTriggers:
     - scream
     - screams
@@ -28,11 +28,25 @@
     - yells!
     - yelled
     - yelling
+    # Corvax-Localization-Start
+    - крик
+    - кричит
+    - кричит.
+    - кричит!
+    - ор
+    - орёт
+    - орёт.
+    - орёт!
+    - визг
+    - визжит
+    - визжит.
+    - визжит!
+    # Corvax-Localization-End
 
 - type: emote
   id: Laugh
   category: Vocal
-  chatMessages: [laughs]
+  chatMessages: [смеётся] # Corvax-Localization
   chatTriggers:
     - laugh
     - laughs
@@ -52,11 +66,30 @@
     - giggles!
     - giggling
     - giggled
+    # Corvax-Localization-Start
+    - смех
+    - смеется
+    - смеется.
+    - смеется!
+    - смеётся
+    - смеётся.
+    - смеётся!
+    - хохот
+    - хохочет
+    - хохочет.
+    - хохочет!
+    - хихикает
+    - хихикает.
+    - хихикает!
+    - хихикнул
+    - хихикнула
+    - ржёт
+    # Corvax-Localization-End
 
 - type: emote
   id: Sigh
   category: Vocal
-  chatMessages: [sighs]
+  chatMessages: [вздыхает] # Corvax-Localization
   chatTriggers:
     - sigh
     - sighs
@@ -64,11 +97,21 @@
     - sigh.
     - sighs.
     - sighed.
+    # Corvax-Localization-Start
+    - вздох
+    - вздох.
+    - вздыхает
+    - вздыхает.
+    - вздохнул
+    - вздохнула
+    - вздохнул.
+    - вздохнула.
+    # Corvax-Localization-End
 
 - type: emote
   id: Whistle
   category: Vocal
-  chatMessages: [whistle]
+  chatMessages: [свистит]
   chatTriggers:
     - whistle
     - whistle.
@@ -79,11 +122,19 @@
     - whistleblowing
     - whistleblowing.
     - whistleblowing!
+    # Corvax-Localization-Start
+    - свистит
+    - свистит.
+    - свистит!
+    - свистнул
+    - свистнул.
+    - свистнул!
+    # Corvax-Localization-End
 
 - type: emote
   id: Crying
   category: Vocal
-  chatMessages: [crying]
+  chatMessages: [плачет] # Corvax-Localization
   chatTriggers:
     - cry
     - cry.
@@ -94,11 +145,19 @@
     - cries
     - cries.
     - cries!
+    # Corvax-Localization-Start
+    - плачет
+    - плачет.
+    - плачет!
+    - рыдает
+    - рыдает.
+    - рыдает!
+    # Corvax-Localization-End
 
 - type: emote
   id: Squish
   category: Vocal
-  chatMessages: [squishing]
+  chatMessages: [хлюпает] # Corvax-Localization
   chatTriggers:
     - squish
     - squish.
@@ -109,6 +168,11 @@
     - squishes
     - squishes.
     - squishes!
+    # Corvax-Localization-Start
+    - хлюпает
+    - хлюпает.
+    - хлюпает!
+    # Corvax-Localization-End
 
 - type: emote
   id: Chitter
@@ -129,7 +193,7 @@
 - type: emote
   id: Clap
   category: Hands
-  chatMessages: [claps!]
+  chatMessages: [хлопает!] # Corvax-Localization
   chatTriggers:
     - clap
     - claps
@@ -137,11 +201,26 @@
     - claps!
     - clapping
     - clapped
+    # Corvax-Localization-Start
+    - хлопает
+    - хлопает.
+    - хлопает!
+    - хлопнул
+    - хлопнула
+    - хлопает в ладоши
+    - хлопает в ладоши.
+    - хлопает в ладоши!
+    - хлопнул в ладоши
+    - хлопнула в ладоши
+    - апплодирует
+    - апплодирует.
+    - апплодирует!
+    # Corvax-Localization-End
 
 - type: emote
   id: Snap
   category: Hands
-  chatMessages: [snaps fingers] # snaps <{THEIR($ent)}> fingers?
+  chatMessages: [щёлкает пальцами] # Corvax-Localization
   chatTriggers:
     - snap
     - snaps
@@ -156,11 +235,33 @@
     - snaps their fingers!
     - snapping fingers
     - snapped fingers
+    # Corvax-Localization-Start
+    - щелкает
+    - щелкает.
+    - щелкает!
+    - щелкнул
+    - щелкнула
+    - щёлкает
+    - щёлкает.
+    - щёлкает!
+    - щёлкнул
+    - щёлкнула
+    - щелкает пальцами
+    - щелкает пальцами.
+    - щелкает пальцами!
+    - щелкнул пальцами
+    - щелкнула пальцами
+    - щёлкает пальцами
+    - щёлкает пальцами.
+    - щёлкает пальцами!
+    - щёлкнул пальцами
+    - щёлкнула пальцами
+    # Corvax-Localization-End
 
 - type: emote
   id: Salute
   category: Hands
-  chatMessages: [Salute]
+  chatMessages: [салютует] # Corvax-Localization
   chatTriggers:
     - salute
     - salute.
@@ -168,4 +269,17 @@
     - salutes
     - salutes.
     - salutes!
-
+    # Corvax-Localization-Start
+    - салютует
+    - салютует.
+    - салютует!
+    - отдаёт честь
+    - отдаёт честь.
+    - отдаёт честь!
+    - отдал честь
+    - отдал честь.
+    - отдал честь!
+    - отдала честь
+    - отдала честь.
+    - отдала честь!
+    # Corvax-Localization-End
