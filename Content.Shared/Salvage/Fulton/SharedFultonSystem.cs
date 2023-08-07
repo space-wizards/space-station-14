@@ -17,7 +17,7 @@ public abstract class SharedFultonSystem : EntitySystem
      * do_after
      * Audio on being applied
      * Implement beacon
-     * Beacon needs anchoring or something
+     * Beacon needs anchoring or something and cuding (probably fulton within an offset of up to 1 tile).
      * Verb to remove fulton
      * Examine indicates how long until fulton.
      */
