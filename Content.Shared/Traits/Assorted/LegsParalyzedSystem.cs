@@ -4,7 +4,7 @@ using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
 
-namespace Content.Server.Traits.Assorted;
+namespace Content.Shared.Traits.Assorted;
 
 public sealed class LegsParalyzedSystem : EntitySystem
 {
