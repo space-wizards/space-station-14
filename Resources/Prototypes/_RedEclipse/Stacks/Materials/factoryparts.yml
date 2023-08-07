@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryImplanter
-  name: implanter
-  description: advanced implantation devices
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryImplanterParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryImplanter: 1
-
-- type: entity
-  parent: MaterialFactoryImplanter
-  id: FactoryImplanterParts1
-  name: implanter
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryImplanterParts
-    count: 1
-
-- type: stack
-  id: FactoryImplanterParts
-  name: implanter
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryImplanterParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryMedicalParts
   name: medical parts
   description: essential medical components
