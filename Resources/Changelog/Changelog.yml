@@ -1,10 +1,4 @@
 Entries:
-- author: Ahion
-  changes:
-  - {message: Fixed O2 tanks in oxygen deprivation treatment kit spawning empty.,
-    type: Fix}
-  id: 3975
-  time: '2023-06-08T15:10:27.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Tweaked toolbelt starting items to remove multitools from non-engineering
@@ -2987,3 +2981,8 @@ Entries:
       for protolathes and autolathes, type: Add}
   id: 4474
   time: '2023-08-07T14:21:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix crusher., type: Fix}
+  id: 4475
+  time: '2023-08-07T17:05:18.0000000+00:00'
