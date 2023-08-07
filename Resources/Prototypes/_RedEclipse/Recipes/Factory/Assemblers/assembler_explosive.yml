@@ -6,7 +6,7 @@
   materials:
     FactorySimpleCircuits : 2
     MaterialFactoryTimer : 1
-    MaterialFactoryCasing : 1
+    FactoryBasicCasings : 1
 
 - type: latheRecipe
   id: FactoryExplosiveGrenade
@@ -15,7 +15,7 @@
   materials:
     FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
-    MaterialFactoryCasing: 1
+    FactoryBasicCasings: 1
     MaterialFactoryPayload: 1
 
 - type: latheRecipe
@@ -23,7 +23,7 @@
   result: PenExploding
   completetime: 1
   materials:
-    MaterialFactoryCasing: 1
+    FactoryBasicCasings: 1
     MaterialFactoryPayload: 1
 
 - type: latheRecipe
@@ -43,7 +43,7 @@
   materials:
     FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
-    MaterialFactoryCasing: 1
+    FactoryBasicCasings: 1
     MaterialFactoryPayload: 1
 
 - type: latheRecipe
