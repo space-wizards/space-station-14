@@ -1,21 +1,22 @@
-﻿using Content.Client.DamageState;
+﻿using System.Linq;
+using Content.Client.DamageState;
 using Content.Shared.Blob;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 
 namespace Content.Client.Blob;
 
-public sealed class BlobTileSystem : EntitySystem
+public sealed class BlobbernautSystem : EntitySystem
 {
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<BlobTileComponent, ComponentHandleState>(OnBlobTileHandleState);
+        SubscribeLocalEvent<BlobbernautComponent, ComponentHandleState>(OnBlobTileHandleState);
     }
 
-    private void OnBlobTileHandleState(EntityUid uid, BlobTileComponent component, ref ComponentHandleState args)
+    private void OnBlobTileHandleState(EntityUid uid, BlobbernautComponent component, ref ComponentHandleState args)
     {
-        if (args.Current is not BlobTileComponentState state)
+        if (args.Current is not BlobbernautComponentState state)
             return;
 
         if (component.Color == state.Color)
@@ -27,7 +28,7 @@ public sealed class BlobTileSystem : EntitySystem
         if (sprite == null)
             return;
 
-        foreach (var key in new []{ DamageStateVisualLayers.Base, DamageStateVisualLayers.BaseUnshaded })
+        foreach (var key in new []{ DamageStateVisualLayers.Base })
         {
             if (!sprite.LayerMapTryGet(key, out _))
                 continue;

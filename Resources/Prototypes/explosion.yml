@@ -101,3 +101,14 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 6
+
+- type: explosion
+  id: Blob
+  damagePerIntensity:
+    groups:
+      Brute: 10
+  tileBreakChance: [0]
+  tileBreakIntensity: [0]
+  lightColor: Red
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3

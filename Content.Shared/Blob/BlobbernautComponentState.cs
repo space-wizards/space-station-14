@@ -3,7 +3,7 @@
 namespace Content.Shared.Blob;
 
 [Serializable, NetSerializable]
-public sealed class BlobTileComponentState : ComponentState
+public sealed class BlobbernautComponentState : ComponentState
 {
     public Color Color;
 }

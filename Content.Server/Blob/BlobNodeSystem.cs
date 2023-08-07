@@ -2,6 +2,7 @@ using System.Linq;
 using System.Numerics;
 using Robust.Shared.Map;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Blob;
 
@@ -10,7 +11,7 @@ public sealed class BlobNodeSystem : EntitySystem
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -18,7 +19,6 @@ public sealed class BlobNodeSystem : EntitySystem
 
         SubscribeLocalEvent<BlobNodeComponent, ComponentStartup>(OnStartup);
     }
-
 
     private void OnStartup(EntityUid uid, BlobNodeComponent component, ComponentStartup args)
     {
@@ -79,16 +79,15 @@ public sealed class BlobNodeSystem : EntitySystem
         var blobFactoryQuery = EntityQueryEnumerator<BlobNodeComponent>();
         while (blobFactoryQuery.MoveNext(out var ent, out var comp))
         {
-            comp.Accumulator += frameTime;
-
-            if (comp.Accumulator <= comp.PulseFrequency)
-                continue;
-            comp.Accumulator = 0;
+            if (_gameTiming.CurTime < comp.NextPulse)
+                return;
 
             if (TryComp<BlobTileComponent>(ent, out var blobTileComponent) && blobTileComponent.Core != null)
             {
                 Pulse(ent, comp);
             }
+
+            comp.NextPulse = _gameTiming.CurTime + TimeSpan.FromSeconds(comp.PulseFrequency);
         }
     }
 }

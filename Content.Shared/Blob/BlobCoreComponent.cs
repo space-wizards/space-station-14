@@ -3,9 +3,10 @@ using Content.Shared.FixedPoint;
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Blob;
+namespace Content.Shared.Blob;
 
 [RegisterComponent]
 public sealed class BlobCoreComponent : Component
@@ -25,25 +26,81 @@ public sealed class BlobCoreComponent : Component
     [DataField("attackSound")]
     public SoundSpecifier AttackSound = new SoundPathSpecifier("/Audio/Animals/Blob/blobattack.ogg");
 
-    [ViewVariables(VVAccess.ReadOnly), DataField("damage")]
-    public DamageSpecifier Damage = new()
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Dictionary<BlobChemType, DamageSpecifier> ChemDamageDict { get; set; } = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
         {
-            { "Piercing", 10 },
-            { "Poison", 5 },
-            { "Structural", 150 },
-        }
+            BlobChemType.BlazingOil, new DamageSpecifier()
+            {
+                DamageDict = new Dictionary<string, FixedPoint2>
+                {
+                    { "Heat", 15 },
+                    { "Structural", 150 },
+                }
+            }
+        },
+        {
+            BlobChemType.ReactiveSpines, new DamageSpecifier()
+            {
+                DamageDict = new Dictionary<string, FixedPoint2>
+                {
+                    { "Blunt", 8 },
+                    { "Slash", 8 },
+                    { "Piercing", 8 },
+                    { "Structural", 150 },
+                }
+            }
+        },
+        {
+            BlobChemType.ExplosiveLattice, new DamageSpecifier()
+            {
+                DamageDict = new Dictionary<string, FixedPoint2>
+                {
+                    { "Heat", 5 },
+                    { "Structural", 150 },
+                }
+            }
+        },
+        {
+            BlobChemType.ElectromagneticWeb, new DamageSpecifier()
+            {
+                DamageDict = new Dictionary<string, FixedPoint2>
+                {
+                    { "Structural", 150 },
+                    { "Heat", 20 },
+                },
+            }
+        },
+        {
+            BlobChemType.RegenerativeMateria, new DamageSpecifier()
+            {
+                DamageDict = new Dictionary<string, FixedPoint2>
+                {
+                    { "Structural", 150 },
+                    { "Poison", 15 },
+                }
+            }
+        },
     };
 
-    [ViewVariables(VVAccess.ReadOnly), DataField("damageOnRemove")]
-    public DamageSpecifier DamageOnRemove = new()
+    [ViewVariables(VVAccess.ReadOnly)]
+    public readonly Dictionary<BlobChemType, Color> ChemСolors = new()
     {
-        DamageDict = new Dictionary<string, FixedPoint2>
-        {
-            { "Heat", 500 },
-        }
+        {BlobChemType.ReactiveSpines, Color.FromHex("#637b19")},
+        {BlobChemType.BlazingOil, Color.FromHex("#937000")},
+        {BlobChemType.RegenerativeMateria, Color.FromHex("#441e59")},
+        {BlobChemType.ExplosiveLattice, Color.FromHex("#6e1900")},
+        {BlobChemType.ElectromagneticWeb, Color.FromHex("#0d7777")},
     };
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("blobExplosive")]
+    public string BlobExplosive = "Blob";
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("defaultChem")]
+    public BlobChemType DefaultChem = BlobChemType.ReactiveSpines;
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("currentChem")]
+    public BlobChemType CurrentChem = BlobChemType.ReactiveSpines;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("factoryRadiusLimit")]
     public float FactoryRadiusLimit = 6f;
@@ -128,4 +185,14 @@ public sealed class BlobCoreComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     public FixedPoint2 Points = 0;
+}
+
+[Serializable, NetSerializable]
+public enum BlobChemType : byte
+{
+    BlazingOil,
+    ReactiveSpines,
+    RegenerativeMateria,
+    ExplosiveLattice,
+    ElectromagneticWeb
 }

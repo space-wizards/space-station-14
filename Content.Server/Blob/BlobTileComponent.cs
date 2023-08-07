@@ -16,9 +16,6 @@ public sealed class BlobTileComponent : SharedBlobTileComponent
     [ViewVariables(VVAccess.ReadOnly), DataField("tileType")]
     public BlobTileType BlobTileType = BlobTileType.Normal;
 
-    [ViewVariables(VVAccess.ReadOnly), DataField("blobBorder")]
-    public string BlobBorder = "BlobBorder";
-
     [ViewVariables(VVAccess.ReadOnly), DataField("healthOfPulse")]
     public DamageSpecifier HealthOfPulse = new()
     {
@@ -30,6 +27,15 @@ public sealed class BlobTileComponent : SharedBlobTileComponent
             { "Heat", -4 },
             { "Cold", -4 },
             { "Shock", -4 },
+        }
+    };
+
+    [ViewVariables(VVAccess.ReadOnly), DataField("flashDamage")]
+    public DamageSpecifier FlashDamage = new()
+    {
+        DamageDict = new Dictionary<string, FixedPoint2>
+        {
+            { "Heat", 100 },
         }
     };
 }

@@ -11,6 +11,9 @@ public sealed class ZombieBlobComponent : Component
 
     public float? OldColdDamageThreshold = null;
 
+    [ViewVariables]
+    public Dictionary<string, int> DisabledFixtureMasks { get; } = new();
+
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
 }

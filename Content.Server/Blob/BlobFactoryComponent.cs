@@ -21,6 +21,9 @@ public sealed class BlobFactoryComponent : Component
     [ViewVariables(VVAccess.ReadOnly)]
     public EntityUid? Blobbernaut = default!;
 
+    [ViewVariables(VVAccess.ReadOnly)]
+    public List<EntityUid> BlobPods = new ();
+
     public TimeSpan NextSpawn = TimeSpan.Zero;
 }
 

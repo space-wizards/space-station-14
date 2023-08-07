@@ -2,8 +2,12 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.Construction.Components;
 using Content.Server.Destructible;
+using Content.Server.Emp;
+using Content.Server.Flash;
+using Content.Server.Flash.Components;
 using Content.Shared.Blob;
 using Content.Shared.Damage;
+using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
@@ -21,17 +25,43 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
     [Dependency] private readonly BlobCoreSystem _blobCoreSystem = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly EmpSystem _empSystem = default!;
+
 
     public override void Initialize()
     {
         base.Initialize();
 
         // SubscribeLocalEvent<BlobTileComponent, ComponentStartup>(OnStartup);
-        // SubscribeLocalEvent<BlobTileComponent, DestructionEventArgs>(OnDestruction);
+        SubscribeLocalEvent<BlobTileComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<BlobTileComponent, BlobTileGetPulseEvent>(OnPulsed);
         SubscribeLocalEvent<BlobTileComponent, GetVerbsEvent<AlternativeVerb>>(AddUpgradeVerb);
         SubscribeLocalEvent<BlobTileComponent, GetVerbsEvent<Verb>>(AddRemoveVerb);
         SubscribeLocalEvent<BlobTileComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<BlobTileComponent, FlashAttemptEvent>(OnFlashAttempt);
+    }
+
+    private void OnFlashAttempt(EntityUid uid, BlobTileComponent component, FlashAttemptEvent args)
+    {
+        if (args.Used == null || MetaData(args.Used.Value).EntityPrototype?.ID != "GrenadeFlashBang")
+            return;
+        if (component.BlobTileType == BlobTileType.Normal)
+        {
+            _damageableSystem.TryChangeDamage(uid, component.FlashDamage);
+        }
+    }
+
+    private void OnDestruction(EntityUid uid, BlobTileComponent component, DestructionEventArgs args)
+    {
+        if (component.Core == null || !TryComp<BlobCoreComponent>(component.Core.Value, out var blobCoreComponent))
+            return;
+
+        var xform = Transform(uid);
+
+        if (blobCoreComponent.CurrentChem == BlobChemType.ElectromagneticWeb)
+        {
+            _empSystem.EmpPulse(xform.MapPosition, 3f, 50f, 3f);
+        }
     }
 
     private void AddRemoveVerb(EntityUid uid, BlobTileComponent component, GetVerbsEvent<Verb> args)
@@ -114,7 +144,7 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
                 _popup.PopupCoordinates(Loc.GetString("blob-get-resource", ("point", returnCost)),
                     xform.Coordinates,
                     blobCoreComponent.Observer.Value,
-                    PopupType.Large);
+                    PopupType.LargeGreen);
             }
             _blobCoreSystem.ChangeBlobPoint(coreUid, returnCost, core);
         }
@@ -124,82 +154,95 @@ public sealed class BlobTileSystem : SharedBlobTileSystem
     {
         args.State = new BlobTileComponentState()
         {
-            State = component.State
+            Color = component.Color
         };
     }
 
     private void OnPulsed(EntityUid uid, BlobTileComponent component, BlobTileGetPulseEvent args)
     {
-        _damageableSystem.TryChangeDamage(uid, component.HealthOfPulse);
 
-    if (!args.Explain)
-        return;
+        if (!TryComp<BlobTileComponent>(uid, out var blobTileComponent) || blobTileComponent.Core == null ||
+            !TryComp<BlobCoreComponent>(blobTileComponent.Core.Value, out var blobCoreComponent))
+            return;
 
-    if (!TryComp<BlobTileComponent>(uid, out var blobTileComponent) || blobTileComponent.Core == null ||
-        !TryComp<BlobCoreComponent>(blobTileComponent.Core.Value, out var blobCoreComponent))
-        return;
-
-    var xform = Transform(uid);
-
-    if (!_map.TryGetGrid(xform.GridUid, out var grid))
-    {
-        return;
-    }
-
-    var mobTile = grid.GetTileRef(xform.Coordinates);
-
-    var mobAdjacentTiles = new[]
-    {
-        mobTile.GridIndices.Offset(Direction.East),
-        mobTile.GridIndices.Offset(Direction.West),
-        mobTile.GridIndices.Offset(Direction.North),
-        mobTile.GridIndices.Offset(Direction.South)
-    };
-
-    var localPos = xform.Coordinates.Position;
-
-    var radius = 1.0f;
-
-    var innerTiles = grid.GetLocalTilesIntersecting(
-        new Box2(localPos + new Vector2(-radius, -radius), localPos + new Vector2(radius, radius))).ToArray();
-
-    foreach (var innerTile in innerTiles)
-    {
-        if (!mobAdjacentTiles.Contains(innerTile.GridIndices))
+        if (blobCoreComponent.CurrentChem == BlobChemType.RegenerativeMateria)
         {
-            continue;
+            var healCore = new DamageSpecifier();
+            foreach (var keyValuePair in component.HealthOfPulse.DamageDict)
+            {
+                healCore.DamageDict.Add(keyValuePair.Key, keyValuePair.Value * 10);
+            }
+            _damageableSystem.TryChangeDamage(uid, healCore);
+        }
+        else
+        {
+            _damageableSystem.TryChangeDamage(uid, component.HealthOfPulse);
         }
 
-        foreach (var ent in grid.GetAnchoredEntities(innerTile.GridIndices))
+        if (!args.Explain)
+            return;
+
+        var xform = Transform(uid);
+
+        if (!_map.TryGetGrid(xform.GridUid, out var grid))
         {
-            if (!HasComp<DestructibleComponent>(ent) || !HasComp<ConstructionComponent>(ent))
-                continue;
-            _damageableSystem.TryChangeDamage(ent, blobCoreComponent.Damage);
-            _audioSystem.PlayPvs(blobCoreComponent.AttackSound, uid, AudioParams.Default);
-            args.Explain = true;
             return;
         }
-        var spawn = true;
-        foreach (var ent in grid.GetAnchoredEntities(innerTile.GridIndices))
+
+        var mobTile = grid.GetTileRef(xform.Coordinates);
+
+        var mobAdjacentTiles = new[]
         {
-            if (!HasComp<BlobTileComponent>(ent))
+            mobTile.GridIndices.Offset(Direction.East),
+            mobTile.GridIndices.Offset(Direction.West),
+            mobTile.GridIndices.Offset(Direction.North),
+            mobTile.GridIndices.Offset(Direction.South)
+        };
+
+        var localPos = xform.Coordinates.Position;
+
+        var radius = 1.0f;
+
+        var innerTiles = grid.GetLocalTilesIntersecting(
+            new Box2(localPos + new Vector2(-radius, -radius), localPos + new Vector2(radius, radius))).ToArray();
+
+        foreach (var innerTile in innerTiles)
+        {
+            if (!mobAdjacentTiles.Contains(innerTile.GridIndices))
+            {
                 continue;
-            spawn = false;
-            break;
-        }
+            }
 
-        if (!spawn)
-            continue;
+            foreach (var ent in grid.GetAnchoredEntities(innerTile.GridIndices))
+            {
+                if (!HasComp<DestructibleComponent>(ent) || !HasComp<ConstructionComponent>(ent))
+                    continue;
+                _damageableSystem.TryChangeDamage(ent, blobCoreComponent.ChemDamageDict[blobCoreComponent.CurrentChem]);
+                _audioSystem.PlayPvs(blobCoreComponent.AttackSound, uid, AudioParams.Default);
+                args.Explain = true;
+                return;
+            }
+            var spawn = true;
+            foreach (var ent in grid.GetAnchoredEntities(innerTile.GridIndices))
+            {
+                if (!HasComp<BlobTileComponent>(ent))
+                    continue;
+                spawn = false;
+                break;
+            }
 
-        var location = innerTile.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map);
+            if (!spawn)
+                continue;
 
-        if (_blobCoreSystem.TransformBlobTile(null,
-                blobTileComponent.Core.Value,
-                blobCoreComponent.NormalBlobTile,
-                location,
-                blobCoreComponent,
-                false))
-            return;
+            var location = innerTile.GridIndices.ToEntityCoordinates(xform.GridUid.Value, _map);
+
+            if (_blobCoreSystem.TransformBlobTile(null,
+                    blobTileComponent.Core.Value,
+                    blobCoreComponent.NormalBlobTile,
+                    location,
+                    blobCoreComponent,
+                    false))
+                return;
         }
     }
 

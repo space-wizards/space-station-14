@@ -137,7 +137,7 @@
     Piercing: 1.15
     Slash: 0.85
     Heat: 1.25
-    Poison: 0.8 
+    Poison: 0.8
 
 - type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
@@ -208,16 +208,30 @@
     Caustic: 0.0
 
 - type: damageModifierSet
-  id: Blob # Base blob
+  id: BaseBlob # ReactiveSpines
   coefficients:
     Blunt: 0.25
     Slash: 0.25
     Piercing: 0.25
     Heat: 2.00
-  flatReductions:
-    Blunt: 5
-    Slash: 5
-    Piercing: 5
+
+- type: damageModifierSet
+  id: ElectromagneticWebBlob # Explosive Lattice
+  coefficients:
+    Blunt: 0.50
+    Slash: 0.50
+    Piercing: 0.50
+    Heat: 2.50
+    Shock: 0.50
+
+- type: damageModifierSet
+  id: ExplosiveLatticeBlob # Explosive Lattice
+  coefficients:
+    Blunt: 0.25
+    Slash: 0.25
+    Piercing: 0.25
+    Heat: 3.00
+    Shock: 1.50
 
 - type: damageModifierSet
   id: BlobMob # Blob mobs
