@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Content.Server.Atmos;
+﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
@@ -7,6 +6,8 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.Power.Generation.Teg;
+using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generation.Teg;
@@ -16,26 +17,54 @@ namespace Content.Server.Power.Generation.Teg;
 /// </summary>
 /// <remarks>
 /// <para>
-/// The TEG generates power by exchanging heat between gases flowing through its sides.
+/// The TEG generates power by exchanging heat between gases flowing through its two sides.
+/// The gas flows through a "circulator" entity on each side, which have both an inlet and an outlet port.
+/// </para>
+/// <remarks>
+/// Connecting the TEG core to its circulators is implemented via a node group. See <see cref="TegNodeGroup"/>.
+/// </remarks>
+/// <para>
+/// The TEG center does HV power output, and must also be connected to an LV wire for the TEG to function.
 /// </para>
 /// <para>
 /// Unlike in SS13, the TEG actually adjusts gas heat exchange to match the energy demand of the power network.
-/// To achieve this, the TEG implements its own ramping logic instead of using the built-in
+/// To achieve this, the TEG implements its own ramping logic instead of using the built-in Pow3r ramping.
+/// The TEG actually has a maximum output of +n% more than was really generated,
+/// which allows Pow3r to draw more power to "signal" that there is more network load.
+/// The ramping is also exponential instead of linear like in normal Pow3r.
+/// This system does mean a fully-loaded TEG creates +n% power out of thin air, but this is considered acceptable.
 /// </para>
 /// </remarks>
 /// <seealso cref="TegGeneratorComponent"/>
 /// <seealso cref="TegCirculatorComponent"/>
+/// <seealso cref="TegNodeGroup"/>
+/// <seealso cref="TegSensorData"/>
 public sealed class TegSystem : EntitySystem
 {
+    /// <summary>
+    /// Node name for the TEG part connection nodes (<see cref="TegNodeGroup"/>).
+    /// </summary>
     private const string NodeNameTeg = "teg";
+
+    /// <summary>
+    /// Node name for the inlet pipe of a circulator.
+    /// </summary>
     private const string NodeNameInlet = "inlet";
+
+    /// <summary>
+    /// Node name for the outlet pipe of a circulator.
+    /// </summary>
     private const string NodeNameOutlet = "outlet";
 
+    /// <summary>
+    /// Device network command to have the TEG output a <see cref="TegSensorData"/> object for its last statistics.
+    /// </summary>
     public const string DeviceNetworkCommandSyncData = "teg_sync_data";
 
-    [Dependency] private readonly MapSystem _map = default!;
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
 
     private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
 
@@ -44,6 +73,7 @@ public sealed class TegSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<TegGeneratorComponent, AtmosDeviceUpdateEvent>(GeneratorUpdate);
+        SubscribeLocalEvent<TegGeneratorComponent, PowerChangedEvent>(GeneratorPowerChange);
         SubscribeLocalEvent<TegGeneratorComponent, DeviceNetworkPacketEvent>(DeviceNetworkPacketReceived);
 
         _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
@@ -51,19 +81,26 @@ public sealed class TegSystem : EntitySystem
 
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
     {
-        var circulators = GetBothCirculators(uid);
-        if (!circulators.HasValue)
+        var tegGroup = GetNodeGroup(uid);
+        if (tegGroup is not { IsFullyBuilt: true })
             return;
 
         var supplier = Comp<PowerSupplierComponent>(uid);
+        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
+        if (!powerReceiver.Powered)
+        {
+            supplier.MaxSupply = 0;
+            return;
+        }
 
-        var (circA, circB) = circulators.Value;
+        var circA = tegGroup.CirculatorA!.Owner;
+        var circB = tegGroup.CirculatorB!.Owner;
 
         var (inletA, outletA) = GetPipes(circA);
         var (inletB, outletB) = GetPipes(circB);
 
-        var airA = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
-        var airB = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
+        var (airA, δpA) = GetCirculatorAirTransfer(inletA.Air, outletA.Air);
+        var (airB, δpB) = GetCirculatorAirTransfer(inletB.Air, outletB.Air);
 
         var cA = _atmosphere.GetHeatCapacity(airA);
         var cB = _atmosphere.GetHeatCapacity(airB);
@@ -86,9 +123,9 @@ public sealed class TegSystem : EntitySystem
             var transferMax = targetEnergy / (component.ThermalEfficiency * component.PowerFactor);
 
             // Calculate thermal and electrical energy transfer between the two sides.
-            var deltaT = MathF.Abs(airA.Temperature - airB.Temperature);
+            var δT = MathF.Abs(airA.Temperature - airB.Temperature);
             // TODO: account for electrical energy when equalizing.
-            var transfer = Math.Min(deltaT * cA * cB / (cA + cB), transferMax);
+            var transfer = Math.Min(δT * cA * cB / (cA + cB), transferMax);
             electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
             var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
@@ -114,29 +151,134 @@ public sealed class TegSystem : EntitySystem
         // Add ramp factor. This magics slight power into existence, but allows us to ramp up.
         supplier.MaxSupply = power * component.RampFactor;
 
+        var circAComp = Comp<TegCirculatorComponent>(circA);
+        var circBComp = Comp<TegCirculatorComponent>(circB);
+
+        circAComp.LastPressureDelta = δpA;
+        circAComp.LastMolesTransferred = airA.TotalMoles;
+        circBComp.LastPressureDelta = δpB;
+        circBComp.LastMolesTransferred = airB.TotalMoles;
+
         _atmosphere.Merge(outletA.Air, airA);
         _atmosphere.Merge(outletB.Air, airB);
+
+        UpdateAppearance(uid, component, powerReceiver, tegGroup);
     }
 
-    private (EntityUid a, EntityUid b)? GetBothCirculators(EntityUid uidGenerator)
+    private void UpdateAppearance(
+        EntityUid uid,
+        TegGeneratorComponent component,
+        ApcPowerReceiverComponent powerReceiver,
+        TegNodeGroup nodeGroup)
+    {
+        int powerLevel;
+        if (powerReceiver.Powered)
+        {
+            powerLevel = ContentHelpers.RoundToLevels(
+                component.RampPosition - component.RampMinimum,
+                component.MaxVisualPower - component.RampMinimum,
+                12);
+        }
+        else
+        {
+            powerLevel = 0;
+        }
+
+        _appearance.SetData(uid, TegVisuals.PowerOutput, powerLevel);
+
+        if (nodeGroup.IsFullyBuilt)
+        {
+            UpdateCirculatorAppearance(nodeGroup.CirculatorA!.Owner, powerReceiver.Powered);
+            UpdateCirculatorAppearance(nodeGroup.CirculatorB!.Owner, powerReceiver.Powered);
+        }
+    }
+
+    [Access(typeof(TegNodeGroup))]
+    public void UpdateGeneratorConnectivity(
+        EntityUid uid,
+        TegNodeGroup group,
+        TegGeneratorComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        var powerReceiver = Comp<ApcPowerReceiverComponent>(uid);
+
+        powerReceiver.PowerDisabled = !group.IsFullyBuilt;
+
+        UpdateAppearance(uid, component, powerReceiver, group);
+    }
+
+    [Access(typeof(TegNodeGroup))]
+    public void UpdateCirculatorConnectivity(
+        EntityUid uid,
+        TegNodeGroup group,
+        TegCirculatorComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        // If the group IS fully built, the generator will update its circulators.
+        // Otherwise, make sure circulator is set to nothing.
+        if (!group.IsFullyBuilt)
+        {
+            UpdateCirculatorAppearance(uid, false);
+        }
+    }
+
+    private void UpdateCirculatorAppearance(EntityUid uid, bool powered)
+    {
+        var circ = Comp<TegCirculatorComponent>(uid);
+
+        TegCirculatorSpeed speed;
+        if (powered && circ.LastPressureDelta > 0 && circ.LastMolesTransferred > 0)
+        {
+            if (circ.LastPressureDelta > circ.VisualSpeedDelta)
+                speed = TegCirculatorSpeed.SpeedFast;
+            else
+                speed = TegCirculatorSpeed.SpeedSlow;
+        }
+        else
+        {
+            speed = TegCirculatorSpeed.SpeedStill;
+        }
+
+        _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
+        _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
+
+        if (TryComp(uid, out PointLightComponent? pointLight))
+        {
+            _pointLight.SetEnabled(uid, powered, pointLight);
+            pointLight.Color = speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow;
+        }
+    }
+
+    private void GeneratorPowerChange(EntityUid uid, TegGeneratorComponent component, ref PowerChangedEvent args)
+    {
+        var nodeGroup = GetNodeGroup(uid);
+        if (nodeGroup == null)
+            return;
+
+        UpdateAppearance(uid, component, Comp<ApcPowerReceiverComponent>(uid), nodeGroup);
+    }
+
+    /// <returns>Null if the node group is not yet available. This can happen during initialization.</returns>
+    private TegNodeGroup? GetNodeGroup(EntityUid uidGenerator)
     {
         NodeContainerComponent? nodeContainer = null;
         if (!_nodeContainerQuery.Resolve(uidGenerator, ref nodeContainer))
             return null;
 
-        if (!nodeContainer.Nodes.TryGetValue(NodeNameTeg, out var tegNode) || tegNode.NodeGroup == null)
+        if (!nodeContainer.Nodes.TryGetValue(NodeNameTeg, out var tegNode))
             return null;
 
-        // TODO: Consistently handle circulator locations.
-        // Also no LINQ.
-        var circulators = tegNode.NodeGroup.Nodes.OfType<TegNodeCirculator>().ToArray();
-        if (circulators.Length != 2)
+        if (tegNode.NodeGroup is not TegNodeGroup tegGroup)
             return null;
 
-        return (circulators[0].Owner, circulators[1].Owner);
+        return tegGroup;
     }
 
-    private static GasMixture GetCirculatorAirTransfer(GasMixture airInlet, GasMixture airOutlet)
+    private static (GasMixture, float δp) GetCirculatorAirTransfer(GasMixture airInlet, GasMixture airOutlet)
     {
         var n1 = airInlet.TotalMoles;
         var n2 = airOutlet.TotalMoles;
@@ -154,10 +296,10 @@ public sealed class TegSystem : EntitySystem
         if (δp > 0 && p1 > 0 && denom > 0)
         {
             var transferMoles = n1 - (n1 + n2) * T2 * V1 / denom;
-            return airInlet.Remove(transferMoles);
+            return (airInlet.Remove(transferMoles), δp);
         }
 
-        return new GasMixture();
+        return (new GasMixture(), δp);
     }
 
     private (PipeNode inlet, PipeNode outlet) GetPipes(EntityUid uidCirculator)
@@ -180,20 +322,21 @@ public sealed class TegSystem : EntitySystem
         switch (cmd)
         {
             case DeviceNetworkCommandSyncData:
-                var circulators = GetBothCirculators(uid);
-                if (!circulators.HasValue)
+                var group = GetNodeGroup(uid);
+                if (group is not { IsFullyBuilt: true })
                     return;
 
-                var (circA, circB) = circulators.Value;
+                var supplier = Comp<PowerSupplierComponent>(uid);
 
                 var payload = new NetworkPayload
                 {
                     [DeviceNetworkConstants.Command] = DeviceNetworkCommandSyncData,
                     [DeviceNetworkCommandSyncData] = new TegSensorData
                     {
-                        CirculatorA = GetCirculatorSensorData(circA),
-                        CirculatorB = GetCirculatorSensorData(circB),
+                        CirculatorA = GetCirculatorSensorData(group.CirculatorA!.Owner),
+                        CirculatorB = GetCirculatorSensorData(group.CirculatorB!.Owner),
                         LastGeneration = component.LastGeneration,
+                        PowerOutput = supplier.CurrentSupply,
                         RampPosition = component.RampPosition
                     }
                 };

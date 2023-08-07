@@ -5,6 +5,7 @@
 /// </summary>
 /// <seealso cref="TegSystem"/>
 [RegisterComponent]
+[Access(typeof(TegSystem))]
 public sealed class TegGeneratorComponent : Component
 {
     /// <summary>
@@ -47,4 +48,10 @@ public sealed class TegGeneratorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] [DataField("ramp_threshold")]
     public float RampMinimum = 5000;
+
+    /// <summary>
+    /// Power output value at which the sprite appearance should cap out.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("max_visual_power")]
+    public float MaxVisualPower = 200_000;
 }

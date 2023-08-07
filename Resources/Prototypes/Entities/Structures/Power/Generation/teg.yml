@@ -1,27 +1,43 @@
 ﻿- type: entity
   id: TegCenter
   name: thermo-electric generator
+  parent: BaseMachinePowered
   placement:
     mode: SnapgridCenter
   components:
-    - type: Clickable
-    - type: InteractionOutline
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          density: 190
-          mask:
-            - MachineMask
-          layer:
-            - MachineLayer
+    - type: Transform
+      noRot: false
     - type: Sprite
       sprite: Structures/Power/Generation/teg.rsi
-      state: teg
+      layers:
+        - state: teg
+        - state: teg_mid
+          shader: unshaded
+          map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+        - state: teg-op1
+          shader: unshaded
+          map: [ "enum.TegVisualLayers.PowerOutput" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.PowerDeviceVisuals.Powered:
+          enum.PowerDeviceVisualLayers.Powered:
+            True: { visible: true }
+            False: { visible: false }
+        enum.TegVisuals.PowerOutput:
+          enum.TegVisualLayers.PowerOutput:
+            0: { visible: false }
+            1: { visible: true, state: teg-op1 }
+            2: { visible: true, state: teg-op2 }
+            3: { visible: true, state: teg-op3 }
+            4: { visible: true, state: teg-op4 }
+            5: { visible: true, state: teg-op5 }
+            6: { visible: true, state: teg-op6 }
+            7: { visible: true, state: teg-op7 }
+            8: { visible: true, state: teg-op8 }
+            9: { visible: true, state: teg-op9 }
+            10: { visible: true, state: teg-op10 }
+            11: { visible: true, state: teg-op11 }
+
     - type: Anchorable
     - type: Pullable
     - type: NodeContainer
@@ -56,6 +72,17 @@
       supplyRampRate: 100000000
       supplyRampTolerance: 10000000000
 
+    - type: Appearance
+    - type: ApcPowerReceiver
+      powerLoad: 1000
+
+    - type: LitOnPowered
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+      color: "#FFAA00"
+
 - type: entity
   id: TegCirculator
   name: circulator
@@ -66,7 +93,35 @@
     - type: Sprite
       sprite: Structures/Power/Generation/teg.rsi
       layers:
-        - state: circ-p
+        - state: circ-0
+          map: [ "enum.TegVisualLayers.CirculatorBase" ]
+        - state: circ-0-light
+          shader: unshaded
+          map: [ "enum.TegVisualLayers.CirculatorLight" ]
+
+    - type: GenericVisualizer
+      visuals:
+        enum.TegVisuals.CirculatorPower:
+          enum.TegVisualLayers.CirculatorLight:
+            True: { visible: true }
+            False: { visible: false }
+        enum.TegVisuals.CirculatorSpeed:
+          enum.TegVisualLayers.CirculatorBase:
+            SpeedStill: { state: circ-0 }
+            SpeedSlow: { state: circ-1 }
+            SpeedFast: { state: circ-2 }
+          enum.TegVisualLayers.CirculatorLight:
+            SpeedStill: { state: circ-0-light }
+            SpeedSlow: { state: circ-1-light }
+            SpeedFast: { state: circ-2-light }
+
+    - type: Appearance
+    - type: PointLight
+      enabled: false
+      castShadows: false
+      radius: 1.5
+      color: "#CC00FF"
+
     # tags
     - type: Tag
       tags:
@@ -112,3 +167,5 @@
 
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
+      light_color_fast: '#AA00FF'
+      light_color_slow: '#FF3300'
