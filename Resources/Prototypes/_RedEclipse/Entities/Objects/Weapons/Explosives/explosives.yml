@@ -29,22 +29,19 @@
   id: MaterialFactoryTinyBomb
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    sprite: _RedEclipse/Objects/Weapons/tinybomb.rsi
+    state: icon
     scale: 0.5, 0.5
   - type: OnUseTimerTrigger
     delay: 5
+  - type: TriggerOnCollide
+    fixtureID: fix1
   - type: ExplodeOnTrigger
   - type: Explosive
     explosionType: Default
     totalIntensity: 3
     intensitySlope: 40
     maxIntensity: 3
-  - type: Appearance
-  - type: TimerTriggerVisuals
-    primingSound:
-      path: /Audio/Effects/minibombcountdown.ogg
-      params:
-        volume: 12
   - type: Material
   - type: Stack
     stackType: FactoryTinyBombParts
@@ -57,3 +54,8 @@
   - type: PhysicalComposition
     materialComposition:
       MaterialFactoryTinyBomb: 1
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12

@@ -258,14 +258,14 @@
   result: TrashBananaPeelExplosive
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryTinyBomb: 1
 
 - type: latheRecipe
   id: FactoryExplosiveWetFloorSign
   result: WetFloorSignMineExplosive
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryTinyBomb: 1
 
 #Medical Assembler
 - type: latheRecipe

@@ -375,48 +375,14 @@
   maxCount: 3
   itemSize: 10
 
-# - type: entity
-#   parent: MaterialBase
-#   id: MaterialFactoryTinyBomb
-#   name: tiny bomb
-#   description: miniature explosive devices
-#   components:
-#   - type: Material
-#   - type: Stack
-#     stackType: FactoryTinyBombParts
-#     count: 1
-#   - type: Sprite
-#     sprite: /Textures/Objects/Misc/monkeycube.rsi
-#     state: cube
-#   - type: Item
-#     size: 10
-#   - type: Tag
-#     tags:
-#     - FactoryParts
-#   - type: PhysicalComposition
-#     materialComposition:
-#       MaterialFactoryTinyBomb: 1
-# Tiny Bomb Removed in favor of functional one see _RedEclipse/Entities/Objects/Weapons
-
-- type: entity
-  parent: MaterialFactoryTinyBomb
-  id: FactoryTinyBombParts1
-  name: tiny bomb
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryTinyBombParts
-    count: 1
 
 - type: stack
   id: FactoryTinyBombParts
   name: tiny bomb
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryTinyBombParts1
-  maxCount: 3
-  itemSize: 10
+  spawn: FactoryTinyBomb
+  maxCount: 1
+  itemSize: 1
 
 - type: entity
   parent: MaterialBase
