@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix cargo pallet collision when anchored., type: Fix}
-  id: 3977
-  time: '2023-06-10T09:43:55.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Paused entities will no longer show as ghost roles (no more taking xeno
       / dragon on expeditions and waiting for the crew to arrive)., type: Tweak}
   id: 3978
@@ -2986,3 +2981,8 @@ Entries:
       to create their own unique style!', type: Add}
   id: 4476
   time: '2023-08-07T17:12:41.0000000+00:00'
+- author: LinkUyx
+  changes:
+  - {message: Added new skirt for security., type: Add}
+  id: 4477
+  time: '2023-08-07T17:42:30.0000000+00:00'
