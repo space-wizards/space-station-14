@@ -1,6 +1,9 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Chat.Managers;
+using Content.Server.Explosion.Components;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
@@ -13,6 +16,7 @@ using Content.Shared.Destructible;
 using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 using Content.Shared.Roles;
+using Content.Shared.Weapons.Melee;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
@@ -30,8 +34,10 @@ public sealed class BlobCoreSystem : EntitySystem
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly BlobObserverSystem _blobObserver = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly DamageableSystem _damageable = default!;
 
     public override void Initialize()
     {
@@ -63,8 +69,6 @@ public sealed class BlobCoreSystem : EntitySystem
 
         if (blobRule == null)
         {
-            //todo fuck me this shit is awful
-            //no i wont fuck you, erp is against rules
             _gameTicker.StartGameRule("Blob", out var ruleEntity);
             blobRule = Comp<BlobRuleComponent>(ruleEntity);
         }
@@ -105,6 +109,8 @@ public sealed class BlobCoreSystem : EntitySystem
             _audioSystem.PlayGlobal(core.GreetSoundNotification, session);
         }
 
+        _blobObserver.UpdateUi(observer, blobObserverComponent);
+
         return true;
     }
 
@@ -132,6 +138,63 @@ public sealed class BlobCoreSystem : EntitySystem
         if (TryComp<BlobTileComponent>(uid, out var blobTileComponent))
         {
             blobTileComponent.Core = uid;
+            blobTileComponent.Color = component.ChemСolors[component.CurrentChem];
+            Dirty(blobTileComponent);
+        }
+
+        component.BlobTiles.Add(uid);
+
+        ChangeChem(uid, component.DefaultChem, component);
+    }
+
+    public void ChangeChem(EntityUid uid, BlobChemType newChem, BlobCoreComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (newChem == component.CurrentChem)
+            return;
+
+        var oldChem = component.CurrentChem;
+        component.CurrentChem = newChem;
+        foreach (var blobTile in component.BlobTiles)
+        {
+            if (!TryComp<BlobTileComponent>(blobTile, out var blobTileComponent))
+                continue;
+
+            blobTileComponent.Color = component.ChemСolors[newChem];
+            Dirty(blobTileComponent);
+
+            if (TryComp<BlobFactoryComponent>(blobTile, out var blobFactoryComponent))
+            {
+                if (TryComp<BlobbernautComponent>(blobFactoryComponent.Blobbernaut, out var blobbernautComponent))
+                {
+                    blobbernautComponent.Color = component.ChemСolors[newChem];
+                    Dirty(blobbernautComponent);
+
+                    if (TryComp<MeleeWeaponComponent>(blobFactoryComponent.Blobbernaut, out var meleeWeaponComponent))
+                    {
+                        var blobbernautDamage = new DamageSpecifier();
+                        foreach (var keyValuePair in component.ChemDamageDict[component.CurrentChem].DamageDict)
+                        {
+                            blobbernautDamage.DamageDict.Add(keyValuePair.Key, keyValuePair.Value * 0.8f);
+                        }
+                        meleeWeaponComponent.Damage = blobbernautDamage;
+                    }
+
+                    ChangeBlobEntChem(blobFactoryComponent.Blobbernaut.Value, oldChem, newChem);
+                }
+
+                foreach (var compBlobPod in blobFactoryComponent.BlobPods)
+                {
+                    if (TryComp<SmokeOnTriggerComponent>(compBlobPod, out var smokeOnTriggerComponent))
+                    {
+                        smokeOnTriggerComponent.SmokeColor = component.ChemСolors[newChem];
+                    }
+                }
+            }
+
+            ChangeBlobEntChem(blobTile, oldChem, newChem);
         }
     }
 
@@ -148,8 +211,33 @@ public sealed class BlobCoreSystem : EntitySystem
                 continue;
             blobTileComponent.Core = null;
 
-            blobTileComponent.State = BlobTileState.Dead;
+            blobTileComponent.Color = Color.White;
             Dirty(blobTileComponent);
+        }
+    }
+
+    private void ChangeBlobEntChem(EntityUid uid, BlobChemType oldChem, BlobChemType newChem)
+    {
+        var explosionResistance = EnsureComp<ExplosionResistanceComponent>(uid);
+        if (oldChem == BlobChemType.ExplosiveLattice)
+        {
+            _explosionSystem.SetExplosionResistance(uid, 0.3f, explosionResistance);
+        }
+        switch (newChem)
+        {
+            case BlobChemType.ExplosiveLattice:
+                _damageable.SetDamageModifierSetId(uid, "ExplosiveLatticeBlob");
+                _explosionSystem.SetExplosionResistance(uid, 0f, explosionResistance);
+                break;
+            case BlobChemType.ElectromagneticWeb:
+                _damageable.SetDamageModifierSetId(uid, "ElectromagneticWebBlob");
+                break;
+            case BlobChemType.ReactiveSpines:
+                _damageable.SetDamageModifierSetId(uid, "ReactiveSpinesBlob");
+                break;
+            default:
+                _damageable.SetDamageModifierSetId(uid, "BaseBlob");
+                break;
         }
     }
 
@@ -165,17 +253,27 @@ public sealed class BlobCoreSystem : EntitySystem
             blobCore.BlobTiles.Remove(oldTileUid.Value);
         }
         var tileBlob = EntityManager.SpawnEntity(newBlobTileProto, coordinates);
+
         if (TryComp<BlobTileComponent>(tileBlob, out var blobTileComponent))
         {
             blobTileComponent.ReturnCost = returnCost;
             blobTileComponent.Core = coreTileUid;
+            blobTileComponent.Color = blobCore.ChemСolors[blobCore.CurrentChem];
+            Dirty(blobTileComponent);
+
+            var explosionResistance = EnsureComp<ExplosionResistanceComponent>(tileBlob);
+
+            if (blobCore.CurrentChem == BlobChemType.ExplosiveLattice)
+            {
+                _explosionSystem.SetExplosionResistance(tileBlob, 0f, explosionResistance);
+            }
         }
         if (blobCore.Observer != null && transformCost != null)
         {
             _popup.PopupEntity(Loc.GetString("blob-spent-resource", ("point", transformCost)),
                 tileBlob,
                 blobCore.Observer.Value,
-                PopupType.Large);
+                PopupType.LargeCaution);
         }
         blobCore.BlobTiles.Add(tileBlob);
         return true;
@@ -186,7 +284,7 @@ public sealed class BlobCoreSystem : EntitySystem
         if (!Resolve(coreTileUid, ref blobCore))
             return false;
 
-        _damageableSystem.TryChangeDamage(tileUid, blobCore.DamageOnRemove);
+        QueueDel(tileUid);
         blobCore.BlobTiles.Remove(tileUid);
 
         return true;

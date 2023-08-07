@@ -1,3 +1,5 @@
+using Content.Shared.Blob;
+using Content.Shared.FixedPoint;
 using Content.Shared.Popups;
 
 namespace Content.Server.Blob;
@@ -11,28 +13,28 @@ public sealed class BlobResourceSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BlobResourceComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<BlobResourceComponent, BlobTileGetPulseEvent>(OnPulsed);
-    }
-
-
-    private void OnStartup(EntityUid uid, BlobResourceComponent component, ComponentStartup args)
-    {
-
     }
 
     private void OnPulsed(EntityUid uid, BlobResourceComponent component, BlobTileGetPulseEvent args)
     {
-        if (TryComp<BlobTileComponent>(uid, out var blobTileComponent) && blobTileComponent.Core != null)
+        if (!TryComp<BlobTileComponent>(uid, out var blobTileComponent) || blobTileComponent.Core == null)
+            return;
+        if (!TryComp<BlobCoreComponent>(blobTileComponent.Core, out var blobCoreComponent) ||
+            blobCoreComponent.Observer == null)
+            return;
+        _popup.PopupEntity(Loc.GetString("blob-get-resource", ("point", component.PointsPerPulsed)),
+            uid,
+            blobCoreComponent.Observer.Value,
+            PopupType.LargeGreen);
+
+        var points = component.PointsPerPulsed;
+
+        if (blobCoreComponent.CurrentChem == BlobChemType.RegenerativeMateria)
         {
-            if (TryComp<BlobCoreComponent>(blobTileComponent.Core, out var blobCoreComponent) && blobCoreComponent.Observer != null)
-            {
-                _popup.PopupEntity(Loc.GetString("blob-get-resource", ("point", component.PointsPerPulsed)),
-                    uid,
-                    blobCoreComponent.Observer.Value,
-                    PopupType.Large);
-            }
-            _blobCoreSystem.ChangeBlobPoint(blobTileComponent.Core.Value, component.PointsPerPulsed);
+            points += FixedPoint2.New(1);
         }
+
+        _blobCoreSystem.ChangeBlobPoint(blobTileComponent.Core.Value, points);
     }
 }

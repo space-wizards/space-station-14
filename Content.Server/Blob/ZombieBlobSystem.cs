@@ -10,7 +10,11 @@ using Content.Server.NPC.Systems;
 using Content.Server.Speech.Components;
 using Content.Server.Temperature.Components;
 using Content.Shared.Mobs;
+using Content.Shared.Physics;
 using Content.Shared.Tag;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Collision.Shapes;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Blob
 {
@@ -22,6 +26,10 @@ namespace Content.Server.Blob
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+
+        private const int ClimbingCollisionGroup = (int) (CollisionGroup.BlobImpassable);
 
         public override void Initialize()
         {
@@ -30,6 +38,24 @@ namespace Content.Server.Blob
             SubscribeLocalEvent<ZombieBlobComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<ZombieBlobComponent, ComponentStartup>(OnStartup);
             SubscribeLocalEvent<ZombieBlobComponent, ComponentShutdown>(OnShutdown);
+        }
+
+        /// <summary>
+        /// Replaces the current fixtures with non-climbing collidable versions so that climb end can be detected
+        /// </summary>
+        /// <returns>Returns whether adding the new fixtures was successful</returns>
+        private void ReplaceFixtures(EntityUid uid, ZombieBlobComponent climbingComp, FixturesComponent fixturesComp)
+        {
+            foreach (var (name, fixture) in fixturesComp.Fixtures)
+            {
+                if (climbingComp.DisabledFixtureMasks.ContainsKey(name)
+                    || fixture.Hard == false
+                    || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
+                    continue;
+
+                climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
+                _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            }
         }
 
         private void OnStartup(EntityUid uid, ZombieBlobComponent component, ComponentStartup args)
@@ -59,6 +85,11 @@ namespace Content.Server.Blob
             {
                 component.OldColdDamageThreshold = temperatureComponent.ColdDamageThreshold;
                 temperatureComponent.ColdDamageThreshold = 0;
+            }
+
+            if (TryComp<FixturesComponent>(uid, out var fixturesComp))
+            {
+                ReplaceFixtures(uid, component, fixturesComp);
             }
 
             var mindComp = EnsureComp<MindContainerComponent>(uid);
@@ -119,6 +150,20 @@ namespace Content.Server.Blob
                 _faction.AddFaction(uid, factionId);
             }
             _faction.RemoveFaction(uid, "Blob");
+
+            if (TryComp<FixturesComponent>(uid, out var fixtures))
+            {
+                foreach (var (name, fixtureMask) in component.DisabledFixtureMasks)
+                {
+                    if (!fixtures.Fixtures.TryGetValue(name, out var fixture))
+                    {
+                        continue;
+                    }
+
+                    _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+                }
+                component.DisabledFixtureMasks.Clear();
+            }
         }
 
         private void OnMobStateChanged(EntityUid uid, ZombieBlobComponent component, MobStateChangedEvent args)

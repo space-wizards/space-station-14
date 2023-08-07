@@ -1,7 +1,11 @@
 using System.Linq;
 using System.Numerics;
 using Content.Server.Actions;
+using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
 using Content.Server.Destructible;
+using Content.Server.Emp;
+using Content.Server.Explosion.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Blob;
@@ -9,10 +13,14 @@ using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
+using Content.Shared.Maps;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Content.Shared.Random.Helpers;
 using Content.Shared.SubFloor;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
@@ -36,6 +44,10 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
+    [Dependency] private readonly FlammableSystem _flammable = default!;
+    [Dependency] private readonly EmpSystem _empSystem = default!;
 
     public override void Initialize()
     {
@@ -54,6 +66,77 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         SubscribeLocalEvent<BlobObserverComponent, BlobSwapCoreActionEvent>(OnSwapCore);
         SubscribeLocalEvent<BlobObserverComponent, BlobSplitCoreActionEvent>(OnSplitCore);
         SubscribeLocalEvent<BlobObserverComponent, MoveEvent>(OnMoveEvent);
+        SubscribeLocalEvent<BlobObserverComponent, ComponentGetState>(GetState);
+        SubscribeLocalEvent<BlobObserverComponent, BlobChemSwapPrototypeSelectedMessage>(OnChemSelected);
+    }
+
+    private void OnBlobSwapChem(EntityUid uid, BlobObserverComponent observerComponent,
+        BlobSwapChemActionEvent args)
+    {
+        TryOpenUi(uid, args.Performer, observerComponent);
+        args.Handled = true;
+    }
+
+    private void OnChemSelected(EntityUid uid, BlobObserverComponent component, BlobChemSwapPrototypeSelectedMessage args)
+    {
+        if (component.Core == null || !TryComp<BlobCoreComponent>(component.Core.Value, out var blobCoreComponent))
+            return;
+
+        if (component.SelectedChemId == args.SelectedId)
+            return;
+
+        if (!_blobCoreSystem.TryUseAbility(uid, component.Core.Value, blobCoreComponent,
+                blobCoreComponent.SwapChemCost))
+            return;
+
+        ChangeChem(uid, args.SelectedId, component);
+    }
+
+    private void ChangeChem(EntityUid uid, BlobChemType newChem, BlobObserverComponent component)
+    {
+        if (component.Core == null || !TryComp<BlobCoreComponent>(component.Core.Value, out var blobCoreComponent))
+            return;
+        component.SelectedChemId = newChem;
+        _blobCoreSystem.ChangeChem(component.Core.Value, newChem, blobCoreComponent);
+
+        _popup.PopupEntity(Loc.GetString("blob-spent-resource", ("point", blobCoreComponent.SwapChemCost)),
+            uid,
+            uid,
+            PopupType.LargeCaution);
+
+        UpdateUi(uid, component);
+    }
+
+    private void GetState(EntityUid uid, BlobObserverComponent component, ref ComponentGetState args)
+    {
+        args.State = new BlobChemSwapComponentState
+        {
+            SelectedChem = component.SelectedChemId
+        };
+    }
+
+    private void TryOpenUi(EntityUid uid, EntityUid user, BlobObserverComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (!TryComp(user, out ActorComponent? actor))
+            return;
+
+        _uiSystem.TryToggleUi(uid, BlobChemSwapUiKey.Key, actor.PlayerSession);
+    }
+
+    public void UpdateUi(EntityUid uid, BlobObserverComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.Core == null || !TryComp<BlobCoreComponent>(component.Core.Value, out var blobCoreComponent))
+            return;
+
+        var state = new BlobChemSwapBoundUserInterfaceState(blobCoreComponent.ChemСolors, component.SelectedChemId);
+
+        _uiSystem.TrySetUiState(uid, BlobChemSwapUiKey.Key, state);
     }
 
     // TODO: This is very bad, but it is clearly better than invisible walls, let someone do better.
@@ -124,13 +207,6 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
         BlobHelpActionEvent args)
     {
         _popup.PopupEntity(Loc.GetString("blob-help"), uid, uid, PopupType.Large);
-        args.Handled = true;
-    }
-
-    private void OnBlobSwapChem(EntityUid uid, BlobObserverComponent observerComponent,
-        BlobSwapChemActionEvent args)
-    {
-        _popup.PopupEntity(Loc.GetString("blob-swap-chem"), uid, uid, PopupType.Large);
         args.Handled = true;
     }
 
@@ -323,13 +399,13 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         if (blobTile == null || !TryComp<BlobFactoryComponent>(blobTile, out var blobFactoryComponent))
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-factory-blob-invalid"), uid, uid, PopupType.Large);
+            _popup.PopupEntity(Loc.GetString("blob-target-factory-blob-invalid"), uid, uid, PopupType.LargeCaution);
             return;
         }
 
         if (blobFactoryComponent.Blobbernaut != null)
         {
-            _popup.PopupEntity(Loc.GetString("blob-target-already-produce-blobbernaut"), uid, uid, PopupType.Large);
+            _popup.PopupEntity(Loc.GetString("blob-target-already-produce-blobbernaut"), uid, uid, PopupType.LargeCaution);
             return;
         }
 
@@ -338,6 +414,11 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
 
         var ev = new ProduceBlobbernautEvent();
         RaiseLocalEvent(blobTile.Value, ev);
+
+        _popup.PopupEntity(Loc.GetString("blob-spent-resource", ("point", blobCoreComponent.BlobbernautCost)),
+            blobTile.Value,
+            uid,
+            PopupType.LargeCaution);
 
         args.Handled = true;
     }
@@ -547,8 +628,8 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             var target = args.Target.Value;
 
             // Check if the target is adjacent to a tile with BlobCellComponent horizontally or vertically
-            var targetCoordinates = Transform(target).Coordinates;
-            var mobTile = grid.GetTileRef(targetCoordinates);
+            var xform = Transform(target);
+            var mobTile = grid.GetTileRef(xform.Coordinates);
 
             var mobAdjacentTiles = new[]
             {
@@ -570,9 +651,29 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                             _popup.PopupCoordinates(Loc.GetString("blob-spent-resource", ("point", blobCoreComponent.AttackCost)),
                                 args.ClickLocation,
                                 blobCoreComponent.Observer.Value,
-                                PopupType.Large);
+                                PopupType.LargeCaution);
                         }
-                        _damageableSystem.TryChangeDamage(target, blobCoreComponent.Damage);
+                        _damageableSystem.TryChangeDamage(target, blobCoreComponent.ChemDamageDict[blobCoreComponent.CurrentChem]);
+
+                        if (blobCoreComponent.CurrentChem == BlobChemType.ExplosiveLattice)
+                        {
+                            _explosionSystem.QueueExplosion(target, blobCoreComponent.BlobExplosive, 4, 1, 6, maxTileBreak: 0);
+                        }
+
+                        if (blobCoreComponent.CurrentChem == BlobChemType.ElectromagneticWeb)
+                        {
+                            if (_random.Prob(0.2f))
+                                _empSystem.EmpPulse(xform.MapPosition, 3f, 50f, 3f);
+                        }
+
+                        if (blobCoreComponent.CurrentChem == BlobChemType.BlazingOil)
+                        {
+                            if (TryComp<FlammableComponent>(target, out var flammable))
+                            {
+                                flammable.FireStacks += 2;
+                                _flammable.Ignite(target, uid, flammable);
+                            }
+                        }
                         blobCoreComponent.NextAction =
                             _gameTiming.CurTime + TimeSpan.FromSeconds(blobCoreComponent.AttackRate);
                         _audioSystem.PlayPvs(blobCoreComponent.AttackSound, uid, AudioParams.Default);
@@ -581,6 +682,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
                 }
             }
         }
+
         var centerTile = grid.GetLocalTilesIntersecting(
             new Box2(location.Position, location.Position), false).ToArray();
 
@@ -591,9 +693,16 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             {
                 targetTileEmplty = true;
             }
+
             foreach (var ent in grid.GetAnchoredEntities(tileRef.GridIndices))
             {
                 if (HasComp<BlobTileComponent>(ent))
+                    return;
+            }
+
+            foreach (var entityUid in _lookup.GetEntitiesIntersecting(tileRef.GridIndices.ToEntityCoordinates(gridId.Value, _map).ToMap(EntityManager)))
+            {
+                if (HasComp<MobStateComponent>(entityUid) && !HasComp<BlobMobComponent>(entityUid))
                     return;
             }
         }
@@ -635,7 +744,7 @@ public sealed class BlobObserverSystem : SharedBlobObserverSystem
             transformCost: cost);
     }
 
-    private void OnStartup(EntityUid uid, BlobObserverComponent observerComponent, ComponentStartup args)
+    private void OnStartup(EntityUid uid, BlobObserverComponent component, ComponentStartup args)
     {
         var helpBlob = new InstantAction(
             _proto.Index<InstantActionPrototype>("HelpBlob"));

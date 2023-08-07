@@ -1,8 +1,11 @@
 using Content.Server.DoAfter;
+using Content.Server.Explosion.EntitySystems;
+using Content.Server.NPC.HTN;
 using Content.Server.Popups;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Blob;
 using Content.Shared.CombatMode;
+using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
 using Content.Shared.Interaction.Components;
@@ -23,11 +26,23 @@ namespace Content.Server.Blob.NPC.BlobPod
         [Dependency] private readonly PopupSystem _popups = default!;
         [Dependency] private readonly AudioSystem _audioSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<BlobPodComponent, GetVerbsEvent<InnateVerb>>(AddDrainVerb);
             SubscribeLocalEvent<BlobPodComponent, BlobPodZombifyDoAfterEvent>(OnZombify);
+            SubscribeLocalEvent<BlobPodComponent, DestructionEventArgs>(OnDestruction);
+        }
+
+        private void OnDestruction(EntityUid uid, BlobPodComponent component, DestructionEventArgs args)
+        {
+            if (!TryComp<BlobCoreComponent>(component.Core, out var blobCoreComponent))
+                return;
+            if (blobCoreComponent.CurrentChem == BlobChemType.ExplosiveLattice)
+            {
+                _explosionSystem.QueueExplosion(uid, blobCoreComponent.BlobExplosive, 4, 1, 2, maxTileBreak: 0);
+            }
         }
 
         private void AddDrainVerb(EntityUid uid, BlobPodComponent component, GetVerbsEvent<InnateVerb> args)
@@ -82,6 +97,8 @@ namespace Content.Server.Blob.NPC.BlobPod
             _popups.PopupEntity(Loc.GetString("blob-mob-zombify-third-end", ("pod", uid), ("target", args.Args.Target.Value)), args.Args.Target.Value, Filter.PvsExcept(args.Args.Target.Value), true, Shared.Popups.PopupType.LargeCaution);
 
             EntityManager.RemoveComponent<CombatModeComponent>(uid);
+
+            EntityManager.RemoveComponent<HTNComponent>(uid);
 
             EntityManager.EnsureComponent<UnremoveableComponent>(uid);
 

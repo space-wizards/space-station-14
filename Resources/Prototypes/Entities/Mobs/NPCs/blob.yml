@@ -23,6 +23,17 @@
   name: Blob pod
   parent: SimpleSpaceMobBase
   components:
+    - type: TriggerOnMobstateChange
+      mobState:
+        - Dead
+    - type: SmokeOnTrigger
+      time: 5
+      smokeColor: Green
+      spreadAmount: 20
+#      smokeReagents:
+#        - ReagentId: TearAcid
+#          Quantity: 3
+      sound: /Audio/Effects/smoke.ogg
     - type: Damageable
       damageContainer: Blob
       damageModifierSet: BlobMob
@@ -66,7 +77,7 @@
       animation: WeaponArcSmash
       damage:
         types:
-          Piercing: 4
+          Piercing: 5
     - type: DamageStateVisuals
       states:
         Alive:
@@ -180,7 +191,6 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: blobbernaut
-          color: "#1ddb49"
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: nautdamage
           shader: unshaded
@@ -194,6 +204,7 @@
     snap:
       - Wall
   components:
+    - type: Flashable
     - type: Reactive
       groups:
         Flammable: [Touch]
@@ -214,10 +225,8 @@
           shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
-          mask:
-            - BlobWallMask
           layer:
-            - BlobWallLayer
+            - BlobTileLayer
           density: 1000
 
 - type: entity
@@ -254,7 +263,6 @@
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: blob
-        color: "#1ddb49"
 #      Vanila vs new type, idk
 #  - type: SlowContacts
 #    walkSpeedModifier: 0.3
@@ -315,18 +323,16 @@
   - type: BlobCore
   - type: BlobNode
   - type: BlobResource
-    pointsPerPulsed: 10
+    pointsPerPulsed: 5
   - type: Sprite
     sprite: Mobs/Aliens/blob.rsi
     drawdepth: BlobTiles
     layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
         state: blob_core
-        color: "#1ddb49"
       - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
         state: blob_core_glow
-        color: "#1ddb49"
-        shader: unshaded
+#        shader: unshaded
       - state: blob_core_overlay
 
 
@@ -378,11 +384,9 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: blob_factory
-          color: "#e8760c"
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: blob_factory_glow
-          color: "#1ddb49"
-          shader: unshaded
+#          shader: unshaded
 
 
 - type: entity
@@ -420,11 +424,9 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: blob_resource
-          color: "#d6a606"
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: blob_resource_glow
-          color: "#09de1b"
-          shader: unshaded
+#          shader: unshaded
 
 
 - type: entity
@@ -462,11 +464,9 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: blob_node
-          color: "#e8760c"
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: blob_node_glow
-          color: "#1ddb49"
-          shader: unshaded
+#          shader: unshaded
         - state: blob_node_overlay
 
 
@@ -491,12 +491,10 @@
       drawdepth: BlobTiles
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
-          state: blob
-          color: "#1ddb49"
+          state: blob_glow
         - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           state: blob_glow
-          color: "#1ddb49"
-          shader: unshaded
+#          shader: unshaded
 
 
 - type: entity
@@ -529,11 +527,9 @@
       layers:
         - map: [ "enum.DamageStateVisualLayers.Base" ]
           state: blob_shield
-          color: "#1ddb49"
-        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
-          state: blob_shield_damaged
-          color: "#1ddb49"
-          shader: unshaded
+#        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+#          state: blob_shield_damaged
+#          shader: unshaded
 
 
 #- type: entity
@@ -577,6 +573,10 @@
   name: Blob observer
   noSpawn: true
   components:
+    - type: UserInterface
+      interfaces:
+        - key: enum.BlobChemSwapUiKey.Key
+          type: BlobChemSwapBoundUserInterface
     - type: Actions
     - type: Alerts
     - type: BlobObserver
@@ -602,7 +602,7 @@
             radius: 0.35
           density: 15
           mask:
-            - BlobGhostImpassable
+            - GhostImpassable
     - type: InputMover
     - type: Appearance
     - type: Eye

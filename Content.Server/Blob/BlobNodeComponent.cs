@@ -6,12 +6,12 @@ namespace Content.Server.Blob;
 public sealed class BlobNodeComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("pulseFrequency")]
-    public FixedPoint2 PulseFrequency = 4;
+    public float PulseFrequency = 4;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("pulseRadius")]
     public float PulseRadius = 3f;
 
-    public float Accumulator = 0;
+    public TimeSpan NextPulse = TimeSpan.Zero;
 }
 
 public sealed class BlobTileGetPulseEvent : EntityEventArgs
