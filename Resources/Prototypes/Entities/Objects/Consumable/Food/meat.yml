@@ -26,6 +26,8 @@
           Quantity: 5
   - type: Item
     size: 5
+  # let air cook and freeze meat for cooking and preservation
+  - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
   - type: Material
