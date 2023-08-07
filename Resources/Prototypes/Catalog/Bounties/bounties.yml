@@ -225,7 +225,7 @@
 
 - type: cargoBounty
   id: BountyInstrument
-  reward: 2500
+  reward: 2000
   description: bounty-description-instrument
   entries:
   - name: bounty-item-instrument
