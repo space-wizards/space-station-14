@@ -22,7 +22,6 @@
       stackType: FactoryBasicParts
       count: 1
 
-
 - type: stack
   id: FactoryBasicParts
   name: factory basic parts
