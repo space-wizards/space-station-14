@@ -6,7 +6,7 @@ using Content.Shared.Standing;
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed class LegParalyzedSystem : EntitySystem
+public sealed class LegsParalyzedSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
     [Dependency] private readonly StandingStateSystem _standingSystem = default!;
@@ -14,25 +14,25 @@ public sealed class LegParalyzedSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<LegParalyzedComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<LegParalyzedComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<LegParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<LegsParalyzedComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<LegsParalyzedComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<LegsParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
     }
 
-    private void OnStartup(EntityUid uid, LegParalyzedComponent component, ComponentStartup args)
+    private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
     {
         // TODO: In future probably must be surgery related wound
         var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(uid);
         _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20, movementSpeed);
     }
 
-    private void OnShutdown(EntityUid uid, LegParalyzedComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
     {
         _standingSystem.Stand(uid);
         _bodySystem.UpdateMovementSpeed(uid);
     }
 
-    private void OnBuckleChange(EntityUid uid, LegParalyzedComponent component, ref BuckleChangeEvent args)
+    private void OnBuckleChange(EntityUid uid, LegsParalyzedComponent component, ref BuckleChangeEvent args)
     {
         if (args.Buckling)
         {
