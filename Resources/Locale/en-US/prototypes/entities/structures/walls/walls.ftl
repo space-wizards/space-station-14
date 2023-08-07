@@ -1,4 +1,4 @@
-ent-BaseWall = basewall
+ent-BaseWall = wall
     .desc = Keeps the air in and the greytide out.
 
 ent-WallBrick = brick wall
