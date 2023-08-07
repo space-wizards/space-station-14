@@ -85,6 +85,18 @@
   - MagazineBoxLightRifleRubber
   - MagazineBoxRifleRubber
 
+- type: technology
+  id: MedSecHud
+  name: research-technology-medsec-hud
+  icon:
+    sprite: Clothing/Eyes/Hud/medsec.rsi
+    state: icon
+  discipline: Arsenal
+  tier: 1
+  cost: 10000
+  recipeUnlocks:
+  - ClothingEyesHudMedSec
+
 # Tier 2
 
 - type: technology

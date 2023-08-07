@@ -267,7 +267,6 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
-      - ClothingEyesGlassesChemical
   - type: EmagLatheRecipes
     emagDynamicRecipes:
       - ExplosivePayload
@@ -459,7 +458,6 @@
       - ForensicPad
       - ClothingEyesGlassesSecurity
       - ClothingEyesHudSecurity
-      - ClothingEyesHudMedSec
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
@@ -514,6 +512,7 @@
       - WeaponLaserCannon
       - WeaponXrayCannon
       - WeaponTaser
+      - ClothingEyesHudMedSec
   - type: MaterialStorage
     whitelist:
       tags:
@@ -592,7 +591,6 @@
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
       - ClothingEyesHudMedical
-      - ClothingEyesGlassesChemical
       - ClothingMaskSterile
       - DiseaseSwab
       - Beaker
@@ -623,6 +621,7 @@
       - Hemostat
       - BluespaceBeaker
       - SyringeBluespace
+      - ClothingEyesGlassesChemical
   - type: Machine
     board: MedicalTechFabCircuitboard
 
