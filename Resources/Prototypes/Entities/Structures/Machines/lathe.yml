@@ -410,6 +410,8 @@
       - Stunbaton
       - ForensicPad
       - ClothingEyesGlassesSecurity
+      - ClothingEyesHudSecurity
+      - ClothingEyesHudMedSec
       - RiotShield
       - CartridgePistol
       - CartridgeMagnum
@@ -541,6 +543,8 @@
       - Defibrillator
       - HandheldHealthAnalyzer
       - ClothingHandsGlovesLatex
+      - ClothingEyesHudMedical
+      - ClothingEyesGlassesChemical
       - ClothingMaskSterile
       - DiseaseSwab
       - Beaker

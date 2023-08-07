@@ -422,3 +422,21 @@
   completetime: 5
   materials:
     Plastic: 950
+
+- type: latheRecipe
+  id: ClothingEyesHudSecurity
+  result: ClothingEyesHudSecurity
+  name: security hud
+  completetime: 2
+  materials:
+    Glass: 200
+    Steel: 300
+
+- type: latheRecipe
+  id: ClothingEyesHudMedSec
+  result: ClothingEyesHudMedSec
+  name: medsec hud
+  completetime: 2
+  materials:
+    Glass: 400
+    Steel: 600
