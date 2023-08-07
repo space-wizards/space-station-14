@@ -21,8 +21,10 @@
     shoes: ClothingShoesBootsCombatFilled
     eyes: ClothingEyesGlassesSunglasses
     gloves: ClothingHandsGlovesCombat
-    id: ERTLeaderPDA
+    mask: ClothingMaskGasExplorer
+    id: CBURNPDA
     ears: ClothingHeadsetAltCentCom
     belt: ClothingBeltBandolierFilledIncendiary
     pocket1: WeaponFlareGun
     pocket2: DoubleEmergencyOxygenTankFilled
+    suitstorage: WeaponShotgunKammerer
