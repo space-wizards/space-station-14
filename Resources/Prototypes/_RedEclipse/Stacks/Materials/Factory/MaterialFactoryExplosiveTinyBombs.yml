@@ -17,7 +17,6 @@
       scale: 0.5, 0.5
     - type: Item
       sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi
-      state: icon
     - type: Tag
       tags:
         - FactoryPart

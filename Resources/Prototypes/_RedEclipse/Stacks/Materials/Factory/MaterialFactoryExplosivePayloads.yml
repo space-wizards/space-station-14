@@ -14,7 +14,6 @@
       state: payload-explosive-armed
     - type: Item
       sprite: Objects/Devices/payload.rsi
-      state: payload-explosive-armed
 
 - type: entity
   parent: MaterialFactoryExplosivePayloads
