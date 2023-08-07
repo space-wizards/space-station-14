@@ -29,6 +29,7 @@ public sealed class RottingSystem : EntitySystem
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PerishableComponent, MapInitEvent>(OnPerishableMapInit);
         SubscribeLocalEvent<PerishableComponent, EntityUnpausedEvent>(OnPerishableUnpaused);
         SubscribeLocalEvent<PerishableComponent, MobStateChangedEvent>(OnMobStateChanged);
 
@@ -40,6 +41,11 @@ public sealed class RottingSystem : EntitySystem
         SubscribeLocalEvent<RottingComponent, RejuvenateEvent>(OnRejuvenate);
 
         SubscribeLocalEvent<TemperatureComponent, IsRottingEvent>(OnTempIsRotting);
+    }
+
+    private void OnPerishableMapInit(EntityUid uid, PerishableComponent component, MapInitEvent args)
+    {
+        component.NextPerishUpdate = _timing.CurTime + component.PerishUpdateRate;
     }
 
     private void OnPerishableUnpaused(EntityUid uid, PerishableComponent component, ref EntityUnpausedEvent args)

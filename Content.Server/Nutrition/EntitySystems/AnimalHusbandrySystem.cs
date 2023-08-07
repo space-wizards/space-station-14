@@ -11,6 +11,7 @@ using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
 using Content.Shared.Storage;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
@@ -83,7 +84,12 @@ public sealed class AnimalHusbandrySystem : EntitySystem
             return false;
 
         var xform = Transform(uid);
+
         var partners = _entityLookup.GetComponentsInRange<ReproductivePartnerComponent>(xform.Coordinates, component.BreedRange);
+
+        if (partners.Count >= component.Capacity)
+            return false;
+
         foreach (var comp in partners)
         {
             var partner = comp.Owner;
