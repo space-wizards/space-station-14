@@ -162,13 +162,15 @@ public sealed partial class ParticleAcceleratorSystem
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
 
 
-            var pos = Transform(uid);
-            ParticleAcceleratorPowerState alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
+            var alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
             if (strength >= alertMinPowerState)
+            {
+                var pos = Transform(uid);
                 _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
-                        ("machine", ToPrettyString(uid)),
-                        ("powerState", strength),
-                        ("coordinates", pos.Coordinates)));
+                    ("machine", ToPrettyString(uid)),
+                    ("powerState", strength),
+                    ("coordinates", pos.Coordinates)));
+            }
         }
 
         comp.SelectedStrength = strength;
