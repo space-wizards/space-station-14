@@ -72,16 +72,17 @@ public sealed class MeleeWeaponComponent : Component
     public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
 
     /// <summary>
-    /// Multiplies damage by this amount for wide attacks.
+    /// Multiplies damage by this amount for single-target attacks.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
     public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(1.25);
 
+    //TODO: Was set to 0 value as of 2023-08-06, might want to delete later if we never go back to this idea
     /// <summary>
     /// How much stamina it costs for a heavy attack.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("heavyStaminaCost")]
-    public float HeavyStaminaCost = 15f;
+    public float HeavyStaminaCost = 0f;
 
     // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
