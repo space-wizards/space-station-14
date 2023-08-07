@@ -309,7 +309,7 @@
   - type: Injector
     injectOnly: false
   - type: ExaminableSolution
-    solution: syringe
+    solution: injector
   - type: Spillable
     solution: injector
   - type: TrashOnEmpty
