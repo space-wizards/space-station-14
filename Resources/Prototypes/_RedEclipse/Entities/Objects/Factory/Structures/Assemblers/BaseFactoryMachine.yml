@@ -23,7 +23,7 @@
     - type: MaterialStorage
       whitelist:
         tags:
-          - FactoryParts
+          - FactoryPart
     - type: Lathe
       idleState: icon
       runningState: building
