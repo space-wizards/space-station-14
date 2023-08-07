@@ -4,39 +4,39 @@
   result: MacroBombImplanter
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryStorageImplanter
   result: StorageImplanter
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryFreedomImplanter
   result: FreedomImplanter
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryHypopenBox
   result: HypopenBox
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactorySyndicateSmokesPacket
   result: CigPackSyndicate
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryStimpack
   result: Stimpack
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1

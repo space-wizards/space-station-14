@@ -59,18 +59,18 @@
   result: WeaponLauncherChinaLake
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryFragGrenade
   result: GrenadeFrag
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryBlastGrenade
   result: GrenadeBlast
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1

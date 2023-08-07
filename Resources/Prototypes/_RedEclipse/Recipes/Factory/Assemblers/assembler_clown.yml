@@ -4,42 +4,42 @@
   result: ClothingHandsGlovesBoxingRigged
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactorySyndicateSoap
   result: SoapSyndie
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryFakeNuclearDisk
   result: NukeDiskFake
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryFakeCapGun
   result: RevolverCapGunFake
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryClownCostumeDuffleBag
   result: ClothingBackpackDuffelSyndicateCostumeClown
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactorySyndieBalloon
   result: BalloonSyn
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryExplosiveBananaPeel

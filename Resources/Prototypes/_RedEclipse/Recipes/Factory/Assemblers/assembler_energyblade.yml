@@ -4,18 +4,18 @@
   result: EnergySword
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryEnergyDagger
   result: EnergyDagger
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
 
 - type: latheRecipe
   id: FactoryDoubleBladedEnergySword
   result: EnergySwordDouble
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryBaseParts : 1
+    FactoryBasicParts : 1
