@@ -1,11 +1,4 @@
 Entries:
-- author: Veritius
-  changes:
-  - {message: Added the White Gilgamesh., type: Add}
-  - {message: Removed bilk., type: Remove}
-  - {message: Fixed the grammar of The Martinez., type: Fix}
-  id: 3980
-  time: '2023-06-11T17:09:41.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Fixes a minor error in the Food Recipes guidebook., type: Fix}
@@ -2985,3 +2978,8 @@ Entries:
   - {message: Bounty payouts x10, type: Tweak}
   id: 4479
   time: '2023-08-07T21:41:57.0000000+00:00'
+- author: hord-brayden
+  changes:
+  - {message: Added Syringe Support for Chemical Analysis Goggles, type: Fix}
+  id: 4480
+  time: '2023-08-07T22:46:05.0000000+00:00'
