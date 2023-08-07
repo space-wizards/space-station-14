@@ -8,7 +8,14 @@
   copyright: "User tosha73 on freesound.org"
   source: "https://freesound.org/people/tosha73/sounds/509902/"
 
+
+- files: ["chainsaw.ogg, chainsawidle.ogg, chainsawwield.ogg"]
+  license: "Custom"
+  copyright: "https://www.soundjay.com/tos.html"
+  source: "https://www.soundjay.com/chainsaw-sound-effect.html"
+
 - files: ["guitarsmash.ogg"]
   license: "CC0-1.0"
   copyright: "User Mystovski on freesound.org. Modified by LankLTE on github."
   source: "https://freesound.org/people/Mystovski/sounds/201111/"
+

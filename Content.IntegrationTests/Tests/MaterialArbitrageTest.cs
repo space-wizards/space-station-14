@@ -30,7 +30,7 @@ public sealed class MaterialArbitrageTest
     [Test]
     public async Task NoMaterialArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -65,7 +65,7 @@ public sealed class MaterialArbitrageTest
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract)
+            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(constructionName, out var destructible))
@@ -125,7 +125,7 @@ public sealed class MaterialArbitrageTest
         // Here we get the set of entities/materials spawned when destroying an entity.
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract)
+            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(destructibleName, out var destructible))
@@ -290,7 +290,7 @@ public sealed class MaterialArbitrageTest
         Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract)
+            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(compositionName, out var composition))

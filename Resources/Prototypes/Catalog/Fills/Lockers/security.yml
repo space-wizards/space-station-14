@@ -71,6 +71,8 @@
       - id: ClothingShoesBootsJack
       - id: ClothingOuterCoatSecurityOvercoat # Corvax-SecFashion
         prob: 0.2
+      - id: WeaponMeleeNeedle
+        prob: 0.1
 
 - type: entity
   id: LockerBrigmedicFilled

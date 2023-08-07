@@ -50,6 +50,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
 using Content.Shared.Cluwne;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Administration.Systems;
 
@@ -65,7 +66,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly FixtureSystem _fixtures = default!;
     [Dependency] private readonly FlammableSystem _flammableSystem = default!;
     [Dependency] private readonly GhostKickManager _ghostKickManager = default!;
-    [Dependency] private readonly GodmodeSystem _godmodeSystem = default!;
+    [Dependency] private readonly SharedGodmodeSystem _sharedGodmodeSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
     [Dependency] private readonly PolymorphSystem _polymorphSystem = default!;
@@ -119,7 +120,7 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ("/Textures/Objects/Fun/Tabletop/chessboard.rsi"), "chessboard"),
             Act = () =>
             {
-                _godmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
+                _sharedGodmodeSystem.EnableGodmode(args.Target); // So they don't suffocate.
                 EnsureComp<TabletopDraggableComponent>(args.Target);
                 RemComp<PhysicsComponent>(args.Target); // So they can be dragged around.
                 var xform = Transform(args.Target);
@@ -149,7 +150,7 @@ public sealed partial class AdminVerbSystem
                 {
                     // Fuck you. Burn Forever.
                     flammable.FireStacks = FlammableSystem.MaximumFireStacks;
-                    _flammableSystem.Ignite(args.Target);
+                    _flammableSystem.Ignite(args.Target, args.User);
                     var xform = Transform(args.Target);
                     _popupSystem.PopupEntity(Loc.GetString("admin-smite-set-alight-self"), args.Target,
                         args.Target, PopupType.LargeCaution);

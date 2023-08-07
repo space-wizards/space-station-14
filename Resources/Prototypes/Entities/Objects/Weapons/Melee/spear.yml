@@ -4,9 +4,27 @@
   id: Spear
   description: Definition of a Classic. Keeping murder affordable since 200,000 BCE.
   components:
+  - type: EmbeddableProjectile
+    offset: 0.15,0.15
+  - type: ThrowingAngle
+    angle: 225
   - type: Tag
     tags:
     - Spear
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
   - type: Sharp
   - type: Sprite
     sprite: Objects/Weapons/Melee/spear.rsi

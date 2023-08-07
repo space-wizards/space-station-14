@@ -143,6 +143,23 @@
       path: /Audio/Corvax/Weapons/Guns/Gunshots/shotgun_metal.ogg
 
 - type: entity
+  name: Enforcer
+  parent: BaseWeaponShotgun
+  id: WeaponShotgunEnforcerRubber
+  description: A next-generation Frozen Star shotgun. Uses .50 shotgun shells.
+  suffix: Non-Lethal
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: Clothing
+    sprite: Objects/Weapons/Guns/Shotguns/enforcer.rsi
+  - type: BallisticAmmoProvider
+    proto: ShellShotgunBeanbag
+  - type: Gun # Corvax-Guns
+    soundGunshot:
+      path: /Audio/Corvax/Weapons/Guns/Gunshots/shotgun_metal.ogg
+
+- type: entity
   name: Kammerer
   parent: BaseWeaponShotgun
   id: WeaponShotgunKammerer

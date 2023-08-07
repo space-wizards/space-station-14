@@ -16,7 +16,7 @@ public abstract class ToolshedTest : IInvocationContext
 {
     protected PairTracker PairTracker = default!;
 
-    protected virtual bool NoClient => true;
+    protected virtual bool Connected => false;
     protected virtual bool AssertOnUnexpectedError => true;
 
     protected RobustIntegrationTest.ServerIntegrationInstance Server = default!;
@@ -32,7 +32,7 @@ public abstract class ToolshedTest : IInvocationContext
         await PairTracker.CleanReturnAsync();
         await TearDown();
     }
-    
+
     protected virtual async Task TearDown()
     {
         Assert.IsEmpty(_expectedErrors);
@@ -42,10 +42,10 @@ public abstract class ToolshedTest : IInvocationContext
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = NoClient});
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
         Server = PairTracker.Pair.Server;
 
-        if (!NoClient)
+        if (Connected)
         {
             Client = PairTracker.Pair.Client;
             await Client.WaitIdleAsync();

@@ -100,7 +100,22 @@
       blacklist:
         tags:
           - NukeOpsUplink
-          
+
+- type: listing
+  id: UplinkDisposableTurret
+  name: uplink-disposable-turret-name
+  description: uplink-disposable-turret-desc
+  productEntity: ToolboxElectricalTurretFilled
+  cost:
+    Telecrystal: 8
+  categories:
+  - UplinkWeapons
+  conditions:
+    - !type:StoreWhitelistCondition
+      blacklist:
+        tags:
+          - NukeOpsUplink
+
 # Explosives
 
 - type: listing
@@ -369,7 +384,7 @@
       whitelist:
         tags:
           - NukeOpsUplink
-          
+
 - type: listing
   id: UplinkReinforcementRadioSyndicateMonkey
   name: uplink-reinforcement-radio-monkey-name
@@ -942,26 +957,8 @@
     whitelist:
     - Zookeeper
     - Scientist
-    - SeniorResearcher      
+    - SeniorResearcher
     - Chef
-
-- type: listing
-  id: UplinkDisposableTurret
-  name: uplink-disposable-turret-name
-  description: uplink-disposable-turret-desc
-  productEntity: ToolboxElectricalTurretFilled
-  cost:
-    Telecrystal: 8
-  categories:
-  - UplinkJob
-  conditions:
-    - !type:BuyerJobCondition
-      whitelist:
-        - StationEngineer
-        - AtmosphericTechnician
-        - Scientist
-        - SeniorEngineer
-        - SeniorResearcher
 
 # Armor
 
@@ -1187,6 +1184,16 @@
       components:
       - SurplusBundle
 
+- type: listing
+  id: UplinkBribe
+  name: uplink-bribe-name
+  description: uplink-bribe-desc
+  productEntity: BriefcaseSyndieLobbyingBundleFilled
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkMisc
+
  # Pointless
 
 - type: listing
@@ -1308,3 +1315,17 @@
     Telecrystal: 1
   categories:
     - UplinkPointless
+
+- type: listing
+  id: UplinkSyndicatePersonalAI
+  name: uplink-syndicate-pai-name
+  description: uplink-syndicate-pai-desc
+  icon: { sprite: /Textures/Objects/Fun/pai.rsi, state: syndicate-icon-pai-off }
+  productEntity: SyndicatePersonalAI
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
+  conditions:
+  - !type:ListingLimitedStockCondition
+    stock: 1

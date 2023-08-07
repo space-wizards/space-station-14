@@ -1,37 +1,8 @@
 - type: entity
   save: false
   name: Urist McHands
-  parent: BaseMobHuman
+  parent: [BaseMobHuman, BaseMob]
   id: MobHuman
-  components:
-  - type: CombatMode
-  - type: InteractionPopup
-    successChance: 1
-    interactSuccessString: hugging-success-generic
-    interactSuccessSound: /Audio/Effects/thudswoosh.ogg
-    messagePerceivedByOthers: hugging-success-generic-others
-  - type: MindContainer
-    showExamineInfo: true
-  - type: Input
-    context: "human"
-  - type: MobMover
-  - type: InputMover
-  - type: Respirator
-    damage:
-      types:
-        Asphyxiation: 1.0
-    damageRecovery:
-      types:
-        Asphyxiation: -1.0
-  - type: Alerts
-  - type: Actions
-  - type: Eye
-  - type: CameraRecoil
-  - type: Examiner
-  - type: CanHostGuardian
-  - type: NpcFactionMember
-    factions:
-    - NanoTrasen
 
 #Syndie
 - type: entity
@@ -40,7 +11,6 @@
   name: Syndicate Agent
   components:
     - type: Loadout
-      prototype: SyndicateOperativeGearExtremelyBasic
       prototypes: [SyndicateOperativeGearExtremelyBasic]
     - type: RandomMetadata
       nameSegments: [corvax_names_death_commando] # Corvax-Localization
@@ -75,7 +45,6 @@
       randomizeName: false
     - type: NukeOperative
     - type: Loadout
-      prototype: SyndicateOperativeGearFull
       prototypes: [SyndicateOperativeGearFull]
     - type: RandomMetadata
       nameSegments:

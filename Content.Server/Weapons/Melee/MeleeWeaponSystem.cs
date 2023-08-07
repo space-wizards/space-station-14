@@ -104,18 +104,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         return true;
     }
 
-
-    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
-    {
-        if (uid == null)
-            return;
-
-        if (user == null)
-            PopupSystem.PopupEntity(message, uid.Value);
-        else
-            PopupSystem.PopupEntity(message, uid.Value, Filter.PvsExcept(user.Value, entityManager: EntityManager), true);
-    }
-
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)
     {
         if (!base.DoDisarm(user, ev, meleeUid, component, session))

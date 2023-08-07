@@ -97,7 +97,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (session != null)
                 nukeops.OperativePlayers.Add(name, session);
             // Corvax-DionaPacifist-Start: Allow dionas nukes to harm
-            RemComp<PacifistComponent>(uid);
             RemComp<PacifiedComponent>(uid);
             // Corvax-DionaPacifist-End
         }
@@ -784,7 +783,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
                 _mindSystem.SetUserId(newMind, session.UserId);
                 _mindSystem.AddRole(newMind, new NukeopsRole(newMind, nukeOpsAntag));
-                
+
                 _mindSystem.TransferTo(newMind, mob);
             }
             else if (addSpawnPoints)

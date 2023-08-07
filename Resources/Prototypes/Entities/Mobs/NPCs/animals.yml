@@ -96,7 +96,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: DamageStateVisuals
     states:
       Alive:
@@ -1444,7 +1444,6 @@
   - type: GhostTakeoverAvailable
   - type: IdExaminable
   - type: Loadout
-    prototype: SyndicateOperativeGearMonkey
     prototypes: [SyndicateOperativeGearMonkey]
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest

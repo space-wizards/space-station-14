@@ -1,0 +1,45 @@
+- type: dataset
+  id: names_moth_first_male
+  values:
+  - Агриус # Agrius
+  - Атлас # Attacus atlas
+  - Цезарь # Attacus caesar
+  - Геркулес # Coscinocera hercules
+  - Раннох # Itame brunneata, "Rannoch Looper"
+  - Сократ # Acosmeryx socrates
+  - Солус # Saturniidae solus
+
+  # Other languages
+  - Эш # Hebrew עש "moth"
+  - Азар # Persian "fire"
+  - Кайзер # German "emperor" descendant of the Latin caesar
+  - Рекс # Latin "king"
+  - Раджас # Sanskrit "darkness" or "dust"
+  - Скорос # Greek "clothes moth"
+
+  # Myth and legend
+  - Бладуд # legendary king of the Britons who crafted wings and died in his attempt at flight
+  - Эребус # Greek primordial deity of darkness
+  - Икар # the classic
+  - Джатаю # Hindu figure, similar to Icarus
+  - Кохо # Japanese reading of 夸父（こほ）
+  - Куафу # Chinese giant 夸父, similar to Icarus
+  - Люцифер # more commonly-known fall-from-heaven figure
+  - Мерлин # Arthurian wizard
+  - Phaethon # another Greek figure, similar to Icarus
+  - Wolford # rendering of Bladud from the Welsh blaidd "wolf" + iudd "lord"
+
+  # Fun names
+  - Эйс
+  - Альтаир
+  - Гамбит
+  - Тимоти
+
+  # Common names, filler
+  - Эшер
+  - Исаак
+  - Роман
+  - Самуэль
+  - Себастиан
+  - Сайлас
+  - Саймон

@@ -28,6 +28,8 @@ namespace Content.MapRenderer.Painters
 
             await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
             {
+                DummyTicker = false,
+                Connected = true,
                 Fresh = true,
                 Map = map
             });

@@ -15,7 +15,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: THCOil
+        - ReagentId: THC
           Quantity: 5
 
 - type: entity

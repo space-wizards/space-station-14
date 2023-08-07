@@ -108,8 +108,6 @@
   id: Dexalin
   reactants:
     Oxygen:
-      amount: 1
-    Hydrogen:
       amount: 2
     Plasma:
       amount: 1
@@ -286,10 +284,8 @@
       amount: 1
     Plasma:
       amount: 1
-    Fluorine:
-      amount: 1
   products:
-    Lexorin: 3
+    Lexorin: 2
 
 - type: reaction
   id: Lipozine
@@ -331,10 +327,8 @@
 - type: reaction
   id: Ultravasculine
   reactants:
-    Dylovene:
-      amount: 1
-    Sodium:
-      amount: 1
+    Histamine:
+      amount: 2
     Plasma:
       amount: 1
       catalyst: true
@@ -389,6 +383,8 @@
 
 - type: reaction
   id: Sigynate
+  impact: Medium
+  minTemp: 370
   reactants:
     SodiumCarbonate:
       amount: 1

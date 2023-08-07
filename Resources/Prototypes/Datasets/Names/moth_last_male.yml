@@ -1,0 +1,19 @@
+- type: dataset
+  id: names_moth_last_male
+  values:
+  - Темнора # Temnora
+  - Уста # Usta
+  - Нитида
+  - Мурина
+
+  # Other languages
+  - Эпиалы # Ancient Greek "moth"
+  - Меллер # conceivably any Old Norse descendant of mǫlr but probably more Danish than anything. "oe" digraph for ø.
+  - Шмеллер
+
+  # Myth and legend
+  - Геральд # belief of moths flying at night signalling the reception of a letter
+  - Леандр # Greek figure associated with Hero, and similar sounding to Oleander hawk-moth
+
+  - Бабочкин
+  - Жуклер
