@@ -9,7 +9,7 @@
     stackType: FactoryBaseParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -36,7 +36,7 @@
 - type: stack
   id: FactoryBaseParts
   name: base factory parts
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryBaseParts1
   maxCount: 3
   itemSize: 10
@@ -52,7 +52,7 @@
     stackType: FactoryCircuitryParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -78,7 +78,7 @@
 - type: stack
   id: FactoryCircuitryParts
   name: circuitry
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryCircuitryParts1
   maxCount: 3
   itemSize: 10
@@ -94,7 +94,7 @@
     stackType: FactoryCasingParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -120,7 +120,7 @@
 - type: stack
   id: FactoryCasingParts
   name: casing
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryCasingParts1
   maxCount: 3
   itemSize: 10
@@ -136,7 +136,7 @@
     stackType: FactoryMetalBladeParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -162,7 +162,7 @@
 - type: stack
   id: FactoryMetalBladeParts
   name: metal blade
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryMetalBladeParts1
   maxCount: 3
   itemSize: 10
@@ -178,7 +178,7 @@
     stackType: FactoryLaserComponentParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -204,7 +204,7 @@
 - type: stack
   id: FactoryLaserComponentParts
   name: laser component
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryLaserComponentParts1
   maxCount: 3
   itemSize: 10
@@ -220,7 +220,7 @@
     stackType: FactoryMachineryParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -246,7 +246,7 @@
 - type: stack
   id: FactoryMachineryParts
   name: machinery
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryMachineryParts1
   maxCount: 3
   itemSize: 10
@@ -259,7 +259,7 @@
   components:
   - type: Material
   - type: Sprite
-    sprite: _RedEclipse/Factory/Parts/explosivepayloadpart.rsi
+    sprite: /Textures/_RedEclipse/Factory/Parts/explosivepayloadpart.rsi
     state: icon
   - type: Item
     size: 10
@@ -278,7 +278,7 @@
   components:
   - type: Material
   - type: Sprite
-    sprite: Objects/Devices/timer.rsi
+    sprite: /Textures/Objects/Devices/timer.rsi
     state: timer
   - type: Item
     size: 10
@@ -300,7 +300,7 @@
     stackType: FactoryClownParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -326,7 +326,7 @@
 - type: stack
   id: FactoryClownParts
   name: clown parts
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryClownParts1
   maxCount: 3
   itemSize: 10
@@ -339,8 +339,8 @@
   components:
   - type: Material
   - type: Sprite
-    sprite: Objects/Specific/Chemistry/syringe.rsi
-    state: syringe_base0
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
+    state: cube
   - type: Item
     size: 10
   - type: Tag
@@ -361,7 +361,7 @@
     stackType: FactoryMedicalParts
     count: 1
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
@@ -387,7 +387,7 @@
 - type: stack
   id: FactoryMedicalParts
   name: medical parts
-  icon: { sprite: Objects/Misc/monkeycube.rsi, state: cube }
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: FactoryMedicalParts1
   maxCount: 3
   itemSize: 10
@@ -400,7 +400,7 @@
   components:
   - type: Material
   - type: Sprite
-    sprite: Objects/Misc/monkeycube.rsi
+    sprite: /Textures/Objects/Misc/monkeycube.rsi
     state: cube
   - type: Item
     size: 10
