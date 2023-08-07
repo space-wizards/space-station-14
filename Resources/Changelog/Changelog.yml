@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the chemical compendium, a book containing all chemistry recipes
-      and effects. Find it in the library today.', type: Add}
-  id: 3974
-  time: '2023-06-08T14:47:54.0000000+00:00'
 - author: Ahion
   changes:
   - {message: Fixed O2 tanks in oxygen deprivation treatment kit spawning empty.,
@@ -2987,3 +2981,9 @@ Entries:
   - {message: Reproducible entities now have a capacity in confined areas., type: Fix}
   id: 4473
   time: '2023-08-07T09:48:47.0000000+00:00'
+- author: ubis1
+  changes:
+  - {message: some lathes can be emagged now; emaggable recipes list has been added
+      for protolathes and autolathes, type: Add}
+  id: 4474
+  time: '2023-08-07T14:21:04.0000000+00:00'
