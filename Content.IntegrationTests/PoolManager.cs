@@ -12,6 +12,7 @@ using Content.IntegrationTests.Tests.Destructible;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.IntegrationTests.Tests.Interaction.Click;
 using Content.Server.GameTicking;
+using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Robust.Client;
@@ -298,7 +299,7 @@ public static partial class PoolManager
                 // Newly created pairs should always be in a valid state.
                 await RunTicksSync(pair, 5);
                 await SyncTicks(pair, targetDelta: 1);
-                ValidateFastRecycle(pair, poolSettings);
+                ValidatePair(pair, poolSettings);
             }
             else
             {
@@ -326,7 +327,7 @@ public static partial class PoolManager
 
                     await RunTicksSync(pair, 5);
                     await SyncTicks(pair, targetDelta: 1);
-                    ValidateFastRecycle(pair, poolSettings);
+                    ValidatePair(pair, poolSettings);
                 }
                 else
                 {
@@ -365,14 +366,15 @@ public static partial class PoolManager
         };
     }
 
-    private static void ValidateFastRecycle(Pair pair, PoolSettings settings)
+    private static void ValidatePair(Pair pair, PoolSettings settings)
     {
         var cfg = pair.Server.ResolveDependency<IConfigurationManager>();
         Assert.That(cfg.GetCVar(CCVars.AdminLogsEnabled), Is.EqualTo(settings.AdminLogsEnabled));
         Assert.That(cfg.GetCVar(CCVars.GameLobbyEnabled), Is.EqualTo(settings.InLobby));
         Assert.That(cfg.GetCVar(CCVars.GameDummyTicker), Is.EqualTo(settings.UseDummyTicker));
 
-        var ticker = pair.Server.ResolveDependency<EntityManager>().System<GameTicker>();
+        var entMan = pair.Server.ResolveDependency<EntityManager>();
+        var ticker = entMan.System<GameTicker>();
         Assert.That(ticker.DummyTicker, Is.EqualTo(settings.UseDummyTicker));
 
         var expectPreRound = settings.InLobby | settings.DummyTicker;
@@ -390,17 +392,33 @@ public static partial class PoolManager
         var cPlayer = pair.Client.ResolveDependency<Robust.Client.Player.IPlayerManager>();
         var sPlayer = pair.Server.ResolveDependency<IPlayerManager>();
         Assert.That(sPlayer.Sessions.Count(), Is.EqualTo(1));
-        Assert.That(cPlayer.LocalPlayer?.Session.UserId, Is.EqualTo(sPlayer.Sessions.Single().UserId));
+        var session = sPlayer.Sessions.Single();
+        Assert.That(cPlayer.LocalPlayer?.Session.UserId, Is.EqualTo(session.UserId));
 
         if (ticker.DummyTicker)
             return;
 
-        var status = ticker.PlayerGameStatuses[sPlayer.Sessions.Single().UserId];
+        var status = ticker.PlayerGameStatuses[session.UserId];
         var expected = settings.InLobby
             ? PlayerGameStatus.NotReadyToPlay
             : PlayerGameStatus.JoinedGame;
 
         Assert.That(status, Is.EqualTo(expected));
+
+        if (settings.InLobby)
+        {
+            Assert.Null(session.AttachedEntity);
+            return;
+        }
+
+        Assert.NotNull(session.AttachedEntity);
+        Assert.That(entMan.EntityExists(session.AttachedEntity));
+        Assert.That(entMan.HasComponent<MindContainerComponent>(session.AttachedEntity));
+        var mindCont = entMan.GetComponent<MindContainerComponent>(session.AttachedEntity!.Value);
+        Assert.NotNull(mindCont.Mind);
+        Assert.Null(mindCont.Mind?.VisitingEntity);
+        Assert.That(mindCont.Mind!.OwnedEntity, Is.EqualTo(session.AttachedEntity!.Value));
+        Assert.That(mindCont.Mind.UserId, Is.EqualTo(session.UserId));
     }
 
     private static Pair? GrabOptimalPair(PoolSettings poolSettings)
