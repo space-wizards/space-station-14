@@ -1,49 +1,46 @@
 - type: dataset
   id: names_moth_first_female
   values:
-  - Atropos # Acherontia atropos
-  - Betularia # Biston betularia
-  - Daphne # Daphnis
-  - Eurypta # Eurypteryx
-  - Eudryas # Eudryas
-  - Iris # Salassa iris
-  - Lachesis # Acherontia lachesis
-  - Luna # Actias luna
-  - Lymanzia # Lymantria
-  - Maple # Dryocampa rubicunda, "Rosy Maple"
-  - Mima # Mimas
-  - Nephele # Nephele
-  - Rosie # Dryocampa rubicunda
-  - Scarlet # Cosmosoma myrodora, "Scarlet-bodied wasp moth"
-  - Styx # Acherontia styx
+  - Атропос # Acherontia atropos
+  - Бетулярия # Biston betularia
+  - Дафна # Daphnis
+  - Эврипта # Eurypteryx
+  - Эудриас # Eudryas
+  - Ирис # Salassa iris
+  - Лахезис # Acherontia lachesis
+  - Луна # Actias luna
+  - Лиманция # Lymantria
+  - Мэйпл # Dryocampa rubicunda, "Rosy Maple"
+  - Мима # Mimas
+  - Нефела # Nephele
+  - Рози # Dryocampa rubicunda
+  - Скарлет # Cosmosoma myrodora, "Scarlet-bodied wasp moth"
+  - Стикс # Acherontia styx
 
   # Other languages
-  - Avelaina # Galician "moth" (avelaíña)
-  - Falena # Italian "winter moth"
-  - Menodora # Greek "moon gift"
-  - Molie # Romanian "moth"
-  - Polilla # Spanish "moth"
+  - Авелайна # Galician "moth" (avelaíña)
+  - Фалена # Italian "winter moth"
+  - Менодора # Greek "moon gift"
+  - Молли # Romanian "moth"
+  - Полилла # Spanish "moth"
 
   # Myth and legend
-  - Althea # Greek mythological figure
-  - Aurora # Roman goddess of the dawn
-  - Helle # Greek mythological figure
-  - Selene # Greek goddess of the moon
-  - Nyx # Greek goddess of the night
+  - Алтея # Greek mythological figure
+  - Аврора # Roman goddess of the dawn
+  - Хелле # Greek mythological figure
+  - Селена # Greek goddess of the moon
+  - Никс # Greek goddess of the night
 
   # Fun names
-  - Angel
-  - Sandy
-  - Liberty
+  - Сэнди
 
   # Common names, filler
-  - Beatrix
-  - Daisy
-  - Dawn
-  - Elizabeth
-  - Lucy
-  - Ruby
-  - Sarah
-  - Sienna
-  - Willow
-  - Zoey
+  - Беатрис
+  - Дэйзи
+  - Элизабет
+  - Люси
+  - Руби
+  - Сара
+  - Сиенна
+  - Уиллоу
+  - Зои
