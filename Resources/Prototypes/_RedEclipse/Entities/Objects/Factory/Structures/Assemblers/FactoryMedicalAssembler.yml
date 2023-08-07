@@ -27,7 +27,6 @@
       idleState: icon
       runningState: building
       staticRecipes:
-        - FactoryHypopenBox
         - FactoryMacroBombImplanter
         - FactoryStorageImplanter
         - FactoryFreedomImplanter
