@@ -5,7 +5,7 @@
   completetime: 1
   materials:
     FactorySimpleCircuits : 2
-    MaterialFactoryTimer : 1
+    FactoryTimingComponents : 1
     FactoryBasicCasings : 1
 
 - type: latheRecipe
@@ -14,7 +14,7 @@
   completetime: 1
   materials:
     FactorySimpleCircuits: 1
-    MaterialFactoryTimer: 1
+    FactoryTimingComponents: 1
     FactoryBasicCasings: 1
     FactoryExplosivePayloads: 1
 
@@ -31,7 +31,7 @@
   result: C4
   completetime: 1
   materials:
-    MaterialFactoryTimer: 1
+    FactoryTimingComponents: 1
     MaterialFactoryChemPack: 1
     FactoryExplosivePayloads: 1
 
@@ -42,7 +42,7 @@
   completetime: 1
   materials:
     FactorySimpleCircuits: 1
-    MaterialFactoryTimer: 1
+    FactoryTimingComponents: 1
     FactoryBasicCasings: 1
     FactoryExplosivePayloads: 1
 
@@ -51,7 +51,7 @@
   result: MaterialFactoryTinyBomb
   completetime: 1
   materials:
-    MaterialFactoryTimer: 1
+    FactoryTimingComponents: 1
     FactoryExplosivePayloads: 1
 
 - type: latheRecipe
