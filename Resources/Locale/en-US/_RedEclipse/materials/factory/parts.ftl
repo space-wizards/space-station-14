@@ -7,3 +7,4 @@ materials-factory-machinery-parts = factory machinery parts
 materials-factory-explosive-payloads = factory explosive payloads
 materials-factory-timing-components = factory timing components
 materials-factory-clown-parts = factory clown parts
+materials-factory-explosive-tiny-bombs = factory explosive tiny bombs
