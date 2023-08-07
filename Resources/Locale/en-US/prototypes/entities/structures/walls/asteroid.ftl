@@ -4,7 +4,7 @@ ent-AsteroidRock = asteroid rock
 
 ent-AsteroidRockMining = asteroid rock
     .desc = An asteroid.
-    .suffix = higher ore yield
+    .suffix = High Ore Yield
 
 ent-WallRock = rock
 
