@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryPayload
-  name: payload
-  description: various payloads
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryPayloadParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryPayload: 1
-
-- type: entity
-  parent: MaterialFactoryPayload
-  id: FactoryPayloadParts1
-  name: payload
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryPayloadParts
-    count: 1
-
-- type: stack
-  id: FactoryPayloadParts
-  name: payload
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryPayloadParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryTimer
   name: timer
   description: precise timing components
