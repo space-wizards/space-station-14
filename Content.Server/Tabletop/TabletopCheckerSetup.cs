@@ -9,16 +9,16 @@ namespace Content.Server.Tabletop
     public sealed class TabletopCheckerSetup : TabletopSetup
     {
 
-        [DataField("prototypePieceWhite", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototypePieceWhite", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrototypePieceWhite = default!;
 
-        [DataField("prototypeCrownWhite", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototypeCrownWhite", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrototypeCrownWhite = default!;
 
-        [DataField("prototypePieceBlack", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototypePieceBlack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrototypePieceBlack = default!;
 
-        [DataField("prototypeCrownBlack", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+        [DataField("prototypeCrownBlack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrototypeCrownBlack = default!;
 
         private const float Separation = 1f;
