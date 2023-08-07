@@ -165,7 +165,10 @@ public sealed partial class ParticleAcceleratorSystem
             var pos = Transform(uid);
             ParticleAcceleratorPowerState alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
             if (strength >= alertMinPowerState)
-                _chat.SendAdminAlert(player, $"changed PA power of {ToPrettyString(uid)} to {strength} at {pos.Coordinates:coordinates}");
+                _chat.SendAdminAlert(player, Loc.GetString("particle-accelerator-admin-power-strength-warning",
+                        ("machine", ToPrettyString(uid)),
+                        ("powerState", strength),
+                        ("coordinates", pos.Coordinates)));
         }
 
         comp.SelectedStrength = strength;
