@@ -42,7 +42,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
-        public const float HydroponicsConsumptionMultiplier = 4f;
+        public const float HydroponicsConsumptionMultiplier = 2f;
 
         public override void Initialize()
         {
@@ -412,7 +412,7 @@ namespace Content.Server.Botany.Systems
             if (component.Seed.WaterConsumption > 0 && component.WaterLevel > 0 && _random.Prob(0.75f))
             {
                 component.WaterLevel -= MathF.Max(0f,
-                    component.Seed.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+                    component.Seed.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
