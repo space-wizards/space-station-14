@@ -46,11 +46,11 @@
   result: TrashBananaPeelExplosive
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryTinyBomb: 1
+    FactoryExplosiveTinyBombs: 1
 
 - type: latheRecipe
   id: FactoryExplosiveWetFloorSign
   result: WetFloorSignMineExplosive
   completetime: 1
   materials: # TODO better recipe
-    MaterialFactoryTinyBomb: 1
+    FactoryExplosiveTinyBombs: 1
