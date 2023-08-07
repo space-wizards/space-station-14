@@ -42,7 +42,7 @@
 - type: entity
   parent: MaterialBase
   id: MaterialFactoryCircuitry
-  name: circuitrty
+  name: circuitry
   description: some simple ciruits
   components:
   - type: Material
