@@ -4,16 +4,12 @@
   name: factory basic parts
   suffix: Full
   components:
-    - type: Material
     - type: PhysicalComposition
       materialComposition:
         FactoryBasicParts: 1
     - type: Stack
       stackType: FactoryBasicParts
-      count: 5
-      baseLayer: base
-      layerStates: # placeholder
-        - cube
+
 - type: entity
   parent: MaterialFactoryBasicParts
   id: FactoryBasicPart
@@ -38,6 +34,6 @@
 - type: material
   id: FactoryBasicParts
   stackEntity: FactoryBasicPart
-  name: materials-factory-basic-parts # placeholder
+  name: materials-factory-basic-parts
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
   price: 0
