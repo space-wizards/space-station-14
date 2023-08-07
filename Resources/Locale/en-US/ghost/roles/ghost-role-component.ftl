@@ -146,8 +146,8 @@ ghost-role-information-centcom-official-description = Inspect the station, jot d
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
 
-ghost-role-information-blobbernaut-name = Блоббернаут
-ghost-role-information-blobbernaut-description = Вы блоббернаут. Вы должны защищать ядро блоба.
+ghost-role-information-blobbernaut-name = Blobbernaut
+ghost-role-information-blobbernaut-description = You are a Blobbernaut. Your mission is to defend the blob's core.
 
-ghost-role-information-blob-name = Блоб
-ghost-role-information-blob-description = Вы космический паразит - блоб. Ваша задача захватить станцию.
+ghost-role-information-blob-name = Blob
+ghost-role-information-blob-description = You are a space parasite - the Blob. Your objective is to take over the station.
