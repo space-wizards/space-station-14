@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryTimer
-  name: timer
-  description: precise timing components
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryTimerParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryTimer: 1
-
-- type: entity
-  parent: MaterialFactoryTimer
-  id: FactoryTimerParts1
-  name: timer
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryTimerParts
-    count: 1
-
-- type: stack
-  id: FactoryTimerParts
-  name: timer
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryTimerParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryClownParts
   name: clown parts
   description: silly clown components
