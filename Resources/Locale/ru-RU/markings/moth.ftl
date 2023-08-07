@@ -1,0 +1,5 @@
+marking-MothAntennasDefault = Антенны (Обычные)
+marking-MothWingsDefault = Крылья (Обычные)
+marking-MothWingsLook1 = Крылья (Острые)
+marking-MothWingsLook2 = Крылья (Закрученные)
+marking-MothWingsLook3 = Крылья (Крапчатые)
