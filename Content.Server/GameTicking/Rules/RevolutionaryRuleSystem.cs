@@ -25,9 +25,8 @@ using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
 using Content.Server.Mindshield;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.Objectives.Conditions;
+using Content.Shared.IdentityManagement;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -43,7 +42,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IObjectivesManager _objectivesManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -286,7 +284,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
     }
 
-
     public void OnHeadRevAdmin(Mind.Mind mind, IPlayerSession headRev)
     {
         var revRule = EntityQuery<RevolutionaryRuleComponent>().FirstOrDefault();
@@ -344,16 +341,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     if (mind != null)
                         if (HasComp<RevolutionaryComponent>(mind.OwnedEntity) && !HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
                         {
-                            var name = mind.CharacterName;
+                            var name = Identity.Entity(mind.OwnedEntity.Value, EntityManager);
                             _npcFaction.AddFaction(mind.OwnedEntity.Value, "NanoTrasen");
                             _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "Revolutionary");
                             _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
                             RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                             RemComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                            if (name != null)
-                            {
-                                _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
-                            }
+                            _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
 
                         }
                 }

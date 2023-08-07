@@ -7,26 +7,27 @@ using Content.Shared.Revolutionary.Components;
 using Content.Server.Popups;
 using Robust.Shared.Containers;
 using Content.Shared.IdentityManagement;
+using Content.Server.Revolutionary;
 
 namespace Content.Server.Mindshield;
 /// <summary>
 /// For checking for Mindshield implant at start and giving them the component
 /// </summary>
 
-public sealed class MindShieldSystem : EntitySystem
+public sealed class MindShieldSystem : RevolutionarySystem
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
 
-    public override void Initialize()
-    {
-        base.Initialize();
+    //public override void Initialize()
+    //{
+    //    base.Initialize();
 
-        //Commenting this stuff out as it isn't really needed unless Revs are active and I want to find a better solution anyway.
-        //SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
-        //SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
-    }
+    //    Commenting this stuff out as it isn't really needed unless Revs are active and I want to find a better solution anyway.
+    //    SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayerJobAssigned);
+    //    SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
+    //}
     //private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
     //{
     //    MindShieldCheck();
@@ -70,7 +71,6 @@ public sealed class MindShieldSystem : EntitySystem
                             {
                                 RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                                 _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
-
                             }
                         }
                     }

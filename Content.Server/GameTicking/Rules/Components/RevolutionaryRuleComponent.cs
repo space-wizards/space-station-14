@@ -61,6 +61,7 @@ public sealed class RevolutionaryRuleComponent : Component
     /// </summary>
 
     [DataField("minPlayers")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int MinPlayers = 15;
 
     /// <summary>
@@ -68,6 +69,7 @@ public sealed class RevolutionaryRuleComponent : Component
     /// </summary>
 
     [DataField("maxHeadRevs")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int MaxHeadRevs = 3;
 
     /// <summary>
@@ -75,5 +77,6 @@ public sealed class RevolutionaryRuleComponent : Component
     /// </summary>
 
     [DataField("playersPerHeadRev")]
+    [ViewVariables(VVAccess.ReadWrite)]
     public int PlayersPerHeadRev = 15;
 }

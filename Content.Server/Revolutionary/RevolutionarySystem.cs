@@ -1,7 +1,10 @@
-using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.Revolutionary;
 
-public sealed class RevolutionarySystem
+/// <summary>
+/// I don't think I need this but I made for the future, maybe.
+/// </summary>
+/// 
+public abstract class RevolutionarySystem : EntitySystem
 {
 }
