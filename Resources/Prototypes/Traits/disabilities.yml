@@ -56,4 +56,4 @@
   description: trait-wheelchair-bound-desc
   components:
     - type: WheelchairBound
-    - type: LegParalyzed
+    - type: LegsParalyzed
