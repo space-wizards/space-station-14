@@ -1,4 +1,4 @@
-#Gear Assembler
+#Factory Gear Assembler
 - type: latheRecipe
   id: FactoryShoulderHolster
   result: ClothingBeltSyndieHolster

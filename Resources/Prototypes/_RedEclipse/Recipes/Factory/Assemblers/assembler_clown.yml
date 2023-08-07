@@ -1,4 +1,4 @@
-#Clown Assembler
+#Factory Clown Assembler
 - type: latheRecipe
   id: FactoryRiggedBoxingGloves
   result: ClothingHandsGlovesBoxingRigged

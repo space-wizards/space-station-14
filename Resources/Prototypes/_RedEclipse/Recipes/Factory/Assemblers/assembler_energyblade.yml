@@ -1,4 +1,4 @@
-#Energy Blade Assembler
+#Factory Energy Blade Assembler
 - type: latheRecipe
   id: FactoryEnergySword
   result: EnergySword
