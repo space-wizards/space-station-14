@@ -7,6 +7,7 @@ ent-AsteroidRockMining = asteroid rock
     .suffix = High Ore Yield
 
 ent-WallRock = rock
+    .desc = A rock wall.
 
 ent-WallRockGold = { ent-WallRock }
     .desc = An ore vein rich with gold.
@@ -41,6 +42,7 @@ ent-WallRockArtifactFragment = { ent-WallRock }
     .suffix = Artifact Fragment
 
 ent-WallRockBasalt = { ent-WallRock }
+    .desc = { ent-WallRock.desc }
 
 ent-WallRockBasaltGold = { ent-WallRock }
     .desc = An ore vein rich with gold.

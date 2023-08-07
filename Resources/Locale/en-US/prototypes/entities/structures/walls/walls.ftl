@@ -93,3 +93,4 @@ ent-WallVaultSandstone = sandstone vault wall
 ent-WallInvisible = invisible wall
 
 ent-WallForce = force wall
+    .desc = A magical forcefield.
