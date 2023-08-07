@@ -77,6 +77,7 @@ ent-WallRockBasaltArtifactFragment = { ent-WallRock }
     .suffix = Artifact Fragment
 
 ent-WallRockSnow = { ent-WallRock }
+    .desc = { ent-WallRock.desc }
 
 ent-WallRockSnowGold = { ent-WallRock }
     .desc = An ore vein rich with gold.
