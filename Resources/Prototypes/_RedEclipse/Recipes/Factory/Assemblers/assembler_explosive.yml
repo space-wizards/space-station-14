@@ -16,7 +16,7 @@
     FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
     FactoryBasicCasings: 1
-    MaterialFactoryPayload: 1
+    FactoryExplosivePayloads: 1
 
 - type: latheRecipe
   id: FactoryExplodingPen
@@ -24,7 +24,7 @@
   completetime: 1
   materials:
     FactoryBasicCasings: 1
-    MaterialFactoryPayload: 1
+    FactoryExplosivePayloads: 1
 
 - type: latheRecipe
   id: FactoryC4
@@ -33,7 +33,7 @@
   materials:
     MaterialFactoryTimer: 1
     MaterialFactoryChemPack: 1
-    MaterialFactoryPayload: 1
+    FactoryExplosivePayloads: 1
 
 # dynamic
 - type: latheRecipe
@@ -44,7 +44,7 @@
     FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
     FactoryBasicCasings: 1
-    MaterialFactoryPayload: 1
+    FactoryExplosivePayloads: 1
 
 - type: latheRecipe
   id: FactoryTinybomb
@@ -52,7 +52,7 @@
   completetime: 1
   materials:
     MaterialFactoryTimer: 1
-    MaterialFactoryPayload: 1
+    FactoryExplosivePayloads: 1
 
 - type: latheRecipe
   id: FactoryChinaLake
