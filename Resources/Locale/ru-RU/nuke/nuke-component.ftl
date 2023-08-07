@@ -1,4 +1,4 @@
-nuke-component-cant-anchor = Похоже, что без диска болты заблокированы!
+nuke-component-cant-anchor-floor = Крепёжным болтам не удаётся закрепиться в полу!
 nuke-component-announcement-sender = Ядерная боеголовка
 nuke-component-announcement-armed = Внимание! Механизм самоуничтожения станции был активирован по координатам { $position }. До детонации { $time } секунд.
 nuke-component-announcement-unarmed = Механизм самоуничтожение станции деактивирован! Хорошего дня!

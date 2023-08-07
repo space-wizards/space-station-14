@@ -56,3 +56,5 @@ alerts-pulling-name = Вы тянете
 alerts-pulling-desc = Вы что-то тянете. Щелкните по иконке, чтобы перестать.
 alerts-bleed-name = [color=red]Кровотечение[/color]
 alerts-bleed-desc = У вас [color=red]кровотечение[/color].
+alerts-pacified-name = [color=green]Пацифизм[/color]
+alerts-pacified-desc = Вы чувствуете себя умиротворенно и не можете атаковать кого-либо напрямую.
