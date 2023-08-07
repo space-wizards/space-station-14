@@ -60,6 +60,12 @@ namespace Content.Server.Body.Components
         public float CycleDelay = 2.0f;
 
         public float AccumulatedFrametime;
+
+        /// <summary>
+        /// Whether the entity is immuned to pressure (i.e possess the PressureImmunity component)
+        /// </summary>
+        [ViewVariables]
+        public bool HasImmunity = false;
     }
 }
 

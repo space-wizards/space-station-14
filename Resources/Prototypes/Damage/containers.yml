@@ -8,6 +8,12 @@
     - Genetic
 
 - type: damageContainer
+  id: Blob
+  supportedGroups:
+    - Brute
+    - Burn
+
+- type: damageContainer
   id: Inorganic
   supportedGroups:
     - Brute

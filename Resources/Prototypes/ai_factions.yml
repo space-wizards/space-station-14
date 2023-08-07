@@ -6,6 +6,23 @@
     - Xeno
     - PetsNT
     - Zombie
+    - Blob
+
+- type: npcFaction
+  id: Blob
+  hostile:
+    - NanoTrasen
+    - Syndicate
+    - RatPassive
+    - RatHostile
+    - Xeno
+    - MalfunctioningRobot
+    - PetsNT
+    - Flesh
+    - Zombie
+    - Pet
+    - FleshHuman
+    - Dragon
 
 - type: npcFaction
   id: NanoTrasen
@@ -14,6 +31,7 @@
   - Syndicate
   - Xeno
   - Zombie
+  - Blob
 
 - type: npcFaction
   id: Mouse
@@ -30,6 +48,7 @@
   - SimpleHostile
   - Zombie
   - Xeno
+  - Blob
 
 - type: npcFaction
   id: SimpleHostile
@@ -39,6 +58,7 @@
   - Passive
   - PetsNT
   - Zombie
+  - Blob
 
 - type: npcFaction
   id: SimpleNeutral
@@ -51,6 +71,7 @@
   - Xeno
   - PetsNT
   - Zombie
+  - Blob
 
 - type: npcFaction
   id: Xeno
@@ -60,6 +81,7 @@
   - Passive
   - PetsNT
   - Zombie
+  - Blob
 
 - type: npcFaction
   id: Zombie
@@ -70,3 +92,4 @@
   - Syndicate
   - Passive
   - PetsNT
+  - Blob

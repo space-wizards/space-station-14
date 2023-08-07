@@ -1,0 +1,93 @@
+﻿- type: worldTargetAction
+  id: CreateBlobFactory
+  icon: Interface/Actions/blobFactory.png
+  name: blob-create-factory-action-name
+  description: blob-create-factory-action-desc
+  serverEvent: !type:BlobCreateFactoryActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: worldTargetAction
+  id: CreateBlobResource
+  icon: Interface/Actions/blobResource.png
+  name: blob-create-resource-action-name
+  description: blob-create-resource-action-desc
+  serverEvent: !type:BlobCreateResourceActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: worldTargetAction
+  id: CreateBlobNode
+  icon: Interface/Actions/blobNode.png
+  name: blob-create-node-action-name
+  description: blob-create-node-action-desc
+  serverEvent: !type:BlobCreateNodeActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: worldTargetAction
+  id: CreateBlobbernaut
+  icon: Interface/Actions/blobBlobbernaut.png
+  name: blob-produce-blobbernaut-action-name
+  description: blob-produce-blobbernaut-action-desc
+  serverEvent: !type:BlobCreateBlobbernautActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: worldTargetAction
+  id: SplitBlobCore
+  icon: Interface/Actions/blobSplit.png
+  name: blob-split-core-action-name
+  description: blob-split-core-action-desc
+  serverEvent: !type:BlobSplitCoreActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: worldTargetAction
+  id: SwapBlobCore
+  icon: Interface/Actions/blobSwap.png
+  name: blob-swap-core-action-name
+  description: blob-swap-core-action-desc
+  serverEvent: !type:BlobSwapCoreActionEvent
+  range: 200
+  checkCanAccess: false
+
+- type: instantAction
+  id: TeleportBlobToCore
+  icon: Interface/Actions/blobToCore.png
+  name: blob-teleport-to-core-action-name
+  description: blob-teleport-to-core-action-desc
+  serverEvent: !type:BlobToCoreActionEvent
+  checkCanAccess: false
+
+- type: instantAction
+  id: TeleportBlobToNode
+  icon: Interface/Actions/blobToNode.png
+  name: blob-teleport-to-node-action-name
+  description: blob-teleport-to-node-action-desc
+  serverEvent: !type:BlobToNodeActionEvent
+  checkCanAccess: false
+
+- type: instantAction
+  id: HelpBlob
+  icon: Interface/Actions/blobHelp.png
+  name: blob-help-action-name
+  description: blob-help-action-desc
+  serverEvent: !type:BlobHelpActionEvent
+  checkCanAccess: false
+
+- type: instantAction
+  id: SwapBlobChem
+  icon: Interface/Actions/blobChemSwap.png
+  name: blob-swap-chem-action-name
+  description: blob-swap-chem-action-desc
+  serverEvent: !type:BlobSwapChemActionEvent
+  checkCanAccess: false
+
+- type: instantAction
+  id: TransformToBlob
+  icon: Interface/Actions/blobToCore.png
+  name: blob-carrier-transform-to-blob-action-name
+  description: blob-carrier-transform-to-blob-action-desc
+  serverEvent: !type:TransformToBlobActionEvent
+  checkCanAccess: false

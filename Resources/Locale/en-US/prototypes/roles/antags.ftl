@@ -21,3 +21,6 @@ roles-antag-nuclear-operative-agent-objective = Like default operative, the team
 
 roles-antag-nuclear-operative-name = Nuclear operative
 roles-antag-nuclear-operative-objective = Find the nuke disk and blow up the station.
+
+roles-antag-blob-name = Blob
+roles-antag-blob-objective = Take over the station.

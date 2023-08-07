@@ -46,6 +46,13 @@
   - type: PiratesRule
 
 - type: entity
+  id: Blob
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+    - type: BlobRule
+
+- type: entity
   id: Traitor
   parent: BaseGameRule
   noSpawn: true

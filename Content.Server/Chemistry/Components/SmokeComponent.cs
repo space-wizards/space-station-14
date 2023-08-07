@@ -1,3 +1,4 @@
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Fluids.Components;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
@@ -8,7 +9,7 @@ namespace Content.Server.Chemistry.Components;
 /// to entities that collide with it. Similar to <see cref="PuddleComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class SmokeComponent : Component
+public sealed class SmokeComponent : SharedSmokeComponent
 {
     public const string SolutionName = "solutionArea";
 
@@ -17,6 +18,9 @@ public sealed class SmokeComponent : Component
 
     [DataField("spreadAmount")]
     public int SpreadAmount = 0;
+
+    [DataField("smokeColor")]
+    public Color SmokeColor = Color.Black;
 
     /// <summary>
     ///     Have we reacted with our tile yet?

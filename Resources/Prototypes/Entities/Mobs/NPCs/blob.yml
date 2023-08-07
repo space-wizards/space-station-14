@@ -1,0 +1,625 @@
+﻿- type: entity
+  id: SpawnPointGhostBlob
+  name: Blob
+  suffix: DONTMAP, spawner
+  parent: MarkerBase
+  components:
+    - type: BlobSpawner
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+    - type: GhostTakeoverAvailable
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      layers:
+        - state: green
+        - sprite: Mobs/Aliens/blob.rsi
+          state: blob_nuke_overlay
+
+
+- type: entity
+  id: MobBlobPod
+  name: Blob pod
+  parent: SimpleSpaceMobBase
+  components:
+    - type: TriggerOnMobstateChange
+      mobState:
+        - Dead
+    - type: SmokeOnTrigger
+      time: 5
+      smokeColor: Green
+      spreadAmount: 20
+#      smokeReagents:
+#        - ReagentId: TearAcid
+#          Quantity: 3
+      sound: /Audio/Effects/smoke.ogg
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobMob
+    - type: Clothing
+      quickEquip: false
+      sprite: Mobs/Aliens/blob.rsi
+      equippedPrefix: blobPod
+      slots:
+        - HEAD
+    - type: Tag
+      tags:
+        - HidesHair
+        - BlobMob
+    - type: IngestionBlocker
+    - type: IdentityBlocker
+    - type: BlobPod
+    - type: DoAfter
+    - type: Physics
+      bodyType: KinematicController
+    - type: InteractionOutline
+    - type: Actions
+    - type: Alerts
+    - type: InputMover
+    - type: Examiner
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: BlobPodCompound
+    - type: BlobMob
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: CombatMode
+    - type: NpcFactionMember
+      factions:
+        - Blob
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 0
+      animation: WeaponArcSmash
+      damage:
+        types:
+          Piercing: 5
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: blobpod
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.25
+          density: 10
+          mask:
+            - FlyingBlobMobMask
+          layer:
+            - FlyingBlobMobLayer
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 50
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        50: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 3
+      baseSprintSpeed: 4
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/blob.rsi
+      state: blobpod
+
+
+- type: entity
+  id: MobBlobBlobbernaut
+  name: Blobbernaut
+  parent: SimpleSpaceMobBase
+  components:
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobMob
+    - type: Tag
+      tags:
+        - BlobMob
+    - type: GhostRole
+      name: ghost-role-information-blobbernaut-name
+      description: ghost-role-information-blobbernaut-description
+      rules: You are an antagonist, defend your blob core!
+    - type: GhostTakeoverAvailable
+    - type: Blobbernaut
+    - type: Physics
+    - type: InputMover
+    - type: MobMover
+    - type: BlobMob
+    - type: ReplacementAccent
+      accent: genericAggressive
+    - type: CombatMode
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+        - Blob
+    - type: MobState
+      allowedStates:
+        - Alive
+        - Dead
+    - type: MeleeWeapon
+      hidden: true
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      angle: 0
+      animation: WeaponArcSmash
+      damage:
+        types:
+          Blunt: 15
+          Structural: 50
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: blobbernaut
+        Dead:
+          Base: blobbernaut_dead
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 200
+          mask:
+            - BlobMobMask
+          layer:
+            - BlobMobLayer
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        200: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2.5
+      baseSprintSpeed: 3
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: Mobs
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blobbernaut
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: nautdamage
+          shader: unshaded
+
+- type: entity
+  id: BaseBlob
+  abstract: true
+  name: base blob
+  placement:
+    mode: SnapgridCenter
+    snap:
+      - Wall
+  components:
+    - type: Flashable
+    - type: Reactive
+      groups:
+        Flammable: [Touch]
+        Extinguish: [Touch]
+    - type: ExplosionResistance
+      damageCoefficient: 0.3
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: Blob
+    - type: Appearance
+    - type: Physics
+    - type: Clickable
+    - type: Transform
+      anchored: true
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+          layer:
+            - BlobTileLayer
+          density: 1000
+
+- type: entity
+  parent: BaseBlob
+  id: NormalBlobTile
+  name: Normal Blob
+  components:
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    ColdDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    cold:
+      types: {}
+    damage:
+      types:
+        Heat: 1
+  - type: BlobTile
+    tileType: Normal
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 25
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+  - type: Sprite
+    sprite: Mobs/Aliens/blob.rsi
+    drawdepth: BlobTiles
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: blob
+#      Vanila vs new type, idk
+#  - type: SlowContacts
+#    walkSpeedModifier: 0.3
+#    sprintSpeedModifier: 0.3
+#    ignoreWhitelist:
+#      tags:
+#        - BlobMob
+#  - type: DamageContacts
+#    damage:
+#      types:
+#        Poison: 1.5
+#        Piercing: 1.5
+#    ignoreWhitelist:
+#      tags:
+#        - BlobMob
+#  - type: Fixtures
+#    fixtures:
+#      fix1:
+#        density: 7
+#        shape:
+#          !type:PhysShapeAabb
+#          bounds: "-0.5,-0.5,0.5,0.5"
+#        layer:
+#          - BlobTileLayer
+#        mask:
+#          - BlobTileMask
+
+
+
+- type: entity
+  parent: BaseBlob
+  id: CoreBlobTile
+  name: Core Blob
+  components:
+  - type: Temperature
+    heatDamage:
+      types:
+        Heat: 5
+    coldDamage: {}
+    ColdDamageThreshold: 0
+  - type: Flammable
+    fireSpread: true
+    cold:
+      types: {}
+    damage:
+      types:
+        Heat: 1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: BlobTile
+    tileType: Core
+  - type: BlobCore
+  - type: BlobNode
+  - type: BlobResource
+    pointsPerPulsed: 5
+  - type: Sprite
+    sprite: Mobs/Aliens/blob.rsi
+    drawdepth: BlobTiles
+    layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: blob_core
+      - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+        state: blob_core_glow
+#        shader: unshaded
+      - state: blob_core_overlay
+
+
+- type: entity
+  parent: CoreBlobTile
+  id: CoreBlobTileGhostRole
+  suffix: Ghost Role
+  components:
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+      reregister: false
+    - type: GhostTakeoverAvailable
+
+
+- type: entity
+  parent: BaseBlob
+  id: FactoryBlobTile
+  name: Factory Blob
+  components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: BlobTile
+      tileType: Factory
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: BlobFactory
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: BlobTiles
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blob_factory
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: blob_factory_glow
+#          shader: unshaded
+
+
+- type: entity
+  parent: BaseBlob
+  id: ResourceBlobTile
+  name: Resource Blob
+  components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: BlobTile
+      tileType: Resource
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 60
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: BlobResource
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: BlobTiles
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blob_resource
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: blob_resource_glow
+#          shader: unshaded
+
+
+- type: entity
+  parent: BaseBlob
+  id: NodeBlobTile
+  name: Node Blob
+  components:
+    - type: Temperature
+      heatDamage:
+        types:
+          Heat: 5
+      coldDamage: {}
+      ColdDamageThreshold: 0
+    - type: Flammable
+      fireSpread: true
+      cold:
+        types: {}
+      damage:
+        types:
+          Heat: 1
+    - type: BlobTile
+      tileType: Node
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: BlobNode
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: BlobTiles
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blob_node
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: blob_node_glow
+#          shader: unshaded
+        - state: blob_node_overlay
+
+
+- type: entity
+  parent: BaseBlob
+  id: StrongBlobTile
+  name: StrongBlobTile
+  components:
+    - type: BlobTile
+      tileType: Strong
+    - type: Airtight
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 150
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: BlobTiles
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blob_glow
+        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          state: blob_glow
+#          shader: unshaded
+
+
+- type: entity
+  parent: BaseBlob
+  id: ReflectiveBlobTile
+  name: ReflectiveBlobTile
+  components:
+    - type: Damageable
+      damageContainer: Blob
+      damageModifierSet: BlobReflective
+    - type: BlobTile
+      tileType: Reflective
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+    - type: Reflect
+      reflectProb: 0.9
+      spread: 10
+      reflects:
+        - Energy
+    - type: Airtight
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      drawdepth: BlobTiles
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: blob_shield
+#        - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+#          state: blob_shield_damaged
+#          shader: unshaded
+
+
+#- type: entity
+#  parent: BaseStructure
+#  id: BlobBorder
+#  name: debug wall
+#  noSpawn: true
+#  suffix: DONTMAP
+#  placement:
+#    mode: SnapgridCenter
+#    snap:
+#      - Wall
+#  components:
+#    - type: BlobBorder
+#    - type: Fixtures
+#      fixtures:
+#        fix1:
+#          shape:
+#            !type:PhysShapeAabb
+#            bounds: "-0.5,-0.5,0.5,0.5"
+#          mask:
+#            - BlobGhostImpassable
+#          layer:
+#            - BlobGhostImpassable
+#    - type: PlacementReplacement
+#      key: walls
+#    - type: Visibility
+#      layer: 5
+#    - type: Sprite
+#      drawdepth: Walls
+#      sprite: Structures/Walls/debug.rsi
+#    - type: Icon
+#      state: full
+#      sprite: Structures/Walls/debug.rsi
+#    - type: IconSmooth
+#      key: walls
+#      base: debug
+
+- type: entity
+  id: MobObserverBlob
+  name: Blob observer
+  noSpawn: true
+  components:
+    - type: UserInterface
+      interfaces:
+        - key: enum.BlobChemSwapUiKey.Key
+          type: BlobChemSwapBoundUserInterface
+    - type: Actions
+    - type: Alerts
+    - type: BlobObserver
+    - type: Visibility
+      layer: 2
+    - type: ContentEye
+    - type: MindContainer
+    - type: Clickable
+    - type: InteractionOutline
+    - type: Physics
+      bodyType: KinematicController
+      fixedRotation: true
+    - type: GhostRole
+      name: ghost-role-information-blob-name
+      description: ghost-role-information-blob-description
+      rules: You are an antagonist, destroy the station!
+    - type: GhostTakeoverAvailable
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 15
+          mask:
+            - GhostImpassable
+    - type: InputMover
+    - type: Appearance
+    - type: Eye
+    - type: Input
+      context: "ghost"
+    - type: Examiner
+      skipChecks: true
+    - type: Sprite
+      sprite: Mobs/Aliens/blob.rsi
+      color: "#fc8403"
+      state: marker
+      noRot: true
+      drawdepth: Ghosts
+    - type: MovementSpeedModifier
+      baseSprintSpeed: 8
+      baseWalkSpeed: 5
+    - type: MovementIgnoreGravity
+    - type: Tag
+      tags:
+        - BypassInteractionRangeChecks

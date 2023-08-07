@@ -145,6 +145,10 @@ public sealed class PopupOverlay : Overlay
                 font = _largeFont;
                 color = Color.Red;
                 break;
+            case PopupType.LargeGreen:
+                font = _largeFont;
+                color = Color.LightGreen;
+                break;
         }
 
         var dimensions = handle.GetDimensions(font, popup.Text, scale);
