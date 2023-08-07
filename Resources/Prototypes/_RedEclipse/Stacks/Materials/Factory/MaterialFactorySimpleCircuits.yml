@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactorySimpleCircuits
+  name: factory simple circuits
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactorySimpleCircuits: 1
+    - type: Stack
+      stackType: FactorySimpleCircuits
+
+- type: entity
+  parent: MaterialFactorySimpleCircuits
+  id: FactorySimpleCircuit
+  name: factory simple circuit
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactorySimpleCircuits
+      count: 1
+
+- type: stack
+  id: FactorySimpleCircuits
+  name: factory simple circuits
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactorySimpleCircuit
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactorySimpleCircuits
+  stackEntity: FactorySimpleCircuit
+  name: materials-factory-simple-circuits
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryCircuitry
-  name: circuitry
-  description: some simple circuits
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryCircuitryParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryCircuitry: 1
-
-- type: entity
-  parent: MaterialFactoryCircuitry
-  id: FactoryCircuitryParts1
-  name: circuitry
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryCircuitryParts
-    count: 1
-
-- type: stack
-  id: FactoryCircuitryParts
-  name: circuitry
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryCircuitryParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryCasing
   name: casing
   description: protective casings
