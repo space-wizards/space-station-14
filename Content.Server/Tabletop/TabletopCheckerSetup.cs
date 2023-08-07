@@ -21,19 +21,29 @@ namespace Content.Server.Tabletop
         [DataField("prototypeCrownBlack", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string PrototypeCrownBlack = default!;
 
-        private const float Separation = 1f;
-
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var checkerboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
-
-            session.Entities.Add(checkerboard);
+            session.Entities.Add(
+                entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0))
+            );
 
             SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
         }
 
         private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates topLeft)
         {
+            const float Separation = 1f;
+
+            static float GetX(float x, float offset)
+            {
+                return x + (offset * Separation);
+            }
+
+            static float GetY(float y, float offset)
+            {
+                return y + (offset * Separation);
+            }
+
             var (mapId, x, y) = topLeft;
             var pieces = new EntityUid[42];
             var pieceIndex = 0;
@@ -41,20 +51,24 @@ namespace Content.Server.Tabletop
             void SpawnPieces(string protoId, MapCoordinates left)
             {
                 var (mapId, x, y) = left;
-                var reversed = (PrototypePieceWhite == protoId) ? 1 : -1;
+                var signum = (sbyte)(PrototypePieceWhite == protoId ? 1 : -1);
 
-                for (var i = 0; i < 3; i++)
+                for (var offsetY = 0; offsetY < 3; offsetY++)
                 {
-                    var x_offset = i % 2;
-                    if (reversed == -1) x_offset = 1 - x_offset; // Flips it
+                    var checker = offsetY % 2;
+                    if (signum == -1) checker = 1 - checker; // Invert pattern for black
 
-                    for (var j = 0; j < 8; j += 2)
+                    for (var offsetX = 0; offsetX < 8; offsetX += 2)
                     {
                         // Prevents an extra piece on the middle row
-                        if (x_offset + j > 8) continue;
+                        if (checker + offsetX > 8) continue;
 
-                        pieces[pieceIndex] = entityManager.SpawnEntity(protoId,
-                            new MapCoordinates(x + (j + x_offset) * Separation, y + i * reversed * Separation, mapId)
+                        pieces[pieceIndex] = entityManager.SpawnEntity(
+                            protoId,
+                            new MapCoordinates(
+                                GetX(x, offsetX + checker),
+                                GetY(y, offsetY * signum),
+                                mapId)
                         );
                         pieceIndex++;
                     }
@@ -62,29 +76,40 @@ namespace Content.Server.Tabletop
             }
 
             SpawnPieces(PrototypePieceBlack, topLeft);
-            SpawnPieces(PrototypePieceWhite, new MapCoordinates(x, y - 7 * Separation, mapId));
+            SpawnPieces(PrototypePieceWhite, new MapCoordinates(x, GetY(y, -7), mapId));
+
+            const int NumCrowns = 3;
+            const float Overlap = 0.25f;
+            const float xOffset = 9f / 32;
+            const float xOffsetBlack = 9 + xOffset;
+            const float xOffsetWhite = 8 + xOffset;
 
             // Crowns
-            for (var i = 1; i < 4; i++)
+            for (var i = 0; i < NumCrowns; i++)
             {
-                pieces[pieceIndex] = entityManager.SpawnEntity(PrototypeCrownBlack,
-                    new MapCoordinates(x + 9 * Separation + 9f / 32, y - (i - 1) * Separation, mapId)
+                var step = -(Overlap * i); // Overlap
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypeCrownBlack,
+                    new MapCoordinates(GetX(x, xOffsetBlack), GetY(y, step), mapId)
                 );
-                pieces[pieceIndex + 1] = entityManager.SpawnEntity(PrototypeCrownWhite,
-                    new MapCoordinates(x + 8 * Separation + 9f / 32, y - (i - 1) * Separation, mapId)
+                pieces[pieceIndex + 1] = entityManager.SpawnEntity(
+                    PrototypeCrownWhite,
+                    new MapCoordinates(GetX(x, xOffsetWhite), GetY(y, step), mapId)
                 );
                 pieceIndex += 2;
             }
 
             // Spares
-            for (var i = 1; i < 7; i++)
+            for (var i = 0; i < 6; i++)
             {
-                var step = 3 + 0.25f * (i - 1);
-                pieces[pieceIndex] = entityManager.SpawnEntity(PrototypePieceBlack,
-                  new MapCoordinates(x + 9 * Separation + 9f / 32, y - step * Separation, mapId)
+                var step = -((Overlap * (NumCrowns + 2)) + (Overlap * i));
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypePieceBlack,
+                    new MapCoordinates(GetX(x, xOffsetBlack), GetY(y, step), mapId)
                 );
-                pieces[pieceIndex] = entityManager.SpawnEntity(PrototypePieceWhite,
-                  new MapCoordinates(x + 8 * Separation + 9f / 32, y - step * Separation, mapId)
+                pieces[pieceIndex] = entityManager.SpawnEntity(
+                    PrototypePieceWhite,
+                    new MapCoordinates(GetX(x, xOffsetWhite), GetY(y, step), mapId)
                 );
                 pieceIndex += 2;
             }
