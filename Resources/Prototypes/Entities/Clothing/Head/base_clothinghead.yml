@@ -8,7 +8,7 @@
     - HEAD
   - type: Sprite
     state: icon
-    - type: Food
+  - type: Food
     requiresSpecialDigestion: true
   - type: SolutionContainerManager
     solutions:

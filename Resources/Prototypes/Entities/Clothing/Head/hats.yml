@@ -744,6 +744,7 @@
   - type: ContainerContainer
     containers:
       storagebase: !type:Container
+  - type: Tag
 
 - type: entity
   parent: ClothingHeadBase
