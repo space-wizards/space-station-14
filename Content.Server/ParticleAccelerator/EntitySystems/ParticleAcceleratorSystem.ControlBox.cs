@@ -6,6 +6,7 @@ using Robust.Server.Player;
 using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
 using System.Diagnostics;
+using Content.Shared.CCVar;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
@@ -159,6 +160,12 @@ public sealed partial class ParticleAcceleratorSystem
             };
 
             _adminLogger.Add(LogType.Action, impact, $"{ToPrettyString(player):player} has set the strength of {ToPrettyString(uid)} to {strength}");
+
+
+            var pos = Transform(uid);
+            ParticleAcceleratorPowerState alertMinPowerState = (ParticleAcceleratorPowerState)_cfg.GetCVar(CCVars.AdminAlertParticleAcceleratorMinPowerState);
+            if (strength >= alertMinPowerState)
+                _chat.SendAdminAlert(player, $"changed PA power of {ToPrettyString(uid)} to {strength} at {pos.Coordinates:coordinates}");
         }
 
         comp.SelectedStrength = strength;
