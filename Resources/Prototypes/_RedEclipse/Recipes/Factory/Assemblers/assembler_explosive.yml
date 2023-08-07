@@ -32,7 +32,7 @@
   completetime: 1
   materials:
     FactoryTimingComponents: 1
-    MaterialFactoryChemPack: 1
+    FactoryChemicalPacks: 1
     FactoryExplosivePayloads: 1
 
 # dynamic
