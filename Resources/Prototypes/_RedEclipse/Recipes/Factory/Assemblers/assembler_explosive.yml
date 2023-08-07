@@ -48,7 +48,7 @@
 
 - type: latheRecipe
   id: FactoryTinybomb
-  result: MaterialFactoryTinyBomb
+  result: FactoryExplosiveTinyBomb
   completetime: 1
   materials:
     FactoryTimingComponents: 1
