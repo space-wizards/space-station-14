@@ -1,12 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'The R&D server can be deconstructed. Be warned: this resets all unlocked
-      technology, points, and the current discipline.', type: Add}
-  id: 3973
-  time: '2023-06-08T07:39:29.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Added the chemical compendium, a book containing all chemistry recipes
       and effects. Find it in the library today.', type: Add}
   id: 3974
@@ -2988,3 +2982,8 @@ Entries:
       other., type: Fix}
   id: 4472
   time: '2023-08-07T09:09:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Reproducible entities now have a capacity in confined areas., type: Fix}
+  id: 4473
+  time: '2023-08-07T09:48:47.0000000+00:00'
