@@ -12,6 +12,7 @@
     - type: Item # placeholder
       sprite: /Textures/Objects/Misc/monkeycube.rsi
     - type: Stack
+      count: 5
       maxCountOverride: 5
       baseLayer: base
       layerStates: # placeholder
