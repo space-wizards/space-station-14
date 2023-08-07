@@ -50,8 +50,20 @@ public sealed class TegGeneratorComponent : Component
     public float RampMinimum = 5000;
 
     /// <summary>
-    /// Power output value at which the sprite appearance should cap out.
+    /// Power output value at which the sprite appearance and sound volume should cap out.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] [DataField("max_visual_power")]
     public float MaxVisualPower = 200_000;
+
+    /// <summary>
+    /// Minimum ambient sound volume, when we're producing just barely any power at all.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("volume_min")]
+    public float VolumeMin = -9;
+
+    /// <summary>
+    /// Maximum ambient sound volume, when we're producing &gt;= <see cref="MaxVisualPower"/> power.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] [DataField("volume_max")]
+    public float VolumeMax = -4;
 }

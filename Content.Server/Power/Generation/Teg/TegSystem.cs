@@ -1,6 +1,7 @@
 ﻿using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.Audio;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
@@ -65,6 +66,7 @@ public sealed class TegSystem : EntitySystem
     [Dependency] private readonly DeviceNetworkSystem _deviceNetwork = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly PointLightSystem _pointLight = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
     private EntityQuery<NodeContainerComponent> _nodeContainerQuery;
 
@@ -183,6 +185,10 @@ public sealed class TegSystem : EntitySystem
         {
             powerLevel = 0;
         }
+
+        _ambientSound.SetAmbience(uid, powerLevel >= 1);
+        // TODO: Ok so this introduces popping which is a major shame big rip.
+        // _ambientSound.SetVolume(uid, MathHelper.Lerp(component.VolumeMin, component.VolumeMax, MathHelper.Clamp01(component.RampPosition / component.MaxVisualPower)));
 
         _appearance.SetData(uid, TegVisuals.PowerOutput, powerLevel);
 

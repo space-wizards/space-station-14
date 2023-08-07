@@ -83,6 +83,13 @@
       radius: 1.5
       color: "#FFAA00"
 
+    - type: AmbientSound
+      volume: -4
+      range: 6
+      enabled: false
+      sound:
+        path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+
 - type: entity
   id: TegCirculator
   name: circulator
