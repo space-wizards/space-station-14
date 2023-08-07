@@ -35,7 +35,6 @@ public sealed class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleCo
         RobustRandom.Shuffle(component.Powered);
 
         component.NumberPerSecond = Math.Max(1, (int)(component.Powered.Count / component.SecondsUntilOff)); // Number of APCs to turn off every second. At least one.
-        component.Station = chosenStation.Value;
     }
 
     protected override void Ended(EntityUid uid, PowerGridCheckRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
