@@ -19,10 +19,6 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
       board: FactoryExplosiveAssemblerMachineCircuitboard
-    - type: MaterialStorage
-      whitelist:
-        tags:
-          - FactoryParts
     - type: Lathe
       idleState: icon
       runningState: building
