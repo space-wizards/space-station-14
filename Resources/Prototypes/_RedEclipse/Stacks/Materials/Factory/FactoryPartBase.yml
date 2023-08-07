@@ -10,6 +10,7 @@
       sprite: /Textures/Objects/Misc/monkeycube.rsi
       state: cube
     - type: Item # placeholder
+      size: 5
       sprite: /Textures/Objects/Misc/monkeycube.rsi
     - type: Stack
       count: 5
