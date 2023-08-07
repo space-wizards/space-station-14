@@ -118,7 +118,7 @@ public sealed partial class MindTests
     public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await SetupPair();
+        await using var pairTracker = await SetupPair(dirty: true);
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();

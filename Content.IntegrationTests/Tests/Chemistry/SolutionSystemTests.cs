@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Chemistry;
 [TestOf(typeof(SolutionContainerSystem))]
 public sealed class SolutionSystemTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: SolutionTarget
@@ -45,11 +46,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryAddTwoNonReactiveReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
@@ -93,11 +90,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryAddTooMuchNonReactiveReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -141,11 +134,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryMixAndOverflowTooMuchReagent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
 
@@ -200,11 +189,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TryMixAndOverflowTooBigOverflow()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-        {
-            NoClient = true,
-            ExtraPrototypes = Prototypes
-        });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entityManager = server.ResolveDependency<IEntityManager>();
@@ -241,7 +226,7 @@ public sealed class SolutionSystemTests
     [Test]
     public async Task TestTemperatureCalculations()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         const float temp = 100.0f;
