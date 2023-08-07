@@ -73,3 +73,47 @@
     sprite: Clothing/OuterClothing/Bio/virology.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Bio/virology.rsi
+
+- type: entity
+  parent: ClothingOuterEVASuitBase
+  id: ClothingOuterBioCleanerGeneral
+  name: bio suit
+  suffix: Generic
+  description: A suit that protects against biological contamination.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/general.rsi
+    tags:
+    - SuitEVA
+
+- type: entity
+  parent: ClothingOuterBioCleanerGeneral
+  id: ClothingOuterBioCleaner
+  name: armored bio suit
+  suffix: Cleaners
+  description: An armored bio suit that protects against biological contamination and kinetic weapons, worn by the cleaners
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/cleaners.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/cleaners.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: TemperatureProtection
+    coefficient: 0.1
+  - type: Armor
+    modifiers:
+      coefficients:
+        Brute: 0.65
+        Slash: 0.65
+        Pierce: 0.4
+        Heat: 0.3
+        Caustic: 0.1
+        Radiation: 0.2
+  - type: GroupExamine

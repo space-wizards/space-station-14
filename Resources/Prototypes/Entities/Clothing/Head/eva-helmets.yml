@@ -80,3 +80,15 @@
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ancientvoidsuit.rsi
+
+#Cleaners helmet
+- type: entity
+  parent: ClothingHeadEVAHelmetBase
+  id: ClothingHeadCleanersBioHelmet
+  name: bio hood
+  description: an EVA capable biohood designed for the cleaners
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Bio/cleaners.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Bio/cleaners.rsi
