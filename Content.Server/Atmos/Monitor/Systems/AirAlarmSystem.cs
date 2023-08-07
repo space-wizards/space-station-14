@@ -166,6 +166,7 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
     }
@@ -224,7 +225,10 @@ public sealed class AirAlarmSystem : EntitySystem
     private void OnInit(EntityUid uid, AirAlarmComponent comp, ComponentInit args)
     {
         _deviceLink.EnsureSourcePorts(uid, comp.DangerPort, comp.WarningPort, comp.NormalPort);
+    }
 
+    private void OnMapInit(EntityUid uid, AirAlarmComponent comp, MapInitEvent args)
+    {
         // for mapped linked air alarms, start with high so when it changes for the first time it goes from high to low
         // without this the output would suddenly get sent a low signal after nothing which is bad
         _deviceLink.SendSignal(uid, GetPort(comp), true);
