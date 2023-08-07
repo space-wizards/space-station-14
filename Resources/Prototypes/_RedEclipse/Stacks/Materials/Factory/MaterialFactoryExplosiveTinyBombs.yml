@@ -11,7 +11,6 @@
     - type: Stack
       stackType: FactoryExplosiveTinyBombs
       count: 3
-      maxCountOverride: 3
     - type: Sprite
       sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi
       state: icon
