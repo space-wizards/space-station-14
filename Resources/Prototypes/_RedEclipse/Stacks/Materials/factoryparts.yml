@@ -1,13 +1,3 @@
-
-
-- type: stack
-  id: FactoryTinyBombParts
-  name: tiny bomb
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryTinyBomb
-  maxCount: 1
-  itemSize: 1
-
 - type: entity
   parent: MaterialBase
   id: MaterialFactoryImplanter
