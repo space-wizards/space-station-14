@@ -27,6 +27,12 @@
             - MobMask
           layer:
             - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: laser_raptor
+        Dead:
+          Base: laser_raptor_dead
     - type: MobThresholds
       thresholds:
         0: Alive
@@ -38,7 +44,7 @@
       tags:
         - FootstepSound
     - type: HitscanBatteryAmmoProvider
-      proto: RedMediumLaser
+      proto: RedMediumLaserWeak
       fireCost: 50
     - type: BatterySelfRecharger
       autoRecharge: true
@@ -55,6 +61,8 @@
       soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
     - type: CombatMode
     - type: InteractionPopup
-      successChance: 0.5
-      interactSuccessString: petting-success-slimes
+      successChance: 0.3
+      interactSuccessString: petting-success-reptile
       interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/lizard_happy.ogg
