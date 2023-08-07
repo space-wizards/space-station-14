@@ -404,7 +404,8 @@ public sealed partial class MindTests
         await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
-            Connected = true
+            Connected = true,
+            Dirty = true
         });
         var server = pairTracker.Pair.Server;
 
