@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Paused entities will no longer show as ghost roles (no more taking xeno
-      / dragon on expeditions and waiting for the crew to arrive)., type: Tweak}
-  id: 3978
-  time: '2023-06-10T12:24:35.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed glue puddles sometimes causing permanent slowdown., type: Fix}
@@ -2986,3 +2980,8 @@ Entries:
   - {message: Added new skirt for security., type: Add}
   id: 4477
   time: '2023-08-07T17:42:30.0000000+00:00'
+- author: Fahasor
+  changes:
+  - {message: Mops now does not stops absorbing for no reason., type: Fix}
+  id: 4478
+  time: '2023-08-07T17:47:34.0000000+00:00'
