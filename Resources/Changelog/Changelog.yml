@@ -1,9 +1,4 @@
 Entries:
-- author: Sanchez_
-  changes:
-  - {message: Added new emotion sound, type: Add}
-  id: 3969
-  time: '2023-06-08T06:22:02.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: 'Central has distributed a new subversion of the standard particle accelerators.
@@ -2992,3 +2987,9 @@ Entries:
   - {message: You can turn APCs on during power grid checks again., type: Tweak}
   id: 4468
   time: '2023-08-06T18:39:49.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The bleeding alert sprite is now drawn at double the resolution, as
+      to fit in with everything else in the game.', type: Tweak}
+  id: 4469
+  time: '2023-08-06T23:49:28.0000000+00:00'
