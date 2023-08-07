@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryLaserComponent
-  name: laser component
-  description: high-tech laser components
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryLaserComponentParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryLaserComponent: 1
-
-- type: entity
-  parent: MaterialFactoryLaserComponent
-  id: FactoryLaserComponentParts1
-  name: laser component
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryLaserComponentParts
-    count: 1
-
-- type: stack
-  id: FactoryLaserComponentParts
-  name: laser component
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryLaserComponentParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryMachinery
   name: machinery
   description: complex machinery parts
