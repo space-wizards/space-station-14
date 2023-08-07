@@ -26,7 +26,7 @@
   id: FactoryLaserComponents
   name: factory laser components
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryBasicCasing
+  spawn: FactoryLaserComponent
   maxCount: 5
   itemSize: 1
 
