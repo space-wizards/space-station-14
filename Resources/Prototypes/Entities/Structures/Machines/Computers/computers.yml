@@ -978,6 +978,9 @@
   id: ComputerSensorMonitoring
   name: sensor monitoring computer
   description: A flexible console for monitoring all kinds of sensors.
+  # Putting this as "DO NOT MAP" until the performance issues are fixed.
+  # And it's more fleshed out.
+  suffix: TESTING, DO NOT MAP
   components:
     - type: Sprite
       layers:
