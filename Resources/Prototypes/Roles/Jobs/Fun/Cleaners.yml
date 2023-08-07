@@ -23,6 +23,6 @@
     gloves: ClothingHandsGlovesCombat
     id: ERTLeaderPDA
     ears: ClothingHeadsetAltCentCom
-    belt: 
+    belt: ClothingBeltBandolierFilledIncendiary
     pocket1: WeaponFlareGun
-    pocket2: MagazineShotgunIncendiary
+    pocket2: DoubleEmergencyOxygenTankFilled
