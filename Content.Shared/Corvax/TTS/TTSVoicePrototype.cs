@@ -10,9 +10,9 @@ namespace Content.Shared.Corvax.TTS;
 // ReSharper disable once InconsistentNaming
 public sealed class TTSVoicePrototype : IPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
-    
+
     [DataField("name")]
     public string Name { get; } = string.Empty;
 
@@ -22,13 +22,13 @@ public sealed class TTSVoicePrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("speaker", required: true)]
     public string Speaker { get; } = string.Empty;
-    
+
     /// <summary>
     /// Whether the species is available "at round start" (In the character editor)
     /// </summary>
     [DataField("roundStart")]
     public bool RoundStart { get; } = true;
-    
+
     [DataField("sponsorOnly")]
     public bool SponsorOnly { get; } = false;
 }

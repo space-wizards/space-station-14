@@ -181,17 +181,6 @@ public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceS
         }
     }
 
-    override public void LoadProfile(EntityUid uid, HumanoidCharacterProfile profile, HumanoidAppearanceComponent? humanoid = null)
-    {
-        if (!Resolve(uid, ref humanoid))
-        {
-            return;
-        }
-
-        SetTTSVoice(uid, profile.Voice, humanoid); // Corvax-TTS
-        base.LoadProfile(uid, profile, humanoid);
-    }
-
     public string GetAgeRepresentation(string species, int age)
     {
         _prototypeManager.TryIndex<SpeciesPrototype>(species, out var speciesPrototype);
