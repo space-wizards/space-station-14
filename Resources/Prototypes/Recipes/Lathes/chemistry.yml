@@ -87,7 +87,6 @@
   result: ClothingEyesGlassesChemical
   completetime: 2
   materials:
-    Steel: 100
-    Plastic: 100
-    Glass: 100
-    Silver: 100
+    Steel: 200
+    Plastic: 300
+    Glass: 500
