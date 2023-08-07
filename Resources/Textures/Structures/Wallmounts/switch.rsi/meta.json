@@ -4,8 +4,8 @@
     "x": 32,
     "y": 32
   },
-  "license": "CC0-1.0",
-  "copyright": "Created by ThunderBear2006 (github) for ss14",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Derivitive of work from CEV-Eris at commit 15748b71a1e6d2c547588c653d7c42f18011f7c5",
   "states": [
     {
       "name": "on",
