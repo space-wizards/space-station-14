@@ -32,8 +32,8 @@
         - FactoryExplodingPen
         - FactoryC4
         - FactoryMinibomb
-        - FactoryMegabomb
-        - FactoryMacroBombImplanter
+        - FactoryTinybomb
+        - FactoryMacroBombImplanter # move to MedicalAssembler
         - FactoryChinaLake
         - FactoryFragGrenade
         - FactoryBlastGrenade
