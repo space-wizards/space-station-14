@@ -1,0 +1,14 @@
+- type: entity
+  id: BaseFactoryMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  abstract: true
+  name: factory base machine board
+  description: debug item
+  components:
+    - type: MachineBoard
+      prototype: BaseFactoryMachine
+      requirements:
+        MatterBin: 1
+        Manipulator: 1
+      materialRequirements:
+        Steel: 1

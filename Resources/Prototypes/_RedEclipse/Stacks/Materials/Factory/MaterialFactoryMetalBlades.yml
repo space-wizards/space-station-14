@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryMetalBlades
+  name: factory metal blades
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryMetalBlades: 1
+    - type: Stack
+      stackType: FactoryMetalBlades
+
+- type: entity
+  parent: MaterialFactoryMetalBlades
+  id: FactoryMetalBlade
+  name: factory metal blade
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryMetalBlades
+      count: 1
+
+- type: stack
+  id: FactoryMetalBlades
+  name: factory metal blades
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryMetalBlade
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryMetalBlades
+  stackEntity: FactoryMetalBlade
+  name: materials-factory-metal-blades
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

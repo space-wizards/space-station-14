@@ -1,0 +1,43 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryTimingComponents
+  name: factory timing components
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryTimingComponents: 1
+    - type: Stack
+      stackType: FactoryTimingComponents
+    - type: Sprite
+      sprite: Objects/Devices/timer.rsi
+      state: timer
+    - type: Item
+      sprite: Objects/Devices/timer.rsi
+
+- type: entity
+  parent: MaterialFactoryTimingComponents
+  id: FactoryTimingComponent
+  name: factory timing component
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryTimingComponents
+      count: 1
+
+- type: stack
+  id: FactoryTimingComponents
+  name: factory timing components
+  icon: { sprite: Objects/Devices/timer.rsi, state: timer }
+  spawn: FactoryTimingComponent
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryTimingComponents
+  stackEntity: FactoryTimingComponent
+  name: materials-factory-timing-components
+  icon: { sprite: Objects/Devices/timer.rsi, state: timer }
+  price: 0

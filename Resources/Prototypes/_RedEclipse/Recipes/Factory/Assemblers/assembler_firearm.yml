@@ -1,0 +1,70 @@
+#Factory Firearm Assembler
+- type: latheRecipe
+  id: FactoryMk58
+  result: WeaponPistolMk58
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryCobra
+  result: WeaponPistolCobra
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryMakeshiftLaserPistol
+  result: WeaponMakeshiftLaser
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryLaserPistol
+  result: WeaponLaserGun
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryDoubleBarreledShotgun
+  result: WeaponShotgunDoubleBarreled
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryAKMS
+  result: WeaponRifleAk
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryC20r
+  result: WeaponSubMachineGunC20r
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryL6Saw
+  result: WeaponLightMachineGunL6
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryBulldog
+  result: WeaponShotgunBulldog
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryHristov
+  result: WeaponSniperHristov
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1

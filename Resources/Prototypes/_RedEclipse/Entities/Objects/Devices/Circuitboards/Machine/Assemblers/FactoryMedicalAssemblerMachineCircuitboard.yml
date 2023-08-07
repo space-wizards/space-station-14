@@ -1,0 +1,8 @@
+- type: entity
+  id: FactoryMedicalAssemblerMachineCircuitboard
+  parent: BaseFactoryMachineCircuitboard
+  name: factory medical machine board
+  description: it is spotless.
+  components:
+    - type: MachineBoard
+      prototype: FactoryMedicalAssembler

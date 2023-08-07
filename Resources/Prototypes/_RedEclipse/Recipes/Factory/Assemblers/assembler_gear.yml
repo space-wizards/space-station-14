@@ -1,0 +1,42 @@
+#Factory Gear Assembler
+- type: latheRecipe
+  id: FactoryShoulderHolster
+  result: ClothingBeltSyndieHolster
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryStealthBox
+  result: StealthBox
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryWebVest
+  result: ClothingOuterVestWeb
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryEmag
+  result: Emag
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryVoiceMask
+  result: ClothingMaskGasVoice
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryCyberSunPen
+  result: CyberPen
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1

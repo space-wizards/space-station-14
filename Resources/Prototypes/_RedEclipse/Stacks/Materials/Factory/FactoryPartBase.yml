@@ -1,0 +1,28 @@
+- type: entity
+  parent: MaterialBase
+  abstract: true
+  id: FactoryPartBase
+  name: factory part base
+  description: A vital component essential for crafting gadgets and gear.
+  components:
+    - type: Material
+    - type: Sprite # placeholder
+      sprite: /Textures/Objects/Misc/monkeycube.rsi
+      state: cube
+    - type: Item # placeholder
+      size: 5
+      sprite: /Textures/Objects/Misc/monkeycube.rsi
+    - type: Stack
+      count: 5
+      baseLayer: base
+      layerStates: # placeholder
+        - cube
+    - type: Tag
+      tags:
+        - FactoryPart
+        - Metal
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: StaticPrice
+      price: 0

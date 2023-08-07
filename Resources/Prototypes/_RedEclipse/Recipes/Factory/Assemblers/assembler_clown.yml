@@ -1,0 +1,56 @@
+#Factory Clown Assembler
+- type: latheRecipe
+  id: FactoryRiggedBoxingGloves
+  result: ClothingHandsGlovesBoxingRigged
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactorySyndicateSoap
+  result: SoapSyndie
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryFakeNuclearDisk
+  result: NukeDiskFake
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryFakeCapGun
+  result: RevolverCapGunFake
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryClownCostumeDuffleBag
+  result: ClothingBackpackDuffelSyndicateCostumeClown
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactorySyndieBalloon
+  result: BalloonSyn
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryExplosiveBananaPeel
+  result: TrashBananaPeelExplosive
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryExplosiveTinyBombs: 1
+
+- type: latheRecipe
+  id: FactoryExplosiveWetFloorSign
+  result: WetFloorSignMineExplosive
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryExplosiveTinyBombs: 1
