@@ -17,6 +17,7 @@ ent-WallCult = cult wall
     .desc = { ent-BaseWall.desc }
 
 ent-WallDebug = debug wall
+    .desc = A wall for debugging IconSmooth.
     .suffix = DEBUG
 
 ent-WallDiamond = diamond wall
