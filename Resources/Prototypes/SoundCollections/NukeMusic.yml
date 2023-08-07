@@ -3,3 +3,8 @@
   files:
     - /Audio/StationEvents/running_out.ogg
     - /Audio/StationEvents/countdown.ogg
+    - /Audio/Corvax/StationEvents/level.ogg
+    - /Audio/Ganimed/StationEvents/invaders-must-die.ogg
+    - /Audio/Ganimed/StationEvents/second-warning.ogg
+    - /Audio/Ganimed/StationEvents/the-adventurers.ogg
+    - /Audio/Ganimed/StationEvents/the-cyber-grind.ogg
