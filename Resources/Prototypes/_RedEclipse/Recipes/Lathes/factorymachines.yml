@@ -5,28 +5,36 @@
   result: EmpGrenade
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryCircuitry : 2
+    MaterialFactoryTimer : 1
+    MaterialFactoryCasing : 1
 
 - type: latheRecipe
   id: FactoryExplosiveGrenade
   result: ExGrenade
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryCircuitry : 1
+    MaterialFactoryTimer : 1
+    MaterialFactoryCasing : 1
+    MaterialFactoryPayload : 1
 
 - type: latheRecipe
   id: FactoryExplodingPen
   result: PenExploding
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryCasing : 1
+    MaterialFactoryPayload : 1
 
 - type: latheRecipe
   id: FactoryC4
   result: C4
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryTimer : 1
+    MaterialFactoryChemPack : 1
+    MaterialFactoryPayload : 1
 
 #dynamic
 - type: latheRecipe
@@ -34,14 +42,28 @@
   result: SyndieMiniBomb
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryCircuitry : 1
+    MaterialFactoryTimer : 1
+    MaterialFactoryCasing : 1
+    MaterialFactoryPayload : 1
+
+# - type: latheRecipe
+#   id: FactoryMegabomb
+#   result: SyndieMegaBomb
+#   completetime: 1
+#   materials:
+#     MaterialFactoryCircuitry : 3
+#     MaterialFactoryTimer : 3
+#     MaterialFactoryCasing : 3
+#     MaterialFactoryPayload : 3
 
 - type: latheRecipe
-  id: FactoryMegabomb
-  result: SyndieMegaBomb
+  id: FactoryTinybomb
+  result: MaterialFactoryTinyBomb
   completetime: 1
   materials:
-    MaterialFactoryBaseParts : 1
+    MaterialFactoryTimer : 1
+    MaterialFactoryPayload : 1
 
 - type: latheRecipe
   id: FactoryChinaLake
