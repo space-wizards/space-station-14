@@ -1,9 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed glue puddles sometimes causing permanent slowdown., type: Fix}
-  id: 3979
-  time: '2023-06-11T17:04:42.0000000+00:00'
 - author: Veritius
   changes:
   - {message: Added the White Gilgamesh., type: Add}
@@ -2985,3 +2980,8 @@ Entries:
   - {message: Mops now does not stops absorbing for no reason., type: Fix}
   id: 4478
   time: '2023-08-07T17:47:34.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Bounty payouts x10, type: Tweak}
+  id: 4479
+  time: '2023-08-07T21:41:57.0000000+00:00'
