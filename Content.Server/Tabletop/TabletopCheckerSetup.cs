@@ -34,36 +34,30 @@ namespace Content.Server.Tabletop
         {
             static float GetOffset(float offset) => offset * 1f /* separation */;
 
-            var pieces = new EntityUid[42];
+            Span<EntityUid> pieces = stackalloc EntityUid[42];
             var pieceIndex = 0;
 
-            void SpawnPieces(string protoId, MapCoordinates left)
+            // Pieces
+            for (var offsetY = 0; offsetY < 3; offsetY++)
             {
-                var signum = (sbyte)(PrototypePieceWhite == protoId ? 1 : -1);
+                var checker = offsetY % 2;
 
-                for (var offsetY = 0; offsetY < 3; offsetY++)
+                for (var offsetX = 0; offsetX < 8; offsetX += 2)
                 {
-                    var checker = offsetY % 2;
+                    // Prevents an extra piece on the middle row
+                    if (checker + offsetX > 8) continue;
 
-                    // Invert pattern for black
-                    if (signum == -1) checker = 1 - checker;
-
-                    for (var offsetX = 0; offsetX < 8; offsetX += 2)
-                    {
-                        // Prevents an extra piece on the middle row
-                        if (checker + offsetX > 8) continue;
-
-                        pieces[pieceIndex] = entityManager.SpawnEntity(
-                            protoId,
-                            left.Offset(GetOffset(offsetX + checker), GetOffset(offsetY * signum))
-                        );
-                        pieceIndex++;
-                    }
+                    pieces[pieceIndex] = entityManager.SpawnEntity(
+                        PrototypePieceBlack,
+                        left.Offset(GetOffset(offsetX + (1 - checker)), GetOffset(offsetY * -1))
+                    );
+                    pieces[pieceIndex] = entityManager.SpawnEntity(
+                        PrototypePieceWhite,
+                        left.Offset(GetOffset(offsetX + checker), GetOffset(offsetY - 7))
+                    );
+                    pieceIndex += 2;
                 }
             }
-
-            SpawnPieces(PrototypePieceBlack, left);
-            SpawnPieces(PrototypePieceWhite, left.Offset(0, GetOffset(-7)));
 
             const int NumCrowns = 3;
             const float Overlap = 0.25f;
@@ -74,7 +68,7 @@ namespace Content.Server.Tabletop
             // Crowns
             for (var i = 0; i < NumCrowns; i++)
             {
-                var step = -(Overlap * i); // Overlap
+                var step = -(Overlap * i);
                 pieces[pieceIndex] = entityManager.SpawnEntity(
                     PrototypeCrownBlack,
                     left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
@@ -101,7 +95,10 @@ namespace Content.Server.Tabletop
                 pieceIndex += 2;
             }
 
-            session.Entities.UnionWith(pieces);
+            for (var i = 0; i < pieces.Length; i++)
+            {
+                session.Entities.Add(pieces[i]);
+            }
         }
     }
 }
