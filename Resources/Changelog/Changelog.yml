@@ -1,10 +1,4 @@
 Entries:
-- author: OctoRocket
-  changes:
-  - {message: The game will now fall back to Traitor if there are more than 5 people
-      in the game., type: Tweak}
-  id: 3972
-  time: '2023-06-08T07:16:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'The R&D server can be deconstructed. Be warned: this resets all unlocked
@@ -2987,3 +2981,10 @@ Entries:
   - {message: Renamed spacebucks to spesos, type: Tweak}
   id: 4471
   time: '2023-08-07T05:43:35.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: You can now examine throw damage on items., type: Add}
+  - {message: Fixed examine damage verbs of different types conflicting with each
+      other., type: Fix}
+  id: 4472
+  time: '2023-08-07T09:09:35.0000000+00:00'
