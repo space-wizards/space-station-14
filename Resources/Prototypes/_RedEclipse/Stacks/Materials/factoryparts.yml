@@ -1,47 +1,5 @@
 - type: entity
   parent: MaterialBase
-  id: MaterialFactoryMachinery
-  name: machinery
-  description: complex machinery parts
-  components:
-  - type: Material
-  - type: Stack
-    stackType: FactoryMachineryParts
-    count: 1
-  - type: Sprite
-    sprite: /Textures/Objects/Misc/monkeycube.rsi
-    state: cube
-  - type: Item
-    size: 10
-  - type: Tag
-    tags:
-    - FactoryParts
-  - type: PhysicalComposition
-    materialComposition:
-      MaterialFactoryMachinery: 1
-
-- type: entity
-  parent: MaterialFactoryMachinery
-  id: FactoryMachineryParts1
-  name: machinery
-  suffix: single
-  components:
-  - type: Item
-    size: 1
-  - type: Stack
-    stackType: FactoryMachineryParts
-    count: 1
-
-- type: stack
-  id: FactoryMachineryParts
-  name: machinery
-  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
-  spawn: FactoryMachineryParts1
-  maxCount: 3
-  itemSize: 10
-
-- type: entity
-  parent: MaterialBase
   id: MaterialFactoryPayload
   name: payload
   description: various payloads

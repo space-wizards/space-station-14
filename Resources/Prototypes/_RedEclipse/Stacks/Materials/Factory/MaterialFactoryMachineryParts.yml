@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryMachineryParts
+  name: factory machinery parts
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryBasicParts: 1
+    - type: Stack
+      stackType: FactoryMachineryParts
+
+- type: entity
+  parent: MaterialFactoryMachineryParts
+  id: FactoryMachineryPart
+  name: factory machinery part
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryMachineryParts
+      count: 1
+
+- type: stack
+  id: FactoryMachineryParts
+  name: factory machinery parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryMachineryPart
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryMachineryParts
+  stackEntity: FactoryMachineryPart
+  name: materials-factory-machinery-parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0
