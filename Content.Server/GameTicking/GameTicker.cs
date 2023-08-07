@@ -14,7 +14,6 @@ using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server;
@@ -41,6 +40,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -79,7 +79,8 @@ namespace Content.Server.GameTicking
             DebugTools.Assert(!_postInitialized);
 
             // We restart the round now that entities are initialized and prototypes have been loaded.
-            RestartRound();
+            if (!DummyTicker)
+                RestartRound();
 
             _postInitialized = true;
         }
@@ -99,6 +100,8 @@ namespace Content.Server.GameTicking
 
         public override void Update(float frameTime)
         {
+            if (DummyTicker)
+                return;
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
         }

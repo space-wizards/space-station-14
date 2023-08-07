@@ -1,0 +1,70 @@
+﻿- Flags: QUERY
+  Commands:
+    - entities
+    - nearby
+    - map
+    - physics
+    - player
+    - splat
+    - emplace
+
+- Flags: DEBUG
+  Commands:
+    - comp
+    - delete
+    - do
+    - named
+    - paused
+    - with
+    - count
+    - select
+    - where
+    - prototyped
+    - types
+    - ecscomp
+    - actor
+
+- Flags: HOST
+  Commands:
+    - methods
+    - ioc
+
+- Commands:
+    - fuck
+    - ent
+    - as
+    - buildinfo
+    - help
+    - explain
+    - cmd
+    - stopwatch
+    - self
+    - search
+    - isnull
+    - help
+    - isempty
+    - any
+    - unique
+    - cd
+    - ls
+    - loc
+    - vars
+    - '=>'
+    - first
+    - val
+    - '+'
+    - '-'
+    - '*'
+    - '/'
+    - 'min'
+    - 'max'
+    - '&'
+    - '|'
+    - '^'
+    - 'neg'
+    - '<'
+    - '>'
+    - '<='
+    - '>='
+    - '=='
+    - '!='

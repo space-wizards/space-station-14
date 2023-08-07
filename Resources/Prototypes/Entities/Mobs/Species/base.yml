@@ -34,10 +34,6 @@
   - type: Polymorphable
   - type: Identity
   - type: Hands
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
   - type: MovementSpeedModifier
   - type: MovedByPressure
   - type: Barotrauma
@@ -88,6 +84,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: Blindable
   # Other
   - type: Inventory
@@ -266,7 +263,8 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 5
+        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
+        Blunt: 4
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -372,7 +370,6 @@
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
     - type: Physics
-      bodyType: Dynamic
     - type: Fixtures
       fixtures:
         fix1:

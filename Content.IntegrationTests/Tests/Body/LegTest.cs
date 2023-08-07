@@ -14,6 +14,7 @@ namespace Content.IntegrationTests.Tests.Body
     [TestOf(typeof(BodyComponent))]
     public sealed class LegTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: HumanBodyAndAppearanceDummy
@@ -28,11 +29,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             EntityUid human = default!;

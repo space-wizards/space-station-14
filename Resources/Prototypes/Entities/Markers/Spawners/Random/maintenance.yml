@@ -77,7 +77,7 @@
           state: high
     - type: RandomSpawner
       rarePrototypes:
-        - lanternextrabright
+        - LanternFlash
         - PowerCellHigh
         - NetProbeCartridge
       rareChance: 0.08
@@ -145,6 +145,6 @@
           state: structure
     - type: RandomSpawner
       prototypes:
-        - FoodSpaceshroom
+        - Spaceshroom
       chance: 0.6
       offset: 0.0
