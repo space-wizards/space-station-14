@@ -43,7 +43,7 @@
   parent: MaterialBase
   id: MaterialFactoryCircuitry
   name: circuitry
-  description: some simple ciruits
+  description: some simple circuits
   components:
   - type: Material
   - type: Stack
