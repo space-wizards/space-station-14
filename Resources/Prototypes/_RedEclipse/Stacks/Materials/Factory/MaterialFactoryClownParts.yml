@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryClownParts
+  name: factory clown parts
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryClownParts: 1
+    - type: Stack
+      stackType: FactoryClownParts
+
+- type: entity
+  parent: MaterialFactoryClownParts
+  id: FactoryClownPart
+  name: factory clown part
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryClownParts
+      count: 1
+
+- type: stack
+  id: FactoryClownParts
+  name: factory clown parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryClownPart
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryClownParts
+  stackEntity: FactoryClownPart
+  name: materials-factory-clown-parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0
