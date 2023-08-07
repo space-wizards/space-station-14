@@ -149,6 +149,28 @@
       - id: MedkitCombatFilled
 
 - type: entity
+  id: ClothingBeltBandolierFilledLethals
+  parent: ClothingBeltBandolier
+  name: bandolier
+  suffix: Lethals
+  components:
+  - type: StorageFill
+    contents:
+      - id: ShellShotgun
+        amount: 60
+
+- type: entity
+  id: ClothingBeltBandolierFilledIncendiary
+  parent: ClothingBeltBandolier
+  name: bandolier
+  suffix: Incendiary
+  components:
+  - type: StorageFill
+    contents:
+      - id: ShellShotgunIncendiary
+        amount: 60
+
+- type: entity
   parent: ClothingBeltWand
   id: ClothingBeltWandFilled
   suffix: Filled
