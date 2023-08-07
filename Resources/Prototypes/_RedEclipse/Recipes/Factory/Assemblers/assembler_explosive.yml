@@ -4,7 +4,7 @@
   result: EmpGrenade
   completetime: 1
   materials:
-    MaterialFactoryCircuitry : 2
+    FactorySimpleCircuits : 2
     MaterialFactoryTimer : 1
     MaterialFactoryCasing : 1
 
@@ -13,7 +13,7 @@
   result: ExGrenade
   completetime: 1
   materials:
-    MaterialFactoryCircuitry: 1
+    FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
     MaterialFactoryCasing: 1
     MaterialFactoryPayload: 1
@@ -41,7 +41,7 @@
   result: SyndieMiniBomb
   completetime: 1
   materials:
-    MaterialFactoryCircuitry: 1
+    FactorySimpleCircuits: 1
     MaterialFactoryTimer: 1
     MaterialFactoryCasing: 1
     MaterialFactoryPayload: 1
