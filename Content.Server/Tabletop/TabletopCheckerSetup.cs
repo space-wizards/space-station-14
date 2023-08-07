@@ -30,33 +30,23 @@ namespace Content.Server.Tabletop
             SpawnPieces(session, entityManager, session.Position.Offset(-4.5f, 3.5f));
         }
 
-        private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates topLeft)
+        private void SpawnPieces(TabletopSession session, IEntityManager entityManager, MapCoordinates left)
         {
-            const float Separation = 1f;
+            static float GetOffset(float offset) => offset * 1f /* separation */;
 
-            static float GetX(float x, float offset)
-            {
-                return x + (offset * Separation);
-            }
-
-            static float GetY(float y, float offset)
-            {
-                return y + (offset * Separation);
-            }
-
-            var (mapId, x, y) = topLeft;
             var pieces = new EntityUid[42];
             var pieceIndex = 0;
 
             void SpawnPieces(string protoId, MapCoordinates left)
             {
-                var (mapId, x, y) = left;
                 var signum = (sbyte)(PrototypePieceWhite == protoId ? 1 : -1);
 
                 for (var offsetY = 0; offsetY < 3; offsetY++)
                 {
                     var checker = offsetY % 2;
-                    if (signum == -1) checker = 1 - checker; // Invert pattern for black
+
+                    // Invert pattern for black
+                    if (signum == -1) checker = 1 - checker;
 
                     for (var offsetX = 0; offsetX < 8; offsetX += 2)
                     {
@@ -65,18 +55,15 @@ namespace Content.Server.Tabletop
 
                         pieces[pieceIndex] = entityManager.SpawnEntity(
                             protoId,
-                            new MapCoordinates(
-                                GetX(x, offsetX + checker),
-                                GetY(y, offsetY * signum),
-                                mapId)
+                            left.Offset(GetOffset(offsetX + checker), GetOffset(offsetY * signum))
                         );
                         pieceIndex++;
                     }
                 }
             }
 
-            SpawnPieces(PrototypePieceBlack, topLeft);
-            SpawnPieces(PrototypePieceWhite, new MapCoordinates(x, GetY(y, -7), mapId));
+            SpawnPieces(PrototypePieceBlack, left);
+            SpawnPieces(PrototypePieceWhite, left.Offset(0, GetOffset(-7)));
 
             const int NumCrowns = 3;
             const float Overlap = 0.25f;
@@ -90,11 +77,11 @@ namespace Content.Server.Tabletop
                 var step = -(Overlap * i); // Overlap
                 pieces[pieceIndex] = entityManager.SpawnEntity(
                     PrototypeCrownBlack,
-                    new MapCoordinates(GetX(x, xOffsetBlack), GetY(y, step), mapId)
+                    left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
                 );
                 pieces[pieceIndex + 1] = entityManager.SpawnEntity(
                     PrototypeCrownWhite,
-                    new MapCoordinates(GetX(x, xOffsetWhite), GetY(y, step), mapId)
+                    left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
                 );
                 pieceIndex += 2;
             }
@@ -105,11 +92,11 @@ namespace Content.Server.Tabletop
                 var step = -((Overlap * (NumCrowns + 2)) + (Overlap * i));
                 pieces[pieceIndex] = entityManager.SpawnEntity(
                     PrototypePieceBlack,
-                    new MapCoordinates(GetX(x, xOffsetBlack), GetY(y, step), mapId)
+                    left.Offset(GetOffset(xOffsetBlack), GetOffset(step))
                 );
                 pieces[pieceIndex] = entityManager.SpawnEntity(
                     PrototypePieceWhite,
-                    new MapCoordinates(GetX(x, xOffsetWhite), GetY(y, step), mapId)
+                    left.Offset(GetOffset(xOffsetWhite), GetOffset(step))
                 );
                 pieceIndex += 2;
             }
