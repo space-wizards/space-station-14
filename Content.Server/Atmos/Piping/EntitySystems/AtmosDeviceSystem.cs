@@ -11,9 +11,9 @@ namespace Content.Server.Atmos.Piping.EntitySystems
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
 
-        private readonly AtmosDeviceUpdateEvent _updateEvent = new();
-
         private float _timer = 0f;
+
+        // Set of atmos devices that are off-grid but have JoinSystem set.
         private readonly HashSet<AtmosDeviceComponent> _joinedDevices = new();
 
         public override void Initialize()
@@ -27,40 +27,23 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             SubscribeLocalEvent<AtmosDeviceComponent, AnchorStateChangedEvent>(OnDeviceAnchorChanged);
         }
 
-        private bool CanJoinAtmosphere(AtmosDeviceComponent component, TransformComponent transform)
-        {
-            return (!component.RequireAnchored || transform.Anchored) && transform.GridUid != null;
-        }
-
         public void JoinAtmosphere(AtmosDeviceComponent component)
         {
             var transform = Transform(component.Owner);
 
-            if (!CanJoinAtmosphere(component, transform))
-            {
+            if (component.RequireAnchored && !transform.Anchored)
                 return;
-            }
 
-            // TODO: low-hanging fruit for perf improvements around here
+            // Attempt to add device to a grid atmosphere.
+            bool onGrid = (transform.GridUid != null) && _atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component);
 
-            // GridUid is not null because we can join atmosphere.
-            // We try to add the device to a valid atmosphere, and if we can't, try to add it to the entity system.
-            if (!_atmosphereSystem.AddAtmosDevice(transform.GridUid!.Value, component))
+            if (!onGrid && component.JoinSystem)
             {
-                if (component.JoinSystem)
-                {
-                    _joinedDevices.Add(component);
-                    component.JoinedSystem = true;
-                }
-                else
-                {
-                    return;
-                }
+                _joinedDevices.Add(component);
+                component.JoinedSystem = true;
             }
-
 
             component.LastProcess = _gameTiming.CurTime;
-
             RaiseLocalEvent(component.Owner, new AtmosDeviceEnabledEvent(), false);
         }
 
@@ -117,6 +100,10 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             RejoinAtmosphere(component);
         }
 
+        /// <summary>
+        /// Update atmos devices that are off-grid but have JoinSystem set. For devices updates when
+        /// a device is on a grid, see AtmosphereSystem:UpdateProcessing().
+        /// </summary>
         public override void Update(float frameTime)
         {
             _timer += frameTime;
@@ -129,7 +116,7 @@ namespace Content.Server.Atmos.Piping.EntitySystems
             var time = _gameTiming.CurTime;
             foreach (var device in _joinedDevices)
             {
-                RaiseLocalEvent(device.Owner, _updateEvent, false);
+                RaiseLocalEvent(device.Owner, new AtmosDeviceUpdateEvent(_atmosphereSystem.AtmosTime), false);
                 device.LastProcess = time;
             }
         }
