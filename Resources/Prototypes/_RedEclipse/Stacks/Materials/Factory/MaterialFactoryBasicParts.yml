@@ -13,15 +13,7 @@
       count: 5
       baseLayer: base
       layerStates: # placeholder
-        - steel
-        - steel_2
-        - steel_3
-    - type: Sprite
-      state: steel_3
-#      layers:
-#        - state: plasteel_3
-#          map: ["base"]
-
+        - cube
 - type: entity
   parent: MaterialFactoryBasicParts
   id: FactoryBasicPart
@@ -30,8 +22,6 @@
   components:
     - type: Item
       size: 1
-    - type: Sprite # placeholder
-      state: steel
     - type: Stack
       stackType: FactoryBasicParts
       count: 1
