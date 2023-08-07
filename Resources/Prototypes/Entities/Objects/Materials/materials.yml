@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/materials.rsi
     size: 30
-  - type: ItemStatus
   - type: Tag
     tags:
       - DroneUsable
@@ -115,12 +114,12 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - Gauze
       - RawMaterial
-      
+
 
 - type: entity
   parent: MaterialCloth
@@ -170,7 +169,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial
@@ -339,7 +338,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial

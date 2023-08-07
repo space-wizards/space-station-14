@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
     size: 30
-  - type: ItemStatus
   - type: Tag
     tags:
     - Sheet
