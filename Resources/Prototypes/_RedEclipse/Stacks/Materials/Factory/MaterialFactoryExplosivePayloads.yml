@@ -6,7 +6,7 @@
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryBasicParts: 1
+        FactoryExplosivePayloads: 1
     - type: Stack
       stackType: FactoryExplosivePayloads
     - type: Sprite
