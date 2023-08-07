@@ -16,7 +16,7 @@ public sealed class PrototypeTests
     {
         await using var pairTracker = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await Validate(pairTracker.Pair.Server, "server", context);
+        await SaveThenValidatePrototype(pairTracker.Pair.Server, "server", context);
         await pairTracker.CleanReturnAsync();
     }
 
@@ -29,11 +29,11 @@ public sealed class PrototypeTests
     {
         await using var pairTracker = await PoolManager.GetServerClient();
         var context = new PrototypeSaveTest.TestEntityUidContext();
-        await Validate(pairTracker.Pair.Client, "client", context);
+        await SaveThenValidatePrototype(pairTracker.Pair.Client, "client", context);
         await pairTracker.CleanReturnAsync();
     }
 
-    public async Task Validate(RobustIntegrationTest.IntegrationInstance instance, string instanceId,
+    public async Task SaveThenValidatePrototype(RobustIntegrationTest.IntegrationInstance instance, string instanceId,
         PrototypeSaveTest.TestEntityUidContext ctx)
     {
         var protoMan = instance.ResolveDependency<IPrototypeManager>();
