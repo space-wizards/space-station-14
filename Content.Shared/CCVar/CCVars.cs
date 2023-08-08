@@ -699,6 +699,11 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int> AdminAlertExplosionMinIntensity =
             CVarDef.Create("admin.alert.explosion_min_intensity", 60, CVar.SERVERONLY);
 
+        /// <summary>
+        ///     Minimum particle accelerator strength to create an admin alert message.
+        /// </summary>
+        public static readonly CVarDef<int> AdminAlertParticleAcceleratorMinPowerState =
+            CVarDef.Create("admin.alert.particle_accelerator_min_power_state", 3, CVar.SERVERONLY);
 
         /// <summary>
         ///     Should the ban details in admin channel include PII? (IP, HWID, etc)
@@ -936,6 +941,12 @@ namespace Content.Shared.CCVar
         /// <remarks> Disabled by default, superconduction is awful. </remarks>
         public static readonly CVarDef<bool> Superconduction =
             CVarDef.Create("atmos.superconduction", false, CVar.SERVERONLY);
+
+        /// <summary>
+        ///     Heat loss per tile due to radiation at 20 degC, in W.
+        /// </summary>
+        public static readonly CVarDef<float> SuperconductionTileLoss =
+            CVarDef.Create("atmos.superconduction_tile_loss", 30f, CVar.SERVERONLY);
 
         /// <summary>
         ///     Whether excited groups will be processed and created.

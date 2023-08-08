@@ -53,10 +53,7 @@ namespace Content.IntegrationTests.Tests.Body
         public async Task AirConsistencyTest()
         {
             // --- Setup
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             await server.WaitIdleAsync();
@@ -141,10 +138,7 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task NoSuffocationTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();

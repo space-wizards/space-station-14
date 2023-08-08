@@ -15,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task PardonTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 

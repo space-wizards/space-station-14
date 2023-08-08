@@ -1,4 +1,5 @@
-﻿using Content.Shared.Materials;
+using Content.Shared.Emag.Systems;
+using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -22,6 +23,7 @@ public abstract class SharedLatheSystem : EntitySystem
 
         SubscribeLocalEvent<LatheComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<LatheComponent, ComponentHandleState>(OnHandleState);
+        SubscribeLocalEvent<EmagLatheRecipesComponent, GotEmaggedEvent>(OnEmagged);
     }
 
     private void OnGetState(EntityUid uid, LatheComponent component, ref ComponentGetState args)
@@ -57,6 +59,11 @@ public abstract class SharedLatheSystem : EntitySystem
                 return false;
         }
         return true;
+    }
+
+    private void OnEmagged(EntityUid uid, EmagLatheRecipesComponent component, ref GotEmaggedEvent args)
+    {
+        args.Handled = true;
     }
 
     public static int AdjustMaterial(int original, bool reduce, float multiplier)

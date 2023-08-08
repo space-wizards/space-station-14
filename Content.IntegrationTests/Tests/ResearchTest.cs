@@ -12,7 +12,7 @@ public sealed class ResearchTest
     [Test]
     public async Task DisciplineValidTierPrerequesitesTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -48,7 +48,7 @@ public sealed class ResearchTest
     [Test]
     public async Task AllTechPrintableTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
