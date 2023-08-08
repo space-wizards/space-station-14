@@ -22,6 +22,7 @@ namespace Content.Server.Speech.EntitySystems
         {
             // Replace every new Word that starts with s/S
             var msg = message.Replace(" s", " es").Replace(" S", " Es");
+            msg = msg.Replace(" с", " эс").Replace(" С", " Эс");
 
             // Still need to check if the beginning of the message starts
             if (msg.StartsWith("s", StringComparison.Ordinal))
@@ -31,6 +32,16 @@ namespace Content.Server.Speech.EntitySystems
             else if (msg.StartsWith("S", StringComparison.Ordinal))
             {
                 return msg.Remove(0, 1).Insert(0, "Es");
+            }
+			
+			
+            if (msg.StartsWith("с", StringComparison.Ordinal))
+            {
+                return msg.Remove(0, 1).Insert(0, "эс");
+            }
+            else if (msg.StartsWith("С", StringComparison.Ordinal))
+            {
+                return msg.Remove(0, 1).Insert(0, "Эс");
             }
 
             return msg;

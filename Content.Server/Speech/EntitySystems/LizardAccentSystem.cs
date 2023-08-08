@@ -1,10 +1,13 @@
 ﻿using System.Text.RegularExpressions;
 using Content.Server.Speech.Components;
+using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
 public sealed class LizardAccentSystem : EntitySystem
 {
+	[Dependency] private readonly IRobustRandom _random = default!;
+	
     public override void Initialize()
     {
         base.Initialize();
@@ -16,15 +19,30 @@ public sealed class LizardAccentSystem : EntitySystem
         var message = args.Message;
 
         // hissss
-        message = Regex.Replace(message, "s+", "sss");
+        message = Regex.Replace(message, "s+", _random.Pick(new List<string>() { "ss", "sss" }));
         // hiSSS
-        message = Regex.Replace(message, "S+", "SSS");
+        message = Regex.Replace(message, "S+", _random.Pick(new List<string>() { "Ss", "Sss" }));
         // ekssit
         message = Regex.Replace(message, @"(\w)x", "$1kss");
         // ecks
         message = Regex.Replace(message, @"\bx([\-|r|R]|\b)", "ecks$1");
         // eckS
-        message = Regex.Replace(message, @"\bX([\-|r|R]|\b)", "ECKS$1");
+        message = Regex.Replace(message, @"\bX([\-|r|R]|\b)", "Ecks$1");
+		
+        message = Regex.Replace(message, "с+", _random.Pick(new List<string>() { "сс", "ссс" }));
+        message = Regex.Replace(message, "С+", _random.Pick(new List<string>() { "Сс", "Ссс" }));
+		
+        message = Regex.Replace(message, "ш+", _random.Pick(new List<string>() { "шш", "шшш" }));
+        message = Regex.Replace(message, "Ш+", _random.Pick(new List<string>() { "Шш", "Шшш" }));
+		
+        message = Regex.Replace(message, "щ+", _random.Pick(new List<string>() { "щщ", "щщщ" }));
+        message = Regex.Replace(message, "Щ+", _random.Pick(new List<string>() { "Щщ", "Щщщ" }));
+		
+        message = Regex.Replace(message, "з+", _random.Pick(new List<string>() { "сс", "ссс" }));
+        message = Regex.Replace(message, "З+", _random.Pick(new List<string>() { "Ссс", "Сс" }));
+		
+        message = Regex.Replace(message, "ч+", _random.Pick(new List<string>() { "щщ", "щщщ" }));
+        message = Regex.Replace(message, "Ч+", _random.Pick(new List<string>() { "Щщ", "Щщщ" }));
 
         args.Message = message;
     }

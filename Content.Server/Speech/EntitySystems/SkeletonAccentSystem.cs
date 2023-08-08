@@ -24,7 +24,30 @@ public sealed class SkeletonAccentSystem : EntitySystem
         { "killed", "skeletonized"},
         { "humorous", "humerus"},
         { "to be a", "tibia"},
-        { "under", "ulna"}
+        { "under", "ulna"},
+		
+		{ "пошел ты", "Я с тобой готов пораскинуть КОСТЕЙ" },
+        { "послан", "насажен"},
+        { "черт", "КЛАЦ КЛАЦ" },
+        { "бля", "КЛАЦ КЛАЦ" },
+        { "сука", "КЛАЦ КЛАЦ" },
+        { "нахуй", "КЛАЦ КЛАЦ" },
+        { "хуй", "КЛАЦ КЛАЦ" },
+        { "хер", "КЛАЦ КЛАЦ" },
+        { "член", "КЛАЦ КЛАЦ" },
+        { "лох", "КЛАЦ КЛАЦ" },
+        { "пидор", "КЛАЦ КЛАЦ" },
+        { "естественно", "да без задней кости" },
+        { "конечно", "да без задней кости" },
+        { "бояться", "коститься"},
+        { "страшно", "костно"},
+        { "боюсь", "костьщу"},
+        { "боишься", "костишь"},
+        { "мертв", "скелетонизирован"},
+        { "убит", "скелетонизирован"},
+        { "рука", "ру-кость"},
+        { "пицца", "череп-пицца"},
+        { "пугаться", "костить"}
     };
 
     public override void Initialize()
@@ -46,6 +69,7 @@ public sealed class SkeletonAccentSystem : EntitySystem
         // Character manipulations:
         // At the start of words, any non-vowel + "one" becomes "bone", e.g. tone -> bone ; lonely -> bonely; clone -> clone (remains unchanged).
         msg = Regex.Replace(msg, @"(?<!\w)[^aeiou]one", "bone", RegexOptions.IgnoreCase);
+        msg = Regex.Replace(msg, @"(?<!\w)[^aeiou]ост", "кост-", RegexOptions.IgnoreCase);
 
         // Direct word/phrase replacements:
         foreach (var (first, replace) in DirectReplacements)

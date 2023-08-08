@@ -34,6 +34,21 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
     private static Regex ANDPattern = new Regex(@"\b(\s)(and)(\s)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex TOMYPattern = new Regex(@"(to|my)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
     private static Regex ProperNouns = new Regex(@"(ratvar)|(nezbere)|(sevtuq)|(nzcrentr)|(inath-neq)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+	
+	
+    private static Regex Rloc_OFPattern = new Regex(@"(\s)(из)");
+	private static Regex Rloc_2OFPattern = new Regex(@"(\s)(от)");
+	private static Regex Rloc_THPattern = new Regex(@"т\w\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_TIPattern = new Regex(@"ти\B", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_ETPattern = new Regex(@"\Bте", RegexOptions.Compiled);
+    private static Regex Rloc_TEPattern = new Regex(@"те\B",RegexOptions.Compiled);
+    private static Regex Rloc_2ETPattern = new Regex(@"\Bти", RegexOptions.Compiled);
+    private static Regex Rloc_2TEPattern = new Regex(@"тэ\B",RegexOptions.Compiled);
+    private static Regex Rloc_GUAPattern = new Regex(@"(г)(ва)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_2GUAPattern = new Regex(@"(г)(а)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_3GUAPattern = new Regex(@"(гу)(а)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_ANDPattern = new Regex(@"\b(\s)(и)(\s)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+    private static Regex Rloc_TOMYPattern = new Regex(@"(к|мой|для)\s", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
     public override void Initialize()
     {
@@ -61,13 +76,26 @@ public sealed class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
         var newWord = new StringBuilder();
 
         ruleTranslation = THPattern.Replace(ruleTranslation, "$&`");
+		ruleTranslation = Rloc_THPattern.Replace(ruleTranslation, "$&`");
         ruleTranslation = TEPattern.Replace(ruleTranslation, "$&-");
+        ruleTranslation = Rloc_TEPattern.Replace(ruleTranslation, "$&-");
+        ruleTranslation = Rloc_2TEPattern.Replace(ruleTranslation, "$&-");
         ruleTranslation = ETPattern.Replace(ruleTranslation, "-$&");
+        ruleTranslation = Rloc_ETPattern.Replace(ruleTranslation, "-$&");
+        ruleTranslation = Rloc_2ETPattern.Replace(ruleTranslation, "-$&");
         ruleTranslation = OFPattern.Replace(ruleTranslation, "-$2");
+        ruleTranslation = Rloc_OFPattern.Replace(ruleTranslation, "-$2");
+        ruleTranslation = Rloc_2OFPattern.Replace(ruleTranslation, "-$2");
         ruleTranslation = TIPattern.Replace(ruleTranslation, "$&`");
+        ruleTranslation = Rloc_TIPattern.Replace(ruleTranslation, "$&`");
         ruleTranslation = GUAPattern.Replace(ruleTranslation, "$1-$2");
+        ruleTranslation = Rloc_GUAPattern.Replace(ruleTranslation, "$1-$2");
+        ruleTranslation = Rloc_2GUAPattern.Replace(ruleTranslation, "$1-$2");
+        ruleTranslation = Rloc_3GUAPattern.Replace(ruleTranslation, "$1-$2");
         ruleTranslation = ANDPattern.Replace(ruleTranslation, "-$2-");
+        ruleTranslation = Rloc_ANDPattern.Replace(ruleTranslation, "-$2-");
         ruleTranslation = TOMYPattern.Replace(ruleTranslation, "$1-");
+        ruleTranslation = Rloc_TOMYPattern.Replace(ruleTranslation, "$1-");
 
         var temp = ruleTranslation.Split(' ');
 
