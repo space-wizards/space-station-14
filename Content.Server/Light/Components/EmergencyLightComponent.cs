@@ -49,13 +49,10 @@ namespace Content.Server.Light.Components
 
     public sealed class EmergencyLightEvent : EntityEventArgs
     {
-        public EmergencyLightComponent Component { get; }
-
         public EmergencyLightState State { get; }
 
-        public EmergencyLightEvent(EmergencyLightComponent component, EmergencyLightState state)
+        public EmergencyLightEvent(EmergencyLightState state)
         {
-            Component = component;
             State = state;
         }
     }
