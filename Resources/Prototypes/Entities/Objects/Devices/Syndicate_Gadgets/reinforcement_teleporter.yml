@@ -43,7 +43,7 @@
 
 - type: entity
   parent: ReinforcementRadioSyndicate
-  id: RadioSyndieBot # Reinforcement radio exclusive to nukeops uplink
+  id: RadioSyndieBot
   name: syndiebot reinforcement radio
   description: Calls in a syndiebot to assist you.
   components:
