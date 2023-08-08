@@ -37,6 +37,8 @@
     qualities:
       - Prying
   - type: TilePrying
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   id: FireAxeFlaming

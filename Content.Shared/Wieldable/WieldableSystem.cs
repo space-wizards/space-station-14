@@ -32,7 +32,6 @@ public sealed class WieldableSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
-        //SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
@@ -43,7 +42,6 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
         SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
-
 
         SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
@@ -161,7 +159,7 @@ public sealed class WieldableSystem : EntitySystem
     }
 
     /// <summary>
-    ///     Attempts to wield an item, creating a DoAfter..
+    ///     Attempts to wield an item, starting a UseDelay after.
     /// </summary>
     public void AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
@@ -172,15 +170,7 @@ public sealed class WieldableSystem : EntitySystem
 
         if (ev.Cancelled)
             return;
-        /*
-        var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
-        {
-            BreakOnUserMove = false,
-            BreakOnDamage = true
-        };
 
-         _doAfter.TryStartDoAfter(doargs);
-        */
         if (TryComp<ItemComponent>(used, out var item))
         {
             component.OldInhandPrefix = item.HeldPrefix;
@@ -197,13 +187,13 @@ public sealed class WieldableSystem : EntitySystem
             _virtualItemSystem.TrySpawnVirtualItemInHand(used, user);
         }
 
-        _delay.BeginDelay(used); // Idk if this should be here specifically.
+        _delay.BeginDelay(used);
 
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", used)), user, user);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", user),("item", used)), user, Filter.PvsExcept(user), true);
 
-        var ev2 = new ItemWieldedEvent();
-        RaiseLocalEvent(used, ref ev2);
+        var targEv = new ItemWieldedEvent();
+        RaiseLocalEvent(used, ref targEv);
 
         Dirty(component);
     }
@@ -224,42 +214,6 @@ public sealed class WieldableSystem : EntitySystem
         RaiseLocalEvent(used, targEv);
 
     }
-
-    /*private void OnDoAfter(EntityUid uid, WieldableComponent component, DoAfterEvent args)
-    {
-        if (args.Handled || args.Cancelled || !CanWield(uid, component, args.Args.User) || component.Wielded)
-            return;
-
-
-        if (TryComp<ItemComponent>(uid, out var item))
-        {
-            component.OldInhandPrefix = item.HeldPrefix;
-            _itemSystem.SetHeldPrefix(uid, component.WieldedInhandPrefix, item);
-        }
-
-        component.Wielded = true;
-
-        if (component.WieldSound != null)
-            _audioSystem.PlayPredicted(component.WieldSound, uid, args.User);
-
-        for (var i = 0; i < component.FreeHandsRequired; i++)
-        {
-            _virtualItemSystem.TrySpawnVirtualItemInHand(uid, args.Args.User);
-        }
-
-        _delay.BeginDelay(uid); // Idk if this should be here specifically.
-
-        _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
-        _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
-
-        var ev = new ItemWieldedEvent();
-        RaiseLocalEvent(uid, ref ev);
-
-        Dirty(component);
-        args.Handled = true;
-
-
-    } */
 
     private void OnItemUnwielded(EntityUid uid, WieldableComponent component, ItemUnwieldedEvent args)
     {
