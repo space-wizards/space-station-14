@@ -58,7 +58,8 @@ public sealed class HeatExchangerSystem : EntitySystem
         // Positive dN flows from inlet to outlet
         var dt = (float)(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
-        var dN = comp.G*dP*dt;
+        var dN = comp.G*dt*dP/Atmospherics.R/outlet.Air.Temperature/(1/inlet.Air.Volume + 1/outlet.Air.Volume);
+        // attempts to equalize pressure: toTransfer = (n2T2/V2 - n1T1/V1)/(T2/V1 + T2/V2) = Δp/R/T2/(1/V1 + 1/V2)
 
         GasMixture xfer;
         if (dN > 0)

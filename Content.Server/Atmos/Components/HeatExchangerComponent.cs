@@ -12,7 +12,7 @@ public sealed class HeatExchangerComponent : Component
     public string OutletName { get; set; } = "outlet";
 
     /// <summary>
-    /// Pipe conductivity (mols/kPa/sec).
+    /// Pipe conductivity (dimensionless).
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("conductivity")]
