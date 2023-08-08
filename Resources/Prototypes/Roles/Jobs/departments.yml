@@ -41,7 +41,6 @@
   - HeadOfPersonnel
   - HeadOfSecurity
   - ResearchDirector
-  - Quartermaster
 
 - type: department
   id: Engineering
