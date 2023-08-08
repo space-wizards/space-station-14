@@ -25,12 +25,13 @@
         - HalfWallLayer
   - type: PointLight
     enabled: false
-    radius: 5
-    energy: 2.5
-    color: "#FFFF20"
+    radius: 4
+    energy: 2.0
+    color: "#FF4020"
     mask: /Textures/Effects/LightMasks/double_cone.png
   - type: RotatingLight
-    speed: 135
+    enabled: false
+    speed: 120
   - type: NukeLabel
   - type: Nuke
     explosionType: Default

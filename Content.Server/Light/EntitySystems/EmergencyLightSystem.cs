@@ -18,6 +18,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 {
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly StationSystem _station = default!;
 
@@ -184,22 +185,14 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void TurnOff(EntityUid uid, EmergencyLightComponent component)
     {
-        if (TryComp<PointLightComponent>(uid, out var light))
-        {
-            light.Enabled = false;
-        }
-
+        _pointLight.SetEnabled(uid, false);
         _appearance.SetData(uid, EmergencyLightVisuals.On, false);
         _ambient.SetAmbience(uid, false);
     }
 
     private void TurnOn(EntityUid uid, EmergencyLightComponent component)
     {
-        if (TryComp<PointLightComponent>(uid, out var light))
-        {
-            light.Enabled = true;
-        }
-
+        _pointLight.SetEnabled(uid, true);
         _appearance.SetData(uid, EmergencyLightVisuals.On, true);
         _ambient.SetAmbience(uid, true);
     }
