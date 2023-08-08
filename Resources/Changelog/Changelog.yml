@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: made temperature ignore resistances, type: Tweak}
-  - {message: fixed shields making blocking sound when user is damaged by temperature,
-    type: Fix}
-  id: 3986
-  time: '2023-06-13T12:59:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Bluespace anomalies no longer mispredict teleportation (no more jittering
@@ -2983,3 +2976,9 @@ Entries:
     type: Add}
   id: 4485
   time: '2023-08-08T18:30:46.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Stun batons and bolas can now be thrown to deal stamina damage. Stun
+      batons no longer show the damage effect when stunning., type: Fix}
+  id: 4486
+  time: '2023-08-08T20:19:31.0000000+00:00'
