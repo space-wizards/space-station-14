@@ -18,3 +18,14 @@
       amount: 1
   products:
     Wine: 1
+
+- type: reaction
+  id: OilAsh
+  impact: Low
+  quantized: true
+  minTemp: 480
+  reactants:
+    Oil:
+      amount: 1
+  products:
+    Ash: 1
