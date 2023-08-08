@@ -1,6 +1,7 @@
 - type: entity
   id: Barricade
   parent: BaseStructure
+  name: barricade
   components:
   - type: InteractionOutline
   - type: Construction
