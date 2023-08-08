@@ -27,7 +27,7 @@ public sealed class RotatingLightSystem : SharedRotatingLightSystem
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
-                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(120), third)
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(120), third),
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(240), third),
                         new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), third)
                     }
