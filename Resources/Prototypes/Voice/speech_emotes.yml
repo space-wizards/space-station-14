@@ -1,7 +1,7 @@
 # vocal emotes
 - type: emote
   id: Scream
-  icon: Interface/Actions/scream.png
+  icon: Interface/Emotes/scream.png
   category: Vocal
   chatMessages: [screams!]
   chatTriggers:
@@ -32,6 +32,7 @@
 
 - type: emote
   id: Laugh
+  icon: Interface/Emotes/laugh.png
   category: Vocal
   chatMessages: [laughs]
   chatTriggers:
@@ -56,6 +57,7 @@
 
 - type: emote
   id: Sigh
+  icon: Interface/Emotes/sighn.png
   category: Vocal
   chatMessages: [sighs]
   chatTriggers:
@@ -68,6 +70,7 @@
 
 - type: emote
   id: Whistle
+  icon: Interface/Emotes/whistle.png
   category: Vocal
   chatMessages: [whistle]
   chatTriggers:
@@ -83,6 +86,7 @@
 
 - type: emote
   id: Crying
+  icon: Interface/Emotes/crying.png
   category: Vocal
   chatMessages: [crying]
   chatTriggers:
@@ -114,6 +118,7 @@
 # hand emotes
 - type: emote
   id: Clap
+  icon: Interface/Emotes/claps.png
   category: Hands
   chatMessages: [claps!]
   chatTriggers:
@@ -126,6 +131,7 @@
 
 - type: emote
   id: Snap
+  icon: Interface/Emotes/snaps-fingers.png
   category: Hands
   chatMessages: [snaps fingers] # snaps <{THEIR($ent)}> fingers?
   chatTriggers:
@@ -145,6 +151,7 @@
 
 - type: emote
   id: Salute
+  icon: Interface/Emotes/salute.png
   category: Hands
   chatMessages: [Salute]
   chatTriggers:
