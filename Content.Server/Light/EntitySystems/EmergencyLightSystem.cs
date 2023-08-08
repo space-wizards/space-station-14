@@ -2,12 +2,12 @@ using Content.Server.AlertLevel;
 using Content.Server.Audio;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.GameStates;
 using Color = Robust.Shared.Maths.Color;
@@ -17,15 +17,16 @@ namespace Content.Server.Light.EntitySystems;
 public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 {
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-    [Dependency] private readonly StationSystem _station = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly StationSystem _station = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+
         SubscribeLocalEvent<EmergencyLightComponent, EmergencyLightEvent>(OnEmergencyLightEvent);
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-        SubscribeLocalEvent<EmergencyLightComponent, ComponentGetState>(GetCompState);
         SubscribeLocalEvent<EmergencyLightComponent, PointLightToggleEvent>(HandleLightToggle);
         SubscribeLocalEvent<EmergencyLightComponent, ExaminedEvent>(OnEmergencyExamine);
         SubscribeLocalEvent<EmergencyLightComponent, PowerChangedEvent>(OnEmergencyPower);
@@ -42,7 +43,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             return;
         }
 
-        UpdateState(ud, component);
+        UpdateState(uid, component);
     }
 
     private void OnEmergencyExamine(EntityUid uid, EmergencyLightComponent component, ExaminedEvent args)
@@ -73,16 +74,14 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
     private void HandleLightToggle(EntityUid uid, EmergencyLightComponent component, PointLightToggleEvent args)
     {
-        if (component.Enabled == args.Enabled)
-            return;
-
-        component.Enabled = args.Enabled;
-        Dirty(component);
-    }
-
-    private void GetCompState(EntityUid uid, EmergencyLightComponent component, ref ComponentGetState args)
-    {
-        args.State = new EmergencyLightComponentState(component.Enabled);
+        if (args.Enabled)
+        {
+            EnsureComp<RotatingLightComponent>(uid);
+        }
+        else
+        {
+            RemComp<RotatingLightComponent>(uid);
+        }
     }
 
     private void OnEmergencyLightEvent(EntityUid uid, EmergencyLightComponent component, EmergencyLightEvent args)
@@ -110,7 +109,8 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
             return;
 
-        foreach (var (uid, light, pointLight, appearance, xform) in EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
+        var query = EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>();
+        while (query.MoveNext(out var uid, out var light, out var pointLight, out var appearance, out var xform))
         {
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                 continue;
@@ -127,7 +127,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             {
                 // Previously forcibly enabled, and we went down an alert level.
                 light.ForciblyEnabled = false;
-                UpdateState(light);
+                UpdateState(uid, light);
             }
         }
     }
@@ -142,9 +142,10 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
     public override void Update(float frameTime)
     {
-        foreach (var (uid, _, activeLight, battery) in EntityQueryEnumerator<ActiveEmergencyLightComponent, EmergencyLightComponent, BatteryComponent>())
+        var query = EntityQueryEnumerator<ActiveEmergencyLightComponent, EmergencyLightComponent, BatteryComponent>();
+        while (query.MoveNext(out var uid, out _, out var emergencyLight, out var battery))
         {
-            Update(uid, activeLight, battery, frameTime);
+            Update(uid, emergencyLight, battery, frameTime);
         }
     }
 
@@ -201,7 +202,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             light.Enabled = false;
         }
 
-        _appearance.SetData(uid, EmergencyLightVisuals.On, false, appearance);
+        _appearance.SetData(uid, EmergencyLightVisuals.On, false);
 
         RemComp<RotatingLightComponent>(uid);
 
