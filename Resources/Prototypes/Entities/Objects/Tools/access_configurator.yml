@@ -58,7 +58,7 @@
           - IdCard
       denialSound:
         path: /Audio/Machines/custom_deny.ogg
-      doAfter: 7.5
+      doAfter: 0.5
     - type: UserInterface
       interfaces:
         - key: enum.AccessOverriderUiKey.Key
