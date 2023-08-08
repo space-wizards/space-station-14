@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Light;
+namespace Content.Shared.Light.Components;
 
 [NetworkedComponent, RegisterComponent, Access(typeof(SharedHandheldLightSystem))]
 public sealed class HandheldLightComponent : Component

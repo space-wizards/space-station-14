@@ -28,6 +28,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -458,6 +459,9 @@ public sealed class NukeSystem : EntitySystem
         _transform.AnchorEntity(uid, nukeXform);
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
+
+        // turn on the spinny light
+        _pointLight.SetEnabled(uid, true);
     }
 
     /// <summary>
@@ -492,6 +496,9 @@ public sealed class NukeSystem : EntitySystem
         _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
+
+        // turn off the spinny light
+        _pointLight.SetEnabled(uid, false);
 
         UpdateUserInterface(uid, component);
     }

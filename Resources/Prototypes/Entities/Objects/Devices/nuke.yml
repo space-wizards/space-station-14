@@ -23,6 +23,12 @@
         - MachineMask
         layer:
         - HalfWallLayer
+  - type: PointLight
+    enabled: false
+    radius: 5
+    energy: 2.5
+    color: "#FFFF20"
+    mask: /Textures/Effects/LightMasks/cone.png
   - type: NukeLabel
   - type: Nuke
     explosionType: Default

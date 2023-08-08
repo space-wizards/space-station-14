@@ -6,6 +6,7 @@ using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
+using Content.Shared.Light.Components;
 using Content.Shared.Rounding;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
