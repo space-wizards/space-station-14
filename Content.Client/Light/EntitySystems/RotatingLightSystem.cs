@@ -1,6 +1,6 @@
 //using System;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
