@@ -37,10 +37,10 @@
       - id: FlashlightSecliteSyndicate
       - id: Stimpack
       - id: PowerCellHyper
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnum
         amount: 2
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGunHighVelocity
+      - id: MagazinePistolSubMachineGun
         amount: 2
       - id: CombatMedipen
       - id: EnergySwordDouble
@@ -159,10 +159,10 @@
       - id: FlashlightSecliteSyndicate
       - id: Stimpack
       - id: PowerCellHyper
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnum
         amount: 2
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGunHighVelocity
+      - id: MagazinePistolSubMachineGun
         amount: 2
       - id: CombatMedipen
       - id: EnergySwordDouble
@@ -278,7 +278,7 @@
       - id: Lighter
       - id: FlashlightSecliteSyndicate
       - id: PowerCellHyper
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnum
         amount: 2
       - id: WeaponSubMachineGunC20r
       - id: MagazinePistolSubMachineGun
@@ -402,10 +402,10 @@
       - id: FlashlightSecliteSyndicate
       - id: Stimpack
       - id: PowerCellHyper
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnum
         amount: 2
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGunHighVelocity
+      - id: MagazinePistolSubMachineGun
         amount: 2
       - id: CombatMedipen
       - id: EnergySwordDouble
@@ -519,10 +519,10 @@
       - id: Lighter
       - id: FlashlightSecliteSyndicate
       - id: PowerCellHyper
-      - id: SpeedLoaderMagnumHighVelocity
+      - id: SpeedLoaderMagnum
         amount: 2
       - id: WeaponSubMachineGunC20r
-      - id: MagazinePistolSubMachineGunHighVelocity
+      - id: MagazinePistolSubMachineGun
         amount: 2
       - id: EnergySword
 

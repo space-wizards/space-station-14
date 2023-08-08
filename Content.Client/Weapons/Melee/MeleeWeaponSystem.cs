@@ -89,7 +89,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         // it's kinda tricky.
         // I think as long as we make secondaries their own component it's probably fine
         // as long as guncomp has an alt-use key then it shouldn't be too much of a PITA to deal with.
-        if (HasComp<GunComponent>(weaponUid))
+        if (TryComp<GunComponent>(weaponUid, out var gun) && gun.UseKey)
         {
             return;
         }

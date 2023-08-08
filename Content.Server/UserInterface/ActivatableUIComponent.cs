@@ -25,7 +25,7 @@ namespace Content.Server.UserInterface
         [DataField("adminOnly")]
         public bool AdminOnly { get; set; } = false;
 
-        [DataField("key", readOnly: true, required: true)]
+        [DataField("key", required: true)]
         private string _keyRaw = default!;
 
         [DataField("verbText")]

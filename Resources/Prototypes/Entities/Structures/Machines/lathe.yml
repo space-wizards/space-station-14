@@ -125,6 +125,38 @@
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+       - CartridgePistol
+       - CartridgeMagnum
+       - ShellShotgun
+       - ShellShotgunFlare
+       - ShellTranquilizer
+       - CartridgeLightRifle
+       - CartridgeRifle
+       - MagazineBoxPistol
+       - MagazineBoxMagnum
+       - MagazineBoxRifle
+       - MagazineBoxLightRifle
+    emagDynamicRecipes:
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - ShellShotgunBeanbag
+      - CartridgeRifleRubber
+      - CartridgeLightRifleRubber
+      - MagazineBoxPistolRubber
+      - MagazineBoxMagnumRubber
+      - MagazineBoxRifleRubber
+      - MagazineBoxLightRifleRubber
+      - ShellShotgunIncendiary
+      - CartridgePistolIncendiary
+      - CartridgeMagnumIncendiary
+      - CartridgeLightRifleIncendiary
+      - CartridgeRifleIncendiary
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxRifleIncendiary
 
 - type: entity
   id: Protolathe
@@ -228,6 +260,14 @@
       - WelderExperimental
       - JawsOfLife
       - ClothingEyesGlassesChemical
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+      - ExplosivePayload
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
+      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -435,14 +475,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary

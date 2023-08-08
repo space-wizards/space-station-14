@@ -67,7 +67,6 @@
   description: Your Syndicate pal who's fun to be with!
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: pai-base

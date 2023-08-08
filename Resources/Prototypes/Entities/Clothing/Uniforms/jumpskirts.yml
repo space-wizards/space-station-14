@@ -748,3 +748,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSecGrey
+  name: grey security jumpskirt
+  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
