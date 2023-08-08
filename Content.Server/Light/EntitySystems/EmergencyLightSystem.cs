@@ -189,12 +189,6 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             light.Enabled = false;
         }
 
-        if (TryComp<RotatingLightComponent>(uid, out var rotatingLight))
-        {
-            // DO NOT COMMIT: well see where this goes
-            //rotatingLight.Enabled = false;
-        }
-
         _appearance.SetData(uid, EmergencyLightVisuals.On, false);
         _ambient.SetAmbience(uid, false);
     }
@@ -204,11 +198,6 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
         if (TryComp<PointLightComponent>(uid, out var light))
         {
             light.Enabled = true;
-        }
-
-        if (TryComp<RotatingLightComponent>(uid, out var rotatingLight))
-        {
-            //rotatingLight.Enabled = true;
         }
 
         _appearance.SetData(uid, EmergencyLightVisuals.On, true);
