@@ -219,6 +219,10 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
             var window = (float) (_curTime - _startTime).TotalSeconds;
 
+            // TODO: omg this is terrible don't fucking hardcode this size to something uncached huge omfg.
+            var vertices = new Vector2[25000];
+            var countVtx = 0;
+
             var lastPoint = new Vector2(float.NaN, float.NaN);
 
             foreach (var (time, sample) in _samples)
@@ -230,10 +234,22 @@ public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindo
 
                 var newPoint = new Vector2(posX, posY);
 
-                handle.DrawLine(lastPoint, newPoint, Color.White);
+                if (float.IsFinite(lastPoint.X))
+                {
+                    handle.DrawLine(lastPoint, newPoint, Color.White);
+
+                    vertices[countVtx++] = lastPoint;
+                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    vertices[countVtx++] = newPoint;
+                    vertices[countVtx++] = newPoint;
+                    vertices[countVtx++] = lastPoint with { Y = PixelHeight };
+                    vertices[countVtx++] = newPoint with { Y = PixelHeight };
+                }
 
                 lastPoint = newPoint;
             }
+
+            handle.DrawPrimitives(DrawPrimitiveTopology.TriangleList, vertices.AsSpan(0, countVtx), Color.White.WithAlpha(0.1f));
         }
     }
 }
