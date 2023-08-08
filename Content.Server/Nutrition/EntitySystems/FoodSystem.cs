@@ -120,10 +120,11 @@ namespace Content.Server.Nutrition.EntitySystems
                 return (false, true);
             }
 
-            // Check for storage on the food item
-            if (EntityManager.TryGetComponent<ServerStorageComponent>(food, out var storageState))
+            // Check for used storage on the food item
+            if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
             {
-                    return (false, true);
+                _popupSystem.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
+                return (false, true);
             }
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food, user, foodSolution);
