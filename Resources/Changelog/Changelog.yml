@@ -1,13 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: The Praetorian and Runner xenos can now be rarely found on expeditions.,
-    type: Add}
-  - {message: All xenos now enjoy a slowdown when badly wounded., type: Tweak}
-  id: 3982
-  time: '2023-06-13T04:48:29.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: R&D has figured out how to upgrade salvage magnets using high-tier capacitors.,
     type: Tweak}
   id: 3983
@@ -2983,3 +2976,9 @@ Entries:
   - {message: Uplink codes no longer contain sharp notes., type: Remove}
   id: 4481
   time: '2023-08-08T00:16:49.0000000+00:00'
+- author: TotallyLemon
+  changes:
+  - {message: 'Nanotrasen''s R&D department have improved the RPED''s design, allowing
+      it to quickly install parts into in-progress machine frames.', type: Add}
+  id: 4482
+  time: '2023-08-08T00:26:25.0000000+00:00'
