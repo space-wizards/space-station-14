@@ -14,7 +14,7 @@
     sprite: Objects/Specific/Janitorial/soap.rsi
   - type: Slippery
     paralyzeTime: 2
-    launchForwardsMultiplier: 1.5
+    launchForwardsMultiplier: 4
   - type: StepTrigger
     intersectRatio: 0.2
   - type: CollisionWake
@@ -98,8 +98,8 @@
   - type: Sprite
     state: omega
   - type: Slippery
-    paralyzeTime: 7
-    launchForwardsMultiplier: 3
+    paralyzeTime: 4
+    launchForwardsMultiplier: 10
   - type: StepTrigger
   - type: Item
     heldPrefix: omega
