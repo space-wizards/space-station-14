@@ -204,6 +204,70 @@
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobSyndieBot
+  name: syndiebot
+  description: Death to Nanotrasen!
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/syndiebot.rsi
+    state: syndiebot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-syndiebot-name
+    description: ghost-role-information-syndiebot-description
+  - type: GhostTakeoverAvailable
+  - type: InnateTool
+    tools:
+      - id: WeaponPulsePistol
+      - id: EnergyDagger
+  - type: Hands
+    showInHands: false
+  - type: Body
+    prototype: Bots
+  - type: CombatMode
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+      - !type:TriggerBehavior
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MobSyndieBotDestroyed:
+            min: 1
+            max: 1
+  - type: Stealth
+  - type: StealthOnMove
+    passiveVisibilityRate: -0.20
+    movementVisibilityRate: 0.30
+
+- type: entity
+  id: MobSyndieBotDestroyed
+  parent: BaseItem
+  name: destroyed syndiebot
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/silicon/Bots/syndiebot.rsi
+    state: broken
 
 - type: entity
   parent: MobHonkBot

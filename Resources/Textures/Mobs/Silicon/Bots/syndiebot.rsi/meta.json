@@ -1,0 +1,28 @@
+{
+    "version": 1,
+    "copyright": "syndiebot made by FillerVK (github) for ss14",
+    "license": "CC-BY-SA-3.0",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "directions": 1,
+            "name": "syndiebot",
+            "delays": [
+                [
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+        {
+            "directions": 1,
+            "name": "broken"
+        }
+    ]
+}
+    
+
+

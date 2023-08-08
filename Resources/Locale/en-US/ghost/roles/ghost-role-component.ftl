@@ -148,3 +148,6 @@ ghost-role-information-behonker-description = You are an antagonist, bring death
 
 ghost-role-information-taxibot-name = TaxiBot
 ghost-role-information-taxibot-description = Drive the station crew to their destination.
+
+ghost-role-information-syndiebot-name = SyndieBot
+ghost-role-information-syndiebot-description = Someone needs SyndieBot. You are the latest development of the robotics syndicate, so help your customer.

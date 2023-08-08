@@ -96,6 +96,9 @@ uplink-reinforcement-radio-monkey-desc =  Call in trained monkey to assist you. 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
 
+uplink-reinforcement-syndiebot-name = SyndieBot Teleporter
+uplink-reinforcement-syndiebot-desc =  The latest development of the syndicate's roboticists! It teleports to you SyndieBot. It is equipped with a 10-charge pulse pistol and an energy dagger. It also has a built-in stealth function. Maybe it is a NinjaBot after all?
+
 uplink-stealth-box-name = Stealth Box
 uplink-stealth-box-desc = A box outfitted with stealth technology, sneak around with this and don't move too fast now!
 

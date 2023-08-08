@@ -397,6 +397,17 @@
   - UplinkUtility
 
 - type: listing
+  id: UplinkSyndieBot
+  name: uplink-reinforcement-syndiebot-name
+  description: uplink-reinforcement-syndiebot-desc
+  productEntity: RadioSyndieBot
+  icon: { sprite: Mobs/silicon/Bots/syndiebot.rsi, state: syndiebot }
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkUtility
+
+- type: listing
   id: UplinkStealthBox
   name: uplink-stealth-box-name
   description: uplink-stealth-box-desc
