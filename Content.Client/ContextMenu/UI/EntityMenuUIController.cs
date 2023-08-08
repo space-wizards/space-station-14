@@ -1,11 +1,11 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.CombatMode;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Verbs;
 using Content.Client.Verbs.UI;
 using Content.Shared.CCVar;
-using Content.Shared.CombatMode;
 using Content.Shared.Examine;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
@@ -95,7 +95,7 @@ namespace Content.Client.ContextMenu.UI
             Elements.Clear();
             AddToUI(orderedStates);
 
-            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, (1, 1));
+            var box = UIBox2.FromDimensions(_userInterfaceManager.MousePositionScaled.Position, new Vector2(1, 1));
             _context.RootMenu.Open(box);
         }
 
@@ -320,15 +320,7 @@ namespace Content.Client.ContextMenu.UI
             }
 
             element.UpdateEntity(entity);
-
-            // Update the entity count & count label
-            element.Count = 0;
-            foreach (var subElement in element.SubMenu.MenuBody.Children)
-            {
-                if (subElement is EntityMenuElement entityElement)
-                    element.Count += entityElement.Count;
-            }
-            element.CountLabel.Text = element.Count.ToString();
+            element.UpdateCount();
 
             if (element.Count == 1)
             {
@@ -337,7 +329,6 @@ namespace Content.Client.ContextMenu.UI
                 element.Entity = entity;
                 element.SubMenu.Dispose();
                 element.SubMenu = null;
-                element.CountLabel.Visible = false;
                 Elements[entity.Value] = element;
             }
 

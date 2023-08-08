@@ -23,7 +23,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 150
+    price: 80
 
 - type: entity
   parent: CrateBaseWeldable
@@ -157,6 +157,18 @@
 
 - type: entity
   parent: CrateBaseSecure
+  id: CrateChemistrySecure
+  name: secure chemistry crate
+  components:
+    - type: Icon
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: Sprite
+      sprite: Structures/Storage/Crates/chemcrate_secure.rsi
+    - type: AccessReader
+      access: [["Chemistry"]]
+
+- type: entity
+  parent: CrateBaseSecure
   id: CratePrivateSecure
   name: private crate
   components:
@@ -229,9 +241,9 @@
   name: command crate
   components:
   - type: Icon
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: Sprite
-    sprite: Structures/Storage/Crates/secure.rsi
+    sprite: Structures/Storage/Crates/command.rsi
   - type: AccessReader
     access: [["Command"]]
 
@@ -240,6 +252,9 @@
   id: CrateLivestock
   name: livestock crate
   components:
+  - type: EntityStorage
+    air:
+      volume: 800
   - type: Sprite
     sprite: Structures/Storage/Crates/livestock.rsi
     layers:
@@ -269,14 +284,15 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 135
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 135
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: Construction
     graph: CrateLivestock
     node: cratelivestock
@@ -321,14 +337,158 @@
     airtight: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.29"
-      density: 80
-      mask:
-      - LargeMobMask
-      layer:
-      - LargeMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.29"
+        density: 80
+        mask:
+        - LargeMobMask
+        layer:
+        - LargeMobLayer
   - type: StaticPrice
     price: 60
 
+- type: entity
+  parent: CrateGeneric
+  id: CratePirate
+  name: pirate chest
+  description: A space pirate chest, not for station lubbers.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/piratechest.rsi
+    state: crate_icon
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateDoorOpen: crate_open
+    stateDoorClosed: crate_door
+
+- type: entity
+  parent: CratePirate
+  id: CrateToyBox
+  name: toy box
+  suffix: Empty
+  description: A box overflowing with fun.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/toybox.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/toybox.rsi
+    state: crate_icon
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateCoffin
+  name: coffin
+  description: A comfy coffin, excelent place for the vampires and corpses.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/coffin.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/coffin.rsi
+    state: base
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: CrateCoffin
+    node: cratecoffin
+    containers:
+    - entity_storage
+
+- type: entity
+  parent: CrateGeneric
+  id: CrateWoodenGrave
+  name: grave
+  suffix: wooden
+  description: Someone died here...
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/wooden_grave.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/wooden_grave.rsi
+    state: base
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 1
+            max: 4
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Static
+
+- type: entity
+  parent: CrateWoodenGrave
+  id: CrateStoneGrave
+  name: grave
+  suffix: stone
+  description: Someone died here...
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/stone_grave.rsi
+    layers:
+    - state: base
+    - state: closed
+      map: ["enum.StorageVisualLayers.Door"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/stone_grave.rsi
+    state: base
+    
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateSyndicate
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/syndicate.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/syndicate.rsi
+    

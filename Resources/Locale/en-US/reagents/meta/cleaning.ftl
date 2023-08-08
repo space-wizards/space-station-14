@@ -6,3 +6,6 @@ reagent-desc-space-cleaner = This is able to clean almost all surfaces of almost
 
 reagent-name-space-lube = space lube
 reagent-desc-space-lube = Space Lube is a high performance lubricant intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people slip).
+
+reagent-name-space-glue = space glue
+reagent-desc-space-glue = Space Glue is a high performance glue intended for maintenance of extremely complex mechanical equipment (and certainly not used to make people stick to the floor).

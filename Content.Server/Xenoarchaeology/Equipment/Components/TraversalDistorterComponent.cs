@@ -17,7 +17,7 @@ public sealed class TraversalDistorterComponent : Component
     public float BaseBiasChance = 0.7f;
 
     [DataField("machinePartBiasChance", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-    public string MachinePartBiasChance = "ScanningModule";
+    public string MachinePartBiasChance = "Manipulator";
 
     [DataField("partRatingBiasChance")]
     public float PartRatingBiasChance = 1.1f;

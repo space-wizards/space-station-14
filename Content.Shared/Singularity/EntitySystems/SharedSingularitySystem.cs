@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
@@ -126,7 +127,7 @@ public abstract class SharedSingularitySystem : EntitySystem
 
         RaiseLocalEvent(uid, new SingularityLevelChangedEvent(singularity.Level, oldValue, singularity));
         if (singularity.Level <= 0)
-            EntityManager.DeleteEntity(singularity.Owner);
+            QueueDel(uid);
     }
 
     /// <summary>
@@ -366,7 +367,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// <param name="args">The event arguments.</param>
     private void UpdateAppearance(EntityUid uid, AppearanceComponent comp, SingularityLevelChangedEvent args)
     {
-        _visualizer.SetData(uid, SingularityVisuals.Level, args.NewValue, comp);
+        _visualizer.SetData(uid, SingularityAppearanceKeys.Singularity, args.NewValue, comp);
     }
 
     /// <summary>

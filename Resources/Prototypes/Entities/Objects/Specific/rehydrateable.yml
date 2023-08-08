@@ -26,24 +26,26 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    target: MobMonkey
+    possibleSpawns:
+    - MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      density: 5
-      mask:
-      - ItemMask
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.3,0.4,0.3"
-      id: "rehydrate"
-      hard: false
-      layer:
-      - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 5
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
 
 - type: entity
   parent: PlushieCarp
@@ -68,23 +70,93 @@
       - !type:AddToSolutionReaction
         solution: plushie
   - type: Rehydratable
-    target: MobCarp
+    possibleSpawns:
+    - MobCarp
   - type: CollisionWake
     enabled: false
   - type: Physics
     bodyType: KinematicController
   - type: Fixtures
-    fixtures: # TODO: Make a second fixture.
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 15
-      mask:
-      - ItemMask
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      id: "rehydrate"
-      hard: false
-      layer:
-      - LowImpassable
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 15
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable
+  # pet fish before rehydrating and he will be nice to you
+  - type: FactionException
+  - type: PettableFriend
+    successString: petting-success-dehydrated-carp
+    failureString: petting-failure-dehydrated-carp
+  - type: EmitSoundOnUse
+    handle: false
+    sound:
+      path: /Audio/Effects/bite.ogg
+
+- type: entity
+  parent: BaseItem
+  id: SyndicateSponge
+  name: monkey cube
+  suffix: Syndicate
+  description: Just add water!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: Food
+    solution: cube
+  - type: RefillableSolution
+    solution: cube
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: cube
+  - type: Rehydratable
+    possibleSpawns:
+    - MobRatServant
+    - MobCarpHolo
+    - MobXenoRavager
+    - MobAngryBee
+    - MobAdultSlimesYellowAngry
+    - MobSpiderSpace
+    - MobBearSpace
+    - MobPurpleSnake
+    - MobKangarooSpace
+    - MobTick
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 5
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable

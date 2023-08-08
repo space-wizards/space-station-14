@@ -87,6 +87,9 @@
 
 - type: playTimeTracker
   id: JobPassenger
+  
+- type: playTimeTracker
+  id: JobParamedic
 
 - type: playTimeTracker
   id: JobPsychologist
@@ -114,6 +117,18 @@
 
 - type: playTimeTracker
   id: JobSecurityOfficer
+
+- type: playTimeTracker
+  id: JobSeniorEngineer
+
+- type: playTimeTracker
+  id: JobSeniorOfficer
+
+- type: playTimeTracker
+  id: JobSeniorPhysician
+
+- type: playTimeTracker
+  id: JobSeniorResearcher
 
 - type: playTimeTracker
   id: JobServiceWorker

@@ -11,6 +11,7 @@
     - Heat
     - Shock
     - Cold
+    - Caustic
 
 # Airloss (sometimes called oxyloss)
 # Caused by asphyxiation or bloodloss.
@@ -34,9 +35,3 @@
   id: Genetic
   damageTypes:
     - Cellular
-
-- type: damageGroup
-  id: Caustic
-  damageTypes:
-  - Heat
-  - Poison

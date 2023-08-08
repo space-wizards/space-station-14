@@ -1,13 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Linq;
+using System.Text.Json.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Nutrition;
+using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Array;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -51,8 +55,20 @@ namespace Content.Shared.Chemistry.Reagent
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedPhysicalDescription => Loc.GetString(PhysicalDescription);
 
-        [DataField("flavor")]
-        public string Flavor { get; } = default!;
+        /// <summary>
+        ///     Is this reagent recognizable to the average spaceman (water, welding fuel, ketchup, etc)?
+        /// </summary>
+        [DataField("recognizable")]
+        public bool Recognizable = false;
+
+        [DataField("flavor", customTypeSerializer:typeof(PrototypeIdSerializer<FlavorPrototype>))]
+        public string? Flavor;
+
+        /// <summary>
+        /// There must be at least this much quantity in a solution to be tasted.
+        /// </summary>
+        [DataField("flavorMinimum")]
+        public FixedPoint2 FlavorMinimum = FixedPoint2.New(0.1f);
 
         [DataField("color")]
         public Color SubstanceColor { get; } = Color.White;
@@ -73,6 +89,19 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("metamorphicSprite")]
         public SpriteSpecifier? MetamorphicSprite { get; } = null;
 
+        /// <summary>
+        /// If this reagent is part of a puddle is it slippery.
+        /// </summary>
+        [DataField("slippery")]
+        public bool Slippery = false;
+
+        /// <summary>
+        /// How much reagent slows entities down if it's part of a puddle.
+        /// 0 - no slowdown; 1 - can't move.
+        /// </summary>
+        [DataField("viscosity")]
+        public float Viscosity = 0;
+
         [DataField("metabolisms", serverOnly: true, customTypeSerializer: typeof(PrototypeIdDictionarySerializer<ReagentEffectsEntry, MetabolismGroupPrototype>))]
         public Dictionary<string, ReagentEffectsEntry>? Metabolisms = null;
 
@@ -85,26 +114,11 @@ namespace Content.Shared.Chemistry.Reagent
         [DataField("plantMetabolism", serverOnly: true)]
         public readonly List<ReagentEffect> PlantMetabolisms = new(0);
 
-        [DataField("pricePerUnit")]
-        public float PricePerUnit { get; }
+        [DataField("pricePerUnit")] public float PricePerUnit;
 
-        /// <summary>
-        /// If the substance color is too dark we user a lighter version to make the text color readable when the user examines a solution.
-        /// </summary>
-        public Color GetSubstanceTextColor()
-        {
-            var highestValue = MathF.Max(SubstanceColor.R, MathF.Max(SubstanceColor.G, SubstanceColor.B));
-            var difference = 0.5f - highestValue;
-
-            if (difference > 0f)
-            {
-                return new Color(SubstanceColor.R + difference,
-                                SubstanceColor.G + difference,
-                                SubstanceColor.B + difference);
-            }
-
-            return SubstanceColor;
-        }
+        // TODO: Pick the highest reagent for sounds and add sticky to cola, juice, etc.
+        [DataField("footstepSound")]
+        public SoundSpecifier FootstepSound = new SoundCollectionSpecifier("FootstepWater");
 
         public FixedPoint2 ReactionTile(TileRef tile, FixedPoint2 reactVolume)
         {
@@ -152,6 +166,23 @@ namespace Content.Shared.Chemistry.Reagent
         }
     }
 
+    [Serializable, NetSerializable]
+    public struct ReagentGuideEntry
+    {
+        public string ReagentPrototype;
+
+        public Dictionary<string, ReagentEffectsGuideEntry>? GuideEntries;
+
+        public ReagentGuideEntry(ReagentPrototype proto, IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            ReagentPrototype = proto.ID;
+            GuideEntries = proto.Metabolisms?
+                .Select(x => (x.Key, x.Value.MakeGuideEntry(prototype, entSys)))
+                .ToDictionary(x => x.Key, x => x.Item2);
+        }
+    }
+
+
     [DataDefinition]
     public sealed class ReagentEffectsEntry
     {
@@ -168,6 +199,30 @@ namespace Content.Shared.Chemistry.Reagent
         [JsonPropertyName("effects")]
         [DataField("effects", required: true)]
         public ReagentEffect[] Effects = default!;
+
+        public ReagentEffectsGuideEntry MakeGuideEntry(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            return new ReagentEffectsGuideEntry(MetabolismRate,
+                Effects
+                    .Select(x => x.GuidebookEffectDescription(prototype, entSys)) // hate.
+                    .Where(x => x is not null)
+                    .Select(x => x!)
+                    .ToArray());
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public struct ReagentEffectsGuideEntry
+    {
+        public FixedPoint2 MetabolismRate;
+
+        public string[] EffectDescriptions;
+
+        public ReagentEffectsGuideEntry(FixedPoint2 metabolismRate, string[] effectDescriptions)
+        {
+            MetabolismRate = metabolismRate;
+            EffectDescriptions = effectDescriptions;
+        }
     }
 
     [DataDefinition]

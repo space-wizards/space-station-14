@@ -1,10 +1,6 @@
-﻿using System;
-using Content.Shared.Communications;
+﻿using Content.Shared.Communications;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Timing;
-using Robust.Shared.ViewVariables;
 
 namespace Content.Client.Communications.UI
 {
@@ -12,21 +8,30 @@ namespace Content.Client.Communications.UI
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 
-        [ViewVariables] private CommunicationsConsoleMenu? _menu;
+        [ViewVariables]
+        private CommunicationsConsoleMenu? _menu;
 
+        [ViewVariables]
         public bool CanAnnounce { get; private set; }
+
+        [ViewVariables]
         public bool CanCall { get; private set; }
 
+        [ViewVariables]
         public bool CountdownStarted { get; private set; }
 
+        [ViewVariables]
         public bool AlertLevelSelectable { get; private set; }
 
+        [ViewVariables]
         public string CurrentLevel { get; private set; } = default!;
 
-        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int)_expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
+        [ViewVariables]
         private TimeSpan? _expectedCountdownTime;
 
-        public CommunicationsConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public int Countdown => _expectedCountdownTime == null ? 0 : Math.Max((int) _expectedCountdownTime.Value.Subtract(_gameTiming.CurTime).TotalSeconds, 0);
+
+        public CommunicationsConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -58,8 +63,22 @@ namespace Content.Client.Communications.UI
 
         public void AnnounceButtonPressed(string message)
         {
-            var msg = message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...";
-            SendMessage(new CommunicationsConsoleAnnounceMessage(msg));
+            var msg = (message.Length <= 256 ? message.Trim() : $"{message.Trim().Substring(0, 256)}...").ToCharArray();
+
+            // No more than 2 newlines, other replaced to spaces
+            var newlines = 0;
+            for (var i = 0; i < msg.Length; i++)
+            {
+                if (msg[i] != '\n')
+                    continue;
+
+                if (newlines >= 2)
+                    msg[i] = ' ';
+
+                newlines++;
+            }
+
+            SendMessage(new CommunicationsConsoleAnnounceMessage(new string(msg)));
         }
 
         public void CallShuttle()

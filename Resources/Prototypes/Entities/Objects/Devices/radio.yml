@@ -5,7 +5,10 @@
   id: RadioHandheld
   components:
   - type: RadioMicrophone
+    broadcastChannel: Handheld
   - type: RadioSpeaker
+    channels:
+    - Handheld
   - type: Speech
   - type: Sprite
     sprite: Objects/Devices/communication.rsi

@@ -1,7 +1,5 @@
 meta:
   format: 2
-  name: DemoStation
-  author: Space-Wizards
   postmapinit: false
 tilemap:
   0: Space
@@ -24,7 +22,7 @@ tilemap:
   23: FloorWood
   24: Lattice
   25: Plating
-  26: UnderPlating
+  26: Plating
 grids:
 - settings:
     chunksize: 16

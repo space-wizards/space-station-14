@@ -14,22 +14,31 @@ namespace Content.Client.Input
             var common = contexts.GetContext("common");
             common.AddFunction(ContentKeyFunctions.FocusChat);
             common.AddFunction(ContentKeyFunctions.FocusLocalChat);
+            common.AddFunction(ContentKeyFunctions.FocusEmote);
             common.AddFunction(ContentKeyFunctions.FocusWhisperChat);
             common.AddFunction(ContentKeyFunctions.FocusRadio);
+            common.AddFunction(ContentKeyFunctions.FocusLOOC);
             common.AddFunction(ContentKeyFunctions.FocusOOC);
             common.AddFunction(ContentKeyFunctions.FocusAdminChat);
             common.AddFunction(ContentKeyFunctions.FocusConsoleChat);
             common.AddFunction(ContentKeyFunctions.FocusDeadChat);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelForward);
             common.AddFunction(ContentKeyFunctions.CycleChatChannelBackward);
+            common.AddFunction(ContentKeyFunctions.EscapeContext);
             common.AddFunction(ContentKeyFunctions.ExamineEntity);
             common.AddFunction(ContentKeyFunctions.OpenAHelp);
             common.AddFunction(ContentKeyFunctions.TakeScreenshot);
             common.AddFunction(ContentKeyFunctions.TakeScreenshotNoUI);
             common.AddFunction(ContentKeyFunctions.Point);
+            common.AddFunction(ContentKeyFunctions.ZoomOut);
+            common.AddFunction(ContentKeyFunctions.ZoomIn);
+            common.AddFunction(ContentKeyFunctions.ResetZoom);
 
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
+
+            // Not in engine because the engine doesn't understand what a flipped object is
+            common.AddFunction(ContentKeyFunctions.EditorFlipObject);
 
             var human = contexts.GetContext("human");
             human.AddFunction(EngineKeyFunctions.MoveUp);

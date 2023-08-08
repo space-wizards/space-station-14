@@ -47,7 +47,7 @@ public sealed class AutoEmoteSystem : EntitySystem
 
                 if (autoEmotePrototype.WithChat)
                 {
-                    _chatSystem.TryEmoteWithChat(uid, autoEmotePrototype.EmoteId, autoEmotePrototype.HiddenFromChatWindow);
+                    _chatSystem.TryEmoteWithChat(uid, autoEmotePrototype.EmoteId, autoEmotePrototype.HiddenFromChatWindow ? ChatTransmitRange.HideChat : ChatTransmitRange.Normal);
                 }
                 else
                 {
@@ -83,6 +83,8 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
 
+        DebugTools.Assert(autoEmote.LifeStage <= ComponentLifeStage.Running);
+
         if (autoEmote.Emotes.Contains(autoEmotePrototypeId))
             return false;
 
@@ -93,9 +95,9 @@ public sealed class AutoEmoteSystem : EntitySystem
     }
 
     /// <summary>
-    /// Stop preforming an emote.
+    /// Stop preforming an emote. Note that by default this will queue empty components for removal.
     /// </summary>
-    public bool RemoveEmote(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null)
+    public bool RemoveEmote(EntityUid uid, string autoEmotePrototypeId, AutoEmoteComponent? autoEmote = null, bool removeEmpty = true)
     {
         if (!Resolve(uid, ref autoEmote, logMissing: false))
             return false;
@@ -105,7 +107,13 @@ public sealed class AutoEmoteSystem : EntitySystem
         if (!autoEmote.EmoteTimers.Remove(autoEmotePrototypeId))
             return false;
 
-        autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
+        if (autoEmote.EmoteTimers.Count > 0)
+            autoEmote.NextEmoteTime = autoEmote.EmoteTimers.Values.Min();
+        else if (removeEmpty)
+            RemCompDeferred(uid, autoEmote);
+        else
+            autoEmote.NextEmoteTime = TimeSpan.MaxValue;
+
         return true;
     }
 

@@ -32,7 +32,7 @@ namespace Content.Server.RoundEnd
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
         [Dependency] private readonly ChatSystem _chatSystem = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
-        [Dependency] private readonly ShuttleSystem _shuttle = default!;
+        [Dependency] private readonly EmergencyShuttleSystem _shuttle = default!;
         [Dependency] private readonly StationSystem _stationSystem = default!;
 
         public TimeSpan DefaultCooldownDuration { get; set; } = TimeSpan.FromSeconds(30);

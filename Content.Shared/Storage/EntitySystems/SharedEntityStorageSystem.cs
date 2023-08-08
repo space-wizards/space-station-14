@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
@@ -34,6 +35,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -43,8 +45,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnInit);
-        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[]{typeof(LockSystem)});
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentInit>(OnComponentInit);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ComponentStartup>(OnComponentStartup);
+        SubscribeLocalEvent<SharedEntityStorageComponent, ActivateInWorldEvent>(OnInteract, after: new[] { typeof(LockSystem) });
         SubscribeLocalEvent<SharedEntityStorageComponent, LockToggleAttemptEvent>(OnLockToggleAttempt);
         SubscribeLocalEvent<SharedEntityStorageComponent, DestructionEventArgs>(OnDestruction);
         SubscribeLocalEvent<SharedEntityStorageComponent, GetVerbsEvent<InteractionVerb>>(AddToggleOpenVerb);
@@ -76,11 +79,16 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         component.IsWeldedShut = state.IsWeldedShut;
     }
 
-    protected virtual void OnInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
+    protected virtual void OnComponentInit(EntityUid uid, SharedEntityStorageComponent component, ComponentInit args)
     {
         component.Contents = _container.EnsureContainer<Container>(uid, ContainerName);
         component.Contents.ShowContents = component.ShowContents;
         component.Contents.OccludesLight = component.OccludesLight;
+    }
+
+    protected virtual void OnComponentStartup(EntityUid uid, SharedEntityStorageComponent component, ComponentStartup args)
+    {
+        _appearance.SetData(uid, StorageVisuals.Open, component.Open);
     }
 
     private void OnInteract(EntityUid uid, SharedEntityStorageComponent component, ActivateInWorldEvent args)
@@ -121,7 +129,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     private void OnRelayMovement(EntityUid uid, SharedEntityStorageComponent component, ref ContainerRelayMovementEntityEvent args)
     {
-        if (!HasComp<SharedHandsComponent>(args.Entity))
+        if (!HasComp<HandsComponent>(args.Entity))
             return;
 
         if (_timing.CurTime < component.LastInternalOpenAttempt + SharedEntityStorageComponent.InternalOpenAttemptDelay)
@@ -146,13 +154,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (component.Open)
         {
             verb.Text = Loc.GetString("verb-common-close");
-            verb.Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
+            verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
         }
         else
         {
             verb.Text = Loc.GetString("verb-common-open");
             verb.Icon = new SpriteSpecifier.Texture(
-                new ResourcePath("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
+                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
         }
         verb.Act = () => ToggleOpen(args.User, args.Target, component);
         args.Verbs.Add(verb);
@@ -255,6 +263,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return true;
         }
 
+        _joints.RecursiveClearJoints(toInsert);
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
         return component.Contents.Insert(toInsert, EntityManager);
@@ -311,7 +320,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         if (!Resolve(target, ref component))
             return false;
 
-        if (!HasComp<SharedHandsComponent>(user))
+        if (!HasComp<HandsComponent>(user))
             return false;
 
         if (component.IsWeldedShut)
@@ -323,7 +332,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.
-        if (component.EnteringOffset != (0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
+        if (component.EnteringOffset != new Vector2(0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
@@ -334,7 +343,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             }
         }
 
-        var ev = new StorageOpenAttemptEvent(silent);
+        var ev = new StorageOpenAttemptEvent(user, silent);
         RaiseLocalEvent(target, ref ev, true);
 
         return !ev.Cancelled;

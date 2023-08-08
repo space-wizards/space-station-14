@@ -17,7 +17,7 @@ namespace Content.Server.Medical.Components
 
         public EntityTargetAction Action = new()
         {
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Clothing/Neck/Misc/stethoscope.rsi/icon.png")),
+            Icon = new SpriteSpecifier.Texture(new ("Clothing/Neck/Misc/stethoscope.rsi/icon.png")),
             DisplayName = "stethoscope-verb",
             Priority = -1,
             Event = new StethoscopeActionEvent(),

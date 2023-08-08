@@ -1,13 +1,12 @@
 - type: entity
   parent: BaseItem
   id: SeedBase
-  noSpawn: true
+  abstract: true
   components:
     - type: SolutionContainerManager
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/seeds.rsi
       state: seed
-      netsync: true
     - type: Item
       size: 2
     - type: StaticPrice
@@ -365,3 +364,24 @@
       seedId: onionred
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/onion_red.rsi
+
+- type: entity
+  parent: SeedBase
+  name: packet of watermelon seeds
+  id: WatermelonSeeds
+  components:
+    - type: Seed
+      seedId: watermelon
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/watermelon.rsi
+      
+- type: entity
+  parent: SeedBase
+  name: packet of grape seeds
+  id: GrapeSeeds
+  components:
+    - type: Seed
+      seedId: grape
+    - type: Sprite
+      sprite: Objects/Specific/Hydroponics/grape.rsi
+      

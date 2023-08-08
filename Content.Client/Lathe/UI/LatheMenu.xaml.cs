@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
+using Content.Client.Stylesheets;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Prototypes;
@@ -14,14 +16,13 @@ namespace Content.Client.Lathe.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LatheMenu : DefaultWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
 
     public event Action<BaseButton.ButtonEventArgs>? OnQueueButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
-    public event Action<BaseButton.ButtonEventArgs>? OnServerSyncButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
 
     public List<string> Recipes = new();
@@ -31,32 +32,30 @@ public sealed partial class LatheMenu : DefaultWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        _spriteSystem = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
-        _lathe = _entityManager.EntitySysManager.GetEntitySystem<LatheSystem>();
+        _spriteSystem = _entityManager.System<SpriteSystem>();
+        _lathe = _entityManager.System<LatheSystem>();
 
-        Title = _entityManager.GetComponent<MetaDataComponent>(owner.Lathe).EntityName;
+        Title = _entityManager.GetComponent<MetaDataComponent>(owner.Owner).EntityName;
 
         SearchBar.OnTextChanged += _ =>
         {
-            PopulateRecipes(owner.Lathe);
+            PopulateRecipes(owner.Owner);
         };
         AmountLineEdit.OnTextChanged += _ =>
         {
-            PopulateRecipes(owner.Lathe);
+            PopulateRecipes(owner.Owner);
         };
 
         QueueButton.OnPressed += a => OnQueueButtonPressed?.Invoke(a);
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
 
-        //refresh the bui state
-        ServerSyncButton.OnPressed += a => OnServerSyncButtonPressed?.Invoke(a);
-
-        if (_entityManager.TryGetComponent<LatheComponent>(owner.Lathe, out var latheComponent))
+        if (_entityManager.TryGetComponent<LatheComponent>(owner.Owner, out var latheComponent))
         {
-            if (latheComponent.DynamicRecipes == null)
+            if (!latheComponent.DynamicRecipes.Any())
             {
                 ServerListButton.Visible = false;
-                ServerSyncButton.Visible = false;
+                QueueButton.RemoveStyleClass(StyleBase.ButtonOpenRight);
+                //QueueButton.AddStyleClass(StyleBase.ButtonSquare);
             }
         }
     }
@@ -132,7 +131,7 @@ public sealed partial class LatheMenu : DefaultWindow
                     sb.Append('\n');
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
-                
+
                 sb.Append(adjustedAmount);
                 sb.Append(' ');
                 sb.Append(Loc.GetString(proto.Name));

@@ -64,7 +64,7 @@ namespace Content.Shared.Pulling
             if (EntityManager.TryGetComponent<BuckleComponent?>(puller, out var buckle))
             {
                 // Prevent people pulling the chair they're on, etc.
-                if (buckle.Buckled && (buckle.LastEntityBuckledTo == pulled))
+                if (buckle is { PullStrap: false, Buckled: true } && (buckle.LastEntityBuckledTo == pulled))
                 {
                     return false;
                 }
@@ -163,7 +163,7 @@ namespace Content.Shared.Pulling
                 }
                 else
                 {
-                    Logger.WarningS("c.go.c.pulling", "Well now you've done it, haven't you? Someone transferred pulling (onto {0}) while presently pulling something that has no Pullable component (on {1})!", pullable.Owner, oldPullable);
+                    Log.Warning("Well now you've done it, haven't you? Someone transferred pulling (onto {0}) while presently pulling something that has no Pullable component (on {1})!", pullable.Owner, oldPullable);
                     return false;
                 }
             }

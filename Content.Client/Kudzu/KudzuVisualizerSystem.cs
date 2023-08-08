@@ -1,4 +1,4 @@
-using Content.Shared.Kudzu;
+using Content.Shared.Spreader;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Kudzu;

@@ -9,7 +9,6 @@
     solution: bucket
   - type: Clickable
   - type: Sprite
-    netsync: false
     sprite: Objects/Tools/bucket.rsi
     layers:
     - state: icon
@@ -35,6 +34,12 @@
     interfaces:
     - key: enum.TransferAmountUiKey.Key
       type: TransferAmountBoundUserInterface
+  - type: MeleeWeapon
+    soundNoDamage:
+      path: "/Audio/Effects/Fluids/splat.ogg"
+    damage:
+      types:
+        Blunt: 0
   - type: Spillable
     solution: bucket
   - type: DrawableSolution
@@ -52,3 +57,6 @@
   - type: Tag
     tags:
       - Bucket
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 50

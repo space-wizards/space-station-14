@@ -1,6 +1,0 @@
-- type: antag
-  id: SuspicionInnocent
-  name: roles-antag-suspicion-innocent-name
-  antagonist: false
-  setPreference: false
-  objective: roles-antag-suspicion-innocent-objective

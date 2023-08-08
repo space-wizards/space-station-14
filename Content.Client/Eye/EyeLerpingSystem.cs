@@ -1,3 +1,4 @@
+using Content.Shared.Follower.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 using Robust.Client.GameObjects;
@@ -25,8 +26,9 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         SubscribeLocalEvent<EyeComponent, ComponentStartup>(OnEyeStartup);
         SubscribeLocalEvent<EyeComponent, ComponentShutdown>(OnEyeShutdown);
-        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<EyeComponent, PlayerAttachedEvent>(OnAttached);
+
+        SubscribeLocalEvent<LerpingEyeComponent, EntParentChangedMessage>(HandleMapChange);
         SubscribeLocalEvent<LerpingEyeComponent, PlayerDetachedEvent>(OnDetached);
 
         UpdatesAfter.Add(typeof(TransformSystem));

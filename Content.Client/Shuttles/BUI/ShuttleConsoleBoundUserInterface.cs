@@ -1,6 +1,5 @@
 using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
-using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -10,9 +9,12 @@ namespace Content.Client.Shuttles.BUI;
 [UsedImplicitly]
 public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 {
+    [ViewVariables]
     private ShuttleConsoleWindow? _window;
 
-    public ShuttleConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
+    public ShuttleConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    {
+    }
 
     protected override void Open()
     {
@@ -28,7 +30,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnDestinationPressed(EntityUid obj)
     {
-        SendMessage(new ShuttleConsoleDestinationMessage()
+        SendMessage(new ShuttleConsoleFTLRequestMessage()
         {
             Destination = obj,
         });
@@ -51,17 +53,17 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnStopAutodockPressed(EntityUid obj)
     {
-        SendMessage(new StopAutodockRequestMessage() {DockEntity = obj});
+        SendMessage(new StopAutodockRequestMessage() { DockEntity = obj });
     }
 
     private void OnAutodockPressed(EntityUid obj)
     {
-        SendMessage(new AutodockRequestMessage() {DockEntity = obj});
+        SendMessage(new AutodockRequestMessage() { DockEntity = obj });
     }
 
     private void OnUndockPressed(EntityUid obj)
     {
-        SendMessage(new UndockRequestMessage() {DockEntity = obj});
+        SendMessage(new UndockRequestMessage() { DockEntity = obj });
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)

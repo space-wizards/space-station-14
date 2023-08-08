@@ -31,7 +31,7 @@ public sealed partial class GameMapPrototype : IPrototype
     /// Relative directory path to the given map, i.e. `/Maps/saltern.yml`
     /// </summary>
     [DataField("mapPath", required: true)]
-    public ResourcePath MapPath { get; } = default!;
+    public ResPath MapPath { get; } = default!;
 
     [DataField("stations", required: true)]
     private Dictionary<string, StationConfig> _stations = new();

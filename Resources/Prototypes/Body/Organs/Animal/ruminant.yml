@@ -1,0 +1,10 @@
+﻿- type: entity
+  id: OrganAnimalRuminantStomach
+  parent: OrganAnimalStomach
+  name: ruminant stomach
+  noSpawn: true
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 80

@@ -1,4 +1,3 @@
-using Content.Server.Doors.Components;
 using Content.Server.Wires;
 using Content.Shared.Doors;
 using Content.Shared.Doors.Components;
@@ -11,7 +10,7 @@ public sealed class DoorTimingWireAction : ComponentWireAction<AirlockComponent>
 {
     public override Color Color { get; set; } = Color.Orange;
     public override string Name { get; set; } = "wire-name-door-timer";
-    
+
     [DataField("timeout")]
     private int _timeout = 30;
 

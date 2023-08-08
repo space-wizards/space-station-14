@@ -1,0 +1,29 @@
+﻿- type: constructionGraph
+  id: BananiumStatueClown
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bananiumStatue
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Bananium
+              amount: 8
+              doAfter: 10
+
+    - node: bananiumStatue
+      entity: StatueBananiumClown
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialBananium1
+                amount: 8
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 5
+            - tool: Welding
+              doAfter: 5

@@ -14,13 +14,13 @@ namespace Content.Shared.Roles
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
         /// </summary>
         [DataField("innerclothingskirt", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _innerClothingSkirt = string.Empty;
+        private string? _innerClothingSkirt;
 
         [DataField("satchel", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _satchel = string.Empty;
+        private string? _satchel;
 
         [DataField("duffelbag", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        private string _duffelbag = string.Empty;
+        private string? _duffelbag;
 
         public IReadOnlyDictionary<string, string> Inhand => _inHand;
         /// <summary>

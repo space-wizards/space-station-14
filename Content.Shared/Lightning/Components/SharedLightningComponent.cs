@@ -34,7 +34,7 @@ public abstract class SharedLightningComponent : Component
     /// The target that the lightning will Arc to.
     /// </summary>
     [DataField("arcTarget")]
-    public EntityUid ArcTarget;
+    public EntityUid? ArcTarget;
 
     /// <summary>
     /// How far should this lightning go?

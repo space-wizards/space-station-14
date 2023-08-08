@@ -1,12 +1,11 @@
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.Sound.Components
+namespace Content.Shared.Sound.Components;
+
+/// <summary>
+/// Simple sound emitter that emits sound on entity pickup
+/// </summary>
+[RegisterComponent, NetworkedComponent]
+public sealed class EmitSoundOnPickupComponent : BaseEmitSoundComponent
 {
-    /// <summary>
-    /// Simple sound emitter that emits sound on entity pickup
-    /// </summary>
-    [RegisterComponent, NetworkedComponent]
-    public sealed class EmitSoundOnPickupComponent : BaseEmitSoundComponent
-    {
-    }
 }

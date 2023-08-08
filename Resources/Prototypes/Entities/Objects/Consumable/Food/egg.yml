@@ -15,7 +15,6 @@
     sprite: Objects/Consumable/Food/egg.rsi
   - type: Item
     sprite: Objects/Consumable/Food/egg.rsi
-    netsync: false
     size: 1
   - type: SolutionContainerManager
     solutions:
@@ -67,25 +66,6 @@
         acts: [ "Destruction" ]
 
 # Splat
-
-- type: entity
-  name: egg
-  id: PuddleEgg
-  parent: PuddleBase
-  description: If the floor was a little hotter this would fry.
-  components:
-  - type: Sprite
-    sprite: Fluids/egg_splat.rsi
-    state: egg-0
-    netsync: false
-  - type: SolutionContainerManager
-    solutions:
-      puddle:
-        maxVol: 1000
-        reagents:
-        - ReagentId: Egg
-          Quantity: 2
-
 - type: entity
   name: eggshells
   parent: BaseItem
@@ -96,7 +76,6 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/egg.rsi
     state: eggshells
-    netsync: false
   - type: Item
     size: 1
   - type: SolutionContainerManager
@@ -110,7 +89,6 @@
     tags:
     - Egg
     - Trash
-  - type: Recyclable
   - type: SpaceGarbage
 
 # Egg
@@ -125,7 +103,6 @@
     layers:
       - state: icon
         map: [ "enum.DamageStateVisualLayers.Base" ]
-    netsync: false
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:

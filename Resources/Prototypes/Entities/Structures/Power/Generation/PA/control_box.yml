@@ -1,62 +1,41 @@
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorFinishedPart
   id: ParticleAcceleratorControlBox
   name: PA control computer
   description: This controls the density of the particles.
   components:
-    - type: Sprite
-      sprite: Structures/Power/Generation/PA/control_box.rsi
-      layers:
-        - state: boxc
-          map: [ "enum.ParticleAcceleratorVisualLayers.Base" ]
-        - state: unlitp
-          map: [ "enum.ParticleAcceleratorVisualLayers.Unlit" ]
-          shader: unshaded
-          visible: false
-    - type: Appearance
-      visuals:
-        - type: ParticleAcceleratorPartVisualizer
-          baseState: unlit
-    - type: ApcPowerReceiver
-      powerLoad: 250
-    - type: ExtensionCableReceiver
-    - type: ParticleAcceleratorControlBox
-    - type: Construction
-      graph: ParticleAcceleratorControlBox
-      node: completed
-    - type: ActivatableUI
-      key: enum.ParticleAcceleratorControlBoxUiKey.Key
-    - type: ActivatableUIRequiresPower
-    - type: UserInterface
-      interfaces:
-        - key: enum.ParticleAcceleratorControlBoxUiKey.Key
-          type: ParticleAcceleratorBoundUserInterface
-        - key: enum.WiresUiKey.Key
-          type: WiresBoundUserInterface
-    - type: Wires
-      BoardName: "Mk2 Particle Accelerator"
-      LayoutId: ParticleAccelerator
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
-      
-      
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/control_box.rsi
+  - type: ParticleAcceleratorControlBox
+  - type: ApcPowerReceiver
+    powerLoad: 250
+  - type: ExtensionCableReceiver
+  - type: Construction
+    graph: ParticleAcceleratorControlBox
+  - type: ActivatableUI
+    key: enum.ParticleAcceleratorControlBoxUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ParticleAcceleratorControlBoxUiKey.Key
+      type: ParticleAcceleratorBoundUserInterface
+    - key: enum.WiresUiKey.Key
+      type: WiresBoundUserInterface
+  - type: WiresPanel
+  - type: Wires
+    BoardName: "Mk2 Particle Accelerator"
+    LayoutId: ParticleAccelerator
+
 # Unfinished
 
 - type: entity
-  parent: ParticleAcceleratorBase
+  parent: ParticleAcceleratorUnfinishedBase
   id: ParticleAcceleratorControlBoxUnfinished
   name: PA control computer
   suffix: Unfinished
   description: This controls the density of the particles. It looks unfinished.
   components:
-    - type: Physics
-      bodyType: Dynamic
     - type: Sprite
       sprite: Structures/Power/Generation/PA/control_box.rsi
-      state: box
     - type: Construction
       graph: ParticleAcceleratorControlBox
-      node: start
-      defaultTarget: completed
-    - type: GuideHelp
-      guides: [ Singularity, Power ]

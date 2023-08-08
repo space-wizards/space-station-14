@@ -1,0 +1,21 @@
+﻿- type: spaceBiome
+  id: Failsafe
+  priority: -999999 # This DEFINITELY shouldn't get selected!
+  noiseRanges: {}
+
+- type: spaceBiome
+  id: AsteroidsFallback
+  priority: -999998 # This probably shouldn't get selected.
+  noiseRanges: {}
+  chunkComponents:
+    - type: DebrisFeaturePlacerController
+      densityNoiseChannel: Density
+    - type: SimpleDebrisSelector
+      debrisTable:
+        - id: AsteroidDebrisSmall
+        - id: AsteroidDebrisMedium
+        - id: AsteroidDebrisLarge
+          prob: 0.7
+        - id: AsteroidDebrisLarger
+          prob: 0.4
+

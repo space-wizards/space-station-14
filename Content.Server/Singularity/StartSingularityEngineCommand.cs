@@ -1,5 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.ParticleAccelerator.Components;
+using Content.Server.ParticleAccelerator.EntitySystems;
 using Content.Server.Singularity.Components;
 using Content.Server.Singularity.EntitySystems;
 using Content.Shared.Administration;
@@ -25,20 +26,37 @@ namespace Content.Server.Singularity
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var entitySystemManager = IoCManager.Resolve<IEntitySystemManager>();
-            foreach (var comp in entityManager.EntityQuery<EmitterComponent>())
+
+            // Turn on emitters
+            var emitterQuery = entityManager.EntityQueryEnumerator<EmitterComponent>();
+            var emitterSystem = entitySystemManager.GetEntitySystem<EmitterSystem>();
+            while (emitterQuery.MoveNext(out var uid, out var emitterComponent))
             {
-                entitySystemManager.GetEntitySystem<EmitterSystem>().SwitchOn(comp);
+                //FIXME: This turns on ALL emitters, including APEs. It should only turn on the containment field emitters.
+                emitterSystem.SwitchOn(uid, emitterComponent);
             }
-            foreach (var comp in entityManager.EntityQuery<RadiationCollectorComponent>())
+
+            // Turn on radiation collectors
+            var radiationCollectorQuery = entityManager.EntityQueryEnumerator<RadiationCollectorComponent>();
+            var radiationCollectorSystem = entitySystemManager.GetEntitySystem<RadiationCollectorSystem>();
+            while (radiationCollectorQuery.MoveNext(out var uid, out var radiationCollectorComponent))
             {
-                entitySystemManager.GetEntitySystem<RadiationCollectorSystem>().SetCollectorEnabled(comp.Owner, true, null, comp);
+                radiationCollectorSystem.SetCollectorEnabled(uid, enabled: true, user: null, radiationCollectorComponent);
             }
-            foreach (var comp in entityManager.EntityQuery<ParticleAcceleratorControlBoxComponent>())
+
+            // Setup PA
+            var paSystem = entitySystemManager.GetEntitySystem<ParticleAcceleratorSystem>();
+            var paQuery = entityManager.EntityQueryEnumerator<ParticleAcceleratorControlBoxComponent>();
+            while (paQuery.MoveNext(out var paId, out var paControl))
             {
-                comp.RescanParts();
-                comp.SetStrength(ParticleAcceleratorPowerState.Level0);
-                comp.SwitchOn();
+                paSystem.RescanParts(paId, controller: paControl);
+                if (!paControl.Assembled)
+                    continue;
+
+                paSystem.SetStrength(paId, ParticleAcceleratorPowerState.Level0, comp: paControl);
+                paSystem.SwitchOn(paId, comp: paControl);
             }
+
             shell.WriteLine("Done!");
         }
     }

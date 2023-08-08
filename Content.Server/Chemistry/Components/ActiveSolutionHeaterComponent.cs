@@ -3,5 +3,4 @@
 [RegisterComponent]
 public sealed class ActiveSolutionHeaterComponent : Component
 {
-
 }

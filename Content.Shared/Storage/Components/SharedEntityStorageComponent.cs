@@ -1,4 +1,5 @@
-﻿using Content.Shared.Physics;
+﻿using System.Numerics;
+using Content.Shared.Physics;
 using Content.Shared.Whitelist;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -11,7 +12,6 @@ namespace Content.Shared.Storage.Components;
 public abstract class SharedEntityStorageComponent : Component
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
-    public const float GasMixVolume = 70f;
 
     public static readonly TimeSpan InternalOpenAttemptDelay = TimeSpan.FromSeconds(0.5);
     public TimeSpan LastInternalOpenAttempt;
@@ -160,7 +160,7 @@ public record struct InsertIntoEntityStorageAttemptEvent(bool Cancelled = false)
 public record struct StoreMobInItemContainerAttemptEvent(bool Handled, bool Cancelled = false);
 
 [ByRefEvent]
-public record struct StorageOpenAttemptEvent(bool Silent, bool Cancelled = false);
+public record struct StorageOpenAttemptEvent(EntityUid User, bool Silent, bool Cancelled = false);
 
 [ByRefEvent]
 public readonly record struct StorageBeforeOpenEvent;

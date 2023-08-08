@@ -18,7 +18,10 @@ public sealed class RemoveEnsnare : IAlertClick
                 if (!entManager.TryGetComponent(ensnare, out EnsnaringComponent? ensnaringComponent))
                     return;
 
-                entManager.EntitySysManager.GetEntitySystem<EnsnareableSystem>().TryFree(player, ensnare, ensnaringComponent);
+                entManager.EntitySysManager.GetEntitySystem<EnsnareableSystem>().TryFree(player, player, ensnare, ensnaringComponent);
+
+                // Only one snare at a time.
+                break;
             }
         }
     }

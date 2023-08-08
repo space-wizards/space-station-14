@@ -18,7 +18,7 @@ public sealed class NameIdentifierGroupPrototype : IPrototype
     public string? Prefix;
 
     [DataField("maxValue")]
-    public int MaxValue = 999;
+    public int MaxValue = 1000;
 
     [DataField("minValue")]
     public int MinValue = 0;

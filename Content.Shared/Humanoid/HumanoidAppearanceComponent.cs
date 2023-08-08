@@ -43,8 +43,8 @@ public sealed class HumanoidAppearanceComponent : Component
     ///     Current species. Dictates things like base body sprites,
     ///     base humanoid to spawn, etc.
     /// </summary>
-    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
-    public string Species { get; set; } = string.Empty;
+    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>), required: true)]
+    public string Species { get; set; } = default!;
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.

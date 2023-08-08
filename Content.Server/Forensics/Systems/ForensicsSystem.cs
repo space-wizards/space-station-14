@@ -11,7 +11,8 @@ namespace Content.Server.Forensics
         public override void Initialize()
         {
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
-            SubscribeLocalEvent<FingerprintComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
+            SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -19,16 +20,34 @@ namespace Content.Server.Forensics
             ApplyEvidence(uid, args.Other);
         }
 
-        private void OnInit(EntityUid uid, FingerprintComponent component, ComponentInit args)
+        private void OnFingerprintInit(EntityUid uid, FingerprintComponent component, MapInitEvent args)
         {
             component.Fingerprint = GenerateFingerprint();
         }
 
+        private void OnDNAInit(EntityUid uid, DnaComponent component, MapInitEvent args)
+        {
+            component.DNA = GenerateDNA();
+        }
+
         private string GenerateFingerprint()
         {
-            byte[] fingerprint = new byte[16];
+            var fingerprint = new byte[16];
             _random.NextBytes(fingerprint);
             return Convert.ToHexString(fingerprint);
+        }
+
+        private string GenerateDNA()
+        {
+            var letters = new[] { "A", "C", "G", "T" };
+            var DNA = string.Empty;
+
+            for (var i = 0; i < 16; i++)
+            {
+                DNA += letters[_random.Next(letters.Length)];
+            }
+
+            return DNA;
         }
 
         private void ApplyEvidence(EntityUid user, EntityUid target)

@@ -62,7 +62,7 @@
 - type: entity
   parent: ClothingShoesBaseButcherable
   id: ClothingShoesDameDane
-  name: dame dane shoes
+  name: yakuza shoes
   description: At last...
   components:
   - type: Sprite

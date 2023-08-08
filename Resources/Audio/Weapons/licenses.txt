@@ -13,3 +13,13 @@ boxingbell.ogg taken from Herkules92 at https://freesound.org/people/Herkules92/
 block_metal1.ogg taken from https://github.com/Citadel-Station-13/Citadel-Station-13/commit/31c5996a5db8cce0cb431cb1dc20d99cac83f268 under CC BY-SA 3.0
 
 pierce.ogg taken from: https://github.com/tgstation/tgstation/commit/106cd26fc00851a51dd362f3131120318d848a53
+
+rubberhammer.ogg taken from https://freesound.org/people/ScreamStudio/sounds/392617/ under CC0 1.0
+
+- files: ["weoweo.ogg"]
+  license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
+  copyright: "Taken from Sonniss.com - GDC 2023 - Systematic Sound - TonalElements Obscurum - Dark Drones"
+
+- files: ["soup.ogg"]
+  license: "SONNISS #GAMEAUDIOGDC BUNDLE LICENSING"
+  copyright: "Taken from Sonniss.com - GDC 2023 - 344 AUdio - Epic Impacts Vol. 1"

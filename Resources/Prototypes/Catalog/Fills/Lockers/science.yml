@@ -8,10 +8,8 @@
       - id: ClothingHandsGlovesLatex
       - id: ClothingHeadsetScience
       - id: ClothingMaskSterile
-      - id: ClothingOuterCoatLab
+      - id: ClothingOuterCoatRnd
       - id: AnomalyScanner
-        prob: 0.5
-        orGroup: Scanner
       - id: NodeScanner
+      - id: NetworkConfigurator
         prob: 0.5
-        orGroup: Scanner

@@ -16,38 +16,41 @@
     },
     {
       "name": "equipped-MASK-dog",
-      "directions": 4,
-      "delays": [[1.0], [1.0], [1.0], [1.0]]
+      "directions": 4
     },
     {
       "name": "equipped-MASK-puppy",
-      "directions": 4,
-      "delays": [[1.0], [1.0], [1.0], [1.0]]
+      "directions": 4
     },
     {
       "name": "equipped-MASK-fox",
-      "directions": 4,
-      "delays": [[1.0], [1.0], [1.0], [1.0]]
+      "directions": 4
     },
     {
       "name": "equipped-MASK-cat",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-sloth",
+      "directions": 4
+    },
+    {
+      "name": "equipped-MASK-hamster",
       "directions": 4,
       "delays": [[1.0], [1.0], [1.0], [1.0]]
     },
     {
-      "name": "equipped-MASK-sloth",
+      "name": "equipped-MASK-kangaroo",
       "directions": 4,
       "delays": [[1.0], [1.0], [1.0], [1.0]]
     },
     {
       "name": "equipped-MASK-possum",
-      "directions": 4,
-      "delays": [[1.0], [1.0], [1.0], [1.0]]
+      "directions": 4
     },
     {
       "name": "equipped-MASK-pig",
-      "directions": 4,
-      "delays": [[1.0], [1.0], [1.0], [1.0]]
+      "directions": 4
     },
     {
       "name": "up-equipped-MASK",

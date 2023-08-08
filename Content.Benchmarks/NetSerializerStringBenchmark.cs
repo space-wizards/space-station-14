@@ -48,7 +48,7 @@ namespace Content.Benchmarks
         public void BenchReadCore()
         {
             _inputStream.Position = 0;
-            ReadPrimitiveCore(_inputStream, out string _);
+            ReadPrimitiveCore(_inputStream, out _);
         }
 
         [Benchmark]
@@ -62,7 +62,7 @@ namespace Content.Benchmarks
         public void BenchReadUnsafe()
         {
             _inputStream.Position = 0;
-            ReadPrimitiveUnsafe(_inputStream, out string _);
+            ReadPrimitiveUnsafe(_inputStream, out _);
         }
 
         [Benchmark]
@@ -76,329 +76,356 @@ namespace Content.Benchmarks
         public void BenchReadSlow()
         {
             _inputStream.Position = 0;
-            ReadPrimitiveSlow(_inputStream, out string _);
+            ReadPrimitiveSlow(_inputStream, out _);
         }
 
-		public static void WritePrimitiveCore(Stream stream, string value)
-		{
-			if (value == null)
-			{
-				Primitives.WritePrimitive(stream, (uint)0);
-				return;
-			}
+        public static void WritePrimitiveCore(Stream stream, string value)
+        {
+            if (value == null)
+            {
+                Primitives.WritePrimitive(stream, (uint) 0);
+                return;
+            }
 
-			if (value.Length == 0)
-			{
-				Primitives.WritePrimitive(stream, (uint)1);
-				return;
-			}
+            if (value.Length == 0)
+            {
+                Primitives.WritePrimitive(stream, (uint) 1);
+                return;
+            }
 
-			Span<byte> buf = stackalloc byte[StringByteBufferLength];
+            Span<byte> buf = stackalloc byte[StringByteBufferLength];
 
-			var totalChars = value.Length;
-			var totalBytes = Encoding.UTF8.GetByteCount(value);
+            var totalChars = value.Length;
+            var totalBytes = Encoding.UTF8.GetByteCount(value);
 
-			Primitives.WritePrimitive(stream, (uint)totalBytes + 1);
-			Primitives.WritePrimitive(stream, (uint)totalChars);
+            Primitives.WritePrimitive(stream, (uint) totalBytes + 1);
+            Primitives.WritePrimitive(stream, (uint) totalChars);
 
-			var totalRead = 0;
-			ReadOnlySpan<char> span = value;
-			for (;;)
-			{
-				var finalChunk = totalRead + totalChars >= totalChars;
-				Utf8.FromUtf16(span, buf, out var read, out var wrote, isFinalBlock: finalChunk);
-				stream.Write(buf.Slice(0, wrote));
-				totalRead += read;
-				if (read >= totalChars)
-				{
-					break;
-				}
+            var totalRead = 0;
+            ReadOnlySpan<char> span = value;
+            while (true)
+            {
+                var finalChunk = totalRead + totalChars >= totalChars;
+                Utf8.FromUtf16(span, buf, out var read, out var wrote, isFinalBlock: finalChunk);
+                stream.Write(buf[0..wrote]);
+                totalRead += read;
+                if (read >= totalChars)
+                {
+                    break;
+                }
 
-				span = span[read..];
-				totalChars -= read;
-			}
-		}
+                span = span[read..];
+                totalChars -= read;
+            }
+        }
 
-		private static readonly SpanAction<char, (int, Stream)> _stringSpanRead = StringSpanRead;
+        public static void ReadPrimitiveCore(Stream stream, out string value)
+        {
+            Primitives.ReadPrimitive(stream, out uint totalBytes);
 
-		public static void ReadPrimitiveCore(Stream stream, out string value)
-		{
-			Primitives.ReadPrimitive(stream, out uint totalBytes);
+            if (totalBytes == 0)
+            {
+                value = null;
+                return;
+            }
 
-			if (totalBytes == 0)
-			{
-				value = null;
-				return;
-			}
+            if (totalBytes == 1)
+            {
+                value = string.Empty;
+                return;
+            }
 
-			if (totalBytes == 1)
-			{
-				value = string.Empty;
-				return;
-			}
-
-			totalBytes -= 1;
+            totalBytes -= 1;
 
             Primitives.ReadPrimitive(stream, out uint totalChars);
 
-			value = string.Create((int) totalChars, ((int) totalBytes, stream), _stringSpanRead);
-		}
+            value = string.Create((int) totalChars, ((int) totalBytes, stream), StringSpanRead);
+        }
 
-		private static void StringSpanRead(Span<char> span, (int totalBytes, Stream stream) tuple)
-		{
-			Span<byte> buf = stackalloc byte[StringByteBufferLength];
+        private static void StringSpanRead(Span<char> span, (int totalBytes, Stream stream) tuple)
+        {
+            Span<byte> buf = stackalloc byte[StringByteBufferLength];
 
-			// ReSharper disable VariableHidesOuterVariable
-			var (totalBytes, stream) = tuple;
-			// ReSharper restore VariableHidesOuterVariable
+            // ReSharper disable VariableHidesOuterVariable
+            var (totalBytes, stream) = tuple;
+            // ReSharper restore VariableHidesOuterVariable
 
-			var totalBytesRead = 0;
-			var totalCharsRead = 0;
-			var writeBufStart = 0;
+            var totalBytesRead = 0;
+            var totalCharsRead = 0;
+            var writeBufStart = 0;
 
-			while (totalBytesRead < totalBytes)
-			{
-				var bytesLeft = totalBytes - totalBytesRead;
-				var bytesReadLeft = Math.Min(buf.Length, bytesLeft);
-				var writeSlice = buf.Slice(writeBufStart, bytesReadLeft - writeBufStart);
-				var bytesInBuffer = stream.Read(writeSlice);
-				if (bytesInBuffer == 0) throw new EndOfStreamException();
+            while (totalBytesRead < totalBytes)
+            {
+                var bytesLeft = totalBytes - totalBytesRead;
+                var bytesReadLeft = Math.Min(buf.Length, bytesLeft);
+                var writeSlice = buf[writeBufStart..(bytesReadLeft - writeBufStart)];
+                var bytesInBuffer = stream.Read(writeSlice);
+                if (bytesInBuffer == 0) throw new EndOfStreamException();
 
-				var readFromStream = bytesInBuffer + writeBufStart;
-				var final = readFromStream == bytesLeft;
-				var status = Utf8.ToUtf16(buf[..readFromStream], span[totalCharsRead..], out var bytesRead, out var charsRead, isFinalBlock: final);
+                var readFromStream = bytesInBuffer + writeBufStart;
+                var final = readFromStream == bytesLeft;
+                var status = Utf8.ToUtf16(buf[..readFromStream], span[totalCharsRead..], out var bytesRead, out var charsRead, isFinalBlock: final);
 
-				totalBytesRead += bytesRead;
-				totalCharsRead += charsRead;
-				writeBufStart = 0;
+                totalBytesRead += bytesRead;
+                totalCharsRead += charsRead;
+                writeBufStart = 0;
 
-				if (status == OperationStatus.DestinationTooSmall)
-				{
-					// Malformed data?
-					throw new InvalidDataException();
-				}
+                if (status == OperationStatus.DestinationTooSmall)
+                {
+                    // Malformed data?
+                    throw new InvalidDataException();
+                }
 
-				if (status == OperationStatus.NeedMoreData)
-				{
-					// We got cut short in the middle of a multi-byte UTF-8 sequence.
-					// So we need to move it to the bottom of the span, then read the next bit *past* that.
-					// This copy should be fine because we're only ever gonna be copying up to 4 bytes
-					// from the end of the buffer to the start.
-					// So no chance of overlap.
-					buf[bytesRead..].CopyTo(buf);
-					writeBufStart = bytesReadLeft - bytesRead;
-					continue;
-				}
+                if (status == OperationStatus.NeedMoreData)
+                {
+                    // We got cut short in the middle of a multi-byte UTF-8 sequence.
+                    // So we need to move it to the bottom of the span, then read the next bit *past* that.
+                    // This copy should be fine because we're only ever gonna be copying up to 4 bytes
+                    // from the end of the buffer to the start.
+                    // So no chance of overlap.
+                    buf[bytesRead..].CopyTo(buf);
+                    writeBufStart = bytesReadLeft - bytesRead;
+                    continue;
+                }
 
-				Debug.Assert(status == OperationStatus.Done);
-			}
-		}
+                Debug.Assert(status == OperationStatus.Done);
+            }
+        }
 
-		public static void WritePrimitiveSlow(Stream stream, string value)
-		{
-			if (value == null)
-			{
-                Primitives.WritePrimitive(stream, (uint)0);
-				return;
-			}
-			else if (value.Length == 0)
-			{
-                Primitives.WritePrimitive(stream, (uint)1);
-				return;
-			}
+        public static void WritePrimitiveSlow(Stream stream, string value)
+        {
+            if (value == null)
+            {
+                Primitives.WritePrimitive(stream, (uint) 0);
+                return;
+            }
+            else if (value.Length == 0)
+            {
+                Primitives.WritePrimitive(stream, (uint) 1);
+                return;
+            }
 
-			var encoding = new UTF8Encoding(false, true);
+            var encoding = new UTF8Encoding(false, true);
 
-			int len = encoding.GetByteCount(value);
+            var len = encoding.GetByteCount(value);
 
-            Primitives.WritePrimitive(stream, (uint)len + 1);
-			Primitives.WritePrimitive(stream, (uint)value.Length);
+            Primitives.WritePrimitive(stream, (uint) len + 1);
+            Primitives.WritePrimitive(stream, (uint) value.Length);
 
-			var buf = new byte[len];
+            var buf = new byte[len];
 
-			encoding.GetBytes(value, 0, value.Length, buf, 0);
+            encoding.GetBytes(value, 0, value.Length, buf, 0);
 
-			stream.Write(buf, 0, len);
-		}
+            stream.Write(buf, 0, len);
+        }
 
-		public static void ReadPrimitiveSlow(Stream stream, out string value)
-		{
-			uint len;
-			Primitives.ReadPrimitive(stream, out len);
+        public static void ReadPrimitiveSlow(Stream stream, out string value)
+        {
+            Primitives.ReadPrimitive(stream, out uint len);
 
-			if (len == 0)
-			{
-				value = null;
-				return;
-			}
-			else if (len == 1)
-			{
-				value = string.Empty;
-				return;
-			}
+            if (len == 0)
+            {
+                value = null;
+                return;
+            }
+            else if (len == 1)
+            {
+                value = string.Empty;
+                return;
+            }
 
-			uint totalChars;
-            Primitives.ReadPrimitive(stream, out totalChars);
+            Primitives.ReadPrimitive(stream, out uint _);
 
-			len -= 1;
+            len -= 1;
 
-			var encoding = new UTF8Encoding(false, true);
+            var encoding = new UTF8Encoding(false, true);
 
-			var buf = new byte[len];
+            var buf = new byte[len];
 
-			int l = 0;
+            var l = 0;
 
-			while (l < len)
-			{
-				int r = stream.Read(buf, l, (int)len - l);
-				if (r == 0)
-					throw new EndOfStreamException();
-				l += r;
-			}
+            while (l < len)
+            {
+                var r = stream.Read(buf, l, (int) len - l);
+                if (r == 0)
+                    throw new EndOfStreamException();
+                l += r;
+            }
 
-			value = encoding.GetString(buf);
-		}
+            value = encoding.GetString(buf);
+        }
 
-        sealed class StringHelper
-		{
-			public StringHelper()
-			{
-				this.Encoding = new UTF8Encoding(false, true);
-			}
+        private sealed class StringHelper
+        {
+            public StringHelper()
+            {
+                Encoding = new UTF8Encoding(false, true);
+            }
 
-			Encoder m_encoder;
-			Decoder m_decoder;
+            private Encoder _encoder;
+            private Decoder _decoder;
 
-			byte[] m_byteBuffer;
-			char[] m_charBuffer;
+            private byte[] _byteBuffer;
+            private char[] _charBuffer;
 
-			public UTF8Encoding Encoding { get; private set; }
-			public Encoder Encoder { get { if (m_encoder == null) m_encoder = this.Encoding.GetEncoder(); return m_encoder; } }
-			public Decoder Decoder { get { if (m_decoder == null) m_decoder = this.Encoding.GetDecoder(); return m_decoder; } }
+            public UTF8Encoding Encoding { get; private set; }
+            public Encoder Encoder
+            {
+                get
+                {
+                    _encoder ??= Encoding.GetEncoder();
+                    return _encoder;
+                }
+            }
+            public Decoder Decoder
+            {
+                get
+                {
+                    _decoder ??= Encoding.GetDecoder();
+                    return _decoder;
+                }
+            }
 
-			public byte[] ByteBuffer { get { if (m_byteBuffer == null) m_byteBuffer = new byte[StringByteBufferLength]; return m_byteBuffer; } }
-			public char[] CharBuffer { get { if (m_charBuffer == null) m_charBuffer = new char[StringCharBufferLength]; return m_charBuffer; } }
-		}
+            public byte[] ByteBuffer
+            {
+                get
+                {
+                    _byteBuffer ??= new byte[StringByteBufferLength];
+                    return _byteBuffer;
+                }
+            }
+            public char[] CharBuffer
+            {
+                get
+                {
+                    _charBuffer ??= new char[StringCharBufferLength];
+                    return _charBuffer;
+                }
+            }
+        }
 
-		[ThreadStatic]
-		static StringHelper s_stringHelper;
+        [ThreadStatic]
+        private static StringHelper _stringHelper;
 
-		public unsafe static void WritePrimitiveUnsafe(Stream stream, string value)
-		{
-			if (value == null)
-			{
-				Primitives.WritePrimitive(stream, (uint)0);
-				return;
-			}
-			else if (value.Length == 0)
-			{
-                Primitives.WritePrimitive(stream, (uint)1);
-				return;
-			}
+        public static unsafe void WritePrimitiveUnsafe(Stream stream, string value)
+        {
+            if (value == null)
+            {
+                Primitives.WritePrimitive(stream, (uint) 0);
+                return;
+            }
+            else if (value.Length == 0)
+            {
+                Primitives.WritePrimitive(stream, (uint) 1);
+                return;
+            }
 
-			var helper = s_stringHelper;
-			if (helper == null)
-				s_stringHelper = helper = new StringHelper();
+            var helper = _stringHelper;
+            if (helper == null)
+                _stringHelper = helper = new StringHelper();
 
-			var encoder = helper.Encoder;
-			var buf = helper.ByteBuffer;
+            var encoder = helper.Encoder;
+            var buf = helper.ByteBuffer;
 
-			int totalChars = value.Length;
-			int totalBytes;
+            var totalChars = value.Length;
+            int totalBytes;
 
-			fixed (char* ptr = value)
-				totalBytes = encoder.GetByteCount(ptr, totalChars, true);
+            fixed (char* ptr = value)
+                totalBytes = encoder.GetByteCount(ptr, totalChars, true);
 
-			Primitives.WritePrimitive(stream, (uint)totalBytes + 1);
-			Primitives.WritePrimitive(stream, (uint)totalChars);
+            Primitives.WritePrimitive(stream, (uint) totalBytes + 1);
+            Primitives.WritePrimitive(stream, (uint) totalChars);
 
-			int p = 0;
-			bool completed = false;
+            var p = 0;
+            var completed = false;
 
-			while (completed == false)
-			{
-				int charsConverted;
-				int bytesConverted;
+            while (completed == false)
+            {
+                int charsConverted;
+                int bytesConverted;
 
-				fixed (char* src = value)
-				fixed (byte* dst = buf)
-				{
-					encoder.Convert(src + p, totalChars - p, dst, buf.Length, true,
-						out charsConverted, out bytesConverted, out completed);
-				}
+                fixed (char* src = value)
+                fixed (byte* dst = buf)
+                {
+                    encoder.Convert(src + p, totalChars - p, dst, buf.Length, true,
+                        out charsConverted, out bytesConverted, out completed);
+                }
 
-				stream.Write(buf, 0, bytesConverted);
+                stream.Write(buf, 0, bytesConverted);
 
-				p += charsConverted;
-			}
-		}
+                p += charsConverted;
+            }
+        }
 
-		public static void ReadPrimitiveUnsafe(Stream stream, out string value)
-		{
-			uint totalBytes;
-			Primitives.ReadPrimitive(stream, out totalBytes);
+        public static void ReadPrimitiveUnsafe(Stream stream, out string value)
+        {
+            Primitives.ReadPrimitive(stream, out uint totalBytes);
 
-			if (totalBytes == 0)
-			{
-				value = null;
-				return;
-			}
-			else if (totalBytes == 1)
-			{
-				value = string.Empty;
-				return;
-			}
+            if (totalBytes == 0)
+            {
+                value = null;
+                return;
+            }
+            else if (totalBytes == 1)
+            {
+                value = string.Empty;
+                return;
+            }
 
-			totalBytes -= 1;
+            totalBytes -= 1;
 
-			uint totalChars;
-			Primitives.ReadPrimitive(stream, out totalChars);
+            Primitives.ReadPrimitive(stream, out uint totalChars);
 
-			var helper = s_stringHelper;
-			if (helper == null)
-				s_stringHelper = helper = new StringHelper();
+            var helper = _stringHelper;
+            if (helper == null)
+                _stringHelper = helper = new StringHelper();
 
-			var decoder = helper.Decoder;
-			var buf = helper.ByteBuffer;
-			char[] chars;
-			if (totalChars <= StringCharBufferLength)
-				chars = helper.CharBuffer;
-			else
-				chars = new char[totalChars];
+            var decoder = helper.Decoder;
+            var buf = helper.ByteBuffer;
+            char[] chars;
+            if (totalChars <= StringCharBufferLength)
+                chars = helper.CharBuffer;
+            else
+                chars = new char[totalChars];
 
-			int streamBytesLeft = (int)totalBytes;
+            var streamBytesLeft = (int) totalBytes;
 
-			int cp = 0;
+            var cp = 0;
 
-			while (streamBytesLeft > 0)
-			{
-				int bytesInBuffer = stream.Read(buf, 0, Math.Min(buf.Length, streamBytesLeft));
-				if (bytesInBuffer == 0)
-					throw new EndOfStreamException();
+            while (streamBytesLeft > 0)
+            {
+                var bytesInBuffer = stream.Read(buf, 0, Math.Min(buf.Length, streamBytesLeft));
+                if (bytesInBuffer == 0)
+                    throw new EndOfStreamException();
 
-				streamBytesLeft -= bytesInBuffer;
-				bool flush = streamBytesLeft == 0;
+                streamBytesLeft -= bytesInBuffer;
+                var flush = streamBytesLeft == 0;
 
-				bool completed = false;
+                var completed = false;
 
-				int p = 0;
+                var p = 0;
 
-				while (completed == false)
-				{
-					int charsConverted;
-					int bytesConverted;
+                while (completed == false)
+                {
+                    decoder.Convert(
+                        buf,
+                        p,
+                        bytesInBuffer - p,
+                        chars,
+                        cp,
+                        (int) totalChars - cp,
+                        flush,
+                        out var bytesConverted,
+                        out var charsConverted,
+                        out completed
+                    );
 
-					decoder.Convert(buf, p, bytesInBuffer - p,
-						chars, cp, (int)totalChars - cp,
-						flush,
-						out bytesConverted, out charsConverted, out completed);
+                    p += bytesConverted;
+                    cp += charsConverted;
+                }
+            }
 
-					p += bytesConverted;
-					cp += charsConverted;
-				}
-			}
-
-			value = new string(chars, 0, (int)totalChars);
-		}
+            value = new string(chars, 0, (int) totalChars);
+        }
     }
 }

@@ -5,6 +5,8 @@
         <BoxContainer Orientation="Horizontal">
             <Label Name="PlayerCount" HorizontalExpand="True" SizeFlagsStretchRatio="0.50"
                    Text="{Loc Player Count}" />
+            <Button Name="ShowDisconnectedButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
+                    Text="{Loc player-tab-show-disconnected}" ToggleMode="True"/>
             <Button Name="OverlayButton" HorizontalExpand="True" SizeFlagsStretchRatio="0.25"
                     Text="{Loc player-tab-overlay}" ToggleMode="True"/>
         </BoxContainer>

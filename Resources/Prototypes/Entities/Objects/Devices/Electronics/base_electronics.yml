@@ -8,9 +8,13 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: generic
-      netsync: false
     - type: Tag
       tags:
         - DroneUsable
     - type: StaticPrice
       price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20

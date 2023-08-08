@@ -32,7 +32,8 @@ public enum AnomalousParticleType : byte
 {
     Delta,
     Epsilon,
-    Zeta
+    Zeta,
+    Default
 }
 
 [Serializable, NetSerializable]

@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Monitor.Systems;
-using Content.Server.Doors.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
@@ -161,13 +160,13 @@ namespace Content.Server.Doors.Systems
         {
             var ev = new BeforeDoorAutoCloseEvent();
             RaiseLocalEvent(uid, ev);
+            UpdateVisuals(uid, component, args);
             if (ev.Cancelled)
             {
                 return;
             }
 
             _doorSystem.SetNextStateChange(uid, component.AutocloseDelay);
-            UpdateVisuals(uid, component, args);
         }
 
         private void OnBeforeDoorAutoclose(EntityUid uid, FirelockComponent component, BeforeDoorAutoCloseEvent args)

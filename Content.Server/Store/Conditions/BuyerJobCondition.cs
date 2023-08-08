@@ -28,7 +28,7 @@ public sealed class BuyerJobCondition : ListingCondition
     {
         var ent = args.EntityManager;
 
-        if (!ent.TryGetComponent<MindComponent>(args.Buyer, out var mind) || mind.Mind == null)
+        if (!ent.TryGetComponent<MindContainerComponent>(args.Buyer, out var mind) || mind.Mind == null)
             return true; //this is for things like surplus crate
 
         if (Blacklist != null)

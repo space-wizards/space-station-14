@@ -72,7 +72,7 @@ namespace Content.Shared.ActionBlocker
             if (ev.Cancelled)
                 return false;
 
-            if (target == null)
+            if (target == null || target == user)
                 return true;
 
             var targetEv = new GettingInteractedWithAttemptEvent(user, target);

@@ -9,9 +9,6 @@
       tags: [] # ignore "WhitelistChameleon" tag
     - type: Sprite
       sprite: Clothing/Back/Backpacks/backpack.rsi
-      netsync: false
-    - type: Clothing
-      sprite: Clothing/Back/Backpacks/backpack.rsi
     - type: ChameleonClothing
       slot: [back]
       default: ClothingBackpack
@@ -21,3 +18,45 @@
           type: StorageBoundUserInterface
         - key: enum.ChameleonUiKey.Key
           type: ChameleonBoundUserInterface
+
+- type: entity
+  parent: Clothing
+  id: ClothingBackpackWaterTank
+  name: backpack water tank
+  description: Holds a large amount of fluids. Supplies to spray nozzles in your hands.
+  components:
+  - type: Tag
+    tags: 
+    - NozzleBackTank
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+    state: icon
+  - type: Item
+    size: 200
+  - type: Clothing
+    slots: BACK
+    sprite: Clothing/Back/Backpacks/waterbackpack.rsi
+  - type: SolutionAmmoProvider
+    solutionId: tank
+    proto: BulletWaterShot
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        maxVol: 1000 #much water
+  - type: SolutionTransfer
+    transferAmount: 50
+    maxTransferAmount: 100
+    minTransferAmount: 10
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+    - key: enum.TransferAmountUiKey.Key
+      type: TransferAmountBoundUserInterface
+  - type: DrawableSolution
+    solution: tank
+  - type: RefillableSolution
+    solution: tank
+  - type: DrainableSolution
+    solution: tank
+  - type: ExaminableSolution
+    solution: tank

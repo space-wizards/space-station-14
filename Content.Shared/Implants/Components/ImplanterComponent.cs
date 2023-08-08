@@ -1,5 +1,6 @@
 ﻿using System.Threading;
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.DoAfter;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Implants.Components;
 /// <summary>
-/// Implanters are used to implant or extract implants from an entity
+/// Implanters are used to implant or extract implants from an entity.
 /// Some can be single use (implant only) or some can draw out an implant
 /// </summary>
 //TODO: Rework drawing to work with implant cases when surgery is in
@@ -38,7 +39,7 @@ public sealed class ImplanterComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("drawTime")]
-    public float DrawTime = 300f;
+    public float DrawTime = 60f;
 
     /// <summary>
     /// Good for single-use injectors
@@ -66,12 +67,10 @@ public sealed class ImplanterComponent : Component
     /// The <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [ViewVariables]
-    [DataField("implanterSlot")]
+    [DataField("implanterSlot", required:true)]
     public ItemSlot ImplanterSlot = new();
 
     public bool UiUpdateNeeded;
-
-    public CancellationTokenSource? CancelToken;
 }
 
 [Serializable, NetSerializable]

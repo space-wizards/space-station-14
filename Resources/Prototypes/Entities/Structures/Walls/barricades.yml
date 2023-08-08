@@ -1,7 +1,6 @@
 - type: entity
   id: Barricade
   parent: BaseStructure
-  name: barricade
   components:
   - type: InteractionOutline
   - type: Construction
@@ -13,12 +12,13 @@
   - type: Physics
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb {}
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Tag
     tags:
     - Wooden

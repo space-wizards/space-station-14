@@ -48,7 +48,7 @@ public sealed class ItemMapperSystem : SharedItemMapperSystem
         foreach (var sprite in component.SpriteLayers)
         {
             spriteComponent.LayerMapReserveBlank(sprite);
-            spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(component.RSIPath!, sprite));
+            spriteComponent.LayerSetSprite(sprite, new SpriteSpecifier.Rsi(component.RSIPath!.Value, sprite));
             spriteComponent.LayerSetVisible(sprite, false);
         }
     }

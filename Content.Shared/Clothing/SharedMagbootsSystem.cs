@@ -35,29 +35,35 @@ public abstract class SharedMagbootsSystem : EntitySystem
             return;
 
         args.Handled = true;
-        component.On = !component.On;
+
+        ToggleMagboots(uid, component);
+    }
+
+    private void ToggleMagboots(EntityUid uid, MagbootsComponent magboots)
+    {
+        magboots.On = !magboots.On;
 
         if (_sharedContainer.TryGetContainingContainer(uid, out var container) &&
-            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == component.Owner)
-            UpdateMagbootEffects(container.Owner, uid, true, component);
+            _inventory.TryGetSlotEntity(container.Owner, "shoes", out var entityUid) && entityUid == uid)
+            UpdateMagbootEffects(container.Owner, uid, true, magboots);
 
         if (TryComp<ItemComponent>(uid, out var item))
         {
-            _item.SetHeldPrefix(uid, component.On ? "on" : null, item);
-            _clothing.SetEquippedPrefix(uid, component.On ? "on" : null);
+            _item.SetHeldPrefix(uid, magboots.On ? "on" : null, item);
+            _clothing.SetEquippedPrefix(uid, magboots.On ? "on" : null);
         }
 
-        _appearance.SetData(uid, ToggleVisuals.Toggled, component.Owner);
-        OnChanged(component);
-        Dirty(component);
+        _appearance.SetData(uid, ToggleVisuals.Toggled, magboots.On);
+        OnChanged(uid, magboots);
+        Dirty(magboots);
     }
 
     protected virtual void UpdateMagbootEffects(EntityUid parent, EntityUid uid, bool state, MagbootsComponent? component) { }
 
-    protected void OnChanged(MagbootsComponent component)
+    protected void OnChanged(EntityUid uid, MagbootsComponent component)
     {
         _sharedActions.SetToggled(component.ToggleAction, component.On);
-        _clothingSpeedModifier.SetClothingSpeedModifierEnabled(component.Owner, component.On);
+        _clothingSpeedModifier.SetClothingSpeedModifierEnabled(uid, component.On);
     }
 
     private void AddToggleVerb(EntityUid uid, MagbootsComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -67,7 +73,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
         ActivationVerb verb = new();
         verb.Text = Loc.GetString("toggle-magboots-verb-get-data-text");
-        verb.Act = () => component.On = !component.On;
+        verb.Act = () => ToggleMagboots(uid, component);
         // TODO VERB ICON add toggle icon? maybe a computer on/off symbol?
         args.Verbs.Add(verb);
     }

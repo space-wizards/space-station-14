@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Alert;
+using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -34,7 +35,7 @@ public sealed class ClientAlertsSystem : AlertsSystem
 
         AlertOrder = _prototypeManager.EnumeratePrototypes<AlertOrderPrototype>().FirstOrDefault();
         if (AlertOrder == null)
-            Logger.ErrorS("alert", "no alertOrder prototype found, alerts will be in random order");
+            Log.Error("alert", "no alertOrder prototype found, alerts will be in random order");
     }
 
     public IReadOnlyDictionary<AlertKey, AlertState>? ActiveAlerts
@@ -67,9 +68,10 @@ public sealed class ClientAlertsSystem : AlertsSystem
     private void ClientAlertsHandleState(EntityUid uid, AlertsComponent component, ref ComponentHandleState args)
     {
         var componentAlerts = (args.Current as AlertsComponentState)?.Alerts;
-        if (componentAlerts == null) return;
+        if (componentAlerts == null)
+            return;
 
-        component.Alerts = new(componentAlerts);
+        component.Alerts = new Dictionary<AlertKey, AlertState>(componentAlerts);
 
         if (_playerManager.LocalPlayer?.ControlledEntity == uid)
             SyncAlerts?.Invoke(this, componentAlerts);

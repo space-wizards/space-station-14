@@ -1,6 +1,9 @@
 using Content.Server.Actions;
 using Content.Server.Administration.Logs;
+using Content.Server.PDA.Ringer;
+using Content.Server.Stack;
 using Content.Server.Store.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.EntitySystems;
@@ -8,8 +11,6 @@ using Content.Shared.Store;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using System.Linq;
-using Content.Server.Stack;
-using Content.Server.UserInterface;
 
 namespace Content.Server.Store.Systems;
 
@@ -50,6 +51,17 @@ public sealed partial class StoreSystem
     }
 
     /// <summary>
+    /// Closes the store UI for everyone, if it's open
+    /// </summary>
+    public void CloseUi(EntityUid uid, StoreComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        _ui.TryCloseAll(uid, StoreUiKey.Key);
+    }
+
+    /// <summary>
     /// Updates the user interface for a store and refreshes the listings
     /// </summary>
     /// <param name="user">The person who if opening the store ui. Listings are filtered based on this.</param>
@@ -83,8 +95,10 @@ public sealed partial class StoreSystem
         // TODO: if multiple users are supposed to be able to interact with a single BUI & see different
         // stores/listings, this needs to use session specific BUI states.
 
-        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency);
-        _ui.SetUiState(ui, state);
+        // only tell operatives to lock their uplink if it can be locked
+        var showFooter = HasComp<RingerUplinkComponent>(store);
+        var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
+        UserInterfaceSystem.SetUiState(ui, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
@@ -105,7 +119,7 @@ public sealed partial class StoreSystem
         var listing = component.Listings.FirstOrDefault(x => x.Equals(msg.Listing));
         if (listing == null) //make sure this listing actually exists
         {
-            Logger.Debug("listing does not exist");
+            Log.Debug("listing does not exist");
             return;
         }
 
@@ -191,7 +205,7 @@ public sealed partial class StoreSystem
         if (proto.Cash == null || !proto.CanWithdraw)
             return;
 
-        if (msg.Session.AttachedEntity is not { Valid: true} buyer)
+        if (msg.Session.AttachedEntity is not { Valid: true } buyer)
             return;
 
         FixedPoint2 amountRemaining = msg.Amount;

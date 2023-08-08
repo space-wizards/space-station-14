@@ -16,8 +16,6 @@
   - node: assembly
     entity: AirlockAssembly
     actions:
-    - !type:SpriteStateChange
-      state: assembly
     - !type:SnapToGrid {}
     - !type:SetAnchor {}
     edges:
@@ -79,6 +77,15 @@
       - material: ReinforcedGlass
         amount: 1
         doAfter: 2
+    - to: wired
+      conditions:
+      - !type:EntityAnchored {}
+      completed:
+      - !type:EmptyAllContainers {}
+      steps:
+      - tool: Prying
+        doAfter: 5
+
 
   - node: airlock
     entity: Airlock
@@ -87,7 +94,7 @@
       conditions:
       - !type:EntityAnchored {}
       - !type:DoorWelded {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut
@@ -114,6 +121,9 @@
       - !type:EntityAnchored {}
       completed:
       - !type:EmptyAllContainers {}
+      - !type:SpawnPrototype
+        prototype: SheetRGlass1
+        amount: 1
       steps:
       - tool: Prying
         doAfter: 5
@@ -125,7 +135,7 @@
       conditions:
       - !type:EntityAnchored {}
       - !type:DoorWelded {}
-      - !type:AirlockBolted
+      - !type:DoorBolted
         value: false
       - !type:WirePanel {}
       - !type:AllWiresCut

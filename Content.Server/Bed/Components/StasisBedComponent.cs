@@ -16,6 +16,6 @@ namespace Content.Server.Bed.Components
         public float Multiplier = 10f;
 
         [DataField("machinePartMetabolismModifier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartMetabolismModifier = "Manipulator";
+        public string MachinePartMetabolismModifier = "Capacitor";
     }
 }

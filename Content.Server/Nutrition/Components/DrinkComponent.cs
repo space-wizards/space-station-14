@@ -1,4 +1,5 @@
 using Content.Server.Nutrition.EntitySystems;
+using Content.Shared.DoAfter;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
@@ -20,6 +21,7 @@ namespace Content.Server.Nutrition.Components
         internal bool DefaultToOpened;
 
         [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
 
         [ViewVariables(VVAccess.ReadWrite)]
@@ -35,23 +37,13 @@ namespace Content.Server.Nutrition.Components
         public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         /// <summary>
-        /// Is this drink being forced on someone else?
-        /// </summary>
-        /// <returns></returns>
-        [DataField("forceDrink")]
-        public bool ForceDrink;
-
-        /// <summary>
-        /// Is the entity currently drinking or trying to make someone else drink?
-        /// </summary>
-        [DataField("drinking")]
-        public bool Drinking;
-
-        /// <summary>
         /// How long it takes to drink this yourself.
         /// </summary>
         [DataField("delay")]
         public float Delay = 1;
+
+        [DataField("examinable")]
+        public bool Examinable = true;
 
         /// <summary>
         ///     This is how many seconds it takes to force feed someone this drink.

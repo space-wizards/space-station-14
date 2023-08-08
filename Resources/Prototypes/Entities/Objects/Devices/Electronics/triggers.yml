@@ -25,6 +25,8 @@
       delayOptions: [3, 5, 10, 15, 30]
       initialBeepDelay: 0
       beepSound: /Audio/Machines/Nuke/general_beep.ogg
+      params:
+        volume: -2
     - type: StaticPrice
       price: 40
 
@@ -40,7 +42,12 @@
   - type: PayloadTrigger
     components:
     - type: TriggerOnSignal
-    - type: SignalReceiver
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+      receiveFrequencyId: BasicDevice
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSink
     - type: StaticPrice
       price: 40
 

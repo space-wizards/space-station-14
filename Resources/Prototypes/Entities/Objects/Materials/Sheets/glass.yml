@@ -2,13 +2,14 @@
   abstract: true
   parent: BaseItem
   id: SheetGlassBase
+  name: glass
   description: A sheet of glass, used often on the station in various applications.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/Sheets/glass.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/glass.rsi
+    size: 30
   - type: StaticPrice
     price: 0
   - type: ItemStatus
@@ -16,9 +17,11 @@
     tags:
     - Sheet
     - DroneUsable
+  - type: Material
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: Appearance
   - type: Destructible
     thresholds:
     - trigger:
@@ -37,7 +40,7 @@
       - !type:SpawnEntitiesBehavior
         spawn:
           ShardGlass:
-            min: 0
+            min: 1
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
@@ -45,27 +48,25 @@
 - type: entity
   parent: SheetGlassBase
   id: SheetGlass
-  name: glass
   suffix: Full
   components:
-  - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Glass: 100
-  - type: StackPrice
-    price: 5
   - type: Stack
     stackType: Glass
+    baseLayer: base
+    layerStates:
+    - glass
+    - glass_2
+    - glass_3
   - type: Sprite
     state: glass_3
+    layers:
+    - state: glass_3
+      map: ["base"]
   - type: Item
     heldPrefix: glass
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - glass
-      - glass_2
-      - glass_3
   - type: FloorTile
     outputs:
     - FloorGlass
@@ -76,7 +77,6 @@
 - type: entity
   parent: SheetGlass
   id: SheetGlass1
-  name: glass
   suffix: Single
   components:
   - type: Sprite
@@ -84,6 +84,8 @@
   - type: Stack
     stackType: Glass
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -92,28 +94,51 @@
   description: A reinforced sheet of glass.
   suffix: Full
   components:
-  - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedGlass: 100
   - type: Stack
     stackType: ReinforcedGlass
+    baseLayer: base
+    layerStates:
+    - rglass
+    - rglass_2
+    - rglass_3
   - type: Sprite
     state: rglass_3
+    layers:
+    - state: rglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: rglass
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rglass
-      - rglass_2
-      - rglass_3
   - type: FloorTile
     outputs:
     - FloorRGlass
   - type: Construction
     graph: Glass
     node: SheetRGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassReinforced:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: SheetRGlass
@@ -126,6 +151,8 @@
   - type: Stack
     stackType: ReinforcedGlass
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetGlassBase
@@ -134,25 +161,49 @@
   description: A sheet of translucent plasma.
   suffix: Full
   components:
-  - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       PlasmaGlass: 100
   - type: Stack
     stackType: PlasmaGlass
+    baseLayer: base
+    layerStates:
+    - pglass
+    - pglass_2
+    - pglass_3
   - type: Sprite
     state: pglass_3
+    layers:
+    - state: pglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: pglass
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - pglass
-      - pglass_2
-      - pglass_3
+    size: 30
   - type: Construction
     graph: Glass
     node: SheetPGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassPlasma:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
 
 - type: entity
   parent: SheetPGlass
@@ -165,30 +216,33 @@
   - type: Stack
     stackType: PlasmaGlass
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
-  parent: SheetGlassBase
+  parent: SheetPGlass
   id: SheetRPGlass
   name: reinforced plasma glass
   description: A reinforced sheet of translucent plasma.
   suffix: Full
   components:
-  - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       ReinforcedPlasmaGlass: 100
   - type: Stack
     stackType: ReinforcedPlasmaGlass
+    baseLayer: base
+    layerStates:
+    - rpglass
+    - rpglass_2
+    - rpglass_3
   - type: Sprite
     state: rpglass_3
+    layers:
+    - state: rpglass_3
+      map: ["base"]
   - type: Item
     heldPrefix: rpglass
-  - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - rpglass
-      - rpglass_2
-      - rpglass_3
   - type: Construction
     graph: Glass
     node: SheetRPGlass
@@ -204,3 +258,110 @@
   - type: Stack
     stackType: ReinforcedPlasmaGlass
     count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: SheetGlassBase
+  id: SheetUGlass
+  name: uranium glass
+  description: A sheet of uranium glass.
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      UraniumGlass: 100
+  - type: Stack
+    stackType: UraniumGlass
+    baseLayer: base
+    layerStates:
+    - uglass
+    - uglass_2
+    - uglass_3
+  - type: Sprite
+    state: uglass_3
+    layers:
+    - state: uglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: uglass
+  - type: Construction
+    graph: Glass
+    node: SheetUGlass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlassUranium:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  parent: SheetUGlass
+  id: SheetUGlass1
+  name: uranium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: uglass
+  - type: Stack
+    stackType: UraniumGlass
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: SheetUGlass
+  id: SheetRUGlass
+  name: reinforced uranium glass
+  description: A reinforced sheet of uranium.
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      ReinforcedUraniumGlass: 100
+  - type: Stack
+    stackType: ReinforcedUraniumGlass
+    baseLayer: base
+    layerStates:
+    - ruglass
+    - ruglass_2
+    - ruglass_3
+  - type: Sprite
+    state: ruglass_3
+    layers:
+    - state: ruglass_3
+      map: ["base"]
+  - type: Item
+    heldPrefix: ruglass
+  - type: Construction
+    graph: Glass
+    node: SheetRUGlass
+
+- type: entity
+  parent: SheetRUGlass
+  id: SheetRUGlass1
+  name: reinforced uranium glass
+  suffix: Single
+  components:
+  - type: Sprite
+    state: ruglass
+  - type: Stack
+    stackType: ReinforcedUraniumGlass
+    count: 1
+  - type: Item
+    size: 1

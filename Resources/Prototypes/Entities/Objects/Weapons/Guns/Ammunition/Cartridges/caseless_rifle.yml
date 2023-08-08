@@ -11,7 +11,6 @@
   - type: CartridgeAmmo
     deleteOnSpawn: true
   - type: Sprite
-    netsync: false
     noRot: false
     sprite: Objects/Weapons/Guns/Ammunition/Casings/ammo_casing.rsi
     layers:
@@ -29,14 +28,6 @@
   components:
   - type: CartridgeAmmo
     proto: BulletCaselessRifle
-
-- type: entity
-  id: CartridgeCaselessRifleHighVelocity
-  name: cartridge (.25 caseless high-velocity)
-  parent: BaseCartridgeCaselessRifle
-  components:
-  - type: CartridgeAmmo
-    proto: BulletCaselessRifleHighVelocity
 
 - type: entity
   id: CartridgeCaselessRiflePractice

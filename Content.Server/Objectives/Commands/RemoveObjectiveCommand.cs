@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration;
+using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Administration;
 using Robust.Server.Player;
@@ -9,6 +10,8 @@ namespace Content.Server.Objectives.Commands
     [AdminCommand(AdminFlags.Admin)]
     public sealed class RemoveObjectiveCommand : IConsoleCommand
     {
+        [Dependency] private readonly IEntityManager _entityManager = default!;
+        
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";
         public string Help => "rmobjective <username> <index>";
@@ -32,7 +35,8 @@ namespace Content.Server.Objectives.Commands
 
                 if (int.TryParse(args[1], out var i))
                 {
-                    shell.WriteLine(mind.TryRemoveObjective(i)
+                    var mindSystem = _entityManager.System<MindSystem>();
+                    shell.WriteLine(mindSystem.TryRemoveObjective(mind, i)
                         ? "Objective successfully removed!"
                         : "Objective removing failed. Maybe the index is out of bounds? Check lsobjectives!");
                 }

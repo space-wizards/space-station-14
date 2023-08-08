@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Pointing.Components;
 
 namespace Content.Client.Pointing.Components;
@@ -16,7 +17,7 @@ public sealed class PointingArrowComponent : SharedPointingArrowComponent
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public readonly Vector2 Offset = (0, 0.25f);
+    public readonly Vector2 Offset = new(0, 0.25f);
 
     public readonly string AnimationKey = "pointingarrow";
 }

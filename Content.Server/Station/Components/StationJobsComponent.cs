@@ -33,6 +33,16 @@ public sealed class StationJobsComponent : Component
     [DataField("extendedAccess")] public bool ExtendedAccess;
 
     /// <summary>
+    /// If there are less than or equal this amount of players in the game at round start,
+    /// people get extended access levels from job prototypes.
+    /// </summary>
+    /// <remarks>
+    /// Set to -1 to disable extended access.
+    /// </remarks>
+    [DataField("extendedAccessThreshold")]
+    public int ExtendedAccessThreshold { get; set; } = 15;
+
+    /// <summary>
     /// The percentage of jobs remaining.
     /// </summary>
     /// <remarks>
@@ -62,5 +72,10 @@ public sealed class StationJobsComponent : Component
     /// <summary>
     /// Overflow jobs that round-start can spawn infinitely many of.
     /// </summary>
-    [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))] public HashSet<string> OverflowJobs = new();
+    [DataField("overflowJobs", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<JobPrototype>))]
+    public HashSet<string> OverflowJobs = new();
+
+    [DataField("availableJobs", required: true,
+        customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
+    public readonly Dictionary<string, List<int?>> SetupAvailableJobs = default!;
 }

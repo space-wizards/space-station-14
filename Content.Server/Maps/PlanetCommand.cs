@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Atmos;
 using Content.Server.Atmos.Components;
+using Content.Server.Atmos.EntitySystems;
+using Content.Server.Parallax;
 using Content.Shared.Administration;
 using Content.Shared.Atmos;
 using Content.Shared.Gravity;
@@ -52,7 +54,7 @@ public sealed class PlanetCommand : IConsoleCommand
             return;
         }
 
-        if (!_protoManager.HasIndex<BiomePrototype>(args[1]))
+        if (!_protoManager.TryIndex<BiomeTemplatePrototype>(args[1], out var biomeTemplate))
         {
             shell.WriteError(Loc.GetString("cmd-planet-map-prototype", ("prototype", args[1])));
             return;
@@ -62,12 +64,14 @@ public sealed class PlanetCommand : IConsoleCommand
         MetaDataComponent? metadata = null;
 
         var biome = _entManager.EnsureComponent<BiomeComponent>(mapUid);
-        biome.BiomePrototype = args[1];
-        biome.Seed = _random.Next();
+        var biomeSystem = _entManager.System<BiomeSystem>();
+        biomeSystem.SetSeed(biome, _random.Next());
+        biomeSystem.SetTemplate(biome, biomeTemplate);
         _entManager.Dirty(biome);
 
         var gravity = _entManager.EnsureComponent<GravityComponent>(mapUid);
         gravity.Enabled = true;
+        gravity.Inherent = true;
         _entManager.Dirty(gravity, metadata);
 
         // Day lighting
@@ -83,16 +87,17 @@ public sealed class PlanetCommand : IConsoleCommand
         // Atmos
         var atmos = _entManager.EnsureComponent<MapAtmosphereComponent>(mapUid);
 
-        atmos.Space = false;
         var moles = new float[Atmospherics.AdjustedNumberOfGases];
         moles[(int) Gas.Oxygen] = 21.824779f;
         moles[(int) Gas.Nitrogen] = 82.10312f;
 
-        atmos.Mixture = new GasMixture(2500)
+        var mixture = new GasMixture(2500)
         {
             Temperature = 293.15f,
             Moles = moles,
         };
+
+        _entManager.System<AtmosphereSystem>().SetMapAtmosphere(mapUid, false, mixture, atmos);
 
         _entManager.EnsureComponent<MapGridComponent>(mapUid);
         shell.WriteLine(Loc.GetString("cmd-planet-success", ("mapId", mapId)));
@@ -101,16 +106,11 @@ public sealed class PlanetCommand : IConsoleCommand
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
     {
         if (args.Length == 1)
-        {
-            var options = _entManager.EntityQuery<MapComponent>(true)
-                .Select(o => new CompletionOption(o.WorldMap.ToString(), "MapId"));
-
-            return CompletionResult.FromOptions(options);
-        }
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(_entManager), "Map Id");
 
         if (args.Length == 2)
         {
-            var options = _protoManager.EnumeratePrototypes<BiomePrototype>()
+            var options = _protoManager.EnumeratePrototypes<BiomeTemplatePrototype>()
                 .Select(o => new CompletionOption(o.ID, "Biome"));
             return CompletionResult.FromOptions(options);
         }

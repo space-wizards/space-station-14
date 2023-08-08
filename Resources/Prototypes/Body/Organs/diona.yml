@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Diona/organs.rsi
   - type: Organ
   - type: Food
@@ -20,16 +19,12 @@
 
 - type: entity
   id: OrganDionaBrain
-  parent: BaseDionaOrgan
+  parent: [BaseDionaOrgan, OrganHumanBrain]
   name: brain
   description: "The source of incredible, unending intelligence. Honk."
   components:
   - type: Sprite
     state: brain
-  - type: Organ
-  - type: Input
-    context: "ghost"
-  - type: InputMover
   - type: SolutionContainerManager
     solutions:
       organ:
@@ -40,10 +35,6 @@
       Lung:
         maxVol: 100
         canReact: False
-  - type: MovementSpeedModifier
-    baseWalkSpeed: 0
-    baseSprintSpeed: 0
-  - type: GhostOnMove
   - type: Brain
   - type: Lung #lungs in they head. why they there tho?
   - type: Metabolizer
@@ -65,7 +56,6 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
-  - type: Organ
 
 - type: entity
   id: OrganDionaStomach
@@ -75,7 +65,6 @@
   components:
   - type: Sprite
     state: stomach
-  - type: Organ
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -91,3 +80,5 @@
       - id: Medicine
       - id: Poison
       - id: Narcotic
+      - id: Alcohol
+        rateModifier: 0.1

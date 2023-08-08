@@ -4,16 +4,12 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.DeviceNetwork;
-using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Tag;
-using Robust.Server.GameObjects;
-using Robust.Shared.Audio;
-using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Atmos.Monitor.Systems;
@@ -41,31 +37,48 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
         SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
+        SubscribeLocalEvent<AtmosMonitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
         SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
         SubscribeLocalEvent<AtmosMonitorComponent, BeforePacketSentEvent>(BeforePacketRecv);
         SubscribeLocalEvent<AtmosMonitorComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+        SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceDisabledEvent>(OnAtmosDeviceLeaveAtmosphere);
+        SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceEnabledEvent>(OnAtmosDeviceEnterAtmosphere);
     }
 
-    private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
+    private void OnAtmosDeviceLeaveAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceDisabledEvent args)
+    {
+        atmosMonitor.TileGas = null;
+    }
+
+    private void OnAtmosDeviceEnterAtmosphere(EntityUid uid, AtmosMonitorComponent atmosMonitor, AtmosDeviceEnabledEvent args)
+    {
+        atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
+    }
+    private void OnMapInit(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
     {
         if (component.TemperatureThresholdId != null)
-            component.TemperatureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId));
+        {
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.TemperatureThresholdId);
+            component.TemperatureThreshold ??= new(proto);
+        }
 
         if (component.PressureThresholdId != null)
-            component.PressureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId));
-
-        if (component.GasThresholdIds != null)
         {
-            component.GasThresholds = new();
-            foreach (var (gas, id) in component.GasThresholdIds)
-            {
-                if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
-                    component.GasThresholds.Add(gas, new(gasThreshold));
-            }
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.PressureThresholdId);
+            component.PressureThreshold ??= new(proto);
+        }
+
+        if (component.GasThresholdPrototypes == null)
+            return;
+
+        component.GasThresholds ??= new();
+        foreach (var (gas, id) in component.GasThresholdPrototypes)
+        {
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(id);
+            component.GasThresholds.TryAdd(gas, new(proto));
         }
     }
 
@@ -148,21 +161,11 @@ public sealed class AtmosMonitorSystem : EntitySystem
         {
             if (!args.Powered)
             {
-                if (atmosDeviceComponent.JoinedGrid != null)
-                {
-                    _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
-                    component.TileGas = null;
-                }
+                _atmosDeviceSystem.LeaveAtmosphere(atmosDeviceComponent);
             }
-            else if (args.Powered)
+            else
             {
-                if (atmosDeviceComponent.JoinedGrid == null)
-                {
-                    _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
-                    var air = _atmosphereSystem.GetContainingMixture(uid, true);
-                    component.TileGas = air;
-                }
-
+                _atmosDeviceSystem.JoinAtmosphere(atmosDeviceComponent);
                 Alert(uid, component.LastAlarmState);
             }
         }

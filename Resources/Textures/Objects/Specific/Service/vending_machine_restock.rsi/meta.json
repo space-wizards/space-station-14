@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Original source: https://github.com/tgstation/tgstation/blob/master/icons/obj/vending_restock.dmi @ commit 014c44ef6279beb02a5f3e76824439fa57181c22 - Additions and cleanup by @Vordenburg. Refill_honk made by brainfood1183 (github) for ss14",
+  "copyright": "Original source: https://github.com/tgstation/tgstation/blob/master/icons/obj/vending_restock.dmi @ commit 014c44ef6279beb02a5f3e76824439fa57181c22 - Additions and cleanup by @Vordenburg. Refill_honk made by brainfood1183 (github) for ss14. Refill_robotics made by potato1234x (github) for ss14.",
   "size": {
     "x": 32,
     "y": 32
@@ -71,6 +71,9 @@
     },
     {
       "name": "refill_ptech"
+    },
+    {
+      "name": "refill_robotics"
     },
     {
       "name": "refill_salvage"

@@ -53,30 +53,32 @@ public sealed partial class StationJobsSystem : EntitySystem
 
     private void OnStationInitialized(StationInitializedEvent msg)
     {
-        var stationJobs = AddComp<StationJobsComponent>(msg.Station);
-        var stationData = Comp<StationDataComponent>(msg.Station);
-
-        if (stationData.StationConfig == null)
+        if (!TryComp<StationJobsComponent>(msg.Station, out var stationJobs))
             return;
 
-        var mapJobList = stationData.StationConfig.AvailableJobs;
+        var mapJobList = stationJobs.SetupAvailableJobs;
 
         stationJobs.RoundStartTotalJobs = mapJobList.Values.Where(x => x[0] is not null && x[0] > 0).Sum(x => x[0]!.Value);
         stationJobs.MidRoundTotalJobs = mapJobList.Values.Where(x => x[1] is not null && x[1] > 0).Sum(x => x[1]!.Value);
+
         stationJobs.TotalJobs = stationJobs.MidRoundTotalJobs;
+
         stationJobs.JobList = mapJobList.ToDictionary(x => x.Key, x =>
         {
             if (x.Value[1] <= -1)
                 return null;
             return (uint?) x.Value[1];
         });
+
         stationJobs.RoundStartJobList = mapJobList.ToDictionary(x => x.Key, x =>
         {
             if (x.Value[0] <= -1)
                 return null;
             return (uint?) x.Value[0];
         });
-        stationJobs.OverflowJobs = stationData.StationConfig.OverflowJobs.ToHashSet();
+
+        stationJobs.OverflowJobs = stationJobs.OverflowJobs.ToHashSet();
+
         UpdateJobsAvailable();
     }
 
@@ -464,9 +466,11 @@ public sealed partial class StationJobsSystem : EntitySystem
         var jobs = new Dictionary<EntityUid, Dictionary<string, uint?>>();
         var stationNames = new Dictionary<EntityUid, string>();
 
-        foreach (var station in _stationSystem.Stations)
+        var query = EntityQueryEnumerator<StationJobsComponent>();
+
+        while (query.MoveNext(out var station, out var comp))
         {
-            var list = Comp<StationJobsComponent>(station).JobList.ToDictionary(x => x.Key, x => x.Value);
+            var list = comp.JobList.ToDictionary(x => x.Key, x => x.Value);
             jobs.Add(station, list);
             stationNames.Add(station, Name(station));
         }

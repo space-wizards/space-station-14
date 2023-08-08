@@ -11,14 +11,15 @@
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.20"
-      density: 85
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.20"
+        density: 85
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: InteractionOutline
 
 # At 7:30 AM on March 8th, 2017, ArcLumin, a SS13 contributor, died in a fatal car crash on impact.

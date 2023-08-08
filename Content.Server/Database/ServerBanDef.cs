@@ -1,5 +1,8 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Net;
+using Content.Shared.CCVar;
+using Content.Shared.Database;
+using Robust.Shared.Configuration;
 using Robust.Shared.Network;
 
 
@@ -14,7 +17,10 @@ namespace Content.Server.Database
 
         public DateTimeOffset BanTime { get; }
         public DateTimeOffset? ExpirationTime { get; }
+        public int? RoundId { get; }
+        public TimeSpan PlaytimeAtNote { get; }
         public string Reason { get; }
+        public NoteSeverity Severity { get; set; }
         public NetUserId? BanningAdmin { get; }
         public ServerUnbanDef? Unban { get; }
 
@@ -25,7 +31,10 @@ namespace Content.Server.Database
             ImmutableArray<byte>? hwId,
             DateTimeOffset banTime,
             DateTimeOffset? expirationTime,
+            int? roundId,
+            TimeSpan playtimeAtNote,
             string reason,
+            NoteSeverity severity,
             NetUserId? banningAdmin,
             ServerUnbanDef? unban)
         {
@@ -47,24 +56,37 @@ namespace Content.Server.Database
             HWId = hwId;
             BanTime = banTime;
             ExpirationTime = expirationTime;
+            RoundId = roundId;
+            PlaytimeAtNote = playtimeAtNote;
             Reason = reason;
+            Severity = severity;
             BanningAdmin = banningAdmin;
             Unban = unban;
         }
 
-        public string DisconnectMessage
+        public string FormatBanMessage(IConfigurationManager cfg, ILocalizationManager loc)
         {
-            get {
-                var expires = Loc.GetString("ban-banned-permanent");
-                if (this.ExpirationTime is { } expireTime)
-                {
-                    var duration = expireTime - this.BanTime;
-                    var utc = expireTime.ToUniversalTime();
-                    expires = Loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
-                }
-                var details = Loc.GetString("ban-banned-1") + "\n" + Loc.GetString("ban-banned-2", ("reason", this.Reason)) + "\n" + expires;
-                return details;
+            string expires;
+            if (ExpirationTime is { } expireTime)
+            {
+                var duration = expireTime - BanTime;
+                var utc = expireTime.ToUniversalTime();
+                expires = loc.GetString("ban-expires", ("duration", duration.TotalMinutes.ToString("N0")), ("time", utc.ToString("f")));
             }
+            else
+            {
+                var appeal = cfg.GetCVar(CCVars.InfoLinksAppeal);
+                expires = !string.IsNullOrWhiteSpace(appeal)
+                    ? loc.GetString("ban-banned-permanent-appeal", ("link", appeal))
+                    : loc.GetString("ban-banned-permanent");
+            }
+
+            return $"""
+                   {loc.GetString("ban-banned-1")}
+                   {loc.GetString("ban-banned-2", ("reason", Reason))}
+                   {expires}
+                   {loc.GetString("ban-banned-3")}
+                   """;
         }
     }
 }

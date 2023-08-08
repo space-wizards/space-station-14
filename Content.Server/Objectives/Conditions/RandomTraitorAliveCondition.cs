@@ -3,6 +3,7 @@ using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Mind;
 
 namespace Content.Server.Objectives.Conditions
 {
@@ -14,9 +15,10 @@ namespace Content.Server.Objectives.Conditions
         public IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
             var entityMgr = IoCManager.Resolve<IEntityManager>();
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
 
-            if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
+            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
+            if (traitors.Count == 0)
+                return new EscapeShuttleCondition(); //You were made a traitor by admins, and are the first/only.
             return new RandomTraitorAliveCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
         }
 
@@ -39,9 +41,17 @@ namespace Content.Server.Objectives.Conditions
 
         public string Description => Loc.GetString("objective-condition-other-traitor-alive-description");
 
-        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResourcePath("Objects/Misc/bureaucracy.rsi"), "folder-white");
+        public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
-        public float Progress => (!_target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<MindSystem>();
+                return _target == null || !mindSystem.IsCharacterDeadIc(_target) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 1.75f;
 

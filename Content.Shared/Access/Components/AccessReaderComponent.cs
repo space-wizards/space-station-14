@@ -1,4 +1,3 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -13,6 +12,13 @@ namespace Content.Shared.Access.Components;
 [RegisterComponent, NetworkedComponent]
 public sealed class AccessReaderComponent : Component
 {
+    /// <summary>
+    /// Whether or not the accessreader is enabled.
+    /// If not, it will always let people through.
+    /// </summary>
+    [DataField("enabled")]
+    public bool Enabled = true;
+
     /// <summary>
     ///     The set of tags that will automatically deny an allowed check, if any of them are present.
     /// </summary>
@@ -31,22 +37,32 @@ public sealed class AccessReaderComponent : Component
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
+
+
+    /// <summary>
+    ///     The name of the container in which additional
+    ///     AccessReaderComponents may be found.
+    /// </summary>
+    [DataField("containerAccessProvider")]
+    public string? ContainerAccessProvider = null;
 }
 
 [Serializable, NetSerializable]
 public sealed class AccessReaderComponentState : ComponentState
 {
+    public bool Enabled;
+
     public HashSet<string> DenyTags;
 
     public List<HashSet<string>> AccessLists;
 
     public HashSet<StationRecordKey> AccessKeys;
 
-    public AccessReaderComponentState(HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
+    public AccessReaderComponentState(bool enabled, HashSet<string> denyTags, List<HashSet<string>> accessLists, HashSet<StationRecordKey> accessKeys)
     {
+        Enabled = enabled;
         DenyTags = denyTags;
         AccessLists = accessLists;
         AccessKeys = accessKeys;
     }
 }
-

@@ -26,8 +26,20 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
         SubscribeLocalEvent<AnomalyVesselComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
-        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnVesselAnomalyStabilityChanged);
+        SubscribeLocalEvent<AnomalyShutdownEvent>(OnShutdown);
+        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    private void OnStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    {
+        OnVesselAnomalyStabilityChanged(ref args);
+        OnScannerAnomalyStabilityChanged(ref args);
+    }
+
+    private void OnShutdown(ref AnomalyShutdownEvent args)
+    {
+        OnVesselAnomalyShutdown(ref args);
+        OnScannerAnomalyShutdown(ref args);
     }
 
     private void OnExamined(EntityUid uid, AnomalyVesselComponent component, ExaminedEvent args)
@@ -100,10 +112,9 @@ public sealed partial class AnomalySystem
 
     private void OnVesselAnomalyShutdown(ref AnomalyShutdownEvent args)
     {
-        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
         {
-            var ent = component.Owner;
-
             if (args.Anomaly != component.Anomaly)
                 continue;
 
@@ -118,9 +129,9 @@ public sealed partial class AnomalySystem
 
     private void OnVesselAnomalyStabilityChanged(ref AnomalyStabilityChangedEvent args)
     {
-        foreach (var component in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var ent, out var component))
         {
-            var ent = component.Owner;
             if (args.Anomaly != component.Anomaly)
                 continue;
 
@@ -146,9 +157,7 @@ public sealed partial class AnomalySystem
 
         Appearance.SetData(uid, AnomalyVesselVisuals.HasAnomaly, on, appearanceComponent);
         if (TryComp<SharedPointLightComponent>(uid, out var pointLightComponent))
-        {
-            pointLightComponent.Enabled = on;
-        }
+            _pointLight.SetEnabled(uid, on, pointLightComponent);
 
         // arbitrary value for the generic visualizer to use.
         // i didn't feel like making an enum for this.
@@ -171,9 +180,9 @@ public sealed partial class AnomalySystem
 
     private void UpdateVessels()
     {
-        foreach (var vessel in EntityQuery<AnomalyVesselComponent>())
+        var query = EntityQueryEnumerator<AnomalyVesselComponent>();
+        while (query.MoveNext(out var vesselEnt, out var vessel))
         {
-            var vesselEnt = vessel.Owner;
             if (vessel.Anomaly is not { } anomUid)
                 continue;
 

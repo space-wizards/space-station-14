@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Mech.Components;
 
 /// <summary>
-/// Attached to entities piloting a <see cref="SharedMechComponent"/>
+/// Attached to entities piloting a <see cref="MechComponent"/>
 /// </summary>
 /// <remarks>
 /// Get in the robot, Shinji

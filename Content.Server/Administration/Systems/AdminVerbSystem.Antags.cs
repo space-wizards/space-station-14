@@ -5,14 +5,13 @@ using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
-using Robust.Shared.Configuration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly ZombifyOnDeathSystem _zombify = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
@@ -28,7 +27,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
+        var targetHasMind = TryComp(args.Target, out MindContainerComponent? targetMindComp);
         if (!targetHasMind || targetMindComp == null)
             return;
 
@@ -36,7 +35,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make Traitor",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi((new ResourcePath("/Textures/Structures/Wallmounts/posters.rsi")), "poster5_contraband"),
+            Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
@@ -53,14 +52,10 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make Zombie",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Wallmounts/signs.rsi"), "bio"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/zombie-turn.png")),
             Act = () =>
             {
-                TryComp(args.Target, out MindComponent? mindComp);
-                if (mindComp == null || mindComp.Mind == null)
-                    return;
-
-                _zombify.ZombifyEntity(targetMindComp.Owner);
+                _zombie.ZombifyEntity(args.Target);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-zombie"),
@@ -72,7 +67,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make nuclear operative",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
@@ -89,7 +84,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = "Make Pirate",
             Category = VerbCategory.Antag,
-            Icon = new SpriteSpecifier.Rsi(new ResourcePath("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
+            Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)

@@ -1,4 +1,3 @@
-using Content.Server.DoAfter;
 using Content.Server.Engineering.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
@@ -41,18 +40,16 @@ namespace Content.Server.Engineering.EntitySystems
             if (string.IsNullOrEmpty(component.Prototype))
                 return;
 
-            if (component.DoAfterTime > 0 && TryGet<DoAfterSystem>(out var doAfterSystem))
+            if (component.DoAfterTime > 0 && TryGet<SharedDoAfterSystem>(out var doAfterSystem))
             {
-                var doAfterArgs = new DoAfterEventArgs(user, component.DoAfterTime, component.TokenSource.Token)
+                var doAfterArgs = new DoAfterArgs(user, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
                     BreakOnUserMove = true,
-                    BreakOnStun = true,
                 };
                 var result = await doAfterSystem.WaitDoAfter(doAfterArgs);
 
                 if (result != DoAfterStatus.Finished)
                     return;
-                component.TokenSource.Cancel();
             }
 
             if (component.Deleted || Deleted(component.Owner))

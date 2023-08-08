@@ -15,6 +15,9 @@ namespace Content.Client.IconSmoothing
     [RegisterComponent]
     public sealed class IconSmoothComponent : Component
     {
+        [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
+        public bool Enabled = true;
+
         public (EntityUid?, Vector2i)? LastPosition;
 
         /// <summary>

@@ -19,8 +19,6 @@ namespace Content.Server.NPC.Systems
         [Dependency] private readonly HTNSystem _htn = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
 
-        private ISawmill _sawmill = default!;
-
         /// <summary>
         /// Whether any NPCs are allowed to run at all.
         /// </summary>
@@ -35,8 +33,6 @@ namespace Content.Server.NPC.Systems
         {
             base.Initialize();
 
-            _sawmill = Logger.GetSawmill("npc");
-            _sawmill.Level = LogLevel.Info;
             SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
             SubscribeLocalEvent<NPCComponent, MapInitEvent>(OnNPCMapInit);
             SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
@@ -53,7 +49,7 @@ namespace Content.Server.NPC.Systems
 
         private void OnPlayerNPCDetach(EntityUid uid, NPCComponent component, PlayerDetachedEvent args)
         {
-            if (_mobState.IsIncapacitated(uid))
+            if (_mobState.IsIncapacitated(uid) || TerminatingOrDeleted(uid))
                 return;
 
             WakeNPC(uid, component);
@@ -83,9 +79,9 @@ namespace Content.Server.NPC.Systems
         /// <summary>
         /// Is the NPC awake and updating?
         /// </summary>
-        public bool IsAwake(NPCComponent component, ActiveNPCComponent? active = null)
+        public bool IsAwake(EntityUid uid, NPCComponent component, ActiveNPCComponent? active = null)
         {
-            return Resolve(component.Owner, ref active, false);
+            return Resolve(uid, ref active, false);
         }
 
         /// <summary>
@@ -98,8 +94,8 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            _sawmill.Debug($"Waking {ToPrettyString(component.Owner)}");
-            EnsureComp<ActiveNPCComponent>(component.Owner);
+            Log.Debug($"Waking {ToPrettyString(uid)}");
+            EnsureComp<ActiveNPCComponent>(uid);
         }
 
         public void SleepNPC(EntityUid uid, NPCComponent? component = null)
@@ -109,8 +105,20 @@ namespace Content.Server.NPC.Systems
                 return;
             }
 
-            _sawmill.Debug($"Sleeping {ToPrettyString(component.Owner)}");
-            RemComp<ActiveNPCComponent>(component.Owner);
+            // Don't bother with an event
+            if (TryComp<HTNComponent>(uid, out var htn))
+            {
+                if (htn.Plan != null)
+                {
+                    var currentOperator = htn.Plan.CurrentOperator;
+                    _htn.ShutdownTask(currentOperator, htn.Blackboard, HTNOperatorStatus.Failed);
+                    _htn.ShutdownPlan(htn);
+                    htn.Plan = null;
+                }
+            }
+
+            Log.Debug($"Sleeping {ToPrettyString(uid)}");
+            RemComp<ActiveNPCComponent>(uid);
         }
 
         /// <inheritdoc />

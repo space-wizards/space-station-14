@@ -1,16 +1,17 @@
-﻿- type: guideEntry
+- type: guideEntry
   id: Science
   name: guide-entry-science
-  text: "/Server Info/Guidebook/Science/Science.xml"
+  text: "/ServerInfo/Guidebook/Science/Science.xml"
   children:
   - AnomalousResearch
   - Xenoarchaeology
+  - Robotics
   - MachineUpgrading
 
 - type: guideEntry
   id: AnomalousResearch
   name: guide-entry-anomalous-research
-  text: "/Server Info/Guidebook/Science/AnomalousResearch.xml"
+  text: "/ServerInfo/Guidebook/Science/AnomalousResearch.xml"
   children:
   - APE
   - ScannersAndVessels
@@ -18,32 +19,37 @@
 - type: guideEntry
   id: ScannersAndVessels
   name: guide-entry-scanners-and-vessels
-  text: "/Server Info/Guidebook/Science/ScannersAndVessels.xml"
+  text: "/ServerInfo/Guidebook/Science/ScannersAndVessels.xml"
 
 - type: guideEntry
   id: APE
   name: guide-entry-ape
-  text: "/Server Info/Guidebook/Science/APE.xml"
+  text: "/ServerInfo/Guidebook/Science/APE.xml"
 
 - type: guideEntry
   id: Xenoarchaeology
   name: guide-entry-xenoarchaeology
-  text: "/Server Info/Guidebook/Science/Xenoarchaeology.xml"
+  text: "/ServerInfo/Guidebook/Science/Xenoarchaeology.xml"
   children:
   - ArtifactReports
   - TraversalDistorter
 
 - type: guideEntry
+  id: Robotics
+  name: guide-entry-robotics
+  text: "/ServerInfo/Guidebook/Science/Robotics.xml"
+
+- type: guideEntry
   id: ArtifactReports
   name: guide-entry-artifact-reports
-  text: "/Server Info/Guidebook/Science/ArtifactReports.xml"
+  text: "/ServerInfo/Guidebook/Science/ArtifactReports.xml"
 
 - type: guideEntry
   id: TraversalDistorter
   name: guide-entry-traversal-distorter
-  text: "/Server Info/Guidebook/Science/TraversalDistorter.xml"
+  text: "/ServerInfo/Guidebook/Science/TraversalDistorter.xml"
 
 - type: guideEntry
   id: MachineUpgrading
   name: guide-entry-machine-upgrading
-  text: "/Server Info/Guidebook/Science/MachineUpgrading.xml"
+  text: "/ServerInfo/Guidebook/Science/MachineUpgrading.xml"

@@ -30,13 +30,19 @@ public sealed class PneumaticCannonComponent : Component
     /// </summary>
     [DataField("gasUsage")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float GasUsage = 2f;
+    public float GasUsage = 0.142f;
 
     /// <summary>
     ///     Base projectile speed at default power.
     /// </summary>
     [DataField("baseProjectileSpeed")]
     public float BaseProjectileSpeed = 20f;
+
+    /// <summary>
+    /// If true, will throw ammo rather than shoot it.
+    /// </summary>
+    [DataField("throwItems"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ThrowItems = true;
 }
 
 /// <summary>

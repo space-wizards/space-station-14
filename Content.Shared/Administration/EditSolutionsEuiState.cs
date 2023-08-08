@@ -16,10 +16,4 @@ namespace Content.Shared.Administration
             Solutions = solutions;
         }
     }
-
-    public static class EditSolutionsEuiMsg
-    {
-        [Serializable, NetSerializable]
-        public sealed class Close : EuiMessageBase { }
-    }
 }

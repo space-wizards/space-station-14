@@ -1,9 +1,10 @@
 using Content.Server.Administration.UI;
 using Content.Server.EUI;
-using Content.Server.Hands.Components;
 using Content.Server.Hands.Systems;
 using Content.Server.Preferences.Managers;
+using Content.Shared.Access.Components;
 using Content.Shared.Administration;
+using Content.Shared.Hands.Components;
 using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
@@ -12,21 +13,20 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
-using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    sealed class SetOutfitCommand : IConsoleCommand
+    public sealed class SetOutfitCommand : IConsoleCommand
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IPrototypeManager _prototypes = default!;
-        
+
         public string Command => "setoutfit";
 
         public string Description => Loc.GetString("set-outfit-command-description", ("requiredComponent", nameof(InventoryComponent)));
 
-        public string Help => Loc.GetString("set-outfit-command-help-text", ("command",Command));
+        public string Help => Loc.GetString("set-outfit-command-help-text", ("command", Command));
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
@@ -52,7 +52,7 @@ namespace Content.Server.Administration.Commands
 
             if (!_entities.HasComponent<InventoryComponent?>(target))
             {
-                shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message",("missing", "inventory")));
+                shell.WriteLine(Loc.GetString("shell-target-entity-does-not-have-message", ("missing", "inventory")));
                 return;
             }
 
@@ -106,13 +106,13 @@ namespace Content.Server.Administration.Commands
                     }
                     var equipmentEntity = entityManager.SpawnEntity(gearStr, entityManager.GetComponent<TransformComponent>(target).Coordinates);
                     if (slot.Name == "id" &&
-                        entityManager.TryGetComponent<PDAComponent?>(equipmentEntity, out var pdaComponent) &&
-                        pdaComponent.ContainedID != null)
+                        entityManager.TryGetComponent<PdaComponent?>(equipmentEntity, out var pdaComponent) &&
+                        entityManager.TryGetComponent<IdCardComponent>(pdaComponent.ContainedId, out var id))
                     {
-                        pdaComponent.ContainedID.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
+                        id.FullName = entityManager.GetComponent<MetaDataComponent>(target).EntityName;
                     }
 
-                    invSystem.TryEquip(target, equipmentEntity, slot.Name, true, inventory: inventoryComponent);
+                    invSystem.TryEquip(target, equipmentEntity, slot.Name, silent: true, force: true, inventory: inventoryComponent);
 
                     onEquipped?.Invoke(target, equipmentEntity);
                 }

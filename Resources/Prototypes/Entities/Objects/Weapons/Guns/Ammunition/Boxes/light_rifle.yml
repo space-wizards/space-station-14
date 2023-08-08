@@ -18,7 +18,6 @@
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/light_rifle.rsi
-    netsync: false
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -62,21 +61,6 @@
 
 - type: entity
   parent: BaseMagazineBoxLightRifle
-  id: MagazineBoxLightRifleHighVelocity
-  name: ammunition box (.30 rifle high-velocity)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeLightRifleHighVelocity
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: hv
-
-- type: entity
-  parent: BaseMagazineBoxLightRifle
   id: MagazineBoxLightRiflePractice
   name: ammunition box (.30 rifle practice)
   components:
@@ -104,3 +88,18 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: rubber
+
+- type: entity
+  id: MagazineBoxLightRifleIncendiary
+  parent: BaseMagazineBoxLightRifle
+  name: ammunition box (.30 rifle incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeLightRifleIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary

@@ -54,3 +54,13 @@
     - enum.DamageStateVisualLayers.Base:
         datadisk_base: Sixteen
   - type: TechnologyDisk
+  - type: StaticPrice
+    price: 50
+
+- type: entity
+  parent: TechnologyDisk
+  id: TechnologyDiskRare
+  suffix: rare.
+  components:
+  - type: TechnologyDisk
+    tierWeightPrototype: RareTechDiskTierWeights

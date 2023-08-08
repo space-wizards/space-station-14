@@ -89,13 +89,8 @@ public sealed class WeatherSystem : SharedWeatherSystem
 
     private CompletionResult WeatherCompletion(IConsoleShell shell, string[] args)
     {
-        var options = new List<CompletionOption>();
-
         if (args.Length == 1)
-        {
-            options.AddRange(EntityQuery<MapComponent>(true).Select(o => new CompletionOption(o.WorldMap.ToString())));
-            return CompletionResult.FromHintOptions(options, "Map Id");
-        }
+            return CompletionResult.FromHintOptions(CompletionHelper.MapIds(EntityManager), "Map Id");
 
         var a = CompletionHelper.PrototypeIDs<WeatherPrototype>(true, ProtoMan);
         return CompletionResult.FromHintOptions(a, Loc.GetString("cmd-weather-hint"));

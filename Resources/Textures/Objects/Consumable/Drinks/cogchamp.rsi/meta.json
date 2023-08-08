@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Made by keronshb for Citadel Station at: https://github.com/Citadel-Station-13/Citadel-Station-13/commit/c790478a3d6e8a2846e658c3dc6c5164737e4b42",
+  "states": [
+    {
+      "name": "icon",
+      "delays": [
+        [
+          0.6,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    }
+  ]
+}

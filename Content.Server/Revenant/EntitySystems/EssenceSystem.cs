@@ -67,7 +67,7 @@ public sealed class EssenceSystem : EntitySystem
         switch (mob.CurrentState)
         {
             case MobState.Alive:
-                if (TryComp<MindComponent>(uid, out var mind) && mind.Mind != null)
+                if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
                     component.EssenceAmount = _random.NextFloat(75f, 100f);
                 else
                     component.EssenceAmount = _random.NextFloat(45f, 70f);

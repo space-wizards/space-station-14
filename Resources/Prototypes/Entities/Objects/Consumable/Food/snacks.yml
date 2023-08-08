@@ -6,9 +6,11 @@
   abstract: true
   components:
   - type: Food
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -82,10 +84,12 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: chocolatebar
-    netsync: false
   - type: Item
     heldPrefix: chocolatebar
     size: 3
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
@@ -297,10 +301,12 @@
   components:
   - type: Item
     size: 10
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
-    netsync: false
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
@@ -339,7 +345,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie
-    netsync: false
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash
@@ -380,14 +388,15 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
-    netsync: false
   - type: Item
     sprite: Objects/Consumable/Food/snacks.rsi
     heldPrefix: packet
   - type: Tag
     tags:
     - Trash
-  - type: Recyclable
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 100
   - type: SpaceGarbage
   - type: StaticPrice
     price: 0

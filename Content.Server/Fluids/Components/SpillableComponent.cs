@@ -1,3 +1,5 @@
+using Content.Shared.FixedPoint;
+
 namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
@@ -15,4 +17,10 @@ public sealed class SpillableComponent : Component
 
     [DataField("spillDelay")]
     public float? SpillDelay;
+
+    /// <summary>
+    ///     At most how much reagent can be splashed on someone at once?
+    /// </summary>
+    [DataField("maxMeleeSpillAmount")]
+    public FixedPoint2 MaxMeleeSpillAmount = FixedPoint2.New(20);
 }

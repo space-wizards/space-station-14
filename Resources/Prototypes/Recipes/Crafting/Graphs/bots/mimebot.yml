@@ -1,0 +1,44 @@
+- type: constructionGraph
+  id: MimeBot
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: bot
+      steps:
+      - tag: MimeHappyHonk
+        icon:
+          sprite: Objects/Storage/Happyhonk/mime.rsi
+          state: box
+        name: mime edition happy honk meal
+      - tag: MimeBelt
+        icon:
+            sprite: Clothing/Belt/suspenders.rsi
+            state: icon
+        name: suspenders
+        doAfter: 2
+      - tag: ProximitySensor
+        icon:
+          sprite: Objects/Misc/proximity_sensor.rsi
+          state: icon
+        name: proximity sensor
+      - tag: BorgHead
+        icon:
+          sprite: Objects/Specific/Borg/head.rsi
+          state: light_borg_head
+        name: borg head
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: borg arm
+        doAfter: 2
+      - tag: BorgArm
+        icon:
+          sprite: Mobs/Silicon/drone.rsi
+          state: l_hand
+        name: borg arm
+        doAfter: 2
+  - node: bot
+    entity: MobMimeBot

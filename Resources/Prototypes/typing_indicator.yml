@@ -1,4 +1,4 @@
-﻿- type: typingIndicator
+- type: typingIndicator
   id: default
   typingState: default0
 
@@ -21,3 +21,7 @@
 - type: typingIndicator
   id: lawyer
   typingState: lawyer0
+
+- type: typingIndicator
+  id: moth
+  typingState: moth0

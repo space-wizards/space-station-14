@@ -1,10 +1,10 @@
-using Content.Server.DoAfter;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
+using Content.Shared.Guardian;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -22,7 +22,7 @@ namespace Content.Server.Guardian
     /// </summary>
     public sealed class GuardianSystem : EntitySystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
@@ -35,7 +35,7 @@ namespace Content.Server.Guardian
             SubscribeLocalEvent<GuardianCreatorComponent, UseInHandEvent>(OnCreatorUse);
             SubscribeLocalEvent<GuardianCreatorComponent, AfterInteractEvent>(OnCreatorInteract);
             SubscribeLocalEvent<GuardianCreatorComponent, ExaminedEvent>(OnCreatorExamine);
-            SubscribeLocalEvent<GuardianCreatorComponent, DoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<GuardianCreatorComponent, GuardianCreatorDoAfterEvent>(OnDoAfter);
 
             SubscribeLocalEvent<GuardianComponent, MoveEvent>(OnGuardianMove);
             SubscribeLocalEvent<GuardianComponent, DamageChangedEvent>(OnGuardianDamaged);
@@ -161,12 +161,7 @@ namespace Content.Server.Guardian
                 return;
             }
 
-            if (component.Injecting)
-                return;
-
-            component.Injecting = true;
-
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(user, component.InjectionDelay, target: target, used: injector)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, component.InjectionDelay, new GuardianCreatorDoAfterEvent(), injector, target: target, used: injector)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true
@@ -179,10 +174,7 @@ namespace Content.Server.Guardian
                 return;
 
             if (args.Cancelled || component.Deleted || component.Used || !_handsSystem.IsHolding(args.Args.User, uid, out _) || HasComp<GuardianHostComponent>(args.Args.Target))
-            {
-                component.Injecting = false;
                 return;
-            }
 
             var hostXform = Transform(args.Args.Target.Value);
             var host = EnsureComp<GuardianHostComponent>(args.Args.Target.Value);

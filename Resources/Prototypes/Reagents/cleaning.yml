@@ -27,22 +27,54 @@
   physicalDesc: reagent-physical-desc-lemony-fresh
   flavor: bitter
   color: "#c8ff69"
+  recognizable: true
   boilingPoint: 147.0 # Made this up, loosely based on bleach
   meltingPoint: -11.0
   tileReactions:
     - !type:CleanTileReaction {}
+    - !type:CleanDecalsReaction {}
 
 - type: reagent
   id: SpaceLube
   name: reagent-name-space-lube
   desc: reagent-desc-space-lube
+  slippery: true
   physicalDesc: reagent-physical-desc-shiny
   flavor: funny
   color: "#77b58e"
+  recognizable: true
   boilingPoint: 290.0 # Glycerin
   meltingPoint: 18.2
   tileReactions:
     - !type:SpillTileReaction
       paralyzeTime: 3
-      launchForwardsMultiplier: 4
+      launchForwardsMultiplier: 2
       requiredSlipSpeed: 1
+
+- type: reagent
+  id: SpaceGlue
+  name: reagent-name-space-glue
+  desc: reagent-desc-space-glue
+  physicalDesc: reagent-physical-desc-sticky
+  flavor: glue
+  color: "#ffffff"
+  boilingPoint: 250.0
+  meltingPoint: 380.0
+  viscosity: 0.5
+  tileReactions:
+    - !type:SpillTileReaction
+  metabolisms:
+    Narcotic:
+      effects:
+      - !type:GenericStatusEffect
+        key: SeeingRainbows
+        component: SeeingRainbows
+        type: Add
+        time: 5
+        refresh: false
+      - !type:GenericStatusEffect
+        key: Muted
+        component: Muted
+        type: Add
+        time: 5
+        refresh: false

@@ -23,7 +23,12 @@
   id: Cellular
   armorCoefficientPrice: 5
   armorFlatPrice: 30
-
+  
+- type: damageType
+  id: Caustic
+  armorCoefficientPrice: 5
+  armorFlatPrice: 30
+  
 - type: damageType
   id: Cold
   armorCoefficientPrice: 2.5

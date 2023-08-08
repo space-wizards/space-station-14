@@ -59,6 +59,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         Apc,
         AMEngine,
         Pipe,
-        WireNet
+        WireNet,
+        Spreader,
     }
 }

@@ -46,19 +46,20 @@ namespace Content.Server.Database
             // ReSharper disable StringLiteralTypo
             // Enforce that an address cannot be IPv6-mapped IPv4.
             // So that IPv4 addresses are consistent between separate-socket and dual-stack socket modes.
-            modelBuilder.Entity<ServerBan>()
-                .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+            modelBuilder.Entity<ServerBan>().ToTable(t =>
+                t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address"));
 
-            modelBuilder.Entity<ServerRoleBan>()
-                .HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address");
+            modelBuilder.Entity<ServerRoleBan>().ToTable( t =>
+                t.HasCheckConstraint("AddressNotIPv6MappedIPv4", "NOT inet '::ffff:0.0.0.0/96' >>= address"));
 
-            modelBuilder.Entity<Player>()
-                .HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
-                    "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address");
+            modelBuilder.Entity<Player>().ToTable(t =>
+                t.HasCheckConstraint("LastSeenAddressNotIPv6MappedIPv4",
+                    "NOT inet '::ffff:0.0.0.0/96' >>= last_seen_address"));
 
-            modelBuilder.Entity<ConnectionLog>()
-                .HasCheckConstraint("AddressNotIPv6MappedIPv4",
-                    "NOT inet '::ffff:0.0.0.0/96' >>= address");
+            modelBuilder.Entity<ConnectionLog>().ToTable(t =>
+                t.HasCheckConstraint("AddressNotIPv6MappedIPv4",
+                    "NOT inet '::ffff:0.0.0.0/96' >>= address"));
+
             // ReSharper restore StringLiteralTypo
 
             modelBuilder.Entity<AdminLog>()

@@ -1,11 +1,7 @@
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Engineering.Components;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
-using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -17,6 +13,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
     [TestOf(typeof(ReactionPrototype))]
     public sealed class TryAllReactionsTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: TestSolutionContainer
@@ -26,10 +23,11 @@ namespace Content.IntegrationTests.Tests.Chemistry
       beaker:
         maxVol: 50
         canMix: true";
+
         [Test]
         public async Task TryAllTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true, ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -54,9 +52,11 @@ namespace Content.IntegrationTests.Tests.Chemistry
                         .TryGetSolution(beaker, "beaker", out component));
                     foreach (var (id, reactant) in reactionPrototype.Reactants)
                     {
+#pragma warning disable NUnit2045
                         Assert.That(solutionSystem
                             .TryAddReagent(beaker, component, id, reactant.Amount, out var quantity));
                         Assert.That(reactant.Amount, Is.EqualTo(quantity));
+#pragma warning restore NUnit2045
                     }
 
                     solutionSystem.SetTemperature(beaker, component, reactionPrototype.MinimumTemperature);

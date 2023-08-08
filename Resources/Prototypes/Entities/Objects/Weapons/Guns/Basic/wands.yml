@@ -105,3 +105,14 @@
     proto: ProjectilePolyboltCluwne
     capacity: 3
     count: 3
+
+- type: entity
+  parent: WeaponWandPolymorphBase
+  id: WeaponWandPolymorphBread
+  name: magic bread wand
+  description: Turn all your friends into bread! Your boss! Your enemies! Your dog! Make everything bread!
+  components:
+  - type: BasicEntityAmmoProvider
+    proto: ProjectilePolyboltBread
+    capacity: 10
+    count: 10

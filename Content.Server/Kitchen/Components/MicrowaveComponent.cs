@@ -12,7 +12,7 @@ namespace Content.Server.Kitchen.Components
         [DataField("cookTimeMultiplier"), ViewVariables(VVAccess.ReadWrite)]
         public float CookTimeMultiplier = 1;
         [DataField("machinePartCookTimeMultiplier", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartCookTimeMultiplier = "Laser";
+        public string MachinePartCookTimeMultiplier = "Capacitor";
         [DataField("cookTimeScalingConstant")]
         public float CookTimeScalingConstant = 0.5f;
 
@@ -43,7 +43,14 @@ namespace Content.Server.Kitchen.Components
         /// For right now, I don't think any recipe cook time should be greater than 60 seconds.
         /// </summary>
         [DataField("currentCookTimerTime"), ViewVariables(VVAccess.ReadWrite)]
-        public uint CurrentCookTimerTime = 5;
+        public uint CurrentCookTimerTime = 0;
+
+        /// <summary>
+        /// The maximum number of seconds a microwave can be set to.
+        /// This is currently only used for validation and the client does not check this.
+        /// </summary>
+        [DataField("maxCookTime"), ViewVariables(VVAccess.ReadWrite)]
+        public uint MaxCookTime = 30;
 
         /// <summary>
         ///     The max temperature that this microwave can heat objects to.

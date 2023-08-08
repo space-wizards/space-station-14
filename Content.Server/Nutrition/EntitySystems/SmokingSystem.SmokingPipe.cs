@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Interaction;
 using Content.Shared.PDA;

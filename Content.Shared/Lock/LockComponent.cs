@@ -34,6 +34,12 @@ public sealed class LockComponent : Component
     /// </summary>
     [DataField("lockingSound"), ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier LockSound = new SoundPathSpecifier("/Audio/Machines/door_lock_on.ogg");
+
+    /// <summary>
+    /// Whether or not an emag disables it.
+    /// </summary>
+    [DataField("breakOnEmag")]
+    public bool BreakOnEmag = true;
 }
 
 [Serializable, NetSerializable]

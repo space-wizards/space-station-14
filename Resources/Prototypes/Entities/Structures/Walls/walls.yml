@@ -2,8 +2,6 @@
   abstract: true
   parent: BaseStructure
   id: BaseWall
-  name: basewall
-  description: Keeps the air in and the greytide out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -22,10 +20,11 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
   - type: Icon
     state: full
+  - type: PlacementReplacement
+    key: walls
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -33,14 +32,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
-      density: 1000
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+        density: 1000
   - type: Occluder
   - type: Airtight
   - type: StaticPrice
@@ -51,7 +51,6 @@
 - type: entity
   parent: BaseWall
   id: WallBrick
-  name: brick wall
   components:
   - type: Tag
     tags:
@@ -74,6 +73,7 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+
   - type: IconSmooth
     key: walls
     base: brick
@@ -81,7 +81,6 @@
 - type: entity
   parent: BaseWall
   id: WallClock
-  name: clock wall
   components:
   - type: Tag
     tags:
@@ -111,7 +110,6 @@
 - type: entity
   parent: BaseWall
   id: WallClown
-  name: clown wall
   components:
   - type: Tag
     tags:
@@ -121,6 +119,9 @@
     sprite: Structures/Walls/clown.rsi
   - type: Icon
     sprite: Structures/Walls/clown.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumWall
   - type: Destructible
     thresholds:
     - trigger:
@@ -138,11 +139,42 @@
     key: walls
     base: clown
 
+- type: entity
+  parent: BaseWall
+  id: WallMeat
+  components:
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
+      - Wall
+      - Structure
+  - type: Sprite
+    sprite: Structures/Walls/meat.rsi
+  - type: Icon
+    sprite: Structures/Walls/meat.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumWall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100 # weak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: meat
 
 - type: entity
   parent: BaseWall
   id: WallCult
-  name: cult wall
   components:
   - type: Tag
     tags:
@@ -172,8 +204,6 @@
 - type: entity
   parent: BaseWall
   id: WallDebug
-  name: debug wall
-  suffix: DEBUG
   components:
   - type: Tag
     tags:
@@ -204,7 +234,6 @@
 - type: entity
   parent: BaseWall
   id: WallDiamond
-  name: diamond wall
   components:
   - type: Tag
     tags:
@@ -234,7 +263,6 @@
 - type: entity
   parent: BaseWall
   id: WallGold
-  name: gold wall
   components:
   - type: Tag
     tags:
@@ -275,7 +303,6 @@
 - type: entity
   parent: BaseWall
   id: WallIce
-  name: ice wall
   components:
   - type: Tag
     tags:
@@ -305,7 +332,6 @@
 - type: entity
   parent: BaseWall
   id: WallPlasma
-  name: plasma wall
   components:
   - type: Tag
     tags:
@@ -346,7 +372,6 @@
 - type: entity
   parent: BaseWall
   id: WallPlastic
-  name: plastic wall
   components:
   - type: Tag
     tags:
@@ -387,8 +412,6 @@
 - type: entity
   parent: BaseWall
   id: WallPlastitaniumIndestructible
-  name: plastitanium wall
-  suffix: indestructible
   components:
     - type: Tag
       tags:
@@ -404,8 +427,6 @@
 - type: entity
   parent: WallPlastitaniumIndestructible
   id: WallPlastitanium
-  name: plastitanium wall
-  suffix: ""
   components:
     - type: Tag
       tags:
@@ -426,9 +447,28 @@
               acts: [ "Destruction" ]
 
 - type: entity
+  parent: WallShuttleDiagonal
+  id: WallPlastitaniumDiagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/plastitanium_diagonal.rsi
+    state: state0
+
+- type: entity
   parent: BaseWall
   id: WallReinforced
-  name: reinforced wall
   components:
   - type: Sprite
     sprite: Structures/Walls/solid.rsi
@@ -458,8 +498,17 @@
     key: walls
     base: reinf_over
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: ReinforcedWallVisualizer
+      enum.ReinforcedWallVisuals.DeconstructionStage:
+        ReinforcedWallVisualLayers.Deconstruction:
+          -1: { visible: false }
+          0: { state: reinf_construct-0, visible: true}
+          1: { state: reinf_construct-1, visible: true}
+          2: { state: reinf_construct-2, visible: true}
+          3: { state: reinf_construct-3, visible: true}
+          4: { state: reinf_construct-4, visible: true}
+          5: { state: reinf_construct-5, visible: true}
   - type: StaticPrice
     price: 150
   - type: RadiationBlocker
@@ -469,7 +518,6 @@
 - type: entity
   parent: BaseWall
   id: WallRiveted
-  name: riveted wall
   components:
   - type: Tag
     tags:
@@ -501,7 +549,6 @@
 - type: entity
   parent: BaseWall
   id: WallSandstone
-  name: sandstone wall
   components:
   - type: Tag
     tags:
@@ -531,7 +578,6 @@
 - type: entity
   parent: BaseWall
   id: WallSilver
-  name: silver wall
   components:
   - type: Tag
     tags:
@@ -571,9 +617,6 @@
 
 - type: entity
   id: WallShuttleDiagonal
-  name: shuttle wall
-  suffix: diagonal
-  description: Keeps the air in and the greytide out.
   placement:
     mode: SnapgridCenter
     snap:
@@ -586,7 +629,6 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
@@ -602,6 +644,8 @@
     damageModifierSet: Metallic
   - type: Physics
     bodyType: Static
+  - type: Reflect
+    reflectProb: 1
   - type: Pullable
   - type: Airtight
     noAirWhenFullyAirBlocked: false
@@ -610,18 +654,25 @@
     - East
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PolygonShape
-          vertices:
-          - "-0.5,-0.5"
-          - "0.5,0.5"
-          - "0.5,-0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PolygonShape
+            vertices:
+            - "-0.5,-0.5"
+            - "0.5,0.5"
+            - "0.5,-0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 300
@@ -637,7 +688,6 @@
 - type: entity
   parent: BaseWall
   id: WallShuttle
-  name: shuttle wall
   components:
   - type: Tag
     tags:
@@ -651,6 +701,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 1000
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 500
       behaviors:
       - !type:PlaySoundBehavior
@@ -660,6 +716,8 @@
         acts: ["Destruction"]
     destroySound:
       path: /Audio/Effects/metalbreak.ogg
+  - type: Reflect
+    reflectProb: 1
   - type: IconSmooth
     key: walls
     base: state
@@ -667,7 +725,6 @@
 - type: entity
   parent: BaseWall
   id: WallSolid
-  name: solid wall
   components:
   - type: Tag
     tags:
@@ -684,7 +741,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 600 # #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 600
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -706,10 +763,28 @@
     base: solid
 
 - type: entity
+  parent: WallShuttleDiagonal
+  id: WallSolidDiagonal
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wall
+  components:
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
+  - type: IconSmooth
+    mode: Diagonal
+    key: walls
+    base: state
+  - type: Icon
+    sprite: Structures/Walls/solid_diagonal.rsi
+    state: state0
+
+- type: entity
   parent: BaseWall
   id: WallSolidRust
-  name: solid wall
-  suffix: rusted
   components:
   - type: Sprite
     sprite: Structures/Walls/solidrust.rsi
@@ -747,7 +822,6 @@
 - type: entity
   parent: BaseWall
   id: WallUranium
-  name: uranium wall
   components:
   - type: Sprite
     sprite: Structures/Walls/uranium.rsi
@@ -784,7 +858,6 @@
 - type: entity
   parent: BaseWall
   id: WallWood
-  name: wood wall
   components:
   - type: Sprite
     sprite: Structures/Walls/wood.rsi
@@ -797,7 +870,7 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300 # #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 300
       behaviors:
       - !type:DoActsBehavior
         acts: ["Destruction"]
@@ -824,8 +897,6 @@
 - type: entity
   parent: BaseWall
   id: WallVaultAlien
-  name: alien vault wall
-  description: A mysterious ornate looking wall. There may be ancient dangers inside.
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
@@ -845,7 +916,6 @@
 - type: entity
   parent: WallVaultAlien
   id: WallVaultRock
-  name: rock vault wall
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
@@ -857,7 +927,6 @@
 - type: entity
   parent: WallVaultAlien
   id: WallVaultSandstone
-  name: sandstone vault wall
   components:
   - type: Sprite
     sprite: Structures/Walls/vault.rsi
@@ -871,7 +940,6 @@
 
 - type: entity
   id: WallInvisible
-  name: Invisible Wall
   components:
   - type: TimedDespawn
     lifetime: 30
@@ -882,18 +950,18 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-          bounds: "-0.5,-0.5,0.5,0.5"
-      mask:
-      - FullTileMask
-      layer:
-      - GlassLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+            bounds: "-0.5,-0.5,0.5,0.5"
+        mask:
+        - FullTileMask
+        layer:
+        - GlassLayer
   - type: Airtight
 
 - type: entity
   id: WallForce
-  name: Force Wall
   components:
     - type: TimedDespawn
       lifetime: 20
@@ -904,7 +972,8 @@
       bodyType: Static
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeAabb
             bounds: "-0.5,-0.5,0.5,0.5"
           mask:

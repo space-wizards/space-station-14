@@ -2,7 +2,7 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Weapons.Melee;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -12,7 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
-using Robust.Shared.Player;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -26,11 +26,20 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
+        }
+
+        private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
+        {
+            args.State = _solutions.TryGetSolution(uid, component.SolutionName, out var solution)
+                ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
+                : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
 
         private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)
         {
-            if (args.Handled) return;
+            if (args.Handled)
+                return;
 
             TryDoInject(uid, args.User, args.User);
             args.Handled = true;
@@ -68,9 +77,8 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan))
                 return false;
 
-            if (TryComp(uid, out UseDelayComponent? delayComp))
-                if (_useDelay.ActiveDelay(uid, delayComp))
-                    return false;
+            if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.ActiveDelay(uid, delayComp))
+                return false;
 
             string? msgFormat = null;
 
@@ -100,9 +108,7 @@ namespace Content.Server.Chemistry.EntitySystems
 
             if (target != user)
             {
-                _popup.PopupCursor(Loc.GetString("hypospray-component-feel-prick-message"), target.Value);
-                var meleeSys = EntitySystem.Get<MeleeWeaponSystem>();
-                var angle = Angle.FromWorldVec(_entMan.GetComponent<TransformComponent>(target.Value).WorldPosition - _entMan.GetComponent<TransformComponent>(user).WorldPosition);
+                _popup.PopupEntity(Loc.GetString("hypospray-component-feel-prick-message"), target.Value, target.Value);
                 // TODO: This should just be using melee attacks...
                 // meleeSys.SendLunge(angle, user);
             }
@@ -131,7 +137,7 @@ namespace Content.Server.Chemistry.EntitySystems
             _reactiveSystem.DoEntityReaction(target.Value, removedSolution, ReactionMethod.Injection);
             _solutions.TryAddSolution(target.Value, targetSolution, removedSolution);
 
-            //same logtype as syringes...
+            // same LogType as syringes...
             _adminLogger.Add(LogType.ForceFeed, $"{_entMan.ToPrettyString(user):user} injected {_entMan.ToPrettyString(target.Value):target} with a solution {SolutionContainerSystem.ToPrettyString(removedSolution):removedSolution} using a {_entMan.ToPrettyString(uid):using}");
 
             return true;

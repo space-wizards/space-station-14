@@ -18,21 +18,21 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.5,0.4,0.3"
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Transform
     anchored: true
     noRot: true
   - type: Sprite
     sprite: Structures/Power/power.rsi
     state: generator
-    netsync: false
     snapCardinals: true
   - type: NodeContainer
     examinable: true
@@ -53,6 +53,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -69,6 +75,12 @@
     totalIntensity: 200
   - type: StaticPrice
     price: 500
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
 
 # Base Wallmount Generator
 
@@ -88,11 +100,11 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
     castShadows: false
+    netsync: false
   - type: Fixtures
   - type: Transform
     anchored: true
@@ -101,15 +113,11 @@
     canCollide: false
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
     - state: on
       shader: unshaded
-#  - type: Appearance
-#    visuals:
-#    - type: ApcVisualizer
   - type: NodeContainer
     examinable: true
     nodes:
@@ -141,7 +149,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     layers:
     - state: panel
@@ -161,15 +168,23 @@
     supplyRate: 3000
 
 - type: entity
+  parent: BaseGenerator
+  id: GeneratorBasic15kW
+  suffix: Basic, 15kW
+  components:
+    - type: PowerSupplier
+      supplyRate: 15000
+
+- type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorPlasma
-  suffix: Plasma, 5kW
+  suffix: Plasma, 20kW
   components:
   - type: PowerSupplier
-    supplyRate: 5000 # 260 sec / sheet
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen0_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorPlasma"
     LayoutId: GeneratorPlasma
@@ -178,17 +193,28 @@
   - type: UpgradePowerSupplier
     powerSupplyMultiplier: 1.25
     scaling: Exponential
+  - type: FuelGenerator
+    targetPower: 20000
+    optimalPower: 20000
+  - type: SolidFuelGeneratorAdapter
+    fuelMaterial: Plasma
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: SolidFuelGeneratorBoundUserInterface
 
 - type: entity
   parent: [ BaseGenerator, ConstructibleMachine ]
   id: GeneratorUranium
-  suffix: Uranium, 15kW
+  suffix: Uranium, 30kW
   components:
   - type: PowerSupplier
-    supplyRate: 15000 # 85 sec / sheet
   - type: Sprite
     sprite: Structures/Power/Generation/portable_generator.rsi
     state: portgen1_1
+  - type: WiresPanel
   - type: Wires
     BoardName: "GeneratorUranium"
     LayoutId: GeneratorUranium
@@ -197,6 +223,18 @@
   - type: UpgradePowerSupplier
     powerSupplyMultiplier: 1.25
     scaling: Exponential
+  - type: FuelGenerator
+    targetPower: 30000
+    optimalPower: 30000
+    optimalBurnRate: 0.00416666666
+  - type: SolidFuelGeneratorAdapter
+    fuelMaterial: Uranium
+  - type: ActivatableUI
+    key: enum.GeneratorComponentUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneratorComponentUiKey.Key
+        type: SolidFuelGeneratorBoundUserInterface
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -208,6 +246,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: generator
+  - type: StaticPrice
+    price: 14
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -221,6 +261,8 @@
   - type: Construction
     graph: WallmountGenerator
     node: APU
+  - type: StaticPrice
+    price: 38
 
 # RTG - no fuel requirement
 
@@ -242,6 +284,12 @@
       path: /Audio/Ambience/Objects/buzzing.ogg
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 300
@@ -269,7 +317,6 @@
   - type: PowerSupplier
     supplyRate: 10000
   - type: Sprite
-    netsync: false
     sprite: Structures/Power/Generation/rtg.rsi
     layers:
       - state: rtg_damaged
@@ -278,6 +325,12 @@
     intensity: 2
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 50
