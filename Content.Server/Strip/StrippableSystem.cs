@@ -71,7 +71,7 @@ namespace Content.Server.Strip
 
             if (args.IsHand)
             {
-                StripHand(target, user, args.Slot, component,  userHands);
+                StripHand(target, user, args.Slot, component, userHands);
                 return;
             }
 

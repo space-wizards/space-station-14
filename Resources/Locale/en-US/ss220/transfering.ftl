@@ -1,0 +1,1 @@
+action-transfer-name = Передать предмет

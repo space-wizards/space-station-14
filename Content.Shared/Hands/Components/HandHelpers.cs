@@ -24,7 +24,7 @@ public static class HandHelpers
     ///     Get a list of hands that are currently holding nothing. This is a LinQ method, not a property, so cache
     ///     it instead of accessing this multiple times.
     /// </summary>
-    public static IEnumerable<Hand> GetFreeHands(this HandsComponent component) => component.Hands.Values.Where(hand => !hand.IsEmpty);
+    public static IEnumerable<Hand> GetFreeHands(this HandsComponent component) => component.Hands.Values.Where(hand => hand.IsEmpty);
 
     /// <summary>
     ///     Get a list of hands that are currently holding nothing. This is a LinQ method, not a property, so cache
