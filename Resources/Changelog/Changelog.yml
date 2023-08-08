@@ -1,9 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: The economy behind timer electronics has crashed., type: Tweak}
-  id: 3984
-  time: '2023-06-13T08:09:18.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Add doorbumpopener to some stuff that should've had it (slimes)., type: Fix}
@@ -2983,3 +2978,8 @@ Entries:
   - {message: Composting produce into trays actually works now., type: Fix}
   id: 4483
   time: '2023-08-08T00:29:59.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
+  id: 4484
+  time: '2023-08-08T08:16:23.0000000+00:00'
