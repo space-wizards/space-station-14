@@ -41839,7 +41839,7 @@ entities:
     - pos: 11.456925,-3.7697382
       parent: 31
       type: Transform
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 202
     components:
