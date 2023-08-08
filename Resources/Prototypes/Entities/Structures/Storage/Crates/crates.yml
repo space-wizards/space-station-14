@@ -24,6 +24,8 @@
     - entity_storage
   - type: StaticPrice
     price: 80
+  - type: Reflect
+    enabled: false
 
 - type: entity
   parent: CrateBaseWeldable
@@ -482,7 +484,7 @@
   - type: Icon
     sprite: Structures/Storage/Crates/stone_grave.rsi
     state: base
-    
+
 - type: entity
   parent: CrateBaseWeldable
   id: CrateSyndicate
@@ -491,4 +493,4 @@
     sprite: Structures/Storage/Crates/syndicate.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/syndicate.rsi
-    
+
