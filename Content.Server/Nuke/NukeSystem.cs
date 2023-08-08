@@ -455,13 +455,13 @@ public sealed class NukeSystem : EntitySystem
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
+        // turn on the spinny light
+        _pointLight.SetEnabled(uid, true);
+
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         _transform.AnchorEntity(uid, nukeXform);
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
-
-        // turn on the spinny light
-        _pointLight.SetEnabled(uid, true);
     }
 
     /// <summary>
@@ -492,13 +492,13 @@ public sealed class NukeSystem : EntitySystem
         component.PlayedAlertSound = false;
         component.AlertAudioStream?.Stop();
 
+        // turn off the spinny light
+        _pointLight.SetEnabled(uid, false);
+
         // start bomb cooldown
         _itemSlots.SetLock(uid, component.DiskSlot, false);
         component.Status = NukeStatus.COOLDOWN;
         component.CooldownTime = component.Cooldown;
-
-        // turn off the spinny light
-        _pointLight.SetEnabled(uid, false);
 
         UpdateUserInterface(uid, component);
     }
