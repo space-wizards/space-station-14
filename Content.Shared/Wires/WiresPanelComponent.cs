@@ -1,8 +1,6 @@
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Wires;
 
@@ -28,11 +26,9 @@ public sealed class WiresPanelComponent : Component
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
-    [DataField("wiresPanelCovering")]
-    public string? WiresPanelCovering;
+    public string WiresPanelSecurityExamination = default!;
 
-    [DataField("wiresPanelCoveringWelded")]
-    public bool WiresPanelCoveringWelded = false;
+    public bool WiresAccessible = true;
 }
 
 [Serializable, NetSerializable]
@@ -40,6 +36,6 @@ public sealed class WiresPanelComponentState : ComponentState
 {
     public bool Open;
     public bool Visible;
-    public string? WiresPanelCovering;
-    public bool WiresPanelCoveringWelded;
+    public string WiresPanelSecurityExamination = default!;
+    public bool WiresAccessible;
 }

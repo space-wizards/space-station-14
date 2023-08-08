@@ -11,7 +11,15 @@ namespace Content.Server.Construction.Completions
             if (userUid == null)
                 return;
 
+            if (entityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified) == false)
+                return;
+
+            bool currentValue = electrified.Enabled;
+            electrified.Enabled = true;
+
             entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
+
+            electrified.Enabled = currentValue;
         }
     }
 }

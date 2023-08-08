@@ -31,6 +31,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -637,11 +638,19 @@ public sealed class WiresSystem : SharedWiresSystem
         Dirty(component);
     }
 
-    public void SetPanelData(EntityUid uid, WiresPanelComponent component, string? wiresPanelCovering, bool wiresPanelCoveringWelded)
+    public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
     {
-        component.WiresPanelCovering = wiresPanelCovering;
-        component.WiresPanelCoveringWelded = wiresPanelCoveringWelded;
-        Dirty(component);
+        if (_protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID, out var wiresPanelSecurityLevelPrototype))
+        {
+            component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
+            component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
+            Dirty(component);
+
+            if (wiresPanelSecurityLevelPrototype.WiresAccessible == false)
+            {
+                CloseAllUserInterfaces(uid);
+            }
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)

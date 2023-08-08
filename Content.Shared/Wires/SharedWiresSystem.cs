@@ -1,5 +1,6 @@
 using Content.Shared.Examine;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wires;
 
@@ -15,18 +16,19 @@ public abstract class SharedWiresSystem : EntitySystem
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
     {
-        if (component.Open == false || component?.WiresPanelCovering == null)
+        if (component.Open == false)
         {
-            args.PushMarkup(Loc.GetString(component?.Open == true
-                ? "wires-panel-component-on-examine-open"
-                : "wires-panel-component-on-examine-closed"));
+            args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-closed"));
         }
 
-        else if (component?.WiresPanelCovering != null)
+        else
         {
-            args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-"
-                + component.WiresPanelCovering
-                + (component.WiresPanelCoveringWelded ? "-welded" : "")));
+            args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
+
+            if (component?.WiresPanelSecurityExamination != null)
+            {
+                args.PushMarkup(Loc.GetString(component.WiresPanelSecurityExamination));
+            }
         }
     }
 
@@ -36,8 +38,8 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             Open = component.Open,
             Visible = component.Visible,
-            WiresPanelCovering = component.WiresPanelCovering,
-            WiresPanelCoveringWelded = component.WiresPanelCoveringWelded,
+            WiresPanelSecurityExamination = component.WiresPanelSecurityExamination,
+            WiresAccessible = component.WiresAccessible,
         };
     }
 
@@ -48,7 +50,7 @@ public abstract class SharedWiresSystem : EntitySystem
 
         component.Open = state.Open;
         component.Visible = state.Visible;
-        component.WiresPanelCovering = state.WiresPanelCovering;
-        component.WiresPanelCoveringWelded = state.WiresPanelCoveringWelded;
+        component.WiresPanelSecurityExamination = state.WiresPanelSecurityExamination;
+        component.WiresAccessible = state.WiresAccessible;
     }
 }

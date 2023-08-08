@@ -149,8 +149,7 @@ namespace Content.Server.Doors.Systems
 
         private void OnActivate(EntityUid uid, AirlockComponent component, ActivateInWorldEvent args)
         {
-            if (TryComp<WiresPanelComponent>(uid, out var panel)
-                && panel.Open && panel.WiresPanelCovering == null
+            if (TryComp<WiresPanelComponent>(uid, out var panel) && panel.Open && panel.WiresAccessible
                 && TryComp<ActorComponent>(args.User, out var actor))
             {
                 _wiresSystem.OpenUserInterface(uid, actor.PlayerSession);
