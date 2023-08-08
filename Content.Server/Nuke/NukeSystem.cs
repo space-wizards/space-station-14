@@ -459,6 +459,7 @@ public sealed class NukeSystem : EntitySystem
         _pointLight.SetEnabled(uid, true);
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
+        _transform.SetCoordinates(uid, nukeXform, nukeXform.Coordinates.SnapToGrid());
         _transform.AnchorEntity(uid, nukeXform);
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
