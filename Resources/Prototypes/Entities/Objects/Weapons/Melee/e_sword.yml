@@ -204,3 +204,5 @@
     enabled: true
     reflectProb: .75
     spread: 75
+  - type: UseDelay
+    delay: 1
