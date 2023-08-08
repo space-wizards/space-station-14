@@ -266,7 +266,7 @@
   components:
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/silicon/Bots/syndiebot.rsi
+    sprite: Mobs/Silicon/Bots/syndiebot.rsi
     state: broken
 
 - type: entity
