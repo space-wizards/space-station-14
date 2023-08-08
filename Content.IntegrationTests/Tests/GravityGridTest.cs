@@ -15,10 +15,11 @@ namespace Content.IntegrationTests.Tests
     [TestOf(typeof(GravityGeneratorComponent))]
     public sealed class GravityGridTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: GravityGeneratorDummy
-  id: GravityGeneratorDummy
+  name: GridGravityGeneratorDummy
+  id: GridGravityGeneratorDummy
   components:
   - type: GravityGenerator
     chargeRate: 1000000000 # Set this really high so it discharges in a single tick.
@@ -29,11 +30,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -56,7 +53,7 @@ namespace Content.IntegrationTests.Tests
                 grid1Entity = grid1.Owner;
                 grid2Entity = grid2.Owner;
 
-                generator = entityMan.SpawnEntity("GravityGeneratorDummy", grid2.ToCoordinates());
+                generator = entityMan.SpawnEntity("GridGravityGeneratorDummy", grid2.ToCoordinates());
                 Assert.Multiple(() =>
                 {
                     Assert.That(entityMan.HasComponent<GravityGeneratorComponent>(generator));

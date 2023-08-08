@@ -10,7 +10,7 @@ namespace Content.Server.Administration.Commands
     [AdminCommand(AdminFlags.Admin)]
     sealed class SetMindCommand : IConsoleCommand
     {
-        
+
         public string Command => "setmind";
 
         public string Description => Loc.GetString("set-mind-command-description", ("requiredComponent", nameof(MindContainerComponent)));
@@ -19,7 +19,7 @@ namespace Content.Server.Administration.Commands
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)
         {
-            if (args.Length != 2)
+            if (args.Length < 2)
             {
                 shell.WriteLine(Loc.GetString("shell-wrong-arguments-number"));
                 return;
@@ -29,6 +29,12 @@ namespace Content.Server.Administration.Commands
             {
                 shell.WriteLine(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;
+            }
+
+            bool ghostOverride = true;
+            if (args.Length > 2)
+            {
+                ghostOverride = bool.Parse(args[2]);
             }
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
@@ -62,7 +68,7 @@ namespace Content.Server.Administration.Commands
             }
 
             var mindSystem = entityManager.System<MindSystem>();
-            
+
             var mind = playerCData.Mind;
             if (mind == null)
             {
@@ -70,7 +76,7 @@ namespace Content.Server.Administration.Commands
                 mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
             }
 
-            mindSystem.TransferTo(mind, eUid);
+            mindSystem.TransferTo(mind, eUid, ghostOverride);
         }
     }
 }

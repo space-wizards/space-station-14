@@ -6,7 +6,7 @@
   <Box>
     <GuideEntityEmbed Entity="ComputerCargoOrders"/>
   </Box>
-  Every transaction you make will begin at a [color=#a4885c]cargo request computer[/color], from which you can make orders for specific products. Making any order requires [color=#118C4F]spacebucks[/color], the currency of the station. To make an order, click the "request" button next to whatever you need, type an appropriate reason for why you're ordering it, and hit "approve" when it appears below the request list.
+  Every transaction you make will begin at a [color=#a4885c]cargo request computer[/color], from which you can make orders for specific products. Making any order requires [color=#118C4F]spesos[/color], the currency of the station. To make an order, click the "request" button next to whatever you need, type an appropriate reason for why you're ordering it, and hit "approve" when it appears below the request list.
 
   ## Piloting
   Orders are shipped to the station via the [color=#a4885c]cargo shuttle[/color], the remotely piloted spacecraft that cargo uses to buy and sell goods. In order to move the shuttle, you must first find the [color=#a4885c]cargo shuttle computer[/color].

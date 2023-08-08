@@ -10,7 +10,7 @@
   - type: AmbientSound
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
-    volume: -5
+    volume: -10
     enabled: false
   - type: InputMover
   - type: InteractionOutline
@@ -428,3 +428,51 @@
   components:
   - type: Foldable
     folded: true
+
+- type: entity
+  id: VehicleWheelchair
+  parent: [BaseVehicle, BaseFoldable, BaseItem]
+  name: Wheelchair
+  description: A chair with big wheels. It looks like you can move in this on your own.
+  components:
+    - type: Vehicle
+      northOver: true
+      hasKey: true
+      northOverride: 0
+      southOverride: 0
+    - type: Sprite
+      sprite: Objects/Vehicles/wheelchair.rsi
+      layers:
+      - state: vehicle
+        map: ["enum.VehicleVisualLayers.AutoAnimate", "unfoldedLayer"]
+      - state: vehicle_folded
+        map: ["foldedLayer"]
+        visible: false
+      netsync: false
+      noRot: true
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 2
+    - type: Strap
+      buckleOffset: "0,0"
+      maxBuckleDistance: 1
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.2
+          density: 360
+          restitution: 0.0
+          mask:
+            - MobMask
+          layer:
+            - TableLayer
+
+- type: entity
+  parent: VehicleWheelchair
+  id: VehicleWheelchairFolded
+  suffix: folded
+  components:
+    - type: Foldable
+      folded: true

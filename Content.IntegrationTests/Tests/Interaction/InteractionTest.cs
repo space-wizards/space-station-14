@@ -120,7 +120,8 @@ public abstract partial class InteractionTest
 
 
     // Simple mob that has one hand and can perform misc interactions.
-    public const string TestPrototypes = @"
+    [TestPrototypes]
+    private const string TestPrototypes = @"
 - type: entity
   id: InteractionTestMob
   components:
@@ -139,7 +140,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = TestPrototypes });
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -239,7 +240,7 @@ public abstract partial class InteractionTest
         await PairTracker.CleanReturnAsync();
         await TearDown();
     }
-    
+
     protected virtual async Task TearDown()
     {
     }

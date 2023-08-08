@@ -8,7 +8,7 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task TestConnect()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var server = pairTracker.Pair.Server;
             var client = pairTracker.Pair.Client;
 
