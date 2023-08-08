@@ -111,8 +111,10 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (!CanStart(uid, component))
             return false;
 
-        if (component.Whitelist != null && !component.Whitelist.IsValid(item) ||
-            HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+        if (HasComp<MobStateComponent>(item) && !CanGib(uid, item, component)) // whitelist? We be gibbing, boy!
+            return false;
+
+        if (component.Whitelist != null && !component.Whitelist.IsValid(item))
             return false;
 
         if (component.Blacklist != null && component.Blacklist.IsValid(item))
