@@ -1,9 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Fixes a minor error in the Food Recipes guidebook., type: Fix}
-  id: 3981
-  time: '2023-06-13T01:17:48.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: The Praetorian and Runner xenos can now be rarely found on expeditions.,
@@ -2983,3 +2978,8 @@ Entries:
   - {message: Added Syringe Support for Chemical Analysis Goggles, type: Fix}
   id: 4480
   time: '2023-08-07T22:46:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Uplink codes no longer contain sharp notes., type: Remove}
+  id: 4481
+  time: '2023-08-08T00:16:49.0000000+00:00'
