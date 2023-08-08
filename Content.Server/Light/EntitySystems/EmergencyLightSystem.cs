@@ -43,7 +43,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
             }
 
-            UpdateState(component);
+            UpdateState(ud, component);
         }
 
         private void OnEmergencyExamine(EntityUid uid, EmergencyLightComponent component, ExaminedEvent args)
@@ -111,18 +111,18 @@ namespace Content.Server.Light.EntitySystems
             if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
                 return;
 
-            foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
+            foreach (var (uid, light, pointLight, appearance, xform) in EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
             {
                 if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                     continue;
 
                 pointLight.Color = details.EmergencyLightColor;
-                _appearance.SetData(appearance.Owner, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
+                _appearance.SetData(uid, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
 
                 if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
                 {
                     light.ForciblyEnabled = true;
-                    TurnOn(light);
+                    TurnOn(uid, light);
                 }
                 else if (!details.ForceEnableEmergencyLights && light.ForciblyEnabled)
                 {
@@ -133,30 +133,30 @@ namespace Content.Server.Light.EntitySystems
             }
         }
 
-        public void SetState(EmergencyLightComponent component, EmergencyLightState state)
+        public void SetState(EntityUid uid, EmergencyLightComponent component, EmergencyLightState state)
         {
             if (component.State == state) return;
 
             component.State = state;
-            RaiseLocalEvent(component.Owner, new EmergencyLightEvent(component, state));
+            RaiseLocalEvent(uid, new EmergencyLightEvent(state));
         }
 
         public override void Update(float frameTime)
         {
-            foreach (var (_, activeLight, battery) in EntityQuery<ActiveEmergencyLightComponent, EmergencyLightComponent, BatteryComponent>())
+            foreach (var (uid, _, activeLight, battery) in EntityQueryEnumerator<ActiveEmergencyLightComponent, EmergencyLightComponent, BatteryComponent>())
             {
-                Update(activeLight, battery, frameTime);
+                Update(uid, activeLight, battery, frameTime);
             }
         }
 
-        private void Update(EmergencyLightComponent component, BatteryComponent battery, float frameTime)
+        private void Update(EntityUid uid, EmergencyLightComponent component, BatteryComponent battery, float frameTime)
         {
             if (component.State == EmergencyLightState.On)
             {
-                if (!battery.TryUseCharge(component.Wattage * frameTime))
+                if (!_battery.TryUseCharge(uid, component.Wattage * frameTime, battery))
                 {
-                    SetState(component, EmergencyLightState.Empty);
-                    TurnOff(component);
+                    SetState(uid, component, EmergencyLightState.Empty);
+                    TurnOff(uid, component);
                 }
             }
             else
@@ -164,12 +164,12 @@ namespace Content.Server.Light.EntitySystems
                 battery.CurrentCharge += component.ChargingWattage * frameTime * component.ChargingEfficiency;
                 if (battery.IsFullyCharged)
                 {
-                    if (TryComp(component.Owner, out ApcPowerReceiverComponent? receiver))
+                    if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
                     {
                         receiver.Load = 1;
                     }
 
-                    SetState(component, EmergencyLightState.Full);
+                    SetState(uid, component, EmergencyLightState.Full);
                 }
             }
         }
@@ -177,52 +177,49 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Updates the light's power drain, battery drain, sprite and actual light state.
         /// </summary>
-        public void UpdateState(EmergencyLightComponent component)
+        public void UpdateState(EntityUid uid, EmergencyLightComponent component)
         {
-            if (!TryComp(component.Owner, out ApcPowerReceiverComponent? receiver))
-            {
+            if (!TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
                 return;
-            }
 
             if (receiver.Powered && !component.ForciblyEnabled)
             {
                 receiver.Load = (int) Math.Abs(component.Wattage);
-                TurnOff(component);
-                SetState(component, EmergencyLightState.Charging);
+                TurnOff(uid, component);
+                SetState(uid, component, EmergencyLightState.Charging);
             }
             else
             {
-                TurnOn(component);
-                SetState(component, EmergencyLightState.On);
+                TurnOn(uid, component);
+                SetState(uid, component, EmergencyLightState.On);
             }
         }
 
-        private void TurnOff(EmergencyLightComponent component)
+        private void TurnOff(EntityUid uid, EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
+            if (TryComp<PointLightComponent>(uid, out var light))
             {
                 light.Enabled = false;
             }
 
-            if (TryComp(component.Owner, out AppearanceComponent? appearance))
-                _appearance.SetData(appearance.Owner, EmergencyLightVisuals.On, false, appearance);
+            _appearance.SetData(uid, EmergencyLightVisuals.On, false, appearance);
 
-            _ambient.SetAmbience(component.Owner, false);
+            RemComp<RotatingLightComponent>(uid);
+
+            _ambient.SetAmbience(uid, false);
         }
 
-        private void TurnOn(EmergencyLightComponent component)
+        private void TurnOn(EntityUid uid, EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
+            if (TryComp<PointLightComponent>(uid, out var light))
             {
                 light.Enabled = true;
             }
 
-            if (TryComp(component.Owner, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(appearance.Owner, EmergencyLightVisuals.On, true, appearance);
-            }
+            EnsureComp<RotatingLightComponent>(uid);
 
-            _ambient.SetAmbience(component.Owner, true);
+            _appearance.SetData(uid, EmergencyLightVisuals.On, true);
+            _ambient.SetAmbience(uid, true);
         }
     }
 }
