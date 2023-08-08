@@ -30,10 +30,8 @@ namespace Content.IntegrationTests.Tests.Atmos
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             AtmosAlarmThreshold threshold = default!;
 
-            await server.WaitPost(() =>
-            {
-                threshold = prototypeManager.Index<AtmosAlarmThreshold>("AlarmThresholdTestDummy");
-            });
+            var proto = prototypeManager.Index<AtmosAlarmThresholdPrototype>("AlarmThresholdTestDummy");
+            threshold = new(proto);
 
             await server.WaitAssertion(() =>
             {
