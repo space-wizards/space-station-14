@@ -448,7 +448,6 @@
       - state: vehicle_folded
         map: ["foldedLayer"]
         visible: false
-      netsync: false
       noRot: true
     - type: MovementSpeedModifier
       baseWalkSpeed: 2
