@@ -51,11 +51,6 @@ namespace Content.Server.Flash
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly StunSystem _stun = default!;
         [Dependency] private readonly TagSystem _tag = default!;
-        [Dependency] private readonly MindSystem _mind = default!;
-        [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly SharedStunSystem _sharedStun = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
 
         public override void Initialize()
         {
@@ -65,11 +60,9 @@ namespace Content.Server.Flash
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
-
             SubscribeLocalEvent<FlashImmunityComponent, FlashAttemptEvent>(OnFlashImmunityFlashAttempt);
             SubscribeLocalEvent<PermanentBlindnessComponent, FlashAttemptEvent>(OnPermanentBlindnessFlashAttempt);
             SubscribeLocalEvent<TemporaryBlindnessComponent, FlashAttemptEvent>(OnTemporaryBlindnessFlashAttempt);
-            SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
         }
 
         private void OnFlashMeleeHit(EntityUid uid, FlashComponent comp, MeleeHitEvent args)
@@ -155,35 +148,6 @@ namespace Content.Server.Flash
             }
 
         }
-        /// <summary>
-        /// Called when a Head Rev uses a flash in melee to convert somebody else.
-        /// </summary>
-
-        public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, AfterFlashedEvent ev)
-        {
-            var stunTime = TimeSpan.FromSeconds(3);
-            if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target))
-            {
-                var mind = _mind.GetMind(ev.Target);
-                if (mind != null && mind.OwnedEntity != null && ev.Used != null)
-                {
-                    _mind.AddRole(mind, new RevolutionaryRole(mind, _prototype.Index<AntagPrototype>("Rev")));
-                    _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
-                    _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
-                    EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                    EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                    _charges.AddCharges(ev.Used.Value, 1);
-                    _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
-                    if (mind.Session != null)
-                    {
-                        var message = Loc.GetString("rev-role-greeting");
-                        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
-                        _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
-                    }
-                }
-            }
-        }
-
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
         {
@@ -256,8 +220,10 @@ namespace Content.Server.Flash
             Used = used;
         }
     }
-
-    public sealed class AfterFlashedEvent
+    /// <summary>
+    /// Called after a flash is used via melee on another person to check for rev conversion.
+    /// </summary>
+    public readonly struct AfterFlashedEvent
     {
         public readonly EntityUid Target;
         public readonly EntityUid? User;

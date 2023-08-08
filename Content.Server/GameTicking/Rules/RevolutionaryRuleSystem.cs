@@ -27,13 +27,17 @@ using Content.Server.Mindshield;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.IdentityManagement;
+using Content.Server.Flash;
+using Content.Server.Mindshield.Components;
+using Robust.Shared.Toolshed.TypeParsers;
+using Content.Shared.Charges.Systems;
+using TerraFX.Interop.Windows;
 
 namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
 /// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for game the game to end.)
 /// </summary>
-
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -50,6 +54,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedChargesSystem _charges = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
@@ -66,6 +71,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<RevolutionaryRuleComponent, MobStateChangedEvent>(OnMobStateChanged);
         SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+        SubscribeLocalEvent<HeadRevolutionaryComponent, AfterFlashedEvent>(OnPostFlash);
     }
 
     protected override void Started(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
@@ -75,26 +81,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     }
 
     /// <summary>
-    /// Checks if any command staff are in space and basically count them as dead. Also checks for round end and if someone has an implanted mindshield.
+    /// Checks if the round should end and also checks who has a mindshield.
     /// </summary>
-
     protected override void ActiveTick(EntityUid uid, RevolutionaryRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
         if (GameTicker.IsGameRuleAdded(uid, gameRule) && _endRoundCheck <= _timing.CurTime)
         {
-            var headsOffStation = AllEntityQuery<CommandComponent>();
-            while (headsOffStation.MoveNext(out var id, out var comp))
-            {
-                if (_stationSystem.GetOwningStation(id) == null && !_emergencyShuttle.EmergencyShuttleArrived)
-                {
-                    EnsureComp<CheckForHeadsInSpaceComponent>(id);
-                }
-                else if (HasComp<CheckForHeadsInSpaceComponent>(id))
-                {
-                    RemComp<CheckForHeadsInSpaceComponent>(id);
-                }
-            }
             _endRoundCheck = _timing.CurTime + _timerWait;
             _mindShield.MindShieldCheck();
             CheckFinish();
@@ -164,7 +157,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gets the list of players currently spawned in and checks if they are eligible to become a Head Rev.
     /// </summary>
-
     private void AssignHeadRevs(RevolutionaryRuleComponent comp)
     {
         var allPlayers = _playerSystem.ServerSessions.ToList();
@@ -217,7 +209,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gets player chosen to become Head Rev from previous method and gives them the role and gear.
     /// </summary>
-
     private void GiveHeadRevRole(Mind.Mind mind, IPlayerSession headRev)
     {
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
@@ -227,9 +218,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var inCharacterName = string.Empty;
             if (mind.OwnedEntity != null)
             {
-                if (HasComp<CommandComponent>(mind.OwnedEntity.Value))
+                if (HasComp<CommandStaffComponent>(mind.OwnedEntity.Value))
                 {
-                    RemComp<CommandComponent>(mind.OwnedEntity.Value);
+                    RemComp<CommandStaffComponent>(mind.OwnedEntity.Value);
                 }
                 AddComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
                 AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
@@ -252,7 +243,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Assigns command staff on station with a component so they can be used later.
     /// </summary>
-
     private void AssignCommandStaff()
     {
         var jobs = _prototypeManager.Index<DepartmentPrototype>("Command");
@@ -277,8 +267,36 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
                     {
                         EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                        EnsureComp<CommandComponent>(mind.OwnedEntity.Value);
+                        EnsureComp<CommandStaffComponent>(mind.OwnedEntity.Value);
                     }
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Called when a Head Rev uses a flash in melee to convert somebody else.
+    /// </summary>
+    public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, AfterFlashedEvent ev)
+    {
+        var stunTime = TimeSpan.FromSeconds(3);
+        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target))
+        {
+            var mind = _mindSystem.GetMind(ev.Target);
+            if (mind != null && mind.OwnedEntity != null && ev.Used != null)
+            {
+                _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("Rev")));
+                _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
+                _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
+                EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
+                EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                _charges.AddCharges(ev.Used.Value, 1);
+                _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
+                if (mind.Session != null)
+                {
+                    var message = Loc.GetString("rev-role-greeting");
+                    var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", message));
+                    _chatManager.ChatMessageToOne(Shared.Chat.ChatChannel.Server, message, wrappedMessage, default, false, mind.Session.ConnectedClient, Color.Red);
                 }
             }
         }
@@ -306,7 +324,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Checks if all Head Revs are dead and if all command is dead to either end the round or remove all revs. Or both.
     /// </summary>
-
     private void CheckFinish()
     {
         var stunTime = TimeSpan.FromSeconds(4);
@@ -353,30 +370,25 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
             }
             // Checks if all heads are dead to finish the round.
-
-            var heads = EntityQuery<CommandComponent, MobStateComponent>(true);
-            var headsOffStation = EntityQuery<CommandComponent, CheckForHeadsInSpaceComponent, MobStateComponent>();
+            var heads = AllEntityQuery<CommandStaffComponent, MobStateComponent>();
             inRound = 0;
             dead = 0;
-            foreach (var head in heads)
+
+            while (heads.MoveNext(out var id, out var command, out var state))
             {
-                if (head.Item2.CurrentState == MobState.Dead || head.Item2.CurrentState == MobState.Invalid)
+                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
+                {
+                    dead++;
+                }
+                else if (_stationSystem.GetOwningStation(id) == null && !_emergencyShuttle.EmergencyShuttleArrived)
                 {
                     dead++;
                 }
                 inRound++;
             }
-            foreach (var head in headsOffStation)
-            {
-                if (head.Item3.CurrentState != MobState.Dead && head.Item3.CurrentState != MobState.Invalid)
-                {
-                    dead++;
-                }
-            }
 
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
             //Also now should set all command and sec jobs to zero.
-
             if (dead == inRound && !revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
             {
                 revs.HeadsDied = true;
@@ -400,7 +412,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Gives late join heads the head component so they also need to be killed.
     /// </summary>
-
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
         var mind = ev.Player.GetMind();

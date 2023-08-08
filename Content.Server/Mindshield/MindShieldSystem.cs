@@ -1,5 +1,3 @@
-using Robust.Server.Player;
-using Content.Server.GameTicking;
 using Content.Shared.Implants.Components;
 using Content.Server.Mind;
 using Content.Server.Mindshield.Components;
@@ -7,14 +5,12 @@ using Content.Shared.Revolutionary.Components;
 using Content.Server.Popups;
 using Robust.Shared.Containers;
 using Content.Shared.IdentityManagement;
-using Content.Server.Revolutionary;
 
 namespace Content.Server.Mindshield;
 /// <summary>
 /// For checking for Mindshield implant at start and giving them the component
 /// </summary>
-
-public sealed class MindShieldSystem : RevolutionarySystem
+public sealed class MindShieldSystem : EntitySystem
 {
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -40,7 +36,6 @@ public sealed class MindShieldSystem : RevolutionarySystem
     /// <summary>
     /// Checks for Mindshields at the start to give component and removes component from head revs for identification.
     /// </summary>
-
     public void MindShieldCheck()
     {
         var query = AllEntityQuery<ImplantedComponent>();

@@ -1,9 +1,8 @@
 using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
-
 /// <summary>
-/// Used for assigning the Revolutionary role.
+/// Role used for assigning Revolutionaries and is assigned when the Revolutionary gamerule starts.
 /// </summary>
 public sealed class RevolutionaryRole : AntagonistRole
 {

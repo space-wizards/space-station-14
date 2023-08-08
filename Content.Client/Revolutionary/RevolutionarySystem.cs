@@ -19,6 +19,7 @@ public sealed class RevolutionarySystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(OnGetStatusIcon);
     }
+
     /// <summary>
     /// Checks if you have the revolutionary or head rev component and gets status icons from other revs. 
     /// </summary>
