@@ -403,7 +403,7 @@
   productEntity: RadioSyndieBot
   icon: { sprite: Mobs/Silicon/Bots/syndiebot.rsi, state: syndiebot }
   cost:
-    Telecrystal: 12
+    Telecrystal: 10
   categories:
   - UplinkUtility
 

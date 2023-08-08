@@ -225,7 +225,7 @@
   - type: GhostTakeoverAvailable
   - type: InnateTool
     tools:
-      - id: WeaponPulsePistol
+      - id: WeaponAdvancedLaser
       - id: EnergyDagger
   - type: Hands
     showInHands: false
@@ -257,7 +257,7 @@
   - type: Stealth
   - type: StealthOnMove
     passiveVisibilityRate: -0.20
-    movementVisibilityRate: 0.30
+    movementVisibilityRate: 0.50
 
 - type: entity
   id: MobSyndieBotDestroyed
