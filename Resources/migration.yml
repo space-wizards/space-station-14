@@ -152,3 +152,6 @@ MagazinePistolSubMachineGunHighVelocity: MagazinePistolSubMachineGun
 MagazineRifleHighVelocity: MagazineRifle
 SpeedLoaderMagnumHighVelocity: SpeedLoaderMagnum
 SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
+
+# 2023-08-08
+WindowTintedDirectional: WindowFrostedDirectional
