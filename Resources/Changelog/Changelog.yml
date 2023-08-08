@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add doorbumpopener to some stuff that should've had it (slimes)., type: Fix}
-  - {message: Mobs that can bump open doors can also click them open now., type: Tweak}
-  id: 3985
-  time: '2023-06-13T10:30:05.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: made temperature ignore resistances, type: Tweak}
@@ -2983,3 +2977,9 @@ Entries:
   - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
   id: 4484
   time: '2023-08-08T08:16:23.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Access readers can now be programmed using the access configurator.,
+    type: Add}
+  id: 4485
+  time: '2023-08-08T18:30:46.0000000+00:00'
