@@ -99,7 +99,7 @@
 
 - type: cargoBounty
   id: BountyClownCostume
-  reward: 15000
+  reward: 1700
   description: bounty-description-clown-costume
   entries:
   - name: bounty-item-clown-mask
@@ -225,7 +225,7 @@
 
 - type: cargoBounty
   id: BountyInstrument
-  reward: 10000
+  reward: 1900
   description: bounty-description-instrument
   entries:
   - name: bounty-item-instrument
@@ -291,7 +291,7 @@
 
 - type: cargoBounty
   id: BountyMouse
-  reward: 6000
+  reward: 2400
   description: bounty-description-mouse
   entries:
   - name: bounty-item-mouse
@@ -459,7 +459,7 @@
 
 - type: cargoBounty
   id: BountyTrash
-  reward: 4000
+  reward: 700
   description: bounty-description-trash
   entries:
   - name: bounty-item-trash
