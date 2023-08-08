@@ -76,6 +76,8 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: reinforced spear
@@ -155,6 +157,8 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: plasma spear
@@ -234,6 +238,8 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
+    delay: 1
 
 - type: entity
   name: uranium spear
@@ -315,3 +321,5 @@
     damage:
       types:
         Blunt: 5
+  - type: UseDelay
+    delay: 1
