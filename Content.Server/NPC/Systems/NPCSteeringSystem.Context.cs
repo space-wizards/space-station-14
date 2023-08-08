@@ -257,7 +257,7 @@ public sealed partial class NPCSteeringSystem
                 // A) NPCs get stuck on non-anchored static bodies still (e.g. closets)
                 // B) NPCs still try to move in locked containers (e.g. cow, hamster)
                 // and I don't want to spam grafana even harder than it gets spammed rn.
-                Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}");
+                //Log.Debug($"NPC {ToPrettyString(uid)} found stuck at {ourCoordinates}"); //закоменчено по причине заебало
                 needsPath = true;
 
                 if (stuckTime.TotalSeconds > maxStuckTime * 3)
