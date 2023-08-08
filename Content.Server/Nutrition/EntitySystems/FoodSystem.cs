@@ -28,6 +28,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using Content.Shared.Tag;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -117,6 +118,12 @@ namespace Content.Server.Nutrition.EntitySystems
                         ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
                         : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
                 return (false, true);
+            }
+
+            // Check for storage on the food item
+            if (EntityManager.TryGetComponent<ServerStorageComponent>(food, out var storageState))
+            {
+                    return (false, true);
             }
 
             var flavors = _flavorProfileSystem.GetLocalizedFlavorsMessage(food, user, foodSolution);
