@@ -88,3 +88,5 @@ ent-ComputerPalletConsole = консоль продажи товаров
 ent-ComputerSalvageExpedition = консоль экспедиций
     .desc = Используется для экспедиционных миссий.
     .suffix = { "" }
+ent-ComputerMassMedia = консоль новостей
+    .desc = Напишите свое послание всему миру!

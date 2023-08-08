@@ -93,3 +93,5 @@ ent-SalvageShuttleConsoleCircuitboard = консоль управления ут
     .suffix = { "" }
 ent-CargoBountyComputerCircuitboard = консоль задач карго (консольная плата)
     .desc = Консольная плата для консоли задач карго.
+ent-ComputerMassMediaCircuitboard = консоль новостей (консольная плата)
+    .desc = Напишите свое послание всему миру!
