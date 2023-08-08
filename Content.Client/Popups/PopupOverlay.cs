@@ -1,8 +1,5 @@
 using System.Numerics;
-using Content.Client.Examine;
-using Content.Shared.CCVar;
 using Content.Shared.Examine;
-using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
