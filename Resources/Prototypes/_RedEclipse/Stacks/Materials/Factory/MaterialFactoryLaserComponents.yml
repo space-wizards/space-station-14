@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryLaserComponents
+  name: factory laser components
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryLaserComponents: 1
+    - type: Stack
+      stackType: FactoryLaserComponents
+
+- type: entity
+  parent: MaterialFactoryLaserComponents
+  id: FactoryLaserComponent
+  name: factory laser component
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryLaserComponents
+      count: 1
+
+- type: stack
+  id: FactoryLaserComponents
+  name: factory laser components
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryLaserComponent
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryLaserComponents
+  stackEntity: FactoryLaserComponent
+  name: materials-factory-laser-components
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

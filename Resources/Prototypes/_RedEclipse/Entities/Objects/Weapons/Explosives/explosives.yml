@@ -1,0 +1,23 @@
+- type: entity
+  name: syndicate megabomb
+  description: A syndicate-manufactured explosive used to stow destruction and cause untold chaos.
+  parent: GrenadeBase
+  id: SyndieMegaBomb
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/syndgrenade.rsi
+    scale: 2.0, 2.0
+  - type: OnUseTimerTrigger
+    delay: 5
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Minibomb
+    totalIntensity: 800
+    intensitySlope: 20
+    maxIntensity: 80
+  - type: Appearance
+  - type: TimerTriggerVisuals
+    primingSound:
+      path: /Audio/Effects/minibombcountdown.ogg
+      params:
+        volume: 12

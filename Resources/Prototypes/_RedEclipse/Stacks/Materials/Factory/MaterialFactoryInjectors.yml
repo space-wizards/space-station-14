@@ -1,0 +1,43 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryInjectors
+  name: factory injectors
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryInjectors: 1
+    - type: Stack
+      stackType: FactoryInjectors
+    - type: Sprite
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+      state: syringe_base0
+    - type: Item
+      sprite: Objects/Specific/Chemistry/syringe.rsi
+
+- type: entity
+  parent: MaterialFactoryInjectors
+  id: FactoryInjector
+  name: factory injector
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryInjectors
+      count: 1
+
+- type: stack
+  id: FactoryInjectors
+  name: factory injectors
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
+  spawn: FactoryInjector
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryInjectors
+  stackEntity: FactoryInjector
+  name: materials-factory-injectors
+  icon: { sprite: Objects/Specific/Chemistry/syringe.rsi, state: syringe_base0 }
+  price: 0

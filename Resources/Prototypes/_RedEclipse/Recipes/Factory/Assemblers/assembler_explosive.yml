@@ -1,0 +1,76 @@
+#Factory Explosive Assembler
+- type: latheRecipe
+  id: FactoryEMPGrenade
+  result: EmpGrenade
+  completetime: 1
+  materials:
+    FactorySimpleCircuits : 2
+    FactoryTimingComponents : 1
+    FactoryBasicCasings : 1
+
+- type: latheRecipe
+  id: FactoryExplosiveGrenade
+  result: ExGrenade
+  completetime: 1
+  materials:
+    FactorySimpleCircuits: 1
+    FactoryTimingComponents: 1
+    FactoryBasicCasings: 1
+    FactoryExplosivePayloads: 1
+
+- type: latheRecipe
+  id: FactoryExplodingPen
+  result: PenExploding
+  completetime: 1
+  materials:
+    FactoryBasicCasings: 1
+    FactoryExplosivePayloads: 1
+
+- type: latheRecipe
+  id: FactoryC4
+  result: C4
+  completetime: 1
+  materials:
+    FactoryTimingComponents: 1
+    FactoryChemicalPacks: 1
+    FactoryExplosivePayloads: 1
+
+# dynamic
+- type: latheRecipe
+  id: FactoryMinibomb
+  result: SyndieMiniBomb
+  completetime: 1
+  materials:
+    FactorySimpleCircuits: 1
+    FactoryTimingComponents: 1
+    FactoryBasicCasings: 1
+    FactoryExplosivePayloads: 1
+
+- type: latheRecipe
+  id: FactoryTinybomb
+  result: FactoryExplosiveTinyBomb
+  completetime: 1
+  materials:
+    FactoryTimingComponents: 1
+    FactoryExplosivePayloads: 1
+
+- type: latheRecipe
+  id: FactoryChinaLake
+  result: WeaponLauncherChinaLake
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryFragGrenade
+  result: GrenadeFrag
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryBlastGrenade
+  result: GrenadeBlast
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1

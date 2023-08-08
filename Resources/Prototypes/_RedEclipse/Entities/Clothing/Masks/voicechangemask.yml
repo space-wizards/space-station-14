@@ -1,0 +1,16 @@
+- type: entity
+  parent: ClothingMaskPullableBase
+  id: ClothingMaskGasVoice
+  name: gas mask
+  description: A face-covering mask that can be connected to an air supply.
+  suffix: voice
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/gas.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/gas.rsi
+  - type: BreathMask
+  - type: IngestionBlocker
+  - type: IdentityBlocker
+  - type: VoiceMasker
+    default: ClothingMaskGas

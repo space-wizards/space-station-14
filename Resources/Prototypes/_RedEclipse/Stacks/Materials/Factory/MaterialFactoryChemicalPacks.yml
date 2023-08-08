@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryChemicalPacks
+  name: factory chemical packs
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryChemicalPacks: 1
+    - type: Stack
+      stackType: FactoryChemicalPacks
+
+- type: entity
+  parent: MaterialFactoryChemicalPacks
+  id: FactoryChemicalPack
+  name: factory chemical pack
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryChemicalPacks
+      count: 1
+
+- type: stack
+  id: FactoryChemicalPacks
+  name: factory chemical packs
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryChemicalPack
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryChemicalPacks
+  stackEntity: FactoryChemicalPack
+  name: materials-factory-chemical-packs
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

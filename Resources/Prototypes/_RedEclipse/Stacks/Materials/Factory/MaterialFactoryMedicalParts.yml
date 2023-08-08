@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryMedicalParts
+  name: factory medical parts
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryMedicalParts: 1
+    - type: Stack
+      stackType: FactoryMedicalParts
+
+- type: entity
+  parent: MaterialFactoryMedicalParts
+  id: FactoryMedicalPart
+  name: factory medical part
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryMedicalParts
+      count: 1
+
+- type: stack
+  id: FactoryMedicalParts
+  name: factory medical parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryMedicalPart
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryMedicalParts
+  stackEntity: FactoryMedicalPart
+  name: materials-factory-medical-parts
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

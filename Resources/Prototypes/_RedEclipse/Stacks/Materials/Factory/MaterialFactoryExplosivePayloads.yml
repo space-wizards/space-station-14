@@ -1,0 +1,43 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryExplosivePayloads
+  name: factory explosive payloads
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryExplosivePayloads: 1
+    - type: Stack
+      stackType: FactoryExplosivePayloads
+    - type: Sprite
+      sprite: Objects/Devices/payload.rsi
+      state: payload-explosive-armed
+    - type: Item
+      sprite: Objects/Devices/payload.rsi
+
+- type: entity
+  parent: MaterialFactoryExplosivePayloads
+  id: FactoryExplosivePayload
+  name: factory explosive payload
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryExplosivePayloads
+      count: 1
+
+- type: stack
+  id: FactoryExplosivePayloads
+  name: factory explosive payloads
+  icon: { sprite: Objects/Devices/payload.rsi, state: payload-explosive-armed }
+  spawn: FactoryExplosivePayload
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryExplosivePayloads
+  stackEntity: FactoryExplosivePayload
+  name: materials-factory-explosive-payloads
+  icon: { sprite: Objects/Devices/payload.rsi, state: payload-explosive-armed }
+  price: 0

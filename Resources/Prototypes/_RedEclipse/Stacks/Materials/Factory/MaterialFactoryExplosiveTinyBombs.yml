@@ -1,0 +1,84 @@
+- type: entity
+  parent: MaterialBase
+  id: MaterialFactoryExplosiveTinyBombs
+  name: factory explosive tiny bombs
+  suffix: Full
+  components:
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryExplosiveTinyBombs: 1
+    - type: Stack
+      stackType: FactoryExplosiveTinyBombs
+      count: 3
+    - type: Sprite
+      sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi
+      state: icon
+      scale: 0.5, 0.5
+    - type: Item
+      size: 3
+      sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi
+    - type: Tag
+      tags:
+        - FactoryPart
+        - Metal
+    - type: Damageable
+      damageContainer: Inorganic
+      damageModifierSet: Metallic
+    - type: StaticPrice
+      price: 0
+    - type: Clothing
+      quickEquip: false
+      slots: belt
+    - type: OnUseTimerTrigger
+      delay: 5
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 10
+          behaviors:
+          - !type:TriggerBehavior
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+    - type: Appearance
+    - type: TimerTriggerVisuals
+      primingSound:
+        path: /Audio/Effects/minibombcountdown.ogg
+        params:
+          volume: 12
+    - type: TriggerOnCollide
+      fixtureID: fix1
+    - type: ExplodeOnTrigger
+    - type: Explosive
+      explosionType: Default
+      totalIntensity: 3
+      intensitySlope: 40
+      maxIntensity: 3
+
+- type: entity
+  parent: MaterialFactoryExplosiveTinyBombs
+  id: FactoryExplosiveTinyBomb
+  name: factory explosive tiny bomb
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryExplosiveTinyBombs
+      count: 1
+
+- type: stack
+  id: FactoryExplosiveTinyBombs
+  name: factory explosive tiny bombs
+  icon: { sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi, state: icon }
+  spawn: FactoryExplosiveTinyBomb
+  maxCount: 3
+  itemSize: 1
+
+- type: material
+  id: FactoryExplosiveTinyBombs
+  stackEntity: FactoryExplosiveTinyBomb
+  name: materials-factory-explosive-tiny-bombs
+  icon: { sprite: _RedEclipse/Objects/Weapons/Explosives/tinybomb.rsi, state: icon }
+  price: 0

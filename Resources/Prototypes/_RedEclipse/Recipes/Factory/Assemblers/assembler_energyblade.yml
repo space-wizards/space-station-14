@@ -1,0 +1,21 @@
+#Factory Energy Blade Assembler
+- type: latheRecipe
+  id: FactoryEnergySword
+  result: EnergySword
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryEnergyDagger
+  result: EnergyDagger
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
+
+- type: latheRecipe
+  id: FactoryDoubleBladedEnergySword
+  result: EnergySwordDouble
+  completetime: 1
+  materials: # TODO better recipe
+    FactoryBasicParts : 1
