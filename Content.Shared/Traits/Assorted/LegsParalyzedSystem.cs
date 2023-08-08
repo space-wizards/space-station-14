@@ -22,8 +22,7 @@ public sealed class LegsParalyzedSystem : EntitySystem
     private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
     {
         // TODO: In future probably must be surgery related wound
-        var movementSpeed = EnsureComp<MovementSpeedModifierComponent>(uid);
-        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20, movementSpeed);
+        _movementSpeedModifierSystem.ChangeBaseSpeed(uid, 0, 0, 20);
     }
 
     private void OnShutdown(EntityUid uid, LegsParalyzedComponent component, ComponentShutdown args)
