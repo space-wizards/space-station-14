@@ -585,6 +585,12 @@ public sealed class WiresSystem : SharedWiresSystem
             _uiSystem.OpenUi(ui, player);
     }
 
+    public void CloseAllUserInterfaces(EntityUid uid)
+    {
+        if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
+            _uiSystem.CloseAll(ui);
+    }
+
     /// <summary>
     ///     Tries to get a wire on this entity by its integer id.
     /// </summary>
@@ -628,6 +634,13 @@ public sealed class WiresSystem : SharedWiresSystem
     {
         component.Open = open;
         UpdateAppearance(uid, component);
+        Dirty(component);
+    }
+
+    public void SetPanelData(EntityUid uid, WiresPanelComponent component, string? wiresPanelCovering, bool wiresPanelCoveringWelded)
+    {
+        component.WiresPanelCovering = wiresPanelCovering;
+        component.WiresPanelCoveringWelded = wiresPanelCoveringWelded;
         Dirty(component);
     }
 
