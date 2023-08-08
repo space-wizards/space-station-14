@@ -7,11 +7,11 @@ using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.CombatMode.Disarm;
 using Content.Server.Contests;
-using Content.Server.Examine;
 using Content.Server.Movement.Systems;
 using Content.Shared.Administration.Components;
 using Content.Shared.Actions.Events;
 using Content.Shared.CombatMode;
+using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -21,7 +21,6 @@ using Content.Shared.Popups;
 using Content.Shared.Speech.Components;
 using Content.Shared.StatusEffect;
 using Content.Shared.Tag;
-using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Server.Player;
@@ -30,8 +29,8 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 using Content.Shared.Effects;
+using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Weapons.Melee;
 
@@ -40,24 +39,24 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly ContestsSystem _contests = default!;
-    [Dependency] private readonly ExamineSystem _examine = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly LagCompensationSystem _lag = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<MeleeChemicalInjectorComponent, MeleeHitEvent>(OnChemicalInjectorHit);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeHitEvent>(OnSpeechHit);
-        SubscribeLocalEvent<MeleeWeaponComponent, GetVerbsEvent<ExamineVerb>>(OnMeleeExaminableVerb);
+        SubscribeLocalEvent<MeleeWeaponComponent, DamageExamineEvent>(OnMeleeExamineDamage);
     }
 
-    private void OnMeleeExaminableVerb(EntityUid uid, MeleeWeaponComponent component, GetVerbsEvent<ExamineVerb> args)
+    private void OnMeleeExamineDamage(EntityUid uid, MeleeWeaponComponent component, ref DamageExamineEvent args)
     {
-        if (!args.CanInteract || !args.CanAccess || component.HideFromExamine)
+        if (component.HideFromExamine)
             return;
 
         var damageSpec = GetDamage(uid, args.User, component);
@@ -65,20 +64,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         if (damageSpec.Total == FixedPoint2.Zero)
             return;
 
-        var verb = new ExamineVerb()
-        {
-            Act = () =>
-            {
-                var markup = Damageable.GetDamageExamine(damageSpec, Loc.GetString("damage-melee"));
-                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
-            },
-            Text = Loc.GetString("damage-examinable-verb-text"),
-            Message = Loc.GetString("damage-examinable-verb-message"),
-            Category = VerbCategory.Examine,
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")),
-        };
-
-        args.Verbs.Add(verb);
+        _damageExamine.AddDamageExamine(args.Message, damageSpec, Loc.GetString("damage-melee"));
     }
 
     protected override bool ArcRaySuccessful(EntityUid targetUid, Vector2 position, Angle angle, Angle arcWidth, float range, MapId mapId,
@@ -102,18 +88,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // TODO: Check arc though due to the aforementioned aimbot + damage split comments it's less important.
         return true;
-    }
-
-
-    protected override void Popup(string message, EntityUid? uid, EntityUid? user)
-    {
-        if (uid == null)
-            return;
-
-        if (user == null)
-            PopupSystem.PopupEntity(message, uid.Value);
-        else
-            PopupSystem.PopupEntity(message, uid.Value, Filter.PvsExcept(user.Value, entityManager: EntityManager), true);
     }
 
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)

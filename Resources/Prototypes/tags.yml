@@ -345,6 +345,9 @@
   id: Folder
 
 - type: Tag
+  id: FoodSnack
+
+- type: Tag
   id: FootstepSound
 
 - type: Tag
@@ -903,3 +906,4 @@
 
 - type: Tag
   id: ModularReceiver
+
