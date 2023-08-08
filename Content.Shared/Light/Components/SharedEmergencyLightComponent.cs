@@ -6,6 +6,7 @@ namespace Content.Shared.Light.Components;
 /// Handles station alert level and power changes for emergency lights.
 /// All logic is serverside, animation is handled by <see cref="RotatingLightComponent"/>.
 /// </summary>
+[Access(typeof(SharedEmergencyLightSystem))]
 public abstract class SharedEmergencyLightComponent : Component
 {
 }

@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Light.EntitySystems;
 
-public sealed class EmergencyLightSystem : VisualizerSystem<SharedEmergencyLightComponent>
+public sealed class EmergencyLightSystem : VisualizerSystem<EmergencyLightComponent>
 {
-    protected override void OnAppearanceChange(EntityUid uid, SharedEmergencyLightComponent comp, ref AppearanceChangeEvent args)
+    protected override void OnAppearanceChange(EntityUid uid, EmergencyLightComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
             return;

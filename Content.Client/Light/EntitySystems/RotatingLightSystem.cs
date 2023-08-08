@@ -1,4 +1,3 @@
-//using System;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Robust.Client.Animations;
@@ -10,29 +9,32 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Light.Systems;
 
-public sealed class RotatingLightSystem : EntitySystem
+public sealed class RotatingLightSystem : SharedRotatingLightSystem
 {
-    private const float DegreesPerSecond = 90;
-    private static Animation Animation => new()
+    private Animation GetAnimation(float speed)
     {
-        Length = TimeSpan.FromSeconds(360f / DegreesPerSecond),
-        AnimationTracks =
+        var third = 120f / speed;
+        return new Animation()
         {
-            new AnimationTrackComponentProperty
+            Length = TimeSpan.FromSeconds(360f / speed),
+            AnimationTracks =
             {
-                ComponentType = typeof(PointLightComponent),
-                InterpolationMode = AnimationInterpolationMode.Linear,
-                Property = nameof(PointLightComponent.Rotation),
-                KeyFrames =
+                new AnimationTrackComponentProperty
                 {
-                    new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
-                    new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(120), 120f/DegreesPerSecond),
-                    new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(240), 120f/DegreesPerSecond),
-                    new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), 120f/DegreesPerSecond)
+                    ComponentType = typeof(PointLightComponent),
+                    InterpolationMode = AnimationInterpolationMode.Linear,
+                    Property = nameof(PointLightComponent.Rotation),
+                    KeyFrames =
+                    {
+                        new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(120), third)
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(240), third),
+                        new AnimationTrackProperty.KeyFrame(Angle.FromDegrees(360), third)
+                    }
                 }
             }
-        }
-    };
+        };
+    }
 
     private const string AnimKey = "rotating_light";
 
@@ -41,25 +43,47 @@ public sealed class RotatingLightSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<RotatingLightComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<RotatingLightComponent, AfterAutoHandleStateEvent>(OnAfterAutoHandleState);
         SubscribeLocalEvent<RotatingLightComponent, AnimationCompletedEvent>(OnAnimationComplete);
     }
 
-    private void OnStartup(EntityUid uid, RotatingLightComponent component, ComponentStartup args)
-    {
-        PlayAnimation(uid, component);
-    }
-
-    private void OnAnimationComplete(EntityUid uid, RotatingLightComponent component, AnimationCompletedEvent args)
-    {
-        if (!TryComp<AnimationPlayerComponent>(uid, out var player)) return;
-
-        player.Play(Animation, AnimKey);
-    }
-
-    private void PlayAnimation(EntityUid uid, RotatingLightComponent component)
+    private void OnStartup(EntityUid uid, RotatingLightComponent comp, ComponentStartup args)
     {
         var player = EnsureComp<AnimationPlayerComponent>(uid);
+        PlayAnimation(uid, comp, player);
+    }
+
+    private void OnAfterAutoHandleState(EntityUid uid, RotatingLightComponent comp, ref AfterAutoHandleStateEvent args)
+    {
+        if (!TryComp<AnimationPlayerComponent>(uid, out var player))
+            return;
+
+        if (comp.Enabled)
+        {
+            PlayAnimation(uid, comp, player);
+        }
+        else
+        {
+            player.Stop(AnimKey);
+        }
+    }
+
+    private void OnAnimationComplete(EntityUid uid, RotatingLightComponent comp, AnimationCompletedEvent args)
+    {
+        PlayAnimation(uid, comp);
+    }
+
+    /// <summary>
+    /// Play the light rotation animation.
+    /// </summary>
+    public void PlayAnimation(EntityUid uid, RotatingLightComponent? comp = null, AnimationPlayerComponent? player = null)
+    {
+        if (!Resolve(uid, ref comp, ref player) || !comp.Enabled)
+            return;
+
         if (!player.HasRunningAnimation(AnimKey))
-            player.Play(Animation, AnimKey);
+        {
+            player.Play(Animation(comp.Speed), AnimKey);
+        }
     }
 }

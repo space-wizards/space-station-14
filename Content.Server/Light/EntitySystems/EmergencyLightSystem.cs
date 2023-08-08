@@ -27,7 +27,6 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
 
         SubscribeLocalEvent<EmergencyLightComponent, EmergencyLightEvent>(OnEmergencyLightEvent);
         SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
-        SubscribeLocalEvent<EmergencyLightComponent, PointLightToggleEvent>(HandleLightToggle);
         SubscribeLocalEvent<EmergencyLightComponent, ExaminedEvent>(OnEmergencyExamine);
         SubscribeLocalEvent<EmergencyLightComponent, PowerChangedEvent>(OnEmergencyPower);
     }
@@ -70,18 +69,6 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             Loc.GetString("emergency-light-component-on-examine-alert",
                 ("color", color.ToHex()),
                 ("level", name)));
-    }
-
-    private void HandleLightToggle(EntityUid uid, EmergencyLightComponent component, PointLightToggleEvent args)
-    {
-        if (args.Enabled)
-        {
-            EnsureComp<RotatingLightComponent>(uid);
-        }
-        else
-        {
-            RemComp<RotatingLightComponent>(uid);
-        }
     }
 
     private void OnEmergencyLightEvent(EntityUid uid, EmergencyLightComponent component, EmergencyLightEvent args)
@@ -202,10 +189,13 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             light.Enabled = false;
         }
 
+        if (TryComp<RotatingLightComponent>(uid, out var rotatingLight))
+        {
+            // DO NOT COMMIT: well see where this goes
+            //rotatingLight.Enabled = false;
+        }
+
         _appearance.SetData(uid, EmergencyLightVisuals.On, false);
-
-        RemComp<RotatingLightComponent>(uid);
-
         _ambient.SetAmbience(uid, false);
     }
 
@@ -216,7 +206,10 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             light.Enabled = true;
         }
 
-        EnsureComp<RotatingLightComponent>(uid);
+        if (TryComp<RotatingLightComponent>(uid, out var rotatingLight))
+        {
+            //rotatingLight.Enabled = true;
+        }
 
         _appearance.SetData(uid, EmergencyLightVisuals.On, true);
         _ambient.SetAmbience(uid, true);

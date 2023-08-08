@@ -28,7 +28,9 @@
     radius: 5
     energy: 2.5
     color: "#FFFF20"
-    mask: /Textures/Effects/LightMasks/cone.png
+    mask: /Textures/Effects/LightMasks/double_cone.png
+  - type: RotatingLight
+    speed: 135
   - type: NukeLabel
   - type: Nuke
     explosionType: Default
