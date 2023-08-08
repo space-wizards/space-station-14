@@ -1,6 +1,8 @@
 - type: entity
   id: MountainRock
   parent: AsteroidRock
+  name: mountain rock
+  description: A craggy mountain wall.
   components:
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
@@ -9,6 +11,8 @@
 - type: entity
   id: MountainRockMining
   parent: AsteroidRockMining
+  name: mountain rock
+  description: A craggy mountain wall.
   components:
   - type: Sprite
     sprite: Structures/Walls/mountain_rock.rsi
