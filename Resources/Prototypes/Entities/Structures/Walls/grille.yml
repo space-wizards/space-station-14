@@ -1,6 +1,8 @@
 - type: entity
   id: Grille
   parent: BaseStructure
+  name: grille
+  description: A flimsy framework of iron rods.
   components:
     - type: MeleeSound
       soundGroups:
@@ -88,6 +90,8 @@
 - type: entity
   id: GrilleBroken
   parent: BaseStructure
+  name: grille
+  description: A flimsy framework of iron rods. It has seen better days.
   components:
     - type: Sprite
       drawdepth: Walls
