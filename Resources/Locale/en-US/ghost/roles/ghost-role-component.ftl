@@ -151,3 +151,4 @@ ghost-role-information-taxibot-description = Drive the station crew to their des
 
 ghost-role-information-syndiebot-name = SyndieBot
 ghost-role-information-syndiebot-description = Someone needs SyndieBot. You are the latest development of the robotics syndicate, so help your customer.
+ghost-role-information-syndiebot-rules = Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.

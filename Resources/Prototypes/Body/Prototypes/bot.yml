@@ -5,3 +5,15 @@
   slots:
     hand 1:
       part: LeftArmBorg
+
+- type: body
+  id: BotTwoHands
+  name: "botTwoHands"
+  root: hand 1
+  slots:
+    hand 1:
+      part: LeftArmBorg
+      connections:
+      - hand 2
+    hand 2:
+      part: RightArmBorg

@@ -222,6 +222,7 @@
     makeSentient: true
     name: ghost-role-information-syndiebot-name
     description: ghost-role-information-syndiebot-description
+    rules: ghost-role-information-syndiebot-rules
   - type: GhostTakeoverAvailable
   - type: InnateTool
     tools:
@@ -230,7 +231,7 @@
   - type: Hands
     showInHands: false
   - type: Body
-    prototype: Bots
+    prototype: BotTwoHands
   - type: CombatMode
   - type: Destructible
     thresholds:
