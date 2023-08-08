@@ -64,6 +64,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
+        - id: DoubleEmergencyOxygenTankFilled
         - id: ClothingOuterHardsuitSyndicate
         - id: ClothingHeadHelmetSyndicate
         - id: ClothingMaskGasSyndicate
@@ -174,7 +175,7 @@
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitMedical
-        - id: ClothingMaskBreathMedical
+        - id: ClothingMaskBreathMedicalSecurity
 
 #RD's hardsuit
 - type: entity
@@ -199,6 +200,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
+        - id: DoubleEmergencyOxygenTankFilled
         - id: JetpackSecurityFilled
         - id: ClothingOuterHardsuitSecurityRed
         - id: ClothingMaskGasSwat
@@ -253,6 +255,7 @@
     contents:
         - id: NitrogenTankFilled
         - id: OxygenTankFilled
+        - id: DoubleEmergencyOxygenTankFilled
         - id: ClothingOuterHardsuitSyndie
         - id: ClothingShoesBootsMagSyndie
         - id: ClothingMaskGasSyndicate

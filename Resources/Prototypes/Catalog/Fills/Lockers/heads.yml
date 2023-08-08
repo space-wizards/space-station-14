@@ -134,7 +134,7 @@
       - id: ClothingBeltChiefEngineerFilled
       - id: ClothingHeadHatBeretEngineering
       - id: ClothingShoesBootsMagAdv
-      - id: ClothingHandsGlovesColorYellow
+      - id: ClothingHandsGlovesCombat
       - id: CigarCase
         prob: 0.15
       - id: DoorRemoteEngineering
@@ -169,7 +169,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitFilled
+      - id: MedkitCombatFilled
       - id: ClothingHandsGlovesNitrile
       #- name: ClothingEyesHudMedical #Removed until working properly
       - id: ClothingHeadsetAltMedical
