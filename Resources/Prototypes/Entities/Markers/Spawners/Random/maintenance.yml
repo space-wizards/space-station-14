@@ -160,6 +160,7 @@
         - Crowbar
         - NetworkConfigurator
         - trayScanner
+        - GasAnalyzer
         - AirlockPainter
         - AppraisalTool
         - Flare
