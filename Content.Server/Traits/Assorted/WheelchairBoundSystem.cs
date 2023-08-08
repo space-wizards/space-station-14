@@ -15,6 +15,5 @@ public sealed class WheelchairBoundSystem : EntitySystem
     {
         var wheelchair = Spawn(component.WheelchairPrototype, Transform(uid).Coordinates);
         _buckleSystem.TryBuckle(uid, uid, wheelchair);
-        RemComp<WheelchairBoundComponent>(uid);
     }
 }
