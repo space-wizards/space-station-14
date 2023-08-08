@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
@@ -35,9 +36,25 @@ namespace Content.Client.Popups
         private readonly List<WorldPopupLabel> _aliveWorldLabels = new();
         private readonly List<CursorPopupLabel> _aliveCursorLabels = new();
 
-        public const float MinimumPopupLifetime = 0.7f;
-        public const float MaximumPopupLifetime = 5f;
-        public const float PopupLifetimePerCharacter = 0.04f;
+        /// <summary>
+        /// Tracks the last label to be placed in these exact entity coordinates.
+        /// </summary>
+        private Dictionary<EntityCoordinates, WorldPopupLabel> _coordsToWorldLabel = new();
+
+        /// <summary>
+        /// Tracks the last label to be placed in these exact screen coordinates.
+        /// </summary>
+        private Dictionary<ScreenCoordinates, CursorPopupLabel> _coordsToCursorLabel = new();
+
+        private PopupOverlay? _popupOverlay;
+
+        public const float MinimumPopupLifetime = 1.6f;
+        public const float MaximumPopupLifetime = 6f;
+        public const float PopupLifetimePerCharacter = 0.06f;
+
+        public const float MaximumPopupTravel = 100f;
+
+        public const float MaximumStackHeight = 80f;
 
         public override void Initialize()
         {
@@ -45,15 +62,17 @@ namespace Content.Client.Popups
             SubscribeNetworkEvent<PopupCoordinatesEvent>(OnPopupCoordinatesEvent);
             SubscribeNetworkEvent<PopupEntityEvent>(OnPopupEntityEvent);
             SubscribeNetworkEvent<RoundRestartCleanupEvent>(OnRoundRestart);
-            _overlay
-                .AddOverlay(new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this));
+
+            _popupOverlay = new PopupOverlay(_configManager, EntityManager, _playerManager, _prototype, _resource, _uiManager, this);
+            _overlay.AddOverlay(_popupOverlay);
         }
 
         public override void Shutdown()
         {
             base.Shutdown();
-            _overlay
-                .RemoveOverlay<PopupOverlay>();
+
+            if (_popupOverlay != null)
+                _overlay.RemoveOverlay(_popupOverlay);
         }
 
         private void PopupMessage(string message, PopupType type, EntityCoordinates coordinates, EntityUid? entity, bool recordReplay)
@@ -66,12 +85,26 @@ namespace Content.Client.Popups
                     _replayRecording.RecordClientMessage(new PopupCoordinatesEvent(message, type, coordinates));
             }
 
+            var stack = 0f;
+            if (_popupOverlay != null &&
+                _coordsToWorldLabel.TryGetValue(coordinates, out var lastLabel))
+            {
+                var height = _popupOverlay.GetPopupHeight(lastLabel.Type);
+                stack = lastLabel.OffsetPos.Y + height;
+
+                if (stack > MaximumStackHeight)
+                    // Going over limit; reset the stack height.
+                    stack = 0f;
+            }
+
             var label = new WorldPopupLabel(coordinates)
             {
                 Text = message,
                 Type = type,
+                OffsetPos = new Vector2(0, stack),
             };
 
+            _coordsToWorldLabel[coordinates] = label;
             _aliveWorldLabels.Add(label);
         }
 
@@ -98,11 +131,28 @@ namespace Content.Client.Popups
             if (recordReplay && _replayRecording.IsRecording)
                 _replayRecording.RecordClientMessage(new PopupCursorEvent(message, type));
 
-            var label = new CursorPopupLabel(_inputManager.MouseScreenPosition)
+            var coordinates = _inputManager.MouseScreenPosition;
+
+            var stack = 0f;
+            if (_popupOverlay != null &&
+                _coordsToCursorLabel.TryGetValue(coordinates, out var lastLabel))
+            {
+                var height = _popupOverlay.GetPopupHeight(lastLabel.Type);
+                stack = lastLabel.OffsetPos.Y + height;
+
+                if (stack > MaximumStackHeight)
+                    // Going over limit; reset the stack height.
+                    stack = 0f;
+            }
+
+            var label = new CursorPopupLabel(coordinates)
             {
                 Text = message,
                 Type = type,
+                OffsetPos = new Vector2(0, stack),
             };
+
+            _coordsToCursorLabel[coordinates] = label;
 
             _aliveCursorLabels.Add(label);
         }
@@ -206,6 +256,12 @@ namespace Content.Client.Popups
 
                 if (label.TotalTime > GetPopupLifetime(label) || Deleted(label.InitialPos.EntityId))
                 {
+                    if (_coordsToWorldLabel.TryGetValue(label.InitialPos, out var trackedLabel) &&
+                        trackedLabel == label)
+                    {
+                        _coordsToWorldLabel.Remove(label.InitialPos);
+                    }
+
                     _aliveWorldLabels.RemoveSwap(i);
                     i--;
                 }
@@ -218,6 +274,12 @@ namespace Content.Client.Popups
 
                 if (label.TotalTime > GetPopupLifetime(label))
                 {
+                    if (_coordsToCursorLabel.TryGetValue(label.InitialPos, out var trackedLabel) &&
+                        trackedLabel == label)
+                    {
+                        _coordsToCursorLabel.Remove(label.InitialPos);
+                    }
+
                     _aliveCursorLabels.RemoveSwap(i);
                     i--;
                 }
@@ -229,6 +291,7 @@ namespace Content.Client.Popups
             public PopupType Type = PopupType.Small;
             public string Text { get; set; } = string.Empty;
             public float TotalTime { get; set; }
+            public Vector2 OffsetPos { get; set; }
         }
 
         public sealed class CursorPopupLabel : PopupLabel

@@ -110,6 +110,30 @@ public sealed class PopupOverlay : Overlay
         }
     }
 
+    public float GetPopupHeight(PopupType type)
+    {
+        var font = _smallFont;
+        switch (type)
+        {
+            case PopupType.SmallCaution:
+                break;
+            case PopupType.Medium:
+                font = _mediumFont;
+                break;
+            case PopupType.MediumCaution:
+                font = _mediumFont;
+                break;
+            case PopupType.Large:
+                font = _largeFont;
+                break;
+            case PopupType.LargeCaution:
+                font = _largeFont;
+                break;
+        }
+
+        return font.GetHeight(_uiManager.DefaultUIScale);
+    }
+
     private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position, float scale)
     {
         var lifetime = PopupSystem.GetPopupLifetime(popup);
@@ -117,7 +141,11 @@ public sealed class PopupOverlay : Overlay
         // Keep alpha at 1 until TotalTime passes half its lifetime, then gradually decrease to 0.
         var alpha = MathF.Min(1f, 1f - MathF.Max(0f, popup.TotalTime - lifetime / 2) * 2 / lifetime);
 
-        var updatedPosition = position - new Vector2(0f, MathF.Min(8f, 12f * (popup.TotalTime * popup.TotalTime + popup.TotalTime)));
+        // Move the popup over time.
+        // Re-use alpha here so it stays in place until it's begun to fade.
+        var travel = new Vector2((1f - alpha) * PopupSystem.MaximumPopupTravel, 0);
+
+        var updatedPosition = position - travel - popup.OffsetPos;
         var font = _smallFont;
         var color = Color.White.WithAlpha(alpha);
 
