@@ -18,3 +18,5 @@ trait-archaic-accent-name = Архаичный акцент
 trait-archaic-accent-desc = Вы выражаетесь с акцентом, который многим кажется архаичным.
 trait-accentless-name = Отсутствие акцента
 trait-accentless-desc = У вас нет того акцента, который характерен для представителей вашего вида.
+trait-wheelchair-bound-name = Привязанность к креслу-коляске
+trait-wheelchair-bound-desc = Вы не можете передвигаться без своего кресла-коляски. Кресло-коляска прилагается.
