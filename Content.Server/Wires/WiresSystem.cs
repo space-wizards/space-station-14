@@ -456,7 +456,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
 
-        if (panel.Open &&
+        if (panel.Open && panel.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
