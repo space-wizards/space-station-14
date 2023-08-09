@@ -20,7 +20,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Linq;
 using System.Numerics;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 

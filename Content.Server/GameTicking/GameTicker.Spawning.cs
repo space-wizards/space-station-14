@@ -9,7 +9,6 @@ using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
