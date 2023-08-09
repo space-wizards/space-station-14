@@ -26,7 +26,8 @@
   description: Holds a large amount of fluids. Supplies to spray nozzles in your hands.
   components:
   - type: Tag
-    tags: 
+    tags:
+    - WhitelistChameleon
     - NozzleBackTank
   - type: Sprite
     sprite: Clothing/Back/Backpacks/waterbackpack.rsi

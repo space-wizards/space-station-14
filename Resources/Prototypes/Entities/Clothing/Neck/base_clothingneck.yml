@@ -27,4 +27,5 @@
           Quantity: 10
   - type: Tag
     tags:
-      - ClothMade
+    - WhitelistChameleon
+    - ClothMade

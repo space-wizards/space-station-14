@@ -33,6 +33,8 @@
     - type: StaticPrice
       price: 200
     - type: Tag
+      tags:
+      - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag

@@ -27,6 +27,7 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Tag
     tags:
+    - WhitelistChameleon
     - SuitEVA
 
 #Emergency EVA
@@ -64,6 +65,7 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Tag
     tags:
+    - WhitelistChameleon
     - SuitEVA
 
 #NTSRA Voidsuit / Ancient Voidsuit

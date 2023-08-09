@@ -438,6 +438,7 @@
     quickEquip: true
   - type: Tag
     tags:
+    - WhitelistChameleon
     - Kangaroo
 
 - type: entity
@@ -540,6 +541,7 @@
   components:
   - type: Tag
     tags:
+    - WhitelistChameleon
     - MimeBelt
   - type: Sprite
     sprite: Clothing/Belt/suspenders.rsi
