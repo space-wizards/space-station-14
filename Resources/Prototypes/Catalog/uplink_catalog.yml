@@ -254,7 +254,7 @@
   id: UplinkMagazineBulldogLethal
   name: uplink-shotgun-magazine-lethal-name
   description: uplink-shotgun-magazine-lethal-desc
-  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: pdsellets }
+  icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: pellets }
   productEntity: MagazineShotgun
   cost:
     Telecrystal: 2
