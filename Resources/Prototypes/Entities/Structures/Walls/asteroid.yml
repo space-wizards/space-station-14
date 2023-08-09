@@ -1,14 +1,32 @@
+#Asteroid rocks
+#These can probably be merged with the rock types below these now, but I'm not going to mess with it since I don't want to risk altering any behavior.
 - type: entity
   id: AsteroidRock
   parent: BaseStructure
+  name: asteroid rock
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
   components:
   - type: Gatherable
     whitelist:
       tags:
         - Pickaxe
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
   - type: Sprite
-    sprite: Structures/Walls/asteroid_rock.rsi
-    state: full
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: rock_asteroid
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_asteroid_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_asteroid_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_asteroid_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_asteroid_west
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -33,9 +51,6 @@
         - FullTileMask
         layer:
         - WallLayer
-  - type: IconSmooth
-    key: walls
-    base: rock_
   - type: OreVein
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
@@ -43,6 +58,9 @@
 - type: entity
   id: AsteroidRockMining
   parent: AsteroidRock
+  name: asteroid rock
+  suffix: higher ore yield
+  description: An asteroid.
   components:
   - type: Gatherable
     whitelist:
@@ -52,10 +70,52 @@
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
 
+
+- type: entity
+  id: IronRock
+  parent: AsteroidRock
+  name: ironrock
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
+  components:
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: ironrock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: ironrock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: ironrock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: ironrock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: ironrock_west
+
+- type: entity
+  id: IronRockMining
+  parent: IronRock
+  name: ironrock
+  suffix: higher ore yield
+  description: An asteroid.
+  components:
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Pickaxe
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: RandomOreDistributionStandard
+
+
 # Rocks and ore veins
 - type: entity
   id: WallRock
   parent: BaseStructure
+  name: rock
   components:
     - type: Gatherable
       whitelist:
@@ -106,6 +166,8 @@
 - type: entity
   id: WallRockGold
   parent: WallRock
+  description: An ore vein rich with gold.
+  suffix: Gold
   components:
     - type: OreVein
       oreChance: 1.0
@@ -126,6 +188,8 @@
 - type: entity
   id: WallRockPlasma
   parent: WallRock
+  description: An ore vein rich with plasma.
+  suffix: Plasma
   components:
     - type: OreVein
       oreChance: 1.0
@@ -146,6 +210,8 @@
 - type: entity
   id: WallRockQuartz
   parent: WallRock
+  description: An ore vein rich with quartz.
+  suffix: Quartz
   components:
     - type: OreVein
       oreChance: 1.0
@@ -166,6 +232,8 @@
 - type: entity
   id: WallRockSilver
   parent: WallRock
+  description: An ore vein rich with silver.
+  suffix: Silver
   components:
     - type: OreVein
       oreChance: 1.0
@@ -187,6 +255,8 @@
 - type: entity
   id: WallRockTin
   parent: WallRock
+  description: An ore vein rich with steel.
+  suffix: Steel
   components:
     - type: OreVein
       oreChance: 1.0
@@ -207,6 +277,8 @@
 - type: entity
   id: WallRockUranium
   parent: WallRock
+  description: An ore vein rich with uranium.
+  suffix: Uranium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -228,6 +300,8 @@
 - type: entity
   id: WallRockBananium
   parent: WallRock
+  description: An ore vein rich with bananium.
+  suffix: Bananium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -248,6 +322,8 @@
 - type: entity
   id: WallRockArtifactFragment
   parent: WallRock
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
   components:
     - type: OreVein
       oreChance: 1.0
@@ -286,6 +362,8 @@
 - type: entity
   id: WallRockBasaltGold
   parent: WallRockBasalt
+  description: An ore vein rich with gold.
+  suffix: Gold
   components:
     - type: OreVein
       oreChance: 1.0
@@ -306,6 +384,8 @@
 - type: entity
   id: WallRockBasaltPlasma
   parent: WallRockBasalt
+  description: An ore vein rich with plasma.
+  suffix: Plasma
   components:
     - type: OreVein
       oreChance: 1.0
@@ -326,6 +406,8 @@
 - type: entity
   id: WallRockBasaltQuartz
   parent: WallRockBasalt
+  description: An ore vein rich with quartz.
+  suffix: Quartz
   components:
     - type: OreVein
       oreChance: 1.0
@@ -346,6 +428,8 @@
 - type: entity
   id: WallRockBasaltSilver
   parent: WallRockBasalt
+  description: An ore vein rich with silver.
+  suffix: Silver
   components:
     - type: OreVein
       oreChance: 1.0
@@ -366,6 +450,8 @@
 - type: entity
   id: WallRockBasaltTin
   parent: WallRockBasalt
+  description: An ore vein rich with steel.
+  suffix: Steel
   components:
     - type: OreVein
       oreChance: 1.0
@@ -386,6 +472,8 @@
 - type: entity
   id: WallRockBasaltUranium
   parent: WallRockBasalt
+  description: An ore vein rich with uranium.
+  suffix: Uranium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -407,6 +495,8 @@
 - type: entity
   id: WallRockBasaltBananium
   parent: WallRockBasalt
+  description: An ore vein rich with bananium.
+  suffix: Bananium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -427,6 +517,8 @@
 - type: entity
   id: WallRockBasaltArtifactFragment
   parent: WallRockBasalt
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
   components:
     - type: OreVein
       oreChance: 1.0
@@ -465,6 +557,8 @@
 - type: entity
   id: WallRockSnowGold
   parent: WallRockSnow
+  description: An ore vein rich with gold.
+  suffix: Gold
   components:
     - type: OreVein
       oreChance: 1.0
@@ -485,6 +579,8 @@
 - type: entity
   id: WallRockSnowPlasma
   parent: WallRockSnow
+  description: An ore vein rich with plasma.
+  suffix: Plasma
   components:
     - type: OreVein
       oreChance: 1.0
@@ -505,6 +601,8 @@
 - type: entity
   id: WallRockSnowQuartz
   parent: WallRockSnow
+  description: An ore vein rich with quartz.
+  suffix: Quartz
   components:
     - type: OreVein
       oreChance: 1.0
@@ -525,6 +623,8 @@
 - type: entity
   id: WallRockSnowSilver
   parent: WallRockSnow
+  description: An ore vein rich with silver.
+  suffix: Silver
   components:
     - type: OreVein
       oreChance: 1.0
@@ -545,6 +645,8 @@
 - type: entity
   id: WallRockSnowTin
   parent: WallRockSnow
+  description: An ore vein rich with steel.
+  suffix: Steel
   components:
     - type: OreVein
       oreChance: 1.0
@@ -565,6 +667,8 @@
 - type: entity
   id: WallRockSnowUranium
   parent: WallRockSnow
+  description: An ore vein rich with uranium.
+  suffix: Uranium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -586,6 +690,8 @@
 - type: entity
   id: WallRockSnowBananium
   parent: WallRockSnow
+  description: An ore vein rich with bananium.
+  suffix: Bananium
   components:
     - type: OreVein
       oreChance: 1.0
@@ -606,6 +712,8 @@
 - type: entity
   id: WallRockSnowArtifactFragment
   parent: WallRockSnow
+  description: A rock wall. What's that sticking out of it?
+  suffix: Artifact Fragment
   components:
     - type: OreVein
       oreChance: 1.0
