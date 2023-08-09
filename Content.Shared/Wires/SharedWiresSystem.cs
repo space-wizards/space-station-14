@@ -1,6 +1,4 @@
 using Content.Shared.Examine;
-using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Wires;
 
