@@ -1,13 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Added the basic hardsuit, a modest but lightweight hardsuit with minor
-      damage resistances in all categories.', type: Add}
-  - {message: Resprited all EVA suits., type: Tweak}
-  - {message: 'Changed a bunch of descriptions relating to hardsuits, softsuits, and
-      EVA helmets.', type: Tweak}
-  id: 3994
-  time: '2023-06-15T02:15:22.0000000+00:00'
 - author: '0x6273'
   changes:
   - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
@@ -2979,3 +2970,8 @@ Entries:
   - {message: Added toggle to hide clothing in the character editor., type: Add}
   id: 4493
   time: '2023-08-09T06:26:34.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Diona are no longer inhibited by kudzu., type: Tweak}
+  id: 4494
+  time: '2023-08-09T15:24:41.0000000+00:00'
