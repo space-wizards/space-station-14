@@ -28,7 +28,5 @@ namespace Content.Server.Guardian
         /// </summary>
         [DataField("delay")]
         public float InjectionDelay = 5f;
-
-        public bool Injecting = false;
     }
 }

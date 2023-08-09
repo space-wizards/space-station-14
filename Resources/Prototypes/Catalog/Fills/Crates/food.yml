@@ -11,6 +11,19 @@
       prob: 0.01
 
 - type: entity
+  id: CrateFoodPizzaLarge
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+        - id: FoodBoxPizzaFilled
+          amount: 16
+        - id: KnifePlastic
+          amount: 4
+        - id: LidSalami
+          prob: 0.04
+
+- type: entity
   id: CrateFoodMRE
   parent: CratePlastic
   components:
@@ -28,25 +41,105 @@
     - id: ReagentContainerFlour
       amount: 3
     - id: ReagentContainerRice
-      amount: 1
+      amount: 3
     - id: ReagentContainerMilk
       amount: 4
     - id: ReagentContainerMilkSoy
-      amount: 1
+      amount: 2
     - id: ReagentContainerSugar
-      amount: 1
+      amount: 2
     - id: FoodCondimentPacketSalt
       amount: 3
     - id: FoodCondimentBottleEnzyme
-      amount: 1
-    - id: FoodBowlBig
-      amount: 3
-    - id: FoodPlate
-      amount: 3
-    - id: FoodPlateSmall
-      amount: 3
+      amount: 2
     - id: FoodContainerEgg
+      amount: 2
+
+- type: entity
+  id: CrateFoodDinnerware
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: FoodBowlBig
+      amount: 4
+    - id: FoodPlate
+      amount: 4
+    - id: FoodPlateSmall
+      amount: 4
     - id: FoodKebabSkewer
-      amount: 3
+      amount: 4
     - id: KitchenKnife
       amount: 1
+    - id: DrinkGlass
+      amount: 4
+    - id: FoodPlateTin
+      amount: 4
+    - id: Fork
+      amount: 2
+    - id: Spoon
+      amount: 2
+
+- type: entity
+  id: CrateFoodBarSupply
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+    - id: DrinkGlass
+      amount: 5
+    - id: DrinkShotGlass
+      amount: 5
+    - id: DrinkShaker
+      amount: 2
+    - id: DrinkOrangeJuice
+      amount: 2
+    - id: DrinkLimeJuice
+      amount: 2
+    - id: DrinkTomatoJuice
+      amount: 2
+    - id: DrinkWaterBottleFull
+      amount: 2
+    - id: DrinkSodaWaterCan
+      amount: 2
+    - id: DrinkCreamCarton
+      amount: 2
+
+- type: entity
+  id: CrateFoodSoftdrinks
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+      - id: DrinkColaCan
+        amount: 4
+      - id: DrinkGrapeCan
+        amount: 2
+      - id: DrinkRootBeerCan
+        amount: 2
+      - id: DrinkIcedTeaCan
+        amount: 2
+      - id: DrinkLemonLimeCan
+        amount: 2
+      - id: DrinkFourteenLokoCan
+        amount: 2
+
+- type: entity
+  id: CrateFoodSoftdrinksLarge
+  parent: CratePlastic
+  components:
+    - type: StorageFill
+      contents:
+        - id: DrinkColaCan
+          amount: 8
+        - id: DrinkGrapeCan
+          amount: 4
+        - id: DrinkRootBeerCan
+          amount: 4
+        - id: DrinkIcedTeaCan
+          amount: 4
+        - id: DrinkLemonLimeCan
+          amount: 4
+        - id: DrinkFourteenLokoCan
+          amount: 4
+

@@ -95,6 +95,8 @@ namespace Content.Shared.Chemistry
         U5 = 5,
         U10 = 10,
         U25 = 25,
+        U50 = 50,
+        U100 = 100,
         All,
     }
 

@@ -1,12 +1,15 @@
+using Content.Shared.Movement.Systems;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class MovementRelayTargetComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+[Access(typeof(SharedMoverController))]
+public sealed partial class MovementRelayTargetComponent : Component
 {
     /// <summary>
-    /// Entities that are relaying to us.
+    /// The entity that is relaying to this entity.
     /// </summary>
-    [ViewVariables] public readonly List<EntityUid> Entities = new();
+    [ViewVariables, AutoNetworkedField]
+    public EntityUid Source;
 }

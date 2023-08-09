@@ -37,7 +37,7 @@
       #  sprite: Mobs/Species/Vox/parts.rsi
       #  state: l_leg
       #- shader: StencilMask
-      #  map: [ "enum.HumanoidVisualLayers.StencilMask" ]
+      #  map: [ "enum.HumanoidVisualLayers.FemaleStencilMask" ]
       #  sprite: Mobs/Customization/masking_helpers.rsi
       #  state: female_full
       #  visible: false
@@ -90,24 +90,30 @@
     damageRecovery:
       types:
         Asphyxiation: -1.0
-  - type: Humanoid
+  - type:  HumanoidAppearance
     species: Vox
     # canColorHair: false
     # canColorFacialHair: false
   - type: Inventory
     speciesId: vox
+  - type: InventorySlots
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeatChicken
       amount: 5
+  - type: Vocal
+    sounds:
+      Male: UnisexVox
+      Female: UnisexVox
+      Unsexed: UnisexVox
 
 - type: entity
   id: MobVoxDummy
   parent: MobHumanDummy
   noSpawn: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Vox
   - type: Body
     prototype: Vox

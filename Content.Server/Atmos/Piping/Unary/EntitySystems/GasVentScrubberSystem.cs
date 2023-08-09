@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -28,6 +29,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -55,7 +58,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (!scrubber.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)
-            || !nodeContainer.TryGetNode(scrubber.OutletName, out PipeNode? outlet))
+            || !_nodeContainer.TryGetNode(nodeContainer, scrubber.OutletName, out PipeNode? outlet))
                 return;
 
             var xform = Transform(uid);
@@ -185,20 +188,20 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!scrubber.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
-                appearance.SetData(ScrubberVisuals.State, ScrubberState.Off);
+                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Off, appearance);
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Scrubbing)
             {
-                appearance.SetData(ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub);
+                _appearance.SetData(uid, ScrubberVisuals.State, scrubber.WideNet ? ScrubberState.WideScrub : ScrubberState.Scrub, appearance);
             }
             else if (scrubber.PumpDirection == ScrubberPumpDirection.Siphoning)
             {
-                appearance.SetData(ScrubberVisuals.State, ScrubberState.Siphon);
+                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Siphon, appearance);
             }
             else if (scrubber.Welded)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
-                appearance.SetData(ScrubberVisuals.State, ScrubberState.Welded);
+                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
             }
         }
     }

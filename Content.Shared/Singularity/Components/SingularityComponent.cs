@@ -2,6 +2,7 @@ using Robust.Shared.GameStates;
 
 using Content.Shared.Singularity.EntitySystems;
 using Robust.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Singularity.Components;
 
@@ -17,8 +18,8 @@ public sealed class SingularityComponent : Component
     /// Used as a scaling factor for things like visual size, event horizon radius, gravity well radius, radiation output, etc.
     /// If you want to set this use <see cref="SharedSingularitySystem.SetLevel"/>().
     /// </summary>
+    [Access(friends: typeof(SharedSingularitySystem), Other = AccessPermissions.Read, Self = AccessPermissions.Read)]
     [DataField("level")]
-    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     public byte Level = 1;
 
     /// <summary>
@@ -26,8 +27,8 @@ public sealed class SingularityComponent : Component
     /// Has to be on shared in case someone attaches a RadiationPulseComponent to the singularity.
     /// If you want to set this use <see cref="SharedSingularitySystem.SetRadsPerLevel"/>().
     /// </summary>
+    [Access(friends: typeof(SharedSingularitySystem), Other = AccessPermissions.Read, Self = AccessPermissions.Read)]
     [DataField("radsPerLevel")]
-    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     [ViewVariables(VVAccess.ReadWrite)]
     public float RadsPerLevel = 2f;
 
@@ -87,7 +88,7 @@ public sealed class SingularityComponent : Component
     /// The amount of time that should elapse between automated updates to this singularity.
     /// </summary>
     [DataField("updatePeriod")]
-    [ViewVariables(VVAccess.ReadOnly)]
+    [ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TargetUpdatePeriod = TimeSpan.FromSeconds(1.0);
 
     /// <summary>

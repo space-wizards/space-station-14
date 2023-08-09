@@ -22,7 +22,4 @@ public sealed class ActiveTimerTriggerComponent : Component
 
     [DataField("beepSound")]
     public SoundSpecifier? BeepSound;
-
-    [DataField("beepParams")]
-    public AudioParams BeepParams = AudioParams.Default;
 }

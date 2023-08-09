@@ -1,4 +1,4 @@
-﻿# Just copypasta of some human basic body parts for interaction,
+# Just copypasta of some human basic body parts for interaction,
 # only differences for now is that limbs work in pairs,
 # they are unextractable and can't be spawned (no surgery on Animals!?).
 
@@ -17,6 +17,16 @@
         ents: []
   - type: StaticPrice
     price: 50
+  - type: Tag
+    tags:
+      - Trash
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: Blood
+        Quantity: 10
 
 # For primates mainly
 - type: entity
@@ -37,7 +47,7 @@
   components:
   - type: BodyPart
     partType: Leg
-  - type: MovementSpeedModifier
+  - type: MovementBodyPart
 
 - type: entity
   id: FeetAnimal
@@ -58,3 +68,11 @@
     partType: Torso
   - type: Damageable
     damageContainer: Biological
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: Blood
+        Quantity: 20
+

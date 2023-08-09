@@ -20,6 +20,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
+using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
@@ -34,6 +35,7 @@ namespace Content.Server.Drone
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -70,7 +72,7 @@ namespace Content.Server.Drone
 
         private void OnExamined(EntityUid uid, DroneComponent component, ExaminedEvent args)
         {
-            if (TryComp<MindComponent>(uid, out var mind) && mind.HasMind)
+            if (TryComp<MindContainerComponent>(uid, out var mind) && mind.HasMind)
             {
                 args.PushMarkup(Loc.GetString("drone-active"));
             }
@@ -120,7 +122,7 @@ namespace Content.Server.Drone
         {
             if (TryComp<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(DroneVisuals.Status, status);
+                _appearance.SetData(uid, DroneVisuals.Status, status, appearance);
             }
         }
 
@@ -130,7 +132,7 @@ namespace Content.Server.Drone
             foreach (var entity in _lookup.GetEntitiesInRange(xform.MapPosition, component.InteractionBlockRange))
             {
                 // Return true if the entity is/was controlled by a player and is not a drone or ghost.
-                if (HasComp<MindComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
+                if (HasComp<MindContainerComponent>(entity) && !HasComp<DroneComponent>(entity) && !HasComp<GhostComponent>(entity))
                 {
                     // Filter out dead ghost roles. Dead normal players are intended to block.
                     if ((TryComp<MobStateComponent>(entity, out var entityMobState) && HasComp<GhostTakeoverAvailableComponent>(entity) && _mobStateSystem.IsDead(entity, entityMobState)))

@@ -1,5 +1,7 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Tools;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Toilet
@@ -16,8 +18,15 @@ namespace Content.Shared.Toilet
         [DataField("toggleSound")]
         public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Effects/toilet_seat_down.ogg");
 
+        [DataField("lidOpen")]
         public bool LidOpen = false;
+
+        [DataField("isSeatUp")]
         public bool IsSeatUp = false;
-        public bool IsPrying = false;
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class ToiletPryDoAfterEvent : SimpleDoAfterEvent
+    {
     }
 }

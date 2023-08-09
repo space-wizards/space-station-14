@@ -7,7 +7,7 @@ namespace Content.Shared.Roles;
 [Prototype("department")]
 public sealed class DepartmentPrototype : IPrototype
 {
-    [IdDataFieldAttribute] public string ID { get; } = default!;
+    [IdDataField] public string ID { get; } = default!;
 
     /// <summary>
     ///     A description string to display in the character menu as an explanation of the department's function.

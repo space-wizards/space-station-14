@@ -102,8 +102,8 @@ public class ListingData : IEquatable<ListingData>, ICloneable
         if (Icon != null && !Icon.Equals(listing.Icon))
             return false;
 
-        ///more complicated conditions that eat perf. these don't really matter
-        ///as much because you will very rarely have to check these.
+        // more complicated conditions that eat perf. these don't really matter
+        // as much because you will very rarely have to check these.
         if (!Categories.OrderBy(x => x).SequenceEqual(listing.Categories.OrderBy(x => x)))
             return false;
 

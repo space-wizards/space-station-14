@@ -7,6 +7,7 @@ namespace Content.Shared.Payload.EntitySystems;
 public sealed class ChemicalPayloadSystem : EntitySystem
 {
     [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -36,7 +37,7 @@ public sealed class ChemicalPayloadSystem : EntitySystem
         if (component.BeakerSlotB.HasItem)
             filled |= ChemicalPayloadFilledSlots.Right;
 
-        appearance.SetData(ChemicalPayloadVisuals.Slots, filled);
+        _appearance.SetData(uid, ChemicalPayloadVisuals.Slots, filled, appearance);
     }
 
     private void OnComponentInit(EntityUid uid, ChemicalPayloadComponent payload, ComponentInit args)

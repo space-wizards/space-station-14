@@ -16,9 +16,18 @@ namespace Content.Shared.Decals
         public DecalGridChunkCollection ChunkCollection = new(new ());
 
         /// <summary>
+        ///     Dictionary mapping decals to their corresponding grid chunks.
+        /// </summary>
+        public readonly Dictionary<uint, Vector2i> DecalIndex = new();
+
+        /// <summary>
         ///     Tick at which PVS was last toggled. Ensures that all players receive a full update when toggling PVS.
         /// </summary>
         public GameTick ForceTick { get; set; }
+
+        // client-side data. I CBF creating a separate client-side comp for this. The server can survive with some empty dictionaries.
+        public readonly Dictionary<uint, int> DecalZIndexIndex = new();
+        public readonly SortedDictionary<int, SortedDictionary<uint, Decal>> DecalRenderIndex = new();
 
         [DataDefinition]
         [Serializable, NetSerializable]
@@ -51,7 +60,7 @@ namespace Content.Shared.Decals
         [DataRecord, Serializable, NetSerializable]
         public record DecalGridChunkCollection(Dictionary<Vector2i, DecalChunk> ChunkCollection)
         {
-            public uint NextUid;
+            public uint NextDecalId;
         }
     }
 

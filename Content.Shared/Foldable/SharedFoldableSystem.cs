@@ -1,3 +1,5 @@
+using Content.Shared.Buckle;
+using Content.Shared.Storage.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
@@ -9,6 +11,7 @@ namespace Content.Shared.Foldable;
 public abstract class SharedFoldableSystem : EntitySystem
 {
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
 
     public override void Initialize()
     {
@@ -19,6 +22,8 @@ public abstract class SharedFoldableSystem : EntitySystem
 
         SubscribeLocalEvent<FoldableComponent, ComponentInit>(OnFoldableInit);
         SubscribeLocalEvent<FoldableComponent, ContainerGettingInsertedAttemptEvent>(OnInsertEvent);
+        SubscribeLocalEvent<FoldableComponent, StoreMobInItemContainerAttemptEvent>(OnStoreThisAttempt);
+        SubscribeLocalEvent<FoldableComponent, StorageOpenAttemptEvent>(OnFoldableOpenAttempt);
     }
 
     private void OnGetState(EntityUid uid, FoldableComponent component, ref ComponentGetState args)
@@ -32,24 +37,37 @@ public abstract class SharedFoldableSystem : EntitySystem
             return;
 
         if (state.IsFolded != component.IsFolded)
-            SetFolded(component, state.IsFolded);
+            SetFolded(uid, component, state.IsFolded);
     }
 
     private void OnFoldableInit(EntityUid uid, FoldableComponent component, ComponentInit args)
     {
-        SetFolded(component, component.IsFolded);
+        SetFolded(uid, component, component.IsFolded);
+    }
+
+    private void OnFoldableOpenAttempt(EntityUid uid, FoldableComponent component, ref StorageOpenAttemptEvent args)
+    {
+        if (component.IsFolded)
+            args.Cancelled = true;
+    }
+
+    public void OnStoreThisAttempt(EntityUid uid, FoldableComponent comp, ref StoreMobInItemContainerAttemptEvent args)
+    {
+        args.Handled = true;
+
+        if (comp.IsFolded)
+            args.Cancelled = true;
     }
 
     /// <summary>
     /// Set the folded state of the given <see cref="FoldableComponent"/>
     /// </summary>
-    /// <param name="component"></param>
-    /// <param name="folded">If true, the component will become folded, else unfolded</param>
-    public virtual void SetFolded(FoldableComponent component, bool folded)
+    public virtual void SetFolded(EntityUid uid, FoldableComponent component, bool folded)
     {
         component.IsFolded = folded;
         Dirty(component);
-        Appearance.SetData(component.Owner, FoldedVisuals.State, folded);
+        Appearance.SetData(uid, FoldedVisuals.State, folded);
+        _buckle.StrapSetEnabled(uid, !component.IsFolded);
     }
 
     private void OnInsertEvent(EntityUid uid, FoldableComponent component, ContainerGettingInsertedAttemptEvent args)

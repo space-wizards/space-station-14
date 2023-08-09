@@ -79,12 +79,13 @@ namespace Content.Server.Armor
 
             var examineMarkup = GetArmorExamine(armorModifiers);
 
-            _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
+            var ev = new ArmorExamineEvent(examineMarkup);
+            RaiseLocalEvent(uid, ref ev);
 
-            return;
+            _examine.AddDetailedExamineVerb(args, component, examineMarkup, Loc.GetString("armor-examinable-verb-text"), "/Textures/Interface/VerbIcons/dot.svg.192dpi.png", Loc.GetString("armor-examinable-verb-message"));
         }
 
-        private static FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
+        private FormattedMessage GetArmorExamine(DamageModifierSet armorModifiers)
         {
             var msg = new FormattedMessage();
 
@@ -112,3 +113,6 @@ namespace Content.Server.Armor
         }
     }
 }
+
+[ByRefEvent]
+public record struct ArmorExamineEvent(FormattedMessage Msg);

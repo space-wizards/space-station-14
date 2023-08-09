@@ -1,0 +1,43 @@
+# 1341158413 seed cooked top 2 rooms are fucked
+# 17x5 Y
+# 11x5 Y
+# 7x5 YY
+# 5x5 YY
+# 3x5 YY
+
+# 13x3 YY
+# 11x3 Y
+# 7x3 Y
+# 7x7 Y
+
+- type: dungeonRoomPack
+  id: LargeArea0
+  size: 17,17
+  rooms:
+    - 0,0,5,17
+    - 10,10,17,17
+    - 12,0,17,3
+
+- type: dungeonRoomPack
+  id: LargeArea1
+  size: 17,17
+  rooms:
+    - 1,1,6,12
+    - 11,1,16,6
+    - 9,13,16,16
+
+- type: dungeonRoomPack
+  id: LargeArea2
+  size: 17,17
+  rooms:
+    - 1,2,8,7
+    - 1,10,8,15
+    - 13,2,16,15
+
+- type: dungeonRoomPack
+  id: LargeArea3
+  size: 17,17
+  rooms:
+    - 2,3,5,8
+    - 1,10,6,15
+    - 13,2,16,15

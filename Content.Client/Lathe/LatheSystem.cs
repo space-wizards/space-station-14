@@ -8,7 +8,7 @@ namespace Content.Client.Lathe;
 
 public sealed class LatheSystem : SharedLatheSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -22,14 +22,14 @@ public sealed class LatheSystem : SharedLatheSystem
         if (args.Sprite == null)
             return;
 
-        if (_appearance.TryGetData(uid, PowerDeviceVisuals.Powered, out bool powered, args.Component) &&
+        if (_appearance.TryGetData<bool>(uid, PowerDeviceVisuals.Powered, out var powered, args.Component) &&
             args.Sprite.LayerMapTryGet(PowerDeviceVisualLayers.Powered, out _))
         {
             args.Sprite.LayerSetVisible(PowerDeviceVisualLayers.Powered, powered);
         }
 
         // Lathe specific stuff
-        if (_appearance.TryGetData(uid, LatheVisuals.IsRunning, out bool isRunning, args.Component))
+        if (_appearance.TryGetData<bool>(uid, LatheVisuals.IsRunning, out var isRunning, args.Component))
         {
             var state = isRunning ? component.RunningState : component.IdleState;
             args.Sprite.LayerSetAnimationTime(LatheVisualLayers.IsRunning, 0f);

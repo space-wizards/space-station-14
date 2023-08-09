@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.EntitySystems
         /// <summary>
         ///     List of gas reactions ordered by priority.
         /// </summary>
-        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions!;
+        public IEnumerable<GasReactionPrototype> GasReactions => _gasReactions;
 
         /// <summary>
         ///     Cached array of gas specific heats.
@@ -76,6 +76,16 @@ namespace Content.Server.Atmos.EntitySystems
         public float GetThermalEnergy(GasMixture mixture, float cachedHeatCapacity)
         {
             return mixture.Temperature * cachedHeatCapacity;
+        }
+
+        /// <summary>
+        ///     Add 'dQ' Joules of energy into 'mixture'.
+        /// </summary>
+        public void AddHeat(GasMixture mixture, float dQ)
+        {
+            var c = GetHeatCapacity(mixture);
+            float dT = dQ / c;
+            mixture.Temperature += dT;
         }
 
         /// <summary>

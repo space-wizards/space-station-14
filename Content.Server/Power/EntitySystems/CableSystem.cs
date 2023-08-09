@@ -2,9 +2,11 @@ using Content.Server.Administration.Logs;
 using Content.Server.Electrocution;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
-using Content.Server.Tools;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.Tools;
+using Content.Shared.Tools.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;
@@ -13,7 +15,7 @@ public sealed partial class CableSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileManager = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly StackSystem _stack = default!;
     [Dependency] private readonly ElectrocutionSystem _electrocutionSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogs = default!;
@@ -25,7 +27,7 @@ public sealed partial class CableSystem : EntitySystem
         InitializeCablePlacer();
 
         SubscribeLocalEvent<CableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<CableComponent, CuttingFinishedEvent>(OnCableCut);
+        SubscribeLocalEvent<CableComponent, CableCuttingFinishedEvent>(OnCableCut);
         // Shouldn't need re-anchoring.
         SubscribeLocalEvent<CableComponent, AnchorStateChangedEvent>(OnAnchorChanged);
     }
@@ -35,12 +37,14 @@ public sealed partial class CableSystem : EntitySystem
         if (args.Handled)
             return;
 
-        var ev = new CuttingFinishedEvent(args.User);
-        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, 0, cable.CuttingDelay, new[] { cable.CuttingQuality }, doAfterCompleteEvent: ev, doAfterEventTarget: uid);
+        args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, cable.CuttingDelay, cable.CuttingQuality, new CableCuttingFinishedEvent());
     }
 
-    private void OnCableCut(EntityUid uid, CableComponent cable, CuttingFinishedEvent args)
+    private void OnCableCut(EntityUid uid, CableComponent cable, DoAfterEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         if (_electrocutionSystem.TryDoElectrifiedAct(uid, args.User))
             return;
 
@@ -64,15 +68,5 @@ public sealed partial class CableSystem : EntitySystem
         // etc). In that case: behave as if the cable had been cut.
         Spawn(cable.CableDroppedOnCutPrototype, Transform(uid).Coordinates);
         QueueDel(uid);
-    }
-}
-
-public sealed class CuttingFinishedEvent : EntityEventArgs
-{
-    public EntityUid User;
-
-    public CuttingFinishedEvent(EntityUid user)
-    {
-        User = user;
     }
 }

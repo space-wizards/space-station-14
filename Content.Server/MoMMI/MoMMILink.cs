@@ -69,7 +69,7 @@ namespace Content.Server.MoMMI
 
         private async Task<bool> HandleChatPost(IStatusHandlerContext context)
         {
-            if (context.RequestMethod != HttpMethod.Post || context.Url!.AbsolutePath != "/ooc")
+            if (context.RequestMethod != HttpMethod.Post || context.Url.AbsolutePath != "/ooc")
             {
                 return false;
             }

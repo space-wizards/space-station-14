@@ -42,9 +42,9 @@ public partial class SharedBodySystem
             return;
 
         part.Body = state.Body;
-        part.ParentSlot = state.ParentSlot;
-        part.Children = state.Children;
-        part.Organs = state.Organs;
+        part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
+        part.Children = state.Children; // TODO use containers. This is broken and does not work.
+        part.Organs = state.Organs; // TODO end my suffering.
         part.PartType = state.PartType;
         part.IsVital = state.IsVital;
         part.Symmetry = state.Symmetry;
@@ -232,7 +232,7 @@ public partial class SharedBodySystem
         return true;
     }
 
-    public virtual bool DropPart(EntityUid? partId, [NotNullWhen(true)] BodyPartComponent? part = null)
+    public virtual bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
         if (partId == null ||
             !Resolve(partId.Value, ref part, false) ||
@@ -311,11 +311,11 @@ public partial class SharedBodySystem
         var acceleration = 0f;
         foreach (var leg in allLegs)
         {
-            if (!TryComp<MovementSpeedModifierComponent>(leg, out var legModifier))
+            if (!TryComp<MovementBodyPartComponent>(leg, out var legModifier))
                 continue;
 
-            walkSpeed += legModifier.BaseWalkSpeed;
-            sprintSpeed += legModifier.BaseSprintSpeed;
+            walkSpeed += legModifier.WalkSpeed;
+            sprintSpeed += legModifier.SprintSpeed;
             acceleration += legModifier.Acceleration;
         }
 

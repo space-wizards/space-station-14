@@ -12,10 +12,9 @@
     range: 7
     sound:
       path: /Audio/Ambience/Objects/gravity_gen_hum.ogg
+
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/gravity_generator.rsi
-    snapCardinals: true
     layers:
       - state: on
         map: ["enum.GravityGeneratorVisualLayers.Base"]
@@ -32,14 +31,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-1.5,-1.5,1.5,1.5"
-      density: 50
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,1.5"
+        density: 50
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
   - type: Repairable
     fuelCost: 10
     doAfterDelay: 5
@@ -56,18 +56,16 @@
     activePower: 2500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
+    spritemap:
+      broken: "broken"
+      unpowered: "off"
+      off: "off"
+      on: "on"
   - type: UserInterface
     interfaces:
       - key: enum.GravityGeneratorUiKey.Key
         type: GravityGeneratorBoundUserInterface
   - type: Appearance
-    visuals:
-    - type: GravityGeneratorVisualizer
-      spritemap:
-        broken: "broken"
-        unpowered: "off"
-        off: "off"
-        on: "on"
   - type: PointLight
     radius: 2.5
     energy: 0.5
@@ -84,7 +82,6 @@
   description: It's what keeps you to the floor, now in fun size.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/gravity_generator_mini.rsi
     snapCardinals: true
     layers:
@@ -98,14 +95,15 @@
         offset: "0,0.2"
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.4,-0.4,0.4,0.4"
-      density: 3125
-      mask:
-      - LargeMobMask
-      layer:
-      - WallLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.4,0.4,0.4"
+        density: 3125
+        mask:
+        - LargeMobMask
+        layer:
+        - WallLayer
   - type: ApcPowerReceiver
     powerLoad: 500
   - type: GravityGenerator

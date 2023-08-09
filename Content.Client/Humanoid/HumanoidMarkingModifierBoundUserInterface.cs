@@ -1,6 +1,7 @@
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Client.GameObjects;
+using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Client.Humanoid;
 
@@ -10,11 +11,12 @@ namespace Content.Client.Humanoid;
 
 public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
 {
-    public HumanoidMarkingModifierBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    [ViewVariables]
+    private HumanoidMarkingModifierWindow? _window;
+
+    public HumanoidMarkingModifierBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
-
-    private HumanoidMarkingModifierWindow? _window;
 
     protected override void Open()
     {

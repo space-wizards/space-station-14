@@ -11,7 +11,6 @@
   - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/meat.rsi
-    netsync: false
   - type: Extractable
     grindableSolutionName: food
   - type: SolutionContainerManager
@@ -23,9 +22,38 @@
           Quantity: 5
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+        - ReagentId: Fat
+          Quantity: 5
   - type: Item
     size: 5
+  # let air cook and freeze meat for cooking and preservation
+  - type: AtmosExposed
+  - type: Temperature
+    currentTemperature: 290
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Meaterial: 300
 
+- type: entity
+  parent: FoodMeatBase
+  id: FoodMeatRawBase
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Perishable
+    # raw meat rots in 5 minutes, get it into the freezer fast
+    rotAfter: 300
+    # don't want meat giving off miasma only bodies
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: FoodMeatRotten
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
+
+# bruh
 - type: Tag
   id: Raw
 
@@ -39,13 +67,34 @@
 
 - type: entity
   name: raw meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeat
   description: A slab of raw meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
+  - type: Sprite
+    state: plain
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
+  - type: SliceableFood
+    count: 3
+    slice: FoodMeatCutlet
+  - type: Construction
+    graph: MeatSteak
+    node: start
+    defaultTarget: meat steak
+
+- type: entity
+  name: raw human meat
+  parent: FoodMeatRawBase
+  id: FoodMeatHuman
+  description: Gross.
+  components:
   - type: Sprite
     state: plain
   - type: SolutionContainerManager
@@ -87,6 +136,7 @@
 
 - type: entity
   name: raw bacon
+  # bacon is cured so not raw = cant rot
   parent: FoodMeatBase
   id: FoodMeatBacon
   description: A raw piece of bacon.
@@ -95,30 +145,22 @@
     tags:
     - Raw
   - type: Sprite
-    netsync: false
     state: bacon
-  - type: RandomSprite
-    available:
-      - enum.DamageStateVisualLayers.Base:
-          bacon: ""
-      - enum.DamageStateVisualLayers.Base:
-          bacon2: ""
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 2
+        - ReagentId: Fat
+          Quantity: 9
 
 - type: entity
   name: raw bear meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatBear
   description: A very manly slab of raw bear meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bear
   - type: SolutionContainerManager
@@ -127,19 +169,22 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatBearCutlet
+  - type: Construction
+    graph: BearSteak
+    node: start
+    defaultTarget: filet migrawr
 
 - type: entity
   name: raw penguin meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatPenguin
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -147,20 +192,23 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatPenguinCutletSlice
+  - type: Construction
+    graph: PenguinSteak
+    node: start
+    defaultTarget: cooked penguin
 
 - type: entity
   name: raw chicken meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatChicken
   description: A slab of raw chicken. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -168,20 +216,23 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatChickenCutlet
+  - type: Construction
+    graph: ChickenSteak
+    node: start
+    defaultTarget: cooked chicken
 
 - type: entity
   name: raw duck meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatDuck
   description: A slab of raw duck. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -190,12 +241,19 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatDuckCutlet
+  - type: Construction
+    graph: DuckSteak
+    node: start
+    defaultTarget: cooked duck
 
 - type: entity
   name: prime-cut corgi meat
+  # can't rot since that would be very bad for syndies
   parent: FoodMeatBase
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
@@ -203,6 +261,7 @@
   - type: Tag
     tags:
     - Raw
+    - HighRiskItem
   - type: Sprite
     state: corgi
   - type: SolutionContainerManager
@@ -216,13 +275,13 @@
 
 - type: entity
   name: raw crab meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatCrab
   description: A pile of raw crab meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
+  - type: FlavorProfile
+    flavors:
+      - crabby
   - type: Sprite
     state: crab
   - type: SolutionContainerManager
@@ -231,16 +290,19 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 1
+        - ReagentId: Fat
+          Quantity: 2
+  - type: Construction
+    graph: CrabSteak
+    node: start
+    defaultTarget: cooked crab
 
 - type: entity
   name: raw goliath meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatGoliath
   description: A slab of goliath meat. It's not very edible now, but it cooks great in lava.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: goliath
   - type: SolutionContainerManager
@@ -249,6 +311,12 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 5
+        - ReagentId: Fat
+          Quantity: 3
+  - type: Construction
+    graph: GoliathSteak
+    node: start
+    defaultTarget: goliath steak
 
 - type: entity
   name: dragon flesh
@@ -278,13 +346,10 @@
 
 - type: entity
   name: raw rat meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatRat
   description: Prime meat from maintenance!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: plain
   - type: SolutionContainerManager
@@ -293,16 +358,15 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   name: raw lizard meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatLizard
   description: Delicious dino damage.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: lizard
   - type: SolutionContainerManager
@@ -311,9 +375,15 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 9
+        - ReagentId: Fat
+          Quantity: 9
   - type: SliceableFood
     count: 3
     slice: FoodMeatLizardCutlet
+  - type: Construction
+    graph: LizardSteak
+    node: start
+    defaultTarget: lizard steak
 
 - type: entity
   name: raw plant meat
@@ -340,17 +410,18 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
-          Quantity: 20
+          Quantity: 5
+        - ReagentId: Toxin
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 4
 
 - type: entity
   name: raw spider meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatSpider
   description: A slab of spider meat. That's so Kafkaesque.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: spider
   - type: SolutionContainerManager
@@ -358,6 +429,8 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
+          Quantity: 9
+        - ReagentId: Fat
           Quantity: 9
   - type: SliceableFood
     count: 3
@@ -369,9 +442,6 @@
   id: FoodMeatSpiderLeg
   description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: spiderleg
   - type: SolutionContainerManager
@@ -380,6 +450,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 10
+        - ReagentId: Fat
+          Quantity: 3
 
 - type: entity
   name: meatwheat clump
@@ -387,9 +459,6 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -401,6 +470,7 @@
 
 - type: entity
   name: raw xeno meat
+  # not raw since acid kills bacteria or something, same as xeno
   parent: FoodMeatBase
   id: FoodMeatXeno
   description: A slab of xeno meat, dripping with acid.
@@ -408,7 +478,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw
@@ -498,6 +568,38 @@
 # Cooked
 
 - type: entity
+  parent: BaseItem
+  id: MaterialSmileExtract
+  name: smile extract
+  description: It's a real panacea. But at what cost?
+  components:
+  - type: Food
+  - type: Extractable
+    grindableSolutionName: food
+  - type: FlavorProfile
+    flavors:
+      - sweet
+  - type: Sprite
+    sprite: Mobs/Aliens/slimes.rsi
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: rainbow_slime_extract
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Omnizine
+          Quantity: 30
+        - ReagentId: Nutriment
+          Quantity: 10
+        - ReagentId: Iron
+          Quantity: 10
+  - type: Item
+    size: 5
+  - type: StaticPrice
+    price: 3000 #It has so much Omnizin in it
+
+- type: entity
   name: steak
   parent: FoodMeatBase
   id: FoodMeatCooked
@@ -510,7 +612,6 @@
     trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: plain-cooked
   - type: SolutionContainerManager
     solutions:
@@ -534,9 +635,7 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    netsync: true
     layers:
     - state: plate-meat
     - state: bacon-cooked
@@ -566,10 +665,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: product-cooked
   - type: SolutionContainerManager
     solutions:
@@ -593,10 +690,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: bird-cooked
   - type: SolutionContainerManager
     solutions:
@@ -620,10 +715,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: bird-cooked
   - type: SolutionContainerManager
     solutions:
@@ -649,7 +742,6 @@
   - type: Food
     trash: FoodPlateSmall
   - type: Sprite
-    netsync: false
     layers:
     - state: chicken-fried
       map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -678,10 +770,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: bird-cooked
   - type: SolutionContainerManager
     solutions:
@@ -701,14 +791,15 @@
   id: FoodMeatCrabCooked
   description: Some deliciously cooked crab meat.
   components:
+  - type: FlavorProfile
+    flavors:
+      - crabby
   - type: Tag
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: crab-cooked
   - type: SolutionContainerManager
     solutions:
@@ -729,10 +820,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: goliath-cooked
   - type: SolutionContainerManager
     solutions:
@@ -753,10 +842,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: lizard-cooked
   - type: SolutionContainerManager
     solutions:
@@ -780,10 +867,8 @@
     tags:
     - Cooked
   - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
-    - state: plate-meat
     - state: spiderleg-cooked
   - type: SolutionContainerManager
     solutions:
@@ -836,6 +921,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw bear cutlet
@@ -858,6 +945,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw penguin cutlet
@@ -878,6 +967,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw chicken cutlet
@@ -898,6 +989,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw duck cutlet
@@ -918,6 +1011,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw lizard cutlet
@@ -941,6 +1036,8 @@
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw spider cutlet
@@ -953,17 +1050,15 @@
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet
   - type: SolutionContainerManager
     solutions:
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
           Quantity: 3
+        - ReagentId: Fat
+          Quantity: 2
 
 - type: entity
   name: raw xeno cutlet
@@ -974,17 +1069,13 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1173,11 +1264,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: red
+    state: spidercutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:
@@ -1198,11 +1285,7 @@
     - Cooked
     - Cutlet
   - type: Sprite
-    layers:
-    - state: cutlet-cooked
-      color: black
-    - state: cutlet-alpha
-      color: green
+    state: xenocutlet-cooked
   - type: SolutionContainerManager
     solutions:
       food:

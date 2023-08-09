@@ -1,11 +1,10 @@
 using Content.Server.Storage.Components;
 using Content.Shared.Audio;
-using Content.Shared.Interaction;
-using Robust.Server.Containers;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Storage.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -21,7 +20,7 @@ public sealed class CursedEntityStorageSystem : EntitySystem
         SubscribeLocalEvent<CursedEntityStorageComponent, StorageAfterCloseEvent>(OnClose);
     }
 
-    private void OnClose(EntityUid uid, CursedEntityStorageComponent component, StorageAfterCloseEvent args)
+    private void OnClose(EntityUid uid, CursedEntityStorageComponent component, ref StorageAfterCloseEvent args)
     {
         if (!TryComp<EntityStorageComponent>(uid, out var storage))
             return;

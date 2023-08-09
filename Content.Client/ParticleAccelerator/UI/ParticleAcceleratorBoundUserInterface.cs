@@ -1,14 +1,14 @@
 ﻿using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
-using Robust.Shared.GameObjects;
 
 namespace Content.Client.ParticleAccelerator.UI
 {
     public sealed class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private ParticleAcceleratorControlMenu? _menu;
 
-        public ParticleAcceleratorBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ParticleAcceleratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 

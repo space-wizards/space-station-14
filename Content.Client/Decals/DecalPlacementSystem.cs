@@ -1,12 +1,14 @@
+using System.Numerics;
 using Content.Client.Actions;
+using Content.Client.Decals.Overlays;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
+using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -17,9 +19,11 @@ namespace Content.Client.Decals;
 public sealed class DecalPlacementSystem : EntitySystem
 {
     [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly IOverlayManager _overlay = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SpriteSystem _sprite = default!;
 
     private string? _decalId;
     private Color _decalColor = Color.White;
@@ -32,9 +36,17 @@ public sealed class DecalPlacementSystem : EntitySystem
     private bool _placing;
     private bool _erasing;
 
+    public (DecalPrototype? Decal, bool Snap, Angle Angle, Color Color) GetActiveDecal()
+    {
+        return _active && _decalId != null ?
+            (_protoMan.Index<DecalPrototype>(_decalId), _snap, _decalAngle, _decalColor) :
+            (null, false, Angle.Zero, Color.Wheat);
+    }
+
     public override void Initialize()
     {
         base.Initialize();
+        _overlay.AddOverlay(new DecalPlacementOverlay(this, _transform, _sprite));
 
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
             (session, coords, uid) =>
@@ -146,6 +158,7 @@ public sealed class DecalPlacementSystem : EntitySystem
             DisplayName = $"{_decalId} ({_decalColor.ToHex()}, {(int) _decalAngle.Degrees})", // non-unique actions may be considered duplicates when saving/loading.
             Icon = decalProto.Sprite,
             Repeat = true,
+            ClientExclusive = true,
             CheckCanAccess = false,
             CheckCanInteract = false,
             Range = -1,
@@ -158,6 +171,7 @@ public sealed class DecalPlacementSystem : EntitySystem
     {
         base.Shutdown();
 
+        _overlay.RemoveOverlay<DecalPlacementOverlay>();
         CommandBinds.Unregister<DecalPlacementSystem>();
     }
 
@@ -183,7 +197,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
 public sealed class PlaceDecalActionEvent : WorldTargetActionEvent
 {
-    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>))]
+    [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>), required:true)]
     public string DecalId = string.Empty;
 
     [DataField("color")]

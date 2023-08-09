@@ -1,7 +1,6 @@
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using System.Linq;
-using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -36,8 +35,8 @@ namespace Content.Client.ContextMenu.UI
                 (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
                 (a, b, entMan) =>
                 {
-                    entMan.TryGetComponent<ISpriteComponent?>(a, out var spriteA);
-                    entMan.TryGetComponent<ISpriteComponent?>(b, out var spriteB);
+                    entMan.TryGetComponent<SpriteComponent?>(a, out var spriteA);
+                    entMan.TryGetComponent<SpriteComponent?>(b, out var spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;
@@ -54,7 +53,7 @@ namespace Content.Client.ContextMenu.UI
                 (e, entMan) =>
                 {
                     var hash = 0;
-                    foreach (var element in entMan.GetComponent<ISpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
+                    foreach (var element in entMan.GetComponent<SpriteComponent>(e).AllLayers.Where(obj => obj.Visible).Select(s => s.RsiState.Name))
                     {
                         hash ^= EqualityComparer<string>.Default.GetHashCode(element!);
                     }

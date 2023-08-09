@@ -1,5 +1,7 @@
 using Content.Shared.Containers.ItemSlots;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Fax;
 
@@ -33,27 +35,20 @@ public sealed class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("responsePings")]
     public bool ResponsePings { get; set; } = true;
-    
+
     /// <summary>
     /// Should admins be notified on message receive
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("notifyAdmins")]
     public bool NotifyAdmins { get; set; } = false;
-    
+
     /// <summary>
     /// Should that fax receive nuke codes send by admins. Probably should be captain fax only
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("receiveNukeCodes")]
     public bool ReceiveNukeCodes { get; set; } = false;
-    
-    /// <summary>
-    /// Is fax was emaaged
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("emagged")]
-    public bool Emagged { get; set; } = false;
 
     /// <summary>
     /// Sound to play when fax has been emagged
@@ -128,22 +123,30 @@ public sealed class FaxMachineComponent : Component
 [DataDefinition]
 public sealed class FaxPrintout
 {
-    [DataField("name")]
-    public string Name { get; }
+    [DataField("name", required: true)]
+    public string Name { get; } = default!;
 
-    [DataField("content")]
-    public string Content { get; }
+    [DataField("content", required: true)]
+    public string Content { get; } = default!;
+
+    [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
+    public string PrototypeId { get; } = default!;
 
     [DataField("stampState")]
     public string? StampState { get; }
 
     [DataField("stampedBy")]
-    public List<string> StampedBy { get; }
+    public List<string> StampedBy { get; } = new();
 
-    public FaxPrintout(string content, string name, string? stampState = null, List<string>? stampedBy = null)
+    private FaxPrintout()
+    {
+    }
+
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<string>? stampedBy = null)
     {
         Content = content;
         Name = name;
+        PrototypeId = prototypeId ?? "";
         StampState = stampState;
         StampedBy = stampedBy ?? new List<string>();
     }

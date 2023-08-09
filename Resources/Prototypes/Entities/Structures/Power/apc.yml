@@ -13,11 +13,11 @@
     sound:
       path: /Audio/Ambience/Objects/hdd_buzz.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
     castShadows: false
+    netsync: false
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
@@ -26,12 +26,32 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apc0
+    layers:
+    - state: base
+    - state: panel
+      map: ["enum.WiresVisualLayers.MaintenancePanel"]
+      visible: false
+    - state: display-charging
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.ChargeState"]
+    - state: lock0-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.InterfaceLock"]
+    - state: lock1-unlocked
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.PanelLock"]
+    - state: channel0-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Equipment"]
+    - state: channel1-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Lighting"]
+    - state: channel2-auto_on
+      shader: unshaded
+      map: ["enum.ApcVisualLayers.Environment"]
   - type: Appearance
-    visuals:
-    - type: ApcVisualizer
+  - type: ApcVisuals
   - type: Battery
     maxCharge: 50000
     startingCharge: 0
@@ -69,9 +89,14 @@
     supplyRampTolerance: 1000
     supplyRampRate: 500
   - type: WallMount
+  - type: WiresPanel
+  - type: Wires
+    BoardName: "APC"
+    LayoutId: APC
+  - type: WiresVisuals
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: Metallic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
     - trigger:
@@ -92,6 +117,13 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StationInfiniteBatteryTarget
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    mediumVoltageNode: input
+    lowVoltageNode: output
   - type: StaticPrice
     price: 500
 
@@ -110,9 +142,8 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/apc.rsi
-    state: apcframe
+    state: frame
   - type: Construction
     graph: APC
     node: apcFrame
@@ -146,8 +177,7 @@
   id: APCConstructed
   suffix: Open
   components:
-  - type: Apc
-    voltage: Apc
+  - type: WiresPanel
     open: true
 
 # APCs in use

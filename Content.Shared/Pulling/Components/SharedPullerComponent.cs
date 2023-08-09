@@ -5,9 +5,9 @@
     public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
-        public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.9f;
+        public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.95f;
 
-        public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.9f;
+        public float SprintSpeedModifier => Pulling == default ? 1.0f : 0.95f;
 
         [ViewVariables]
         public EntityUid? Pulling { get; set; }
@@ -17,12 +17,6 @@
         /// </summary>
         [DataField("needsHands")]
         public bool NeedsHands = true;
-
-        protected override void Shutdown()
-        {
-            EntitySystem.Get<SharedPullingStateManagementSystem>().ForceDisconnectPuller(this);
-            base.Shutdown();
-        }
 
         protected override void OnRemove()
         {

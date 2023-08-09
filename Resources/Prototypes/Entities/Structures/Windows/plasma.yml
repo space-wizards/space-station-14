@@ -40,7 +40,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 20.5
+    price: 60
   - type: RadiationBlocker
     resistance: 2
 
@@ -55,7 +55,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: plasma_window
   - type: Icon
@@ -81,4 +80,4 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
-    price: 20.5
+    price: 30

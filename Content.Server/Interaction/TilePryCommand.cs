@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Server.Tools.Components;
 using Content.Shared.Administration;
@@ -60,14 +61,14 @@ namespace Content.Server.Interaction
             {
                 for (var j = -radius; j <= radius; j++)
                 {
-                    var tile = mapGrid.GetTileRef(playerPosition.Offset((i, j)));
+                    var tile = mapGrid.GetTileRef(playerPosition.Offset(new Vector2(i, j)));
                     var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
                     var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 
                     if (!tileDef.CanCrowbar) continue;
 
-                    var underplating = tileDefinitionManager["UnderPlating"];
-                    mapGrid.SetTile(coordinates, new Tile(underplating.TileId));
+                    var plating = tileDefinitionManager["Plating"];
+                    mapGrid.SetTile(coordinates, new Tile(plating.TileId));
                 }
             }
         }

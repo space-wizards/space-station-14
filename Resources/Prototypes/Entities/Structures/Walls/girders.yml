@@ -11,14 +11,15 @@
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.45"
-      density: 60
-      mask:
-      - MachineMask
-      layer:
-      - GlassAirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 60
+        mask:
+        - MachineMask
+        layer:
+        - GlassAirlockLayer
   - type: InteractionOutline
   - type: Construction
     graph: Girder
@@ -49,7 +50,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
-    price: 0.5
+    price: 10
 
 - type: entity
   id: ReinforcedGirder
@@ -85,3 +86,5 @@
                   max: 1
             - !type:DoActsBehavior
               acts: [ "Destruction" ]
+    - type: StaticPrice
+      price: 66

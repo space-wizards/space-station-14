@@ -36,6 +36,11 @@ namespace Content.Shared.Construction.Steps
                 return typeof(MultipleTagsConstructionGraphStep);
             }
 
+            if (node.Has("minTemperature") || node.Has("maxTemperature"))
+            {
+                return typeof(TemperatureConstructionGraphStep);
+            }
+
             return null;
         }
 

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
@@ -5,6 +6,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -14,13 +16,15 @@ namespace Content.Shared.Stacks
     [UsedImplicitly]
     public abstract class SharedStackSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-        [Dependency] protected readonly SharedPopupSystem PopupSystem = default!;
-        [Dependency] protected readonly SharedHandsSystem HandsSystem = default!;
-        [Dependency] protected readonly SharedTransformSystem Xform = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IViewVariablesManager _vvm = default!;
+        [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
+        [Dependency] protected readonly SharedHandsSystem Hands = default!;
+        [Dependency] protected readonly SharedTransformSystem Xform = default!;
+        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] protected readonly SharedPopupSystem Popup = default!;
 
         public override void Initialize()
         {
@@ -72,18 +76,18 @@ namespace Content.Shared.Stacks
             switch (transfered)
             {
                 case > 0:
-                    PopupSystem.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
+                    Popup.PopupCoordinates($"+{transfered}", popupPos, Filter.Local(), false);
 
                     if (GetAvailableSpace(recipientStack) == 0)
                     {
-                        PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
+                        Popup.PopupCoordinates(Loc.GetString("comp-stack-becomes-full"),
                             popupPos.Offset(new Vector2(0, -0.5f)), Filter.Local(), false);
                     }
 
                     break;
 
                 case 0 when GetAvailableSpace(recipientStack) == 0:
-                    PopupSystem.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
+                    Popup.PopupCoordinates(Loc.GetString("comp-stack-already-full"), popupPos, Filter.Local(), false);
                     break;
             }
         }
@@ -96,10 +100,13 @@ namespace Content.Shared.Stacks
             StackComponent? recipientStack = null)
         {
             transfered = 0;
+            if (donor == recipient)
+                return false;
+
             if (!Resolve(recipient, ref recipientStack, false) || !Resolve(donor, ref donorStack, false))
                 return false;
 
-            if (recipientStack.StackTypeId == null || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
+            if (string.IsNullOrEmpty(recipientStack.StackTypeId) || !recipientStack.StackTypeId.Equals(donorStack.StackTypeId))
                 return false;
 
             transfered = Math.Min(donorStack.Count, GetAvailableSpace(recipientStack));
@@ -119,7 +126,7 @@ namespace Content.Shared.Stacks
             EntityUid item,
             EntityUid user,
             StackComponent? itemStack = null,
-            SharedHandsComponent? hands = null)
+            HandsComponent? hands = null)
         {
             if (!Resolve(user, ref hands, false))
                 return;
@@ -127,12 +134,12 @@ namespace Content.Shared.Stacks
             if (!Resolve(item, ref itemStack, false))
             {
                 // This isn't even a stack. Just try to pickup as normal.
-                HandsSystem.PickupOrDrop(user, item, handsComp: hands);
+                Hands.PickupOrDrop(user, item, handsComp: hands);
                 return;
             }
 
             // This is shit code until hands get fixed and give an easy way to enumerate over items, starting with the currently active item.
-            foreach (var held in HandsSystem.EnumerateHeld(user, hands))
+            foreach (var held in Hands.EnumerateHeld(user, hands))
             {
                 TryMergeStacks(item, held, out _, donorStack: itemStack);
 
@@ -140,7 +147,7 @@ namespace Content.Shared.Stacks
                     return;
             }
 
-            HandsSystem.PickupOrDrop(user, item, handsComp: hands);
+            Hands.PickupOrDrop(user, item, handsComp: hands);
         }
 
         public virtual void SetCount(EntityUid uid, int amount, StackComponent? component = null)
@@ -159,6 +166,7 @@ namespace Content.Shared.Stacks
             amount = Math.Min(amount, GetMaxCount(component));
             amount = Math.Max(amount, 0);
 
+            // Server-side override deletes the entity if count == 0
             component.Count = amount;
             Dirty(component);
 
@@ -188,6 +196,46 @@ namespace Content.Shared.Stacks
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Tries to merge a stack into any of the stacks it is touching.
+        /// </summary>
+        /// <returns>Whether or not it was successfully merged into another stack</returns>
+        public bool TryMergeToContacts(EntityUid uid, StackComponent? stack = null, TransformComponent? xform = null)
+        {
+            if (!Resolve(uid, ref stack, ref xform, false))
+                return false;
+
+            var map = xform.MapID;
+            var bounds = _physics.GetWorldAABB(uid);
+            var intersecting = _entityLookup.GetComponentsIntersecting<StackComponent>(map, bounds,
+                LookupFlags.Dynamic | LookupFlags.Sundries);
+
+            var merged = false;
+            foreach (var otherStack in intersecting)
+            {
+                var otherEnt = otherStack.Owner;
+
+                if (!TryMergeStacks(uid, otherEnt, out _, stack, otherStack))
+                    continue;
+                merged = true;
+
+                if (stack.Count <= 0)
+                    break;
+            }
+            return merged;
+        }
+
+        /// <summary>
+        /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public int GetCount(EntityUid uid, StackComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) ? component.Count : 1;
         }
 
         /// <summary>
@@ -235,7 +283,7 @@ namespace Content.Shared.Stacks
             if (component.MaxCountOverride != null)
                 return component.MaxCountOverride.Value;
 
-            if (component.StackTypeId == null)
+            if (string.IsNullOrEmpty(component.StackTypeId))
                 return 1;
 
             var stackProto = _prototype.Index<StackPrototype>(component.StackTypeId);
@@ -252,6 +300,38 @@ namespace Content.Shared.Stacks
         public int GetAvailableSpace(StackComponent component)
         {
             return GetMaxCount(component) - component.Count;
+        }
+
+        /// <summary>
+        /// Tries to add one stack to another. May have some leftover count in the inserted entity.
+        /// </summary>
+        public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, StackComponent? insertStack = null, StackComponent? targetStack = null)
+        {
+            if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
+                return false;
+
+            var count = insertStack.Count;
+            return TryAdd(insertEnt, targetEnt, count, insertStack, targetStack);
+        }
+
+        /// <summary>
+        /// Tries to add one stack to another. May have some leftover count in the inserted entity.
+        /// </summary>
+        public bool TryAdd(EntityUid insertEnt, EntityUid targetEnt, int count, StackComponent? insertStack = null, StackComponent? targetStack = null)
+        {
+            if (!Resolve(insertEnt, ref insertStack) || !Resolve(targetEnt, ref targetStack))
+                return false;
+
+            var available = GetAvailableSpace(targetStack);
+
+            if (available <= 0)
+                return false;
+
+            var change = Math.Min(available, count);
+
+            SetCount(targetEnt, targetStack.Count + change, targetStack);
+            SetCount(insertEnt, insertStack.Count - change, insertStack);
+            return true;
         }
 
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)

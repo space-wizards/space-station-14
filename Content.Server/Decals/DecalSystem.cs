@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Chunking;
+using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
@@ -29,10 +32,12 @@ namespace Content.Server.Decals
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IDependencyCollection _dependencies = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
+        private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
+        private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -42,7 +47,6 @@ namespace Content.Server.Decals
         private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
             new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
                 new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
-        private bool _pvsEnabled;
 
         public override void Initialize()
         {
@@ -50,7 +54,6 @@ namespace Content.Server.Decals
 
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
             SubscribeLocalEvent<TileChangedEvent>(OnTileChanged);
-            SubscribeLocalEvent<DecalGridComponent, ComponentGetState>(OnGetState);
 
             SubscribeNetworkEvent<RequestDecalPlacementEvent>(OnDecalPlacementRequest);
             SubscribeNetworkEvent<RequestDecalRemovalEvent>(OnDecalRemovalRequest);
@@ -61,10 +64,10 @@ namespace Content.Server.Decals
 
         private void OnPvsToggle(bool value)
         {
-            if (value == _pvsEnabled)
+            if (value == PvsEnabled)
                 return;
 
-            _pvsEnabled = value;
+            PvsEnabled = value;
 
             if (value)
                 return;
@@ -81,70 +84,53 @@ namespace Content.Server.Decals
             }
         }
 
-        private void OnGetState(EntityUid uid, DecalGridComponent component, ref ComponentGetState args)
-        {
-            if (_pvsEnabled && !args.ReplayState)
-                return;
-
-            // Should this be a full component state or a delta-state?
-            if (args.FromTick <= component.CreationTick && args.FromTick <= component.ForceTick)
-            {
-                args.State = new DecalGridState(component.ChunkCollection.ChunkCollection);
-                return;
-            }
-
-            var data = new Dictionary<Vector2i, DecalChunk>();
-            foreach (var (index, chunk) in component.ChunkCollection.ChunkCollection)
-            {
-                if (chunk.LastModified >= args.FromTick)
-                    data[index] = chunk;
-            }
-
-            args.State = new DecalGridState(data) { AllChunks = new(component.ChunkCollection.ChunkCollection.Keys) };
-        }
-
         private void OnGridSplit(ref PostGridSplitEvent ev)
         {
+            if (!TryComp(ev.OldGrid, out DecalGridComponent? oldComp))
+                return;
+
+            if (!TryComp(ev.Grid, out DecalGridComponent? newComp))
+                return;
+
             // Transfer decals over to the new grid.
             var enumerator = MapManager.GetGrid(ev.Grid).GetAllTilesEnumerator();
-            var oldChunkCollection = DecalGridChunkCollection(ev.OldGrid);
-            var chunkCollection = DecalGridChunkCollection(ev.Grid);
 
-            if (chunkCollection == null || oldChunkCollection == null)
-                return;
+            var oldChunkCollection = oldComp.ChunkCollection.ChunkCollection;
+            var chunkCollection = newComp.ChunkCollection.ChunkCollection;
 
             while (enumerator.MoveNext(out var tile))
             {
                 var tilePos = (Vector2) tile.Value.GridIndices;
                 var chunkIndices = GetChunkIndices(tilePos);
 
-                if (!oldChunkCollection.ChunkCollection.TryGetValue(chunkIndices, out var oldChunk)) continue;
+                if (!oldChunkCollection.TryGetValue(chunkIndices, out var oldChunk))
+                    continue;
 
-                var bounds = new Box2(tilePos - 0.01f, tilePos + 1.01f);
+                var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
                 var toRemove = new RemQueue<uint>();
 
-                foreach (var (oldUid, decal) in oldChunk.Decals)
+                foreach (var (oldDecalId, decal) in oldChunk.Decals)
                 {
-                    if (!bounds.Contains(decal.Coordinates)) continue;
+                    if (!bounds.Contains(decal.Coordinates))
+                        continue;
 
-                    var uid = chunkCollection.NextUid++;
-                    var chunk = chunkCollection.ChunkCollection.GetOrNew(chunkIndices);
-
-                    chunk.Decals[uid] = decal;
-                    ChunkIndex[ev.Grid][uid] = chunkIndices;
-                    DirtyChunk(ev.Grid, chunkIndices, chunk);
-
-                    toRemove.Add(oldUid);
-                    ChunkIndex[ev.OldGrid].Remove(oldUid);
+                    var newDecalId = newComp.ChunkCollection.NextDecalId++;
+                    var newChunk = chunkCollection.GetOrNew(chunkIndices);
+                    newChunk.Decals[newDecalId] = decal;
+                    newComp.DecalIndex[newDecalId] = chunkIndices;
+                    toRemove.Add(oldDecalId);
                 }
 
-                foreach (var uid in toRemove)
+                foreach (var oldDecalId in toRemove)
                 {
-                    oldChunk.Decals.Remove(uid);
+                    oldChunk.Decals.Remove(oldDecalId);
+                    oldComp.DecalIndex.Remove(oldDecalId);
                 }
+
+                DirtyChunk(ev.Grid, chunkIndices, chunkCollection.GetOrNew(chunkIndices));
 
                 if (oldChunk.Decals.Count == 0)
-                    oldChunkCollection.ChunkCollection.Remove(chunkIndices);
+                    oldChunkCollection.Remove(chunkIndices);
 
                 if (toRemove.List?.Count > 0)
                     DirtyChunk(ev.OldGrid, chunkIndices, oldChunk);
@@ -164,32 +150,35 @@ namespace Content.Server.Decals
             if (!args.NewTile.IsSpace(_tileDefMan))
                 return;
 
-            var chunkCollection = ChunkCollection(args.Entity);
-            if (chunkCollection == null)
+            if (!TryComp(args.Entity, out DecalGridComponent? grid))
                 return;
 
             var indices = GetChunkIndices(args.NewTile.GridIndices);
             var toDelete = new HashSet<uint>();
-            if (chunkCollection.TryGetValue(indices, out var chunk))
+            if (!grid.ChunkCollection.ChunkCollection.TryGetValue(indices, out var chunk))
+                return;
+
+            foreach (var (uid, decal) in chunk.Decals)
             {
-                foreach (var (uid, decal) in chunk.Decals)
+                if (new Vector2((int) Math.Floor(decal.Coordinates.X), (int) Math.Floor(decal.Coordinates.Y)) ==
+                    args.NewTile.GridIndices)
                 {
-                    if (new Vector2((int) Math.Floor(decal.Coordinates.X), (int) Math.Floor(decal.Coordinates.Y)) ==
-                        args.NewTile.GridIndices)
-                    {
-                        toDelete.Add(uid);
-                    }
+                    toDelete.Add(uid);
                 }
             }
 
-            if (toDelete.Count == 0) return;
+            if (toDelete.Count == 0)
+                return;
 
-            foreach (var uid in toDelete)
+            foreach (var decalId in toDelete)
             {
-                RemoveDecalInternal( args.NewTile.GridUid, uid);
+                grid.DecalIndex.Remove(decalId);
+                chunk.Decals.Remove(decalId);
             }
 
-            DirtyChunk(args.NewTile.GridUid, indices, chunk!);
+            DirtyChunk(args.Entity, indices, chunk);
+            if (chunk.Decals.Count == 0)
+                grid.ChunkCollection.ChunkCollection.Remove(indices);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -217,7 +206,19 @@ namespace Content.Server.Decals
             if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            TryAddDecal(ev.Decal, ev.Coordinates, out _);
+            if (!TryAddDecal(ev.Decal, ev.Coordinates, out _))
+                return;
+
+            if (eventArgs.SenderSession.AttachedEntity != null)
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{eventArgs.SenderSession.Name} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
         }
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
@@ -238,10 +239,20 @@ namespace Content.Server.Decals
                 return;
 
             // remove all decals on the same tile
-            foreach (var (uid, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
+            foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
             {
-                var chunkIndices = GetChunkIndices(decal.Coordinates);
-                RemoveDecal(gridId.Value, uid);
+                if (eventArgs.SenderSession.AttachedEntity != null)
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+
+                RemoveDecal(gridId.Value, decalId);
             }
         }
 
@@ -253,19 +264,17 @@ namespace Content.Server.Decals
             _dirtyChunks[id].Add(chunkIndices);
         }
 
-        public bool TryAddDecal(string id, EntityCoordinates coordinates, [NotNullWhen(true)] out uint? uid, Color? color = null, Angle? rotation = null, int zIndex = 0, bool cleanable = false)
+        public bool TryAddDecal(string id, EntityCoordinates coordinates, out uint decalId, Color? color = null, Angle? rotation = null, int zIndex = 0, bool cleanable = false)
         {
-            uid = 0;
-
             rotation ??= Angle.Zero;
             var decal = new Decal(coordinates.Position, id, color, rotation.Value, zIndex, cleanable);
 
-            return TryAddDecal(decal, coordinates, out uid);
+            return TryAddDecal(decal, coordinates, out decalId);
         }
 
-        public bool TryAddDecal(Decal decal, EntityCoordinates coordinates, [NotNull] out uint? uid)
+        public bool TryAddDecal(Decal decal, EntityCoordinates coordinates, out uint decalId)
         {
-            uid = 0;
+            decalId = 0;
 
             if (!PrototypeManager.HasIndex<DecalPrototype>(decal.Id))
                 return false;
@@ -277,181 +286,121 @@ namespace Content.Server.Decals
             if (grid.GetTileRef(coordinates).IsSpace(_tileDefMan))
                 return false;
 
-            var chunkCollection = DecalGridChunkCollection(gridId.Value);
-            if (chunkCollection == null)
+            if (!TryComp(gridId, out DecalGridComponent? comp))
                 return false;
 
-            uid = chunkCollection.NextUid++;
+            decalId = comp.ChunkCollection.NextDecalId++;
             var chunkIndices = GetChunkIndices(decal.Coordinates);
-            var chunk = chunkCollection.ChunkCollection.GetOrNew(chunkIndices);
-            chunk.Decals[uid.Value] = decal;
-            ChunkIndex[gridId.Value][uid.Value] = chunkIndices;
+            var chunk = comp.ChunkCollection.ChunkCollection.GetOrNew(chunkIndices);
+            chunk.Decals[decalId] = decal;
+            comp.DecalIndex[decalId] = chunkIndices;
             DirtyChunk(gridId.Value, chunkIndices, chunk);
 
             return true;
         }
 
-        public bool RemoveDecal(EntityUid gridId, uint uid) => RemoveDecalInternal(gridId, uid);
+        public bool RemoveDecal(EntityUid gridId, uint decalId, DecalGridComponent? component = null)
+            => RemoveDecalInternal(gridId, decalId, out _, component);
 
         public HashSet<(uint Index, Decal Decal)> GetDecalsInRange(EntityUid gridId, Vector2 position, float distance = 0.75f, Func<Decal, bool>? validDelegate = null)
         {
-            var uids = new HashSet<(uint, Decal)>();
+            var decalIds = new HashSet<(uint, Decal)>();
             var chunkCollection = ChunkCollection(gridId);
             var chunkIndices = GetChunkIndices(position);
             if (chunkCollection == null || !chunkCollection.TryGetValue(chunkIndices, out var chunk))
-                return uids;
+                return decalIds;
 
             foreach (var (uid, decal) in chunk.Decals)
             {
-                if ((position - decal.Coordinates-new Vector2(0.5f, 0.5f)).Length > distance)
+                if ((position - decal.Coordinates - new Vector2(0.5f, 0.5f)).Length() > distance)
                     continue;
 
                 if (validDelegate == null || validDelegate(decal))
                 {
-                    uids.Add((uid, decal));
+                    decalIds.Add((uid, decal));
                 }
             }
 
-            return uids;
+            return decalIds;
         }
 
-        public bool SetDecalPosition(EntityUid gridId, uint uid, EntityCoordinates coordinates)
+        public HashSet<(uint Index, Decal Decal)> GetDecalsIntersecting(EntityUid gridUid, Box2 bounds, DecalGridComponent? component = null)
         {
-            var newGridId = coordinates.GetGridUid(EntityManager);
-            if (newGridId == null)
-                return false;
+            var decalIds = new HashSet<(uint, Decal)>();
+            var chunkCollection = ChunkCollection(gridUid, component);
 
-            return SetDecalPosition(gridId, uid, newGridId.Value, coordinates.Position);
-        }
-
-        public bool SetDecalPosition(EntityUid gridId, uint uid, EntityUid newGridId, Vector2 position)
-        {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
-
-            var chunkCollection = ChunkCollection(gridId);
             if (chunkCollection == null)
-                return false;
+                return decalIds;
 
-            var decal = chunkCollection[indices].Decals[uid];
-            if (newGridId == gridId)
+            var chunks = new ChunkIndicesEnumerator(bounds, ChunkSize);
+
+            while (chunks.MoveNext(out var chunkOrigin))
             {
-                var existingChunk = chunkCollection[indices];
-                existingChunk.Decals[uid] = decal.WithCoordinates(position);
-                DirtyChunk(gridId, indices, existingChunk);
-                return true;
+                if (!chunkCollection.TryGetValue(chunkOrigin.Value, out var chunk))
+                    continue;
+
+                foreach (var (id, decal) in chunk.Decals)
+                {
+                    if (!bounds.Contains(decal.Coordinates))
+                        continue;
+
+                    decalIds.Add((id, decal));
+                }
             }
 
-            RemoveDecalInternal(gridId, uid);
-
-            var newChunkCollection = ChunkCollection(newGridId);
-            if (newChunkCollection == null)
-                return false;
-
-            var chunkIndices = GetChunkIndices(position);
-            if(!newChunkCollection.ContainsKey(chunkIndices))
-                newChunkCollection[chunkIndices] = new();
-
-            var chunk = newChunkCollection[chunkIndices];
-            chunk.Decals[uid] = decal.WithCoordinates(position);
-            ChunkIndex[newGridId][uid] = chunkIndices;
-            DirtyChunk(newGridId, chunkIndices, chunk);
-            return true;
+            return decalIds;
         }
 
-        public bool SetDecalColor(EntityUid gridId, uint uid, Color? color)
+        /// <summary>
+        ///     Changes a decals position. Note this will actually result in a new decal being created, possibly on a new grid or chunk.
+        /// </summary>
+        /// <remarks>
+        ///     If the new position is invalid, this will result in the decal getting deleted.
+        /// </remarks>
+        public bool SetDecalPosition(EntityUid gridId, uint decalId, EntityCoordinates coordinates, DecalGridComponent? comp = null)
         {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
-
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null)
+            if (!Resolve(gridId, ref comp))
                 return false;
 
-            var chunk = chunkCollection[indices];
-            var decal = chunk.Decals[uid];
-            chunk.Decals[uid] = decal.WithColor(color);
+            if (!RemoveDecalInternal(gridId, decalId, out var removed, comp))
+                return false;
+
+            return TryAddDecal(removed.WithCoordinates(coordinates.Position), coordinates, out _);
+        }
+
+        private bool ModifyDecal(EntityUid gridId, uint decalId, Func<Decal, Decal> modifyDecal, DecalGridComponent? comp = null)
+        {
+            if (!Resolve(gridId, ref comp))
+                return false;
+
+            if (!comp.DecalIndex.TryGetValue(decalId, out var indices))
+                return false;
+
+            var chunk = comp.ChunkCollection.ChunkCollection[indices];
+            var decal = chunk.Decals[decalId];
+            chunk.Decals[decalId] = modifyDecal(decal);
             DirtyChunk(gridId, indices, chunk);
             return true;
         }
 
-        public bool SetDecalId(EntityUid gridId, uint uid, string id)
-        {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
+        public bool SetDecalColor(EntityUid gridId, uint decalId, Color? value, DecalGridComponent? comp = null)
+            => ModifyDecal(gridId, decalId, x => x.WithColor(value), comp);
 
+        public bool SetDecalRotation(EntityUid gridId, uint decalId, Angle value, DecalGridComponent? comp = null)
+            => ModifyDecal(gridId, decalId, x => x.WithRotation(value), comp);
+
+        public bool SetDecalZIndex(EntityUid gridId, uint decalId, int value, DecalGridComponent? comp = null)
+            => ModifyDecal(gridId, decalId, x => x.WithZIndex(value), comp);
+
+        public bool SetDecalCleanable(EntityUid gridId, uint decalId, bool value, DecalGridComponent? comp = null)
+            => ModifyDecal(gridId, decalId, x => x.WithCleanable(value), comp);
+
+        public bool SetDecalId(EntityUid gridId, uint decalId, string id, DecalGridComponent? comp = null)
+        {
             if (!PrototypeManager.HasIndex<DecalPrototype>(id))
                 throw new ArgumentOutOfRangeException($"Tried to set decal id to invalid prototypeid: {id}");
 
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null)
-                return false;
-
-            var chunk = chunkCollection[indices];
-            var decal = chunk.Decals[uid];
-            chunk.Decals[uid] = decal.WithId(id);
-            DirtyChunk(gridId, indices , chunk);
-            return true;
-        }
-
-        public bool SetDecalRotation(EntityUid gridId, uint uid, Angle angle)
-        {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
-
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null)
-                return false;
-
-            var chunk = chunkCollection[indices];
-            var decal = chunk.Decals[uid];
-            chunk.Decals[uid] = decal.WithRotation(angle);
-            DirtyChunk(gridId, indices, chunk);
-            return true;
-        }
-
-        public bool SetDecalZIndex(EntityUid gridId, uint uid, int zIndex)
-        {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
-
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null)
-                return false;
-
-            var chunk = chunkCollection[indices];
-            var decal = chunk.Decals[uid];
-            chunk.Decals[uid] = decal.WithZIndex(zIndex);
-            DirtyChunk(gridId, indices, chunk);
-            return true;
-        }
-
-        public bool SetDecalCleanable(EntityUid gridId, uint uid, bool cleanable)
-        {
-            if (!ChunkIndex.TryGetValue(gridId, out var values) || !values.TryGetValue(uid, out var indices))
-            {
-                return false;
-            }
-
-            var chunkCollection = ChunkCollection(gridId);
-            if (chunkCollection == null)
-                return false;
-
-            var chunk = chunkCollection[indices];
-            var decal = chunk.Decals[uid];
-            chunk.Decals[uid] = decal.WithCleanable(cleanable);
-            DirtyChunk(gridId, indices, chunk);
-            return true;
+            return ModifyDecal(gridId, decalId, x => x.WithId(id), comp);
         }
 
         public override void Update(float frameTime)
@@ -464,13 +413,13 @@ namespace Content.Server.Decals
                     Dirty(decals);
             }
 
-            if (!_pvsEnabled)
+            if (!PvsEnabled)
             {
                 _dirtyChunks.Clear();
                 return;
             }
 
-            if (_pvsEnabled)
+            if (PvsEnabled)
             {
                 var players = _playerManager.ServerSessions.Where(x => x.Status == SessionStatus.InGame).ToArray();
                 var opts = new ParallelOptions { MaxDegreeOfParallelism = _parMan.ParallelProcessCount };

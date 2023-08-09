@@ -9,7 +9,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     {
         [DataField("recursive")] private bool _recursive = true;
 
-        public void Execute(EntityUid owner, DestructibleSystem system)
+        public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (system.EntityManager.TryGetComponent(owner, out BodyComponent? body))
             {

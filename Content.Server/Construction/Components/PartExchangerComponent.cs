@@ -1,4 +1,4 @@
-﻿using System.Threading;
+using System.Threading;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Construction.Components;
@@ -27,6 +27,4 @@ public sealed class PartExchangerComponent : Component
     public SoundSpecifier ExchangeSound = new SoundPathSpecifier("/Audio/Items/rped.ogg");
 
     public IPlayingAudioStream? AudioStream;
-
-    public CancellationTokenSource? Token;
 }

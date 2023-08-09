@@ -25,7 +25,6 @@
       - DrinkBarefootGlass
       - DrinkBeerglass
       - DrinkBerryJuice
-      - DrinkBilkGlass
       - DrinkBlackRussianGlass
       - DrinkBlueCuracaoGlass
       - DrinkBloodyMaryGlass
@@ -33,7 +32,6 @@
       - DrinkBraveBullGlass
       - DrinkCarrotJuice
       - DrinkChocolateGlass
-      - DrinkCafeLatte
       - DrinkCognacGlass
       - DrinkCubaLibreGlass
       - DrinkDeadRumGlass
@@ -69,6 +67,7 @@
       - DrinkMojito
       - DrinkNTCahors
       - DrinkPatronGlass
+      - DrinkPoscaGlass
       - DrinkRedMeadGlass
       - DrinkRewriter
       - DrinkRootBeerFloatGlass

@@ -9,34 +9,42 @@
     - Disposal
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     snapCardinals: true
     layers:
     - state: condisposal
-      map: ["enum.DisposalUnitVisualLayers.Base"]
-    - state: dispover-handle
-      map: ["enum.DisposalUnitVisualLayers.Handle"]
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-flush
+      map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
     - state: dispover-ready
-      map: ["enum.DisposalUnitVisualLayers.Light"]
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.25,-0.4,0.25,0.4"
-      density: 75
-      mask:
-      - MachineMask
-      layer:
-      - MachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.4,0.25,0.4"
+        density: 75
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
   - type: Destructible
     thresholds:
     - trigger:
         !type:DamageTrigger
-        damage: 300
-      behaviors: #excess damage (nuke?). avoid computational cost of spawning entities.
+        damage: 200
+      behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
     - trigger:
@@ -54,28 +62,16 @@
             min: 1
             max: 1
   - type: Appearance
-    visuals:
-    - type: DisposalUnitVisualizer
-      state_unanchored: condisposal
-      state_anchored: disposal
-      state_charging: disposal-charging
-      overlay_charging: dispover-charge
-      overlay_ready: dispover-ready
-      overlay_full: dispover-full
-      overlay_engaged: dispover-handle
-      state_flush: disposal-flush
-      flush_sound:
-        path: /Audio/Machines/disposalflush.ogg
-      flush_time: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
   - type: ContainerContainer
     containers:
-      DisposalUnit: !type:Container
+      disposals: !type:Container
   - type: StaticPrice
-    price: 100
+    price: 62
+  - type: PowerSwitch
 
 - type: entity
   id: DisposalUnit
@@ -86,12 +82,10 @@
     graph: DisposalMachine
     node: disposal_unit
   - type: DisposalUnit
-    flushTime: 2
   - type: UserInterface
     interfaces:
     - key: enum.DisposalUnitUiKey.Key
       type: DisposalUnitBoundUserInterface
-
 
 - type: entity
   id: MailingUnit
@@ -100,20 +94,28 @@
   description: A pneumatic mail delivery unit.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/disposal.rsi
     layers:
       - state: conmailing
+        map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+      - state: mailing
         map: [ "enum.DisposalUnitVisualLayers.Base" ]
-      - state: mailover-handle
-        map: [ "enum.DisposalUnitVisualLayers.Handle" ]
+      - state: mailing-charging
+        map: [ "enum.DisposalUnitVisualLayers.BaseCharging" ]
+      - state: mailing-flush
+        map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+      - state: dispover-charge
+        map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
       - state: dispover-ready
-        map: [ "enum.DisposalUnitVisualLayers.Light" ]
+        map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+      - state: dispover-full
+        map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+      - state: mailover-handle
+        map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
   - type: Construction
     graph: DisposalMachine
     node: mailing_unit
   - type: DisposalUnit
-    flushTime: 2
     autoEngageEnabled: false
     mobsCanEnter: false
   - type: MailingUnit
@@ -123,20 +125,9 @@
     transmitFrequencyId: MailingUnit
   - type: WiredNetworkConnection
   - type: Configuration
+    config:
+      tag:
   - type: Appearance
-    visuals:
-      - type: DisposalUnitVisualizer
-        state_unanchored: conmailing
-        state_anchored: mailing
-        state_charging: mailing-charging
-        overlay_charging: dispover-charge
-        overlay_ready: dispover-ready
-        overlay_full: dispover-full
-        overlay_engaged: mailover-handle
-        state_flush: mailing-flush
-        flush_sound:
-          path: /Audio/Machines/disposalflush.ogg
-        flush_time: 2
   - type: UserInterface
     interfaces:
     - key: enum.MailingUnitUiKey.Key

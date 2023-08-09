@@ -1,8 +1,7 @@
-using System.Threading;
 using Content.Server.Light.EntitySystems;
 using Content.Shared.Damage;
-using Content.Shared.Light;
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
+using Content.Shared.Light.Component;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Prototypes;
@@ -55,21 +54,31 @@ namespace Content.Server.Light.Components
         [ViewVariables]
         public TimeSpan? LastGhostBlink;
 
-        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("onPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string OnPort = "On";
 
-        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string OffPort = "Off";
 
-        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string TogglePort = "Toggle";
-
-        public CancellationTokenSource? CancelToken;
 
         /// <summary>
         /// How long it takes to eject a bulb from this
         /// </summary>
         [DataField("ejectBulbDelay")]
         public float EjectBulbDelay = 2;
+
+        /// <summary>
+        /// Shock damage done to a mob that hits the light with an unarmed attack
+        /// </summary>
+        [DataField("unarmedHitShock")]
+        public int UnarmedHitShock = 20;
+
+        /// <summary>
+        /// Stun duration applied to a mob that hits the light with an unarmed attack
+        /// </summary>
+        [DataField("unarmedHitStun")]
+        public TimeSpan UnarmedHitStun = TimeSpan.FromSeconds(5);
     }
 }

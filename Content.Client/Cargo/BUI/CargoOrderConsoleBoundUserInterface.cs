@@ -38,9 +38,10 @@ namespace Content.Client.Cargo.BUI
         /// <summary>
         /// Currently selected product
         /// </summary>
+        [ViewVariables]
         private CargoProductPrototype? _product;
 
-        public CargoOrderConsoleBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public CargoOrderConsoleBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -48,17 +49,15 @@ namespace Content.Client.Cargo.BUI
         {
             base.Open();
 
-            var entityManager = IoCManager.Resolve<IEntityManager>();
-            var sysManager = entityManager.EntitySysManager;
-            var spriteSystem = sysManager.GetEntitySystem<SpriteSystem>();
+            var spriteSystem = EntMan.System<SpriteSystem>();
             _menu = new CargoConsoleMenu(IoCManager.Resolve<IPrototypeManager>(), spriteSystem);
             var localPlayer = IoCManager.Resolve<IPlayerManager>()?.LocalPlayer?.ControlledEntity;
             var description = new FormattedMessage();
 
             string orderRequester;
 
-            if (entityManager.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
-                orderRequester = Identity.Name(localPlayer.Value, entityManager);
+            if (EntMan.TryGetComponent<MetaDataComponent>(localPlayer, out var metadata))
+                orderRequester = Identity.Name(localPlayer.Value, EntMan);
             else
                 orderRequester = string.Empty;
 
@@ -75,8 +74,8 @@ namespace Content.Client.Cargo.BUI
                 description.PushColor(Color.White); // Rich text default color is grey
                 if (row.MainButton.ToolTip != null)
                     description.AddText(row.MainButton.ToolTip);
-                    _orderMenu.Description.SetMessage(description);
 
+                _orderMenu.Description.SetMessage(description);
                 _product = row.Product;
                 _orderMenu.ProductName.Text = row.ProductName.Text;
                 _orderMenu.PointCost.Text = row.PointCost.Text;
@@ -138,7 +137,7 @@ namespace Content.Client.Cargo.BUI
 
         private bool AddOrder()
         {
-            int orderAmt = _orderMenu?.Amount.Value ?? 0;
+            var orderAmt = _orderMenu?.Amount.Value ?? 0;
             if (orderAmt < 1 || orderAmt > OrderCapacity)
             {
                 return false;
@@ -158,7 +157,7 @@ namespace Content.Client.Cargo.BUI
             if (args.Button.Parent?.Parent is not CargoOrderRow row || row.Order == null)
                 return;
 
-            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleRemoveOrderMessage(row.Order.OrderId));
         }
 
         private void ApproveOrder(ButtonEventArgs args)
@@ -169,7 +168,7 @@ namespace Content.Client.Cargo.BUI
             if (OrderCount >= OrderCapacity)
                 return;
 
-            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderNumber));
+            SendMessage(new CargoConsoleApproveOrderMessage(row.Order.OrderId));
             // Most of the UI isn't predicted anyway so.
             // _menu?.UpdateCargoCapacity(OrderCount + row.Order.Amount, OrderCapacity);
         }

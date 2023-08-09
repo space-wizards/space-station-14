@@ -1,8 +1,8 @@
-﻿using System.Threading;
-using Content.Server.Administration.Logs;
+﻿using Content.Server.Administration.Logs;
 using Content.Server.Maps;
 using Content.Server.Tools.Components;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
 using Content.Shared.Maps;
 using Content.Shared.Tools.Components;
@@ -19,17 +19,13 @@ public sealed partial class ToolSystem
     {
         SubscribeLocalEvent<LatticeCuttingComponent, AfterInteractEvent>(OnLatticeCuttingAfterInteract);
         SubscribeLocalEvent<LatticeCuttingComponent, LatticeCuttingCompleteEvent>(OnLatticeCutComplete);
-        SubscribeLocalEvent<LatticeCuttingComponent, LatticeCuttingCancelledEvent>(OnLatticeCutCancelled);
-    }
-
-    private void OnLatticeCutCancelled(EntityUid uid, LatticeCuttingComponent component, LatticeCuttingCancelledEvent args)
-    {
-        component.CancelTokenSource = null;
     }
 
     private void OnLatticeCutComplete(EntityUid uid, LatticeCuttingComponent component, LatticeCuttingCompleteEvent args)
     {
-        component.CancelTokenSource = null;
+        if (args.Cancelled)
+            return;
+
         var gridUid = args.Coordinates.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
@@ -38,7 +34,7 @@ public sealed partial class ToolSystem
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
             || tile.IsBlockedTurf(true))
             return;
 
@@ -52,20 +48,13 @@ public sealed partial class ToolSystem
         if (args.Handled || !args.CanReach || args.Target != null)
             return;
 
-        if (TryCut(args.User, component, args.ClickLocation))
+        if (TryCut(uid, args.User, component, args.ClickLocation))
             args.Handled = true;
     }
 
-    private bool TryCut(EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
+    private bool TryCut(EntityUid toolEntity, EntityUid user, LatticeCuttingComponent component, EntityCoordinates clickLocation)
     {
-        if (component.CancelTokenSource != null)
-            return true;
-
-        ToolComponent? tool = null;
-        if (component.ToolComponentNeeded && !TryComp<ToolComponent?>(component.Owner, out tool))
-            return false;
-
-        if (!_mapManager.TryGetGrid(clickLocation.GetGridUid(EntityManager), out var mapGrid))
+        if (!_mapManager.TryFindGridAt(clickLocation.ToMap(EntityManager, _transformSystem), out _, out var mapGrid))
             return false;
 
         var tile = mapGrid.GetTileRef(clickLocation);
@@ -77,34 +66,13 @@ public sealed partial class ToolSystem
 
         if (_tileDefinitionManager[tile.Tile.TypeId] is not ContentTileDefinition tileDef
             || !tileDef.CanWirecutter
-            || tileDef.BaseTurfs.Count == 0
-            || _tileDefinitionManager[tileDef.BaseTurfs[^1]] is not ContentTileDefinition newDef
+            || string.IsNullOrEmpty(tileDef.BaseTurf)
+            || _tileDefinitionManager[tileDef.BaseTurf] is not ContentTileDefinition newDef
             || tile.IsBlockedTurf(true))
             return false;
 
-        var tokenSource = new CancellationTokenSource();
-        component.CancelTokenSource = tokenSource;
-
-        if (!UseTool(component.Owner, user, null, 0f, component.Delay, new[] {component.QualityNeeded},
-                new LatticeCuttingCompleteEvent
-                {
-                    Coordinates = clickLocation,
-                    User = user
-                }, new LatticeCuttingCancelledEvent(), toolComponent: tool, doAfterEventTarget: component.Owner,
-                cancelToken: tokenSource.Token))
-            component.CancelTokenSource = null;
-
-        return true;
-    }
-
-    private sealed class LatticeCuttingCompleteEvent : EntityEventArgs
-    {
-        public EntityCoordinates Coordinates;
-        public EntityUid User;
-    }
-
-    private sealed class LatticeCuttingCancelledEvent : EntityEventArgs
-    {
+        var ev = new LatticeCuttingCompleteEvent(coordinates);
+        return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev);
     }
 }
 

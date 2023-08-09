@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/e1142f20f5e4661cb6845cfcf2dd69f864d67432, orb, orb-inhand-left and orb-inhand-right created by Pancake, plushie_diona and plushie_diona1 created by discord user Deos#5630, toy-mouse-equipped-HELMET is a resprited 1-equipped-HELMET in mouse.rsi by PuroSlavKing (Github), plushie_xeno by LinkUyx#6557, plushie_hampter by RenLou#4333, beachball taken from https://github.com/ss220-space/Paradise/commit/662c08272acd7be79531550919f56f846726eabb, beachb-inhand by ;3#1161",
   "size": {
     "x": 32,
     "y": 32
@@ -11,7 +11,8 @@
             "name": "plushie_ratvar"
         },
         {
-            "name": "plushie_rouny"
+            "name": "plushie_rouny",
+            "directions": 4
         },
         {
             "name": "plushie_spacelizard"
@@ -25,6 +26,9 @@
         {
             "name": "plushie_h"
         },
+		{
+            "name": "plushie_hampter"
+        },
         {
             "name": "plushie_lizard"
         },
@@ -33,6 +37,9 @@
         },
         {
             "name": "plushie_nuke"
+        },
+        {
+            "name": "plushie_atmosian"
         },
         {
             "name": "plushie_slime"
@@ -44,7 +51,13 @@
             "name": "plushie_vox"
         },
         {
-            "name": "doll"
+            "name": "plushie_diona"
+        },
+        {
+            "name": "plushie_diona1"
+        },
+        {
+            "name": "plushie_xeno"
         },
         {
             "name": "carpplush-inhand-left",
@@ -52,14 +65,6 @@
         },
         {
             "name": "carpplush-inhand-right",
-            "directions": 4
-        },
-        {
-            "name": "doll-inhand-left",
-            "directions": 4
-        },
-        {
-            "name": "doll-inhand-right",
             "directions": 4
         },
         {
@@ -75,15 +80,6 @@
             "name": "bolt-open"
         },
         {
-            "name": "deathripleytoy"
-        },
-        {
-            "name": "durandprize"
-        },
-        {
-            "name": "fireripleytoy"
-        },
-        {
             "name": "foamblade"
         },
         {
@@ -93,49 +89,13 @@
             "name": "foamdart"
         },
         {
-            "name": "griffinprize"
-        },
-        {
             "name": "foambox"
-        },
-        {
-            "name": "gygaxtoy"
-        },
-        {
-            "name": "honkprize"
         },
         {
             "name": "ian"
         },
         {
-            "name": "marauderprize"
-        },
-        {
-            "name": "maulerprize"
-        },
-        {
             "name": "nuketoy"
-        },
-        {
-            "name": "odysseusprize"
-        },
-        {
-            "name": "owlprize"
-        },
-        {
-            "name": "phazonprize"
-        },
-        {
-            "name": "reticenceprize"
-        },
-        {
-            "name": "ripleytoy"
-        },
-        {
-            "name": "seraphprize"
-        },
-        {
-            "name": "skeletonprize"
         },
         {
             "name": "snappop"
@@ -145,6 +105,10 @@
         },
         {
             "name": "toy_mouse"
+        },
+        {
+            "name": "mouse-equipped-HELMET",
+            "directions": 4
         },
         {
             "name": "capbullet"
@@ -309,6 +273,17 @@
         },
         {
             "name": "orb-inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "beachball"
+        },
+        {
+            "name": "beachb-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "beachb-inhand-right",
             "directions": 4
         }
     ]

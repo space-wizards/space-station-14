@@ -15,7 +15,7 @@ namespace Content.Shared.Construction.Steps
             return list == null || list.Count == 0;
         }
 
-        public override bool EntityValid(EntityUid uid, IEntityManager entityManager)
+        public override bool EntityValid(EntityUid uid, IEntityManager entityManager, IComponentFactory compFactory)
         {
             // This step can only happen if either list has tags.
             if (IsNullOrEmpty(_allTags) && IsNullOrEmpty(_anyTags))

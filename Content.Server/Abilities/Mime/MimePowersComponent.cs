@@ -28,18 +28,15 @@ namespace Content.Server.Abilities.Mime
         public InstantAction InvisibleWallAction = new()
         {
             UseDelay = TimeSpan.FromSeconds(30),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("Structures/Walls/solid.rsi/full.png")),
+            Icon = new SpriteSpecifier.Texture(new("Structures/Walls/solid.rsi/full.png")),
             DisplayName = "mime-invisible-wall",
             Description = "mime-invisible-wall-desc",
             Priority = -1,
             Event = new InvisibleWallActionEvent(),
         };
 
-
-        /// The vow zone lies below
-
+        // The vow zone lies below
         public bool VowBroken = false;
-
 
         /// <summary>
         /// Whether this mime is ready to take the vow again.
@@ -55,8 +52,8 @@ namespace Content.Server.Abilities.Mime
 
         /// <summary>
         /// How long it takes the mime to get their powers back
-
-        [DataField("vowCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
+        /// </summary>
+        [DataField("vowCooldown")]
         public TimeSpan VowCooldown = TimeSpan.FromMinutes(5);
     }
 }

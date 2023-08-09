@@ -1,0 +1,31 @@
+﻿<Document>
+  # Security
+  Ensuring the safety of both station and crew is number one for Security. Be it Syndicate Agents, Nuclear Operatives, Infestations or just unruly staff. Security are on hand to maintain order and control crowds.
+
+  ## Gear
+  First we have non-lethals a step above simply telling someone to cooperate with instructions. Both the stunbaton and disabler are capable of limiting the movement of an assailant, whereas handcuffs can be applied to deny a criminal free movement and access to their hands.
+  <Box>
+    <GuideEntityEmbed Entity="Stunbaton"/>
+    <GuideEntityEmbed Entity="Handcuffs"/>
+    <GuideEntityEmbed Entity="WeaponDisabler"/>
+  </Box>
+
+  ## Flashes
+  Flashes are an effective tool for dispersing crowds and apprehending particularly evasive targets, with a large area of effect blinding all those without protection.
+  It is worth noting that flashes can be both used in a large area 	([color=yellow]Z[/color] hotkey) and if you attack somebody with it while [color=red]harm mode[/color] is active. Important to note that localized flashes last [color=yellow]2.5[/color] times as long as large area ones.
+  Security and [color=#a4885c]some[/color] other members of staff have eye protection from flashbangs and flashes.
+  <Box>
+    <GuideEntityEmbed Entity="Flash"/>
+    <GuideEntityEmbed Entity="ClothingEyesGlassesSecurity"/>
+    <GuideEntityEmbed Entity="GrenadeFlashBang"/>
+
+  </Box>
+  ## Lethals
+  Should the situation dictate, Security have access to laser rifles, shotguns, handguns and automatic rifles able to put down substancial fire against any who would stand against the station.
+  <Box>
+  <GuideEntityEmbed Entity="WeaponLaserCarbine"/>
+  <GuideEntityEmbed Entity="WeaponShotgunKammerer"/>
+  <GuideEntityEmbed Entity="WeaponPistolMk58"/>
+  <GuideEntityEmbed Entity="WeaponRifleLecter"/>
+  </Box>
+</Document>

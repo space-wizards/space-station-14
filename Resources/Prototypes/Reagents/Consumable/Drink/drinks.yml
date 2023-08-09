@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: coffee
   color: "#664300"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -37,7 +38,9 @@
   physicalDesc: reagent-physical-desc-creamy
   flavor: creamy
   color: "#664300"
-  spritePath: cafe_latte.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/cafe_latte.rsi
+    state: icon
 
 - type: reagent
   id: GreenTea
@@ -47,7 +50,9 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
   color: "#C33F00"
-  spritePath: glass_green.rsi #Placeholder
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    state: icon
 
 - type: reagent
   id: Grenadine
@@ -57,7 +62,9 @@
   physicalDesc: reagent-physical-desc-dark-red
   flavor: bitter
   color: "#EA1D26"
-  spritePath: grenadineglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/grenadineglass.rsi
+    state: icon
 
 - type: reagent
   id: IcedCoffee
@@ -67,7 +74,9 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: coffee
   color: "#102838"
-  spritePath: icedcoffeeglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icedcoffeeglass.rsi
+    state: icon
 
 - type: reagent
   id: IcedGreenTea
@@ -77,7 +86,9 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
   color: "#CE4200"
-  spritePath: glass_green.rsi #Placeholder
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_green.rsi
+    state: icon
 
 - type: reagent
   id: IcedTea
@@ -87,7 +98,9 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: icedtea
   color: "#104038"
-  spritePath: icedteaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/icedteaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -98,6 +111,25 @@
         amount: 0.05
 
 - type: reagent
+  id: JuiceBerryPoison
+  name: reagent-name-juice-berry-poison
+  group: Drinks
+  desc: reagent-desc-juice-berry-poison
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: bitter
+  color: "#6600CC"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
   id: Lemonade
   name: reagent-name-lemonade
   group: Drinks
@@ -105,7 +137,9 @@
   physicalDesc: reagent-physical-desc-tart
   flavor: sweet
   color: "#FFFF00"
-  spritePath: lemonadeglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/lemonadeglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -120,6 +154,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: milk
   color: "#DFDFDF"
+  recognizable: true
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.1
@@ -144,7 +179,8 @@
   desc: reagent-desc-milk-oat
   physicalDesc: reagent-physical-desc-refreshing
   flavor: oats
-  color: "#302000"
+  color: "#DEDACD"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -156,6 +192,9 @@
   parent: MilkOat
   name: reagent-name-milk-soy
   desc: reagent-desc-milk-soy
+  physicalDesc: reagent-physical-desc-refreshing
+  flavor: soy
+  color: "#D2C29D"
 
 - type: reagent
   id: MilkSpoiled
@@ -177,7 +216,9 @@
   desc: reagent-desc-nothing
   group: Drinks
   physicalDesc: reagent-physical-desc-nothing
-  spritePath: nothing.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/nothing.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -193,7 +234,9 @@
   physicalDesc: reagent-physical-desc-fizzy
   flavor: atomiccola
   color: "#100800"
-  spritePath: nuclear_colaglass.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/nuclear_colaglass.rsi
+    state: icon
   metabolisms:
     Drink:
       effects:
@@ -223,7 +266,9 @@
   physicalDesc: reagent-physical-desc-strong-smelling
   flavor: soy
   color: "#664300"
-  spritePath: soy_latte.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/soy_latte.rsi
+    state: icon
 
 - type: reagent
   id: Tea
@@ -233,6 +278,7 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
   color: "#8a5a3a"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -256,9 +302,11 @@
   name: reagent-name-water
   parent: BaseDrink
   desc: reagent-desc-water
+  slippery: true
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
+  recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
   metabolisms:
@@ -274,6 +322,7 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"
+  recognizable: true
   meltingPoint: 0.0
   boilingPoint: 100.0
   plantMetabolism:
@@ -323,31 +372,63 @@
           factor: 1
 
 - type: reagent
+  id: Posca
+  name: reagent-name-posca
+  parent: BaseDrink
+  desc: reagent-desc-posca
+  physicalDesc: reagent-physical-desc-sour
+  flavor: bitter
+  color: "#B3B599"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/glass_light_yellow.rsi
+    state: icon
+
+- type: reagent
   id: KiraSpecial
   name: reagent-name-kira-special
   parent: BaseDrink
   desc: reagent-desc-kira-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
-  spritePath: kiraspecial.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/kiraspecial.rsi
+    state: icon
 
 - type: reagent
   id: Rewriter
   name: reagent-name-rewriter
   parent: BaseDrink
   desc: reagent-desc-rewriter
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#485000"
-  spritePath: rewriter.rsi
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/rewriter.rsi
+    state: icon
 
 - type: reagent
-  id: Kvass
-  name: reagent-name-kvass
+  id: TheMartinez
+  name: reagent-name-the-martinez
   parent: BaseDrink
-  desc: reagent-desc-kvass
-  physicalDesc: reagent-physical-desc-bubbly
-  flavor: bread
-  color: "#381600"
-  spritePath: kvass.rsi
+  desc: reagent-desc-the-martinez
+  physicalDesc: reagent-physical-desc-vibrant
+  flavor: themartinez
+  color: "#75b1f0"
+  metamorphicSprite:
+    sprite: Objects/Consumable/Drinks/the_martinez.rsi
+    state: icon
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseDrink
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#e5d27e"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1

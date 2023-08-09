@@ -7,9 +7,16 @@
     - type: Sprite
       sprite: Objects/Tools/appraisal-tool.rsi
       state: icon
-      netsync: false
     - type: Item
       sprite: Objects/Tools/appraisal-tool.rsi
     - type: PriceGun
     - type: UseDelay
       delay: 3
+    - type: Clothing
+      sprite: Objects/Tools/appraisal-tool.rsi
+      quickEquip: false
+      slots:
+      - Belt
+    - type: Tag
+      tags:
+      - AppraisalTool

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Shared.Administration;
 using Content.Shared.Explosion;
 using Robust.Shared.Map;
@@ -44,11 +45,11 @@ public sealed partial class ExplosionSystem : EntitySystem
         var (localGrids, referenceGrid, maxDistance) = GetLocalGrids(epicenter, totalIntensity, slope, maxIntensity);
 
         // get the epicenter tile indices
-        if (_mapManager.TryFindGridAt(epicenter, out var candidateGrid) &&
+        if (_mapManager.TryFindGridAt(epicenter, out var gridUid, out var candidateGrid) &&
             candidateGrid.TryGetTileRef(candidateGrid.WorldToTile(epicenter.Position), out var tileRef) &&
             !tileRef.Tile.IsEmpty)
         {
-            epicentreGrid = candidateGrid.Owner;
+            epicentreGrid = gridUid;
             initialTile = tileRef.GridIndices;
         }
         else if (referenceGrid != null)
@@ -80,7 +81,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         HashSet<EntityUid> encounteredGrids = new();
         Dictionary<EntityUid, HashSet<Vector2i>>? previousGridJump;
 
-        // variables for transforming between grid and space-coordiantes
+        // variables for transforming between grid and space-coordinates
         var spaceMatrix = Matrix3.Identity;
         var spaceAngle = Angle.Zero;
         if (referenceGrid != null)
@@ -153,7 +154,7 @@ public sealed partial class ExplosionSystem : EntitySystem
                 if (tilesInIteration[i] * intensityIncrease >= remainingIntensity)
                 {
                     // there is not enough intensity left to distribute. add a fractional amount and break.
-                    iterationIntensity[i] += (float) remainingIntensity / tilesInIteration[i];
+                    iterationIntensity[i] += remainingIntensity / tilesInIteration[i];
                     remainingIntensity = 0;
                     break;
                 }
@@ -219,7 +220,7 @@ public sealed partial class ExplosionSystem : EntitySystem
             tilesInIteration.Add(newTileCount);
             if (newTileCount * stepSize >= remainingIntensity)
             {
-                iterationIntensity.Add((float) remainingIntensity / newTileCount);
+                iterationIntensity.Add(remainingIntensity / newTileCount);
                 break;
             }
 
@@ -272,7 +273,7 @@ public sealed partial class ExplosionSystem : EntitySystem
 
         // First attempt to find a grid that is relatively close to the explosion's center. Instead of looking in a
         // diameter x diameter sized box, use a smaller box with radius sized sides:
-        var box = Box2.CenteredAround(epicenter.Position, (radius, radius));
+        var box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
 
         foreach (var grid in _mapManager.FindGridsIntersecting(epicenter.MapId, box))
         {
@@ -293,7 +294,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         // and using that for the grid look-up, we will just arbitrarily fudge the lookup size to be twice the diameter.
 
         radius *= 4;
-        box = Box2.CenteredAround(epicenter.Position, (radius, radius));
+        box = Box2.CenteredAround(epicenter.Position, new Vector2(radius, radius));
         var mapGrids = _mapManager.FindGridsIntersecting(epicenter.MapId, box).ToList();
         var grids = mapGrids.Select(x => x.Owner).ToList();
 

@@ -328,7 +328,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     {
         var newLayer = spriteComponent.AddLayer(
             new SpriteSpecifier.Rsi(
-                new ResourcePath(sprite.Sprite), state
+                new (sprite.Sprite), state
             ), index);
         spriteComponent.LayerMapSet(mapKey, newLayer);
         if (sprite.Color != null)
@@ -345,28 +345,28 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         // If this was passed into the component, we update
         // the data to ensure that the current disabled
         // bool matches.
-        if (args.Component.TryGetData<bool>(DamageVisualizerKeys.Disabled, out var disabledStatus))
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.Disabled, out var disabledStatus, args.Component))
             damageVisComp.Disabled = disabledStatus;
 
         if (damageVisComp.Disabled)
             return;
 
-        HandleDamage(args.Component, damageVisComp);
+        HandleDamage(uid, args.Component, damageVisComp);
     }
 
-    private void HandleDamage(AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void HandleDamage(EntityUid uid, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
-        if (!TryComp(component.Owner, out SpriteComponent? spriteComponent)
-            || !TryComp(component.Owner, out DamageableComponent? damageComponent))
+        if (!TryComp(uid, out SpriteComponent? spriteComponent)
+            || !TryComp(uid, out DamageableComponent? damageComponent))
             return;
 
         if (damageVisComp.TargetLayers != null && damageVisComp.DamageOverlayGroups != null)
-            UpdateDisabledLayers(spriteComponent, component, damageVisComp);
+            UpdateDisabledLayers(uid, spriteComponent, component, damageVisComp);
 
         if (damageVisComp.Overlay && damageVisComp.DamageOverlayGroups != null && damageVisComp.TargetLayers == null)
             CheckOverlayOrdering(spriteComponent, damageVisComp);
 
-        if (component.TryGetData<bool>(DamageVisualizerKeys.ForceUpdate, out var update)
+        if (AppearanceSystem.TryGetData<bool>(uid, DamageVisualizerKeys.ForceUpdate, out var update, component)
             && update)
         {
             ForceUpdateLayers(damageComponent, spriteComponent, damageVisComp);
@@ -376,11 +376,16 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
         if (damageVisComp.TrackAllDamage)
         {
             UpdateDamageVisuals(damageComponent, spriteComponent, damageVisComp);
+            return;
         }
-        else if (component.TryGetData(DamageVisualizerKeys.DamageUpdateGroups, out DamageVisualizerGroupData data))
+
+        if (!AppearanceSystem.TryGetData<DamageVisualizerGroupData>(uid, DamageVisualizerKeys.DamageUpdateGroups,
+                out var data, component))
         {
-            UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
+            data = new DamageVisualizerGroupData(Comp<DamageableComponent>(uid).DamagePerGroup.Keys.ToList());
         }
+
+        UpdateDamageVisuals(data.GroupList, damageComponent, spriteComponent, damageVisComp);
     }
 
     /// <summary>
@@ -389,29 +394,30 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
     ///     layer will no longer be visible, or obtain
     ///     any damage updates.
     /// </summary>
-    private void UpdateDisabledLayers(SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
+    private void UpdateDisabledLayers(EntityUid uid, SpriteComponent spriteComponent, AppearanceComponent component, DamageVisualsComponent damageVisComp)
     {
         foreach (var layer in damageVisComp.TargetLayerMapKeys)
         {
-            bool? layerStatus = null;
-            if (component.TryGetData<bool>(layer, out var layerStateEnum))
-                layerStatus = layerStateEnum;
+            // I assume this gets set by something like body system if limbs are missing???
+            // TODO is this actually used by anything anywhere?
+            AppearanceSystem.TryGetData(uid, layer, out bool disabled, component);
 
-            if (layerStatus == null)
+            if (damageVisComp.DisabledLayers[layer] == disabled)
                 continue;
 
-            if (damageVisComp.DisabledLayers[layer] != (bool) layerStatus)
+            damageVisComp.DisabledLayers[layer] = disabled;
+            if (damageVisComp.TrackAllDamage)
             {
-                damageVisComp.DisabledLayers[layer] = (bool) layerStatus;
-                if (!damageVisComp.TrackAllDamage && damageVisComp.DamageOverlayGroups != null)
-                {
-                    foreach (var damageGroup in damageVisComp.DamageOverlayGroups!.Keys)
-                    {
-                        spriteComponent.LayerSetVisible($"{layer}{damageGroup}", damageVisComp.DisabledLayers[layer]);
-                    }
-                }
-                else if (damageVisComp.TrackAllDamage)
-                    spriteComponent.LayerSetVisible($"{layer}trackDamage", damageVisComp.DisabledLayers[layer]);
+                spriteComponent.LayerSetVisible($"{layer}trackDamage", !disabled);
+                continue;
+            }
+
+            if (damageVisComp.DamageOverlayGroups == null)
+                continue;
+
+            foreach (var damageGroup in damageVisComp.DamageOverlayGroups.Keys)
+            {
+                spriteComponent.LayerSetVisible($"{layer}{damageGroup}", !disabled);
             }
         }
     }
@@ -461,7 +467,7 @@ public sealed class DamageVisualsSystem : VisualizerSystem<DamageVisualsComponen
             threshold = damageVisComp.Thresholds[1];
         spriteLayer = spriteComponent.AddLayer(
             new SpriteSpecifier.Rsi(
-                new ResourcePath(sprite.Sprite),
+                new (sprite.Sprite),
                 $"{statePrefix}_{threshold}"
             ),
             spriteLayer);

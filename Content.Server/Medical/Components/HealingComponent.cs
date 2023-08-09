@@ -1,8 +1,7 @@
-using System.Threading;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.Medical.Components
 {
@@ -24,13 +23,20 @@ namespace Content.Server.Medical.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public float BloodlossModifier = 0.0f;
 
+        /// <summary>
+        ///     Restore missing blood.
+        /// </summary>
+        [DataField("ModifyBloodLevel")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float ModifyBloodLevel = 0.0f;
+
         /// <remarks>
         ///     The supported damage types are specified using a <see cref="DamageContainerPrototype"/>s. For a
         ///     HealingComponent this filters what damage container type this component should work on. If null,
         ///     all damage container types are supported.
         /// </remarks>
-        [DataField("damageContainer", customTypeSerializer: typeof(PrototypeIdSerializer<DamageContainerPrototype>))]
-        public string? DamageContainerID;
+        [DataField("damageContainers", customTypeSerializer: typeof(PrototypeIdListSerializer<DamageContainerPrototype>))]
+        public List<string>? DamageContainers;
 
         /// <summary>
         /// How long it takes to apply the damage.
@@ -44,8 +50,6 @@ namespace Content.Server.Medical.Components
         /// </summary>
         [DataField("selfHealPenaltyMultiplier")]
         public float SelfHealPenaltyMultiplier = 3f;
-
-        public CancellationTokenSource? CancelToken = null;
 
         /// <summary>
         ///     Sound played on healing begin

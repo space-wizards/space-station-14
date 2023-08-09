@@ -6,7 +6,7 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
-using Robust.Shared.Player;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Linq;
@@ -19,6 +19,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
         public override void Initialize()
         {
@@ -40,7 +41,7 @@ namespace Content.Server.Access.Systems
                 // if really unlucky, burn card
                 if (randomPick <= 0.15f)
                 {
-                    TryComp<TransformComponent>(uid, out TransformComponent? transformComponent);
+                    TryComp(uid, out TransformComponent? transformComponent);
                     if (transformComponent != null)
                     {
                         _popupSystem.PopupCoordinates(Loc.GetString("id-card-component-microwave-burnt", ("id", uid)),
@@ -57,7 +58,10 @@ namespace Content.Server.Access.Systems
                 if (randomPick <= 0.25f)
                 {
                     _popupSystem.PopupEntity(Loc.GetString("id-card-component-microwave-bricked", ("id", uid)), uid);
+
                     access.Tags.Clear();
+                    Dirty(access);
+
                     _adminLogger.Add(LogType.Action, LogImpact.Medium,
                         $"{ToPrettyString(args.Microwave)} cleared access on {ToPrettyString(uid):entity}");
                 }
@@ -68,7 +72,9 @@ namespace Content.Server.Access.Systems
 
                 // Give them a wonderful new access to compensate for everything
                 var random = _random.Pick(_prototypeManager.EnumeratePrototypes<AccessLevelPrototype>().ToArray());
+
                 access.Tags.Add(random.ID);
+                Dirty(access);
 
                 _adminLogger.Add(LogType.Action, LogImpact.Medium,
                         $"{ToPrettyString(args.Microwave)} added {random.ID} access to {ToPrettyString(uid):entity}");
@@ -91,8 +97,8 @@ namespace Content.Server.Access.Systems
             {
                 jobTitle = jobTitle.Trim();
 
-                if (jobTitle.Length > SharedIdCardConsoleComponent.MaxJobTitleLength)
-                    jobTitle = jobTitle[..SharedIdCardConsoleComponent.MaxJobTitleLength];
+                if (jobTitle.Length > IdCardConsoleComponent.MaxJobTitleLength)
+                    jobTitle = jobTitle[..IdCardConsoleComponent.MaxJobTitleLength];
             }
             else
             {
@@ -108,8 +114,32 @@ namespace Content.Server.Access.Systems
             if (player != null)
             {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                    $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
+                    $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(uid):entity} to {jobTitle} ");
             }
+            return true;
+        }
+
+        public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+        {
+            if (!Resolve(uid, ref id))
+            {
+                return false;
+            }
+
+            if (id.JobIcon == jobIcon.ID)
+            {
+                return true;
+            }
+
+            id.JobIcon = jobIcon.ID;
+            Dirty(id);
+
+            if (player != null)
+            {
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                    $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(id.Owner):entity} to {jobIcon} ");
+            }
+
             return true;
         }
 
@@ -128,8 +158,8 @@ namespace Content.Server.Access.Systems
             if (!string.IsNullOrWhiteSpace(fullName))
             {
                 fullName = fullName.Trim();
-                if (fullName.Length > SharedIdCardConsoleComponent.MaxFullNameLength)
-                    fullName = fullName[..SharedIdCardConsoleComponent.MaxFullNameLength];
+                if (fullName.Length > IdCardConsoleComponent.MaxFullNameLength)
+                    fullName = fullName[..IdCardConsoleComponent.MaxFullNameLength];
             }
             else
             {
@@ -145,7 +175,7 @@ namespace Content.Server.Access.Systems
             if (player != null)
             {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                    $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
+                    $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(uid):entity} to {fullName} ");
             }
             return true;
         }
@@ -170,7 +200,7 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
-            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
+            _metaSystem.SetEntityName(uid, val);
         }
     }
 }

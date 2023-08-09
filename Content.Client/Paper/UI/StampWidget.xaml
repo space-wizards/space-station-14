@@ -1,0 +1,25 @@
+<paper:StampWidget xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:style="clr-namespace:Content.Client.Stylesheets"
+    xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+    xmlns:paper="clr-namespace:Content.Client.Paper.UI" HorizontalAlignment="Center" Margin="6">
+
+    <BoxContainer Orientation="Vertical">
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
+            </PanelContainer.PanelOverride>
+            <Control MinSize="3 3" />
+        </PanelContainer>
+
+        <Label Name="StampedByLabel" StyleClasses="LabelHeadingBigger" FontColorOverride="{x:Static style:StyleNano.DangerousRedFore}" Margin="12 6 12 6"/>
+
+        <PanelContainer>
+            <PanelContainer.PanelOverride>
+                <gfx:StyleBoxFlat BackgroundColor="{x:Static style:StyleNano.DangerousRedFore}" />
+            </PanelContainer.PanelOverride>
+            <Control MinSize="3 3" />
+        </PanelContainer>
+
+    </BoxContainer>
+</paper:StampWidget>

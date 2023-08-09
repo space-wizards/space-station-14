@@ -20,4 +20,32 @@ namespace Content.Shared.Tools.Components
         [DataField("useSound")]
         public SoundSpecifier? UseSound { get; set; }
     }
+
+    /// <summary>
+    ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
+    /// </summary>
+    public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
+    {
+        public EntityUid User { get; }
+
+        public ToolUseAttemptEvent(EntityUid user)
+        {
+            User = user;
+        }
+    }
+
+    /// <summary>
+    /// Event raised on the user of a tool to see if they can actually use it.
+    /// </summary>
+    [ByRefEvent]
+    public struct ToolUserAttemptUseEvent
+    {
+        public EntityUid? Target;
+        public bool Cancelled = false;
+
+        public ToolUserAttemptUseEvent(EntityUid? target)
+        {
+            Target = target;
+        }
+    }
 }

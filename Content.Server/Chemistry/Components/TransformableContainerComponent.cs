@@ -1,43 +1,45 @@
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Shared.Chemistry.Components;
+using Content.Server.Animals.Systems;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Shared.Chemistry.Reagent;
-using Robust.Server.GameObjects;
-using Robust.Shared.Utility;
 
-namespace Content.Server.Chemistry.Components
+namespace Content.Server.Chemistry.Components;
+
+/// <summary>
+/// A container that transforms its appearance depending on the reagent it contains.
+/// It returns to its initial state once the reagent is removed.
+/// e.g. An empty glass changes to a beer glass when beer is added to it.
+///
+/// Should probably be joined with SolutionContainerVisualsComponent when solutions are networked.
+/// </summary>
+[RegisterComponent, Access(typeof(TransformableContainerSystem))]
+public sealed class TransformableContainerComponent : Component
 {
-    [RegisterComponent]
-    public sealed class TransformableContainerComponent : Component
-    {
-        [Dependency] private readonly IEntityManager _entMan = default!;
+    /// <summary>
+    /// This is the initial metadata name for the container.
+    /// It will revert to this when emptied.
+    /// It defaults to the name of the parent entity unless overwritten.
+    /// </summary>
+    [DataField("initialName")]
+    public string? InitialName;
 
-        public SpriteSpecifier? InitialSprite;
-        public string InitialName = default!;
-        public string InitialDescription = default!;
-        public ReagentPrototype? CurrentReagent;
+    /// <summary>
+    /// This is the initial metadata description for the container.
+    /// It will revert to this when emptied.
+    ///     /// It defaults to the description of the parent entity unless overwritten.
+    /// </summary>
+    [DataField("initialDescription")]
+    public string? InitialDescription;
+    /// <summary>
+    /// This stores whatever primary reagent is currently in the container.
+    /// It is used to help determine if a transformation is needed on solution update.
+    /// </summary>
+    [DataField("currentReagent")]
+    public ReagentPrototype? CurrentReagent;
 
-        public bool Transformed { get; internal set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (_entMan.TryGetComponent(Owner, out SpriteComponent? sprite) &&
-                sprite.BaseRSIPath != null)
-            {
-                InitialSprite = new SpriteSpecifier.Rsi(new ResourcePath(sprite.BaseRSIPath), "icon");
-            }
-
-            InitialName = _entMan.GetComponent<MetaDataComponent>(Owner).EntityName;
-            InitialDescription = _entMan.GetComponent<MetaDataComponent>(Owner).EntityDescription;
-        }
-
-        protected override void Startup()
-        {
-            base.Startup();
-
-            Owner.EnsureComponentWarn<SolutionContainerManagerComponent>();
-            Owner.EnsureComponentWarn<FitsInDispenserComponent>();
-        }
-    }
+    /// <summary>
+    /// This returns whether this container in a transformed or initial state.
+    /// </summary>
+    ///
+    [DataField("transformed")]
+    public bool Transformed;
 }

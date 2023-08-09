@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Mobs.Systems;
@@ -16,7 +17,6 @@ namespace Content.Shared.Interaction
     public sealed class RotateToFaceSystem : EntitySystem
     {
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             var diff = coordinates - xform.MapPosition.Position;
-            if (diff.LengthSquared <= 0.01f)
+            if (diff.LengthSquared() <= 0.01f)
                 return true;
 
             var diffAngle = Angle.FromWorldVec(diff);
@@ -95,7 +95,7 @@ namespace Content.Shared.Interaction
                 if (suid != null)
                 {
                     // We're buckled to another object. Is that object rotatable?
-                    if (TryComp<RotatableComponent>(suid.Value!, out var rotatable) && rotatable.RotateWhileAnchored)
+                    if (TryComp<RotatableComponent>(suid.Value, out var rotatable) && rotatable.RotateWhileAnchored)
                     {
                         // Note the assumption that even if unanchored, user can only do spinnychair with an "independent wheel".
                         // (Since the user being buckled to it holds it down with their weight.)

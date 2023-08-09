@@ -1,26 +1,17 @@
 - type: entity
   parent: BaseComputer
   id: ComputerTechnologyDiskTerminal
-  name: technology disk terminal
+  name: tech disk terminal
   description: A terminal used to print out technology disks.
   components:
   - type: Sprite
-    netsync: false
     noRot: true
     sprite: Structures/Machines/tech_disk_printer.rsi
     layers:
-    - state: icon
-      map: ["enum.ComputerVisualizer+Layers.Body"]
-    - state: unshaded
-      shader: unshaded
-      map: ["enum.ComputerVisualizer+Layers.Screen"]
-  - type: Appearance
-    visuals:
-    - type: ComputerVisualizer
-      screen: unshaded
-      key: ""
-      body: icon
-      bodyBroken: icon
+    - map: ["computerLayerBody"]
+      state: icon
+    - map: ["computerLayerScreen"]
+      state: unshaded
   - type: DiskConsole
   - type: ResearchClient
   - type: ActivatableUI
@@ -39,3 +30,16 @@
     radius: 0.8
     energy: 0.5
     color: "#b53ca1"
+
+- type: weightedRandom
+  id: TechDiskTierWeights
+  weights:
+    1: 25
+    2: 10
+    3: 1
+
+- type: weightedRandom
+  id: RareTechDiskTierWeights
+  weights:
+    2: 19
+    3: 1

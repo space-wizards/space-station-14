@@ -1,9 +1,13 @@
-﻿using Robust.Shared.Serialization;
+﻿using System.Globalization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Manager;
 using Robust.Shared.Serialization.Markdown;
 using Robust.Shared.Serialization.Markdown.Mapping;
 using Robust.Shared.Serialization.Markdown.Validation;
+using Robust.Shared.Serialization.Markdown.Value;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 using Robust.Shared.Serialization.TypeSerializers.Interfaces;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Serialization;
 
@@ -20,21 +24,81 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         SerializationHookContext hookCtx, ISerializationContext? context = null,
         ISerializationManager.InstantiationDelegate<Dictionary<Vector2i, TileAtmosphere>>? instanceProvider = null)
     {
-        var data = serializationManager.Read<TileAtmosData>(node, hookCtx, context);
-        var tiles = new Dictionary<Vector2i, TileAtmosphere>();
-        if (data.TilesUniqueMixes != null)
+        node.TryGetValue(new ValueDataNode("version"), out var versionNode);
+        var version = ((ValueDataNode?) versionNode)?.AsInt() ?? 1;
+        Dictionary<Vector2i, TileAtmosphere> tiles;
+
+        // Backwards compatability
+        if (version == 1)
         {
-            foreach (var (indices, mix) in data.TilesUniqueMixes)
+            var tile2 = node["tiles"];
+
+            var mixies = serializationManager.Read<Dictionary<Vector2i, int>?>(tile2, hookCtx, context);
+            var unique = serializationManager.Read<List<GasMixture>?>(node["uniqueMixes"], hookCtx, context);
+
+            tiles = new Dictionary<Vector2i, TileAtmosphere>();
+
+            if (unique != null && mixies != null)
             {
-                try
+                foreach (var (indices, mix) in mixies)
                 {
-                    tiles.Add(indices, new TileAtmosphere(EntityUid.Invalid, indices,
-                        data.UniqueMixes![mix].Clone()));
+                    try
+                    {
+                        tiles.Add(indices, new TileAtmosphere(EntityUid.Invalid, indices,
+                            unique[mix].Clone()));
+                    }
+                    catch (ArgumentOutOfRangeException)
+                    {
+                        Logger.Error(
+                            $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                    }
                 }
-                catch (ArgumentOutOfRangeException)
+            }
+        }
+        else
+        {
+            var dataNode = (MappingDataNode) node["data"];
+            var tileNode = (MappingDataNode) dataNode["tiles"];
+            var chunkSize = serializationManager.Read<int>(dataNode["chunkSize"], hookCtx, context);
+
+            var unique = serializationManager.Read<List<GasMixture>?>(dataNode["uniqueMixes"], hookCtx, context);
+
+            tiles = new Dictionary<Vector2i, TileAtmosphere>();
+
+            if (unique != null)
+            {
+                foreach (var (chunkNode, valueNode) in tileNode)
                 {
-                    Logger.Error(
-                        $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                    var chunkOrigin = serializationManager.Read<Vector2i>(chunkNode, hookCtx, context);
+                    var chunk = serializationManager.Read<TileAtmosChunk>(valueNode, hookCtx, context);
+
+                    foreach (var (mix, data) in chunk.Data)
+                    {
+                        for (var x = 0; x < chunkSize; x++)
+                        {
+                            for (var y = 0; y < chunkSize; y++)
+                            {
+                                var flag = data & (uint) (1 << (x + y * chunkSize));
+
+                                if (flag == 0)
+                                    continue;
+
+                                var indices = new Vector2i(x + chunkOrigin.X * chunkSize,
+                                    y + chunkOrigin.Y * chunkSize);
+
+                                try
+                                {
+                                    tiles.Add(indices, new TileAtmosphere(EntityUid.Invalid, indices,
+                                        unique[mix].Clone()));
+                                }
+                                catch (ArgumentOutOfRangeException)
+                                {
+                                    Logger.Error(
+                                        $"Error during atmos serialization! Tile at {indices} points to an unique mix ({mix}) out of range!");
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -46,44 +110,74 @@ public sealed class TileAtmosCollectionSerializer : ITypeSerializer<Dictionary<V
         bool alwaysWrite = false, ISerializationContext? context = null)
     {
         var uniqueMixes = new List<GasMixture>();
-        var uniqueMixHash = new Dictionary<GasMixture, int>();
-        var tiles = new Dictionary<Vector2i, int>();
+        var tileChunks = new Dictionary<Vector2i, TileAtmosChunk>();
+        var chunkSize = 4;
 
-        foreach (var (indices, tile) in value)
+        foreach (var (gridIndices, tile) in value)
         {
             if (tile.Air == null) continue;
 
-            if (uniqueMixHash.TryGetValue(tile.Air, out var index))
+            var mixIndex = uniqueMixes.IndexOf(tile.Air);
+
+            if (mixIndex == -1)
             {
-                tiles[indices] = index;
-                continue;
+                mixIndex = uniqueMixes.Count;
+                uniqueMixes.Add(tile.Air);
             }
 
-            uniqueMixes.Add(tile.Air);
-            var newIndex = uniqueMixes.Count - 1;
-            uniqueMixHash[tile.Air] = newIndex;
-            tiles[indices] = newIndex;
+            var chunkOrigin = SharedMapSystem.GetChunkIndices(gridIndices, chunkSize);
+            var tileChunk = tileChunks.GetOrNew(chunkOrigin);
+            var indices = SharedMapSystem.GetChunkRelative(gridIndices, chunkSize);
+
+            var mixFlag = tileChunk.Data.GetOrNew(mixIndex);
+            mixFlag |= (uint) 1 << (indices.X + indices.Y * chunkSize);
+            tileChunk.Data[mixIndex] = mixFlag;
         }
 
-        if (uniqueMixes.Count == 0) uniqueMixes = null;
-        if (tiles.Count == 0) tiles = null;
+        if (uniqueMixes.Count == 0)
+            uniqueMixes = null;
+        if (tileChunks.Count == 0)
+            tileChunks = null;
 
-        return serializationManager.WriteValue(new TileAtmosData
+        var map = new MappingDataNode
         {
-            UniqueMixes = uniqueMixes,
-            TilesUniqueMixes = tiles
-        }, alwaysWrite, context);
+            { "version", 2.ToString(CultureInfo.InvariantCulture) },
+            {
+                "data", serializationManager.WriteValue(new TileAtmosData
+                {
+                    ChunkSize = chunkSize,
+                    UniqueMixes = uniqueMixes,
+                    TilesUniqueMixes = tileChunks,
+                }, alwaysWrite, context)
+            }
+        };
+
+        return map;
     }
 
     [DataDefinition]
     private struct TileAtmosData
     {
+        [DataField("chunkSize")] public int ChunkSize;
+
         [DataField("uniqueMixes")] public List<GasMixture>? UniqueMixes;
 
-        [DataField("tiles")] public Dictionary<Vector2i, int>? TilesUniqueMixes;
+        [DataField("tiles")] public Dictionary<Vector2i, TileAtmosChunk>? TilesUniqueMixes;
     }
 
-    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target, SerializationHookContext hookCtx,
+    [DataDefinition]
+    private record struct TileAtmosChunk()
+    {
+        /// <summary>
+        /// Key is unique mix and value is bitflag of the affected tiles.
+        /// </summary>
+        [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<int, uint>))]
+        public readonly Dictionary<int, uint> Data = new();
+    }
+
+    public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target,
+        IDependencyCollection dependencies,
+        SerializationHookContext hookCtx,
         ISerializationContext? context = null)
     {
         target.Clear();

@@ -14,7 +14,7 @@ namespace Content.Client.Parallax.Data;
 public sealed class ParallaxPrototype : IPrototype
 {
     /// <inheritdoc/>
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     /// <summary>

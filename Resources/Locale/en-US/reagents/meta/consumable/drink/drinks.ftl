@@ -73,5 +73,11 @@ reagent-desc-hot-ramen = Hot noodles.
 reagent-name-pilk = pilk
 reagent-desc-pilk = A sickening mixture of milk and cola.
 
-reagent-name-kvass = kvass
-reagent-desc-kvass = A cool refreshing drink with a taste of socialism.
+reagent-name-posca = posca
+reagent-desc-posca = Poor warriors' drink from a forgotten era.
+
+reagent-name-the-martinez = The Martinez
+reagent-desc-the-martinez = The edgerunner legend. Remembered by a drink, forgotten by a drunk.
+
+reagent-name-white-gilgamesh = white gilgamesh
+reagent-desc-white-gilgamesh = A sickening mixture of milk and beer. Makes you feel like you're made of wood.

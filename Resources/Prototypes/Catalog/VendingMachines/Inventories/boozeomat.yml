@@ -1,13 +1,15 @@
 - type: vendingMachineInventory
   id: BoozeOMatInventory
   startingInventory:
-
-    DrinkGlass: 30 #Kept glasses at top for ease to differentiate from booze.
+    DrinkGlass: 20 #Kept glasses at top for ease to differentiate from booze.
     DrinkShotGlass: 10
+    DrinkGlassCoupeShaped: 10
+    DrinkVacuumFlask: 5
+    DrinkFlaskBar: 5
     DrinkShaker: 5
     DrinkAbsintheBottleFull: 2
     DrinkAleBottleFull: 5
-    DrinkBeer: 5 # Needs to be renamed DrinkBeerBottleFull
+    DrinkBeerBottleFull: 5
     DrinkBlueCuracaoBottleFull: 2
     DrinkCognacBottleFull: 4
     DrinkColaBottleFull: 4
@@ -31,3 +33,4 @@
     DrinkVodkaBottleFull: 5
     DrinkWhiskeyBottleFull: 5
     DrinkWineBottleFull: 5
+    DrinkChampagneBottleFull: 2 #because the premium drink

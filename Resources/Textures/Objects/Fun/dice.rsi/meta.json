@@ -1,221 +1,221 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d",
+  "copyright": "Taken from vgstation at https://github.com/vgstation-coders/vgstation13/commit/1cdfb0230cc96d0ba751fa002d04f8aa2f25ad7d. Edited by ElectroSR.",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "d10010"
+      "name": "percentile_10"
     },
     {
-      "name": "d100100"
+      "name": "percentile_0"
     },
     {
-      "name": "d10020"
+      "name": "percentile_20"
     },
     {
-      "name": "d10030"
+      "name": "percentile_30"
     },
     {
-      "name": "d10040"
+      "name": "percentile_40"
     },
     {
-      "name": "d10050"
+      "name": "percentile_50"
     },
     {
-      "name": "d10060"
+      "name": "percentile_60"
     },
     {
-      "name": "d10070"
+      "name": "percentile_70"
     },
     {
-      "name": "d10080"
+      "name": "percentile_80"
     },
     {
-      "name": "d10090"
+      "name": "percentile_90"
     },
     {
-      "name": "d101"
+      "name": "d10_1"
     },
     {
-      "name": "d1010"
+      "name": "d10_10"
     },
     {
-      "name": "d102"
+      "name": "d10_2"
     },
     {
-      "name": "d103"
+      "name": "d10_3"
     },
     {
-      "name": "d104"
+      "name": "d10_4"
     },
     {
-      "name": "d105"
+      "name": "d10_5"
     },
     {
-      "name": "d106"
+      "name": "d10_6"
     },
     {
-      "name": "d107"
+      "name": "d10_7"
     },
     {
-      "name": "d108"
+      "name": "d10_8"
     },
     {
-      "name": "d109"
+      "name": "d10_9"
     },
     {
-      "name": "d121"
+      "name": "d12_1"
     },
     {
-      "name": "d1210"
+      "name": "d12_10"
     },
     {
-      "name": "d1211"
+      "name": "d12_11"
     },
     {
-      "name": "d1212"
+      "name": "d12_12"
     },
     {
-      "name": "d122"
+      "name": "d12_2"
     },
     {
-      "name": "d123"
+      "name": "d12_3"
     },
     {
-      "name": "d124"
+      "name": "d12_4"
     },
     {
-      "name": "d125"
+      "name": "d12_5"
     },
     {
-      "name": "d126"
+      "name": "d12_6"
     },
     {
-      "name": "d127"
+      "name": "d12_7"
     },
     {
-      "name": "d128"
+      "name": "d12_8"
     },
     {
-      "name": "d129"
+      "name": "d12_9"
     },
     {
-      "name": "d201"
+      "name": "d20_1"
     },
     {
-      "name": "d2010"
+      "name": "d20_10"
     },
     {
-      "name": "d2011"
+      "name": "d20_11"
     },
     {
-      "name": "d2012"
+      "name": "d20_12"
     },
     {
-      "name": "d2013"
+      "name": "d20_13"
     },
     {
-      "name": "d2014"
+      "name": "d20_14"
     },
     {
-      "name": "d2015"
+      "name": "d20_15"
     },
     {
-      "name": "d2016"
+      "name": "d20_16"
     },
     {
-      "name": "d2017"
+      "name": "d20_17"
     },
     {
-      "name": "d2018"
+      "name": "d20_18"
     },
     {
-      "name": "d2019"
+      "name": "d20_19"
     },
     {
-      "name": "d202"
+      "name": "d20_2"
     },
     {
-      "name": "d2020"
+      "name": "d20_20"
     },
     {
-      "name": "d203"
+      "name": "d20_3"
     },
     {
-      "name": "d204"
+      "name": "d20_4"
     },
     {
-      "name": "d205"
+      "name": "d20_5"
     },
     {
-      "name": "d206"
+      "name": "d20_6"
     },
     {
-      "name": "d207"
+      "name": "d20_7"
     },
     {
-      "name": "d208"
+      "name": "d20_8"
     },
     {
-      "name": "d209"
+      "name": "d20_9"
     },
     {
-      "name": "d41"
+      "name": "d4_1"
     },
     {
-      "name": "d42"
+      "name": "d4_2"
     },
     {
-      "name": "d43"
+      "name": "d4_3"
     },
     {
-      "name": "d44"
+      "name": "d4_4"
     },
     {
-      "name": "d61"
+      "name": "d6_1"
     },
     {
-      "name": "d62"
+      "name": "d6_2"
     },
     {
-      "name": "d63"
+      "name": "d6_3"
     },
     {
-      "name": "d64"
+      "name": "d6_4"
     },
     {
-      "name": "d65"
+      "name": "d6_5"
     },
     {
-      "name": "d66"
+      "name": "d6_6"
     },
     {
-      "name": "d81"
+      "name": "d8_1"
     },
     {
-      "name": "d82"
+      "name": "d8_2"
     },
     {
-      "name": "d83"
+      "name": "d8_3"
     },
     {
-      "name": "d84"
+      "name": "d8_4"
     },
     {
-      "name": "d85"
+      "name": "d8_5"
     },
     {
-      "name": "d86"
+      "name": "d8_6"
     },
     {
-      "name": "d87"
+      "name": "d8_7"
     },
     {
-      "name": "d88"
+      "name": "d8_8"
     },
     {
       "name": "dicebag"

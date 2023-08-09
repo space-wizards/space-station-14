@@ -14,6 +14,18 @@
     spawned:
     - id: MaterialCloth1
       amount: 3
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
+  - type: Tag
+    tags: 
+      - ClothMade
 
 - type: entity
   abstract: true
@@ -35,7 +47,8 @@
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
   - type: WirelessNetworkConnection
-    range: 500
+    range: 1200
+  - type: StationLimitedNetwork
 
 - type: entity
   abstract: true

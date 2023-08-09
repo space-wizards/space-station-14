@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   product: CrateServiceJanitorialSupplies
-  cost: 500
+  cost: 560
   category: Service
   group: market
 
@@ -25,6 +25,16 @@
     state: mousetrap
   product: CrateMousetrapBoxes
   cost: 500
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceTheatre
+  icon:
+    sprite: Clothing/Mask/mime.rsi
+    state: icon
+  product: CrateServiceTheatre
+  cost: 1800
   category: Service
   group: market
 
@@ -75,5 +85,35 @@
     state: book0
   product: CrateServiceBooks
   cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceGuidebooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_engineering2
+  product: CrateServiceGuidebooks
+  cost: 1300
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceBoxes
+  icon:
+    sprite: Objects/Storage/boxes.rsi
+    state: box
+  product: CrateServiceBox
+  cost: 400
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceJanitorBiosuit
+  icon:
+    sprite: Clothing/Head/Hoods/Bio/janitor.rsi
+    state: icon
+  product: CrateJanitorBiosuit
+  cost: 800
   category: Service
   group: market

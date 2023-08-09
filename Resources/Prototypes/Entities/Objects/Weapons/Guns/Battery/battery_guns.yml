@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 50
   - type: Clothing
@@ -321,14 +320,12 @@
     - type: ProjectileBatteryAmmoProvider
       proto: BulletDisablerPractice
       fireCost: 100
-      
+
 - type: entity
   name: taser
   parent: BaseWeaponBatterySmall
   id: WeaponTaser
   description: A low-capacity, energy-based stun gun used by security teams to subdue targets at range.
-  # Use Disabler
-  suffix: Obsolete
   components:
   - type: Tag
     tags:
@@ -351,8 +348,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/taser.ogg
   - type: ProjectileBatteryAmmoProvider
-    proto: BulletDisabler
-    fireCost: 100
+    proto: BulletTaser
+    fireCost: 200
   - type: MagazineVisuals
     magState: mag
     steps: 5
@@ -391,6 +388,9 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+  - type: Tag
+    tags:
+    - HighRiskItem
   - type: StaticPrice
     price: 750
 
@@ -426,3 +426,35 @@
   - type: Appearance
   - type: StaticPrice
     price: 63
+
+
+- type: entity
+  name: Eye of a behonker
+  parent: BaseWeaponBatterySmall
+  id: WeaponBehonkerLaser
+  description: The eye of a behonker, it fires a laser when squeezed.
+  components:
+  - type: Item
+    size: 30
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+  - type: Gun
+    fireRate: 1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/laser_clown.ogg
+  - type: HitscanBatteryAmmoProvider
+    proto: RedMediumLaser
+    fireCost: 100
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
+  - type: MagazineVisuals
+    magState: mag
+    steps: 5
+    zeroVisible: true
+  - type: Appearance
+  - type: StaticPrice
+    price: 750

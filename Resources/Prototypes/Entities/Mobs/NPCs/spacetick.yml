@@ -6,7 +6,10 @@
   components:
   - type: InputMover
   - type: MobMover
-  - type: Faction
+  - type: HTN
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -22,14 +25,15 @@
     baseSprintSpeed : 6
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.20
-      density: 20
-      mask:
-      - SmallMobMask
-      layer:
-      - SmallMobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.20
+        density: 20
+        mask:
+        - SmallMobMask
+        layer:
+        - SmallMobLayer
   - type: MobState
     allowedStates:
       - Alive
@@ -39,9 +43,8 @@
       0: Alive
       15: Dead
   - type: Stamina
-    excess: 15
+    critThreshold: 15
   - type: MovementAlwaysTouching
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -55,10 +58,6 @@
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CombatMode
-    disarmAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-disarm
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -76,12 +75,12 @@
           Quantity: 5
   - type: MeleeChemicalInjector
     solution: melee
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     prob: 0.33
     makeSentient: true
-    name: space tick
-    description: |
-      Wreak havoc on the station!
+    name: ghost-role-information-space-tick-name
+    description: ghost-role-information-space-tick-description
+  - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
 
@@ -90,9 +89,9 @@
   parent: MobTick
   suffix: "Salvage Ruleset"
   components:
+  - type: GhostRole
+    name: ghost-role-information-salvage-tick-name
+    description: ghost-role-information-salvage-tick-description
   - type: GhostTakeoverAvailable
-    name: space tick on salvage wreck
-    description: |
-      Defend the loot inside the salvage wreck!
   - type: SalvageMobRestrictions
 

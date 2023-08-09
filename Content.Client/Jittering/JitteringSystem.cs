@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.Numerics;
 using Content.Shared.Jittering;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
@@ -29,7 +30,7 @@ namespace Content.Client.Jittering
 
         private void OnStartup(EntityUid uid, JitteringComponent jittering, ComponentStartup args)
         {
-            if (!EntityManager.TryGetComponent(uid, out ISpriteComponent? sprite))
+            if (!EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 return;
 
             var animationPlayer = EntityManager.EnsureComponent<AnimationPlayerComponent>(uid);
@@ -52,11 +53,11 @@ namespace Content.Client.Jittering
                 return;
 
             if(EntityManager.TryGetComponent(uid, out AnimationPlayerComponent? animationPlayer)
-            && EntityManager.TryGetComponent(uid, out ISpriteComponent? sprite))
+            && EntityManager.TryGetComponent(uid, out SpriteComponent? sprite))
                 animationPlayer.Play(GetAnimation(jittering, sprite), _jitterAnimationKey);
         }
 
-        private Animation GetAnimation(JitteringComponent jittering, ISpriteComponent sprite)
+        private Animation GetAnimation(JitteringComponent jittering, SpriteComponent sprite)
         {
             var amplitude = MathF.Min(4f, jittering.Amplitude / 100f + 1f) / 10f;
             var offset = new Vector2(_random.NextFloat(amplitude/4f, amplitude),
@@ -88,8 +89,8 @@ namespace Content.Client.Jittering
                 {
                     new AnimationTrackComponentProperty()
                     {
-                        ComponentType = typeof(ISpriteComponent),
-                        Property = nameof(ISpriteComponent.Offset),
+                        ComponentType = typeof(SpriteComponent),
+                        Property = nameof(SpriteComponent.Offset),
                         KeyFrames =
                         {
                             new AnimationTrackProperty.KeyFrame(sprite.Offset, 0f),

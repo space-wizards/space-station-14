@@ -27,7 +27,7 @@ public sealed class PriceGunSystem : EntitySystem
     private void OnUtilityVerb(EntityUid uid, PriceGunComponent component, GetVerbsEvent<UtilityVerb> args)
     {
 
-        if (!args.CanAccess || !args.CanInteract || args.Target == null)
+        if (!args.CanAccess || !args.CanInteract)
             return;
 
         if (TryComp(args.Using, out UseDelayComponent? useDelay) && useDelay.ActiveDelay)
@@ -50,7 +50,7 @@ public sealed class PriceGunSystem : EntitySystem
     }
     private void OnAfterInteract(EntityUid uid, PriceGunComponent component, AfterInteractEvent args)
     {
-        if (!args.CanReach || args.Target == null)
+        if (!args.CanReach || args.Target == null || args.Handled)
             return;
 
         if (TryComp(args.Used, out UseDelayComponent? useDelay) && useDelay.ActiveDelay)
@@ -60,5 +60,6 @@ public sealed class PriceGunSystem : EntitySystem
 
         _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
         _useDelay.BeginDelay(uid, useDelay);
+        args.Handled = true;
     }
 }

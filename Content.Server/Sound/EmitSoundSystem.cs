@@ -11,7 +11,9 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
     public override void Update(float frameTime)
     {
         base.Update(frameTime);
-        foreach (var soundSpammer in EntityQuery<SpamEmitSoundComponent>())
+        var query = EntityQueryEnumerator<SpamEmitSoundComponent>();
+
+        while (query.MoveNext(out var uid, out var soundSpammer))
         {
             if (!soundSpammer.Enabled)
                 continue;
@@ -26,8 +28,8 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
             if (Random.Prob(soundSpammer.PlayChance))
             {
                 if (soundSpammer.PopUp != null)
-                    Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), soundSpammer.Owner);
-                TryEmitSound(soundSpammer);
+                    Popup.PopupEntity(Loc.GetString(soundSpammer.PopUp), uid);
+                TryEmitSound(uid, soundSpammer);
             }
         }
     }
@@ -40,14 +42,14 @@ public sealed class EmitSoundSystem : SharedEmitSoundSystem
         SubscribeLocalEvent<EmitSoundOnUIOpenComponent, AfterActivatableUIOpenEvent>(HandleEmitSoundOnUIOpen);
     }
 
-    private void HandleEmitSoundOnUIOpen(EntityUid eUI, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
+    private void HandleEmitSoundOnUIOpen(EntityUid uid, EmitSoundOnUIOpenComponent component, AfterActivatableUIOpenEvent args)
     {
-        TryEmitSound(component, args.User);
+        TryEmitSound(uid, component, args.User);
     }
 
     private void HandleEmitSoundOnTrigger(EntityUid uid, EmitSoundOnTriggerComponent component, TriggerEvent args)
     {
-        TryEmitSound(component, args.User);
+        TryEmitSound(uid, component);
         args.Handled = true;
     }
 }

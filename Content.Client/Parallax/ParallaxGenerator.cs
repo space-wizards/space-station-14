@@ -235,7 +235,7 @@ namespace Content.Client.Parallax
                     for (var x = 0; x < bitmap.Width; x++)
                     {
                         // Do noise calculations.
-                        var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
+                        var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoise(x, y) + 1) / 2));
 
                         // Threshold
                         noiseVal = MathF.Max(0, noiseVal - Threshold);
@@ -462,7 +462,7 @@ namespace Content.Client.Parallax
                     var y = random.Next(0, buffer.Height);
 
                     // Grab noise at this point.
-                    var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoiseTiled(x, y) + 1) / 2));
+                    var noiseVal = MathF.Min(1, MathF.Max(0, (noise.GetNoise(x, y) + 1) / 2));
                     // Threshold
                     noiseVal = MathF.Max(0, noiseVal - MaskThreshold);
                     noiseVal *= threshVal;

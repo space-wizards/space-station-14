@@ -9,6 +9,7 @@ using Content.Shared.AlertLevel;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.CCVar;
 using Content.Shared.DeviceNetwork;
+using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
 using Content.Shared.Emag.Systems;
 using Robust.Server.GameObjects;
@@ -74,7 +75,7 @@ public sealed class FireAlarmSystem : EntitySystem
         }
     }
 
-    private void OnEmagged(EntityUid uid, FireAlarmComponent component, GotEmaggedEvent args)
+    private void OnEmagged(EntityUid uid, FireAlarmComponent component, ref GotEmaggedEvent args)
     {
         if (TryComp<AtmosAlarmableComponent>(uid, out var alarmable))
         {

@@ -10,9 +10,9 @@
       anchored: true
     - type: Physics
       bodyType: Static
+      canCollide: false
     - type: Fixtures
     - type: Sprite
-      netsync: false
       layers:
         - sprite: Structures/Specific/carp_rift.rsi
           state: icon

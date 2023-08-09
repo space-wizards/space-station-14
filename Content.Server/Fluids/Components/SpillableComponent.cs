@@ -1,4 +1,4 @@
-using System.Threading;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Fluids.Components;
 
@@ -18,5 +18,9 @@ public sealed class SpillableComponent : Component
     [DataField("spillDelay")]
     public float? SpillDelay;
 
-    public CancellationTokenSource? CancelToken;
+    /// <summary>
+    ///     At most how much reagent can be splashed on someone at once?
+    /// </summary>
+    [DataField("maxMeleeSpillAmount")]
+    public FixedPoint2 MaxMeleeSpillAmount = FixedPoint2.New(20);
 }

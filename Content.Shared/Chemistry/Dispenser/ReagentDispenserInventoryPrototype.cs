@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Dispenser
         private List<string> _inventory = new();
 
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         public List<string> Inventory => _inventory;

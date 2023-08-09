@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (github)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+          "name": "normal-unshaded",
+          "delays": [
+            [
+              2.5,
+              0.1,
+              3.4,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "deny-unshaded",
+          "delays": [
+            [
+              0.1,
+              0.1,
+              0.1
+            ]
+          ]
+        },
+        {
+          "name": "broken"
+        },
+        {
+          "name": "off"
+        },
+        {
+          "name": "panel"
+        }
+    ]
+}

@@ -7,12 +7,10 @@
   - type: StorageFill
     contents:
       - id: CrowbarRed
-        amount: 1
       - id: ClothingMaskBreath
         amount: 2
       - id: FoodSnackChocolate
       - id: FlashlightLantern
-        amount: 1
       - id: FlashlightLantern
         prob: 0.5
       - id: HarmonicaInstrument
@@ -32,14 +30,35 @@
       - id: Screwdriver
       - id: Crowbar
       - id: Wirecutter
-      - id: CableApcStack
-      - id: CableMVStack
+      - id: CableApcStack10
+      - id: CableMVStack10
       - id: trayScanner
         prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - id: CableHVStack
+      - id: CableHVStack10
+        orGroup: GlovesOrWires
+
+- type: entity
+  id: ToolboxElectricalTurretFilled
+  name: electrical toolbox
+  suffix: Filled
+  parent: ToolboxElectricalTurret
+  components:
+  - type: StorageFill
+    contents:
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: CableApcStack10
+      - id: CableMVStack10
+      - id: trayScanner
+        prob: 0.9
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - id: CableHVStack10
         orGroup: GlovesOrWires
 
 - type: entity
@@ -69,14 +88,8 @@
   components:
   - type: StorageFill
     contents:
-      - id: Screwdriver
-      - id: Wrench
-      - id: Welder
-      - id: Crowbar
-      - id: Multitool
-      - id: Wirecutter
+      - id: ClothingBeltUtilityEngineering
       - id: ClothingHandsGlovesCombat
-      - id: ClothingBeltSyndieHolster
       - id: ClothingMaskGasSyndicate
 
 - type: entity
@@ -88,9 +101,5 @@
   - type: StorageFill
     contents:
       - id: IngotGold
-        amount: 5
       - id: DrinkGoldenCup
         prob: 0.05
-        orGroup: CupOrGold
-      - id: IngotGold
-        orGroup: CupOrGold

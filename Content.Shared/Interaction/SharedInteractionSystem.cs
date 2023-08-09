@@ -1,34 +1,43 @@
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Item;
 using Content.Shared.Movement.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
+using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
+using Robust.Shared.Network;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
 using Robust.Shared.Players;
+using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
@@ -43,7 +52,9 @@ namespace Content.Shared.Interaction
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly INetManager _net = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly ISharedAdminManager _adminManager = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
         [Dependency] private readonly RotateToFaceSystem _rotateToFaceSystem = default!;
@@ -54,6 +65,9 @@ namespace Content.Shared.Interaction
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly UseDelaySystem _useDelay = default!;
         [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         private const CollisionGroup InRangeUnobstructedMask
             = CollisionGroup.Impassable | CollisionGroup.InteractImpassable;
@@ -70,6 +84,9 @@ namespace Content.Shared.Interaction
             SubscribeLocalEvent<BoundUserInterfaceMessageAttempt>(OnBoundInterfaceInteractAttempt);
             SubscribeAllEvent<InteractInventorySlotEvent>(HandleInteractInventorySlotEvent);
             SubscribeLocalEvent<UnremoveableComponent, ContainerGettingRemovedAttemptEvent>(OnRemoveAttempt);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedEvent>(OnUnequip);
+            SubscribeLocalEvent<UnremoveableComponent, GotUnequippedHandEvent>(OnUnequipHand);
+            SubscribeLocalEvent<UnremoveableComponent, DroppedEvent>(OnDropped);
 
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.AltActivateItemInWorld,
@@ -102,7 +119,12 @@ namespace Content.Shared.Interaction
                 return;
             }
 
-            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target) && !CanAccessViaStorage(user, ev.Target))
+            // Check if the bound entity is accessible. Note that we allow admins to ignore this restriction, so that
+            // they can fiddle with UI's that people can't normally interact with (e.g., placing things directly into
+            // other people's backpacks).
+            if (!_containerSystem.IsInSameOrParentContainer(user, ev.Target)
+                && !CanAccessViaStorage(user, ev.Target)
+                && !_adminManager.HasAdminFlag(user, AdminFlags.Admin))
             {
                 ev.Cancel();
                 return;
@@ -121,6 +143,35 @@ namespace Content.Shared.Interaction
         {
             args.Cancel();
         }
+
+        /// <summary>
+        ///     If item has DeleteOnDrop true then item will be deleted if removed from inventory, if it is false then item
+        ///     loses Unremoveable when removed from inventory (gibbing).
+        /// </summary>
+        private void OnUnequip(EntityUid uid, UnremoveableComponent item, GotUnequippedEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
+        private void OnUnequipHand(EntityUid uid, UnremoveableComponent item, GotUnequippedHandEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
+        private void OnDropped(EntityUid uid, UnremoveableComponent item, DroppedEvent args)
+        {
+            if (!item.DeleteOnDrop)
+                RemCompDeferred<UnremoveableComponent>(uid);
+            else if (_net.IsServer)
+                QueueDel(uid);
+        }
+
 
         private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
         {
@@ -205,7 +256,7 @@ namespace Content.Shared.Interaction
         {
             // This is for Admin/mapping convenience. If ever there are other ghosts that can still interact, this check
             // might need to be more selective.
-            return !HasComp<SharedGhostComponent>(user);
+            return !_tagSystem.HasTag(user, "BypassInteractionRangeChecks");
         }
 
         /// <summary>
@@ -228,13 +279,18 @@ namespace Content.Shared.Interaction
         {
             if (TryComp<InteractionRelayComponent>(user, out var relay) && relay.RelayEntity is not null)
             {
-                UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+                // TODO this needs to be handled better. This probably bypasses many complex can-interact checks in weird roundabout ways.
+                if (_actionBlockerSystem.CanInteract(user, target))
+                {
+                    UserInteraction(relay.RelayEntity.Value, coordinates, target, altInteract, checkCanInteract, checkAccess, checkCanUse);
+                    return;
+                }
             }
 
             if (target != null && Deleted(target.Value))
                 return;
 
-            if (!altInteract && TryComp(user, out SharedCombatModeComponent? combatMode) && combatMode.IsInCombatMode)
+            if (!altInteract && TryComp(user, out CombatModeComponent? combatMode) && combatMode.IsInCombatMode)
             {
                 // Eat the input
                 return;
@@ -267,7 +323,7 @@ namespace Content.Shared.Interaction
                 : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
 
             // Does the user have hands?
-            if (!TryComp(user, out SharedHandsComponent? hands) || hands.ActiveHand == null)
+            if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand == null)
             {
                 var ev = new InteractNoHandEvent(user, target, coordinates);
                 RaiseLocalEvent(user, ev);
@@ -390,17 +446,17 @@ namespace Content.Shared.Interaction
         {
             var dir = other.Position - origin.Position;
 
-            if (dir.LengthSquared.Equals(0f))
+            if (dir.LengthSquared().Equals(0f))
                 return 0f;
 
             predicate ??= _ => false;
-            var ray = new CollisionRay(origin.Position, dir.Normalized, collisionMask);
-            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length, predicate.Invoke, false).ToList();
+            var ray = new CollisionRay(origin.Position, dir.Normalized(), collisionMask);
+            var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, dir.Length(), predicate.Invoke, false).ToList();
 
             if (rayResults.Count == 0)
-                return dir.Length;
+                return dir.Length();
 
-            return (rayResults[0].HitPos - origin.Position).Length;
+            return (rayResults[0].HitPos - origin.Position).Length();
         }
 
         /// <summary>
@@ -420,6 +476,7 @@ namespace Content.Shared.Interaction
         ///     A predicate to check whether to ignore an entity or not.
         ///     If it returns true, it will be ignored.
         /// </param>
+        /// <param name="checkAccess">Perform range checks</param>
         /// <returns>
         ///     True if the two points are within a given range without being obstructed.
         /// </returns>
@@ -428,14 +485,18 @@ namespace Content.Shared.Interaction
             MapCoordinates other,
             float range = InteractionRange,
             CollisionGroup collisionMask = InRangeUnobstructedMask,
-            Ignored? predicate = null)
+            Ignored? predicate = null,
+            bool checkAccess = true)
         {
             // Have to be on same map regardless.
             if (other.MapId != origin.MapId)
                 return false;
 
+            if (!checkAccess)
+                return true;
+
             var dir = other.Position - origin.Position;
-            var length = dir.Length;
+            var length = dir.Length();
 
             // If range specified also check it
             if (range > 0f && length > range)
@@ -452,7 +513,7 @@ namespace Content.Shared.Interaction
                 length = MaxRaycastRange;
             }
 
-            var ray = new CollisionRay(origin.Position, dir.Normalized, (int) collisionMask);
+            var ray = new CollisionRay(origin.Position, dir.Normalized(), (int) collisionMask);
             var rayResults = _sharedBroadphaseSystem.IntersectRayWithPredicate(origin.MapId, ray, length, predicate.Invoke, false).ToList();
 
             return rayResults.Count == 0;
@@ -532,9 +593,9 @@ namespace Content.Shared.Interaction
                 TryComp<TransformComponent>(origin, out var xformA))
             {
                 var (worldPosA, worldRotA) = xformA.GetWorldPositionRotation();
-                var xfA = new Robust.Shared.Physics.Transform(worldPosA, worldRotA);
+                var xfA = new Transform(worldPosA, worldRotA);
                 var parentRotB = _transform.GetWorldRotation(otherCoordinates.EntityId);
-                var xfB = new Robust.Shared.Physics.Transform(targetPos.Position, parentRotB + otherAngle);
+                var xfB = new Transform(targetPos.Position, parentRotB + otherAngle);
 
                 // Different map or the likes.
                 if (!_sharedBroadphaseSystem.TryGetNearest(origin, other,
@@ -548,6 +609,11 @@ namespace Content.Shared.Interaction
                 {
                     return true;
                 }
+                // Entity can bypass range checks.
+                else if (!ShouldCheckAccess(origin))
+                {
+                    return true;
+                }
                 // Out of range so don't raycast.
                 else if (distance > range)
                 {
@@ -557,7 +623,7 @@ namespace Content.Shared.Interaction
                 {
                     // We'll still do the raycast from the centres but we'll bump the range as we know they're in range.
                     originPos = xformA.MapPosition;
-                    range = (originPos.Position - targetPos.Position).Length;
+                    range = (originPos.Position - targetPos.Position).Length();
                 }
             }
             // No fixtures, e.g. wallmounts.
@@ -572,7 +638,7 @@ namespace Content.Shared.Interaction
             if (inRange)
             {
                 var rayPredicate = GetPredicate(originPos, other, targetPos, targetRot, collisionMask, combinedPredicate);
-                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate);
+                inRange = InRangeUnobstructed(originPos, targetPos, range, collisionMask, rayPredicate, ShouldCheckAccess(origin));
             }
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
@@ -635,7 +701,7 @@ namespace Content.Shared.Interaction
                     ignoreAnchored = angleDelta < wallMount.Arc / 2 || Math.Tau - angleDelta < wallMount.Arc / 2;
                 }
 
-                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out var grid))
+                if (ignoreAnchored && _mapManager.TryFindGridAt(targetCoords, out _, out var grid))
                     ignored.UnionWith(grid.GetAnchoredEntities(targetCoords));
             }
 
@@ -718,7 +784,7 @@ namespace Content.Shared.Interaction
         {
             Ignored combinedPredicate = e => e == origin || (predicate?.Invoke(e) ?? false);
             var originPosition = Transform(origin).MapPosition;
-            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate);
+            var inRange = InRangeUnobstructed(originPosition, other, range, collisionMask, combinedPredicate, ShouldCheckAccess(origin));
 
             if (!inRange && popup && _gameTiming.IsFirstTimePredicted)
             {
@@ -860,7 +926,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             // Does the user have hands?
-            if (!HasComp<SharedHandsComponent>(user))
+            if (!HasComp<HandsComponent>(user))
                 return false;
 
             var activateMsg = new ActivateInWorldEvent(user, used);
@@ -870,7 +936,8 @@ namespace Content.Shared.Interaction
 
             DoContactInteraction(user, used, activateMsg);
             _useDelay.BeginDelay(used, delayComponent);
-            _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
+            if (!activateMsg.WasLogged)
+                _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
         }
         #endregion
@@ -979,6 +1046,32 @@ namespace Content.Shared.Interaction
         /// </summary>
         public abstract bool CanAccessViaStorage(EntityUid user, EntityUid target);
 
+        /// <summary>
+        ///     Checks whether an entity currently equipped by another player is accessible to some user. This shouldn't
+        ///     be used as a general interaction check, as these kinda of interactions should generally trigger a
+        ///     do-after and a warning for the other player.
+        /// </summary>
+        public bool CanAccessEquipment(EntityUid user, EntityUid target)
+        {
+            if (Deleted(target))
+                return false;
+
+            if (!_containerSystem.TryGetContainingContainer(target, out var container))
+                return false;
+
+            var wearer = container.Owner;
+            if (!_inventory.TryGetSlot(wearer, container.ID, out var slotDef))
+                return false;
+
+            if (wearer == user)
+                return true;
+
+            if (slotDef.StripHidden)
+                return false;
+
+            return InRangeUnobstructed(user, wearer) && _containerSystem.IsInSameOrParentContainer(user, wearer);
+        }
+
         protected bool ValidateClientInput(ICommonSession? session, EntityCoordinates coords,
             EntityUid uid, [NotNullWhen(true)] out EntityUid? userEntity)
         {
@@ -1026,6 +1119,9 @@ namespace Content.Shared.Interaction
 
             // Entities may no longer exist (banana was eaten, or human was exploded)?
             if (!Exists(uidA) || !Exists(uidB))
+                return;
+
+            if (Paused(uidA) || Paused(uidB.Value))
                 return;
 
             RaiseLocalEvent(uidA, new ContactInteractionEvent(uidB.Value));

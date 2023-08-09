@@ -6,23 +6,17 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 {
     public override void Update(float frameTime)
     {
-        foreach (var comp in EntityQuery<ActiveSurveillanceCameraMonitorVisualsComponent>())
-        {
-            if (Paused(comp.Owner))
-            {
-                continue;
-            }
+        var query = EntityQueryEnumerator<ActiveSurveillanceCameraMonitorVisualsComponent>();
 
+        while (query.MoveNext(out var uid, out var comp))
+        {
             comp.TimeLeft -= frameTime;
 
-            if (comp.TimeLeft <= 0 || Deleted(comp.Owner))
+            if (comp.TimeLeft <= 0)
             {
-                if (comp.OnFinish != null)
-                {
-                    comp.OnFinish();
-                }
+                comp.OnFinish?.Invoke();
 
-                EntityManager.RemoveComponentDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(comp.Owner);
+                RemCompDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
             }
         }
     }
@@ -35,6 +29,6 @@ public sealed class SurveillanceCameraMonitorSystem : EntitySystem
 
     public void RemoveTimer(EntityUid uid)
     {
-        EntityManager.RemoveComponentDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
+        RemCompDeferred<ActiveSurveillanceCameraMonitorVisualsComponent>(uid);
     }
 }

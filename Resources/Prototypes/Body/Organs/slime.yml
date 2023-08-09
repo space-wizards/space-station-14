@@ -1,15 +1,9 @@
 - type: entity
   id: SentientSlimeCore
-  parent: BaseItem
+  parent: [BaseItem, OrganHumanBrain]
   name: sentient slime core
   description: "The source of incredible, unending gooeyness."
   components:
-    - type: Sprite
-      netsync: false
-      sprite: Mobs/Species/Human/organs.rsi
-      state: brain
-    - type: Organ
-    - type: Brain
     - type: Stomach
     - type: Metabolizer
       maxReagents: 6
@@ -21,6 +15,8 @@
         - id: Medicine
         - id: Poison
         - id: Narcotic
+        - id: Alcohol
+          rateModifier: 0.25
     - type: SolutionContainerManager
       solutions:
         stomach:
@@ -37,7 +33,6 @@
     layers:
       - state: lung-l
       - state: lung-r
-  - type: Organ
   - type: Lung
   - type: Metabolizer
     removeEmpty: true

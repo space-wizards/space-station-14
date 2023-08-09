@@ -7,5 +7,8 @@ ent-CrateFoodMRE = MRE crate
 ent-CrateFoodCooking = Kitchen supplies crate
     .desc = Extra kitchen supplies, in case the botanists are absent.
 
-ent-CrateFoodKvassTank = Kvass tank crate
-    .desc = A tank with refreshing kvass, which helps so much in the heat.
+ent-CrateFoodDinnerware = Kitchen dinnerware crate
+    .desc = Extra kitchen supplies, in case the clown was allowed in the cafeteria unsupervised.
+
+ent-CrateFoodBarSupply = Bartending supplies crate
+    .desc = Extra Bar supplies, in case the clown was allowed in the bar unsupervised.

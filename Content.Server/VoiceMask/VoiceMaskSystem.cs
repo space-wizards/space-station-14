@@ -1,12 +1,12 @@
+using Content.Server.Administration.Logs;
 using Content.Server.Chat.Systems;
 using Content.Server.Popups;
 using Content.Shared.Actions;
+using Content.Shared.Database;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Preferences;
-using Content.Shared.Verbs;
 using Content.Shared.VoiceMask;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.VoiceMask;
 
@@ -14,6 +14,7 @@ public sealed partial class VoiceMaskSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {
@@ -39,6 +40,10 @@ public sealed partial class VoiceMaskSystem : EntitySystem
         }
 
         component.VoiceName = message.Name;
+        if (message.Session.AttachedEntity != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} set voice of {ToPrettyString(uid):mask}: {component.VoiceName}");
+        else
+            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"Voice of {ToPrettyString(uid):mask} set: {component.VoiceName}");
 
         _popupSystem.PopupCursor(Loc.GetString("voice-mask-popup-success"), message.Session);
 
@@ -64,11 +69,11 @@ public sealed partial class VoiceMaskSystem : EntitySystem
     private void OpenUI(EntityUid player, ActorComponent? actor = null)
     {
         if (!Resolve(player, ref actor))
-        {
             return;
-        }
+        if (!_uiSystem.TryGetUi(player, VoiceMaskUIKey.Key, out var bui))
+            return;
 
-        _uiSystem.GetUiOrNull(player, VoiceMaskUIKey.Key)?.Open(actor.PlayerSession);
+        _uiSystem.OpenUi(bui, actor.PlayerSession);
         UpdateUI(player);
     }
 
@@ -79,7 +84,8 @@ public sealed partial class VoiceMaskSystem : EntitySystem
             return;
         }
 
-        _uiSystem.GetUiOrNull(owner, VoiceMaskUIKey.Key)?.SetState(new VoiceMaskBuiState(component.VoiceName));
+        if (_uiSystem.TryGetUi(owner, VoiceMaskUIKey.Key, out var bui))
+            UserInterfaceSystem.SetUiState(bui, new VoiceMaskBuiState(component.VoiceName));
     }
 }
 

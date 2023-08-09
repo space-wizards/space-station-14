@@ -79,7 +79,7 @@ namespace Content.Server.Nuke
         public SoundSpecifier DisarmSound = new SoundPathSpecifier("/Audio/Misc/notice2.ogg");
 
         [DataField("armMusic")]
-        public SoundSpecifier ArmMusic = new SoundPathSpecifier("/Audio/StationEvents/countdown.ogg");
+        public SoundSpecifier ArmMusic = new SoundCollectionSpecifier("NukeMusic");
 
         // These datafields here are duplicates of those in explosive component. But I'm hesitant to use explosive
         // component, just in case at some point, somehow, when grenade crafting added in someone manages to wire up a
@@ -174,8 +174,13 @@ namespace Content.Server.Nuke
         /// </summary>
         public bool PlayedAlertSound = false;
 
-        public CancellationToken? DisarmCancelToken = null;
-
         public IPlayingAudioStream? AlertAudioStream = default;
+
+        /// <summary>
+        ///     The radius from the nuke for which there must be floor tiles for it to be anchorable.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("requiredFloorRadius")]
+        public float RequiredFloorRadius = 7;
     }
 }

@@ -29,7 +29,7 @@ namespace Content.Server.Chat.Commands
             var mind = player.ContentData()?.Mind;
 
             // This check also proves mind not-null for at the end when the mob is ghosted.
-            if (mind?.OwnedComponent?.Owner is not { Valid: true } victim)
+            if (mind?.OwnedEntity is not { Valid: true } victim)
             {
                 shell.WriteLine("You don't have a mind!");
                 return;
@@ -40,15 +40,14 @@ namespace Content.Server.Chat.Commands
             {
                 // Prevent the player from returning to the body.
                 // Note that mind cannot be null because otherwise victim would be null.
-                gameTicker.OnGhostAttempt(mind!, false);
+                gameTicker.OnGhostAttempt(mind, false);
                 return;
             }
 
             if (gameTicker.OnGhostAttempt(mind, true))
                 return;
 
-            shell?.WriteLine("You can't ghost right now.");
-
+            shell.WriteLine("You can't ghost right now.");
         }
     }
 }

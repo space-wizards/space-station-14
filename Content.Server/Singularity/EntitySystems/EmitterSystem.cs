@@ -1,22 +1,27 @@
+using System.Numerics;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
+using Content.Server.DeviceLinking.Events;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Projectiles;
-using Content.Server.Storage.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Database;
+using Content.Shared.Examine;
 using Content.Shared.Interaction;
+using Content.Shared.Lock;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Content.Shared.Verbs;
 using Content.Shared.Weapons.Ranged.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Timer = Robust.Shared.Timing.Timer;
@@ -27,6 +32,7 @@ namespace Content.Server.Singularity.EntitySystems
     public sealed class EmitterSystem : SharedEmitterSystem
     {
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -38,45 +44,102 @@ namespace Content.Server.Singularity.EntitySystems
             base.Initialize();
 
             SubscribeLocalEvent<EmitterComponent, PowerConsumerReceivedChanged>(ReceivedChanged);
+            SubscribeLocalEvent<EmitterComponent, PowerChangedEvent>(OnApcChanged);
             SubscribeLocalEvent<EmitterComponent, InteractHandEvent>(OnInteractHand);
+            SubscribeLocalEvent<EmitterComponent, GetVerbsEvent<Verb>>(OnGetVerb);
+            SubscribeLocalEvent<EmitterComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<EmitterComponent, RefreshPartsEvent>(OnRefreshParts);
             SubscribeLocalEvent<EmitterComponent, UpgradeExamineEvent>(OnUpgradeExamine);
+            SubscribeLocalEvent<EmitterComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
+            SubscribeLocalEvent<EmitterComponent, SignalReceivedEvent>(OnSignalReceived);
+        }
+
+        private void OnAnchorStateChanged(EntityUid uid, EmitterComponent component, ref AnchorStateChangedEvent args)
+        {
+            if (args.Anchored)
+                return;
+
+            SwitchOff(uid, component);
         }
 
         private void OnInteractHand(EntityUid uid, EmitterComponent component, InteractHandEvent args)
         {
-            args.Handled = true;
-            if (EntityManager.TryGetComponent(uid, out LockComponent? lockComp) && lockComp.Locked)
+            if (args.Handled)
+                return;
+
+            if (TryComp(uid, out LockComponent? lockComp) && lockComp.Locked)
             {
                 _popup.PopupEntity(Loc.GetString("comp-emitter-access-locked",
-                    ("target", component.Owner)), uid, args.User);
+                    ("target", uid)), uid, args.User);
                 return;
             }
 
-            if (EntityManager.TryGetComponent(component.Owner, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
+            if (TryComp(uid, out PhysicsComponent? phys) && phys.BodyType == BodyType.Static)
             {
                 if (!component.IsOn)
                 {
-                    SwitchOn(component);
+                    SwitchOn(uid, component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-on",
-                        ("target", component.Owner)), uid, args.User);
+                        ("target", uid)), uid, args.User);
                 }
                 else
                 {
-                    SwitchOff(component);
+                    SwitchOff(uid, component);
                     _popup.PopupEntity(Loc.GetString("comp-emitter-turned-off",
-                        ("target", component.Owner)), uid, args.User);
+                        ("target", uid)), uid, args.User);
                 }
 
-                _adminLogger.Add(LogType.Emitter,
+                _adminLogger.Add(LogType.FieldGeneration,
                     component.IsOn ? LogImpact.Medium : LogImpact.High,
                     $"{ToPrettyString(args.User):player} toggled {ToPrettyString(uid):emitter}");
+                args.Handled = true;
             }
             else
             {
                 _popup.PopupEntity(Loc.GetString("comp-emitter-not-anchored",
-                    ("target", component.Owner)), uid, args.User);
+                    ("target", uid)), uid, args.User);
             }
+        }
+
+        private void OnGetVerb(EntityUid uid, EmitterComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+                return;
+
+            if (TryComp<LockComponent>(uid, out var lockComp) && lockComp.Locked)
+                return;
+
+            if (component.SelectableTypes.Count < 2)
+                return;
+
+            foreach (var type in component.SelectableTypes)
+            {
+                var proto = _prototype.Index<EntityPrototype>(type);
+
+                var v = new Verb
+                {
+                    Priority = 1,
+                    Category = VerbCategory.SelectType,
+                    Text = proto.Name,
+                    Disabled = type == component.BoltType,
+                    Impact = LogImpact.Medium,
+                    DoContactInteraction = true,
+                    Act = () =>
+                    {
+                        component.BoltType = type;
+                        _popup.PopupEntity(Loc.GetString("emitter-component-type-set", ("type", proto.Name)), uid);
+                    }
+                };
+                args.Verbs.Add(v);
+            }
+        }
+
+        private void OnExamined(EntityUid uid, EmitterComponent component, ExaminedEvent args)
+        {
+            if (component.SelectableTypes.Count < 2)
+                return;
+            var proto = _prototype.Index<EntityPrototype>(component.BoltType);
+            args.PushMarkup(Loc.GetString("emitter-component-current-type", ("type", proto.Name)));
         }
 
         private void ReceivedChanged(
@@ -91,20 +154,34 @@ namespace Content.Server.Singularity.EntitySystems
 
             if (args.ReceivedPower < args.DrawRate)
             {
-                PowerOff(component);
+                PowerOff(uid, component);
             }
             else
             {
-                PowerOn(component);
+                PowerOn(uid, component);
+            }
+        }
+
+        private void OnApcChanged(EntityUid uid, EmitterComponent component, ref PowerChangedEvent args)
+        {
+            if (!component.IsOn)
+            {
+                return;
+            }
+
+            if (!args.Powered)
+            {
+                PowerOff(uid, component);
+            }
+            else
+            {
+                PowerOn(uid, component);
             }
         }
 
         private void OnRefreshParts(EntityUid uid, EmitterComponent component, RefreshPartsEvent args)
         {
-            var powerUseRating = args.PartRatings[component.MachinePartPowerUse];
             var fireRateRating = args.PartRatings[component.MachinePartFireRate];
-
-            component.PowerUseActive = (int) (component.BasePowerUseActive * MathF.Pow(component.PowerUseMultiplier, powerUseRating - 1));
 
             component.FireInterval = component.BaseFireInterval * MathF.Pow(component.FireRateMultiplier, fireRateRating - 1);
             component.FireBurstDelayMin = component.BaseFireBurstDelayMin * MathF.Pow(component.FireRateMultiplier, fireRateRating - 1);
@@ -114,30 +191,35 @@ namespace Content.Server.Singularity.EntitySystems
         private void OnUpgradeExamine(EntityUid uid, EmitterComponent component, UpgradeExamineEvent args)
         {
             args.AddPercentageUpgrade("emitter-component-upgrade-fire-rate", (float) (component.BaseFireInterval.TotalSeconds / component.FireInterval.TotalSeconds));
-            // TODO: Remove this and use UpgradePowerDrawComponent instead.
-            args.AddPercentageUpgrade("upgrade-power-draw", component.PowerUseActive / (float) component.BasePowerUseActive);
         }
 
-        public void SwitchOff(EmitterComponent component)
+        public void SwitchOff(EntityUid uid, EmitterComponent component)
         {
             component.IsOn = false;
-            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
-                powerConsumer.DrawRate = 0;
-            PowerOff(component);
-            UpdateAppearance(component);
+            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
+                powerConsumer.DrawRate = 1; // this needs to be not 0 so that the visuals still work.
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
+                apcReceiver.Load = 1;
+            PowerOff(uid, component);
+            UpdateAppearance(uid, component);
         }
 
-        public void SwitchOn(EmitterComponent component)
+        public void SwitchOn(EntityUid uid, EmitterComponent component)
         {
             component.IsOn = true;
-            if (TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer))
+            if (TryComp<PowerConsumerComponent>(uid, out var powerConsumer))
                 powerConsumer.DrawRate = component.PowerUseActive;
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var apcReceiver))
+            {
+                apcReceiver.Load = component.PowerUseActive;
+                PowerOn(uid, component);
+            }
             // Do not directly PowerOn().
             // OnReceivedPowerChanged will get fired due to DrawRate change which will turn it on.
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
         }
 
-        public void PowerOff(EmitterComponent component)
+        public void PowerOff(EntityUid uid, EmitterComponent component)
         {
             if (!component.IsPowered)
             {
@@ -150,10 +232,10 @@ namespace Content.Server.Singularity.EntitySystems
             DebugTools.AssertNotNull(component.TimerCancel);
             component.TimerCancel?.Cancel();
 
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
         }
 
-        public void PowerOn(EmitterComponent component)
+        public void PowerOn(EntityUid uid, EmitterComponent component)
         {
             if (component.IsPowered)
             {
@@ -165,12 +247,12 @@ namespace Content.Server.Singularity.EntitySystems
             component.FireShotCounter = 0;
             component.TimerCancel = new CancellationTokenSource();
 
-            Timer.Spawn(component.FireBurstDelayMax, () => ShotTimerCallback(component), component.TimerCancel.Token);
+            Timer.Spawn(component.FireBurstDelayMax, () => ShotTimerCallback(uid, component), component.TimerCancel.Token);
 
-            UpdateAppearance(component);
+            UpdateAppearance(uid, component);
         }
 
-        private void ShotTimerCallback(EmitterComponent component)
+        private void ShotTimerCallback(EntityUid uid, EmitterComponent component)
         {
             if (component.Deleted)
                 return;
@@ -179,11 +261,8 @@ namespace Content.Server.Singularity.EntitySystems
             // and thus not firing
             DebugTools.Assert(component.IsPowered);
             DebugTools.Assert(component.IsOn);
-            DebugTools.Assert(TryComp<PowerConsumerComponent>(component.Owner, out var powerConsumer) &&
-                              (powerConsumer.DrawRate <= powerConsumer.ReceivedPower ||
-                               MathHelper.CloseTo(powerConsumer.DrawRate, powerConsumer.ReceivedPower, 0.0001f)));
 
-            Fire(component);
+            Fire(uid, component);
 
             TimeSpan delay;
             if (component.FireShotCounter < component.FireBurstSize)
@@ -201,13 +280,12 @@ namespace Content.Server.Singularity.EntitySystems
 
             // Must be set while emitter powered.
             DebugTools.AssertNotNull(component.TimerCancel);
-            Timer.Spawn(delay, () => ShotTimerCallback(component), component.TimerCancel!.Token);
+            Timer.Spawn(delay, () => ShotTimerCallback(uid, component), component.TimerCancel!.Token);
         }
 
-        private void Fire(EmitterComponent component)
+        private void Fire(EntityUid uid, EmitterComponent component)
         {
-            var uid = component.Owner;
-            if (!TryComp<GunComponent>(uid, out var guncomp))
+            if (!TryComp<GunComponent>(uid, out var gunComponent))
                 return;
 
             var xform = Transform(uid);
@@ -215,11 +293,12 @@ namespace Content.Server.Singularity.EntitySystems
             var proj = EnsureComp<ProjectileComponent>(ent);
             _projectile.SetShooter(proj, uid);
 
-            var targetPos = new EntityCoordinates(uid, (0, -1));
-            _gun.Shoot(guncomp, ent, xform.Coordinates, targetPos);
+            var targetPos = new EntityCoordinates(uid, new Vector2(0, -1));
+
+            _gun.Shoot(uid, gunComponent, ent, xform.Coordinates, targetPos, out _);
         }
 
-        private void UpdateAppearance(EmitterComponent component)
+        private void UpdateAppearance(EntityUid uid, EmitterComponent component)
         {
             EmitterVisualState state;
             if (component.IsPowered)
@@ -234,7 +313,38 @@ namespace Content.Server.Singularity.EntitySystems
             {
                 state = EmitterVisualState.Off;
             }
-            _appearance.SetData(component.Owner, EmitterVisuals.VisualState, state);
+            _appearance.SetData(uid, EmitterVisuals.VisualState, state);
+        }
+
+        private void OnSignalReceived(EntityUid uid, EmitterComponent component, ref SignalReceivedEvent args)
+        {
+            // must anchor the emitter for signals to work
+            if (TryComp<PhysicsComponent>(uid, out var phys) && phys.BodyType != BodyType.Static)
+                return;
+
+            if (args.Port == component.OffPort)
+            {
+                SwitchOff(uid, component);
+            }
+            else if (args.Port == component.OnPort)
+            {
+                SwitchOn(uid, component);
+            }
+            else if (args.Port == component.TogglePort)
+            {
+                if (component.IsOn)
+                {
+                    SwitchOff(uid, component);
+                }
+                else
+                {
+                    SwitchOn(uid, component);
+                }
+            }
+            else if (component.SetTypePorts.TryGetValue(args.Port, out var boltType))
+            {
+                component.BoltType = boltType;
+            }
         }
     }
 }

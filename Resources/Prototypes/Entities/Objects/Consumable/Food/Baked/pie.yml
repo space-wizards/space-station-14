@@ -12,7 +12,6 @@
     trash: FoodPlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -26,7 +25,7 @@
     count: 4
   - type: Tag
     tags:
-    - NoSpinOnThrow
+    - Pie
 
 - type: entity
   parent: FoodInjectableBase # Not sliceable
@@ -41,7 +40,6 @@
     trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:
@@ -51,9 +49,6 @@
           Quantity: 1.2
         - ReagentId: Vitamin
           Quantity: 1
-  - type: Tag
-    tags:
-    - NoSpinOnThrow
 
 # Pie
 
@@ -141,6 +136,19 @@
     - state: tin
     - state: plain
   - type: CreamPie
+  - type: ContainerContainer
+    containers:
+      payloadSlot: !type:ContainerSlot
+  - type: ItemSlots
+    slots:
+      payloadSlot:
+        whitelist:
+          components:
+          - OnUseTimerTrigger
+        insertSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
+        ejectSound:
+          path: /Audio/Weapons/Guns/Empty/empty.ogg
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -253,7 +261,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
     - state: tin
@@ -269,7 +277,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Sprite
     layers:
     - state: plate-small

@@ -8,31 +8,28 @@
     anchored: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.08,-0.35,0.15,0.25"
-      mask:
-      - TabletopMachineMask
-      layer:
-      - TabletopMachineLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.08,-0.35,0.15,0.25"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - Impassable
+        - MidImpassable
+        - LowImpassable
+        hard: false
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/hotplate.rsi
     drawdepth: SmallObjects
     snapCardinals: true
     layers:
     - state: icon
     - state: on
-      map: ["enum.PowerDeviceVisualLayers.Powered"]
+      map: ["enum.SolutionHeaterVisuals.IsOn"]
       shader: unshaded
   - type: ApcPowerReceiver
     powerLoad: 300
-  - type: ItemSlots
-    slots:
-      beakerSlot:
-        whitelist:
-          components:
-          - FitsInDispenser
   - type: ItemMapper
     sprite: Structures/Machines/hotplate.rsi
     mapLayers:
@@ -41,17 +38,22 @@
           components:
           - FitsInDispenser
   - type: SolutionHeater
+    whitelist:
+      components:
+      - FitsInDispenser
+  - type: PlaceableSurface
+    placeCentered: true
+    positionOffset: 0, 0.25
   - type: Machine
     board: HotplateMachineCircuitboard
   - type: Appearance
   - type: ContainerContainer
     containers:
-      beakerSlot: !type:ContainerSlot
       machine_board: !type:Container
       machine_parts: !type:Container
   - type: GenericVisualizer
     visuals:
-      enum.PowerDeviceVisuals.Powered:
-        enum.PowerDeviceVisualLayers.Powered:
+      enum.SolutionHeaterVisuals.IsOn:
+        enum.SolutionHeaterVisuals.IsOn:
           True: { visible: true }
           False: { visible: false }

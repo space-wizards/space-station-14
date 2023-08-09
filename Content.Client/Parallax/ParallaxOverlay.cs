@@ -1,5 +1,7 @@
+using System.Numerics;
 using Content.Client.Parallax.Managers;
 using Content.Shared.CCVar;
+using Content.Shared.Parallax.Biomes;
 using Robust.Client.Graphics;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
@@ -11,9 +13,11 @@ namespace Content.Client.Parallax;
 
 public sealed class ParallaxOverlay : Overlay
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IParallaxManager _manager = default!;
     private readonly ParallaxSystem _parallax;
 
@@ -21,9 +25,17 @@ public sealed class ParallaxOverlay : Overlay
 
     public ParallaxOverlay()
     {
+        ZIndex = ParallaxSystem.ParallaxZIndex;
         IoCManager.InjectDependencies(this);
-        _parallax = IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<ParallaxSystem>();
+        _parallax = _entManager.System<ParallaxSystem>();
+    }
 
+    protected override bool BeforeDraw(in OverlayDrawArgs args)
+    {
+        if (args.MapId == MapId.Nullspace || _entManager.HasComponent<BiomeComponent>(_mapManager.GetMapEntityId(args.MapId)))
+            return false;
+
+        return true;
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -35,7 +47,7 @@ public sealed class ParallaxOverlay : Overlay
             return;
 
         var position = args.Viewport.Eye?.Position.Position ?? Vector2.Zero;
-        var screenHandle = args.WorldHandle;
+        var worldHandle = args.WorldHandle;
 
         var layers = _parallax.GetParallaxLayers(args.MapId);
         var realTime = (float) _timing.RealTime.TotalSeconds;
@@ -49,7 +61,7 @@ public sealed class ParallaxOverlay : Overlay
             else
                 shader = null;
 
-            screenHandle.UseShader(shader);
+            worldHandle.UseShader(shader);
             var tex = layer.Texture;
 
             // Size of the texture in world units.
@@ -90,17 +102,17 @@ public sealed class ParallaxOverlay : Overlay
                 {
                     for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
                     {
-                        screenHandle.DrawTextureRect(tex, Box2.FromDimensions((x, y), size));
+                        worldHandle.DrawTextureRect(tex, Box2.FromDimensions(new Vector2(x, y), size));
                     }
                 }
             }
             else
             {
-                screenHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
+                worldHandle.DrawTextureRect(tex, Box2.FromDimensions(originBL, size));
             }
         }
 
-        screenHandle.UseShader(null);
+        worldHandle.UseShader(null);
     }
 }
 

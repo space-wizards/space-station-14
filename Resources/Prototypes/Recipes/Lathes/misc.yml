@@ -71,11 +71,24 @@
 
 - type: latheRecipe
   id: NodeScanner
-  icon:
-    sprite: Objects/Specific/Xenoarchaeology/node_scanner.rsi
-    state: icon
   result: NodeScanner
   completetime: 2
   materials:
     Steel: 100
     Plastic: 50
+
+- type: latheRecipe
+  id: ClothingShoesBootsMag
+  result: ClothingShoesBootsMag
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 500
+
+- type: latheRecipe
+  id: ModularReceiver
+  result: ModularReceiver
+  completetime: 12
+  materials:
+    Steel: 750
+    Plastic: 100

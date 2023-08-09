@@ -5,11 +5,13 @@
   abstract: true
   components:
     - type: Sprite
-      netsync: false
       sprite: Objects/Misc/books.rsi
       layers:
         - state: book_demonomicon
     - type: Spellbook
+    - type: Tag
+      tags:
+      - Spellbook
 
 - type: entity
   id: SpawnSpellbook
@@ -28,7 +30,6 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: bookforcewall
@@ -42,7 +43,6 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: spellbook
@@ -56,7 +56,6 @@
   parent: BaseSpellbook
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Magic/spellbooks.rsi
     layers:
     - state: spellbook
@@ -70,7 +69,6 @@
   parent: BaseSpellbook
   components:
     - type: Sprite
-      netsync: false
       sprite: Objects/Magic/spellbooks.rsi
       layers:
         - state: bookknock
@@ -84,10 +82,25 @@
   parent: BaseSpellbook
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Magic/spellbooks.rsi
     layers:
     - state: bookfireball
   - type: Spellbook
     worldSpells:
       Fireball: -1
+
+- type: entity
+  id: ScrollRunes
+  name: scroll of runes
+  parent: BaseSpellbook
+  components:
+  - type: Sprite
+    sprite: Objects/Magic/magicactions.rsi
+    layers:
+    - state: spell_default
+  - type: Spellbook
+    instantSpells:
+      FlashRune: -1
+      ExplosionRune: -1
+      IgniteRune: -1
+      StunRune: -1

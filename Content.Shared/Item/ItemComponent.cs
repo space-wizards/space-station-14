@@ -20,7 +20,7 @@ public sealed class ItemComponent : Component
 
     [Access(typeof(SharedItemSystem))]
     [DataField("inhandVisuals")]
-    public Dictionary<HandLocation, List<SharedSpriteComponent.PrototypeLayerData>> InhandVisuals = new();
+    public Dictionary<HandLocation, List<PrototypeLayerData>> InhandVisuals = new();
 
     [Access(typeof(SharedItemSystem))]
     [ViewVariables(VVAccess.ReadWrite)]

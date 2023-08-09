@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
@@ -13,6 +14,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems
@@ -22,14 +24,18 @@ namespace Content.Server.Chemistry.EntitySystems
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly ThrowingSystem _throwing = default!;
 
         private const float ReactTime = 0.125f;
 
+        private ISawmill _sawmill = default!;
+
         public override void Initialize()
         {
             base.Initialize();
+            _sawmill = Logger.GetSawmill("vapor");
             SubscribeLocalEvent<VaporComponent, StartCollideEvent>(HandleCollide);
         }
 
@@ -37,9 +43,9 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             if (!EntityManager.TryGetComponent(uid, out SolutionContainerManagerComponent? contents)) return;
 
-            foreach (var (_, value) in contents.Solutions)
+            foreach (var value in contents.Solutions.Values)
             {
-                value.DoEntityReaction(args.OtherFixture.Body.Owner, ReactionMethod.Touch);
+                value.DoEntityReaction(args.OtherEntity, ReactionMethod.Touch);
             }
 
             // Check for collision with a impassable object (e.g. wall) and stop
@@ -58,13 +64,13 @@ namespace Content.Server.Chemistry.EntitySystems
             // Set Move
             if (EntityManager.TryGetComponent(vapor.Owner, out PhysicsComponent? physics))
             {
-                physics.LinearDamping = 0f;
-                physics.AngularDamping = 0f;
+                _physics.SetLinearDamping(physics, 0f);
+                _physics.SetAngularDamping(physics, 0f);
 
-                _throwing.TryThrow(vapor.Owner, dir * speed, user: user, pushbackRatio: 50f);
+                _throwing.TryThrow(vapor.Owner, dir, speed, user: user, pushbackRatio: ThrowingSystem.PushbackDefault * 10f);
 
-                var distance = (target.Position - vaporXform.WorldPosition).Length;
-                var time = (distance / physics.LinearVelocity.Length);
+                var distance = (target.Position - vaporXform.WorldPosition).Length();
+                var time = (distance / physics.LinearVelocity.Length());
                 despawn.Lifetime = MathF.Min(aliveTime, time);
             }
         }
@@ -115,8 +121,17 @@ namespace Content.Server.Chemistry.EntitySystems
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
                     var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.ReagentId);
-                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId,
-                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f));
+
+                    var reaction =
+                        reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f);
+
+                    if (reaction > reagentQuantity.Quantity)
+                    {
+                        _sawmill.Error($"Tried to tile react more than we have for reagent {reagentQuantity.ReagentId}. Found {reaction} and we only have {reagentQuantity.Quantity}");
+                        reaction = reagentQuantity.Quantity;
+                    }
+
+                    _solutionContainerSystem.TryRemoveReagent(vapor.Owner, contents, reagentQuantity.ReagentId, reaction);
                 }
             }
 

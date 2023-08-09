@@ -64,9 +64,40 @@
     types:
       Cold: 5
       Blunt: 2
+      Structural: 20
   tileBreakChance: [0]
   tileBreakIntensity: [0]
   lightColor: Blue
   fireColor: Blue
   texturePath: /Textures/Effects/fire_greyscale.rsi
   fireStates: 3
+
+- type: explosion
+  id: Minibomb
+  damagePerIntensity:
+    types:
+      Heat: 4
+      Blunt: 7
+      Piercing: 4
+  tileBreakChance: [0, 0.5, 1]
+  tileBreakIntensity: [0, 10, 30]
+  tileBreakRerollReduction: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 3
+
+- type: explosion
+  id: PowerSink
+  damagePerIntensity:
+    types:
+      Heat: 12
+      Blunt: 12
+      Piercing: 12
+      Structural: 40
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 1, 5, 10 ]
+  tileBreakRerollReduction: 3
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6

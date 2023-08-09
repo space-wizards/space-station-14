@@ -19,7 +19,12 @@
       - FoodBreadCreamcheeseSlice
       - FoodBreadMoldySlice
       - FoodBreadGarlicSlice
+      - FoodBreadCornSlice
+      - FoodBreadSausageSlice
       - FoodBreadButteredToast
+      - FoodBreadJellySlice
+      - FoodBreadFrenchToast
+      - FoodBreadTwoSlice
       - FoodCakeBlueberrySlice
       - FoodCakePlainSlice
       - FoodCakeCarrotSlice
@@ -42,7 +47,6 @@
       - FoodBakedBunHotX
       - FoodBakedBunMeat
       - FoodBakedCookie
-      - FoodBakedCookieFortune
       - FoodBakedCookieOatmeal
       - FoodBakedCookieRaisin
       - FoodBakedCookieSugar

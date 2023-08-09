@@ -1,3 +1,4 @@
+using System.Collections.ObjectModel;
 using Content.Shared.Whitelist;
 using Robust.Shared.Serialization;
 
@@ -37,21 +38,22 @@ namespace Content.Shared.Storage.Components
     [Serializable, NetSerializable]
     public sealed class ShowLayerData : ICloneable
     {
-        public IReadOnlyList<string> QueuedEntities { get; internal set; }
+        public readonly IReadOnlyList<string> QueuedEntities;
 
         public ShowLayerData()
         {
             QueuedEntities = new List<string>();
         }
 
-        public ShowLayerData(IEnumerable<string> other)
+        public ShowLayerData(IReadOnlyList<string> other)
         {
-            QueuedEntities = new List<string>(other);
+            QueuedEntities = other;
         }
 
         public object Clone()
         {
-            return new ShowLayerData(QueuedEntities);
+            // QueuedEntities should never be getting modified after this object is created.
+            return this;
         }
     }
 }

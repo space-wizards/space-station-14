@@ -12,11 +12,9 @@ public sealed class HTNBranch
     [DataField("preconditions")]
     public List<HTNPrecondition> Preconditions = new();
 
-    [ViewVariables] public List<HTNTask> Tasks = new();
-
     /// <summary>
     /// Due to how serv3 works we need to defer getting the actual tasks until after they have all been serialized.
     /// </summary>
-    [DataField("tasks", required: true, customTypeSerializer:typeof(HTNTaskListSerializer))]
-    public List<string> TaskPrototypes = default!;
+    [DataField("tasks", required: true)]
+    public List<HTNTask> Tasks = new();
 }

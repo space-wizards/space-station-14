@@ -5,10 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterVestKevlar
-      - id: WeaponShotgunDoubleBarreled
+      - id: ClothingOuterArmorBasicSlim
+      - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
-      - id: ClothingEyesGlassesBeer
+      - id: ClothingEyesHudBeer
       - id: DrinkBottleBeer
         prob: 0.5
       - id: DrinkBottleBeer
@@ -17,6 +17,8 @@
         prob: 0.5
       - id: BoxBeanbag
         amount: 2
+      - id: RagItem
+        amound: 2
 
 #- type: entity
 #  id: LockerFormalFilled
@@ -63,14 +65,13 @@
       - id: TrashBag
         amount: 2
       - id: LightReplacer
-        amount: 1
       - id: BoxLightMixed
-        amount: 1
       - id: Holoprojector
-        amount: 1
       - id: SoapNT
         amount: 2
       - id: FlashlightLantern
+        amount: 2
+      - id: Plunger
         amount: 2
 
 - type: entity
@@ -82,6 +83,7 @@
     contents:
       - id: BriefcaseBrownFilled
         prob: 0.80
+      - id: ClothingOuterRobesJudge
 
 - type: entity
   id: LockerBotanistFilled
@@ -94,7 +96,7 @@
         amount: 2
       - id: ClothingOuterApronBotanist
         amount: 2
-      - id: HatBandBotany
+      - id: ClothingHeadBandBotany
         amount: 2
       - id: HydroponicsToolClippers
       - id: ClothingBeltPlant

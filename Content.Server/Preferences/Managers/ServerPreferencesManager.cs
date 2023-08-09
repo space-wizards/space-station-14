@@ -276,7 +276,7 @@ namespace Content.Server.Preferences.Managers
                     case HumanoidCharacterProfile hp:
                     {
                         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-                        var selectedSpecies = HumanoidSystem.DefaultSpecies;
+                        var selectedSpecies = HumanoidAppearanceSystem.DefaultSpecies;
 
                         if (prototypeManager.TryIndex<SpeciesPrototype>(hp.Species, out var species) && species.RoundStart)
                         {

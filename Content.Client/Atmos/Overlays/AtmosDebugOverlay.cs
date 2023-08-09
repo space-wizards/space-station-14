@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Atmos.EntitySystems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.EntitySystems;
@@ -55,7 +56,7 @@ namespace Content.Client.Atmos.Overlays
                         var dataMaybeNull = _atmosDebugOverlaySystem.GetData(mapGrid.Owner, tile.GridIndices);
                         if (dataMaybeNull != null)
                         {
-                            var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull!;
+                            var data = (SharedAtmosDebugOverlaySystem.AtmosDebugOverlayData) dataMaybeNull;
                             if (pass == 0)
                             {
                                 // -- Mole Count --

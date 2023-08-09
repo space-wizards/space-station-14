@@ -1,6 +1,4 @@
 #nullable enable
-using NUnit.Framework;
-using System.Threading.Tasks;
 using Content.Server.Stack;
 using Content.Shared.Stacks;
 using Content.Shared.Materials;
@@ -8,13 +6,12 @@ using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 
-
-/// <summary>
-/// Materials and stacks have some odd relationships to entities,
-/// so we need some test coverage for them.
-/// </summary>
 namespace Content.IntegrationTests.Tests.Materials
 {
+    /// <summary>
+    /// Materials and stacks have some odd relationships to entities,
+    /// so we need some test coverage for them.
+    /// </summary>
     [TestFixture]
     [TestOf(typeof(StackSystem))]
     [TestOf(typeof(MaterialPrototype))]
@@ -23,7 +20,7 @@ namespace Content.IntegrationTests.Tests.Materials
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{NoClient = true});
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             await server.WaitIdleAsync();
 
@@ -42,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Materials
                 {
                     foreach (var proto in allMaterialProtos)
                     {
-                        if (proto.StackEntity == "")
+                        if (proto.StackEntity == null)
                             continue;
 
                         var spawned = entityManager.SpawnEntity(proto.StackEntity, coords);
@@ -61,9 +58,11 @@ namespace Content.IntegrationTests.Tests.Materials
                             Assert.That(proto.StackEntity, Is.EqualTo(stackProto.Spawn));
                     }
                 });
-                
+
                 mapManager.DeleteMap(testMap.MapId);
             });
+
+            await pairTracker.CleanReturnAsync();
         }
     }
 }

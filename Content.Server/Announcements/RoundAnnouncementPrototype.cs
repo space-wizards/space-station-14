@@ -11,13 +11,10 @@ namespace Content.Server.Announcements;
 [Prototype("roundAnnouncement")]
 public sealed class RoundAnnouncementPrototype : IPrototype
 {
-    [IdDataFieldAttribute]
+    [IdDataField]
     public string ID { get; } = default!;
 
     [DataField("sound")] public SoundSpecifier? Sound;
 
     [DataField("message")] public string? Message;
-
-    [DataField("presets", customTypeSerializer: typeof(PrototypeIdListSerializer<GamePresetPrototype>))]
-    public List<string> GamePresets = new();
 }

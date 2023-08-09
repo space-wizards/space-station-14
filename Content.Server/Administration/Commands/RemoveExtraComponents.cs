@@ -15,6 +15,7 @@ namespace Content.Server.Administration.Commands
             var id = args.Length == 0 ? null : string.Join(" ", args);
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
+            var fac = IoCManager.Resolve<IComponentFactory>();
 
             EntityPrototype? prototype = null;
             var checkPrototype = !string.IsNullOrEmpty(id);
@@ -40,7 +41,7 @@ namespace Content.Server.Administration.Commands
 
                 foreach (var component in entityManager.GetComponents(entity))
                 {
-                    if (metaData.EntityPrototype.Components.ContainsKey(component.Name))
+                    if (metaData.EntityPrototype.Components.ContainsKey(fac.GetComponentName(component.GetType())))
                         continue;
 
                     entityManager.RemoveComponent(entity, component);

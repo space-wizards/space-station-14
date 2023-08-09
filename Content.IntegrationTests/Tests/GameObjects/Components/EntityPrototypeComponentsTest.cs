@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Utility;
@@ -23,12 +21,12 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
             var client = pairTracker.Pair.Client;
 
             var sResourceManager = server.ResolveDependency<IResourceManager>();
-            var prototypePath = new ResourcePath("/Prototypes/");
+            var prototypePath = new ResPath("/Prototypes/");
             var paths = sResourceManager.ContentFindFiles(prototypePath)
                 .ToList()
                 .AsParallel()
                 .Where(filePath => filePath.Extension == "yml" &&
-                                   !filePath.Filename.StartsWith("."))
+                                   !filePath.Filename.StartsWith(".", StringComparison.Ordinal))
                 .ToArray();
 
             var cComponentFactory = client.ResolveDependency<IComponentFactory>();
@@ -102,16 +100,16 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
 
             var message = new StringBuilder();
 
-            foreach (var unknownComponent in unknownComponentsClient)
+            foreach (var (entityId, component) in unknownComponentsClient)
             {
                 message.Append(
-                    $"CLIENT: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+                    $"CLIENT: Unknown component {component} in prototype {entityId}\n");
             }
 
-            foreach (var unknownComponent in unknownComponentsServer)
+            foreach (var (entityId, component) in unknownComponentsServer)
             {
                 message.Append(
-                    $"SERVER: Unknown component {unknownComponent.component} in prototype {unknownComponent.entityId}\n");
+                    $"SERVER: Unknown component {component} in prototype {entityId}\n");
             }
 
             Assert.Fail(message.ToString());
@@ -139,7 +137,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components
                     failureMessages = $"{failureMessages}\nComponent {serverIgnored} was ignored on server, but does not exist on client";
                 }
             }
-            Assert.IsEmpty(failureMessages);
+            Assert.That(failureMessages, Is.Empty);
             await pairTracker.CleanReturnAsync();
         }
     }

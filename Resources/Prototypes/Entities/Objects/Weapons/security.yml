@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Weapons/Melee/stunbaton.rsi
-    netsync: false
     layers:
     - state: stunbaton_off
       map: [ "enum.ToggleVisuals.Layer" ]
@@ -21,6 +20,10 @@
     animation: WeaponArcSlash
   - type: StaminaDamageOnHit
     damage: 55
+    sound: /Audio/Weapons/egloves.ogg
+  - type: StaminaDamageOnCollide
+    damage: 55
+    sound: /Audio/Weapons/egloves.ogg
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
@@ -44,6 +47,46 @@
           False: {state: stunbaton_off}
   - type: StaticPrice
     price: 100
+  - type: Riggable
+  - type: SolutionContainerManager
+    solutions:
+      battery:
+        maxVol: 5
+  - type: InjectableSolution
+    solution: battery
+  - type: DrawableSolution
+    solution: battery
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 1.5
+    maxIntensity: 200
+
+- type: entity
+  name: truncheon
+  parent: BaseItem
+  id: Truncheon
+  description: A rigid, steel-studded baton, meant to harm.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/truncheon.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 20
+    bluntStaminaDamageFactor: 1.5
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects\Weapons\Melee\truncheon.rsi
+    quickEquip: false
+    slots:
+    - Belt
+  - type: DisarmMalus
+    malus: 0.225
+  - type: Appearance
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: flash
@@ -53,12 +96,21 @@
   components:
     - type: Sprite
       sprite: Objects/Weapons/Melee/flash.rsi
-      state: flash
+      layers:
+      - state: flash
+        map: [ "enum.FlashVisuals.BaseLayer" ]
+      - state: flashing
+        map: [ "enum.FlashVisuals.LightLayer" ]
+        visible: false
+        shader: unshaded
     - type: Flash
+    - type: LimitedCharges
+      maxCharges: 5
+      charges: 5
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 0 # why is this classed as a melee weapon? Is it needed for some interaction?
+          Blunt: 0 # melee weapon to allow flashing individual targets
       angle: 10
     - type: Item
       size: 5
@@ -66,6 +118,16 @@
     - type: ItemCooldown
     - type: StaticPrice
       price: 40
+    - type: Appearance
+    - type: GenericVisualizer
+      visuals:
+        enum.FlashVisuals.Burnt:
+          enum.FlashVisuals.BaseLayer:
+            True: {state: burnt}
+        enum.FlashVisuals.Flashing:
+          enum.FlashVisuals.LightLayer:
+            True: {visible: true}
+            False: {visible: false}
 
 - type: entity
   name: portable flasher
@@ -87,7 +149,6 @@
           radius: 2
     - type: Anchorable
     - type: Sprite
-      netsync: false
       sprite: Objects/Weapons/pflash.rsi
       layers:
         - state: "off"
@@ -96,14 +157,15 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeAabb
-          bounds: "-0.15,-0.3,0.15,0.3"
-        mask:
-        - MachineMask
-        layer:
-        - MachineLayer
-        density: 380
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.15,-0.3,0.15,0.3"
+          mask:
+          - MachineMask
+          layer:
+          - MachineLayer
+          density: 380
     - type: Appearance
     - type: AnimationPlayer
     - type: PointLight
@@ -111,4 +173,3 @@
       radius: 0
       softness: 0
       enabled: true
-

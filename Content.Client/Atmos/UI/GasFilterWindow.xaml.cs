@@ -37,7 +37,7 @@ namespace Content.Client.Atmos.UI
             FilterTransferRateInput.OnTextChanged += _ => SetFilterRate.Disabled = false;
             SetFilterRate.OnPressed += _ =>
             {
-                FilterTransferRateChanged?.Invoke(FilterTransferRateInput.Text ??= "");
+                FilterTransferRateChanged?.Invoke(FilterTransferRateInput.Text);
                 SetFilterRate.Disabled = true;
             };
 

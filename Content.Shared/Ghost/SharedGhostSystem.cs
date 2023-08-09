@@ -1,5 +1,6 @@
 using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
+using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Robust.Shared.Serialization;
@@ -26,6 +27,14 @@ namespace Content.Shared.Ghost
         {
             if (!component.CanGhostInteract)
                 args.Cancel();
+        }
+
+        public void SetCanReturnToBody(EntityUid uid, bool value, SharedGhostComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.CanReturnToBody = value;
         }
 
         public void SetCanReturnToBody(SharedGhostComponent component, bool value)
@@ -56,7 +65,7 @@ namespace Content.Shared.Ghost
             DisplayName = displayName;
             IsWarpPoint = isWarpPoint;
         }
-        
+
         /// <summary>
         /// The entity representing the warp point.
         /// This is passed back to the server in <see cref="GhostWarpToTargetRequestEvent"/>

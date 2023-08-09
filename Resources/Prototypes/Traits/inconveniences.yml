@@ -1,14 +1,7 @@
 ﻿- type: trait
-  id: UncontrollableSneezing
-  name: trait-sneezing-name
-  description: trait-sneezing-desc
-  whitelist:
-    components:
-      - DiseaseCarrier
+  id: LightweightDrunk
+  name: trait-lightweight-name
+  description: trait-lightweight-desc
   components:
-    - type: UncontrollableSnough
-      snoughSound:
-        collection: Sneezes
-        params:
-          variation: 0.2
-      timeBetweenIncidents: 0.3, 300
+    - type: LightweightDrunk
+      boozeStrengthMultiplier: 2

@@ -78,7 +78,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
             if (!data.FilterGases.SequenceEqual(FilterGases))
             {
                 FilterGases.Clear();
-                foreach (var gas in data.FilterGases!)
+                foreach (var gas in data.FilterGases)
                     FilterGases.Add(gas);
             }
         }

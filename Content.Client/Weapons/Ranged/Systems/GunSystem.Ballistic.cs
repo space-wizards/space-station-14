@@ -1,4 +1,5 @@
 using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Map;
 
 namespace Content.Client.Weapons.Ranged.Systems;
@@ -16,13 +17,13 @@ public sealed partial class GunSystem
         if (args.Control is DefaultStatusControl control)
         {
             control.Update(GetBallisticShots(component), component.Capacity);
-            return;
         }
     }
 
-    protected override void Cycle(BallisticAmmoProviderComponent component, MapCoordinates coordinates)
+    protected override void Cycle(EntityUid uid, BallisticAmmoProviderComponent component, MapCoordinates coordinates)
     {
-        if (!Timing.IsFirstTimePredicted) return;
+        if (!Timing.IsFirstTimePredicted)
+            return;
 
         EntityUid? ent = null;
 
@@ -44,5 +45,8 @@ public sealed partial class GunSystem
 
         if (ent != null && ent.Value.IsClientSide())
             Del(ent.Value);
+
+        var cycledEvent = new GunCycledEvent();
+        RaiseLocalEvent(uid, ref cycledEvent);
     }
 }

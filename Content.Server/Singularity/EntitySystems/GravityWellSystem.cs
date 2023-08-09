@@ -24,6 +24,7 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
     [Dependency] private readonly IViewVariablesManager _vvManager = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -181,22 +182,27 @@ public sealed class GravityWellSystem : SharedGravityWellSystem
 
         var epicenter = mapPos.Position;
         var minRange2 = MathF.Max(minRange * minRange, MinGravPulseRange); // Cache square value for speed. Also apply a sane minimum value to the minimum value so that div/0s don't happen.
+        var bodyQuery = GetEntityQuery<PhysicsComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
         foreach(var entity in _lookup.GetEntitiesInRange(mapPos.MapId, epicenter, maxRange, flags: LookupFlags.Dynamic | LookupFlags.Sundries))
         {
-            if(!TryComp<PhysicsComponent?>(entity, out var physics)
-            || physics.BodyType == BodyType.Static)
+            if (!bodyQuery.TryGetComponent(entity, out var physics)
+                || physics.BodyType == BodyType.Static)
+            {
                 continue;
+            }
 
             if(!CanGravPulseAffect(entity))
                 continue;
 
-            var displacement = epicenter - Transform(entity).WorldPosition;
-            var distance2 = displacement.LengthSquared;
+            var displacement = epicenter - _transform.GetWorldPosition(entity, xformQuery);
+            var distance2 = displacement.LengthSquared();
             if (distance2 < minRange2)
                 continue;
 
             var scaling = (1f / distance2) * physics.Mass; // TODO: Variable falloff gradiants.
-            _physics.ApplyLinearImpulse(physics, (displacement * baseMatrixDeltaV) * scaling);
+            _physics.ApplyLinearImpulse(entity, (displacement * baseMatrixDeltaV) * scaling, body: physics);
         }
     }
 

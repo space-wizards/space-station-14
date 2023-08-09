@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.GameTicking.Rules;
-using Content.Server.GameTicking.Rules.Configurations;
+using Content.Server.StationEvents.Components;
 using Content.Shared.CCVar;
-using Content.Shared.GameTicking;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -31,6 +29,15 @@ public sealed class EventManagerSystem : EntitySystem
         _sawmill = Logger.GetSawmill("events");
 
         _configurationManager.OnValueChanged(CCVars.EventsEnabled, SetEnabled, true);
+
+        SubscribeLocalEvent<StationEventComponent, EntityUnpausedEvent>(OnUnpaused);
+    }
+
+    private void OnUnpaused(EntityUid uid, StationEventComponent component, ref EntityUnpausedEvent args)
+    {
+        component.StartTime += args.PausedTime;
+        if (component.EndTime != null)
+            component.EndTime = component.EndTime.Value + args.PausedTime;
     }
 
     public override void Shutdown()
@@ -46,16 +53,15 @@ public sealed class EventManagerSystem : EntitySystem
     {
         var randomEvent = PickRandomEvent();
 
-        if (randomEvent == null
-            || !_prototype.TryIndex<GameRulePrototype>(randomEvent.Id, out var proto))
+        if (randomEvent == null)
         {
             var errStr = Loc.GetString("station-event-system-run-random-event-no-valid-events");
             _sawmill.Error(errStr);
             return errStr;
         }
 
-        GameTicker.AddGameRule(proto);
-        var str = Loc.GetString("station-event-system-run-event",("eventName", randomEvent.Id));
+        var ent = GameTicker.AddGameRule(randomEvent);
+        var str = Loc.GetString("station-event-system-run-event",("eventName", ToPrettyString(ent)));
         _sawmill.Info(str);
         return str;
     }
@@ -63,7 +69,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// <summary>
     /// Randomly picks a valid event.
     /// </summary>
-    public StationEventRuleConfiguration? PickRandomEvent()
+    public string? PickRandomEvent()
     {
         var availableEvents = AvailableEvents();
         _sawmill.Info($"Picking from {availableEvents.Count} total available events");
@@ -74,7 +80,7 @@ public sealed class EventManagerSystem : EntitySystem
     /// Pick a random event from the available events at this time, also considering their weightings.
     /// </summary>
     /// <returns></returns>
-    private StationEventRuleConfiguration? FindEvent(List<StationEventRuleConfiguration> availableEvents)
+    private string? FindEvent(Dictionary<EntityPrototype, StationEventComponent> availableEvents)
     {
         if (availableEvents.Count == 0)
         {
@@ -84,20 +90,20 @@ public sealed class EventManagerSystem : EntitySystem
 
         var sumOfWeights = 0;
 
-        foreach (var stationEvent in availableEvents)
+        foreach (var stationEvent in availableEvents.Values)
         {
             sumOfWeights += (int) stationEvent.Weight;
         }
 
         sumOfWeights = _random.Next(sumOfWeights);
 
-        foreach (var stationEvent in availableEvents)
+        foreach (var (proto, stationEvent) in availableEvents)
         {
             sumOfWeights -= (int) stationEvent.Weight;
 
             if (sumOfWeights <= 0)
             {
-                return stationEvent;
+                return proto.ID;
             }
         }
 
@@ -110,67 +116,73 @@ public sealed class EventManagerSystem : EntitySystem
     /// </summary>
     /// <param name="ignoreEarliestStart"></param>
     /// <returns></returns>
-    private List<StationEventRuleConfiguration> AvailableEvents(bool ignoreEarliestStart = false)
+    private Dictionary<EntityPrototype, StationEventComponent> AvailableEvents(bool ignoreEarliestStart = false)
     {
-        TimeSpan currentTime;
         var playerCount = _playerManager.PlayerCount;
 
         // playerCount does a lock so we'll just keep the variable here
-        if (!ignoreEarliestStart)
-        {
-            currentTime = GameTicker.RoundDuration();
-        }
-        else
-        {
-            currentTime = TimeSpan.Zero;
-        }
+        var currentTime = !ignoreEarliestStart
+            ? GameTicker.RoundDuration()
+            : TimeSpan.Zero;
 
-        var result = new List<StationEventRuleConfiguration>();
+        var result = new Dictionary<EntityPrototype, StationEventComponent>();
 
-        foreach (var stationEvent in AllEvents())
+        foreach (var (proto, stationEvent) in AllEvents())
         {
-            if (CanRun(stationEvent, playerCount, currentTime))
+            if (CanRun(proto, stationEvent, playerCount, currentTime))
             {
-                _sawmill.Debug($"Adding event {stationEvent.Id} to possibilities");
-                result.Add(stationEvent);
+                _sawmill.Debug($"Adding event {proto.ID} to possibilities");
+                result.Add(proto, stationEvent);
             }
         }
 
         return result;
     }
 
-    private IEnumerable<StationEventRuleConfiguration> AllEvents()
+    public Dictionary<EntityPrototype, StationEventComponent> AllEvents()
     {
-        return _prototype.EnumeratePrototypes<GameRulePrototype>()
-            .Where(p => p.Configuration is StationEventRuleConfiguration)
-            .Select(p => (StationEventRuleConfiguration) p.Configuration);
+        var allEvents = new Dictionary<EntityPrototype, StationEventComponent>();
+        foreach (var prototype in _prototype.EnumeratePrototypes<EntityPrototype>())
+        {
+            if (prototype.Abstract)
+                continue;
+
+            if (!prototype.TryGetComponent<StationEventComponent>(out var stationEvent))
+                continue;
+
+            allEvents.Add(prototype, stationEvent);
+        }
+
+        return allEvents;
     }
 
-    private int GetOccurrences(StationEventRuleConfiguration stationEvent)
+    private int GetOccurrences(EntityPrototype stationEvent)
     {
-        return GameTicker.AllPreviousGameRules.Count(p => p.Item2.ID == stationEvent.Id);
+        return GetOccurrences(stationEvent.ID);
     }
 
-    public TimeSpan TimeSinceLastEvent(StationEventRuleConfiguration? stationEvent)
+    private int GetOccurrences(string stationEvent)
+    {
+        return GameTicker.AllPreviousGameRules.Count(p => p.Item2 == stationEvent);
+    }
+
+    public TimeSpan TimeSinceLastEvent(EntityPrototype stationEvent)
     {
         foreach (var (time, rule) in GameTicker.AllPreviousGameRules.Reverse())
         {
-            if (rule.Configuration is not StationEventRuleConfiguration)
-                continue;
-
-            if (stationEvent == null || rule.ID == stationEvent.Id)
+            if (rule == stationEvent.ID)
                 return time;
         }
 
         return TimeSpan.Zero;
     }
 
-    private bool CanRun(StationEventRuleConfiguration stationEvent, int playerCount, TimeSpan currentTime)
+    private bool CanRun(EntityPrototype prototype, StationEventComponent stationEvent, int playerCount, TimeSpan currentTime)
     {
-        if (GameTicker.IsGameRuleStarted(stationEvent.Id))
+        if (GameTicker.IsGameRuleActive(prototype.ID))
             return false;
 
-        if (stationEvent.MaxOccurrences.HasValue && GetOccurrences(stationEvent) >= stationEvent.MaxOccurrences.Value)
+        if (stationEvent.MaxOccurrences.HasValue && GetOccurrences(prototype) >= stationEvent.MaxOccurrences.Value)
         {
             return false;
         }
@@ -185,7 +197,7 @@ public sealed class EventManagerSystem : EntitySystem
             return false;
         }
 
-        var lastRun = TimeSinceLastEvent(stationEvent);
+        var lastRun = TimeSinceLastEvent(prototype);
         if (lastRun != TimeSpan.Zero && currentTime.TotalMinutes <
             stationEvent.ReoccurrenceDelay + lastRun.TotalMinutes)
         {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Content.Server.Database.Migrations.Postgres
 {
-    public partial class whitelist : Migration
+    public partial class Whitelist : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

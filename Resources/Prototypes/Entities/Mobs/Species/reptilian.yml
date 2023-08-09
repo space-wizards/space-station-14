@@ -5,9 +5,12 @@
   id: BaseMobReptilian
   abstract: true
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -15,11 +18,19 @@
   - type: Body
     prototype: Reptilian
     requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatLizard
+      amount: 5
   - type: LizardAccent
   - type: Speech
     speechSounds: Lizard
-  - type: DiseaseCarrier
-    diseaseResist: 0.1
+  - type: Vocal
+    sounds:
+      Male: UnisexReptilian
+      Female: UnisexReptilian
+      Unsexed: UnisexReptilian
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Scale
@@ -31,7 +42,8 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Piercing: 5
+        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
+        Piercing: 4
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285
@@ -56,7 +68,7 @@
   noSpawn: true
   description: A dummy reptilian meant to be used in character setup.
   components:
-  - type: Humanoid
+  - type: HumanoidAppearance
     species: Reptilian
 
 #Weh

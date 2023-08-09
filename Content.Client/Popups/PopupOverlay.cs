@@ -1,9 +1,11 @@
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
+using Robust.Client.Player;
 using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Shared;
@@ -21,6 +23,7 @@ public sealed class PopupOverlay : Overlay
 {
     private readonly IConfigurationManager _configManager;
     private readonly IEntityManager _entManager;
+    private readonly IPlayerManager _playerMgr;
     private readonly IUserInterfaceManager _uiManager;
     private readonly PopupSystem _popup;
 
@@ -34,6 +37,7 @@ public sealed class PopupOverlay : Overlay
     public PopupOverlay(
         IConfigurationManager configManager,
         IEntityManager entManager,
+        IPlayerManager playerMgr,
         IPrototypeManager protoManager,
         IResourceCache cache,
         IUserInterfaceManager uiManager,
@@ -41,6 +45,7 @@ public sealed class PopupOverlay : Overlay
     {
         _configManager = configManager;
         _entManager = entManager;
+        _playerMgr = playerMgr;
         _uiManager = uiManager;
         _popup = popup;
 
@@ -75,6 +80,7 @@ public sealed class PopupOverlay : Overlay
 
         var matrix = args.ViewportControl!.GetWorldToScreenMatrix();
         var viewPos = new MapCoordinates(args.WorldAABB.Center, args.MapId);
+        var ourEntity = _playerMgr.LocalPlayer?.ControlledEntity;
 
         foreach (var popup in _popup.WorldLabels)
         {
@@ -83,11 +89,11 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            var distance = (mapPos.Position - args.WorldBounds.Centre).Length;
+            var distance = (mapPos.Position - args.WorldBounds.Center).Length();
 
             // Should handle fade here too wyci.
             if (!args.WorldAABB.Contains(mapPos.Position) || !ExamineSystemShared.InRangeUnOccluded(viewPos, mapPos, distance,
-                    e => e == popup.InitialPos.EntityId, entMan: _entManager))
+                    e => e == popup.InitialPos.EntityId || e == ourEntity, entMan: _entManager))
                 continue;
 
             var pos = matrix.Transform(mapPos.Position);
@@ -109,10 +115,12 @@ public sealed class PopupOverlay : Overlay
 
     private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position, float scale)
     {
-        const float alphaMinimum = 0.5f;
+        var lifetime = PopupSystem.GetPopupLifetime(popup);
 
-        var alpha = MathF.Min(1f, 1f - (popup.TotalTime - alphaMinimum) / (PopupSystem.PopupLifetime - alphaMinimum));
-        var updatedPosition = position - new Vector2(0f, 20f * (popup.TotalTime * popup.TotalTime + popup.TotalTime));
+        // Keep alpha at 1 until TotalTime passes half its lifetime, then gradually decrease to 0.
+        var alpha = MathF.Min(1f, 1f - MathF.Max(0f, popup.TotalTime - lifetime / 2) * 2 / lifetime);
+
+        var updatedPosition = position - new Vector2(0f, MathF.Min(8f, 12f * (popup.TotalTime * popup.TotalTime + popup.TotalTime)));
         var font = _smallFont;
         var color = Color.White.WithAlpha(alpha);
 

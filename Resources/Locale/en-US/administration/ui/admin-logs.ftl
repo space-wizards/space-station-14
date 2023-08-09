@@ -1,5 +1,5 @@
 ﻿admin-logs-title = Admin Logs Panel
-admin-logs-count = Showing {$showing}/{$total}
+admin-logs-count = Showing {$showing}/{$total} of {$round}
 admin-logs-pop-out = Pop Out
 
 # Round
@@ -15,6 +15,7 @@ admin-logs-select-none = None
 # Players
 admin-logs-search-players-placeholder = Search Players (OR)
 admin-logs-select-none = None
+admin-logs-include-non-player = Include Non-players
 
 # Logs
 admin-logs-search-logs-placeholder = Search Logs

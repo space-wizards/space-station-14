@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "license": "CC0-1.0",
+  "copyright": "Created by EmoGarbage; anom3, anom3-pulse, anom4, anom4-pulse are CC-BY-SA-3.0 at https://github.com/ParadiseSS13/Paradise/blob/master/icons/effects/effects.dmi; anom5, anom5-pulse are CC-BY-SA-3.0 by Aleksh#7552 (discord) for space-station-14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "anom1"
+    },
+    {
+      "name": "anom1-pulse",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625
+        ]
+      ]
+    },
+    {
+      "name": "anom2"
+    },
+    {
+      "name": "anom2-pulse",
+      "delays": [
+        [
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625,
+          0.15625
+        ]
+      ]
+    },
+    {
+      "name": "anom3"
+    },
+    {
+      "name": "anom3-pulse",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "anom4",
+      "delays": [
+        [
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3,
+          0.3
+        ]
+      ]
+    },
+    {
+      "name": "anom4-pulse",
+      "delays": [
+        [
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15,
+          0.15
+        ]
+      ]
+    },
+    {
+      "name": "anom5"
+    },
+    {
+      "name": "anom5-pulse",
+      "delays": [
+        [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      ]
+    }
+  ]
+}

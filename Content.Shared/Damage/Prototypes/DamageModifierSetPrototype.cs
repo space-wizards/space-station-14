@@ -13,7 +13,7 @@ namespace Content.Shared.Damage.Prototypes
     public sealed class DamageModifierSetPrototype : DamageModifierSet, IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
     }
 }

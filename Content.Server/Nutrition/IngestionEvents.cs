@@ -1,6 +1,3 @@
-using Content.Server.Nutrition.Components;
-using Content.Shared.Chemistry.Components;
-
 namespace Content.Server.Nutrition;
 
 /// <summary>
@@ -15,67 +12,25 @@ public sealed class IngestionAttemptEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-///     Raised directed at the food after a successful feed do-after.
+/// Raised directed at the food after finishing eating a food before it's deleted.
+/// Cancel this if you want to do something special before a food is deleted.
 /// </summary>
-public sealed class FeedEvent : EntityEventArgs
+public sealed class BeforeFullyEatenEvent : CancellableEntityEventArgs
 {
-    public readonly EntityUid User;
-    public readonly FoodComponent Food;
-    public readonly Solution FoodSolution;
-    public readonly string FlavorMessage;
-    public readonly List<UtensilComponent> Utensils;
-
-    public FeedEvent(EntityUid user, FoodComponent food, Solution foodSolution, string flavorMessage, List<UtensilComponent> utensils)
-    {
-        User = user;
-        Food = food;
-        FoodSolution = foodSolution;
-        FlavorMessage = flavorMessage;
-        Utensils = utensils;
-    }
+    /// <summary>
+    /// The person that ate the food.
+    /// </summary>
+    public EntityUid User;
 }
 
 /// <summary>
-///     Raised directed at the food after a failed force-feed do-after.
+/// Raised directed at the food being sliced before it's deleted.
+/// Cancel this if you want to do something special before a food is deleted.
 /// </summary>
-public sealed class ForceFeedCancelledEvent : EntityEventArgs
+public sealed class BeforeFullySlicedEvent : CancellableEntityEventArgs
 {
-    public readonly FoodComponent Food;
-
-    public ForceFeedCancelledEvent(FoodComponent food)
-    {
-        Food = food;
-    }
-}
-
-/// <summary>
-///     Raised directed at the drink after a successful force-drink do-after.
-/// </summary>
-public sealed class DrinkEvent : EntityEventArgs
-{
-    public readonly EntityUid User;
-    public readonly DrinkComponent Drink;
-    public readonly Solution DrinkSolution;
-    public readonly string FlavorMessage;
-
-    public DrinkEvent(EntityUid user, DrinkComponent drink, Solution drinkSolution, string flavorMessage)
-    {
-        User = user;
-        Drink = drink;
-        DrinkSolution = drinkSolution;
-        FlavorMessage = flavorMessage;
-    }
-}
-
-/// <summary>
-///     Raised directed at the food after a failed force-dink do-after.
-/// </summary>
-public sealed class DrinkCancelledEvent : EntityEventArgs
-{
-    public readonly DrinkComponent Drink;
-
-    public DrinkCancelledEvent(DrinkComponent drink)
-    {
-        Drink = drink;
-    }
+    /// <summary>
+    /// The person slicing the food.
+    /// </summary>
+    public EntityUid User;
 }

@@ -5,7 +5,7 @@ namespace Content.Client.SubFloor;
 
 public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     private bool _showAll;
 
@@ -34,22 +34,18 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
         if (args.Sprite == null)
             return;
 
-        args.Component.TryGetData(SubFloorVisuals.Covered, out bool covered);
-        args.Component.TryGetData(SubFloorVisuals.ScannerRevealed, out bool scannerRevealed);
+        _appearance.TryGetData<bool>(uid, SubFloorVisuals.Covered, out var covered, args.Component);
+        _appearance.TryGetData<bool>(uid, SubFloorVisuals.ScannerRevealed, out var scannerRevealed, args.Component);
 
         scannerRevealed &= !ShowAll; // no transparency for show-subfloor mode.
 
         var revealed = !covered || ShowAll || scannerRevealed;
-        var transparency = scannerRevealed ? component.ScannerTransparency : 1f;
 
         // set visibility & color of each layer
         foreach (var layer in args.Sprite.AllLayers)
         {
             // pipe connection visuals are updated AFTER this, and may re-hide some layers
-            layer.Visible = revealed; 
-
-            if (layer.Visible)
-                layer.Color = layer.Color.WithAlpha(transparency);
+            layer.Visible = revealed;
         }
 
         // Is there some layer that is always visible?
@@ -70,9 +66,10 @@ public sealed class SubFloorHideSystem : SharedSubFloorHideSystem
 
     private void UpdateAll()
     {
-        foreach (var (_, appearance) in EntityManager.EntityQuery<SubFloorHideComponent, AppearanceComponent>(true))
+        var query = AllEntityQuery<SubFloorHideComponent, AppearanceComponent>();
+        while (query.MoveNext(out var uid, out _, out var appearance))
         {
-            _appearanceSystem.MarkDirty(appearance, true);
+            _appearance.QueueUpdate(uid, appearance);
         }
     }
 }

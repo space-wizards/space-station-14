@@ -12,9 +12,9 @@ namespace Content.Shared.Rotation
     public enum RotationState
     {
         /// <summary>
-        ///     Standing up
+        ///     Standing up. This is the default value.
         /// </summary>
-        Vertical,
+        Vertical = 0,
 
         /// <summary>
         ///     Laying down

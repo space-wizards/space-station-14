@@ -59,11 +59,6 @@ public sealed class StoreComponent : Component
     [ViewVariables]
     public HashSet<ListingData> LastAvailableListings = new();
 
-    /// <summary>
-    /// checks whether or not the store has been opened yet.
-    /// </summary>
-    public bool Opened = false;
-
     #region audio
     /// <summary>
     /// The sound played to the buyer when a purchase is succesfully made.
@@ -76,8 +71,10 @@ public sealed class StoreComponent : Component
 /// <summary>
 /// Event that is broadcast when a store is added to an entity
 /// </summary>
-public sealed class StoreAddedEvent : EntityEventArgs { };
+[ByRefEvent]
+public readonly record struct StoreAddedEvent;
 /// <summary>
 /// Event that is broadcast when a store is removed from an entity
 /// </summary>
-public sealed class StoreRemovedEvent : EntityEventArgs { };
+[ByRefEvent]
+public readonly record struct StoreRemovedEvent;

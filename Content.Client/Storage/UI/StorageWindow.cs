@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
@@ -5,7 +6,9 @@ using Robust.Client.UserInterface.CustomControls;
 using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.IdentityManagement;
 using Content.Shared.Item;
+using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using static Content.Shared.Storage.SharedStorageComponent;
@@ -28,7 +31,7 @@ namespace Content.Client.Storage.UI
         public StorageWindow(IEntityManager entityManager)
         {
             _entityManager = entityManager;
-            SetSize = (200, 320);
+            SetSize = new Vector2(240, 320);
             Title = Loc.GetString("comp-storage-window-title");
             RectClipContent = true;
 
@@ -110,8 +113,11 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out ISpriteComponent? sprite);
+            _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
+            _entityManager.TryGetComponent(entity, out StackComponent? stack);
+            var count = stack?.Count ?? 1;
+            var size = item?.Size;
 
             button.AddChild(new BoxContainer
             {
@@ -123,7 +129,7 @@ namespace Content.Client.Storage.UI
                         {
                             HorizontalAlignment = HAlignment.Left,
                             VerticalAlignment = VAlignment.Center,
-                            MinSize = new Vector2(32.0f, 32.0f),
+                            SetSize = new Vector2(32.0f, 32.0f),
                             OverrideDirection = Direction.South,
                             Sprite = sprite
                         },
@@ -131,12 +137,13 @@ namespace Content.Client.Storage.UI
                         {
                             HorizontalExpand = true,
                             ClipText = true,
-                            Text = _entityManager.GetComponent<MetaDataComponent>(entity).EntityName
+                            Text = _entityManager.GetComponent<MetaDataComponent>(Identity.Entity(entity, _entityManager)).EntityName +
+                                   (count > 1 ? $" x {count}" : string.Empty),
                         },
                         new Label
                         {
                             Align = Label.AlignMode.Right,
-                            Text = item?.Size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
+                            Text = size.ToString() ?? Loc.GetString("comp-storage-no-item-size"),
                         }
                     }
             });

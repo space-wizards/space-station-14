@@ -1,11 +1,13 @@
 using Content.Server.Atmos.Piping.Binary.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos.Piping;
 using Content.Shared.Audio;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -15,6 +17,8 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
     public sealed class GasValveSystem : EntitySystem
     {
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -53,12 +57,12 @@ namespace Content.Server.Atmos.Piping.Binary.EntitySystems
         {
             component.Open = value;
             if (TryComp(uid, out NodeContainerComponent? nodeContainer)
-                && nodeContainer.TryGetNode(component.InletName, out PipeNode? inlet)
-                && nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+                && _nodeContainer.TryGetNode(nodeContainer, component.InletName, out PipeNode? inlet)
+                && _nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
             {
                 if (TryComp<AppearanceComponent>(component.Owner,out var appearance))
                 {
-                    appearance.SetData(FilterVisuals.Enabled, component.Open);
+                    _appearance.SetData(uid, FilterVisuals.Enabled, component.Open, appearance);
                 }
                 if (component.Open)
                 {

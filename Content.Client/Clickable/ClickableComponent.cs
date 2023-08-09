@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
@@ -35,7 +36,7 @@ namespace Content.Client.Clickable
             renderOrder = sprite.RenderOrder;
             var (spritePos, spriteRot) = transform.GetWorldPositionRotation(xformQuery);
             var spriteBB = sprite.CalculateRotatedBoundingBox(spritePos, spriteRot, eye.Rotation);
-            bottom = spriteBB.CalcBoundingBox().Bottom;
+            bottom = Matrix3.CreateRotation(eye.Rotation).TransformBox(spriteBB).Bottom;
 
             var invSpriteMatrix = Matrix3.Invert(sprite.GetLocalMatrix());
 
@@ -62,7 +63,7 @@ namespace Content.Client.Clickable
                 if (layer.Texture != null)
                 {
                     // Convert to image coordinates
-                    var imagePos = (Vector2i) (localPos * EyeManager.PixelsPerMeter * (1, -1) + layer.Texture.Size / 2f);
+                    var imagePos = (Vector2i) (localPos * EyeManager.PixelsPerMeter * new Vector2(1, -1) + layer.Texture.Size / 2f);
 
                     if (_clickMapManager.IsOccluding(layer.Texture, imagePos))
                         return true;
@@ -80,12 +81,12 @@ namespace Content.Client.Clickable
                 var layerLocal = inverseMatrix.Transform(localPos);
 
                 // Convert to image coordinates
-                var layerImagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * (1, -1) + rsiState.Size / 2f);
+                var layerImagePos = (Vector2i) (layerLocal * EyeManager.PixelsPerMeter * new Vector2(1, -1) + rsiState.Size / 2f);
 
                 // Next, to get the right click map we need the "direction" of this layer that is actually being used to draw the sprite on the screen.
                 // This **can** differ from the dir defined before, but can also just be the same.
                 if (sprite.EnableDirectionOverride)
-                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);;
+                    dir = sprite.DirectionOverride.Convert(rsiState.Directions);
                 dir = dir.OffsetRsiDir(layer.DirOffset);
 
                 if (_clickMapManager.IsOccluding(layer.ActualRsi!, layer.State, dir, layer.AnimationFrame, layerImagePos))
@@ -98,7 +99,7 @@ namespace Content.Client.Clickable
             return false;
         }
 
-        public bool CheckDirBound(ISpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
+        public bool CheckDirBound(SpriteComponent sprite, Angle relativeRotation, Vector2 localPos)
         {
             if (Bounds == null)
                 return false;

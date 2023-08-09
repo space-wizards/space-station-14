@@ -12,6 +12,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -23,10 +24,15 @@
     graph: SignalSwitchGraph
     node: SignalSwitchNode
   - type: Fixtures
-  - type: SignalTransmitter
-    outputs:
-      On: []
-      Off: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    ports:
+    - On
+    - Off
+    - Status
 
 - type: entity
   id: SignalButton
@@ -42,6 +48,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Physics
+    canCollide: false
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
@@ -50,19 +57,30 @@
   - type: SignalSwitch
     onPort: Pressed
     offPort: Pressed
+    statusPort: Pressed
   - type: Rotatable
   - type: Construction
     graph: SignalButtonGraph
     node: SignalButtonNode
   - type: Fixtures
-  - type: SignalTransmitter
-    outputs:
-      Pressed: []
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+    range: 200
+  - type: DeviceLinkSource
+    ports:
+      - Pressed
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
   - type: Destructible
     thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 80
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
       - trigger:
           !type:DamageTrigger
           damage: 40
@@ -87,6 +105,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+      canCollide: false
     - type: Transform
       anchored: true
     - type: Sprite
@@ -114,7 +133,6 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      netsync: false
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off
@@ -144,8 +162,12 @@
     - type: Construction
       graph: LeverGraph
       node: LeverNode
-    - type: SignalTransmitter
-      outputs:
-        Left: []
-        Right: []
-        Middle: []
+    - type: DeviceNetwork
+      deviceNetId: Wireless
+    - type: WirelessNetworkConnection
+      range: 200
+    - type: DeviceLinkSource
+      ports:
+        - Left
+        - Right
+        - Middle

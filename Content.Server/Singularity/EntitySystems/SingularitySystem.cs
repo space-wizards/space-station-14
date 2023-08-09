@@ -24,7 +24,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -147,8 +147,8 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="delta">The amount to adjust the energy of the singuarity.</param>
     /// <param name="min">The minimum amount of energy for the singularity to be adjusted to.</param>
     /// <param name="max">The maximum amount of energy for the singularity to be adjusted to.</param>
-    /// <param name="hardMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
-    /// <param name="hardMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
+    /// <param name="snapMin">Whether the amount of energy in the singularity should be forced to within the specified range if it already is below it.</param>
+    /// <param name="snapMax">Whether the amount of energy in the singularity should be forced to within the specified range if it already is above it.</param>
     /// <param name="singularity">The state of the singularity to adjust the energy of.</param>
     public void AdjustEnergy(EntityUid uid, float delta, float min = float.MinValue, float max = float.MaxValue, bool snapMin = true, bool snapMax = true, SingularityComponent? singularity = null)
     {
@@ -256,7 +256,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is consuming the entity.</param>
     /// <param name="comp">The component of the singularity that is consuming the entity.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, EntityConsumedByEventHorizonEvent args)
+    public void OnConsumedEntity(EntityUid uid, SingularityComponent comp, ref EntityConsumedByEventHorizonEvent args)
     {
         AdjustEnergy(uid, BaseEntityEnergy, singularity: comp);
     }
@@ -267,21 +267,21 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity that is consuming the tiles.</param>
     /// <param name="comp">The component of the singularity that is consuming the tiles.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, TilesConsumedByEventHorizonEvent args)
+    public void OnConsumedTiles(EntityUid uid, SingularityComponent comp, ref TilesConsumedByEventHorizonEvent args)
     {
         AdjustEnergy(uid, args.Tiles.Count * BaseTileEnergy, singularity: comp);
     }
 
     /// <summary>
-    /// Adds the energy of this singularity to singularities consume it.
+    /// Adds the energy of this singularity to singularities that consume it.
     /// </summary>
     /// <param name="uid">The entity UID of the singularity that is being consumed.</param>
     /// <param name="comp">The component of the singularity that is being consumed.</param>
     /// <param name="args">The event arguments.</param>
-    private void OnConsumed(EntityUid uid, SingularityComponent comp, EventHorizonConsumedEntityEvent args)
+    private void OnConsumed(EntityUid uid, SingularityComponent comp, ref EventHorizonConsumedEntityEvent args)
     {
         // Should be slightly more efficient than checking literally everything we consume for a singularity component and doing the reverse.
-        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
+        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
         {
             AdjustEnergy(singulo.Owner, comp.Energy, singularity: singulo);
             SetEnergy(uid, 0.0f, comp);
@@ -294,10 +294,10 @@ public sealed class SingularitySystem : SharedSingularitySystem
     /// <param name="uid">The entity UID of the singularity food that is being consumed.</param>
     /// <param name="comp">The component of the singularity food that is being consumed.</param>
     /// <param name="args">The event arguments.</param>
-    public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, EventHorizonConsumedEntityEvent args)
+    public void OnConsumed(EntityUid uid, SinguloFoodComponent comp, ref EventHorizonConsumedEntityEvent args)
     {
-        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizon.Owner, out var singulo))
-            AdjustEnergy(args.EventHorizon.Owner, comp.Energy, singularity: singulo);
+        if (EntityManager.TryGetComponent<SingularityComponent>(args.EventHorizonUid, out var singulo))
+            AdjustEnergy(args.EventHorizonUid, comp.Energy, singularity: singulo);
     }
 
     /// <summary>
@@ -313,7 +313,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
             6 => 20,
             5 => 15,
             4 => 10,
-            3 => 5,
+            3 => 6,
             2 => 2,
             1 => 1,
             _ => 0

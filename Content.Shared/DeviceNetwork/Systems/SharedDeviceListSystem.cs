@@ -1,7 +1,8 @@
 using System.Linq;
+using Content.Shared.DeviceNetwork.Components;
 using Robust.Shared.GameStates;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Systems;
 
 public abstract class SharedDeviceListSystem : EntitySystem
 {
@@ -17,7 +18,6 @@ public abstract class SharedDeviceListSystem : EntitySystem
     /// <param name="uid">The entity to update.</param>
     /// <param name="devices">The devices to store.</param>
     /// <param name="merge">Whether to merge or replace the devices stored.</param>
-    /// <param name="dirty">If the component should be dirtied upon this call.</param>
     /// <param name="deviceList">Device list component</param>
     public DeviceListUpdateResult UpdateDeviceList(EntityUid uid, IEnumerable<EntityUid> devices, bool merge = false, DeviceListComponent? deviceList = null)
     {
@@ -36,6 +36,8 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
         deviceList.Devices = newDevices;
 
+        UpdateShutdownSubscription(uid, devicesList, oldDevices);
+
         RaiseLocalEvent(uid, new DeviceListUpdateEvent(oldDevices, devicesList));
 
         Dirty(deviceList);
@@ -50,6 +52,10 @@ public abstract class SharedDeviceListSystem : EntitySystem
             return new EntityUid[] { };
         }
         return component.Devices;
+    }
+
+    protected virtual void UpdateShutdownSubscription(EntityUid uid, List<EntityUid> devicesList, List<EntityUid> oldDevices)
+    {
     }
 
     private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)

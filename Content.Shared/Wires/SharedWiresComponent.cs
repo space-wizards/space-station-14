@@ -1,9 +1,15 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.DoAfter;
 using JetBrains.Annotations;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Wires
 {
+    [Serializable, NetSerializable]
+    public sealed class WirePanelDoAfterEvent : SimpleDoAfterEvent
+    {
+    }
+
     [Serializable, NetSerializable]
     public enum WiresVisuals : byte
     {

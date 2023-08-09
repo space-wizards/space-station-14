@@ -1,0 +1,69 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "ss220 - Paradise at e7cf38dac1a945aad8d7ecc6f16dbbb966a82b46",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "syndlogo1"
+      },
+      {
+        "name": "syndlogo2"
+      },
+      {
+        "name": "syndlogo3"
+      },
+      {
+        "name": "syndlogo4"
+      },
+      {
+        "name": "syndlogo5"
+      },
+      {
+        "name": "syndlogo6"
+      },
+      {
+        "name": "syndlogo7"
+      },
+      {
+        "name": "syndlogo8"
+      },
+      {
+        "name": "syndlogo9"
+      },
+      {
+        "name": "syndlogo10"
+      },
+      {
+        "name": "syndlogo11"
+      },
+      {
+        "name": "syndlogo12"
+      },
+      {
+        "name": "syndlogo13"
+      },
+      {
+        "name": "syndlogo14"
+      },
+      {
+        "name": "syndlogo15"
+      },
+      {
+        "name": "syndlogo16"
+      },
+      {
+        "name": "syndlogo17"
+      },
+      {
+        "name": "syndlogo18"
+      },
+      {
+        "name": "syndlogo19"
+      }
+    ]
+  }
+  

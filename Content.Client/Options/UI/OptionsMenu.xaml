@@ -2,7 +2,7 @@
             xmlns:tabs="clr-namespace:Content.Client.Options.UI.Tabs"
             Title="{Loc 'ui-options-title'}"
             MinSize="800 450">
-    <TabContainer Name="Tabs">
+    <TabContainer Name="Tabs" Access="Public">
         <tabs:GraphicsTab />
         <tabs:KeyRebindTab />
         <tabs:AudioTab />

@@ -1,6 +1,9 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.Singularity;
 using Content.Shared.Singularity.Components;
 using Content.Shared.Singularity.EntitySystems;
+using Robust.Client.GameObjects;
+using Robust.Shared.GameStates;
+using Robust.Shared.Utility;
 
 namespace Content.Client.Singularity.EntitySystems;
 
@@ -10,6 +13,8 @@ namespace Content.Client.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+
     public override void Initialize()
     {
         base.Initialize();

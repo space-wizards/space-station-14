@@ -5,7 +5,6 @@
   description: A special machine intended to create a safe environment for the use of chemicals that react in cold environments.
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/cryogenics.rsi
     drawdepth: Mobs
     noRot: true
@@ -28,7 +27,8 @@
     noRot: true
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.90"
         density: 200
@@ -49,6 +49,7 @@
   - type: Machine
     board: CryoPodMachineCircuitboard
   - type: WiresVisuals
+  - type: WiresPanel
   - type: Wires
     BoardName: "Cryo pod"
     LayoutId: CryoPod
@@ -100,5 +101,9 @@
     containers:
       - scanner-body
   - type: CryoPod
+  - type: CryoPodAir
   - type: ContainerTemperatureDamageThresholds
     coldDamageThreshold: 10
+  - type: GuideHelp
+    guides:
+    - Cryogenics

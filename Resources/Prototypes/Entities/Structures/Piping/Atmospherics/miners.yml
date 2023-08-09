@@ -9,6 +9,7 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Physics
+      canCollide: false
     - type: Fixtures
     - type: Transform
       anchored: true
@@ -24,7 +25,6 @@
             - !type:DoActsBehavior
               acts: ["Destruction"]
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/miners.rsi
       state: miner
     - type: AtmosDevice
@@ -36,6 +36,7 @@
   name: O2 gas miner
   parent: GasMinerBase
   id: GasMinerOxygen
+  suffix: Shuttle, 300kPa
   placement:
     mode: SnapgridCenter
   components:
@@ -43,14 +44,51 @@
       spawnGas: Oxygen
 
 - type: entity
+  name: O2 gas miner
+  parent: GasMinerOxygen
+  id: GasMinerOxygenStation
+  suffix: Station, 1000kPa
+  components:
+    - type: GasMiner
+      maxExternalPressure: 1000
+
+- type: entity
+  name: O2 gas miner
+  parent: GasMinerOxygen
+  id: GasMinerOxygenStationLarge
+  suffix: Large Station, 4500kPa
+  components:
+    - type: GasMiner
+      maxExternalPressure: 4500
+
+- type: entity
   name: N2 gas miner
   parent: GasMinerBase
   id: GasMinerNitrogen
+  suffix: Shuttle, 300kPa
   placement:
     mode: SnapgridCenter
   components:
     - type: GasMiner
       spawnGas: Nitrogen
+
+- type: entity
+  name: N2 gas miner
+  parent: GasMinerNitrogen
+  id: GasMinerNitrogenStation
+  suffix: Station, 1000kPa
+  components:
+    - type: GasMiner
+      maxExternalPressure: 1000
+
+- type: entity
+  name: N2 gas miner
+  parent: GasMinerNitrogen
+  id: GasMinerNitrogenStationLarge
+  suffix: Large Station, 4500kPa
+  components:
+    - type: GasMiner
+      maxExternalPressure: 4500
 
 - type: entity
   name: CO2 gas miner

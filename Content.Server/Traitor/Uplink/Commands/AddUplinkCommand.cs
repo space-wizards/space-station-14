@@ -87,7 +87,6 @@ namespace Content.Server.Traitor.Uplink.Commands
             if (!uplinkSys.AddUplink(user, FixedPoint2.New(tcCount), uplinkEntity: uplinkEntity))
             {
                 shell.WriteLine(Loc.GetString("add-uplink-command-error-2"));
-                return;
             }
         }
     }

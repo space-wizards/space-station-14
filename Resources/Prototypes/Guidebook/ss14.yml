@@ -1,0 +1,10 @@
+- type: guideEntry
+  id: SS14
+  name: guide-entry-ss14
+  text: "/ServerInfo/Guidebook/SpaceStation14.xml"
+  children:
+  - Controls
+  - Jobs
+  - Survival
+  - Chemicals
+  - Antagonists

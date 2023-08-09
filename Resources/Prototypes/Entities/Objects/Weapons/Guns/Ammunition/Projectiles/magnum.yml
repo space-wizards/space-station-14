@@ -7,18 +7,7 @@
   - type: Projectile
     damage:
       types:
-        Piercing: 22
-
-- type: entity
-  id: BulletMagnumHighVelocity
-  name: bullet (.45 magnum high-velocity)
-  parent: BaseBulletHighVelocity
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 24
+        Piercing: 35
 
 - type: entity
   id: BulletMagnumPractice
@@ -41,3 +30,28 @@
     damage:
       types:
         Blunt: 3
+  - type: StaminaDamageOnCollide
+    damage: 35 # 3 hits to stun cuz revolver
+
+- type: entity
+  id: BulletMagnumIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.45 magnum incendiary)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 32
+
+- type: entity
+  id: BulletMagnumAP
+  name: bullet (.45 magnum armor-piercing)
+  parent: BaseBulletAP
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 26 # 20% decrease
+    ignoreResistances: true

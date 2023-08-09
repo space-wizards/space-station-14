@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public float BaseMinTemp = 300 + Atmospherics.T0C;
 
         [DataField("machinePartMinTemp", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartMinTemp = "Laser";
+        public string MachinePartMinTemp = "Capacitor";
 
         [DataField("partRatingMinTempMultiplier")]
         public float PartRatingMinTempMultiplier = 0.95f;

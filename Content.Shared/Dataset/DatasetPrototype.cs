@@ -6,7 +6,7 @@ namespace Content.Shared.Dataset
     public sealed class DatasetPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("values")] public IReadOnlyList<string> Values { get; } = new List<string>();

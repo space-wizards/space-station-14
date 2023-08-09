@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface.Controls;
@@ -26,11 +27,11 @@ public sealed class MenuButton : ContainerButton
 
     private BoundKeyFunction _function;
     private readonly BoxContainer _root;
-    private readonly TextureRect _buttonIcon;
-    private readonly Label _buttonLabel;
+    private readonly TextureRect? _buttonIcon;
+    private readonly Label? _buttonLabel;
 
     public string AppendStyleClass { set => AddStyleClass(value); }
-    public Texture? Icon { get => _buttonIcon.Texture; set => _buttonIcon.Texture = value; }
+    public Texture? Icon { get => _buttonIcon!.Texture; set => _buttonIcon!.Texture = value; }
 
     public BoundKeyFunction BoundKey
     {
@@ -38,7 +39,7 @@ public sealed class MenuButton : ContainerButton
         set
         {
             _function = value;
-            _buttonLabel.Text = BoundKeyHelper.ShortKeyName(value);
+            _buttonLabel!.Text = BoundKeyHelper.ShortKeyName(value);
         }
     }
 
@@ -50,7 +51,7 @@ public sealed class MenuButton : ContainerButton
         TooltipDelay = CustomTooltipDelay;
         _buttonIcon = new TextureRect()
         {
-            TextureScale = (0.5f, 0.5f),
+            TextureScale = new Vector2(0.5f, 0.5f),
             HorizontalAlignment = HAlignment.Center,
             VerticalAlignment = VAlignment.Center,
             VerticalExpand = true,
@@ -95,12 +96,12 @@ public sealed class MenuButton : ContainerButton
 
     private void OnKeyBindingChanged(IKeyBinding obj)
     {
-        _buttonLabel.Text = BoundKeyHelper.ShortKeyName(_function);
+        _buttonLabel!.Text = BoundKeyHelper.ShortKeyName(_function);
     }
 
     private void OnKeyBindingChanged()
     {
-        _buttonLabel.Text = BoundKeyHelper.ShortKeyName(_function);
+        _buttonLabel!.Text = BoundKeyHelper.ShortKeyName(_function);
     }
 
     protected override void StylePropertiesChanged()

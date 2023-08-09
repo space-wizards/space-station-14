@@ -1,4 +1,4 @@
-﻿# Just copypasta of some animal basic body parts for interaction,
+# Just copypasta of some animal basic body parts for interaction,
 # It's basically as animals except a different torso with different organs
 - type: entity
   id: TorsoRat
@@ -10,3 +10,6 @@
     partType: Torso
   - type: Damageable
     damageContainer: Biological
+  - type: Tag
+    tags:
+      - Trash

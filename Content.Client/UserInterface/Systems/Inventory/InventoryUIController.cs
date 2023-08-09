@@ -1,11 +1,11 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.Inventory;
 using Content.Client.Storage;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Controls;
 using Content.Client.UserInterface.Systems.Inventory.Windows;
+using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
@@ -28,7 +28,8 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     [UISystemDependency] private readonly ClientInventorySystem _inventorySystem = default!;
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
-    private ClientInventoryComponent? _playerInventory;
+    private EntityUid? _playerUid;
+    private InventorySlotsComponent? _playerInventory;
     private readonly Dictionary<string, ItemSlotButtonContainer> _slotGroups = new();
 
     private StrippingWindow? _strippingWindow;
@@ -105,7 +106,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         ToggleInventoryBar();
     }
 
-    private void UpdateInventoryHotbar(ClientInventoryComponent? clientInv)
+    private void UpdateInventoryHotbar(InventorySlotsComponent? clientInv)
     {
         if (clientInv == null)
         {
@@ -131,7 +132,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         }
     }
 
-    private void UpdateStrippingWindow(ClientInventoryComponent? clientInv)
+    private void UpdateStrippingWindow(InventorySlotsComponent? clientInv)
     {
         if (clientInv == null)
         {
@@ -197,7 +198,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         _inventorySystem.OnSlotAdded += AddSlot;
         _inventorySystem.OnSlotRemoved += RemoveSlot;
-        _inventorySystem.OnLinkInventory += LoadSlots;
+        _inventorySystem.OnLinkInventorySlots += LoadSlots;
         _inventorySystem.OnUnlinkInventory += UnloadSlots;
         _inventorySystem.OnSpriteUpdate += SpriteUpdated;
     }
@@ -207,7 +208,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
     {
         _inventorySystem.OnSlotAdded -= AddSlot;
         _inventorySystem.OnSlotRemoved -= RemoveSlot;
-        _inventorySystem.OnLinkInventory -= LoadSlots;
+        _inventorySystem.OnLinkInventorySlots -= LoadSlots;
         _inventorySystem.OnUnlinkInventory -= UnloadSlots;
         _inventorySystem.OnSpriteUpdate -= SpriteUpdated;
     }
@@ -222,26 +223,26 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
             return;
         }
 
-        if (_playerInventory == null)
+        if (_playerInventory == null || _playerUid == null)
         {
             return;
         }
 
         if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            _inventorySystem.UIInventoryExamine(slot, _playerInventory.Owner);
+            _inventorySystem.UIInventoryExamine(slot, _playerUid.Value);
         }
         else if (args.Function == EngineKeyFunctions.UseSecondary)
         {
-            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerInventory.Owner);
+            _inventorySystem.UIInventoryOpenContextMenu(slot, _playerUid.Value);
         }
         else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
         {
-            _inventorySystem.UIInventoryActivateItem(slot, _playerInventory.Owner);
+            _inventorySystem.UIInventoryActivateItem(slot, _playerUid.Value);
         }
         else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
         {
-            _inventorySystem.UIInventoryAltActivateItem(slot, _playerInventory.Owner);
+            _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
         }
     }
 
@@ -258,14 +259,14 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     public void UpdateHover(SlotControl control)
     {
-        var player = _playerInventory?.Owner;
+        var player = _playerUid;
 
         if (!control.MouseIsHovering ||
             _playerInventory == null ||
             !_entities.TryGetComponent<HandsComponent>(player, out var hands) ||
             hands.ActiveHandEntity is not { } held ||
             !_entities.TryGetComponent(held, out SpriteComponent? sprite) ||
-            !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef, _playerInventory))
+            !_inventorySystem.TryGetSlotContainer(player.Value, control.SlotName, out var container, out var slotDef))
         {
             control.ClearHover();
             return;
@@ -274,7 +275,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         // Set green / red overlay at 50% transparency
         var hoverEntity = _entities.SpawnEntity("hoverentity", MapCoordinates.Nullspace);
         var hoverSprite = _entities.GetComponent<SpriteComponent>(hoverEntity);
-        var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef, _playerInventory) &&
+        var fits = _inventorySystem.CanEquip(player.Value, held, control.SlotName, out _, slotDef) &&
                    container.CanInsert(held, _entities);
 
         hoverSprite.CopyFrom(sprite);
@@ -305,9 +306,10 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         _inventorySystem.ReloadInventory();
     }
 
-    private void LoadSlots(ClientInventoryComponent clientInv)
+    private void LoadSlots(EntityUid clientUid, InventorySlotsComponent clientInv)
     {
         UnloadSlots();
+        _playerUid = clientUid;
         _playerInventory = clientInv;
         foreach (var slotData in clientInv.SlotData.Values)
         {
@@ -319,6 +321,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
 
     private void UnloadSlots()
     {
+        _playerUid = null;
         _playerInventory = null;
         foreach (var slotGroup in _slotGroups.Values)
         {

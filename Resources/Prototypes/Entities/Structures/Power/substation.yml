@@ -46,8 +46,17 @@
     maxChargeRate: 5000
     supplyRampTolerance: 5000
     supplyRampRate: 1000
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 100
@@ -68,12 +77,26 @@
     maxIntensity: 100
     intensitySlope: 2
     totalIntensity: 200
+  - type: WiresPanel
   - type: Wires
     BoardName: "Substation"
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
   - type: StationInfiniteBatteryTarget
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: input
+    mediumVoltageNode: output
 
 # Compact Wall Substation Base
 - type: entity
@@ -86,15 +109,15 @@
   components:
   - type: AmbientOnPowered
   - type: AmbientSound
-    volume: -15
+    volume: -5
     range: 2
     sound:
-      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+      path: /Audio/Ambience/Objects/buzzing.ogg
   - type: PointLight
-    netsync: false
     radius: 1.5
     energy: 1.6
     color: "#3db83b"
+    netsync: false
     castShadows: false
   - type: Clickable
   - type: AccessReader
@@ -102,12 +125,12 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
   - type: Sprite # TODO: add sprite for maintenance panel open
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall
@@ -142,6 +165,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 100
       behaviors:
       - !type:DoActsBehavior
@@ -166,7 +195,7 @@
 - type: entity
   parent: BaseSubstation
   id: SubstationBasic
-  suffix: Basic, 2.5MW
+  suffix: Basic, 2.5MJ
   components:
   - type: Battery
     maxCharge: 2500000
@@ -183,7 +212,7 @@
 - type: entity
   parent: BaseSubstationWall
   id: SubstationWallBasic
-  suffix: Basic, 2MW
+  suffix: Basic, 2MJ
   components:
   - type: Battery
     maxCharge: 2000000
@@ -202,12 +231,12 @@
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
+    canCollide: false
   - type: Fixtures
   - type: Transform
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Power/substation.rsi
     layers:
     - state: substation_wall

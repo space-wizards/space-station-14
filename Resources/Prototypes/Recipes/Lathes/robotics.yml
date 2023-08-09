@@ -21,3 +21,27 @@
   materials:
     Steel: 70
     Glass: 25
+
+- type: latheRecipe
+  id: LeftLegBorg
+  result: LeftLegBorg
+  completetime: 2
+  materials:
+    Steel: 70
+    Glass: 25
+
+- type: latheRecipe
+  id: RightLegBorg
+  result: RightLegBorg
+  completetime: 2
+  materials:
+    Steel: 70
+    Glass: 25
+
+- type: latheRecipe
+  id: LightHeadBorg
+  result: LightHeadBorg
+  completetime: 2
+  materials:
+    Steel: 70
+    Glass: 25

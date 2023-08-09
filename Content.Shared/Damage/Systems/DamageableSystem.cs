@@ -2,6 +2,8 @@ using System.Linq;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Mobs.Systems;
 using Content.Shared.Radiation.Events;
 using Content.Shared.Rejuvenate;
 using Robust.Shared.GameStates;
@@ -16,6 +18,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly INetManager _netMan = default!;
+        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
 
         public override void Initialize()
         {
@@ -24,34 +27,6 @@ namespace Content.Shared.Damage
             SubscribeLocalEvent<DamageableComponent, ComponentGetState>(DamageableGetState);
             SubscribeLocalEvent<DamageableComponent, OnIrradiatedEvent>(OnIrradiated);
             SubscribeLocalEvent<DamageableComponent, RejuvenateEvent>(OnRejuvenate);
-        }
-
-        /// <summary>
-        /// Retrieves the damage examine values.
-        /// </summary>
-        public FormattedMessage GetDamageExamine(DamageSpecifier damageSpecifier, string? type = null)
-        {
-            var msg = new FormattedMessage();
-
-            if (string.IsNullOrEmpty(type))
-            {
-                msg.AddMarkup(Loc.GetString("damage-examine"));
-            }
-            else
-            {
-                msg.AddMarkup(Loc.GetString("damage-examine-type", ("type", type)));
-            }
-
-            foreach (var damage in damageSpecifier.DamageDict)
-            {
-                if (damage.Value != FixedPoint2.Zero)
-                {
-                    msg.PushNewline();
-                    msg.AddMarkup(Loc.GetString("damage-value", ("type", damage.Key), ("amount", damage.Value)));
-                }
-            }
-
-            return msg;
         }
 
         /// <summary>
@@ -99,10 +74,10 @@ namespace Content.Shared.Damage
         ///     Useful for some unfriendly folk. Also ensures that cached values are updated and that a damage changed
         ///     event is raised.
         /// </remarks>
-        public void SetDamage(DamageableComponent damageable, DamageSpecifier damage)
+        public void SetDamage(EntityUid uid, DamageableComponent damageable, DamageSpecifier damage)
         {
             damageable.Damage = damage;
-            DamageChanged(damageable);
+            DamageChanged(uid, damageable);
         }
 
         /// <summary>
@@ -112,19 +87,19 @@ namespace Content.Shared.Damage
         ///     This updates cached damage information, flags the component as dirty, and raises a damage changed event.
         ///     The damage changed event is used by other systems, such as damage thresholds.
         /// </remarks>
-        public void DamageChanged(DamageableComponent component, DamageSpecifier? damageDelta = null,
+        public void DamageChanged(EntityUid uid, DamageableComponent component, DamageSpecifier? damageDelta = null,
             bool interruptsDoAfters = true, EntityUid? origin = null)
         {
             component.DamagePerGroup = component.Damage.GetDamagePerGroup(_prototypeManager);
             component.TotalDamage = component.Damage.Total;
             Dirty(component);
 
-            if (EntityManager.TryGetComponent<AppearanceComponent>(component.Owner, out var appearance) && damageDelta != null)
+            if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance) && damageDelta != null)
             {
-                var data = new DamageVisualizerGroupData(damageDelta.GetDamagePerGroup(_prototypeManager).Keys.ToList());
-                _appearance.SetData(component.Owner, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
+                var data = new DamageVisualizerGroupData(component.DamagePerGroup.Keys.ToList());
+                _appearance.SetData(uid, DamageVisualizerKeys.DamageUpdateGroups, data, appearance);
             }
-            RaiseLocalEvent(component.Owner, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
+            RaiseLocalEvent(uid, new DamageChangedEvent(component, damageDelta, interruptsDoAfters, origin));
         }
 
         /// <summary>
@@ -150,7 +125,7 @@ namespace Content.Shared.Damage
 
             if (damage == null)
             {
-                Logger.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
+                Log.Error("Null DamageSpecifier. Probably because a required yaml field was not given.");
                 return null;
             }
 
@@ -158,6 +133,12 @@ namespace Content.Shared.Damage
             {
                 return damage;
             }
+
+            var before = new BeforeDamageChangedEvent(damage);
+            RaiseLocalEvent(uid.Value, ref before);
+
+            if (before.Cancelled)
+                return null;
 
             // Apply resistances
             if (!ignoreResistances)
@@ -169,7 +150,7 @@ namespace Content.Shared.Damage
                 }
 
                 var ev = new DamageModifyEvent(damage);
-                RaiseLocalEvent(uid.Value, ev, false);
+                RaiseLocalEvent(uid.Value, ev);
                 damage = ev.Damage;
 
                 if (damage.Empty)
@@ -189,7 +170,7 @@ namespace Content.Shared.Damage
 
             if (!delta.Empty)
             {
-                DamageChanged(damageable, delta, interruptsDoAfters, origin);
+                DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
             }
 
             return delta;
@@ -201,7 +182,7 @@ namespace Content.Shared.Damage
         /// <remakrs>
         ///     Does nothing If the given damage value is negative.
         /// </remakrs>
-        public void SetAllDamage(DamageableComponent component, FixedPoint2 newValue)
+        public void SetAllDamage(EntityUid uid, DamageableComponent component, FixedPoint2 newValue)
         {
             if (newValue < 0)
             {
@@ -216,7 +197,7 @@ namespace Content.Shared.Damage
 
             // Setting damage does not count as 'dealing' damage, even if it is set to a larger value, so we pass an
             // empty damage delta.
-            DamageChanged(component, new DamageSpecifier());
+            DamageChanged(uid, component, new DamageSpecifier());
         }
 
         public void SetDamageModifierSetId(EntityUid uid, string damageModifierSetId, DamageableComponent? comp = null)
@@ -258,7 +239,10 @@ namespace Content.Shared.Damage
 
         private void OnRejuvenate(EntityUid uid, DamageableComponent component, RejuvenateEvent args)
         {
-            SetAllDamage(component, 0);
+            TryComp<MobThresholdsComponent>(uid, out var thresholds);
+            _mobThreshold.SetAllowRevives(uid, true, thresholds); // do this so that the state changes when we set the damage
+            SetAllDamage(uid, component, 0);
+            _mobThreshold.SetAllowRevives(uid, false, thresholds);
         }
 
         private void DamageableHandleState(EntityUid uid, DamageableComponent component, ref ComponentHandleState args)
@@ -278,10 +262,16 @@ namespace Content.Shared.Damage
             if (!delta.Empty)
             {
                 component.Damage = newDamage;
-                DamageChanged(component, delta);
+                DamageChanged(uid, component, delta);
             }
         }
     }
+
+    /// <summary>
+    ///     Raised before damage is done, so stuff can cancel it if necessary.
+    /// </summary>
+    [ByRefEvent]
+    public record struct BeforeDamageChangedEvent(DamageSpecifier Delta, bool Cancelled=false);
 
     /// <summary>
     ///     Raised on an entity when damage is about to be dealt,
@@ -295,10 +285,12 @@ namespace Content.Shared.Damage
         // Whenever locational damage is a thing, this should just check only that bit of armour.
         public SlotFlags TargetSlots { get; } = ~SlotFlags.POCKET;
 
+        public readonly DamageSpecifier OriginalDamage;
         public DamageSpecifier Damage;
 
         public DamageModifyEvent(DamageSpecifier damage)
         {
+            OriginalDamage = damage;
             Damage = damage;
         }
     }

@@ -3,13 +3,14 @@ using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
-using Content.Server.Afk;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
+using Content.Shared.Database;
 using Content.Shared.Voting;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -35,6 +36,7 @@ namespace Content.Server.Voting.Managers
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IGameMapManager _gameMapManager = default!;
         [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private int _nextVoteId = 1;
 
@@ -50,20 +52,31 @@ namespace Content.Server.Voting.Managers
         {
             _netManager.RegisterNetMessage<MsgVoteData>();
             _netManager.RegisterNetMessage<MsgVoteCanCall>();
+            _netManager.RegisterNetMessage<MsgVoteMenu>(ReceiveVoteMenu);
 
             _playerManager.PlayerStatusChanged += PlayerManagerOnPlayerStatusChanged;
             _adminMgr.OnPermsChanged += AdminPermsChanged;
 
-            _cfg.OnValueChanged(CCVars.VoteEnabled, value => {
+            _cfg.OnValueChanged(CCVars.VoteEnabled, _ =>
+            {
                 DirtyCanCallVoteAll();
             });
 
             foreach (var kvp in _voteTypesToEnableCVars)
             {
-                _cfg.OnValueChanged(kvp.Value, value => {
+                _cfg.OnValueChanged(kvp.Value, _ =>
+                {
                     DirtyCanCallVoteAll();
                 });
             }
+        }
+
+        private void ReceiveVoteMenu(MsgVoteMenu message)
+        {
+            var sender = message.MsgChannel;
+            var session = _playerManager.GetSessionByChannel(sender);
+
+            _adminLogger.Add(LogType.Vote, LogImpact.Low, $"{session} opened vote menu");
         }
 
         private void AdminPermsChanged(AdminPermsChangedEventArgs obj)
@@ -282,7 +295,7 @@ namespace Content.Server.Voting.Managers
                 var votesUnavailable = new List<(StandardVoteType, TimeSpan)>();
                 foreach (var v in _standardVoteTypeValues)
                 {
-                    if (CanCallVote(player, v, out var _isAdmin, out var typeTimeSpan))
+                    if (CanCallVote(player, v, out _, out var typeTimeSpan))
                         continue;
                     votesUnavailable.Add((v, typeTimeSpan));
                 }
@@ -312,7 +325,7 @@ namespace Content.Server.Voting.Managers
             if (!_cfg.GetCVar(CCVars.VoteEnabled))
                 return false;
             // Specific standard vote types can be disabled with cvars.
-            if ((voteType != null) && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
+            if (voteType != null && _voteTypesToEnableCVars.TryGetValue(voteType.Value, out var cvar) && !_cfg.GetCVar(cvar))
                 return false;
 
             // Cannot start vote if vote is already active (as non-admin).
@@ -333,7 +346,7 @@ namespace Content.Server.Voting.Managers
             if (voteType == StandardVoteType.Preset)
             {
                 var presets = GetGamePresets();
-                if (presets.Count() == 1 && presets.Select(x => x.Key).Single() == EntitySystem.Get<GameTicker>().Preset?.ID)
+                if (presets.Count == 1 && presets.Select(x => x.Key).Single() == _entityManager.System<GameTicker>().Preset?.ID)
                     return false;
             }
 

@@ -8,56 +8,55 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
-    - type: Faction
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
       factions:
         - SimpleHostile
     - type: Sprite
       drawdepth: Mobs
-      netsync: false
       sprite: Mobs/Aliens/Carps/space.rsi
       layers:
       - map: [ "enum.DamageStateVisualLayers.Base" ]
-        state: base
+        state: alive
     - type: CombatMode
-      disarmAction:
-        enabled: false
-        autoPopulate: false
-        name: action-name-disarm
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 80
           mask:
-            - MobMask
+            - FlyingMobMask
           layer:
-            - MobLayer
+            - FlyingMobLayer
     - type: MobState
     - type: MobThresholds
       thresholds:
         0: Alive
-        50: Critical
         100: Dead
     - type: Stamina
-      excess: 100
+      critThreshold: 100
     - type: MovementAlwaysTouching
-    - type: Appearance
     - type: DamageStateVisuals
       states:
         Alive:
-          Base: base
+          Base: alive
           BaseUnshaded: mouth
         Dead:
-          Base: base_dead
+          Base: dead
           BaseUnshaded: dead_mouth
     - type: Butcherable
       spawned:
         - id: FoodMeatFish
           amount: 2
     - type: MeleeWeapon
+      altDisarm: false
       hidden: true
       angle: 0
       animation: WeaponArcBite
@@ -84,14 +83,14 @@
   - type: Sprite
     layers:
     - map: [ "enum.DamageStateVisualLayers.Base" ]
-      state: base
+      state: alive
     - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
       state: mouth
       shader: unshaded
   - type: RandomSprite
     available:
     - enum.DamageStateVisualLayers.Base:
-        base: Rainbow
+        alive: Rainbow
       enum.DamageStateVisualLayers.BaseUnshaded:
         mouth: ""
 
@@ -117,7 +116,8 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.40
           density: 10
@@ -133,26 +133,38 @@
   parent: MobCarp
   suffix: "Salvage Ruleset"
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       prob: 0.33
-      name: space carp on salvage wreck
+      name: ghost-role-information-salvage-carp-name
       allowMovement: true
       allowSpeech: true
-      description: |
-        Defend the loot inside the salvage wreck!
+      description: ghost-role-information-salvage-carp-description
+    - type: GhostTakeoverAvailable
     - type: SalvageMobRestrictions
 
 - type: entity
   name: space carp
   id: MobCarpDragon
   suffix: DragonBrood
-  parent: BaseMobCarp
+  parent: MobCarp
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Sentient Carp
-      description: Help the dragon flood the station with carps!
+      name: ghost-role-information-sentient-carp-name
+      description: ghost-role-information-sentient-carp-description
+    - type: GhostTakeoverAvailable
     - type: HTN
-      rootTask: DragonCarpCompound
+      rootTask:
+        task: DragonCarpCompound
+
+- type: entity
+  id: MobCarpDungeon
+  parent: MobCarp
+  suffix: Dungeon
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5

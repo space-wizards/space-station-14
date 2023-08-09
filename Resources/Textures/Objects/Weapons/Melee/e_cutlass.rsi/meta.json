@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by brainfood1183 (Github) for ss14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "e_cutlass"
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+	{
+      "name": "e_cutlass_blade",
+      "delays": [
+        [
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left-blade",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-right-blade",
+      "directions": 4,
+      "delays": [
+        [
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ],
+		[
+          0.1,
+          0.1
+        ]
+      ]
+    }
+  ]
+}

@@ -10,3 +10,5 @@
       - state: icon
   - type: Item
     size: 1001
+  - type: StaticPrice
+    price: 0

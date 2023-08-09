@@ -5,10 +5,10 @@
   description: A sheet of material, used often on the station in various applications.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Materials/Sheets/other.rsi
   - type: Item
     sprite: Objects/Materials/Sheets/other.rsi
+    size: 30
   - type: ItemStatus
   - type: Tag
     tags:
@@ -33,17 +33,19 @@
   components:
   - type: Stack
     stackType: Paper
+    baseLayer: base
+    layerStates:
+    - paper
+    - paper_2
+    - paper_3
   - type: Sprite
     state: paper_3
+    layers:
+    - state: paper_3
+      map: ["base"]
   - type: Item
     heldPrefix: paper
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - paper
-      - paper_2
-      - paper_3
 
 - type: entity
   parent: SheetPaper
@@ -55,6 +57,8 @@
     state: paper
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -63,21 +67,24 @@
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plasma: 100
   - type: Stack
     stackType: Plasma
+    baseLayer: base
+    layerStates:
+    - plasma
+    - plasma_2
+    - plasma_3
   - type: Sprite
     state: plasma_3
+    layers:
+    - state: plasma_3
+      map: ["base"]
   - type: Item
     heldPrefix: plasma
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plasma
-      - plasma_2
-      - plasma_3
   - type: Extractable
     grindableSolutionName: plasma
   - type: SolutionContainerManager
@@ -100,6 +107,8 @@
     state: plasma
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: SheetOtherBase
@@ -113,21 +122,38 @@
     - Sheet
     - DroneUsable
   - type: Material
-    materials:
+  - type: PhysicalComposition
+    materialComposition:
       Plastic: 100
   - type: Stack
     stackType: Plastic
+    baseLayer: base
+    layerStates:
+    - plastic
+    - plastic_2
+    - plastic_3
   - type: Sprite
     state: plastic_3
+    layers:
+    - state: plastic_3
+      map: ["base"]
   - type: Item
     heldPrefix: plastic
+    size: 30
   - type: Appearance
-    visuals:
-    - type: StackVisualizer
-      stackLayers:
-      - plastic
-      - plastic_2
-      - plastic_3
+
+- type: entity
+  parent: SheetPlastic
+  id: SheetPlastic10
+  name: plastic
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plastic
+  - type: Item
+    size: 10
+  - type: Stack
+    count: 10
 
 - type: entity
   parent: SheetPlastic
@@ -137,29 +163,44 @@
   components:
   - type: Sprite
     state: plastic
+  - type: Item
+    size: 1
   - type: Stack
     count: 1
 
 - type: entity
-  parent: SheetOtherBase
+  parent: [SheetOtherBase, FoodBase]
   id: SheetUranium
   name: uranium
   suffix: Full
   components:
   - type: Material
-    materials:
+  - type: Food
+    transferAmount: 10
+  - type: BadFood
+  - type: PhysicalComposition
+    materialComposition:
       Uranium: 100
   - type: Stack
     stackType: Uranium
+    baseLayer: base
+    layerStates:
+    - uranium
+    - uranium_2
+    - uranium_3
   - type: Sprite
-    state: uranium
+    state: uranium_3
+    layers:
+    - state: uranium_3
+      map: ["base"]
+  - type: Appearance
   - type: Item
     heldPrefix: uranium
   - type: Extractable
-    grindableSolutionName: uranium
+    grindableSolutionName: food
   - type: SolutionContainerManager
     solutions:
-      uranium:
+      food:
         reagents:
         - ReagentId: Uranium
           Quantity: 10
@@ -172,3 +213,48 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  parent: SheetOtherBase
+  id: MaterialSheetMeat
+  name: meat sheet
+  suffix: Full
+  components:
+    - type: Sprite
+      sprite: Objects/Materials/Sheets/meaterial.rsi
+      layers:
+      - state: meat_3
+        map: [ "base" ]
+    - type: Tag
+      tags:
+      - Sheet
+      - DroneUsable
+    - type: Material
+    - type: PhysicalComposition
+      materialComposition:
+        Meaterial: 100
+    - type: Stack
+      stackType: MeatSheets
+      baseLayer: base
+      layerStates:
+        - meat
+        - meat_2
+        - meat_3
+    - type: Item
+      sprite: Objects/Materials/Sheets/meaterial.rsi
+      heldPrefix: meat
+    - type: Appearance
+
+- type: entity
+  parent: MaterialSheetMeat
+  id: MaterialSheetMeat1
+  suffix: Single
+  components:
+    - type: Sprite
+      state: meat
+    - type: Stack
+      count: 1
+    - type: Item
+      size: 1

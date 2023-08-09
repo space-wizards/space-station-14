@@ -7,7 +7,7 @@ namespace Content.Shared.Speech
     public sealed class SpeechSoundsPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         //Variation is here instead of in SharedSpeechComponent since some sets of

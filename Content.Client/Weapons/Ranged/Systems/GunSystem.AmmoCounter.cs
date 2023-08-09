@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.IoC;
 using Content.Client.Items;
 using Content.Client.Resources;
@@ -27,7 +28,8 @@ public sealed partial class GunSystem
     /// <param name="component"></param>
     private void RefreshControl(EntityUid uid, AmmoCounterComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false)) return;
+        if (!Resolve(uid, ref component, false))
+            return;
 
         component.Control?.Dispose();
         component.Control = null;
@@ -44,7 +46,8 @@ public sealed partial class GunSystem
 
     private void UpdateAmmoCount(EntityUid uid, AmmoCounterComponent component)
     {
-        if (component.Control == null) return;
+        if (component.Control == null)
+            return;
 
         var ev = new UpdateAmmoCounterEvent()
         {
@@ -59,7 +62,10 @@ public sealed partial class GunSystem
         // Don't use resolves because the method is shared and there's no compref and I'm trying to
         // share as much code as possible
         if (!Timing.IsFirstTimePredicted ||
-            !TryComp<AmmoCounterComponent>(uid, out var clientComp)) return;
+            !TryComp<AmmoCounterComponent>(uid, out var clientComp))
+        {
+            return;
+        }
 
         UpdateAmmoCount(uid, clientComp);
     }
@@ -227,7 +233,7 @@ public sealed partial class GunSystem
                             }),
                         }
                     },
-                    new Control() { MinSize = (5, 0) },
+                    new Control() { MinSize = new Vector2(5, 0) },
                     (_ammoCount = new Label
                     {
                         StyleClasses = { StyleNano.StyleClassItemStatus },
@@ -262,7 +268,7 @@ public sealed partial class GunSystem
                     {
                         BackgroundColor = colorGone,
                     },
-                    MinSize = (10, 15),
+                    MinSize = new Vector2(10, 15),
                 });
             }
 
@@ -276,7 +282,7 @@ public sealed partial class GunSystem
                     {
                         BackgroundColor = color,
                     },
-                    MinSize = (10, 15),
+                    MinSize = new Vector2(10, 15),
                 });
             }
         }
@@ -307,7 +313,7 @@ public sealed partial class GunSystem
                         VerticalAlignment = VAlignment.Center,
                         HorizontalAlignment = HAlignment.Right,
                     }),
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = new Vector2(5,0) },
                     new Control
                     {
                         HorizontalExpand = true,
@@ -326,7 +332,7 @@ public sealed partial class GunSystem
                             })
                         }
                     },
-                    new Control() { MinSize = (5,0) },
+                    new Control() { MinSize = new Vector2(5,0) },
                     (_ammoCount = new Label
                     {
                         StyleClasses = {StyleNano.StyleClassItemStatus},
@@ -473,7 +479,7 @@ public sealed partial class GunSystem
                     box.AddChild(new TextureRect
                     {
                         Texture = texture,
-                        TextureScale = (scale, scale),
+                        TextureScale = new Vector2(scale, scale),
                         ModulateSelfOverride = Color.LimeGreen,
                     });
                 }

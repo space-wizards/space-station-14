@@ -28,16 +28,19 @@ public sealed class DecalPainter
         _sPrototypeManager = server.ResolveDependency<IPrototypeManager>();
     }
 
-    public void Run(Image canvas, List<DecalData> decals)
+    public void Run(Image canvas, Span<DecalData> decals)
     {
         var stopwatch = new Stopwatch();
         stopwatch.Start();
 
         decals.Sort(Comparer<DecalData>.Create((x, y) => x.Decal.ZIndex.CompareTo(y.Decal.ZIndex)));
 
-        foreach (var proto in _sPrototypeManager.EnumeratePrototypes<DecalPrototype>())
+        if (_decalTextures.Count == 0)
         {
-            _decalTextures.Add(proto.ID, proto.Sprite);
+            foreach (var proto in _sPrototypeManager.EnumeratePrototypes<DecalPrototype>())
+            {
+                _decalTextures.Add(proto.ID, proto.Sprite);
+            }
         }
 
         foreach (var decal in decals)
@@ -45,7 +48,7 @@ public sealed class DecalPainter
             Run(canvas, decal);
         }
 
-        Console.WriteLine($"{nameof(DecalPainter)} painted {decals.Count} decals in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
+        Console.WriteLine($"{nameof(DecalPainter)} painted {decals.Length} decals in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
     private void Run(Image canvas, DecalData data)
@@ -64,7 +67,13 @@ public sealed class DecalPainter
         }
         else if (sprite is SpriteSpecifier.Rsi rsi)
         {
-            stream = _cResourceCache.ContentFileRead($"/Textures/{rsi.RsiPath}/{rsi.RsiState}.png");
+            var path = $"{rsi.RsiPath}/{rsi.RsiState}.png";
+            if (!path.StartsWith("/Textures"))
+            {
+                path = $"/Textures/{path}";
+            }
+
+            stream = _cResourceCache.ContentFileRead(path);
         }
         else
         {

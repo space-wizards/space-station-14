@@ -10,10 +10,9 @@ public sealed partial class ResearchSystem
 {
     private void InitializeClient()
     {
-        SubscribeLocalEvent<ResearchClientComponent, ComponentStartup>(OnClientStartup);
+        SubscribeLocalEvent<ResearchClientComponent, MapInitEvent>(OnClientMapInit);
         SubscribeLocalEvent<ResearchClientComponent, ComponentShutdown>(OnClientShutdown);
         SubscribeLocalEvent<ResearchClientComponent, BoundUIOpenedEvent>(OnClientUIOpen);
-        SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSyncMessage>(OnConsoleSync);
         SubscribeLocalEvent<ResearchClientComponent, ConsoleServerSelectionMessage>(OnConsoleSelect);
 
         SubscribeLocalEvent<ResearchClientComponent, ResearchClientSyncMessage>(OnClientSyncMessage);
@@ -26,12 +25,11 @@ public sealed partial class ResearchSystem
 
     private void OnClientSelected(EntityUid uid, ResearchClientComponent component, ResearchClientServerSelectedMessage args)
     {
-        var server = GetServerById(args.ServerId);
-        if (server == null)
+        if (!TryGetServerById(args.ServerId, out var serveruid, out var serverComponent))
             return;
 
-        UnregisterClient(uid, clientComponent: component);
-        RegisterClient(uid, server.Owner, component, server);
+        UnregisterClient(uid, component);
+        RegisterClient(uid, serveruid.Value, component, serverComponent);
     }
 
     private void OnClientDeselected(EntityUid uid, ResearchClientComponent component, ResearchClientServerDeselectedMessage args)
@@ -46,18 +44,10 @@ public sealed partial class ResearchSystem
 
     private void OnConsoleSelect(EntityUid uid, ResearchClientComponent component, ConsoleServerSelectionMessage args)
     {
-        if (!HasComp<TechnologyDatabaseComponent>(uid) || !this.IsPowered(uid, EntityManager))
-            return;
-
-        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
-    }
-
-    private void OnConsoleSync(EntityUid uid, ResearchClientComponent component, ConsoleServerSyncMessage args)
-    {
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        SyncClientWithServer(uid);
+        _uiSystem.TryToggleUi(uid, ResearchClientUiKey.Key, (IPlayerSession) args.Session);
     }
     #endregion
 
@@ -66,7 +56,7 @@ public sealed partial class ResearchSystem
         UpdateClientInterface(uid, component);
     }
 
-    private void OnClientStartup(EntityUid uid, ResearchClientComponent component, ComponentStartup args)
+    private void OnClientMapInit(EntityUid uid, ResearchClientComponent component, MapInitEvent args)
     {
         var allServers = EntityQuery<ResearchServerComponent>(true).ToArray();
         if (allServers.Length > 0)
@@ -95,7 +85,7 @@ public sealed partial class ResearchSystem
         var state = new ResearchClientBoundInterfaceState(names.Length, names,
             GetServerIds(), component.ConnectedToServer ? serverComponent.Id : -1);
 
-        _uiSystem.TrySetUiState(component.Owner, ResearchClientUiKey.Key, state);
+        _uiSystem.TrySetUiState(uid, ResearchClientUiKey.Key, state);
     }
 
     /// <summary>
@@ -106,8 +96,10 @@ public sealed partial class ResearchSystem
     /// <param name="serverComponent">The server's ResearchServerComponent. Null if false</param>
     /// <param name="component">The client's Researchclient component</param>
     /// <returns>If the server was successfully retrieved.</returns>
-    public bool TryGetClientServer(EntityUid uid, [NotNullWhen(returnValue: true)] out EntityUid? server,
-        [NotNullWhen(returnValue: true)] out ResearchServerComponent? serverComponent, ResearchClientComponent? component = null)
+    public bool TryGetClientServer(EntityUid uid,
+        [NotNullWhen(returnValue: true)] out EntityUid? server,
+        [NotNullWhen(returnValue: true)] out ResearchServerComponent? serverComponent,
+        ResearchClientComponent? component = null)
     {
         server = null;
         serverComponent = null;
@@ -118,11 +110,10 @@ public sealed partial class ResearchSystem
         if (component.Server == null)
             return false;
 
-        if (!TryComp<ResearchServerComponent>(component.Server, out var sc))
+        if (!TryComp(component.Server, out serverComponent))
             return false;
 
         server = component.Server;
-        serverComponent = sc;
         return true;
     }
 }

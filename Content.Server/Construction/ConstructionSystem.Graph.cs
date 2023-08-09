@@ -3,6 +3,7 @@ using Content.Server.Containers;
 using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Construction.Steps;
+using Content.Shared.Containers;
 using Content.Shared.Database;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
@@ -87,6 +88,23 @@ namespace Content.Server.Construction
                 return null;
 
             return GetCurrentNode(uid, construction) is not {} node ? null : GetEdgeFromNode(node, edgeIndex);
+        }
+
+        /// <summary>
+        ///     Variant of <see cref="GetCurrentEdge"/> that returns both the node and edge.
+        /// </summary>
+        public (ConstructionGraphNode?, ConstructionGraphEdge?) GetCurrentNodeAndEdge(EntityUid uid, ConstructionComponent? construction = null)
+        {
+            if (!Resolve(uid, ref construction, false))
+                return (null, null);
+
+            if (GetCurrentNode(uid, construction) is not { } node)
+                return (null, null);
+
+            if (construction.EdgeIndex is not {} edgeIndex)
+                return (node, null);
+
+            return (node, GetEdgeFromNode(node, edgeIndex));
         }
 
         /// <summary>
@@ -238,7 +256,8 @@ namespace Content.Server.Construction
                     $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
-            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
+            if (node.Entity.GetId(uid, userUid, new(EntityManager)) is {} newEntity
+                && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;
 
             if(performActions)
@@ -305,8 +324,6 @@ namespace Content.Server.Construction
                 }
             }
 
-            EntityManager.InitializeAndStartEntity(newUid);
-
             // We set the graph and node accordingly.
             ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
 
@@ -319,8 +336,12 @@ namespace Content.Server.Construction
                 newConstruction.InteractionQueue.Enqueue(ev);
             }
 
+            if (newConstruction.InteractionQueue.Count > 0 && _queuedUpdates.Add(newUid))
+                    _constructionUpdateQueue.Enqueue(newUid);
+
             // Transform transferring.
             var newTransform = Transform(newUid);
+            newTransform.AttachToGridOrMap(); // in case in hands or a container
             newTransform.LocalRotation = transform.LocalRotation;
             newTransform.Anchored = transform.Anchored;
 
@@ -347,6 +368,17 @@ namespace Content.Server.Construction
                     }
                 }
             }
+
+            var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
+            RaiseLocalEvent(uid, entChangeEv);
+            RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
+
+            foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
+            {
+                logic.Transform(uid, newUid, userUid, new(EntityManager));
+            }
+
+            EntityManager.InitializeAndStartEntity(newUid);
 
             QueueDel(uid);
 
@@ -378,6 +410,22 @@ namespace Content.Server.Construction
 
             construction.Graph = graphId;
             return ChangeNode(uid, userUid, nodeId, performActions, construction);
+        }
+    }
+
+    /// <summary>
+    ///     This event gets raised when an entity changes prototype / uid during construction. The event is raised
+    ///     directed both at the old and new entity.
+    /// </summary>
+    public sealed class ConstructionChangeEntityEvent : EntityEventArgs
+    {
+        public readonly EntityUid New;
+        public readonly EntityUid Old;
+
+        public ConstructionChangeEntityEvent(EntityUid newUid, EntityUid oldUid)
+        {
+            New = newUid;
+            Old = oldUid;
         }
     }
 }

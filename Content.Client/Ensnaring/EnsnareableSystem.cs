@@ -6,6 +6,8 @@ namespace Content.Client.Ensnaring.Visualizers;
 
 public sealed class EnsnareableSystem : SharedEnsnareableSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -28,7 +30,7 @@ public sealed class EnsnareableSystem : SharedEnsnareableSystem
         if (args.Sprite == null || !args.Sprite.LayerMapTryGet(EnsnaredVisualLayers.Ensnared, out var layer))
             return;
 
-        if (args.Component.TryGetData(EnsnareableVisuals.IsEnsnared, out bool isEnsnared))
+        if (_appearance.TryGetData<bool>(uid, EnsnareableVisuals.IsEnsnared, out var isEnsnared, args.Component))
         {
             if (component.Sprite != null)
             {

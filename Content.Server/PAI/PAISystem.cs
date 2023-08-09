@@ -1,14 +1,13 @@
-using Content.Shared.Examine;
-using Content.Shared.PAI;
-using Content.Shared.Verbs;
-using Content.Server.Popups;
-using Content.Server.Instruments;
 using Content.Server.Ghost.Roles.Components;
+using Content.Server.Instruments;
 using Content.Server.Mind.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
+using Content.Server.Popups;
+using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
+using Content.Shared.PAI;
 using Content.Shared.Popups;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
 
 namespace Content.Server.PAI
 {
@@ -16,6 +15,7 @@ namespace Content.Server.PAI
     {
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {
@@ -32,7 +32,7 @@ namespace Content.Server.PAI
         {
             if (args.IsInDetailsRange)
             {
-                if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
+                if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
                 {
                     args.PushMarkup(Loc.GetString("pai-system-pai-installed"));
                 }
@@ -57,7 +57,7 @@ namespace Content.Server.PAI
             args.Handled = true;
 
             // Check for pAI activation
-            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
+            if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
             {
                 _popupSystem.PopupEntity(Loc.GetString("pai-system-pai-installed"), uid, args.User, PopupType.Large);
                 return;
@@ -75,13 +75,14 @@ namespace Content.Server.PAI
             // But having the pda's name permanently be "old lady's PAI" is weird.
             // Changing the PAI's identity in a way that ties it to the owner's identity also seems weird.
             // Cause then you could remotely figure out information about the owner's equipped items.
-            
+
             EntityManager.GetComponent<MetaDataComponent>(component.Owner).EntityName = val;
 
-            var ghostFinder = EntityManager.EnsureComponent<GhostTakeoverAvailableComponent>(uid);
+            var ghostRole = EnsureComp<GhostRoleComponent>(uid);
+            EnsureComp<GhostTakeoverAvailableComponent>(uid);
 
-            ghostFinder.RoleName = Loc.GetString("pai-system-role-name");
-            ghostFinder.RoleDescription = Loc.GetString("pai-system-role-description");
+            ghostRole.RoleName = Loc.GetString("pai-system-role-name");
+            ghostRole.RoleDescription = Loc.GetString("pai-system-role-description");
 
             _popupSystem.PopupEntity(Loc.GetString("pai-system-searching"), uid, args.User);
             UpdatePAIAppearance(uid, PAIStatus.Searching);
@@ -126,7 +127,7 @@ namespace Content.Server.PAI
         {
             if (EntityManager.TryGetComponent<AppearanceComponent>(uid, out var appearance))
             {
-                appearance.SetData(PAIVisuals.Status, status);
+                _appearance.SetData(uid, PAIVisuals.Status, status, appearance);
             }
         }
 
@@ -135,7 +136,7 @@ namespace Content.Server.PAI
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            if (EntityManager.TryGetComponent<MindComponent>(uid, out var mind) && mind.HasMind)
+            if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) && mind.HasMind)
             {
                 ActivationVerb verb = new();
                 verb.Text = Loc.GetString("pai-system-wipe-device-verb-text");
@@ -145,9 +146,9 @@ namespace Content.Server.PAI
                     // Wiping device :(
                     // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
                     // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                    if (EntityManager.HasComponent<MindComponent>(uid))
+                    if (EntityManager.HasComponent<MindContainerComponent>(uid))
                     {
-                        EntityManager.RemoveComponent<MindComponent>(uid);
+                        EntityManager.RemoveComponent<MindContainerComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-wiped-device"), uid, args.User, PopupType.Large);
                         PAITurningOff(uid);
                     }
@@ -164,6 +165,7 @@ namespace Content.Server.PAI
                     if (EntityManager.HasComponent<GhostTakeoverAvailableComponent>(uid))
                     {
                         EntityManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
+						EntityManager.RemoveComponent<GhostRoleComponent>(uid);
                         _popupSystem.PopupEntity(Loc.GetString("pai-system-stopped-searching"), uid, args.User);
                         PAITurningOff(uid);
                     }

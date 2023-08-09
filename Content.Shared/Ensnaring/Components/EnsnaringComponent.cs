@@ -51,13 +51,12 @@ public sealed class EnsnaringComponent : Component
     public EntityUid? Ensnared;
 
     /// <summary>
-    /// Should movement cancel breaking out?
+    /// Should breaking out be possible when moving?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("canMoveBreakout")]
     public bool CanMoveBreakout;
 
-    public CancellationTokenSource? CancelToken;
 }
 
 /// <summary>
@@ -80,7 +79,14 @@ public sealed class EnsnareEvent : EntityEventArgs
 /// </summary>
 public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
 {
+    public readonly float WalkSpeed;
+    public readonly float SprintSpeed;
 
+    public EnsnareRemoveEvent(float walkSpeed, float sprintSpeed)
+    {
+        WalkSpeed = walkSpeed;
+        SprintSpeed = sprintSpeed;
+    }
 }
 
 /// <summary>

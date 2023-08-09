@@ -1,4 +1,4 @@
-﻿using Content.Shared.Destructible;
+﻿using System.Numerics;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Medical.Cryogenics;
 using Content.Shared.Verbs;
@@ -9,6 +9,8 @@ namespace Content.Client.Medical.Cryogenics;
 
 public sealed class CryoPodSystem: SharedCryoPodSystem
 {
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -16,10 +18,7 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         SubscribeLocalEvent<CryoPodComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<CryoPodComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryoPodComponent, GotEmaggedEvent>(OnEmagged);
-        SubscribeLocalEvent<CryoPodComponent, DoInsertCryoPodEvent>(DoInsertCryoPod);
-        SubscribeLocalEvent<CryoPodComponent, DoInsertCancelledCryoPodEvent>(DoInsertCancelCryoPod);
         SubscribeLocalEvent<CryoPodComponent, CryoPodPryFinished>(OnCryoPodPryFinished);
-        SubscribeLocalEvent<CryoPodComponent, CryoPodPryInterrupted>(OnCryoPodPryInterrupted);
 
         SubscribeLocalEvent<CryoPodComponent, AppearanceChangeEvent>(OnAppearanceChange);
         SubscribeLocalEvent<InsideCryoPodComponent, ComponentStartup>(OnCryoPodInsertion);
@@ -47,15 +46,15 @@ public sealed class CryoPodSystem: SharedCryoPodSystem
         spriteComponent.Offset = component.PreviousOffset;
     }
 
-    private void OnAppearanceChange(EntityUid uid, SharedCryoPodComponent component, ref AppearanceChangeEvent args)
+    private void OnAppearanceChange(EntityUid uid, CryoPodComponent component, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
         {
             return;
         }
 
-        if (!args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.ContainsEntity, out bool isOpen)
-            || !args.Component.TryGetData(SharedCryoPodComponent.CryoPodVisuals.IsOn, out bool isOn))
+        if (!_appearance.TryGetData<bool>(uid, CryoPodComponent.CryoPodVisuals.ContainsEntity, out var isOpen, args.Component)
+            || !_appearance.TryGetData<bool>(uid, CryoPodComponent.CryoPodVisuals.IsOn, out var isOn, args.Component))
         {
             return;
         }

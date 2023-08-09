@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.CCVar;
 using Content.Shared.Gravity;
 using Content.Shared.Movement.Events;
@@ -20,7 +21,7 @@ namespace Content.Shared.Friction
 {
     public sealed class TileFrictionController : VirtualController
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
         [Dependency] private readonly SharedGravitySystem _gravity = default!;
         [Dependency] private readonly SharedMoverController _mover = default!;
@@ -28,30 +29,14 @@ namespace Content.Shared.Friction
 
         private float _stopSpeed;
         private float _frictionModifier;
-        private const float DefaultFriction = 0.3f;
+        public const float DefaultFriction = 0.3f;
 
         public override void Initialize()
         {
             base.Initialize();
 
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
-
-            configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
-            configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
-
-            SubscribeLocalEvent<TileFrictionModifierComponent, ComponentGetState>(OnGetState);
-            SubscribeLocalEvent<TileFrictionModifierComponent, ComponentHandleState>(OnHandleState);
-        }
-
-        private void OnHandleState(EntityUid uid, TileFrictionModifierComponent component, ref ComponentHandleState args)
-        {
-            if (args.Current is not TileFrictionComponentState tileState) return;
-            component.Modifier = tileState.Modifier;
-        }
-
-        private void OnGetState(EntityUid uid, TileFrictionModifierComponent component, ref ComponentGetState args)
-        {
-            args.State = new TileFrictionComponentState(component.Modifier);
+            _configManager.OnValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier, true);
+            _configManager.OnValueChanged(CCVars.StopSpeed, SetStopSpeed, true);
         }
 
         private void SetStopSpeed(float value) => _stopSpeed = value;
@@ -61,10 +46,9 @@ namespace Content.Shared.Friction
         public override void Shutdown()
         {
             base.Shutdown();
-            var configManager = IoCManager.Resolve<IConfigurationManager>();
 
-            configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
-            configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
+            _configManager.UnsubValueChanged(CCVars.TileFrictionModifier, SetFrictionModifier);
+            _configManager.UnsubValueChanged(CCVars.StopSpeed, SetStopSpeed);
         }
 
         public override void UpdateBeforeMapSolve(bool prediction, PhysicsMapComponent mapComponent, float frameTime)
@@ -75,9 +59,12 @@ namespace Content.Shared.Friction
             var xformQuery = GetEntityQuery<TransformComponent>();
             var pullerQuery = GetEntityQuery<SharedPullerComponent>();
             var pullableQuery = GetEntityQuery<SharedPullableComponent>();
+            var gridQuery = GetEntityQuery<MapGridComponent>();
 
             foreach (var body in mapComponent.AwakeBodies)
             {
+                var uid = body.Owner;
+
                 // Only apply friction when it's not a mob (or the mob doesn't have control)
                 if (prediction && !body.Predict ||
                     body.BodyStatus == BodyStatus.InAir ||
@@ -86,50 +73,50 @@ namespace Content.Shared.Friction
                     continue;
                 }
 
-                if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f)) continue;
+                if (body.LinearVelocity.Equals(Vector2.Zero) && body.AngularVelocity.Equals(0f))
+                    continue;
 
-                DebugTools.Assert(!Deleted(body.Owner));
-
-                if (!xformQuery.TryGetComponent(body.Owner, out var xform))
+                if (!xformQuery.TryGetComponent(uid, out var xform))
                 {
-                    Logger.ErrorS("physics", $"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
+                    Log.Error($"Unable to get transform for {ToPrettyString(body.Owner)} in tilefrictioncontroller");
                     continue;
                 }
 
-                var surfaceFriction = GetTileFriction(body, xform);
+                var surfaceFriction = GetTileFriction(uid, body, xform, gridQuery, frictionQuery);
                 var bodyModifier = 1f;
 
-                if (frictionQuery.TryGetComponent(body.Owner, out var frictionComp))
+                if (frictionQuery.TryGetComponent(uid, out var frictionComp))
                 {
                     bodyModifier = frictionComp.Modifier;
                 }
 
                 var ev = new TileFrictionEvent(bodyModifier);
 
-                RaiseLocalEvent(body.Owner, ref ev);
+                RaiseLocalEvent(uid, ref ev);
                 bodyModifier = ev.Modifier;
 
                 // If we're sandwiched between 2 pullers reduce friction
                 // Might be better to make this dynamic and check how many are in the pull chain?
                 // Either way should be much faster for now.
-                if (pullerQuery.TryGetComponent(body.Owner, out var puller) && puller.Pulling != null &&
-                    pullableQuery.TryGetComponent(body.Owner, out var pullable) && pullable.BeingPulled)
+                if (pullerQuery.TryGetComponent(uid, out var puller) && puller.Pulling != null &&
+                    pullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
                 {
                     bodyModifier *= 0.2f;
                 }
 
                 var friction = _frictionModifier * surfaceFriction * bodyModifier;
 
-                ReduceLinearVelocity(prediction, body, friction, frameTime);
-                ReduceAngularVelocity(prediction, body, friction, frameTime);
+                ReduceLinearVelocity(uid, prediction, body, friction, frameTime);
+                ReduceAngularVelocity(uid, prediction, body, friction, frameTime);
             }
         }
 
-        private void ReduceLinearVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
+        private void ReduceLinearVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
-            var speed = body.LinearVelocity.Length;
+            var speed = body.LinearVelocity.Length();
 
-            if (speed <= 0.0f) return;
+            if (speed <= 0.0f)
+                return;
 
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;
@@ -153,14 +140,15 @@ namespace Content.Shared.Friction
             var newSpeed = MathF.Max(0.0f, speed - drop);
 
             newSpeed /= speed;
-            _physics.SetLinearVelocity(body, body.LinearVelocity * newSpeed);
+            _physics.SetLinearVelocity(uid, body.LinearVelocity * newSpeed, body: body);
         }
 
-        private void ReduceAngularVelocity(bool prediction, PhysicsComponent body, float friction, float frameTime)
+        private void ReduceAngularVelocity(EntityUid uid, bool prediction, PhysicsComponent body, float friction, float frameTime)
         {
             var speed = MathF.Abs(body.AngularVelocity);
 
-            if (speed <= 0.0f) return;
+            if (speed <= 0.0f)
+                return;
 
             // This is the *actual* amount that speed will drop by, we just do some multiplication around it to be easier.
             var drop = 0.0f;
@@ -184,45 +172,62 @@ namespace Content.Shared.Friction
             var newSpeed = MathF.Max(0.0f, speed - drop);
 
             newSpeed /= speed;
-            _physics.SetAngularVelocity(body, body.AngularVelocity * newSpeed);
+            _physics.SetAngularVelocity(uid, body.AngularVelocity * newSpeed, body: body);
         }
 
         [Pure]
-        private float GetTileFriction(PhysicsComponent body, TransformComponent xform)
+        private float GetTileFriction(
+            EntityUid uid,
+            PhysicsComponent body,
+            TransformComponent xform,
+            EntityQuery<MapGridComponent> gridQuery,
+            EntityQuery<TileFrictionModifierComponent> frictionQuery)
         {
             // TODO: Make IsWeightless event-based; we already have grid traversals tracked so just raise events
-            if (_gravity.IsWeightless(body.Owner, body, xform))
+            if (_gravity.IsWeightless(uid, body, xform))
                 return 0.0f;
 
-            if (!xform.Coordinates.IsValid(EntityManager)) return 0.0f;
+            if (!xform.Coordinates.IsValid(EntityManager))
+                return 0.0f;
 
-            if (_mapManager.TryGetGrid(xform.GridUid, out var grid))
+            // If not on a grid then return the map's friction.
+            if (!gridQuery.TryGetComponent(xform.GridUid, out var grid))
             {
-                var tile = grid.GetTileRef(xform.Coordinates);
-
-                // If it's a map but on an empty tile then just assume it has gravity.
-                if (tile.Tile.IsEmpty && HasComp<MapComponent>(xform.GridUid) &&
-                    (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
-                {
-                    return DefaultFriction;
-                }
-
-                var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
-                return tileDef.Friction;
+                return frictionQuery.TryGetComponent(xform.MapUid, out var friction)
+                    ? friction.Modifier
+                    : DefaultFriction;
             }
 
-            return TryComp<TileFrictionModifierComponent>(xform.MapUid, out var friction) ? friction.Modifier : DefaultFriction;
+            var tile = grid.GetTileRef(xform.Coordinates);
+
+            // If it's a map but on an empty tile then just assume it has gravity.
+            if (tile.Tile.IsEmpty &&
+                HasComp<MapComponent>(xform.GridUid) &&
+                (!TryComp<GravityComponent>(xform.GridUid, out var gravity) || gravity.Enabled))
+            {
+                return DefaultFriction;
+            }
+
+            // If there's an anchored ent that modifies friction then fallback to that instead.
+            var anc = grid.GetAnchoredEntitiesEnumerator(tile.GridIndices);
+
+            while (anc.MoveNext(out var tileEnt))
+            {
+                if (frictionQuery.TryGetComponent(tileEnt, out var friction))
+                    return friction.Modifier;
+            }
+
+            var tileDef = _tileDefinitionManager[tile.Tile.TypeId];
+            return tileDef.Friction;
         }
 
-        [NetSerializable, Serializable]
-        private sealed class TileFrictionComponentState : ComponentState
+        public void SetModifier(EntityUid entityUid, float value, TileFrictionModifierComponent? friction = null)
         {
-            public float Modifier;
+            if (!Resolve(entityUid, ref friction) || value.Equals(friction.Modifier))
+                return;
 
-            public TileFrictionComponentState(float modifier)
-            {
-                Modifier = modifier;
-            }
+            friction.Modifier = value;
+            Dirty(friction);
         }
     }
 }

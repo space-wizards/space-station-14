@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Machines/artifact_analyzer.rsi
     drawdepth: FloorObjects
     layers:
@@ -19,13 +18,14 @@
     canCollide: true
   - type: AmbientSound
     enabled: false
-    sound: 
+    sound:
       path: /Audio/Machines/scan_loop.ogg
     range: 5
     volume: -8
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
@@ -48,16 +48,20 @@
   - type: ArtifactAnalyzer
   - type: DeviceNetwork
     deviceNetId: Wired
+    receiveFrequencyId: BasicDevice
   - type: DeviceList
-  - type: SignalReceiver
-    inputs:
-      ArtifactAnalyzerReceiver: []
+  - type: DeviceLinkSink
+    ports:
+      - ArtifactAnalyzerReceiver
   - type: Machine
     board: ArtifactAnalyzerMachineCircuitboard
   - type: PointLight
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology
   - type: LitOnPowered
   - type: Appearance
   - type: GenericVisualizer
@@ -87,7 +91,8 @@
     canCollide: true
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeAabb
           bounds: "-0.35,-0.35,0.35,0.35"
         density: 190
@@ -107,6 +112,9 @@
   - type: Machine
     board: TraversalDistorterMachineCircuitboard
   - type: Appearance
+  - type: GuideHelp
+    guides:
+    - TraversalDistorter
   - type: GenericVisualizer
     visuals:
       enum.PowerDeviceVisuals.Powered:

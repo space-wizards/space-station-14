@@ -6,11 +6,35 @@
   physicalDesc: reagent-physical-desc-powdery
   flavor: chalky
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:SatiateThirst
+        factor: -0.2 #its flour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
+
+- type: reagent
+  id: Cornmeal
+  name: reagent-name-cornmeal
+  group: Foods
+  desc: reagent-desc-cornmeal
+  physicalDesc: reagent-physical-desc-powdery
+  flavor: corn #so corn doesnt taste chalky
+  color: tan
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateThirst
+        factor: -0.2 #its cornflour
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: Oats
@@ -23,8 +47,12 @@
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.2
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.3
 
 - type: reagent
   id: Enzyme
@@ -34,11 +62,6 @@
   physicalDesc: reagent-physical-desc-chalky
   flavor: bitter
   color: "#009900"
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        nutritionFactor: 1
 
 - type: reagent
   id: Egg
@@ -48,34 +71,13 @@
   physicalDesc: reagent-physical-desc-mucus-like
   flavor: egg
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
-
-- type: reagent
-  id: Sugar
-  name: reagent-name-sugar
-  group: Foods
-  desc: reagent-desc-sugar
-  physicalDesc: reagent-physical-desc-sweet
-  flavor: sweet
-  color: white
-  meltingPoint: 146.0
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
-  plantMetabolism:
-  - !type:PlantAdjustNutrition
-    amount: 0.1
-  - !type:PlantAdjustWeeds
-    amount: 2
-  - !type:PlantAdjustPests
-    amount: 2
-
+      - !type:AdjustReagent
+        reagent: Protein
+        amount: 0.5
 
 - type: reagent
   id: Blackpepper
@@ -85,11 +87,7 @@
   physicalDesc: reagent-physical-desc-grainy
   flavor: peppery
   color: black
-  metabolisms:
-    Food:
-      effects:
-      - !type:SatiateHunger
-        factor: 1
+  recognizable: true
 
 - type: reagent
   id: Vinegar
@@ -99,11 +97,21 @@
   physicalDesc: reagent-physical-desc-sour
   flavor: bitter
   color: tan
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Water
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Vitamin
+        amount: 0.1
+      - !type:ChemVomit
+        probability: 0.1
+        conditions:
+          - !type:ReagentThreshold
+            min: 6
 
 - type: reagent
   id: Rice
@@ -113,10 +121,16 @@
   physicalDesc: reagent-physical-desc-chewy
   flavor: rice
   color: white
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
+      - !type:AdjustReagent
+        reagent: Sugar
+        amount: 0.4
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.1
 
 - type: reagent
   id: OilOlive
@@ -125,12 +139,15 @@
   desc: reagent-desc-oil-olive
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
+  flavorMinimum: 0.05
   color: olive
+  recognizable: true
   metabolisms:
     Food:
       effects:
-      - !type:SatiateHunger
-        factor: 1
+      - !type:AdjustReagent
+        reagent: Nutriment
+        amount: 0.75
 
 - type: reagent
   id: Oil
@@ -139,6 +156,8 @@
   desc: reagent-desc-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: oily
+  flavorMinimum: 0.05
+  recognizable: true
   color: "#b67823"
   boilingPoint: 300.0
   meltingPoint: -16.0
@@ -148,17 +167,21 @@
 - type: reagent
   id: CapsaicinOil
   name: reagent-name-capsaicin-oil
+  group: Foods
   desc: reagent-desc-capsaicin-oil
   physicalDesc: reagent-physical-desc-oily
   flavor: spicy
+  flavorMinimum: 0.05
   color: "#FF0000"
+  recognizable: true
   meltingPoint: 146
   boilingPoint: 410 # Really high boiling point compared to its melting
   metabolisms:
     Food:
       effects:
-        - !type:SatiateHunger # spicy foods satiate hunger better
-          factor: 1.5
+      - !type:AdjustReagent
+        reagent: Nutriment #Oils enhance nutrition
+        amount: 0.75
     Poison:
       effects:
         - !type:AdjustTemperature
@@ -168,7 +191,7 @@
             - !type:ReagentThreshold
               min: 5
           damage:
-            groups:
+            types:
               Caustic: 1
         - !type:PopupMessage
           type: Local

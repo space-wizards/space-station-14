@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 using Content.Server.Physics.Components;
+using Content.Shared.Follower.Components;
 using Content.Shared.Throwing;
 
 namespace Content.Server.Physics.Controllers;
@@ -41,7 +42,8 @@ internal sealed class RandomWalkController : VirtualController
         foreach(var (randomWalk, physics) in EntityManager.EntityQuery<RandomWalkComponent, PhysicsComponent>())
         {
             if (EntityManager.HasComponent<ActorComponent>(randomWalk.Owner)
-            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner))
+            ||  EntityManager.HasComponent<ThrownItemComponent>(randomWalk.Owner)
+            ||  EntityManager.HasComponent<FollowerComponent>(randomWalk.Owner))
                 continue;
 
             var curTime = _timing.CurTime;
@@ -69,8 +71,8 @@ internal sealed class RandomWalkController : VirtualController
         var pushAngle = _random.NextAngle();
         var pushStrength = _random.NextFloat(randomWalk.MinSpeed, randomWalk.MaxSpeed);
 
-        _physics.SetLinearVelocity(physics, physics.LinearVelocity * randomWalk.AccumulatorRatio);
-        _physics.ApplyLinearImpulse(physics, pushAngle.ToVec() * (pushStrength * physics.Mass));
+        _physics.SetLinearVelocity(uid, physics.LinearVelocity * randomWalk.AccumulatorRatio, body: physics);
+        _physics.ApplyLinearImpulse(uid, pushAngle.ToVec() * (pushStrength * physics.Mass), body: physics);
     }
 
     /// <summary>

@@ -51,7 +51,7 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 20.75
+    price: 132
 
 - type: entity
   id: PlasmaReinforcedWindowDirectional
@@ -64,7 +64,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: plasma_reinforced_window
   - type: Icon
@@ -99,4 +98,4 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: StaticPrice
-    price: 20.75
+    price: 66

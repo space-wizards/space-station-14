@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.Components
     public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, ISerializationHooks
     {
         // This is a list because it is actually faster to add and remove reagents from
-        // a list than a dictionary, though contains-reagent checks are slightly slower, 
+        // a list than a dictionary, though contains-reagent checks are slightly slower,
         [DataField("reagents")]
         public List<ReagentQuantity> Contents = new(2);
 
@@ -114,6 +114,10 @@ namespace Content.Shared.Chemistry.Components
             return _heatCapacity;
         }
 
+        public float GetThermalEnergy(IPrototypeManager? protoMan)
+        {
+            return GetHeatCapacity(protoMan) * Temperature;
+        }
 
         /// <summary>
         ///     Constructs an empty solution (ex. an empty beaker).
@@ -317,16 +321,16 @@ namespace Content.Shared.Chemistry.Components
             if (scale == 1)
                 return;
 
-            if (scale == 0)
+            if (scale <= 0)
             {
                 RemoveAllSolution();
                 return;
             }
-            
+
             _heatCapacity *= scale;
             Volume *= scale;
 
-            for (int i = 0; i <= Contents.Count; i++)
+            for (int i = 0; i < Contents.Count; i++)
             {
                 var old = Contents[i];
                 Contents[i] = new ReagentQuantity(old.ReagentId, old.Quantity * scale);
@@ -432,6 +436,26 @@ namespace Content.Shared.Chemistry.Components
             _heatCapacity = 0;
         }
 
+        /// <summary>
+        /// Splits a solution without the specified reagent.
+        /// </summary>
+        public Solution SplitSolutionWithout(FixedPoint2 toTake, params string[] without)
+        {
+            var existing = new FixedPoint2[without.Length];
+            for (var i = 0; i < without.Length; i++)
+            {
+                TryGetReagent(without[i], out existing[i]);
+                RemoveReagent(without[i], existing[i]);
+            }
+
+            var sol = SplitSolution(toTake);
+
+            for (var i = 0; i < without.Length; i++)
+                AddReagent(without[i], existing[i]);
+
+            return sol;
+        }
+
         public Solution SplitSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)
@@ -498,7 +522,7 @@ namespace Content.Shared.Chemistry.Components
         /// <summary>
         /// Variant of <see cref="SplitSolution(FixedPoint2)"/> that doesn't return a new solution containing the removed reagents.
         /// </summary>
-        /// <param name="quantity">The quantity of this solution to remove</param>
+        /// <param name="toTake">The quantity of this solution to remove</param>
         public void RemoveSolution(FixedPoint2 toTake)
         {
             if (toTake <= FixedPoint2.Zero)
@@ -599,7 +623,7 @@ namespace Content.Shared.Chemistry.Components
             ValidateSolution();
         }
 
-        public Color GetColor(IPrototypeManager? protoMan)
+        public Color GetColorWithout(IPrototypeManager? protoMan, params string[] without)
         {
             if (Volume == FixedPoint2.Zero)
             {
@@ -614,6 +638,9 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
+                if (without.Contains(reagent.ReagentId))
+                    continue;
+
                 runningTotalQuantity += reagent.Quantity;
 
                 if (!protoMan.TryIndex(reagent.ReagentId, out ReagentPrototype? proto))
@@ -634,6 +661,11 @@ namespace Content.Shared.Chemistry.Components
             return mixColor;
         }
 
+        public Color GetColor(IPrototypeManager? protoMan)
+        {
+            return GetColorWithout(protoMan);
+        }
+
         [Obsolete("Use ReactiveSystem.DoEntityReaction")]
         public void DoEntityReaction(EntityUid uid, ReactionMethod method)
         {
@@ -644,15 +676,19 @@ namespace Content.Shared.Chemistry.Components
         [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
             public readonly string ReagentId;
-            [DataField("Quantity")]
+            [DataField("Quantity", required:true)]
             public readonly FixedPoint2 Quantity;
 
             public ReagentQuantity(string reagentId, FixedPoint2 quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;
+            }
+
+            public ReagentQuantity() : this(string.Empty, default)
+            {
             }
 
             [ExcludeFromCodeCoverage]

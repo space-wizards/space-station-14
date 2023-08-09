@@ -12,7 +12,7 @@ namespace Content.Shared.Polymorph
     public sealed class PolymorphPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         [DataField("name")]
@@ -88,6 +88,12 @@ namespace Content.Shared.Polymorph
         /// </summary>
         [DataField("revertOnDeath", serverOnly: true)]
         public bool RevertOnDeath = true;
+
+        /// <summary>
+        /// Whether or not the polymorph reverts when the entity is eaten or fully sliced.
+        /// </summary>
+        [DataField("revertOnEat", serverOnly: true)]
+        public bool RevertOnEat = false;
 
         [DataField("allowRepeatedMorphs", serverOnly: true)]
         public bool AllowRepeatedMorphs = false;

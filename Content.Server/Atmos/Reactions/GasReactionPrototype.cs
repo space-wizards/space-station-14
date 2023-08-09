@@ -21,7 +21,7 @@ namespace Content.Server.Atmos.Reactions
     public sealed class GasReactionPrototype : IPrototype
     {
         [ViewVariables]
-        [IdDataFieldAttribute]
+        [IdDataField]
         public string ID { get; } = default!;
 
         /// <summary>

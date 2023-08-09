@@ -12,16 +12,16 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 100
-      mask:
-      - TableMask
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 100
+        mask:
+        - TableMask
   - type: Sprite
     sprite: Structures/Furniture/chairs.rsi
     noRot: true
-    netsync: false
   - type: Strap
     position: Stand
     buckleOffset: "0,0.15"
@@ -33,6 +33,12 @@
     thresholds:
     - trigger:
         !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
         damage: 50
       behaviors:
       - !type:DoActsBehavior
@@ -41,7 +47,7 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
   - type: StaticPrice
-    price: 50
+    price: 10
 
 - type: entity
   name: chair
@@ -50,6 +56,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
@@ -80,6 +88,8 @@
     anchored: true
   - type: Rotatable
     rotateWhileAnchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Sprite
     state: bar
@@ -119,6 +129,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
@@ -135,6 +147,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
@@ -175,6 +189,8 @@
   - type: Tag
     tags:
     - Wooden
+  - type: StaticPrice
+    price: 75
 
 - type: entity
   name: ritual chair
@@ -189,6 +205,20 @@
   - type: Construction
     graph: RitualSeat
     node: chairRitual
+
+- type: entity
+  id: ChairMeat
+  parent: SeatBase
+  name: meat chair
+  description: Uncomfortably sweaty.
+  components:
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: meat
+  - type: Construction
+    graph: Seat
+    node: chairMeat
 
 - type: entity
   name: cursed chair
@@ -218,7 +248,7 @@
     node: chairCursed
 
 - type: entity
-  parent: SeatBase
+  parent: [SeatBase, BaseFoldable]
   id: ChairFolding
   name: folding chair
   description: If you carry six of these you become the coolest kid at church.
@@ -228,18 +258,17 @@
     sprite: Structures/Furniture/folding_chair.rsi
     layers:
     - state: folding
-      map: ["enum.FoldableVisualLayers.Base"]
+      map: ["unfoldedLayer"]
+    - state: folding_folded
+      map: ["foldedLayer"]
+      visible: false
   - type: Item
     size: 50
-  - type: Foldable
   - type: Appearance
-    visuals:
-    - type: FoldableVisualizer
-      key: folding
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 15
+        Blunt: 8
   - type: Construction
     graph: Seat
     node: chairFolding

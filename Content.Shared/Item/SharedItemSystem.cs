@@ -1,15 +1,18 @@
 using Content.Shared.CombatMode;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Inventory.Events;
+using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
 public abstract class SharedItemSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] protected readonly SharedContainerSystem Container = default!;
@@ -18,10 +21,8 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-
-        SubscribeLocalEvent<SharedSpriteComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<SharedSpriteComponent, GotUnequippedEvent>(OnUnequipped);
         SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
@@ -31,7 +32,7 @@ public abstract class SharedItemSystem : EntitySystem
 
     public void SetSize(EntityUid uid, int size, ItemComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false))
             return;
 
         component.Size = size;
@@ -77,6 +78,18 @@ public abstract class SharedItemSystem : EntitySystem
         args.Handled = _handsSystem.TryPickup(args.User, uid, animateUser: false);
     }
 
+    protected virtual void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
+    {
+        if (!TryComp<StackComponent>(uid, out var stack))
+            return;
+
+        if (!_prototype.TryIndex<StackPrototype>(stack.StackTypeId, out var stackProto) ||
+            stackProto.ItemSize is not { } size)
+            return;
+
+        SetSize(uid, args.NewCount * size, component);
+    }
+
     private void OnHandleState(EntityUid uid, ItemComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not ItemComponentState state)
@@ -91,21 +104,6 @@ public abstract class SharedItemSystem : EntitySystem
         args.State = new ItemComponentState(component.Size, component.HeldPrefix);
     }
 
-    // Although netsync is being set to false for items client can still update these
-    // Realistically:
-    // Container should already hide these
-    // Client is the only thing that matters.
-
-    private void OnUnequipped(EntityUid uid, SharedSpriteComponent component, GotUnequippedEvent args)
-    {
-        component.Visible = true;
-    }
-
-    private void OnEquipped(EntityUid uid, SharedSpriteComponent component, GotEquippedEvent args)
-    {
-        component.Visible = false;
-    }
-
     private void AddPickupVerb(EntityUid uid, ItemComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null ||
@@ -118,7 +116,7 @@ public abstract class SharedItemSystem : EntitySystem
         InteractionVerb verb = new();
         verb.Act = () => _handsSystem.TryPickupAnyHand(args.User, args.Target, checkActionBlocker: false,
             handsComp: args.Hands, item: component);
-        verb.IconTexture = "/Textures/Interface/VerbIcons/pickup.svg.192dpi.png";
+        verb.Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/pickup.svg.192dpi.png"));
 
         // if the item already in a container (that is not the same as the user's), then change the text.
         // this occurs when the item is in their inventory or in an open backpack

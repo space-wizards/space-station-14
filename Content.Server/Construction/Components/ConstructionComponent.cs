@@ -1,4 +1,5 @@
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DoAfter;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Construction.Components
@@ -34,9 +35,8 @@ namespace Content.Server.Construction.Components
         public string? DeconstructionNode { get; set; } = "start";
 
         [ViewVariables]
-        public bool WaitingDoAfter { get; set; } = false;
-
-        [ViewVariables]
+        // TODO Force flush interaction queue before serializing to YAML.
+        // Otherwise you can end up with entities stuck in invalid states (e.g., waiting for DoAfters).
         public readonly Queue<object> InteractionQueue = new();
     }
 }

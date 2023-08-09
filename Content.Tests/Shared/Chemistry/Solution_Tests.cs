@@ -3,6 +3,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 using NUnit.Framework;
+using Robust.Shared.Utility;
 
 namespace Content.Tests.Shared.Chemistry;
 
@@ -23,6 +24,51 @@ public sealed class Solution_Tests : ContentUnitTest
         var quantity = solution.GetReagentQuantity("water");
 
         Assert.That(quantity.Int(), Is.EqualTo(1000));
+    }
+
+    [Test]
+    public void ScaleSolution()
+    {
+        var solution = new Solution();
+        solution.AddReagent("water", FixedPoint2.New(20));
+        solution.AddReagent("fire", FixedPoint2.New(30));
+
+        // Test integer scaling
+        {
+            var tmp = solution.Clone();
+            tmp.ScaleSolution(0);
+            Assert.That(tmp.Contents.Count, Is.EqualTo(0));
+            Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.Zero));
+
+            tmp = solution.Clone();
+            tmp.ScaleSolution(2);
+            Assert.That(tmp.Contents.Count, Is.EqualTo(2));
+            Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(100)));
+            Assert.That(tmp.GetReagentQuantity("water"), Is.EqualTo(FixedPoint2.New(40)));
+            Assert.That(tmp.GetReagentQuantity("fire"), Is.EqualTo(FixedPoint2.New(60)));
+        }
+
+        // Test float scaling
+        {
+            var tmp = solution.Clone();
+            tmp.ScaleSolution(0f);
+            Assert.That(tmp.Contents.Count, Is.EqualTo(0));
+            Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.Zero));
+
+            tmp = solution.Clone();
+            tmp.ScaleSolution(2f);
+            Assert.That(tmp.Contents.Count, Is.EqualTo(2));
+            Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(100)));
+            Assert.That(tmp.GetReagentQuantity("water"), Is.EqualTo(FixedPoint2.New(40)));
+            Assert.That(tmp.GetReagentQuantity("fire"), Is.EqualTo(FixedPoint2.New(60)));
+
+            tmp = solution.Clone();
+            tmp.ScaleSolution(0.3f);
+            Assert.That(tmp.Contents.Count, Is.EqualTo(2));
+            Assert.That(tmp.Volume, Is.EqualTo(FixedPoint2.New(15)));
+            Assert.That(tmp.GetReagentQuantity("water"), Is.EqualTo(FixedPoint2.New(6)));
+            Assert.That(tmp.GetReagentQuantity("fire"), Is.EqualTo(FixedPoint2.New(9)));
+        }
     }
 
     [Test]

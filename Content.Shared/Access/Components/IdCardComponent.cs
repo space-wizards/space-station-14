@@ -1,33 +1,32 @@
 using Content.Shared.Access.Systems;
 using Content.Shared.PDA;
+using Content.Shared.StatusIcon;
 using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Access.Components
 {
     [RegisterComponent, NetworkedComponent]
-    [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
-    public sealed class IdCardComponent : Component
+    [AutoGenerateComponentState]
+    [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
+    public sealed partial class IdCardComponent : Component
     {
         [DataField("fullName")]
-        [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
-            Other = AccessPermissions.ReadWrite)] // FIXME Friends
+        [AutoNetworkedField]
+        // FIXME Friends
         public string? FullName;
 
         [DataField("jobTitle")]
-        public string? JobTitle;
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class IdCardComponentState : ComponentState
-    {
-        public string? FullName;
+        [AutoNetworkedField]
+        [Access(typeof(SharedIdCardSystem), typeof(SharedPdaSystem), typeof(SharedAgentIdCardSystem), Other = AccessPermissions.ReadWrite)]
         public string? JobTitle;
 
-        public IdCardComponentState(string? fullName, string? jobTitle)
-        {
-            FullName = fullName;
-            JobTitle = jobTitle;
-        }
+        /// <summary>
+        /// The state of the job icon rsi.
+        /// </summary>
+        [DataField("jobIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
+        [AutoNetworkedField]
+        public string JobIcon = "JobIconUnknown";
+
     }
 }

@@ -22,9 +22,6 @@ namespace Content.Server.Chemistry.Components
         [ViewVariables(VVAccess.ReadWrite)]
         public string? EmagPackPrototypeId = default!;
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool IsEmagged = false;
-
         [DataField("clickSound"), ViewVariables(VVAccess.ReadWrite)]
         public SoundSpecifier ClickSound = new SoundPathSpecifier("/Audio/Machines/machine_switch.ogg");
 

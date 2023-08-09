@@ -5,13 +5,22 @@ namespace Content.Server.NPC.Pathfinding;
 
 public sealed class PathPoly : IEquatable<PathPoly>
 {
+    [ViewVariables]
     public readonly EntityUid GraphUid;
+
+    [ViewVariables]
     public readonly Vector2i ChunkOrigin;
+
+    [ViewVariables]
     public readonly byte TileIndex;
 
+    [ViewVariables]
     public readonly Box2 Box;
+
+    [ViewVariables]
     public PathfindingData Data;
 
+    [ViewVariables]
     public readonly HashSet<PathPoly> Neighbors;
 
     public PathPoly(EntityUid graphUid, Vector2i chunkOrigin, byte tileIndex, Box2 vertices, PathfindingData data, HashSet<PathPoly> neighbors)
@@ -29,6 +38,7 @@ public sealed class PathPoly : IEquatable<PathPoly>
         return (Data.Flags & PathfindingBreadcrumbFlag.Invalid) == 0x0;
     }
 
+    [ViewVariables]
     public EntityCoordinates Coordinates => new(GraphUid, Box.Center);
 
     // Explicitly don't check neighbors.

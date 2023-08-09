@@ -79,7 +79,7 @@ namespace Content.Shared.Verbs
             var canInteract = force || _actionBlockerSystem.CanInteract(user, target);
 
             EntityUid? @using = null;
-            if (TryComp(user, out SharedHandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
+            if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
                 @using = hands.ActiveHandEntity;
 
@@ -93,6 +93,7 @@ namespace Content.Shared.Verbs
                 }
             }
 
+            // TODO: fix this garbage and use proper generics or reflection or something else, not this.
             if (types.Contains(typeof(InteractionVerb)))
             {
                 var verbEvent = new GetVerbsEvent<InteractionVerb>(user, target, @using, hands, canInteract, canAccess);
@@ -142,6 +143,14 @@ namespace Content.Shared.Verbs
             {
                 var verbEvent = new GetVerbsEvent<Verb>(user, target, @using, hands, canInteract, canAccess);
                 RaiseLocalEvent(target, verbEvent, true);
+                verbs.UnionWith(verbEvent.Verbs);
+            }
+
+            if (types.Contains(typeof(EquipmentVerb)))
+            {
+                var access = canAccess || _interactionSystem.CanAccessEquipment(user, target);
+                var verbEvent = new GetVerbsEvent<EquipmentVerb>(user, target, @using, hands, canInteract, access);
+                RaiseLocalEvent(target, verbEvent);
                 verbs.UnionWith(verbEvent.Verbs);
             }
 

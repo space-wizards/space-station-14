@@ -120,5 +120,70 @@ namespace Content.Shared.Humanoid.Markings
                 _index.Add(markingPrototype);
             }
         }
+
+        public bool CanBeApplied(string species, Marking marking, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref prototypeManager);
+
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+
+            if (!TryGetMarking(marking, out var prototype))
+            {
+                return false;
+            }
+
+            if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+            {
+                return false;
+            }
+
+            if (prototype.SpeciesRestrictions != null
+                && !prototype.SpeciesRestrictions.Contains(species))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool CanBeApplied(string species, MarkingPrototype prototype, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref prototypeManager);
+
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            var onlyWhitelisted = prototypeManager.Index<MarkingPointsPrototype>(speciesProto.MarkingPoints).OnlyWhitelisted;
+
+            if (onlyWhitelisted && prototype.SpeciesRestrictions == null)
+            {
+                return false;
+            }
+
+            if (prototype.SpeciesRestrictions != null &&
+                !prototype.SpeciesRestrictions.Contains(species))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool MustMatchSkin(string species, HumanoidVisualLayers layer, out float alpha, IPrototypeManager? prototypeManager = null)
+        {
+            IoCManager.Resolve(ref prototypeManager);
+            var speciesProto = prototypeManager.Index<SpeciesPrototype>(species);
+            if (
+                !prototypeManager.TryIndex(speciesProto.SpriteSet, out HumanoidSpeciesBaseSpritesPrototype? baseSprites) ||
+                !baseSprites.Sprites.TryGetValue(layer, out var spriteName) ||
+                !prototypeManager.TryIndex(spriteName, out HumanoidSpeciesSpriteLayer? sprite) ||
+                sprite == null ||
+                !sprite.MarkingsMatchSkin
+            )
+            {
+                alpha = 1f;
+                return false;
+            }
+            
+            alpha = sprite.LayerAlpha;
+            return true;
+        }
     }
 }

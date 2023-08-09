@@ -179,6 +179,42 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: bananium wall
+  id: ClownWall
+  graph: Girder
+  startNode: start
+  targetNode: bananiumWall
+  category: construction-category-structures
+  description: Keeps the air in and the greytide out.
+  icon:
+    sprite: Structures/Walls/clown.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: meat wall
+  id: MeatWall
+  graph: Girder
+  startNode: start
+  targetNode: meatWall
+  category: construction-category-structures
+  description: Sticky.
+  icon:
+    sprite: Structures/Walls/meat.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: grille
   id: Grille
   graph: Grille
@@ -188,6 +224,7 @@
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille
@@ -363,6 +400,44 @@
   placementMode: SnapgridCenter
 
 - type: construction
+  name: uranium window
+  id: UraniumWindow
+  graph: Window
+  startNode: start
+  targetNode: uraniumWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/uranium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
+  name: reinforced uranium window
+  id: ReinforcedUraniumWindow
+  graph: Window
+  startNode: start
+  targetNode: reinforcedUraniumWindow
+  category: construction-category-structures
+  canBuildInImpassable: true
+  description: Clear and much tougher than regular glass, with added RadAbsorb to protect you from deadly radiation.
+  conditions:
+    - !type:EmptyOrWindowValidInTile
+    - !type:NoWindowsInTile
+  icon:
+    sprite: Structures/Windows/reinforced_uranium_window.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+
+- type: construction
   name: firelock
   id: Firelock
   graph: Firelock
@@ -411,6 +486,35 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
 
+- type: construction
+  name: glass shutter
+  id: ShuttersWindow
+  graph: Shutters
+  startNode: start
+  targetNode: ShuttersWindow
+  category: construction-category-structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters_window.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: radiation shutter
+  id: ShuttersRadiation
+  graph: Shutters
+  startNode: start
+  targetNode: ShuttersRadiation
+  category: construction-category-structures
+  description: This is a shutter - connect it to a button to open and close it.
+  icon:
+    sprite: Structures/Doors/Shutters/shutters_radiation.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
 
 - type: construction
   name: catwalk
@@ -422,14 +526,35 @@
   description: Just like a lattice. Except it looks better.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
     - !type:TileType
       targets:
         - Lattice
         - Plating
-        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: bananium floor
+  id: FloorBananium
+  graph: FloorBananium
+  startNode: start
+  targetNode: BananiumFloor
+  category: construction-category-structures
+  description: A slippery floor of bright yellow bananium.
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Plating
+  icon:
+    sprite: Tiles/Misc/bananium.rsi
+    state: bananium
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false
@@ -553,6 +678,24 @@
   canBuildInImpassable: false
   conditions:
   - !type:TileNotBlocked
+
+- type: construction
+  name: glass shuttle airlock
+  id: AirlockGlassShuttle
+  graph: AirlockShuttle
+  startNode: start
+  targetNode: airlockGlass
+  category: construction-category-structures
+  description: It opens, it closes, and maybe crushes you. Necessary for connecting two space craft together. This one has a window.
+  icon:
+    sprite: Structures/Doors/Airlocks/Glass/shuttle.rsi
+    state: closed
+  #  state: assembly
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
 
 - type: construction
   name: windoor
@@ -779,5 +922,57 @@
   icon:
     sprite: Structures/plastic_flaps.rsi
     state: plasticflaps
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: bananium clown statue
+  id: BananiumClownStatue
+  graph: BananiumStatueClown
+  startNode: start
+  targetNode: bananiumStatue
+  category: construction-category-structures
+  placementMode: SnapgridCenter
+  description: A clown statue made from bananium.
+  objectType: Structure
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Decoration/statues.rsi
+    state: bananium_clown
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: bananium door
+  id: BananiumDoor
+  graph: DoorGraph
+  startNode: start
+  targetNode: bananiumDoor
+  category: construction-category-structures
+  description: A primitive door made from bananium, it honks.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/MineralDoors/bananium_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: bananium altar
+  id: BananiumAltar
+  graph: BananiumAltarGraph
+  startNode: start
+  targetNode: bananiumAltar
+  category: construction-category-structures
+  description: An altar to worship the honkmother with.
+  icon:
+    sprite: Structures/Furniture/Altars/Cults/bananium.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked

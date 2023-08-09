@@ -20,9 +20,13 @@ public sealed class LogFilter
 
     public DateTime? After { get; set; }
 
+    public bool IncludePlayers  { get; set; } = true;
+
     public Guid[]? AnyPlayers { get; set; }
 
     public Guid[]? AllPlayers { get; set; }
+
+    public bool IncludeNonPlayers { get; set; }
 
     public int? LastLogId { get; set; }
 

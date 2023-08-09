@@ -1,6 +1,5 @@
 using System.Threading;
 using Content.Server.NPC.Components;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.NPC.HTN;
 
@@ -11,8 +10,14 @@ public sealed class HTNComponent : NPCComponent
     /// The base task to use for planning
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite),
-     DataField("rootTask", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<HTNCompoundTask>))]
-    public string RootTask = default!;
+     DataField("rootTask", required: true)]
+    public HTNCompoundTask RootTask = default!;
+
+    /// <summary>
+    /// Check any active services for our current plan. This is used to find new targets for example without changing our plan.
+    /// </summary>
+    [DataField("checkServices")]
+    public bool CheckServices = true;
 
     /// <summary>
     /// The NPC's current plan.
@@ -42,6 +47,4 @@ public sealed class HTNComponent : NPCComponent
     /// Is this NPC currently planning?
     /// </summary>
     [ViewVariables] public bool Planning => PlanningJob != null;
-
-
 }

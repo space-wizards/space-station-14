@@ -20,29 +20,18 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FlyBySoundComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<FlyBySoundComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<FlyBySoundComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<FlyBySoundComponent, ComponentShutdown>(OnShutdown);
     }
 
     private void OnStartup(EntityUid uid, FlyBySoundComponent component, ComponentStartup args)
     {
-        if (!TryComp<PhysicsComponent>(uid, out var body)) return;
+        if (!TryComp<PhysicsComponent>(uid, out var body))
+            return;
 
-        var shape = new PhysShapeCircle()
-        {
-            Radius = component.Range,
-        };
+        var shape = new PhysShapeCircle(component.Range);
 
-        var fixture = new Fixture(body, shape)
-        {
-            Hard = false,
-            ID = FlyByFixture,
-            CollisionLayer = (int) CollisionGroup.MobMask,
-        };
-
-        _fixtures.TryCreateFixture(body, fixture);
+        _fixtures.TryCreateFixture(uid, shape, FlyByFixture, collisionLayer: (int) CollisionGroup.MobMask, hard: false, body: body);
     }
 
     private void OnShutdown(EntityUid uid, FlyBySoundComponent component, ComponentShutdown args)
@@ -53,30 +42,6 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
             return;
         }
 
-        _fixtures.DestroyFixture(body, FlyByFixture);
-    }
-
-    private void OnHandleState(EntityUid uid, FlyBySoundComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not FlyBySoundComponentState state) return;
-
-        component.Sound = state.Sound;
-        component.Range = state.Range;
-    }
-
-    private void OnGetState(EntityUid uid, FlyBySoundComponent component, ref ComponentGetState args)
-    {
-        args.State = new FlyBySoundComponentState()
-        {
-            Sound = component.Sound,
-            Range = component.Range,
-        };
-    }
-
-    [Serializable, NetSerializable]
-    private sealed class FlyBySoundComponentState : ComponentState
-    {
-        public SoundSpecifier Sound = default!;
-        public float Range;
+        _fixtures.DestroyFixture(uid, FlyByFixture, body: body);
     }
 }
