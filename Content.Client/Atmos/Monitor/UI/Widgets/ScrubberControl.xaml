@@ -22,8 +22,8 @@
                 <BoxContainer>
                     <CheckBox Name="CWideNet" Text="{Loc 'air-alarm-ui-scrubber-wide-net-label'}" />
                 </BoxContainer>
-				<BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
-					<Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
+                <BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
+                    <Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
                 <!-- Lower row: every single gas -->
                 <Collapsible Orientation="Vertical" Margin="2 2 2 2">

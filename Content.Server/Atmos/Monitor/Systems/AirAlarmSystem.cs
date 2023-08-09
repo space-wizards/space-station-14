@@ -328,7 +328,6 @@ public sealed class AirAlarmSystem : EntitySystem
                 break;
         }
     }
-    }
 
     private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)
     {
