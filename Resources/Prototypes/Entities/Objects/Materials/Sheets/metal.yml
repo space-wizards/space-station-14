@@ -72,6 +72,20 @@
 
 - type: entity
   parent: SheetSteel
+  id: SheetSteel10
+  name: steel
+  suffix: 10
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    state: steel
+  - type: Stack
+    stackType: Steel
+    count: 10
+
+- type: entity
+  parent: SheetSteel
   id: SheetSteel1
   name: steel
   suffix: Single
@@ -109,6 +123,20 @@
   - type: Item
     heldPrefix: plasteel
   - type: Appearance
+
+- type: entity
+  parent: SheetPlasteel
+  id: SheetPlasteel10
+  name: plasteel
+  suffix: 10
+  components:
+  - type: Sprite
+    state: plasteel
+  - type: Stack
+    stackType: Plasteel
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: SheetPlasteel

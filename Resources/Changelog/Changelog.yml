@@ -1,32 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Add doorbumpopener to some stuff that should've had it (slimes)., type: Fix}
-  - {message: Mobs that can bump open doors can also click them open now., type: Tweak}
-  id: 3985
-  time: '2023-06-13T10:30:05.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: made temperature ignore resistances, type: Tweak}
-  - {message: fixed shields making blocking sound when user is damaged by temperature,
-    type: Fix}
-  id: 3986
-  time: '2023-06-13T12:59:08.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Bluespace anomalies no longer mispredict teleportation (no more jittering
-      around and teleporting 7 times instantly), type: Fix}
-  - {message: Portals and bluespace anomalies no longer teleport players into walls,
-    type: Fix}
-  id: 3987
-  time: '2023-06-14T01:32:03.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the sheetmeister, a machine that presses raw meat into construction
-      sheets.', type: Add}
-  - {message: Added sheetmeister to meat manipulation technology., type: Add}
-  id: 3988
-  time: '2023-06-15T00:49:24.0000000+00:00'
 - author: Dynexust
   changes:
   - {message: 'Interdyne Pharmaceutics has pushed a new chemical on the market, Doxarubixadone,
@@ -2983,3 +2955,25 @@ Entries:
   - {message: Fix radiator transfer rate in high-pressure environments., type: Fix}
   id: 4484
   time: '2023-08-08T08:16:23.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Access readers can now be programmed using the access configurator.,
+    type: Add}
+  id: 4485
+  time: '2023-08-08T18:30:46.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: Stun batons and bolas can now be thrown to deal stamina damage. Stun
+      batons no longer show the damage effect when stunning., type: Fix}
+  id: 4486
+  time: '2023-08-08T20:19:31.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Better nuke sprite from /vg/., type: Tweak}
+  id: 4487
+  time: '2023-08-08T21:55:41.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
+  id: 4488
+  time: '2023-08-09T00:47:35.0000000+00:00'
