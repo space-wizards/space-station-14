@@ -29,7 +29,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: new [] { typeof(SharedGunSystem) });
         SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
@@ -111,10 +111,11 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         if(!component.Wielded)
-            AttemptWield(uid, component, args.User);
+            args.Handled = AttemptWield(uid, component, args.User);
         else
-            AttemptUnwield(uid, component, args.User);
+            args.Handled = AttemptUnwield(uid, component, args.User);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
@@ -153,15 +154,17 @@ public sealed class WieldableSystem : EntitySystem
     /// <summary>
     ///     Attempts to wield an item, creating a DoAfter..
     /// </summary>
-    public void AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         if (!CanWield(used, component, user))
-            return;
+            return false;
+
         var ev = new BeforeWieldEvent();
         RaiseLocalEvent(used, ev);
 
         if (ev.Cancelled)
-            return;
+            return false;
 
         var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
         {
@@ -170,22 +173,25 @@ public sealed class WieldableSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doargs);
+        return true;
     }
 
     /// <summary>
     ///     Attempts to unwield an item, with no DoAfter.
     /// </summary>
-    public void AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         var ev = new BeforeUnwieldEvent();
         RaiseLocalEvent(used, ev);
 
         if (ev.Cancelled)
-            return;
+            return false;
 
         var targEv = new ItemUnwieldedEvent(user);
 
         RaiseLocalEvent(used, targEv);
+        return true;
     }
 
     private void OnDoAfter(EntityUid uid, WieldableComponent component, DoAfterEvent args)
