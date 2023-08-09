@@ -458,6 +458,43 @@
     soundHit:
       path: /Audio/Weapons/Xeno/alien_spitacid.ogg
 
+- type: entity
+  parent: BasePlushie
+  id: PlushieNeco
+  name: neco plushie
+  description: An adorable stuffed toy that resembles a neco. She so cute and can MeoW.
+  components:
+  - type: Sprite
+    state: plushieneco
+  - type: EmitSoundOnUse
+    sound:
+     collection: Meow
+  - type: EmitSoundOnLand
+    sound:
+     collection: Meow
+  - type: EmitSoundOnActivate
+    sound:
+     collection: Meow
+
+- type: entity
+  parent: BasePlushie
+  id: PlushieNecoBlack
+  name: black neco plushie
+  description: An adorable stuffed toy that resembles a neco. She so cute and can MeoW.
+  components:
+  - type: Sprite
+    state: plushieneco_black
+  - type: EmitSoundOnUse
+    sound:
+     collection: Meow
+  - type: EmitSoundOnLand
+    sound:
+     collection: Meow
+  - type: EmitSoundOnActivate
+    sound:
+     collection: Meow
+
+
 ## Cheapo Figurines
 
 - type: entity

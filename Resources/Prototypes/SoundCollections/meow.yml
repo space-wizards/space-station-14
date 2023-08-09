@@ -1,0 +1,8 @@
+- type: soundCollection
+  id: Meow
+  files:
+    - /Audio/Items/Toys/meow1.ogg
+    - /Audio/Items/Toys/meow2.ogg
+    - /Audio/Items/Toys/meow3.ogg
+
+
