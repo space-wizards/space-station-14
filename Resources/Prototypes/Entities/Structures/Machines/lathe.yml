@@ -413,6 +413,9 @@
     - BorgModuleAppraisal
     dynamicRecipes:
     - ProximitySensor
+    - BorgModuleLightReplacer
+    - BorgModuleCleaning
+    - BorgModuleTrashCollection
     - BorgModuleMining
     - BorgModuleGrapplingGun
     - BorgModuleGasAnalyzer

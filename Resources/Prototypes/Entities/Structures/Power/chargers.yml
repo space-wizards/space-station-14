@@ -200,6 +200,11 @@
   - type: Charger
     baseChargeRate: 30
     slotId: entity_storage
+  - type: Construction
+    containers:
+    - machine_parts
+    - machine_board
+    - entity_storage
   - type: Wires
     LayoutId: borgcharger
   - type: WiresPanel
