@@ -1656,6 +1656,11 @@ namespace Content.Shared.CCVar
         /// </summary>
         public static readonly CVarDef<bool>
             VoteAutoStartInLobby = CVarDef.Create("vote.autostartinlobby", true, CVar.SERVERONLY);
+        /// <summary>
+        /// Timer for end round
+        /// </summary>
+        public static readonly CVarDef<int>
+            GameEndRoundDuration = CVarDef.Create("game.endroundduration", 40, CVar.SERVERONLY);
         //Imperial-end
 
         /*

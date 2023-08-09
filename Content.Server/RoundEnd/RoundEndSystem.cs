@@ -58,6 +58,8 @@ namespace Content.Server.RoundEnd
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
             SetAutoCallTime();
+            var restartDuration = _cfg.GetCVar(CCVars.GameEndRoundDuration); //Imperial end round timer
+            DefaultRestartRoundDuration = TimeSpan.FromSeconds(restartDuration); //Imperial end round timer
         }
 
         private void SetAutoCallTime()
