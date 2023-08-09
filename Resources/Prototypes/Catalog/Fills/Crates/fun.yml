@@ -12,6 +12,8 @@
       - id: PlushieSnake
       - id: PlushieLizard
       - id: PlushieSpaceLizard
+      - id: PlushieNeco
+      - id: PlushieNecoBlack
       - id: PlushieVox
       - id: PlushieRouny
       - id: PlushieRatvar
