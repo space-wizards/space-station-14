@@ -13,8 +13,8 @@
   - type: InteractionOutline
   - type: Physics
     canCollide: false
-    drawdepth: SmallObjects
   - type: Sprite
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: SignalSwitch
