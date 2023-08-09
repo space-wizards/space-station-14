@@ -330,6 +330,3 @@ uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Sy
 
 uplink-bribe-name = Lobbying Bundle
 uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. Real or counterfeit? Yes.
-
-uplink-suitandtie-name = Suit and tie bundle
-uplink-suitandtie-desc = A dapper black and white suit suited for formal occasions
