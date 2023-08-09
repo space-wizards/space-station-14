@@ -7,6 +7,11 @@
     sprite: Structures/Storage/Crates/generic.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/generic.rsi
+  - type: Reflect
+    reflects:
+    - Energy
+    reflectProb: 0.2
+    spread: 90
 
 - type: entity
   parent: CrateBaseWeldable
@@ -24,8 +29,6 @@
     - entity_storage
   - type: StaticPrice
     price: 80
-  - type: Reflect
-    enabled: false
 
 - type: entity
   parent: CrateBaseWeldable
