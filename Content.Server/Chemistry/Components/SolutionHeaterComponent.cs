@@ -26,10 +26,4 @@ public sealed class SolutionHeaterComponent : Component
     /// </summary>
     [DataField("partRatingHeatMultiplier")]
     public float PartRatingHeatMultiplier = 1.5f;
-
-    /// <summary>
-    /// The max amount of entities that can be heated at the same time.
-    /// </summary>
-    [DataField("maxEntities")]
-    public uint MaxEntities = 1;
 }
