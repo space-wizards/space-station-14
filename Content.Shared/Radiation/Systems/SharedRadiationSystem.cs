@@ -10,10 +10,11 @@ public sealed class SharedRadiationSystem : EntitySystem
 {
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<RadiationDecayComponent, RadiationSourceComponent>();
-        while (query.MoveNext(out var _, out var decay, out var source))
+        var query = EntityQueryEnumerator<RadiationSourceComponent>();
+        while (query.MoveNext(out var _, out var comp))
         {
-            source.Intensity *= (1f - decay.Rate * frameTime);
+            if (comp.DecayRate != 0f)
+                comp.Intensity *= (1f - comp.DecayRate * frameTime);
         }
     }
 
