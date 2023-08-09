@@ -289,7 +289,7 @@ uplink-syndicate-sponge-box-name = Syndicate Sponge Box
 uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
 
 uplink-suitandtie-name = Suit and tie bundle
-uplink-suitandtie-desc = let me show you a few things
+uplink-suitandtie-desc = A dapper black and white suit suited for formal occasions
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
