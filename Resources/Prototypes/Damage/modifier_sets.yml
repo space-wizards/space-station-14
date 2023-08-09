@@ -139,13 +139,10 @@
     Shock: 1.2
 
 - type: damageModifierSet
-  id: Arachnid # Kill it with fire, venomous, external skeleton (slashing is weak, better to bash or pierce them)
+  id: Arachnid # Exo-skeleton, should have simillarities to skeleton resistances.
   coefficients:
-    Blunt: 1.2
-    Piercing: 1.2
-    Slash: 0.8
-    Heat: 1.25
-    Poison: 0.8 
+    Blunt: 1.1
+    Heat: 1.5
 
 - type: damageModifierSet
   id: Moth # Slightly worse at everything but cold
