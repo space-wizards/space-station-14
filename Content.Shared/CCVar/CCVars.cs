@@ -1134,7 +1134,7 @@ namespace Content.Shared.CCVar
         ///     Sets the duration of the gamemode/preset vote timer.
         /// </summary>
         public static readonly CVarDef<int>
-            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 30, CVar.SERVERONLY);
+            VoteTimerPreset = CVarDef.Create("vote.timerpreset", 90, CVar.SERVERONLY); //imperial 90
 
         /// <summary>
         ///     Sets the duration of the map vote timer when ALONE.
@@ -1142,10 +1142,7 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<int>
             VoteTimerAlone = CVarDef.Create("vote.timeralone", 10, CVar.SERVERONLY);
 
-        // Imperial-start
-        public static readonly CVarDef<bool>
-            VoteAutoStartInLobby = CVarDef.Create("vote.autostartinlobby", true, CVar.SERVERONLY);
-        // Imperial-end
+
 
 
         /*
@@ -1649,8 +1646,16 @@ namespace Content.Shared.CCVar
         // Imperial-start
         // public static readonly CVarDef<bool>
         //     EconomyWagesEnabled = CVarDef.Create("economy.wages_enabled", true, CVar.SERVERONLY);
+        /// <summary>
+        /// Enables footprints
+        /// </summary>
         public static readonly CVarDef<bool>
             FootPrintsEnabled = CVarDef.Create("imperial.footprints_enabled", true, CVar.SERVERONLY);
+        /// <summary>
+        /// Enables autovote for map and preset in lobby
+        /// </summary>
+        public static readonly CVarDef<bool>
+            VoteAutoStartInLobby = CVarDef.Create("vote.autostartinlobby", true, CVar.SERVERONLY);
         //Imperial-end
 
         /*

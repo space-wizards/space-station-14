@@ -411,6 +411,7 @@ namespace Content.Server.GameTicking
                 if (_configurationManager.GetCVar(CCVars.VoteAutoStartInLobby))
                 {
                     _voteManager.CreateStandardVote(null, StandardVoteType.Map);
+                    _voteManager.CreateStandardVote(null, StandardVoteType.Preset);
                 }
                 // Imperial-end
 
