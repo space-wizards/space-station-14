@@ -2,7 +2,6 @@ using Content.Server.Wires;
 using Content.Shared.Construction;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 
 namespace Content.Server.Construction.Completions
 {
