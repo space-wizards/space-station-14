@@ -26,7 +26,7 @@ public sealed class WiresPanelComponent : Component
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
-    public string WiresPanelSecurityExamination = default!;
+    public string? WiresPanelSecurityExamination = default!;
 
     public bool WiresAccessible = true;
 }
@@ -36,6 +36,6 @@ public sealed class WiresPanelComponentState : ComponentState
 {
     public bool Open;
     public bool Visible;
-    public string WiresPanelSecurityExamination = default!;
+    public string? WiresPanelSecurityExamination = default!;
     public bool WiresAccessible;
 }

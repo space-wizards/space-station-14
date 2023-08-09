@@ -640,16 +640,18 @@ public sealed class WiresSystem : SharedWiresSystem
 
     public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
     {
-        if (_protoMan.TryIndex<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID, out var wiresPanelSecurityLevelPrototype))
-        {
-            component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
-            component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
-            Dirty(component);
+        var wiresPanelSecurityLevelPrototype = _protoMan.Index<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID);
 
-            if (wiresPanelSecurityLevelPrototype.WiresAccessible == false)
-            {
-                CloseAllUserInterfaces(uid);
-            }
+        if (wiresPanelSecurityLevelPrototype == null)
+            return;
+
+        component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
+        component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
+        Dirty(component);
+
+        if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
+        {
+            CloseAllUserInterfaces(uid);
         }
     }
 

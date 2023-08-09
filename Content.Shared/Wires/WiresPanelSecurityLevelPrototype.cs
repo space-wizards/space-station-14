@@ -9,7 +9,7 @@ namespace Content.Shared.Wires
         public string ID { get; } = default!;
 
         [DataField("examine")]
-        public string Examine = default!;
+        public string? Examine = default!;
 
         [DataField("wiresAccessible")]
         public bool WiresAccessible = true;
