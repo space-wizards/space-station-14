@@ -305,27 +305,29 @@ public sealed class AirAlarmSystem : EntitySystem
 	
 	private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
         {
-			switch (args.Data)
-			{
-				case GasVentPumpData ventData:
-					foreach (string addr in component.VentData.Keys)
-					{
-						SetData(uid, addr, args.Data);
-					}
-					break;
-				case GasVentScrubberData scrubberData:
-					foreach (string addr in component.ScrubberData.Keys)
-					{
-						SetData(uid, addr, args.Data);
-					}
-					break;
-			}
-			
+           UpdateUI(uid, component);
+        	return;       
+        }
+
+		switch (args.Data)
+		{
+			case GasVentPumpData ventData:
+				foreach (string addr in component.VentData.Keys)
+				{
+					SetData(uid, addr, args.Data);
+				}
+				break;
+				
+			case GasVentScrubberData scrubberData:
+				foreach (string addr in component.ScrubberData.Keys)
+				{
+					SetData(uid, addr, args.Data);
+				}
+				break;
 		}
-        else
-            UpdateUI(uid, component);
+	}
     }
 
     private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)
