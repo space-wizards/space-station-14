@@ -1227,16 +1227,6 @@
   categories:
     - UplinkMisc
 
-- type: listing
-  id: UplinkSuitAndTie
-  name: uplink-suitandtie-name
-  description: uplink-suitandtie-desc
-  productEntity: BoxSuitAndTie
-  cost:
-    Telecrystal: 1
-  categories:
-    - UplinkMisc
-
  # Pointless
 
 - type: listing
@@ -1372,3 +1362,12 @@
   conditions:
   - !type:ListingLimitedStockCondition
     stock: 1
+- type: listing
+  id: UplinkSuitAndTie
+  name: uplink-suitandtie-name
+  description: uplink-suitandtie-desc
+  productEntity: BoxSuitAndTie
+  cost:
+    Telecrystal: 1
+  categories:
+    - UplinkPointless
