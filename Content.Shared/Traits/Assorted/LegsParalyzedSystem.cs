@@ -18,8 +18,6 @@ public sealed class LegsParalyzedSystem : EntitySystem
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<LegsParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
-        SubscribeLocalEvent<LegsParalyzedComponent, DownAttemptEvent>(OnDownAttempt);
-        SubscribeLocalEvent<LegsParalyzedComponent, StandAttemptEvent>(OnStandAttempt);
         SubscribeLocalEvent<LegsParalyzedComponent, ThrowPushbackAttemptEvent>(OnThrowPushbackAttempt);
         SubscribeLocalEvent<LegsParalyzedComponent, UpdateCanMoveEvent>(OnUpdateCanMoveEvent);
     }
@@ -48,22 +46,12 @@ public sealed class LegsParalyzedSystem : EntitySystem
         }
     }
 
-    private void OnDownAttempt(EntityUid uid, LegsParalyzedComponent component, DownAttemptEvent args)
-    {
-        args.Cancel();
-    }
-
     private void OnUpdateCanMoveEvent(EntityUid uid, LegsParalyzedComponent component, UpdateCanMoveEvent args)
     {
         args.Cancel();
     }
 
     private void OnThrowPushbackAttempt(EntityUid uid, LegsParalyzedComponent component, ThrowPushbackAttemptEvent args)
-    {
-        args.Cancel();
-    }
-
-    private void OnStandAttempt(EntityUid uid, LegsParalyzedComponent component, StandAttemptEvent args)
     {
         args.Cancel();
     }
