@@ -312,6 +312,7 @@
   id: GeneratorRTGDamaged
   name: damaged RTG
   description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
+  suffix: ""
   components:
   - type: Sprite
     sprite: Structures/Power/Generation/rtg.rsi
@@ -322,9 +323,8 @@
     supplyRate: 100 # shielding damaged so power output is negligible, it is primarily a radiation source
   - type: RadiationSource # ideally only when opened.
     intensity: 2
-  - type: RadiationDecay
     # half life of 5 minutes
-    rate: 0.0023104906018665
+    halfLife: 300
   - type: Destructible
     thresholds:
     - trigger:
