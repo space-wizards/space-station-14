@@ -73,6 +73,12 @@ uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
 uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
 
+uplink-shotgun-magazine-lethal-name = Lethal bulldog magazine
+uplink-shotgun-magazine-lethal-desc = A box magazine of 8 lethal shells for the bulldog auto shotgun
+
+uplink-shotgun-magazine-Beanbags-name = Beanbag bulldog magazine
+uplink-shotgun-magazine-Beanbags-desc = A box magazine of 8 beanbag shells for the bulldog auto shotgun
+
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
 uplink-holopara-kit-desc = The pride and joy of Cybersun. Contains an injector that hosts a sentient metaphysical guardian made of hard light which resides in the user's body when not active.
@@ -281,6 +287,9 @@ uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!
 
 uplink-syndicate-sponge-box-name = Syndicate Sponge Box
 uplink-syndicate-sponge-box-desc = A box containing 6 syndicate sponges disguised as monkey cubes, these cubes turn into a variety of angry wildlife after coming into contact with water.
+
+uplink-suitandtie-name = Suit and tie bundle
+uplink-suitandtie-desc = let me show you a few things
 
 # Pointless
 uplink-revolver-cap-gun-name = Cap Gun
