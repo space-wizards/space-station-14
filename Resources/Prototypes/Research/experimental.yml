@@ -26,6 +26,7 @@
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
+  - BorgModuleAnomaly
   - APECircuitboard
   - AnomalyVesselCircuitboard
 
@@ -40,6 +41,7 @@
   cost: 10000
   recipeUnlocks:
   - NodeScanner
+  - BorgModuleArtifact
   - AnalysisComputerCircuitboard
   - ArtifactAnalyzerMachineCircuitboard
 

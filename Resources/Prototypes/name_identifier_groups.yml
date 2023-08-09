@@ -17,7 +17,6 @@
 - type: nameIdentifierGroup
   id: MMI
   prefix: MMI
-  fullName: true
   minValue: 100
   maxValue: 999
 

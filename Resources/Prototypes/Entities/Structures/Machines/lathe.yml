@@ -395,6 +395,9 @@
     idleState: fab-idle
     runningState: fab-active
     staticRecipes:
+    - MMI
+    - PositronicBrain
+    - Flash
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -402,9 +405,28 @@
     - RightLegBorg
     - LightHeadBorg
     - TorsoBorg
-    - Flash
+    - BorgModuleCable
+    - BorgModuleFireExtinguisher
+    - BorgModuleGPS
+    - BorgModuleRadiationDetection
+    - BorgModuleTool
+    - BorgModuleAppraisal
     dynamicRecipes:
     - ProximitySensor
+    - BorgModuleMining
+    - BorgModuleGrapplingGun
+    - BorgModuleGasAnalyzer
+    - BorgModuleAdvancedTool
+    - BorgModuleRCD
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    - BorgModuleGardening
+    - BorgModuleMusique
+    - BorgModuleLiteracy
+    - BorgModuleClowning
+    - BorgModuleDiagnosis
+    - BorgModuleTreatment
+    - BorgModuleDefibrillator
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm

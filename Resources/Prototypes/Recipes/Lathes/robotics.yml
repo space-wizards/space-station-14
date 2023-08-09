@@ -60,3 +60,257 @@
   materials:
     Steel: 500
     Glass: 150
+
+- type: latheRecipe
+  id: MMI
+  result: MMI
+  completetime: 5
+  icon:
+    sprite: Objects/Specific/Robotics/mmi.rsi
+    state: mmi_off
+  materials:
+    Steel: 1500
+    Glass: 750
+    Plastic: 250
+    Gold: 250
+    Silver: 250
+
+- type: latheRecipe
+  id: PositronicBrain
+  result: PositronicBrain
+  completetime: 5
+  materials:
+    Steel: 1000
+    Plastic: 500
+    Silver: 500
+    Plasma: 1500
+
+- type: latheRecipe
+  id: BorgModuleCable
+  result: BorgModuleCable
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleFireExtinguisher
+  result: BorgModuleFireExtinguisher
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleGPS
+  result: BorgModuleGPS
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleRadiationDetection
+  result: BorgModuleRadiationDetection
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleTool
+  result: BorgModuleTool
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleAppraisal
+  result: BorgModuleAppraisal
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleMining
+  result: BorgModuleMining
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleGrapplingGun
+  result: BorgModuleGrapplingGun
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleAdvancedTool
+  result: BorgModuleAdvancedTool
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleGasAnalyzer
+  result: BorgModuleGasAnalyzer
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleRCD
+  result: BorgModuleRCD
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleLightReplacer
+  result: BorgModuleLightReplacer
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleCleaning
+  result: BorgModuleCleaning
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleTrashCollection
+  result: BorgModuleTrashCollection
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleDiagnosis
+  result: BorgModuleDiagnosis
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleTreatment
+  result: BorgModuleTreatment
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleDefibrillator
+  result: BorgModuleDefibrillator
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleArtifact
+  result: BorgModuleArtifact
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleAnomaly
+  result: BorgModuleAnomaly
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleLiteracy
+  result: BorgModuleLiteracy
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleMusique
+  result: BorgModuleMusique
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleGardening
+  result: BorgModuleGardening
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50
+
+- type: latheRecipe
+  id: BorgModuleClowning
+  result: BorgModuleClowning
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 750
+    Plastic: 250
+    Gold: 50

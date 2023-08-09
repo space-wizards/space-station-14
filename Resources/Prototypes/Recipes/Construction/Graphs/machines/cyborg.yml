@@ -22,7 +22,7 @@
         guideString: borg-construction-guide-string
       steps:
       - component: PowerCell
-        name: Power cell
+        name: power cell
         store: cell_slot
         icon:
           sprite: Objects/Power/power_cells.rsi
@@ -34,14 +34,14 @@
         store: part-contaienr
 
       - component: Flash
-        name: Flash
+        name: flash
         store: part-contaienr
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - component: Flash
-        name: Flash
+        name: second flash
         store: part-contaienr
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi

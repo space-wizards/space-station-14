@@ -41,7 +41,7 @@ namespace Content.Server.Light.EntitySystems
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
 
-            SubscribeLocalEvent<HandheldLightComponent, ComponentStartup>(OnStartup);
+            SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
@@ -104,7 +104,7 @@ namespace Content.Server.Light.EntitySystems
             args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(uid, component));
         }
 
-        private void OnStartup(EntityUid uid, HandheldLightComponent component, ComponentStartup args)
+        private void OnMapInit(EntityUid uid, HandheldLightComponent component, MapInitEvent args)
         {
             if (component.ToggleAction == null
                 && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
