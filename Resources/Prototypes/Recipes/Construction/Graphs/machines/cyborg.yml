@@ -19,6 +19,7 @@
       conditions:
       - !type:PartAssemblyComplete
         assemblyId: generic
+        guideString: borg-construction-guide-string
       steps:
       - component: PowerCell
         name: Power cell

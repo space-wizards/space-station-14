@@ -29,6 +29,9 @@
       "name": "icon-cables"
     },
     {
+      "name": "icon-clown"
+    },
+    {
       "name": "icon-defib"
     },
     {
@@ -38,13 +41,34 @@
       "name": "icon-fire-extinguisher"
     },
     {
+      "name": "icon-gardening"
+    },
+    {
+      "name": "icon-gas-analyzer"
+    },
+    {
       "name": "icon-gps"
     },
     {
       "name": "icon-grappling-gun"
     },
     {
+      "name": "icon-light-replacer"
+    },
+    {
       "name": "icon-mining"
+    },
+    {
+      "name": "icon-mop"
+    },
+    {
+      "name": "icon-musique"
+    },
+    {
+      "name": "icon-pen"
+    },
+    {
+      "name": "icon-radiation"
     },
     {
       "name": "icon-rcd"
@@ -57,6 +81,9 @@
     },
     {
       "name": "icon-tools"
+    },
+    {
+      "name": "icon-trash-bag"
     },
     {
       "name": "icon-treatment"

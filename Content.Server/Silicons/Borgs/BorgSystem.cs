@@ -119,7 +119,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             UpdateUI(uid, component);
         }
 
-        if (module != null && CanInsertModule(uid, used, component, module))
+        if (module != null && CanInsertModule(uid, used, component, module, args.User))
         {
             component.ModuleContainer.Insert(used);
             _adminLog.Add(LogType.Action, LogImpact.Low,

@@ -1,3 +1,4 @@
+using Content.Server.Construction.Components;
 using Content.Shared.Construction;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
@@ -8,8 +9,17 @@ namespace Content.Server.Construction.Conditions
     [DataDefinition]
     public sealed class PartAssemblyComplete : IGraphCondition
     {
+        /// <summary>
+        /// A valid ID on <see cref="PartAssemblyComponent"/>'s dictionary of strings to part lists.
+        /// </summary>
         [DataField("assemblyId")]
         public string AssemblyId = string.Empty;
+
+        /// <summary>
+        /// A localization string used for
+        /// </summary>
+        [DataField("guideString")]
+        public string GuideString = "construction-guide-condition-part-assembly";
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
@@ -23,7 +33,7 @@ namespace Content.Server.Construction.Conditions
 
             if (!entityManager.System<PartAssemblySystem>().IsAssemblyFinished(entity, AssemblyId))
             {
-                args.PushMarkup(Loc.GetString("construction-guide-condition-part-assembly"));
+                args.PushMarkup(Loc.GetString(GuideString));
                 return true;
             }
 
@@ -34,7 +44,7 @@ namespace Content.Server.Construction.Conditions
         {
             yield return new ConstructionGuideEntry
             {
-                Localization = "construction-guide-condition-part-assembly",
+                Localization = GuideString,
             };
         }
     }

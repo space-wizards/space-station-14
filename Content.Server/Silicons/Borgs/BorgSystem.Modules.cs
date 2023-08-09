@@ -203,14 +203,17 @@ public sealed partial class BorgSystem
 
         foreach (var (handId, item) in component.ProvidedItems)
         {
-            RemComp<UnremoveableComponent>(item);
-            component.ProvidedContainer.Insert(item, EntityManager);
+            if (!Deleted(item) && !Terminating(item))
+            {
+                RemComp<UnremoveableComponent>(item);
+                component.ProvidedContainer.Insert(item, EntityManager);
+            }
             _hands.RemoveHand(chassis, handId, hands);
         }
         component.ProvidedItems.Clear();
     }
 
-    public bool CanInsertModule(EntityUid uid, EntityUid module, BorgChassisComponent? component = null, BorgModuleComponent? moduleComponent = null)
+    public bool CanInsertModule(EntityUid uid, EntityUid module, BorgChassisComponent? component = null, BorgModuleComponent? moduleComponent = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
             return false;
@@ -219,7 +222,11 @@ public sealed partial class BorgSystem
             return false;
 
         if (component.ModuleWhitelist?.IsValid(module, EntityManager) == false)
+        {
+            if (user != null)
+                Popup.PopupEntity(Loc.GetString("borg-module-whitelist-deny"), uid, user.Value);
             return false;
+        }
 
         return true;
     }

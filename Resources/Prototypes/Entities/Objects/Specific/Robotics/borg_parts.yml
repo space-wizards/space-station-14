@@ -75,6 +75,7 @@
   - type: Construction
     graph: Cyborg
     node: start
+    defaultTarget: generic
     containers:
     - part-container
     - cell_slot

@@ -6,6 +6,10 @@ borg-panel-not-open = The cyborg's panel isn't open...
 borg-mind-added = {CAPITALIZE($name)} powered on!
 borg-mind-removed = {CAPITALIZE($name)} shut off!
 
+borg-module-whitelist-deny = This module doesn't fit in this type of cyborg...
+
+borg-construction-guide-string = The cyborg limbs and torso must be attached to the exoskeleton.
+
 borg-ui-menu-title = Cyborg Interface
 borg-ui-charge-label = Charge: {$charge}%
 borg-ui-no-brain = No brain present
