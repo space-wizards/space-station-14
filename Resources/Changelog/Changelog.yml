@@ -1,10 +1,4 @@
 Entries:
-- author: deepy
-  changes:
-  - {message: Cables now connect to the closest net instead of the first one it finds.,
-    type: Fix}
-  id: 3990
-  time: '2023-06-15T01:31:15.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Wallmount generator board is now cheaper to compensate for less power
@@ -2977,3 +2971,8 @@ Entries:
       is fixed., type: Tweak}
   id: 4489
   time: '2023-08-09T03:10:47.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
+  id: 4490
+  time: '2023-08-09T03:35:15.0000000+00:00'
