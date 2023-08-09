@@ -1,5 +1,3 @@
-﻿using Content.Shared.Whitelist;
-
 namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
@@ -30,21 +28,8 @@ public sealed class SolutionHeaterComponent : Component
     public float PartRatingHeatMultiplier = 1.5f;
 
     /// <summary>
-    /// The entities that are placed on the heater.
-    /// <summary>
-    [DataField("placedEntities")]
-    public HashSet<EntityUid> PlacedEntities = new();
-
-    /// <summary>
     /// The max amount of entities that can be heated at the same time.
     /// </summary>
     [DataField("maxEntities")]
     public uint MaxEntities = 1;
-
-    /// <summary>
-    /// Whitelist for entities that can be placed on the heater.
-    /// </summary>
-    [DataField("whitelist")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public EntityWhitelist? Whitelist;
 }
