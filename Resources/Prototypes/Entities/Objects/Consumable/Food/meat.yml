@@ -608,8 +608,6 @@
   - type: Tag
     tags:
     - Cooked
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plain-cooked
@@ -739,8 +737,6 @@
   - type: Tag
     tags:
     - Cooked
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: chicken-fried
