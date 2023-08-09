@@ -32,6 +32,7 @@
             False: {state: icon}
     - type: StaticPrice
       price: 200
+    - type: Tag
 
 - type: entity
   parent: ClothingShoesBootsMag
