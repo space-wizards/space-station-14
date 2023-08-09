@@ -7,6 +7,8 @@
     contents:
       - id: ClothingNeckCloakQm
       - id: ClothingHeadsetCargo
+      - id: ClothingUniformJumpsuitQuartermasterTurtleneck
+      - id: ClothingUniformJumpskirtQuartermasterTurtleneck
       - id: ClothingHandsGlovesColorBrown
       - id: ClothingShoesColorBrown
       - id: ClothingHeadHatQMsoft
