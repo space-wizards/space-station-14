@@ -23,7 +23,6 @@ public sealed class VocalSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<VocalComponent, MapInitEvent>(OnMapInit);
-        SubscribeLocalEvent<VocalComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<VocalComponent, SexChangedEvent>(OnSexChanged);
         SubscribeLocalEvent<VocalComponent, EmoteEvent>(OnEmote);
         SubscribeLocalEvent<VocalComponent, ScreamActionEvent>(OnScreamAction);
@@ -31,23 +30,7 @@ public sealed class VocalSystem : EntitySystem
 
     private void OnMapInit(EntityUid uid, VocalComponent component, MapInitEvent args)
     {
-        // try to add scream action when vocal comp added
-        if (_proto.TryIndex(component.ScreamActionId, out InstantActionPrototype? proto))
-        {
-            component.ScreamAction = new InstantAction(proto);
-            _actions.AddAction(uid, component.ScreamAction, null);
-        }
-
         LoadSounds(uid, component);
-    }
-
-    private void OnShutdown(EntityUid uid, VocalComponent component, ComponentShutdown args)
-    {
-        // remove scream action when component removed
-        if (component.ScreamAction != null)
-        {
-            _actions.RemoveAction(uid, component.ScreamAction);
-        }
     }
 
     private void OnSexChanged(EntityUid uid, VocalComponent component, SexChangedEvent args)
