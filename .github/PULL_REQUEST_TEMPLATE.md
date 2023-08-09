@@ -32,4 +32,6 @@ Make players aware of new features and changes that could affect how they play t
 - remove: Removed fun!
 - tweak: Changed fun!
 - fix: Fixed fun!
+
+Make sure to take this Changelog template out of the comment block in order for it to show up.
 -->
