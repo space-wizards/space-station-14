@@ -10,6 +10,7 @@ using Content.Shared.Popups;
 using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using Content.Shared.Shuttles.Systems;
+using Content.Shared.Emag.Systems;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -91,9 +92,16 @@ public sealed partial class EmergencyShuttleSystem
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealMessage>(OnEmergencyRepeal);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, EmergencyShuttleRepealAllMessage>(OnEmergencyRepealAll);
         SubscribeLocalEvent<EmergencyShuttleConsoleComponent, ActivatableUIOpenAttemptEvent>(OnEmergencyOpenAttempt);
+		SubscribeLocalEvent<EmergencyShuttleConsoleComponent, GotEmaggedEvent>(OnEmagged);
 
         SubscribeLocalEvent<EscapePodComponent, EntityUnpausedEvent>(OnEscapeUnpaused);
     }
+	
+	private void OnEmagged(EntityUid uid, EmergencyShuttleConsoleComponent component, ref GotEmaggedEvent args)
+	{
+		_logger.Add(LogType.EmergencyShuttle, LogImpact.Extreme, $"{ToPrettyString(args.UserUid):player} emagged shuttle console for early launch");
+		EarlyLaunch();
+	}
 
     private void OnEmergencyOpenAttempt(EntityUid uid, EmergencyShuttleConsoleComponent component, ActivatableUIOpenAttemptEvent args)
     {
