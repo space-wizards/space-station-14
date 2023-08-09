@@ -152,3 +152,9 @@ MagazinePistolSubMachineGunHighVelocity: MagazinePistolSubMachineGun
 MagazineRifleHighVelocity: MagazineRifle
 SpeedLoaderMagnumHighVelocity: SpeedLoaderMagnum
 SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
+
+# 2023-08-07
+#If the name is anything to go off of, these are presumably just CEV-Eris versions of the snow rock (which we already have.)
+#They are practically never used in this way however, so they're migrated to the basic rock type.
+MountainRock: AsteroidRock
+MountainRockMining: AsteroidRockMining
