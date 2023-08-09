@@ -31,7 +31,7 @@
     price: 80
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CratePlastic
   id: CrateFreezer
   name: freezer
   components:
@@ -42,9 +42,9 @@
   - type: AntiRottingContainer
 
 - type: entity
+  parent: CratePlastic
   id: CrateHydroponics
   name: hydroponics crate
-  parent: CrateBaseWeldable
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/hydroponics.rsi
@@ -52,7 +52,7 @@
     sprite: Structures/Storage/Crates/hydroponics.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CratePlastic
   id: CrateMedical
   name: medical crate
   components:
@@ -62,7 +62,7 @@
     sprite: Structures/Storage/Crates/medical.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CrateGenericSteel
   id: CrateRadiation
   name: radiation gear crate
   description: Is not actually lead lined. Do not store your plutonium in this.
@@ -73,7 +73,7 @@
     sprite: Structures/Storage/Crates/radiation.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CratePlastic
   id: CrateInternals
   name: oxygen crate
   components:
@@ -83,7 +83,7 @@
     sprite: Structures/Storage/Crates/o2.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CratePlastic
   id: CrateElectrical
   name: electrical crate
   components:
@@ -93,7 +93,7 @@
     sprite: Structures/Storage/Crates/electrical.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CrateGenericSteel
   id: CrateEngineering
   name: engineering crate
   components:
@@ -103,7 +103,7 @@
     sprite: Structures/Storage/Crates/engineering.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CrateGenericSteel
   id: CrateScience
   name: science crate
   components:
@@ -113,7 +113,7 @@
     sprite: Structures/Storage/Crates/science.rsi
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CrateGenericSteel
   id: CrateSurgery
   name: surgery crate
   components:
@@ -489,11 +489,10 @@
     state: base
 
 - type: entity
-  parent: CrateBaseWeldable
+  parent: CrateGenericSteel
   id: CrateSyndicate
   components:
   - type: Icon
     sprite: Structures/Storage/Crates/syndicate.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/syndicate.rsi
-
