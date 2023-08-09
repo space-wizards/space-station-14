@@ -96,7 +96,7 @@
         state: ironrock_west
 
 - type: entity
-  id: IronRockkMining
+  id: IronRockMining
   parent: IronRock
   name: ironrock
   suffix: higher ore yield
