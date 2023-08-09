@@ -4,12 +4,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Suspicion
 {
     [NetworkedComponent()]
-    public abstract partial class SharedSuspicionRoleComponent : Component
+    public abstract class SharedSuspicionRoleComponent : Component
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SuspicionRoleComponentState : ComponentState
+    public sealed class SuspicionRoleComponentState : ComponentState
     {
         public readonly string? Role;
         public readonly bool? Antagonist;

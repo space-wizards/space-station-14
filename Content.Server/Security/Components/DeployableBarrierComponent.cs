@@ -1,7 +1,7 @@
 namespace Content.Server.Security
 {
     [RegisterComponent]
-    public sealed partial class DeployableBarrierComponent : Component
+    public sealed class DeployableBarrierComponent : Component
     {
     }
 }

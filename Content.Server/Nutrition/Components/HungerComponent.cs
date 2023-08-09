@@ -9,7 +9,7 @@ namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHungerComponent))]
-    public sealed partial class HungerComponent : SharedHungerComponent
+    public sealed class HungerComponent : SharedHungerComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;

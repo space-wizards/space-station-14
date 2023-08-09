@@ -1,4 +1,4 @@
 ﻿namespace Content.Server.Explosion.Components;
 
 [RegisterComponent]
-public sealed partial class ActiveTriggerOnTimedCollideComponent : Component { }
+public sealed class ActiveTriggerOnTimedCollideComponent : Component { }

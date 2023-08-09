@@ -4,4 +4,4 @@ using Content.Shared.Medical.Cryogenics;
 namespace Content.Client.Medical.Cryogenics;
 
 [RegisterComponent]
-public sealed partial class CryoPodComponent : SharedCryoPodComponent { }
+public sealed class CryoPodComponent : SharedCryoPodComponent { }

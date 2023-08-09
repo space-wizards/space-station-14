@@ -3,7 +3,7 @@ using Content.Server.Stunnable;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class Paralyze : ReagentEffect
+public sealed class Paralyze : ReagentEffect
 {
     [DataField("paralyzeTime")] public double ParalyzeTime = 2;
 

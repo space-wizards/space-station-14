@@ -22,14 +22,14 @@ namespace Content.Shared.Preferences
     /// </summary>
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed partial class HumanoidCharacterProfile : ICharacterProfile
+    public sealed class HumanoidCharacterProfile : ICharacterProfile
     {
         public const int MaxNameLength = 32;
         public const int MaxDescLength = 512;
 
-        private readonly Dictionary<string, JobPriority> _jobPriorities = new();
-        private readonly List<string> _antagPreferences = new();
-        private readonly List<string> _traitPreferences = new();
+        private readonly Dictionary<string, JobPriority> _jobPriorities;
+        private readonly List<string> _antagPreferences;
+        private readonly List<string> _traitPreferences;
 
         private HumanoidCharacterProfile(
             string name,
@@ -188,9 +188,9 @@ namespace Content.Shared.Preferences
                 }, PreferenceUnavailableMode.StayInLobby, new List<string>(), new List<string>());
         }
 
-        public string Name { get; private set; } = string.Empty;
-        public string FlavorText { get; private set; } = string.Empty;
-        public string Species { get; private set; } = string.Empty;
+        public string Name { get; private set; }
+        public string FlavorText { get; private set; }
+        public string Species { get; private set; }
 
         [DataField("age")]
         public int Age { get; private set; }

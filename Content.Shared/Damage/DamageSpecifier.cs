@@ -16,7 +16,7 @@ namespace Content.Shared.Damage
     ///     functions to apply resistance sets and supports basic math operations to modify this dictionary.
     /// </remarks>
     [DataDefinition]
-    public sealed partial class DamageSpecifier : IEquatable<DamageSpecifier>
+    public sealed class DamageSpecifier : IEquatable<DamageSpecifier>
     {
         // These exist solely so the wiki works. Please do not touch them or use them.
         [JsonPropertyName("types")]

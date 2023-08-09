@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Jobs
 {
     [UsedImplicitly]
-    public sealed partial class AddComponentSpecial : JobSpecial
+    public sealed class AddComponentSpecial : JobSpecial
     {
 
         [DataField("components")]

@@ -8,7 +8,7 @@ namespace Content.Shared.Strip.Components
     ///     Give to an entity to say they can strip another entity.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class SharedStrippingComponent : Component, IDragDropOn
+    public sealed class SharedStrippingComponent : Component, IDragDropOn
     {
         bool IDragDropOn.CanDragDropOn(DragDropEvent eventArgs)
         {

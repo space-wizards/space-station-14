@@ -1,7 +1,7 @@
 namespace Content.Server.Mind.Components
 {
     [RegisterComponent]
-    public sealed partial class VisitingMindComponent : Component
+    public sealed class VisitingMindComponent : Component
     {
         [ViewVariables] public Mind Mind { get; set; } = default!;
 

@@ -4,7 +4,7 @@ namespace Content.Shared.Eye.Blinding.EyeProtection
     /// For tools like welders that will damage your eyes when you use them.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class RequiresEyeProtectionComponent : Component
+    public sealed class RequiresEyeProtectionComponent : Component
     {
         /// <summary>
         /// How long to apply temporary blindness to the user.

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed partial class TabletopParchisSetup : TabletopSetup
+    public sealed class TabletopParchisSetup : TabletopSetup
     {
         [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string ParchisBoardPrototype { get; } = "ParchisBoardTabletop";

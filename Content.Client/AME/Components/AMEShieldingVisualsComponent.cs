@@ -4,6 +4,6 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.AME.Components;
 
 [RegisterComponent]
-public sealed partial class AMEShieldingVisualsComponent : Component
+public sealed class AMEShieldingVisualsComponent : Component
 {
 }

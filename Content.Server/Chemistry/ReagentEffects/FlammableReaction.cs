@@ -7,7 +7,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed partial class FlammableReaction : ReagentEffect
+    public sealed class FlammableReaction : ReagentEffect
     {
         [DataField("multiplier")]
         public float Multiplier = 0.05f;

@@ -6,6 +6,6 @@ namespace Content.Server.Abilities.Boxer
     /// Boxer gets a bonus for these, and their fists, but not other unarmed weapons.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class BoxingGlovesComponent : Component
+    public sealed class BoxingGlovesComponent : Component
     {}
 }

@@ -10,7 +10,7 @@ namespace Content.Server.Disease.Cures
     /// Cures the disease if a certain amount of reagent
     /// is in the host's chemstream.
     /// </summary>
-    public sealed partial class DiseaseReagentCure : DiseaseCure
+    public sealed class DiseaseReagentCure : DiseaseCure
     {
         [DataField("min")]
         public FixedPoint2 Min = 5;

@@ -13,7 +13,7 @@ namespace Content.Server.Disease.Effects
     /// host's chemstream.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class DiseaseAdjustReagent : DiseaseEffect
+    public sealed class DiseaseAdjustReagent : DiseaseEffect
     {
         /// <summary>
         ///     The reagent ID to add or remove.

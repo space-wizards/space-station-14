@@ -1,7 +1,7 @@
 namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
-    public sealed partial class DrainComponent : Component
+    public sealed class DrainComponent : Component
     {
         public const string SolutionName = "drainBuffer";
 

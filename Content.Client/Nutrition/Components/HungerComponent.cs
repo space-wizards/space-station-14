@@ -7,7 +7,7 @@ namespace Content.Client.Nutrition.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHungerComponent))]
-    public sealed partial class HungerComponent : SharedHungerComponent
+    public sealed class HungerComponent : SharedHungerComponent
     {
         private HungerThreshold _currentHungerThreshold;
         public override HungerThreshold CurrentHungerThreshold => _currentHungerThreshold;

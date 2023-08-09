@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Monitor.Components;
 ///     calculate the highest network alert.
 /// </summary>
 [RegisterComponent]
-public sealed partial class AtmosAlarmableComponent : Component
+public sealed class AtmosAlarmableComponent : Component
 {
     [ViewVariables]
     public readonly Dictionary<string, AtmosAlarmType> NetworkAlarmStates = new();

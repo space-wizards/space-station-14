@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Arcade;
 
 [DataDefinition]
-public sealed partial class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
+public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 {
     private string _text = "MNGR";
     private Color _color = Color.Purple;
@@ -46,7 +46,7 @@ public sealed partial class ArcadePlayerInvincibleWireAction : BaseToggleWireAct
 }
 
 [DataDefinition]
-public sealed partial class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
+public sealed class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
 {
     public override object? StatusKey { get; } = null;
 

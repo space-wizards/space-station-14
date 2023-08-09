@@ -53,7 +53,7 @@ namespace Content.Shared.CombatMode
         }
 
         [Serializable, NetSerializable]
-        protected sealed partial class CombatModeComponentState : ComponentState
+        protected sealed class CombatModeComponentState : ComponentState
         {
             public bool IsInCombatMode { get; }
             public TargetingZone TargetingZone { get; }
@@ -66,5 +66,5 @@ namespace Content.Shared.CombatMode
         }
     }
 
-    public sealed partial class ToggleCombatActionEvent : InstantActionEvent { }
+    public sealed class ToggleCombatActionEvent : InstantActionEvent { }
 }

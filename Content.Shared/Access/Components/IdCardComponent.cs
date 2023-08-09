@@ -7,7 +7,7 @@ namespace Content.Shared.Access.Components
 {
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem))]
-    public sealed partial class IdCardComponent : Component
+    public sealed class IdCardComponent : Component
     {
         [DataField("fullName")]
         [Access(typeof(SharedIdCardSystem), typeof(SharedPDASystem), typeof(SharedAgentIdCardSystem),
@@ -19,7 +19,7 @@ namespace Content.Shared.Access.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class IdCardComponentState : ComponentState
+    public sealed class IdCardComponentState : ComponentState
     {
         public string? FullName;
         public string? JobTitle;

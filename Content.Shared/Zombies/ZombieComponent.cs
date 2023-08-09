@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Zombies
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class ZombieComponent : Component
+    public sealed class ZombieComponent : Component
     {
         /// <summary>
         /// The coefficient of the damage reduction applied when a zombie

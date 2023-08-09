@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Projectiles
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class ProjectileComponent : Component
+    public sealed class ProjectileComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? ImpactEffect;

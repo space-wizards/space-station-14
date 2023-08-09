@@ -12,7 +12,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed partial class DisposalTaggerComponent : DisposalTransitComponent
+    public sealed class DisposalTaggerComponent : DisposalTransitComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Morgue.Components;
 
 [RegisterComponent]
-public sealed partial class CrematoriumComponent : Component
+public sealed class CrematoriumComponent : Component
 {
     /// <summary>
     ///     The time it takes to cook in second

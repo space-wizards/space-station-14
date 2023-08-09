@@ -2,7 +2,7 @@
 {
     [Serializable]
     [DataDefinition]
-    public partial struct MinMax
+    public struct MinMax
     {
         [DataField("min")]
         public int Min;

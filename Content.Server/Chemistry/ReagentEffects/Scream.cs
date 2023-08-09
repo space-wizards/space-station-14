@@ -6,7 +6,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// <summary>
 ///     Forces someone to scream their lungs out.
 /// </summary>
-public sealed partial class Scream : ReagentEffect
+public sealed class Scream : ReagentEffect
 {
     public override void Effect(ReagentEffectArgs args)
     {

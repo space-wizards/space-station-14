@@ -26,7 +26,7 @@ namespace Content.Server.ParticleAccelerator.Components
     ///     Also contains primary logic for actual PA behavior, part scanning, etc...
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorControlBoxComponent : ParticleAcceleratorPartComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IMapManager _mapManager = default!;

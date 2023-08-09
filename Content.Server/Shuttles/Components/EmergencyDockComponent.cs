@@ -4,4 +4,4 @@ namespace Content.Server.Shuttles.Components;
 /// Given priority when considering where to dock an emergency shuttle.
 /// </summary>
 [RegisterComponent]
-public sealed partial class EmergencyDockComponent : Component {}
+public sealed class EmergencyDockComponent : Component {}

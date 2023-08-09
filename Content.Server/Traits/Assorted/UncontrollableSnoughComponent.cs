@@ -6,7 +6,7 @@ namespace Content.Server.Traits.Assorted;
 /// This is used for the occasional sneeze or cough.
 /// </summary>
 [RegisterComponent]
-public sealed partial class UncontrollableSnoughComponent : Component
+public sealed class UncontrollableSnoughComponent : Component
 {
     /// <summary>
     /// Message to play when snoughing.

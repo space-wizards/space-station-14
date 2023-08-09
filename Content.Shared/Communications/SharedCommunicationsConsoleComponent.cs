@@ -3,7 +3,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Communications
 {
     [Virtual]
-    public partial class SharedCommunicationsConsoleComponent : Component
+    public class SharedCommunicationsConsoleComponent : Component
     {
     }
 

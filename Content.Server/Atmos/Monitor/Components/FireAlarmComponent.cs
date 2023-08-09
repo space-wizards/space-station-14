@@ -1,6 +1,6 @@
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed partial class FireAlarmComponent : Component
+public sealed class FireAlarmComponent : Component
 {
 }

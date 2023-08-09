@@ -6,6 +6,6 @@ namespace Content.Server.DeviceNetwork.Components;
 ///     if the entity is not powered.
 /// </summary>
 [RegisterComponent]
-public sealed partial class DeviceNetworkRequiresPowerComponent : Component
+public sealed class DeviceNetworkRequiresPowerComponent : Component
 {
 }

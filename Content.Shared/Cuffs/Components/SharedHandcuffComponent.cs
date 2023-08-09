@@ -4,10 +4,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cuffs.Components
 {
     [NetworkedComponent()]
-    public abstract partial class SharedHandcuffComponent : Component
+    public abstract class SharedHandcuffComponent : Component
     {
         [Serializable, NetSerializable]
-        protected sealed partial class HandcuffedComponentState : ComponentState
+        protected sealed class HandcuffedComponentState : ComponentState
         {
             public string? IconState { get; }
 

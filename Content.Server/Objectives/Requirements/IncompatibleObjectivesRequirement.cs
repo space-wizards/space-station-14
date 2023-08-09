@@ -3,7 +3,7 @@
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public sealed partial class IncompatibleObjectivesRequirement : IObjectiveRequirement
+    public sealed class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         [DataField("objectives")]
         private readonly List<string> _incompatibleObjectives = new();

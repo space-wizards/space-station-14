@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Humanoid;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class HumanoidComponent : Component
+public sealed class HumanoidComponent : Component
 {
     /// <summary>
     ///     Current species. Dictates things like base body sprites,
@@ -74,7 +74,7 @@ public sealed partial class HumanoidComponent : Component
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class CustomBaseLayerInfo
+public sealed class CustomBaseLayerInfo
 {
     public CustomBaseLayerInfo(string id, Color color)
     {

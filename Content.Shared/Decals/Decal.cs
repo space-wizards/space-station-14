@@ -4,7 +4,7 @@ namespace Content.Shared.Decals
 {
     [Serializable, NetSerializable]
     [DataDefinition]
-    public sealed partial class Decal
+    public sealed class Decal
     {
         // if these are made not-readonly, then decal grid state handling needs to be updated to clone decals.
         [DataField("coordinates")] public readonly Vector2 Coordinates = Vector2.Zero;

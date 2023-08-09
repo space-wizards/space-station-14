@@ -6,7 +6,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Melee;
 /// Selects a target for melee.
 /// </summary>
 [MeansImplicitUse]
-public sealed partial class PickMeleeTargetOperator : NPCCombatOperator
+public sealed class PickMeleeTargetOperator : NPCCombatOperator
 {
     protected override float GetRating(NPCBlackboard blackboard, EntityUid uid, EntityUid existingTarget, float distance, bool canMove, EntityQuery<TransformComponent> xformQuery)
     {

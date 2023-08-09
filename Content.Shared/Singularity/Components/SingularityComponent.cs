@@ -10,7 +10,7 @@ namespace Content.Shared.Singularity.Components;
 /// Energy management is server-side.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class SingularityComponent : Component
+public sealed class SingularityComponent : Component
 {
     /// <summary>
     /// The current level of the singularity.
@@ -18,7 +18,7 @@ public sealed partial class SingularityComponent : Component
     /// If you want to set this use <see cref="SharedSingularitySystem.SetLevel"/>().
     /// </summary>
     [DataField("level")]
-    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read)]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     public byte Level = 1;
 
     /// <summary>
@@ -27,7 +27,7 @@ public sealed partial class SingularityComponent : Component
     /// If you want to set this use <see cref="SharedSingularitySystem.SetRadsPerLevel"/>().
     /// </summary>
     [DataField("radsPerLevel")]
-    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read)]
+    [Access(friends:typeof(SharedSingularitySystem), Other=AccessPermissions.Read, Self=AccessPermissions.Read)]
     [ViewVariables(VVAccess.ReadWrite)]
     public float RadsPerLevel = 2f;
 

@@ -7,7 +7,7 @@ namespace Content.Client.Hands
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandsComponent))]
     [Access(typeof(HandsSystem))]
-    public sealed partial class HandsComponent : SharedHandsComponent
+    public sealed class HandsComponent : SharedHandsComponent
     {
         /// <summary>
         ///     Whether or not to add in-hand sprites for held items. Some entities (e.g., drones) don't want these.

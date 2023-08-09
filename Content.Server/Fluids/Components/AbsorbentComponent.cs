@@ -8,7 +8,7 @@ namespace Content.Server.Fluids.Components;
 /// For entities that can clean up puddles
 /// </summary>
 [RegisterComponent, Access(typeof(MoppingSystem))]
-public sealed partial class AbsorbentComponent : Component
+public sealed class AbsorbentComponent : Component
 {
     public const string SolutionName = "absorbed";
 

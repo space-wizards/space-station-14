@@ -1,6 +1,6 @@
 ﻿namespace Content.Server.LandMines;
 
 [RegisterComponent]
-public sealed partial class LandMineComponent : Component
+public sealed class LandMineComponent : Component
 {
 }

@@ -9,7 +9,7 @@ namespace Content.Shared.CartridgeLoader;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-public sealed partial class CartridgeComponent : Component
+public sealed class CartridgeComponent : Component
 {
     [DataField("programName", required: true)]
     public string ProgramName = "default-program-name";
@@ -21,7 +21,7 @@ public sealed partial class CartridgeComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class CartridgeComponentState : ComponentState
+public sealed class CartridgeComponentState : ComponentState
 {
     public InstallationStatus InstallationStatus;
 }

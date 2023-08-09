@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Strip.Components
 {
-    public abstract partial class SharedStrippableComponent : Component, IDraggable
+    public abstract class SharedStrippableComponent : Component, IDraggable
     {
         bool IDraggable.CanDrop(CanDropEvent args)
         {

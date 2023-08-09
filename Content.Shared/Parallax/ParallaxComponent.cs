@@ -7,7 +7,7 @@ namespace Content.Shared.Parallax;
 /// Handles per-map parallax
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class ParallaxComponent : Component
+public sealed class ParallaxComponent : Component
 {
     // I wish I could use a typeserializer here but parallax is extremely client-dependent.
     [DataField("parallax")]

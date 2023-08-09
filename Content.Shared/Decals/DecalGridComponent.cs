@@ -10,7 +10,7 @@ namespace Content.Shared.Decals
     [RegisterComponent]
     [Access(typeof(SharedDecalSystem))]
     [NetworkedComponent]
-    public sealed partial class DecalGridComponent : Component
+    public sealed class DecalGridComponent : Component
     {
         [DataField("chunkCollection", serverOnly: true)]
         public DecalGridChunkCollection ChunkCollection = new(new ());
@@ -22,7 +22,7 @@ namespace Content.Shared.Decals
 
         [DataDefinition]
         [Serializable, NetSerializable]
-        public sealed partial  class DecalChunk
+        public sealed class DecalChunk
         {
             [IncludeDataField(customTypeSerializer:typeof(DictionarySerializer<uint, Decal>))]
             public Dictionary<uint, Decal> Decals;
@@ -56,7 +56,7 @@ namespace Content.Shared.Decals
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class DecalGridState : ComponentState, IComponentDeltaState
+    public sealed class DecalGridState : ComponentState, IComponentDeltaState
     {
         public Dictionary<Vector2i, DecalChunk> Chunks;
         public bool FullState => AllChunks == null;

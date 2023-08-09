@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class ModifyBleedAmount : ReagentEffect
+public sealed class ModifyBleedAmount : ReagentEffect
 {
     [DataField("scaled")]
     public bool Scaled = false;

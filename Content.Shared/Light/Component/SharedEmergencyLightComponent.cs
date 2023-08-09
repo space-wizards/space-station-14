@@ -10,7 +10,7 @@ namespace Content.Shared.Light.Component
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class EmergencyLightComponentState : ComponentState
+    public sealed class EmergencyLightComponentState : ComponentState
     {
         public bool Enabled;
 

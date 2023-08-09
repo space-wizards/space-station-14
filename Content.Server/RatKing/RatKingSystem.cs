@@ -84,6 +84,6 @@ namespace Content.Server.RatKing
         }
     }
 
-    public sealed partial class RatKingRaiseArmyActionEvent : InstantActionEvent { };
-    public sealed partial class RatKingDomainActionEvent : InstantActionEvent { };
+    public sealed class RatKingRaiseArmyActionEvent : InstantActionEvent { };
+    public sealed class RatKingDomainActionEvent : InstantActionEvent { };
 };

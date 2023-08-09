@@ -6,7 +6,7 @@ namespace Content.Server.Abilities.Boxer
     /// Added to the boxer on spawn.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class BoxerComponent : Component
+    public sealed class BoxerComponent : Component
     {
         [DataField("modifiers", required: true)]
         public DamageModifierSet UnarmedModifiers = default!;

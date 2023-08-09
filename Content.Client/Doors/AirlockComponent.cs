@@ -4,4 +4,4 @@ namespace Content.Client.Doors;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedAirlockComponent))]
-public sealed partial class AirlockComponent : SharedAirlockComponent { }
+public sealed class AirlockComponent : SharedAirlockComponent { }

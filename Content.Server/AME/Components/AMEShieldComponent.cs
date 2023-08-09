@@ -4,7 +4,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    public sealed partial class AMEShieldComponent : SharedAMEShieldComponent
+    public sealed class AMEShieldComponent : SharedAMEShieldComponent
     {
 
         private bool _isCore = false;

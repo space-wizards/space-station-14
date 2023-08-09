@@ -4,4 +4,4 @@
 /// Triggers on click.
 /// </summary>
 [RegisterComponent]
-public sealed partial class TriggerOnActivateComponent : Component { }
+public sealed class TriggerOnActivateComponent : Component { }

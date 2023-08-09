@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.VendingMachines
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class VendingMachineComponent : Component
+    public sealed class VendingMachineComponent : Component
     {
         /// <summary>
         /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
@@ -234,7 +234,7 @@ namespace Content.Shared.VendingMachines
         StatusKey,
     }
 
-    public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
+    public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent
     {
 
     };

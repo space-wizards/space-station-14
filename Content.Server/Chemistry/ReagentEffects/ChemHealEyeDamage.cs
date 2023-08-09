@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Heal eye damage (or deal)
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class ChemHealEyeDamage : ReagentEffect
+    public sealed class ChemHealEyeDamage : ReagentEffect
     {
         /// <summary>
         /// How much eye damage to remove.

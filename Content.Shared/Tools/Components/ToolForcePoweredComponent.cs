@@ -5,6 +5,6 @@ namespace Content.Shared.Tools.Components
     /// or not to work.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ToolForcePoweredComponent : Component
+    public sealed class ToolForcePoweredComponent : Component
     {}
 }

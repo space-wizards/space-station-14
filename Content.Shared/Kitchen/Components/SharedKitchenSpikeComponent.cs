@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Kitchen.Components
 {
-    public abstract partial class SharedKitchenSpikeComponent : Component, IDragDropOn
+    public abstract class SharedKitchenSpikeComponent : Component, IDragDropOn
     {
         [DataField("delay")]
         public float SpikeDelay = 7.0f;

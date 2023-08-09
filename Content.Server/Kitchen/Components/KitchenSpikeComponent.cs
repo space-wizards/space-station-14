@@ -5,7 +5,7 @@ using Content.Shared.Kitchen.Components;
 namespace Content.Server.Kitchen.Components
 {
     [RegisterComponent, Access(typeof(KitchenSpikeSystem))]
-    public sealed partial class KitchenSpikeComponent : SharedKitchenSpikeComponent
+    public sealed class KitchenSpikeComponent : SharedKitchenSpikeComponent
     {
         public List<string?>? PrototypesToSpawn;
 

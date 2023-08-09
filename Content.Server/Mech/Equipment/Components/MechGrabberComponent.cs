@@ -9,7 +9,7 @@ namespace Content.Server.Mech.Equipment.Components;
 /// inside of a container so large objects can be moved.
 /// </summary>
 [RegisterComponent]
-public sealed partial class MechGrabberComponent : Component
+public sealed class MechGrabberComponent : Component
 {
     /// <summary>
     /// The change in energy after each grab.

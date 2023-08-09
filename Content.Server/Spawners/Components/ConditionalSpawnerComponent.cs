@@ -6,7 +6,7 @@ namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
     [Virtual]
-    public partial class ConditionalSpawnerComponent : Component
+    public class ConditionalSpawnerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]

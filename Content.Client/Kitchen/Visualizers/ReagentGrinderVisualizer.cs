@@ -3,7 +3,7 @@ using Content.Shared.Kitchen;
 
 namespace Content.Client.Kitchen.Visualizers
 {
-    public sealed partial class ReagentGrinderVisualizer : AppearanceVisualizer
+    public sealed class ReagentGrinderVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

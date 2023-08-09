@@ -8,7 +8,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Atmos.Monitor;
 
 [DataDefinition]
-public sealed partial class AirAlarmPanicWire : BaseWireAction
+public sealed class AirAlarmPanicWire : BaseWireAction
 {
     private string _text = "PANC";
     private Color _color = Color.Red;

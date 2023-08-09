@@ -4,7 +4,7 @@
 /// This is used for pricing stacks of items.
 /// </summary>
 [RegisterComponent]
-public sealed partial class StackPriceComponent : Component
+public sealed class StackPriceComponent : Component
 {
     /// <summary>
     /// The price of the object this component is on, per unit.

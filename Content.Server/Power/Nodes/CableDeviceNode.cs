@@ -10,7 +10,7 @@ namespace Content.Server.Power.Nodes
     /// </summary>
     [DataDefinition]
     [Virtual]
-    public partial class CableDeviceNode : Node
+    public class CableDeviceNode : Node
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

@@ -5,7 +5,7 @@ namespace Content.Server.Fluids.Components
 {
     [RegisterComponent]
     [Access(typeof(EvaporationSystem))]
-    public sealed partial class EvaporationComponent : Component
+    public sealed class EvaporationComponent : Component
     {
         /// <summary>
         ///     Is this entity actively evaporating? This toggle lets us pause evaporation under certain conditions.

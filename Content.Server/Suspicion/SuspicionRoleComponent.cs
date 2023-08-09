@@ -10,7 +10,7 @@ using Content.Shared.Suspicion;
 namespace Content.Server.Suspicion
 {
     [RegisterComponent]
-    public sealed partial class SuspicionRoleComponent : SharedSuspicionRoleComponent
+    public sealed class SuspicionRoleComponent : SharedSuspicionRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         private Role? _role;

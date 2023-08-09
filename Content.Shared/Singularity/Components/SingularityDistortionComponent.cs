@@ -4,7 +4,7 @@ namespace Content.Shared.Singularity.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed partial class SingularityDistortionComponent : Component
+    public sealed class SingularityDistortionComponent : Component
     {
         [DataField("intensity")]
         private float _intensity = 31.25f;
@@ -46,7 +46,7 @@ namespace Content.Shared.Singularity.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SingularityDistortionComponentState : ComponentState
+    public sealed class SingularityDistortionComponentState : ComponentState
     {
         public SingularityDistortionComponentState(float intensity, float falloff)
         {

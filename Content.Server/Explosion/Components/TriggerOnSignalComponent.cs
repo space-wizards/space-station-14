@@ -7,7 +7,7 @@ namespace Content.Server.Explosion.Components
     /// Sends a trigger when signal is received.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class TriggerOnSignalComponent : Component
+    public sealed class TriggerOnSignalComponent : Component
     {
         [DataField("port", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
         public string Port = "Trigger";

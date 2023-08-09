@@ -3,7 +3,7 @@ using Content.Shared.DoAfter;
 namespace Content.Server.DoAfter
 {
     [RegisterComponent, Access(typeof(DoAfterSystem))]
-    public sealed partial class DoAfterComponent : SharedDoAfterComponent
+    public sealed class DoAfterComponent : SharedDoAfterComponent
     {
         public readonly Dictionary<DoAfter, byte> DoAfters = new();
 
@@ -16,5 +16,5 @@ namespace Content.Server.DoAfter
     ///     Added to entities that are currently performing any doafters.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ActiveDoAfterComponent : Component {}
+    public sealed class ActiveDoAfterComponent : Component {}
 }

@@ -1,7 +1,7 @@
 namespace Content.Server.Labels.Components
 {
     [RegisterComponent]
-    public sealed partial class LabelComponent : Component
+    public sealed class LabelComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]

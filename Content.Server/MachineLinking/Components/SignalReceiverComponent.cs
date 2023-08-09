@@ -4,7 +4,7 @@ namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
     [Access(typeof(SignalLinkerSystem))]
-    public sealed partial class SignalReceiverComponent : Component
+    public sealed class SignalReceiverComponent : Component
     {
         [DataField("inputs")]
         public Dictionary<string, List<PortIdentifier>> Inputs = new();

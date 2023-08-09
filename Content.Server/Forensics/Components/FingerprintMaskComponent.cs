@@ -5,6 +5,6 @@ namespace Content.Server.Forensics
     /// usually so fibres can be left instead.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class FingerprintMaskComponent : Component
+    public sealed class FingerprintMaskComponent : Component
     {}
 }

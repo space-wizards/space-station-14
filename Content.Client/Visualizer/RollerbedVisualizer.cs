@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Visualizer
 {
     [UsedImplicitly]
-    public sealed partial class RollerbedVisualizer : AppearanceVisualizer
+    public sealed class RollerbedVisualizer : AppearanceVisualizer
     {
         [DataField("key")]
         private string _key = default!;

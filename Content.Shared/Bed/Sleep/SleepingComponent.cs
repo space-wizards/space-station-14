@@ -8,7 +8,7 @@ namespace Content.Shared.Bed.Sleep;
 /// Added to entities when they go to sleep.
 /// </summary>
 [NetworkedComponent, RegisterComponent]
-public sealed partial class SleepingComponent : Component
+public sealed class SleepingComponent : Component
 {
     /// <summary>
     /// How much damage of any type it takes to wake this entity.

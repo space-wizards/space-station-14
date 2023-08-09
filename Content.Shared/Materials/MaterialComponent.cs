@@ -8,7 +8,7 @@ namespace Content.Shared.Materials
     ///     This is not a storage system for say smelteries.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class MaterialComponent : Component
+    public sealed class MaterialComponent : Component
     {
         [DataField("materials", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
         public readonly Dictionary<string, int> Materials = new();

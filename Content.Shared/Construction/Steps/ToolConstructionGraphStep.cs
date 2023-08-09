@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed partial class ToolConstructionGraphStep : ConstructionGraphStep
+    public sealed class ToolConstructionGraphStep : ConstructionGraphStep
     {
         [DataField("tool", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string Tool { get; } = string.Empty;

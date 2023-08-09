@@ -4,5 +4,5 @@ namespace Content.Shared.Interaction.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed partial class UnremoveableComponent : Component {}
+    public sealed class UnremoveableComponent : Component {}
 }

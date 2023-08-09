@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class Electrocute : ReagentEffect
+public sealed class Electrocute : ReagentEffect
 {
     [DataField("electrocuteTime")] public int ElectrocuteTime = 2;
 

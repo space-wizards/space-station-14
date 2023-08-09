@@ -1,7 +1,7 @@
 namespace Content.Client.Rotation;
 
 [RegisterComponent]
-public sealed partial class RotationVisualsComponent : Component
+public sealed class RotationVisualsComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public Angle VerticalRotation = 0;

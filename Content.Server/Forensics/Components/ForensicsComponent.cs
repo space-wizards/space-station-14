@@ -1,7 +1,7 @@
 namespace Content.Server.Forensics
 {
     [RegisterComponent]
-    public sealed partial class ForensicsComponent : Component
+    public sealed class ForensicsComponent : Component
     {
         [DataField("fingerprints")]
         public HashSet<string> Fingerprints = new();

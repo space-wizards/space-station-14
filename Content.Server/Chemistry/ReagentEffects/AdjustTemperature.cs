@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public sealed partial class AdjustTemperature : ReagentEffect
+    public sealed class AdjustTemperature : ReagentEffect
     {
         [DataField("amount")]
         public float Amount;

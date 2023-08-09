@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
-    public sealed partial class TimedSpawnerComponent : Component, ISerializationHooks
+    public sealed class TimedSpawnerComponent : Component, ISerializationHooks
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
 

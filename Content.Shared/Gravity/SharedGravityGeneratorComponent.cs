@@ -5,7 +5,7 @@ namespace Content.Shared.Gravity
 {
     [NetworkedComponent()]
     [Virtual]
-    public partial class SharedGravityGeneratorComponent : Component
+    public class SharedGravityGeneratorComponent : Component
     {
         /// <summary>
         ///     Sent to the server to set whether the generator should be on or off

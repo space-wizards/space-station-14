@@ -3,7 +3,7 @@ using Content.Server.MachineLinking.System;
 namespace Content.Server.MachineLinking.Components
 {
     [DataDefinition]
-    public partial struct PortIdentifier
+    public struct PortIdentifier
     {
         [DataField("uid")]
         public EntityUid Uid;
@@ -20,7 +20,7 @@ namespace Content.Server.MachineLinking.Components
 
     [RegisterComponent]
     [Access(typeof(SignalLinkerSystem))]
-    public sealed partial class SignalTransmitterComponent : Component
+    public sealed class SignalTransmitterComponent : Component
     {
         /// <summary>
         ///     How far the device can transmit a signal wirelessly.

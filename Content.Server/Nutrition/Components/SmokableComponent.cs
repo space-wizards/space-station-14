@@ -5,7 +5,7 @@ using Content.Shared.Smoking;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(SmokingSystem))]
-    public sealed partial class SmokableComponent : Component
+    public sealed class SmokableComponent : Component
     {
         [DataField("solution")]
         public string Solution { get; } = "smokable";

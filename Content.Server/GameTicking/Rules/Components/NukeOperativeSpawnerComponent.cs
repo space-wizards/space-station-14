@@ -7,7 +7,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(NukeopsRuleSystem))]
-public sealed partial class NukeOperativeSpawnerComponent : Component
+public sealed class NukeOperativeSpawnerComponent : Component
 {
     [DataField("name")]
     public string OperativeName = "";

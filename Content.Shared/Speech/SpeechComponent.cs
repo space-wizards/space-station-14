@@ -9,7 +9,7 @@ namespace Content.Shared.Speech
     ///     Contains the option to let entities make noise when speaking, datafields for the sounds in question, and relevant AudioParams.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class SpeechComponent : Component
+    public sealed class SpeechComponent : Component
     {
         [DataField("enabled"), Access(typeof(SpeechSystem),
              Friend = AccessPermissions.ReadWrite,

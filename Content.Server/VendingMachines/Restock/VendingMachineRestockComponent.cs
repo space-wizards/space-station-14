@@ -6,7 +6,7 @@ using Content.Shared.VendingMachines;
 namespace Content.Server.VendingMachines.Restock
 {
     [RegisterComponent]
-    public sealed partial class VendingMachineRestockComponent : Component
+    public sealed class VendingMachineRestockComponent : Component
     {
         public CancellationTokenSource? CancelToken;
 

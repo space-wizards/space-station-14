@@ -396,7 +396,7 @@ public partial class SharedGunSystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed partial class RevolverAmmoProviderComponentState : ComponentState
+    protected sealed class RevolverAmmoProviderComponentState : ComponentState
     {
         public int CurrentIndex;
         public List<EntityUid?> AmmoSlots = default!;

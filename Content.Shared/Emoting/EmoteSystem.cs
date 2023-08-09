@@ -47,7 +47,7 @@ namespace Content.Shared.Emoting
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class EmotingComponentState : ComponentState
+        private sealed class EmotingComponentState : ComponentState
         {
             public bool Enabled { get; }
 

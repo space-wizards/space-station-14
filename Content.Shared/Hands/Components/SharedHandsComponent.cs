@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Hands.Components;
 
 [NetworkedComponent]
-public abstract partial class SharedHandsComponent : Component
+public abstract class SharedHandsComponent : Component
 {
     /// <summary>
     ///     The currently active hand.
@@ -74,7 +74,7 @@ public sealed class Hand //TODO: This should definitely be a struct - Jezi
 }
 
 [Serializable, NetSerializable]
-public sealed partial class HandsComponentState : ComponentState
+public sealed class HandsComponentState : ComponentState
 {
     public readonly List<Hand> Hands;
     public readonly List<string> HandNames;

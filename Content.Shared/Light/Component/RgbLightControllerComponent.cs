@@ -13,7 +13,7 @@ namespace Content.Shared.Light.Component;
 [NetworkedComponent]
 [RegisterComponent]
 [Access(typeof(SharedRgbLightControllerSystem))]
-public sealed partial class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
+public sealed class RgbLightControllerComponent : Robust.Shared.GameObjects.Component
 {
     [DataField("cycleRate")]
     public float CycleRate { get; set; } = 0.1f;
@@ -46,7 +46,7 @@ public sealed partial class RgbLightControllerComponent : Robust.Shared.GameObje
 }
 
 [Serializable, NetSerializable]
-public sealed partial class RgbLightControllerState : ComponentState
+public sealed class RgbLightControllerState : ComponentState
 {
     public readonly float CycleRate;
     public List<int>? Layers;

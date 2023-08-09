@@ -4,7 +4,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Cargo;
 
 [RegisterComponent]
-public sealed partial class CargoTelepadComponent : SharedCargoTelepadComponent
+public sealed class CargoTelepadComponent : SharedCargoTelepadComponent
 {
 
 }

@@ -5,7 +5,7 @@ using Content.Shared.Wires;
 namespace Content.Server.VendingMachines;
 
 [DataDefinition]
-public sealed partial class VendingMachineContrabandWireAction : BaseToggleWireAction
+public sealed class VendingMachineContrabandWireAction : BaseToggleWireAction
 {
     private readonly Color _color = Color.Green;
     private readonly string _text = "MNGR";

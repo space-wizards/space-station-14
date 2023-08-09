@@ -10,7 +10,7 @@ namespace Content.Shared.Actions.ActionTypes;
 // anymore.
 
 [Prototype("worldTargetAction")]
-public sealed partial class WorldTargetActionPrototype : WorldTargetAction, IPrototype
+public sealed class WorldTargetActionPrototype : WorldTargetAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
@@ -27,7 +27,7 @@ public sealed partial class WorldTargetActionPrototype : WorldTargetAction, IPro
 }
 
 [Prototype("entityTargetAction")]
-public sealed partial class EntityTargetActionPrototype : EntityTargetAction, IPrototype
+public sealed class EntityTargetActionPrototype : EntityTargetAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;
@@ -41,7 +41,7 @@ public sealed partial class EntityTargetActionPrototype : EntityTargetAction, IP
 }
 
 [Prototype("instantAction")]
-public sealed partial class InstantActionPrototype : InstantAction, IPrototype
+public sealed class InstantActionPrototype : InstantAction, IPrototype
 {
     [IdDataFieldAttribute]
     public string ID { get; } = default!;

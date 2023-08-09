@@ -7,7 +7,7 @@ namespace Content.Shared.Mech.Equipment.Components;
 /// A piece of equipment that can be installed into <see cref="SharedMechComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed partial class MechEquipmentComponent : Component
+public sealed class MechEquipmentComponent : Component
 {
     /// <summary>
     /// How long does it take to install this piece of equipment

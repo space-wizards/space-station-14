@@ -10,7 +10,7 @@ using Robust.Shared.Physics;
 
 namespace Content.Server.Disposal.Tube.Components
 {
-    public abstract partial class DisposalTubeComponent : Component, IDisposalTubeComponent
+    public abstract class DisposalTubeComponent : Component, IDisposalTubeComponent
     {
         public virtual string ContainerId => "DisposalTube";
 

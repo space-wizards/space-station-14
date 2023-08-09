@@ -5,7 +5,7 @@ using Robust.Shared.GameObjects;
 namespace Content.Client.Kitchen.Components
 {
     [RegisterComponent]
-    internal sealed partial class KitchenSpikeComponent : SharedKitchenSpikeComponent
+    internal sealed class KitchenSpikeComponent : SharedKitchenSpikeComponent
     {
         public override bool DragDropOn(DragDropEvent eventArgs)
         {

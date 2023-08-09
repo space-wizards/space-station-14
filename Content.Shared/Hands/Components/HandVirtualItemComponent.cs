@@ -7,7 +7,7 @@ namespace Content.Shared.Hands.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed partial class HandVirtualItemComponent : Component
+    public sealed class HandVirtualItemComponent : Component
     {
         private EntityUid _blockingEntity;
 
@@ -42,7 +42,7 @@ namespace Content.Shared.Hands.Components
         }
 
         [Serializable, NetSerializable]
-        public sealed partial class VirtualItemComponentState : ComponentState
+        public sealed class VirtualItemComponentState : ComponentState
         {
             public readonly EntityUid BlockingEntity;
 

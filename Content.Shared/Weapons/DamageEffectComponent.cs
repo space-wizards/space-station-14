@@ -4,7 +4,7 @@ namespace Content.Shared.Weapons;
 /// Stores the original sprite color for a damaged entity to be able to restore it later.
 /// </summary>
 [RegisterComponent]
-public sealed partial class DamageEffectComponent : Component
+public sealed class DamageEffectComponent : Component
 {
     [ViewVariables]
     public Color Color = Color.White;

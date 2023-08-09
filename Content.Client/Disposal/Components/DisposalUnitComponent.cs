@@ -6,7 +6,7 @@ namespace Content.Client.Disposal.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedDisposalUnitComponent))]
-    public sealed partial class DisposalUnitComponent : SharedDisposalUnitComponent
+    public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
     {
         public DisposalUnitBoundUserInterfaceState? UiState;
 

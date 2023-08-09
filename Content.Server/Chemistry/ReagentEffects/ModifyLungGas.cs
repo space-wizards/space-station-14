@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class ModifyLungGas : ReagentEffect
+public sealed class ModifyLungGas : ReagentEffect
 {
     [DataField("ratios", required: true)]
     private Dictionary<Gas, float> _ratios = default!;

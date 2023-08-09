@@ -11,7 +11,7 @@ namespace Content.Shared.Stealth.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStealthSystem))]
-public sealed partial class StealthComponent : Component
+public sealed class StealthComponent : Component
 {
     /// <summary>
     /// Whether or not the stealth effect should currently be applied.
@@ -70,7 +70,7 @@ public sealed partial class StealthComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class StealthComponentState : ComponentState
+public sealed class StealthComponentState : ComponentState
 {
     public readonly float Visibility;
     public readonly TimeSpan? LastUpdated;

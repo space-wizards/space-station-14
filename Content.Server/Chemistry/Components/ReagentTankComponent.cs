@@ -4,7 +4,7 @@
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed partial class ReagentTankComponent : Component
+    public sealed class ReagentTankComponent : Component
     {
         [DataField("transferAmount")]
         [ViewVariables(VVAccess.ReadWrite)]

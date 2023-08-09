@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.HTN.Preconditions;
 
-public sealed partial class KeyExistsPrecondition : HTNPrecondition
+public sealed class KeyExistsPrecondition : HTNPrecondition
 {
     [DataField("key", required: true)] public string Key = string.Empty;
 

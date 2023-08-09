@@ -6,7 +6,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class SpriteStateChange : IGraphAction
+    public sealed class SpriteStateChange : IGraphAction
     {
         [DataField("layer")] public int Layer { get; private set; } = 0;
         [DataField("state")] public string? State { get; private set; } = string.Empty;

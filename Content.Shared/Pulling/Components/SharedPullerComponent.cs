@@ -2,7 +2,7 @@
 {
     [RegisterComponent]
     [Access(typeof(SharedPullingStateManagementSystem))]
-    public sealed partial class SharedPullerComponent : Component
+    public sealed class SharedPullerComponent : Component
     {
         // Before changing how this is updated, please see SharedPullerSystem.RefreshMovementSpeed
         public float WalkSpeedModifier => Pulling == default ? 1.0f : 0.9f;

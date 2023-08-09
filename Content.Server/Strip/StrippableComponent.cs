@@ -7,7 +7,7 @@ namespace Content.Server.Strip
     [RegisterComponent]
     [ComponentReference(typeof(SharedStrippableComponent))]
     [Access(typeof(StrippableSystem))]
-    public sealed partial class StrippableComponent : SharedStrippableComponent
+    public sealed class StrippableComponent : SharedStrippableComponent
     {
         /// <summary>
         /// The strip delay for hands.

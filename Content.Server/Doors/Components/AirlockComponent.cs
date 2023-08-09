@@ -14,7 +14,7 @@ namespace Content.Server.Doors.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedAirlockComponent))]
-    public sealed partial class AirlockComponent : SharedAirlockComponent
+    public sealed class AirlockComponent : SharedAirlockComponent
     {
         [Dependency] private readonly IEntityManager _entityManager = default!;
 

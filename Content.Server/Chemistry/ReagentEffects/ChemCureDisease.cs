@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for medicine reagents.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class ChemCureDisease : ReagentEffect
+    public sealed class ChemCureDisease : ReagentEffect
     {
         /// <summary>
         /// Chance it has each tick to cure a disease, between 0 and 1

@@ -2,7 +2,7 @@
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
-    public sealed partial class PlantAdjustMutationLevel : PlantAdjustAttribute
+    public sealed class PlantAdjustMutationLevel : PlantAdjustAttribute
     {
         public override void Effect(ReagentEffectArgs args)
         {

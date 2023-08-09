@@ -7,7 +7,7 @@ using Content.Server.GameTicking.Rules;
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed partial class RandomTraitorProgressCondition : IObjectiveCondition
+    public sealed class RandomTraitorProgressCondition : IObjectiveCondition
     {
         private Mind.Mind? _target;
 

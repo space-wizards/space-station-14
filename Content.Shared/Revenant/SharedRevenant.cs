@@ -26,11 +26,11 @@ public sealed class HarvestDoAfterComplete : EntityEventArgs
 }
 
 public sealed class HarvestDoAfterCancelled : EntityEventArgs { }
-public sealed partial class RevenantShopActionEvent : InstantActionEvent { }
-public sealed partial class RevenantDefileActionEvent : InstantActionEvent { }
-public sealed partial class RevenantOverloadLightsActionEvent : InstantActionEvent { }
-public sealed partial class RevenantBlightActionEvent : InstantActionEvent { }
-public sealed partial class RevenantMalfunctionActionEvent : InstantActionEvent { }
+public sealed class RevenantShopActionEvent : InstantActionEvent { }
+public sealed class RevenantDefileActionEvent : InstantActionEvent { }
+public sealed class RevenantOverloadLightsActionEvent : InstantActionEvent { }
+public sealed class RevenantBlightActionEvent : InstantActionEvent { }
+public sealed class RevenantMalfunctionActionEvent : InstantActionEvent { }
 
 [NetSerializable, Serializable]
 public enum RevenantVisuals : byte

@@ -1,7 +1,7 @@
 namespace Content.Shared.AlertLevel;
 
 [RegisterComponent]
-public sealed partial class AlertLevelDisplayComponent : Component
+public sealed class AlertLevelDisplayComponent : Component
 {
     [DataField("alertVisuals")]
     public readonly Dictionary<string, string> AlertVisuals = new();

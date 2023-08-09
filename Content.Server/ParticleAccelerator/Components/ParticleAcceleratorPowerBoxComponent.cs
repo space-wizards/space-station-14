@@ -4,7 +4,7 @@ namespace Content.Server.ParticleAccelerator.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public sealed partial class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorPowerBoxComponent : ParticleAcceleratorPartComponent
     {
         [ViewVariables] public PowerConsumerComponent? PowerConsumerComponent;
 

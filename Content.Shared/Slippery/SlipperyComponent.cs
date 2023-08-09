@@ -13,7 +13,7 @@ namespace Content.Shared.Slippery
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed partial class SlipperyComponent : Component
+    public sealed class SlipperyComponent : Component
     {
         /// <summary>
         /// Path to the sound to be played when a mob slips.
@@ -40,7 +40,7 @@ namespace Content.Shared.Slippery
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class SlipperyComponentState : ComponentState
+    public sealed class SlipperyComponentState : ComponentState
     {
         public float ParalyzeTime { get; }
         public float LaunchForwardsMultiplier { get; }

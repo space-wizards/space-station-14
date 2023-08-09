@@ -10,7 +10,7 @@ namespace Content.Server.Explosion.Components
     /// Raises a <see cref="TriggerEvent"/> whenever an entity collides with a fixture attached to the owner of this component.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class TriggerOnProximityComponent : SharedTriggerOnProximityComponent
+    public sealed class TriggerOnProximityComponent : SharedTriggerOnProximityComponent
     {
         public const string FixtureID  = "trigger-on-proximity-fixture";
 

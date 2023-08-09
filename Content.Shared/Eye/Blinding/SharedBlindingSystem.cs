@@ -174,7 +174,7 @@ namespace Content.Shared.Eye.Blinding
 
     // I have no idea why blurry vision needs this but blindness doesn't
     [Serializable, NetSerializable]
-    public sealed partial class BlurryVisionComponentState : ComponentState
+    public sealed class BlurryVisionComponentState : ComponentState
     {
         public float Magnitude;
         public BlurryVisionComponentState(float magnitude)

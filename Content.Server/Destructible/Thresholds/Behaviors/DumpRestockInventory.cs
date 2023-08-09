@@ -12,7 +12,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed partial class DumpRestockInventory: IThresholdBehavior
+    public sealed class DumpRestockInventory: IThresholdBehavior
     {
         /// <summary>
         ///     The percent of each inventory entry that will be salvaged

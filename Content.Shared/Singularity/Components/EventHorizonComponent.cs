@@ -9,7 +9,7 @@ namespace Content.Shared.Singularity.Components;
 /// Primarily managed by <see cref="SharedEventHorizonSystem"/> and its server/client versions.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class EventHorizonComponent : Component
+public sealed class EventHorizonComponent : Component
 {
     /// <summary>
     /// The radius of the event horizon within which it will destroy all entities and tiles.

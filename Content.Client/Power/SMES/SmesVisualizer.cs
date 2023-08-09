@@ -8,7 +8,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Power.SMES
 {
     [UsedImplicitly]
-    public sealed partial class SmesVisualizer : AppearanceVisualizer
+    public sealed class SmesVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)

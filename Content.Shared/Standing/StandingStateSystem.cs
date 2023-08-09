@@ -158,7 +158,7 @@ namespace Content.Shared.Standing
 
         // I'm not calling it StandingStateComponentState
         [Serializable, NetSerializable]
-        private sealed partial class StandingComponentState : ComponentState
+        private sealed class StandingComponentState : ComponentState
         {
             public bool Standing { get; }
             public List<string> ChangedFixtures { get; }

@@ -11,7 +11,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// For things ingested by one person, you probably want ChemCauseRandomDisease instead.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class ChemMiasmaPoolSource : ReagentEffect
+    public sealed class ChemMiasmaPoolSource : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

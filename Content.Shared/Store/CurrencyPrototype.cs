@@ -11,7 +11,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Prototype("currency")]
 [DataDefinition, Serializable, NetSerializable]
-public sealed partial class CurrencyPrototype : IPrototype
+public sealed class CurrencyPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]

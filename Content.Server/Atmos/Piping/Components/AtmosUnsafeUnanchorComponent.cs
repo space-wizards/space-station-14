@@ -1,7 +1,7 @@
 namespace Content.Server.Atmos.Piping.Components
 {
     [RegisterComponent]
-    public sealed partial class AtmosUnsafeUnanchorComponent : Component
+    public sealed class AtmosUnsafeUnanchorComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

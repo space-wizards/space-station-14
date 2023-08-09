@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
-public sealed partial class ActiveSolutionHeaterComponent : Component
+public sealed class ActiveSolutionHeaterComponent : Component
 {
 
 }

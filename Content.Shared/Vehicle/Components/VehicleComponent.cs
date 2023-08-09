@@ -11,7 +11,7 @@ namespace Content.Shared.Vehicle.Components
     /// All vehicles should have Physics, Strap, and SharedPlayerInputMover components.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class VehicleComponent : Component
+    public sealed class VehicleComponent : Component
     {
         /// <summary>
         /// Whether someone is currently riding the vehicle

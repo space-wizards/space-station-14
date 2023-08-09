@@ -7,7 +7,7 @@ namespace Content.Shared.Nutrition.Components
     /// Indicates that the entity can be thrown on a kitchen spike for butchering.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class SharedButcherableComponent : Component, IDraggable
+    public sealed class SharedButcherableComponent : Component, IDraggable
     {
         [DataField("spawned", required: true)]
         public List<EntitySpawnEntry> SpawnedEntities = new();

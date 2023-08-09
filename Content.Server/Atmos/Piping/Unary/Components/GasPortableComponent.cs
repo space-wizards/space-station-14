@@ -1,7 +1,7 @@
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed partial class GasPortableComponent : Component
+    public sealed class GasPortableComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("port")]

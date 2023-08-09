@@ -5,7 +5,7 @@ namespace Content.Shared.Access.Components
     ///     and allows checking if something or somebody is authorized with these access levels.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class AccessReaderComponent : Component
+    public sealed class AccessReaderComponent : Component
     {
         /// <summary>
         ///     Whether this reader is enabled or not. If disabled, all access

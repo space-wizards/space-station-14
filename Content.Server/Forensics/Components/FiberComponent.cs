@@ -5,7 +5,7 @@ namespace Content.Server.Forensics
     /// which the forensics system uses.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class FiberComponent : Component
+    public sealed class FiberComponent : Component
     {
         [DataField("fiberMaterial")]
         public string FiberMaterial = "fibers-synthetic";

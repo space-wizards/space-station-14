@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Nutrition.Visualizers
 {
     [UsedImplicitly]
-    public sealed partial class DrinkCanVisualizer : AppearanceVisualizer
+    public sealed class DrinkCanVisualizer : AppearanceVisualizer
     {
         [DataField("stateClosed")]
         private string? _stateClosed;

@@ -16,7 +16,7 @@ namespace Content.Server.Access.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedIdCardConsoleComponent))]
-    public sealed partial class IdCardConsoleComponent : SharedIdCardConsoleComponent
+    public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;

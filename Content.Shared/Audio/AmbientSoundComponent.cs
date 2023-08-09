@@ -9,7 +9,7 @@ namespace Content.Shared.Audio
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(SharedAmbientSoundSystem))]
-    public sealed partial class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
+    public sealed class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
     {
         [DataField("enabled")]
         [ViewVariables(VVAccess.ReadWrite)] // only for map editing
@@ -42,7 +42,7 @@ namespace Content.Shared.Audio
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class AmbientSoundComponentState : ComponentState
+    public sealed class AmbientSoundComponentState : ComponentState
     {
         public bool Enabled { get; init; }
         public float Range { get; init; }

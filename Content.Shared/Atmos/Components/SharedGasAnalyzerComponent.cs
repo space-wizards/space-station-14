@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Atmos.Components
 {
     [NetworkedComponent()]
-    public abstract partial class SharedGasAnalyzerComponent : Component
+    public abstract class SharedGasAnalyzerComponent : Component
     {
 
         [Serializable, NetSerializable]

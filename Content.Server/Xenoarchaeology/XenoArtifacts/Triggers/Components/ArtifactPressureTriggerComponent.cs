@@ -4,7 +4,7 @@
 /// Triggers when a certain pressure threshold is hit
 /// </summary>
 [RegisterComponent]
-public sealed partial class ArtifactPressureTriggerComponent : Component
+public sealed class ArtifactPressureTriggerComponent : Component
 {
     /// <summary>
     /// The lower-end pressure threshold

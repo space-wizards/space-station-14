@@ -6,7 +6,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
     [Access(typeof(GasOutletInjectorSystem))]
-    public sealed partial class GasOutletInjectorComponent : Component
+    public sealed class GasOutletInjectorComponent : Component
     {
 
         [ViewVariables(VVAccess.ReadWrite)]

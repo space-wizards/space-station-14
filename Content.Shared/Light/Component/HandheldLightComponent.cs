@@ -9,7 +9,7 @@ namespace Content.Shared.Light
     [NetworkedComponent]
     [RegisterComponent]
     [Access(typeof(SharedHandheldLightSystem))]
-    public sealed partial class HandheldLightComponent : Robust.Shared.GameObjects.Component
+    public sealed class HandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         public byte? Level;
         public bool Activated;
@@ -58,7 +58,7 @@ namespace Content.Shared.Light
         public string RadiatingBehaviourId { get; set; } = string.Empty;
 
         [Serializable, NetSerializable]
-        public sealed partial class HandheldLightComponentState : ComponentState
+        public sealed class HandheldLightComponentState : ComponentState
         {
             public byte? Charge { get; }
 

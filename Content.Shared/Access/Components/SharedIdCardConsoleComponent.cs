@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Access.Components
 {
     [NetworkedComponent]
-    public abstract partial class SharedIdCardConsoleComponent : Component
+    public abstract class SharedIdCardConsoleComponent : Component
     {
         public const int MaxFullNameLength = 30;
         public const int MaxJobTitleLength = 30;

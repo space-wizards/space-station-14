@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Crayon
 {
     [NetworkedComponent, ComponentProtoName("Crayon"), Access(typeof(SharedCrayonSystem))]
-    public abstract partial class SharedCrayonComponent : Component
+    public abstract class SharedCrayonComponent : Component
     {
         public string SelectedState { get; set; } = string.Empty;
 
@@ -45,7 +45,7 @@ namespace Content.Shared.Crayon
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class CrayonComponentState : ComponentState
+    public sealed class CrayonComponentState : ComponentState
     {
         public readonly Color Color;
         public readonly string State;

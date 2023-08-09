@@ -8,7 +8,7 @@ namespace Content.Shared.Movement.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedMoverController))]
-public sealed partial class RelayInputMoverComponent : Component
+public sealed class RelayInputMoverComponent : Component
 {
     [ViewVariables]
     public EntityUid? RelayEntity;

@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Movement.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class MovementRelayTargetComponent : Component
+public sealed class MovementRelayTargetComponent : Component
 {
     /// <summary>
     /// Entities that are relaying to us.

@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     ///     tank of a car.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class RefillableSolutionComponent : Component
+    public sealed class RefillableSolutionComponent : Component
     {
         /// <summary>
         /// Solution name that can added to easily.

@@ -9,9 +9,9 @@ namespace Content.Server.Disease
     /// or neither.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class DiseaseSnough : DiseaseEffect
+    public sealed class DiseaseSnough : DiseaseEffect
     {
-
+        
         /// <summary>
         /// Message to play when snoughing
         /// </summary>
@@ -23,7 +23,7 @@ namespace Content.Server.Disease
         /// <summary>
         [DataField("snoughSound")]
         public SoundSpecifier? SnoughSound;
-
+        
         /// <summary>
         /// Whether to spread the disease through the air
         /// </summary>

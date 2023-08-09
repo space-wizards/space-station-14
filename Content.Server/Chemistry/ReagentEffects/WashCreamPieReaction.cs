@@ -6,7 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed partial class WashCreamPieReaction : ReagentEffect
+    public sealed class WashCreamPieReaction : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

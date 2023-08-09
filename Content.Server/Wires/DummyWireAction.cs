@@ -9,7 +9,7 @@ namespace Content.Server.Wires;
 // a serializable class for consistency.
 // C'est la vie.
 [DataDefinition]
-public sealed partial class DummyWireAction : BaseWireAction
+public sealed class DummyWireAction : BaseWireAction
 {
     public override object? StatusKey { get; } = null;
 

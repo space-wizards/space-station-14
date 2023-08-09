@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Stacks
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class StackComponent : Component
+    public sealed class StackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -41,7 +41,7 @@ namespace Content.Shared.Stacks
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class StackComponentState : ComponentState
+    public sealed class StackComponentState : ComponentState
     {
         public int Count { get; }
         public int MaxCount { get; }

@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Wires;
 
 [RegisterComponent]
-public sealed partial class WiresComponent : Component
+public sealed class WiresComponent : Component
 {
     /// <summary>
     ///     Is the panel open for this entity's wires?

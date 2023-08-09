@@ -12,7 +12,7 @@ namespace Content.Server.Disease.Effects
     /// Supports passing the host's entity metadata
     /// in PVS ones with {$person}
     /// </summary>
-    public sealed partial class DiseasePopUp : DiseaseEffect
+    public sealed class DiseasePopUp : DiseaseEffect
     {
         [DataField("message")]
         public string Message = "disease-sick-generic";

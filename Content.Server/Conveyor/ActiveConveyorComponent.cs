@@ -4,7 +4,7 @@ namespace Content.Server.Conveyor;
 /// Used to track which conveyors are relevant in case there's a lot of them.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ActiveConveyorComponent : Component
+public sealed class ActiveConveyorComponent : Component
 {
 
 }

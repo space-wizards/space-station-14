@@ -9,7 +9,7 @@ namespace Content.Shared.PowerCell;
 /// </summary>
 [NetworkedComponent]
 [RegisterComponent]
-public sealed partial class PowerCellComponent : Component
+public sealed class PowerCellComponent : Component
 {
     public const string SolutionName = "powerCell";
     public const int PowerCellVisualsLevels = 2;

@@ -3,7 +3,7 @@
 namespace Content.Server.Cleanable
 {
     [RegisterComponent]
-    public sealed partial class CleanableComponent : Component
+    public sealed class CleanableComponent : Component
     {
         [DataField("cleanAmount")]
         private FixedPoint2 _cleanAmount = FixedPoint2.Zero;

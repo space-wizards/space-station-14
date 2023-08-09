@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Research.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class TechnologyDatabaseComponent : Component
+    public sealed class TechnologyDatabaseComponent : Component
     {
         /// <summary>
         /// The ids of all the technologies which have been unlocked.
@@ -34,7 +34,7 @@ namespace Content.Shared.Research.Components
     public readonly record struct TechnologyDatabaseModifiedEvent;
 
     [Serializable, NetSerializable]
-    public sealed partial class TechnologyDatabaseState : ComponentState
+    public sealed class TechnologyDatabaseState : ComponentState
     {
         public List<string> Technologies;
         public List<string> Recipes;

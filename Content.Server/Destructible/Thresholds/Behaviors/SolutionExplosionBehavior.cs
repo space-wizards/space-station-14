@@ -11,7 +11,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class SolutionExplosionBehavior : IThresholdBehavior
+    public sealed class SolutionExplosionBehavior : IThresholdBehavior
     {
         [DataField("solution", required: true)]
         public string Solution = default!;

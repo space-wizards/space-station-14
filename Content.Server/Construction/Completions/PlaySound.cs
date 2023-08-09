@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class PlaySound : IGraphAction
+    public sealed class PlaySound : IGraphAction
     {
         [DataField("sound", required: true)] public SoundSpecifier Sound { get; private set; } = default!;
 

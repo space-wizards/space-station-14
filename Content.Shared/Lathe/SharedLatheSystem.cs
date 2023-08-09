@@ -64,7 +64,7 @@ public abstract class SharedLatheSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed partial class LatheComponentState : ComponentState
+public sealed class LatheComponentState : ComponentState
 {
     public float MaterialUseMultiplier;
 

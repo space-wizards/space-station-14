@@ -4,7 +4,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.NodeContainer.Nodes
 {
     [DataDefinition]
-    public sealed partial class PortablePipeNode : PipeNode
+    public sealed class PortablePipeNode : PipeNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,

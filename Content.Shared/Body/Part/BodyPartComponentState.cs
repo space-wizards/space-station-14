@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Body.Part;
 
 [Serializable, NetSerializable]
-public sealed partial class BodyPartComponentState : ComponentState
+public sealed class BodyPartComponentState : ComponentState
 {
     public readonly EntityUid? Body;
     public readonly BodyPartSlot? ParentSlot;

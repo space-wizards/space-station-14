@@ -9,7 +9,7 @@ namespace Content.Shared.Humanoid
 {
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed partial class HumanoidCharacterAppearance : ICharacterAppearance
+    public sealed class HumanoidCharacterAppearance : ICharacterAppearance
     {
         public HumanoidCharacterAppearance(string hairStyleId,
             Color hairColor,

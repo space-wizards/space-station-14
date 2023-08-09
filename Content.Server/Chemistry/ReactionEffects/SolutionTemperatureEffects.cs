@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Sets the temperature of the solution involved with the reaction to a new value.
     /// </summary>
     [DataDefinition]
-    public sealed partial class SetSolutionTemperatureEffect : ReagentEffect
+    public sealed class SetSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The temperature to set the solution to.
@@ -30,7 +30,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Adjusts the temperature of the solution involved in the reaction.
     /// </summary>
     [DataDefinition]
-    public sealed partial class AdjustSolutionTemperatureEffect : ReagentEffect
+    public sealed class AdjustSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in temperature.
@@ -66,7 +66,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// <summary>
     ///     Adjusts the thermal energy of the solution involved in the reaction.
     /// </summary>
-    public sealed partial class AdjustSolutionThermalEnergyEffect : ReagentEffect
+    public sealed class AdjustSolutionThermalEnergyEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in energy.
@@ -101,7 +101,7 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var heatCap = solution.GetHeatCapacity(null);
             var deltaT = _scaled
-                ? _delta / heatCap * (float) args.Quantity
+                ? _delta / heatCap * (float) args.Quantity 
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);

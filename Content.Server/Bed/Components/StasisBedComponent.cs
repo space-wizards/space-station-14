@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
-    public sealed partial class StasisBedComponent : Component
+    public sealed class StasisBedComponent : Component
     {
         /// <summary>
         /// Stores whether or not the stasis bed has been emagged,

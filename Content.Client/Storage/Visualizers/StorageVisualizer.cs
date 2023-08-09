@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Storage.Visualizers
 {
     [UsedImplicitly]
-    public sealed partial class StorageVisualizer : AppearanceVisualizer
+    public sealed class StorageVisualizer : AppearanceVisualizer
     {
         /// <summary>
         /// Sets the base sprite to this layer. Exists to make the inheritance tree less boilerplate-y.

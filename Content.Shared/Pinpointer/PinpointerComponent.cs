@@ -9,7 +9,7 @@ namespace Content.Shared.Pinpointer
     [RegisterComponent]
     [NetworkedComponent]
     [Access(typeof(SharedPinpointerSystem))]
-    public sealed partial class PinpointerComponent : Component
+    public sealed class PinpointerComponent : Component
     {
         // TODO: Type serializer oh god
         [DataField("component")]
@@ -38,7 +38,7 @@ namespace Content.Shared.Pinpointer
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class PinpointerComponentState : ComponentState
+    public sealed class PinpointerComponentState : ComponentState
     {
         public bool IsActive;
         public Angle ArrowAngle;

@@ -5,7 +5,7 @@ namespace Content.Client.Atmos.Components;
 /// accumulated.
 /// </summary>
 [RegisterComponent]
-public sealed partial class FireVisualsComponent : Component
+public sealed class FireVisualsComponent : Component
 {
     [DataField("fireStackAlternateState")]
     public int FireStackAlternateState = 3;

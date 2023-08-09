@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Research.TechnologyDisk.Components;
 
 [RegisterComponent]
-public sealed partial class DiskConsoleComponent : Component
+public sealed class DiskConsoleComponent : Component
 {
     [DataField("pricePerDisk"), ViewVariables(VVAccess.ReadWrite)]
     public int PricePerDisk = 2500;

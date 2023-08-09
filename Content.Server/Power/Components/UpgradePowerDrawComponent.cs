@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components;
 /// can be decreased through machine part upgrades.
 /// </summary>
 [RegisterComponent]
-public sealed partial class UpgradePowerDrawComponent : Component
+public sealed class UpgradePowerDrawComponent : Component
 {
     /// <summary>
     /// The base power draw of the machine.

@@ -6,6 +6,6 @@ namespace Content.Shared.Eye.Blinding
     /// Blind status effect.
     /// </summary>
     [NetworkedComponent, RegisterComponent]
-    public sealed partial class TemporaryBlindnessComponent : Component
+    public sealed class TemporaryBlindnessComponent : Component
     {}
 }

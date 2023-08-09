@@ -6,7 +6,7 @@ namespace Content.Server.Weapons.Ranged.Components;
 ///     Responsible for handling recharging a basic entity ammo provider over time.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RechargeBasicEntityAmmoComponent : Component
+public sealed class RechargeBasicEntityAmmoComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("minRechargeCooldown")]

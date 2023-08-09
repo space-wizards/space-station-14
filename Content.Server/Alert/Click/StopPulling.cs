@@ -10,7 +10,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class StopPulling : IAlertClick
+    public sealed class StopPulling : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

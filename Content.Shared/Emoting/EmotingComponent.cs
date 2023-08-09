@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Emoting
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class EmotingComponent : Component
+    public sealed class EmotingComponent : Component
     {
         [DataField("enabled"), Access(typeof(EmoteSystem),
              Friend = AccessPermissions.ReadWrite,

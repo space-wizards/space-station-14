@@ -6,7 +6,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Light.Visualizers
 {
     [UsedImplicitly]
-    public sealed partial class ExpendableLightVisualizer : AppearanceVisualizer
+    public sealed class ExpendableLightVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

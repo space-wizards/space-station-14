@@ -6,7 +6,7 @@ namespace Content.Shared.Sound.Components
     /// Simple sound emitter that emits sound on LandEvent
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class EmitSoundOnLandComponent : BaseEmitSoundComponent
+    public sealed class EmitSoundOnLandComponent : BaseEmitSoundComponent
     {
     }
 }

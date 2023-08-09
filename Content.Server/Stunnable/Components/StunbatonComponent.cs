@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Stunnable.Components
 {
     [RegisterComponent, Access(typeof(StunbatonSystem))]
-    public sealed partial class StunbatonComponent : Component
+    public sealed class StunbatonComponent : Component
     {
         public bool Activated = false;
 

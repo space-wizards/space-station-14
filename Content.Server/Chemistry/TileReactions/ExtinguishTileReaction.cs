@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ExtinguishTileReaction : ITileReaction
+    public sealed class ExtinguishTileReaction : ITileReaction
     {
         [DataField("coolingTemperature")] private float _coolingTemperature = 2f;
 

@@ -4,5 +4,5 @@
     /// Absorbs power up to its capacity when anchored then explodes.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class PowerSinkComponent : Component {}
+    public sealed class PowerSinkComponent : Component {}
 }

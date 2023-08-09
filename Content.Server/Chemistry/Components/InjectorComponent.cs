@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.Components
     /// containers, and can directly inject into a mobs bloodstream.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class InjectorComponent : SharedInjectorComponent
+    public sealed class InjectorComponent : SharedInjectorComponent
     {
         public const string SolutionName = "injector";
 

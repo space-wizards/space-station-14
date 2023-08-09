@@ -9,7 +9,7 @@ namespace Content.Server.CombatMode
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedCombatModeComponent))]
-    public sealed partial class CombatModeComponent : SharedCombatModeComponent
+    public sealed class CombatModeComponent : SharedCombatModeComponent
     {
     }
 }

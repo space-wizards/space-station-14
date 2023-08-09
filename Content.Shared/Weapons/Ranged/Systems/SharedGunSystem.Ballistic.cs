@@ -213,7 +213,7 @@ public abstract partial class SharedGunSystem
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class BallisticAmmoProviderComponentState : ComponentState
+    private sealed class BallisticAmmoProviderComponentState : ComponentState
     {
         public int UnspawnedCount;
         public List<EntityUid> Entities = default!;

@@ -195,5 +195,5 @@ namespace Content.Server.Medical
 
     }
 
-    public sealed partial class StethoscopeActionEvent : EntityTargetActionEvent {}
+    public sealed class StethoscopeActionEvent : EntityTargetActionEvent {}
 }

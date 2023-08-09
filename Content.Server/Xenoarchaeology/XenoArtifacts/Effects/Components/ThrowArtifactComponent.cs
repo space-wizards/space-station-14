@@ -5,7 +5,7 @@
 /// Also pries nearby tiles.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ThrowArtifactComponent : Component
+public sealed class ThrowArtifactComponent : Component
 {
     /// <summary>
     /// How close do you have to be to get yeeted?

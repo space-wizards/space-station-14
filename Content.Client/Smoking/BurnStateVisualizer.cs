@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Smoking
 {
     [UsedImplicitly]
-    public sealed partial class BurnStateVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class BurnStateVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

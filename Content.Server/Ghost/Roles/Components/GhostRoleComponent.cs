@@ -4,7 +4,7 @@ using Robust.Server.Player;
 namespace Content.Server.Ghost.Roles.Components
 {
     [Access(typeof(GhostRoleSystem))]
-    public abstract partial class GhostRoleComponent : Component
+    public abstract class GhostRoleComponent : Component
     {
         [DataField("name")] public string _roleName = "Unknown";
 

@@ -4,7 +4,7 @@ using Content.Shared.Shuttles.Components;
 namespace Content.Server.Shuttles.Components;
 
 [RegisterComponent, Access(typeof(ShuttleSystem))]
-public sealed partial class IFFConsoleComponent : Component
+public sealed class IFFConsoleComponent : Component
 {
     /// <summary>
     /// Flags that this console is allowed to set.

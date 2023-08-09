@@ -9,7 +9,7 @@ namespace Content.Client.CombatMode
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedCombatModeComponent))]
-    public sealed partial class CombatModeComponent : SharedCombatModeComponent
+    public sealed class CombatModeComponent : SharedCombatModeComponent
     {
         [Dependency] private readonly IPlayerManager _playerManager = default!;
 

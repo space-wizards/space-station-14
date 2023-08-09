@@ -4,7 +4,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public sealed partial class DumpCanisterBehavior : IThresholdBehavior
+    public sealed class DumpCanisterBehavior : IThresholdBehavior
     {
         public void Execute(EntityUid owner, DestructibleSystem system)
         {

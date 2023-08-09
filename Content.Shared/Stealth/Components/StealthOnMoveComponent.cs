@@ -7,7 +7,7 @@ namespace Content.Shared.Stealth.Components
     ///     based on the entity's (lack of) movement.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class StealthOnMoveComponent : Component
+    public sealed class StealthOnMoveComponent : Component
     {
         /// <summary>
         /// Rate that effects how fast an entity's visibility passively changes.

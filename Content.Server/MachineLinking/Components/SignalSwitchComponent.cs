@@ -9,7 +9,7 @@ namespace Content.Server.MachineLinking.Components
     ///     same port regardless of its state.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class SignalSwitchComponent : Component
+    public sealed class SignalSwitchComponent : Component
     {
         /// <summary>
         ///     The port that gets signaled when the switch turns on.

@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Dice
 {
     [RegisterComponent, Access(typeof(DiceSystem))]
-    public sealed partial class DiceComponent : Component
+    public sealed class DiceComponent : Component
     {
         [DataField("sound")]
         public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("Dice");

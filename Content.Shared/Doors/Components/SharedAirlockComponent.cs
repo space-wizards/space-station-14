@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
-public abstract partial class SharedAirlockComponent : Component
+public abstract class SharedAirlockComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("safety")]
@@ -16,7 +16,7 @@ public abstract partial class SharedAirlockComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class AirlockComponentState : ComponentState
+public sealed class AirlockComponentState : ComponentState
 {
     public readonly bool Safety;
 

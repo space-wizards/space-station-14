@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Pointing.Components
 {
     [NetworkedComponent]
-    public abstract partial class SharedRoguePointingArrowComponent : Component
+    public abstract class SharedRoguePointingArrowComponent : Component
     {
     }
 

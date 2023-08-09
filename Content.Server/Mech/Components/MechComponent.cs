@@ -11,7 +11,7 @@ namespace Content.Server.Mech.Components;
 /// <inheritdoc/>
 [RegisterComponent, NetworkedComponent]
 [ComponentReference(typeof(SharedMechComponent))]
-public sealed partial class MechComponent : SharedMechComponent
+public sealed class MechComponent : SharedMechComponent
 {
     /// <summary>
     /// How long it takes to enter the mech.

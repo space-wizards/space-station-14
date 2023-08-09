@@ -4,4 +4,4 @@ namespace Content.Shared.Weapons.Ranged.Components;
 /// Chamber + mags in one package. If you need just magazine then use <see cref="MagazineAmmoProviderComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed partial class ChamberMagazineAmmoProviderComponent : MagazineAmmoProviderComponent {}
+public sealed class ChamberMagazineAmmoProviderComponent : MagazineAmmoProviderComponent {}

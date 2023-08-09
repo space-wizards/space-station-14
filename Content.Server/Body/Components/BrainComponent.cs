@@ -3,7 +3,7 @@
 namespace Content.Server.Body.Components
 {
     [RegisterComponent, Access(typeof(BrainSystem))]
-    public sealed partial class BrainComponent : Component
+    public sealed class BrainComponent : Component
     {
     }
 }

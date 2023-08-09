@@ -230,5 +230,5 @@ public enum VehicleVisuals : byte
 /// <summary>
 /// Raised when someone honks a vehicle horn
 /// </summary>
-public sealed partial class HonkActionEvent : InstantActionEvent { }
+public sealed class HonkActionEvent : InstantActionEvent { }
 

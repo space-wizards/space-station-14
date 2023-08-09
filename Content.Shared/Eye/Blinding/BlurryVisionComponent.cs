@@ -4,7 +4,7 @@ namespace Content.Shared.Eye.Blinding
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed partial class BlurryVisionComponent : Component
+    public sealed class BlurryVisionComponent : Component
     {
         [DataField("mangitude")]
         public float Magnitude = 1f;

@@ -3,7 +3,7 @@ using Content.Shared.Damage;
 namespace Content.Server.Bed.Components
 {
     [RegisterComponent]
-    public sealed partial class HealOnBuckleComponent : Component
+    public sealed class HealOnBuckleComponent : Component
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

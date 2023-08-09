@@ -76,7 +76,7 @@ namespace Content.Shared.Tabletop
 
 
         [Serializable, NetSerializable]
-        public sealed partial class TabletopDraggableComponentState : ComponentState
+        public sealed class TabletopDraggableComponentState : ComponentState
         {
             public NetUserId? DraggingPlayer;
 

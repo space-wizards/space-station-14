@@ -9,7 +9,7 @@ namespace Content.Server.Doors.Components
     /// retaining pressure..
     /// </summary>
     [RegisterComponent]
-    public sealed partial class FirelockComponent : Component
+    public sealed class FirelockComponent : Component
     {
         /// <summary>
         /// Pry time modifier to be used when the firelock is currently closed due to fire or pressure.

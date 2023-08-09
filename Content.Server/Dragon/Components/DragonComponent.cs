@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Dragon
 {
     [RegisterComponent]
-    public sealed partial class DragonComponent : Component
+    public sealed class DragonComponent : Component
     {
         /// <summary>
         /// The chemical ID injected upon devouring
@@ -124,7 +124,7 @@ namespace Content.Server.Dragon
         public Container DragonStomach = default!;
     }
 
-    public sealed partial class DragonDevourActionEvent : EntityTargetActionEvent {}
+    public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
-    public sealed partial class DragonSpawnRiftActionEvent : InstantActionEvent {}
+    public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }

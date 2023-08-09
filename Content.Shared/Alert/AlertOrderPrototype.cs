@@ -7,7 +7,7 @@ namespace Content.Shared.Alert
     /// </summary>
     [Prototype("alertOrder")]
     [DataDefinition]
-    public sealed partial class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
+    public sealed class AlertOrderPrototype : IPrototype, IComparer<AlertPrototype>
     {
         [ViewVariables]
         [IdDataFieldAttribute]

@@ -6,7 +6,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 ///     Activates artifact when it surrounded by certain gas.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ArtifactGasTriggerComponent : Component
+public sealed class ArtifactGasTriggerComponent : Component
 {
     /// <summary>
     ///     List of possible activation gases to pick on startup.

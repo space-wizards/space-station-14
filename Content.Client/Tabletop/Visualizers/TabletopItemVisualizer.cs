@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 namespace Content.Client.Tabletop.Visualizers
 {
     [UsedImplicitly]
-    public sealed partial class TabletopItemVisualizer : AppearanceVisualizer
+    public sealed class TabletopItemVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent appearance)

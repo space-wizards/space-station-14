@@ -7,7 +7,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class SpillBehavior : IThresholdBehavior
+    public sealed class SpillBehavior : IThresholdBehavior
     {
         [DataField("solution")]
         public string? Solution;

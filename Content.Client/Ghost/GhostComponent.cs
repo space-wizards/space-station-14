@@ -7,7 +7,7 @@ namespace Content.Client.Ghost
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGhostComponent))]
-    public sealed partial class GhostComponent : SharedGhostComponent
+    public sealed class GhostComponent : SharedGhostComponent
     {
         public bool IsAttached { get; set; }
 
@@ -45,9 +45,9 @@ namespace Content.Client.Ghost
         };
     }
 
-    public sealed partial class ToggleLightingActionEvent : InstantActionEvent { };
+    public sealed class ToggleLightingActionEvent : InstantActionEvent { };
 
-    public sealed partial class ToggleFoVActionEvent : InstantActionEvent { };
+    public sealed class ToggleFoVActionEvent : InstantActionEvent { };
 
-    public sealed partial class ToggleGhostsActionEvent : InstantActionEvent { };
+    public sealed class ToggleGhostsActionEvent : InstantActionEvent { };
 }

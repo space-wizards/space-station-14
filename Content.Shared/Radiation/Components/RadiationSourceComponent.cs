@@ -4,7 +4,7 @@ namespace Content.Shared.Radiation.Components;
 ///     Irradiate all objects in range.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RadiationSourceComponent : Component
+public sealed class RadiationSourceComponent : Component
 {
     /// <summary>
     ///     Radiation intensity in center of the source in rads per second.

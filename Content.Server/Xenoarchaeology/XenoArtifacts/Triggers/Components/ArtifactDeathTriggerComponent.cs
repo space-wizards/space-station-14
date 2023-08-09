@@ -4,7 +4,7 @@
 /// Triggers when a nearby entity dies
 /// </summary>
 [RegisterComponent]
-public sealed partial class ArtifactDeathTriggerComponent : Component
+public sealed class ArtifactDeathTriggerComponent : Component
 {
     /// <summary>
     /// How close to the death the artifact has to be for it to trigger.

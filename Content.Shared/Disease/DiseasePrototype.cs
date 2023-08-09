@@ -9,7 +9,7 @@ namespace Content.Shared.Disease
     /// </summary>
     [Prototype("disease")]
     [DataDefinition]
-    public sealed partial class DiseasePrototype : IPrototype, IInheritingPrototype
+    public sealed class DiseasePrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

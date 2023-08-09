@@ -4,4 +4,4 @@ namespace Content.Client.Access.Components;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedIdCardConsoleComponent))]
-public sealed partial class IdCardConsoleComponent : SharedIdCardConsoleComponent {}
+public sealed class IdCardConsoleComponent : SharedIdCardConsoleComponent {}

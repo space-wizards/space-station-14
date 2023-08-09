@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Cloning.Components
 {
     [RegisterComponent]
-    public sealed partial class CloningPodComponent : Component
+    public sealed class CloningPodComponent : Component
     {
         public const string PodPort = "CloningPodReceiver";
 

@@ -388,7 +388,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     protected abstract void CreateEffect(EntityUid uid, MuzzleFlashEvent message, EntityUid? user = null);
 
     [Serializable, NetSerializable]
-    protected sealed partial class GunComponentState : ComponentState
+    protected sealed class GunComponentState : ComponentState
     {
         public Angle CurrentAngle;
         public Angle MinAngle;

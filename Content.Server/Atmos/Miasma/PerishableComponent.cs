@@ -7,7 +7,7 @@ namespace Content.Server.Atmos.Miasma
     /// This makes mobs eventually start rotting when they die.
     /// It may be expanded to food at some point, but it's just for mobs right now.
     /// </summary>
-    public sealed partial class PerishableComponent : Component
+    public sealed class PerishableComponent : Component
     {
         /// <summary>
         /// Is this progressing?

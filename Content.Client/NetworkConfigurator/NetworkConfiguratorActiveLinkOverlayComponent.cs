@@ -4,7 +4,7 @@ namespace Content.Client.NetworkConfigurator;
 /// This is used for...
 /// </summary>
 [RegisterComponent]
-public sealed partial class NetworkConfiguratorActiveLinkOverlayComponent : Component
+public sealed class NetworkConfiguratorActiveLinkOverlayComponent : Component
 {
     /// <summary>
     ///     The entities linked to this network configurator.

@@ -6,7 +6,7 @@ namespace Content.Shared.Sound.Components
     /// Simple sound emitter that emits sound on ThrowEvent
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class EmitSoundOnThrowComponent : BaseEmitSoundComponent
+    public sealed class EmitSoundOnThrowComponent : BaseEmitSoundComponent
     {
     }
 }

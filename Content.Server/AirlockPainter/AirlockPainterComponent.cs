@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.AirlockPainter
 {
     [RegisterComponent]
-    public sealed partial class AirlockPainterComponent : Component
+    public sealed class AirlockPainterComponent : Component
     {
         [DataField("spraySound")]
         public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");

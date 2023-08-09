@@ -12,7 +12,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ComponentInTile : IGraphCondition
+    public sealed class ComponentInTile : IGraphCondition
     {
         /// <summary>
         ///     If true, any entity on the tile must have the component.

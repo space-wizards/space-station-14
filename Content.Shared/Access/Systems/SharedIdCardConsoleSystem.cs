@@ -47,7 +47,7 @@ namespace Content.Shared.Access.Systems
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class IdCardConsoleComponentState : ComponentState
+        private sealed class IdCardConsoleComponentState : ComponentState
         {
             public List<string> AccessLevels;
 

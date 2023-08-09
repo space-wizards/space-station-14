@@ -10,7 +10,7 @@ namespace Content.Shared.Interaction.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedInteractionSystem))]
-public sealed partial class InteractionRelayComponent : Component
+public sealed class InteractionRelayComponent : Component
 {
     /// <summary>
     /// The entity the interactions are being relayed to.
@@ -23,7 +23,7 @@ public sealed partial class InteractionRelayComponent : Component
 /// Contains network state for <see cref="InteractionRelayComponent"/>
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class InteractionRelayComponentState : ComponentState
+public sealed class InteractionRelayComponentState : ComponentState
 {
     public EntityUid? RelayEntity;
 

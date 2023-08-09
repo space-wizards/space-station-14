@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Causes a random disease from a list, if the user is not already diseased.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class ChemCauseRandomDisease : ReagentEffect
+    public sealed class ChemCauseRandomDisease : ReagentEffect
     {
         /// <summary>
         /// A disease to choose from.

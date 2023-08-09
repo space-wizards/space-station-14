@@ -14,7 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Doors
 {
     [UsedImplicitly]
-    public sealed partial class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
+    public sealed class AirlockVisualizer : AppearanceVisualizer, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;

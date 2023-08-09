@@ -25,7 +25,7 @@ public abstract partial class SharedMoverController
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class MobMoverComponentState : ComponentState
+    private sealed class MobMoverComponentState : ComponentState
     {
         public float GrabRange;
         public float PushStrength;

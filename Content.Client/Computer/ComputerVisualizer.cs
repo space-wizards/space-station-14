@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Computer
 {
     [UsedImplicitly]
-    public sealed partial class ComputerVisualizer : AppearanceVisualizer
+    public sealed class ComputerVisualizer : AppearanceVisualizer
     {
         [DataField("key")]
         private string KeyboardState = "generic_key";

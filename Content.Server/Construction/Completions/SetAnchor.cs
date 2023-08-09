@@ -5,7 +5,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class SetAnchor : IGraphAction
+    public sealed class SetAnchor : IGraphAction
     {
         [DataField("value")] public bool Value { get; private set; } = true;
 

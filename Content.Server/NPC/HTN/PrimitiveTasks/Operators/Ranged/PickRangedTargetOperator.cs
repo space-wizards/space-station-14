@@ -6,7 +6,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 /// Selects a target for ranged combat.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class PickRangedTargetOperator : NPCCombatOperator
+public sealed class PickRangedTargetOperator : NPCCombatOperator
 {
     protected override bool IsRanged => true;
 

@@ -7,7 +7,7 @@ namespace Content.Server.Station.Components;
 ///     shuttles for multi-grid stations.
 /// </summary>
 [RegisterComponent, Access(typeof(GameTicker)), Obsolete("Performs the exact same function as BecomesStationComponent.")]
-public sealed partial class PartOfStationComponent : Component
+public sealed class PartOfStationComponent : Component
 {
     [DataField("id", required: true)]
     [ViewVariables(VVAccess.ReadWrite)]

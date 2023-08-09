@@ -12,7 +12,7 @@ namespace Content.Server.Cuffs.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedHandcuffComponent))]
-    public sealed partial class HandcuffComponent : SharedHandcuffComponent
+    public sealed class HandcuffComponent : SharedHandcuffComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;

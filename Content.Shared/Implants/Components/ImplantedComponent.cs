@@ -7,7 +7,7 @@ namespace Content.Shared.Implants.Components;
 /// Used in instances where mob info needs to be passed to the implant such as MobState triggers
 /// </summary>
 [RegisterComponent]
-public sealed partial class ImplantedComponent : Component
+public sealed class ImplantedComponent : Component
 {
     public Container ImplantContainer = default!;
 }

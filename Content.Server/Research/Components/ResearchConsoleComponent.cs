@@ -1,7 +1,7 @@
 namespace Content.Server.Research.Components;
 
 [RegisterComponent]
-public sealed partial class ResearchConsoleComponent : Component
+public sealed class ResearchConsoleComponent : Component
 {
 
 }

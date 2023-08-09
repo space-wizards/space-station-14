@@ -105,7 +105,7 @@ public abstract partial class SharedGunSystem
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class BatteryAmmoProviderComponentState : ComponentState
+    private sealed class BatteryAmmoProviderComponentState : ComponentState
     {
         public int Shots;
         public int MaxShots;

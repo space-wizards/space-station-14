@@ -6,7 +6,7 @@ namespace Content.Server.Sound.Components
     /// Rolls to play a sound every few seconds.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class SpamEmitSoundComponent : BaseEmitSoundComponent
+    public sealed class SpamEmitSoundComponent : BaseEmitSoundComponent
     {
         [DataField("accumulator")]
         public float Accumulator = 0f;

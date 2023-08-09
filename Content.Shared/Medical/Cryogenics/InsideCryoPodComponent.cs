@@ -4,7 +4,7 @@ namespace Content.Shared.Medical.Cryogenics;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed partial class InsideCryoPodComponent: Component
+public sealed class InsideCryoPodComponent: Component
 {
     [ViewVariables]
     [DataField("previousOffset")]

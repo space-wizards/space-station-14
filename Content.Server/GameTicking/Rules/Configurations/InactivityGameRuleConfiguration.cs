@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Configurations;
 /// Configures the <see cref="InactivityTimeRestartRuleSystem"/> game rule.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class InactivityGameRuleConfiguration : GameRuleConfiguration
+public sealed class InactivityGameRuleConfiguration : GameRuleConfiguration
 {
     public override string Id => "InactivityTimeRestart"; // The value for this in the system isn't static and can't be made static. RIP.
 

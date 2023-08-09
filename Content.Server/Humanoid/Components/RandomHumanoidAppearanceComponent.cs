@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.CharacterAppearance.Components;
 
 [RegisterComponent]
-public sealed partial class RandomHumanoidAppearanceComponent : Component
+public sealed class RandomHumanoidAppearanceComponent : Component
 {
     [DataField("randomizeName")] public bool RandomizeName = true;
 }

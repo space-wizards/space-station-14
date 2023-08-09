@@ -10,7 +10,7 @@ namespace Content.Server.Station.Components;
 /// Stores information about a station's job selection.
 /// </summary>
 [RegisterComponent, Access(typeof(StationJobsSystem)), PublicAPI]
-public sealed partial class StationJobsComponent : Component
+public sealed class StationJobsComponent : Component
 {
     /// <summary>
     /// Total *round-start* jobs at station start.

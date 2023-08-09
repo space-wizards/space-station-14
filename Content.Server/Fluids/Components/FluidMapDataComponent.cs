@@ -5,7 +5,7 @@ namespace Content.Server.Fluids.Components;
 
 [RegisterComponent]
 [Access(typeof(FluidSpreaderSystem))]
-public sealed partial class FluidMapDataComponent : Component
+public sealed class FluidMapDataComponent : Component
 {
     /// <summary>
     /// At what time will <see cref="FluidSpreaderSystem"/> be checked next

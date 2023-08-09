@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed partial class NetProbeUi : UIFragment
+public sealed class NetProbeUi : UIFragment
 {
     private NetProbeUiFragment? _fragment;
 

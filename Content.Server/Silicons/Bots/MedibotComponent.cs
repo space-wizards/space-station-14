@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 namespace Content.Server.Silicons.Bots
 {
     [RegisterComponent]
-    public sealed partial class MedibotComponent : Component
+    public sealed class MedibotComponent : Component
     {
         /// <summary>
         /// Med the bot will inject when UNDER the standard med damage threshold.

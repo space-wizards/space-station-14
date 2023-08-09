@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.Security
 {
     [UsedImplicitly]
-    public sealed partial class DeployableBarrierVisualizer : AppearanceVisualizer
+    public sealed class DeployableBarrierVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

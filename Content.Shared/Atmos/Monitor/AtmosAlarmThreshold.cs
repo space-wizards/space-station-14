@@ -7,7 +7,7 @@ namespace Content.Shared.Atmos.Monitor;
 // except for the range boundaries
 [Prototype("alarmThreshold")]
 [Serializable, NetSerializable]
-public sealed partial class AtmosAlarmThreshold : IPrototype, ISerializationHooks
+public sealed class AtmosAlarmThreshold : IPrototype, ISerializationHooks
 {
     [IdDataField]
     public string ID { get; } = default!;
@@ -240,7 +240,7 @@ public sealed partial class AtmosAlarmThreshold : IPrototype, ISerializationHook
     }
 
     [DataDefinition, Serializable]
-    public partial struct AlarmThresholdSetting
+    public struct AlarmThresholdSetting
     {
         [DataField("enabled")]
         public bool Enabled { get; set; } = false;

@@ -5,7 +5,7 @@ namespace Content.Server.Atmos.Components;
 /// </summary>
 /// <remarks>Honestly, no need to [Friend] this. It's just two simple data fields... Change them to your heart's content.</remarks>
 [RegisterComponent]
-public sealed partial class MapAtmosphereComponent : Component
+public sealed class MapAtmosphereComponent : Component
 {
     /// <summary>
     ///     The default GasMixture a map will have. Space mixture by default.

@@ -5,7 +5,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed partial class ConditionalAction : IGraphAction
+    public sealed class ConditionalAction : IGraphAction
     {
         [DataField("passUser")] public bool PassUser { get; }
 

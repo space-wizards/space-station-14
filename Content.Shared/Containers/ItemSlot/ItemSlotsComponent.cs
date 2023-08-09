@@ -15,7 +15,7 @@ namespace Content.Shared.Containers.ItemSlots
     [RegisterComponent]
     [Access(typeof(ItemSlotsSystem))]
     [NetworkedComponent]
-    public sealed partial class ItemSlotsComponent : Component
+    public sealed class ItemSlotsComponent : Component
     {
         /// <summary>
         ///     The dictionary that stores all of the item slots whose interactions will be managed by the <see
@@ -41,7 +41,7 @@ namespace Content.Shared.Containers.ItemSlots
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ItemSlotsComponentState : ComponentState
+    public sealed class ItemSlotsComponentState : ComponentState
     {
         public readonly Dictionary<string, ItemSlot> Slots;
 
@@ -58,7 +58,7 @@ namespace Content.Shared.Containers.ItemSlots
     [DataDefinition]
     [Access(typeof(ItemSlotsSystem))]
     [Serializable, NetSerializable]
-    public sealed partial class ItemSlot
+    public sealed class ItemSlot
     {
         public ItemSlot() { }
 

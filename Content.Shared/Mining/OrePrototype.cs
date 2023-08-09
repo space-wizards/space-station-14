@@ -8,7 +8,7 @@ namespace Content.Shared.Mining;
 /// </summary>
 [Prototype("ore")]
 [DataDefinition]
-public sealed partial class OrePrototype : IPrototype
+public sealed class OrePrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]

@@ -5,7 +5,7 @@ namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
 [Access(typeof(SurveillanceCameraSystem))]
-public sealed partial class SurveillanceCameraComponent : Component
+public sealed class SurveillanceCameraComponent : Component
 {
     // List of active viewers. This is for bookkeeping purposes,
     // so that when a camera shuts down, any entity viewing it

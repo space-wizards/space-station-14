@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Configurable
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class ConfigurationComponent : Component
+    public sealed class ConfigurationComponent : Component
     {
         [DataField("config")]
         public readonly Dictionary<string, string> Config = new();

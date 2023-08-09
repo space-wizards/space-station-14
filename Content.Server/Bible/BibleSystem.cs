@@ -242,7 +242,7 @@ namespace Content.Server.Bible
         }
     }
 
-    public sealed partial class SummonActionEvent : InstantActionEvent
+    public sealed class SummonActionEvent : InstantActionEvent
     {
 
     }

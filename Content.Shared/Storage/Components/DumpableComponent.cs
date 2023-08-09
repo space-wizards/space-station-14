@@ -7,7 +7,7 @@ namespace Content.Shared.Storage.Components
     /// or when interacting with it on a disposal unit or placeable surface.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class DumpableComponent : Component
+    public sealed class DumpableComponent : Component
     {
         /// <summary>
         /// How long each item adds to the doafter.

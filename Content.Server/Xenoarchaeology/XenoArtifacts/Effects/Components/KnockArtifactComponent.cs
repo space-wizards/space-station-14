@@ -4,7 +4,7 @@
 /// This is used for using the "knock" spell when the artifact is activated
 /// </summary>
 [RegisterComponent]
-public sealed partial class KnockArtifactComponent : Component
+public sealed class KnockArtifactComponent : Component
 {
     /// <summary>
     /// The range of the spell

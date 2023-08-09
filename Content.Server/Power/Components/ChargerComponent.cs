@@ -3,7 +3,7 @@ using Content.Shared.Power;
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed partial class ChargerComponent : Component
+    public sealed class ChargerComponent : Component
     {
         [ViewVariables]
         public CellChargerStatus Status;

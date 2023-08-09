@@ -9,7 +9,7 @@ namespace Content.Server.Humanoid.Components;
 ///     humanoid ingame.
 /// </summary>
 [RegisterComponent]
-public sealed partial class RandomHumanoidSpawnerComponent : Component
+public sealed class RandomHumanoidSpawnerComponent : Component
 {
     [DataField("settings", customTypeSerializer: typeof(PrototypeIdSerializer<RandomHumanoidSettingsPrototype>))]
     public string SettingsPrototypeId = default!;

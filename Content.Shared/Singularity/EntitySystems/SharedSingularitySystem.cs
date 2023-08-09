@@ -248,7 +248,7 @@ public abstract class SharedSingularitySystem : EntitySystem
     /// A state wrapper used to sync the singularity between the server and client.
     /// </summary>
     [Serializable, NetSerializable]
-    protected sealed partial class SingularityComponentState : ComponentState
+    protected sealed class SingularityComponentState : ComponentState
     {
         /// <summary>
         /// The level of the singularity to sync.

@@ -3,7 +3,7 @@
 namespace Content.Shared.Body.Organ;
 
 [Serializable, NetSerializable]
-public sealed partial class OrganComponentState : ComponentState
+public sealed class OrganComponentState : ComponentState
 {
     public readonly EntityUid? Body;
     public readonly OrganSlot? Parent;

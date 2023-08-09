@@ -4,6 +4,6 @@ namespace Content.Server.Suspicion;
 ///     Tag component meant for bookkeeping items spawned by the suspicion rule.
 /// </summary>
 [RegisterComponent]
-public sealed partial class SuspicionItemComponent : Component
+public sealed class SuspicionItemComponent : Component
 {
 }

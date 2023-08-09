@@ -1,7 +1,7 @@
 namespace Content.Shared.Emag.Components
 {
     [RegisterComponent]
-    public sealed partial class EmagComponent : Component
+    public sealed class EmagComponent : Component
     {
         [DataField("maxCharges"), ViewVariables(VVAccess.ReadWrite)]
         public int MaxCharges = 3;

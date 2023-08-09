@@ -6,7 +6,7 @@ using Content.Server.Ghost.Roles.Components;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class MakeSentient : ReagentEffect
+public sealed class MakeSentient : ReagentEffect
 {
     public override void Effect(ReagentEffectArgs args)
     {

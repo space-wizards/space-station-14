@@ -14,7 +14,7 @@ namespace Content.Shared.Weapons.Melee;
 /// When given to a mob lets them do unarmed attacks, or when given to an item lets someone wield it to do attacks.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class MeleeWeaponComponent : Component
+public sealed class MeleeWeaponComponent : Component
 {
     /// <summary>
     /// Should the melee weapon's damage stats be examinable.
@@ -141,7 +141,7 @@ public sealed class GetMeleeWeaponEvent : HandledEntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed partial class MeleeWeaponComponentState : ComponentState
+public sealed class MeleeWeaponComponentState : ComponentState
 {
     // None of the other data matters for client as they're not predicted.
 

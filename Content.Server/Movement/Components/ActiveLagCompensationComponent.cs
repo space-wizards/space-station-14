@@ -4,7 +4,7 @@ namespace Content.Server.Movement.Components;
 /// Track lag compensation components that may need to have their data culled for memory reasons.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ActiveLagCompensationComponent : Component
+public sealed class ActiveLagCompensationComponent : Component
 {
 
 }

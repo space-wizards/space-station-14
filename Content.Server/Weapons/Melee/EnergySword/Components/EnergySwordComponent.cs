@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Weapons.Melee.EnergySword.Components
 {
     [RegisterComponent]
-    internal sealed partial class EnergySwordComponent : Component
+    internal sealed class EnergySwordComponent : Component
     {
         public Color BladeColor = Color.DodgerBlue;
 

@@ -12,7 +12,7 @@ namespace Content.Shared.Foldable;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedFoldableSystem))]
-public sealed partial class FoldableComponent : Component
+public sealed class FoldableComponent : Component
 {
     [DataField("folded")]
     public bool IsFolded = false;
@@ -20,7 +20,7 @@ public sealed partial class FoldableComponent : Component
 
 // ahhh, the ol' "state thats just a copy of the component".
 [Serializable, NetSerializable]
-public sealed partial class FoldableComponentState : ComponentState
+public sealed class FoldableComponentState : ComponentState
 {
     public readonly bool IsFolded;
 

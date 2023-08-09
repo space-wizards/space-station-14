@@ -6,7 +6,7 @@ namespace Content.Server.Cargo.Components;
 /// Lets you remotely control the cargo shuttle.
 /// </summary>
 [RegisterComponent]
-public sealed partial class CargoPilotConsoleComponent : Component
+public sealed class CargoPilotConsoleComponent : Component
 {
     /// <summary>
     /// <see cref="ShuttleConsoleComponent"/> that we're proxied into.

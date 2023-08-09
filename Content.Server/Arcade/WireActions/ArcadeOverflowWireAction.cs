@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Arcade;
 
 [DataDefinition]
-public sealed partial class ArcadeOverflowWireAction : BaseToggleWireAction
+public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
 {
     private Color _color = Color.Red;
     private string _text = "LMTR";

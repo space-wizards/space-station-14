@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(FoodSystem))]
-    public sealed partial class FoodComponent : Component
+    public sealed class FoodComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";

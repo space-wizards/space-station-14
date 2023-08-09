@@ -4,4 +4,4 @@
 /// This is used for forcing someone to be disarmed 100% of the time.
 /// </summary>
 [RegisterComponent]
-public sealed partial class DisarmProneComponent : Component { }
+public sealed class DisarmProneComponent : Component { }

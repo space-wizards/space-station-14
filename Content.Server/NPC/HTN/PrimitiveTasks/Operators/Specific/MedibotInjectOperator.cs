@@ -10,7 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
-public sealed partial class MedibotInjectOperator : HTNOperator
+public sealed class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private ChatSystem _chat = default!;

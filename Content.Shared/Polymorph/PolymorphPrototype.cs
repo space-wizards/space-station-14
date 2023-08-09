@@ -9,7 +9,7 @@ namespace Content.Shared.Polymorph
     /// </summary>
     [Prototype("polymorph")]
     [DataDefinition]
-    public sealed partial class PolymorphPrototype : IPrototype, IInheritingPrototype
+    public sealed class PolymorphPrototype : IPrototype, IInheritingPrototype
     {
         [ViewVariables]
         [IdDataFieldAttribute]

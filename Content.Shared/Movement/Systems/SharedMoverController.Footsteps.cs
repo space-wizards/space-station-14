@@ -28,7 +28,7 @@ public abstract partial class SharedMoverController
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class FootstepModifierComponentState : ComponentState
+    private sealed class FootstepModifierComponentState : ComponentState
     {
         public SoundSpecifier Sound = default!;
     }

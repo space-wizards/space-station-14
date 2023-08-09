@@ -122,7 +122,7 @@ namespace Content.Shared.Access.Systems
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class AccessComponentState : ComponentState
+        private sealed class AccessComponentState : ComponentState
         {
             public HashSet<string> Tags = new();
             public HashSet<string> Groups = new();

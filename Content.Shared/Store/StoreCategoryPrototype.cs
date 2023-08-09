@@ -8,7 +8,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Prototype("storeCategory")]
 [Serializable, NetSerializable, DataDefinition]
-public sealed partial class StoreCategoryPrototype : IPrototype
+public sealed class StoreCategoryPrototype : IPrototype
 {
     private string _name = string.Empty;
 

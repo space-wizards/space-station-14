@@ -6,7 +6,7 @@ namespace Content.Shared.DeviceNetwork;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedDeviceListSystem))]
-public sealed partial class DeviceListComponent : Component
+public sealed class DeviceListComponent : Component
 {
     /// <summary>
     /// The list of devices can or can't connect to, depending on the <see cref="IsAllowList"/> field.
@@ -37,7 +37,7 @@ public sealed partial class DeviceListComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DeviceListComponentState : ComponentState
+public sealed class DeviceListComponentState : ComponentState
 {
     public readonly HashSet<EntityUid> Devices;
     public readonly bool IsAllowList;

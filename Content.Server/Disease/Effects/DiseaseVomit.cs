@@ -8,7 +8,7 @@ namespace Content.Server.Disease.Effects
     /// Forces you to vomit.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class DiseaseVomit : DiseaseEffect
+    public sealed class DiseaseVomit : DiseaseEffect
     {
         /// How many units of thirst to add each time we vomit
         [DataField("thirstAmount")]

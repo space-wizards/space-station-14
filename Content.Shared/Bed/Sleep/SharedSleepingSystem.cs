@@ -46,9 +46,9 @@ namespace Content.Server.Bed.Sleep
 }
 
 
-public sealed partial class SleepActionEvent : InstantActionEvent {}
+public sealed class SleepActionEvent : InstantActionEvent {}
 
-public sealed partial class WakeActionEvent : InstantActionEvent {}
+public sealed class WakeActionEvent : InstantActionEvent {}
 
 /// <summary>
 /// Raised on an entity when they fall asleep or wake up.

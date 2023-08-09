@@ -6,7 +6,7 @@ namespace Content.Server.Body.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedBodyScannerComponent))]
-    public sealed partial class BodyScannerComponent : SharedBodyScannerComponent
+    public sealed class BodyScannerComponent : SharedBodyScannerComponent
     {
         [ViewVariables] private BoundUserInterface? UserInterface => Owner.GetUIOrNull(BodyScannerUiKey.Key);
         protected override void Initialize()

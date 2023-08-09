@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public sealed partial class MachinePartComponent : Component
+    public sealed class MachinePartComponent : Component
     {
         [DataField("part", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string PartType { get; private set; } = default!;

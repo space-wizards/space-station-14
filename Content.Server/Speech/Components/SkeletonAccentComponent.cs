@@ -4,7 +4,7 @@
 ///     Rattle me bones!
 /// </summary>
 [RegisterComponent]
-public sealed partial class SkeletonAccentComponent : Component
+public sealed class SkeletonAccentComponent : Component
 {
     /// <summary>
     ///     Chance that the message will be appended with "ACK ACK!"

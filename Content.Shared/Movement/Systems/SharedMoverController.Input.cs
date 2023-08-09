@@ -498,7 +498,7 @@ namespace Content.Shared.Movement.Systems
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class InputMoverComponentState : ComponentState
+        private sealed class InputMoverComponentState : ComponentState
         {
             public MoveButtons Buttons { get; }
             public readonly bool CanMove;

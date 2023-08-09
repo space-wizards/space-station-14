@@ -6,7 +6,7 @@ namespace Content.Shared.CombatMode.Pacification
     /// Status effect that disables combat mode.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class PacifiedComponent : Component
+    public sealed class PacifiedComponent : Component
     {
 
     }

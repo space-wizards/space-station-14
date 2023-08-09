@@ -4,7 +4,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class Oxygenate : ReagentEffect
+public sealed class Oxygenate : ReagentEffect
 {
     [DataField("factor")]
     public float Factor = 1f;

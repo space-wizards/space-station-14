@@ -87,7 +87,7 @@ namespace Content.Benchmarks
             return count;
         }
 
-        private sealed partial class DummyComponent : Component
+        private sealed class DummyComponent : Component
         {
         }
     }

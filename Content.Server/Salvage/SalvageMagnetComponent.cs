@@ -10,7 +10,7 @@ namespace Content.Server.Salvage
     /// </summary>
     [NetworkedComponent, RegisterComponent]
     [Access(typeof(SalvageSystem))]
-    public sealed partial class SalvageMagnetComponent : SharedSalvageMagnetComponent
+    public sealed class SalvageMagnetComponent : SharedSalvageMagnetComponent
     {
         /// <summary>
         ///     Offset relative to magnet used as centre of the placement circle.

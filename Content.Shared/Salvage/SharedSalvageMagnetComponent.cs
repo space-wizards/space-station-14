@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Salvage;
 
-public abstract partial class SharedSalvageMagnetComponent : Component {}
+public abstract class SharedSalvageMagnetComponent : Component {}
 
 [Serializable, NetSerializable]
 public enum SalvageMagnetVisuals : byte

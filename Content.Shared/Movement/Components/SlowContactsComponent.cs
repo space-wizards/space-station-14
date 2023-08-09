@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Movement.Components;
 
 [NetworkedComponent, RegisterComponent]
-public sealed partial class SlowContactsComponent : Component
+public sealed class SlowContactsComponent : Component
 {
     [DataField("walkSpeedModifier")]
     public float WalkSpeedModifier { get; set; } = 1.0f;
@@ -18,7 +18,7 @@ public sealed partial class SlowContactsComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed partial class SlowContactsComponentState : ComponentState
+public sealed class SlowContactsComponentState : ComponentState
 {
     public readonly float WalkSpeedModifier;
 

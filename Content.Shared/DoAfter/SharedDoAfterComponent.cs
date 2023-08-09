@@ -6,12 +6,12 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.DoAfter
 {
     [NetworkedComponent()]
-    public abstract partial class SharedDoAfterComponent : Component
+    public abstract class SharedDoAfterComponent : Component
     {
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class DoAfterComponentState : ComponentState
+    public sealed class DoAfterComponentState : ComponentState
     {
         public List<ClientDoAfter> DoAfters { get; }
 

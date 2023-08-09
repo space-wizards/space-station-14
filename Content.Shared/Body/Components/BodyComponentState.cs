@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Body.Components;
 
 [Serializable, NetSerializable]
-public sealed partial class BodyComponentState : ComponentState
+public sealed class BodyComponentState : ComponentState
 {
     public readonly BodyPartSlot? Root;
     public readonly SoundSpecifier GibSound;

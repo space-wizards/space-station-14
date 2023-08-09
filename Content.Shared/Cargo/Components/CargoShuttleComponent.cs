@@ -6,7 +6,7 @@ namespace Content.Shared.Cargo.Components;
 /// Present on cargo shuttles to provide metadata such as preventing spam calling.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedCargoSystem))]
-public sealed partial class CargoShuttleComponent : Component
+public sealed class CargoShuttleComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("nextCall")]
     public TimeSpan? NextCall;

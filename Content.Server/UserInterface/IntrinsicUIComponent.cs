@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.UserInterface;
 
 [RegisterComponent]
-public sealed partial class IntrinsicUIComponent : Component, ISerializationHooks
+public sealed class IntrinsicUIComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// List of UIs and their actions that this entity has.
@@ -25,7 +25,7 @@ public sealed partial class IntrinsicUIComponent : Component, ISerializationHook
 }
 
 [DataDefinition]
-public partial struct IntrinsicUIEntry
+public struct IntrinsicUIEntry
 {
     [ViewVariables] public Enum? Key { get; set; } = null;
 

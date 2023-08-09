@@ -20,7 +20,7 @@ namespace Content.Server.Containers;
 ///     cref="EntitySpawnCollection.GetSpawns"/>, which is also used by several other systems.
 /// </remarks>
 [RegisterComponent]
-public sealed partial class ContainerFillComponent : Component
+public sealed class ContainerFillComponent : Component
 {
     [DataField("containers", customTypeSerializer:typeof(ContainerFillSerializer))]
     public readonly Dictionary<string, List<string>> Containers = new();

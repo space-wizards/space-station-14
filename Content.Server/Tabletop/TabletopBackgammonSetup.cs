@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed partial class TabletopBackgammonSetup : TabletopSetup
+    public sealed class TabletopBackgammonSetup : TabletopSetup
     {
         [DataField("boardPrototype")]
         public string BackgammonBoardPrototype { get; } = "BackgammonBoardTabletop";

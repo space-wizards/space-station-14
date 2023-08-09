@@ -6,7 +6,7 @@ namespace Content.Shared.Humanoid.Markings;
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed partial class MarkingPoints
+public sealed class MarkingPoints
 {
     [DataField("points", required: true)]
     public int Points = 0;

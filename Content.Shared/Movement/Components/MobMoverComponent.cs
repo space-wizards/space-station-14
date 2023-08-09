@@ -8,7 +8,7 @@ namespace Content.Shared.Movement.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed partial class MobMoverComponent : Component
+    public sealed class MobMoverComponent : Component
     {
         private float _stepSoundDistance;
         [DataField("grabRange")] public float GrabRange = 1.0f;

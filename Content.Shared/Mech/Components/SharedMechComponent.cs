@@ -11,7 +11,7 @@ namespace Content.Shared.Mech.Components;
 /// A large, pilotable machine that has equipment that is
 /// powered via an internal battery.
 /// </summary>
-public abstract partial class SharedMechComponent : Component
+public abstract class SharedMechComponent : Component
 {
     /// <summary>
     /// How much "health" the mech has left.
@@ -121,7 +121,7 @@ public abstract partial class SharedMechComponent : Component
 /// Contains network state for <see cref="SharedMechComponent"/>.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed partial class MechComponentState : ComponentState
+public sealed class MechComponentState : ComponentState
 {
     public FixedPoint2 Integrity;
     public FixedPoint2 MaxIntegrity;

@@ -1,7 +1,7 @@
 namespace Content.Server.Shuttles.Components;
 
 [RegisterComponent]
-public sealed partial class EmergencyShuttleConsoleComponent : Component
+public sealed class EmergencyShuttleConsoleComponent : Component
 {
     // TODO: Okay doing it by string is kinda suss but also ID card tracking doesn't seem to be robust enough
 

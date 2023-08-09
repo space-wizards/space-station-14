@@ -5,7 +5,7 @@ namespace Content.Server.Power.Components
 {
 
     [RegisterComponent]
-    public sealed partial class UpgradeBatteryComponent : Component
+    public sealed class UpgradeBatteryComponent : Component
     {
         /// <summary>
         ///     The machine part that affects the power capacity.

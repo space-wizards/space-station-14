@@ -5,7 +5,7 @@ namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedGasAnalyzerComponent))]
-    public sealed partial class GasAnalyzerComponent : SharedGasAnalyzerComponent
+    public sealed class GasAnalyzerComponent : SharedGasAnalyzerComponent
     {
         [ViewVariables] public EntityUid? Target;
         [ViewVariables] public EntityUid User;
@@ -17,7 +17,7 @@ namespace Content.Server.Atmos.Components
     /// Used to keep track of which analyzers are active for update purposes
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ActiveGasAnalyzerComponent : Component
+    public sealed class ActiveGasAnalyzerComponent : Component
     {
         // Set to a tiny bit after the default because otherwise the user often gets a blank window when first using
         public float AccumulatedFrametime = 2.01f;

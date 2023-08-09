@@ -63,7 +63,7 @@ namespace Content.Shared.Movement.Systems
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class MovementSpeedModifierComponentState : ComponentState
+        private sealed class MovementSpeedModifierComponentState : ComponentState
         {
             public float BaseWalkSpeed;
             public float BaseSprintSpeed;

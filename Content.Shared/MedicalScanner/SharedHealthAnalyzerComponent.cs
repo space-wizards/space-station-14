@@ -2,7 +2,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
 {
-    public abstract partial class SharedHealthAnalyzerComponent : Component
+    public abstract class SharedHealthAnalyzerComponent : Component
     {
         /// <summary>
         ///     On interacting with an entity retrieves the entity UID for use with getting the current damage of the mob.

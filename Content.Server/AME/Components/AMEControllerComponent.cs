@@ -15,7 +15,7 @@ using Robust.Shared.Player;
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    public sealed partial class AMEControllerComponent : SharedAMEControllerComponent
+    public sealed class AMEControllerComponent : SharedAMEControllerComponent
     {
         [Dependency] private readonly IEntityManager _entities = default!;
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;

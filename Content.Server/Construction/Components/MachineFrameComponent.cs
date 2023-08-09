@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent]
-    public sealed partial class MachineFrameComponent : Component
+    public sealed class MachineFrameComponent : Component
     {
         public const string PartContainerName = "machine_parts";
         public const string BoardContainerName = "machine_board";
@@ -45,7 +45,7 @@ namespace Content.Server.Construction.Components
     }
 
     [DataDefinition]
-    public sealed partial class MachineDeconstructedEvent : EntityEventArgs
+    public sealed class MachineDeconstructedEvent : EntityEventArgs
     {
     }
 }

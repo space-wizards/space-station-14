@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed partial class AtmosMonitorComponent : Component
+public sealed class AtmosMonitorComponent : Component
 {
     // Whether this monitor can send alarms,
     // or recieve atmos command events.

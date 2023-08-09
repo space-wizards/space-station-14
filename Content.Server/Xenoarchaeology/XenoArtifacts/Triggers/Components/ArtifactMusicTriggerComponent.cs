@@ -4,7 +4,7 @@
 /// Triggers when an instrument is played nearby
 /// </summary>
 [RegisterComponent]
-public sealed partial class ArtifactMusicTriggerComponent : Component
+public sealed class ArtifactMusicTriggerComponent : Component
 {
     /// <summary>
     /// how close does the artifact have to be to the instrument to activate

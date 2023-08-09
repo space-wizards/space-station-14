@@ -7,7 +7,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Pointing.Components
 {
     [RegisterComponent]
-    public sealed partial class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
+    public sealed class RoguePointingArrowComponent : SharedRoguePointingArrowComponent
     {
     }
 }

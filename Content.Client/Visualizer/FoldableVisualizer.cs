@@ -7,7 +7,7 @@ using static Content.Shared.Foldable.SharedFoldableSystem;
 namespace Content.Client.Visualizer;
 
 
-public sealed partial class FoldableVisualizer : AppearanceVisualizer
+public sealed class FoldableVisualizer : AppearanceVisualizer
 {
     [DataField("key")]
     private string _key = default!;

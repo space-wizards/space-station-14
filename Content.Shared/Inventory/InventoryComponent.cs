@@ -2,7 +2,7 @@
 
 namespace Content.Shared.Inventory;
 
-public abstract partial class InventoryComponent : Component
+public abstract class InventoryComponent : Component
 {
     [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
     public string TemplateId { get; } = "human";

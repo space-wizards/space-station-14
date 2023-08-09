@@ -1,7 +1,7 @@
 namespace Content.Server.Research.Components;
 
 [RegisterComponent]
-public sealed partial class ResearchPointSourceComponent : Component
+public sealed class ResearchPointSourceComponent : Component
 {
     [DataField("pointspersecond"), ViewVariables(VVAccess.ReadWrite)]
     public int PointsPerSecond;

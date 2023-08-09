@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.Manager.Attributes;
 namespace Content.Client.Light.Visualizers
 {
     [DataDefinition]
-    public sealed partial class EmergencyLightVisualizer : AppearanceVisualizer
+    public sealed class EmergencyLightVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

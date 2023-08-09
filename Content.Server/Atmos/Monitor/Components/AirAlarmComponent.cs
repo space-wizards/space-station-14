@@ -6,7 +6,7 @@ using Robust.Shared.Network;
 namespace Content.Server.Atmos.Monitor.Components;
 
 [RegisterComponent]
-public sealed partial class AirAlarmComponent : Component
+public sealed class AirAlarmComponent : Component
 {
     [ViewVariables] public AirAlarmMode CurrentMode { get; set; } = AirAlarmMode.Filtering;
 

@@ -8,7 +8,7 @@ namespace Content.Server.Gatherable.Components
     ///     When interacting with an <see cref="GatherableComponent"/> allows it to spawn entities.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class GatheringToolComponent : Component
+    public sealed class GatheringToolComponent : Component
     {
         /// <summary>
         ///     Sound that is made once you completed gathering

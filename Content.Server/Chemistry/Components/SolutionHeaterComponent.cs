@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
-public sealed partial class SolutionHeaterComponent : Component
+public sealed class SolutionHeaterComponent : Component
 {
     public readonly string BeakerSlotId = "beakerSlot";
 

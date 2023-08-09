@@ -8,7 +8,7 @@ namespace Content.Server.Disease.Components
     /// For mouth swabs used to collect and process
     /// disease samples.
     /// </summary>
-    public sealed partial class DiseaseSwabComponent : Component
+    public sealed class DiseaseSwabComponent : Component
     {
         /// <summary>
         /// How long it takes to swab someone.

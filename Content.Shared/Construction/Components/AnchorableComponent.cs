@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Components
 {
     [RegisterComponent, Access(typeof(SharedAnchorableSystem))]
-    public sealed partial class AnchorableComponent : Component
+    public sealed class AnchorableComponent : Component
     {
         [DataField("tool", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string Tool { get; private set; } = "Anchoring";

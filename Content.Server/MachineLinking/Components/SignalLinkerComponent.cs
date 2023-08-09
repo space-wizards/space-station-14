@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.MachineLinking.Components
 {
     [RegisterComponent]
-    public sealed partial class SignalLinkerComponent : Component
+    public sealed class SignalLinkerComponent : Component
     {
         [ViewVariables]
         public EntityUid? SavedTransmitter;

@@ -1,6 +1,6 @@
 ﻿namespace Content.Shared.Administration.Components;
 
-public abstract partial class SharedKillSignComponent : Component
+public abstract class SharedKillSignComponent : Component
 {
 
 }

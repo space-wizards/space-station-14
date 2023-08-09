@@ -335,7 +335,7 @@ public sealed class StaminaSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class StaminaComponentState : ComponentState
+    private sealed class StaminaComponentState : ComponentState
     {
         public bool Critical;
         public float Decay;

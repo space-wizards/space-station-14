@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Recycling.Components
 {
     [RegisterComponent, Access(typeof(RecyclerSystem))]
-    public sealed partial class RecyclableComponent : Component
+    public sealed class RecyclableComponent : Component
     {
         /// <summary>
         ///     The prototype that will be spawned on recycle.

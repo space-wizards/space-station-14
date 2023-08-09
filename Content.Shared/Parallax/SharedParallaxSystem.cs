@@ -9,7 +9,7 @@ namespace Content.Shared.Parallax;
 public abstract class SharedParallaxSystem: EntitySystem
 {
     [Serializable, NetSerializable]
-    protected sealed partial class ParallaxComponentState : ComponentState
+    protected sealed class ParallaxComponentState : ComponentState
     {
         public string Parallax = string.Empty;
     }

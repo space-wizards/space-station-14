@@ -3,7 +3,7 @@ using Content.Shared.Whitelist;
 namespace Content.Server.Labels.Components
 {
     [RegisterComponent]
-    public sealed partial class HandLabelerComponent : Component
+    public sealed class HandLabelerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("assignedLabel")]

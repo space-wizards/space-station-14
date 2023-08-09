@@ -8,13 +8,13 @@ namespace Content.Shared.Chemistry.Components
     /// Shared class for injectors & syringes
     /// </summary>
     [NetworkedComponent, ComponentProtoName("Injector")]
-    public abstract partial class SharedInjectorComponent : Component
+    public abstract class SharedInjectorComponent : Component
     {
         /// <summary>
         /// Component data used for net updates. Used by client for item status ui
         /// </summary>
         [Serializable, NetSerializable]
-        public sealed partial class InjectorComponentState : ComponentState
+        public sealed class InjectorComponentState : ComponentState
         {
             public FixedPoint2 CurrentVolume { get; }
             public FixedPoint2 TotalVolume { get; }

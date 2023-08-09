@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Construction.Components;
 
 [RegisterComponent]
-public sealed partial class PartExchangerComponent : Component
+public sealed class PartExchangerComponent : Component
 {
     /// <summary>
     /// How long it takes to exchange the parts

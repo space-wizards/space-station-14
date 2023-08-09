@@ -11,7 +11,7 @@ namespace Content.Server.Light.Components
     ///     Can be reloaded by new light tubes or light bulbs
     /// </summary>
     [RegisterComponent]
-    public sealed partial class LightReplacerComponent : Component
+    public sealed class LightReplacerComponent : Component
     {
         [DataField("sound")]
         public SoundSpecifier Sound = new SoundPathSpecifier("/Audio/Weapons/click.ogg");
@@ -30,7 +30,7 @@ namespace Content.Server.Light.Components
 
         [Serializable]
         [DataDefinition]
-        public sealed partial class LightReplacerEntity
+        public sealed class LightReplacerEntity
         {
             [DataField("name", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
             public string PrototypeName = default!;

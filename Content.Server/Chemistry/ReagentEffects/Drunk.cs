@@ -3,7 +3,7 @@ using Content.Shared.Drunk;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class Drunk : ReagentEffect
+public sealed class Drunk : ReagentEffect
 {
     /// <summary>
     ///     BoozePower is how long each metabolism cycle will make the drunk effect last for.

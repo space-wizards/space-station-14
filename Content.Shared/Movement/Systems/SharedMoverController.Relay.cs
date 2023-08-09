@@ -124,13 +124,13 @@ public abstract partial class SharedMoverController
     #endregion
 
     [Serializable, NetSerializable]
-    private sealed partial class RelayInputMoverComponentState : ComponentState
+    private sealed class RelayInputMoverComponentState : ComponentState
     {
         public EntityUid? Entity;
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class MovementRelayTargetComponentState : ComponentState
+    private sealed class MovementRelayTargetComponentState : ComponentState
     {
         public List<EntityUid> Entities;
 

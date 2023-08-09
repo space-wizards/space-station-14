@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Clothing.Components
 {
     [RegisterComponent]
-    public sealed partial class LoadoutComponent : Component
+    public sealed class LoadoutComponent : Component
     {
         /// <summary>
         /// A list of starting gears, of which one will be given.

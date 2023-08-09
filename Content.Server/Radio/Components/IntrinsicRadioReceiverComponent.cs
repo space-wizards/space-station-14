@@ -6,6 +6,6 @@ namespace Content.Server.Radio.Components;
 ///     channels.
 /// </summary>
 [RegisterComponent]
-public sealed partial class IntrinsicRadioReceiverComponent : Component
+public sealed class IntrinsicRadioReceiverComponent : Component
 {
 }

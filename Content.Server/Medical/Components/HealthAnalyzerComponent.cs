@@ -13,7 +13,7 @@ namespace Content.Server.Medical.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedHealthAnalyzerComponent))]
-    public sealed partial class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
+    public sealed class HealthAnalyzerComponent : SharedHealthAnalyzerComponent
     {
         /// <summary>
         /// How long it takes to scan someone.

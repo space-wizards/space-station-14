@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Fax;
 
 [RegisterComponent]
-public sealed partial class FaxMachineComponent : Component
+public sealed class FaxMachineComponent : Component
 {
     /// <summary>
     /// Name with which the fax will be visible to others on the network
@@ -33,21 +33,21 @@ public sealed partial class FaxMachineComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("responsePings")]
     public bool ResponsePings { get; set; } = true;
-
+    
     /// <summary>
     /// Should admins be notified on message receive
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("notifyAdmins")]
     public bool NotifyAdmins { get; set; } = false;
-
+    
     /// <summary>
     /// Should that fax receive nuke codes send by admins. Probably should be captain fax only
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("receiveNukeCodes")]
     public bool ReceiveNukeCodes { get; set; } = false;
-
+    
     /// <summary>
     /// Is fax was emaaged
     /// </summary>
@@ -126,7 +126,7 @@ public sealed partial class FaxMachineComponent : Component
 }
 
 [DataDefinition]
-public sealed partial class FaxPrintout
+public sealed class FaxPrintout
 {
     [DataField("name")]
     public string Name { get; }

@@ -6,7 +6,7 @@ namespace Content.Server.Spawners.Components
 {
     [RegisterComponent]
     [ComponentReference(typeof(SharedSpawnPointComponent))]
-    public sealed partial class SpawnPointComponent : SharedSpawnPointComponent
+    public sealed class SpawnPointComponent : SharedSpawnPointComponent
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

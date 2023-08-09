@@ -11,7 +11,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// in order to analyze and destroy artifacts.
 /// </summary>
 [RegisterComponent]
-public sealed partial class ArtifactAnalyzerComponent : Component
+public sealed class ArtifactAnalyzerComponent : Component
 {
     /// <summary>
     /// How long it takes to analyze an artifact

@@ -10,7 +10,7 @@ namespace Content.Shared.Storage;
 /// </summary>
 [Serializable]
 [DataDefinition]
-public partial struct EntitySpawnEntry
+public struct EntitySpawnEntry
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

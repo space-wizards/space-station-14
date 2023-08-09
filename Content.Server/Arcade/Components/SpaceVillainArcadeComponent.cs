@@ -13,7 +13,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Arcade.Components
 {
     [RegisterComponent]
-    public sealed partial class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
+    public sealed class SpaceVillainArcadeComponent : SharedSpaceVillainArcadeComponent
     {
         [Dependency] private readonly IRobustRandom _random = null!;
 

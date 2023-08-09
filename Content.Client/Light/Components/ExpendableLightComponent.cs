@@ -7,7 +7,7 @@ namespace Content.Client.Light.Components
     ///     Component that represents a handheld expendable light which can be activated and eventually dies over time.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ExpendableLightComponent : SharedExpendableLightComponent
+    public sealed class ExpendableLightComponent : SharedExpendableLightComponent
     {
         public IPlayingAudioStream? PlayingStream { get; set; }
     }

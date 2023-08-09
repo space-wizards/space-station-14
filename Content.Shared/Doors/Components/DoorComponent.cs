@@ -13,7 +13,7 @@ namespace Content.Shared.Doors.Components;
 
 [NetworkedComponent]
 [RegisterComponent]
-public sealed partial class DoorComponent : Component, ISerializationHooks
+public sealed class DoorComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// The current state of the door -- whether it is open, closed, opening, or closing.
@@ -234,7 +234,7 @@ public enum DoorVisuals
 }
 
 [Serializable, NetSerializable]
-public sealed partial class DoorComponentState : ComponentState
+public sealed class DoorComponentState : ComponentState
 {
     public readonly DoorState DoorState;
     public readonly HashSet<EntityUid> CurrentlyCrushing;

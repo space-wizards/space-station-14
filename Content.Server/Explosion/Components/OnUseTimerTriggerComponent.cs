@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Explosion.Components
 {
     [RegisterComponent]
-    public sealed partial class OnUseTimerTriggerComponent : Component
+    public sealed class OnUseTimerTriggerComponent : Component
     {
         [DataField("delay")]
         public float Delay = 1f;

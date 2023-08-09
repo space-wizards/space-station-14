@@ -82,7 +82,7 @@ public abstract partial class SharedGravitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed partial class GravityShakeComponentState : ComponentState
+    protected sealed class GravityShakeComponentState : ComponentState
     {
         public int ShakeTimes;
         public TimeSpan NextShake;

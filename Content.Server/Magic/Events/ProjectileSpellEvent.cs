@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Magic.Events;
 
-public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent
+public sealed class ProjectileSpellEvent : WorldTargetActionEvent
 {
     /// <summary>
     /// What entity should be spawned.

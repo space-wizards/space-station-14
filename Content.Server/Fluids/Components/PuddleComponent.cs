@@ -9,7 +9,7 @@ namespace Content.Server.Fluids.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(PuddleSystem))]
-    public sealed partial class PuddleComponent : Component
+    public sealed class PuddleComponent : Component
     {
         public const string DefaultSolutionName = "puddle";
         private static readonly FixedPoint2 DefaultSlipThreshold = FixedPoint2.New(-1); //Not slippery by default. Set specific slipThresholds in YAML if you want your puddles to be slippery. Lower = more slippery, and zero means any volume can slip.

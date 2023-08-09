@@ -13,7 +13,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed partial class DisposalRouterComponent : DisposalJunctionComponent
+    public sealed class DisposalRouterComponent : DisposalJunctionComponent
     {
         public override string ContainerId => "DisposalRouter";
 

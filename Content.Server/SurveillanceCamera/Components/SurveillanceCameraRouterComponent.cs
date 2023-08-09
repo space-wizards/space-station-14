@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.SurveillanceCamera;
 
 [RegisterComponent]
-public sealed partial class SurveillanceCameraRouterComponent : Component
+public sealed class SurveillanceCameraRouterComponent : Component
 {
     [ViewVariables] public bool Active { get; set; }
 

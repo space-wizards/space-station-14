@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Morgue.Components;
 
 [RegisterComponent]
-public sealed partial class MorgueComponent : Component
+public sealed class MorgueComponent : Component
 {
     /// <summary>
     ///     Whether or not the morgue beeps if a living player is inside.

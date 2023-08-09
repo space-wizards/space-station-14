@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Disease.Effects
 {
     [UsedImplicitly]
-    public sealed partial class DiseasePolymorph : DiseaseEffect
+    public sealed class DiseasePolymorph : DiseaseEffect
     {
         [DataField("polymorphId", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PolymorphPrototype>))]
         [ViewVariables(VVAccess.ReadWrite)]

@@ -6,7 +6,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Gravity
 {
     [UsedImplicitly]
-    public sealed partial class GravityGeneratorVisualizer : AppearanceVisualizer
+    public sealed class GravityGeneratorVisualizer : AppearanceVisualizer
     {
         [DataField("spritemap")]
         private Dictionary<string, string> _rawSpriteMap

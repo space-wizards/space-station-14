@@ -7,7 +7,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Ranged;
 
-public sealed partial class RangedOperator : HTNOperator
+public sealed class RangedOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

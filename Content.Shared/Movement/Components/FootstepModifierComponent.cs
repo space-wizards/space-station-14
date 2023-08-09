@@ -7,7 +7,7 @@ namespace Content.Shared.Movement.Components
     /// Changes footstep sound
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class FootstepModifierComponent : Component
+    public sealed class FootstepModifierComponent : Component
     {
         [DataField("footstepSoundCollection", required: true)]
         public SoundSpecifier Sound = default!;

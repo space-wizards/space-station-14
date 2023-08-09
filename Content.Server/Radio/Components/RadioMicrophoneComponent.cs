@@ -10,7 +10,7 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadioDeviceSystem))]
-public sealed partial class RadioMicrophoneComponent : Component
+public sealed class RadioMicrophoneComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("broadcastChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]

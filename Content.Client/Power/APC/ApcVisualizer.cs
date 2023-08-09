@@ -8,7 +8,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Power.APC
 {
-    public sealed partial class ApcVisualizer : AppearanceVisualizer
+    public sealed class ApcVisualizer : AppearanceVisualizer
     {
         public static readonly Color LackColor = Color.FromHex("#d1332e");
         public static readonly Color ChargingColor = Color.FromHex("#2e8ad1");

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.MedicalScanner
 {
-    public abstract partial class SharedMedicalScannerComponent : Component, IDragDropOn
+    public abstract class SharedMedicalScannerComponent : Component, IDragDropOn
     {
         [Serializable, NetSerializable]
         public enum MedicalScannerVisuals

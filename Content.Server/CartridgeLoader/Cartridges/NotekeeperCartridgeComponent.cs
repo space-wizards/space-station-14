@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
-public sealed partial class NotekeeperCartridgeComponent : Component
+public sealed class NotekeeperCartridgeComponent : Component
 {
     /// <summary>
     /// The list of notes that got written down

@@ -2,7 +2,7 @@ namespace Content.Shared.Friction
 {
     [RegisterComponent]
     [Access(typeof(TileFrictionController))]
-    public sealed partial class TileFrictionModifierComponent : Component
+    public sealed class TileFrictionModifierComponent : Component
     {
         /// <summary>
         ///     Multiply the tilefriction cvar by this to get the body's actual tilefriction.

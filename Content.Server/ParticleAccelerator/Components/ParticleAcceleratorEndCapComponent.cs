@@ -2,7 +2,7 @@
 {
     [RegisterComponent]
     [ComponentReference(typeof(ParticleAcceleratorPartComponent))]
-    public sealed partial class ParticleAcceleratorEndCapComponent : ParticleAcceleratorPartComponent
+    public sealed class ParticleAcceleratorEndCapComponent : ParticleAcceleratorPartComponent
     {
     }
 }

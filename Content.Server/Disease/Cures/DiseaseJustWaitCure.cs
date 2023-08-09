@@ -6,7 +6,7 @@ namespace Content.Server.Disease.Cures
     /// Automatically removes the disease after a
     /// certain amount of time.
     /// </summary>
-    public sealed partial class DiseaseJustWaitCure : DiseaseCure
+    public sealed class DiseaseJustWaitCure : DiseaseCure
     {
         /// <summary>
         /// All of these are in seconds

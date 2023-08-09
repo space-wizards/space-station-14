@@ -10,7 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Configurations;
 
-public sealed partial class NukeopsRuleConfiguration : GameRuleConfiguration
+public sealed class NukeopsRuleConfiguration : GameRuleConfiguration
 {
     public override string Id => "Nukeops";
 

@@ -5,7 +5,7 @@ namespace Content.Server.AlertLevel;
 /// signify its alert level state.
 /// </summary>
 [RegisterComponent]
-public sealed partial class AlertLevelComponent : Component
+public sealed class AlertLevelComponent : Component
 {
     /// <summary>
     /// The current set of alert levels on the station.

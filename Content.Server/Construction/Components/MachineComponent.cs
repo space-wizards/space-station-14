@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Construction.Components
 {
     [RegisterComponent, ComponentProtoName("Machine")]
-    public sealed partial class MachineComponent : Component
+    public sealed class MachineComponent : Component
     {
         [DataField("board", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? BoardPrototype { get; private set; }

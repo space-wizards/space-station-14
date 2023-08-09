@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
-public sealed partial class NetProbeCartridgeComponent : Component
+public sealed class NetProbeCartridgeComponent : Component
 {
     /// <summary>
     /// The list of probed network devices

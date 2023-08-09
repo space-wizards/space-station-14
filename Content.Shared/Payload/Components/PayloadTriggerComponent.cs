@@ -18,7 +18,7 @@ namespace Content.Shared.Payload.Components;
 ///     network message), the trigger will be forwarded to the device that this entity is installed in (if any).
 /// </remarks>
 [RegisterComponent, NetworkedComponent]
-public sealed partial class PayloadTriggerComponent : Component
+public sealed class PayloadTriggerComponent : Component
 {
     /// <summary>
     ///     If true, triggering this entity will also cause the parent of this entity to be triggered.

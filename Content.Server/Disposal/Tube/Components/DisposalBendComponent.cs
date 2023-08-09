@@ -5,7 +5,7 @@ namespace Content.Server.Disposal.Tube.Components
     [RegisterComponent]
     [ComponentReference(typeof(IDisposalTubeComponent))]
     [ComponentReference(typeof(DisposalTubeComponent))]
-    public sealed partial class DisposalBendComponent : DisposalTubeComponent
+    public sealed class DisposalBendComponent : DisposalTubeComponent
     {
         public override string ContainerId => "DisposalBend";
 

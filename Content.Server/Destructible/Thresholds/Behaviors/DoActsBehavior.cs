@@ -2,7 +2,7 @@
 {
     [Serializable]
     [DataDefinition]
-    public sealed partial class DoActsBehavior : IThresholdBehavior
+    public sealed class DoActsBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     What acts should be triggered upon activation.

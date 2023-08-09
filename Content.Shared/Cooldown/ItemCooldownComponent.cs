@@ -8,7 +8,7 @@ namespace Content.Shared.Cooldown
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent()]
-    public sealed partial class ItemCooldownComponent : Component
+    public sealed class ItemCooldownComponent : Component
     {
         private TimeSpan? _cooldownEnd;
         private TimeSpan? _cooldownStart;
@@ -68,7 +68,7 @@ namespace Content.Shared.Cooldown
         }
 
         [Serializable, NetSerializable]
-        private sealed partial class ItemCooldownComponentState : ComponentState
+        private sealed class ItemCooldownComponentState : ComponentState
         {
             public TimeSpan? CooldownStart { get; set; }
             public TimeSpan? CooldownEnd { get; set; }

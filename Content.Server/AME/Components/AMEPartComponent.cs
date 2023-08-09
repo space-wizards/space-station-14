@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.AME.Components
 {
     [RegisterComponent]
-    public sealed partial class AMEPartComponent : Component
+    public sealed class AMEPartComponent : Component
     {
         [DataField("unwrapSound")]
         public SoundSpecifier UnwrapSound = new SoundPathSpecifier("/Audio/Effects/unwrap.ogg");

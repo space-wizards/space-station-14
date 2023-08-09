@@ -7,7 +7,7 @@ namespace Content.Server.Cabinet
     ///     Used for entities that can be opened, closed, and can hold one item. E.g., fire extinguisher cabinets.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class ItemCabinetComponent : Component
+    public sealed class ItemCabinetComponent : Component
     {
         /// <summary>
         ///     Sound to be played when the cabinet door is opened.

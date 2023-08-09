@@ -32,7 +32,7 @@ namespace Content.Shared.Projectiles
         }
 
         [NetSerializable, Serializable]
-        public sealed partial class ProjectileComponentState : ComponentState
+        public sealed class ProjectileComponentState : ComponentState
         {
             public ProjectileComponentState(EntityUid shooter, bool ignoreShooter)
             {

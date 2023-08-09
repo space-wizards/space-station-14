@@ -196,7 +196,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed partial class JetpackUserComponentState : ComponentState
+    protected sealed class JetpackUserComponentState : ComponentState
     {
         public EntityUid Jetpack;
     }

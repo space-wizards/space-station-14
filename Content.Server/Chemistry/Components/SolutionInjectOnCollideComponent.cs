@@ -7,7 +7,7 @@ namespace Content.Server.Chemistry.Components
     /// On colliding with an entity that has a bloodstream will dump its solution onto them.
     /// </summary>
     [RegisterComponent]
-    internal sealed partial class SolutionInjectOnCollideComponent : Component
+    internal sealed class SolutionInjectOnCollideComponent : Component
     {
 
         [ViewVariables(VVAccess.ReadWrite)]

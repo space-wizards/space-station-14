@@ -1,7 +1,7 @@
 ﻿namespace Content.Client.Cabinet;
 
 [RegisterComponent]
-public sealed partial class ItemCabinetVisualsComponent : Component
+public sealed class ItemCabinetVisualsComponent : Component
 {
     [DataField("openState", required: true)]
     public string OpenState = default!;

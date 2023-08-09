@@ -16,7 +16,7 @@ namespace Content.Server.Chemistry.Components
     /// Used to clone its owner repeatedly and group up them all so they behave like one unit, that way you can have
     /// effects that cover an area. Inherited by <see cref="SmokeSolutionAreaEffectComponent"/> and <see cref="FoamSolutionAreaEffectComponent"/>.
     /// </summary>
-    public abstract partial class SolutionAreaEffectComponent : Component
+    public abstract class SolutionAreaEffectComponent : Component
     {
         public const string SolutionName = "solutionArea";
 

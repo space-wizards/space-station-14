@@ -74,7 +74,7 @@ public abstract class SharedFlyBySoundSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed partial class FlyBySoundComponentState : ComponentState
+    private sealed class FlyBySoundComponentState : ComponentState
     {
         public SoundSpecifier Sound = default!;
         public float Range;

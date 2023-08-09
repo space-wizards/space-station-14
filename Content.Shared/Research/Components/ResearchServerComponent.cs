@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Research.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed partial class ResearchServerComponent : Component
+    public sealed class ResearchServerComponent : Component
     {
         /// <summary>
         /// The name of the server
@@ -42,7 +42,7 @@ namespace Content.Shared.Research.Components
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class ResearchServerState : ComponentState
+    public sealed class ResearchServerState : ComponentState
     {
         public string ServerName;
         public int Points;

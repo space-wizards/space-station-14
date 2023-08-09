@@ -5,7 +5,7 @@ namespace Content.Client.Explosion;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedExplosionVisualsComponent))]
-public sealed partial class ExplosionVisualsComponent : SharedExplosionVisualsComponent
+public sealed class ExplosionVisualsComponent : SharedExplosionVisualsComponent
 {
     public EntityUid LightEntity;
     /// <summary>

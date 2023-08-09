@@ -6,7 +6,7 @@ namespace Content.Client.Mech;
 /// <inheritdoc/>
 [RegisterComponent, NetworkedComponent]
 [ComponentReference(typeof(SharedMechComponent))]
-public sealed partial class MechComponent : SharedMechComponent
+public sealed class MechComponent : SharedMechComponent
 {
 
 }

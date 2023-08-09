@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.Components
     ///     Gives click behavior for transferring to/from other reagent containers.
     /// </summary>
     [RegisterComponent]
-    public sealed partial class SolutionTransferComponent : Component
+    public sealed class SolutionTransferComponent : Component
     {
         /// <summary>
         ///     The amount of solution to be transferred from this solution when clicking on other solutions with it.

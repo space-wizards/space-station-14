@@ -3,7 +3,7 @@
 namespace Content.Shared.AME
 {
     [Virtual]
-    public partial class SharedAMEShieldComponent : Component
+    public class SharedAMEShieldComponent : Component
     {
         [Serializable, NetSerializable]
         public enum AMEShieldVisuals

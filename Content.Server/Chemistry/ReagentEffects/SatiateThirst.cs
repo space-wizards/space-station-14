@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
     /// and to update it's thirst values.
     /// </summary>
-    public sealed partial class SatiateThirst : ReagentEffect
+    public sealed class SatiateThirst : ReagentEffect
     {
         /// How much thirst is satiated each metabolism tick. Not currently tied to
         /// rate or anything.

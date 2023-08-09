@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed partial class TransformableContainerComponent : Component
+    public sealed class TransformableContainerComponent : Component
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

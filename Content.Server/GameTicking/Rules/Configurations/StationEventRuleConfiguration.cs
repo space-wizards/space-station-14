@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking.Rules.Configurations;
 ///     game rules.
 /// </summary>
 [UsedImplicitly]
-public sealed partial class StationEventRuleConfiguration : GameRuleConfiguration
+public sealed class StationEventRuleConfiguration : GameRuleConfiguration
 {
     [DataField("id", required: true)]
     private string _id = default!;

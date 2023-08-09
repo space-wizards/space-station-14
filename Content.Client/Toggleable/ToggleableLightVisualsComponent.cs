@@ -11,7 +11,7 @@ namespace Content.Client.Toggleable;
 ///     visuals. This will modify the color of any attached point lights.
 /// </remarks>
 [RegisterComponent]
-public sealed partial class ToggleableLightVisualsComponent : Component
+public sealed class ToggleableLightVisualsComponent : Component
 {
     /// <summary>
     ///     Sprite layer that will have it's visibility toggled when this item is toggled.

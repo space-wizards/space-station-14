@@ -4,7 +4,7 @@ namespace Content.Server.Morgue.Components;
 /// used to track actively cooking crematoriums
 /// </summary>
 [RegisterComponent]
-public sealed partial class ActiveCrematoriumComponent : Component
+public sealed class ActiveCrematoriumComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float Accumulator = 0;

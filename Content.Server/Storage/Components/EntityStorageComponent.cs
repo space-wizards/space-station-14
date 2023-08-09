@@ -7,7 +7,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
-public sealed partial class EntityStorageComponent : Component, IGasMixtureHolder
+public sealed class EntityStorageComponent : Component, IGasMixtureHolder
 {
     public readonly float MaxSize = 1.0f; // maximum width or height of an entity allowed inside the storage.
     public const float GasMixVolume = 70f;

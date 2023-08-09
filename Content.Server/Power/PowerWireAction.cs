@@ -9,7 +9,7 @@ namespace Content.Server.Power;
 // Generic power wire action. Use on anything
 // that requires power.
 [DataDefinition]
-public sealed partial class PowerWireAction : BaseWireAction
+public sealed class PowerWireAction : BaseWireAction
 {
     [DataField("color")]
     private Color _statusColor = Color.Red;

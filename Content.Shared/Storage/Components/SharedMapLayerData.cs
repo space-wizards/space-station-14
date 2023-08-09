@@ -12,7 +12,7 @@ namespace Content.Shared.Storage.Components
 
     [Serializable]
     [DataDefinition]
-    public sealed partial class SharedMapLayerData
+    public sealed class SharedMapLayerData
     {
         public string Layer = string.Empty;
 

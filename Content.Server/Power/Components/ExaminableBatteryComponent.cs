@@ -1,6 +1,6 @@
 namespace Content.Server.Power.Components
 {
     [RegisterComponent]
-    public sealed partial class ExaminableBatteryComponent : Component
+    public sealed class ExaminableBatteryComponent : Component
     {}
 }

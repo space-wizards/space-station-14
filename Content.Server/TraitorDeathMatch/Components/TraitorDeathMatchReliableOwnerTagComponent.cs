@@ -3,7 +3,7 @@
 namespace Content.Server.TraitorDeathMatch.Components
 {
     [RegisterComponent]
-    public sealed partial class TraitorDeathMatchReliableOwnerTagComponent : Component
+    public sealed class TraitorDeathMatchReliableOwnerTagComponent : Component
     {
         [ViewVariables]
         public NetUserId? UserId { get; set; }

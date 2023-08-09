@@ -4,6 +4,6 @@ namespace Content.Server.Hands.Components;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedHandsComponent))]
-public sealed partial class HandsComponent : SharedHandsComponent
+public sealed class HandsComponent : SharedHandsComponent
 {
 }

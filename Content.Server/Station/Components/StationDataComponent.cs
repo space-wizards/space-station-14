@@ -8,7 +8,7 @@ namespace Content.Server.Station.Components;
 /// All station entities will have this component.
 /// </summary>
 [RegisterComponent, Access(typeof(StationSystem))]
-public sealed partial class StationDataComponent : Component
+public sealed class StationDataComponent : Component
 {
     /// <summary>
     /// The game map prototype, if any, associated with this station.

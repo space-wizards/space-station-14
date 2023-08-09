@@ -7,7 +7,7 @@ using Robust.Shared.IoC;
 namespace Content.Client.PowerCell
 {
     [UsedImplicitly]
-    public sealed partial class PowerChargerVisualizer : AppearanceVisualizer
+    public sealed class PowerChargerVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to your component being initialised instead.")]
         public override void InitializeEntity(EntityUid entity)

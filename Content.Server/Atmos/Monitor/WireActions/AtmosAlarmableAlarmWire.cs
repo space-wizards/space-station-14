@@ -7,7 +7,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Atmos.Monitor;
 
 [DataDefinition]
-public sealed partial class AtmosMonitorDeviceNetWire : BaseWireAction
+public sealed class AtmosMonitorDeviceNetWire : BaseWireAction
 {
     // whether or not this wire will send out an alarm upon
     // being pulsed

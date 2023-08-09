@@ -12,7 +12,7 @@ namespace Content.Server.Ghost.Roles.Components
     ///     Allows a ghost to take this role, spawning a new entity.
     /// </summary>
     [RegisterComponent, ComponentReference(typeof(GhostRoleComponent))]
-    public sealed partial class GhostRoleMobSpawnerComponent : GhostRoleComponent
+    public sealed class GhostRoleMobSpawnerComponent : GhostRoleComponent
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 

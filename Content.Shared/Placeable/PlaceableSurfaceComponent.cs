@@ -5,7 +5,7 @@ namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(PlaceableSurfaceSystem))]
-    public sealed partial class PlaceableSurfaceComponent : Component
+    public sealed class PlaceableSurfaceComponent : Component
     {
         [DataField("isPlaceable")]
         public bool IsPlaceable { get; set; } = true;
@@ -18,7 +18,7 @@ namespace Content.Shared.Placeable
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class PlaceableSurfaceComponentState : ComponentState
+    public sealed class PlaceableSurfaceComponentState : ComponentState
     {
         public readonly bool IsPlaceable;
         public readonly bool PlaceCentered;

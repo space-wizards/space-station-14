@@ -1,7 +1,7 @@
 namespace Content.Shared.Electrocution
 {
     [RegisterComponent]
-    public sealed partial class ElectrocutedComponent : Component
+    public sealed class ElectrocutedComponent : Component
     {
     }
 }

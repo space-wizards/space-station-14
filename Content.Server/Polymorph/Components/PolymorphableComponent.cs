@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Polymorph.Components
 {
     [RegisterComponent]
-    public sealed partial class PolymorphableComponent : Component
+    public sealed class PolymorphableComponent : Component
     {
         /// <summary>
         /// A list of all the polymorphs that the entity has.

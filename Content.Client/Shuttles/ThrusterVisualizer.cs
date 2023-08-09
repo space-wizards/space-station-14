@@ -5,7 +5,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Shuttles
 {
-    public sealed partial class ThrusterVisualizer : AppearanceVisualizer
+    public sealed class ThrusterVisualizer : AppearanceVisualizer
     {
         [Obsolete("Subscribe to AppearanceChangeEvent instead.")]
         public override void OnChangeData(AppearanceComponent component)

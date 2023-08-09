@@ -4,7 +4,7 @@ using Robust.Client.Graphics;
 namespace Content.Client.Fluids
 {
     [RegisterComponent]
-    public sealed partial class PuddleVisualizerComponent : Component
+    public sealed class PuddleVisualizerComponent : Component
     {
         // Whether the underlying solution color should be used. True in most cases.
         [DataField("recolor")] public bool Recolor = true;

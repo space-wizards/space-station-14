@@ -8,7 +8,7 @@ namespace Content.Shared.Follower.Components;
 /// </summary>
 [RegisterComponent, Access(typeof(FollowerSystem))]
 [NetworkedComponent]
-public sealed partial class FollowedComponent : Component
+public sealed class FollowedComponent : Component
 {
     public HashSet<EntityUid> Following = new();
 }

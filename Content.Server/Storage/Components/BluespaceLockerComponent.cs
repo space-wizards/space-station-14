@@ -3,7 +3,7 @@
 namespace Content.Server.Storage.Components;
 
 [RegisterComponent]
-public sealed partial class BluespaceLockerComponent : Component
+public sealed class BluespaceLockerComponent : Component
 {
     /// <summary>
     /// If length > 0, when something is added to the storage, it will instead be teleported to a random storage
@@ -91,7 +91,7 @@ public sealed partial class BluespaceLockerComponent : Component
 }
 
 [DataDefinition]
-public partial record BluespaceLockerBehaviorProperties
+public record BluespaceLockerBehaviorProperties
 {
     /// <summary>
     /// Determines if gas will be transported.

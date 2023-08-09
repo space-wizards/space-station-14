@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Ghost
 {
     [NetworkedComponent()]
-    public abstract partial class SharedGhostComponent : Component
+    public abstract class SharedGhostComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool CanGhostInteract
@@ -60,7 +60,7 @@ namespace Content.Shared.Ghost
     }
 
     [Serializable, NetSerializable]
-    public sealed partial class GhostComponentState : ComponentState
+    public sealed class GhostComponentState : ComponentState
     {
         public bool CanReturnToBody { get; }
         public bool CanGhostInteract { get; }

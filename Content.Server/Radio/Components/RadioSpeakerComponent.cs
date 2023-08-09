@@ -9,7 +9,7 @@ namespace Content.Server.Radio.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(RadioDeviceSystem))]
-public sealed partial class RadioSpeakerComponent : Component
+public sealed class RadioSpeakerComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new () { "Common" };
