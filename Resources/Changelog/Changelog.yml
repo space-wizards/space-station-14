@@ -1,47 +1,4 @@
 Entries:
-- author: deepy
-  changes:
-  - {message: Cables now connect to the closest net instead of the first one it finds.,
-    type: Fix}
-  id: 3990
-  time: '2023-06-15T01:31:15.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Wallmount generator board is now cheaper to compensate for less power
-      output., type: Tweak}
-  id: 3991
-  time: '2023-06-15T01:45:07.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Blood-red hardsuits now slow you half as much as before., type: Tweak}
-  id: 3992
-  time: '2023-06-15T02:12:09.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'Implemented a new robust harvest overdose threshold for Diona, preventing
-      them from achieving immortality.', type: Tweak}
-  id: 3993
-  time: '2023-06-15T02:13:06.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Added the basic hardsuit, a modest but lightweight hardsuit with minor
-      damage resistances in all categories.', type: Add}
-  - {message: Resprited all EVA suits., type: Tweak}
-  - {message: 'Changed a bunch of descriptions relating to hardsuits, softsuits, and
-      EVA helmets.', type: Tweak}
-  id: 3994
-  time: '2023-06-15T02:15:22.0000000+00:00'
-- author: '0x6273'
-  changes:
-  - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
-    type: Tweak}
-  id: 3995
-  time: '2023-06-15T02:16:12.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Added a trait that gives you a pirate accent!, type: Add}
-  id: 3996
-  time: '2023-06-15T02:17:40.0000000+00:00'
 - author: MisterMecky
   changes:
   - {message: 'Condiment bottles and shakers are now refillable, and are spill-able
@@ -2977,3 +2934,44 @@ Entries:
       is fixed., type: Tweak}
   id: 4489
   time: '2023-08-09T03:10:47.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
+  id: 4490
+  time: '2023-08-09T03:35:15.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The overhead perspective, hueshifted-looking rocks now use sprites
+      from SS13 that match the perspective of all other walls.', type: Tweak}
+  - {message: Added ironrock for mappers to use. It is easily identifiable by its
+      bright red colors and garish appearance., type: Add}
+  id: 4491
+  time: '2023-08-09T04:00:27.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: What Moths consider to be made of cloth should now be more accurate.,
+    type: Tweak}
+  - {message: Moths are now able to squeak., type: Tweak}
+  id: 4492
+  time: '2023-08-09T04:05:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added toggle to hide clothing in the character editor., type: Add}
+  id: 4493
+  time: '2023-08-09T06:26:34.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Diona are no longer inhibited by kudzu., type: Tweak}
+  id: 4494
+  time: '2023-08-09T15:24:41.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Taxibots have robot speech bubbles, type: Tweak}
+  id: 4495
+  time: '2023-08-09T16:48:08.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: The air alarm UI now allows copying settings of one device to all similar
+      devices., type: Add}
+  id: 4496
+  time: '2023-08-09T18:20:20.0000000+00:00'

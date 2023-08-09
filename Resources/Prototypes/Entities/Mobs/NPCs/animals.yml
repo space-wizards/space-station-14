@@ -2017,6 +2017,10 @@
         Base: spacecat
       Dead:
         Base: spacecat_dead
+  - type: Temperature
+    heatDamageThreshold: 423
+    coldDamageThreshold: 0
+  - type: PressureImmunity
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
