@@ -20,7 +20,6 @@ public abstract class SharedWiresSystem : EntitySystem
         {
             args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-closed"));
         }
-
         else
         {
             args.PushMarkup(Loc.GetString("wires-panel-component-on-examine-open"));
