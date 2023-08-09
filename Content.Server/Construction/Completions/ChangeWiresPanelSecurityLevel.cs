@@ -10,7 +10,8 @@ namespace Content.Server.Construction.Completions
     public sealed class ChangeWiresPanelSecurityLevel : IGraphAction
     {
         [DataField("level")]
-        public string WiresPanelSecurityLevelID { get; private set; } = default!;
+        [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
+        public string WiresPanelSecurityLevelID = default!;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
