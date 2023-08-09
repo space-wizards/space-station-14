@@ -29,16 +29,18 @@ public sealed class ItemPlacerSystem : EntitySystem
         // Disallow sleeping so we can detect when entity is removed from the heater.
         _physics.SetSleepingAllowed(args.OtherEntity, args.OtherBody, false);
 
-        if (comp.MaxEntities == 0 || comp.PlacedEntities.Count < comp.MaxEntities)
+        var count = comp.PlacedEntities.Count;
+        if (comp.MaxEntities == 0 || count < comp.MaxEntities)
         {
             comp.PlacedEntities.Add(args.OtherEntity);
 
             var ev = new ItemPlacedEvent(args.OtherEntity);
             RaiseLocalEvent(uid, ref ev);
         }
-        else
+
+        if (comp.MaxEntities != 0 && count >= comp.MaxEntities)
         {
-            // Don't let any more items be placed on it once it's full.
+            // Don't let any more items be placed if it's reached its limit.
             _placeableSurface.SetPlaceable(uid, false);
         }
     }
