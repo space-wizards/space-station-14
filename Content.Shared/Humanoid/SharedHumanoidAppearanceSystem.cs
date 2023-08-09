@@ -25,6 +25,7 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MarkingManager _markingManager = default!;
 
+    [ValidatePrototypeId<SpeciesPrototype>]
     public const string DefaultSpecies = "Human";
 
     public override void Initialize()
