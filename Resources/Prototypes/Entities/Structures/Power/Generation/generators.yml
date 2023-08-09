@@ -318,6 +318,8 @@
     layers:
       - state: rtg_damaged
       - state: rtg_glow
+  - type: PowerSupplier
+    supplyRate: 100 # shielding damaged so power output is negligible, it is primarily a radiation source
   - type: RadiationSource # ideally only when opened.
     intensity: 2
   - type: RadiationDecay
