@@ -1,10 +1,4 @@
 Entries:
-- author: Dynexust
-  changes:
-  - {message: 'Interdyne Pharmaceutics has pushed a new chemical on the market, Doxarubixadone,
-      which cryogenically heals cellular damage.', type: Add}
-  id: 3989
-  time: '2023-06-15T01:26:28.0000000+00:00'
 - author: deepy
   changes:
   - {message: Cables now connect to the closest net instead of the first one it finds.,
@@ -2977,3 +2971,9 @@ Entries:
   - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
   id: 4488
   time: '2023-08-09T00:47:35.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Temporarily disable the Wheelchair Bound trait until its vehicle code
+      is fixed., type: Tweak}
+  id: 4489
+  time: '2023-08-09T03:10:47.0000000+00:00'
