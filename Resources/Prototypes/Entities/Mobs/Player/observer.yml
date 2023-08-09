@@ -62,3 +62,4 @@
   - type: Tag
     tags:
       - BypassInteractionRangeChecks
+  - type: ShowSecurityIcons
