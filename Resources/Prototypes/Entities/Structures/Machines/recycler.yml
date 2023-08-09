@@ -87,7 +87,7 @@
     whitelist:
       components:
       - PhysicalComposition
-      - HumanoidAppearance
+      - MobState
       - SpaceGarbage
       tags:
       - Trash
