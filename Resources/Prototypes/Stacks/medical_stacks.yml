@@ -37,3 +37,21 @@
   spawn: Bloodpack
   maxCount: 10
   itemSize: 1
+
+- type: stack
+  id: MedicatedSuture
+  name: medicated-suture
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: medicated-suture }
+  spawn: MedicatedSuture
+  maxCount: 10
+  itemSize: 1
+
+- type: stack
+  id: RegenerativeMesh
+  name: regenerative-mesh
+  icon: {sprite: "/Textures/Objects/Specific/Medical/medical.rsi", state: regenerative-mesh}
+  spawn: RegenerativeMesh
+  maxCount: 10
+  itemSize: 1
+
+

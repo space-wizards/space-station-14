@@ -256,7 +256,8 @@ namespace Content.Server.Construction
                     $"{ToPrettyString(userUid.Value):player} changed {ToPrettyString(uid):entity}'s node from \"{oldNode}\" to \"{id}\"");
 
             // ChangeEntity will handle the pathfinding update.
-            if (node.Entity is {} newEntity && ChangeEntity(uid, userUid, newEntity, construction) != null)
+            if (node.Entity.GetId(uid, userUid, new(EntityManager)) is {} newEntity
+                && ChangeEntity(uid, userUid, newEntity, construction) != null)
                 return true;
 
             if(performActions)
@@ -323,8 +324,6 @@ namespace Content.Server.Construction
                 }
             }
 
-            EntityManager.InitializeAndStartEntity(newUid);
-
             // We set the graph and node accordingly.
             ChangeGraph(newUid, userUid, construction.Graph, construction.Node, false, newConstruction);
 
@@ -373,6 +372,13 @@ namespace Content.Server.Construction
             var entChangeEv = new ConstructionChangeEntityEvent(newUid, uid);
             RaiseLocalEvent(uid, entChangeEv);
             RaiseLocalEvent(newUid, entChangeEv, broadcast: true);
+
+            foreach (var logic in GetCurrentNode(newUid, newConstruction)!.TransformLogic)
+            {
+                logic.Transform(uid, newUid, userUid, new(EntityManager));
+            }
+
+            EntityManager.InitializeAndStartEntity(newUid);
 
             QueueDel(uid);
 

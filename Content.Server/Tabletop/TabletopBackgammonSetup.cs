@@ -5,8 +5,6 @@ namespace Content.Server.Tabletop
     [UsedImplicitly]
     public sealed class TabletopBackgammonSetup : TabletopSetup
     {
-        [DataField("boardPrototype")]
-        public string BackgammonBoardPrototype { get; } = "BackgammonBoardTabletop";
 
         [DataField("whitePiecePrototype")]
         public string WhitePiecePrototype { get; } = "WhiteTabletopPiece";
@@ -15,7 +13,7 @@ namespace Content.Server.Tabletop
         public string BlackPiecePrototype { get; } = "BlackTabletopPiece";
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var board = entityManager.SpawnEntity(BackgammonBoardPrototype, session.Position);
+            var board = entityManager.SpawnEntity(BoardPrototype, session.Position);
 
             const float borderLengthX = 7.35f; //BORDER
             const float borderLengthY = 5.60f; //BORDER

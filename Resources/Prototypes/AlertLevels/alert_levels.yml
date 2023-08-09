@@ -5,11 +5,12 @@
     green:
       announcement: alert-level-green-announcement
       color: Green
-      shuttleTime: 600
+      shuttleTime: 1200
     blue:
       announcement: alert-level-blue-announcement
       sound: /Audio/Misc/bluealert.ogg
       color: DodgerBlue
+      shuttleTime: 600
     violet:
       announcement: alert-level-violet-announcement
       sound: /Audio/Misc/notice1.ogg
@@ -21,11 +22,12 @@
       sound: /Audio/Misc/notice1.ogg
       color: Yellow
       emergencyLightColor: Goldenrod
-      shuttleTime: 400
+      shuttleTime: 600
     red:
       announcement: alert-level-red-announcement
       sound: /Audio/Misc/redalert.ogg
       color: Red
+      shuttleTime: 600 #No reduction in time as we don't have swiping for red alert like in /tg/. Shuttle times are intended to create friction, so having a way to brainlessly bypass that would be dumb.
     gamma:
       announcement: alert-level-gamma-announcement
       selectable: false

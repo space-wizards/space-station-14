@@ -7,9 +7,9 @@ namespace Content.Server.UserInterface;
 public sealed class OpenUiActionEvent : InstantActionEvent, ISerializationHooks
 {
     [ViewVariables]
-    public Enum? Key { get; set; }
+    public Enum? Key { get; private set; }
 
-    [DataField("key", readOnly: true, required: true)]
+    [DataField("key", required: true)]
     private string _keyRaw = default!;
 
     void ISerializationHooks.AfterDeserialization()

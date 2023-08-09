@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixelTheKermit (github) for SS14",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "stripes",
+      "directions": 4
+    },
+    {
+      "name": "slashes",
+      "directions": 4
+    },
+    {
+      "name": "x",
+      "directions": 4
+    },
+    {
+      "name": "cross",
+      "directions": 4
+    },
+    {
+      "name": "heart",
+      "directions": 4
+    },
+    {
+      "name": "hourglass",
+      "directions": 4
+    },
+    {
+      "name": "nail-and-hammer",
+      "directions": 4
+    },
+    {
+      "name": "star",
+      "directions": 4
+    }
+  ]
+}

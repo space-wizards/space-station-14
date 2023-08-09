@@ -32,11 +32,21 @@ namespace Content.Client.Chemistry.Visualizers
         [DataField("metamorphic")]
         public bool Metamorphic = false;
         [DataField("metamorphicDefaultSprite")]
-        public SpriteSpecifier MetamorphicDefaultSprite = SpriteSpecifier.Invalid;
+        public SpriteSpecifier? MetamorphicDefaultSprite;
         [DataField("metamorphicNameFull")]
         public string MetamorphicNameFull = "transformable-container-component-glass";
 
+        /// <summary>
+        /// Which solution of the SolutionContainerManagerComponent to represent.
+        /// If not set, will work as default.
+        /// </summary>
+        [DataField("solutionName")]
+        public string? SolutionName;
+
+        [DataField("initialName")]
         public string InitialName = string.Empty;
+
+        [DataField("initialDescription")]
         public string InitialDescription = string.Empty;
     }
 }

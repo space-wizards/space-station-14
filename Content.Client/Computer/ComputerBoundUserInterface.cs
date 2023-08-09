@@ -1,7 +1,5 @@
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.CustomControls;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 
 namespace Content.Client.Computer
 {
@@ -13,6 +11,8 @@ namespace Content.Client.Computer
     public class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
     {
         [Dependency] private readonly IDynamicTypeFactory _dynamicTypeFactory = default!;
+
+        [ViewVariables]
         private TWindow? _window;
 
         protected override void Open()
@@ -26,7 +26,9 @@ namespace Content.Client.Computer
         }
 
         // Alas, this constructor has to be copied to the subclass. :(
-        public ComputerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
+        }
 
         protected override void UpdateState(BoundUserInterfaceState state)
         {
@@ -58,7 +60,9 @@ namespace Content.Client.Computer
     [Virtual]
     public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
-        public ComputerBoundUserInterfaceBase(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey) {}
+        public ComputerBoundUserInterfaceBase(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        {
+        }
 
         public new void SendMessage(BoundUserInterfaceMessage msg)
         {
@@ -68,8 +72,13 @@ namespace Content.Client.Computer
 
     public interface IComputerWindow<TState>
     {
-        void SetupComputerWindow(ComputerBoundUserInterfaceBase cb) {}
-        void UpdateState(TState state) {}
+        void SetupComputerWindow(ComputerBoundUserInterfaceBase cb)
+        {
+        }
+
+        void UpdateState(TState state)
+        {
+        }
     }
 }
 

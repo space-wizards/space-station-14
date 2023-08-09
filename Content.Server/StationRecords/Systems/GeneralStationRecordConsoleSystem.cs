@@ -99,9 +99,7 @@ public sealed class GeneralStationRecordConsoleSystem : EntitySystem
 
     private void SetStateForInterface(EntityUid uid, GeneralStationRecordConsoleState newState)
     {
-        _userInterface
-            .GetUiOrNull(uid, GeneralStationRecordConsoleKey.Key)
-            ?.SetState(newState);
+        _userInterface.TrySetUiState(uid, GeneralStationRecordConsoleKey.Key, newState);
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,

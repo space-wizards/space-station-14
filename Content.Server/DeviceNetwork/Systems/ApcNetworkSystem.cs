@@ -1,5 +1,6 @@
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using JetBrains.Annotations;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Nodes;
@@ -9,6 +10,8 @@ namespace Content.Server.DeviceNetwork.Systems
     [UsedImplicitly]
     public sealed class ApcNetworkSystem : EntitySystem
     {
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -36,11 +39,11 @@ namespace Content.Server.DeviceNetwork.Systems
         {
             if (!EntityManager.TryGetComponent(args.Provider.Owner, out NodeContainerComponent? nodeContainer)) return;
 
-            if (nodeContainer.TryGetNode("power", out CableNode? node))
+            if (_nodeContainer.TryGetNode(nodeContainer, "power", out CableNode? node))
             {
                 component.ConnectedNode = node;
             }
-            else if (nodeContainer.TryGetNode("output", out CableDeviceNode? deviceNode))
+            else if (_nodeContainer.TryGetNode(nodeContainer, "output", out CableDeviceNode? deviceNode))
             {
                 component.ConnectedNode = deviceNode;
             }

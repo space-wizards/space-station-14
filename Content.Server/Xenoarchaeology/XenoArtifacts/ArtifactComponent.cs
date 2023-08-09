@@ -1,4 +1,5 @@
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
+using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -77,6 +78,19 @@ public sealed class ArtifactComponent : Component
     /// </summary>
     [DataField("pointDangerMultiplier"), ViewVariables(VVAccess.ReadWrite)]
     public float PointDangerMultiplier = 1.35f;
+
+    /// <summary>
+    /// The sound that plays when an artifact is activated
+    /// </summary>
+    [DataField("activationSound")]
+    public SoundSpecifier ActivationSound = new SoundCollectionSpecifier("ArtifactActivation")
+    {
+        Params = new()
+        {
+            Variation = 0.1f,
+            Volume = 3f
+        }
+    };
 }
 
 /// <summary>

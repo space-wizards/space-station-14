@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by potato1234x at https://github.com/tgstation/tgstation/commit/0631fe5bde73a68b4c12bdfa633c30b2cee442d5",
+  "copyright": "Taken from tgstation and modified by potato1234x at https://github.com/tgstation/tgstation/commit/0631fe5bde73a68b4c12bdfa633c30b2cee442d5. Crostini created by Github user deathride58",
   "size": {
     "x": 32,
     "y": 32
@@ -54,6 +54,9 @@
     },
     {
       "name": "creamcheese-slice"
+    },
+    {
+      "name": "crostini"
     },
     {
       "name": "french-toast"

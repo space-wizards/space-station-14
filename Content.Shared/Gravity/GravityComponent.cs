@@ -27,5 +27,12 @@ namespace Content.Shared.Gravity
 
         [DataField("enabled")]
         public bool Enabled;
+
+        /// <summary>
+        /// Inherent gravity ensures GravitySystem won't change Enabled according to the gravity generators attached to this entity.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("inherent")]
+        public bool Inherent;
     }
 }

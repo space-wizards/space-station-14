@@ -65,10 +65,10 @@ public sealed partial class CargoSystem
             }
 
             var xform = Transform(uid);
-            if (FulfillOrder(orderDatabase, xform.Coordinates,comp.PrinterOutput))
+            if (FulfillOrder(orderDatabase, xform.Coordinates, comp.PrinterOutput))
             {
                 _audio.PlayPvs(_audio.GetSound(comp.TeleportSound), uid, AudioParams.Default.WithVolume(-8f));
-                UpdateOrders(orderDatabase);
+                UpdateOrders(station!.Value, orderDatabase);
 
                 comp.CurrentState = CargoTelepadState.Teleporting;
                 _appearance.SetData(uid, CargoTelepadVisuals.State, CargoTelepadState.Teleporting, appearance);

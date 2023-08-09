@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
-using Content.Shared.CCVar;
 using Content.Shared.Database;
-using NUnit.Framework;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 
@@ -19,7 +15,7 @@ public sealed class QueryTests
     [Test]
     public async Task QuerySingleLog()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(AddTests.LogTestSettings);
         var server = pairTracker.Pair.Server;
 
         var sSystems = server.ResolveDependency<IEntitySystemManager>();
@@ -44,9 +40,9 @@ public sealed class QueryTests
         {
             Round = sGamerTicker.RoundId,
             Search = guid.ToString(),
-            Types = new HashSet<LogType> {LogType.Unknown},
+            Types = new HashSet<LogType> { LogType.Unknown },
             After = date,
-            AnyPlayers = new[] {player.UserId.UserId}
+            AnyPlayers = new[] { player.UserId.UserId }
         };
 
         await PoolManager.WaitUntil(server, async () =>

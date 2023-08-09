@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;
@@ -54,10 +55,10 @@ public sealed class ProjectileAnomalySystem : EntitySystem
                 priority.Add(entity);
         }
 
-        Logger.Debug($"shots: {projectileCount}");
+        Log.Debug($"shots: {projectileCount}");
         while (projectileCount > 0)
         {
-            Logger.Debug($"{projectileCount}");
+            Log.Debug($"{projectileCount}");
             var target = priority.Any()
                 ? _random.PickAndTake(priority)
                 : _random.Pick(inRange);

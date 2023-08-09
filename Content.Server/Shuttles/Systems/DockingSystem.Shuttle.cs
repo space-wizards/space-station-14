@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Shuttles.Components;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;

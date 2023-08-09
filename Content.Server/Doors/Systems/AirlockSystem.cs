@@ -9,7 +9,6 @@ using Content.Shared.Doors.Systems;
 using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 using Content.Shared.Wires;
-using Content.Server.MachineLinking.System;
 
 namespace Content.Server.Doors.Systems
 {
@@ -17,7 +16,6 @@ namespace Content.Server.Doors.Systems
     {
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
         [Dependency] private readonly DoorBoltSystem _bolts = default!;
 
         public override void Initialize()

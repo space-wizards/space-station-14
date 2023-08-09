@@ -20,10 +20,7 @@ namespace Content.Tests.Shared.Gamestates
             foreach (var compType in comps)
             {
                 // Any component should be able to be instantiated without DI injection.
-                var compInstance = (IComponent) Activator.CreateInstance(compType);
-
-                // Any component should treat this as a null function.
-                compInstance.HandleComponentState(null, null);
+                _ = (IComponent) Activator.CreateInstance(compType);
             }
         }
 

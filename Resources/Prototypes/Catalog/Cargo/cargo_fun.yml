@@ -167,3 +167,13 @@
   cost: 900
   category: Fun
   group: market
+
+- type: cargoProduct
+  id: FunBikeHornImplants
+  icon:
+    sprite: Objects/Specific/Chemistry/syringe.rsi
+    state: syringe_base0
+  product: CrateFunBikeHornImplants
+  cost: 1000
+  category: Fun
+  group: market

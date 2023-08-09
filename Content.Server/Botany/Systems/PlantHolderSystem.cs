@@ -2,7 +2,6 @@ using Content.Server.Atmos;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Botany.Components;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Coordinates.Helpers;
 using Content.Server.Fluids.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Kitchen.Components;
@@ -10,6 +9,7 @@ using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
 using Content.Shared.Hands.Components;
@@ -42,7 +42,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
-        public const float HydroponicsConsumptionMultiplier = 4f;
+        public const float HydroponicsConsumptionMultiplier = 2f;
 
         public override void Initialize()
         {
@@ -288,11 +288,17 @@ namespace Content.Server.Botany.Systems
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
                 {
-                    // This deliberately discards overfill.
-                    _solutionSystem.TryAddSolution(args.Used, solution2,
-                        _solutionSystem.SplitSolution(args.Used, solution2, solution2.Volume));
+                    if (_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
+                    {
+                        // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
+                        // since the plant will be consumed anyway.
 
-                    ForceUpdateByExternalCause(uid, component);
+                        var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
+                        _solutionSystem.TryAddSolution(uid, solution1,
+                            _solutionSystem.SplitSolution(args.Used, solution2, fillAmount));
+
+                        ForceUpdateByExternalCause(uid, component);
+                    }
                 }
 
                 EntityManager.QueueDeleteEntity(args.Used);
@@ -412,7 +418,7 @@ namespace Content.Server.Botany.Systems
             if (component.Seed.WaterConsumption > 0 && component.WaterLevel > 0 && _random.Prob(0.75f))
             {
                 component.WaterLevel -= MathF.Max(0f,
-                    component.Seed.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+                    component.Seed.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
