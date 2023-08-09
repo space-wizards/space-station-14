@@ -31,7 +31,7 @@
                     </BoxContainer>
                 </BoxContainer>
 				<BoxContainer Orientation="Horizontal" Margin ="0 0 0 2">
-					<Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" />
+					<Button Name="CCopySettings" Text="{Loc 'air-alarm-ui-widget-copy'}" ToolTip="{Loc 'air-alarm-ui-widget-copy-tooltip'}" />
                 </BoxContainer>
             </BoxContainer>
         </CollapsibleBody>
