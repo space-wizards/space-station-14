@@ -501,10 +501,10 @@ public abstract class SharedDoorSystem : EntitySystem
             TryComp<FirelockComponent>(uid, out var firelock))
             return false;
 
-        if (!Resolve(uid, ref access))
+        if (!Resolve(uid, ref access, false))
             return true;
 
-        var isExternal = access?.AccessLists.Any(list => list.Contains("External")) ?? false;
+        var isExternal = access.AccessLists.Any(list => list.Contains("External"));
 
         return AccessType switch
         {
