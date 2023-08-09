@@ -11,7 +11,6 @@ namespace Content.Server.Administration.Logs.Converters;
 public sealed class EntityStringRepresentationConverter : AdminLogConverter<EntityStringRepresentation>
 {
     [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
 
     public override void Write(Utf8JsonWriter writer, EntityStringRepresentation value, JsonSerializerOptions options)
