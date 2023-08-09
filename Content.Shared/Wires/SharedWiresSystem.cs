@@ -10,8 +10,6 @@ public abstract class SharedWiresSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<WiresPanelComponent, ExaminedEvent>(OnExamine);
-        SubscribeLocalEvent<WiresPanelComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<WiresPanelComponent, ComponentHandleState>(OnHandleState);
     }
 
     private void OnExamine(EntityUid uid, WiresPanelComponent component, ExaminedEvent args)
@@ -29,27 +27,5 @@ public abstract class SharedWiresSystem : EntitySystem
                 args.PushMarkup(Loc.GetString(component.WiresPanelSecurityExamination));
             }
         }
-    }
-
-    private void OnGetState(EntityUid uid, WiresPanelComponent component, ref ComponentGetState args)
-    {
-        args.State = new WiresPanelComponentState
-        {
-            Open = component.Open,
-            Visible = component.Visible,
-            WiresPanelSecurityExamination = component.WiresPanelSecurityExamination,
-            WiresAccessible = component.WiresAccessible,
-        };
-    }
-
-    private void OnHandleState(EntityUid uid, WiresPanelComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not WiresPanelComponentState state)
-            return;
-
-        component.Open = state.Open;
-        component.Visible = state.Visible;
-        component.WiresPanelSecurityExamination = state.WiresPanelSecurityExamination;
-        component.WiresAccessible = state.WiresAccessible;
     }
 }
