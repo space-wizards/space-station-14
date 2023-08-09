@@ -52,6 +52,7 @@
                     <ScrollContainer VerticalExpand="True">
                         <!-- appearanceList -->
                         <BoxContainer Orientation="Vertical">
+                            <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'humanoid-profile-editor-clothing'}"/>
                             <!-- SexAndAgeRow -->
                             <BoxContainer Orientation="Horizontal" SeparationOverride="10">
                                 <!-- Sex -->
