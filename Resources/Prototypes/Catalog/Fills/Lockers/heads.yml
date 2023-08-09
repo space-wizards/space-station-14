@@ -268,6 +268,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
@@ -299,6 +300,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
