@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added the sheetmeister, a machine that presses raw meat into construction
-      sheets.', type: Add}
-  - {message: Added sheetmeister to meat manipulation technology., type: Add}
-  id: 3988
-  time: '2023-06-15T00:49:24.0000000+00:00'
 - author: Dynexust
   changes:
   - {message: 'Interdyne Pharmaceutics has pushed a new chemical on the market, Doxarubixadone,
@@ -2979,3 +2972,8 @@ Entries:
   - {message: Better nuke sprite from /vg/., type: Tweak}
   id: 4487
   time: '2023-08-08T21:55:41.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Changed random maintenance loot spawns to be more diverse., type: Tweak}
+  id: 4488
+  time: '2023-08-09T00:47:35.0000000+00:00'
