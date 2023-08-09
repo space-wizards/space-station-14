@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
     {
         [DataField("level")]
         [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
-        public string WiresPanelSecurityLevelID = default!;
+        public string WiresPanelSecurityLevelID = "Level0";
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
