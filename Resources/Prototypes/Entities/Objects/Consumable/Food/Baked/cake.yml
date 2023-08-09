@@ -9,7 +9,6 @@
     flavors:
       - sweet
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/cake.rsi
   - type: SolutionContainerManager
@@ -34,7 +33,6 @@
     flavors:
       - sweet
   - type: Food
-    trash: FoodPlateSmall
   - type: SolutionContainerManager
     solutions:
       food:
@@ -336,8 +334,6 @@
   id: FoodCakeApple
   description: A cake centred with apple.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -351,8 +347,6 @@
   id: FoodCakeAppleSlice
   description: A slice of heavenly cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -366,8 +360,6 @@
   id: FoodCakeSlime
   description: A cake made of slimes. Probably not electrified.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -381,8 +373,6 @@
   id: FoodCakeSlimeSlice
   description: A slice of slime cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -396,8 +386,6 @@
   id: FoodCakePumpkin
   description: A hollow cake with real pumpkin.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -420,8 +408,6 @@
   id: FoodCakePumpkinSlice
   description: A spicy slice of pumpkin goodness.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -444,8 +430,6 @@
   id: FoodCakeChristmas
   description: A cake made of christmas.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -458,8 +442,6 @@
   parent: FoodCakeSliceBase
   id: FoodCakeChristmasSlice
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -473,8 +455,6 @@
   id: FoodCakeBirthday
   description: Happy Birthday little clown...
   components:
-  - type: Food
-    trash: FoodPlatePlastic
   - type: Sprite
     layers:
     - state: plate-plastic
@@ -488,8 +468,6 @@
   id: FoodCakeBirthdaySlice
   description: A slice of your birthday.
   components:
-  - type: Food
-    trash: FoodPlateSmallPlastic
   - type: Sprite
     layers:
     - state: plate-small-plastic
@@ -502,8 +480,6 @@
   id: FoodCakeVanilla
   description: A vanilla frosted cake.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -528,8 +504,6 @@
   id: FoodCakeVanillaSlice
   description: A slice of vanilla frosted cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -554,8 +528,6 @@
   id: FoodCakeClown
   description: A funny cake with a clown face on it.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -580,8 +552,6 @@
   id: FoodCakeClownSlice
   description: A slice of bad jokes, and silly props.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -606,8 +576,6 @@
   id: FoodCakeSpaceman
   description: A spaceman's trumpet frosted cake.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
     layers:
     - state: plate
@@ -632,8 +600,6 @@
   id: FoodCakeSpacemanSlice
   description: A spaceman's trumpet frosted cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-small
@@ -663,9 +629,7 @@
   description: Extremely dense and powerful food.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: suppermatter
+    state: suppermatter
   - type: SliceableFood
     slice: FoodCakeSuppermatterSlice
     TotalCount: 8
@@ -678,7 +642,6 @@
           Quantity: 48
   - type: Food
     transferAmount: 12
-    trash: FoodPlate
   - type: Item
     size: 40
   - type: PointLight

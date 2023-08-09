@@ -8,8 +8,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
   - type: SolutionContainerManager
@@ -36,8 +34,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
   - type: SolutionContainerManager
@@ -131,6 +127,8 @@
       - sweet
       - banana
       - creamy
+  - type: Food
+    trash: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
@@ -374,8 +372,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -391,8 +387,6 @@
   - type: FlavorProfile
     flavors:
       - nothing
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -408,8 +402,6 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart
@@ -425,8 +417,6 @@
   - type: FlavorProfile
     flavors:
       - chocolate
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     layers:
     - state: plate-tart

@@ -7,7 +7,6 @@
   description: Now that's a nice pasta!
   components:
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
   - type: SolutionContainerManager
