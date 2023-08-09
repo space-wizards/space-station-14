@@ -51,7 +51,7 @@ public sealed class SericultureSystem : EntitySystem
     {
         if (IsHungry(uid))
         {
-            _popupSystem.PopupEntity(Loc.GetString("sericulture-failure-hunger"), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
@@ -73,7 +73,7 @@ public sealed class SericultureSystem : EntitySystem
 
         if (IsHungry(uid))
         {
-            _popupSystem.PopupEntity(Loc.GetString("sericulture-failure-hunger"), uid, uid);
+            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
