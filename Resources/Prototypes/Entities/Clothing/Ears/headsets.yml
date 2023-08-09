@@ -67,7 +67,6 @@
     containers:
       key_slots:
       - EncryptionKeyCargo
-      - EncryptionKeyCommand
       - EncryptionKeyCommon
 
 - type: entity
