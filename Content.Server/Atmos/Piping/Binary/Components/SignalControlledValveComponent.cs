@@ -1,5 +1,5 @@
 using Content.Server.Atmos.Piping.Binary.EntitySystems;
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Binary.Components;
@@ -7,12 +7,12 @@ namespace Content.Server.Atmos.Piping.Binary.Components;
 [RegisterComponent, Access(typeof(SignalControlledValveSystem))]
 public sealed class SignalControlledValveComponent : Component
 {
-    [DataField("openPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("openPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string OpenPort = "Open";
 
-    [DataField("closePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("closePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string ClosePort = "Close";
 
-    [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("togglePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string TogglePort = "Toggle";
 }

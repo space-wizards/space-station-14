@@ -42,9 +42,9 @@ public partial class SharedBodySystem
             return;
 
         part.Body = state.Body;
-        part.ParentSlot = state.ParentSlot;
-        part.Children = state.Children;
-        part.Organs = state.Organs;
+        part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
+        part.Children = state.Children; // TODO use containers. This is broken and does not work.
+        part.Organs = state.Organs; // TODO end my suffering.
         part.PartType = state.PartType;
         part.IsVital = state.IsVital;
         part.Symmetry = state.Symmetry;

@@ -125,6 +125,38 @@
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
+  - type: EmagLatheRecipes
+    emagStaticRecipes:
+       - CartridgePistol
+       - CartridgeMagnum
+       - ShellShotgun
+       - ShellShotgunFlare
+       - ShellTranquilizer
+       - CartridgeLightRifle
+       - CartridgeRifle
+       - MagazineBoxPistol
+       - MagazineBoxMagnum
+       - MagazineBoxRifle
+       - MagazineBoxLightRifle
+    emagDynamicRecipes:
+      - CartridgePistolRubber
+      - CartridgeMagnumRubber
+      - ShellShotgunBeanbag
+      - CartridgeRifleRubber
+      - CartridgeLightRifleRubber
+      - MagazineBoxPistolRubber
+      - MagazineBoxMagnumRubber
+      - MagazineBoxRifleRubber
+      - MagazineBoxLightRifleRubber
+      - ShellShotgunIncendiary
+      - CartridgePistolIncendiary
+      - CartridgeMagnumIncendiary
+      - CartridgeLightRifleIncendiary
+      - CartridgeRifleIncendiary
+      - MagazineBoxPistolIncendiary
+      - MagazineBoxMagnumIncendiary
+      - MagazineBoxLightRifleIncendiary
+      - MagazineBoxRifleIncendiary
 
 - type: entity
   id: Protolathe
@@ -227,6 +259,15 @@
       - ClothingBackpackDuffelHolding
       - WelderExperimental
       - JawsOfLife
+      - ClothingEyesGlassesChemical
+  - type: EmagLatheRecipes
+    emagDynamicRecipes:
+      - ExplosivePayload
+      - WeaponLaserCarbine
+      - WeaponAdvancedLaser
+      - WeaponLaserCannon
+      - WeaponXrayCannon
+      - WeaponTaser
 
 - type: entity
   id: CircuitImprinter
@@ -316,6 +357,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
+      - MassMediaCircuitboard
   - type: MaterialStorage
     whitelist:
       tags:
@@ -433,14 +475,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -454,6 +488,7 @@
       - SignalTrigger
       - VoiceTrigger
       - TimerTrigger
+      - Truncheon
       - FlashPayload
       - ExplosivePayload
       - WeaponLaserCarbine
@@ -467,6 +502,47 @@
         - Sheet
         - RawMaterial
         - Ingot
+
+- type: entity
+  id: AmmoTechFab
+  parent: BaseLathe
+  name: ammo techfab
+  description: Prints the bare minimum of bullets that any budget military or armory could need. Nothing fancy.
+  components:
+    - type: Sprite
+      sprite: Structures/Machines/techfab.rsi
+      layers:
+        - state: icon
+          map: ["enum.LatheVisualLayers.IsRunning"]
+        - state: ammo
+        - state: unlit
+          shader: unshaded
+          map: ["enum.PowerDeviceVisualLayers.Powered"]
+        - state: inserting
+          map: ["enum.MaterialStorageVisualLayers.Inserting"]
+        - state: panel
+          map: ["enum.WiresVisualLayers.MaintenancePanel"]
+    - type: Machine
+      board: AmmoTechFabCircuitboard
+    - type: Lathe
+      idleState: icon
+      runningState: icon
+      staticRecipes:
+        - CartridgePistol
+        - CartridgeMagnum
+        - ShellShotgun
+        - ShellShotgunFlare
+        - ShellTranquilizer
+        - CartridgeLightRifle
+        - CartridgeRifle
+        - MagazineBoxPistol
+        - MagazineBoxMagnum
+        - MagazineBoxRifle
+        - MagazineBoxLightRifle
+    - type: MaterialStorage
+      whitelist:
+        tags:
+          - Sheet
 
 - type: entity
   id: MedicalTechFab

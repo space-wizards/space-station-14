@@ -40,4 +40,10 @@
     ClothingMaskScaredMime: 1
     ClothingUniformJumpsuitKimono: 1
     ClothingHeadHatCasa: 1
+    ClothingHeadHatHairflower: 1
   inventoryType: RegularInventory
+  emaggedInventory:
+    ClothingShoesBling: 1
+    ClothingOuterDogi: 1
+    ClothingMaskSexyClown: 1
+    ClothingMaskSexyMime: 1

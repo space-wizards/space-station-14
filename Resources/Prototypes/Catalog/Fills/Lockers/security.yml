@@ -67,6 +67,8 @@
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
+      - id: WeaponMeleeNeedle
+        prob: 0.1
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -119,7 +121,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
-      - id: ForensicGloves
+      - id: ClothingHandsGlovesForensic
 
 - type: entity
   id: ClosetBombFilled

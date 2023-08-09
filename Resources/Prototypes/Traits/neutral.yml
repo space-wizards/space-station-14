@@ -10,4 +10,15 @@
   name: trait-archaic-accent-name
   description: trait-archaic-accent-desc
   components:
-    - type: ArchaicAccent  
+    - type: ArchaicAccent
+
+- type: trait
+  id: Accentless
+  name: trait-accentless-name
+  description: trait-accentless-desc
+  components:
+  - type: Accentless
+    removes:
+    - type: LizardAccent
+    - type: ReplacementAccent
+      accent: dwarf

@@ -8,3 +8,29 @@
     contents:
       - id: Paper
         amount: 3
+
+- type: entity
+  id: BriefcaseSyndieSniperBundleFilled
+  name: brown briefcase
+  parent: BriefcaseSyndie
+  suffix: SniperBundle
+  components:
+  - type: StorageFill
+    contents:
+      - id: WeaponSniperHristov
+      - id: MagazineBoxAntiMateriel
+      - id: ClothingNeckTieRed
+      - id: ClothingHandsGlovesLatex
+      - id: ClothingUniformJumpsuitLawyerBlack
+
+- type: entity
+  id: BriefcaseSyndieLobbyingBundleFilled
+  name: brown briefcase
+  parent: BriefcaseSyndie
+  suffix: Filled, Spesos
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingEyesGlassesSunglasses
+      - id: SpaceCash1000
+        amount: 5

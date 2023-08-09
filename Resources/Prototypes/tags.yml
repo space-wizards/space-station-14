@@ -8,6 +8,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -18,6 +21,9 @@
 
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: Balloon
 
 - type: Tag
   id: BaseballBat
@@ -160,6 +166,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClothMade
 
 - type: Tag
   id: ClownMask
@@ -319,6 +328,9 @@
 
 - type: Tag
   id: Folder
+
+- type: Tag
+  id: FoodSnack
 
 - type: Tag
   id: FootstepSound
@@ -580,8 +592,6 @@
 - type: Tag
   id: Multitool
 
-- type: Tag
-  id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring
@@ -648,7 +658,7 @@
 
 - type: Tag
   id: Plunger
-  
+
 - type: Tag
   id: PlushieGhost
 
@@ -824,7 +834,7 @@
 
 - type: Tag
   id: TrashBag
-  
+
 - type: Tag
   id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
 
@@ -881,3 +891,4 @@
 
 - type: Tag
   id: ModularReceiver
+

@@ -94,6 +94,8 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
+  - type: Reflect
+    reflectProb: 1
 
 - type: entity
   parent: ClothingOuterBaseLarge
@@ -246,7 +248,7 @@
         Radiation: 0.8
   - type: ClothingSpeedModifier
     walkModifier: 0.7
-    sprintModifier: 0.65 
+    sprintModifier: 0.65
   - type: ExplosionResistance
     damageCoefficient: 0.5
   - type: GroupExamine

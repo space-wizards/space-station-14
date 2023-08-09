@@ -134,7 +134,7 @@ namespace Content.MapRenderer.Painters
             return decals;
         }
 
-        private (float x, float y) TransformLocalPosition(Vector2 position, MapGridComponent grid)
+        private static (float x, float y) TransformLocalPosition(Vector2 position, MapGridComponent grid)
         {
             var xOffset = (int) -grid.LocalAABB.Left;
             var yOffset = (int) -grid.LocalAABB.Bottom;
