@@ -1,0 +1,17 @@
+<DefaultWindow Title="{Loc Ghost Role Cast Settings}"
+            xmlns="https://spacestation14.io">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleNameLabel" Text="Role Name" />
+            <LineEdit Name="RoleName" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleDescriptionLabel" Text="Role Description" />
+            <LineEdit Name="RoleDescription" HorizontalExpand="True" />
+        </BoxContainer>
+        <BoxContainer Orientation="Horizontal">
+            <Label Name="RoleRulesLabel" Text="Role Rules" />
+            <LineEdit Name="RoleRules" HorizontalExpand="True"  Text="{Loc ghost-role-component-default-rules}" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>
