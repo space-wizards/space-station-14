@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Completions
             if (userUid == null)
                 return;
 
-            if (entityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified) == false)
+            if (!entityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified))
                 return;
 
             bool currentValue = electrified.Enabled;
