@@ -461,8 +461,10 @@ public sealed class NukeSystem : EntitySystem
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)
         {
+            // Admin command shenanigans, just make sure.
             _transform.AnchorEntity(uid, nukeXform);
         }
+
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
     }

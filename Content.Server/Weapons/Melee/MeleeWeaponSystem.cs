@@ -166,7 +166,6 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
         var eventArgs = new DisarmedEvent { Target = target, Source = user, PushProbability = 1 - chance };
         RaiseLocalEvent(target, eventArgs);
 
-        RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Aqua, new List<EntityUid>() { target }));
         return true;
     }
 

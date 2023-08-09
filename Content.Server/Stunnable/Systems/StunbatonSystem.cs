@@ -4,20 +4,19 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
-using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
+using Content.Shared.Stunnable;
 using Content.Shared.Toggleable;
-using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
 namespace Content.Server.Stunnable.Systems
 {
-    public sealed class StunbatonSystem : EntitySystem
+    public sealed class StunbatonSystem : SharedStunbatonSystem
     {
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
@@ -31,16 +30,6 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-            SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
-        }
-
-        private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
-        {
-            if (!component.Activated)
-                return;
-
-            // Don't apply damage if it's activated; just do stamina damage.
-            args.Damage = new DamageSpecifier();
         }
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
@@ -51,8 +40,6 @@ namespace Content.Server.Stunnable.Systems
                 args.Cancelled = true;
                 return;
             }
-
-            args.HitSoundOverride = component.StunSound;
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
@@ -99,6 +86,7 @@ namespace Content.Server.Stunnable.Systems
             SoundSystem.Play(comp.SparksSound.GetSound(), Filter.Pvs(comp.Owner), comp.Owner, AudioHelpers.WithVariation(0.25f));
 
             comp.Activated = false;
+            Dirty(comp);
         }
 
         private void TurnOn(EntityUid uid, StunbatonComponent comp, EntityUid user)
@@ -131,6 +119,7 @@ namespace Content.Server.Stunnable.Systems
 
             SoundSystem.Play(comp.SparksSound.GetSound(), playerFilter, comp.Owner, AudioHelpers.WithVariation(0.25f));
             comp.Activated = true;
+            Dirty(comp);
         }
 
         // https://github.com/space-wizards/space-station-14/pull/17288#discussion_r1241213341
