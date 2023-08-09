@@ -29,7 +29,7 @@ public sealed partial class RadiationSourceComponent : Component
     /// How many seconds it takes for half of the intensity to decay.
     /// If 0 then the source will not decay.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("halfLife", required: true), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("halfLife"), AutoNetworkedField]
     public float HalfLife
     {
         get
