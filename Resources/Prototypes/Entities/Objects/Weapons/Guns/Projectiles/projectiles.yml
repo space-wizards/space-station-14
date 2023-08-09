@@ -110,10 +110,9 @@
     damage:
       types:
         Blunt: 3
+        Stamina: 22
     soundHit:
       path: /Audio/Weapons/Guns/Hits/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 22 # 5 hits to stun sounds reasonable
 
 - type: entity
   id: BaseBulletIncendiary
@@ -220,13 +219,12 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 30
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Heat: 5
+        Stamina: 30
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
@@ -260,13 +258,12 @@
         - BulletImpassable
       fly-by: *flybyfixture
   - type: Ammo
-  - type: StaminaDamageOnCollide
-    damage: 5
   - type: Projectile
     impactEffect: BulletImpactEffectDisabler
     damage:
       types:
         Heat: 1
+        Stamina: 5
     soundHit:
       path: "/Audio/Weapons/tap.ogg"
     soundForce: true
@@ -538,10 +535,9 @@
     damage:
       types:
         Blunt: 1
+        Stamina: 80
     soundHit:
       path: /Audio/Effects/gen_hit.ogg
-  - type: StaminaDamageOnCollide
-    damage: 80
 
 - type: entity
   id: BulletGrenadeBlast

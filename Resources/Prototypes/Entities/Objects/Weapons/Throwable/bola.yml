@@ -13,8 +13,6 @@
     sound: /Audio/Weapons/bolathrow.ogg
   - type: EmitSoundOnLand
     sound: /Audio/Effects/snap.ogg
-  - type: StaminaDamageOnCollide
-    damage: 80
   - type: Construction
     graph: Bola
     node: bola
@@ -25,12 +23,14 @@
     - trigger:
         !type:DamageTrigger
         damage: 75
+        Stamina: 80
       behaviors:
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
     - trigger:
         !type:DamageTrigger
         damage: 15
+        Stamina: 80
       behaviors:
       - !type:PlaySoundBehavior
         sound: /Audio/Effects/metalbreak.ogg
@@ -40,6 +40,7 @@
     damage:
       types:
         Blunt: 5
+        Stamina: 80
   - type: Ensnaring
     freeTime: 2.0
     breakoutTime: 3.5 #all bola should generally be fast to remove

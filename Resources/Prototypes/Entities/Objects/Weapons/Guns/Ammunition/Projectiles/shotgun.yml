@@ -25,8 +25,7 @@
     damage:
       types:
         Blunt: 10
-  - type: StaminaDamageOnCollide
-    damage: 55 # 2 hits to stun
+        Stamina: 55
 
 - type: entity
   id: PelletShotgun
@@ -74,7 +73,7 @@
   id: PelletShotgunImprovised
   name: improvised pellet
   noSpawn: true
-  parent: BaseBullet 
+  parent: BaseBullet
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi

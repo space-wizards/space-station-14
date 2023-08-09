@@ -14,11 +14,10 @@
     damage:
       types:
         Blunt: 5
-  - type: StaminaDamageOnHit
-    damage: 5
+        Stamina: 5
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 3
-    
+        Stamina: 5

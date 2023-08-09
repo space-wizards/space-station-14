@@ -107,4 +107,5 @@
         Heat: 0.90
         Radiation: 0.75
         Caustic: 0.5
+        Stamina: 0.8
   - type: GroupExamine

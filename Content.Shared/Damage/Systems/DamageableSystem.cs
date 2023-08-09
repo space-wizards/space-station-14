@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.FixedPoint;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs.Components;
@@ -19,6 +20,7 @@ namespace Content.Shared.Damage
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly INetManager _netMan = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
+        [Dependency] private readonly StaminaSystem _stamina = default!;
 
         public override void Initialize()
         {
@@ -169,9 +171,10 @@ namespace Content.Shared.Damage
             delta.TrimZeros();
 
             if (!delta.Empty)
-            {
                 DamageChanged(uid.Value, damageable, delta, interruptsDoAfters, origin);
-            }
+
+            if (damage.DamageDict.TryGetValue("Stamina", out var staminavalue))
+                _stamina.TakeStaminaDamage(uid.Value, staminavalue.Float());
 
             return delta;
         }

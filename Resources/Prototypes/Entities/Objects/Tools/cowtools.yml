@@ -89,8 +89,7 @@
     damage:
       types:
         Blunt: 1
-  - type: StaminaDamageOnHit
-    damage: 5 #have you ever been hit with a plastic bat? that shit hurts
+        Stamina: 5
   - type: Tool
     qualities:
     - Prying

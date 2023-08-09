@@ -908,8 +908,6 @@
       damageBonus:
           types:
               Blunt: 1000
-    - type: StaminaDamageOnHit
-      damage: 8
     - type: Item
       size: 5
       sprite: Objects/Fun/rubber_hammer.rsi
@@ -930,6 +928,7 @@
       damage:
         types:
           Blunt: 0
+          Stamina: 8
 
 - type: entity
   parent: BaseItem

@@ -24,12 +24,6 @@ public sealed class SwitchableWeaponComponent : Component
         }
     };
 
-    [ViewVariables(VVAccess.ReadWrite)][DataField("staminaDamageFolded")]
-    public float StaminaDamageFolded = 0;
-
-    [ViewVariables(VVAccess.ReadWrite)][DataField("staminaDamageOpen")]
-    public float StaminaDamageOpen = 28;
-
     [ViewVariables(VVAccess.ReadWrite)][DataField("isOpen")]
     public bool IsOpen = false;
 

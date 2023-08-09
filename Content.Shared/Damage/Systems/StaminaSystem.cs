@@ -205,7 +205,7 @@ public sealed partial class StaminaSystem : EntitySystem
             TakeStaminaDamage(ent, damage / toHit.Count, comp, source: args.User, with: args.Weapon);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
-                _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);
+                _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);// PopupClient Сообщение о том что человек уже в крите по стамине, нужно его перести в  TakeStaminaDamage 242
             }
         }
     }
