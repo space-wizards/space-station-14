@@ -3,39 +3,41 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Doors.Electronics;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent()]
 public class DoorElectronicsComponent : Component
 {
-    [DataField("accessLevels")]
-    public List<string> AccessLevels = new()
+}
+
+[Serializable, NetSerializable]
+public sealed class DoorElectronicsRefreshUiMessage : BoundUserInterfaceMessage
+{
+
+}
+
+[Serializable, NetSerializable]
+public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
+{
+    public List<string> accessList;
+
+    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList)
     {
-        "Armory",
-        "Atmospherics",
-        "Bar",
-        "Brig",
-        "Detective",
-        "Captain",
-        "Cargo",
-        "Chapel",
-        "Chemistry",
-        "ChiefEngineer",
-        "ChiefMedicalOfficer",
-        "Command",
-        "Engineering",
-        "External",
-        "HeadOfPersonnel",
-        "HeadOfSecurity",
-        "Hydroponics",
-        "Janitor",
-        "Kitchen",
-        "Maintenance",
-        "Medical",
-        "Quartermaster",
-        "Research",
-        "ResearchDirector",
-        "Salvage",
-        "Security",
-        "Service",
-        "Theatre",
-    };
+        accessList = _accessList;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class DoorElectronicsConfigurationState : BoundUserInterfaceState
+{
+    public List<string> accessList;
+
+    public DoorElectronicsConfigurationState(List<string> _accessList)
+    {
+        accessList = _accessList;
+    }
+}
+
+[Serializable, NetSerializable]
+public enum DoorElectronicsConfigurationUiKey : byte
+{
+    Key
 }

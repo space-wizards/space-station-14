@@ -1,6 +1,8 @@
+using System.Linq;
+using Content.Shared.Access;
+using Content.Shared.Doors.Electronics;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
-using Content.Shared.Doors.Electronics;
 
 namespace Content.Client.Doors.Electronics;
 
@@ -20,16 +22,13 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         base.Open();
         List<string> accessLevels;
 
-        if (_entityManager.TryGetComponent<DoorElectronicsComponent>(Owner, out var doorElectronics))
-        {
-            accessLevels = doorElectronics.AccessLevels;
-            accessLevels.Sort();
-        }
-        else
-        {
-            accessLevels = new List<string>();
-            Logger.Error($"No DoorElectronicsComponent component found for {_entityManager.ToPrettyString(Owner)}!");
-        }
+
+        accessLevels = _prototypeManager
+            .EnumeratePrototypes<AccessLevelPrototype>()
+            .Where(x => x.Name != null)
+            .Select(x => x.ID)
+            .ToList();
+        accessLevels.Sort();
 
         _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
         _window.OnClose += Close;
