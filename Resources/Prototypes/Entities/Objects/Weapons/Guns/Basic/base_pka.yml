@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: WeaponProtoKineticAcceleratorBase
   abstract: true
   parent: BaseItem
@@ -12,7 +12,6 @@
     minAngle: -43
     maxAngle: -43
   - type: Wieldable
-    wieldedInhandPrefix: null
   - type: Gun
     fireRate: 0.5
     selectedMode: SemiAuto
@@ -40,7 +39,7 @@
     capacity: 1
     count: 1
   - type: Clothing
-    #sprite: WRITEMEWRITEMEWRITEME
+    sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
     quickEquip: false
     slots:
     - suitStorage
