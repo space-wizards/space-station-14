@@ -3,26 +3,25 @@ using Content.Shared.Construction;
 using Content.Shared.Wires;
 using JetBrains.Annotations;
 
-namespace Content.Server.Construction.Completions
+namespace Content.Server.Construction.Completions;
+
+[UsedImplicitly]
+[DataDefinition]
+public sealed class ChangeWiresPanelSecurityLevel : IGraphAction
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public sealed class ChangeWiresPanelSecurityLevel : IGraphAction
+    [DataField("level")]
+    [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
+    public string WiresPanelSecurityLevelID = "Level0";
+
+    public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
     {
-        [DataField("level")]
-        [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]
-        public string WiresPanelSecurityLevelID = "Level0";
+        if (WiresPanelSecurityLevelID == null)
+            return;
 
-        public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
+        if (entityManager.TryGetComponent(uid, out WiresPanelComponent? wiresPanel)
+            && entityManager.TrySystem(out WiresSystem? wiresSystem))
         {
-            if (WiresPanelSecurityLevelID == null)
-                return;
-
-            if (entityManager.TryGetComponent(uid, out WiresPanelComponent? wiresPanel)
-                && entityManager.TrySystem(out WiresSystem? wiresSystem))
-            {
-                wiresSystem.SetWiresPanelSecurityData(uid, wiresPanel, WiresPanelSecurityLevelID);
-            }
+            wiresSystem.SetWiresPanelSecurityData(uid, wiresPanel, WiresPanelSecurityLevelID);
         }
     }
 }
