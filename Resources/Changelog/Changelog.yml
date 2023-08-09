@@ -1,12 +1,6 @@
 Entries:
 - author: deltanedas
   changes:
-  - {message: Wallmount generator board is now cheaper to compensate for less power
-      output., type: Tweak}
-  id: 3991
-  time: '2023-06-15T01:45:07.0000000+00:00'
-- author: deltanedas
-  changes:
   - {message: Blood-red hardsuits now slow you half as much as before., type: Tweak}
   id: 3992
   time: '2023-06-15T02:12:09.0000000+00:00'
@@ -2976,3 +2970,11 @@ Entries:
   - {message: Space cats' EVA suits are now functional! Oxygen not included., type: Tweak}
   id: 4490
   time: '2023-08-09T03:35:15.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'The overhead perspective, hueshifted-looking rocks now use sprites
+      from SS13 that match the perspective of all other walls.', type: Tweak}
+  - {message: Added ironrock for mappers to use. It is easily identifiable by its
+      bright red colors and garish appearance., type: Add}
+  id: 4491
+  time: '2023-08-09T04:00:27.0000000+00:00'
