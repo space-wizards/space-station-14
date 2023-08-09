@@ -1,5 +1,6 @@
 - type: reagent
   id: Desoxyephedrine
+  pricePerUnit: 3 #imperial
   name: reagent-name-desoxyephedrine
   group: Narcotics
   desc: reagent-desc-desoxyephedrine
@@ -49,6 +50,7 @@
 
 - type: reagent
   id: Ephedrine
+  pricePerUnit: 2 #imperial
   name: reagent-name-ephedrine
   group: Narcotics
   desc: reagent-desc-ephedrine
@@ -94,6 +96,7 @@
 
 - type: reagent
   id: Stimulants
+  pricePerUnit: 1 #imperial
   name: reagent-name-stimulants
   group: Narcotics
   desc: reagent-desc-stimulants
@@ -144,6 +147,7 @@
 
 - type: reagent
   id: THC
+  pricePerUnit: 2 #imperial
   name: reagent-name-thc
   group: Narcotics
   desc: reagent-desc-thc
@@ -167,6 +171,7 @@
 
 - type: reagent
   id: THCOil
+  pricePerUnit: 1 #imperial
   name: reagent-name-thc-oil
   group: Narcotics
   desc: reagent-desc-thc-oil
@@ -186,6 +191,7 @@
 
 - type: reagent
   id: Nicotine
+  pricePerUnit: 1 #imperial
   name: reagent-name-nicotine
   group: Narcotics
   desc: reagent-desc-nicotine
@@ -199,6 +205,7 @@
 # TODO: Replace these nonstandardized effects with generic brain damage
 - type: reagent
   id: Impedrezene
+  pricePerUnit: 1 #imperial
   name: reagent-name-impedrezene
   group: Narcotics
   desc: reagent-desc-impedrezene
@@ -228,6 +235,7 @@
 
 - type: reagent
   id: SpaceDrugs
+  pricePerUnit: 1 #imperial
   name: reagent-name-space-drugs
   group: Narcotics
   desc: reagent-desc-space-drugs
@@ -247,6 +255,7 @@
 # Probably replace this one with sleeping chem when putting someone in a comatose state is easier
 - type: reagent
   id: Nocturine
+  pricePerUnit: 3 #imperial
   name: reagent-name-nocturine
   group: Narcotics
   desc: reagent-desc-nocturine
@@ -269,6 +278,7 @@
 
 - type: reagent
   id: MuteToxin
+  pricePerUnit: 5 #imperial
   name: reagent-name-mute-toxin
   group: Narcotics
   desc: reagent-desc-mute-toxin
@@ -285,6 +295,7 @@
 
 - type: reagent
   id: NorepinephricAcid
+  pricePerUnit: 5 #imperial
   name: reagent-name-norepinephric-acid
   group: Narcotics
   desc: reagent-desc-norepinephric-acid

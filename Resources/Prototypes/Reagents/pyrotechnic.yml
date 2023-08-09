@@ -15,6 +15,7 @@
 
 - type: reagent
   id: Thermite
+  pricePerUnit: 1 #imperial
   name: reagent-name-thermite
   parent: BasePyrotechnic
   desc: reagent-desc-thermite
@@ -36,6 +37,7 @@
 
 - type: reagent
   id: Napalm
+  pricePerUnit: 1.25 #imperial
   name: reagent-name-napalm
   parent: BasePyrotechnic
   desc: reagent-desc-napalm
@@ -63,6 +65,7 @@
 
 - type: reagent
   id: Phlogiston
+  pricePerUnit: 2.75 #imperial
   name: reagent-name-phlogiston
   parent: BasePyrotechnic
   desc: reagent-desc-phlogiston
@@ -90,6 +93,7 @@
 
 - type: reagent
   id: ChlorineTrifluoride
+  pricePerUnit: 2.5 #imperial
   name: reagent-name-chlorine-trifluoride
   parent: BasePyrotechnic
   desc: reagent-desc-chlorine-trifluoride
@@ -127,6 +131,7 @@
 
 - type: reagent
   id: FoamingAgent
+  pricePerUnit: 1 #imperial
   name: reagent-name-foaming-agent
   parent: BasePyrotechnic
   desc: reagent-desc-foaming-agent
@@ -163,6 +168,7 @@
 
 - type: reagent
   id: Fluorosurfactant
+  pricePerUnit: 1 #imperial
   name: reagent-name-fluorosurfactant
   parent: BasePyrotechnic
   desc: reagent-desc-fluorosurfactant

@@ -1,5 +1,6 @@
 - type: reagent
   id: Toxin
+  pricePerUnit: 1 #imperial
   name: reagent-name-toxin
   group: Toxins
   desc: reagent-desc-toxin
@@ -21,6 +22,7 @@
 
 - type: reagent
   id: CarpoToxin
+  pricePerUnit: 5 #imperial
   name: reagent-name-carpotoxin
   group: Toxins
   desc: reagent-desc-carpotoxin
@@ -47,6 +49,7 @@
 
 - type: reagent
   id: ChloralHydrate
+  pricePerUnit: 1 #imperial
   name: reagent-name-chloral-hydrate
   group: Toxins
   desc: reagent-desc-chloral-hydrate
@@ -79,6 +82,7 @@
 
 - type: reagent
   id: Mold
+  pricePerUnit: 1 #imperial
   name: reagent-name-mold
   group: Toxins
   desc: reagent-desc-mold
@@ -96,6 +100,7 @@
 
 - type: reagent
   id: PolytrinicAcid
+  pricePerUnit: 1 #imperial
   name: reagent-name-polytrinic-acid
   group: Toxins
   desc: reagent-desc-polytrinic-acid
@@ -139,6 +144,7 @@
 
 - type: reagent
   id: FluorosulfuricAcid
+  pricePerUnit: 1.25 #imperial
   name: reagent-name-fluorosulfuric-acid
   group: Toxins
   desc: reagent-desc-fluorosulfuric-acid
@@ -175,6 +181,7 @@
 
 - type: reagent
   id: SulfuricAcid
+  pricePerUnit: 0.75 #imperial
   name: reagent-name-sulfuric-acid
   group: Toxins
   desc: reagent-desc-sulfuric-acid
@@ -219,6 +226,7 @@
 
 - type: reagent
   id: UnstableMutagen
+  pricePerUnit: 0.8 #imperial
   name: reagent-name-unstable-mutagen
   group: Toxins
   desc: reagent-desc-unstable-mutagen
@@ -240,6 +248,7 @@
 
 - type: reagent
   id: HeartbreakerToxin
+  pricePerUnit: 4 #imperial
   name: reagent-name-heartbreaker-toxin
   group: Toxins
   desc: reagent-desc-heartbreaker-toxin
@@ -258,6 +267,7 @@
 
 - type: reagent
   id: Lexorin
+  pricePerUnit: 5 #imperial
   name: reagent-name-lexorin
   group: Toxins
   desc: reagent-desc-lexorin
@@ -273,6 +283,7 @@
 
 - type: reagent
   id: MindbreakerToxin
+  pricePerUnit: 2 #imperial
   name: reagent-name-mindbreaker-toxin
   group: Toxins
   desc: reagent-desc-mindbreaker-toxin
@@ -286,6 +297,7 @@
 
 - type: reagent
   id: Histamine
+  pricePerUnit: 2 #imperial
   name: reagent-name-histamine
   group: Toxins
   desc: reagent-desc-histamine
@@ -324,6 +336,7 @@
 
 - type: reagent
   id: Theobromine
+  pricePerUnit: 1 #imperial
   name: reagent-name-theobromine
   group: Toxins
   desc: reagent-desc-theobromine
@@ -354,6 +367,7 @@
 
 - type: reagent
   id: Amatoxin
+  pricePerUnit: 1 #imperial
   name: reagent-name-amatoxin
   group: Toxins
   desc: reagent-desc-amatoxin
@@ -448,6 +462,7 @@
 
 - type: reagent
   id: Pax
+  pricePerUnit: 2.75 #imperial
   name: reagent-name-pax
   group: Narcotics
   desc: reagent-desc-pax
