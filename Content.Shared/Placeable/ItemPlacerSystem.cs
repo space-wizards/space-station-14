@@ -38,7 +38,7 @@ public sealed class ItemPlacerSystem : EntitySystem
             RaiseLocalEvent(uid, ref ev);
         }
 
-        if (comp.MaxEntities != 0 && count >= comp.MaxEntities)
+        if (comp.MaxEntities > 0 && count >= (comp.MaxEntities - 1))
         {
             // Don't let any more items be placed if it's reached its limit.
             _placeableSurface.SetPlaceable(uid, false);
