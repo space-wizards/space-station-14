@@ -6,18 +6,21 @@ namespace Content.Shared.Wires;
 
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedWiresSystem))]
-public sealed class WiresPanelComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class WiresPanelComponent : Component
 {
     /// <summary>
     ///     Is the panel open for this entity's wires?
     /// </summary>
     [DataField("open")]
+    [AutoNetworkedField]
     public bool Open;
 
     /// <summary>
     ///     Should this entity's wires panel be visible at all?
     /// </summary>
     [ViewVariables]
+    [AutoNetworkedField]
     public bool Visible = true;
 
     [DataField("screwdriverOpenSound")]
@@ -26,16 +29,9 @@ public sealed class WiresPanelComponent : Component
     [DataField("screwdriverCloseSound")]
     public SoundSpecifier ScrewdriverCloseSound = new SoundPathSpecifier("/Audio/Machines/screwdriverclose.ogg");
 
+    [AutoNetworkedField]
     public string? WiresPanelSecurityExamination = default!;
 
+    [AutoNetworkedField]
     public bool WiresAccessible = true;
-}
-
-[Serializable, NetSerializable]
-public sealed class WiresPanelComponentState : ComponentState
-{
-    public bool Open;
-    public bool Visible;
-    public string? WiresPanelSecurityExamination = default!;
-    public bool WiresAccessible;
 }
