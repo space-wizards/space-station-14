@@ -29,7 +29,7 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
         {
             writer.WriteString("player", value.Session.UserId.UserId);
 
-            if (_playerManager.TryGetSessionById(value.Session.UserId, out var playerSession) &&
+            if (value.Session is IPlayerSession playerSession &&
                 _adminManager.IsAdmin(playerSession))
             {
                 writer.WriteBoolean("admin", true);
