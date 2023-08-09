@@ -53,7 +53,7 @@
   copyright: "Taken from /tg/station, edited by Flareguy for Space Station 14"
   source: "https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/sound/weapons/armbomb.ogg"
 
-- files: ["Toys/meow1.ogg"]
+- files: ["Toys/meow2.ogg"]
   license: "CC0-1.0"
   copyright: "Created by suicdxsaturday, shortened and converted to OGG and mono"
   source: "https://freesound.org/people/suicdxsaturday/sounds/698633/"
