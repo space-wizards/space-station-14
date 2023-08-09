@@ -1,7 +1,9 @@
 ﻿using Content.Shared.Body.Systems;
 using Content.Shared.Buckle.Components;
+using Content.Shared.Movement.Events;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Standing;
+using Content.Shared.Throwing;
 
 namespace Content.Shared.Traits.Assorted;
 
@@ -16,6 +18,10 @@ public sealed class LegsParalyzedSystem : EntitySystem
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LegsParalyzedComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<LegsParalyzedComponent, BuckleChangeEvent>(OnBuckleChange);
+        SubscribeLocalEvent<LegsParalyzedComponent, DownAttemptEvent>(OnDownAttempt);
+        SubscribeLocalEvent<LegsParalyzedComponent, StandAttemptEvent>(OnStandAttempt);
+        SubscribeLocalEvent<LegsParalyzedComponent, ThrowPushbackAttemptEvent>(OnThrowPushbackAttempt);
+        SubscribeLocalEvent<LegsParalyzedComponent, UpdateCanMoveEvent>(OnUpdateCanMoveEvent);
     }
 
     private void OnStartup(EntityUid uid, LegsParalyzedComponent component, ComponentStartup args)
@@ -40,5 +46,25 @@ public sealed class LegsParalyzedSystem : EntitySystem
         {
             _standingSystem.Down(args.BuckledEntity);
         }
+    }
+
+    private void OnDownAttempt(EntityUid uid, LegsParalyzedComponent component, DownAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnUpdateCanMoveEvent(EntityUid uid, LegsParalyzedComponent component, UpdateCanMoveEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnThrowPushbackAttempt(EntityUid uid, LegsParalyzedComponent component, ThrowPushbackAttemptEvent args)
+    {
+        args.Cancel();
+    }
+
+    private void OnStandAttempt(EntityUid uid, LegsParalyzedComponent component, StandAttemptEvent args)
+    {
+        args.Cancel();
     }
 }
