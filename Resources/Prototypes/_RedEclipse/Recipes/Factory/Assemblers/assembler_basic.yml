@@ -1,5 +1,5 @@
 - type: latheRecipe
-  id: FactorySimpleCircuits
+  id: FactorySimpleCircuit
   result: FactorySimpleCircuit
   completetime: 4
   materials: # TODO better recipe

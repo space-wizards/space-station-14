@@ -28,6 +28,6 @@
       idleState: icon
       runningState: building
       staticRecipes:
-        - FactorySimpleCircuits
+        - FactorySimpleCircuit
         - FactoryBasicCasing
         - FactoryMetalBlade
