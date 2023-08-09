@@ -1,0 +1,5 @@
+- type: damageModifierSet
+  id: Vulpkanin # Thick fur helps with blunt damage, but somewhat increases damage from heat
+  coefficients:
+    Blunt: 0.75
+    Heat: 1.2

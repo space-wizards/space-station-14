@@ -1,0 +1,8 @@
+- type: speechSounds
+  id: Vulpkanin
+  saySound:
+    path: /Audio/Voice/Talk/speech_4.ogg
+  askSound:
+    path: /Audio/Voice/Talk/speech_4_ask.ogg
+  exclaimSound:
+    path: /Audio/Voice/Talk/speech_4_exclaim.ogg

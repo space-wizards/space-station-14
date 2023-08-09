@@ -1,0 +1,70 @@
+- type: entity
+  save: false
+  name: Urist McVulp
+  parent: BaseMobOrganic
+  id: BaseMobVulpkanin
+  abstract: true
+  components:
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 3.0
+    baseSprintSpeed: 5.0
+  - type: HumanoidAppearance
+    species: Vulpkanin
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Vulpkanin
+  - type: Icon
+    sprite: Ganimed/Mobs/Species/Vulpkanin/parts.rsi
+    state: full
+  - type: Bloodstream
+    bloodReagent: Blood
+  - type: Body
+    prototype: Vulpkanin
+    requiredLegs: 2
+  - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 0.65
+        Bloodloss: 0.65
+  - type: Thirst
+  - type: Perishable
+  - type: Temperature
+    heatDamageThreshold: 360
+    coldDamageThreshold: 245
+    currentTemperature: 340.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.15 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.2 #per second, scales with temperature & other constants
+  - type: ThermalRegulator
+    normalBodyTemperature: 340.15
+  - type: Speech
+    speechSounds: Vulpkanin
+  - type: Vocal
+    sounds:
+      Male: UnisexVulpkanin
+      Female: UnisexVulpkanin
+      Unsexed: UnisexVulpkanin
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcClaw
+    damage:
+      types:
+        Slash: 5.5
+
+- type: entity
+  save: false
+  name: Urist McVulp
+  id: MobVulpkaninDummy
+  parent: BaseMobOrganicDummy
+  noSpawn: true
+  description: A dummy vulpkanin meant to be used in character setup.
+  components:
+    - type: HumanoidAppearance
+      species: Vulpkanin

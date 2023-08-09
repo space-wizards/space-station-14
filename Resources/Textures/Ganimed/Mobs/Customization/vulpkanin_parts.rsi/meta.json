@@ -1,0 +1,21 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from SerbiaStrong-220/space-station-14 at https://github.com/space-wizards/space-station-14/commit/cccdb93d51d54f1602b86198c71eb6af54bee10a",
+    "size": {
+      "x": 32,
+      "y": 32
+    },
+    "states": [
+      {
+        "name": "ears",
+        "directions": 4
+      },
+      {
+        "name": "tail",
+        "directions": 4
+      }
+      
+    ]
+  }
+  

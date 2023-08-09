@@ -1,0 +1,9 @@
+- type: emoteSounds
+  id: UnisexVulpkanin
+  params:
+    variation: 0.125
+  sounds:
+    Scream:
+      path: /Audio/Animals/kangaroo_grunt.ogg
+    Laugh:
+      path: /Audio/Animals/kangaroo_grunt.ogg

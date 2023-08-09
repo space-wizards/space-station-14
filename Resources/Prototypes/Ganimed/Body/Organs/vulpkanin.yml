@@ -1,0 +1,12 @@
+- type: entity
+  id: OrganVulpkaninStomach
+  parent: OrganAnimalStomach
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: stomach
+  - type: Stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
