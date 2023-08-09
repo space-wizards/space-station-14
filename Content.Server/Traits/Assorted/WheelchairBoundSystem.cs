@@ -1,4 +1,5 @@
 ﻿using Content.Shared.Buckle;
+using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Traits.Assorted;
 
@@ -8,10 +9,10 @@ public sealed class WheelchairBoundSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<WheelchairBoundComponent, MapInitEvent>(OnMapInit);
+        SubscribeLocalEvent<WheelchairBoundComponent, ComponentStartup>(OnStartup);
     }
 
-    private void OnMapInit(EntityUid uid, WheelchairBoundComponent component, MapInitEvent args)
+    private void OnStartup(EntityUid uid, WheelchairBoundComponent component, ComponentStartup args)
     {
         var wheelchair = Spawn(component.WheelchairPrototype, Transform(uid).Coordinates);
         _buckleSystem.TryBuckle(uid, uid, wheelchair);
