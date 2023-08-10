@@ -101,16 +101,16 @@ namespace Content.Shared.Maps
             var accumulated = 0f;
             var rand = random.NextFloat() * sum;
 
-            for (var i = 0; i < variants.Count; ++i)
+            for (byte i = 0; i < variants.Count; ++i)
             {
                 accumulated += variants[i];
 
                 if (accumulated >= rand)
-                    return (byte) i;
+                    return i;
             }
 
             // Shouldn't happen
-            throw new InvalidOperationException($"Invalid weighted pick for {tile.ID}!");
+            throw new InvalidOperationException($"Invalid weighted variantize tile pick for {tile.ID}!");
         }
 
         /// <summary>

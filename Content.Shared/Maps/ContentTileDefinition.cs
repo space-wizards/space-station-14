@@ -1,5 +1,4 @@
 using Content.Shared.Atmos;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
