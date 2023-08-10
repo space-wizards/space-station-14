@@ -850,6 +850,7 @@
   - type: VendingMachineInventory
     pack:
       - NutriMaxInventory
+      - NutriMaxEmaggedInventory
   - type: VendingMachineVisualState
     offState: off
     brokenState: broken
