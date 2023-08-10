@@ -1,10 +1,4 @@
 Entries:
-- author: end
-  changes:
-  - {message: 'Librarians now can ask cargo to order guidebooks, in order to increase
-      the IQ of spessman.', type: Add}
-  id: 4004
-  time: '2023-06-15T03:36:16.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Shuttle airlocks now have wires and can be hacked., type: Tweak}
@@ -2978,3 +2972,8 @@ Entries:
       supplies from cargo., type: Fix}
   id: 4503
   time: '2023-08-10T06:04:43.0000000+00:00'
+- author: emogarbage
+  changes:
+  - {message: Re-sprited grappling gun per artist request., type: Tweak}
+  id: 4504
+  time: '2023-08-10T06:16:57.0000000+00:00'
