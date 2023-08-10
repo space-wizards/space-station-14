@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-3.0",
+  "copyright": "Sprite by https://github.com/SonicHDC",
+  "size": {
+    "x": 16,
+    "y": 16
+  },
+  "states": [
+    {
+      "name": "web_projectile"
+    }
+  ]
+}
