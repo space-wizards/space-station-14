@@ -74,10 +74,10 @@ uplink-speedloader-magnum-name = Speedloader (.45 magnum AP)
 uplink-speedloader-magnu-desc = Revolver speedloader with 6 armor-piercing catridges, capable of ignoring armor entirely. Compatible with the Python.
 
 uplink-mosin-ammo-name = Ammunition box (.30 rifle)
-uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
+uplink-mosin-ammo-desc = A box of 50 cartridges for the surplus rifle.
 
-uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
-uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
+uplink-sniper-ammo-name = Ammunition box (.60 antimateriel)
+uplink-sniper-ammo-desc = A box of 10 cartridges for the hristov sniper rifle.
 
 # Utility
 uplink-holopara-kit-name = Holoparasite Kit
@@ -94,10 +94,10 @@ uplink-agent-id-card-name = Agent ID Card
 uplink-agent-id-card-desc = A modified ID card that can copy accesses from other cards and change its name and job title at-will.
 
 uplink-black-jetpack-name = Black Jetpack
-uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Additional fuel now included!
+uplink-black-jetpack-desc = A black jetpack. It allows you to fly around in space. Additional fuel not included!
 
 uplink-reinforcement-radio-monkey-name = Monkey Reinforcement Teleporter
-uplink-reinforcement-radio-monkey-desc =  Call in trained monkey to assist you. Comes with a single syndicate cigarette.
+uplink-reinforcement-radio-monkey-desc =  Call in a trained monkey to assist you. Comes with a single syndicate cigarette.
 
 uplink-reinforcement-radio-name = Reinforcement Teleporter
 uplink-reinforcement-radio-desc =  Radio in a reinforcement agent of extremely questionable quality. No off button, buy this if you're ready to party. They have a pistol with no reserve ammo, and a knife. That's it.
