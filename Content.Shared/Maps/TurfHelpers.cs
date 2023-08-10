@@ -101,7 +101,7 @@ namespace Content.Shared.Maps
             var accumulated = 0f;
             var rand = random.NextFloat() * sum;
 
-            for (byte i = 0; i < variants.Count; ++i)
+            for (byte i = 0; i < variants.Length; ++i)
             {
                 accumulated += variants[i];
 
