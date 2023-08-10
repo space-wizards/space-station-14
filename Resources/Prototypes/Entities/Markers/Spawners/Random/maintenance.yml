@@ -48,6 +48,21 @@
         - CluwneHorn
         - ClothingMaskRat
         - MysteryFigureBox
+        - ClothingHandsGlovesMercFingerless
+        - ClothingHandsGlovesNitrile
+        - ClothingHandsGlovesPowerglove
+        - ClothingHeadHatAnimalHeadslime
+        - ClothingHeadHatBeretMerc
+        - ClothingHeadHatOutlawHat
+        - ClothingHeadHatUshanka
+        - ClothingHeadHatBunny
+        - ClothingMaskNeckGaiter
+        - ClothingNeckScarfStripedZebra
+        - ClothingOuterRobesCult
+        - ClothingOuterGhostSheet
+        - ClothingShoesCult
+        - ClothingUniformJumpsuitAncient
+        - ClothingUniformJumpsuitPirate
       rareChance: 0.01
       prototypes:
         - Lighter
@@ -71,6 +86,37 @@
         - ClothingMaskRaven
         - ClothingMaskJackal
         - ClothingMaskBat
+        - ClothingBeltSuspenders
+        - ClothingEyesEyepatch
+        - ClothingEyesGlasses
+        - ClothingHandsGlovesLatex
+        - ClothingHandsGlovesFingerless
+        - ClothingHandsGlovesColorBlack
+        - ClothingHeadHatBeret
+        - ClothingHeadHatBowlerHat
+        - ClothingHeadHatFedoraBrown
+        - ClothingHeadHatFedoraGrey
+        - ClothingHeadHatFez
+        - ClothingHeadHatPaper
+        - ClothingHeadHatPirate
+        - ClothingHeadHatPirateTricord
+        - ClothingHeadHatTophat
+        - ClothingMaskSterile
+        - ClothingNeckHeadphones
+        - ClothingNeckTieRed
+        - ClothingOuterCoatGentle
+        - ClothingOuterCoatJensen
+        - ClothingOuterCoatLab
+        - ClothingOuterCoatPirate
+        - ClothingOuterHoodieBlack
+        - ClothingOuterHoodieGrey
+        - ClothingOuterVestHazard
+        - ClothingShoesBootsJack
+        - ClothingShoesBootsLaceup
+        - ClothingShoesLeather
+        - ClothingShoesBootsSalvage
+        - ClothingShoesBootsWork
+        - ClothingShoesTourist
       chance: 0.6
       offset: 0.0
 
@@ -91,22 +137,59 @@
         - LanternFlash
         - PowerCellHigh
         - NetProbeCartridge
+        - WelderIndustrial
+        - SheetPlasteel10
+        - ClothingMaskGasExplorer
       rareChance: 0.08
       prototypes:
         - FlashlightLantern
         - YellowOxygenTankFilled
         - DoubleEmergencyOxygenTankFilled
         - ToolboxEmergencyFilled
+        - NitrogenTankFilled
         - ToolboxElectricalFilled
         - ToolboxMechanicalFilled
-        - ClothingBeltUtilityFilled
+        - ClothingBeltUtility
         - Shovel
         - Welder
         - WeaponFlareGun
-        - SheetSteel
-        - SheetPlastic
+        - SheetSteel10
+        - SheetPlastic10
+        - SheetGlass10
+        - PartRodMetal10
+        - MaterialCardboard10
+        - MaterialCloth10
+        - MaterialWoodPlank10
         - ResearchDisk
         - Plunger
+        - TechnologyDisk
+        - PowerCellMedium
+        - PowerCellSmall
+        - Wirecutter
+        - Screwdriver
+        - Wrench
+        - Crowbar
+        - NetworkConfigurator
+        - trayScanner
+        - GasAnalyzer
+        - AirlockPainter
+        - AppraisalTool
+        - Flare
+        - HandheldGPSBasic
+        - HandLabeler
+        - GlowstickBase
+        - Bucket
+        - RadioHandheld
+        - GeigerCounter
+        - Beaker
+        - ClothingMaskGas
+        - ClothingMaskBreath
+        - DoorElectronics
+        - APCElectronics
+        - InflatableWallStack5
+        - CableHVStack10
+        - CableMVStack10
+        - CableApcStack10
       chance: 0.6
       offset: 0.0
 
@@ -126,6 +209,10 @@
         - Machete
         - BaseBallBat
         - CombatKnife
+        - Spear
+        - RifleStock
+        - ModularReceiver
+        - HydroponicsToolScythe
       rareChance: 0.05
       prototypes:
         - FlashlightLantern
@@ -137,9 +224,22 @@
         - Shovel
         - Welder
         - WeaponFlareGun
-        - Spear
         - LidSalami
         - ClothingEyesBlindfold
+        - ClothingMaskMuzzle
+        - ClothingMaskGasSecurity
+        - ShardGlass
+        - Syringe
+        - Mousetrap
+        - Brutepack1
+        - Ointment1
+        - Gauze1
+        - Bola
+        - SurvivalKnife
+        - ScalpelShiv
+        - Shiv
+        - SawImprov
+        - HydroponicsToolMiniHoe
       chance: 0.6
       offset: 0.0
 

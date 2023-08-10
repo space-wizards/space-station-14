@@ -456,7 +456,12 @@ public sealed class NukeSystem : EntitySystem
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
         _itemSlots.SetLock(uid, component.DiskSlot, true);
-        _transform.AnchorEntity(uid, nukeXform);
+        if (!nukeXform.Anchored)
+        {
+            // Admin command shenanigans, just make sure.
+            _transform.AnchorEntity(uid, nukeXform);
+        }
+
         component.Status = NukeStatus.ARMED;
         UpdateUserInterface(uid, component);
     }
