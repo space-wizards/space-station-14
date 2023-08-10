@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Our top scientists have injected our artifacts with foaming agents to
-      greatly increase their foam output. Let's just hope that there's nothing dangerous
-      inside of it., type: Fix}
-  id: 4007
-  time: '2023-06-15T11:26:10.0000000+00:00'
 - author: lzk
   changes:
   - {message: Changed sprites, type: Tweak}
@@ -2980,3 +2973,9 @@ Entries:
       Command airlocks start with an even higher level of security., type: Add}
   id: 4506
   time: '2023-08-10T08:33:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Syndicate are no longer interested in stealing Cargo's request computer
+      boards., type: Remove}
+  id: 4507
+  time: '2023-08-10T08:34:38.0000000+00:00'
