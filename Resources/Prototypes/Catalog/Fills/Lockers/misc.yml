@@ -93,7 +93,7 @@
   components:
     - type: StorageFill
       contents:
-        - id: lantern
+        - id: Lantern
           prob: 0.50
         - id: Wirecutter
           prob: 0.33
@@ -178,7 +178,7 @@
   components:
   - type: StorageFill
     contents:
-        - id: lantern
+        - id: Lantern
           prob: 0.50
         - id: Wirecutter
           prob: 0.33

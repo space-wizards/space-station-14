@@ -16,7 +16,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: IdleCompound
+    rootTask:
+      task: IdleCompound
   - type: Input
     context: "human"
   - type: NpcFactionMember
@@ -193,6 +194,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

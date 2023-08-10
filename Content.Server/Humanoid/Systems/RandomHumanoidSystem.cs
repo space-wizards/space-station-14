@@ -16,6 +16,7 @@ public sealed class RandomHumanoidSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IComponentFactory _compFactory = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
@@ -35,31 +36,27 @@ public sealed class RandomHumanoidSystem : EntitySystem
     public EntityUid SpawnRandomHumanoid(string prototypeId, EntityCoordinates coordinates, string name)
     {
         if (!_prototypeManager.TryIndex<RandomHumanoidSettingsPrototype>(prototypeId, out var prototype))
-        {
             throw new ArgumentException("Could not get random humanoid settings");
-        }
 
         var profile = HumanoidCharacterProfile.Random(prototype.SpeciesBlacklist);
         var speciesProto = _prototypeManager.Index<SpeciesPrototype>(profile.Species);
-        var humanoid = Spawn(speciesProto.Prototype, coordinates);
+        var humanoid = EntityManager.CreateEntityUninitialized(speciesProto.Prototype, coordinates);
 
-        MetaData(humanoid).EntityName = prototype.RandomizeName
-            ? profile.Name
-            : name;
+        _metaData.SetEntityName(humanoid, prototype.RandomizeName ? profile.Name : name);
 
         _humanoid.LoadProfile(humanoid, profile);
 
-        if (prototype.Components == null)
+        if (prototype.Components != null)
         {
-            return humanoid;
+            foreach (var entry in prototype.Components.Values)
+            {
+                var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
+                comp.Owner = humanoid; // This .owner must survive for now.
+                EntityManager.AddComponent(humanoid, comp, true);
+            }
         }
 
-        foreach (var entry in prototype.Components.Values)
-        {
-            var comp = (Component) _serialization.CreateCopy(entry.Component, notNullableOverride: true);
-            comp.Owner = humanoid;
-            EntityManager.AddComponent(humanoid, comp, true);
-        }
+        EntityManager.InitializeAndStartEntity(humanoid);
 
         return humanoid;
     }

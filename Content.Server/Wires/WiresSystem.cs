@@ -31,6 +31,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -455,7 +456,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
 
-        if (panel.Open &&
+        if (panel.Open && panel.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -629,6 +630,23 @@ public sealed class WiresSystem : SharedWiresSystem
         component.Open = open;
         UpdateAppearance(uid, component);
         Dirty(component);
+    }
+
+    public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
+    {
+        var wiresPanelSecurityLevelPrototype = _protoMan.Index<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID);
+
+        if (wiresPanelSecurityLevelPrototype == null)
+            return;
+
+        component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
+        component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
+        Dirty(component);
+
+        if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
+        {
+            _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)

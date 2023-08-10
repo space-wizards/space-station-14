@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartNodeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IEntityManager>();
@@ -53,7 +53,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -71,7 +71,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestTargetIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -89,7 +89,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task DeconstructionIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var entMan = server.ResolveDependency<IEntityManager>();
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || !proto.Components.TryGetValue(name, out var reg))
+                    if (proto.Abstract || pairTracker.Pair.IsTestPrototype(proto) || !proto.Components.TryGetValue(name, out var reg))
                         continue;
 
                     var comp = (ConstructionComponent) reg.Component;
@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartReachesValidTarget()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();

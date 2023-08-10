@@ -115,6 +115,22 @@
     owner: job-name-rd
 
 - type: objective
+  id: SecretDocumentsStealObjective
+  issuer: syndicate
+  difficultyOverride: 2.75
+  requirements:
+  - !type:TraitorRequirement {}
+  - !type:IncompatibleConditionsRequirement
+    conditions:
+    - DieCondition
+  - !type:NotRoleRequirement
+    roleId: HeadOfSecurity
+  conditions:
+  - !type:StealCondition
+    prototype: BookSecretDocuments
+    owner: job-name-hos
+
+- type: objective
   id: NukeDiskStealObjective
   issuer: syndicate
   requirements:
@@ -170,21 +186,6 @@
     - !type:StealCondition
       prototype: ClothingShoesBootsMagAdv
       owner: job-name-ce
-
-- type: objective
-  id: SupplyConsoleBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Quartermaster
-  conditions:
-    - !type:StealCondition
-      prototype: CargoRequestComputerCircuitboard
-      owner: job-name-qm
 
 - type: objective
   id: CorgiMeatStealObjective
