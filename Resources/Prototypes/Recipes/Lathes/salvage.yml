@@ -4,3 +4,12 @@
   completetime: 5
   materials:
     Cloth: 200
+
+- type: latheRecipe
+  id: FultonBeacon
+  result: FultonBeacon
+  completetime: 5
+  materials:
+    Steel: 1000
+    Glass: 500
+    # If they get spammed make it cost silver.
