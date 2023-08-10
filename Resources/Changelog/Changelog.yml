@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Shuttle airlocks now have wires and can be hacked., type: Tweak}
-  id: 4005
-  time: '2023-06-15T03:37:58.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: added mass hallucinations event that temporarily makes everyone on station
@@ -2977,3 +2972,10 @@ Entries:
   - {message: Re-sprited grappling gun per artist request., type: Tweak}
   id: 4504
   time: '2023-08-10T06:16:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Advanced laser guns are now 30 size, like the antique laser gun.',
+    type: Tweak}
+  - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
+  id: 4505
+  time: '2023-08-10T07:27:02.0000000+00:00'
