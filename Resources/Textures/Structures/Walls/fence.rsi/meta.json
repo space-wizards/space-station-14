@@ -8,6 +8,12 @@
   },
   "states": [
     {
+      "name": "icon_straight"
+    },
+    {
+      "name": "icon_end"
+    },
+    {
       "name": "straight",
       "directions": 4
     },
