@@ -26,7 +26,7 @@ public partial class SharedBodySystem
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(
-            part.Body,
+            ToNetEntity(part.Body),
             part.ParentSlot,
             part.Children,
             part.Organs,
@@ -41,7 +41,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyPartComponentState state)
             return;
 
-        part.Body = state.Body;
+        part.Body = ToEntity(state.Body);
         part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
         part.Children = state.Children; // TODO use containers. This is broken and does not work.
         part.Organs = state.Organs; // TODO end my suffering.

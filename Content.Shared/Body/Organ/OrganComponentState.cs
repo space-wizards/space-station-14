@@ -5,10 +5,10 @@ namespace Content.Shared.Body.Organ;
 [Serializable, NetSerializable]
 public sealed class OrganComponentState : ComponentState
 {
-    public readonly EntityUid? Body;
+    public readonly NetEntity? Body;
     public readonly OrganSlot? Parent;
 
-    public OrganComponentState(EntityUid? body, OrganSlot? parent)
+    public OrganComponentState(NetEntity? body, OrganSlot? parent)
     {
         Body = body;
         Parent = parent;

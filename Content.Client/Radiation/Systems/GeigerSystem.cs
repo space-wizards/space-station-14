@@ -29,7 +29,7 @@ public sealed class GeigerSystem : SharedGeigerSystem
         component.CurrentRadiation = state.CurrentRadiation;
         component.DangerLevel = state.DangerLevel;
         component.IsEnabled = state.IsEnabled;
-        component.User = state.User;
+        component.User = ToEntity(state.User);
         component.UiUpdateNeeded = true;
     }
 

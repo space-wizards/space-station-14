@@ -40,7 +40,7 @@ public partial class SharedBodySystem
 
     private void OnOrganGetState(EntityUid uid, OrganComponent organ, ref ComponentGetState args)
     {
-        args.State = new OrganComponentState(organ.Body, organ.ParentSlot);
+        args.State = new OrganComponentState(ToNetEntity(organ.Body), organ.ParentSlot);
     }
 
     private void OnOrganHandleState(EntityUid uid, OrganComponent organ, ref ComponentHandleState args)
@@ -48,7 +48,7 @@ public partial class SharedBodySystem
         if (args.Current is not OrganComponentState state)
             return;
 
-        organ.Body = state.Body;
+        organ.Body = ToEntity(state.Body);
         organ.ParentSlot = state.Parent;
     }
 

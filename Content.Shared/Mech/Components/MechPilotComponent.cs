@@ -22,5 +22,5 @@ public sealed class MechPilotComponent : Component
 [Serializable, NetSerializable]
 public sealed class MechPilotComponentState : ComponentState
 {
-    public EntityUid Mech;
+    public NetEntity Mech;
 }
