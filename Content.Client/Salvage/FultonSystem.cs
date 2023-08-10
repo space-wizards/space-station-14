@@ -1,11 +1,8 @@
-using System.Numerics;
 using Content.Shared.Salvage.Fulton;
 using JetBrains.Annotations;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.Map;
-using Robust.Shared.Prototypes;
 
 namespace Content.Client.Salvage;
 
@@ -32,34 +29,22 @@ public sealed class FultonSystem : SharedFultonSystem
         }
     };
 
-    [ValidatePrototypeId<EntityPrototype>] private const string EffectProto = "FultonEffect";
-
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<FultonedComponent, ComponentStartup>(OnFultonedStartup);
-        SubscribeLocalEvent<FultonedComponent, ComponentShutdown>(OnFultonedShutdown);
+        SubscribeLocalEvent<FultonedComponent, AfterAutoHandleStateEvent>(OnHandleState);
     }
 
-    private void OnFultonedShutdown(EntityUid uid, FultonedComponent component, ComponentShutdown args)
+    private void OnHandleState(EntityUid uid, FultonedComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        QueueDel(component.Effect);
-    }
-
-    private void OnFultonedStartup(EntityUid uid, FultonedComponent component, ComponentStartup args)
-    {
-        if (!Timing.IsFirstTimePredicted)
-            return;
-
-        component.Effect = Spawn(EffectProto, new EntityCoordinates(uid, Vector2.Zero));
         UpdateAppearance(uid, component);
     }
 
     protected override void UpdateAppearance(EntityUid uid, FultonedComponent component)
     {
+        if (!component.Effect.IsValid())
+            return;
+
         var startTime = component.NextFulton - FultonDuration;
         var elapsed = Timing.CurTime - startTime;
 
