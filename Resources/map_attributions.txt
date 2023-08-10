@@ -43,3 +43,6 @@
 - files: ["saltern.yml"]
   authors: deltanedas, Emisse, PJB
 
+- files: ["core.yml"]
+  authors: Ubaser
+

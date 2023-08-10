@@ -1,3 +1,4 @@
+using System.Numerics;
 using JetBrains.Annotations;
 using Robust.Shared.Player;
 using Robust.Shared.Serialization;
@@ -52,7 +53,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
         {
             var recoil = entity.Item2;
             var eye = entity.Item1;
-            var magnitude = recoil.CurrentKick.Length;
+            var magnitude = recoil.CurrentKick.Length();
             if (magnitude <= 0.005f)
             {
                 recoil.CurrentKick = Vector2.Zero;
@@ -60,7 +61,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
             }
             else // Continually restore camera to 0.
             {
-                var normalized = recoil.CurrentKick.Normalized;
+                var normalized = recoil.CurrentKick.Normalized();
                 recoil.LastKickTime += frameTime;
                 var restoreRate = MathHelper.Lerp(RestoreRateMin, RestoreRateMax, Math.Min(1, recoil.LastKickTime / RestoreRateRamp));
                 var restore = normalized * restoreRate * frameTime;
@@ -69,7 +70,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 
                 if (Math.Sign(y) != Math.Sign(recoil.CurrentKick.Y)) y = 0;
 
-                recoil.CurrentKick = (x, y);
+                recoil.CurrentKick = new Vector2(x, y);
 
                 eye.Offset = recoil.BaseOffset + recoil.CurrentKick;
             }

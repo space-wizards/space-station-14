@@ -14,6 +14,7 @@ using Content.Shared.Popups;
 using Content.Shared.Slippery;
 using Content.Shared.Fluids.Components;
 using Content.Shared.Friction;
+using Content.Shared.IdentityManagement;
 using Content.Shared.StepTrigger.Components;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Server.GameObjects;
@@ -27,6 +28,8 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
+using Content.Shared.Maps;
+using Content.Shared.Effects;
 
 namespace Content.Server.Fluids.EntitySystems;
 
@@ -50,6 +53,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly TileFrictionController _tile = default!;
     [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
 
     public static float PuddleVolume = 1000;
 
@@ -492,6 +496,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         if (solution.Volume == 0)
             return false;
 
+        var targets = new List<EntityUid>();
         // Get reactive entities nearby--if there are some, it'll spill a bit on them instead.
         foreach (var ent in _lookup.GetComponentsInRange<ReactiveComponent>(coordinates, 1.0f))
         {
@@ -508,9 +513,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
                     $"{ToPrettyString(user.Value):user} threw {ToPrettyString(uid):entity} which splashed a solution {SolutionContainerSystem.ToPrettyString(solution):solution} onto {ToPrettyString(owner):target}");
             }
 
+            targets.Add(owner);
             _reactive.DoEntityReaction(owner, splitSolution, ReactionMethod.Touch);
-            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", owner)), owner, PopupType.SmallCaution);
+            _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
+
+        RaiseNetworkEvent(new ColorFlashEffectEvent(solution.GetColor(_prototypeManager), targets), Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }
@@ -562,7 +570,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         }
 
         // If space return early, let that spill go out into the void
-        if (tileRef.Tile.IsEmpty)
+        if (tileRef.Tile.IsEmpty || tileRef.IsSpace(_tileDefMan))
         {
             puddleUid = EntityUid.Invalid;
             return false;

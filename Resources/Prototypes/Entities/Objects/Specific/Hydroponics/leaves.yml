@@ -15,7 +15,7 @@
     solutions:
       food:
         reagents:
-        - ReagentId: THCOil
+        - ReagentId: THC
           Quantity: 5
 
 - type: entity
@@ -62,6 +62,8 @@
   - type: Tag
     tags:
       - Smokable
+  - type: Item
+    size: 1
 
 - type: entity
   name: tobacco leaves
@@ -118,3 +120,5 @@
   - type: Tag
     tags:
       - Smokable
+  - type: Item
+    size: 1

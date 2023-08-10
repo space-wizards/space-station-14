@@ -1,5 +1,6 @@
 using Content.Shared.Parallax.Biomes.Markers;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Procedural.Loot;
 
@@ -8,6 +9,7 @@ namespace Content.Shared.Procedural.Loot;
 /// </summary>
 public sealed class BiomeMarkerLoot : IDungeonLoot
 {
-    [DataField("proto", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<BiomeMarkerLayerPrototype>))]
-    public string Prototype = string.Empty;
+    [DataField("proto", required: true,
+        customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<string, BiomeMarkerLayerPrototype>))]
+    public Dictionary<string, string> Prototype = new();
 }

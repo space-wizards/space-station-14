@@ -116,3 +116,14 @@
       - id: CableApcStack
       - id: DoorElectronics
         amount: 6
+
+- type: entity
+  id: CrateEvaKit
+  parent: CrateCommandSecure
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHeadHelmetEVA
+        amount: 2
+      - id: ClothingOuterHardsuitEVA
+        amount: 2

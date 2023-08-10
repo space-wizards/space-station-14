@@ -4,6 +4,7 @@
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube }
   spawn: MaterialBiomass1
   maxCount: 100
+  itemSize: 1
 
 - type: stack
   id: WoodPlank
@@ -11,6 +12,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: wood }
   spawn: MaterialWoodPlank1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Cardboard
@@ -18,6 +20,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cardboard }
   spawn: MaterialCardboard1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Cloth
@@ -25,6 +28,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cloth }
   spawn: MaterialCloth1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Durathread
@@ -32,6 +36,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: durathread }
   spawn: MaterialDurathread1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Diamond
@@ -39,6 +44,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: diamond }
   spawn: MaterialDiamond1
   maxCount: 30
+  itemSize: 2
 
 - type: stack
   id: Cotton
@@ -46,6 +52,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: cotton }
   spawn: MaterialCotton1
   maxCount: 30
+  itemSize: 1
 
 - type: stack
   id: Bananium
@@ -53,6 +60,7 @@
   icon: { sprite: /Textures/Objects/Materials/materials.rsi, state: bananium }
   spawn: MaterialBananium1
   maxCount: 10
+  itemSize: 2
 
 - type: stack
   id: MeatSheets
@@ -60,3 +68,4 @@
   icon: { sprite: /Textures/Objects/Materials/Sheets/meaterial.rsi, state: meat }
   spawn: MaterialSheetMeat1
   maxCount: 30
+  itemSize: 1

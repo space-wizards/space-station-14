@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Construction.NodeEntities;
+using Content.Shared.Construction.Serialization;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -23,8 +25,11 @@ namespace Content.Shared.Construction
         [ViewVariables]
         public IReadOnlyList<IGraphAction> Actions => _actions;
 
-        [DataField("entity", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Entity { get; private set; }
+        [DataField("transform")]
+        public IGraphTransform[] TransformLogic = Array.Empty<IGraphTransform>();
+
+        [DataField("entity", customTypeSerializer: typeof(GraphNodeEntitySerializer), serverOnly:true)]
+        public IGraphNodeEntity Entity { get; private set; } = new NullNodeEntity();
 
         public ConstructionGraphEdge? GetEdge(string target)
         {

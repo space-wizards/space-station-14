@@ -6,3 +6,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from tgstation"
   source: "https://github.com/tgstation/tgstation/tree/ae9767664701396501af5dcef8e34c4b5add3d47/sound/ambience"
+
+- files: ["cute_snore.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "Created by Trogg, converted to mono and ogg by slava0135"
+  source: "https://freesound.org/people/Trogg/sounds/489478/"
+
+- files: ["silly_snore.ogg"]
+  license: "CC0-1.0"
+  copyright: "Created by Snore Man, converted to mono and ogg by slava0135"
+  source: "https://soundbible.com/1683-Silly-Snoring.html"

@@ -262,3 +262,14 @@
         damage:
           types:
             Radiation: 2
+
+- type: reagent
+  id: Zinc
+  name: reagent-name-zinc
+  group: Elements
+  desc: reagent-desc-zinc
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: metallic
+  color: "#bababa"
+  meltingPoint: 419.5
+  boilingPoint: 907.0

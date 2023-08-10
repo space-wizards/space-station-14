@@ -16,10 +16,11 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: IdleCompound
+    rootTask:
+      task: IdleCompound
   - type: Input
     context: "human"
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -107,6 +108,7 @@
   - type: HeatResistance
   - type: CombatMode
   - type: Internals
+  - type: StatusIcon
   - type: StatusEffects
     allowed:
     - SlowedDown
@@ -192,6 +194,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100
@@ -222,7 +225,6 @@
     bloodMaxVolume: 150
   - type: MobPrice
     price: 150
-  - type: Appearance
   - type: FloatingVisuals
   - type: Puller
     needsHands: false

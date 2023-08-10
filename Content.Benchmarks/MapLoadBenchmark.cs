@@ -45,9 +45,10 @@ public class MapLoadBenchmark
 
     public static IEnumerable<string> MapsSource { get; set; }
 
-    [ParamsSource(nameof(MapsSource))] public string Map;
+    [ParamsSource(nameof(MapsSource))]
+    public string Map;
 
-    public static Dictionary<string, string> Paths;
+    public Dictionary<string, string> Paths;
 
     [Benchmark]
     public async Task LoadMap()

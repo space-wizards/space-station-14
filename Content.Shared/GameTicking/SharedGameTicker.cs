@@ -117,20 +117,6 @@ namespace Content.Shared.GameTicking
     }
 
     [Serializable, NetSerializable]
-    public sealed class TickerLobbyReadyEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The Status of the Player in the lobby (ready, observer, ...)
-        /// </summary>
-        public Dictionary<NetUserId, PlayerGameStatus> Status { get; }
-
-        public TickerLobbyReadyEvent(Dictionary<NetUserId, PlayerGameStatus> status)
-        {
-            Status = status;
-        }
-    }
-
-    [Serializable, NetSerializable]
     public sealed class TickerJobsAvailableEvent : EntityEventArgs
     {
         /// <summary>

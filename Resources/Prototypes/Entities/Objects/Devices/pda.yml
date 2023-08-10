@@ -72,7 +72,9 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
+      - CrewManifestCartridge
       - NotekeeperCartridge
+      - NewsReadCartridge
     cartridgeSlot:
       priority: -1
       name: Cartridge
@@ -126,6 +128,9 @@
   - type: Pda
     id: TechnicalAssistantIDCard
     state: pda-interntech
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#949137"
   - type: Icon
     state: pda-interntech
 
@@ -138,6 +143,9 @@
   - type: Pda
     id: MedicalInternIDCard
     state: pda-internmed
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-internmed
   - type: HealthAnalyzer
@@ -157,6 +165,9 @@
   - type: Pda
     id: SecurityCadetIDCard
     state: pda-interncadet
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#A32D26"
   - type: Icon
     state: pda-interncadet
 
@@ -169,6 +180,9 @@
   - type: Pda
     id: ResearchAssistantIDCard
     state: pda-internsci
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-internsci
 
@@ -181,6 +195,9 @@
   - type: Pda
     id: ServiceWorkerIDCard
     state: pda-internservice
+  - type: PdaBorderColor
+    borderColor: "#717059"
+    accentVColor: "#00cc35"
   - type: Icon
     state: pda-internservice
 
@@ -207,6 +224,9 @@
   - type: Pda
     id: BotanistIDCard
     state: pda-hydro
+  - type: PdaBorderColor
+    borderColor: "#44843c"
+    accentVColor: "#00cc35"
   - type: Icon
     state: pda-hydro
 
@@ -270,11 +290,14 @@
       whitelist:
         components:
         - IdCard
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#333333"
   - type: Icon
     state: pda-mime
 
 - type: entity
-  name: Chaplain PDA
+  name: chaplain PDA
   parent: BasePDA
   id: ChaplainPDA
   description: God's chosen PDA.
@@ -288,7 +311,7 @@
     state: pda-chaplain
 
 - type: entity
-  name: Quartermaster PDA
+  name: quartermaster PDA
   parent: BasePDA
   id: QuartermasterPDA
   description: PDA for the guy that orders the guns.
@@ -296,6 +319,9 @@
   - type: Pda
     id: QuartermasterIDCard
     state: pda-qm
+  - type: PdaBorderColor
+    borderColor: "#e39751"
+    accentVColor: "#a23e3e"
   - type: Icon
     state: pda-qm
 
@@ -308,6 +334,8 @@
   - type: Pda
     id: CargoIDCard
     state: pda-cargo
+  - type: PdaBorderColor
+    borderColor: "#e39751"
   - type: Icon
     state: pda-cargo
 
@@ -320,6 +348,9 @@
   - type: Pda
     id: SalvageIDCard
     state: pda-miner
+  - type: PdaBorderColor
+    borderColor: "#af9366"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-miner
 
@@ -332,6 +363,8 @@
   - type: Pda
     id: BartenderIDCard
     state: pda-bartender
+  - type: PdaBorderColor
+    borderColor: "#333333"
   - type: Icon
     state: pda-bartender
 
@@ -344,6 +377,8 @@
   - type: Pda
     id: LibrarianIDCard
     state: pda-library
+  - type: PdaBorderColor
+    borderColor: "#858585"
   - type: Icon
     state: pda-library
 
@@ -356,6 +391,8 @@
   - type: Pda
     id: LawyerIDCard
     state: pda-lawyer
+  - type: PdaBorderColor
+    borderColor: "#6f6192"
   - type: Icon
     state: pda-lawyer
 
@@ -408,6 +445,9 @@
       whitelist:
         tags:
         - Write
+  - type: PdaBorderColor
+    borderColor: "#789876"
+    accentHColor: "#447987"
   - type: Icon
     state: pda-hop
 
@@ -435,6 +475,9 @@
   - type: Pda
     id: EngineeringIDCard
     state: pda-engineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#A32D26"
   - type: Icon
     state: pda-engineer
 
@@ -513,6 +556,10 @@
     accentVColor: "#B34200"
   - type: Icon
     state: pda-chemistry
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -523,6 +570,10 @@
   - type: Pda
     id: RDIDCard
     state: pda-rd
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-rd
 
@@ -535,6 +586,9 @@
   - type: Pda
     id: ResearchIDCard
     state: pda-science
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentVColor: "#8900c9"
   - type: Icon
     state: pda-science
 
@@ -562,6 +616,9 @@
   - type: Pda
     id: WardenIDCard
     state: pda-warden
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#949137"
   - type: Icon
     state: pda-warden
 
@@ -574,6 +631,8 @@
   - type: Pda
     id: SecurityIDCard
     state: pda-security
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
   - type: Icon
     state: pda-security
 
@@ -584,7 +643,7 @@
   description: Light green sign of walking bureaucracy.
   components:
   - type: Pda
-    id: CentcomIDCardSyndie
+    id: CentcomIDCard
     state: pda-centcom
     penSlot:
       startingItem: PenCentcom
@@ -592,9 +651,25 @@
         tags:
         - Write
   - type: PdaBorderColor
-    borderColor: "#32CD32"
+    borderColor: "#00842e"
   - type: Icon
     state: pda-centcom
+
+- type: entity
+  parent: CentcomPDA
+  id: CentcomPDAFake
+  suffix: Fake
+  components:
+  - type: Pda
+    id: CentcomIDCardSyndie
+
+- type: entity
+  parent: CentcomPDA
+  id: DeathsquadPDA
+  suffix: Deathsquad
+  components:
+  - type: Pda
+    id: CentcomIDCardDeathsquad
 
 - type: entity
   parent: BasePDA
@@ -604,6 +679,10 @@
   components:
   - type: Pda
     id: MusicianIDCard
+    state: pda-musician
+  - type: PdaBorderColor
+    borderColor: "#333333"
+  - type: Icon
     state: pda-musician
   - type: Instrument
     allowPercussion: false
@@ -620,6 +699,9 @@
   - type: Pda
     id: AtmosIDCard
     state: pda-atmos
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-atmos
 
@@ -632,6 +714,8 @@
   - type: Pda
     id: PassengerIDCard
     state: pda-clear
+  - type: PdaBorderColor
+    borderColor: "#288e4d"
   - type: Icon
     state: pda-clear
 
@@ -644,8 +728,22 @@
   - type: Pda
     id: SyndicateIDCard
     state: pda-syndi
+  - type: PdaBorderColor
+    borderColor: "#891417"
   - type: Icon
     state: pda-syndi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
 
 - type: entity
   parent: BasePDA
@@ -659,6 +757,7 @@
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
+    accentVColor: "#447987"
   - type: Icon
     state: pda-ert
 
@@ -674,6 +773,7 @@
   - type: PdaBorderColor
     borderColor: "#A32D26"
     accentHColor: "#447987"
+    accentVColor: "#447987"
 
 - type: entity
   parent: BasePDA
@@ -699,6 +799,8 @@
   - type: Pda
     id: ReporterIDCard
     state: pda-reporter
+  - type: PdaBorderColor
+    borderColor: "#3f3f74"
   - type: Icon
     state: pda-reporter
 
@@ -711,6 +813,8 @@
   - type: Pda
     id: ZookeeperIDCard
     state: pda-zookeeper
+  - type: PdaBorderColor
+    borderColor: "#ffe685"
   - type: Icon
     state: pda-zookeeper
 
@@ -725,7 +829,7 @@
     state: pda-boxer
   - type: PdaBorderColor
     borderColor: "#333333"
-    borderVColor: "#390504"
+    accentVColor: "#390504"
   - type: Icon
     state: pda-boxer
 
@@ -786,3 +890,68 @@
         - Write
   - type: Unremoveable
 
+- type: entity
+  parent: BasePDA
+  id: SeniorEngineerPDA
+  name: senior engineer PDA
+  description: Seems to have been taken apart and put back together several times.
+  components:
+  - type: Pda
+    id: SeniorEngineerIDCard
+    state: pda-seniorengineer
+  - type: PdaBorderColor
+    borderColor: "#949137"
+    accentVColor: "#CD6900"
+  - type: Icon
+    state: pda-seniorengineer
+
+- type: entity
+  parent: BasePDA
+  id: SeniorResearcherPDA
+  name: senior researcher PDA
+  description: Looks like it's been through years of chemical burns and explosions.
+  components:
+  - type: Pda
+    id: SeniorResearcherIDCard
+    state: pda-seniorresearcher
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#8900c9"
+    accentVColor: "#8900c9"
+  - type: Icon
+    state: pda-seniorresearcher
+
+- type: entity
+  parent: BasePDA
+  id: SeniorPhysicianPDA
+  name: senior physician PDA
+  description: Smells faintly like iron and chemicals. Has a built-in health analyzer.
+  components:
+  - type: Pda
+    id: SeniorPhysicianIDCard
+    state: pda-seniorphysician
+  - type: PdaBorderColor
+    borderColor: "#d7d7d0"
+    accentHColor: "#447987"
+    accentVColor: "#B34200"
+  - type: Icon
+    state: pda-seniorphysician
+  - type: HealthAnalyzer
+    scanDelay: 1
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+
+- type: entity
+  parent: BasePDA
+  id: SeniorOfficerPDA
+  name: senior officer PDA
+  description: Beaten, battered and broken, but just barely useable.
+  components:
+  - type: Pda
+    id: SeniorOfficerIDCard
+    state: pda-seniorofficer
+  - type: PdaBorderColor
+    borderColor: "#A32D26"
+    accentVColor: "#DFDFDF"
+  - type: Icon
+    state: pda-seniorofficer

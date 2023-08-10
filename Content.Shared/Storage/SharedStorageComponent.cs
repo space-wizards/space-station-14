@@ -62,12 +62,14 @@ namespace Content.Shared.Storage
         public readonly EntityUid Storage;
         public readonly List<EntityUid> StoredEntities;
         public readonly List<EntityCoordinates> EntityPositions;
+        public readonly List<Angle> EntityAngles;
 
-        public AnimateInsertingEntitiesEvent(EntityUid storage, List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions)
+        public AnimateInsertingEntitiesEvent(EntityUid storage, List<EntityUid> storedEntities, List<EntityCoordinates> entityPositions, List<Angle> entityAngles)
         {
             Storage = storage;
             StoredEntities = storedEntities;
             EntityPositions = entityPositions;
+            EntityAngles = entityAngles;
         }
     }
 

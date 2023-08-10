@@ -38,6 +38,8 @@ namespace Content.Shared.Alert
         VowBroken,
         Essence,
         Corporeal,
+        Bleed,
+        Pacified,
         Debug1,
         Debug2,
         Debug3,

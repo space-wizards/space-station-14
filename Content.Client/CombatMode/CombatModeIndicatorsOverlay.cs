@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Hands.Systems;
 using Content.Shared.Weapons.Ranged.Components;
 using Robust.Client.GameObjects;
@@ -77,7 +78,7 @@ public sealed class CombatModeIndicatorsOverlay : Overlay
     private void DrawSight(Texture sight, DrawingHandleScreen screen, Vector2 centerPos, float scale)
     {
         var sightSize = sight.Size * scale;
-        var expandedSize = sightSize + 7f;
+        var expandedSize = sightSize + new Vector2(7f, 7f);
 
         screen.DrawTextureRect(sight,
             UIBox2.FromDimensions(centerPos - sightSize * 0.5f, sightSize), StrokeColor);

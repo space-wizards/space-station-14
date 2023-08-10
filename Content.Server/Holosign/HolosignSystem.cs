@@ -1,6 +1,6 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Examine;
-using Content.Server.Coordinates.Helpers;
+using Content.Shared.Coordinates.Helpers;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 

@@ -98,7 +98,7 @@
 - type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
-  suffix: Service, Locked
+  suffix: Kitchen, Locked
   components:
   - type: AccessReader
     access: [["Kitchen"]]
@@ -142,14 +142,6 @@
   components:
   - type: AccessReader
     access: [["Salvage"]]
-
-- type: entity
-  parent: AirlockCargo
-  id: AirlockQuartermasterLocked
-  suffix: Quartermaster, Locked
-  components:
-  - type: AccessReader
-    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockMedical
@@ -248,6 +240,14 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockCommand
+  id: AirlockQuartermasterLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockSecurity
@@ -411,14 +411,6 @@
     access: [["Salvage"]]
 
 - type: entity
-  parent: AirlockCargoGlass
-  id: AirlockQuartermasterGlassLocked
-  suffix: Quartermaster, Locked
-  components:
-  - type: AccessReader
-    access: [["Quartermaster"]]
-
-- type: entity
   parent: AirlockMedicalGlass
   id: AirlockMedicalGlassLocked
   suffix: Medical, Locked
@@ -505,6 +497,14 @@
   components:
   - type: AccessReader
     access: [["HeadOfPersonnel"]]
+
+- type: entity
+  parent: AirlockCommandGlass
+  id: AirlockQuartermasterGlassLocked
+  suffix: Quartermaster, Locked
+  components:
+  - type: AccessReader
+    access: [["Quartermaster"]]
 
 - type: entity
   parent: AirlockSecurityGlass

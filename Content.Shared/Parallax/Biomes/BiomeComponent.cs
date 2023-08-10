@@ -59,6 +59,12 @@ public sealed partial class BiomeComponent : Component
     #region Markers
 
     /// <summary>
+    /// Work out entire marker tiles in advance but only load the entities when in range.
+    /// </summary>
+    [DataField("pendingMarkers")]
+    public Dictionary<Vector2i, Dictionary<string, List<Vector2i>>> PendingMarkers = new();
+
+    /// <summary>
     /// Track what markers we've loaded already to avoid double-loading.
     /// </summary>
     [DataField("loadedMarkers", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<HashSet<Vector2i>, BiomeMarkerLayerPrototype>))]

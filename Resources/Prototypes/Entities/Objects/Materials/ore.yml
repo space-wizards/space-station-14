@@ -8,7 +8,7 @@
     sprite: Objects/Materials/ore.rsi
   - type: Item
     sprite: Objects/Materials/ore.rsi
-    size: 30
+    size: 60
   - type: ItemStatus
   - type: Tag
     tags:
@@ -58,6 +58,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -81,6 +83,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -104,6 +108,8 @@
   components:
     - type: Stack
       count: 1
+    - type: Item
+      size: 2
 
 - type: entity
   parent: OreBase
@@ -127,6 +133,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -150,6 +158,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 - type: entity
   parent: OreBase
@@ -173,6 +183,8 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2
 
 
 - type: entity
@@ -197,3 +209,5 @@
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 2

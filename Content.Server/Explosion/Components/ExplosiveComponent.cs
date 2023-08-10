@@ -75,6 +75,13 @@ public sealed class ExplosiveComponent : Component
     public bool CanCreateVacuum = true;
 
     /// <summary>
+    /// An override for whether or not the entity should be deleted after it explodes.
+    /// If null, the system calling the explode method handles it.
+    /// </summary>
+    [DataField("deleteAfterExplosion")]
+    public bool? DeleteAfterExplosion;
+
+    /// <summary>
     ///     Avoid somehow double-triggering this explosion (e.g. by damaging this entity from its own explosion.
     /// </summary>
     public bool Exploded;

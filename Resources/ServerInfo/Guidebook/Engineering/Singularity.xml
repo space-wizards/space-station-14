@@ -53,7 +53,7 @@ They connect to HV cables and generate power from nearby radiation sources when 
 <GuideEntityEmbed Entity="ParticleAcceleratorEmitterPort" Caption="Port Emitter"/>
 </Box>
 
-The Particle Accelerator (PA) is a multi-tile structure that launches acclerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
+The Particle Accelerator (PA) is a multi-tile structure that launches accelerated particles from its emitters. Its emitters should always face the gravitational singularity generator.
 Some stations already have an unfinished PA. To complete, first ensure there is HV cable beneath the PA power box, anchor all parts, then add LV cable to each part.
 <Box>
 <GuideEntityEmbed Entity="CableApcStack"/>
@@ -68,7 +68,7 @@ Scan parts using the PA control computer to check if it's operational. If it sho
 
 [color=#a4885c]Do not[/color] turn the PA on unless all other subsystems are working properly.
 
-Turn power on using the PA control computer. Set strength to an appropiate level.
+Turn power on using the PA control computer. Set strength to an appropiate level. Currently the only appropriate level is [color=#f0684d]1[/color], anything above that will ensure that singularity grows too strong to handle.
 The higher the output stength is set on PA control computer, the bigger the singularity will be.
 
 The PA will now draw power from the power net and start firing particles at the Gravitational singularity generator. 

@@ -1,4 +1,5 @@
-﻿using Content.Client.Actions.UI;
+﻿using System.Numerics;
+using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Shared.Alert;
 using Robust.Client.UserInterface;
@@ -54,7 +55,7 @@ namespace Content.Client.UserInterface.Systems.Alerts.Controls
             var specifier = alert.GetIcon(_severity);
             _icon = new AnimatedTextureRect
             {
-                DisplayRect = {TextureScale = (2, 2)}
+                DisplayRect = {TextureScale = new Vector2(2, 2)}
             };
 
             _icon.SetFromSpriteSpecifier(specifier);

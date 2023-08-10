@@ -28,6 +28,7 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
+        ///     Note that <see cref="Count"/> still limits the amount that can be used at any one time.
         /// </summary>
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]

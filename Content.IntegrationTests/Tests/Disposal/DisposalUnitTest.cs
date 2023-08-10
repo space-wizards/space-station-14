@@ -1,11 +1,12 @@
 #nullable enable annotations
 using System.Linq;
-using System.Threading.Tasks;
+using System.Numerics;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Disposal.Unit.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Shared.Disposal;
+using Content.Shared.Disposal.Components;
 using NUnit.Framework;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Reflection;
@@ -71,10 +72,11 @@ namespace Content.IntegrationTests.Tests.Disposal
             });
         }
 
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanDisposalDummy
+  id: HumanDisposalDummy
   components:
   - type: Body
     prototype: Human
@@ -82,7 +84,6 @@ namespace Content.IntegrationTests.Tests.Disposal
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       200: Dead
   - type: Damageable
     damageContainer: Biological
@@ -146,11 +147,7 @@ namespace Content.IntegrationTests.Tests.Disposal
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);
@@ -171,7 +168,7 @@ namespace Content.IntegrationTests.Tests.Disposal
             {
                 // Spawn the entities
                 var coordinates = testMap.GridCoords;
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanDisposalDummy", coordinates);
                 wrench = entityManager.SpawnEntity("WrenchDummy", coordinates);
                 disposalUnit = entityManager.SpawnEntity("DisposalUnitDummy", coordinates);
                 disposalTrunk = entityManager.SpawnEntity("DisposalTrunkDummy",
@@ -210,7 +207,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Move the disposal trunk away
                 var xform = entityManager.GetComponent<TransformComponent>(disposalTrunk);
                 var worldPos = xformSystem.GetWorldPosition(disposalTrunk);
-                xformSystem.SetWorldPosition(xform, worldPos + (1, 0));
+                xformSystem.SetWorldPosition(xform, worldPos + new Vector2(1, 0));
 
                 // Fail to flush with a mob and an item
                 Flush(disposalUnit, unitComponent, false, disposalSystem, human, wrench);
@@ -221,7 +218,7 @@ namespace Content.IntegrationTests.Tests.Disposal
                 // Move the disposal trunk back
                 var xform = entityManager.GetComponent<TransformComponent>(disposalTrunk);
                 var worldPos = xformSystem.GetWorldPosition(disposalTrunk);
-                xformSystem.SetWorldPosition(xform, worldPos - (1, 0));
+                xformSystem.SetWorldPosition(xform, worldPos - new Vector2(1, 0));
 
                 // Fail to flush with a mob and an item, no power
                 Flush(disposalUnit, unitComponent, false, disposalSystem, human, wrench);
