@@ -1,3 +1,4 @@
+using Content.Server.Inventory;
 using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
@@ -28,6 +29,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly ServerInventorySystem _inventory = default!;
 
         public override void Initialize()
         {
@@ -216,6 +218,8 @@ namespace Content.Server.Guardian
             }
             else if (args.NewMobState == MobState.Dead)
             {
+                _inventory.TryUnequip(component.HostedGuardian.Value, "pocket1", true, true);
+                _inventory.TryUnequip(component.HostedGuardian.Value, "pocket2", true, true);
                 //TODO: Replace WithVariation with datafield
                 _audio.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, true, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);
