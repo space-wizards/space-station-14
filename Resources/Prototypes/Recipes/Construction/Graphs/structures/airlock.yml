@@ -299,13 +299,13 @@
       - tool: Cutting
         doAfter: 0.5 
 
-   - to: airlockSuperMaxSecurityBreached
-     conditions:
-     - !type:WirePanel {}
-     steps:     
-     - material: Plasteel
-       amount: 2
-       doAfter: 2
+    - to: airlockSuperMaxSecurityBreached
+      conditions:
+      - !type:WirePanel {}
+      steps:     
+      - material: Plasteel
+        amount: 2
+        doAfter: 2
 
 ## Super max security level airlock: an additional layer of plasteel is added     
  - node: airlockSuperMaxSecurityBreached
