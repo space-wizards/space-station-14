@@ -150,6 +150,13 @@
   boilingPoint: -195.8
   meltingPoint: -210.0
   metabolisms:
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 1 # liquid nitrogen is cold
     Gas:
       effects:
       - !type:Oxygenate
