@@ -702,8 +702,6 @@
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
       layers:
         - state: hook
-        - state: hook-unshaded
-          shader: unshaded
     - type: Physics
       bodyType: Dynamic
       linearDamping: 0
