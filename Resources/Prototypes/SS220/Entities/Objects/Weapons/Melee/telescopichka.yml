@@ -14,8 +14,6 @@
   - type: SwitchableWeapon
     openSound: "/Audio/SS220/Weapons/telescopichka/batonextend.ogg"
     closeSound: "/Audio/SS220/Weapons/telescopichka/batonextend.ogg"
-    bonkSound: !type:SoundCollectionSpecifier
-      collection: BatonHit
     damageOpen:
       types:
         Blunt: 1
