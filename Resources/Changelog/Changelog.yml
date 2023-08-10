@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: grilles can now be constructed on lattice (easier to rebuild asteroid
-      defences), type: Tweak}
-  id: 3998
-  time: '2023-06-15T02:25:29.0000000+00:00'
 - author: OttoMaticode
   changes:
   - {message: Linked the science entry in the robotics guidebook entry., type: Fix}
@@ -2975,3 +2969,10 @@ Entries:
       and Royal moth wings to now have two separate color layers.', type: Tweak}
   id: 4497
   time: '2023-08-10T01:32:01.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added Mustard. It can be found in condiment stations., type: Add}
+  - {message: 'Mixing bleach and ammonia will now create... well, at least they got
+      the smell right.', type: Add}
+  id: 4498
+  time: '2023-08-10T01:38:37.0000000+00:00'
