@@ -1,6 +1,0 @@
-  # Some engineer forgot to take the multitool out the youtool when working on it, happens.
-- type: vendingMachineInventory
-  id: YouToolContrabandInventory
-  inventory:
-    Multitool: 1
-  inventoryType: ContrabandInventory

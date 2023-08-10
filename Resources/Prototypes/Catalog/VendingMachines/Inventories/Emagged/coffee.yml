@@ -1,5 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: HotDrinksMachineEmaggedInventory
-  inventory:
-    DrinkNothing: 2
-  inventoryType: EmaggedInventory

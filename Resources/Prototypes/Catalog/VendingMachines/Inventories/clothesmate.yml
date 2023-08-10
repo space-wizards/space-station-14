@@ -59,3 +59,10 @@
     ClothingHeadRastaHat: 2
     ClothingBeltStorageWaistbag: 3
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: ClothesMateContrabandInventory
+  inventory:
+    ClothingUniformJumpsuitTacticool: 1
+    ClothingUniformJumpskirtTacticool: 1
+  inventoryType: ContrabandInventory

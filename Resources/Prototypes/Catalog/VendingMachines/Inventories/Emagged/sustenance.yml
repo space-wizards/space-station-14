@@ -1,9 +1,0 @@
-- type: vendingMachineInventory
-  id: SustenanceEmaggedInventory
-  inventory:
-    KitchenKnife: 2
-    SpaceMedipen: 3
-    ClothingMaskBreath: 3
-    EmergencyOxygenTankFilled: 3
-    DrinkNukieCan: 2
-  inventoryType: EmaggedInventory

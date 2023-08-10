@@ -14,3 +14,11 @@
     ClothingHeadHatSantahat: 2
     ClothingHeadHatXmasCrown: 2
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: WinterDrobeEmaggedInventory
+  inventory:
+    ClothingNeckScarfStripedSyndieGreen: 3
+    ClothingNeckScarfStripedSyndieRed: 3
+    ClothingNeckScarfStripedCentcom: 3
+  inventoryType: EmaggedInventory

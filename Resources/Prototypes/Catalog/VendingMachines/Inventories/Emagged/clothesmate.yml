@@ -1,6 +1,0 @@
-- type: vendingMachineInventory
-  id: ClothesMateEmaggedInventory
-  inventory:
-    ClothingUniformJumpsuitTacticool: 1
-    ClothingUniformJumpskirtTacticool: 1
-  inventoryType: EmaggedInventory

@@ -1,5 +1,0 @@
-- type: vendingMachineInventory
-  id: MegaSeedServitorEmaggedInventory
-  inventory:
-    FlyAmanitaSeeds: 1
-  inventoryType: EmaggedInventory

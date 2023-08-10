@@ -10,3 +10,10 @@
     ClothingOuterWinterJani: 2
     ClothingNeckScarfStripedPurple: 3
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: JaniDrobeEmaggedInventory
+  inventory:
+    ClothingUniformJumpskirtJanimaid: 2
+    ClothingUniformJumpskirtJanimaidmini: 1
+  inventoryType: EmaggedInventory

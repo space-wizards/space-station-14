@@ -13,3 +13,9 @@
     CheapLighter: 4
     Lighter: 1
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: CigaretteMachineEmaggedInventory
+  inventory:
+    CigPackSyndicate: 1
+  inventoryType: EmaggedInventory

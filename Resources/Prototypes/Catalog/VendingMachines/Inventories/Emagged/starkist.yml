@@ -1,5 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: StarkistEmaggedInventory
-  inventory:
-    DrinkChangelingStingCan: 2
-  inventoryType: EmaggedInventory

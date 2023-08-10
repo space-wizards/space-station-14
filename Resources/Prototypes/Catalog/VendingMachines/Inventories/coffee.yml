@@ -6,3 +6,9 @@
     DrinkTeacup: 5
     DrinkGreenTea: 5
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: HotDrinksMachineEmaggedInventory
+  inventory:
+    DrinkNothing: 2
+  inventoryType: EmaggedInventory

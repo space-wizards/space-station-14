@@ -1,6 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: SodaEmaggedInventory
-  inventory:
-    DrinkNukieCan: 3
-    DrinkChangelingStingCan: 3
-  inventoryType: EmaggedInventory

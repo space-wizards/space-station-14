@@ -1,9 +1,0 @@
-- type: vendingMachineInventory
-  id: SyndieDrobeEmaggedInventory
-  inventory:
-    ClothingOuterCoatSyndieCapArmored: 1
-    ClothingOuterWinterSyndieCapArmored: 1
-    ClothingHeadHatTacticalMaidHeadband: 5
-    ClothingUniformJumpskirtTacticalMaid: 5
-    ClothingHandsTacticalMaidGloves: 5
-  inventoryType: EmaggedInventory

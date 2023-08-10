@@ -4,3 +4,10 @@
     HappyHonk: 10
     HappyHonkMime: 4
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: HappyHonkDispenserEmaggedInventory
+  inventory:
+    HappyHonkCluwne: 1
+    HappyHonkNukie: 1
+  inventoryType: EmaggedInventory

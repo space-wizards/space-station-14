@@ -1,6 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: HappyHonkDispenserEmaggedInventory
-  inventory:
-    HappyHonkCluwne: 1
-    HappyHonkNukie: 1
-  inventoryType: EmaggedInventory

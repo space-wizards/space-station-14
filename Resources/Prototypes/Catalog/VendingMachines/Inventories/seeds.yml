@@ -32,3 +32,9 @@
     WheatSeeds: 5
     WatermelonSeeds: 5
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: MegaSeedServitorEmaggedInventory
+  inventory:
+    FlyAmanitaSeeds: 1
+  inventoryType: EmaggedInventory

@@ -23,3 +23,9 @@
     JugSugar: 2
     JugSulfur: 2
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: ChemVendEmaggedInventory
+  inventory:
+    ToxinChemistryBottle: 1
+  inventoryType: EmaggedInventory

@@ -12,7 +12,7 @@ public sealed class VendingMachineInventoryComponent : Component
     /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
     /// </summary>
     [DataField("pack",
-        customTypeSerializer: typeof(PrototypeIdListSerializer<VendingMachineInventoryPrototype>))]
+        customTypeSerializer: typeof(PrototypeIdListSerializer<VendingMachineInventoryPrototype>), required: true)]
     public List<string> PackPrototypeId = new();
 
     /// <summary>

@@ -15,3 +15,9 @@
     ClothingHeadsetService: 2
     ClothingNeckLawyerbadge: 2
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: LawDrobeEmaggedInventory
+  inventory:
+    CyberPen: 1
+  inventoryType: EmaggedInventory

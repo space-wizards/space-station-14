@@ -3,3 +3,9 @@
   inventory:
     DrinkSodaWaterCan: 10 #typically hacked product. Default product is "soda"
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: BodaEmaggedInventory
+  inventory:
+    DrinkColaCan: 10
+  inventoryType: EmaggedInventory

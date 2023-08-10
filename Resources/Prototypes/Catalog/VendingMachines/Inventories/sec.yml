@@ -12,3 +12,12 @@
     RiotLaserShield: 2
     RiotBulletShield: 2
   inventoryType: RegularInventory
+
+  # security officers need to follow a diet regimen!
+- type: vendingMachineInventory
+  id: SecTechContrabandInventory
+  inventory:
+    FoodDonutHomer: 12
+    FoodBoxDonut: 2
+    #box evidence
+  inventoryType: ContrabandInventory

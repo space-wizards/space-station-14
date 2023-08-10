@@ -42,8 +42,12 @@
     ClothingHeadHatCasa: 1
     ClothingHeadHatHairflower: 1
   inventoryType: RegularInventory
-  emaggedInventory:
+
+- type: vendingMachineInventory
+  id: AutoDrobeEmaggedInventory
+  inventory:
     ClothingShoesBling: 1
     ClothingOuterDogi: 1
     ClothingMaskSexyClown: 1
     ClothingMaskSexyMime: 1
+  inventoryType: EmaggedInventory

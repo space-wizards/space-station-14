@@ -8,3 +8,10 @@
     DrinkLemonLimeCan: 3
     DrinkFourteenLokoCan: 3
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: SodaEmaggedInventory
+  inventory:
+    DrinkNukieCan: 3
+    DrinkChangelingStingCan: 3
+  inventoryType: EmaggedInventory

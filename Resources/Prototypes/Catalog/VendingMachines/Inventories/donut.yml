@@ -6,3 +6,9 @@
     FoodDonutPink: 3
     FoodDonutBungo: 3
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: DonutEmaggedInventory
+  inventory:
+    FoodDonutPoison: 1
+  inventoryType: EmaggedInventory

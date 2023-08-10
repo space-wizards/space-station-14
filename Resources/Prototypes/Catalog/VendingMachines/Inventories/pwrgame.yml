@@ -9,6 +9,10 @@
     DrinkLemonLimeCan: 2
     DrinkFourteenLokoCan: 2
   inventoryType: RegularInventory
-  emaggedInventory:
+
+- type: vendingMachineInventory
+  id: PwrGameEmaggedInventory
+  inventory:
     DrinkNukieCan: 2
     DrinkChangelingStingCan: 2
+  inventoryType: EmaggedInventory

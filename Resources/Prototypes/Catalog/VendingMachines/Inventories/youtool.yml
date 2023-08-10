@@ -14,8 +14,16 @@
     ClothingHandsGlovesColorYellowBudget: 3
     AirlockPainter: 3
   inventoryType: RegularInventory
+
   # Some engineer forgot to take the multitool out the youtool when working on it, happens.
-  contrabandInventory:
+- type: vendingMachineInventory
+  id: YouToolContrabandInventory
+  inventory:
     Multitool: 1
-  emaggedInventory:
+  inventoryType: ContrabandInventory
+
+- type: vendingMachineInventory
+  id: YouToolEmaggedInventory
+  inventory:
     ClothingHandsGlovesColorYellow: 1
+  inventoryType: EmaggedInventory

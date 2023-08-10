@@ -1,5 +1,0 @@
-﻿- type: vendingMachineInventory
-  id: SpaceUpEmaggedInventory
-  inventory:
-    DrinkChangelingStingCan: 2
-  inventoryType: EmaggedInventory

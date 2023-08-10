@@ -1,5 +1,0 @@
-- type: vendingMachineInventory
-  id: BodaEmaggedInventory
-  inventory:
-    DrinkColaCan: 10
-  inventoryType: EmaggedInventory
