@@ -191,6 +191,23 @@
     - Bottle
 
 - type: entity
+  id: Left4ZedChemistryBottle
+  name: left-4-zed bottle
+  description: This will increase the effectiveness of mutagen.
+  parent: BaseChemistryEmptyBottle
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      drink:
+        maxVol: 30
+        reagents:
+        - ReagentId: Left4Zed
+          Quantity: 30
+  - type: Tag
+    tags:
+    - Bottle
+
+- type: entity
   id: UnstableMutagenChemistryBottle
   name: unstable mutagen bottle
   description: This will cause rapid mutations in your plants.

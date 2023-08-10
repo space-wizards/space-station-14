@@ -18,3 +18,9 @@
     #TO DO:
     #plant analyzer
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: NutriMaxEmaggedInventory
+  inventory:
+    Left4ZedChemistryBottle: 1
+  inventoryType: EmaggedInventory

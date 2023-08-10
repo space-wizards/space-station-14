@@ -36,6 +36,17 @@
   objectType: Item
 
 - type: construction
+  name: makeshift stunprod
+  id: makeshiftstunprod
+  graph: makeshiftstunprod
+  startNode: start
+  targetNode: msstunprod
+  category: construction-category-weapons
+  description: "Homemade stunprod."
+  icon: { sprite: Objects/Weapons/Melee/stunprod.rsi, state: stunprod_off }
+  objectType: Item
+
+- type: construction
   name: muzzle
   id: muzzle
   graph: Muzzle
