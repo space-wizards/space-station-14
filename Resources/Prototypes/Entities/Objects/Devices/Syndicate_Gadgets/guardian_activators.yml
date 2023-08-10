@@ -63,3 +63,6 @@
     layers:
       - state: box_hug
       - state: holo
+  - type: Tag
+    tags:
+      - BoxHug
