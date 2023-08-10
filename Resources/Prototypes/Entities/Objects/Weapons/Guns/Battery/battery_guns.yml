@@ -59,7 +59,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -360,10 +360,8 @@
   name: antique laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
-  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
@@ -398,10 +396,10 @@
   name: advanced laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAdvancedLaser
-  description: An experimental high-energy laser with a self-charging nuclear battery.
+  description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: 30
+    size: 30  # Intentionally larger than other pistols
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -436,8 +434,6 @@
   id: WeaponBehonkerLaser
   description: The eye of a behonker, it fires a laser when squeezed.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
     layers:
