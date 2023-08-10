@@ -267,7 +267,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         var structureComp = _entManager.EnsureComponent<SalvageStructureExpeditionComponent>(gridUid);
         var availableRooms = dungeon.Rooms.ToList();
         var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random);
+        await SpawnMobsRandom(mission, dungeon, faction, grid, random);
 
         var structureCount = _salvage.GetStructureCount(mission.Difficulty);
         var shaggy = faction.Configs["DefenseStructure"];
@@ -322,10 +322,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         eliminationComp.Megafauna.Add(uid);
 
         // spawn less mobs than usual since there's megafauna to deal with too
-        await SpawnMobsRandomRooms(mission, dungeon, faction, grid, random, 0.5f);
+        await SpawnMobsRandom(mission, dungeon, faction, grid, random, 0.5f);
     }
 
-    private async Task SpawnMobsRandomRooms(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
+    private async Task SpawnMobsRandom(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
     {
         // scale affects how many groups are spawned, not the size of the groups themselves
         var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty) * scale;

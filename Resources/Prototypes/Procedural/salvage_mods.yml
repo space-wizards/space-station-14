@@ -68,17 +68,6 @@
   cost: 2
   color: null
 
-# Time mods -> at least 1 required
-- type: salvageTimeMod
-  id: StandardTime
-
-- type: salvageTimeMod
-  id: RushTime
-  desc: Rush
-  minDuration: 420
-  maxDuration: 465
-  cost: 1
-
 # Misc mods
 - type: salvageMod
   id: LongDistance

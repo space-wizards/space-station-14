@@ -231,8 +231,6 @@ public sealed partial class SalvageSystem
         // but the previous system didn't do that either.
         var allDifficulties = Enum.GetValues<DifficultyRating>();
         _random.Shuffle(allDifficulties);
-        var difficulties = allDifficulties.Take(MissionLimit).ToList();
-        difficulties.Sort();
 
         if (configs.Count == 0)
             return;
@@ -240,7 +238,6 @@ public sealed partial class SalvageSystem
         for (var i = 0; i < MissionLimit; i++)
         {
             _random.Shuffle(configs);
-            var rating = difficulties[i];
 
             foreach (var config in configs)
             {
@@ -249,7 +246,7 @@ public sealed partial class SalvageSystem
                     Index = component.NextIndex,
                     MissionType = config,
                     Seed = _random.Next(),
-                    Difficulty = rating,
+                    Difficulty = DifficultyRating.Moderate,
                 };
 
                 component.Missions[component.NextIndex++] = mission;

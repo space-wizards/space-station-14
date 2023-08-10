@@ -49,7 +49,7 @@ public abstract class SharedSalvageSystem : EntitySystem
     /// </summary>
     public int GetStructureCount(DifficultyRating baseRating)
     {
-        return 1 + (int) baseRating * 2;
+        return 2;
     }
 
     #endregion
@@ -78,7 +78,7 @@ public abstract class SharedSalvageSystem : EntitySystem
     /// </summary>
     public float GetSpawnCount(DifficultyRating difficulty)
     {
-        return (int) difficulty * 2;
+        return (int) difficulty * 4;
     }
 
     public static string GetFTLName(DatasetPrototype dataset, int seed)
@@ -119,16 +119,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(light.Description);
         }
 
-        var time = GetMod<SalvageTimeMod>(rand, ref rating);
-        // Round the duration to nearest 15 seconds.
-        var exactDuration = MathHelper.Lerp(time.MinDuration, time.MaxDuration, rand.NextFloat());
-        exactDuration = MathF.Round(exactDuration / 15f) * 15f;
-        var duration = TimeSpan.FromSeconds(exactDuration);
-
-        if (time.Description != string.Empty)
-        {
-            mods.Add(time.Description);
-        }
+        var duration = TimeSpan.FromMinutes(6);
 
         var rewards = GetRewards(difficulty, rand);
         return new SalvageMission(seed, difficulty, dungeon.ID, faction.ID, config, biome.ID, air.ID, temp.Temperature, light.Color, duration, rewards, mods);

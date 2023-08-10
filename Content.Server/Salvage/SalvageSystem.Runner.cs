@@ -155,7 +155,7 @@ public sealed partial class SalvageSystem
         {
             var remaining = comp.EndTime - _timing.CurTime;
 
-            if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(30))
+            if (comp.Stage < ExpeditionStage.FinalCountdown && remaining < TimeSpan.FromSeconds(45))
             {
                 comp.Stage = ExpeditionStage.FinalCountdown;
                 Dirty(comp);
