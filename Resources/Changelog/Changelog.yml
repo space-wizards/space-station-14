@@ -1,9 +1,4 @@
 Entries:
-- author: SonicDC
-  changes:
-  - {message: Added dumplings!, type: Add}
-  id: 4000
-  time: '2023-06-15T02:45:31.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Clown Spiders have been sighted in the maintenance corridors., type: Add}
@@ -2981,3 +2976,8 @@ Entries:
       and Left-4-Zed., type: Tweak}
   id: 4499
   time: '2023-08-10T01:43:07.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Admin ghosts can now analyse solutions easier., type: Tweak}
+  id: 4500
+  time: '2023-08-10T02:03:21.0000000+00:00'
