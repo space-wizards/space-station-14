@@ -203,6 +203,13 @@
     - type: Inventory
       templateId: holoclown
     - type: Hands
+    - type: Clumsy
+      clumsyDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
     - type: InventorySlots
     - type: MeleeWeapon
       hidden: true
