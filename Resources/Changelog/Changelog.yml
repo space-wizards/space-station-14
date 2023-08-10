@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added mass hallucinations event that temporarily makes everyone on station
-      hear random sounds (paracusia), type: Add}
-  id: 4006
-  time: '2023-06-15T06:45:51.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Our top scientists have injected our artifacts with foaming agents to
@@ -2979,3 +2973,10 @@ Entries:
   - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
   id: 4505
   time: '2023-08-10T07:27:02.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
+  - {message: Security and Atmospherics airlocks start with a moderate level of protection.
+      Command airlocks start with an even higher level of security., type: Add}
+  id: 4506
+  time: '2023-08-10T08:33:04.0000000+00:00'
