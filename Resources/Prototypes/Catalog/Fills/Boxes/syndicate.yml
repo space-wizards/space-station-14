@@ -1,0 +1,12 @@
+- type: entity
+  id: ElectricalDisruptionKit
+  parent: BoxCardboard
+  name: electrical disruption kit
+  suffix: Filled
+  components:
+    - type: StorageFill
+      contents:
+        - id: EmpGrenade
+          amount: 3
+        - id: EmpImplanter
+          amount: 1

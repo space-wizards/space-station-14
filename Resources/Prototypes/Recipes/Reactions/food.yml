@@ -174,6 +174,17 @@
   products:
     Mayo: 15
 
+# Gas not included
+- type: reaction
+  id: CookingMustard
+  reactants:
+    Bleach:
+      amount: 1
+    Ammonia:
+      amount: 1
+  products:
+    Mustard: 2
+
 - type: reaction
   id: CookingKetchunaise
   reactants:

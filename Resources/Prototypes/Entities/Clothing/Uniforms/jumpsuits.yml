@@ -444,6 +444,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitQMTurtleneck
+  name: quartermasters's turtleneck
+  description: A sharp turtleneck made for the hardy work environment of supply.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpsuit/qmturtle.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpsuit/qmturtle.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitResearchDirector
   name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
