@@ -7,6 +7,7 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
+using Robust.Server.GameStates;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -45,6 +46,22 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private bool _startingRound;
 
+        /// <summary>
+        /// This is a list of players that are going to appear in the round-end
+        /// crew manifest so their children entities can be collected each update
+        /// and sent to far-away players.
+        /// </summary>
+        [ViewVariables]
+        private List<EntityUid> _expandPvsPlayers = new();
+
+        /// <summary>
+        /// This is the list of the children entities that should be sent to
+        /// all players at the end of the round, to keep distant characters from
+        /// looking naked in the crew manifest.
+        /// </summary>
+        [ViewVariables]
+        private List<EntityUid> _expandPvsEntities = new();
+
         [ViewVariables]
         private GameRunLevel _runLevel;
 
@@ -62,6 +79,11 @@ namespace Content.Server.GameTicking
 
                 RaiseLocalEvent(new GameRunLevelChangedEvent(old, value));
             }
+        }
+
+        private void InitializeRoundFlow()
+        {
+            SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
         }
 
         /// <summary>
@@ -299,6 +321,14 @@ namespace Content.Server.GameTicking
             ShowRoundEndScoreboard(text);
         }
 
+        private void OnExpandPvs(ref ExpandPvsEvent args)
+        {
+            if (RunLevel != GameRunLevel.PostRound)
+                return;
+
+            args.Entities.AddRange(_expandPvsEntities);
+        }
+
         public void ShowRoundEndScoreboard(string text = "")
         {
             // Log end of round
@@ -348,6 +378,9 @@ namespace Content.Server.GameTicking
                     playerIcName = mind.CharacterName;
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
+
+                if (Exists(mind.OriginalOwnedEntity))
+                    _expandPvsPlayers.Add(mind.OriginalOwnedEntity.Value);
 
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
@@ -464,6 +497,9 @@ namespace Content.Server.GameTicking
 
             _allPreviousGameRules.Clear();
 
+            _expandPvsPlayers.Clear();
+            _expandPvsEntities.Clear();
+
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
             RaiseLocalEvent(ev);
@@ -500,6 +536,18 @@ namespace Content.Server.GameTicking
             if (RunLevel == GameRunLevel.InRound)
             {
                 RoundLengthMetric.Inc(frameTime);
+            }
+            else if (RunLevel == GameRunLevel.PostRound)
+            {
+                _expandPvsEntities.Clear();
+
+                foreach (var entity in _expandPvsPlayers)
+                {
+                    if (Deleted(entity))
+                        continue;
+
+                    _expandPvsEntities.AddRange(Transform(entity).ChildEntities);
+                }
             }
 
             if (_roundStartTime == TimeSpan.Zero ||
