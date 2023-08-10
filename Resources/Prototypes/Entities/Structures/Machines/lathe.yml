@@ -97,6 +97,7 @@
       - TRayScanner
       - GasAnalyzer
       - UtilityBelt
+      - Fulton
       - Pickaxe
       - ModularReceiver
       - AppraisalTool

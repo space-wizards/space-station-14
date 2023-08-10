@@ -1,0 +1,6 @@
+- type: latheRecipe
+  id: Fulton
+  result: Fulton1
+  completetime: 5
+  materials:
+    Cloth: 200

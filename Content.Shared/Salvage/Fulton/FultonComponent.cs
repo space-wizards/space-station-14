@@ -19,10 +19,11 @@ public sealed partial class FultonComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
     {
-        Components = new string[]
+        Components = new[]
         {
             "EntityStorage",
             "Item",
+            "ReagentTank",
         }
     };
 
