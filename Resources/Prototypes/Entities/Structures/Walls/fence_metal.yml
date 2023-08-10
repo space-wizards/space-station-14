@@ -1,6 +1,6 @@
 ﻿- type: entity
   parent: BaseStructure
-  id: FenceMetalBase
+  id: BaseFenceMetal
   name: chain link fence
   description: A metal piece of fencing cordoning off something likely very important.
   abstract: true
@@ -18,6 +18,8 @@
     drawdepth: WallTops
   - type: Physics
     bodyType: Static
+  - type: Transform
+    anchored: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: FlimsyMetallic
@@ -78,7 +80,7 @@
   - type: AnimationPlayer
 
 - type: entity
-  parent: FenceMetalBase
+  parent: BaseFenceMetal
   id: FenceMetalBroken
   name: broken chain link fence
   description: Someone got real mad at an inanimate object.
@@ -136,7 +138,7 @@
     node: broken
 
 - type: entity
-  parent: FenceMetalBase
+  parent: BaseFenceMetal
   id: FenceMetalStraight
   suffix: Straight
   components:
@@ -196,7 +198,7 @@
     node: straight
 
 - type: entity
-  parent: FenceMetalBase
+  parent: BaseFenceMetal
   id: FenceMetalCorner
   suffix: Corner
   components:
@@ -239,7 +241,7 @@
     node: corner
 
 - type: entity
-  parent: FenceMetalBase
+  parent: BaseFenceMetal
   id: FenceMetalEnd
   suffix: End
   components:
@@ -275,7 +277,7 @@
     node: end
 
 - type: entity
-  parent: FenceMetalBase
+  parent: BaseFenceMetal
   id: FenceMetalGate
   name: chain link fence gate
   description: You could use the door instead of vaulting over--if you're a COWARD, that is.
