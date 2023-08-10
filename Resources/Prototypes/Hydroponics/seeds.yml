@@ -13,7 +13,7 @@
   yield: 3
   potency: 5
   idealLight: 8
-  nutrientConsumption: 0.30
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -39,7 +39,7 @@
   yield: 3
   potency: 5
   idealLight: 8
-  nutrientConsumption: 0.30
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -298,7 +298,7 @@
   yield: 2
   potency: 10
   waterConsumption: 0.60
-  nutrientConsumption: 0.30
+  nutrientConsumption: 0.40
   idealLight: 8
   idealHeat: 298
   juicy: true
@@ -873,7 +873,7 @@
   potency: 5
   growthStages: 4
   idealLight: 5
-  nutrientConsumption: 0.30
+  nutrientConsumption: 0.40
   waterConsumption: 0.60
   chemicals:
     Nutriment:
@@ -901,7 +901,7 @@
   yield: 3
   potency: 5
   idealLight: 7
-  nutrientConsumption: 0.30
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1

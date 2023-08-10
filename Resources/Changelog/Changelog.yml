@@ -1,96 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: 'Added the basic hardsuit, a modest but lightweight hardsuit with minor
-      damage resistances in all categories.', type: Add}
-  - {message: Resprited all EVA suits., type: Tweak}
-  - {message: 'Changed a bunch of descriptions relating to hardsuits, softsuits, and
-      EVA helmets.', type: Tweak}
-  id: 3994
-  time: '2023-06-15T02:15:22.0000000+00:00'
-- author: '0x6273'
-  changes:
-  - {message: Pre-filled non-engineering utility belts now come with a network configurator.,
-    type: Tweak}
-  id: 3995
-  time: '2023-06-15T02:16:12.0000000+00:00'
-- author: OctoRocket
-  changes:
-  - {message: Added a trait that gives you a pirate accent!, type: Add}
-  id: 3996
-  time: '2023-06-15T02:17:40.0000000+00:00'
-- author: MisterMecky
-  changes:
-  - {message: 'Condiment bottles and shakers are now refillable, and are spill-able
-      in-hand.', type: Tweak}
-  id: 3997
-  time: '2023-06-15T02:18:38.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: grilles can now be constructed on lattice (easier to rebuild asteroid
-      defences), type: Tweak}
-  id: 3998
-  time: '2023-06-15T02:25:29.0000000+00:00'
-- author: OttoMaticode
-  changes:
-  - {message: Linked the science entry in the robotics guidebook entry., type: Fix}
-  id: 3999
-  time: '2023-06-15T02:43:02.0000000+00:00'
-- author: SonicDC
-  changes:
-  - {message: Added dumplings!, type: Add}
-  id: 4000
-  time: '2023-06-15T02:45:31.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Clown Spiders have been sighted in the maintenance corridors., type: Add}
-  - {message: Rumors of giant floating Behonkers have been circulating between salvage
-      crews., type: Add}
-  id: 4001
-  time: '2023-06-15T02:47:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added high-capacity bluespace beakers and large-volume quick-injecting
-      bluespace syringes., type: Add}
-  - {message: Replaced the tier 3 biochemical technology with Bluespace Chemistry.,
-    type: Add}
-  id: 4002
-  time: '2023-06-15T03:11:11.0000000+00:00'
-- author: Ahion
-  changes:
-  - {message: 'Using the crew monitoring console, it has become more convenient to
-      track the position of the crew on the map.', type: Tweak}
-  id: 4003
-  time: '2023-06-15T03:29:53.0000000+00:00'
-- author: end
-  changes:
-  - {message: 'Librarians now can ask cargo to order guidebooks, in order to increase
-      the IQ of spessman.', type: Add}
-  id: 4004
-  time: '2023-06-15T03:36:16.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Shuttle airlocks now have wires and can be hacked., type: Tweak}
-  id: 4005
-  time: '2023-06-15T03:37:58.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added mass hallucinations event that temporarily makes everyone on station
-      hear random sounds (paracusia), type: Add}
-  id: 4006
-  time: '2023-06-15T06:45:51.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Our top scientists have injected our artifacts with foaming agents to
-      greatly increase their foam output. Let's just hope that there's nothing dangerous
-      inside of it., type: Fix}
-  id: 4007
-  time: '2023-06-15T11:26:10.0000000+00:00'
-- author: lzk
-  changes:
-  - {message: Changed sprites, type: Tweak}
-  id: 4008
-  time: '2023-06-15T11:55:07.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed being able to insert tanks/jetpacks into locked gas canisters.,
@@ -2979,3 +2887,98 @@ Entries:
   - {message: Added toggle to hide clothing in the character editor., type: Add}
   id: 4493
   time: '2023-08-09T06:26:34.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Diona are no longer inhibited by kudzu., type: Tweak}
+  id: 4494
+  time: '2023-08-09T15:24:41.0000000+00:00'
+- author: themias
+  changes:
+  - {message: Taxibots have robot speech bubbles, type: Tweak}
+  id: 4495
+  time: '2023-08-09T16:48:08.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: The air alarm UI now allows copying settings of one device to all similar
+      devices., type: Add}
+  id: 4496
+  time: '2023-08-09T18:20:20.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Changed Dark & Bushy, Death''s-Head, Firewatch, Moffra, Plasmafire,
+      and Royal moth wings to now have two separate color layers.', type: Tweak}
+  id: 4497
+  time: '2023-08-10T01:32:01.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Added Mustard. It can be found in condiment stations., type: Add}
+  - {message: 'Mixing bleach and ammonia will now create... well, at least they got
+      the smell right.', type: Add}
+  id: 4498
+  time: '2023-08-10T01:38:37.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: 'Emagging the NutriMax will give a bottle of left-4-zed, for when you
+      need kudzu ASAP.', type: Add}
+  - {message: 'Since it got lost in translation last time, the NutriMax also has EZ
+      nutrient to satisfy increased nutrient demand.', type: Add}
+  - {message: New and improved formulas have increased the effectiveness of EZ nutrient
+      and Left-4-Zed., type: Tweak}
+  id: 4499
+  time: '2023-08-10T01:43:07.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Admin ghosts can now analyse solutions easier., type: Tweak}
+  id: 4500
+  time: '2023-08-10T02:03:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Potentially fix invalid moth markings leading to issues spawning., type: Fix}
+  id: 4501
+  time: '2023-08-10T03:34:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing entity names to not update after being
+      modified., type: Fix}
+  id: 4502
+  time: '2023-08-10T04:42:09.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: 'Added the SecHud to lockers, sec vendor, secfab.', type: Add}
+  - {message: Security will now receive the correct glasses box with their security
+      supplies from cargo., type: Fix}
+  id: 4503
+  time: '2023-08-10T06:04:43.0000000+00:00'
+- author: emogarbage
+  changes:
+  - {message: Re-sprited grappling gun per artist request., type: Tweak}
+  id: 4504
+  time: '2023-08-10T06:16:57.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Advanced laser guns are now 30 size, like the antique laser gun.',
+    type: Tweak}
+  - {message: Advanced laser guns recharge 25% slower than before., type: Tweak}
+  id: 4505
+  time: '2023-08-10T07:27:02.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Obstacles to deter hackers can now be added to airlocks., type: Add}
+  - {message: Security and Atmospherics airlocks start with a moderate level of protection.
+      Command airlocks start with an even higher level of security., type: Add}
+  id: 4506
+  time: '2023-08-10T08:33:04.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The Syndicate are no longer interested in stealing Cargo's request computer
+      boards., type: Remove}
+  id: 4507
+  time: '2023-08-10T08:34:38.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: 'Added an electrical disruption kit to syndicate operatives, containing
+      3 EMP grenades and an EMP implanter. Costs 6 telecrystals.', type: Add}
+  - {message: Changed EMP grenade pricing to 2 telecrystals., type: Tweak}
+  - {message: Changed EMP implant pricing to 3 telecrystals., type: Tweak}
+  id: 4508
+  time: '2023-08-10T08:40:17.0000000+00:00'
