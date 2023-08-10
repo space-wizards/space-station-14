@@ -15,16 +15,9 @@ using Content.Shared.Cuffs;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Popups;
 using Content.Server.Polymorph.Systems;
-using Content.Server.Polymorph.Components;
-using Content.Shared.Damage;
-using Robust.Shared.Player;
-using Internal.TypeSystem;
 using Content.Shared.Hands.Components;
-using Content.Shared.Interaction.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Shared.StatusEffect;
 using Content.Shared.Inventory;
-using Robust.Shared.Map;
 
 namespace Content.Server.Stunnable
 {
