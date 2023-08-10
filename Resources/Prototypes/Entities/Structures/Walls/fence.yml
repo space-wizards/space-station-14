@@ -1,8 +1,8 @@
 ﻿- type: entity
   parent: BaseStructure
   id: FenceMetalBase
-  name: chain-link fence
-  description: it a fence :D
+  name: chain link fence
+  description: A metal piece of fencing cordoning off something likely very important.
   abstract: true
   components:
   - type: MeleeSound
@@ -45,7 +45,7 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Climbable
-    delay: 3.0
+    delay: 5.0
   - type: PowerConsumer
     showInMonitor: false
   - type: Electrified
@@ -98,6 +98,11 @@
         - FullTileMask
         layer:
         - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
 
 - type: entity
   parent: FenceMetalBase
@@ -133,6 +138,11 @@
         - TableMask
         layer:
         - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
 
 - type: entity
   parent: FenceMetalBase
@@ -158,3 +168,45 @@
         - TableMask
         layer:
         - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
+
+- type: entity
+  parent: FenceMetalBase
+  id: FenceMetalGate
+  name: chain link fence gate
+  description: You could use the door instead of vaulting over--if you're a COWARD, that is.
+  suffix: Gate
+  components:
+  - type: Sprite
+    layers:
+    - state: end
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: [ "enum.ElectrifiedLayers.Powered" ]
+      shader: unshaded
+      visible: false
+  - type: InteractionOutline
+  - type: Door
+    openSpriteState: door_opened
+    closedSpriteState: door_closed
+    canPry: false
+    occludes: false
+    changeAirtight: false
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0
+    closeTimeTwo: 0
+    openTimeOne: 0
+    openTimeTwo: 0
+    openingAnimationTime: 0
+    closingAnimationTime: 0
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
