@@ -151,3 +151,16 @@
   icon:
     sprite: Objects/Misc/rifle_stock.rsi
     state: icon
+
+- type: construction
+  name: Security HUD glasses
+  id: Sechudglasses
+  graph: SechudglassesGraph
+  startNode: start
+  targetNode: Sechudglasses
+  category: construction-category-clothing
+  objectType: Item
+  description: sunglasses installed with security hud technology
+  icon:
+    sprite: Clothing/Eyes/Glasses/secglasses.rsi
+    state: icon
