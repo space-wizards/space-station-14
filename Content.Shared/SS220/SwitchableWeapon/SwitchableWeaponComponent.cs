@@ -33,9 +33,6 @@ public sealed class SwitchableWeaponComponent : Component
     [ViewVariables(VVAccess.ReadWrite)][DataField("closeSound")]
     public SoundSpecifier? CloseSound;
 
-    [ViewVariables(VVAccess.ReadWrite)][DataField("bonkSound")]
-    public SoundSpecifier? BonkSound;
-
     [ViewVariables(VVAccess.ReadWrite)][DataField("sizeOpened")]
     public int SizeOpened = 15;
 

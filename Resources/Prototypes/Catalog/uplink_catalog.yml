@@ -204,7 +204,7 @@
   description: uplink-emp-grenade-desc
   productEntity: EmpGrenade
   cost:
-    Telecrystal: 3
+    Telecrystal: 2
   categories:
   - UplinkExplosives
 
@@ -526,7 +526,7 @@
   icon: { sprite: /Textures/Objects/Magic/magicactions.rsi, state: shield }
   productEntity: EmpImplanter
   cost:
-    Telecrystal: 5
+    Telecrystal: 3
   categories:
     - UplinkImplants
 
@@ -586,6 +586,16 @@
           - SurplusBundle
 
 # Bundles
+
+- type: listing
+  id: UplinkEmpKit
+  name: uplink-emp-kit-name
+  description: uplink-emp-kit-desc
+  productEntity: ElectricalDisruptionKit
+  cost:
+    Telecrystal: 6
+  categories:
+    - UplinkBundles
 
 - type: listing
   id: UplinkAmmoBundle

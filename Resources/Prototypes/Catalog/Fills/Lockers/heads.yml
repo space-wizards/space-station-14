@@ -8,6 +8,8 @@
       - id: Telescopichka
       - id: ClothingNeckCloakQm
       - id: ClothingHeadsetCargo
+      - id: ClothingUniformJumpsuitQMTurtleneck
+      - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
       - id: ClothingShoesColorBrown
       - id: ClothingHeadHatQMsoft
@@ -121,6 +123,7 @@
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan
         prob: 0.5
+      - id: AccessConfigurator
       - id: ClothingOuterCoatHOP # Corvax-Resprite
 
 - type: entity
@@ -148,6 +151,7 @@
       - id: JetpackVoidFilled
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
+      - id: AccessConfigurator
 
 - type: entity
   id: LockerChiefEngineerFilled
@@ -168,6 +172,7 @@
       - id: RubberStampCE
       - id: ClothingHeadsetAltEngineering
       - id: BoxEncryptionKeyEngineering
+      - id: AccessConfigurator
 
 - type: entity
   id: LockerChiefMedicalOfficerFilledHardsuit
@@ -276,6 +281,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatCapHoS # Corvax-SecFashion
@@ -310,6 +316,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatCapHoS # Corvax-SecFashion

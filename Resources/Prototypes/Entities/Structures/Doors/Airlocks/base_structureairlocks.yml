@@ -129,6 +129,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: AccessReader
   - type: StaticPrice
     price: 150
   placement:

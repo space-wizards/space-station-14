@@ -305,7 +305,9 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
         for (var j = 0; j < markingPrototype.Sprites.Count; j++)
         {
-            if (markingPrototype.Sprites[j] is not SpriteSpecifier.Rsi rsi)
+            var markingSprite = markingPrototype.Sprites[j];
+
+            if (markingSprite is not SpriteSpecifier.Rsi rsi)
             {
                 continue;
             }
@@ -314,7 +316,7 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 
             if (!sprite.LayerMapTryGet(layerId, out _))
             {
-                var layer = sprite.AddLayer(markingPrototype.Sprites[j], targetLayer + j + 1);
+                var layer = sprite.AddLayer(markingSprite, targetLayer + j + 1);
                 sprite.LayerMapSet(layerId, layer);
                 sprite.LayerSetSprite(layerId, rsi);
             }
@@ -326,7 +328,10 @@ public sealed class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
                 continue;
             }
 
-            if (colors != null)
+            // Okay so if the marking prototype is modified but we load old marking data this may no longer be valid
+            // and we need to check the index is correct.
+            // So if that happens just default to white?
+            if (colors != null && j < colors.Count)
             {
                 sprite.LayerSetColor(layerId, colors[j]);
             }
