@@ -138,7 +138,7 @@ public abstract partial class SharedBuckleSystem
         if (component.BuckledTo != null)
         {
             var buckle = component.BuckledTo;
-            if (TryComp<VehicleComponent>(buckle, out var vehicle))
+            if (TryComp<VehicleComponent>(buckle, out _))
                 return;
         }
         if (component.Buckled)
