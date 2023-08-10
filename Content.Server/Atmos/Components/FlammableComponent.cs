@@ -41,20 +41,20 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("alwaysCombustible")]
-        public bool AlwaysCombustible { get; private set; } = false;
+        public bool AlwaysCombustible = false;
 
         /// <summary>
         ///     Can the component anyhow lose its FireStacks?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("extinguishable")]
-        public bool CanExtinguish { get; private set; } = true;
+        public bool CanExtinguish = true;
 
         /// <summary>
         ///     How many firestacks should be applied to component when being set on fire?
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("fireOnIgnite")]
-        public float FirestacksOnIgnite { get; private set; } = 2.0f;
+        public float FirestacksOnIgnite = 2.0f;
     }
 }
