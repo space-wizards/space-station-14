@@ -1,15 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: CentCom's Ministry Of Truth has trained station mice to stop eating
-      uranium., type: Fix}
-  id: 4010
-  time: '2023-06-15T12:35:11.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Female dwarves now have female laughs., type: Tweak}
-  id: 4011
-  time: '2023-06-15T19:19:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Ice anomaly projectiles do increased structural damage., type: Tweak}
@@ -2981,3 +2970,17 @@ Entries:
   - {message: Added a homemade stun weapon., type: Add}
   id: 4509
   time: '2023-08-10T09:33:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'You can now construct chain link fencing. Bullets pass through it,
+      it''s very slowly vaultable, and you can construct gates. Expect to see it mapped
+      eventually.', type: Add}
+  id: 4510
+  time: '2023-08-10T14:16:26.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
+      foreshadowing from the planet background sprites). They''re just as dangerous
+      as lava, so be careful.', type: Add}
+  id: 4511
+  time: '2023-08-10T14:16:51.0000000+00:00'
