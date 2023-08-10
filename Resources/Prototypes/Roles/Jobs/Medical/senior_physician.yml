@@ -3,6 +3,7 @@
   name: job-name-senior-physician
   description: job-description-senior-physician
   playTimeTracker: JobSeniorPhysician
+  setPreference: false #SS220 No senior job
   requirements:
     - !type:RoleTimeRequirement
       role: JobChemist
