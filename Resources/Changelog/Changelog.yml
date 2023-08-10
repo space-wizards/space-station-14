@@ -1,10 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed anchored and unanchored examine text to be green and red respectfully.,
-    type: Tweak}
-  id: 4013
-  time: '2023-06-16T02:46:39.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'NanoTrasen has finally started rewarding salvagers for actually completing
@@ -2981,3 +2975,11 @@ Entries:
       for special operations., type: Add}
   id: 4512
   time: '2023-08-10T14:29:47.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
+      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
+  - {message: Updated pried tiles to match the appearance of the new tiles better.,
+    type: Tweak}
+  id: 4513
+  time: '2023-08-10T17:46:44.0000000+00:00'
