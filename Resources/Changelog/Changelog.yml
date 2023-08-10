@@ -1,11 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Clown Spiders have been sighted in the maintenance corridors., type: Add}
-  - {message: Rumors of giant floating Behonkers have been circulating between salvage
-      crews., type: Add}
-  id: 4001
-  time: '2023-06-15T02:47:37.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added high-capacity bluespace beakers and large-volume quick-injecting
@@ -2981,3 +2974,8 @@ Entries:
   - {message: Admin ghosts can now analyse solutions easier., type: Tweak}
   id: 4500
   time: '2023-08-10T02:03:21.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Potentially fix invalid moth markings leading to issues spawning., type: Fix}
+  id: 4501
+  time: '2023-08-10T03:34:01.0000000+00:00'
