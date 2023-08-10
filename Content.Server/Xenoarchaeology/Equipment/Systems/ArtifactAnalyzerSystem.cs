@@ -45,7 +45,6 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     /// <inheritdoc/>
     public override void Initialize()
     {
-        SubscribeLocalEvent<ActiveScannedArtifactComponent, MoveEvent>(OnScannedMoved);
         SubscribeLocalEvent<ActiveScannedArtifactComponent, ArtifactActivatedEvent>(OnArtifactActivated);
 
         SubscribeLocalEvent<ActiveArtifactAnalyzerComponent, ComponentStartup>(OnAnalyzeStart);
@@ -376,20 +375,6 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     private void OnArtifactActivated(EntityUid uid, ActiveScannedArtifactComponent component, ArtifactActivatedEvent args)
     {
         CancelScan(uid);
-    }
-
-    /// <summary>
-    /// Checks to make sure that the currently scanned artifact isn't moved off of the scanner
-    /// </summary>
-    private void OnScannedMoved(EntityUid uid, ActiveScannedArtifactComponent component, ref MoveEvent args)
-    {
-/*        if (!TryComp<ArtifactAnalyzerComponent>(component.Scanner, out var analyzer))
-            return;
-
-        if (analyzer.Contacts.Contains(uid))
-            return;
-
-        CancelScan(uid, component, analyzer);*/
     }
 
     /// <summary>
