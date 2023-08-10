@@ -34,13 +34,14 @@ public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly InteractionSystem _interaction = default!;
-    [Dependency] private readonly PricingSystem _pricing = default!;
-    [Dependency] private readonly StaminaSystem _stamina = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
+    [Dependency] private readonly InteractionSystem _interaction = default!;
+    [Dependency] private readonly PricingSystem _pricing = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly StaminaSystem _stamina = default!;
+    [Dependency] private readonly StunSystem _stun = default!;
 
     public const float DamagePitchVariation = SharedMeleeWeaponSystem.DamagePitchVariation;
     public const float GunClumsyChance = 0.5f;
@@ -239,7 +240,9 @@ public sealed partial class GunSystem : SharedGunSystem
                             if (!Deleted(hitEntity))
                             {
                                 if (dmg.Total > FixedPoint2.Zero)
-                                    RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { hitEntity }), Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                {
+                                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { hitEntity }, Filter.Pvs(hitEntity, entityManager: EntityManager));
+                                }
 
                                 // TODO get fallback position for playing hit sound.
                                 PlayImpactSound(hitEntity, dmg, hitscan.Sound, hitscan.ForceSound);
