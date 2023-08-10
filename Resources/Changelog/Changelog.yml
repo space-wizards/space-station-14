@@ -1,12 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Added high-capacity bluespace beakers and large-volume quick-injecting
-      bluespace syringes., type: Add}
-  - {message: Replaced the tier 3 biochemical technology with Bluespace Chemistry.,
-    type: Add}
-  id: 4002
-  time: '2023-06-15T03:11:11.0000000+00:00'
 - author: Ahion
   changes:
   - {message: 'Using the crew monitoring console, it has become more convenient to
@@ -2979,3 +2971,9 @@ Entries:
   - {message: Potentially fix invalid moth markings leading to issues spawning., type: Fix}
   id: 4501
   time: '2023-08-10T03:34:01.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed a bug that was causing entity names to not update after being
+      modified., type: Fix}
+  id: 4502
+  time: '2023-08-10T04:42:09.0000000+00:00'
