@@ -14,10 +14,10 @@ public sealed class AttemptElectrocute : IGraphAction
         if (!entityManager.TryGetComponent<ElectrifiedComponent>(uid, out var electrified))
             return;
 
-        bool currentValue = electrified.Enabled;
+        var currentValue = electrified.Enabled;
         electrified.Enabled = true;
 
-        entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value);
+        entityManager.EntitySysManager.GetEntitySystem<ElectrocutionSystem>().TryDoElectrifiedAct(uid, userUid.Value, electrified: electrified);
 
         electrified.Enabled = currentValue;
     }
