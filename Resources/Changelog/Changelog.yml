@@ -1,13 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Ice anomaly projectiles do increased structural damage., type: Tweak}
-  - {message: Ice anomalies now shoot more projectiles with increased accuracy on
-      living targets., type: Tweak}
-  - {message: Decreased explosive power from the ice anomaly supercritical event.,
-    type: Tweak}
-  id: 4012
-  time: '2023-06-16T00:52:49.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed anchored and unanchored examine text to be green and red respectfully.,
@@ -2984,3 +2975,9 @@ Entries:
       as lava, so be careful.', type: Add}
   id: 4511
   time: '2023-08-10T14:16:51.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Added supermatter grenade analog from SS13 and brand new whitehole grenade
+      for special operations., type: Add}
+  id: 4512
+  time: '2023-08-10T14:29:47.0000000+00:00'
