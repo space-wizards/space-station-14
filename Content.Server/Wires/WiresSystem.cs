@@ -586,12 +586,6 @@ public sealed class WiresSystem : SharedWiresSystem
             _uiSystem.OpenUi(ui, player);
     }
 
-    public void CloseAllUserInterfaces(EntityUid uid)
-    {
-        if (_uiSystem.TryGetUi(uid, WiresUiKey.Key, out var ui))
-            _uiSystem.CloseAll(ui);
-    }
-
     /// <summary>
     ///     Tries to get a wire on this entity by its integer id.
     /// </summary>
@@ -651,7 +645,7 @@ public sealed class WiresSystem : SharedWiresSystem
 
         if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
         {
-            CloseAllUserInterfaces(uid);
+            _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
         }
     }
 
