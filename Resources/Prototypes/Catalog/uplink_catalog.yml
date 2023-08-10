@@ -271,7 +271,7 @@
   name: uplink-shotgun-magazine-Beanbags-name
   description: uplink-shotgun-magazine-Beanbags-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Ammunition/Magazine/Shotgun/m12.rsi, state: beanbag }
-  productEntity: MagazineShotgun
+  productEntity: MagazineShotgunBeanbag
   cost:
     Telecrystal: 1
   categories:
