@@ -45,7 +45,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 1.5
+            Poison: 2
 
 - type: reagent
   id: Copper
