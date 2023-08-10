@@ -187,7 +187,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: dbushy
+    state: dbushy_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: dbushy_secondary
 
 - type: marking
   id: MothWingsDeathhead
@@ -196,7 +198,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: deathhead
+    state: deathhead_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: deathhead_secondary
 
 - type: marking
   id: MothWingsFan
@@ -232,7 +236,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: firewatch
+    state: firewatch_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: firewatch_secondary
 
 - type: marking
   id: MothWingsGothic
@@ -277,7 +283,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: moffra
+    state: moffra_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: moffra_secondary
 
 - type: marking
   id: MothWingsOakworm
@@ -295,7 +303,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: plasmafire
+    state: plasmafire_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: plasmafire_secondary
 
 - type: marking
   id: MothWingsPointy
@@ -313,7 +323,9 @@
   speciesRestriction: [Moth]
   sprites:
   - sprite: Mobs/Customization/Moth/moth_wings.rsi
-    state: royal
+    state: royal_primary
+  - sprite: Mobs/Customization/Moth/moth_wings.rsi
+    state: royal_secondary
 
 - type: marking
   id: MothWingsStellar
