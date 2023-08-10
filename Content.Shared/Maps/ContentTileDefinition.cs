@@ -37,7 +37,7 @@ namespace Content.Shared.Maps
         public string BaseTurf { get; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
-		
+
         /// <summary>
         /// Whether this tile can be pried by an advanced prying tool if not pryable otherwise.
         /// </summary>
@@ -62,7 +62,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
+        [DataField("placementVariants")] public List<float> PlacementVariants { get; set; } = new () { 1f };
 
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 
