@@ -34869,6 +34869,11 @@ entities:
       pos: 23.5,-31.5
       parent: 1668
       type: Transform
+    - setupAvailableNetworks:
+      - SurveillanceCameraEngineering
+      nameSet: True
+      id: Atmospherics
+      type: SurveillanceCamera
   - uid: 6790
     components:
     - rot: 3.141592653589793 rad
