@@ -117,3 +117,8 @@
     node: cratesecure
     containers:
     - entity_storage
+  - type: Reflect
+    reflects:
+    - Energy
+    reflectProb: 0.2
+    spread: 90
