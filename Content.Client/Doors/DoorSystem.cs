@@ -111,11 +111,11 @@ public sealed class DoorSystem : SharedDoorSystem
                 }
                 break;
             case DoorState.Opening:
-                if (animPlayer != null && comp.OpeningAnimation != default)
+                if (animPlayer != null && comp.OpeningAnimationTime != 0.0)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.OpeningAnimation, DoorComponent.AnimationKey);
                 break;
             case DoorState.Closing:
-                if (animPlayer != null && comp.ClosingAnimation != default && comp.CurrentlyCrushing.Count == 0)
+                if (animPlayer != null && comp.ClosingAnimationTime != 0.0 && comp.CurrentlyCrushing.Count == 0)
                     _animationSystem.Play(uid, animPlayer, (Animation)comp.ClosingAnimation, DoorComponent.AnimationKey);
                 break;
             case DoorState.Denying:
