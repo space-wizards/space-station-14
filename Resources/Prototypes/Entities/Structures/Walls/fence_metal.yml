@@ -45,6 +45,10 @@
         acts: [ "Destruction" ]
   - type: Climbable
     delay: 5.0
+    startClimbSound:
+      collection: FenceRattle
+    finishClimbSound:
+      collection: FenceRattle
   - type: PowerConsumer
     showInMonitor: false
   - type: Electrified
