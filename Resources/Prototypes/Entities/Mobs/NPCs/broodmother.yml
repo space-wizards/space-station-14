@@ -113,7 +113,7 @@
 
 
 - type: entity
-  #abstract: true
+  noSpawn: true
   name: BroodyTrap
   description: BroodyTrap
   id: BroodyTrap
@@ -142,7 +142,7 @@
     state: cuff
 
 - type: entity
-  #abstract: true
+  noSpawn: true
   name: broken web cuffs
   description: The torn web
   id: WebCuffsBroken
@@ -155,6 +155,57 @@
     tags:
     - Trash
 
+
+#polymorph egg
+- type: polymorph
+  id: HumanToCocon
+  entity: DudeInCocon
+  forced: true
+  transferDamage: true
+  revertOnCrit: true
+  revertOnDeath: true
+  allowRepeatedMorphs: false
+  delay: 3
+
+
+- type: entity
+  name: ???
+  description: Someone in cocon...
+  id: DudeInCocon
+  parent: MobHuman
+
+
+
+- type: entity
+  noSpawn: true
+  name: BroodCocon
+  parent: ClothingOuterBase
+  id: BroodCocon
+  components:
+  - type: Clothing
+    slots:
+    - outerClothing
+  - type: Sprite
+    sprite: Objects/Misc/broodtrap.rsi
+    state: alive
+  - type: IngestionBlocker
+  - type: AddAccentClothing
+    accent: ReplacementAccent
+    replacement: mumble
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.80
+        Slash: 0.90
+        Piercing: 0.95
+        Heat: 1.25
+  - type: NoSlip
+  - type: Tag
+    tags:
+    - HidesHair
 
 #broodservant
 - type: entity

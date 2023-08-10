@@ -16,6 +16,15 @@ using Content.Shared.Cuffs.Components;
 using Content.Shared.Popups;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Polymorph.Components;
+using Content.Shared.Damage;
+using Robust.Shared.Player;
+using Internal.TypeSystem;
+using Content.Shared.Hands.Components;
+using Content.Shared.Interaction.Components;
+using Content.Shared.Hands.EntitySystems;
+using Content.Shared.StatusEffect;
+using Content.Shared.Inventory;
+using Robust.Shared.Map;
 
 namespace Content.Server.Stunnable
 {
@@ -29,6 +38,8 @@ namespace Content.Server.Stunnable
         [Dependency] private readonly ActionsSystem _action = default!;
         [Dependency] private readonly SharedCuffableSystem _cuff = default!;
         [Dependency] private readonly PolymorphSystem _poly = default!;
+        [Dependency] private readonly SharedHandsSystem _hands = default!;
+        [Dependency] private readonly InventorySystem _inventory = default!;
 
         public override void Initialize()
         {
@@ -95,6 +106,11 @@ namespace Content.Server.Stunnable
                     return;
                 }
 
+                EntityManager.AddComponent<CoconComponent>(polytarget.Value);
+
+                if (TryComp(polytarget, out CoconComponent? CoconComp))
+                    CoconComp.EquipedOn = polytarget.Value;
+
 
                 _stunSystem.TryParalyze(polytarget.Value, TimeSpan.FromSeconds(component.ParalyzeTime), true);
 
@@ -104,12 +120,11 @@ namespace Content.Server.Stunnable
                     _cuff.TryAddNewCuffs(polytarget.Value, polytarget.Value, cuffs, cuffcomp);
                     _popup.PopupEntity(Loc.GetString("Your hands are tied with cobwebs!"), polytarget.Value, polytarget.Value, PopupType.LargeCaution);
                 }
-
+                var broodCocon = Spawn("BroodCocon", Transform(polytarget.Value).Coordinates);
+                _inventory.TryEquip(polytarget.Value, broodCocon, "outerClothing", true, true);
             }
 
         }
-
-
 
 
         private void HandleCollide(EntityUid uid, WebStunComponent component, ref StartCollideEvent args)
@@ -128,6 +143,47 @@ namespace Content.Server.Stunnable
         {
             _action.AddAction(uid, component.ActionWebSpit, null);
         }
+
+
+        public override void Update(float frameTime)
+        {
+            base.Update(frameTime);
+
+            foreach (var comp in EntityQuery<CoconComponent>())
+            {
+                comp.Accumulator += frameTime;
+
+                if (comp.Accumulator <= comp.DamageFrequency)
+                    continue;
+
+                comp.Accumulator = 0;
+
+                if (comp.EquipedOn is not { Valid: true } targetId)
+                    continue;
+                if (TryComp(targetId, out MobStateComponent? mobState))
+                {
+                    if (mobState.CurrentState is not MobState.Alive)
+                    {
+                        _poly.Revert(targetId);
+                    }
+                }
+
+                if (TryComp(targetId, out HandsComponent? handComp))
+                {
+                    foreach (var hand in _hands.EnumerateHands(targetId, handComp))
+                    {
+                        if (hand.HeldEntity != null)
+                        {
+                            return;
+                        }
+                        else
+                            _poly.Revert(targetId);
+                    }
+
+                }
+            }
+        }
+
 
     }
 
