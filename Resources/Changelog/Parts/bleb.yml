@@ -1,0 +1,6 @@
+author: Flareguy
+changes:
+  - type: tweak
+    message: Updated asteroid tiles to match their sprites from /tg/. They are much more vibrant, and should fit in a lot better with their surroundings.
+  - type: tweak
+    message: Updated pried tiles to match the appearance of the new tiles better.
