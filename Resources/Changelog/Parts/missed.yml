@@ -1,0 +1,5 @@
+author: juliangiebel & mirrorcult
+changes:
+  - type: tweak 
+    message: You may notice that chat text in general has become much prettier and dynamic. Whispered text is smaller, announcements are larger, and names should pop out more.
+
