@@ -7,7 +7,7 @@ namespace Content.Shared.Placeable;
 /// Detects items placed on it that match a whitelist.
 /// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(ItemPlacerSystem))]
-public sealed class ItemPlacerComponent : Component
+public sealed partial class ItemPlacerComponent : Component
 {
     /// <summary>
     /// The entities that are currently on top of the placer.
