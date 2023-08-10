@@ -1,10 +1,4 @@
 Entries:
-- author: MisterMecky
-  changes:
-  - {message: 'Condiment bottles and shakers are now refillable, and are spill-able
-      in-hand.', type: Tweak}
-  id: 3997
-  time: '2023-06-15T02:18:38.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: grilles can now be constructed on lattice (easier to rebuild asteroid
@@ -2975,3 +2969,9 @@ Entries:
       devices., type: Add}
   id: 4496
   time: '2023-08-09T18:20:20.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Changed Dark & Bushy, Death''s-Head, Firewatch, Moffra, Plasmafire,
+      and Royal moth wings to now have two separate color layers.', type: Tweak}
+  id: 4497
+  time: '2023-08-10T01:32:01.0000000+00:00'
