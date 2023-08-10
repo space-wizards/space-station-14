@@ -1,4 +1,5 @@
 using Content.Shared.DoAfter;
+using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -16,6 +17,9 @@ public sealed class DumpableDoAfterEvent : SimpleDoAfterEvent
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class DumpableComponent : Component
 {
+    [ViewVariables(VVAccess.ReadWrite), DataField("soundDump"), AutoNetworkedField]
+    public SoundSpecifier? DumpSound = new SoundCollectionSpecifier("storageRustle");
+
     /// <summary>
     /// How long each item adds to the doafter.
     /// </summary>

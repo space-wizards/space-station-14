@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
@@ -225,7 +226,7 @@ namespace Content.Client.Viewport
                     Filter = StretchMode == ScalingViewportStretchMode.Bilinear,
                 });
 
-            _viewport.RenderScale = (renderScale, renderScale);
+            _viewport.RenderScale = new Vector2(renderScale, renderScale);
 
             _viewport.Eye = _eye;
         }

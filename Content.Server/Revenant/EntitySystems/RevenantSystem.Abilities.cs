@@ -14,6 +14,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Bed.Sleep;
 using System.Linq;
+using System.Numerics;
 using Content.Server.Maps;
 using Content.Server.Revenant.Components;
 using Content.Shared.DoAfter;
@@ -214,7 +215,7 @@ public sealed partial class RevenantSystem
         if (!_mapManager.TryGetGrid(xform.GridUid, out var map))
             return;
         var tiles = map.GetTilesIntersecting(Box2.CenteredAround(xform.WorldPosition,
-            (component.DefileRadius*2, component.DefileRadius))).ToArray();
+            new Vector2(component.DefileRadius * 2, component.DefileRadius))).ToArray();
 
         _random.Shuffle(tiles);
 

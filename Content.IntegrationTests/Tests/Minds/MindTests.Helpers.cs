@@ -23,9 +23,14 @@ public sealed partial class MindTests
     /// the player's mind's current entity, likely because some previous test directly changed the players attached
     /// entity.
     /// </remarks>
-    private static async Task<PairTracker> SetupPair()
+    private static async Task<PairTracker> SetupPair(bool dirty = false)
     {
-        var pairTracker = await PoolManager.GetServerClient();
+        var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            Dirty = dirty
+        });
         var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();

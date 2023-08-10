@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Interaction;
 using Robust.Shared.Containers;
 using Robust.Shared.GameObjects;
@@ -16,7 +17,7 @@ namespace Content.IntegrationTests.Tests.Interaction
 
         private const float InteractionRangeDivided15 = InteractionRange / 1.5f;
 
-        private readonly (float, float) _interactionRangeDivided15X = (InteractionRangeDivided15, 0f);
+        private static readonly Vector2 InteractionRangeDivided15X = new(InteractionRangeDivided15, 0f);
 
         private const float InteractionRangeDivided15Times3 = InteractionRangeDivided15 * 3;
 
@@ -25,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Interaction
         [Test]
         public async Task EntityEntityTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var sEntities = server.ResolveDependency<IEntityManager>();
@@ -67,7 +68,7 @@ namespace Content.IntegrationTests.Tests.Interaction
                 });
 
                 // Move them slightly apart
-                xformSys.SetLocalPosition(origin, xform.LocalPosition + _interactionRangeDivided15X, xform);
+                xformSys.SetLocalPosition(origin, xform.LocalPosition + InteractionRangeDivided15X, xform);
 
                 Assert.Multiple(() =>
                 {

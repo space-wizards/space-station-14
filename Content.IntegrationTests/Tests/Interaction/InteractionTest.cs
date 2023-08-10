@@ -1,5 +1,6 @@
 #nullable enable
 using System.Linq;
+using System.Numerics;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
@@ -119,7 +120,8 @@ public abstract partial class InteractionTest
 
 
     // Simple mob that has one hand and can perform misc interactions.
-    public const string TestPrototypes = @"
+    [TestPrototypes]
+    private const string TestPrototypes = @"
 - type: entity
   id: InteractionTestMob
   components:
@@ -138,7 +140,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings { ExtraPrototypes = TestPrototypes });
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -171,8 +173,8 @@ public abstract partial class InteractionTest
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
-        PlayerCoords = MapData.GridCoords.Offset((0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
-        TargetCoords = MapData.GridCoords.Offset((1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
         await SetTile(Plating, grid: MapData.MapGrid);
 
         // Get player data
@@ -232,9 +234,14 @@ public abstract partial class InteractionTest
     }
 
     [TearDown]
-    public virtual async Task Cleanup()
+    public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
         await PairTracker.CleanReturnAsync();
+        await TearDown();
+    }
+
+    protected virtual async Task TearDown()
+    {
     }
 }

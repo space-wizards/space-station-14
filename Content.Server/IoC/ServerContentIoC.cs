@@ -11,6 +11,7 @@ using Content.Server.GhostKick;
 using Content.Server.Info;
 using Content.Server.Maps;
 using Content.Server.MoMMI;
+using Content.Server.NewCon;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Interfaces;
@@ -23,6 +24,7 @@ using Content.Server.Worldgen.Tools;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Kitchen;
+using Robust.Shared.Toolshed;
 
 namespace Content.Server.IoC
 {
@@ -48,7 +50,7 @@ namespace Content.Server.IoC
             IoCManager.Register<IAfkManager, AfkManager>();
             IoCManager.Register<IGameMapManager, GameMapManager>();
             IoCManager.Register<RulesManager, RulesManager>();
-            IoCManager.Register<RoleBanManager, RoleBanManager>();
+            IoCManager.Register<IBanManager, BanManager>();
             IoCManager.Register<ContentNetworkResourceManager>();
             IoCManager.Register<IAdminNotesManager, AdminNotesManager>();
             IoCManager.Register<GhostKickManager>();

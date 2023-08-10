@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Server.Tools.Components;
 using Content.Shared.Administration;
@@ -60,7 +61,7 @@ namespace Content.Server.Interaction
             {
                 for (var j = -radius; j <= radius; j++)
                 {
-                    var tile = mapGrid.GetTileRef(playerPosition.Offset((i, j)));
+                    var tile = mapGrid.GetTileRef(playerPosition.Offset(new Vector2(i, j)));
                     var coordinates = mapGrid.GridTileToLocal(tile.GridIndices);
                     var tileDef = (ContentTileDefinition) tileDefinitionManager[tile.Tile.TypeId];
 

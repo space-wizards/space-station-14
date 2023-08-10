@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using Content.Client.Construction;
 using Content.Server.Atmos;
@@ -532,7 +533,7 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             // Get all entities left behind by deconstruction
-            entities = lookup.GetEntitiesIntersecting(MapId, Box2.CentredAroundZero((10, 10)), flags);
+            entities = lookup.GetEntitiesIntersecting(MapId, Box2.CentredAroundZero(new Vector2(10, 10)), flags);
 
             var xformQuery = SEntMan.GetEntityQuery<TransformComponent>();
 
@@ -752,22 +753,26 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!CEntMan.TryGetComponent(target, out ClientUserInterfaceComponent? ui))
+        if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(target, out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have a bui component");
             return false;
         }
 
-        bui = ui.Interfaces.FirstOrDefault(x => x.UiKey.Equals(key));
-        if (bui == null)
+        if (!ui.OpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have an open bui with key {key.GetType()}.{key}.");
             return false;
         }
 
-        Assert.That(shouldSucceed, Is.True);
+        var bui2 = bui;
+        Assert.Multiple(() =>
+        {
+            Assert.That(bui2.UiKey, Is.EqualTo(key), $"Bound user interface {bui2} is indexed by a key other than the one assigned to it somehow. {bui2.UiKey} != {key}");
+            Assert.That(shouldSucceed, Is.True);
+        });
         return true;
     }
 

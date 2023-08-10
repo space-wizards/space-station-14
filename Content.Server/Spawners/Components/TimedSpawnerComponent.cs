@@ -9,8 +9,6 @@ namespace Content.Server.Spawners.Components
     [RegisterComponent]
     public sealed class TimedSpawnerComponent : Component, ISerializationHooks
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototypes", customTypeSerializer:typeof(PrototypeIdListSerializer<EntityPrototype>))]
         public List<string> Prototypes { get; set; } = new();
@@ -37,33 +35,6 @@ namespace Content.Server.Spawners.Components
         {
             if (MinimumEntitiesSpawned > MaximumEntitiesSpawned)
                 throw new ArgumentException("MaximumEntitiesSpawned can't be lower than MinimumEntitiesSpawned!");
-        }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-            SetupTimer();
-        }
-
-        private void SetupTimer()
-        {
-            TokenSource?.Cancel();
-            TokenSource = new CancellationTokenSource();
-            Owner.SpawnRepeatingTimer(TimeSpan.FromSeconds(IntervalSeconds), OnTimerFired, TokenSource.Token);
-        }
-
-        private void OnTimerFired()
-        {
-            if (!_robustRandom.Prob(Chance))
-                return;
-
-            var number = _robustRandom.Next(MinimumEntitiesSpawned, MaximumEntitiesSpawned);
-
-            for (int i = 0; i < number; i++)
-            {
-                var entity = _robustRandom.Pick(Prototypes);
-                IoCManager.Resolve<IEntityManager>().SpawnEntity(entity, IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(Owner).Coordinates);
-            }
         }
     }
 }

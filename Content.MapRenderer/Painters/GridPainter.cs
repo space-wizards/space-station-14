@@ -2,6 +2,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Runtime.InteropServices;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
@@ -133,7 +134,7 @@ namespace Content.MapRenderer.Painters
             return decals;
         }
 
-        private (float x, float y) TransformLocalPosition(Vector2 position, MapGridComponent grid)
+        private static (float x, float y) TransformLocalPosition(Vector2 position, MapGridComponent grid)
         {
             var xOffset = (int) -grid.LocalAABB.Left;
             var yOffset = (int) -grid.LocalAABB.Bottom;

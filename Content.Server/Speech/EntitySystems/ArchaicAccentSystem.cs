@@ -22,20 +22,6 @@ public sealed class ArchaicAccentSystem : EntitySystem
         var msg = message;
 
         msg = _replacement.ApplyReplacements(msg, "archaic");
-
-        // Changes words like "Looked" to "Look'd"
-        msg = Regex.Replace(msg, "ed", "'d");
-        // "LOOKED" to "LOOK'D"
-        msg = Regex.Replace(msg, "ED", "'D");
-
-        if (!_random.Prob(component.ForsoothChance))
-            return msg;
-
-        var pick = _random.Pick(component.ArchaicWords);
-
-        // Reverse sanitize capital
-        msg = msg[0].ToString().ToLower() + msg.Remove(0, 1);
-        msg = Loc.GetString(pick) + " " + msg;
         return msg;
     }
 

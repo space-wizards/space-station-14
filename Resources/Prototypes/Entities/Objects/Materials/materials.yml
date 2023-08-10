@@ -12,8 +12,8 @@
   - type: ItemStatus
   - type: Tag
     tags:
-      - RawMaterial
       - DroneUsable
+      - RawMaterial
   - type: Damageable
     damageContainer: Inorganic
   - type: Destructible
@@ -53,6 +53,18 @@
 
 - type: entity
   parent: MaterialCardboard
+  id: MaterialCardboard10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: MaterialCardboard
   id: MaterialCardboard1
   suffix: Single
   components:
@@ -69,11 +81,6 @@
   name: cloth
   suffix: Full
   components:
-  - type: Tag
-    tags:
-    - RawMaterial
-    - DroneUsable
-    - Gauze
   - type: Healing
     damageContainers:
       - Biological
@@ -110,6 +117,33 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - Gauze
+      - RawMaterial
+
+- type: entity
+  parent: MaterialCloth
+  id: MaterialCloth10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cloth
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: MaterialCloth
@@ -149,6 +183,20 @@
   - type: Construction
     graph: Durathread
     node: MaterialDurathread
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 - type: entity
   parent: MaterialDurathread
@@ -187,6 +235,16 @@
   - type: Appearance
   - type: Item
     heldPrefix: wood
+
+- type: entity
+  parent: MaterialWoodPlank
+  id: MaterialWoodPlank10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: MaterialWoodPlank
@@ -304,6 +362,20 @@
   - type: Appearance
   - type: Item
     size: 30
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 5
+  - type: Tag
+    tags: 
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 
 - type: entity

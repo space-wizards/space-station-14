@@ -47,3 +47,8 @@
   license: "CC0-1.0"
   copyright: "Created by HighTechPuddle"
   source: "https://github.com/HighTechPuddle/space-station-14"
+
+- files: ["minibombcountdown.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station, edited by Flareguy for Space Station 14"
+  source: "https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/sound/weapons/armbomb.ogg"

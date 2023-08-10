@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Administration;
 using Content.Shared.Administration;
 using Robust.Shared.Console;
@@ -61,7 +62,7 @@ Possible modes are:\n
                     return;
                 }
 
-                if (!decalSystem.SetDecalPosition(gridId, uid, new(gridId, (x, y))))
+                if (!decalSystem.SetDecalPosition(gridId, uid, new(gridId, new Vector2(x, y))))
                 {
                     shell.WriteError("Failed changing decalposition.");
                 }

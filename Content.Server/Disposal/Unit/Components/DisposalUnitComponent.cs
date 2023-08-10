@@ -6,6 +6,7 @@ namespace Content.Server.Disposal.Unit.Components;
 
 // GasMixture life.
 [RegisterComponent]
+[ComponentReference(typeof(SharedDisposalUnitComponent))]
 public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
 {
     [DataField("air")]

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Numerics;
 using Content.Server.Shuttles.Systems;
 using Content.Tests;
 using Robust.Shared.GameObjects;
@@ -20,7 +21,7 @@ public sealed class DockTest : ContentUnitTest
     [TestCaseSource(nameof(TestSource))]
     public async Task TestDockingConfig(Vector2 dock1Pos, Vector2 dock2Pos, Angle dock1Angle, Angle dock2Angle, bool result)
     {
-        await using var pair = await PoolManager.GetServerClient(new PoolSettings() { NoClient = true });
+        await using var pair = await PoolManager.GetServerClient();
         var server = pair.Pair.Server;
 
         var map = await PoolManager.CreateTestMap(pair);

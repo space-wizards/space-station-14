@@ -11,6 +11,7 @@
         <controls:ActionButtonContainer
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            MaxSize="64 9999"
             Name="ActionsContainer"
             Access="Public"/>
         <controls:ActionPageButtons Name="PageButtons" Access="Public"/>

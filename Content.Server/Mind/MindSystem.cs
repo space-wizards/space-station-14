@@ -31,6 +31,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, Mind> _userMinds = new();
@@ -413,8 +414,10 @@ public sealed class MindSystem : EntitySystem
             InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);
-        if (mind.OwnedComponent != null)
+        if (mind.OwnedComponent != null){
             InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
+            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
+        }
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -467,7 +470,7 @@ public sealed class MindSystem : EntitySystem
     /// <returns>Returns true if the removal succeeded.</returns>
     public bool TryRemoveObjective(Mind mind, int index)
     {
-        if (mind.Objectives.Count >= index) return false;
+        if (index < 0 || index >= mind.Objectives.Count) return false;
 
         var objective = mind.Objectives[index];
 
@@ -582,11 +585,10 @@ public sealed class MindSystem : EntitySystem
     }
 
     /// <summary>
-    /// Sets the Mind's UserId, Session, and updates the player's PlayerData.
-    /// This should have no direct effect on the entity that any mind is connected to, but it may change a player's attached entity.
+    /// Sets the Mind's UserId, Session, and updates the player's PlayerData. This should have no direct effect on the
+    /// entity that any mind is connected to, except as a side effect of the fact that it may change a player's
+    /// attached entity. E.g., ghosts get deleted.
     /// </summary>
-    /// <param name="mind"></param>
-    /// <param name="userId"></param>
     public void SetUserId(Mind mind, NetUserId? userId)
     {
         if (mind.UserId == userId)
@@ -600,7 +602,7 @@ public sealed class MindSystem : EntitySystem
 
         if (mind.Session != null)
         {
-            mind.Session.AttachToEntity(null);
+            _actor.Attach(null, mind.Session);
             mind.Session = null;
         }
 
@@ -627,8 +629,11 @@ public sealed class MindSystem : EntitySystem
         mind.UserId = userId;
         mind.OriginalOwnerUserId ??= userId;
 
-        _playerManager.TryGetSessionById(userId.Value, out var ret);
-        mind.Session = ret;
+        if (_playerManager.TryGetSessionById(userId.Value, out var ret))
+        {
+            mind.Session = ret;
+            _actor.Attach(mind.CurrentEntity, mind.Session);
+        }
 
         // session may be null, but user data may still exist for disconnected players.
         if (_playerManager.GetPlayerData(userId.Value).ContentData() is { } data)

@@ -197,7 +197,7 @@ public sealed class StationSystem : EntitySystem
         foreach (var gridUid in component.Grids)
         {
             if (!TryComp<MapGridComponent>(gridUid, out var grid) ||
-                grid.LocalAABB.Size.LengthSquared < largestBounds.Size.LengthSquared)
+                grid.LocalAABB.Size.LengthSquared() < largestBounds.Size.LengthSquared())
                 continue;
 
             largestBounds = grid.LocalAABB;
@@ -449,7 +449,7 @@ public sealed class StationSystem : EntitySystem
     /// Returns the first station that has a grid in a certain map.
     /// If the map has no stations, null is returned instead.
     /// </summary>
-    /// </remarks
+    /// <remarks>
     /// If there are multiple stations on a map it is probably arbitrary which one is returned.
     /// </remarks>
     public EntityUid? GetStationInMap(MapId map)

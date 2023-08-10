@@ -52,7 +52,7 @@
     color: "#adffe6"
   - type: PressureProtection
     highPressureMultiplier: 0.08
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
   - type: TemperatureProtection
     coefficient: 0.005
 
@@ -107,7 +107,7 @@
         shader: unshaded
   - type: PressureProtection
     highPressureMultiplier: 0.72
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
 
 #Salvage Hardsuit
 - type: entity
@@ -123,7 +123,7 @@
     sprite: Clothing/Head/Hardsuits/salvage.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
   - type: PointLight
     radius: 7
     energy: 3
@@ -144,7 +144,7 @@
     color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -178,7 +178,7 @@
         Caustic: 0.90
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 5500
+    lowPressureMultiplier: 1000
 
 #Warden's Hardsuit
 - type: entity
@@ -196,7 +196,7 @@
     color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.525
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -255,7 +255,7 @@
     color: "#adf1ff"
   - type: PressureProtection
     highPressureMultiplier: 0.6
-    lowPressureMultiplier: 5500
+    lowPressureMultiplier: 1000
 
 #Research Director's Hardsuit
 - type: entity
@@ -273,7 +273,7 @@
     color: "#d6adff"
   - type: PressureProtection
     highPressureMultiplier: 0.60
-    lowPressureMultiplier: 5500
+    lowPressureMultiplier: 1000
 
 #Head of Security's hardsuit
 - type: entity
@@ -291,7 +291,7 @@
     color: "#ffeead"
   - type: PressureProtection
     highPressureMultiplier: 0.45
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
   - type: Armor
     modifiers:
       coefficients:
@@ -440,7 +440,7 @@
     sprite: Clothing/Head/Hardsuits/lingspacehelmet.rsi
   - type: PressureProtection
     highPressureMultiplier: 0.225
-    lowPressureMultiplier: 10000
+    lowPressureMultiplier: 1000
 
 #Pirate EVA Suit (Deep Space EVA Suit)
 - type: entity

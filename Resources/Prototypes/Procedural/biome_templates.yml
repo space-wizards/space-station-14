@@ -1,3 +1,40 @@
+# Contains several biomes
+- type: biomeTemplate
+  id: Continental
+  layers:
+    - !type:BiomeMetaLayer
+      template: Lava
+    - !type:BiomeMetaLayer
+      template: Caves
+      threshold: -0.5
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+    - !type:BiomeMetaLayer
+      template: Grasslands
+      threshold: 0
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+    - !type:BiomeMetaLayer
+      template: Snow
+      threshold: 0.5
+      noise:
+        frequency: 0.001
+        noiseType: OpenSimplex2
+        fractalType: FBm
+        octaves: 2
+        lacunarity: 2
+        gain: 0.5
+
 # Desert
 # TODO: Water in desert
 - type: biomeTemplate
@@ -129,7 +166,7 @@
       allowedTiles:
         - FloorPlanetGrass
         - FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -184,7 +221,7 @@
     # Rock formation sand
     - !type:BiomeTileLayer
       tile: FloorPlanetDirt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -260,7 +297,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorBasalt
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -377,7 +414,7 @@
     - !type:BiomeEntityLayer
       allowedTiles:
         - FloorSnow
-      threshold: -0.15
+      threshold: -0.30
       noise:
         seed: 0
         noiseType: Cellular
@@ -402,6 +439,20 @@
         seed: 0
         frequency: 0.02
         fractalType: None
+    # Liquid plasma rivers. Ice moon baby
+    - !type:BiomeEntityLayer
+      allowedTiles:
+      - FloorSnow
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+      - FloorLiquidPlasmaEntity
 
 # Caves
 - type: biomeTemplate

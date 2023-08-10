@@ -21,9 +21,8 @@ public sealed class IdExaminableSystem : EntitySystem
 
     private void OnGetExamineVerbs(EntityUid uid, IdExaminableComponent component, GetVerbsEvent<ExamineVerb> args)
     {
-
         var detailsRange = _examineSystem.IsInDetailsRange(args.User, uid);
-        var info = GetInfo(component.Owner) ?? Loc.GetString("id-examinable-component-verb-no-id");
+        var info = GetInfo(uid) ?? Loc.GetString("id-examinable-component-verb-no-id");
 
         var verb = new ExamineVerb()
         {
@@ -36,7 +35,7 @@ public sealed class IdExaminableSystem : EntitySystem
             Category = VerbCategory.Examine,
             Disabled = !detailsRange,
             Message = Loc.GetString("id-examinable-component-verb-disabled"),
-            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/character.svg.192dpi.png"))
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/character.svg.192dpi.png"))
         };
 
         args.Verbs.Add(verb);
@@ -47,12 +46,13 @@ public sealed class IdExaminableSystem : EntitySystem
         if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
         {
             // PDA
-            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) && pda.ContainedId is not null)
+            if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda) &&
+                TryComp<IdCardComponent>(pda.ContainedId, out var id))
             {
-                return GetNameAndJob(pda.ContainedId);
+                return GetNameAndJob(id);
             }
             // ID Card
-            if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
+            if (EntityManager.TryGetComponent(idUid, out id))
             {
                 return GetNameAndJob(id);
             }
