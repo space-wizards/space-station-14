@@ -13,7 +13,8 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 3
+            Poison: 2
+            Caustic: 2
       - !type:PopupMessage
         type: Local
         visualType: MediumCaution
