@@ -158,3 +158,6 @@ SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
 #They are practically never used in this way however, so they're migrated to the basic rock type.
 MountainRock: AsteroidRock
 MountainRockMining: AsteroidRockMining
+
+# 2023-08-08
+WindowTintedDirectional: WindowFrostedDirectional
