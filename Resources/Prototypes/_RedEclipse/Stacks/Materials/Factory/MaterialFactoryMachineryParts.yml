@@ -6,7 +6,7 @@
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryBasicParts: 1
+        FactoryMachineryParts: 1
     - type: Stack
       stackType: FactoryMachineryParts
 
