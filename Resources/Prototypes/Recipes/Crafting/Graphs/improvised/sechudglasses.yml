@@ -1,0 +1,23 @@
+- type: constructionGraph
+  id: Sechudglasses
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: Sechudglasses
+        steps:
+      - tag: ClothingEyesGlassesSunglasses
+        icon:
+          sprite: Clothing/Eyes/Glasses/sunglasses.rsi
+          state: icon
+        name: Sun glasses
+      - tag: Sechud
+        icon:
+          sprite: Clothing/Eyes/Hud/Sec.rsi
+          state: icon
+        name: Sechud
+        - material: Cable
+          amount: 2
+          doAfter: 5
+    - node: Sechudglasses
+      entity: ClothingEyesGlassesSecurity
