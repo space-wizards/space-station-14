@@ -57,6 +57,7 @@ namespace Content.Client.Preferences.UI
         private readonly IConfigurationManager _configurationManager;
         private readonly MarkingManager _markingManager;
         private readonly JobRequirementsManager _requirements;
+        private readonly IRobustRandom _random;
 
         private LineEdit _ageEdit => CAgeEdit;
         private LineEdit _nameEdit => CNameEdit;
@@ -76,7 +77,7 @@ namespace Content.Client.Preferences.UI
         private SingleMarkingPicker _facialHairPicker => CFacialHairPicker;
         private EyeColorPicker _eyesPicker => CEyeColorPicker;
 
-        private CheckBox _teleportAfkToCryoStorage => CTeleportAfkToCryoStorage; 
+        private CheckBox _teleportAfkToCryoStorage => CTeleportAfkToCryoStorage;
 
         private TabContainer _tabContainer => CTabContainer;
         private BoxContainer _jobList => CJobList;
@@ -122,6 +123,7 @@ namespace Content.Client.Preferences.UI
             _preferencesManager = preferencesManager;
             _configurationManager = configurationManager;
             _markingManager = IoCManager.Resolve<MarkingManager>();
+            _random = IoCManager.Resolve<IRobustRandom>();
 
             #region Left
 
@@ -519,9 +521,9 @@ namespace Content.Client.Preferences.UI
             };
             _previewSpriteSideControl.AddChild(_previewSpriteSide);
             #endregion Dummy
-            
+
             #region TeleportAfkToCryoStorage
-            
+
             _tabContainer.SetTabTitle(5, Loc.GetString("humanoid-profile-edtior-afkPreferences-tab"));
             _teleportAfkToCryoStorage.Pressed = Profile?.TeleportAfkToCryoStorage ?? true;
             _teleportAfkToCryoStorage.OnToggled += args => SetTeleportAfkToCryoStorage(args.Pressed);

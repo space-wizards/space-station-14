@@ -35,7 +35,7 @@ public sealed partial class HumanoidProfileEditor
             _voiceButton.SelectId(args.Id);
             SetVoice(_voiceList[args.Id].ID);
         };
-            
+
         _voicePlayButton.OnPressed += _ => { PlayTTS(); };
     }
 
@@ -52,7 +52,7 @@ public sealed partial class HumanoidProfileEditor
             var voice = _voiceList[i];
             if (!HumanoidCharacterProfile.CanHaveVoice(voice, Profile.Sex))
                 continue;
-                
+
             var name = Loc.GetString(voice.Name);
             _voiceButton.AddItem(name, i);
 

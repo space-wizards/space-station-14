@@ -29,6 +29,8 @@
   - type: StaminaDamageOnHit
     damage: 0
   - type: MeleeWeapon
+    soundHit: !type:SoundCollectionSpecifier
+      collection: BatonHit
     damage:
       types:
         Blunt: 0
