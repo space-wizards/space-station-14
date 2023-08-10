@@ -308,37 +308,37 @@
         doAfter: 2
 
 ## Super max security level airlock: an additional layer of plasteel is added     
- - node: airlockSuperMaxSecurityBreached
-   actions:
-     - !type:ChangeWiresPanelSecurityLevel
-       level: Level6
-   edges:
-   - to: airlockMaxSecurity 
-     completed:
-     - !type:GivePrototype
-       prototype: SheetPlasteel1
-       amount: 2
-     conditions:
-     - !type:WirePanel {}
-     steps:
-     - tool: Prying
-       doAfter: 4
-   
-   - to: airlockSuperMaxSecurity 
-     conditions:  
-     - !type:WirePanel {}
-     steps:
-     - tool: Welding
-       doAfter: 5
-     
- - node: airlockSuperMaxSecurity
-   actions:
-     - !type:ChangeWiresPanelSecurityLevel
-       level: Level7
-   edges:
-   - to: airlockSuperMaxSecurityBreached 
-     conditions:
-     - !type:WirePanel {}
-     steps:
-     - tool: Welding
-       doAfter: 15
+  - node: airlockSuperMaxSecurityBreached
+    actions:
+      - !type:ChangeWiresPanelSecurityLevel
+        level: Level6
+    edges:
+    - to: airlockMaxSecurity 
+      completed:
+      - !type:GivePrototype
+        prototype: SheetPlasteel1
+        amount: 2
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Prying
+        doAfter: 4
+    
+    - to: airlockSuperMaxSecurity 
+      conditions:  
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 5
+      
+  - node: airlockSuperMaxSecurity
+    actions:
+      - !type:ChangeWiresPanelSecurityLevel
+        level: Level7
+    edges:
+    - to: airlockSuperMaxSecurityBreached 
+      conditions:
+      - !type:WirePanel {}
+      steps:
+      - tool: Welding
+        doAfter: 15
