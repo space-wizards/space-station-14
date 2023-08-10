@@ -76,6 +76,35 @@
 
 - type: entity
   parent: FenceMetalBase
+  id: FenceMetalBroken
+  name: broken chain link fence
+  description: Someone got real mad at an inanimate object.
+  suffix: Broken
+  components:
+  - type: Sprite
+    layers:
+    - state: straight_broken
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - TableLayer
+
+- type: entity
+  parent: FenceMetalBase
   id: FenceMetalStraight
   suffix: Straight
   components:
