@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Content.Server.Database;
 using Robust.Server.Player;
