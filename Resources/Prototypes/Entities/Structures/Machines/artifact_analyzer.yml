@@ -46,6 +46,12 @@
     powerDrawMultiplier: 0.80
     scaling: Exponential
   - type: ArtifactAnalyzer
+  - type: ItemPlacer
+    whitelist:
+      components:
+      - Artifact
+  - type: PlaceableSurface
+    placeCentered: true
   - type: DeviceNetwork
     deviceNetId: Wired
     receiveFrequencyId: BasicDevice
