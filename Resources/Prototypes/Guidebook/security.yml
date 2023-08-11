@@ -4,8 +4,14 @@
   text: "/ServerInfo/Guidebook/Security/Security.xml"
   children:
     - DNA
+    - AirlockSecurity
 
 - type: guideEntry
   id: DNA
   name: guide-entry-dna
   text: "/ServerInfo/Guidebook/Security/DNA.xml"
+  
+- type: guideEntry
+  id: AirlockSecurity
+  name: guide-entry-airlock-security
+  text: "/ServerInfo/Guidebook/Security/AirlockSecurity.xml"
