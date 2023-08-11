@@ -16,21 +16,21 @@ chat-manager-no-headset-on-message = У вас нет гарнитуры!
 chat-manager-no-radio-key = Не задан ключ канала!
 chat-manager-no-such-channel = Нет канала с ключём '{ $key }'!
 chat-manager-whisper-headset-on-message = Вы не можете шептать в радио!
-chat-manager-server-wrap-message = СЕРВЕР: { $message }
-chat-manager-sender-announcement-wrap-message =
-    Объявление { $sender }:
-    { $message }
-chat-manager-entity-say-wrap-message = { $entityName } говорит, "{ $message }"
-chat-manager-entity-whisper-wrap-message = { $entityName } шепчет, "{ $message }"
-chat-manager-entity-whisper-unknown-wrap-message = Кто-то шепчет, "{ $message }"
-chat-manager-entity-me-wrap-message = { $entityName } { $message }
-chat-manager-entity-looc-wrap-message = LOOC: { $entityName }: { $message }
-chat-manager-send-ooc-wrap-message = OOC: { $playerName }: { $message }
-chat-manager-send-ooc-patron-wrap-message = OOC: [color={ $patronColor }]{ $playerName }[/color]: { $message }
-chat-manager-send-dead-chat-wrap-message = { $deadChannelName }: { $playerName }: { $message }
-chat-manager-send-admin-dead-chat-wrap-message = { $adminChannelName }:({ $userName }): { $message }
-chat-manager-send-admin-chat-wrap-message = { $adminChannelName }: { $playerName }: { $message }
-chat-manager-send-admin-announcement-wrap-message = { $adminChannelName }: { $message }
-chat-manager-send-hook-ooc-wrap-message = OOC: (D){ $senderName }: { $message }
+chat-manager-server-wrap-message = [bold]{ $message }[/bold]
+chat-manager-sender-announcement-wrap-message = 
+    [font size=14][bold]{ $sender } Объявление:[/font][font size=12]
+                                                { $message }[/bold][/font]
+chat-manager-entity-say-wrap-message = [bold]{ $entityName }[/bold] [italic]говорит,[/italic] "{ $message }"
+chat-manager-entity-whisper-wrap-message = [font size=11][italic]{ $entityName } шепчет, "{ $message }"[/italic][/font]
+chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic]Кто-то шепчет, "{$message}"[/italic][/font]
+chat-manager-entity-me-wrap-message = [italic]{ $entityName } { $message }[/italic]
+chat-manager-entity-looc-wrap-message = LOOC: [bold]{ $entityName }:[/bold] { $message }
+chat-manager-send-ooc-wrap-message = OOC: [bold]{ $playerName }:[/bold] { $message }
+chat-manager-send-ooc-patron-wrap-message = OOC: [bold][color={ $patronColor }]{ $playerName }[/color]:[/bold] { $message }
+chat-manager-send-dead-chat-wrap-message =  $deadChannelName }: [bold]{ $playerName }:[/bold] { $message }
+chat-manager-send-admin-dead-chat-wrap-message = { $adminChannelName }: [bold]({ $userName }):[/bold] { $message }
+chat-manager-send-admin-chat-wrap-message = { $adminChannelName }: [bold]{ $playerName }:[/bold] { $message }
+chat-manager-send-admin-announcement-wrap-message = [bold]{ $adminChannelName }: { $message }[/bold]
+chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){ $senderName }:[/bold] { $message }
 chat-manager-dead-channel-name = МЁРТВЫЕ
 chat-manager-admin-channel-name = АДМИН

@@ -53,4 +53,5 @@ petting-failure-medibot = Вы тянетесь погладить { $target }, 
 comp-window-knock = *тук-тук*
 hugging-success-generic = Вы обнимаете { $target }.
 hugging-success-generic-others = { CAPITALIZE($user) } обнимает { $target }.
+fence-rattle-success = *бдзынь*
 hugging-success-generic-target = { CAPITALIZE($user) } обнимает вас.
