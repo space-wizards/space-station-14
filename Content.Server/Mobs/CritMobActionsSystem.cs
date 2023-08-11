@@ -22,6 +22,8 @@ public sealed class CritMobActionsSystem : EntitySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
 
+    private const int MaxLastWordsLength = 30;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -60,9 +62,9 @@ public sealed class CritMobActionsSystem : EntitySystem
                     || !_mobState.IsCritical(uid))
                     return;
 
-                if (lastWords.Length > 20)
+                if (lastWords.Length > MaxLastWordsLength)
                 {
-                    lastWords = lastWords.Substring(0, 20);
+                    lastWords = lastWords.Substring(0, MaxLastWordsLength);
                 }
                 lastWords += "...";
 
