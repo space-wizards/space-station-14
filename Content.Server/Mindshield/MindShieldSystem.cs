@@ -10,7 +10,6 @@ namespace Content.Server.Mindshield;
 /// </summary>
 public sealed class MindShieldSystem : EntitySystem
 {
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
@@ -26,28 +25,15 @@ public sealed class MindShieldSystem : EntitySystem
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))
         {
-            var mind = _mind.GetMind(uid);
             var name = Identity.Entity(uid, EntityManager);
-            if (mind != null)
-            {
-                if (mind.OwnedEntity != null)
-                {
-                    RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                    _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
-                }
-            }
+            RemComp<RevolutionaryComponent>(uid);
+            _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
+
         }
         else if (HasComp<HeadRevolutionaryComponent>(uid))
         {
-            var mind = _mind.GetMind(uid);
-            if (mind != null)
-            {
-                if (mind.OwnedEntity != null)
-                {
-                    RemComp<MindShieldComponent>(mind.OwnedEntity.Value);
-                    _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), mind.OwnedEntity.Value);
-                }
-            }
+            RemComp<MindShieldComponent>(uid);
+            _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), uid);
         }
     }
 }
