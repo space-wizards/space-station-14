@@ -19,11 +19,12 @@ namespace Content.Server.Damage.Systems
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly GunSystem _guns = default!;
-        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
-        [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
+        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+        [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
 
         public override void Initialize()
         {
@@ -39,7 +40,7 @@ namespace Content.Server.Damage.Systems
             if (dmg != null && HasComp<MobStateComponent>(args.Target))
                 _adminLogger.Add(LogType.ThrowHit, $"{ToPrettyString(args.Target):target} received {dmg.Total:damage} damage from collision");
 
-            RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { args.Target }), Filter.Pvs(args.Target, entityManager: EntityManager));
+            _color.RaiseEffect(Color.Red, new List<EntityUid>() { args.Target }, Filter.Pvs(args.Target, entityManager: EntityManager));
             _guns.PlayImpactSound(args.Target, dmg, null, false);
             if (TryComp<PhysicsComponent>(uid, out var body) && body.LinearVelocity.LengthSquared() > 0f)
             {

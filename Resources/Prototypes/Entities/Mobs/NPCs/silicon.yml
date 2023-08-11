@@ -157,6 +157,8 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: TypingIndicator
+    proto: robot
 
 - type: entity
   parent: MobSiliconBase
