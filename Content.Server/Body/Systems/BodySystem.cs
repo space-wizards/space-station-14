@@ -58,7 +58,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out BodyPartComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -75,7 +75,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out OrganComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -101,7 +101,7 @@ public sealed class BodySystem : SharedBodySystem
         }
 
         child.ParentSlot = slot;
-        Dirty(slot.Child.Value);
+        Dirty(slot.Child.Value, child);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)

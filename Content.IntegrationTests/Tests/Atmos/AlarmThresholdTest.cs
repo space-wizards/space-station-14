@@ -24,16 +24,14 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestAlarmThreshold()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             AtmosAlarmThreshold threshold = default!;
 
-            await server.WaitPost(() =>
-            {
-                threshold = prototypeManager.Index<AtmosAlarmThreshold>("AlarmThresholdTestDummy");
-            });
+            var proto = prototypeManager.Index<AtmosAlarmThresholdPrototype>("AlarmThresholdTestDummy");
+            threshold = new(proto);
 
             await server.WaitAssertion(() =>
             {

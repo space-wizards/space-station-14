@@ -98,6 +98,9 @@
   id: CableCoil
 
 - type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
   id: Carrot
 
 - type: Tag
@@ -276,6 +279,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -328,6 +334,9 @@
 
 - type: Tag
   id: Folder
+
+- type: Tag
+  id: FoodSnack
 
 - type: Tag
   id: FootstepSound
@@ -661,6 +670,9 @@
 
 
 - type: Tag
+  id: PowerCellSmall
+
+- type: Tag
   id: Powerdrill
 
 - type: Tag
@@ -894,3 +906,4 @@
 
 - type: Tag
   id: ModularReceiver
+

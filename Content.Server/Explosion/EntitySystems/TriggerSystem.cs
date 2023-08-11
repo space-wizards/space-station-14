@@ -58,6 +58,7 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
         [Dependency] private readonly RadioSystem _radioSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -84,7 +85,30 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+
+            SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
             SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
+        }
+
+        private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        {
+            _audio.PlayPvs(component.Sound, uid);
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<SoundOnTriggerComponent>(uid);
+        }
+
+        private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
+        {
+            var xform = Transform(uid);
+
+            if (xform.Anchored)
+                return;
+
+            _transformSystem.AnchorEntity(uid, xform);
+
+            if(component.RemoveOnTrigger)
+                RemCompDeferred<AnchorOnTriggerComponent>(uid);
         }
 
         private void OnSpawnTrigger(EntityUid uid, SpawnOnTriggerComponent component, TriggerEvent args)
@@ -105,14 +129,12 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             args.Handled = true;
         }
-        #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {

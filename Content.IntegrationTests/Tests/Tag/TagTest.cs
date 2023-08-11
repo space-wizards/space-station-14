@@ -44,10 +44,7 @@ namespace Content.IntegrationTests.Tests.Tag
         [Test]
         public async Task TagComponentTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();

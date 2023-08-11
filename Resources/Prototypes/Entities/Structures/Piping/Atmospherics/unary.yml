@@ -38,9 +38,9 @@
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -127,9 +127,9 @@
       examinableAddress: true
     - type: DeviceNetworkRequiresPower
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2

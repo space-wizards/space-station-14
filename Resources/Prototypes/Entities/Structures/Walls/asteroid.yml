@@ -1,3 +1,5 @@
+#Asteroid rocks
+#These can probably be merged with the rock types below these now, but I'm not going to mess with it since I don't want to risk altering any behavior.
 - type: entity
   id: AsteroidRock
   parent: BaseStructure
@@ -9,9 +11,22 @@
     whitelist:
       tags:
         - Pickaxe
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
   - type: Sprite
-    sprite: Structures/Walls/asteroid_rock.rsi
-    state: full
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: rock_asteroid
+      - map: [ "enum.EdgeLayer.South" ]
+        state: rock_asteroid_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: rock_asteroid_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: rock_asteroid_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: rock_asteroid_west
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
@@ -36,9 +51,6 @@
         - FullTileMask
         layer:
         - WallLayer
-  - type: IconSmooth
-    key: walls
-    base: rock_
   - type: OreVein
     oreChance: 0.2
     oreRarityPrototypeId: RandomOreDistributionStandard
@@ -57,6 +69,47 @@
   - type: OreVein
     oreChance: 0.33
     oreRarityPrototypeId: RandomOreDistributionStandard
+
+
+- type: entity
+  id: IronRock
+  parent: AsteroidRock
+  name: ironrock
+  suffix: Low Ore Yield
+  description: A rocky asteroid.
+  components:
+  - type: IconSmooth
+    key: walls
+    mode: NoSprite
+  - type: SmoothEdge
+  - type: Sprite
+    sprite: Structures/Walls/rock.rsi
+    layers:
+      - state: ironrock
+      - map: [ "enum.EdgeLayer.South" ]
+        state: ironrock_south
+      - map: [ "enum.EdgeLayer.East" ]
+        state: ironrock_east
+      - map: [ "enum.EdgeLayer.North" ]
+        state: ironrock_north
+      - map: [ "enum.EdgeLayer.West" ]
+        state: ironrock_west
+
+- type: entity
+  id: IronRockMining
+  parent: IronRock
+  name: ironrock
+  suffix: higher ore yield
+  description: An asteroid.
+  components:
+  - type: Gatherable
+    whitelist:
+      tags:
+        - Pickaxe
+  - type: OreVein
+    oreChance: 0.33
+    oreRarityPrototypeId: RandomOreDistributionStandard
+
 
 # Rocks and ore veins
 - type: entity

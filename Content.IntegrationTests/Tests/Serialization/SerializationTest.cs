@@ -17,7 +17,7 @@ public sealed class SerializationTest
     [Test]
     public async Task SerializeGenericEnums()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
         var seriMan = server.ResolveDependency<ISerializationManager>();
         var refMan = server.ResolveDependency<IReflectionManager>();

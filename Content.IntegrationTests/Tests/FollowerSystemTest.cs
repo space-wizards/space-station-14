@@ -14,7 +14,7 @@ public sealed class FollowerSystemTest
     [Test]
     public async Task FollowerMapDeleteTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new() { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IEntityManager>();
