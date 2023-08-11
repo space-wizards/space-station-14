@@ -461,19 +461,6 @@
           Quantity: 15
 
 - type: entity
-  name: spaceacillin syringe
-  parent: BaseSyringe
-  id: SyringeSpaceacillin
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Spaceacillin
-          Quantity: 15
-
-- type: entity
   name: bicaridine syringe
   parent: BaseSyringe
   id: SyringeBicaridine

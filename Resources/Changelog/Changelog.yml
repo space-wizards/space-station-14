@@ -1,42 +1,4 @@
 Entries:
-- author: Arteben
-  changes:
-  - {message: Most entities can now zoom in their view via the zoom key bindings.
-      Zooming out is still restricted., type: Tweak}
-  id: 4016
-  time: '2023-06-16T23:22:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
-  id: 4017
-  time: '2023-06-17T01:59:54.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
-  id: 4018
-  time: '2023-06-17T02:00:54.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Shield values now can be examined, type: Add}
-  id: 4019
-  time: '2023-06-17T02:07:58.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix gas tile overlays not always showing, e.g. gas leaks on shuttles
-      on planets.', type: Fix}
-  id: 4020
-  time: '2023-06-17T02:30:56.0000000+00:00'
-- author: Sigil
-  changes:
-  - {message: Fixed the armour values on all winter coats that have caustic armour
-      as well as the CMO and virology bio suits., type: Fix}
-  id: 4021
-  time: '2023-06-17T09:55:16.0000000+00:00'
-- author: PixelTK
-  changes:
-  - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
-  id: 4022
-  time: '2023-06-17T19:47:32.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
@@ -2972,15 +2934,61 @@ Entries:
 - author: Flareguy
   changes:
   - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: tweak}
+      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
   - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: tweak}
+    type: Tweak}
   id: 4514
   time: '2023-08-10T18:33:15.435911+00:00'
 - author: juliangiebel & mirrorcult
   changes:
   - {message: 'You may notice that chat text in general has become much prettier and
       dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: tweak}
+      pop out more.', type: Tweak}
   id: 4515
   time: '2023-08-10T18:33:15.436963+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All crates have a brand new look., type: Tweak}
+  id: 4516
+  time: '2023-08-11T00:12:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Job icons now ignore lighting., type: Fix}
+  id: 4517
+  time: '2023-08-11T00:36:26.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'As disease has been eradicated, Spaceacillin can no longer be created
+      or found.', type: Remove}
+  - {message: Creating medicated suture now required Cryptobiolin in place of Spaceacillin.,
+    type: Tweak}
+  id: 4518
+  time: '2023-08-11T03:04:49.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Added missing emergency security orders to the hardsuit version of HoS's
+      locker., type: Fix}
+  id: 4519
+  time: '2023-08-11T03:31:13.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The Microwave and wall-mounted Nanomed now use sprites similar to the
+      ones found in SS14., type: Tweak}
+  id: 4520
+  time: '2023-08-11T05:12:37.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Ice has been added to the freezer crates. Chefs rejoice!, type: Tweak}
+  id: 4521
+  time: '2023-08-11T07:28:27.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: Air Technicians will find a new fire-fighting door remote in their locker.
+      It controls FireLocks Let space in and fire out using a handy remote from a
+      safe distance!, type: Add}
+  - {message: 'FireDoors can be bolted and unbolted by fire-fighting, engineering
+      and command door remotes', type: Add}
+  - {message: 'Door remotes add your ID card access to their own. If you have access
+      to open a door, you can control that door with any door remote.', type: Tweak}
+  id: 4522
+  time: '2023-08-11T09:29:33.0000000+00:00'
