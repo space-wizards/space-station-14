@@ -17,11 +17,11 @@ public sealed class KillRandomPersonCondition : KillPersonCondition
         {
             var entity = mc.Mind?.OwnedEntity;
             if (entity == default)
-                return false;
+                continue;
 
             if (EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
                 MobStateSystem.IsAlive(entity.Value, mobState) &&
-                mc.Mind != mind)
+                mc.Mind != mind && mc.Mind != null)
             {
                 allHumans.Add(mc.Mind);
             }
