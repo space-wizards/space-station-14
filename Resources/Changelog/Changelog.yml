@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
-  id: 4017
-  time: '2023-06-17T01:59:54.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
@@ -2983,3 +2978,8 @@ Entries:
   - {message: All crates have a brand new look., type: Tweak}
   id: 4516
   time: '2023-08-11T00:12:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Job icons now ignore lighting., type: Fix}
+  id: 4517
+  time: '2023-08-11T00:36:26.0000000+00:00'
