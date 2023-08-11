@@ -42,3 +42,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Composer: Georg Friedrich Händel; Performed by: MIT Concert Choir; Directed by William C. Cutter; + cropped and mixed from stereo to mono"
   source: "https://en.wikipedia.org/wiki/File:Handel_-_messiah_-_44_hallelujah.ogg"
+
+- files: ["fence_rattle1.ogg", "fence_rattle2.ogg", "fence_rattle3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from MWsfx via freesound.org and cropped + mixed from stereo to mono."
+  source: "https://freesound.org/people/MWsfx/sounds/575388/"
