@@ -13,7 +13,7 @@ public sealed class RequestCrewManifestMessage : EntityEventArgs
 {
     public NetEntity Id { get; }
 
-    public RequestCrewManifestMessage(EntityUid id)
+    public RequestCrewManifestMessage(NetEntity id)
     {
         Id = id;
     }

@@ -306,7 +306,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
 
         if (component.ToggleAction != null)
         {
-            component.ToggleAction.EntityIcon = component.ClothingUid;
+            component.ToggleAction.EntityIcon = ToNetEntity(component.ClothingUid);
             _actionsSystem.Dirty(component.ToggleAction);
         }
     }
