@@ -20,6 +20,7 @@ public sealed class CritMobActionsSystem : EntitySystem
     [Dependency] private readonly IServerConsoleHost _host = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly DeathgaspSystem _deathgasp = default!;
 
     public override void Initialize()
     {
@@ -36,10 +37,12 @@ public sealed class CritMobActionsSystem : EntitySystem
             return;
 
         _host.ExecuteCommand(actor.PlayerSession, "ghost");
+        args.Handled = true;
     }
 
     private void OnFakeDeath(EntityUid uid, MobStateActionsComponent component, CritFakeDeathEvent args)
     {
+        args.Handled = _deathgasp.Deathgasp(uid);
     }
 
     private void OnLastWords(EntityUid uid, MobStateActionsComponent component, CritLastWordsEvent args)
@@ -63,6 +66,8 @@ public sealed class CritMobActionsSystem : EntitySystem
                 _chat.TrySendInGameICMessage(uid, lastWords, InGameICChatType.Whisper, ChatTransmitRange.Normal, ignoreActionBlocker: true);
                 _host.ExecuteCommand(actor.PlayerSession, "ghost");
             });
+
+        args.Handled = true;
     }
 }
 

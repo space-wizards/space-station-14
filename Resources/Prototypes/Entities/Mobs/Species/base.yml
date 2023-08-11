@@ -198,6 +198,7 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: Deathgasp
   - type: MobStateActions
     actions:
       Critical:

@@ -185,7 +185,7 @@
     - salutes!
 
 - type: emote
-  id: Deathgasp
+  id: DefaultDeathgasp
   chatMessages: ["emote-deathgasp"]
   chatTriggers:
   - deathgasp

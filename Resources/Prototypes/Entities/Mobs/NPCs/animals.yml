@@ -925,6 +925,7 @@
         layer:
         - SmallMobLayer
   - type: MobState
+  - type: Deathgasp
   - type: MobStateActions
     actions:
       Critical:
@@ -2198,6 +2199,7 @@
         layer:
         - SmallMobLayer
   - type: MobState
+  - type: Deathgasp
   - type: MobStateActions
     actions:
       Critical:
