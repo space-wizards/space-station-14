@@ -1,21 +1,27 @@
-﻿namespace Content.Shared.Mobs.Components;
+﻿using Content.Shared.Mobs.Systems;
+
+namespace Content.Shared.Mobs.Components;
 
 /// <summary>
-/// This is used for...
+///     Used for specifying actions that should be automatically added/removed on mob state transitions
 /// </summary>
-public abstract class MobStateActionsComponent : Component
+/// <remarks>
+///     Mostly for crit-specific actions.
+/// </remarks>
+/// <see cref="MobStateActionsSystem"/>
+[RegisterComponent]
+public sealed class MobStateActionsComponent : Component
 {
-    
-}
-
-/// <summary>
-/// Contains network state for MobStateActionsComponent.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class MobStateActionsComponentState : ComponentState
-{
-    public MobStateActionsComponentState(MobStateActionsComponent component)
-    {
-
-    }
+    /// <summary>
+    ///     Specifies a list of actions that should be available if a mob is in a given state.
+    /// </summary>
+    /// <example>
+    /// actions:
+    ///   Critical:
+    ///   - CritSuccumb
+    ///   Alive:
+    ///   - AnimalLayEgg
+    /// </example>
+    [DataField("actions")]
+    public Dictionary<MobState, List<string>> Actions = new();
 }
