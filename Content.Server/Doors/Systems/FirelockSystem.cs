@@ -6,6 +6,8 @@ using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.Remotes;
 using Content.Server.Shuttles.Components;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Doors;
@@ -26,6 +28,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
         [Dependency] private readonly AtmosphereSystem _atmosSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
 
         private static float _visualUpdateInterval = 0.5f;
         private float _accumulatedFrameTime;
@@ -135,9 +138,9 @@ namespace Content.Server.Doors.Systems
         private void OnBeforeDoorOpened(EntityUid uid, FirelockComponent component, BeforeDoorOpenedEvent args)
         {
             // Give the Door remote the ability to force a firelock open even if it is holding back dangerous gas
-            bool usedRemote = args.User != null && TryComp<DoorRemoteComponent>(args.User, out var _remoteComponent);
+            var overrideAccess = (args.User != null) && _accessReaderSystem.IsAllowed(args.User.Value, uid);
 
-            if (!this.IsPowered(uid, EntityManager) || (!usedRemote && IsHoldingPressureOrFire(uid, component)))
+            if (!this.IsPowered(uid, EntityManager) || (!overrideAccess && IsHoldingPressureOrFire(uid, component)))
                 args.Cancel();
         }
 

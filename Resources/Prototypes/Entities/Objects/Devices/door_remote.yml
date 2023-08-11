@@ -22,8 +22,6 @@
       color: "#e6e600"
     - state: door_remotescreencolour
       color: "#9f9f00"
-  - type: DoorRemote
-    airlockOnly: False   # Can operate firelocks as well.
   - type: Access
     groups:
     - Command
@@ -40,8 +38,6 @@
       color: "#cb0000"
     - state: door_remotescreencolour
       color: "#830000"
-  - type: DoorRemote
-    airlockOnly: False   # Can operate firelocks as well.
   - type: Access
     groups:
     - Security
@@ -138,8 +134,6 @@
       color: "#ffa62b"
     - state: door_remotescreencolour
       color: "#bc5b00"
-  - type: DoorRemote
-    airlockOnly: False   # Can operate firelocks as well.
   - type: Access
     groups:
     - Engineering
@@ -161,11 +155,6 @@
     - type: Access
       groups:
         - Engineering
-    - type: DoorRemote
-      firelockOnly: True
-      airlockOnly: False
-      allowBolt : True
-      allowEmergencyAccess: False
 
 - type: entity
   parent: DoorRemoteDefault
