@@ -31,7 +31,6 @@ public sealed class FirelockSystem : EntitySystem
                 state == DoorState.Closing
                 ||  state == DoorState.Opening
                 ||  state == DoorState.Denying
-            //    || (state == DoorState.Open && comp.OpenUnlitVisible)
                 || (_appearanceSystem.TryGetData<bool>(uid, DoorVisuals.ClosedLights, out var closedLights, args.Component) && closedLights);
         }
 

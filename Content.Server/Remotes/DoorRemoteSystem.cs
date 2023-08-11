@@ -36,15 +36,15 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
-                        component.Mode = OperatingMode.ToggleBolts;
-                        switchMessageId = "door-remote-switch-state-toggle-bolts";
-                        break;
+                    component.Mode = OperatingMode.ToggleBolts;
+                    switchMessageId = "door-remote-switch-state-toggle-bolts";
+                    break;
 
                     // Skip toggle bolts mode and move on from there (to emergency access)
                 case OperatingMode.ToggleBolts:
-                        component.Mode = OperatingMode.ToggleEmergencyAccess;
-                        switchMessageId = "door-remote-switch-state-toggle-emergency-access";
-                        break;
+                    component.Mode = OperatingMode.ToggleEmergencyAccess;
+                    switchMessageId = "door-remote-switch-state-toggle-emergency-access";
+                    break;
 
                     // Skip ToggleEmergencyAccess mode and move on from there (to door toggle)
                 case OperatingMode.ToggleEmergencyAccess:
@@ -65,11 +65,13 @@ namespace Content.Server.Remotes
             if (args.Handled
                 || args.Target == null
                 || !TryComp<DoorComponent>(args.Target, out var doorComp) // If it isn't a door we don't use it
-                     // The remote can be used anywhere the user can see the door.
-                     // This doesn't work that well, but I don't know of an alternative
-                     || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
-                         SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
+                // The remote can be used anywhere the user can see the door.
+                // This doesn't work that well, but I don't know of an alternative
+                || !_interactionSystem.InRangeUnobstructed(args.User, args.Target.Value,
+                    SharedInteractionSystem.MaxRaycastRange, CollisionGroup.Opaque))
+            {
                 return;
+            }
 
             args.Handled = true;
 
@@ -92,6 +94,9 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
+                    // Note we provide args.User here to TryToggleDoor as the "user"
+                    // This means that the door will look at all access items carryed by the player for access, including
+                    // this remote, but also including anything else they are carrying such as a PDA or ID card.
                     if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.User))
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                     break;
