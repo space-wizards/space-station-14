@@ -16,3 +16,5 @@
   # Some engineer forgot to take the multitool out the youtool when working on it, happens.
   contrabandInventory:
     Multitool: 1
+  emaggedInventory:
+    ClothingHandsGlovesColorYellow: 1

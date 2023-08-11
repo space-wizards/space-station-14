@@ -2,6 +2,7 @@
 using System.Linq;
 using Content.Server.Ghost;
 using Content.Server.Ghost.Roles;
+using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
@@ -24,6 +25,7 @@ namespace Content.IntegrationTests.Tests.Minds;
 [TestFixture]
 public sealed partial class MindTests
 {
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
   id: MindTestEntityDamageable
@@ -52,7 +54,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestCreateAndTransferMindToNewEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -78,7 +80,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestReplaceMind()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -109,7 +111,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -163,7 +165,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestMindTransfersToOtherEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -197,7 +199,11 @@ public sealed partial class MindTests
     [Test]
     public async Task TestOwningPlayerCanBeChanged()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        {
+            Connected = true,
+            DummyTicker = false
+        });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -250,7 +256,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestAddRemoveHasRoles()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -319,7 +325,7 @@ public sealed partial class MindTests
     public async Task TestPlayerCanGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -395,18 +401,20 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
     {
-        // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        {
+            DummyTicker = false,
+            Connected = true,
+            Dirty = true
+        });
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var serverConsole = server.ResolveDependency<IServerConsoleHost>();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-
         //EntityUid entity = default!;
-        EntityUid mouse = default!;
+        EntityUid ghostRole = default!;
         EntityUid ghost = default!;
         Mind mind = default!;
         var player = playerMan.ServerSessions.Single();
@@ -430,36 +438,37 @@ public sealed partial class MindTests
 
             Assert.That(mind.OwnedEntity, Is.Not.Null);
 
-            mouse = entMan.SpawnEntity("MobMouse", new MapCoordinates());
+            ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", MapCoordinates.Nullspace);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 120);
+        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
 
         await server.WaitAssertion(() =>
         {
             serverConsole.ExecuteCommand(player, "aghost");
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 120);
+        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
 
         await server.WaitAssertion(() =>
         {
-            entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(player, 0);
+            var id = entMan.GetComponent<GhostRoleComponent>(ghostRole).Identifier;
+            entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(player, id);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 120);
+        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
 
         await server.WaitAssertion(() =>
         {
             var data = player.ContentData()!;
-            Assert.That(data.Mind!.OwnedEntity, Is.EqualTo(mouse));
+            Assert.That(data.Mind!.OwnedEntity, Is.EqualTo(ghostRole));
 
             serverConsole.ExecuteCommand(player, "aghost");
             Assert.That(player.AttachedEntity, Is.Not.Null);
             ghost = player.AttachedEntity!.Value;
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 60);
+        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
 
         await server.WaitAssertion(() =>
         {

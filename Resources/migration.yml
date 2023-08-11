@@ -1,4 +1,4 @@
-﻿# basic dictionary that maps old entity ids to new entity ids.
+# basic dictionary that maps old entity ids to new entity ids.
 # an empty or "null" string results in the entity getting deleted.
 
 # e.g., you can swap all walls with windows and delete all tables by adding lines like:
@@ -38,7 +38,6 @@ BoxMagazineMagnumSubMachineGunPractice: BoxMagazinePistolSubMachineGunPractice
 BoxMagazineMagnumSubMachineGunRubber: BoxMagazinePistolSubMachineGunRubber
 
 MagazineMagnumSubMachineGun: MagazinePistolSubMachineGun
-MagazineMagnumSubMachineGunHighVelocity: MagazinePistolSubMachineGunHighVelocity
 MagazineMagnumSubMachineGunPractice: MagazinePistolSubMachineGunPractice
 MagazineMagnumSubMachineGunRubber: MagazinePistolSubMachineGunRubber
 WeaponSubMachineGunVector: WeaponSubMachineGunDrozd
@@ -114,3 +113,54 @@ ForensicGloves: ClothingHandsGlovesForensic
 
 # 2023-07-24
 ClothingEyesGlassesBeer: ClothingEyesHudBeer
+
+# 2023-08-01
+lantern: Lantern
+lanternextrabright: LanternFlash
+
+# 2023-08-04
+BoxMagazineLightRifleHighVelocity: BoxMagazineLightRifle
+BoxMagazineMagnumSubMachineGunHighVelocity: BoxMagazineMagnumSubMachineGun
+BoxMagazinePistolCaselessRifleHighVelocity: BoxMagazinePistolCaselessRifle
+BoxMagazinePistolHighCapacityHighVelocity: BoxMagazinePistolHighCapacity
+BoxMagazinePistolHighVelocity: BoxMagazinePistol
+BoxMagazinePistolSubMachineGunHighVelocity: BoxMagazinePistolSubMachineGun
+BoxMagazineRifleHighVelocity: BoxMagazineRifle
+BulletCaselessRifleHighVelocity: BulletCaselessRifle
+BulletLightRifleHighVelocity: BulletLightRifle
+BulletMagnumHighVelocity: BulletMagnum
+BulletPistolHighVelocity: BulletPistol
+BulletRifleHighVelocity: BulletRifle
+CartridgeCaselessRifleHighVelocity: CartridgeCaselessRifle
+CartridgeLightRifleHighVelocity: CartridgeLightRifle
+CartridgeMagnumHighVelocity: CartridgeMagnum
+CartridgePistolHighVelocity: CartridgePistol
+CartridgeRifleHighVelocity: CartridgeRifle
+MagazineBoxCaselessRifleHighVelocity: MagazineBoxCaselessRifle
+MagazineBoxLightRifleHighVelocity: MagazineBoxLightRifle
+MagazineBoxMagnumHighVelocity: MagazineBoxMagnum
+MagazineBoxPistolHighVelocity: MagazineBoxPistol
+MagazineBoxRifleHighVelocity: MagazineBoxRifle
+MagazineCaselessRifleHighVelocity: MagazineCaselessRifle
+MagazineCaselessRifleShortHighVelocity: MagazineCaselessRifleShort
+MagazineLightRifleHighVelocity: MagazineLightRifle
+MagazineMagnumSubMachineGunHighVelocity: MagazineMagnumSubMachineGun
+MagazinePistolCaselessRifleHighVelocity: MagazinePistolCaselessRifle
+MagazinePistolHighCapacityHighVelocity: MagazinePistolHighCapacity
+MagazinePistolHighVelocity: MagazinePistol
+MagazinePistolSubMachineGunHighVelocity: MagazinePistolSubMachineGun
+MagazineRifleHighVelocity: MagazineRifle
+SpeedLoaderMagnumHighVelocity: SpeedLoaderMagnum
+SpeedLoaderPistolHighVelocity: SpeedLoaderPistol
+
+# 2023-08-07
+#If the name is anything to go off of, these are presumably just CEV-Eris versions of the snow rock (which we already have.)
+#They are practically never used in this way however, so they're migrated to the basic rock type.
+MountainRock: AsteroidRock
+MountainRockMining: AsteroidRockMining
+
+# 2023-08-08
+WindowTintedDirectional: WindowFrostedDirectional
+
+# 2023-08-10
+SyringeSpaceacillin: null

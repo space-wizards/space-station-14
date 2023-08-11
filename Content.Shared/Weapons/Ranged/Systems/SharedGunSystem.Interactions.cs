@@ -16,7 +16,7 @@ public abstract partial class SharedGunSystem
             return;
 
         args.PushMarkup(Loc.GetString("gun-selected-mode-examine", ("color", ModeExamineColor), ("mode", GetLocSelector(component.SelectedMode))));
-        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", component.FireRate)));
+        args.PushMarkup(Loc.GetString("gun-fire-rate-examine", ("color", FireRateExamineColor), ("fireRate", $"{component.FireRate:0.0}")));
     }
 
     private string GetLocSelector(SelectiveFire mode)

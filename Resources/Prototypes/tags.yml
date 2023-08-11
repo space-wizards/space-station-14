@@ -8,6 +8,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -18,6 +21,9 @@
 
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: Balloon
 
 - type: Tag
   id: BaseballBat
@@ -92,6 +98,9 @@
   id: CableCoil
 
 - type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
   id: Carrot
 
 - type: Tag
@@ -137,9 +146,6 @@
   id: CartridgeMagnum
 
 - type: Tag
-  id: CartridgeMagnum357
-
-- type: Tag
   id: CartridgePistol
 
 - type: Tag
@@ -163,6 +169,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClothMade
 
 - type: Tag
   id: ClownMask
@@ -267,6 +276,9 @@
   id: Donut
 
 - type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
   id: DroneUsable
 
 - type: Tag
@@ -319,6 +331,9 @@
 
 - type: Tag
   id: Folder
+
+- type: Tag
+  id: FoodSnack
 
 - type: Tag
   id: FootstepSound
@@ -580,8 +595,6 @@
 - type: Tag
   id: Multitool
 
-- type: Tag
-  id: NoSpinOnThrow
 
 - type: Tag
   id: NoBlockAnchoring
@@ -652,6 +665,9 @@
 - type: Tag
   id: PlushieGhost
 
+
+- type: Tag
+  id: PowerCellSmall
 
 - type: Tag
   id: Powerdrill
@@ -761,9 +777,6 @@
 
 - type: Tag
   id: SpeedLoaderMagnum
-
-- type: Tag
-  id: SpeedLoaderMagnum357
 
 - type: Tag
   id: SpeedLoaderPistol
@@ -884,3 +897,4 @@
 
 - type: Tag
   id: ModularReceiver
+

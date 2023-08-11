@@ -22,16 +22,12 @@
   - Janitor
   - Lawyer
   - Librarian
-  - MedicalIntern
   - Mime
   - Musician
   - Passenger
   - Reporter
   - Zookeeper
-  - SecurityCadet
   - ServiceWorker
-  - TechnicalAssistant
-  - ResearchAssistant
 
 - type: department
   id: Command
