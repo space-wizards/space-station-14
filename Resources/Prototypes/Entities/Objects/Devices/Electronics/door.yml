@@ -7,13 +7,16 @@
     - type: Sprite
       sprite: Objects/Misc/module.rsi
       state: door_electronics
-    - type: AccessReader
     - type: Tag
       tags:
         - DroneUsable
     - type: DoorElectronics
     - type: StaticPrice
       price: 55
+    - type: ActivatableUI
+      allowedItems:
+        tags:
+        - Multitool
     - type: UserInterface
       interfaces:
       - key: enum.DoorElectronicsConfigurationUiKey.Key

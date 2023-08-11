@@ -1,3 +1,4 @@
+﻿using Content.Shared.Whitelist;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Reflection;
@@ -43,6 +44,13 @@ namespace Content.Server.UserInterface
         public bool RequireHands = true;
 
         /// <summary>
+        ///     Entities that are required to open this UI.
+        /// </summary>
+        [DataField("allowedItems")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public EntityWhitelist? AllowedItems = null;
+
+        /// <summary>
         ///     Whether you can activate this ui with activateinhand or not
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
@@ -78,4 +86,3 @@ namespace Content.Server.UserInterface
         }
     }
 }
-
