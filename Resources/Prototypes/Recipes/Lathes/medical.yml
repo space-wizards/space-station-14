@@ -201,7 +201,6 @@
 - type: latheRecipe
   id: Jug
   result: Jug
-  name: jug
   completetime: 4
   materials:
     Plastic: 700
