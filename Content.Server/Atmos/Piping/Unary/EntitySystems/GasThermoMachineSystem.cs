@@ -50,34 +50,46 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
 
-            if (!(_power.IsPowered(uid))
+            if (!(_power.IsPowered(uid) && TryComp(uid, out ApcPowerReceiverComponent? receiver))
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
                 || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
             {
                 return;
             }
 
-            var airHeatCapacity = _atmosphereSystem.GetHeatCapacity(inlet.Air);
-            var combinedHeatCapacity = airHeatCapacity + thermoMachine.HeatCapacity;
+            float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
 
-            var startEnergy = inlet.Air.Temperature * airHeatCapacity;
-
-            if (!MathHelper.CloseTo(combinedHeatCapacity, 0, 0.001f))
+            // Implement hysteresis
+            float hystTemp = thermoMachine.TargetTemperature;
+            if (thermoMachine.HysteresisState)
             {
-                var combinedEnergy = thermoMachine.HeatCapacity * thermoMachine.TargetTemperature + airHeatCapacity * inlet.Air.Temperature;
-                inlet.Air.Temperature = combinedEnergy / combinedHeatCapacity;
-
-                thermoMachine.LastEnergyDelta = inlet.Air.Temperature * airHeatCapacity - startEnergy;
+                hystTemp += sign*thermoMachine.TemperatureTolerance;
             }
+
+            // Stop if we've reached our target temperature.
+            if (sign*inlet.Air.Temperature > sign*hystTemp) // inequality flips if freezer
+            {
+                thermoMachine.HysteresisState = !thermoMachine.HysteresisState;
+                return;
+            }
+
+            // Multiply power in by coefficient of performance, add that heat to gas
+            float dQ = receiver.Load * thermoMachine.Cp * args.dt;
+            _atmosphereSystem.AddHeat(inlet.Air, dQ);
+
+            // If temperature over/undershoots, that's okay! Min/Max temp is about the setpoint.
         }
 
         private void OnGasThermoRefreshParts(EntityUid uid, GasThermoMachineComponent thermoMachine, RefreshPartsEvent args)
         {
             var heatCapacityPartRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
-            var temperatureRangePartRating = args.PartRatings[thermoMachine.MachinePartTemperature];
-
             thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(heatCapacityPartRating, 2);
+            if (TryComp(uid, out ApcPowerReceiverComponent? receiver))
+            {
+                receiver.Load = thermoMachine.HeatCapacity;
+            }
 
+            var temperatureRangePartRating = args.PartRatings[thermoMachine.MachinePartTemperature];
             switch (thermoMachine.Mode)
             {
                 // 593.15K with stock parts.
