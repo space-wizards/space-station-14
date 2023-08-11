@@ -1,9 +1,4 @@
 Entries:
-- author: Nails-n-Tape
-  changes:
-  - {message: added a guidebook entry for cargo, type: Add}
-  id: 4024
-  time: '2023-06-18T02:31:49.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: The Syndicate has stopped making zombie bundles available to nuclear
@@ -2991,3 +2986,11 @@ Entries:
     type: Add}
   id: 4523
   time: '2023-08-11T16:20:16.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'After a flurry of memos, the Atmospheric Technician''s remote no longer
+      opens the Chief Engineer''s door. So I guess fires in that room are considered
+      "totally normal" by command. To compensate, the remotes are more widely available
+      in more stations. Thanks Wookyskill.', type: Tweak}
+  id: 4524
+  time: '2023-08-11T22:18:40.0000000+00:00'
