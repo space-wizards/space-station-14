@@ -503,6 +503,9 @@
       Brute:
         path:
           "/Audio/Weapons/slash.ogg"
+  - type: Construction
+    graph: TableWeb
+    node: table
 
 - type: entity
   id: TableDebug
