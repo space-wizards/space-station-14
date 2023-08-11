@@ -2961,16 +2961,16 @@ Entries:
 - author: Flareguy
   changes:
   - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
-      more vibrant, and should fit in a lot better with their surroundings.', type: tweak}
+      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
   - {message: Updated pried tiles to match the appearance of the new tiles better.,
-    type: tweak}
+    type: Tweak}
   id: 4514
   time: '2023-08-10T18:33:15.435911+00:00'
 - author: juliangiebel & mirrorcult
   changes:
   - {message: 'You may notice that chat text in general has become much prettier and
       dynamic. Whispered text is smaller, announcements are larger, and names should
-      pop out more.', type: tweak}
+      pop out more.', type: Tweak}
   id: 4515
   time: '2023-08-10T18:33:15.436963+00:00'
 - author: EmoGarbage404
