@@ -1,2 +1,2 @@
-ent-FloorLavaEntity = лавовый пол
-    .desc = Пол — это лава!
+ent-FloorLavaEntity = лава
+    .desc = Не прыгать. Как бы смешно это ни было, оно того не стоит.

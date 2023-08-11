@@ -17,3 +17,5 @@ ent-VehicleUnicycle = уницикл
 ent-VehicleUnicycleFolded = { ent-VehicleUnicycle }
     .suffix = Сложенный
     .desc = { ent-VehicleUnicycle.desc }
+ent-VehicleWheelchair = кресло-коляска
+    .desc = Кресло с большими колесами. Кажется, с ним вы сможете передвигаться самостоятельно.

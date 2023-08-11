@@ -1,0 +1,1 @@
+particle-accelerator-admin-power-strength-warning = изменена сила УЧ {$machine} на {$powerState} по координатам: {$coordinates}

@@ -5,6 +5,7 @@ food-nom = Ням. { $flavors }
 food-swallow = Вы проглатываете { $food }. { $flavors }
 food-repulsing = This looks repulsing.
 food-system-remove-mask = Сначала вам нужно снять { $entity }.
+food-has-used-storage = Вы не можете проглотить {$food} с предметом внутри.
 
 ## System
 

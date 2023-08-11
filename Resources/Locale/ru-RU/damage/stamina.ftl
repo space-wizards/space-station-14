@@ -1,2 +1,2 @@
 stamina-resist = Устоял
-melee-stamina = Not enough stamina
+melee-stamina = Недостаточно выносливости

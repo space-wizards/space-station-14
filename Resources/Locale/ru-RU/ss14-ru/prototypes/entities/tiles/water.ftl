@@ -1,2 +1,2 @@
 ent-FloorWaterEntity = вода
-    .desc = { "" }
+    .desc = Реально утоляет жажду.
