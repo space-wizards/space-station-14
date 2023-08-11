@@ -70,6 +70,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Vending
   - type: DoAfter
   - type: Electrified

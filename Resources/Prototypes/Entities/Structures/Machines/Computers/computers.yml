@@ -788,6 +788,7 @@
       - key: enum.CloningConsoleUiKey.Key
         type: CloningConsoleBoundUserInterface
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
   - type: Damageable
     damageContainer: Inorganic
@@ -900,6 +901,7 @@
     range: 200
   - type: DeviceNetworkRequiresPower
   - type: Speech
+    speechVerb: Robotic
   - type: SurveillanceCameraSpeaker
   - type: SurveillanceCameraMonitor
     speechEnabled: true

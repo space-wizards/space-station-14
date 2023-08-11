@@ -34,4 +34,36 @@
 - type: speechVerb
   id: Reptilian
   speechVerbStrings:
-  - chat-speech-verb-robotic
+  - chat-speech-verb-reptilian
+
+- type: speechVerb
+  id: Skeleton
+  speechVerbStrings:
+  - chat-speech-verb-skeleton
+
+- type: speechVerb
+  id: Slime
+  speechVerbStrings:
+  - chat-speech-verb-slime
+
+- type: speechVerb
+  id: LargeMob
+  speechVerbStrings:
+  - chat-speech-verb-large-mob
+
+- type: speechVerb
+  id: SmallMob
+  speechVerbStrings:
+  - chat-speech-verb-small-mob
+
+- type: speechVerb
+  id: Monkey
+  speechVerbStrings:
+  - chat-speech-verb-monkey
+
+- type: speechVerb
+  id: Cluwne
+  speechVerbStrings:
+  - chat-speech-verb-cluwne-1
+  - chat-speech-verb-cluwne-2
+  - chat-speech-verb-cluwne-3

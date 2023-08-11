@@ -51,6 +51,7 @@
       80: 0.4
   # Misc
   - type: Speech
+    speechVerb: Insect
     speechSounds: Arachnid
   - type: Vocal
     sounds:

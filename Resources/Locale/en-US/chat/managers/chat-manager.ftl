@@ -46,7 +46,23 @@ chat-speech-verb-default = says
 chat-speech-verb-exclamation = shouts
 chat-speech-verb-exclamation-strong = yells
 chat-speech-verb-question = asks
+
 chat-speech-verb-insect-1 = chitters
-chat-speech-verb-insect-2 = chirps
+chat-speech-verb-insect-2 = flutters
+
+chat-speech-verb-slime = chirps
+
 chat-speech-verb-robotic = states
 chat-speech-verb-reptilian = hisses
+
+chat-speech-verb-skeleton = rattles
+
+chat-speech-verb-small-mob = squeaks
+
+chat-speech-verb-large-mob = roars
+
+chat-speech-verb-monkey = chimpers
+
+chat-speech-verb-cluwne-1 = giggles
+chat-speech-verb-cluwne-2 = guffaws
+chat-speech-verb-cluwne-3 = laughs

@@ -30,6 +30,7 @@
   - type: ItemCooldown
   - type: MultiHandedItem
   - type: Speech
+    speechVerb: Robotic
   - type: Defibrillator
     zapHeal:
       types:
