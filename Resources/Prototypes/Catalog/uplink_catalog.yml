@@ -953,6 +953,7 @@
       whitelist:
         - Scientist
         - SeniorResearcher
+        - ResearchDirector
 
 - type: listing
   id: uplinkProximityMine
@@ -988,6 +989,7 @@
     - Zookeeper
     - Scientist
     - SeniorResearcher
+    - ResearchDirector
     - Chef
 
 # Armor
