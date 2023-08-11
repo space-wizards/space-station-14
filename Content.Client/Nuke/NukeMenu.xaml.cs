@@ -68,6 +68,8 @@ namespace Content.Client.Nuke
         {
             string firstMsg, secondMsg;
 
+            ArmButton.Text = Loc.GetString("nuke-user-interface-arm-button");
+
             switch (state.Status)
             {
                 case NukeStatus.AWAIT_DISK:
