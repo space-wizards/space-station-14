@@ -1,6 +1,7 @@
 ﻿- type: entity
   id: TegCenter
   name: thermo-electric generator
+  description: A high efficiency generator that uses energy transfer between hot and cold gases to produce electricity.
   parent: BaseMachinePowered
   placement:
     mode: SnapgridCenter
@@ -93,9 +94,14 @@
 - type: entity
   id: TegCirculator
   name: circulator
+  description: Passes gas through the thermo-electric generator to exchange heat. Has an inlet and outlet port.
+  parent: BaseMachine
   placement:
     mode: SnapgridCenter
   components:
+    - type: Transform
+      noRot: false
+
     # visuals
     - type: Sprite
       sprite: Structures/Power/Generation/teg.rsi
@@ -136,24 +142,9 @@
         - Unstackable
 
     # basic interactions
-    - type: Clickable
-    - type: InteractionOutline
     - type: Rotatable
     - type: Anchorable
     - type: Pullable
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          density: 190
-          mask:
-            - MachineMask
-          layer:
-            - MachineLayer
 
     # functionality
     - type: NodeContainer
@@ -176,3 +167,19 @@
     - type: TegCirculator
       light_color_fast: '#AA00FF'
       light_color_slow: '#FF3300'
+
+- # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
+  type: entity
+  id: TegCirculatorArrow
+  noSpawn: true
+  components:
+    - type: Sprite
+      sprite: Markers/teg_arrow.rsi
+      color: "#FFFFFFBB"
+      layers:
+        - state: arrow
+          offset: 0, 0.75
+        - state: arrow
+          offset: 0, -0.75
+    - type: TegCirculatorArrow
+

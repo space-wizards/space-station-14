@@ -7,6 +7,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Shared.Examine;
 using Content.Shared.Power.Generation.Teg;
 using Content.Shared.Rounding;
 using Robust.Server.GameObjects;
@@ -78,7 +79,22 @@ public sealed class TegSystem : EntitySystem
         SubscribeLocalEvent<TegGeneratorComponent, PowerChangedEvent>(GeneratorPowerChange);
         SubscribeLocalEvent<TegGeneratorComponent, DeviceNetworkPacketEvent>(DeviceNetworkPacketReceived);
 
+        SubscribeLocalEvent<TegGeneratorComponent, ExaminedEvent>(GeneratorExamined);
+
         _nodeContainerQuery = GetEntityQuery<NodeContainerComponent>();
+    }
+
+    private void GeneratorExamined(EntityUid uid, TegGeneratorComponent component, ExaminedEvent args)
+    {
+        if (GetNodeGroup(uid) is not { IsFullyBuilt: true })
+        {
+            args.PushMarkup(Loc.GetString("teg-generator-examine-connection"));
+        }
+        else
+        {
+            var supplier = Comp<PowerSupplierComponent>(uid);
+            args.PushMarkup(Loc.GetString("teg-generator-examine-power", ("power", supplier.CurrentSupply)));
+        }
     }
 
     private void GeneratorUpdate(EntityUid uid, TegGeneratorComponent component, AtmosDeviceUpdateEvent args)
