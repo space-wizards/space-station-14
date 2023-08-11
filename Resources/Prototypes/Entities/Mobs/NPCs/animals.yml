@@ -2348,6 +2348,7 @@
     tags:
     - DoorBumpOpener
     - Pig
+    - VimPilot
   - type: Reproductive
     partnerWhitelist:
       tags:
@@ -2387,6 +2388,3 @@
   - type: NpcFactionMember
     factions:
     - Passive
-  - type: Tag
-    tags:
-    - VimPilot
