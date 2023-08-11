@@ -34,6 +34,15 @@
           amount: 4
         - id: ClothingHeadHatCargosoft
           amount: 1
+    - type: GhostRole
+      makeSentient: true
+      allowSpeech: true
+      allowMovement: true
+      prob: 1
+      name: ent-MobGorillaLargo
+      description: ent-MobGorillaLargo.desc
+      rules: "Вы - выдрессированная горилла отдела снабжения. Подчиняйтесь простым командам членов отдела."
+    - type: GhostTakeoverAvailable
     - type: Bloodstream
       bloodMaxVolume: 300
     - type: Puller

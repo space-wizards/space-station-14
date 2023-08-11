@@ -35,4 +35,5 @@
     prob: 1
     name: ghost-role-information-kesha-name
     description: ghost-role-information-kesha-description
+    rules: "Вы НЕ разумный попугай, вы НЕ знаете слов, но можете запоминать и использовать их не взирая на смысл. Составлять осмысленные предложения или вести диалог запрещено."
   - type: GhostTakeoverAvailable
