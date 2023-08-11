@@ -31,6 +31,7 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 
         _window.OnClose += Close;
         _window.AtmosDeviceDataChanged += OnDeviceDataChanged;
+		_window.AtmosDeviceDataCopied += OnDeviceDataCopied;
         _window.AtmosAlarmThresholdChanged += OnThresholdChanged;
         _window.AirAlarmModeChanged += OnAirAlarmModeChanged;
         _window.AutoModeChanged += OnAutoModeChanged;
@@ -46,6 +47,11 @@ public sealed class AirAlarmBoundUserInterface : BoundUserInterface
     private void OnDeviceDataChanged(string address, IAtmosDeviceData data)
     {
         SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
+    }
+	
+	private void OnDeviceDataCopied(IAtmosDeviceData data)
+    {
+        SendMessage(new AirAlarmCopyDeviceDataMessage(data));
     }
 
     private void OnAirAlarmModeChanged(AirAlarmMode mode)

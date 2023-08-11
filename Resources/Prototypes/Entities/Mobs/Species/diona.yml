@@ -60,6 +60,7 @@
       Unsexed: UnisexDiona
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
+  - type: IgnoreKudzu
 
 - type: entity
   save: false
