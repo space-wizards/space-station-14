@@ -454,11 +454,13 @@ public sealed partial class ChatSystem : SharedChatSystem
         if (!_actionBlocker.CanEmote(source)) return;
 
         // get the entity's apparent name (if no override provided).
-        string name = FormattedMessage.EscapeText(nameOverride ?? Identity.Name(source, EntityManager));
+        var ent = Identity.Entity(source, EntityManager);
+        string name = FormattedMessage.EscapeText(nameOverride ?? Name(ent));
 
         // Emotes use Identity.Name, since it doesn't actually involve your voice at all.
         var wrappedMessage = Loc.GetString("chat-manager-entity-me-wrap-message",
             ("entityName", name),
+            ("entity", ent),
             ("message", FormattedMessage.EscapeText(action)));
 
         if (checkEmote)
