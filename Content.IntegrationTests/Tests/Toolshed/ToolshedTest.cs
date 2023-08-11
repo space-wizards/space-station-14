@@ -58,8 +58,8 @@ public abstract class ToolshedTest : IInvocationContext
 
     protected void ParseCommand(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
     {
-        var parser = new ForwardParser(command, Toolshed);
-        var success = CommandRun.TryParse(false, false, parser, inputType, expectedType, once, out _, out _, out var error);
+        var parser = new ParserContext(command, Toolshed);
+        var success = CommandRun.TryParse(false, parser, inputType, expectedType, once, out _, out _, out var error);
 
         if (error is not null)
             ReportError(error);
