@@ -1,12 +1,4 @@
 Entries:
-- author: Owai-Seek
-  changes:
-  - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
-  - {message: 'Unit amounts to medicine in kits is now displayed. (IE: bicardine (10u)',
-    type: Tweak}
-  - {message: Burn kits now contain Dermaline pills instead., type: Tweak}
-  id: 4023
-  time: '2023-06-17T19:47:56.0000000+00:00'
 - author: Nails-n-Tape
   changes:
   - {message: added a guidebook entry for cargo, type: Add}
@@ -2992,3 +2984,10 @@ Entries:
       to open a door, you can control that door with any door remote.', type: Tweak}
   id: 4522
   time: '2023-08-11T09:29:33.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Nanotrasen has designed the new Vim exosuit for all your beloved pets!
+      Research it alongside the HAMTR in the new "Critters Mechs" research technology,
+    type: Add}
+  id: 4523
+  time: '2023-08-11T16:20:16.0000000+00:00'
