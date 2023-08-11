@@ -12,7 +12,7 @@ head-rev-role-greeting =
 
 head-rev-admin = Make Head Rev
 
-head-rev-initial = [color=mediumblue]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial Head Revolutionaries.
+head-rev-initial = [color=#5e9cff]{$name}[/color] ([color=gray]{$username}[/color]) was one of the initial Head Revolutionaries.
 
 head-rev-initial-count = {$initialCount ->
     [one] There was one initial Head Rev:

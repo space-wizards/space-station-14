@@ -126,7 +126,7 @@ namespace Content.Server.Flash
 
             var ev = new AfterFlashedEvent(target, user, used);
             if (user != null)
-                RaiseLocalEvent(user.Value, ev);
+                RaiseLocalEvent(user.Value, ref ev);
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
@@ -210,6 +210,7 @@ namespace Content.Server.Flash
     /// <summary>
     /// Called after a flash is used via melee on another person to check for rev conversion.
     /// </summary>
+    [ByRefEvent]
     public readonly struct AfterFlashedEvent
     {
         public readonly EntityUid Target;

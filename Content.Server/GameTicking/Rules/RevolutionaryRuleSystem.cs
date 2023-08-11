@@ -90,7 +90,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-
         foreach (var headrev in EntityQuery<RevolutionaryRuleComponent>())
         {
             if (headrev.HeadsDied && !headrev.RevsLost)
@@ -101,7 +100,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 ev.AddLine(Loc.GetString("rev-lost"));
             }
-            if (!headrev.HeadsDied && !headrev.RevsLost)
+            if (headrev.HeadsDied && headrev.RevsLost)
             {
                 ev.AddLine(Loc.GetString("rev-stalemate"));
             }
@@ -112,6 +111,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     ("name", player.Key),
                     ("username", player.Value)));
             }
+            break;
         }
     }
     private void OnStartAttempt(RoundStartAttemptEvent ev)
@@ -271,7 +271,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// <summary>
     /// Called when a Head Rev uses a flash in melee to convert somebody else.
     /// </summary>
-    public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, AfterFlashedEvent ev)
+    public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
         var stunTime = TimeSpan.FromSeconds(3);
         if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target))
