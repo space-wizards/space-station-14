@@ -87,7 +87,6 @@
     - type: Tag
       tags:
       - DroneUsable
-      - HighRiskItem
 
 - type: entity
   id: CargoBountyComputerCircuitboard

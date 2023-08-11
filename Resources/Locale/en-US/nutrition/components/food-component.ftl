@@ -6,7 +6,8 @@ food-you-need-to-hold-utensil = You need to be holding a {$utensil} to eat that!
 
 food-nom = Nom. {$flavors}
 food-swallow = You swallow the {$food}. {$flavors}
-food-repulsing = This looks repulsing.
+
+food-has-used-storage = You cannot eat the {$food} with an item stored inside.
 
 food-system-remove-mask = You need to take off the {$entity} first.
 

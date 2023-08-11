@@ -161,6 +161,7 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+        SubscribeLocalEvent<AirAlarmComponent, AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
@@ -299,6 +300,32 @@ public sealed class AirAlarmSystem : EntitySystem
         else
         {
             UpdateUI(uid, component);
+        }
+    }
+    
+    private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
+    {
+        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        {
+           UpdateUI(uid, component);
+            return;       
+        }
+
+        switch (args.Data)
+        {
+            case GasVentPumpData ventData:
+                foreach (string addr in component.VentData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
+                
+            case GasVentScrubberData scrubberData:
+                foreach (string addr in component.ScrubberData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
         }
     }
 
