@@ -64,7 +64,7 @@ namespace Content.Server.Flash
             args.Handled = true;
             foreach (var e in args.HitEntities)
             {
-                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo);
+                Flash(e, args.User, uid, comp.FlashDuration, comp.SlowTo, melee: true);
             }
         }
 
@@ -107,7 +107,7 @@ namespace Content.Server.Flash
             return true;
         }
 
-        public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null)
+        public void Flash(EntityUid target, EntityUid? user, EntityUid? used, float flashDuration, float slowTo, bool displayPopup = true, FlashableComponent? flashable = null, bool melee = false)
         {
             if (!Resolve(target, ref flashable, false)) return;
 
@@ -117,16 +117,21 @@ namespace Content.Server.Flash
             if (attempt.Cancelled)
                 return;
 
+            if (melee)
+            {
+                var ev = new AfterFlashedEvent(target, user, used);
+                if (user != null)
+                    RaiseLocalEvent(user.Value, ref ev);
+                if (used != null)
+                    RaiseLocalEvent(used.Value, ref ev);
+            }
+
             flashable.LastFlash = _timing.CurTime;
             flashable.Duration = flashDuration / 1000f; // TODO: Make this sane...
             Dirty(flashable);
 
             _stun.TrySlowdown(target, TimeSpan.FromSeconds(flashDuration/1000f), true,
                 slowTo, slowTo);
-
-            var ev = new AfterFlashedEvent(target, user, used);
-            if (user != null)
-                RaiseLocalEvent(user.Value, ref ev);
 
             if (displayPopup && user != null && target != user && EntityManager.EntityExists(user.Value))
             {
@@ -217,11 +222,11 @@ namespace Content.Server.Flash
         public readonly EntityUid? User;
         public readonly EntityUid? Used;
 
-        public AfterFlashedEvent(EntityUid target, EntityUid? used, EntityUid? user)
+        public AfterFlashedEvent(EntityUid target, EntityUid? user, EntityUid? used)
         {
             Target = target;
-            Used = used;
             User = user;
+            Used = used;
         }
     }
 

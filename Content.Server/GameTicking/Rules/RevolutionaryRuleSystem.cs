@@ -274,18 +274,21 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
         var stunTime = TimeSpan.FromSeconds(3);
-        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target))
+        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && HasComp<HumanoidAppearanceComponent>(ev.Target))
         {
+            if (ev.Used != null)
+            {
+                _charges.AddCharges(ev.Used.Value, 1);
+            }
+            _npcFaction.RemoveFaction(ev.Target, "NanoTrasen");
+            _npcFaction.AddFaction(ev.Target, "Revolutionary");
+            EnsureComp<RevolutionaryComponent>(ev.Target);
+            _sharedStun.TryParalyze(ev.Target, stunTime, true);
+
             var mind = _mindSystem.GetMind(ev.Target);
-            if (mind != null && mind.OwnedEntity != null && ev.Used != null)
+            if (mind != null && mind.OwnedEntity != null)
             {
                 _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("Rev")));
-                _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen");
-                _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
-                EnsureComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                _charges.AddCharges(ev.Used.Value, 1);
-                _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
                 if (mind.Session != null)
                 {
                     var message = Loc.GetString("rev-role-greeting");
@@ -345,22 +348,25 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (dead == inRound)
             {
                 revs.RevsLost = true;
-                var allPlayers = _playerSystem.ServerSessions.ToList();
-                foreach (var rev in allPlayers)
+                var rev = AllEntityQuery<RevolutionaryComponent>();
+                while (rev.MoveNext(out var id, out var comp))
                 {
-                    var mind = rev.GetMind();
-                    if (mind != null)
-                        if (HasComp<RevolutionaryComponent>(mind.OwnedEntity) && !HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
-                        {
-                            var name = Identity.Entity(mind.OwnedEntity.Value, EntityManager);
-                            _npcFaction.AddFaction(mind.OwnedEntity.Value, "NanoTrasen");
-                            _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "Revolutionary");
-                            _sharedStun.TryParalyze(mind.OwnedEntity.Value, stunTime, true);
-                            RemComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                            RemComp<RevolutionaryRuleComponent>(mind.OwnedEntity.Value);
-                            _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), mind.OwnedEntity.Value);
-
-                        }
+                    if (HasComp<RevolutionaryComponent>(id) && !HasComp<HeadRevolutionaryComponent>(id))
+                    {
+                        var name = Identity.Entity(id, EntityManager);
+                        _npcFaction.AddFaction(id, "NanoTrasen");
+                        _npcFaction.RemoveFaction(id, "Revolutionary");
+                        _sharedStun.TryParalyze(id, stunTime, true);
+                        RemCompDeferred<RevolutionaryComponent>(id);
+                        _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), id);
+                    }
+                }
+            }
+            else
+            {
+                if (revs.RevsLost)
+                {
+                    revs.RevsLost = false;
                 }
             }
             // Checks if all heads are dead to finish the round.

@@ -16,13 +16,13 @@ public sealed class MindShieldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MindShieldComponent, ComponentAdd>(MindShieldAdded);
+        SubscribeLocalEvent<MindShieldComponent, ComponentInit>(MindShieldAdded);
     }
 
     /// <summary>
     /// When the MindShield is added this will trigger to check if the implanted is a Rev or Head Rev and will remove Rev or "destroy" implant respectively.
     /// </summary>
-    private void MindShieldAdded(EntityUid uid, MindShieldComponent comp, ComponentAdd add)
+    private void MindShieldAdded(EntityUid uid, MindShieldComponent comp, ComponentInit init)
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))
         {
