@@ -1,5 +1,6 @@
 using Content.Server.Inventory;
 using Content.Server.Popups;
+using Content.Server.Body.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -15,6 +16,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Shared.Hands.Components;
 
 namespace Content.Server.Guardian
 {
@@ -29,7 +31,7 @@ namespace Content.Server.Guardian
         [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly ServerInventorySystem _inventory = default!;
+        [Dependency] private readonly BodySystem _bodySystem = default!;
 
         public override void Initialize()
         {
@@ -95,6 +97,9 @@ namespace Content.Server.Guardian
         {
             if (component.HostedGuardian == null)
                 return;
+
+            if (HasComp<HandsComponent>(component.HostedGuardian.Value))
+                _bodySystem.GibBody(component.HostedGuardian.Value);
 
             EntityManager.QueueDeleteEntity(component.HostedGuardian.Value);
             _actionSystem.RemoveAction(uid, component.Action);
@@ -218,8 +223,6 @@ namespace Content.Server.Guardian
             }
             else if (args.NewMobState == MobState.Dead)
             {
-                _inventory.TryUnequip(component.HostedGuardian.Value, "pocket1", true, true);
-                _inventory.TryUnequip(component.HostedGuardian.Value, "pocket2", true, true);
                 //TODO: Replace WithVariation with datafield
                 _audio.Play("/Audio/Voice/Human/malescream_guardian.ogg", Filter.Pvs(uid), uid, true, AudioHelpers.WithVariation(0.20f));
                 EntityManager.RemoveComponent<GuardianHostComponent>(uid);
