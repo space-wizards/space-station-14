@@ -36,25 +36,17 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (component.AllowBolt)
-                    {
                         component.Mode = OperatingMode.ToggleBolts;
                         switchMessageId = "door-remote-switch-state-toggle-bolts";
                         break;
-                    }
 
                     // Skip toggle bolts mode and move on from there (to emergency access)
-                    goto case OperatingMode.ToggleBolts;
                 case OperatingMode.ToggleBolts:
-                    if (component.AllowEmergencyAccess)
-                    {
                         component.Mode = OperatingMode.ToggleEmergencyAccess;
                         switchMessageId = "door-remote-switch-state-toggle-emergency-access";
                         break;
-                    }
 
                     // Skip ToggleEmergencyAccess mode and move on from there (to door toggle)
-                    goto case OperatingMode.ToggleEmergencyAccess;
                 case OperatingMode.ToggleEmergencyAccess:
                     component.Mode = OperatingMode.OpenClose;
                     switchMessageId = "door-remote-switch-state-open-close";
@@ -87,15 +79,10 @@ namespace Content.Server.Remotes
                 return;
             }
 
-            bool doorAccessBlocking = (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
-                                         !_doorSystem.HasAccess(args.Target.Value, args.Used, accessComponent));
-            bool firelockOnlyBlocking = (component.FirelockOnly &&
-                                           !TryComp<FirelockComponent>(args.Target, out var _firelockComponent));
-            bool airlockOnlyBlocking = (component.AirlockOnly && !isAirlock); // Most Remotes only work on airlocks
-
-            // if (doorAccessBlocking || firelockOnlyBlocking || airlockOnlyBlocking)
-            if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
-                !_doorSystem.HasAccess(args.Target.Value, args.Used, doorComp, accessComponent))
+            // Holding the door remote grants you access to the relevant doors IN ADDITION to what ever access you had.
+            // This access is enforced in _doorSystem.HasAccess when it calls _accessReaderSystem.IsAllowed
+            if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent)
+                && !_doorSystem.HasAccess(args.Target.Value, args.User, doorComp, accessComponent))
             {
                 _doorSystem.Deny(args.Target.Value, doorComp, args.User);
                 ShowPopupToUser("door-remote-denied", args.User);
@@ -105,7 +92,7 @@ namespace Content.Server.Remotes
             switch (component.Mode)
             {
                 case OperatingMode.OpenClose:
-                    if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.Used))
+                    if (_doorSystem.TryToggleDoor(args.Target.Value, doorComp, args.User))
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                     break;
                 case OperatingMode.ToggleBolts:
