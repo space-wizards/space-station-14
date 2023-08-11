@@ -294,6 +294,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
 
 - type: entity
   id: LockerHeadOfSecurityFilled

@@ -1,83 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed being able to insert tanks/jetpacks into locked gas canisters.,
-    type: Fix}
-  id: 4009
-  time: '2023-06-15T12:03:20.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: CentCom's Ministry Of Truth has trained station mice to stop eating
-      uranium., type: Fix}
-  id: 4010
-  time: '2023-06-15T12:35:11.0000000+00:00'
-- author: notafet
-  changes:
-  - {message: Female dwarves now have female laughs., type: Tweak}
-  id: 4011
-  time: '2023-06-15T19:19:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Ice anomaly projectiles do increased structural damage., type: Tweak}
-  - {message: Ice anomalies now shoot more projectiles with increased accuracy on
-      living targets., type: Tweak}
-  - {message: Decreased explosive power from the ice anomaly supercritical event.,
-    type: Tweak}
-  id: 4012
-  time: '2023-06-16T00:52:49.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Changed anchored and unanchored examine text to be green and red respectfully.,
-    type: Tweak}
-  id: 4013
-  time: '2023-06-16T02:46:39.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'NanoTrasen has finally started rewarding salvagers for actually completing
-      their missions. Rewards can range from materials, to cloning parts, to advanced
-      weaponry.', type: Add}
-  - {message: todo..., type: Remove}
-  id: 4014
-  time: '2023-06-16T05:19:03.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: 'NanoTrasen has discovered new planets with dangerous atmospheres, or
-      none at all, to send salvagers to.', type: Add}
-  id: 4015
-  time: '2023-06-16T05:25:26.0000000+00:00'
-- author: Arteben
-  changes:
-  - {message: Most entities can now zoom in their view via the zoom key bindings.
-      Zooming out is still restricted., type: Tweak}
-  id: 4016
-  time: '2023-06-16T23:22:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
-  id: 4017
-  time: '2023-06-17T01:59:54.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: When taking a mission you can now see what its rewards will be., type: Tweak}
-  id: 4018
-  time: '2023-06-17T02:00:54.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: Shield values now can be examined, type: Add}
-  id: 4019
-  time: '2023-06-17T02:07:58.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: 'Fix gas tile overlays not always showing, e.g. gas leaks on shuttles
-      on planets.', type: Fix}
-  id: 4020
-  time: '2023-06-17T02:30:56.0000000+00:00'
-- author: Sigil
-  changes:
-  - {message: Fixed the armour values on all winter coats that have caustic armour
-      as well as the CMO and virology bio suits., type: Fix}
-  id: 4021
-  time: '2023-06-17T09:55:16.0000000+00:00'
 - author: PixelTK
   changes:
   - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
@@ -2982,3 +2903,86 @@ Entries:
   - {message: Changed EMP implant pricing to 3 telecrystals., type: Tweak}
   id: 4508
   time: '2023-08-10T08:40:17.0000000+00:00'
+- author: kxvvv
+  changes:
+  - {message: Added a homemade stun weapon., type: Add}
+  id: 4509
+  time: '2023-08-10T09:33:34.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'You can now construct chain link fencing. Bullets pass through it,
+      it''s very slowly vaultable, and you can construct gates. Expect to see it mapped
+      eventually.', type: Add}
+  id: 4510
+  time: '2023-08-10T14:16:26.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Liquid plasma rivers now spawn on snow planets (you may have noticed
+      foreshadowing from the planet background sprites). They''re just as dangerous
+      as lava, so be careful.', type: Add}
+  id: 4511
+  time: '2023-08-10T14:16:51.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Added supermatter grenade analog from SS13 and brand new whitehole grenade
+      for special operations., type: Add}
+  id: 4512
+  time: '2023-08-10T14:29:47.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
+      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
+  - {message: Updated pried tiles to match the appearance of the new tiles better.,
+    type: Tweak}
+  id: 4513
+  time: '2023-08-10T17:46:44.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: 'Updated asteroid tiles to match their sprites from /tg/. They are much
+      more vibrant, and should fit in a lot better with their surroundings.', type: Tweak}
+  - {message: Updated pried tiles to match the appearance of the new tiles better.,
+    type: Tweak}
+  id: 4514
+  time: '2023-08-10T18:33:15.435911+00:00'
+- author: juliangiebel & mirrorcult
+  changes:
+  - {message: 'You may notice that chat text in general has become much prettier and
+      dynamic. Whispered text is smaller, announcements are larger, and names should
+      pop out more.', type: Tweak}
+  id: 4515
+  time: '2023-08-10T18:33:15.436963+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All crates have a brand new look., type: Tweak}
+  id: 4516
+  time: '2023-08-11T00:12:38.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Job icons now ignore lighting., type: Fix}
+  id: 4517
+  time: '2023-08-11T00:36:26.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'As disease has been eradicated, Spaceacillin can no longer be created
+      or found.', type: Remove}
+  - {message: Creating medicated suture now required Cryptobiolin in place of Spaceacillin.,
+    type: Tweak}
+  id: 4518
+  time: '2023-08-11T03:04:49.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Added missing emergency security orders to the hardsuit version of HoS's
+      locker., type: Fix}
+  id: 4519
+  time: '2023-08-11T03:31:13.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: The Microwave and wall-mounted Nanomed now use sprites similar to the
+      ones found in SS14., type: Tweak}
+  id: 4520
+  time: '2023-08-11T05:12:37.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Ice has been added to the freezer crates. Chefs rejoice!, type: Tweak}
+  id: 4521
+  time: '2023-08-11T07:28:27.0000000+00:00'
