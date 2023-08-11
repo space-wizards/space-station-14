@@ -16,6 +16,7 @@ using Content.Shared.Shuttles.Components;
 using Content.Shared.Spawners.Components;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
+using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -266,8 +267,7 @@ public sealed class ArrivalsSystem : EntitySystem
             return false;
 
         var points = EntityQueryEnumerator<SpawnPointComponent, TransformComponent>();
-        var possiblePositions = new List<EntityCoordinates>();
-        var passengerPositions = new List<EntityCoordinates>();
+        var possiblePositions = new ValueList<EntityCoordinates>(32);
 
         // Find a spawnpoint on the same map as the player is already docked with now.
         while ( points.MoveNext(out var uid, out var spawnPoint, out var xform))
@@ -277,11 +277,6 @@ public sealed class ArrivalsSystem : EntitySystem
             {
                 // Add to list of possible spawn locations
                 possiblePositions.Add(xform.Coordinates);
-            } else if (possiblePositions.Count == 0 && spawnPoint?.Job?.ID == "Passenger" &&
-                       _station.GetOwningStation(uid, xform) == stationId)
-            {
-                // Add to passenger positions as fallback if there are no possiblePositions
-                passengerPositions.Add(xform.Coordinates);
             }
         }
 
@@ -289,19 +284,10 @@ public sealed class ArrivalsSystem : EntitySystem
         {
             // Move the player to a random late-join spawnpoint.
             _transform.SetCoordinates(player, transform, _random.Pick(possiblePositions));
-        }
-        else
-        {
-            if (passengerPositions.Count == 0)
-            {
-                return false;
-            }
-
-            // Move the player to a random passenger spawnpoint.
-            _transform.SetCoordinates(player, transform, _random.Pick(passengerPositions));
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     private void OnShuttleStartup(EntityUid uid, ArrivalsShuttleComponent component, ComponentStartup args)
@@ -336,8 +322,8 @@ public sealed class ArrivalsSystem : EntitySystem
                 time = comp.NextArrivalsTime;
         }
 
-        var duration = _ticker.RoundDuration();
-        return (time < duration) ? null : time - _ticker.RoundDuration();
+        var duration = _timing.CurTime;
+        return (time < duration) ? null : time - duration;
     }
 
     public override void Update(float frameTime)
@@ -371,7 +357,7 @@ public sealed class ArrivalsSystem : EntitySystem
                     if (arrivals.IsValid())
                         _shuttles.FTLTravel(uid, shuttle, arrivals, dock: true);
 
-                    comp.NextArrivalsTime = _ticker.RoundDuration() + TimeSpan.FromSeconds(tripTime);
+                    comp.NextArrivalsTime = _timing.CurTime + TimeSpan.FromSeconds(tripTime);
                 }
                 // Go to station
                 else
@@ -383,8 +369,8 @@ public sealed class ArrivalsSystem : EntitySystem
 
                     // The ArrivalsCooldown includes the trip there, so we only need to add the time taken for
                     // the trip back.
-                    comp.NextArrivalsTime = _ticker.RoundDuration() +
-                         TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown) + tripTime);
+                    comp.NextArrivalsTime = _timing.CurTime + TimeSpan.FromSeconds(
+                        _cfgManager.GetCVar(CCVars.ArrivalsCooldown) + tripTime);
                 }
 
                 comp.NextTransfer += TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.ArrivalsCooldown));
