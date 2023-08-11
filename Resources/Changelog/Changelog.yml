@@ -1,9 +1,4 @@
 Entries:
-- author: PixelTK
-  changes:
-  - {message: Tweaked arachnids to look a bit more fluffier., type: Tweak}
-  id: 4022
-  time: '2023-06-17T19:47:32.0000000+00:00'
 - author: Owai-Seek
   changes:
   - {message: Added Dermaline Pills and Cryoxadone Beaker entities., type: Add}
@@ -2986,3 +2981,14 @@ Entries:
   - {message: Ice has been added to the freezer crates. Chefs rejoice!, type: Tweak}
   id: 4521
   time: '2023-08-11T07:28:27.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: Air Technicians will find a new fire-fighting door remote in their locker.
+      It controls FireLocks Let space in and fire out using a handy remote from a
+      safe distance!, type: Add}
+  - {message: 'FireDoors can be bolted and unbolted by fire-fighting, engineering
+      and command door remotes', type: Add}
+  - {message: 'Door remotes add your ID card access to their own. If you have access
+      to open a door, you can control that door with any door remote.', type: Tweak}
+  id: 4522
+  time: '2023-08-11T09:29:33.0000000+00:00'
