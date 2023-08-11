@@ -1460,7 +1460,7 @@
   - type: IdExaminable
   - type: Loadout
     prototypes: [SyndicateOperativeGearMonkey]
-  - type: tag
+  - type: Tag
     tags:
     - VimPilot
 
