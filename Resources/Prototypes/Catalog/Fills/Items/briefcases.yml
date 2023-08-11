@@ -27,7 +27,7 @@
   id: BriefcaseSyndieLobbyingBundleFilled
   name: brown briefcase
   parent: BriefcaseSyndie
-  suffix: Filled, Spacebucks
+  suffix: Filled, Spesos
   components:
   - type: StorageFill
     contents:

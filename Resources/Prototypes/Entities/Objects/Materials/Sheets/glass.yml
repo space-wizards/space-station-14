@@ -76,6 +76,19 @@
 
 - type: entity
   parent: SheetGlass
+  id: SheetGlass10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: glass
+  - type: Stack
+    stackType: Glass
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: SheetGlass
   id: SheetGlass1
   suffix: Single
   components:

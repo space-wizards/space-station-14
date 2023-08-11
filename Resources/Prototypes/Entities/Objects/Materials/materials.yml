@@ -53,6 +53,18 @@
 
 - type: entity
   parent: MaterialCardboard
+  id: MaterialCardboard10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cardboard
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: MaterialCardboard
   id: MaterialCardboard1
   suffix: Single
   components:
@@ -120,7 +132,18 @@
       - DroneUsable
       - Gauze
       - RawMaterial
-      
+
+- type: entity
+  parent: MaterialCloth
+  id: MaterialCloth10
+  suffix: 10
+  components:
+  - type: Sprite
+    state: cloth
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: MaterialCloth
@@ -212,6 +235,16 @@
   - type: Appearance
   - type: Item
     heldPrefix: wood
+
+- type: entity
+  parent: MaterialWoodPlank
+  id: MaterialWoodPlank10
+  suffix: 10
+  components:
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
 
 - type: entity
   parent: MaterialWoodPlank
