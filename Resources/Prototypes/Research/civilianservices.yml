@@ -42,8 +42,8 @@
   - HydroponicsTrayMachineCircuitboard
 
 - type: technology
-  id: HamtrMechTech
-  name: research-technology-hamtr
+  id: CritterMechs
+  name: research-technology-critter-mechs
   icon:
     sprite: Objects/Specific/Mech/mecha.rsi
     state: hamtr
@@ -51,14 +51,15 @@
   tier: 1
   cost: 10000
   recipeUnlocks:
-    - HamtrHarness
-    - HamtrLArm
-    - HamtrRArm
-    - HamtrLLeg
-    - HamtrRLeg
-    - HamtrCentralElectronics
-    - HamtrPeripheralsElectronics
-    - MechEquipmentGrabberSmall
+  - HamtrHarness
+  - HamtrLArm
+  - HamtrRArm
+  - HamtrLLeg
+  - HamtrRLeg
+  - HamtrCentralElectronics
+  - HamtrPeripheralsElectronics
+  - MechEquipmentGrabberSmall
+  - VimHarness
 
 - type: technology
   id: FoodService
