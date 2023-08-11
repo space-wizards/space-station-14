@@ -25,7 +25,8 @@ namespace Content.Shared.Speech
         /// <summary>
         ///     What speech verb prototype should be used by default for displaying this entity's messages?
         /// </summary>
-        [DataField("speechVerb", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<SpeechVerbPrototype>))]
+        [ViewVariables(VVAccess.ReadWrite)]
+        [DataField("speechVerb", customTypeSerializer:typeof(PrototypeIdSerializer<SpeechVerbPrototype>))]
         public string SpeechVerb = "Default";
 
         /// <summary>
