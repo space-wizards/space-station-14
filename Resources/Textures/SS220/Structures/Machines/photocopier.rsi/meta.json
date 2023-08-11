@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
-  "copyright": "Original is taken from CEV-Eris at commit 7c7358df0347984994c1e6c643b61b8802cd7da7",
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Modified by TheArturZh for SS220. Original is taken from CEV-Eris at commit 7c7358df0347984994c1e6c643b61b8802cd7da7",
   "size": {
     "x": 32,
     "y": 32

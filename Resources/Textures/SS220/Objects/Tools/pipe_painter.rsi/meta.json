@@ -1,6 +1,6 @@
 {
-   "copyright" : "Original is taken from tgstation at commit https://github.com/tgstation/tgstation/commit/3866dabea8ba6c31115e661b852601cc099e0136",
-   "license" : "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+   "copyright" : "Modified by TheArturZh for SS220. Original is taken from tgstation at commit https://github.com/tgstation/tgstation/commit/3866dabea8ba6c31115e661b852601cc099e0136",
+   "license" : "CC-BY-SA-3.0",
    "size" : {
       "x" : 32,
       "y" : 32
