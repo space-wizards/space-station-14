@@ -188,6 +188,21 @@
    - chittered
    - chittered.
    - chittered!
+  
+- type: emote
+  id: Squeak
+  category: Vocal
+  chatMessages: [squeaks.]
+  chatTriggers:
+   - squeak
+   - squeak.
+   - squeak!
+   - squeaks
+   - squeaks.
+   - squeaks!
+   - squeaked
+   - squeaked.
+   - squeaked!
 
 # hand emotes
 - type: emote

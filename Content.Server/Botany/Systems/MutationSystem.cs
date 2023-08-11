@@ -119,6 +119,7 @@ public sealed class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
+        p = Math.Clamp(p, 0, 1);
         if (!Random(p))
         {
             return;
@@ -150,6 +151,7 @@ public sealed class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
+        p = Math.Clamp(p, 0, 1);
         if (!Random(p))
         {
             return;
@@ -174,7 +176,8 @@ public sealed class MutationSystem : EntitySystem
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult*bits/totalbits;
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
         if (!Random(p))
         {
             return;
@@ -186,6 +189,7 @@ public sealed class MutationSystem : EntitySystem
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
         float p = mult * bits/totalbits;
+        p = Math.Clamp(p, 0, 1);
         if (!Random(p))
             return;
 
