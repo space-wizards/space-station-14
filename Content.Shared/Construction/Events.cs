@@ -15,7 +15,7 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Position to start building.
     /// </summary>
-    public readonly EntityCoordinates Location;
+    public readonly NetCoordinates Location;
 
     /// <summary>
     ///     The construction prototype to start building.
@@ -29,7 +29,7 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// </summary>
     public readonly int Ack;
 
-    public TryStartStructureConstructionMessage(EntityCoordinates loc, string prototypeName, Angle angle, int ack)
+    public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack)
     {
         Location = loc;
         PrototypeName = prototypeName;
@@ -67,9 +67,9 @@ public sealed class AckStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     The entity that is now being constructed, if any.
     /// </summary>
-    public readonly EntityUid? Uid;
+    public readonly NetEntity? Uid;
 
-    public AckStructureConstructionMessage(int ghostId, EntityUid? uid = null)
+    public AckStructureConstructionMessage(int ghostId, NetEntity? uid = null)
     {
         GhostId = ghostId;
         Uid = uid;

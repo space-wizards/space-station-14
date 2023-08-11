@@ -9,13 +9,13 @@ namespace Content.Shared.Examine
         [Serializable, NetSerializable]
         public sealed class RequestExamineInfoMessage : EntityEventArgs
         {
-            public readonly EntityUid EntityUid;
-            
+            public readonly NetEntity EntityUid;
+
             public readonly int Id;
 
             public readonly bool GetVerbs;
 
-            public RequestExamineInfoMessage(EntityUid entityUid, int id, bool getVerbs=false)
+            public RequestExamineInfoMessage(NetEntity entityUid, int id, bool getVerbs=false)
             {
                 EntityUid = entityUid;
                 Id = id;
@@ -26,7 +26,7 @@ namespace Content.Shared.Examine
         [Serializable, NetSerializable]
         public sealed class ExamineInfoResponseMessage : EntityEventArgs
         {
-            public readonly EntityUid EntityUid;
+            public readonly NetEntity EntityUid;
             public readonly int Id;
             public readonly FormattedMessage Message;
 
@@ -37,7 +37,7 @@ namespace Content.Shared.Examine
 
             public readonly bool KnowTarget;
 
-            public ExamineInfoResponseMessage(EntityUid entityUid, int id, FormattedMessage message, List<Verb>? verbs=null,
+            public ExamineInfoResponseMessage(NetEntity entityUid, int id, FormattedMessage message, List<Verb>? verbs=null,
                 bool centerAtCursor=true, bool openAtOldTooltip=true, bool knowTarget = true)
             {
                 EntityUid = entityUid;

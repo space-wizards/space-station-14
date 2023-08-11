@@ -42,9 +42,9 @@ public abstract partial class SharedInstrumentComponent : Component
 [Serializable, NetSerializable]
 public sealed class InstrumentStopMidiEvent : EntityEventArgs
 {
-    public EntityUid Uid { get; }
+    public NetEntity Uid { get; }
 
-    public InstrumentStopMidiEvent(EntityUid uid)
+    public InstrumentStopMidiEvent(NetEntity uid)
     {
         Uid = uid;
     }

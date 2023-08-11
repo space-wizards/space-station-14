@@ -43,21 +43,21 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
     public readonly ActionType Action;
-    public readonly EntityUid? EntityTarget;
-    public readonly EntityCoordinates? EntityCoordinatesTarget;
+    public readonly NetEntity? EntityTarget;
+    public readonly NetCoordinates? EntityCoordinatesTarget;
 
     public RequestPerformActionEvent(InstantAction action)
     {
         Action = action;
     }
 
-    public RequestPerformActionEvent(EntityTargetAction action, EntityUid entityTarget)
+    public RequestPerformActionEvent(EntityTargetAction action, NetEntity entityTarget)
     {
         Action = action;
         EntityTarget = entityTarget;
     }
 
-    public RequestPerformActionEvent(WorldTargetAction action, EntityCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(WorldTargetAction action, NetCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;

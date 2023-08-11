@@ -82,10 +82,10 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
 [NetSerializable]
 public sealed class CameraKickEvent : EntityEventArgs
 {
-    public readonly EntityUid Euid;
+    public readonly NetEntity Euid;
     public readonly Vector2 Recoil;
 
-    public CameraKickEvent(EntityUid euid, Vector2 recoil)
+    public CameraKickEvent(NetEntity euid, Vector2 recoil)
     {
         Recoil = recoil;
         Euid = euid;

@@ -45,13 +45,15 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity == null)
             return;
 
-        if (!TryComp(action.AttachedEntity, out ActionsComponent? comp))
+        var ent = ToEntity(action.AttachedEntity);
+
+        if (!TryComp(ent, out ActionsComponent? comp))
         {
             action.AttachedEntity = null;
             return;
         }
 
-        Dirty(comp);
+        Dirty(ent.Value, comp);
     }
 
     public void SetToggled(ActionType action, bool toggled)
@@ -124,20 +126,23 @@ public abstract class SharedActionsSystem : EntitySystem
         switch (act)
         {
             case EntityTargetAction entityAction:
-
-                if (ev.EntityTarget is not { Valid: true } entityTarget)
+            {
+                if (ev.EntityTarget is not { Valid: true } netEntity)
                 {
                     Log.Error($"Attempted to perform an entity-targeted action without a target! Action: {entityAction.DisplayName}");
                     return;
                 }
 
+                var entityTarget = ToEntity(netEntity);
                 var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
 
                 if (!ValidateEntityTarget(user, entityTarget, entityAction))
                     return;
 
-                if (act.Provider == null)
+                var provider = ToEntity(act.Provider);
+
+                if (provider == null)
                 {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {ToPrettyString(entityTarget):target}.");
@@ -145,7 +150,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 else
                 {
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
+                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(provider.Value):provider}) targeted at {ToPrettyString(entityTarget):target}.");
                 }
 
                 if (entityAction.Event != null)
@@ -155,21 +160,24 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 break;
-
+            }
             case WorldTargetAction worldAction:
-
-                if (ev.EntityCoordinatesTarget is not { } entityCoordinatesTarget)
+            {
+                if (ev.EntityCoordinatesTarget is not { } netCoordinates)
                 {
                     Log.Error($"Attempted to perform a world-targeted action without a target! Action: {worldAction.DisplayName}");
                     return;
                 }
 
+                var entityCoordinatesTarget = ToCoordinates(netCoordinates);
                 _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;
 
-                if (act.Provider == null)
+                var provider = ToEntity(act.Provider);
+
+                if (provider == null)
                 {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action targeted at {entityCoordinatesTarget:target}.");
@@ -177,7 +185,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 else
                 {
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(act.Provider.Value):provider}) targeted at {entityCoordinatesTarget:target}.");
+                        $"{ToPrettyString(user):user} is performing the {name:action} action (provided by {ToPrettyString(provider.Value):provider}) targeted at {entityCoordinatesTarget:target}.");
                 }
 
                 if (worldAction.Event != null)
@@ -187,13 +195,15 @@ public abstract class SharedActionsSystem : EntitySystem
                 }
 
                 break;
-
+            }
             case InstantAction instantAction:
-
+            {
                 if (act.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
 
-                if (act.Provider == null)
+                var provider = ToEntity(act.Provider);
+
+                if (provider == null)
                 {
                     _adminLogger.Add(LogType.Action,
                         $"{ToPrettyString(user):user} is performing the {name:action} action.");
@@ -201,11 +211,12 @@ public abstract class SharedActionsSystem : EntitySystem
                 else
                 {
                     _adminLogger.Add(LogType.Action,
-                        $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(act.Provider.Value):provider}.");
+                        $"{ToPrettyString(user):user} is performing the {name:action} action provided by {ToPrettyString(provider.Value):provider}.");
                 }
 
                 performEvent = instantAction.Event;
                 break;
+            }
         }
 
         if (performEvent != null)
@@ -286,11 +297,12 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
+            var provider = ToEntity(action.Provider);
 
-            if (action.Provider == null)
+            if (provider == null)
                 RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
             else
-                RaiseLocalEvent(action.Provider.Value, (object) actionEvent, broadcast: true);
+                RaiseLocalEvent(provider.Value, (object) actionEvent, broadcast: true);
 
             handled = actionEvent.Handled;
         }
@@ -342,12 +354,12 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         comp ??= EnsureComp<ActionsComponent>(uid);
-        action.Provider = provider;
-        action.AttachedEntity = uid;
+        action.Provider = ToNetEntity(provider);
+        action.AttachedEntity = ToNetEntity(uid);
         AddActionInternal(comp, action);
 
         if (dirty)
-            Dirty(comp);
+            Dirty(uid, comp);
     }
 
     protected virtual void AddActionInternal(ActionsComponent comp, ActionType action)
@@ -374,7 +386,7 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         if (dirty && !allClientExclusive)
-            Dirty(comp);
+            Dirty(uid, comp);
     }
 
     /// <summary>
@@ -387,10 +399,12 @@ public abstract class SharedActionsSystem : EntitySystem
 
         foreach (var act in comp.Actions.ToArray())
         {
-            if (act.Provider == provider)
+            var actProvider = ToEntity(act.Provider);
+
+            if (actProvider == provider)
                 RemoveAction(uid, act, comp, dirty: false);
         }
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     public virtual void RemoveAction(EntityUid uid, ActionType action, ActionsComponent? comp = null, bool dirty = true)
@@ -402,7 +416,7 @@ public abstract class SharedActionsSystem : EntitySystem
         action.AttachedEntity = null;
 
         if (dirty)
-            Dirty(comp);
+            Dirty(uid, comp);
     }
 
     #endregion

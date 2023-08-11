@@ -149,9 +149,9 @@ namespace Content.Shared.Decals
     public sealed class RequestDecalPlacementEvent : EntityEventArgs
     {
         public Decal Decal;
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalPlacementEvent(Decal decal, EntityCoordinates coordinates)
+        public RequestDecalPlacementEvent(Decal decal, NetCoordinates coordinates)
         {
             Decal = decal;
             Coordinates = coordinates;
@@ -161,9 +161,9 @@ namespace Content.Shared.Decals
     [Serializable, NetSerializable]
     public sealed class RequestDecalRemovalEvent : EntityEventArgs
     {
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public RequestDecalRemovalEvent(EntityCoordinates coordinates)
+        public RequestDecalRemovalEvent(NetCoordinates coordinates)
         {
             Coordinates = coordinates;
         }
