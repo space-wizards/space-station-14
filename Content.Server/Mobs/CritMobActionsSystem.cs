@@ -33,7 +33,7 @@ public sealed class CritMobActionsSystem : EntitySystem
 
     private void OnSuccumb(EntityUid uid, MobStateActionsComponent component, CritSuccumbEvent args)
     {
-        if (!TryComp<ActorComponent>(uid, out var actor))
+        if (!TryComp<ActorComponent>(uid, out var actor) || !_mobState.IsCritical(uid))
             return;
 
         _host.ExecuteCommand(actor.PlayerSession, "ghost");
@@ -42,6 +42,9 @@ public sealed class CritMobActionsSystem : EntitySystem
 
     private void OnFakeDeath(EntityUid uid, MobStateActionsComponent component, CritFakeDeathEvent args)
     {
+        if (!_mobState.IsCritical(uid))
+            return;
+
         args.Handled = _deathgasp.Deathgasp(uid);
     }
 
