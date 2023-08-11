@@ -33,6 +33,8 @@
     - type: StaticPrice
       price: 200
     - type: Tag
+      tags:
+        - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -101,3 +103,6 @@
       walkModifier: 0.85
       sprintModifier: 0.8
       enabled: false
+    - type: Tag
+      tags:
+        - WhitelistChameleon
