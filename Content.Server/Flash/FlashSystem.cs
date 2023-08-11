@@ -22,20 +22,7 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
-using Robust.Shared.Prototypes;
 using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
-using Content.Server.Roles;
-using Content.Shared.Roles;
-using Content.Shared.Revolutionary.Components;
-using Content.Server.NPC.Systems;
-using Content.Shared.Stunnable;
-using Content.Server.Revolutionary;
-using Content.Server.Chat.Managers;
-using Content.Server.Mindshield.Components;
-using Content.Shared.Sound.Components;
-using Content.Shared.Hands;
-using Content.Shared.Item;
-using Robust.Shared.Log;
 
 namespace Content.Server.Flash
 {

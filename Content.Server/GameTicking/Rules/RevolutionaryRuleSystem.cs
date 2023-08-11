@@ -23,20 +23,16 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
-using Content.Server.Mindshield;
 using Content.Server.Shuttles.Systems;
-using Content.Server.Objectives.Interfaces;
 using Content.Shared.IdentityManagement;
 using Content.Server.Flash;
-using Content.Server.Mindshield.Components;
-using Robust.Shared.Toolshed.TypeParsers;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Charges.Systems;
-using TerraFX.Interop.Windows;
 
 namespace Content.Server.GameTicking.Rules;
 
 /// <summary>
-/// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for game the game to end.)
+/// Where all the main stuff for Revolutionaries happens (Assigning Head Revs, Command on station, and checking for the game to end.)
 /// </summary>
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
@@ -49,7 +45,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly MindShieldSystem _mindShield = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly RoundEndSystem _roundEndSystem = default!;
@@ -89,7 +84,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (GameTicker.IsGameRuleAdded(uid, gameRule) && _endRoundCheck <= _timing.CurTime)
         {
             _endRoundCheck = _timing.CurTime + _timerWait;
-            _mindShield.MindShieldCheck();
             CheckFinish();
         }
     }

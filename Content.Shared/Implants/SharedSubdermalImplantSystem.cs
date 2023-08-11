@@ -1,9 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mindshield.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Tag;
 using Robust.Shared.Containers;
@@ -53,6 +54,11 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                     QueueDel(implant);
                 }
             }
+        }
+
+        if (_tag.HasTag(uid, "MindShield"))
+        {
+            EnsureComp<MindShieldComponent>(component.ImplantedEntity.Value);
         }
     }
 

@@ -299,4 +299,4 @@
 - type: startingGear
   id: HeadRevGear
   equipment:
-    pocket1: Flash
+    pocket2: Flash

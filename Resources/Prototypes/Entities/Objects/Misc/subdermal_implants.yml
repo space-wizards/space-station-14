@@ -274,3 +274,6 @@
    - type: SubdermalImplant
      permanent: true
    - type: MindShield
+   - type: Tag
+     tags:
+       - MindShield

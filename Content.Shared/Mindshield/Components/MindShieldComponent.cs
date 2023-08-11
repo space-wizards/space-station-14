@@ -3,11 +3,11 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Mindshield.Components;
+namespace Content.Shared.Mindshield.Components;
 /// <summary>
 /// If a player has a Mindshield they will get this component to prevent conversion.
 /// </summary>
-[RegisterComponent, Access(typeof(MindShieldSystem))]
+[RegisterComponent, NetworkedComponent]
 public sealed class MindShieldComponent : Component
 {
 }
