@@ -1,10 +1,4 @@
 Entries:
-- author: Arteben
-  changes:
-  - {message: Most entities can now zoom in their view via the zoom key bindings.
-      Zooming out is still restricted., type: Tweak}
-  id: 4016
-  time: '2023-06-16T23:22:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: HAMTR Mech is now a tier 1 civilian service technology., type: Tweak}
@@ -2984,3 +2978,8 @@ Entries:
       pop out more.', type: tweak}
   id: 4515
   time: '2023-08-10T18:33:15.436963+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All crates have a brand new look., type: Tweak}
+  id: 4516
+  time: '2023-08-11T00:12:38.0000000+00:00'
