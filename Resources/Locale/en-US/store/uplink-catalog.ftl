@@ -79,10 +79,10 @@ uplink-mosin-ammo-desc = A box of cartridges for the surplus rifle.
 uplink-sniper-ammo-name = ammunition box (.60 antimateriel)
 uplink-sniper-ammo-desc = a box of 10 cartridges for the hristov sniper rifle
 
-uplink-shotgun-magazine-lethal-name = Lethal shotgun magazine
+uplink--magazine-lethal-name = Lethal shotgun magazine
 uplink-shotgun-magazine-lethal-desc = A magazine of 8 lethal shells for the bulldog auto shotgun.
 
-uplink-shotgun-magazine-Beanbags-name = Beanbag shotgun magazine
+uplink-shotgun-magazine-Beanbags-name = Beanbag shotgun magazine will it work this time
 uplink-shotgun-magazine-Beanbags-desc = A magazine of 8 beanbag shells for the bulldog auto shotgun.
 
 # Utility
