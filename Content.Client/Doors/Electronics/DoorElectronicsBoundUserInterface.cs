@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Shared.Access;
 using Content.Shared.Doors.Electronics;
 using Robust.Client.GameObjects;
@@ -20,14 +19,16 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
     protected override void Open()
     {
         base.Open();
-        List<string> accessLevels;
+        List<string> accessLevels = new();
 
+        foreach (var accessLevel in _prototypeManager.EnumeratePrototypes<AccessLevelPrototype>())
+        {
+            if (accessLevel.Name != null)
+            {
+                accessLevels.Add(accessLevel.ID);
+            }
+        }
 
-        accessLevels = _prototypeManager
-            .EnumeratePrototypes<AccessLevelPrototype>()
-            .Where(x => x.Name != null)
-            .Select(x => x.ID)
-            .ToList();
         accessLevels.Sort();
 
         _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
