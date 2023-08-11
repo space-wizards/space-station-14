@@ -20,7 +20,7 @@
     sprite: Interface/Actions/actions_crit.rsi
     state: fakedeath
   serverEvent: !type:CritFakeDeathEvent
-  useDelay: 60.0
+  useDelay: 30
 
 - type: instantAction
   id: CritLastWords
