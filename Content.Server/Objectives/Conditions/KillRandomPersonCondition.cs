@@ -13,7 +13,7 @@ public sealed class KillRandomPersonCondition : KillPersonCondition
     {
         var allHumans = new List<Mind.Mind>();
         var query = EntityManager.EntityQuery<MindContainerComponent, HumanoidAppearanceComponent>(true);
-        while (query.MoveNext(out var mc, out _))
+        foreach (var (mc, _) in query)
         {
             var entity = mc.Mind?.OwnedEntity;
             if (entity == default)
