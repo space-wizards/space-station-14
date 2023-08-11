@@ -135,6 +135,9 @@ public sealed class TegSystem : EntitySystem
 
         if (airA.Pressure > 0 && airB.Pressure > 0)
         {
+            var hotA = airA.Temperature > airB.Temperature;
+            var cHot = hotA ? cA : cB;
+
             // Calculate maximum amount of energy to generate this tick based on ramping above.
             // This clamps the thermal energy transfer as well.
             var targetEnergy = curRamp / _atmosphere.AtmosTickRate;
@@ -142,13 +145,12 @@ public sealed class TegSystem : EntitySystem
 
             // Calculate thermal and electrical energy transfer between the two sides.
             var δT = MathF.Abs(airA.Temperature - airB.Temperature);
-            // TODO: account for electrical energy when equalizing.
-            var transfer = Math.Min(δT * cA * cB / (cA + cB), transferMax);
+            var transfer = Math.Min(δT * cA * cB / (cA + cB - cHot * component.ThermalEfficiency), transferMax);
             electricalEnergy = transfer * component.ThermalEfficiency * component.PowerFactor;
             var outTransfer = transfer * (1 - component.ThermalEfficiency);
 
             // Adjust thermal energy in transferred gas mixtures.
-            if (airA.Temperature > airB.Temperature)
+            if (hotA)
             {
                 // A -> B
                 airA.Temperature -= transfer / cA;
