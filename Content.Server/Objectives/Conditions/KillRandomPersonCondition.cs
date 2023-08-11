@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
 using Content.Shared.Humanoid;
@@ -14,17 +13,21 @@ namespace Content.Server.Objectives.Conditions
     {
         public override IObjectiveCondition GetAssigned(Mind.Mind mind)
         {
-            var allHumans = EntityManager.EntityQuery<MindContainerComponent, HumanoidAppearanceComponent>(true).Where((mc, _) =>
+            var allHumans = new List<Mind.Mind>();
+            var query = EntityManager.EntityQuery<MindContainerComponent, HumanoidAppearanceComponent>(true);
+            while (query.MoveNext(out var mc, out _))
             {
                 var entity = mc.Mind?.OwnedEntity;
-
                 if (entity == default)
                     return false;
 
-                return EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
-                       MobStateSystem.IsAlive(entity.Value, mobState) &&
-                       mc.Mind != mind;
-            }).Select((mc, _) => mc.Mind).ToList();
+                if (EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
+                    MobStateSystem.IsAlive(entity.Value, mobState) &&
+                    mc.Mind != mind)
+                {
+                    allHumans.Add(mc.Mind);
+                }
+            }
 
             if (allHumans.Count == 0)
                 return new DieCondition(); // I guess I'll die
