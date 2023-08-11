@@ -139,6 +139,39 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
+        private byte GetOpacity(float moles, float molesVisible, float molesVisibleMax)
+        {
+            return (byte) (ContentHelpers.RoundToLevels(
+                MathHelper.Clamp01((moles - molesVisible) /
+                                   (molesVisibleMax - molesVisible)) * 255, byte.MaxValue,
+                _thresholds) * 255 / (_thresholds - 1));
+        }
+
+        public GasOverlayData GetOverlayData(GasMixture? mixture)
+        {
+            var data = new GasOverlayData(0, new byte[VisibleGasId.Length]);
+
+            for (var i = 0; i < VisibleGasId.Length; i++)
+            {
+                var id = VisibleGasId[i];
+                var gas = _atmosphereSystem.GetGas(id);
+                var moles = mixture?.Moles[id] ?? 0f;
+                ref var opacity = ref data.Opacity[i];
+
+                if (moles < gas.GasMolesVisible)
+                {
+                    continue;
+                }
+
+                opacity = (byte) (ContentHelpers.RoundToLevels(
+                    MathHelper.Clamp01((moles - gas.GasMolesVisible) /
+                                       (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
+                    _thresholds) * 255 / (_thresholds - 1));
+            }
+
+            return data;
+        }
+
         /// <summary>
         ///     Updates the visuals for a tile on some grid chunk. Returns true if the visuals have changed.
         /// </summary>
@@ -187,10 +220,7 @@ namespace Content.Server.Atmos.EntitySystems
                         continue;
                     }
 
-                    var opacity = (byte) (ContentHelpers.RoundToLevels(
-                        MathHelper.Clamp01((moles - gas.GasMolesVisible) /
-                                           (gas.GasMolesVisibleMax - gas.GasMolesVisible)) * 255, byte.MaxValue,
-                        _thresholds) * 255 / (_thresholds - 1));
+                    var opacity = GetOpacity(moles, gas.GasMolesVisible, gas.GasMolesVisibleMax);
 
                     if (oldOpacity == opacity)
                         continue;
@@ -307,7 +337,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 // Not all grids have atmospheres.
                 if (!TryComp(grid, out GasTileOverlayComponent? overlay))
-                    return;
+                    continue;
 
                 List<GasOverlayChunk> dataToSend = new();
                 ev.UpdatedChunks[grid] = dataToSend;
@@ -322,7 +352,9 @@ namespace Content.Server.Atmos.EntitySystems
                     if (previousChunks != null &&
                         previousChunks.Contains(index) &&
                         value.LastUpdate != curTick)
+                    {
                         continue;
+                    }
 
                     dataToSend.Add(value);
                 }

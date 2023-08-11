@@ -1,5 +1,6 @@
 using Content.Server.Temperature.Components;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
@@ -13,7 +14,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
         public float Min = 0;
 
         [DataField("max")]
-        public float Max = float.MaxValue;
+        public float Max = float.PositiveInfinity;
         public override bool Condition(ReagentEffectArgs args)
         {
             if (args.EntityManager.TryGetComponent(args.SolutionEntity, out TemperatureComponent? temp))
@@ -23,6 +24,13 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
             }
 
             return false;
+        }
+
+        public override string GuidebookExplanation(IPrototypeManager prototype)
+        {
+            return Loc.GetString("reagent-effect-condition-guidebook-body-temperature",
+                ("max", float.IsPositiveInfinity(Max) ? (float) int.MaxValue : Max),
+                ("min", Min));
         }
     }
 }

@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
@@ -14,9 +16,9 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         public const float BrakeCoefficient = 1.5f;
 
-        public const float MaxLinearVelocity = 10f;
+        public const float MaxLinearVelocity = 20f;
 
-        public const float MaxAngularVelocity = 1f;
+        public const float MaxAngularVelocity = 4f;
 
         /// <summary>
         /// The cached thrust available for each cardinal direction
@@ -42,5 +44,14 @@ namespace Content.Server.Shuttles.Components
         /// </summary>
         [ViewVariables]
         public DirectionFlag ThrustDirections = DirectionFlag.None;
+
+        /// <summary>
+        /// Damping applied to the shuttle's physics component when not in FTL.
+        /// </summary>
+        [DataField("linearDamping"), ViewVariables(VVAccess.ReadWrite)]
+        public float LinearDamping = 0.05f;
+
+        [DataField("angularDamping"), ViewVariables(VVAccess.ReadWrite)]
+        public float AngularDamping = 0.05f;
     }
 }

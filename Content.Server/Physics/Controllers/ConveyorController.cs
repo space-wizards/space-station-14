@@ -1,7 +1,5 @@
-
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.MachineLinking.System;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Shared.Conveyor;
@@ -103,7 +101,7 @@ public sealed class ConveyorController : SharedConveyorController
         component.State = state;
 
         if (TryComp<PhysicsComponent>(uid, out var physics))
-            _broadphase.RegenerateContacts(physics);
+            _broadphase.RegenerateContacts(uid, physics);
 
         _materialReclaimer.SetReclaimerEnabled(uid, component.State != ConveyorState.Off);
 
@@ -123,11 +121,11 @@ public sealed class ConveyorController : SharedConveyorController
         if (!xformQuery.TryGetComponent(uid, out var xform))
             return;
 
-        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, _mapManager);
+        var beltTileRef = xform.Coordinates.GetTileRef(EntityManager, MapManager);
 
         if (beltTileRef != null)
         {
-            var intersecting = _lookup.GetEntitiesIntersecting(beltTileRef.Value);
+            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value, 0f);
 
             foreach (var entity in intersecting)
             {
@@ -135,7 +133,7 @@ public sealed class ConveyorController : SharedConveyorController
                     continue;
 
                 if (physics.BodyType != BodyType.Static)
-                    _physics.WakeBody(entity, body: physics);
+                    Physics.WakeBody(entity, body: physics);
             }
         }
     }

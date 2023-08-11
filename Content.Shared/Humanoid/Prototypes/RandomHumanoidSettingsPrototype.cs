@@ -33,5 +33,5 @@ public sealed class RandomHumanoidSettingsPrototype : IPrototype, IInheritingPro
     ///     Extra components to add to this entity.
     /// </summary>
     [DataField("components")]
-    public EntityPrototype.ComponentRegistry? Components { get; }
+    public ComponentRegistry? Components { get; }
 }

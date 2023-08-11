@@ -29,10 +29,11 @@ public sealed class AdminLogsEui : BaseEui
     private int _clientBatchSize;
     private bool _isLoading = true;
     private readonly Dictionary<Guid, string> _players = new();
+    private int _roundLogs;
     private CancellationTokenSource _logSendCancellation = new();
     private LogFilter _filter;
 
-    private DefaultObjectPool<List<SharedAdminLog>> _adminLogListPool =
+    private readonly DefaultObjectPool<List<SharedAdminLog>> _adminLogListPool =
         new(new ListPolicy<SharedAdminLog>());
 
     public AdminLogsEui()
@@ -50,7 +51,7 @@ public sealed class AdminLogsEui : BaseEui
         };
     }
 
-    public int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
+    private int CurrentRoundId => EntitySystem.Get<GameTicker>().RoundId;
 
     public override async void Opened()
     {
@@ -58,8 +59,8 @@ public sealed class AdminLogsEui : BaseEui
 
         _adminManager.OnPermsChanged += OnPermsChanged;
 
-        var roundId = _filter.Round ?? EntitySystem.Get<GameTicker>().RoundId;
-        LoadFromDb(roundId);
+        var roundId = _filter.Round ?? CurrentRoundId;
+        await LoadFromDb(roundId);
     }
 
     private void ClientBatchSizeChanged(int value)
@@ -79,13 +80,13 @@ public sealed class AdminLogsEui : BaseEui
     {
         if (_isLoading)
         {
-            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>())
+            return new AdminLogsEuiState(CurrentRoundId, new Dictionary<Guid, string>(), 0)
             {
                 IsLoading = true
             };
         }
 
-        var state = new AdminLogsEuiState(CurrentRoundId, _players);
+        var state = new AdminLogsEuiState(CurrentRoundId, _players, _roundLogs);
 
         return state;
     }
@@ -120,12 +121,12 @@ public sealed class AdminLogsEui : BaseEui
                     AnyPlayers = request.AnyPlayers,
                     AllPlayers = request.AllPlayers,
                     IncludeNonPlayers = request.IncludeNonPlayers,
-                    LastLogId = 0,
+                    LastLogId = null,
                     Limit = _clientBatchSize
                 };
 
-                var roundId = _filter.Round ??= EntitySystem.Get<GameTicker>().RoundId;
-                LoadFromDb(roundId);
+                var roundId = _filter.Round ??= CurrentRoundId;
+                await LoadFromDb(roundId);
 
                 SendLogs(true);
                 break;
@@ -164,8 +165,8 @@ public sealed class AdminLogsEui : BaseEui
 
             var largestId = _filter.DateOrder switch
             {
-                DateOrder.Ascending => ^1,
-                DateOrder.Descending => 0,
+                DateOrder.Ascending => 0,
+                DateOrder.Descending => ^1,
                 _ => throw new ArgumentOutOfRangeException(nameof(_filter.DateOrder), _filter.DateOrder, null)
             };
 
@@ -192,13 +193,16 @@ public sealed class AdminLogsEui : BaseEui
         _logSendCancellation.Dispose();
     }
 
-    private async void LoadFromDb(int roundId)
+    private async Task LoadFromDb(int roundId)
     {
         _isLoading = true;
         StateDirty();
 
-        var round = await Task.Run(() => _adminLogs.Round(roundId));
-        var players = round.Players
+        var round = _adminLogs.Round(roundId);
+        var count = _adminLogs.CountLogs(roundId);
+        await Task.WhenAll(round, count);
+
+        var players = (await round).Players
             .ToDictionary(player => player.UserId, player => player.LastSeenUserName);
 
         _players.Clear();
@@ -207,6 +211,8 @@ public sealed class AdminLogsEui : BaseEui
         {
             _players.Add(id, name);
         }
+
+        _roundLogs = await count;
 
         _isLoading = false;
         StateDirty();

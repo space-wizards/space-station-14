@@ -16,12 +16,12 @@
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
   - type: Sprite
-    netsync: false
     sprite: Objects/Fun/pai.rsi
     layers:
     - state: pai-base
     - state: pai-off-overlay
       shader: unshaded
+      map: ["screen"]
   - type: Input
     context: "human"
   - type: PAI
@@ -50,12 +50,34 @@
     allowedStates:
       - Alive
   - type: Appearance
+  - type: GenericVisualizer
     visuals:
-      - type: GenericEnumVisualizer
-        key: enum.PAIVisuals.Status
-        layer: 1
-        states:
-          enum.PAIStatus.Off: pai-off-overlay
-          enum.PAIStatus.Searching: pai-searching-overlay
-          enum.PAIStatus.On: pai-on-overlay
+      enum.PAIVisuals.Status:
+        screen:
+          Off: { state: pai-off-overlay }
+          Searching: { state: pai-searching-overlay }
+          On: { state: pai-on-overlay }
 
+- type: entity
+  parent: PersonalAI
+  id: SyndicatePersonalAI
+  name: Syndicate personal ai device
+  description: Your Syndicate pal who's fun to be with!
+  components:
+  - type: Sprite
+    sprite: Objects/Fun/pai.rsi
+    layers:
+    - state: pai-base
+    - state: syndicate-pai-off-overlay
+      shader: unshaded
+  - type: ActiveRadio
+    channels:
+    - Syndicate
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PAIVisuals.Status:
+        screen:
+          Off: { state: syndicate-pai-off-overlay }
+          Searching: { state: syndicate-pai-searching-overlay }
+          On: { state: syndicate-pai-on-overlay }

@@ -80,6 +80,12 @@ public partial class GunComponent : Component
     #endregion
 
     /// <summary>
+    /// Whether this gun is shot via the use key or the alt-use key.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("useKey"), AutoNetworkedField]
+    public bool UseKey = true;
+
+    /// <summary>
     /// Where the gun is being requested to shoot.
     /// </summary>
     [ViewVariables]
@@ -136,6 +142,13 @@ public partial class GunComponent : Component
     /// </summary>
     [DataField("showExamineText")]
     public bool ShowExamineText = true;
+
+    /// <summary>
+    /// Whether or not someone with the
+    /// clumsy trait can shoot this
+    /// </summary>
+    [DataField("clumsyProof")]
+    public bool ClumsyProof = false;
 }
 
 [Flags]

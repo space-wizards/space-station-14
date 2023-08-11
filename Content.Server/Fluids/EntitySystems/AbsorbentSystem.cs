@@ -25,6 +25,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
     {
@@ -139,6 +140,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         // Remove water on target
         // Then do the transfer.
         var nonWater = absorberSoln.SplitSolutionWithout(component.PickupAmount, PuddleSystem.EvaporationReagent);
+        _solutionContainerSystem.UpdateChemicals(used, absorberSoln);
 
         if (nonWater.Volume == FixedPoint2.Zero && absorberSoln.AvailableVolume == FixedPoint2.Zero)
         {
@@ -151,6 +153,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             absorberSoln.AvailableVolume;
 
         var water = refillableSolution.RemoveReagent(PuddleSystem.EvaporationReagent, transferAmount);
+        _solutionContainerSystem.UpdateChemicals(target, refillableSolution);
 
         if (water == FixedPoint2.Zero && nonWater.Volume == FixedPoint2.Zero)
         {
@@ -158,11 +161,21 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             return false;
         }
 
-        absorberSoln.AddReagent(PuddleSystem.EvaporationReagent, water);
-        refillableSolution.AddSolution(nonWater, _prototype);
 
-        _solutionSystem.UpdateChemicals(used, absorberSoln);
-        _solutionSystem.UpdateChemicals(target, refillableSolution);
+        if (water > 0 && !_solutionContainerSystem.TryAddReagent(used, absorberSoln, PuddleSystem.EvaporationReagent, water,
+                out _))
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
+        }
+
+        var toTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
+
+        if (nonWater.Volume > 0 && !_solutionContainerSystem.TryAddSolution(target, refillableSolution, toTransferSolution))
+        {
+            _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
+        }
+
+        _solutionContainerSystem.TryAddSolution(used, absorberSoln, nonWater);
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;

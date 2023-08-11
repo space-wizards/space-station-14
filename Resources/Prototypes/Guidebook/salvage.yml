@@ -1,0 +1,4 @@
+- type: guideEntry
+  id: Salvage
+  name: guide-entry-salvage
+  text: "/ServerInfo/Guidebook/Cargo/Salvage.xml"

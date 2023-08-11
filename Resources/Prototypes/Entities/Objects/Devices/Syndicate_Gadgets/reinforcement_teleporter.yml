@@ -8,7 +8,6 @@
     sprite: Objects/Devices/communication.rsi
     layers:
     - state: old-radio
-    netsync: false
   - type: GhostRole
     name: Syndicate Agent
     description: Someone needs reinforcements. You, the first person the syndicate could find, will help them.
@@ -16,7 +15,28 @@
   - type: GhostRoleMobSpawner
     prototype: MobHumanSyndicateAgent
   - type: EmitSoundOnUse
-    sound: /Audio/Misc/emergency_meeting.ogg
+    sound: /Audio/Effects/Emotes/parp1.ogg
   - type: ItemCooldown
   - type: UseDelay
     delay: 300
+
+- type: entity
+  parent: ReinforcementRadioSyndicate
+  id: ReinforcementRadioSyndicateNukeops # Reinforcement radio exclusive to nukeops uplink
+  suffix: NukeOps
+  components:
+  - type: GhostRoleMobSpawner
+    prototype: MobHumanSyndicateAgentNukeops
+
+- type: entity
+  parent: ReinforcementRadioSyndicate
+  id: ReinforcementRadioSyndicateMonkey # Reinforcement radio exclusive to nukeops uplink
+  name: syndicate monkey reinforcement radio
+  description: Calls in a specially trained monkey to assist you.
+  components:
+  - type: GhostRole
+    name: Syndicate Monkey Agent
+    description: Someone needs reinforcements. You, a trained monkey, will help them.
+    rules: Normal syndicate antagonist rules apply. Work with whoever called you in, and don't harm them.
+  - type: GhostRoleMobSpawner
+    prototype: MobMonkeySyndicateAgent

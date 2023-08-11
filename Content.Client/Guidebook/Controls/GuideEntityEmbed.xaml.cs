@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
 using Content.Client.Guidebook.Richtext;
@@ -79,7 +81,8 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         // do examination?
         if (args.Function == ContentKeyFunctions.ExamineEntity)
         {
-            _examineSystem.DoExamine(entity.Value);
+            _examineSystem.DoExamine(entity.Value,
+                userOverride: _guidebookSystem.GetGuidebookUser());
             args.Handle();
             return;
         }
@@ -153,12 +156,12 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         if (args.TryGetValue("Scale", out var scaleStr))
         {
-            var scale = float.Parse(scaleStr);
+            var scale = float.Parse(scaleStr, CultureInfo.InvariantCulture);
             Scale = new Vector2(scale, scale);
         }
         else
         {
-            Scale = (2, 2);
+            Scale = new Vector2(2, 2);
         }
 
         if (args.TryGetValue("Interactive", out var interactive))

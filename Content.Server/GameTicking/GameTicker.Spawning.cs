@@ -1,15 +1,15 @@
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
+using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
 using Content.Server.Players;
-using Content.Server.Shuttles.Systems;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
+using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
-using Content.Shared.Ghost;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using JetBrains.Annotations;
@@ -24,6 +24,8 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+
         private const string ObserverPrototypeName = "MobObserver";
 
         /// <summary>
@@ -50,7 +52,9 @@ namespace Content.Server.GameTicking
 
                 foreach (var (player, _) in profiles)
                 {
-                    if (playerNetIds.Contains(player)) continue;
+                    if (playerNetIds.Contains(player))
+                        continue;
+
                     toRemove.Add(player);
                 }
 
@@ -60,12 +64,14 @@ namespace Content.Server.GameTicking
                 }
             }
 
-            var assignedJobs = _stationJobs.AssignJobs(profiles, _stationSystem.Stations.ToList());
+            var spawnableStations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
 
-            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, _stationSystem.Stations.ToList());
+            var assignedJobs = _stationJobs.AssignJobs(profiles, spawnableStations);
+
+            _stationJobs.AssignOverflowJobs(ref assignedJobs, playerNetIds, profiles, spawnableStations);
 
             // Calculate extended access for stations.
-            var stationJobCounts = _stationSystem.Stations.ToDictionary(e => e, _ => 0);
+            var stationJobCounts = spawnableStations.ToDictionary(e => e, _ => 0);
             foreach (var (netUser, (job, station)) in assignedJobs)
             {
                 if (job == null)
@@ -100,7 +106,7 @@ namespace Content.Server.GameTicking
         {
             var character = GetPlayerProfile(player);
 
-            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans == null || jobId != null && jobBans.Contains(jobId))
                 return;
 
@@ -117,7 +123,7 @@ namespace Content.Server.GameTicking
 
             if (station == EntityUid.Invalid)
             {
-                var stations = _stationSystem.Stations.ToList();
+                var stations = EntityQuery<StationJobsComponent, StationSpawningComponent>().Select(x => x.Item1.Owner).ToList();
                 _robustRandom.Shuffle(stations);
                 if (stations.Count == 0)
                     station = EntityUid.Invalid;
@@ -127,9 +133,13 @@ namespace Content.Server.GameTicking
 
             if (lateJoin && DisallowLateJoin)
             {
-                MakeObserve(player);
+                JoinAsObserver(player);
                 return;
             }
+
+            // Automatically de-admin players who are joining.
+            if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(player))
+                _adminManager.DeAdmin(player);
 
             // We raise this event to allow other systems to handle spawning this player themselves. (e.g. late-join wizard, etc)
             var bev = new PlayerBeforeSpawnEvent(player, character, jobId, lateJoin, station);
@@ -148,7 +158,7 @@ namespace Content.Server.GameTicking
             var getDisallowed = _playTimeTrackings.GetDisallowedJobs(player);
             restrictedRoles.UnionWith(getDisallowed);
 
-            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            var jobBans = _banManager.GetJobBans(player.UserId);
             if(jobBans != null) restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
@@ -159,7 +169,7 @@ namespace Content.Server.GameTicking
             {
                 if (!LobbyEnabled)
                 {
-                    MakeObserve(player);
+                    JoinAsObserver(player);
                 }
                 _chatManager.DispatchServerMessage(player, Loc.GetString("game-ticker-player-no-jobs-available-when-joining"));
                 return;
@@ -171,16 +181,12 @@ namespace Content.Server.GameTicking
 
             DebugTools.AssertNotNull(data);
 
-            data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId)
-            {
-                CharacterName = character.Name
-            };
-            newMind.ChangeOwningPlayer(data.UserId);
+            var newMind = _mind.CreateMind(data!.UserId, character.Name);
+            _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new Job(newMind, jobPrototype);
-            newMind.AddRole(job);
+            _mind.AddRole(newMind, job);
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
@@ -189,7 +195,7 @@ namespace Content.Server.GameTicking
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
-            newMind.TransferTo(mob);
+            _mind.TransferTo(newMind, mob);
 
             if (lateJoin)
             {
@@ -243,7 +249,7 @@ namespace Content.Server.GameTicking
 
         public void Respawn(IPlayerSession player)
         {
-            player.ContentData()?.WipeMind();
+            _mind.WipeMind(player);
             _adminLogger.Add(LogType.Respawn, LogImpact.Medium, $"Player {player} was respawned.");
 
             if (LobbyEnabled)
@@ -263,33 +269,41 @@ namespace Content.Server.GameTicking
             SpawnPlayer(player, station, jobId);
         }
 
-        public void MakeObserve(IPlayerSession player)
+        /// <summary>
+        /// Causes the given player to join the current game as observer ghost. See also <see cref="SpawnObserver"/>
+        /// </summary>
+        public void JoinAsObserver(IPlayerSession player)
         {
             // Can't spawn players with a dummy ticker!
             if (DummyTicker)
                 return;
 
             PlayerJoinGame(player);
+            SpawnObserver(player);
+        }
+
+        /// <summary>
+        /// Spawns an observer ghost and attaches the given player to it. If the player does not yet have a mind, the
+        /// player is given a new mind with the observer role. Otherwise, the current mind is transferred to the ghost.
+        /// </summary>
+        public void SpawnObserver(IPlayerSession player)
+        {
+            if (DummyTicker)
+                return;
+
+            var mind = player.GetMind();
+            if (mind == null)
+            {
+                mind = _mind.CreateMind(player.UserId);
+                _mind.SetUserId(mind, player.UserId);
+                _mind.AddRole(mind, new ObserverRole(mind));
+            }
 
             var name = GetPlayerProfile(player).Name;
-
-            var data = player.ContentData();
-
-            DebugTools.AssertNotNull(data);
-
-            data!.WipeMind();
-            var newMind = new Mind.Mind(data.UserId);
-            newMind.ChangeOwningPlayer(data.UserId);
-            newMind.AddRole(new ObserverRole(newMind));
-
-            var mob = SpawnObserverMob();
-            EntityManager.GetComponent<MetaDataComponent>(mob).EntityName = name;
-            var ghost = EntityManager.GetComponent<GhostComponent>(mob);
-            EntitySystem.Get<SharedGhostSystem>().SetCanReturnToBody(ghost, false);
-            newMind.TransferTo(mob);
-
-            _playerGameStatuses[player.UserId] = PlayerGameStatus.JoinedGame;
-            RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));
+            var ghost = SpawnObserverMob();
+            MetaData(ghost).EntityName = name;
+            _ghost.SetCanReturnToBody(ghost, false);
+            _mind.TransferTo(mind, ghost);
         }
 
         #region Mob Spawning Helpers
@@ -338,11 +352,11 @@ namespace Content.Server.GameTicking
                 var spawn = _robustRandom.Pick(_possiblePositions);
                 var toMap = spawn.ToMap(EntityManager);
 
-                if (_mapManager.TryFindGridAt(toMap, out var foundGrid))
+                if (_mapManager.TryFindGridAt(toMap, out var gridUid, out _))
                 {
-                    var gridXform = Transform(foundGrid.Owner);
+                    var gridXform = Transform(gridUid);
 
-                    return new EntityCoordinates(foundGrid.Owner,
+                    return new EntityCoordinates(gridUid,
                         gridXform.InvWorldMatrix.Transform(toMap.Position));
                 }
 

@@ -3,10 +3,11 @@
   parent: BaseStructure
   name: high security door
   description: Keeps the bad out and keeps the good in.
+  placement:
+    mode: SnapgridCenter
   components:
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/highsec/highsec.rsi
     layers:
     - state: closed
@@ -54,7 +55,6 @@
     denySound:
       path: /Audio/Machines/airlock_deny.ogg
   - type: Weldable
-    fuel: 10
     time: 10
   - type: Airlock
   - type: DoorBolt
@@ -66,6 +66,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "HighSec Control"
     LayoutId: HighSec
@@ -91,5 +92,3 @@
   - type: IconSmooth
     key: walls
     mode: NoSprite
-  placement:
-    mode: SnapgridCenter

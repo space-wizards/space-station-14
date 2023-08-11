@@ -11,11 +11,11 @@
         loop: true
         maxdistance: 5
   - type: Sprite
-    netsync: false
     sprite: Structures/Machines/fat_sucker.rsi
     snapCardinals: true
     layers:
     - state: fat
+      map: ["enum.StorageVisualLayers.Base"]
     - state: fat_door_off
       map: ["enum.StorageVisualLayers.Door"]
     - state: fat_red
@@ -94,6 +94,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: FatExtractorMachineCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: FatExtractor
     LayoutId: FatExtractor

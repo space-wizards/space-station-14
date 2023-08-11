@@ -150,6 +150,10 @@ binds:
 - function: EditorRotateObject
   type: State
   key: MouseMiddle
+- function: EditorFlipObject
+  type: State
+  key: MouseMiddle
+  mod1: Control
 - function: EditorCopyObject
   type: State
   key: P
@@ -197,7 +201,6 @@ binds:
 - function: ThrowItemInHand
   type: State
   key: Q
-  canFocus: true
   mod1: Control
 - function: TryPullObject
   type: State

@@ -5,7 +5,6 @@
   components:
   - type: Sprite
     noRot: false
-    netsync: false
     sprite: Objects/Weapons/Guns/Projectiles/meteor.rsi
     scale: 4,4
     layers:

@@ -3,6 +3,7 @@
   description: Accelerated particles.
   id: ParticlesProjectile
   parent: BaseBullet
+  noSpawn: true
   components:
     - type: Sprite
       layers:
@@ -33,6 +34,8 @@
     - type: ParticleProjectile
     - type: SinguloFood
       # Energy is setup by the PA particle fire function.
+    - type: TimedDespawn
+      lifetime: 3.0
     - type: Appearance
     - type: GenericVisualizer
       visuals:

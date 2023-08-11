@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using JetBrains.Annotations;
@@ -16,10 +17,13 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
     {
         base.Started(uid, component, gameRule, args);
 
-        if (StationSystem.Stations.Count == 0)
-            return; // No stations
-        var chosenStation = RobustRandom.Pick(StationSystem.Stations.ToList());
-        var jobList = _stationJobs.GetJobs(chosenStation).Keys.ToList();
+        if (!TryGetRandomStation(out var chosenStation, HasComp<StationJobsComponent>))
+            return;
+
+        var jobList = _stationJobs.GetJobs(chosenStation.Value).Keys.ToList();
+
+        if (jobList.Count == 0)
+            return;
 
         var mod = GetSeverityModifier();
 
@@ -28,12 +32,12 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
         if (RobustRandom.Prob(Math.Min(0.25f * MathF.Sqrt(mod), 1.0f)))
         {
             var chosenJob = RobustRandom.PickAndTake(jobList);
-            _stationJobs.MakeJobUnlimited(chosenStation, chosenJob); // INFINITE chaos.
+            _stationJobs.MakeJobUnlimited(chosenStation.Value, chosenJob); // INFINITE chaos.
             foreach (var job in jobList)
             {
-                if (_stationJobs.IsJobUnlimited(chosenStation, job))
+                if (_stationJobs.IsJobUnlimited(chosenStation.Value, job))
                     continue;
-                _stationJobs.TrySetJobSlot(chosenStation, job, 0);
+                _stationJobs.TrySetJobSlot(chosenStation.Value, job, 0);
             }
         }
         else
@@ -45,10 +49,10 @@ public sealed class BureaucraticErrorRule : StationEventSystem<BureaucraticError
             for (var i = 0; i < num; i++)
             {
                 var chosenJob = RobustRandom.PickAndTake(jobList);
-                if (_stationJobs.IsJobUnlimited(chosenStation, chosenJob))
+                if (_stationJobs.IsJobUnlimited(chosenStation.Value, chosenJob))
                     continue;
 
-                _stationJobs.TryAdjustJobSlot(chosenStation, chosenJob, RobustRandom.Next(-3, 6), clamp: true);
+                _stationJobs.TryAdjustJobSlot(chosenStation.Value, chosenJob, RobustRandom.Next(-3, 6), clamp: true);
             }
         }
     }

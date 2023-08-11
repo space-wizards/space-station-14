@@ -9,11 +9,11 @@
     - WheatBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   idealLight: 8
-  nutrientConsumption: 0.15
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -35,11 +35,11 @@
     - OatBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   idealLight: 8
-  nutrientConsumption: 0.15
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -63,9 +63,9 @@
   lifespan: 50
   maturation: 6
   production: 6
-  yield: 3
+  yield: 2
   idealLight: 9
-  waterConsumption: 6
+  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -88,11 +88,11 @@
     - FoodCarrot
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     JuiceCarrot:
       Min: 1
@@ -116,7 +116,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -142,7 +142,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -168,7 +168,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   chemicals:
@@ -194,7 +194,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   idealLight: 8
   growthStages: 3
@@ -223,11 +223,11 @@
     - FoodPotato
   lifespan: 30
   maturation: 10
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 4
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -249,9 +249,9 @@
     - Sugarcane
   harvestRepeat: Repeat
   lifespan: 60
-  maturation: 3
+  maturation: 6
   production: 6
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 3
   idealHeat: 298
@@ -273,13 +273,14 @@
   lifespan: 80
   maturation: 15
   ligneous: true
-  production: 1
+  production: 3
   yield: 5
   potency: 1
   growthStages: 3
-  waterConsumption: 6
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
   lightTolerance: 6
-  idealLight: 288
+  idealHeat: 288
 
 - type: seed
   id: tomato
@@ -296,8 +297,8 @@
   production: 6
   yield: 2
   potency: 10
-  waterConsumption: 6
-  nutrientConsumption: 0.25
+  waterConsumption: 0.60
+  nutrientConsumption: 0.40
   idealLight: 8
   idealHeat: 298
   juicy: true
@@ -349,9 +350,9 @@
   productPrototypes:
     - FoodCabbage
   lifespan: 50
-  maturation: 3
+  maturation: 7
   production: 5
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 1
   chemicals:
@@ -374,9 +375,9 @@
   productPrototypes:
     - FoodGarlic
   lifespan: 25
-  maturation: 3
+  maturation: 8
   production: 5
-  yield: 6
+  yield: 3
   potency: 25
   growthStages: 3
   chemicals:
@@ -406,7 +407,7 @@
   lifespan: 55
   maturation: 6
   production: 6
-  yield: 5
+  yield: 3
   potency: 10
   idealLight: 6
   chemicals:
@@ -431,11 +432,11 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
-  waterConsumption: 6
+  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -459,11 +460,11 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
-  waterConsumption: 6
+  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -491,11 +492,11 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 3
   idealLight: 8
-  waterConsumption: 6
+  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Nutriment:
@@ -521,13 +522,14 @@
   productPrototypes:
     - FoodMushroom
   lifespan: 35
-  maturation: 7
-  production: 1
+  maturation: 10
+  production: 7
   yield: 5
   potency: 1
   growthStages: 3
   lightTolerance: 6
-  waterConsumption: 6
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
   idealHeat: 288
   chemicals:
     Nutriment:
@@ -550,6 +552,7 @@
   production: 12
   yield: 2
   potency: 20
+  nutrientConsumption: 0.50
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -574,6 +577,7 @@
   yield: 2
   potency: 20
   growthStages: 3
+  waterConsumption: 0.40
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -598,6 +602,7 @@
   yield: 2
   potency: 20
   growthStages: 3
+  waterConsumption: 0.40
   idealLight: 9
   idealHeat: 298
   chemicals:
@@ -618,11 +623,11 @@
   lifespan: 25
   maturation: 8
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   growthStages: 5
   idealLight: 8
-  waterConsumption: 6
+  waterConsumption: 0.60
   idealHeat: 298
   chemicals:
     Histamine:
@@ -643,7 +648,7 @@
   lifespan: 25
   maturation: 6
   production: 6
-  yield: 3
+  yield: 2
   potency: 20
   idealLight: 9
   idealHeat: 298
@@ -672,11 +677,11 @@
     - FoodPoppy
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -684,8 +689,8 @@
       Potencydivisor: 50
     Bicaridine:
       Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      Max: 20
+      PotencyDivisor: 5
 
 - type: seed
   id: aloe
@@ -698,11 +703,11 @@
     - FoodAloe
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 5
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Aloe:
       Min: 1
@@ -724,11 +729,11 @@
     - FoodLingzhi
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Ultravasculine:
       Min: 1
@@ -750,11 +755,11 @@
     - FoodAmbrosiaVulgaris
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 6
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -762,16 +767,16 @@
       PotencyDivisor: 10
     Bicaridine:
       Min: 1
-      Max: 10
-      PotencyDivisor: 10
+      Max: 5
+      PotencyDivisor: 20
     Kelotane:
       Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Desoxyephedrine:
+      Min: 1
       Max: 10
       PotencyDivisor: 10
-    Desoxyephedrine: #Needs a small touch of spice, replace this with something better when we have more fun drugs
-      Min: 1
-      Max: 2
-      PotencyDivisor: 50
     Vitamin:
       Min: 1
       Max: 2
@@ -788,11 +793,11 @@
     - FoodGalaxythistle
   lifespan: 25
   maturation: 10
-  production: 1
-  yield: 5
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 3
-  waterConsumption: 6
+  waterConsumption: 0.60
   chemicals:
     Stellibinin:
       Min: 1
@@ -809,12 +814,13 @@
   productPrototypes:
     - FoodFlyAmanita
   lifespan: 25
-  maturation: 10
-  production: 1
-  yield: 5
+  maturation: 12
+  production: 3
+  yield: 3
   potency: 10
   growthStages: 2
-  waterConsumption: 6
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
   chemicals:
     Amatoxin:
       Min: 1
@@ -862,12 +868,13 @@
     - RiceBushel
   lifespan: 25
   maturation: 6
-  production: 1
-  yield: 4
+  production: 3
+  yield: 3
   potency: 5
   growthStages: 4
   idealLight: 5
-  nutrientConsumption: 0.15
+  nutrientConsumption: 0.40
+  waterConsumption: 0.60
   chemicals:
     Nutriment:
       Min: 1
@@ -889,12 +896,12 @@
     - FoodSoybeans
   growthStages: 4
   lifespan: 25
-  maturation: 4
-  production: 4
+  maturation: 6
+  production: 6
   yield: 3
   potency: 5
   idealLight: 7
-  nutrientConsumption: 0.15
+  nutrientConsumption: 0.40
   chemicals:
     Nutriment:
       Min: 1
@@ -911,9 +918,9 @@
   productPrototypes:
     - FoodGrape
   lifespan: 50
-  maturation: 3
+  maturation: 6
   production: 5
-  yield: 4
+  yield: 3
   potency: 10
   growthStages: 2
   chemicals:
@@ -936,8 +943,8 @@
   productPrototypes:
     - FoodWatermelon
   lifespan: 55
-  maturation: 15
-  production: 1
+  maturation: 12
+  production: 3
   yield: 1
   potency: 1
   idealLight: 8

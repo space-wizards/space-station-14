@@ -197,6 +197,24 @@
     - !type:TileNotBlocked
 
 - type: construction
+  name: meat wall
+  id: MeatWall
+  graph: Girder
+  startNode: start
+  targetNode: meatWall
+  category: construction-category-structures
+  description: Sticky.
+  icon:
+    sprite: Structures/Walls/meat.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
   name: grille
   id: Grille
   graph: Grille
@@ -206,6 +224,7 @@
   description: A flimsy framework of iron rods.
   conditions:
     - !type:TileNotBlocked
+      failIfSpace: false
   icon:
     sprite: Structures/Walls/grille.rsi
     state: grille
@@ -512,7 +531,6 @@
       targets:
         - Lattice
         - Plating
-        - UnderPlating
   icon:
     sprite: Structures/catwalk.rsi
     state: catwalk_preview
@@ -534,7 +552,6 @@
     - !type:TileType
       targets:
         - Plating
-        - UnderPlating
   icon:
     sprite: Tiles/Misc/bananium.rsi
     state: bananium
@@ -604,6 +621,75 @@
   icon:
     sprite: Structures/Walls/railing.rsi
     state: corner_small
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+# Chain link fencing
+- type: construction
+  name: chain link fence
+  id: FenceMetal
+  graph: FenceMetal
+  startNode: start
+  targetNode: straight
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: straight
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence corner
+  id: FenceMetalCorner
+  graph: FenceMetal
+  startNode: start
+  targetNode: corner
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence end-piece
+  id: FenceMetalEnd
+  graph: FenceMetal
+  startNode: start
+  targetNode: end
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: end
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence gate
+  id: FenceMetalGate
+  graph: FenceMetal
+  startNode: start
+  targetNode: gate
+  category: construction-category-structures
+  description: An easy way to get through a chain link fence.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: door_closed
   objectType: Structure
   placementMode: SnapgridCenter
   canBuildInImpassable: false

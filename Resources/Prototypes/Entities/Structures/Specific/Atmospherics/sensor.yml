@@ -46,9 +46,9 @@
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -68,7 +68,6 @@
       node: sensor
     - type: Appearance
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:
@@ -94,7 +93,6 @@
       graph: AirSensor
       node: assembly
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Specific/Atmospherics/sensor.rsi
       layers:

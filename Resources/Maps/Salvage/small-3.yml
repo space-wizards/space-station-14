@@ -1,11 +1,9 @@
 meta:
-  format: 4
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
-  48: FloorLaundry
-  93: Lattice
-  94: Plating
+  4: FloorAsteroidCoarseSand0
 entities:
 - proto: ""
   entities:
@@ -18,16 +16,16 @@ entities:
     - chunks:
         -1,-1:
           ind: -1,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAADAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAADAAAAAwAAAAMAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAEEAAABBAAAAAQAAAEEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAQQAAAIEAAABBAAAAQQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAAQAAAIEAAAABAAAAgQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAAEAAABBAAAAQQAAAAEAAAABAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAIEAAACBAAAAQQAAAIEAAACBAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAQQAAAIEAAACBAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAIEAAAABAAAAAQAAAEEAAABBAAAAg==
         0,-1:
           ind: 0,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAAABAAAAgQAAAIEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAIEAAABBAAAAgQAAAIEAAABBAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACBAAAAQQAAAAEAAACBAAAAgQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAEEAAAABAAAAgQAAAIEAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAAABAAAAQQAAAAEAAABBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAQQAAAIEAAAABAAAAQQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAAEAAACBAAAAAQAAAEEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
         -1,0:
           ind: -1,0
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAADAAAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAwAAAAMAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAQQAAAIEAAACBAAAAgQAAAAEAAACBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAABBAAAAgQAAAAEAAABBAAAAgQAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAABBAAAAAQAAAIEAAABBAAAAQQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAgQAAAEEAAAABAAAAQQAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAACBAAAAgQAAAAEAAACBAAAAQQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAQAAAIEAAAABAAAAQQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
         0,0:
           ind: 0,0
-          tiles: MAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: BAAAAAQAAAAEAAACBAAAAAQAAAAEAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAEAAABBAAAAAQAAAIEAAABBAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAQQAAAAEAAAABAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAEAAACBAAAAgQAAAIEAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAEEAAACBAAAAAQAAAIEAAACBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAACBAAAAAQAAAAEAAAABAAAAgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       type: MapGrid
     - type: Broadphase
     - angularDamping: 0.05
@@ -35,7 +33,8 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
+    - fixtures: {}
+      type: Fixtures
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -45,20 +44,42 @@ entities:
       type: DecalGrid
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 74.0335825
-      type: GridPathfinding
     - type: RadiationGridResistance
     - version: 2
       data:
         tiles:
           -1,-1:
-            0: 65528
+            0: 65535
           0,-1:
-            0: 12561
+            0: 65535
           -1,0:
-            0: 4095
+            0: 65535
           0,0:
-            0: 273
+            0: 65535
+          -2,-2:
+            0: 61152
+          -2,-1:
+            0: 61166
+          -1,-2:
+            0: 65520
+          0,-2:
+            0: 65520
+          1,-2:
+            0: 13104
+          1,-1:
+            0: 13107
+          -2,0:
+            0: 61166
+          -2,1:
+            0: 238
+          -1,1:
+            0: 255
+          0,1:
+            0: 255
+          1,0:
+            0: 13107
+          1,1:
+            0: 51
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -79,162 +100,611 @@ entities:
       type: GridAtmosphere
     - type: GasTileOverlay
     - type: SpreaderGrid
-- proto: ClosetEmergencyFilledRandom
+    - type: GridPathfinding
+- proto: MetalDoor
   entities:
-  - uid: 18
+  - uid: 96
     components:
-    - pos: -1.5,-1.5
+    - pos: 5.5,-0.5
       parent: 10
       type: Transform
-- proto: ClosetFireFilled
-  entities:
-  - uid: 19
+  - uid: 97
     components:
-    - pos: -0.5,-1.5
+    - pos: -6.5,-0.5
       parent: 10
       type: Transform
-- proto: Girder
-  entities:
-  - uid: 12
+  - uid: 99
     components:
-    - pos: -3.5,0.5
+    - pos: 1.5,2.5
       parent: 10
       type: Transform
-  - uid: 13
+  - uid: 100
     components:
-    - pos: -3.5,2.5
+    - pos: -4.5,4.5
       parent: 10
       type: Transform
-- proto: LockerBotanistLoot
-  entities:
-  - uid: 15
+  - uid: 102
     components:
-    - pos: -2.727456,1.4982367
+    - pos: 3.5,-5.5
       parent: 10
       type: Transform
-  - uid: 16
+  - uid: 103
     components:
-    - pos: -2.211831,1.4982367
+    - pos: -4.5,2.5
       parent: 10
       type: Transform
-- proto: Rack
-  entities:
-  - uid: 20
+  - uid: 105
     components:
-    - pos: -2.5,-1.5
+    - pos: 3.5,1.5
       parent: 10
       type: Transform
-- proto: SalvageCanisterSpawner
-  entities:
-  - uid: 25
+  - uid: 106
     components:
-    - pos: 0.5,-1.5
+    - pos: 1.5,-5.5
       parent: 10
       type: Transform
-- proto: SalvageMaterialCrateSpawner
-  entities:
-  - uid: 22
+  - uid: 107
     components:
-    - pos: -2.5,-0.5
+    - pos: -2.5,-5.5
       parent: 10
       type: Transform
-  - uid: 26
+  - uid: 108
     components:
-    - pos: 0.5,1.5
+    - pos: -4.5,-2.5
       parent: 10
       type: Transform
-- proto: SpaceTickSpawner
-  entities:
-  - uid: 23
-    components:
-    - pos: -1.5,0.5
-      parent: 10
-      type: Transform
-  - uid: 24
-    components:
-    - pos: -0.5,-0.5
-      parent: 10
-      type: Transform
-- proto: ToySpawner
-  entities:
-  - uid: 21
-    components:
-    - pos: -2.5,-1.5
-      parent: 10
-      type: Transform
-- proto: VendingMachineClothing
-  entities:
-  - uid: 14
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - pos: -1.5,1.5
-      parent: 10
-      type: Transform
-- proto: WallSolid
-  entities:
-  - uid: 1
-    components:
-    - pos: -1.5,2.5
-      parent: 10
-      type: Transform
-  - uid: 3
-    components:
-    - pos: 0.5,2.5
-      parent: 10
-      type: Transform
-  - uid: 4
-    components:
-    - pos: -2.5,2.5
-      parent: 10
-      type: Transform
-  - uid: 5
-    components:
-    - pos: -1.5,-2.5
-      parent: 10
-      type: Transform
-  - uid: 8
-    components:
-    - pos: -3.5,1.5
-      parent: 10
-      type: Transform
-  - uid: 9
-    components:
-    - pos: 0.5,-2.5
-      parent: 10
-      type: Transform
-  - uid: 27
-    components:
-    - pos: -0.5,-2.5
-      parent: 10
-      type: Transform
-- proto: WallSolidRust
-  entities:
-  - uid: 2
-    components:
-    - pos: -3.5,-1.5
-      parent: 10
-      type: Transform
-  - uid: 6
-    components:
-    - pos: -0.5,2.5
-      parent: 10
-      type: Transform
-  - uid: 7
+  - uid: 109
     components:
     - pos: -2.5,-2.5
       parent: 10
       type: Transform
-  - uid: 11
+  - uid: 110
     components:
-    - pos: -3.5,-0.5
+    - pos: 0.5,-1.5
       parent: 10
       type: Transform
-- proto: WardrobeMixedFilled
+  - uid: 111
+    components:
+    - pos: -0.5,2.5
+      parent: 10
+      type: Transform
+- proto: SalvageMaterialCrateSpawner
   entities:
+  - uid: 98
+    components:
+    - pos: -5.5,-5.5
+      parent: 10
+      type: Transform
+  - uid: 117
+    components:
+    - pos: 2.5,4.5
+      parent: 10
+      type: Transform
+- proto: SilverOre
+  entities:
+  - uid: 119
+    components:
+    - pos: 4.4981737,4.558294
+      parent: 10
+      type: Transform
+- proto: SpaceTickSpawner
+  entities:
+  - uid: 113
+    components:
+    - pos: 0.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 114
+    components:
+    - pos: -3.5,0.5
+      parent: 10
+      type: Transform
+- proto: SpawnMobSpiderSalvage
+  entities:
+  - uid: 101
+    components:
+    - pos: -0.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 112
+    components:
+    - pos: -0.5,4.5
+      parent: 10
+      type: Transform
+- proto: TableStone
+  entities:
+  - uid: 115
+    components:
+    - pos: -1.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 116
+    components:
+    - pos: 4.5,4.5
+      parent: 10
+      type: Transform
+- proto: UraniumOre
+  entities:
+  - uid: 118
+    components:
+    - pos: -1.5018263,-0.4104561
+      parent: 10
+      type: Transform
+- proto: WallCult
+  entities:
+  - uid: 1
+    components:
+    - pos: -3.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 2
+    components:
+    - pos: -4.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 3
+    components:
+    - pos: 4.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 4
+    components:
+    - pos: 5.5,-2.5
+      parent: 10
+      type: Transform
+  - uid: 5
+    components:
+    - pos: -6.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 6
+    components:
+    - pos: -6.5,4.5
+      parent: 10
+      type: Transform
+  - uid: 7
+    components:
+    - pos: -2.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 8
+    components:
+    - pos: 2.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 9
+    components:
+    - pos: 0.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 11
+    components:
+    - pos: -0.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 12
+    components:
+    - pos: 3.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 13
+    components:
+    - pos: 1.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 14
+    components:
+    - pos: -1.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 15
+    components:
+    - pos: -5.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 16
+    components:
+    - pos: 5.5,-4.5
+      parent: 10
+      type: Transform
   - uid: 17
     components:
+    - pos: 5.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 18
+    components:
+    - pos: 5.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 19
+    components:
+    - pos: 5.5,-5.5
+      parent: 10
+      type: Transform
+  - uid: 20
+    components:
+    - pos: 5.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 21
+    components:
+    - pos: 5.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 22
+    components:
+    - pos: 5.5,4.5
+      parent: 10
+      type: Transform
+  - uid: 23
+    components:
+    - pos: 5.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 24
+    components:
+    - pos: 5.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 25
+    components:
+    - pos: 5.5,2.5
+      parent: 10
+      type: Transform
+  - uid: 26
+    components:
+    - pos: -5.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 27
+    components:
+    - pos: -6.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 28
+    components:
+    - pos: -6.5,2.5
+      parent: 10
+      type: Transform
+  - uid: 29
+    components:
+    - pos: -6.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 30
+    components:
+    - pos: -6.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 31
+    components:
+    - pos: -0.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 32
+    components:
+    - pos: -6.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 33
+    components:
+    - pos: -6.5,-2.5
+      parent: 10
+      type: Transform
+  - uid: 34
+    components:
+    - pos: -6.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 35
+    components:
+    - pos: -6.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 36
+    components:
+    - pos: -6.5,-5.5
+      parent: 10
+      type: Transform
+  - uid: 37
+    components:
+    - pos: -6.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 38
+    components:
+    - pos: -5.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 39
+    components:
+    - pos: -4.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 40
+    components:
+    - pos: -3.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 41
+    components:
+    - pos: -2.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 42
+    components:
+    - pos: -1.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 43
+    components:
     - pos: -0.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 44
+    components:
+    - pos: 0.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 45
+    components:
+    - pos: 1.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 46
+    components:
+    - pos: 2.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 47
+    components:
+    - pos: 3.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 48
+    components:
+    - pos: 5.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 49
+    components:
+    - pos: -0.5,-6.5
+      parent: 10
+      type: Transform
+  - uid: 50
+    components:
+    - pos: -4.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 51
+    components:
+    - pos: -4.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 52
+    components:
+    - pos: -4.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 53
+    components:
+    - pos: -1.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 54
+    components:
+    - pos: 3.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 55
+    components:
+    - pos: -4.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 56
+    components:
+    - pos: -4.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 57
+    components:
+    - pos: -0.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 58
+    components:
+    - pos: -2.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 59
+    components:
+    - pos: -4.5,-5.5
+      parent: 10
+      type: Transform
+  - uid: 60
+    components:
+    - pos: -4.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 61
+    components:
+    - pos: -4.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 62
+    components:
+    - pos: -0.5,-5.5
+      parent: 10
+      type: Transform
+  - uid: 63
+    components:
+    - pos: 0.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 64
+    components:
+    - pos: -2.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 65
+    components:
+    - pos: 2.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 66
+    components:
+    - pos: -1.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 67
+    components:
+    - pos: 0.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 68
+    components:
+    - pos: 1.5,-2.5
+      parent: 10
+      type: Transform
+  - uid: 69
+    components:
+    - pos: 3.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 70
+    components:
+    - pos: -1.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 71
+    components:
+    - pos: 1.5,-4.5
+      parent: 10
+      type: Transform
+  - uid: 72
+    components:
+    - pos: -0.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 73
+    components:
+    - pos: 3.5,-2.5
+      parent: 10
+      type: Transform
+  - uid: 74
+    components:
+    - pos: 3.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 75
+    components:
+    - pos: 3.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 76
+    components:
+    - pos: -0.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 77
+    components:
+    - pos: 3.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 78
+    components:
+    - pos: 4.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 79
+    components:
+    - pos: 3.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 80
+    components:
+    - pos: 1.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 81
+    components:
+    - pos: 1.5,-3.5
+      parent: 10
+      type: Transform
+  - uid: 82
+    components:
+    - pos: -3.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 83
+    components:
+    - pos: -2.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 84
+    components:
+    - pos: -2.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 85
+    components:
+    - pos: -2.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 86
+    components:
+    - pos: -2.5,-0.5
+      parent: 10
+      type: Transform
+  - uid: 87
+    components:
+    - pos: -0.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 88
+    components:
+    - pos: 4.5,5.5
+      parent: 10
+      type: Transform
+  - uid: 89
+    components:
+    - pos: 1.5,0.5
+      parent: 10
+      type: Transform
+  - uid: 90
+    components:
+    - pos: 1.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 91
+    components:
+    - pos: -2.5,-1.5
+      parent: 10
+      type: Transform
+  - uid: 92
+    components:
+    - pos: 3.5,2.5
+      parent: 10
+      type: Transform
+  - uid: 93
+    components:
+    - pos: 1.5,3.5
+      parent: 10
+      type: Transform
+  - uid: 94
+    components:
+    - pos: 1.5,1.5
+      parent: 10
+      type: Transform
+  - uid: 95
+    components:
+    - pos: -2.5,2.5
+      parent: 10
+      type: Transform
+  - uid: 104
+    components:
+    - pos: 3.5,4.5
       parent: 10
       type: Transform
 ...

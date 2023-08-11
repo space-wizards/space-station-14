@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Map;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.SuitSensor
@@ -6,13 +6,15 @@ namespace Content.Shared.Medical.SuitSensor
     [Serializable, NetSerializable]
     public sealed class SuitSensorStatus
     {
-        public SuitSensorStatus(string name, string job)
+        public SuitSensorStatus(EntityUid suitSensorUid, string name, string job)
         {
+            SuitSensorUid = suitSensorUid;
             Name = name;
             Job = job;
         }
 
         public TimeSpan Timestamp;
+        public EntityUid SuitSensorUid;
         public string Name;
         public string Job;
         public bool IsAlive;
@@ -51,6 +53,7 @@ namespace Content.Shared.Medical.SuitSensor
         public const string NET_IS_ALIVE = "alive";
         public const string NET_TOTAL_DAMAGE = "vitals";
         public const string NET_COORDINATES = "coords";
+        public const string NET_SUIT_SENSOR_UID = "uid";
 
         ///Used by the CrewMonitoringServerSystem to send the status of all connected suit sensors to each crew monitor
         public const string NET_STATUS_COLLECTION = "suit-status-collection";

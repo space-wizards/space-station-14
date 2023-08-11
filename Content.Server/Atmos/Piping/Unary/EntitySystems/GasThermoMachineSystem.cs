@@ -3,6 +3,7 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Construction;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -20,6 +21,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -40,7 +42,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (!(thermoMachine.Enabled && _power.IsPowered(uid))
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(thermoMachine.InletName, out PipeNode? inlet))
+                || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
             {
                 return;
             }

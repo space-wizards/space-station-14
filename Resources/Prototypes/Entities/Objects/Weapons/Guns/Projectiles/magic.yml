@@ -102,7 +102,7 @@
 - type: entity
   id: BulletInstakillMagic
   name: magical lead cylinder
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   noSpawn: true
   description: This looks familiar.
   components:
@@ -127,9 +127,10 @@
 
 - type: entity
   id: ProjectileIcicle
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   name: Icicle
   description: Brrrrr.
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Structures/Specific/Anomalies/ice_anom.rsi
@@ -138,5 +139,17 @@
       types:
         Piercing: 20
         Cold: 20
-        Structural: 40
+        Structural: 50
 
+- type: entity
+  parent: ProjectilePolyboltBase
+  id: ProjectilePolyboltBread
+  name: bread polybolt
+  description: Nooo, I don't wanna be bread!
+  noSpawn: true
+  components:
+  - type: PolymorphOnCollide
+    polymorph: BreadMorph
+    whitelist:
+      components:
+      - Body

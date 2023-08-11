@@ -74,7 +74,7 @@ namespace Content.Server.Traitor.Uplink
                 {
                     if (!pdaUid.ContainedEntity.HasValue) continue;
 
-                    if (HasComp<PDAComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
+                    if (HasComp<PdaComponent>(pdaUid.ContainedEntity.Value) || HasComp<StoreComponent>(pdaUid.ContainedEntity.Value))
                         return pdaUid.ContainedEntity.Value;
                 }
             }
@@ -82,7 +82,7 @@ namespace Content.Server.Traitor.Uplink
             // Also check hands
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                if (HasComp<PDAComponent>(item) || HasComp<StoreComponent>(item))
+                if (HasComp<PdaComponent>(item) || HasComp<StoreComponent>(item))
                     return item;
             }
 

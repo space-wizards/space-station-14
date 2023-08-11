@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.ActionBlocker;
@@ -169,12 +169,11 @@ public abstract class SharedMechSystem : EntitySystem
             return;
 
         var rider = EnsureComp<MechPilotComponent>(pilot);
-        var relay = EnsureComp<RelayInputMoverComponent>(pilot);
 
         // Warning: this bypasses most normal interaction blocking components on the user, like drone laws and the like.
         var irelay = EnsureComp<InteractionRelayComponent>(pilot);
 
-        _mover.SetRelay(pilot, mech, relay);
+        _mover.SetRelay(pilot, mech);
         _interaction.SetRelay(pilot, mech, irelay);
         rider.Mech = mech;
         Dirty(rider);
@@ -271,7 +270,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (component.EquipmentContainer.ContainedEntities.Count >= component.MaxEquipmentAmount)
             return;
 
-        if (component.EquipmentWhitelist != null && !component.EquipmentWhitelist.IsValid(uid))
+        if (component.EquipmentWhitelist != null && !component.EquipmentWhitelist.IsValid(toInsert))
             return;
 
         equipmentComponent.EquipmentOwner = uid;
@@ -387,7 +386,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        return IsEmpty(component) && _actionBlocker.CanMove(toInsert) && HasComp<HandsComponent>(toInsert);
+        return IsEmpty(component) && _actionBlocker.CanMove(toInsert);
     }
 
     /// <summary>

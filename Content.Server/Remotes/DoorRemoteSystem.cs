@@ -93,7 +93,9 @@ namespace Content.Server.Remotes
                                            !TryComp<FirelockComponent>(args.Target, out var _firelockComponent));
             bool airlockOnlyBlocking = (component.AirlockOnly && !isAirlock); // Most Remotes only work on airlocks
 
-            if (doorAccessBlocking || firelockOnlyBlocking || airlockOnlyBlocking)
+            // if (doorAccessBlocking || firelockOnlyBlocking || airlockOnlyBlocking)
+            if (TryComp<AccessReaderComponent>(args.Target, out var accessComponent) &&
+                !_doorSystem.HasAccess(args.Target.Value, args.Used, doorComp, accessComponent))
             {
                 _doorSystem.Deny(args.Target.Value, doorComp, args.User);
                 ShowPopupToUser("door-remote-denied", args.User);

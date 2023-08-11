@@ -29,6 +29,14 @@ namespace Content.Shared.Ghost
                 args.Cancel();
         }
 
+        public void SetCanReturnToBody(EntityUid uid, bool value, SharedGhostComponent? component = null)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.CanReturnToBody = value;
+        }
+
         public void SetCanReturnToBody(SharedGhostComponent component, bool value)
         {
             component.CanReturnToBody = value;

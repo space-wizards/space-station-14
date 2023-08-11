@@ -38,9 +38,9 @@
     - type: DeviceNetworkRequiresPower
     - type: AtmosDevice
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -54,7 +54,6 @@
       tags:
         - GasVent
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -95,7 +94,6 @@
   components:
     # TODO ATMOS: Find sprite for this.
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/vent.rsi
       layers:
@@ -129,9 +127,9 @@
       examinableAddress: true
     - type: DeviceNetworkRequiresPower
     - type: AtmosMonitor
-      temperatureThreshold: stationTemperature
-      pressureThreshold: stationPressure
-      gasThresholds:
+      temperatureThresholdId: stationTemperature
+      pressureThresholdId: stationPressure
+      gasThresholdPrototypes:
         Oxygen: stationOxygen
         Nitrogen: ignore
         CarbonDioxide: stationCO2
@@ -145,7 +143,6 @@
       tags:
         - GasScrubber
     - type: Sprite
-      netsync: false
       drawdepth: FloorObjects
       sprite: Structures/Piping/Atmospherics/scrubber.rsi
       layers:
@@ -187,7 +184,6 @@
   components:
     - type: Sprite
       drawdepth: FloorObjects
-      netsync: false
       sprite: Structures/Piping/Atmospherics/outletinjector.rsi
       layers:
         - state: pipeHalf
@@ -226,9 +222,8 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
-      netsync: false
       sprite: Structures/Piping/Atmospherics/thermomachine.rsi
-      noRot: true
+      snapCardinals: true
     - type: Appearance
     - type: PipeColorVisuals
     - type: Rotatable
@@ -242,6 +237,7 @@
     - type: ActivatableUI
       inHandsOnly: false
       key: enum.ThermomachineUiKey.Key
+    - type: WiresPanel
     - type: Wires
       BoardName: "Thermomachine"
       LayoutId: Thermomachine
@@ -264,6 +260,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering: true
       layers:
         - state: freezerOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
@@ -271,6 +268,7 @@
           map: [ "enum.WiresVisualLayers.MaintenancePanel" ]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:
@@ -303,6 +301,7 @@
     mode: SnapgridCenter
   components:
     - type: Sprite
+      granularLayersRendering : true
       layers:
         - state: heaterOff
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
@@ -310,6 +309,7 @@
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
         - state: pipe
           map: [ "enum.PipeVisualLayers.Pipe" ]
+          renderingStrategy: Default
     - type: GenericVisualizer
       visuals:
         enum.PowerDeviceVisuals.Powered:

@@ -3,10 +3,11 @@
   id: WeaponArcStatic
   noSpawn: true
   components:
+    - type: TimedDespawn
+      lifetime: 2.0
     - type: Sprite
       sprite: Effects/arcs.rsi
       state: spear
-      netsync: false
       drawdepth: Effects
     - type: EffectVisuals
     - type: WeaponArcVisuals
@@ -22,7 +23,6 @@
     - type: Sprite
       sprite: Effects/arcs.rsi
       state: disarm
-      netsync: false
       drawdepth: Effects
     - type: EffectVisuals
     - type: WeaponArcVisuals

@@ -30,15 +30,14 @@ public sealed class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 
     private void PickRule(SecretRuleComponent component)
     {
-        // TODO: This doesn't consider what can't start due to minimum player count, but currently there's no way to know anyway.
-        // as they use cvars.
+        // TODO: This doesn't consider what can't start due to minimum player count,
+        // but currently there's no way to know anyway as they use cvars.
         var preset = _prototypeManager.Index<WeightedRandomPrototype>("Secret").Pick(_random);
         Logger.InfoS("gamepreset", $"Selected {preset} for secret.");
 
         var rules = _prototypeManager.Index<GamePresetPrototype>(preset).Rules;
         foreach (var rule in rules)
         {
-            Logger.Debug($"what the fuck, {rule}");
             GameTicker.StartGameRule(rule, out var ruleEnt);
             component.AdditionalGameRules.Add(ruleEnt);
         }

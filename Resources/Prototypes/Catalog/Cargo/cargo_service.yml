@@ -4,7 +4,7 @@
     sprite: Objects/Specific/Janitorial/janitorial.rsi
     state: cleaner
   product: CrateServiceJanitorialSupplies
-  cost: 500
+  cost: 560
   category: Service
   group: market
 
@@ -85,6 +85,16 @@
     state: book0
   product: CrateServiceBooks
   cost: 1000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: ServiceGuidebooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_engineering2
+  product: CrateServiceGuidebooks
+  cost: 1300
   category: Service
   group: market
 

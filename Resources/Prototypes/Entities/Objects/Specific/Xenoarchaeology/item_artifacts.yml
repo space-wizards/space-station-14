@@ -7,7 +7,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
-    netsync: false
     layers:
     - state: ano01
       map: [ "enum.ArtifactsVisualLayers.Base" ]
@@ -20,6 +19,9 @@
   - type: CollisionWake
     enabled: false
   - type: InteractionOutline
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
   - type: Fixtures
     fixtures:
       fix1:
@@ -49,14 +51,17 @@
       type: TransferAmountBoundUserInterface
     - key: enum.InstrumentUiKey.Key
       type: InstrumentBoundUserInterface
+    - key: enum.IntercomUiKey.Key
+      type: IntercomBoundUserInterface
   - type: Appearance
-  - type: StaticPrice
-    price: 500
   - type: Item
     size: 40
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     heldPrefix: ano01
   - type: Actions
+  - type: Construction
+    graph: Artifact
+    node: done
   - type: GuideHelp
     guides:
     - Xenoarchaeology
@@ -88,3 +93,100 @@
     nodesMin: 9
     nodesMax: 13
 
+# this exists for crafting item artifacts so that the final result can be simple, medium, or complex.
+- type: entity
+  parent: BaseXenoArtifactItem
+  id: VariedXenoArtifactItem
+  suffix: Varied
+  components:
+  - type: Artifact
+    nodesMin: 2
+    nodesMax: 13
+
+- type: entity
+  id: ArtifactFragment
+  parent: BaseItem
+  name: artifact fragment
+  description: A broken piece of an artifact. You could probably repair it if you had more.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Xenoarchaeology/artifact_fragments.rsi
+    layers:
+    - state: ancientball1
+      map: [ "enum.ArtifactsVisualLayers.Base" ]
+  - type: RandomSprite
+    available: #yaml hero
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball1: ""
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball2: ""
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball3: ""
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball4: ""
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball5: ""
+    - enum.ArtifactsVisualLayers.Base:
+        ancientball6: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball1: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball2: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball3: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball4: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball5: ""
+    - enum.ArtifactsVisualLayers.Base:
+        eldritchball6: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball1: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball2: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball3: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball4: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball5: ""
+    - enum.ArtifactsVisualLayers.Base:
+        martianball6: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball1: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball2: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball3: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball4: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball5: ""
+    - enum.ArtifactsVisualLayers.Base:
+        precursorball6: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball1: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball2: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball3: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball4: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball5: ""
+    - enum.ArtifactsVisualLayers.Base:
+        wizardball6: ""
+  - type: Appearance
+  - type: Tag
+    tags:
+    - ArtifactFragment
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Artifexium
+        Quantity: 10
+  - type: StaticPrice
+    price: 250
+  - type: GuideHelp
+    guides:
+    - Xenoarchaeology

@@ -1,10 +1,10 @@
+using System.Numerics;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Cooldown;
 using Content.Server.Extinguisher;
 using Content.Server.Fluids.Components;
 using Content.Server.Popups;
-using Content.Shared.Chemistry.Components;
 using Content.Shared.Cooldown;
 using Content.Shared.FixedPoint;
 using Content.Shared.Interaction;
@@ -62,9 +62,6 @@ public sealed class SpraySystem : EntitySystem
             return;
         }
 
-        if (!TryComp<SolutionTransferComponent>(uid, out var transfer))
-            return;
-
         var xformQuery = GetEntityQuery<TransformComponent>();
         var userXform = xformQuery.GetComponent(args.User);
 
@@ -72,11 +69,11 @@ public sealed class SpraySystem : EntitySystem
         var clickMapPos = args.ClickLocation.ToMap(EntityManager, _transform);
 
         var diffPos = clickMapPos.Position - userMapPos.Position;
-        if (diffPos == Vector2.Zero || diffPos == Vector2.NaN)
+        if (diffPos == Vector2.Zero || diffPos == Vector2Helpers.NaN)
             return;
 
-        var diffNorm = diffPos.Normalized;
-        var diffLength = diffPos.Length;
+        var diffNorm = diffPos.Normalized();
+        var diffLength = diffPos.Length();
 
         if (diffLength > component.SprayDistance)
         {
@@ -89,7 +86,7 @@ public sealed class SpraySystem : EntitySystem
         var threeQuarters = diffNorm * 0.75f;
         var quarter = diffNorm * 0.25f;
 
-        var amount = Math.Max(Math.Min((solution.Volume / transfer.TransferAmount).Int(), component.VaporAmount), 1);
+        var amount = Math.Max(Math.Min((solution.Volume / component.TransferAmount).Int(), component.VaporAmount), 1);
         var spread = component.VaporSpread / amount;
         // TODO: Just use usedelay homie.
         var cooldownTime = 0f;
@@ -101,13 +98,13 @@ public sealed class SpraySystem : EntitySystem
 
             // Calculate the destination for the vapor cloud. Limit to the maximum spray distance.
             var target = userMapPos
-                .Offset((diffNorm + rotation.ToVec()).Normalized * diffLength + quarter);
+                .Offset((diffNorm + rotation.ToVec()).Normalized() * diffLength + quarter);
 
-            var distance = (target.Position - userMapPos.Position).Length;
+            var distance = (target.Position - userMapPos.Position).Length();
             if (distance > component.SprayDistance)
                 target = userMapPos.Offset(diffNorm * component.SprayDistance);
 
-            var newSolution = _solutionContainer.SplitSolution(uid, solution, transfer.TransferAmount);
+            var newSolution = _solutionContainer.SplitSolution(uid, solution, component.TransferAmount);
 
             if (newSolution.Volume <= FixedPoint2.Zero)
                 break;

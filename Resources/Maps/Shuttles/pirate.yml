@@ -1,17 +1,17 @@
 meta:
-  format: 4
+  format: 5
   postmapinit: false
 tilemap:
   0: Space
   12: FloorBar
-  22: FloorDark
-  58: FloorReinforced
-  60: FloorShowroom
-  68: FloorSteel
-  78: FloorTechMaint
-  91: FloorWood
-  93: Lattice
-  94: Plating
+  23: FloorDark
+  59: FloorReinforced
+  61: FloorShowroom
+  69: FloorSteel
+  79: FloorTechMaint
+  92: FloorWood
+  94: Lattice
+  95: Plating
 entities:
 - proto: ""
   entities:
@@ -24,16 +24,16 @@ entities:
     - chunks:
         -1,0:
           ind: -1,0
-          tiles: AAAAAAAAAAAAAAAAAAAAAF0AAABeAAAAXgAAAF4AAAAMAAAAXgAAAF4AAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABEAAAAXgAAAEQAAABeAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAARAAAAF4AAABEAAAAXgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAEQAAABeAAAARAAAAF4AAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAF4AAABeAAAARAAAAF4AAABeAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABEAAAARAAAAEQAAABEAAAAXgAAAF4AAABeAAAAFgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAAXgAAAF4AAABeAAAAXgAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAF4AAABeAAAAWwAAAF4AAABeAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABbAAAAWwAAAFsAAABbAAAAXgAAAF4AAABeAAAAFgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAAWwAAAFsAAABbAAAAWwAAABYAAAAWAAAAFgAAABYAAAAWAAAAFgAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAFsAAABbAAAAWwAAAFsAAAAWAAAAFgAAABYAAAAWAAAAFgAAABYAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAABYAAAAWAAAAFgAAABYAAAAWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF0AAABdAAAAXQAAAF4AAABeAAAAFgAAABYAAAAWAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAF4AAABfAAAAXwAAAF8AAAAMAAAAXwAAAF8AAAAXAAAAFwAAABcAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABFAAAAXwAAAEUAAABfAAAAFwAAABcAAAAXAAAAFwAAABcAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAARQAAAF8AAABFAAAAXwAAABcAAAAXAAAAFwAAABcAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAEUAAABfAAAARQAAAF8AAAAXAAAAFwAAABcAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXwAAAF8AAABfAAAARQAAAF8AAABfAAAAFwAAABcAAAAXAAAAFwAAABcAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF8AAABFAAAARQAAAEUAAABFAAAAXwAAAF8AAABfAAAAFwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABfAAAAXwAAAF8AAABfAAAAXwAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXwAAAF8AAABfAAAAXAAAAF8AAABfAAAAFwAAABcAAAAXAAAAFwAAABcAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF8AAABcAAAAXAAAAFwAAABcAAAAXwAAAF8AAABfAAAAFwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABfAAAAXAAAAFwAAABcAAAAXAAAABcAAAAXAAAAFwAAABcAAAAXAAAAFwAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXwAAAFwAAABcAAAAXAAAAFwAAAAXAAAAFwAAABcAAAAXAAAAFwAAABcAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAABcAAAAXAAAAFwAAABcAAAAXAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAXgAAAF8AAABfAAAAFwAAABcAAAAXAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXwAAAF8AAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
         -1,-1:
           ind: -1,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAAAAAAF0AAABdAAAAAAAAAF0AAABdAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXQAAAF0AAABeAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAAwAAABeAAAAXgAAAE4AAABOAAAATgAAAE4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABbAAAAWwAAAFsAAAAMAAAAXgAAAF4AAABOAAAATgAAAE4AAABOAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAAWwAAAFsAAABbAAAADAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAABdAAAAXgAAAFsAAABbAAAAWwAAAAwAAAAMAAAAXgAAAF4AAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF4AAABbAAAAWwAAAFsAAAAMAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAF0AAABeAAAADAAAAAwAAAAMAAAADAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAAAAAAF4AAABeAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABfAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAAXwAAAAwAAABfAAAAXwAAAE8AAABPAAAATwAAAE8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABcAAAAXAAAAFwAAAAMAAAAXwAAAF8AAABPAAAATwAAAE8AAABPAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABfAAAAXAAAAFwAAABcAAAADAAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXwAAAFwAAABcAAAAXAAAAAwAAAAMAAAAXwAAAF8AAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF8AAABcAAAAXAAAAFwAAAAMAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABfAAAADAAAAAwAAAAMAAAADAAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAA==
         0,0:
           ind: 0,0
-          tiles: XgAAAF4AAABEAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABOAAAAXgAAAEQAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAATgAAAF4AAABEAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAE4AAABeAAAARAAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAARAAAAF4AAABeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAPAAAADwAAAA8AAAAPAAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAADwAAAA8AAAAPAAAADwAAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAA8AAAAPAAAADwAAAA8AAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABOAAAAXgAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFgAAAF4AAABeAAAATgAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABYAAABdAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXQAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAAAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF0AAAAAAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: XwAAAF8AAABFAAAAXwAAAF8AAABfAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABPAAAAXwAAAEUAAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAATwAAAF8AAABFAAAAXwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAE8AAABfAAAARQAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAARQAAAF8AAABfAAAAXwAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAPQAAAD0AAAA9AAAAPQAAAF8AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAD0AAAA9AAAAPQAAAD0AAABfAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAAA9AAAAPQAAAD0AAAA9AAAAXwAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABPAAAAXwAAAF8AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFwAAAF8AAABfAAAATwAAAF8AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABcAAABeAAAAXwAAAF8AAABfAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXgAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAAAAAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAXwAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
         0,-1:
           ind: 0,-1
-          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXQAAAF0AAAAAAAAAAAAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXQAAAF0AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE4AAABeAAAAXgAAAF4AAABeAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABOAAAAXgAAAE4AAABOAAAAXgAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAAF4AAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABeAAAAXgAAAF4AAABeAAAAXgAAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAXgAAAF4AAABeAAAAOgAAAF4AAABdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAABeAAAAXgAAADoAAABeAAAAXQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+          tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF4AAAAAAAAAAAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAAXgAAAF4AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE8AAABfAAAAXwAAAF8AAABfAAAAXwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPAAAAXwAAAE8AAABPAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAAXwAAAF8AAABfAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF8AAABfAAAAXwAAAF8AAABfAAAAXwAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAXwAAAF8AAABfAAAAOwAAAF8AAABeAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAAXwAAADsAAABfAAAAXgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       type: MapGrid
     - type: Broadphase
     - angularDamping: 0.05
@@ -41,7 +41,8 @@ entities:
       fixedRotation: False
       bodyType: Dynamic
       type: Physics
-
+    - fixtures: {}
+      type: Fixtures
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity
@@ -339,14 +340,12 @@ entities:
       type: GridAtmosphere
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 1678.8452663
-      type: GridPathfinding
     - type: RadiationGridResistance
-    - nextShake: -4201.5220081
-      shakeTimes: 10
+    - shakeTimes: 10
       type: GravityShake
     - type: GasTileOverlay
     - type: SpreaderGrid
+    - type: GridPathfinding
 - proto: AirlockCommand
   entities:
   - uid: 649
@@ -428,7 +427,6 @@ entities:
       pos: 3.5,15.5
       parent: 732
       type: Transform
-
 - proto: AirlockMedicalGlass
   entities:
   - uid: 485
@@ -457,14 +455,12 @@ entities:
       pos: -11.5,2.5
       parent: 732
       type: Transform
-
   - uid: 77
     components:
     - rot: 1.5707963267948966 rad
       pos: 6.5,2.5
       parent: 732
       type: Transform
-
 - proto: APCBasic
   entities:
   - uid: 261
@@ -1711,7 +1707,8 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
-
+    - fixtures: {}
+      type: Fixtures
 - proto: CarpetBlack
   entities:
   - uid: 526
@@ -1907,15 +1904,11 @@ entities:
       pos: -3.5,9.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 611
     components:
     - pos: -1.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: ChairPilotSeat
   entities:
   - uid: 20
@@ -1923,22 +1916,16 @@ entities:
     - pos: -2.5,11.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 153
     components:
     - pos: -1.5,11.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 570
     components:
     - pos: -3.5,11.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: ClosetEmergencyFilledRandom
   entities:
   - uid: 519
@@ -2031,48 +2018,6 @@ entities:
   - uid: 679
     components:
     - pos: -6.27275,8.540821
-      parent: 732
-      type: Transform
-- proto: ClothingOuterHardsuitPirateEVA
-  entities:
-  - uid: 545
-    components:
-    - pos: -4.5863295,1.517483
-      parent: 732
-      type: Transform
-  - uid: 546
-    components:
-    - pos: -4.5707045,2.517483
-      parent: 732
-      type: Transform
-  - uid: 556
-    components:
-    - pos: -0.57070446,2.579983
-      parent: 732
-      type: Transform
-  - uid: 567
-    components:
-    - pos: -0.58632946,1.595608
-      parent: 732
-      type: Transform
-  - uid: 568
-    components:
-    - pos: -0.58632946,0.611233
-      parent: 732
-      type: Transform
-  - uid: 619
-    components:
-    - pos: -4.5550795,0.595608
-      parent: 732
-      type: Transform
-  - uid: 667
-    components:
-    - pos: -0.58839893,-5.449323
-      parent: 732
-      type: Transform
-  - uid: 673
-    components:
-    - pos: 0.47410107,-5.480573
       parent: 732
       type: Transform
 - proto: ClothingShoesBootsMag
@@ -2303,8 +2248,6 @@ entities:
     - inletTwoConcentration: 0.22000003
       inletOneConcentration: 0.78
       type: GasMixer
-    - bodyType: Static
-      type: Physics
 - proto: GasPassiveVent
   entities:
   - uid: 201
@@ -2313,40 +2256,30 @@ entities:
       pos: 4.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 202
     components:
     - rot: -1.5707963267948966 rad
       pos: 4.5,-0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 688
     components:
     - rot: 3.141592653589793 rad
       pos: 2.5,-7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 689
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,-7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 705
     components:
     - rot: 1.5707963267948966 rad
       pos: -11.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPipeBend
   entities:
   - uid: 190
@@ -2355,8 +2288,6 @@ entities:
       pos: 2.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 197
@@ -2365,8 +2296,6 @@ entities:
       pos: 2.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 198
@@ -2375,8 +2304,6 @@ entities:
       pos: 0.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 214
@@ -2384,8 +2311,6 @@ entities:
     - pos: -2.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 219
@@ -2394,16 +2319,12 @@ entities:
       pos: -7.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 246
     components:
     - rot: 3.141592653589793 rad
       pos: 2.5,-0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 646
@@ -2412,16 +2333,12 @@ entities:
       pos: 3.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 706
     components:
     - rot: 1.5707963267948966 rad
       pos: -7.5,8.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPipeFourway
   entities:
   - uid: 228
@@ -2429,8 +2346,6 @@ entities:
     - pos: -7.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 233
@@ -2438,15 +2353,11 @@ entities:
     - pos: -2.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 254
     components:
     - pos: 2.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPipeStraight
   entities:
   - uid: 115
@@ -2455,8 +2366,6 @@ entities:
       pos: 3.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 199
@@ -2465,8 +2374,6 @@ entities:
       pos: 1.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 212
@@ -2475,8 +2382,6 @@ entities:
       pos: -1.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 215
@@ -2485,8 +2390,6 @@ entities:
       pos: -3.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 216
@@ -2495,8 +2398,6 @@ entities:
       pos: -4.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 217
@@ -2505,40 +2406,30 @@ entities:
       pos: -5.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 218
     components:
     - rot: -1.5707963267948966 rad
       pos: -6.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 221
     components:
     - rot: 3.141592653589793 rad
       pos: -7.5,-0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 222
     components:
     - rot: 3.141592653589793 rad
       pos: -7.5,0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 223
     components:
     - rot: 3.141592653589793 rad
       pos: -7.5,1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 225
@@ -2546,8 +2437,6 @@ entities:
     - pos: -7.5,3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 226
@@ -2555,23 +2444,17 @@ entities:
     - pos: -7.5,4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 227
     components:
     - pos: -7.5,5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 229
     components:
     - rot: -1.5707963267948966 rad
       pos: -6.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 231
@@ -2580,69 +2463,51 @@ entities:
       pos: -4.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 232
     components:
     - rot: -1.5707963267948966 rad
       pos: -3.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 235
     components:
     - rot: 1.5707963267948966 rad
       pos: -1.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 236
     components:
     - rot: 1.5707963267948966 rad
       pos: -0.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 237
     components:
     - rot: 1.5707963267948966 rad
       pos: 0.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 238
     components:
     - rot: 1.5707963267948966 rad
       pos: 1.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 240
     components:
     - pos: 2.5,5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 241
     components:
     - pos: 2.5,4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 242
     components:
     - pos: 2.5,3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 244
@@ -2651,8 +2516,6 @@ entities:
       pos: 2.5,1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 245
@@ -2661,16 +2524,12 @@ entities:
       pos: 2.5,0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 247
     components:
     - rot: 1.5707963267948966 rad
       pos: 3.5,-0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 248
@@ -2678,69 +2537,51 @@ entities:
     - pos: -2.5,5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 249
     components:
     - pos: -2.5,4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 250
     components:
     - pos: -2.5,3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 251
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 259
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,8.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 317
     components:
     - rot: -1.5707963267948966 rad
       pos: -5.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 643
     components:
     - rot: 3.141592653589793 rad
       pos: 3.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 644
     components:
     - rot: 3.141592653589793 rad
       pos: 3.5,8.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 686
     components:
     - pos: 2.5,-5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 687
@@ -2748,8 +2589,6 @@ entities:
     - pos: 2.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 690
@@ -2758,8 +2597,6 @@ entities:
       pos: -6.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 691
@@ -2768,80 +2605,60 @@ entities:
       pos: -6.5,-5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 692
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,-4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 693
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 694
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,-2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 695
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 699
     components:
     - rot: 3.141592653589793 rad
       pos: -7.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 701
     components:
     - rot: -1.5707963267948966 rad
       pos: -7.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 702
     components:
     - rot: -1.5707963267948966 rad
       pos: -8.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 703
     components:
     - rot: -1.5707963267948966 rad
       pos: -9.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 704
     components:
     - rot: -1.5707963267948966 rad
       pos: -10.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 708
@@ -2850,24 +2667,18 @@ entities:
       pos: -4.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 709
     components:
     - rot: -1.5707963267948966 rad
       pos: -5.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 717
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPipeTJunction
   entities:
   - uid: 196
@@ -2876,8 +2687,6 @@ entities:
       pos: 0.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 213
@@ -2886,8 +2695,6 @@ entities:
       pos: -2.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 220
@@ -2896,16 +2703,12 @@ entities:
       pos: -7.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 224
     components:
     - rot: -1.5707963267948966 rad
       pos: -7.5,2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 234
@@ -2914,16 +2717,12 @@ entities:
       pos: -2.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 505
     components:
     - rot: 1.5707963267948966 rad
       pos: 2.5,2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
     - enabled: True
       type: AmbientSound
   - uid: 707
@@ -2931,8 +2730,6 @@ entities:
     - pos: -6.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPort
   entities:
   - uid: 205
@@ -2941,16 +2738,12 @@ entities:
       pos: 3.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 206
     components:
     - rot: 3.141592653589793 rad
       pos: 1.5,-5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasPressurePump
   entities:
   - uid: 203
@@ -2959,24 +2752,18 @@ entities:
       pos: 1.5,-4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 204
     components:
     - rot: -1.5707963267948966 rad
       pos: 2.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 211
     components:
     - rot: -1.5707963267948966 rad
       pos: -0.5,-3.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: GasVentPump
   entities:
   - uid: 239
@@ -2984,86 +2771,86 @@ entities:
     - pos: 2.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 243
     components:
     - rot: -1.5707963267948966 rad
       pos: 3.5,2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 252
     components:
     - rot: 1.5707963267948966 rad
       pos: -3.5,7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 253
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 255
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,2.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 257
     components:
     - rot: 1.5707963267948966 rad
       pos: -8.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 258
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,-4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 260
     components:
     - pos: -2.5,9.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 660
     components:
     - pos: 3.5,9.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 700
     components:
     - rot: -1.5707963267948966 rad
       pos: -6.5,8.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 718
     components:
     - rot: 3.141592653589793 rad
       pos: -2.5,0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
 - proto: GasVentScrubber
   entities:
   - uid: 645
@@ -3071,32 +2858,32 @@ entities:
     - pos: 2.5,-4.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 696
     components:
     - pos: -6.5,-0.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 697
     components:
     - rot: -1.5707963267948966 rad
       pos: -3.5,10.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
+    - enabled: False
+      type: AmbientSound
   - uid: 698
     components:
     - rot: 3.141592653589793 rad
       pos: -6.5,9.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
-- proto: GeneratorUranium
+    - enabled: False
+      type: AmbientSound
+- proto: GeneratorBasic15kW
   entities:
   - uid: 55
     components:
@@ -3277,15 +3064,11 @@ entities:
     - pos: -2.5,-5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 469
     components:
     - pos: -3.5,-5.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: HandheldHealthAnalyzer
   entities:
   - uid: 597
@@ -3623,54 +3406,14 @@ entities:
       type: ApcPowerReceiver
 - proto: Rack
   entities:
-  - uid: 91
-    components:
-    - pos: -0.5,1.5
-      parent: 732
-      type: Transform
   - uid: 256
     components:
     - pos: -6.5,2.5
       parent: 732
       type: Transform
-  - uid: 523
-    components:
-    - pos: -4.5,1.5
-      parent: 732
-      type: Transform
-  - uid: 524
-    components:
-    - pos: -4.5,2.5
-      parent: 732
-      type: Transform
-  - uid: 525
-    components:
-    - pos: -0.5,2.5
-      parent: 732
-      type: Transform
-  - uid: 529
-    components:
-    - pos: -4.5,0.5
-      parent: 732
-      type: Transform
   - uid: 615
     components:
     - pos: 1.5,2.5
-      parent: 732
-      type: Transform
-  - uid: 656
-    components:
-    - pos: -0.5,0.5
-      parent: 732
-      type: Transform
-  - uid: 666
-    components:
-    - pos: -0.5,-5.5
-      parent: 732
-      type: Transform
-  - uid: 668
-    components:
-    - pos: 0.5,-5.5
       parent: 732
       type: Transform
 - proto: ReinforcedPlasmaWindow
@@ -3980,6 +3723,55 @@ entities:
     - pos: -4.5,-5.5
       parent: 732
       type: Transform
+- proto: SuitStorageEVAPirate
+  entities:
+  - uid: 91
+    components:
+    - pos: -4.5,0.5
+      parent: 732
+      type: Transform
+  - uid: 523
+    components:
+    - pos: -4.5,2.5
+      parent: 732
+      type: Transform
+  - uid: 524
+    components:
+    - pos: -0.5,1.5
+      parent: 732
+      type: Transform
+  - uid: 525
+    components:
+    - pos: 0.5,-5.5
+      parent: 732
+      type: Transform
+  - uid: 529
+    components:
+    - pos: -0.5,2.5
+      parent: 732
+      type: Transform
+  - uid: 545
+    components:
+    - pos: -4.5,1.5
+      parent: 732
+      type: Transform
+  - uid: 556
+    components:
+    - pos: -0.5,0.5
+      parent: 732
+      type: Transform
+  - uid: 567
+    components:
+    - pos: -0.5,-5.5
+      parent: 732
+      type: Transform
+- proto: SuitStoragePirateCap
+  entities:
+  - uid: 546
+    components:
+    - pos: -8.5,8.5
+      parent: 732
+      type: Transform
 - proto: Table
   entities:
   - uid: 173
@@ -4128,93 +3920,69 @@ entities:
       pos: -2.5,-7.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 40
     components:
     - pos: -7.5,12.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 180
     components:
     - rot: 3.141592653589793 rad
       pos: 3.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 182
     components:
     - rot: 3.141592653589793 rad
       pos: -8.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 515
     components:
     - pos: 5.5,9.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 542
     components:
     - rot: 3.141592653589793 rad
       pos: 4.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 543
     components:
     - rot: 3.141592653589793 rad
       pos: -9.5,-6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 622
     components:
     - pos: 1.5,11.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 624
     components:
     - rot: 1.5707963267948966 rad
       pos: -11.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 625
     components:
     - rot: 1.5707963267948966 rad
       pos: -11.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 626
     components:
     - rot: -1.5707963267948966 rad
       pos: 6.5,-1.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
   - uid: 627
     components:
     - rot: -1.5707963267948966 rad
       pos: 6.5,6.5
       parent: 732
       type: Transform
-    - bodyType: Static
-      type: Physics
 - proto: VendingMachineCigs
   entities:
   - uid: 516

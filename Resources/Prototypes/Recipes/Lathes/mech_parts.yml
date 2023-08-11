@@ -100,3 +100,52 @@
   materials:
     Steel: 500
     Bananium: 200
+
+# HAMTR
+- type: latheRecipe
+  id: HamtrHarness
+  result: HamtrHarness
+  completetime: 10
+  materials:
+    Steel: 1200
+    Glass: 1000
+
+- type: latheRecipe
+  id: HamtrLArm
+  result: HamtrLArm
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrLLeg
+  result: HamtrLLeg
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrRLeg
+  result: HamtrRLeg
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrRArm
+  result: HamtrRArm
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: MechEquipmentGrabberSmall
+  result: MechEquipmentGrabberSmall
+  completetime: 10
+  materials:
+    Steel: 400
+    Plastic: 100

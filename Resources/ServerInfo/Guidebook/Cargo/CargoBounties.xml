@@ -1,0 +1,29 @@
+<Document>
+  # Cargo Bounties
+  [textlink="Cargo" link="Cargo"] can always make money selling items whenever they feel like it. However, there are ways to make even more money by being more selective about what and when you're selling. One of these ways is [color=#a4885c]bounties[/color].
+
+  <Box>
+    <GuideEntityEmbed Entity="ComputerCargoBounty"/>
+  </Box>
+  Every station has a fixed amount of bounties that are globally available. These can be checked at the [color=#a4885c]cargo bounty computer[/color], which shows the following information about them:
+  - What items are needed to fulfill the bounty
+  - How much money do you get for completing the bounty
+  - How much time is left before the bounty expires
+
+  Assuming that you are able to aquire all of the items for it in a time efficient and low-cost manner, you will be able to complete the bounty and get a significantly higher payout than you would be selling the items conventionally.
+
+  ## Completing Bounties
+  <Box>
+    <GuideEntityEmbed Entity="PaperCargoBountyManifest"/>
+    <GuideEntityEmbed Entity="CrateGenericSteel"/>
+    <GuideEntityEmbed Entity="CargoPallet"/>
+  </Box>
+  Once you have collected the items you need for a bounty, completing it is a simple process:
+  - Place all of the items inside of the crate and [bold]close it![/bold]
+  - Get the bounties manifest label by clicking the [color=#a4885c]print label[/color] button on corresponding entry on the cargo bounty computer.
+  - Place the label on the crate containing the items.
+  - Move the crate onto the cargo shuttle.
+  - Sell it.
+
+  And there you go! After you follow these steps, the bounty should disappear from the computer and a new one will take its place.
+</Document>

@@ -5,7 +5,6 @@
   description: A bag for storing chemistry products, such as pills, pill canisters, bottles, and syringes.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Chemistry/chem_bag.rsi
     state: icon
   - type: Clothing

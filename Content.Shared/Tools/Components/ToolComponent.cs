@@ -23,16 +23,13 @@ namespace Content.Shared.Tools.Components
 
     /// <summary>
     ///     Attempt event called *before* any do afters to see if the tool usage should succeed or not.
-    ///     You can change the fuel consumption by changing the Fuel property.
     /// </summary>
     public sealed class ToolUseAttemptEvent : CancellableEntityEventArgs
     {
-        public float Fuel { get; set; }
         public EntityUid User { get; }
 
-        public ToolUseAttemptEvent(float fuel, EntityUid user)
+        public ToolUseAttemptEvent(EntityUid user)
         {
-            Fuel = fuel;
             User = user;
         }
     }

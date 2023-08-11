@@ -24,7 +24,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "torso_m"
     - type: Icon
@@ -40,7 +39,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "skull_icon"
     - type: Icon
@@ -78,7 +76,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_arm"
     - type: Icon
@@ -94,7 +91,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_arm"
     - type: Icon
@@ -110,7 +106,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_hand"
     - type: Icon
@@ -126,7 +121,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_hand"
     - type: Icon
@@ -142,7 +136,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_leg"
     - type: Icon
@@ -159,7 +152,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_leg"
     - type: Icon
@@ -176,7 +168,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "l_foot"
     - type: Icon
@@ -192,7 +183,6 @@
   parent: PartSkeleton
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Skeleton/parts.rsi
       state: "r_foot"
     - type: Icon

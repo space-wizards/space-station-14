@@ -42,7 +42,7 @@ public sealed partial class ShuttleSystem
 
         var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
         var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);
-        var jungleDiff = (ourVelocity - otherVelocity).Length;
+        var jungleDiff = (ourVelocity - otherVelocity).Length();
 
         if (jungleDiff < MinimumImpactVelocity)
         {

@@ -1,0 +1,21 @@
+﻿- type: constructionGraph
+  id: PlushieGhostRevenant
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: plushie
+          steps:
+            - tag: PlushieGhost
+              name: ghost soft toy
+              icon:
+                sprite: Mobs/Ghosts/ghost_human.rsi
+                state: icon
+            - tag: Ectoplasm
+              name: ectoplasm
+              icon:
+                sprite: Mobs/Ghosts/revenant.rsi
+                state: ectoplasm
+              doAfter: 10
+    - node: plushie
+      entity: PlushieGhostRevenant

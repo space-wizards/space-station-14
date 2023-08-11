@@ -5,7 +5,6 @@
   description: A robust bag for salvage specialists and miners alike to carry large amounts of ore.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Mining/ore_bag.rsi
     state: icon
   - type: Clothing

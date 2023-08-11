@@ -8,6 +8,9 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 using Content.Shared.Weapons.Melee.Events;
+using Content.Shared.Weapons.Melee.Components;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
 using Content.Shared.Wieldable.Components;
 using Robust.Shared.Player;
 
@@ -32,15 +35,53 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
-        SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
-        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
+        SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
+        SubscribeLocalEvent<GunWieldBonusComponent, ItemWieldedEvent>(OnGunWielded);
+        SubscribeLocalEvent<GunWieldBonusComponent, ItemUnwieldedEvent>(OnGunUnwielded);
+
+        SubscribeLocalEvent<IncreaseDamageOnWieldComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
     }
 
-    private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
+    private void OnMeleeAttempt(EntityUid uid, MeleeRequiresWieldComponent component, ref AttemptMeleeEvent args)
     {
-        if (component.Wielded)
-            args.Cancel();
+        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+            !wieldable.Wielded)
+        {
+            args.Cancelled = true;
+            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+        }
+    }
+
+    private void OnShootAttempt(EntityUid uid, GunRequiresWieldComponent component, ref AttemptShootEvent args)
+    {
+        if (TryComp<WieldableComponent>(uid, out var wieldable) &&
+            !wieldable.Wielded)
+        {
+            args.Cancelled = true;
+            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+        }
+    }
+
+    private void OnGunUnwielded(EntityUid uid, GunWieldBonusComponent component, ItemUnwieldedEvent args)
+    {
+        if (!TryComp<GunComponent>(uid, out var gun))
+            return;
+
+        gun.MinAngle -= component.MinAngle;
+        gun.MaxAngle -= component.MaxAngle;
+        Dirty(gun);
+    }
+
+    private void OnGunWielded(EntityUid uid, GunWieldBonusComponent component, ref ItemWieldedEvent args)
+    {
+        if (!TryComp<GunComponent>(uid, out var gun))
+            return;
+
+        gun.MinAngle += component.MinAngle;
+        gun.MaxAngle += component.MaxAngle;
+        Dirty(gun);
     }
 
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
@@ -171,6 +212,9 @@ public sealed class WieldableSystem : EntitySystem
         _popupSystem.PopupClient(Loc.GetString("wieldable-component-successful-wield", ("item", uid)), args.Args.User, args.Args.User);
         _popupSystem.PopupEntity(Loc.GetString("wieldable-component-successful-wield-other", ("user", args.Args.User),("item", uid)), args.Args.User, Filter.PvsExcept(args.Args.User), true);
 
+        var ev = new ItemWieldedEvent();
+        RaiseLocalEvent(uid, ref ev);
+
         Dirty(component);
         args.Handled = true;
     }
@@ -217,16 +261,13 @@ public sealed class WieldableSystem : EntitySystem
             AttemptUnwield(args.BlockingEntity, component, args.User);
     }
 
-    private void OnMeleeHit(EntityUid uid, IncreaseDamageOnWieldComponent component, MeleeHitEvent args)
+    private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
     {
-        if (EntityManager.TryGetComponent<WieldableComponent>(uid, out var wield))
-        {
-            if (!wield.Wielded)
-                return;
-        }
-        if (args.Handled)
+        if (!TryComp<WieldableComponent>(uid, out var wield))
+            return;
+        if (!wield.Wielded)
             return;
 
-        args.BonusDamage += component.BonusDamage;
+        args.Damage += component.BonusDamage;
     }
 }

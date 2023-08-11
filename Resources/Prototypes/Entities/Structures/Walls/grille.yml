@@ -14,7 +14,6 @@
         - RCDDeconstructWhitelist
     - type: CanBuildWindowOnTop
     - type: Sprite
-      netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
       layers:
@@ -33,8 +32,9 @@
       deconstructionTarget: start
     - type: Damageable
       damageContainer: Inorganic
-      damageModifierSet: FlimsyMetallic
+      damageModifierSet: PerforatedMetallic
     - type: PowerConsumer
+      showInMonitor: false
     - type: Electrified
       requirePower: true
       noWindowInTile: true
@@ -66,13 +66,13 @@
       thresholds:
         - trigger:
             !type:DamageTrigger
-            damage: 50 #excess damage (nuke?). avoid computational cost of spawning entities.
+            damage: 130 #excess damage (nuke?). avoid computational cost of spawning entities.
           behaviors:
             - !type:DoActsBehavior
               acts: ["Destruction"]
         - trigger:
             !type:DamageTrigger
-            damage: 20
+            damage: 100
           behaviors:
             - !type:ChangeConstructionNodeBehavior
               node: grilleBroken
@@ -94,7 +94,6 @@
   description: A flimsy framework of iron rods. It has seen better days.
   components:
     - type: Sprite
-      netsync: false
       drawdepth: Walls
       sprite: Structures/Walls/grille.rsi
       state: grille_broken

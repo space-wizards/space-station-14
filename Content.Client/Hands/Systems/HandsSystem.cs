@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Examine;
 using Content.Client.Strip;
@@ -109,16 +110,16 @@ namespace Content.Client.Hands.Systems
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition);
+            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
         }
 
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
+        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
             EntityUid? exclude)
         {
-            PickupAnimation(item, initialPosition, finalPosition);
+            PickupAnimation(item, initialPosition, finalPosition, initialAngle);
         }
 
-        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition)
+        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle)
         {
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
@@ -126,7 +127,7 @@ namespace Content.Client.Hands.Systems
             if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
                 return;
 
-            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
+            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition, initialAngle);
         }
         #endregion
 
@@ -348,10 +349,12 @@ namespace Content.Client.Hands.Systems
                 // In case no RSI is given, use the item's base RSI as a default. This cuts down on a lot of unnecessary yaml entries.
                 if (layerData.RsiPath == null
                     && layerData.TexturePath == null
-                    && sprite[index].Rsi == null
-                    && TryComp(held, out SpriteComponent? clothingSprite))
+                    && sprite[index].Rsi == null)
                 {
-                    sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
+                    if (TryComp<ItemComponent>(held, out var itemComponent) && itemComponent.RsiPath != null)
+                        sprite.LayerSetRSI(index, itemComponent.RsiPath);
+                    else if (TryComp(held, out SpriteComponent? clothingSprite))
+                        sprite.LayerSetRSI(index, clothingSprite.BaseRSI);
                 }
 
                 sprite.LayerSetData(index, layerData);

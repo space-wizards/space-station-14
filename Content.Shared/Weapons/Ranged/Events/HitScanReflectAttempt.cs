@@ -1,3 +1,6 @@
+using System.Numerics;
+using Content.Shared.Weapons.Reflect;
+
 namespace Content.Shared.Weapons.Ranged.Events;
 
 /// <summary>
@@ -5,4 +8,4 @@ namespace Content.Shared.Weapons.Ranged.Events;
 /// and changing <see cref="Direction"/> where shot will go next
 /// </summary>
 [ByRefEvent]
-public record struct HitScanReflectAttemptEvent(Vector2 Direction, bool Reflected);
+public record struct HitScanReflectAttemptEvent(EntityUid? Shooter, EntityUid SourceItem, ReflectType Reflective, Vector2 Direction, bool Reflected);

@@ -139,7 +139,9 @@ public abstract class SharedAnomalySystem : EntitySystem
             ChangeAnomalySeverity(uid, GetSeverityIncreaseFromGrowth(component), component);
         }
 
-        var stability = Random.NextFloat(-component.PulseStabilityVariation, component.PulseStabilityVariation);
+        var minStability = component.PulseStabilityVariation.X * component.Severity;
+        var maxStability = component.PulseStabilityVariation.Y * component.Severity;
+        var stability = Random.NextFloat(minStability, maxStability);
         ChangeAnomalyStability(uid, stability, component);
 
         Log.Add(LogType.Anomaly, LogImpact.Medium, $"Anomaly {ToPrettyString(uid)} pulsed with severity {component.Severity}.");
@@ -221,7 +223,7 @@ public abstract class SharedAnomalySystem : EntitySystem
 
         if (Terminating(uid) || _net.IsClient)
             return;
-        Del(uid);
+        QueueDel(uid);
     }
 
     /// <summary>

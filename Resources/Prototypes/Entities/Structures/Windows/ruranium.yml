@@ -50,3 +50,5 @@
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
     price: 140
+  - type: RadiationBlocker
+    resistance: 5

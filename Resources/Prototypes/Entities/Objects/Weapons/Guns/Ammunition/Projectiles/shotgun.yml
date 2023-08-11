@@ -46,7 +46,7 @@
   id: PelletShotgunIncendiary
   name: pellet (.50 incendiary)
   noSpawn: true
-  parent: BaseBullet
+  parent: BaseBulletIncendiary
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
@@ -55,13 +55,6 @@
     damage:
       groups:
         Burn: 7
-  - type: PointLight
-    enabled: true
-    color: "#ff4300"
-    radius: 2.0
-    energy: 7.0
-  - type: IgniteOnCollide
-    fireStacks: 1
 
 - type: entity
   id: PelletShotgunPractice
@@ -76,6 +69,21 @@
     damage:
       types:
         Blunt: 1
+
+- type: entity
+  id: PelletShotgunImprovised
+  name: improvised pellet
+  noSpawn: true
+  parent: BaseBullet 
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/projectiles2.rsi
+    state: buckshot
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 3
+        Slash: 3 #remember, it's metal shrapnel!
 
 - type: entity
   id: PelletShotgunTranquilizer

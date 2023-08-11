@@ -4,30 +4,30 @@
   placement:
     mode: SnapgridCenter
   components:
-    - type: InteractionOutline
-    - type: Anchorable
-    - type: Rotatable
-    - type: Physics
-      bodyType: Static
-    - type: Fixtures
-      fixtures:
-        fix1:
-          shape:
-            !type:PhysShapeAabb
-            bounds: "-0.45,-0.45,0.45,0.45"
-          density: 190
-          mask:
-          - MachineMask
-          layer:
-          - MachineLayer
-    - type: Transform
-      anchored: true
-      noRot: false
-    - type: Pullable
-    - type: Clickable
-    - type: GuideHelp
-      guides: [ Singularity, Power ]
-    - type: Appearance
+  - type: InteractionOutline
+  - type: Anchorable
+  - type: Rotatable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+    noRot: false
+  - type: Pullable
+  - type: Clickable
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+  - type: Appearance
 
 - type: entity
   id: ParticleAcceleratorFinishedPart

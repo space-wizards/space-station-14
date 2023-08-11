@@ -13,7 +13,7 @@ public sealed class PerishableComponent : Component
     /// How long it takes after death to start rotting.
     /// </summary>
     [DataField("rotAfter"), ViewVariables(VVAccess.ReadWrite)]
-    public TimeSpan RotAfter = TimeSpan.FromMinutes(5);
+    public TimeSpan RotAfter = TimeSpan.FromMinutes(10);
 
     /// <summary>
     /// How much rotting has occured
@@ -29,7 +29,7 @@ public sealed class PerishableComponent : Component
 
     /// <summary>
     /// How often the rotting ticks.
-    /// Feel free to weak this if there are perf concerns.
+    /// Feel free to tweak this if there are perf concerns.
     /// </summary>
     [DataField("perishUpdateRate"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan PerishUpdateRate = TimeSpan.FromSeconds(5);

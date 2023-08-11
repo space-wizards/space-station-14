@@ -37,16 +37,16 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             return;
         _updateDiff -= UpdateRate;
 
-        var servers = EntityManager.EntityQuery<CrewMonitoringServerComponent>();
+        var servers = EntityQueryEnumerator<CrewMonitoringServerComponent>();
         List<EntityUid> activeServers = new();
 
-        foreach (var server in servers)
+        while (servers.MoveNext(out var id, out var server))
         {
             //Make sure the server is disconnected when it becomes unavailable
             if (!server.Available)
             {
                 if (server.Active)
-                    DisconnectServer(server.Owner, server);
+                    DisconnectServer(id, server);
 
                 continue;
             }
@@ -54,7 +54,7 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
             if (!server.Active)
                 continue;
 
-            activeServers.Add(server.Owner);
+            activeServers.Add(id);
         }
 
         foreach (var activeServer in activeServers)
@@ -69,21 +69,21 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
     /// </summary>
     public bool TryGetActiveServerAddress(EntityUid stationId, out string? address)
     {
-        var servers = EntityManager.EntityQuery<CrewMonitoringServerComponent, DeviceNetworkComponent>();
-        (CrewMonitoringServerComponent, DeviceNetworkComponent)? last = default;
+        var servers = EntityQueryEnumerator<CrewMonitoringServerComponent, DeviceNetworkComponent>();
+        (EntityUid id, CrewMonitoringServerComponent server, DeviceNetworkComponent device)? last = default;
 
-        foreach (var (server, device) in servers)
+        while (servers.MoveNext(out var uid, out var server, out var device))
         {
-            if (!_stationSystem.GetOwningStation(server.Owner)?.Equals(stationId) ?? false)
+            if (!_stationSystem.GetOwningStation(uid)?.Equals(stationId) ?? true)
                 continue;
 
             if (!server.Available)
             {
-                DisconnectServer(server.Owner,server, device);
+                DisconnectServer(uid,server, device);
                 continue;
             }
 
-            last = (server, device);
+            last = (uid, server, device);
 
             if (server.Active)
             {
@@ -95,8 +95,8 @@ public sealed class CrewMonitoringServerSystem : EntitySystem
         //If there was no active server for the station make the last available inactive one active
         if (last.HasValue)
         {
-            ConnectServer(last.Value.Item1.Owner, last.Value.Item1, last.Value.Item2);
-            address = last.Value.Item2.Address;
+            ConnectServer(last.Value.id, last.Value.server, last.Value.device);
+            address = last.Value.device.Address;
             return true;
         }
 

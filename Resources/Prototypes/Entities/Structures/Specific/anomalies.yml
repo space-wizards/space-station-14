@@ -33,7 +33,6 @@
         layer:
         - MobLayer
   - type: Sprite
-    netsync: false
     noRot: true
     drawdepth: Effects #it needs to draw over stuff.
     sprite: Structures/Specific/anomaly.rsi
@@ -73,6 +72,9 @@
   - type: GasProducerAnomaly
     releasedGas: 3
     releaseOnMaxSeverity: true
+    spawnRadius: 3
+    tileCount: 5
+    tempChange: 550
 
 - type: entity
   id: AnomalyGravity
@@ -216,9 +218,9 @@
         Cold: 10
   - type: ExplosionAnomaly
     supercriticalExplosion: Cryo
-    explosionTotalIntensity: 1000
-    explosionDropoff: 1
-    explosionMaxTileIntensity: 10
+    explosionTotalIntensity: 300
+    explosionDropoff: 2
+    explosionMaxTileIntensity: 20
   - type: ProjectileAnomaly
     projectilePrototype: ProjectileIcicle
     targetNonSentientChance: 0.1
@@ -228,3 +230,4 @@
   - type: GasProducerAnomaly
     releasedGas: 8 # Frezon. Please replace if there is a better way to specify this
     releaseOnMaxSeverity: true
+    spawnRadius: 0

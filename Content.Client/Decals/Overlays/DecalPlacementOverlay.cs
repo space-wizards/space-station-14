@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
@@ -39,13 +40,13 @@ public sealed class DecalPlacementOverlay : Overlay
             return;
 
         // No map support for decals
-        if (!_mapManager.TryFindGridAt(mousePos, out var grid))
+        if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid))
         {
             return;
         }
 
-        var worldMatrix = _transform.GetWorldMatrix(grid.Owner);
-        var invMatrix = _transform.GetInvWorldMatrix(grid.Owner);
+        var worldMatrix = _transform.GetWorldMatrix(gridUid);
+        var invMatrix = _transform.GetInvWorldMatrix(gridUid);
 
         var handle = args.WorldHandle;
         handle.SetTransform(worldMatrix);
@@ -54,7 +55,7 @@ public sealed class DecalPlacementOverlay : Overlay
 
         if (snap)
         {
-            localPos = (Vector2) localPos.Floored() + grid.TileSize / 2f;
+            localPos = (Vector2) localPos.Floored() + grid.TileSizeHalfVector;
         }
 
         // Nothing uses snap cardinals so probably don't need preview?

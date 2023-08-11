@@ -5,6 +5,14 @@
   duration: 30
 
 - type: polymorph
+  id: Scrambled
+  entity: MobHumanScrambled
+  forced: false
+  inventory: Transfer
+  revertOnCrit: true
+  revertOnDeath: true
+
+- type: polymorph
   id: Chicken
   entity: MobChicken
   forced: true
@@ -83,3 +91,14 @@
   transferName: true
   revertOnCrit: false
   revertOnDeath: false
+
+- type: polymorph
+  id: BreadMorph
+  entity: FoodBreadPlain
+  forced: true
+  inventory: None
+  transferName: false
+  transferDamage: true
+  revertOnCrit: false
+  revertOnDeath: true
+  revertOnEat: true

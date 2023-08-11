@@ -85,3 +85,19 @@
   lightColor: Orange
   texturePath: /Textures/Effects/fire.rsi
   fireStates: 3
+
+- type: explosion
+  id: PowerSink
+  damagePerIntensity:
+    types:
+      Heat: 12
+      Blunt: 12
+      Piercing: 12
+      Structural: 40
+  tileBreakChance: [ 0, 0.5, 1 ]
+  tileBreakIntensity: [ 1, 5, 10 ]
+  tileBreakRerollReduction: 3
+  intensityPerState: 20
+  lightColor: Orange
+  texturePath: /Textures/Effects/fire.rsi
+  fireStates: 6

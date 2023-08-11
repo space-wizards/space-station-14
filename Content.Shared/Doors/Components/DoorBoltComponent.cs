@@ -11,6 +11,7 @@ namespace Content.Shared.Doors.Components;
 /// Companion component to DoorComponent that handles bolt-specific behavior.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
+[Access(typeof(SharedDoorBoltSystem))]
 public sealed class DoorBoltComponent : Component
 {
     /// <summary>

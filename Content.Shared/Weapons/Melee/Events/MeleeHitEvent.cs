@@ -1,4 +1,5 @@
 using Content.Shared.Damage;
+using Content.Shared.FixedPoint;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Weapons.Melee.Events;
@@ -66,3 +67,21 @@ public sealed class MeleeHitEvent : HandledEntityEventArgs
         BaseDamage = baseDamage;
     }
 }
+
+/// <summary>
+/// Raised on a melee weapon to calculate potential damage bonuses or decreases.
+/// </summary>
+[ByRefEvent]
+public record struct GetMeleeDamageEvent(EntityUid Weapon, DamageSpecifier Damage, List<DamageModifierSet> Modifiers, EntityUid User);
+
+/// <summary>
+/// Raised on a melee weapon to calculate the attack rate.
+/// </summary>
+[ByRefEvent]
+public record struct GetMeleeAttackRateEvent(EntityUid Weapon, float Rate, float Multipliers, EntityUid User);
+
+/// <summary>
+/// Raised on a melee weapon to calculate the heavy damage modifier.
+/// </summary>
+[ByRefEvent]
+public record struct GetHeavyDamageModifierEvent(EntityUid Weapon, FixedPoint2 DamageModifier, float Multipliers, EntityUid User);

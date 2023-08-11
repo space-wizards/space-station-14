@@ -8,7 +8,6 @@
   components:
   - type: Sprite
     sprite: Structures/Machines/mixer.rsi
-    netsync: false
     snapCardinals: true
     layers:
     - state: mixer_empty
@@ -60,6 +59,7 @@
           True: { visible: true }
           False: { visible: false }
   # Machine / Construction stuff
+  - type: WiresPanel
   - type: Wires
     BoardName: "chem_master"
     LayoutId: chem_master
@@ -86,3 +86,7 @@
   - type: SolutionContainerManager
     solutions:
       buffer: {}
+  - type: GuideHelp
+    guides:
+    - Chemicals
+    - Chemist

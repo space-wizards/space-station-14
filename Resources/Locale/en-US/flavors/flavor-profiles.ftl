@@ -42,6 +42,7 @@ flavor-base-cheap = cheap
 flavor-base-piquant = piquant
 flavor-base-sharp = sharp
 flavor-base-syrupy = syrupy
+flavor-base-spaceshroom = mysterious
 
 # lmao
 flavor-base-terrible = terrible
@@ -143,6 +144,9 @@ flavor-complex-chaos = like chaos
 flavor-complex-squirming = like squirming
 flavor-complex-electrons = like electrons
 flavor-complex-parents = like someone's parents
+flavor-complex-plastic = like plastic
+flavor-complex-glue = like glue
+flavor-complex-spaceshroom-cooked = like space umami
 
 # Drink-specific flavors.
 
@@ -150,6 +154,7 @@ flavor-complex-parents = like someone's parents
 flavor-complex-alcohol = like alcohol
 flavor-complex-soda = like soda
 flavor-complex-juice = like juice
+flavor-complex-rocksandstones = like rocks and stones
 
 ## Basic drinks
 flavor-complex-water = like water
@@ -163,6 +168,7 @@ flavor-complex-rum = like fermented sugar
 flavor-complex-coffee-liquor = like strong, bitter coffee
 flavor-complex-whiskey = like molasses
 flavor-complex-shitty-wine = like grape rinds
+flavor-complex-champagne = like freshly baked bread
 flavor-complex-iced-tea = like iced tea
 flavor-complex-coffee = like coffee
 flavor-complex-milk = like milk
@@ -189,6 +195,8 @@ flavor-complex-gin-tonic = like spiked lemon-lime soda
 flavor-complex-screwdriver = like spiked orange juice
 flavor-complex-themartinez = like violets and lemon vodka
 flavor-complex-cogchamp = like brass
+flavor-complex-white-gilgamesh = like lightly carbonated cream
+flavor-complex-antifreeze = warm
 
 ### This is exactly what pilk tastes like. I'm not even joking. I might've been a little drunk though
 flavor-complex-pilk = like sweet milk

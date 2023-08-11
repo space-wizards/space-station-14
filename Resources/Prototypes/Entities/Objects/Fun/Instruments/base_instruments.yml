@@ -5,7 +5,6 @@
   description: That's an instrument.
   components:
   - type: Sprite
-    netsync: false
   - type: Instrument
   - type: ActivatableUI
     inHandsOnly: true

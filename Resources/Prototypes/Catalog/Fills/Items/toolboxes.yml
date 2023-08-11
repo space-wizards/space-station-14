@@ -30,14 +30,35 @@
       - id: Screwdriver
       - id: Crowbar
       - id: Wirecutter
-      - id: CableApcStack
-      - id: CableMVStack
+      - id: CableApcStack10
+      - id: CableMVStack10
       - id: trayScanner
         prob: 0.9
       - id: ClothingHandsGlovesColorYellow
         prob: 0.05
         orGroup: GlovesOrWires
-      - id: CableHVStack
+      - id: CableHVStack10
+        orGroup: GlovesOrWires
+
+- type: entity
+  id: ToolboxElectricalTurretFilled
+  name: electrical toolbox
+  suffix: Filled
+  parent: ToolboxElectricalTurret
+  components:
+  - type: StorageFill
+    contents:
+      - id: Screwdriver
+      - id: Crowbar
+      - id: Wirecutter
+      - id: CableApcStack10
+      - id: CableMVStack10
+      - id: trayScanner
+        prob: 0.9
+      - id: ClothingHandsGlovesColorYellow
+        prob: 0.05
+        orGroup: GlovesOrWires
+      - id: CableHVStack10
         orGroup: GlovesOrWires
 
 - type: entity
@@ -67,7 +88,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingBeltUtilityFilled
+      - id: ClothingBeltUtilityEngineering
       - id: ClothingHandsGlovesCombat
       - id: ClothingMaskGasSyndicate
 

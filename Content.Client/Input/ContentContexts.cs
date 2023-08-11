@@ -37,6 +37,9 @@ namespace Content.Client.Input
             // Not in engine, because engine cannot check for sanbox/admin status before starting placement.
             common.AddFunction(ContentKeyFunctions.EditorCopyObject);
 
+            // Not in engine because the engine doesn't understand what a flipped object is
+            common.AddFunction(ContentKeyFunctions.EditorFlipObject);
+
             var human = contexts.GetContext("human");
             human.AddFunction(EngineKeyFunctions.MoveUp);
             human.AddFunction(EngineKeyFunctions.MoveDown);

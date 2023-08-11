@@ -23,7 +23,7 @@ signal-port-name-close = Close
 signal-port-description-close = Closes a device.
 
 signal-port-name-doorbolt = Door bolt
-signal-port-description-doorbolt = Toggles door bolt.
+signal-port-description-doorbolt = Bolts door when HIGH.
 
 signal-port-name-trigger = Trigger
 signal-port-description-trigger = Triggers some mechanism on the device.
@@ -60,3 +60,21 @@ signal-port-description-artifact-analyzer-sender = Analysis console signal sende
 
 signal-port-name-artifact-analyzer-receiver = Pad
 signal-port-description-artifact-analyzer-receiver = Artifact analyzer signal receiver
+
+signal-port-name-set-particle-delta = Set particle type: delta
+signal-port-description-set-particle-delta = Sets the type of particle this device emits to delta.
+
+signal-port-name-set-particle-epsilon = Set particle type: epsilon
+signal-port-description-set-particle-epsilon = Sets the type of particle this device emits to epsilon.
+
+signal-port-name-set-particle-zeta = Set particle type: zeta
+signal-port-description-set-particle-zeta = Sets the type of particle this device emits to zeta.
+
+signal-port-name-logic-input-a = Input A
+signal-port-description-logic-input-a = First input of a logic gate.
+
+signal-port-name-logic-input-b = Input B
+signal-port-description-logic-input-b = Second input of a logic gate.
+
+signal-port-name-logic-input = Input
+signal-port-description-logic-input = Input to the edge detector, cannot be a pulse signal.

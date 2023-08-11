@@ -8,12 +8,13 @@
     - type: Sprite
       drawdepth: SmallObjects
       sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
-      netsync: false
-      layers:
-      - state: ano01
-        map: [ "enum.ArtifactsVisualLayers.Base" ]
-      state: ano01
       noRot: true
+      layers:
+      - state: ano30
+        map: [ "enum.ArtifactsVisualLayers.Base" ]
+      - state: ano30_on
+        map: [ "enum.ArtifactsVisualLayers.Effect" ]
+        visible: false
     - type: Damageable
     - type: Physics
       bodyType: Dynamic
@@ -27,6 +28,11 @@
         type: TransferAmountBoundUserInterface
       - key: enum.InstrumentUiKey.Key
         type: InstrumentBoundUserInterface
+      - key: enum.IntercomUiKey.Key
+        type: IntercomBoundUserInterface
+    - type: Reactive
+      groups:
+        Acidic: [Touch]
     - type: Fixtures
       fixtures:
         fix1:
@@ -42,9 +48,12 @@
     - type: InteractionOutline
     - type: Artifact
     - type: RandomArtifactSprite
+      maxSprite: 36
+    - type: RandomSprite
+      available:
+      - enum.ArtifactsVisualLayers.Effect:
+          ano01_on: Rainbow
     - type: Appearance
-    - type: StaticPrice
-      price: 500
     - type: Actions
     - type: GuideHelp
       guides:

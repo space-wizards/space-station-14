@@ -6,6 +6,7 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: coffee
   color: "#664300"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -110,6 +111,25 @@
         amount: 0.05
 
 - type: reagent
+  id: JuiceBerryPoison
+  name: reagent-name-juice-berry-poison
+  group: Drinks
+  desc: reagent-desc-juice-berry-poison
+  physicalDesc: reagent-physical-desc-sickly
+  flavor: bitter
+  color: "#6600CC"
+  metabolisms:
+    Drink:
+      effects:
+      - !type:SatiateThirst
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+
+- type: reagent
   id: Lemonade
   name: reagent-name-lemonade
   group: Drinks
@@ -134,6 +154,7 @@
   physicalDesc: reagent-physical-desc-opaque
   flavor: milk
   color: "#DFDFDF"
+  recognizable: true
   plantMetabolism:
     - !type:PlantAdjustNutrition
       amount: 0.1
@@ -159,6 +180,7 @@
   physicalDesc: reagent-physical-desc-refreshing
   flavor: oats
   color: "#DEDACD"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -256,6 +278,7 @@
   physicalDesc: reagent-physical-desc-aromatic
   flavor: tea
   color: "#8a5a3a"
+  recognizable: true
   metabolisms:
     Drink:
       effects:
@@ -283,6 +306,7 @@
   physicalDesc: reagent-physical-desc-translucent
   flavor: water
   color: "#75b1f0"
+  recognizable: true
   boilingPoint: 100.0
   meltingPoint: 0.0
   metabolisms:
@@ -298,6 +322,7 @@
   physicalDesc: reagent-physical-desc-frosty
   flavor: cold
   color: "#bed8e6"
+  recognizable: true
   meltingPoint: 0.0
   boilingPoint: 100.0
   plantMetabolism:
@@ -363,7 +388,7 @@
   name: reagent-name-kira-special
   parent: BaseDrink
   desc: reagent-desc-kira-special
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#CCCC99"
   metamorphicSprite:
@@ -375,7 +400,7 @@
   name: reagent-name-rewriter
   parent: BaseDrink
   desc: reagent-desc-rewriter
-  physicalDesc: strong-smelling
+  physicalDesc: reagent-physical-desc-strong-smelling
   flavor: sweet
   color: "#485000"
   metamorphicSprite:
@@ -393,3 +418,17 @@
   metamorphicSprite:
     sprite: Objects/Consumable/Drinks/the_martinez.rsi
     state: icon
+
+- type: reagent
+  id: WhiteGilgamesh
+  name: reagent-name-white-gilgamesh
+  parent: BaseDrink
+  desc: reagent-desc-white-gilgamesh
+  physicalDesc: reagent-physical-desc-creamy
+  flavor: white-gilgamesh
+  color: "#e5d27e"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 1

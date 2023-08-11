@@ -25,3 +25,10 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from https://github.com/tgstation/tgstation"
   source: "https://github.com/nero1024/tgstation/blob/83ccc939a20489de8ab81cb47e6f8e84c490adc2/sound/effects/footstep/slime1.ogg"
+
+- files:
+  - clownstepspider1.ogg
+  - clownstepspider2.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken and modified from tgstation (clownstep 1 and 2) by brainfood1183 (github)"
+  source: "https://github.com/tgstation/tgstation/tree/f8ee37afc00bce1ad421615eaa0e4cbddd5eea90/sound/effects"

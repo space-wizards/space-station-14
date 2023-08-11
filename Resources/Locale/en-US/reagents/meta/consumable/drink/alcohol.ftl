@@ -55,6 +55,9 @@ reagent-desc-whiskey = A type of distilled alcoholic beverage made from fermente
 reagent-name-wine = wine
 reagent-desc-wine = An premium alchoholic beverage made from distilled grape juice.
 
+reagent-name-champagne = champagne
+reagent-desc-champagne = A premium sparkling wine
+
 reagent-name-acid-spit = acidspit
 reagent-desc-acid-spit = A drink for the daring, can be deadly if incorrectly prepared!
 
@@ -90,9 +93,6 @@ reagent-desc-barefoot = Barefoot and pregnant.
 
 reagent-name-beepsky-smash = beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
-
-reagent-name-bilk = bilk
-reagent-desc-bilk = This appears to be beer mixed with milk. Disgusting.
 
 reagent-name-black-russian = black russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.

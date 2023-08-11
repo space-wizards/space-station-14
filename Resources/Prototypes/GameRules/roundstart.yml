@@ -36,6 +36,7 @@
   noSpawn: true
   components:
   - type: NukeopsRule
+    faction: Syndicate
 
 - type: entity
   id: Pirates

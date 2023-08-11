@@ -1,3 +1,5 @@
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Chat.Systems;
@@ -7,6 +9,7 @@ using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Database;
+using Robust.Shared.Collections;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
@@ -131,19 +134,49 @@ public abstract class StationEventSystem<T> : GameRuleSystem<T> where T : Compon
         GameTicker.EndGameRule(uid, component);
     }
 
-    protected bool TryFindRandomTile(out Vector2i tile, out EntityUid targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
+    protected bool TryGetRandomStation([NotNullWhen(true)] out EntityUid? station, Func<EntityUid, bool>? filter = null)
+    {
+        var stations = new ValueList<EntityUid>();
+
+        if (filter == null)
+        {
+            stations.EnsureCapacity(Count<StationEventEligibleComponent>());
+        }
+
+        filter ??= _ => true;
+        var query = AllEntityQuery<StationEventEligibleComponent>();
+
+        while (query.MoveNext(out var uid, out _))
+        {
+            if (!filter(uid))
+                continue;
+
+            stations.Add(uid);
+        }
+
+        if (stations.Count == 0)
+        {
+            station = null;
+            return false;
+        }
+
+        // TODO: Engine PR.
+        station = stations[RobustRandom.Next(stations.Count)];
+        return true;
+    }
+
+    protected bool TryFindRandomTile(out Vector2i tile, [NotNullWhen(true)] out EntityUid? targetStation, out EntityUid targetGrid, out EntityCoordinates targetCoords)
     {
         tile = default;
 
         targetCoords = EntityCoordinates.Invalid;
-        if (StationSystem.Stations.Count == 0)
+        if (!TryGetRandomStation(out targetStation))
         {
             targetStation = EntityUid.Invalid;
             targetGrid = EntityUid.Invalid;
             return false;
         }
-        targetStation = RobustRandom.Pick(StationSystem.Stations);
-        var possibleTargets = Comp<StationDataComponent>(targetStation).Grids;
+        var possibleTargets = Comp<StationDataComponent>(targetStation.Value).Grids;
         if (possibleTargets.Count == 0)
         {
             targetGrid = EntityUid.Invalid;

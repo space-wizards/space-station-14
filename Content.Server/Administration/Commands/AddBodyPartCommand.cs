@@ -34,7 +34,7 @@ namespace Content.Server.Administration.Commands
             var entityManager = IoCManager.Resolve<IEntityManager>();
             var bodySystem = entityManager.System<BodySystem>();
 
-            if (bodySystem.TryCreatePartSlotAndAttach(parentId, args[3], childId))
+            if (bodySystem.TryCreatePartSlotAndAttach(parentId, args[2], childId))
             {
                 shell.WriteLine($@"Added {childId} to {parentId}.");
             }

@@ -21,7 +21,6 @@
       - ForceFixRotations
       - Window
   - type: Sprite
-    netsync: false
     drawdepth: WallTops
     sprite: Structures/Windows/window.rsi
   - type: Icon
@@ -100,8 +99,6 @@
   components:
   - type: WallMount
     arc: 360 # interact despite grilles
-    # Attention! If adding tags here:
-    # Keep WindowTintedDirectional in mind
   - type: Tag
     tags:
       - Window
@@ -112,7 +109,6 @@
           "/Audio/Effects/glass_hit.ogg"
   - type: Sprite
     drawdepth: Mobs
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: window
   - type: Icon
@@ -174,29 +170,6 @@
     price: 10
 
 - type: entity
-  id: WindowTintedDirectional
-  parent: WindowDirectional
-  name: directional tinted window
-  description: Don't smudge up the glass down there.
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Window
-  components:
-  - type: Sprite
-    netsync: false
-    sprite: Structures/Windows/directional.rsi
-    state: tinted_window
-  - type: Tag
-    tags:
-      - ForceNoFixRotations
-  - type: Icon
-    sprite: Structures/Windows/directional.rsi
-    state: tinted_window
-  - type: Occluder
-    boundingBox: "-0.5,-0.5,0.5,-0.3"
-
-- type: entity
   id: WindowFrostedDirectional
   parent: WindowDirectional
   name: directional frosted window
@@ -207,7 +180,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: frosted_window
   - type: Icon

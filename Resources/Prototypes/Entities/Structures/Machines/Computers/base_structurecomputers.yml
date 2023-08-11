@@ -13,6 +13,8 @@
   - type: Construction
     graph: Computer
     node: computer
+    containers:
+      - board
   - type: Computer
   - type: ApcPowerReceiver
     powerLoad: 200
@@ -20,7 +22,6 @@
   - type: ActivatableUIRequiresPower
   - type: Sprite
     sprite: Structures/Machines/computers.rsi
-    netsync: false
     layers:
     - map: ["computerLayerBody"]
       state: computer

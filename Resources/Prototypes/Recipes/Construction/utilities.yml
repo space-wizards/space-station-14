@@ -28,6 +28,24 @@
   placementMode: SnapgridCenter
   canBuildInImpassable: true
 
+- type: construction
+  name: station map
+  id: StationMap
+  graph: StationMap
+  startNode: start
+  targetNode: station_map
+  category: construction-category-structures
+  description: A station map.
+  icon:
+    sprite: Structures/Machines/station_map.rsi
+    state: station_map0
+  placementMode: SnapgridCenter
+  objectType: Structure
+  canRotate: true
+  canBuildInImpassable: true
+  conditions:
+  - !type:WallmountCondition {}
+
 # POWER
 - type: construction
   name: APC
@@ -61,11 +79,6 @@
   conditions:
     - !type:TileNotBlocked
       failIfSpace: false
-    - !type:TileType
-      targets:
-        - Lattice
-        - Plating
-        - UnderPlating
 
 - type: construction
   name: cable terminal
@@ -211,6 +224,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1s
+  mirror: DisposalRouterFlipped
+
+- type: construction
+  hide: true
+  name: disposal router
+  description: A three-way router. Entities with matching tags get routed to the side.
+  id: DisposalRouterFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: routerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2s
+  mirror: DisposalRouter
 
 - type: construction
   name: disposal junction
@@ -225,6 +255,23 @@
   icon:
     sprite: Structures/Piping/disposal.rsi
     state: conpipe-j1
+  mirror: DisposalJunctionFlipped
+
+- type: construction
+  hide: true
+  name: disposal junction
+  description: A three-way junction. The arrow indicates where items exit.
+  id: DisposalJunctionFlipped
+  graph: DisposalPipe
+  startNode: start
+  targetNode: junctionflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/disposal.rsi
+    state: conpipe-j2
+  mirror: DisposalJunction
 
 - type: construction
   name: disposal Y junction
@@ -483,6 +530,7 @@
     state: pumpPressure
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   name: volumetric gas pump
@@ -504,6 +552,7 @@
     state: pumpVolume
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasPassiveGate
@@ -525,6 +574,7 @@
     state: pumpPassiveGate
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasValve
@@ -546,6 +596,7 @@
     state: pumpManualValve
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: SignalControlledValve
@@ -567,6 +618,7 @@
     state: pumpSignalValve
   conditions:
   - !type:TileNotBlocked {}
+  - !type:NoUnstackableInTile
 
 - type: construction
   id: GasPort
@@ -588,6 +640,7 @@
     state: gasCanisterPort
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasDualPortVentPump
@@ -610,6 +663,22 @@
   conditions:
     - !type:TileNotBlocked {}
 
+- type: construction
+  id: HeatExchanger
+  name: radiator
+  description: Transfers heat between the pipe and its surroundings.
+  graph: GasBinary
+  startNode: start
+  targetNode: radiator
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/heatexchanger.rsi
+    state: heStraight
+  conditions:
+    - !type:TileNotBlocked {}
+
 # ATMOS TRINARY
 - type: construction
   id: GasFilter
@@ -624,8 +693,29 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasfilter.rsi
     state: gasFilter
+  mirror: GasFilterFlipped
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
+
+- type: construction
+  id: GasFilterFlipped
+  hide: true
+  name: gas filter
+  description: Very useful for filtering gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: filterflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasfilter.rsi
+    state: gasFilterF
+  mirror: GasFilter
+  conditions:
+    - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: GasMixer
@@ -640,8 +730,29 @@
   icon:
     sprite: Structures/Piping/Atmospherics/gasmixer.rsi
     state: gasMixer
+  mirror: GasMixerFlipped
   conditions:
     - !type:TileNotBlocked {}
+    - !type:NoUnstackableInTile
+
+- type: construction
+  id: GasMixerFlipped
+  hide: true
+  name: gas mixer
+  description: Very useful for mixing gases.
+  graph: GasTrinary
+  startNode: start
+  targetNode: mixerflipped
+  category: construction-category-utilities
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Piping/Atmospherics/gasmixer.rsi
+    state: gasMixerF
+  mirror: GasMixer
+  conditions:
+    - !type:TileNotBlocked
+    - !type:NoUnstackableInTile
 
 - type: construction
   id: PressureControlledValve
@@ -657,7 +768,8 @@
     sprite: Structures/Piping/Atmospherics/pneumaticvalve.rsi
     state: off
   conditions:
-    - !type:TileNotBlocked {}
+    - !type:TileNotBlocked
+    - !type:NoUnstackableInTile
 
 # INTERCOM
 - type: construction

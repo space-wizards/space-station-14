@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
@@ -23,16 +24,29 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
 
         public override bool Condition(ReagentEffectArgs args)
         {
-            if (Reagent == null)
-                Reagent = args.Reagent.ID;
+            var reagent = Reagent ?? args.Reagent?.ID;
+            if (reagent == null)
+                return true; // No condition to apply.
 
             var quant = FixedPoint2.Zero;
-            if (args.Source != null && args.Source.ContainsReagent(Reagent))
+            if (args.Source != null && args.Source.ContainsReagent(reagent))
             {
-                quant = args.Source.GetReagentQuantity(args.Reagent.ID);
+                quant = args.Source.GetReagentQuantity(reagent);
             }
 
             return quant >= Min && quant <= Max;
+        }
+
+        public override string GuidebookExplanation(IPrototypeManager prototype)
+        {
+            ReagentPrototype? reagentProto = null;
+            if (Reagent is not null)
+                prototype.TryIndex(Reagent, out reagentProto);
+
+            return Loc.GetString("reagent-effect-condition-guidebook-reagent-threshold",
+                ("reagent", reagentProto?.LocalizedName ?? "this reagent"),
+                ("max", Max == FixedPoint2.MaxValue ? (float) int.MaxValue : Max.Float()),
+                ("min", Min.Float()));
         }
     }
 }

@@ -1,9 +1,6 @@
-using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.GameTicking;
 using Content.Shared.CCVar;
-using NUnit.Framework;
 using Robust.Shared.Configuration;
 using Robust.Shared.GameObjects;
 
@@ -18,16 +15,16 @@ public sealed class StartEndGameRulesTest
     [Test]
     public async Task TestAllConcurrent()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings()
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
         {
-            NoClient = true,
             Dirty = true,
+            DummyTicker = false
         });
         var server = pairTracker.Pair.Server;
         await server.WaitIdleAsync();
         var gameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
         var cfg = server.ResolveDependency<IConfigurationManager>();
-        Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
+        Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
         await server.WaitAssertion(() =>
         {

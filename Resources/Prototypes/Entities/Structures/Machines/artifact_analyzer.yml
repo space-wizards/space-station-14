@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     noRot: true
-    netsync: false
     sprite: Structures/Machines/artifact_analyzer.rsi
     drawdepth: FloorObjects
     layers:

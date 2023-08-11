@@ -80,6 +80,15 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackAtmospherics
+  name: atmospherics backpack
+  description: It's a backpack made of fire resistant fibers. Smells like plasma.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Backpacks/atmospherics.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackMedical
   name: medical backpack
   description: It's a backpack especially designed for use in a sterile environment.
@@ -152,12 +161,30 @@
 
 - type: entity
   parent: ClothingBackpack
+  id: ClothingBackpackCargo
+  name: cargo backpack
+  description: A robust backpack for stealing cargo's loot.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/cargo.rsi
+
+- type: entity
+  parent: ClothingBackpack
   id: ClothingBackpackSalvage
   name: salvage bag
   description: A robust backpack for stashing your loot.
   components:
     - type: Sprite
       sprite: Clothing/Back/Backpacks/salvage.rsi
+
+- type: entity
+  parent: ClothingBackpack
+  id: ClothingBackpackMerc
+  name: merc bag
+  description: A backpack that has been in many dangerous places, a reliable combat backpack.
+  components:
+    - type: Sprite
+      sprite: Clothing/Back/Backpacks/merc.rsi
 
 #ERT
 - type: entity
@@ -238,9 +265,9 @@
 - type: entity
   parent: ClothingBackpackClown
   id: ClothingBackpackCluwne
-  name: cursed giggles von honkerton
+  name: jiggles von jonkerton
   suffix: Unremoveable
-  description: Cursed giggles von honkerton backpack.
+  description: It's a backpack made by Jonk! Co.
   components:
   - type: Sprite
     sprite: Clothing/Back/Backpacks/cluwne.rsi

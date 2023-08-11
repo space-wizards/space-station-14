@@ -1,7 +1,7 @@
 - type: entity
   id: RadiationCollector
   name: radiation collector
-  description: A machine that collects Radiation and turns it into power.
+  description: A machine that collects radiation and turns it into power.
   placement:
     mode: SnapgridCenter
   components:
@@ -25,14 +25,12 @@
     noRot: true
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/collector.rsi
-    netsync: false
     snapCardinals: true
     layers:
-      - state: ca_on
+      - state: ca_off
         map: ["enum.RadiationCollectorVisualLayers.Main"]
   - type: Appearance
-    visuals:
-      - type: RadiationCollectorVisualizer
+  - type: AnimationPlayer
   - type: NodeContainer
     examinable: true
     nodes:

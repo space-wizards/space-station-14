@@ -5,7 +5,7 @@
   completetime: 2
   materials:
     Steel: 100
-    
+
 - type: latheRecipe
   id: SheetSteel30
   result: SheetSteel
@@ -20,7 +20,7 @@
   completetime: 2
   materials:
     Glass: 100
-    
+
 - type: latheRecipe
   id: SheetGlass30
   result: SheetGlass
@@ -36,7 +36,7 @@
   materials:
     Glass: 100
     Steel: 50
-    
+
 - type: latheRecipe
   id: SheetRGlass30
   result: SheetRGlass
@@ -52,7 +52,7 @@
   materials:
     Glass: 3000
     Plasma: 3000
-    
+
 - type: latheRecipe
   id: SheetRPGlass30
   result: SheetRPGlass
@@ -61,7 +61,7 @@
     Glass: 3000
     Plasma: 3000
     Steel: 1500
-    
+
 - type: latheRecipe
   id: SheetPlasma30
   result: SheetPlasma
@@ -75,7 +75,7 @@
   completetime: 2
   materials:
     Uranium: 500
-    
+
 - type: latheRecipe
   id: IngotGold1
   result: IngotGold1
@@ -104,3 +104,10 @@
   completetime: 2
   materials:
     Bananium: 500
+
+- type: latheRecipe
+  id: MaterialSheetMeat
+  result: MaterialSheetMeat1
+  completetime: 6.4
+  materials:
+    Meaterial: 200

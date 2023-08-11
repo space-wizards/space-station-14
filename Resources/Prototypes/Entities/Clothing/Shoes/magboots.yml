@@ -6,7 +6,6 @@
   components:
     - type: Sprite
       sprite: Clothing/Shoes/Boots/magboots.rsi
-      netsync: false
       layers:
       - state: icon
         map: [ "enum.ToggleVisuals.Layer" ]
@@ -33,6 +32,9 @@
             False: {state: icon}
     - type: StaticPrice
       price: 200
+    - type: Tag
+      tags:
+        - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -72,12 +74,11 @@
   description: These would look fetching on a fetcher like you.
   components:
   - type: ClothingSpeedModifier
-    walkModifier: 2.5 #PVS isn't too much of an issue when you are blind...
-    sprintModifier: 2.5
+    walkModifier: 1.10 #PVS isn't too much of an issue when you are blind...
+    sprintModifier: 1.10
     enabled: false
   - type: StaticPrice
     price: 3000
-  - type: Blindfold
 
 - type: entity
   parent: ClothingShoesBase
@@ -102,3 +103,6 @@
       walkModifier: 0.85
       sprintModifier: 0.8
       enabled: false
+    - type: Tag
+      tags:
+        - WhitelistChameleon

@@ -1,10 +1,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Construction;
-using Content.Server.CPUJob.JobQueues.Queues;
+using Robust.Shared.CPUJob.JobQueues.Queues;
 using Content.Server.Decals;
 using Content.Server.GameTicking.Events;
 using Content.Shared.CCVar;
+using Content.Shared.Construction.EntitySystems;
+using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Robust.Server.GameObjects;
 using Robust.Shared.Configuration;
@@ -15,7 +17,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural;
 
-public sealed partial class DungeonSystem : EntitySystem
+public sealed partial class DungeonSystem : SharedDungeonSystem
 {
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IConsoleHost _console = default!;
@@ -31,6 +33,9 @@ public sealed partial class DungeonSystem : EntitySystem
     private ISawmill _sawmill = default!;
 
     private const double DungeonJobTime = 0.005;
+
+    public const int CollisionMask = (int) CollisionGroup.Impassable;
+    public const int CollisionLayer = (int) CollisionGroup.Impassable;
 
     private readonly JobQueue _dungeonJobQueue = new(DungeonJobTime);
     private readonly Dictionary<DungeonJob, CancellationTokenSource> _dungeonJobs = new();
@@ -150,6 +155,7 @@ public sealed partial class DungeonSystem : EntitySystem
         }
 
         var mapId = _mapManager.CreateMap();
+        _mapManager.AddUninitializedMap(mapId);
         _loader.Load(mapId, proto.AtlasPath.ToString());
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.SetMapPaused(mapId, true);

@@ -8,13 +8,25 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
+
+- type: Tag
+  id: ArtifactFragment
 
 - type: Tag
   id: ATVKeys
 
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: Balloon
+
+- type: Tag
+  id: BaseballBat
 
 - type: Tag
   id: Bee
@@ -65,6 +77,12 @@
   id: BrassInstrument
 
 - type: Tag
+  id: Bread
+
+- type: Tag
+  id: Briefcase
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -74,10 +92,19 @@
   id: BulletFoam
 
 - type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
   id: CableCoil
 
 - type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
   id: Carrot
+
+- type: Tag
+  id: CarrotFries
 
 - type: Tag
   id: Carpet
@@ -132,6 +159,9 @@
   id: Catwalk
 
 - type: Tag
+  id: Chicken
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -139,6 +169,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClothMade
 
 - type: Tag
   id: ClownMask
@@ -154,6 +187,12 @@
 
 - type: Tag
   id: CluwneHorn
+
+- type: Tag #Ohioans die happy
+  id: Corn
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -204,6 +243,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: CubanCarp
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -237,7 +279,16 @@
   id: Donut
 
 - type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
   id: DroneUsable
+
+- type: Tag
+  id: Duck
+
+- type: Tag
+  id: Ectoplasm
 
 - type: Tag
   id: Egg
@@ -250,6 +301,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Figurine
 
 - type: Tag
   id: FireAlarm
@@ -282,13 +336,22 @@
   id: Folder
 
 - type: Tag
+  id: FoodSnack
+
+- type: Tag
   id: FootstepSound
+
+- type: Tag
+  id: ForceableFollow
 
 - type: Tag
   id: ForceFixRotations # fixrotations command WILL target this
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: Galaxythistle
 
 - type: Tag
   id: GasScrubber
@@ -309,13 +372,38 @@
   id: GlassShard
 
 - type: Tag
+  id: Goat
+
+- type: Tag
   id: Grenade
 
 - type: Tag
   id: GuideEmbeded
 
+
 - type: Tag
-  id: GunsDisabled # Allow certain entities to not use guns without complicating the system with an event
+  id: Hamster
+
+- type: Tag
+  id: HamsterWearable
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
 
 - type: Tag
   id: Handcuffs
@@ -326,9 +414,6 @@
 
 - type: Tag
   id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
-
-- type: Tag
-  id: HardsuitEVA
 
 - type: Tag
   id: Head
@@ -382,6 +467,9 @@
   id: Ingot
 
 - type: Tag
+  id: InstantDoAfters
+
+- type: Tag
   id: IntercomElectronics
 
 - type: Tag
@@ -405,6 +493,12 @@
 
 - type: Tag
   id: LavaBrig
+
+- type: Tag
+  id: Lemon
+
+- type: Tag
+  id: Lime
 
 - type: Tag
   id: Machete
@@ -499,10 +593,11 @@
   id: Mop
 
 - type: Tag
-  id: Multitool
+  id: Mouse
 
 - type: Tag
-  id: NoSpinOnThrow
+  id: Multitool
+
 
 - type: Tag
   id: NoBlockAnchoring
@@ -526,6 +621,9 @@
   id: PaintableAirlock
 
 - type: Tag
+  id: Pancake
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
@@ -533,6 +631,12 @@
 
 - type: Tag
   id: Pickaxe
+
+- type: Tag
+  id: Pie
+
+- type: Tag
+  id: Pig
 
 - type: Tag
   id: PillCanister
@@ -553,10 +657,26 @@
   id: PlantSampleTaker
 
 - type: Tag
+  id: PlasmaGlassShard
+
+- type: Tag
   id: Plastic
 
 - type: Tag
+  id: Plunger
+
+- type: Tag
+  id: PlushieGhost
+
+
+- type: Tag
+  id: PowerCellSmall
+
+- type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PrisonUniform
 
 - type: Tag
   id: ProximitySensor
@@ -573,6 +693,9 @@
 # Give this to something that doesn't need any special recycler behavior and just needs deleting.
 - type: Tag
   id: Recyclable
+
+- type: Tag
+  id: ReinforcedGlassShard
 
 - type: Tag
   id: RipleyCentralControlModule
@@ -617,6 +740,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: Shiv
+
+- type: Tag
   id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
@@ -624,6 +750,9 @@
 
 - type: Tag
   id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallMech
 
 - type: Tag
   id: Smokable
@@ -636,6 +765,9 @@
 
 - type: Tag
   id: SolarTrackerElectronics
+
+- type: Tag
+  id: Soup
 
 - type: Tag
   id: Spray
@@ -662,7 +794,13 @@
   id: StringInstrument
 
 - type: Tag
+  id: StationMapElectronics
+
+- type: Tag
   id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
 
 - type: Tag
   id: SurveillanceCameraMonitorCircuitboard
@@ -683,6 +821,12 @@
   id: Taser
 
 - type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag
@@ -692,10 +836,19 @@
   id: TimerSignalElectronics
 
 - type: Tag
+  id: Toolbox
+
+- type: Tag
   id: Trash
 
 - type: Tag
   id: TrashBag
+
+- type: Tag
+  id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
+
+- type: Tag
+  id: UraniumGlassShard
 
 - type: Tag
   id: VehicleKey
@@ -741,3 +894,10 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver
+

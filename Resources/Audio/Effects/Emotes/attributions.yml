@@ -18,3 +18,8 @@
   license: "CC-BY-4.0"
   copyright: "Made by TV_LING. Converted from WAV to OGG and downmixed to 1 channel."
   source: "https://freesound.org/people/TV_LING/sounds/523467/"
+- files:
+    - salute.ogg
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from https://github.com/infinitystation/Baystation12/commit/e639451bef42230a3838c085a6c782376e693499. No changes were made"
+  source: "https://github.com/infinitystation/Baystation12"

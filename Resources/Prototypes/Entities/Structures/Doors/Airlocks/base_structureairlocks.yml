@@ -11,7 +11,6 @@
           "/Audio/Weapons/smash.ogg"
   - type: InteractionOutline
   - type: Sprite
-    netsync: false
     sprite: Structures/Doors/Airlocks/Standard/basic.rsi
     snapCardinals: true
     layers:
@@ -63,7 +62,6 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 3
     time: 3
   - type: Airlock
   - type: DoorBolt
@@ -75,6 +73,7 @@
   - type: Electrified
     enabled: false
     usesApcPower: true
+  - type: WiresPanel
   - type: Wires
     BoardName: "Airlock Control"
     LayoutId: Airlock
@@ -94,6 +93,8 @@
   - type: DeviceLinkSource
     ports:
       - DoorStatus
+  - type: SoundOnOverload
+  - type: SpawnOnOverload
   - type: UserInterface
     interfaces:
     - key: enum.WiresUiKey.Key
@@ -127,6 +128,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: AccessReader
   - type: StaticPrice
     price: 150
   placement:

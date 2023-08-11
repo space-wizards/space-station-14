@@ -108,9 +108,12 @@
   targetDepth: 0
   components:
   - type: PointLight
-    radius: 2
-    energy: 5
-    color: "#27153b"
+    radius: 8
+    energy: 25
+    color: "#daa3fd"
+  - type: TriggerArtifact
+  - type: FlashOnTrigger
+    range: 8
 
 - type: artifactEffect #bornana
   id: EffectBananaSpawn
@@ -121,10 +124,25 @@
     maxSpawns: 20
     spawns:
     - id: FoodBanana
+      amount: 3
+      maxAmount: 6
+  - type: ChemicalPuddleArtifact
+    chemicalSolution:
+      maxVol: 100
+      canReact: false
+    possibleChemicals:
+    - Potassium
+
+- type: artifactEffect
+  id: EffectThrow
+  targetDepth: 0
+  effectHint: artifact-effect-hint-environment
+  components:
+    - type: ThrowArtifact
 
 - type: artifactEffect
   id: EffectChemicalPuddle
-  targetDepth: 1
+  targetDepth: 0
   effectHint: artifact-effect-hint-biochemical
   components:
   - type: ChemicalPuddleArtifact
@@ -160,14 +178,15 @@
   effectHint: artifact-effect-hint-consumption
   components:
   - type: TemperatureArtifact
-    targetTemp: 150
+    targetTemp: 50
 
 - type: artifactEffect
-  id: EffectThrow
+  id: EffectHeat
   targetDepth: 1
-  effectHint: artifact-effect-hint-environment
+  effectHint: artifact-effect-hint-release
   components:
-  - type: ThrowArtifact
+    - type: TemperatureArtifact
+      targetTemp: 500
 
 - type: artifactEffect
   id: EffectFoamMild
@@ -222,9 +241,59 @@
     - charge-artifact-popup
 
 - type: artifactEffect
-  id: EffectAngryCarpSpawn
+  id: EffectRadiate
+  targetDepth: 1
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: RadiationSource
+    intensity: 2
+
+- type: artifactEffect
+  id: EffectKnock
+  targetDepth: 1
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+    - type: KnockArtifact
+
+- type: artifactEffect
+  id: EffectExplosionScary
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
+  components:
+  - type: TriggerArtifact
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    deleteAfterExplosion: false
+    explosionType: Radioactive
+    totalIntensity: 300
+    intensitySlope: 2
+    maxIntensity: 1.5
+    canCreateVacuum: false
+
+- type: artifactEffect
+  id: EffectRareMaterialSpawn
+  targetDepth: 2
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    spawns:
+    - id: SilverOre1
+      prob: 0.3
+      maxAmount: 3
+    - id: PlasmaOre1
+      prob: 0.3
+      maxAmount: 3
+    - id: GoldOre1
+      prob: 0.3
+      maxAmount: 3
+    - id: UraniumOre1
+      prob: 0.3
+      maxAmount: 3
+
+- type: artifactEffect
+  id: EffectAngryCarpSpawn
+  targetDepth: 2
+  effectHint: artifact-effect-hint-creation
   components:
   - type: SpawnArtifact
     maxSpawns: 5
@@ -254,21 +323,6 @@
       prob: 0.1
 
 - type: artifactEffect
-  id: EffectRadiate
-  targetDepth: 2
-  effectHint: artifact-effect-hint-release
-  components:
-  - type: RadiationSource
-    intensity: 2
-
-- type: artifactEffect
-  id: EffectKnock
-  targetDepth: 2
-  effectHint: artifact-effect-hint-electrical-interference
-  components:
-  - type: KnockArtifact
-
-- type: artifactEffect
   id: EffectShatterWindows
   targetDepth: 2
   effectHint: artifact-effect-hint-environment
@@ -280,7 +334,7 @@
       - Window
     damage:
       types:
-        Structural: 100
+        Structural: 200
 
 - type: artifactEffect
   id: EffectGas
@@ -288,6 +342,13 @@
   effectHint: artifact-effect-hint-environment
   components:
   - type: GasArtifact
+    possibleGas:
+    - CarbonDioxide
+    - Plasma
+    - Tritium
+    - Miasma
+    - NitrousOxide
+    - Frezon
 
 - type: artifactEffect
   id: EffectBlink
@@ -296,22 +357,20 @@
   components:
   - type: RandomTeleportArtifact
 
-- type: artifactEffect
-  id: EffectFoamGood
-  targetDepth: 2
-  effectHint: artifact-effect-hint-biochemical
-  components:
-  - type: FoamArtifact
-    spreadDuration: 0.5
-    duration: 5
-    reagents:
-    - Dermaline
-    - Arithrazine
-    - Bicaridine
-    - Inaprovaline
-    - Kelotane
-    - Dexalin
-    - Omnizine
+#- type: artifactEffect
+#  id: EffectFoamGood
+#  targetDepth: 2
+#  effectHint: artifact-effect-hint-biochemical
+#  components:
+#  - type: FoamArtifact
+#    reagents:
+#    - Dermaline
+#    - Arithrazine
+#    - Bicaridine
+#    - Inaprovaline
+#    - Kelotane
+#    - Dexalin
+#    - Omnizine
 
 - type: artifactEffect
   id: EffectChemicalPuddleRare
@@ -340,13 +399,20 @@
     - Siderlac
 
 - type: artifactEffect
+  id: EffectEmp
+  targetDepth: 2
+  effectHint: artifact-effect-hint-electrical-interference
+  components:
+  - type: EmpArtifact
+
+- type: artifactEffect
   id: EffectHealAll
   targetDepth: 3
   effectHint: artifact-effect-hint-environment
   components:
   - type: DamageNearbyArtifact
-    damageChance: 0.75
-    radius: 5
+    damageChance: 1
+    radius: 8
     whitelist:
       components:
       - MobState
@@ -354,6 +420,14 @@
       groups:
         Brute: -300
         Burn: -300
+
+- type: artifactEffect
+  id: EffectRadiateStrong
+  targetDepth: 3
+  effectHint: artifact-effect-hint-release
+  components:
+  - type: RadiationSource
+    intensity: 6
 
 - type: artifactEffect
   id: EffectMaterialSpawn
@@ -399,54 +473,26 @@
       prob: 0.5
       maxAmount: 3
 
-- type: artifactEffect
-  id: EffectRareMaterialSpawn
-  targetDepth: 3
-  effectHint: artifact-effect-hint-creation
-  components:
-  - type: SpawnArtifact
-    spawns:
-    - id: SilverOre1
-      prob: 0.3
-      maxAmount: 3
-    - id: PlasmaOre1
-      prob: 0.3
-      maxAmount: 3
-    - id: GoldOre1
-      prob: 0.3
-      maxAmount: 3
-    - id: UraniumOre1
-      prob: 0.3
-      maxAmount: 3
-
-- type: artifactEffect
-  id: EffectHeat
-  targetDepth: 3
-  effectHint: artifact-effect-hint-release
-  components:
-  - type: TemperatureArtifact
-    targetTemp: 450
-
-- type: artifactEffect
-  id: EffectFoamDangerous
-  targetDepth: 3
-  effectHint: artifact-effect-hint-biochemical
-  components:
-  - type: FoamArtifact
-    spreadDuration: 0.5
-    duration: 5
-    reagents:
-    - Tritium
-    - Plasma
-    - SulfuricAcid
-    - SpaceDrugs
-    - Nocturine
-    - MuteToxin
-    - Napalm
-    - CarpoToxin
-    - ChloralHydrate
-    - Mold
-    - Amatoxin
+#- type: artifactEffect
+#  id: EffectFoamDangerous
+#  targetDepth: 3
+#  effectHint: artifact-effect-hint-biochemical
+#  components:
+#  - type: FoamArtifact
+#    minFoamAmount: 20
+#    maxFoamAmount: 30
+#    reagents:
+#    - Tritium
+#    - Plasma
+#    - SulfuricAcid
+#    - SpaceDrugs
+#    - Nocturine
+#    - MuteToxin
+#    - Napalm
+#    - CarpoToxin
+#    - ChloralHydrate
+#    - Mold
+#    - Amatoxin
 
 - type: artifactEffect
   id: EffectIgnite
@@ -454,6 +500,9 @@
   effectHint: artifact-effect-hint-release
   components:
   - type: IgniteArtifact
+    range: 7
+    minFireStack: 3
+    maxFireStack: 6
 
 - type: artifactEffect
   id: EffectMitosis
@@ -466,18 +515,35 @@
     - id: RandomArtifactSpawner
 
 - type: artifactEffect
+  id: EffectAnomaly
+  targetDepth: 3
+  effectHint: artifact-effect-hint-creation
+  components:
+  - type: SpawnArtifact
+    maxSpawns: 1
+    spawns:
+    - id: RandomAnomalySpawner
+
+- type: artifactEffect
+  id: EffectBoom
+  targetDepth: 3
+  effectHint: artifact-effect-hint-environment
+  components:
+  - type: TriggerArtifact
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    deleteAfterExplosion: false
+    explosionType: Default
+    totalIntensity: 500
+    intensitySlope: 2.5
+    maxIntensity: 50
+
+- type: artifactEffect
   id: EffectSingulo
-  targetDepth: 100
+  targetDepth: 10
   effectHint: artifact-effect-hint-destruction
   components:
   - type: SpawnArtifact
     maxSpawns: 1
     spawns:
     - id: Singularity
-
-- type: artifactEffect
-  id: EffectEmp
-  targetDepth: 3
-  effectHint: artifact-effect-hint-electrical-interference
-  components:
-  - type: EmpArtifact

@@ -7,7 +7,6 @@
     - type: Transform
       noRot: true
     - type: Sprite
-      netsync: false
       sprite: Structures/Storage/canister.rsi
       noRot: true
       layers:

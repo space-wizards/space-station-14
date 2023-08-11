@@ -17,7 +17,6 @@
       ballistic-ammo: !type:Container
   - type: Sprite
     sprite: Objects/Weapons/Guns/Ammunition/Boxes/magnum.rsi
-    netsync: false
   - type: MagazineVisuals
     magState: mag
     steps: 2
@@ -38,21 +37,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
-  parent: BaseMagazineBoxMagnum
-  id: MagazineBoxMagnumHighVelocity
-  name: ammunition box (.45 magnum high-velocity)
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeMagnumHighVelocity
-  - type: Sprite
-    layers:
-    - state: base
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-    - state: hv
 
 - type: entity
   parent: BaseMagazineBoxMagnum
@@ -83,3 +67,18 @@
     - state: mag-1
       map: ["enum.GunVisualLayers.Mag"]
     - state: rubber
+
+- type: entity
+  id: MagazineBoxMagnumIncendiary
+  parent: BaseMagazineBoxMagnum
+  name: ammunition box (.45 magnum incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgeMagnumIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary

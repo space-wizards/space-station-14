@@ -37,6 +37,27 @@
     Steel: 25
 
 - type: latheRecipe
+  id: BluespaceBeaker
+  result: BluespaceBeaker
+  completetime: 2
+  materials:
+    Steel: 500
+    Plastic: 500
+    Plasma: 150
+    Silver: 50
+
+- type: latheRecipe
+  id: SyringeBluespace
+  result: SyringeBluespace
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 150
+    Glass: 250
+    Plasma: 100
+    Silver: 50
+
+- type: latheRecipe
   id: PillCanister
   result: PillCanister
   completetime: 2
@@ -60,3 +81,12 @@
   materials:
     Plastic: 100
     Steel: 250
+
+- type: latheRecipe
+  id: ClothingEyesGlassesChemical
+  result: ClothingEyesGlassesChemical
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 300
+    Glass: 500

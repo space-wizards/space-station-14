@@ -7,8 +7,10 @@
   components:
   - type: SolutionContainerManager
   - type: Sprite
-    netsync: false
     state: produce
+  # let cows eat raw produce like wheat and oats
+  - type: Food
+    requiredStomachs: 2
   - type: Produce
   - type: PotencyVisuals
   - type: Appearance
@@ -24,7 +26,6 @@
   components:
   - type: SolutionContainerManager
   - type: Sprite
-    netsync: false
     state: produce
   - type: Produce
   - type: PotencyVisuals
@@ -230,7 +231,7 @@
     heldPrefix: peel
   - type: Slippery
     paralyzeTime: 4
-    launchForwardsMultiplier: 5
+    launchForwardsMultiplier: 2
 
 - type: entity
   name: banana peel
@@ -240,7 +241,10 @@
   components:
     - type: Sprite
       sprite: Objects/Specific/Hydroponics/banana.rsi
-      state: primed
+      layers:
+      - state: peel
+      - state: primed
+        shader: unshaded
     - type: TriggerOnSlip
     - type: ExplodeOnTrigger
     - type: Explosive
@@ -357,6 +361,9 @@
       reagents:
       - ReagentId: JuiceLemon
         Quantity: 10
+  - type: Tag
+    tags:
+    - Lemon
 
 - type: entity
   name: lime
@@ -376,6 +383,9 @@
       reagents:
       - ReagentId: JuiceLime
         Quantity: 10
+  - type: Tag
+    tags:
+    - Lime
 
 - type: entity
   name: orange
@@ -589,6 +599,9 @@
           Quantity: 15
         - ReagentId: Nutriment
           Quantity: 5
+  - type: Tag
+    tags:
+    - Corn
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
   - type: Produce
@@ -610,7 +623,6 @@
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/corn.rsi
     state: cob
-    netsync: false
   - type: Item
     size: 1
   - type: Tag
@@ -712,7 +724,6 @@
         - ReagentId: Nutriment
           Quantity: 2
   - type: Sprite
-    netsync: false
     state: slice
   - type: Extractable
     grindableSolutionName: food
@@ -842,12 +853,12 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 12
+        maxVol: 22
         reagents:
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Bicaridine
-          Quantity: 10
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/poppy.rsi
   - type: Produce
@@ -856,7 +867,7 @@
     grindableSolutionName: food
   - type: Tag
     tags:
-    - Flower
+    - Flower # TODO add "RedFlower" or "Poppy" tag, when other color flowers will be
 
 - type: entity
   name: lingzhi
@@ -897,16 +908,16 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 26
+        maxVol: 24
         reagents:
         - ReagentId: Bicaridine
-          Quantity: 10
+          Quantity: 5
         - ReagentId: Kelotane
-          Quantity: 10
+          Quantity: 5
         - ReagentId: Nutriment
           Quantity: 2
         - ReagentId: Desoxyephedrine
-          Quantity: 2
+          Quantity: 10
         - ReagentId: Vitamin
           Quantity: 2
   - type: Sprite
@@ -919,6 +930,9 @@
     sprite: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
     slots:
     - HEAD
+  - type: Tag
+    tags:
+    - Ambrosia
 
 - type: entity
   name: galaxythistle
@@ -942,6 +956,9 @@
     seedId: galaxythistle
   - type: Extractable
     grindableSolutionName: food
+  - type: Tag
+    tags:
+    - Galaxythistle
 
 - type: entity
   name: fly amanita
@@ -967,6 +984,7 @@
     seedId: flyAmanita
   - type: Extractable
     grindableSolutionName: food
+  - type: BadFood
 
 - type: entity
   name: gatfruit

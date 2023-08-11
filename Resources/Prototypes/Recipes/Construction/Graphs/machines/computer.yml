@@ -107,15 +107,12 @@
         - to: computer
           conditions:
             - !type:EntityAnchored {}
-          completed:
-            - !type:BuildComputer
-              container: board
           steps:
             - tool: Screwing
 
         - to: monitorMissing
           conditions:
-            - !type:EntityAnchored { }
+            - !type:EntityAnchored {}
           completed:
             - !type:SpawnPrototype
               prototype: SheetGlass1
@@ -124,6 +121,7 @@
             - tool: Prying
 
     - node: computer
+      entity: !type:BoardNodeEntity { container: board }
       edges:
         - to: monitorUnsecured
           steps:

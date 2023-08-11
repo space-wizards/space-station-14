@@ -24,9 +24,7 @@ public sealed class StationCargoOrderDatabaseComponent : Component
     /// </summary>
     public int NumOrdersCreated;
 
-    [DataField("cargoShuttleProto", customTypeSerializer:typeof(PrototypeIdSerializer<CargoShuttlePrototype>))]
-    public string? CargoShuttleProto = "CargoShuttle";
-
+    // TODO: Can probably dump this
     /// <summary>
     /// The cargo shuttle assigned to this station.
     /// </summary>

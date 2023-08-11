@@ -35,12 +35,12 @@
         <Control SetHeight="28" Margin="1 0 2 1">
             <PanelContainer Name="FooterPanel"></PanelContainer>
             <BoxContainer Name="ContentFooter" HorizontalExpand="True" SetHeight="28">
-                <Label Text="Net#Link ™" VerticalAlignment="Center" Margin="6 0" StyleClasses="PDAContentFooterText"/>
-                <Label Name="AddressLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0" StyleClasses="PDAContentFooterText"/>
+                <Label Text="Net#Link ™" VerticalAlignment="Center" Margin="6 0" StyleClasses="PdaContentFooterText"/>
+                <Label Name="AddressLabel" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="6 0" StyleClasses="PdaContentFooterText"/>
                 <Control HorizontalExpand="True"/>
-                <Label Name="FromAddressLabel" Margin="6 0" StyleClasses="PDAContentFooterText"/>
-                <Label SetWidth="25" StyleClasses="PDAContentFooterText" Align="Center" Text="➝"/><!--Turn this into an arrow texture-->
-                <Label Name="ToAddressLabel" Margin="6 0" StyleClasses="PDAContentFooterText"/>
+                <Label Name="FromAddressLabel" Margin="6 0" StyleClasses="PdaContentFooterText"/>
+                <Label SetWidth="25" StyleClasses="PdaContentFooterText" Align="Center" Text="➝"/><!--Turn this into an arrow texture-->
+                <Label Name="ToAddressLabel" Margin="6 0" StyleClasses="PdaContentFooterText"/>
             </BoxContainer>
         </Control>
     </BoxContainer>

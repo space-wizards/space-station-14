@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Actions;
 using Content.Shared.Popups;
 using Content.Shared.Alert;
@@ -136,6 +137,7 @@ public sealed partial class RevenantSystem : EntitySystem
 
         if (component.Essence <= 0)
         {
+            Spawn(component.SpawnOnDeathPrototype, Transform(uid).Coordinates);
             QueueDel(uid);
         }
         return true;
