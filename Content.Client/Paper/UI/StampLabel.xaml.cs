@@ -5,53 +5,52 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Paper.UI
+namespace Content.Client.Paper.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class StampLabel : Label
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class StampLabel : Label
+    /// A scale that's applied to the text to ensure it
+    /// fits in the allowed space.
+    private Vector2 _textScaling = Vector2.One;
+
+    /// Shader used to draw the stamps
+    private ShaderInstance? _stampShader;
+
+    /// Allows an additional orientation to be applied to
+    /// this control.
+    public float Orientation = 0.0f;
+
+    public StampLabel()
     {
-        /// A scale that's applied to the text to ensure it
-        /// fits in the allowed space.
-        private Vector2 _textScaling = Vector2.One;
+        RobustXamlLoader.Load(this);
 
-        /// Shader used to draw the stamps
-        private ShaderInstance? _stampShader;
+        var prototypes = IoCManager.Resolve<IPrototypeManager>();
+        _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
+    }
 
-        /// Allows an additional orientation to be applied to
-        /// this control.
-        public float Orientation = 0.0f;
+    protected override Vector2 MeasureOverride(Vector2 availableSize)
+    {
+        var desiredTextSize = base.MeasureOverride(availableSize);
+        var clampedScale = Vector2.Min(availableSize / desiredTextSize, Vector2.One);
+        var keepAspectRatio = MathF.Min(clampedScale.X, clampedScale.Y);
+        const float shimmerReduction = 0.1f;
+        _textScaling = Vector2.One * MathF.Round(keepAspectRatio / shimmerReduction) * shimmerReduction;
+        return desiredTextSize;
+    }
 
-        public StampLabel()
-        {
-            RobustXamlLoader.Load(this);
+    protected override void Draw(DrawingHandleScreen handle)
+    {
+        var offset = new Vector2(PixelPosition.X * MathF.Cos(Orientation) - PixelPosition.Y * MathF.Sin(Orientation),
+                PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
 
-            var prototypes = IoCManager.Resolve<IPrototypeManager>();
-            _stampShader = prototypes.Index<ShaderPrototype>("PaperStamp").InstanceUnique();
-        }
+        _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
+        handle.UseShader(_stampShader);
+        handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
+        base.Draw(handle);
 
-        protected override Vector2 MeasureOverride(Vector2 availableSize)
-        {
-            var desiredTextSize = base.MeasureOverride(availableSize);
-            var clampedScale = Vector2.Min(availableSize / desiredTextSize, Vector2.One);
-            var keepAspectRatio = MathF.Min(clampedScale.X, clampedScale.Y);
-            const float shimmerReduction = 0.1f;
-            _textScaling = Vector2.One * MathF.Round(keepAspectRatio / shimmerReduction) * shimmerReduction;
-            return desiredTextSize;
-        }
-
-        protected override void Draw(DrawingHandleScreen handle)
-        {
-            var offset = new Vector2(PixelPosition.X * MathF.Cos(Orientation) - PixelPosition.Y * MathF.Sin(Orientation),
-                    PixelPosition.Y * MathF.Cos(Orientation) + PixelPosition.X * MathF.Sin(Orientation));
-
-            _stampShader?.SetParameter("objCoord", GlobalPosition * UIScale * new Vector2(1, -1));
-            handle.UseShader(_stampShader);
-            handle.SetTransform(GlobalPixelPosition - PixelPosition + offset, Orientation, _textScaling);
-            base.Draw(handle);
-
-            // Restore a sane transform+shader
-            handle.SetTransform(Matrix3.Identity);
-            handle.UseShader(null);
-        }
+        // Restore a sane transform+shader
+        handle.SetTransform(Matrix3.Identity);
+        handle.UseShader(null);
     }
 }
