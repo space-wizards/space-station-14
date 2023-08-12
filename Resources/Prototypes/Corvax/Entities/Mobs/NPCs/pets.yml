@@ -53,3 +53,19 @@
     - type: Tag
       tags:
         - CannotSuicide
+
+- type: entity
+  name: Анатолий
+  parent: MobGorillaLargo
+  id: MobGorillaAnatoly
+  description: Питомец карго, участвовал в первой революции. Кажется, у него есть татуировка "Я люблю маму".
+  components:
+    - type: GhostRole
+      makeSentient: true
+      allowSpeech: true
+      allowMovement: true
+      prob: 1
+      name: Анатолий
+      description: Питомец карго, участвовал в первой революции. Кажется, у него есть татуировка "Я люблю маму".
+      rules: "Вы - выдрессированная горилла отдела снабжения. Подчиняйтесь простым командам членов отдела."
+    - type: GhostTakeoverAvailable
