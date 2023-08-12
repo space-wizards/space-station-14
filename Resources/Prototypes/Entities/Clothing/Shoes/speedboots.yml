@@ -13,8 +13,8 @@
   - type: StaticPrice
     price: 500
   - type: ClothingSpeedModifier
-    walkModifier: 1.1
-    sprintModifier: 1.3
+    walkModifier: 1
+    sprintModifier: 1.2
     enabled: true
   - type: Tag
     tags:
@@ -37,8 +37,8 @@
   - type: StaticPrice
     price: 500
   - type: ClothingSpeedModifier
-    walkModifier: 1.1
-    sprintModifier: 1.3
+    walkModifier: 1
+    sprintModifier: 1.2
     enabled: true
   - type: Construction
     graph: Clownspeedboots
