@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: The artifact division has finally remembered to wash alien artifacts
-      before giving them to scientists. They should now look significantly better.,
-    type: Tweak}
-  id: 4029
-  time: '2023-06-18T15:02:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Removed the spare CE belt., type: Remove}
   id: 4030
   time: '2023-06-18T17:06:09.0000000+00:00'
@@ -2997,3 +2990,9 @@ Entries:
   - {message: Fixed errant transparency on jester outfit, type: Fix}
   id: 4528
   time: '2023-08-12T17:06:46.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
+    type: Tweak}
+  id: 4529
+  time: '2023-08-12T19:03:08.0000000+00:00'
