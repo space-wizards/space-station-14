@@ -27,9 +27,9 @@
   description: Super power for clowns. Allows you to run away from security even faster!
   components:
   - type: Sprite
-    sprite: Clothing\Shoes\Boots\clownspeedboots.rsi
+    sprite: Clothing/Shoes/Boots/clownspeedboots.rsi
   - type: Clothing
-    sprite: Clothing\Shoes\Boots\clownspeedboots.rsi
+    sprite: Clothing/Shoes/Boots/clownspeedboots.rsi
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown
