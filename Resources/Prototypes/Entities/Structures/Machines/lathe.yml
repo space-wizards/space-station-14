@@ -238,9 +238,6 @@
       - PowerCellMedium
       - PowerCellHigh
       - WeaponPistolCHIMP
-      - CartridgeAnomalousParticleDelta
-      - CartridgeAnomalousParticleEpsilon
-      - CartridgeAnomalousParticleZeta
       - SynthesizerInstrument
       - RPED
       - ClothingShoesBootsMag

@@ -378,7 +378,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm
+      - state: magicm_red
         shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -412,6 +412,10 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
+  - type: Projectile
+    damage:
+      types:
+        Heat: 10
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -419,8 +423,16 @@
   name: epsilon particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_green
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Epsilon
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 5
 
 - type: entity
   parent: AnomalousParticleEpsilon
@@ -433,6 +445,10 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
+  - type: Projectile
+    damage:
+      types:
+        Radiation: 10
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -440,9 +456,17 @@
   name: zeta particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_yellow
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Zeta
-
+  - type: Projectile
+    damage:
+      types:
+        Shock: 5 
+        
 - type: entity
   parent: AnomalousParticleZeta
   id: AnomalousParticleZetaStrong
@@ -454,16 +478,21 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
+  - type: Projectile
+    damage:
+      types:
+        Shock: 10
 
 - type: entity
   parent: AnomalousParticleDelta
   id: AnomalousParticleOmegaStrong
+  name: omega particles
   noSpawn: true
   components:
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm_green
+      - state: magicm
         shader: unshaded
   - type: AnomalousParticle
     particleType: Default
@@ -476,7 +505,8 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Heat: 20
+        Heat: 10
+        Radiation: 10
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

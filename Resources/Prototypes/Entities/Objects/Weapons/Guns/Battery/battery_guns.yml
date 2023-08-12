@@ -428,9 +428,9 @@
     price: 63
 
 - type: entity
-  name: C.H.I.M.P. handcannon special
+  name: C.H.I.M.P. handcannon
   parent: BaseWeaponBatterySmall
-  id: WeaponPistolBatteryCHIMP
+  id: WeaponPistolCHIMP
   description: Just because it's a little C.H.I.M.P. doesn't mean it can't punch like an A.P.E.
   components:
   - type: Sprite
@@ -456,18 +456,38 @@
   - type: ProjectileBatteryAmmoProvider
     proto: AnomalousParticleDeltaStrong
     fireCost: 100
-  - type: AlternativeBatteryAmmoModes
-    batteryAmmoModes:
-    - batteryAmmo:
+  - type: AlternativeFireModes
+    fireModes:
+    - fireMode:
       proto: AnomalousParticleDeltaStrong
       fireCost: 100
-    - batteryAmmo:
+    - fireMode:
       proto: AnomalousParticleEpsilonStrong
       fireCost: 100
-    - batteryAmmo:
+    - fireMode:
       proto: AnomalousParticleZetaStrong
       fireCost: 100
       
+- type: entity
+  name: Experimental C.H.I.M.P. handcannon
+  parent: WeaponPistolCHIMP
+  id: WeaponPistolCHIMPOmega  
+  components: 
+  - type: AlternativeFireModes
+    fireModes:
+    - fireMode:
+      proto: AnomalousParticleDeltaStrong
+      fireCost: 100
+    - fireMode:
+      proto: AnomalousParticleEpsilonStrong
+      fireCost: 100
+    - fireMode:
+      proto: AnomalousParticleOmegaStrong
+      fireCost: 100     
+    - fireMode:
+      proto: AnomalousParticleZetaStrong
+      fireCost: 100
+
 - type: entity
   name: Eye of a behonker
   parent: BaseWeaponBatterySmall

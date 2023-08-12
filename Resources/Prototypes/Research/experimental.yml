@@ -111,9 +111,6 @@
   cost: 10000
   recipeUnlocks:
   - WeaponPistolCHIMP
-  - CartridgeAnomalousParticleDelta
-  - CartridgeAnomalousParticleEpsilon
-  - CartridgeAnomalousParticleZeta
   technologyPrerequisites:
   - BasicAnomalousResearch
 
