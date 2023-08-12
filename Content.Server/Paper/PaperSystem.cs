@@ -119,14 +119,11 @@ namespace Content.Server.Paper
             {
                 // successfully stamped, play popup
                 var stampPaperOtherMessage = Loc.GetString("paper-component-action-stamp-paper-other",
-                        ("user", Identity.Entity(args.User, EntityManager)),
-                        ("target", Identity.Entity(args.Target, EntityManager)),
-                        ("stamp", args.Used));
+                        ("user", args.User), ("target", args.Target), ("stamp", args.Used));
 
                 _popupSystem.PopupEntity(stampPaperOtherMessage, args.User, Filter.PvsExcept(args.User, entityManager: EntityManager), true);
                 var stampPaperSelfMessage = Loc.GetString("paper-component-action-stamp-paper-self",
-                        ("target", Identity.Entity(args.Target, EntityManager)),
-                        ("stamp", args.Used));
+                        ("target", args.Target), ("stamp", args.Used));
                 _popupSystem.PopupEntity(stampPaperSelfMessage, args.User, args.User);
 
                 _audio.PlayPvs(stampComp.Sound, uid);
