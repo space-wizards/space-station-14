@@ -89,6 +89,7 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
+      - id: DoorRemoteFirefight
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -103,6 +104,7 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
+      - id: DoorRemoteFirefight
 
 - type: entity
   id: LockerEngineerFilledHardsuit
