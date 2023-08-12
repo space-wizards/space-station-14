@@ -458,14 +458,11 @@
     fireCost: 100
   - type: AlternativeFireModes
     fireModes:
-    - fireMode:
-      proto: AnomalousParticleDeltaStrong
+    - proto: AnomalousParticleDeltaStrong
       fireCost: 100
-    - fireMode:
-      proto: AnomalousParticleEpsilonStrong
+    - proto: AnomalousParticleEpsilonStrong
       fireCost: 100
-    - fireMode:
-      proto: AnomalousParticleZetaStrong
+    - proto: AnomalousParticleZetaStrong
       fireCost: 100
       
 - type: entity
@@ -475,17 +472,13 @@
   components: 
   - type: AlternativeFireModes
     fireModes:
-    - fireMode:
-      proto: AnomalousParticleDeltaStrong
+    - proto: AnomalousParticleDeltaStrong
       fireCost: 100
-    - fireMode:
-      proto: AnomalousParticleEpsilonStrong
+    - proto: AnomalousParticleEpsilonStrong
       fireCost: 100
-    - fireMode:
-      proto: AnomalousParticleOmegaStrong
+    - proto: AnomalousParticleOmegaStrong
       fireCost: 100     
-    - fireMode:
-      proto: AnomalousParticleZetaStrong
+    - proto: AnomalousParticleZetaStrong
       fireCost: 100
 
 - type: entity

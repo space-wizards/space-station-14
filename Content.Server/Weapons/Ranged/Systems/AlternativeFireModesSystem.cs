@@ -61,7 +61,8 @@ public sealed class AlternativeFireModesSystem : EntitySystem
                 DoContactInteraction = true,
                 Act = () =>
                 {
-                    component.CurrentFireModeIndex = component.FireModes.IndexOf(component.FireModes.First(x => x.Prototype == fireMode.Prototype));
+                    int newIndex = component.FireModes.IndexOf(component.FireModes.First(x => x.Prototype == fireMode.Prototype));
+                    SetCurrentFireModeIndex(uid, component, newIndex);
                     SetFireMode(uid, component, args.User);
                 }
             };
@@ -75,8 +76,26 @@ public sealed class AlternativeFireModesSystem : EntitySystem
         if (component.FireModes == null || !component.FireModes.Any())
             return;
 
-        component.CurrentFireModeIndex++;
+        SetCurrentFireModeIndex(uid, component, component.CurrentFireModeIndex + 1);
         SetFireMode(uid, component, args.User);
+    }
+
+    private void SetCurrentFireModeIndex(EntityUid uid, AlternativeFireModesComponent component, int index)
+    {
+        if (index >= component.FireModes.Count)
+        {
+            component.CurrentFireModeIndex = 0;
+        }
+
+        else if (index < 0)
+        {
+            component.CurrentFireModeIndex = component.FireModes.Count - 1;
+        }
+
+        else
+        {
+            component.CurrentFireModeIndex = index;
+        }
     }
 
     private void SetFireMode(EntityUid uid, AlternativeFireModesComponent component, EntityUid user)

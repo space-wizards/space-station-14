@@ -14,31 +14,8 @@ public sealed partial class AlternativeFireModesComponent : Component
     [AutoNetworkedField]
     public List<FireMode> FireModes = new();
 
-    private int _currentFireModeIndex = 0;
-
     [AutoNetworkedField]
-    public int CurrentFireModeIndex
-    {
-        get { return _currentFireModeIndex; }
-
-        set
-        {
-            if (value >= FireModes.Count)
-            {
-                _currentFireModeIndex = 0;
-            }
-
-            else if (value < 0)
-            {
-                _currentFireModeIndex = FireModes.Count - 1;
-            }
-
-            else
-            {
-                _currentFireModeIndex = value;
-            }
-        }
-    }
+    public int CurrentFireModeIndex = 0;
 
     public FireMode? CurrentFireMode
     {
@@ -47,7 +24,7 @@ public sealed partial class AlternativeFireModesComponent : Component
             if (FireModes == null || !FireModes.Any())
                 return null;
 
-            return FireModes[CurrentFireModeIndex];
+            return FireModes.ElementAtOrDefault(CurrentFireModeIndex);
         }
     }
 }
