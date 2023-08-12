@@ -239,6 +239,13 @@
     pilotWhitelist:
       tags:
       - VimPilot
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6
