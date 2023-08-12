@@ -65,10 +65,10 @@
 - type: latheRecipe
   id: Pickaxe
   result: Pickaxe
-  completetime: 2
+  completetime: 4
   materials:
-    Steel: 200
-    Wood: 100
+    Steel: 1000
+    Wood: 500
 
 - type: latheRecipe
   id: Shovel
