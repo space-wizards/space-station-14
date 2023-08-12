@@ -28,6 +28,11 @@ using Content.Shared.IdentityManagement;
 using Content.Server.Flash;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Inventory;
+using Robust.Shared.Map;
+using System.Numerics;
+using Content.Server.Storage.EntitySystems;
+using Content.Server.Construction.Completions;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -40,10 +45,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
@@ -54,6 +61,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
     [Dependency] private readonly StationJobsSystem _stationJobs = default!;
     [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly StorageSystem _storageSystem = default!;
 
     private TimeSpan _timerWait = TimeSpan.FromSeconds(10);
 
@@ -218,7 +226,24 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 }
                 AddComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
                 AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
-                _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>(comp.HeadRevGearPrototypeId), null);
+                if (_inventory.TryGetSlotContainer(mind.OwnedEntity.Value, "back", out var containerSlot, out var slotDefinition))
+                {
+                    var bag = containerSlot.ContainedEntity;
+                    var flash = Spawn("Flash", new EntityCoordinates(mind.OwnedEntity.Value, Vector2.Zero));
+                    var glasses = Spawn("ClothingEyesGlassesSunglasses", new EntityCoordinates(mind.OwnedEntity.Value, Vector2.Zero));
+                    if (bag != null && _storageSystem.CanInsert((EntityUid) bag, flash, out var reason))
+                    {
+                        _storageSystem.Insert((EntityUid) bag, flash);
+                        _storageSystem.Insert((EntityUid) bag, glasses);
+                    }
+                    else
+                    {
+                        //Honestly if they don't have a bag they are just going to take this L.
+                        _entityManager.DeleteEntity(flash);
+                        _entityManager.DeleteEntity(glasses);
+                        _stationSpawningSystem.EquipStartingGear(mind.OwnedEntity.Value, _prototypeManager.Index<StartingGearPrototype>(comp.HeadRevGearPrototypeId), null);
+                    }
+                }
                 _npcFaction.RemoveFaction(mind.OwnedEntity.Value, "NanoTrasen", false);
                 _npcFaction.AddFaction(mind.OwnedEntity.Value, "Revolutionary");
                 inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
