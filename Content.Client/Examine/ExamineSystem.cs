@@ -93,19 +93,21 @@ namespace Content.Client.Examine
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(args.EntityUid))
+            var entity = ToEntity(args.EntityUid);
+
+            if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(entity))
             {
                 return false;
             }
 
             _playerEntity = _playerManager.LocalPlayer?.ControlledEntity ?? default;
 
-            if (_playerEntity == default || !CanExamine(_playerEntity, args.EntityUid))
+            if (_playerEntity == default || !CanExamine(_playerEntity, entity))
             {
                 return false;
             }
 
-            DoExamine(args.EntityUid);
+            DoExamine(entity);
             return true;
         }
 
@@ -140,8 +142,10 @@ namespace Content.Client.Examine
             // Tooltips coming in from the server generally prioritize
             // opening at the old tooltip rather than the cursor/another entity,
             // since there's probably one open already if it's coming in from the server.
-            OpenTooltip(player.Value, ev.EntityUid, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
-            UpdateTooltipInfo(player.Value, ev.EntityUid, ev.Message, ev.Verbs);
+            var entity = ToEntity(ev.EntityUid);
+
+            OpenTooltip(player.Value, entity, ev.CenterAtCursor, ev.OpenAtOldTooltip, ev.KnowTarget);
+            UpdateTooltipInfo(player.Value, entity, ev.Message, ev.Verbs);
         }
 
         public override void SendExamineTooltip(EntityUid player, EntityUid target, FormattedMessage message, bool getVerbs, bool centerAtCursor)
@@ -339,9 +343,7 @@ namespace Content.Client.Examine
             FormattedMessage message;
 
             // Basically this just predicts that we can't make out the entity if we have poor vision.
-            var canSeeClearly = true;
-            if (HasComp<BlurryVisionComponent>(playerEnt))
-                canSeeClearly = false;
+            var canSeeClearly = !HasComp<BlurryVisionComponent>(playerEnt);
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
             if (entity.IsClientSide()
@@ -357,7 +359,7 @@ namespace Content.Client.Examine
                     _idCounter += 1;
                 if (_idCounter == int.MaxValue)
                     _idCounter = 0;
-                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, _idCounter, true));
+                RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(ToNetEntity(entity), _idCounter, true));
             }
             _lastExaminedEntity = entity;
         }

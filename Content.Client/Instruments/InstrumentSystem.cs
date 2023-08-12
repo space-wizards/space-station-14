@@ -189,7 +189,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         if (!fromStateChange && _netManager.IsConnected)
         {
-            RaiseNetworkEvent(new InstrumentStopMidiEvent(uid));
+            RaiseNetworkEvent(new InstrumentStopMidiEvent(ToNetEntity(uid)));
         }
     }
 
@@ -359,7 +359,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     private void OnMidiStop(InstrumentStopMidiEvent ev)
     {
-        EndRenderer(ev.Uid, true);
+        EndRenderer(ToEntity(ev.Uid), true);
     }
 
     public override void Update(float frameTime)

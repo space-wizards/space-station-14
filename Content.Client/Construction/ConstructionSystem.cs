@@ -150,10 +150,12 @@ namespace Content.Client.Construction
 
         private bool HandleUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            if (!args.EntityUid.IsValid() || !args.EntityUid.IsClientSide())
+            var entity = ToEntity(args.EntityUid);
+
+            if (!entity.IsValid() || !IsClientSide(entity))
                 return false;
 
-            if (!EntityManager.TryGetComponent<ConstructionGhostComponent?>(args.EntityUid, out var ghostComp))
+            if (!EntityManager.TryGetComponent<ConstructionGhostComponent>(entity, out var ghostComp))
                 return false;
 
             TryStartConstruction(ghostComp.GhostId);
@@ -263,7 +265,7 @@ namespace Content.Client.Construction
             }
 
             var transform = EntityManager.GetComponent<TransformComponent>(ghost.Owner);
-            var msg = new TryStartStructureConstructionMessage(transform.Coordinates, ghost.Prototype.ID, transform.LocalRotation, ghostId);
+            var msg = new TryStartStructureConstructionMessage(ToNetCoordinates(transform.Coordinates), ghost.Prototype.ID, transform.LocalRotation, ghostId);
             RaiseNetworkEvent(msg);
         }
 

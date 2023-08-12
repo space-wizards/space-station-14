@@ -156,7 +156,7 @@ namespace Content.Server.Communications
             }
 
             if (comp.UserInterface is not null)
-                UserInterfaceSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
+                _uiSystem.SetUiState(comp.UserInterface, new CommunicationsConsoleInterfaceState(
                     CanAnnounce(comp),
                     CanCallOrRecall(comp),
                     levels,

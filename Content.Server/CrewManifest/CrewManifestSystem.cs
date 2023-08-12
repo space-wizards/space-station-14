@@ -64,7 +64,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(message.Id, sessionCast);
+        OpenEui(ToEntity(message.Id), sessionCast);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time

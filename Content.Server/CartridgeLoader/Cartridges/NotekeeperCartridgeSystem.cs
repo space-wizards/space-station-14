@@ -42,7 +42,7 @@ public sealed class NotekeeperCartridgeSystem : EntitySystem
             component.Notes.Remove(message.Note);
         }
 
-        UpdateUiState(uid, args.LoaderUid, component);
+        UpdateUiState(uid, ToEntity(args.LoaderUid), component);
     }
 
 

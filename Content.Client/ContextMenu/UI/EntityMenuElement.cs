@@ -49,7 +49,8 @@ namespace Content.Client.ContextMenu.UI
 
         private string? SearchPlayerName(EntityUid entity)
         {
-            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == entity)?.Username;
+            var netEntity = _entityManager.ToNetEntity(entity);
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == netEntity)?.Username;
         }
 
         /// <summary>

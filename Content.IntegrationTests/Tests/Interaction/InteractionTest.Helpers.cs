@@ -961,14 +961,15 @@ public abstract partial class InteractionTest
     ///     Make the client press and then release a key. This assumes the key is currently released.
     /// </summary>
     protected async Task PressKey(
+        IEntityManager entManager,
         BoundKeyFunction key,
         int ticks = 1,
         EntityCoordinates? coordinates = null,
         EntityUid cursorEntity = default)
     {
-        await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
+        await SetKey(entManager, key, BoundKeyState.Down, coordinates, cursorEntity);
         await RunTicks(ticks);
-        await SetKey(key, BoundKeyState.Up, coordinates, cursorEntity);
+        await SetKey(entManager, key, BoundKeyState.Up, coordinates, cursorEntity);
         await RunTicks(1);
     }
 
@@ -976,6 +977,7 @@ public abstract partial class InteractionTest
     ///     Make the client press or release a key
     /// </summary>
     protected async Task SetKey(
+        IEntityManager entManager,
         BoundKeyFunction key,
         BoundKeyState state,
         EntityCoordinates? coordinates = null,
@@ -986,7 +988,7 @@ public abstract partial class InteractionTest
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
         var message = new FullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId, state,
-            coords, screen, cursorEntity);
+            entManager.ToNetCoordinates(coords), screen, entManager.ToNetEntity(cursorEntity));
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));
     }
@@ -994,29 +996,29 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Variant of <see cref="SetKey"/> for setting movement keys.
     /// </summary>
-    protected async Task SetMovementKey(DirectionFlag dir, BoundKeyState state)
+    protected async Task SetMovementKey(IEntityManager entManager, DirectionFlag dir, BoundKeyState state)
     {
         if ((dir & DirectionFlag.South) != 0)
-            await SetKey(EngineKeyFunctions.MoveDown, state);
+            await SetKey(entManager, EngineKeyFunctions.MoveDown, state);
 
         if ((dir & DirectionFlag.East) != 0)
-            await SetKey(EngineKeyFunctions.MoveRight, state);
+            await SetKey(entManager, EngineKeyFunctions.MoveRight, state);
 
         if ((dir & DirectionFlag.North) != 0)
-            await SetKey(EngineKeyFunctions.MoveUp, state);
+            await SetKey(entManager, EngineKeyFunctions.MoveUp, state);
 
         if ((dir & DirectionFlag.West) != 0)
-            await SetKey(EngineKeyFunctions.MoveLeft, state);
+            await SetKey(entManager, EngineKeyFunctions.MoveLeft, state);
     }
 
     /// <summary>
     ///     Make the client hold the move key in some direction for some amount of time.
     /// </summary>
-    protected async Task Move(DirectionFlag dir, float seconds)
+    protected async Task Move(IEntityManager entManager, DirectionFlag dir, float seconds)
     {
-        await SetMovementKey(dir, BoundKeyState.Down);
+        await SetMovementKey(entManager, dir, BoundKeyState.Down);
         await RunSeconds(seconds);
-        await SetMovementKey(dir, BoundKeyState.Up);
+        await SetMovementKey(entManager, dir, BoundKeyState.Up);
         await RunTicks(1);
     }
 

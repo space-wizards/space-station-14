@@ -24,7 +24,7 @@ public sealed class ClimbingTest : MovementTest
         });
 
         // Attempt (and fail) to walk past the table.
-        await Move(DirectionFlag.East, 1f);
+        await Move(SEntMan, DirectionFlag.East, 1f);
         Assert.That(Delta(), Is.GreaterThan(0));
 
         // Try to start climbing
@@ -40,7 +40,7 @@ public sealed class ClimbingTest : MovementTest
         });
 
         // Can now walk over the table.
-        await Move(DirectionFlag.East, 1f);
+        await Move(SEntMan, DirectionFlag.East, 1f);
 
         Assert.Multiple(() =>
         {
@@ -52,7 +52,7 @@ public sealed class ClimbingTest : MovementTest
         });
 
         // Try to walk back to the other side (and fail).
-        await Move(DirectionFlag.West, 1f);
+        await Move(SEntMan, DirectionFlag.West, 1f);
         Assert.That(Delta(), Is.LessThan(0));
 
         // Start climbing
@@ -66,7 +66,7 @@ public sealed class ClimbingTest : MovementTest
         });
 
         // Walk past table and stop climbing again.
-        await Move(DirectionFlag.West, 1f);
+        await Move(SEntMan, DirectionFlag.West, 1f);
         Assert.Multiple(() =>
         {
             Assert.That(Delta(), Is.GreaterThan(0));

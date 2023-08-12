@@ -340,10 +340,11 @@ public sealed class DragDropSystem : SharedDragDropSystem
         }
 
         IEnumerable<EntityUid> entities;
+        var coords = ToCoordinates(args.Coordinates);
 
         if (_stateManager.CurrentState is GameplayState screen)
         {
-            entities = screen.GetClickableEntities(args.Coordinates);
+            entities = screen.GetClickableEntities(coords);
         }
         else
         {
@@ -371,7 +372,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             }
 
             // tell the server about the drop attempt
-            RaiseNetworkEvent(new DragDropRequestEvent(_draggedEntity.Value, entity));
+            RaiseNetworkEvent(new DragDropRequestEvent(ToNetEntity(_draggedEntity.Value), ToNetEntity(entity)));
             EndDrag();
             return true;
         }

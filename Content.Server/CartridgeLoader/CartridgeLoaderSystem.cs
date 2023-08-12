@@ -46,7 +46,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         state.Programs = GetAvailablePrograms(loaderUid, loader);
 
         if (_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
-            UserInterfaceSystem.SetUiState(ui, state, session);
+            _userInterfaceSystem.SetUiState(ui, state, session);
     }
 
     /// <summary>
@@ -66,7 +66,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return;
 
         if (_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
-            UserInterfaceSystem.SetUiState(ui, state, session);
+            _userInterfaceSystem.SetUiState(ui, state, session);
     }
 
     /// <summary>
@@ -337,7 +337,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
-        cartridgeEvent.LoaderUid = uid;
+        cartridgeEvent.LoaderUid = ToNetEntity(uid);
 
         RelayEvent(component, cartridgeEvent, true);
     }

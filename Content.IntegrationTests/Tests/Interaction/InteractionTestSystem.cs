@@ -29,6 +29,6 @@ public sealed class InteractionTestSystem : EntitySystem
     private void OnAck(AckStructureConstructionMessage ev)
     {
         if (ev.Uid != null)
-            Ghosts[ev.GhostId] = ev.Uid.Value;
+            Ghosts[ev.GhostId] = ToEntity(ev.Uid.Value);
     }
 }

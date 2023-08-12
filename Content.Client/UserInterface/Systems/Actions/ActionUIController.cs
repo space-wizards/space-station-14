@@ -213,7 +213,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        var coords = args.Coordinates;
+        var coords = EntityManager.ToCoordinates(args.Coordinates);
 
         if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
         {
@@ -235,7 +235,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, coords));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.Coordinates));
 
         if (!action.Repeat)
             StopTargeting();
@@ -248,7 +248,9 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        if (!_actionsSystem.ValidateEntityTarget(user, args.EntityUid, action))
+        var entity = EntityManager.ToEntity(args.EntityUid);
+
+        if (!_actionsSystem.ValidateEntityTarget(user, entity, action))
         {
             if (action.DeselectOnMiss)
                 StopTargeting();
@@ -260,7 +262,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         {
             if (action.Event != null)
             {
-                action.Event.Target = args.EntityUid;
+                action.Event.Target = entity;
                 action.Event.Performer = user;
             }
 
@@ -501,11 +503,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
 
     private bool MatchesFilter(ActionType action, Filters filter)
     {
+        var provider = EntityManager.ToEntity(action.Provider);
+
         return filter switch
         {
             Filters.Enabled => action.Enabled,
-            Filters.Item => action.Provider != null && action.Provider != _playerManager.LocalPlayer?.ControlledEntity,
-            Filters.Innate => action.Provider == null || action.Provider == _playerManager.LocalPlayer?.ControlledEntity,
+            Filters.Item => action.Provider != null && provider != _playerManager.LocalPlayer?.ControlledEntity,
+            Filters.Innate => action.Provider == null || provider == _playerManager.LocalPlayer?.ControlledEntity,
             Filters.Instant => action is InstantAction,
             Filters.Targeted => action is TargetedAction,
             _ => throw new ArgumentOutOfRangeException(nameof(filter), filter, null)
@@ -566,10 +570,12 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.DisplayName.Contains(search, StringComparison.OrdinalIgnoreCase))
                 return true;
 
-            if (action.Provider == null || action.Provider == _playerManager.LocalPlayer?.ControlledEntity)
+            var provider = EntityManager.ToEntity(action.Provider);
+
+            if (provider == null || provider == _playerManager.LocalPlayer?.ControlledEntity)
                 return false;
 
-            var name = EntityManager.GetComponent<MetaDataComponent>(action.Provider.Value).EntityName;
+            var name = EntityManager.GetComponent<MetaDataComponent>(provider.Value).EntityName;
             return name.Contains(search, StringComparison.OrdinalIgnoreCase);
         });
 
@@ -724,9 +730,11 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
     {
         if (_menuDragHelper.Dragged?.Action is { } action)
         {
-            if (action.EntityIcon != null)
+            var entIcon = EntityManager.ToEntity(action.EntityIcon);
+
+            if (entIcon != null)
             {
-                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
+                _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(entIcon.Value).Icon?
                     .GetFrame(RSI.State.Direction.South, 0);
             }
             else if (action.Icon != null)
@@ -938,11 +946,13 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         SelectingTargetFor = action;
 
         // override "held-item" overlay
+        var provider = EntityManager.ToEntity(action.Provider);
+
         if (action.TargetingIndicator && _overlays.TryGetOverlay<ShowHandItemOverlay>(out var handOverlay))
         {
             if (action.ItemIconStyle == ItemActionIconStyle.BigItem && action.Provider != null)
             {
-                handOverlay.EntityOverride = action.Provider;
+                handOverlay.EntityOverride = provider;
             }
             else if (action.Toggled && action.IconOn != null)
                 handOverlay.IconOverride = _spriteSystem.Frame0(action.IconOn);
@@ -959,9 +969,10 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             return;
 
         Func<EntityUid, bool>? predicate = null;
+        var attachedEnt = EntityManager.ToEntity(entityAction.AttachedEntity);
 
         if (!entityAction.CanTargetSelf)
-            predicate = e => e != entityAction.AttachedEntity;
+            predicate = e => e != attachedEnt;
 
         var range = entityAction.CheckCanAccess ? action.Range : -1;
 

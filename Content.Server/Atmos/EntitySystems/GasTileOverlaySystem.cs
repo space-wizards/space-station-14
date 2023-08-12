@@ -42,9 +42,9 @@ namespace Content.Server.Atmos.EntitySystems
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
             new DefaultObjectPool<HashSet<Vector2i>>(
                 new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
-        private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
-            new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
+        private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
+            new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
+                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
 
         /// <summary>
         ///     Overlay update interval, in seconds.
@@ -294,22 +294,23 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void UpdatePlayer(IPlayerSession playerSession, GameTick curTick)
         {
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
+            var chunksInRange = _chunkingSys.GetChunksForSession(playerSession, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var previouslySent = _lastSentChunks[playerSession];
 
             var ev = new GasOverlayUpdateEvent();
 
             foreach (var (grid, oldIndices) in previouslySent)
             {
+                var netGrid = ToNetEntity(grid);
+
                 // Mark the whole grid as stale and flag for removal.
-                if (!chunksInRange.TryGetValue(grid, out var chunks))
+                if (!chunksInRange.TryGetValue(netGrid, out var chunks))
                 {
                     previouslySent.Remove(grid);
 
                     // If grid was deleted then don't worry about sending it to the client.
                     if (_mapManager.IsGrid(grid))
-                        ev.RemovedChunks[grid] = oldIndices;
+                        ev.RemovedChunks[netGrid] = oldIndices;
                     else
                     {
                         oldIndices.Clear();
@@ -330,17 +331,19 @@ namespace Content.Server.Atmos.EntitySystems
                 if (old.Count == 0)
                     _chunkIndexPool.Return(old);
                 else
-                    ev.RemovedChunks.Add(grid, old);
+                    ev.RemovedChunks.Add(netGrid, old);
             }
 
-            foreach (var (grid, gridChunks) in chunksInRange)
+            foreach (var (netGrid, gridChunks) in chunksInRange)
             {
+                var grid = ToEntity(netGrid);
+
                 // Not all grids have atmospheres.
                 if (!TryComp(grid, out GasTileOverlayComponent? overlay))
                     continue;
 
                 List<GasOverlayChunk> dataToSend = new();
-                ev.UpdatedChunks[grid] = dataToSend;
+                ev.UpdatedChunks[ToNetEntity(grid)] = dataToSend;
 
                 previouslySent.TryGetValue(grid, out var previousChunks);
 

@@ -302,7 +302,7 @@ public sealed class MechSystem : SharedMechSystem
             EquipmentStates = ev.States
         };
         var ui = _ui.GetUi(uid, MechUiKey.Key);
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)

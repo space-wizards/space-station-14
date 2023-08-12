@@ -110,7 +110,7 @@ namespace Content.Client.Hands.Systems
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
+            PickupAnimation(ToEntity(msg.ItemUid), ToCoordinates(msg.InitialPosition), msg.FinalPosition, msg.InitialAngle);
         }
 
         public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,

@@ -44,9 +44,9 @@ namespace Content.Server.Decals
             new DefaultObjectPool<HashSet<Vector2i>>(
                 new DefaultPooledObjectPolicy<HashSet<Vector2i>>(), 64);
 
-        private ObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>> _chunkViewerPool =
-            new DefaultObjectPool<Dictionary<EntityUid, HashSet<Vector2i>>>(
-                new DefaultPooledObjectPolicy<Dictionary<EntityUid, HashSet<Vector2i>>>(), 64);
+        private ObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>> _chunkViewerPool =
+            new DefaultObjectPool<Dictionary<NetEntity, HashSet<Vector2i>>>(
+                new DefaultPooledObjectPolicy<Dictionary<NetEntity, HashSet<Vector2i>>>(), 64);
 
         public override void Initialize()
         {
@@ -436,7 +436,7 @@ namespace Content.Server.Decals
         public void UpdatePlayer(IPlayerSession player)
         {
             var xformQuery = GetEntityQuery<TransformComponent>();
-            var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, xformQuery, _chunkIndexPool, _chunkViewerPool);
+            var chunksInRange = _chunking.GetChunksForSession(player, ChunkSize, _chunkIndexPool, _chunkViewerPool);
             var staleChunks = _chunkViewerPool.Get();
             var previouslySent = _previousSentChunks[player];
 
@@ -446,14 +446,16 @@ namespace Content.Server.Decals
 
             foreach (var (gridId, oldIndices) in previouslySent)
             {
+                var netGrid = ToNetEntity(gridId);
+
                 // Mark the whole grid as stale and flag for removal.
-                if (!chunksInRange.TryGetValue(gridId, out var chunks))
+                if (!chunksInRange.TryGetValue(netGrid, out var chunks))
                 {
                     previouslySent.Remove(gridId);
 
                     // Was the grid deleted?
                     if (MapManager.IsGrid(gridId))
-                        staleChunks[gridId] = oldIndices;
+                        staleChunks[netGrid] = oldIndices;
                     else
                     {
                         // If grid was deleted then don't worry about telling the client to delete the chunk.
@@ -469,7 +471,9 @@ namespace Content.Server.Decals
                 // Get individual stale chunks.
                 foreach (var chunk in oldIndices)
                 {
-                    if (chunks.Contains(chunk)) continue;
+                    if (chunks.Contains(chunk))
+                        continue;
+
                     elmo.Add(chunk);
                 }
 
@@ -479,12 +483,13 @@ namespace Content.Server.Decals
                     continue;
                 }
 
-                staleChunks.Add(gridId, elmo);
+                staleChunks.Add(netGrid, elmo);
             }
 
             var updatedChunks = _chunkViewerPool.Get();
-            foreach (var (gridId, gridChunks) in chunksInRange)
+            foreach (var (netGrid, gridChunks) in chunksInRange)
             {
+                var gridId = ToEntity(netGrid);
                 var newChunks = _chunkIndexPool.Get();
                 _dirtyChunks.TryGetValue(gridId, out var dirtyChunks);
 
@@ -507,14 +512,14 @@ namespace Content.Server.Decals
                 if (newChunks.Count == 0)
                     _chunkIndexPool.Return(newChunks);
                 else
-                    updatedChunks[gridId] = newChunks;
+                    updatedChunks[netGrid] = newChunks;
             }
 
             //send all gridChunks to client
             SendChunkUpdates(player, updatedChunks, staleChunks);
         }
 
-        private void ReturnToPool(Dictionary<EntityUid, HashSet<Vector2i>> chunks)
+        private void ReturnToPool(Dictionary<NetEntity, HashSet<Vector2i>> chunks)
         {
             foreach (var (_, previous) in chunks)
             {
@@ -528,12 +533,14 @@ namespace Content.Server.Decals
 
         private void SendChunkUpdates(
             IPlayerSession session,
-            Dictionary<EntityUid, HashSet<Vector2i>> updatedChunks,
-            Dictionary<EntityUid, HashSet<Vector2i>> staleChunks)
+            Dictionary<NetEntity, HashSet<Vector2i>> updatedChunks,
+            Dictionary<NetEntity, HashSet<Vector2i>> staleChunks)
         {
-            var updatedDecals = new Dictionary<EntityUid, Dictionary<Vector2i, DecalChunk>>();
-            foreach (var (gridId, chunks) in updatedChunks)
+            var updatedDecals = new Dictionary<NetEntity, Dictionary<Vector2i, DecalChunk>>();
+            foreach (var (netGrid, chunks) in updatedChunks)
             {
+                var gridId = ToEntity(netGrid);
+
                 var collection = ChunkCollection(gridId);
                 if (collection == null)
                     continue;
@@ -546,7 +553,7 @@ namespace Content.Server.Decals
                             ? chunk
                             : new());
                 }
-                updatedDecals[gridId] = gridChunks;
+                updatedDecals[netGrid] = gridChunks;
             }
 
             if (updatedDecals.Count != 0 || staleChunks.Count != 0)

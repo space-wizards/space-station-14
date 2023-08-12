@@ -38,7 +38,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                target, 0, message, verbs?.ToList(), centerAtCursor
+                ToNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
@@ -49,16 +49,17 @@ namespace Content.Server.Examine
             var player = (IPlayerSession) eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
             var channel = player.ConnectedClient;
+            var entity = ToEntity(request.NetEntity);
 
             if (session.AttachedEntity is not {Valid: true} playerEnt
-                || !EntityManager.EntityExists(request.NetEntity))
+                || !EntityManager.EntityExists(entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                     request.NetEntity, request.Id, _entityNotFoundMessage), channel);
                 return;
             }
 
-            if (!CanExamine(playerEnt, request.NetEntity))
+            if (!CanExamine(playerEnt, entity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                     request.NetEntity, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
@@ -67,9 +68,9 @@ namespace Content.Server.Examine
 
             SortedSet<Verb>? verbs = null;
             if (request.GetVerbs)
-                verbs = _verbSystem.GetLocalVerbs(request.NetEntity, playerEnt, typeof(ExamineVerb));
+                verbs = _verbSystem.GetLocalVerbs(entity, playerEnt, typeof(ExamineVerb));
 
-            var text = GetExamineText(request.NetEntity, player.AttachedEntity);
+            var text = GetExamineText(entity, player.AttachedEntity);
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
                 request.NetEntity, request.Id, text, verbs?.ToList()), channel);
         }

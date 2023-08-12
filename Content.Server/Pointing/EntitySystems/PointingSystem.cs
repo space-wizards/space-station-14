@@ -95,17 +95,19 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
+        public bool TryPoint(ICommonSession? session, NetCoordinates netCoords, NetEntity netPointed)
         {
             if (session?.AttachedEntity is not { } player)
             {
-                Logger.Warning($"Player {session} attempted to point without any attached entity");
+                Log.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
             }
 
+            var coords = ToCoordinates(netCoords);
+
             if (!coords.IsValid(EntityManager))
             {
-                Logger.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
+                Log.Warning($"Player {ToPrettyString(player)} attempted to point at invalid coordinates: {coords}");
                 return false;
             }
 
@@ -114,6 +116,8 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 return false;
             }
+
+            var pointed = ToEntity(netPointed);
 
             if (HasComp<PointingArrowComponent>(pointed))
             {
@@ -246,9 +250,9 @@ namespace Content.Server.Pointing.EntitySystems
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
             if (TryComp(ev.Target, out TransformComponent? xform))
-                TryPoint(args.SenderSession, xform.Coordinates, ev.Target);
+                TryPoint(args.SenderSession, ToNetCoordinates(xform.Coordinates), ToNetEntity(ev.Target));
             else
-                Logger.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
+                Log.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }
 
         public override void Shutdown()

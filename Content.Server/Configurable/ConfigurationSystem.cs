@@ -43,7 +43,7 @@ public sealed class ConfigurationSystem : EntitySystem
     private void UpdateUi(EntityUid uid, ConfigurationComponent component)
     {
         if (_uiSystem.TryGetUi(uid, ConfigurationUiKey.Key, out var ui))
-            UserInterfaceSystem.SetUiState(ui, new ConfigurationBoundUserInterfaceState(component.Config));
+            _uiSystem.SetUiState(ui, new ConfigurationBoundUserInterfaceState(component.Config));
     }
 
     private void OnUpdate(EntityUid uid, ConfigurationComponent component, ConfigurationUpdatedMessage args)
