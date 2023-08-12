@@ -1011,6 +1011,22 @@
 
 - type: entity
   parent: MobMouse
+  suffix: Dead
+  save: false
+  id: MobMouseDead
+  name: mouse
+  description: Squeak!
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 6
+        Asphyxiation: 4
+        Slash: 7
+        Blunt: 3
+
+- type: entity
+  parent: MobMouse
   id: MobMouseAdmeme
   suffix: Admeme
   components:
