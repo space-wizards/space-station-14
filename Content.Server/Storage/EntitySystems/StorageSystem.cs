@@ -736,7 +736,7 @@ namespace Content.Server.Storage.EntitySystems
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)
-                UserInterfaceSystem.SetUiState(bui, state);
+                _uiSystem.SetUiState(bui, state);
         }
 
         private void Popup(EntityUid _, EntityUid player, string message, ServerStorageComponent storageComp)

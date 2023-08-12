@@ -161,9 +161,9 @@ public sealed class SandboxUIController : UIController, IOnStateChanged<Gameplay
         TileSpawningController.CloseWindow();
     }
 
-    private bool Copy(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+    private bool Copy(ICommonSession? session, NetCoordinates coords, NetEntity netEntity)
     {
-        return _sandbox.Copy(session, coords, uid);
+        return _sandbox.Copy(session, EntityManager.ToCoordinates(coords), EntityManager.ToEntity(netEntity));
     }
 
     private void ToggleWindow()

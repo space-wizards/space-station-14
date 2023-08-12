@@ -193,7 +193,9 @@ public sealed class ActionButton : Control
     private void UpdateItemIcon()
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
-        if (Action?.EntityIcon != null && !entityManager.EntityExists(Action.EntityIcon))
+        var entIcon = entityManager.ToEntity(Action?.EntityIcon);
+
+        if (!entityManager.EntityExists(entIcon))
         {
             // This is almost certainly because a player received/processed their own actions component state before
             // being send the entity in their inventory that enabled this action.
@@ -204,7 +206,7 @@ public sealed class ActionButton : Control
         }
 
         if (Action?.EntityIcon == null ||
-            !entityManager.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent? sprite))
+            !entityManager.TryGetComponent(entIcon.Value, out SpriteComponent? sprite))
         {
             _bigItemSpriteView.Visible = false;
             _bigItemSpriteView.Sprite = null;

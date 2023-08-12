@@ -289,7 +289,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (ui == null)
                 return;
 
-            UserInterfaceSystem.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
+            _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
                 component.Storage.ContainedEntities.ToArray(),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,

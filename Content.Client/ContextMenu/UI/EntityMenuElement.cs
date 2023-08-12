@@ -49,7 +49,7 @@ namespace Content.Client.ContextMenu.UI
 
         private string? SearchPlayerName(EntityUid entity)
         {
-            return _adminSystem.PlayerList.FirstOrDefault(player => player.EntityUid == entity)?.Username;
+            return _adminSystem.PlayerList.FirstOrDefault(player => player.NetEntity == entity)?.Username;
         }
 
         /// <summary>

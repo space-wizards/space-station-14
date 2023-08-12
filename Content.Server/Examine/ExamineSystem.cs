@@ -51,27 +51,27 @@ namespace Content.Server.Examine
             var channel = player.ConnectedClient;
 
             if (session.AttachedEntity is not {Valid: true} playerEnt
-                || !EntityManager.EntityExists(request.EntityUid))
+                || !EntityManager.EntityExists(request.NetEntity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, request.Id, _entityNotFoundMessage), channel);
+                    request.NetEntity, request.Id, _entityNotFoundMessage), channel);
                 return;
             }
 
-            if (!CanExamine(playerEnt, request.EntityUid))
+            if (!CanExamine(playerEnt, request.NetEntity))
             {
                 RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                    request.EntityUid, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
+                    request.NetEntity, request.Id, _entityOutOfRangeMessage, knowTarget: false), channel);
                 return;
             }
 
             SortedSet<Verb>? verbs = null;
             if (request.GetVerbs)
-                verbs = _verbSystem.GetLocalVerbs(request.EntityUid, playerEnt, typeof(ExamineVerb));
+                verbs = _verbSystem.GetLocalVerbs(request.NetEntity, playerEnt, typeof(ExamineVerb));
 
-            var text = GetExamineText(request.EntityUid, player.AttachedEntity);
+            var text = GetExamineText(request.NetEntity, player.AttachedEntity);
             RaiseNetworkEvent(new ExamineSystemMessages.ExamineInfoResponseMessage(
-                request.EntityUid, request.Id, text, verbs?.ToList()), channel);
+                request.NetEntity, request.Id, text, verbs?.ToList()), channel);
         }
     }
 }

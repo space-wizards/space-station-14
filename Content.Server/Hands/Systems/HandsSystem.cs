@@ -105,7 +105,7 @@ namespace Content.Server.Hands.Systems
             if (exclude != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
-            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition, initialAngle), filter);
+            RaiseNetworkEvent(new PickupAnimationEvent(ToNetEntity(item), ToNetCoordinates(initialPosition), finalPosition, initialAngle), filter);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)
@@ -178,7 +178,7 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleThrowItem(ICommonSession? session, NetCoordinates netCoordinates, NetEntity netEntity)
         {
             if (session is not IPlayerSession playerSession)
                 return false;
@@ -201,7 +201,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = ToCoordinates(netCoordinates).ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 

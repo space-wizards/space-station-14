@@ -191,27 +191,29 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // the mouse, canceling the drag, but just being cautious)
         EndDrag();
 
+        var entity = ToEntity(args.EntityUid);
+
         // possibly initiating a drag
         // check if the clicked entity is draggable
-        if (!Exists(args.EntityUid))
+        if (!Exists(entity))
         {
             return false;
         }
 
         // check if the entity is reachable
-        if (!_interactionSystem.InRangeUnobstructed(dragger, args.EntityUid))
+        if (!_interactionSystem.InRangeUnobstructed(dragger, entity))
         {
             return false;
         }
 
         var ev = new CanDragEvent();
 
-        RaiseLocalEvent(args.EntityUid, ref ev);
+        RaiseLocalEvent(entity, ref ev);
 
         if (ev.Handled != true)
             return false;
 
-        _draggedEntity = args.EntityUid;
+        _draggedEntity = entity;
         _state = DragState.MouseDown;
         _mouseDownScreenPos = _inputManager.MouseScreenPosition;
         _mouseDownTime = 0;

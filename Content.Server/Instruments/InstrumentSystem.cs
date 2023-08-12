@@ -102,7 +102,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
     private void OnMidiStop(InstrumentStopMidiEvent msg, EntitySessionEventArgs args)
     {
-        var uid = msg.Uid;
+        var uid = ToEntity(msg.Uid);
 
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
@@ -271,7 +271,7 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
             // Reset puppet instruments too.
             RaiseNetworkEvent(new InstrumentMidiEventEvent(uid, new[]{RobustMidiEvent.SystemReset(0)}));
 
-            RaiseNetworkEvent(new InstrumentStopMidiEvent(uid));
+            RaiseNetworkEvent(new InstrumentStopMidiEvent(ToNetEntity(uid)));
         }
 
         instrument.Playing = false;

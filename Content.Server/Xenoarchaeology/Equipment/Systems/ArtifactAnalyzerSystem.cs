@@ -222,7 +222,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
             canScan, canPrint, msg, scanning, remaining, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);
-        UserInterfaceSystem.SetUiState(bui, state);
+        _ui.SetUiState(bui, state);
     }
 
     /// <summary>

@@ -42,7 +42,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
         if (act.Event != null)
             act.Event.Performer = args.User;
 
-        act.Provider = uid;
+        act.Provider = ToNetEntity(uid);
         _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }
@@ -76,7 +76,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
                     entAct.Event.Target = args.Target.Value;
                 }
 
-                entAct.Provider = uid;
+                entAct.Provider = ToNetEntity(uid);
                 _actions.PerformAction(args.User, null, entAct, entAct.Event, _timing.CurTime, false);
                 args.Handled = true;
                 return;
@@ -109,7 +109,7 @@ public sealed class ActionOnInteractSystem : EntitySystem
             act.Event.Target = args.ClickLocation;
         }
 
-        act.Provider = uid;
+        act.Provider = ToNetEntity(uid);
         _actions.PerformAction(args.User, null, act, act.Event, _timing.CurTime, false);
         args.Handled = true;
     }

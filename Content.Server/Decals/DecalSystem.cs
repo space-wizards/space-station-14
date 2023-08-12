@@ -203,10 +203,12 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
-            if (!ev.Coordinates.IsValid(EntityManager))
+            var coordinates = ToCoordinates(ev.Coordinates);
+
+            if (!coordinates.IsValid(EntityManager))
                 return;
 
-            if (!TryAddDecal(ev.Decal, ev.Coordinates, out _))
+            if (!TryAddDecal(ev.Decal, coordinates, out _))
                 return;
 
             if (eventArgs.SenderSession.AttachedEntity != null)
@@ -230,10 +232,12 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
-            if (!ev.Coordinates.IsValid(EntityManager))
+            var coordinates = ToCoordinates(ev.Coordinates);
+
+            if (!coordinates.IsValid(EntityManager))
                 return;
 
-            var gridId = ev.Coordinates.GetGridUid(EntityManager);
+            var gridId = coordinates.GetGridUid(EntityManager);
 
             if (gridId == null)
                 return;

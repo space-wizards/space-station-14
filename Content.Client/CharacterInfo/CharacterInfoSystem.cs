@@ -29,7 +29,7 @@ public sealed class CharacterInfoSystem : EntitySystem
             return;
         }
 
-        RaiseNetworkEvent(new RequestCharacterInfoEvent(entity.Value));
+        RaiseNetworkEvent(new RequestCharacterInfoEvent(ToNetEntity(entity.Value)));
     }
 
     private void OnPlayerAttached(PlayerAttachSysMessage msg)
@@ -42,8 +42,9 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var sprite = CompOrNull<SpriteComponent>(msg.EntityUid);
-        var data = new CharacterData(msg.JobTitle, msg.Objectives, msg.Briefing, sprite, Name(msg.EntityUid));
+        var entity = ToEntity(msg.NetEntity);
+        var sprite = CompOrNull<SpriteComponent>(entity);
+        var data = new CharacterData(msg.JobTitle, msg.Objectives, msg.Briefing, sprite, Name(entity));
 
         OnCharacterUpdate?.Invoke(data);
     }

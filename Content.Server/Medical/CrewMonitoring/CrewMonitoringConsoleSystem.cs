@@ -59,7 +59,7 @@ namespace Content.Server.Medical.CrewMonitoring
 
             // update all sensors info
             var allSensors = component.ConnectedSensors.Values.ToList();
-            UserInterfaceSystem.SetUiState(bui, new CrewMonitoringState(allSensors, component.Snap, component.Precision));
+            _uiSystem.SetUiState(bui, new CrewMonitoringState(allSensors, component.Snap, component.Precision));
         }
     }
 }

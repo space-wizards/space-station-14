@@ -473,7 +473,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
             return;
 
         if (_uiSystem.OpenUi(bui, actor.PlayerSession))
-            UserInterfaceSystem.SetUiState(bui, new DeviceListUserInterfaceState(
+            _uiSystem.SetUiState(bui, new DeviceListUserInterfaceState(
                 _deviceListSystem.GetDeviceList(configurator.ActiveDeviceList.Value)
                     .Select(v => (v.Key, MetaData(v.Value).EntityName)).ToHashSet()
             ));
@@ -505,7 +505,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         }
 
         if (_uiSystem.TryGetUi(uid, NetworkConfiguratorUiKey.List, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
+            _uiSystem.SetUiState(bui, new NetworkConfiguratorUserInterfaceState(devices));
     }
 
     /// <summary>

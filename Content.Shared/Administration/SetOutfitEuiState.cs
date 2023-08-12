@@ -6,6 +6,6 @@ namespace Content.Shared.Administration
     [Serializable, NetSerializable]
     public sealed class SetOutfitEuiState : EuiStateBase
     {
-        public NetEntity TargetEntityId;
+        public NetEntity TargetNetEntity;
     }
 }

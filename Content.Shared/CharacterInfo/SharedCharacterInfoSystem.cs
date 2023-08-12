@@ -6,25 +6,25 @@ namespace Content.Shared.CharacterInfo;
 [Serializable, NetSerializable]
 public sealed class RequestCharacterInfoEvent : EntityEventArgs
 {
-    public readonly NetEntity EntityUid;
+    public readonly NetEntity NetEntity;
 
-    public RequestCharacterInfoEvent(NetEntity entityUid)
+    public RequestCharacterInfoEvent(NetEntity netEntity)
     {
-        EntityUid = entityUid;
+        NetEntity = netEntity;
     }
 }
 
 [Serializable, NetSerializable]
 public sealed class CharacterInfoEvent : EntityEventArgs
 {
-    public readonly NetEntity EntityUid;
+    public readonly NetEntity NetEntity;
     public readonly string JobTitle;
     public readonly Dictionary<string, List<ConditionInfo>> Objectives;
     public readonly string Briefing;
 
-    public CharacterInfoEvent(NetEntity entityUid, string jobTitle, Dictionary<string, List<ConditionInfo>> objectives, string briefing)
+    public CharacterInfoEvent(NetEntity netEntity, string jobTitle, Dictionary<string, List<ConditionInfo>> objectives, string briefing)
     {
-        EntityUid = entityUid;
+        NetEntity = netEntity;
         JobTitle = jobTitle;
         Objectives = objectives;
         Briefing = briefing;

@@ -98,7 +98,7 @@ public sealed partial class StoreSystem
         // only tell operatives to lock their uplink if it can be locked
         var showFooter = HasComp<RingerUplinkComponent>(store);
         var state = new StoreUpdateState(component.LastAvailableListings, allCurrency, showFooter);
-        UserInterfaceSystem.SetUiState(ui, state);
+        _ui.SetUiState(ui, state);
     }
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)

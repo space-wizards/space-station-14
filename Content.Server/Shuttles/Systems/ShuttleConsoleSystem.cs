@@ -328,7 +328,8 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         docks ??= GetAllDocks();
 
         if (_ui.TryGetUi(consoleUid, ShuttleConsoleUiKey.Key, out var bui))
-            UserInterfaceSystem.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
+        {
+            _ui.SetUiState(bui, new ShuttleConsoleBoundInterfaceState(
                 ftlState,
                 ftlTime,
                 destinations,
@@ -337,6 +338,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 consoleXform?.LocalRotation,
                 docks
             ));
+        }
     }
 
     public override void Update(float frameTime)

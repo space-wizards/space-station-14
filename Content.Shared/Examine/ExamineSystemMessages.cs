@@ -9,15 +9,15 @@ namespace Content.Shared.Examine
         [Serializable, NetSerializable]
         public sealed class RequestExamineInfoMessage : EntityEventArgs
         {
-            public readonly NetEntity EntityUid;
+            public readonly NetEntity NetEntity;
 
             public readonly int Id;
 
             public readonly bool GetVerbs;
 
-            public RequestExamineInfoMessage(NetEntity entityUid, int id, bool getVerbs=false)
+            public RequestExamineInfoMessage(NetEntity netEntity, int id, bool getVerbs=false)
             {
-                EntityUid = entityUid;
+                NetEntity = netEntity;
                 Id = id;
                 GetVerbs = getVerbs;
             }

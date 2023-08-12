@@ -94,7 +94,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
 
         var state = GetUiState(uid, controller);
-        UserInterfaceSystem.SetUiState(bui, state);
+        _userInterfaceSystem.SetUiState(bui, state);
     }
 
     private AmeControllerBoundUserInterfaceState GetUiState(EntityUid uid, AmeControllerComponent controller)
