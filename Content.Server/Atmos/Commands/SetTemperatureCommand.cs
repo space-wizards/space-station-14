@@ -7,7 +7,6 @@ using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
-using SharpZstd.Interop;
 
 namespace Content.Server.Atmos.Commands
 {

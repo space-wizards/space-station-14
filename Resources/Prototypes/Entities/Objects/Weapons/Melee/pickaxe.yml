@@ -25,7 +25,7 @@
         Piercing: 5
         Structural: 15
   - type: Item
-    size: 24
+    size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
 
 - type: entity
