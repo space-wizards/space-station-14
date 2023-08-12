@@ -8,10 +8,10 @@
   },
     "states": [
         {
-            "name": "gun"
+            "name": "icon"
         },
         {
-            "name": "empty",
+            "name": "animation-icon",
             "delays": [
                 [
                     0.2,
