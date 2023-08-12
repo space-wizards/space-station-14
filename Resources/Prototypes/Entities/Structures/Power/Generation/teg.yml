@@ -17,6 +17,7 @@
           map: [ "enum.PowerDeviceVisualLayers.Powered" ]
         - state: teg-op1
           shader: unshaded
+          visible: false
           map: [ "enum.TegVisualLayers.PowerOutput" ]
     - type: GenericVisualizer
       visuals:
