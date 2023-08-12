@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Added more dwarf accenting, type: Add}
-  id: 4027
-  time: '2023-06-18T09:12:10.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added artifact fragments. These can be uncovered in rock on planets
@@ -2999,3 +2994,8 @@ Entries:
     type: Tweak}
   id: 4526
   time: '2023-08-12T06:17:26.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Traitors can now exist along with nuclear operatives., type: Add}
+  id: 4527
+  time: '2023-08-12T09:54:46.0000000+00:00'
