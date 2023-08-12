@@ -125,8 +125,7 @@ public abstract partial class SharedGunSystem : EntitySystem
 
         if (user == null ||
             !_combatMode.IsInCombatMode(user) ||
-            !TryGetGun(user.Value, out var ent, out var gun
-            ))
+            !TryGetGun(user.Value, out var ent, out var gun))
         {
             return;
         }
