@@ -43,9 +43,7 @@ public sealed partial class GameTicker
         {
             var baseReplayPath = new ResPath(_cfg.GetCVar(CVars.ReplayDirectory)).ToRootedPath();
             moveToPath = baseReplayPath / finalPath;
-
-            var fileName = finalPath.Filename;
-            recordPath = new ResPath(tempDir) / fileName;
+            recordPath = new ResPath(tempDir) / finalPath;
 
             _sawmillReplays.Debug($"Replay will record in temporary position: {recordPath}");
         }
