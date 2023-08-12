@@ -5,18 +5,18 @@
   abstract: true
   description: A floating demon aspect of the honkmother.
   components:
+    - type: HTN
+      rootTask:
+      task: SimpleHostileCompound
     - type: GhostRole
       allowMovement: true
       makeSentient: true
       name: ghost-role-information-behonker-name
       description: ghost-role-information-behonker-description
     - type: GhostTakeoverAvailable
-    - type: HTN
-      rootTask:
-        task: SimpleHostileCompound
     - type: NpcFactionMember
       factions:
-        - SimpleHostile
+        - HonkHostile
     - type: Speech
     - type: CombatMode
     - type: MobMover

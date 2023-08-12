@@ -19,6 +19,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Zombies;
+using Content.Server.NPC.Systems;
 
 namespace Content.Server.Cluwne;
 
@@ -31,6 +32,7 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
 
@@ -90,9 +92,11 @@ public sealed class CluwneSystem : EntitySystem
             _audio.PlayPvs(component.SpawnSound, uid);
             meta.EntityName = Loc.GetString("cluwne-name-prefix", ("target", name));
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
+            _npcFaction.RemoveFaction(uid, "NanoTrasen", false);
+            _npcFaction.AddFaction(uid, "HonkNeutral");
         }
 
-        if (component.IsBeast)
+        else
         {
             Spawn(component.Portal, Transform(uid).Coordinates);
             SetOutfitCommand.SetOutfit(uid, "CluwneBeastGear", EntityManager);

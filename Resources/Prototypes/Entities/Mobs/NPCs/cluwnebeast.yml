@@ -8,14 +8,15 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
   - type: NpcFactionMember
     factions:
-      - SimpleHostile
+      - HonkHostile
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Aliens/cluwnebeast.rsi

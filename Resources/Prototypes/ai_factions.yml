@@ -1,11 +1,13 @@
 - type: npcFaction
   id: Dragon
   hostile:
-    - NanoTrasen
-    - Syndicate
-    - Xeno
-    - PetsNT
-    - Zombie
+  - NanoTrasen
+  - Syndicate
+  - Xeno
+  - PetsNT
+  - Zombie
+  - HonkHostile
+  - HonkNeutral
 
 - type: npcFaction
   id: NanoTrasen
@@ -14,6 +16,7 @@
   - Syndicate
   - Xeno
   - Zombie
+  - HonkHostile
 
 - type: npcFaction
   id: Mouse
@@ -30,6 +33,7 @@
   - SimpleHostile
   - Zombie
   - Xeno
+  - HonkHostile
 
 - type: npcFaction
   id: SimpleHostile
@@ -39,6 +43,8 @@
   - Passive
   - PetsNT
   - Zombie
+  - HonkHostile
+  - HonkNeutral
 
 - type: npcFaction
   id: SimpleNeutral
@@ -51,6 +57,8 @@
   - Xeno
   - PetsNT
   - Zombie
+  - HonkHostile
+  - HonkNeutral
 
 - type: npcFaction
   id: Xeno
@@ -60,6 +68,8 @@
   - Passive
   - PetsNT
   - Zombie
+  - HonkHostile
+  - HonkNeutral
 
 - type: npcFaction
   id: Zombie
@@ -70,3 +80,22 @@
   - Syndicate
   - Passive
   - PetsNT
+  - HonkHostile
+  - HonkNeutral
+
+- type: npcFaction
+  id: HonkHostile
+  hostile:
+  - NanoTrasen
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+
+- type: npcFaction
+  id: HonkNeutral
+  hostile:
+  - SimpleHostile
+  - Syndicate
+  - Xeno
+  - Zombie
