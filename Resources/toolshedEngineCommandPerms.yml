@@ -23,6 +23,7 @@
     - types
     - ecscomp
     - actor
+    - entitysystemupdateorder
 
 - Flags: HOST
   Commands:
