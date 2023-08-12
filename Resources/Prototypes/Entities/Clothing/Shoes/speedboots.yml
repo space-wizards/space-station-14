@@ -21,7 +21,7 @@
     - ClothingShoesSpeedBoots
 
 - type: entity
-  parent: ClothingShoesBaseButcherable
+  parent: ClothingShoesBase
   id: ClothingShoesSpeedBootsClown
   name: clown speed boots
   description: Super power for clowns. Allows you to run away from security even faster!
