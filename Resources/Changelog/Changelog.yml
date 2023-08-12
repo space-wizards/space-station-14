@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Removed the spare CE belt., type: Remove}
-  id: 4030
-  time: '2023-06-18T17:06:09.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: 'Fixed equipped clothing sprites not working for some mobs (e.g., monkeys).',
@@ -2996,3 +2991,12 @@ Entries:
     type: Tweak}
   id: 4529
   time: '2023-08-12T19:03:08.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added trash carts. Expect these to be mapped into maintenance soon.,
+    type: Add}
+  - {message: Added janitorial trash carts that can be locked and unlocked by janitors.
+      These are for janitors to store trash bags instead of lugging them around.,
+    type: Add}
+  id: 4530
+  time: '2023-08-12T19:05:33.0000000+00:00'
