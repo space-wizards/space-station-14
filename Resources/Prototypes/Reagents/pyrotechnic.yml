@@ -79,7 +79,7 @@
         damage:
           types:
             Heat: 3
-            Poison: 2
+            Poison: 1
       - !type:FlammableReaction
         multiplier: 0.1
       - !type:AdjustTemperature
