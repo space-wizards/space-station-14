@@ -34,12 +34,19 @@ namespace Content.Shared.Stacks
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
 
+        /// <summary>
+        /// Lingering stacks will remain present even when there are no items.
+        /// Instead, they will become transparent.
+        /// </summary>
+        [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
+        public bool Lingering;
+
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
 
         [ViewVariables]
         public bool UiUpdateNeeded { get; set; }
-    
+
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>
