@@ -1,11 +1,4 @@
 Entries:
-- author: FacePlus
-  changes:
-  - {message: Interns at Syndicate Command found a lost crate of Double Bladed Energy
-      Swords in the back. They will be giving them to agents at the cost of 16tc each
-      in their uplinks., type: Add}
-  id: 4032
-  time: '2023-06-18T19:35:23.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Command role requirements have been modified., type: Tweak}
@@ -3005,3 +2998,16 @@ Entries:
   - {message: You can open air alarm and pump menus with activate (E) now., type: Tweak}
   id: 4531
   time: '2023-08-12T20:41:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added cyborgs. These creations are assembled part by part and can be
+      loaded up with various modules to give them unique abilities. Make sure you
+      charge them at their dedicated charging stations., type: Add}
+  - {message: Added silicon laws. These are laws that all robotic crew must abide
+      by. This Asimov guy had the right idea., type: Add}
+  - {message: Added new Mechanized Treatment and Robotic Cleanliness technologies.,
+    type: Add}
+  - {message: The EMAG is now able to force cyborgs to follow your orders. How devious!,
+    type: Add}
+  id: 4532
+  time: '2023-08-12T21:39:58.0000000+00:00'
