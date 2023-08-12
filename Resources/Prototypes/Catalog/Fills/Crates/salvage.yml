@@ -77,7 +77,7 @@
         prob: 0.001
       - id: WeaponRevolverInspector
         prob: 0.001
-      - id: ClothingShoesBootsMagBlinding
+      - id: ClothingShoesSpeedBoots
         prob: 0.001
         #  - Skub
       - id: Skub
