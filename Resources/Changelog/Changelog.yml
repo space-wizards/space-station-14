@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Bananium now generates on expedition planets., type: Fix}
-  id: 4026
-  time: '2023-06-18T07:11:30.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: Added more dwarf accenting, type: Add}
@@ -2998,3 +2993,9 @@ Entries:
   - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
   id: 4525
   time: '2023-08-12T05:56:34.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Pickaxes are now 80 size and take more wood and steel to manufacture.,
+    type: Tweak}
+  id: 4526
+  time: '2023-08-12T06:17:26.0000000+00:00'
