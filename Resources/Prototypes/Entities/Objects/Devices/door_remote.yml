@@ -154,7 +154,7 @@
 
     - type: Access
       groups:
-        - Engineering
+        - FireFight
 
 - type: entity
   parent: DoorRemoteDefault
