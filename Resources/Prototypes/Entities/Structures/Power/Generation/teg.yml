@@ -181,5 +181,6 @@
           offset: 0, 0.75
         - state: arrow
           offset: 0, -0.75
-    - type: TegCirculatorArrow
-
+    - type: TimedDespawn
+      lifetime: 2
+    - type: NoContextMenu
