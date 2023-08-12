@@ -130,9 +130,6 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-        if (_mobState.IsIncapacitated(user.Value))
-            return;
-
         if (ent != msg.Gun)
             return;
 
@@ -212,7 +209,8 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     private void AttemptShoot(EntityUid user, EntityUid gunUid, GunComponent gun)
     {
-        if (gun.FireRate <= 0f)
+        if (gun.FireRate <= 0f ||
+            _mobState.IsIncapacitated(user))
             return;
 
         var toCoordinates = gun.ShootCoordinates;
