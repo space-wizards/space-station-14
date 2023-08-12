@@ -195,7 +195,7 @@ namespace Content.Shared.Pulling
             }
         }
 
-        private bool HandleMovePulledObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleMovePulledObject(ICommonSession? session, NetCoordinates netCoords, NetEntity nent)
         {
             if (session?.AttachedEntity is not { } player ||
                 !player.IsValid())
@@ -210,7 +210,7 @@ namespace Content.Shared.Pulling
             if (_containerSystem.IsEntityInContainer(player))
                 return false;
 
-            TryMoveTo(pullable, coords);
+            TryMoveTo(pullable, ToCoordinates(netCoords));
 
             return false;
         }

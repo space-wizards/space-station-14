@@ -173,8 +173,11 @@ namespace Content.Shared.Interaction
         }
 
 
-        private bool HandleTryPullObject(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleTryPullObject(ICommonSession? session, NetCoordinates netCoords, NetEntity netEntity)
         {
+            var uid = ToEntity(netEntity);
+            var coords = ToCoordinates(netCoords);
+
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
                 Logger.InfoS("system.interaction", $"TryPullObject input validation failed");
@@ -224,8 +227,11 @@ namespace Content.Shared.Interaction
                 InteractionActivate(user.Value, msg.ItemUid);
         }
 
-        public bool HandleAltUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleAltUseInteraction(ICommonSession? session, NetCoordinates netCoords, NetEntity netEntity)
         {
+            var coords = ToCoordinates(netCoords);
+            var uid = ToEntity(netEntity);
+
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var user))
             {
@@ -238,8 +244,11 @@ namespace Content.Shared.Interaction
             return false;
         }
 
-        public bool HandleUseInteraction(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        public bool HandleUseInteraction(ICommonSession? session, NetCoordinates netCoords, NetEntity netEntity)
         {
+            var coords = ToCoordinates(netCoords);
+            var uid = ToEntity(netEntity);
+
             // client sanitization
             if (!ValidateClientInput(session, coords, uid, out var userEntity))
             {
@@ -879,8 +888,11 @@ namespace Content.Shared.Interaction
         }
 
         #region ActivateItemInWorld
-        private bool HandleActivateItemInWorld(ICommonSession? session, EntityCoordinates coords, EntityUid uid)
+        private bool HandleActivateItemInWorld(ICommonSession? session, NetCoordinates netCoords, NetEntity netEntity)
         {
+            var coords = ToCoordinates(netCoords);
+            var uid = ToEntity(netEntity);
+
             if (!ValidateClientInput(session, coords, uid, out var user))
             {
                 Logger.InfoS("system.interaction", $"ActivateItemInWorld input validation failed");
