@@ -1,0 +1,29 @@
+<Document>
+  # HeadSlimes
+
+  <Box>
+    <GuideEntityEmbed Entity="SignBiohazard" Caption=""/>
+  </Box>
+
+  - Head Slimes attach themselves to humanoid victims and puppet their bodies.
+
+  ## Parasite
+
+  - Head Slimes cannot normally move by themselves, so they need to be placed on a victims head in order to take control of them. 
+  - Older Head Slimes entirely eat the brains of their victims and move into their skull to hide their nature, becoming Queens that are able to use their host body to create new head slimes and place them on their victims.
+  - Head Slimes Queens are able to stab their victims with a fast acting sleeping drug, to make it easier to place a head slime upon them.
+
+  ## Objectives
+
+  - The objective for Head Slimes is to infect the entire station's crew.
+
+  ## Weaknesses
+
+  - New born Head Slimes are not adapt at moving their victims bodies, so they much slower then normal.
+  - All Head Slimes are deathly allergic to salt, if they injest pure salt they die.
+
+  ## Cure?
+
+  - Once a Head Slime has been attached to a persons head there is no known way to remove it as of now.
+  - The only way to recover a Head Slime victim is to clone them.
+</Document>

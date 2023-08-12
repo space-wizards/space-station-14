@@ -1,6 +1,7 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.Mind.Components;
 using Content.Server.Zombies;
+using Content.Server.HeadSlime;
 using Content.Shared.Administration;
 using Content.Shared.Database;
 using Content.Shared.Verbs;
@@ -12,6 +13,7 @@ namespace Content.Server.Administration.Systems;
 public sealed partial class AdminVerbSystem
 {
     [Dependency] private readonly ZombieSystem _zombie = default!;
+    [Dependency] private readonly HeadSlimeSystem _HeadSlime = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
@@ -62,6 +64,19 @@ public sealed partial class AdminVerbSystem
         };
         args.Verbs.Add(zombie);
 
+        Verb HeadSlime = new()
+        {
+            Text = "Make HeadSlime Queen",
+            Category = VerbCategory.Antag,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Actions/headSlimeInfect.png")),
+            Act = () =>
+            {
+                _HeadSlime.HeadSlimeEntity(args.Target, null, true);
+            },
+            Impact = LogImpact.High,
+            Message = Loc.GetString("admin-verb-make-HeadSlime"),
+        };
+        args.Verbs.Add(HeadSlime);
 
         Verb nukeOp = new()
         {

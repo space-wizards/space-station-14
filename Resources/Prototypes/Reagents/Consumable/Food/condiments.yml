@@ -155,3 +155,19 @@
       # eating salt on its own kinda sucks, kids
       - !type:SatiateThirst
         factor: -0.5
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: HeadSlime # Salt Kills you if your a HeadSlime
+        damage:
+          types:
+            Poison: 40
+      - !type:ChemVomit
+        probability: 0.04 #Scaled for time, not metabolismrate.
+        conditions:
+          - !type:ReagentThreshold
+            min: 3
+          - !type:OrganType
+            type: HeadSlime

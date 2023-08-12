@@ -1,0 +1,15 @@
+- type: entityTargetAction
+  id: HeadSlimeInfectAction
+  icon: Interface/Actions/headSlimeInfect.png
+  name: head-slime-infect-action-name
+  description: head-slime-infect-action-description
+  serverEvent: !type:HeadSlimeInfectEvent
+  useDelay: 5
+
+- type: entityTargetAction
+  id: HeadSlimeInjectAction
+  icon: Interface/Actions/headSlimeInject.png
+  name: head-slime-inject-action-name
+  description: head-slime-inject-action-description
+  serverEvent: !type:HeadSlimeInjectEvent
+  useDelay: 50

@@ -17,6 +17,11 @@
   id: NuclearOperatives
   name: guide-entry-nuclear-operatives
   text: "/ServerInfo/Guidebook/Antagonist/Nuclear Operatives.xml"
+  
+- type: guideEntry
+  id: HeadSlimes
+  name: guide-entry-headslimes
+  text: "/ServerInfo/Guidebook/Antagonist/HeadSlimes.xml"
 
 - type: guideEntry
   id: Zombies

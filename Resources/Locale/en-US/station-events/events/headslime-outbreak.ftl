@@ -1,0 +1,1 @@
+station-event-HeadSlime-outbreak-announcement = Confirmed sightings of head slimes aboard the station. All personnel should arm themselves, barricade doors, and secure their location and trust no one.

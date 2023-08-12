@@ -4,3 +4,10 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Zombie
+
+- type: statusIcon
+  id: HeadSlimeFaction
+  priority: 11
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: HeadSlime

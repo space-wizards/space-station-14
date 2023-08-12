@@ -400,6 +400,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("zombie.min_players", 20);
 
         /*
+         * HeadSlime
+         */
+
+        public static readonly CVarDef<int> HeadSlimeMinPlayers =
+            CVarDef.Create("headSlime.min_players", 20);
+
+        /*
          * Pirates
          */
 

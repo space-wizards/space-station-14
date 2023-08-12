@@ -1,0 +1,11 @@
+- type: entity
+  parent: ClothingHeadBase
+  id: HeadSlimeRealHat
+  name: Head Slime
+  description: A green, sticky headslime, you put it on your head - oh shit it's real!
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Animals/headslime.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Animals/headslime.rsi
+  - type: HeadSlimeReal

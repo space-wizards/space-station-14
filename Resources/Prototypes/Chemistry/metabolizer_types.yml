@@ -36,3 +36,7 @@
 - type: metabolizerType
   id: Moth
   name: moth
+
+- type: metabolizerType
+  id: HeadSlime
+  name: headslime

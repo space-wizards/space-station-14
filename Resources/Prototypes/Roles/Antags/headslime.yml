@@ -1,0 +1,13 @@
+- type: antag
+  id: InitialHeadSlimes
+  name: Head Slime Queen
+  antagonist: true
+  setPreference: true
+  objective: Capture victims, plant Head Slimes onto their heads.
+
+- type: antag
+  id: HeadSlime
+  name: Head Slime
+  antagonist: true
+  setPreference: false
+  objective: Capture victims, bring them to your queen for infection.
