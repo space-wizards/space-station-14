@@ -121,3 +121,14 @@
     contents:
     - id: CigaretteSyndicate
       amount: 5
+
+- type: entity
+  id: CigPackMixed
+  parent: CigPackBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi

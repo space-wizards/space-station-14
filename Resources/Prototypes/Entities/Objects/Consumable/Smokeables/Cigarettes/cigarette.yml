@@ -51,3 +51,19 @@
             Quantity: 10
           - ReagentId: Omnizine
             Quantity: 30
+
+- type: entity
+  id: CigaretteMixed
+  suffix: mixed
+  parent: Cigarette
+  name: cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Omnizine
+            Quantity: 30
