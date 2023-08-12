@@ -90,8 +90,9 @@
   result: ClothingShoesSpeedBoots
   completetime: 10
   materials:
-    Steel: 1000
+    Steel: 1100
     Plastic: 700
+    gold: 200
 
 - type: latheRecipe
   id: ModularReceiver
