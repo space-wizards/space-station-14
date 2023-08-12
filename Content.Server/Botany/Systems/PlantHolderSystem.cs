@@ -42,7 +42,7 @@ namespace Content.Server.Botany.Systems
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
-        public const float HydroponicsConsumptionMultiplier = 4f;
+        public const float HydroponicsConsumptionMultiplier = 2f;
 
         public override void Initialize()
         {
@@ -288,11 +288,17 @@ namespace Content.Server.Botany.Systems
 
                 if (_solutionSystem.TryGetSolution(args.Used, produce.SolutionName, out var solution2))
                 {
-                    // This deliberately discards overfill.
-                    _solutionSystem.TryAddSolution(args.Used, solution2,
-                        _solutionSystem.SplitSolution(args.Used, solution2, solution2.Volume));
+                    if (_solutionSystem.TryGetSolution(uid, component.SoilSolutionName, out var solution1))
+                    {
+                        // We try to fit as much of the composted plant's contained solution into the hydroponics tray as we can,
+                        // since the plant will be consumed anyway.
 
-                    ForceUpdateByExternalCause(uid, component);
+                        var fillAmount = FixedPoint2.Min(solution2.Volume, solution1.AvailableVolume);
+                        _solutionSystem.TryAddSolution(uid, solution1,
+                            _solutionSystem.SplitSolution(args.Used, solution2, fillAmount));
+
+                        ForceUpdateByExternalCause(uid, component);
+                    }
                 }
 
                 EntityManager.QueueDeleteEntity(args.Used);
@@ -338,7 +344,7 @@ namespace Content.Server.Botany.Systems
             }
 
             // Weeds like water and nutrients! They may appear even if there's not a seed planted.
-            if (component.WaterLevel > 10 && component.NutritionLevel > 2)
+            if (component.WaterLevel > 10 && component.NutritionLevel > 5)
             {
                 var chance = 0f;
                 if (component.Seed == null)
@@ -412,7 +418,7 @@ namespace Content.Server.Botany.Systems
             if (component.Seed.WaterConsumption > 0 && component.WaterLevel > 0 && _random.Prob(0.75f))
             {
                 component.WaterLevel -= MathF.Max(0f,
-                    component.Seed.NutrientConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
+                    component.Seed.WaterConsumption * HydroponicsConsumptionMultiplier * HydroponicsSpeedMultiplier);
                 if (component.DrawWarnings)
                     component.UpdateSpriteAfterUpdate = true;
             }
@@ -429,7 +435,7 @@ namespace Content.Server.Botany.Systems
             // Make sure the plant is not starving.
             if (_random.Prob(0.35f))
             {
-                if (component.NutritionLevel > 2)
+                if (component.NutritionLevel > 5)
                 {
                     component.Health += healthMod;
                 }
@@ -898,8 +904,8 @@ namespace Content.Server.Botany.Systems
             if (!component.DrawWarnings)
                 return;
 
-            _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 10, app);
-            _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 2, app);
+            _appearance.SetData(uid, PlantHolderVisuals.WaterLight, component.WaterLevel <= 15, app);
+            _appearance.SetData(uid, PlantHolderVisuals.NutritionLight, component.NutritionLevel <= 8, app);
             _appearance.SetData(uid, PlantHolderVisuals.AlertLight,
                 component.WeedLevel >= 5 || component.PestLevel >= 5 || component.Toxins >= 40 || component.ImproperHeat ||
                 component.ImproperLight || component.ImproperPressure || component.MissingGas > 0, app);

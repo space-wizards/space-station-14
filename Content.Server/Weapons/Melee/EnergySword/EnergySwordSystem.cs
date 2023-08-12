@@ -52,8 +52,8 @@ public sealed class EnergySwordSystem : EntitySystem
         if (!comp.Activated)
             return;
 
-        // Overrides basic blunt damage with burn+slash as set in yaml
-        args.Damage = comp.LitDamageBonus;
+        // Adjusts base damage when the energy blade is active, by values set in yaml
+        args.Damage += comp.LitDamageBonus;
     }
 
     private void OnUseInHand(EntityUid uid, EnergySwordComponent comp, UseInHandEvent args)

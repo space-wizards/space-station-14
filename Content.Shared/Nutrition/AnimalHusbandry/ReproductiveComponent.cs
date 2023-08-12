@@ -39,6 +39,12 @@ public sealed class ReproductiveComponent : Component
     public float BreedRange = 3f;
 
     /// <summary>
+    /// How many other entities with this component are allowed in range before we stop.
+    /// </summary>
+    [DataField("capacity"), ViewVariables(VVAccess.ReadWrite)]
+    public int Capacity = 6;
+
+    /// <summary>
     /// The chance that, on a given attempt,
     /// for each valid partner, the entity will breed.
     /// </summary>

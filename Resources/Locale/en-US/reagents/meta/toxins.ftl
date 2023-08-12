@@ -1,47 +1,47 @@
 reagent-name-toxin = toxin
-reagent-desc-toxin = A toxic chemical.
+reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
 
 reagent-name-carpotoxin = carpotoxin
-reagent-desc-carpotoxin = Toxic secretions of a space carp. Causes a painful burning sensation.
+reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
 
 reagent-name-mold = mold
-reagent-desc-mold = Often found in dark, humid places or on old bread.
+reagent-desc-mold = A fungal growth, often found in dark, humid places or on expired bread. Will cause you to develop a disease if ingested.
 
 reagent-name-polytrinic-acid = polytrinic acid
-reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. The slightest touch of it will melt off most masks and headgear, and it deals extreme damage to anyone who comes directly into contact with it.
+reagent-desc-polytrinic-acid = An extremely corrosive chemical substance. Severely burns anyone who comes directly into contact with it.
 
 reagent-name-chloral-hydrate = chloral hydrate
-reagent-desc-chloral-hydrate = In low doses, makes you drowsy. In higher doses, puts you to sleep. Overdoses deal toxin damage.
+reagent-desc-chloral-hydrate = A sedative and hypnotic chemical. Commonly used to put other people to sleep, whether they want to or not.
 
 reagent-name-fluorosulfuric-acid = fluorosulfuric acid
-reagent-desc-fluorosulfuric-acid = An extremely corrosive chemical substance.
+reagent-desc-fluorosulfuric-acid = A highly corrosive chemical, capable of leaving quite a mark on your skin.
 
 reagent-name-sulfuric-acid = sulfuric acid
-reagent-desc-sulfuric-acid = A highly corrosive, oily, colorless liquid.
+reagent-desc-sulfuric-acid = A corrosive chemical. Keep away from your face.
 
 reagent-name-unstable-mutagen = unstable mutagen
 reagent-desc-unstable-mutagen = Causes mutations when injected into living people or plants. High doses may be lethal, especially in humans.
 
 reagent-name-heartbreaker-toxin = heartbreaker toxin
-reagent-desc-heartbreaker-toxin = A hallucinogenic compound that is illegal under space law. A synthetic drug derived from Mindbreaker toxin, it blocks some neurological signals to the respiratory system which causes choking.
+reagent-desc-heartbreaker-toxin = A hallucinogenic compound derived from mindbreaker toxin. it blocks neurological signals to the respiratory system, causing asphyxiation.
 
 reagent-name-lexorin = lexorin
-reagent-desc-lexorin = Temporarily stops respiration and causes tissue damage. Large doses are fatal, and will cause people to pass out very quickly. Dexalin and Dexalin Plus will both remove it, however.
+reagent-desc-lexorin = A fast-acting chemical used to asphyxiate people rapidly. Dexalin, dexalin plus and epinephrine will filter it out, however.
 
 reagent-name-mindbreaker-toxin = mindbreaker toxin
-reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is illegal under space law. Formerly known as LSD.
+reagent-desc-mindbreaker-toxin = A potent hallucinogenic compound that is formerly known as LSD.
 
 reagent-name-histamine = histamine
-reagent-desc-histamine = Histamine's effects become more dangerous depending on the dosage amount. They range from mildly annoying to incredibly lethal.
+reagent-desc-histamine = A chemical caused by allergenics reacting with antibodies. Lethal at large quantities.
 
 reagent-name-theobromine = theobromine
-reagent-desc-theobromine = Theobromine is a bitter alkaloid of the cacao plant found in chocolate, and some other foods.
+reagent-desc-theobromine = A bitter alkaloid of the cacao plant, commonly found in chocolate. Do not feed to animals.
 
 reagent-name-amatoxin = amatoxin
-reagent-desc-amatoxin = A potent toxin found in some mushrooms.
+reagent-desc-amatoxin = A deadly toxin found in some mushrooms, primarily fly amanita. Small dosages can be lethal.
 
 reagent-name-vent-crud = vent crud
-reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems.
+reagent-desc-vent-crud = A jet black substance found in poorly maintained ventilation systems. Can cause vent cough.
 
 reagent-name-romerol = romerol
 reagent-desc-romerol = An otherworldly concoction able to bring the undead to life. If untreated, the effects are irreversible and will bring certain doom upon the station. Handle with care.
@@ -53,7 +53,7 @@ reagent-name-allicin = allicin
 reagent-desc-allicin = An organosulfur compound found in alliums like garlic, onions, and related plants.
 
 reagent-name-pax = pax
-reagent-desc-pax = A psychiatric drug which prevents the patient from directly harming anyone.
+reagent-desc-pax = A psychiatric chemical which prevents the patient from directly harming anyone.
 
 reagent-name-honk = honk
 reagent-desc-honk = A toxin found in bananium. Causes severe honking and internal bleeding, may also cause the patient to mutate.

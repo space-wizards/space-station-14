@@ -13,6 +13,34 @@
   heatCapacity: 10000
 
 - type: tile
+  id: FloorSteelCheckerLight
+  name: tiles-steel-floor-checker-light
+  sprite: /Textures/Tiles/cafeteria.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelCheckerLight
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorSteelCheckerDark
+  name: tiles-steel-floor-checker-dark
+  sprite: /Textures/Tiles/checker_dark.png
+  variants: 4
+  placementVariants: [0, 1, 2, 3]
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepFloor
+  itemDrop: FloorTileItemSteelCheckerDark
+  heatCapacity: 10000
+
+- type: tile
   id: FloorSteelMini
   name: tiles-steel-floor-mini
   sprite: /Textures/Tiles/steel_mini.png
@@ -972,10 +1000,55 @@
   weather: true
 
 # Asteroid
+# TODO: Change the rock & pebbles into regular variants with a 20% chance to spawn (like SS13.) Give ironsand variants from /vg/station.
+# TODO: Probably remove asteroid coarse sand if it isn't resprited by the time tile migrations exist. It was likely made to co-exist with the CEV-Eris style rocks and doesn't look too good nowadays.
+
 - type: tile
   id: FloorAsteroidSand
-  name: tiles-asteroid-floor
-  sprite: /Textures/Tiles/Asteroid/asteroid_sand.png
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandRocks
+  name: tiles-asteroid-sand-rocks
+  sprite: /Textures/Tiles/Asteroid/asteroid_rocks.png
+  variants: 8
+  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandRocksRed
+  name: tiles-asteroid-sand-rocks
+  sprite: /Textures/Tiles/Asteroid/asteroid_rocks_red.png
+  variants: 8
+  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandPebbles
+  name: tiles-asteroid-sand-pebbles
+  sprite: /Textures/Tiles/Asteroid/asteroid_pebbles.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false
@@ -1181,3 +1254,42 @@
     collection: BarestepWood
   itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
+
+#Hull tiles
+- type: tile
+  id: FloorHull
+  name: tiles-hull
+  sprite: /Textures/Tiles/hull.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel #probably should not be normally obtainable, but the game shits itself and dies when you try to put null here
+  heatCapacity: 10000
+
+- type: tile
+  id: FloorHullReinforced
+  name: tiles-hull-reinforced
+  sprite: /Textures/Tiles/hull_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false #You can't RCD these in SS13 apparently, so this is probably the next best thing
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemSteel
+  heatCapacity: 100000 #/tg/ has this set as "INFINITY." I don't know if that exists here so I've just added an extra 0
+
+- type: tile
+  id: FloorReinforcedHardened
+  name: tiles-super-reinforced-floor
+  sprite: /Textures/Tiles/super_reinforced.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: false
+  canAxe: false
+  footstepSounds:
+    collection: FootstepHull
+  itemDrop: FloorTileItemReinforced #same case as FloorHull

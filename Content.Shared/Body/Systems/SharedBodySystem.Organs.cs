@@ -70,8 +70,8 @@ public partial class SharedBodySystem
         organ.ParentSlot = slot;
         organ.Body = CompOrNull<BodyPartComponent>(slot.Parent)?.Body;
 
-        Dirty(slot.Parent);
-        Dirty(organId.Value);
+        DirtyAllComponents(slot.Parent);
+        Dirty(organId.Value, organ);
 
         if (organ.Body == null)
         {
@@ -84,6 +84,20 @@ public partial class SharedBodySystem
 
         return true;
     }
+
+    public void DirtyAllComponents(EntityUid uid)
+    {
+        // TODO just use containers. Please
+        if (TryComp(uid, out BodyPartComponent? part))
+            Dirty(uid, part);
+
+        if (TryComp(uid, out OrganComponent? organ))
+            Dirty(uid, organ);
+
+        if (TryComp(uid, out BodyComponent? body))
+            Dirty(uid, body);
+    }
+
 
     public bool AddOrganToFirstValidSlot(
         EntityUid? childId,
