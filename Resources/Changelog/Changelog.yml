@@ -1,10 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed equipped clothing sprites not working for some mobs (e.g., monkeys).',
-    type: Fix}
-  id: 4031
-  time: '2023-06-18T17:23:04.0000000+00:00'
 - author: FacePlus
   changes:
   - {message: Interns at Syndicate Command found a lost crate of Double Bladed Energy
@@ -3000,3 +2994,14 @@ Entries:
     type: Add}
   id: 4530
   time: '2023-08-12T19:05:33.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Nanotrasen finally decided to give engineering departments something
+      to do, and has finalized the schematics for the thermo-electric generator (TEG).',
+    type: Add}
+  - {message: The TEG creates power by exchanging energy between a hot and cold gas
+      on its two sides., type: Add}
+  - {message: You can turn on gas heaters/freezers with alt-click now., type: Tweak}
+  - {message: You can open air alarm and pump menus with activate (E) now., type: Tweak}
+  id: 4531
+  time: '2023-08-12T20:41:55.0000000+00:00'
