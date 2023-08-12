@@ -124,7 +124,7 @@
    - chittered
    - chittered.
    - chittered!
-  
+
 - type: emote
   id: Squeak
   category: Vocal
@@ -184,3 +184,8 @@
     - salutes.
     - salutes!
 
+- type: emote
+  id: DefaultDeathgasp
+  chatMessages: ["emote-deathgasp"]
+  chatTriggers:
+  - deathgasp
