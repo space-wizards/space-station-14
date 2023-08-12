@@ -129,6 +129,18 @@
   recipeUnlocks:
   - RPED
 
+- type: technology
+  id: SpeedTech
+  name: research-technology-speed-tech
+  icon:
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  discipline: Experimental
+  tier: 2
+  cost: 7500
+  recipeUnlocks:
+  - ClothingShoesSpeedBoots
+
 # Tier 3
 
 - type: technology
@@ -157,15 +169,3 @@
   recipeUnlocks:
     - WeaponForceGun
     - WeaponTetherGun
-
-- type: technology
-  id: SpeedTech
-  name: research-technology-speed-tech
-  icon:
-    sprite: Clothing/Shoes/Boots/speedboots.rsi
-    state: icon
-  discipline: Experimental
-  tier: 3
-  cost: 15000
-  recipeUnlocks:
-  - ClothingShoesSpeedBoots
