@@ -149,14 +149,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -476,6 +468,7 @@
     - HamtrRArm
     - HamtrLLeg
     - HamtrRLeg
+    - VimHarness
   - type: MaterialStorage
     whitelist:
       tags:
@@ -510,6 +503,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - ClothingEyesHudSecurity
       - Flash
       - Handcuffs
       - Zipties
@@ -541,14 +535,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -749,6 +735,8 @@
       - ClothingUniformJumpskirtPrisoner
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpsuitQMTurtleneck
+      - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist

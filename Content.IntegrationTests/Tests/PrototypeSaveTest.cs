@@ -232,7 +232,7 @@ public sealed class PrototypeSaveTest
             SerializationHookContext hookCtx,
             ISerializationContext? context, ISerializationManager.InstantiationDelegate<EntityUid>? instanceProvider)
         {
-            return EntityUid.Invalid;
+            return EntityUid.Parse(node.Value);
         }
     }
 }

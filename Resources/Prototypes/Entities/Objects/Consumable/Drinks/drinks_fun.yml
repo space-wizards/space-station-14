@@ -30,6 +30,9 @@
   - type: SolutionContainerVisuals
     maxFillLevels: 6
     fillBaseName: fill
+  - type: Tag
+    tags:
+      - DrinkSpaceGlue
 
 - type: entity
   parent: DrinkBase
