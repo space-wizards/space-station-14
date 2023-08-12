@@ -83,8 +83,8 @@ public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 
     private void ConsoleStartup(EntityUid uid, SensorMonitoringConsoleComponent component, ComponentStartup args)
     {
-        var network = Comp<DeviceListComponent>(uid);
-        UpdateDevices(uid, component, network.Devices, Array.Empty<EntityUid>());
+        if (TryComp(uid, out DeviceListComponent? network))
+            UpdateDevices(uid, component, network.Devices, Array.Empty<EntityUid>());
     }
 
     private void DeviceListUpdated(

@@ -39,7 +39,7 @@
   minPlayers: 0
   stations:
     TEG:
-      stationProto: StandardNanotrasenStation
+      stationProto: TestStation
       components:
         - type: StationNameSetup
           mapNameTemplate: "TEG"
