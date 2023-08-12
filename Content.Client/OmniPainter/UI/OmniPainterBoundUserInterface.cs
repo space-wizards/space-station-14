@@ -1,18 +1,18 @@
-using Content.Shared.EngineerPainter;
+using Content.Shared.OmniPainter;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 
-namespace Content.Client.EngineerPainter.UI
+namespace Content.Client.OmniPainter.UI
 {
-    public sealed class EngineerPainterBoundUserInterface : BoundUserInterface
+    public sealed class OmniPainterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private EngineerPainterWindow? _window;
+        private OmniPainterWindow? _window;
 
         [ViewVariables]
-        private EngineerPainterSystem? _painter;
+        private OmniPainterSystem? _painter;
 
-        public EngineerPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public OmniPainterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -20,9 +20,9 @@ namespace Content.Client.EngineerPainter.UI
         {
             base.Open();
 
-            _window = new EngineerPainterWindow();
+            _window = new OmniPainterWindow();
 
-            _painter = EntMan.System<EngineerPainterSystem>();
+            _painter = EntMan.System<OmniPainterSystem>();
 
             _window.OpenCentered();
             _window.OnClose += Close;
@@ -47,7 +47,7 @@ namespace Content.Client.EngineerPainter.UI
             if (_painter == null)
                 return;
 
-            if (state is not EngineerPainterBoundUserInterfaceState stateCast)
+            if (state is not OmniPainterBoundUserInterfaceState stateCast)
                 return;
 
             _window.Populate(_painter.Entries,
@@ -58,13 +58,13 @@ namespace Content.Client.EngineerPainter.UI
 
         private void OnSpritePicked(ItemList.ItemListSelectedEventArgs args)
         {
-            SendMessage(new EngineerPainterSpritePickedMessage(args.ItemIndex));
+            SendMessage(new OmniPainterSpritePickedMessage(args.ItemIndex));
         }
 
         private void OnColorPicked(ItemList.ItemListSelectedEventArgs args)
         {
             var key = _window?.IndexToColorKey(args.ItemIndex);
-            SendMessage(new EngineerPainterColorPickedMessage(key));
+            SendMessage(new OmniPainterColorPickedMessage(key));
         }
     }
 }

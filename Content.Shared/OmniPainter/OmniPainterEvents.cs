@@ -1,44 +1,44 @@
 using Content.Shared.DoAfter;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.EngineerPainter
+namespace Content.Shared.OmniPainter
 {
     [Serializable, NetSerializable]
-    public enum EngineerPainterUiKey
+    public enum OmniPainterUiKey
     {
         Key,
     }
 
     [Serializable, NetSerializable]
-    public sealed class EngineerPainterSpritePickedMessage : BoundUserInterfaceMessage
+    public sealed class OmniPainterSpritePickedMessage : BoundUserInterfaceMessage
     {
         public int Index { get; }
 
-        public EngineerPainterSpritePickedMessage(int index)
+        public OmniPainterSpritePickedMessage(int index)
         {
             Index = index;
         }
     }
 
     [Serializable, NetSerializable]
-    public sealed class EngineerPainterColorPickedMessage : BoundUserInterfaceMessage
+    public sealed class OmniPainterColorPickedMessage : BoundUserInterfaceMessage
     {
         public string? Key { get; }
 
-        public EngineerPainterColorPickedMessage(string? key)
+        public OmniPainterColorPickedMessage(string? key)
         {
             Key = key;
         }
     }
 
     [Serializable, NetSerializable]
-    public sealed class EngineerPainterBoundUserInterfaceState : BoundUserInterfaceState
+    public sealed class OmniPainterBoundUserInterfaceState : BoundUserInterfaceState
     {
         public int SelectedStyle { get; }
         public string? SelectedColorKey { get; }
         public Dictionary<string, Color> Palette { get; }
 
-        public EngineerPainterBoundUserInterfaceState(int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
+        public OmniPainterBoundUserInterfaceState(int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
         {
             SelectedStyle = selectedStyle;
             SelectedColorKey = selectedColorKey;
@@ -47,7 +47,7 @@ namespace Content.Shared.EngineerPainter
     }
 
     [Serializable, NetSerializable]
-    public sealed class EngineerPainterDoAfterEvent : DoAfterEvent
+    public sealed class OmniPainterDoAfterEvent : DoAfterEvent
     {
         [DataField("sprite")]
         public readonly string? Sprite = null;
@@ -55,11 +55,11 @@ namespace Content.Shared.EngineerPainter
         [DataField("color")]
         public readonly Color? Color = null;
 
-        private EngineerPainterDoAfterEvent()
+        private OmniPainterDoAfterEvent()
         {
         }
 
-        public EngineerPainterDoAfterEvent(string? sprite, Color? color)
+        public OmniPainterDoAfterEvent(string? sprite, Color? color)
         {
             Sprite = sprite;
             Color = color;

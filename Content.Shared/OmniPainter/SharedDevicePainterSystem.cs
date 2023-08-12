@@ -1,10 +1,10 @@
 using System.Linq;
-using Content.Shared.EngineerPainter.Prototypes;
+using Content.Shared.OmniPainter.Prototypes;
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EngineerPainter
+namespace Content.Shared.OmniPainter
 {
-    public abstract class SharedEngineerPainterSystem : EntitySystem
+    public abstract class SharedOmniPainterSystem : EntitySystem
     {
         [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
 

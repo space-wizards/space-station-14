@@ -1,7 +1,7 @@
-using Content.Shared.EngineerPainter.Prototypes;
+using Content.Shared.OmniPainter.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.EngineerPainter
+namespace Content.Server.OmniPainter
 {
     [RegisterComponent]
     public sealed class PaintableAirlockComponent : Component

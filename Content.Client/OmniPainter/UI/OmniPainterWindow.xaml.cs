@@ -6,10 +6,10 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
 ﻿using Content.Client.Message;
 
-namespace Content.Client.EngineerPainter.UI
+namespace Content.Client.OmniPainter.UI
 {
     [GenerateTypedNameReferences]
-    public sealed partial class EngineerPainterWindow : DefaultWindow
+    public sealed partial class OmniPainterWindow : DefaultWindow
     {
         [Dependency] private readonly IEntitySystemManager _sysMan = default!;
         private readonly SpriteSystem _spriteSystem;
@@ -20,13 +20,13 @@ namespace Content.Client.EngineerPainter.UI
 
         private Dictionary<string, Color> currentPalette = new();
         private const string colorLocKeyPrefix = "pipe-painter-color-";
-        private List<EngineerPainterEntry> CurrentEntries = new List<EngineerPainterEntry>();
+        private List<OmniPainterEntry> CurrentEntries = new List<OmniPainterEntry>();
 
         private readonly SpriteSpecifier _colorEntryIconTexture = new SpriteSpecifier.Rsi(
             new ResPath("Structures/Piping/Atmospherics/pipe.rsi"),
             "pipeStraight");
 
-        public EngineerPainterWindow()
+        public OmniPainterWindow()
         {
             RobustXamlLoader.Load(this);
             IoCManager.InjectDependencies(this);
@@ -60,7 +60,7 @@ namespace Content.Client.EngineerPainter.UI
             return (string?) ColorList[index].Metadata;
         }
 
-        public void Populate(List<EngineerPainterEntry> entries, int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
+        public void Populate(List<OmniPainterEntry> entries, int selectedStyle, string? selectedColorKey, Dictionary<string, Color> palette)
         {
             // Only clear if the entries change. Otherwise the list would "jump" after selecting an item
             if (!CurrentEntries.Equals(entries))

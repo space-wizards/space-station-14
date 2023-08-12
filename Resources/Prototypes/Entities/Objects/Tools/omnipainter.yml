@@ -1,19 +1,19 @@
 - type: entity
   parent: BaseItem
-  id: EngineerPainter
-  name: Engineer painter
-  description: An engineer painter for painting airlocks and pipes.
+  id: OmniPainter
+  name: Omnipainter
+  description: An omnipainter for painting airlocks and pipes.
   components:
     - type: Sprite
-      sprite: Objects/Tools/engineer_painter.rsi
-      state: engineer_painter
+      sprite: Objects/Tools/omnipainter.rsi
+      state: omnipainter
     - type: Item
-      sprite: Objects/Tools/engineer_painter.rsi
+      sprite: Objects/Tools/omnipainter.rsi
     - type: UserInterface
       interfaces:
-        - key: enum.EngineerPainterUiKey.Key
-          type: EngineerPainterBoundUserInterface
-    - type: EngineerPainter
+        - key: enum.OmniPainterUiKey.Key
+          type: OmniPainterBoundUserInterface
+    - type: OmniPainter
       whitelist:
         tags:
           - PaintableAirlock

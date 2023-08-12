@@ -1,4 +1,4 @@
-engineer-painter-window-title = Engineer painter
+engineer-painter-window-title = Omnipainter
 
 engineer-painter-style-not-available = Cannot apply the selected style to this type of airlock
 engineer-painter-selected-style = Selected style

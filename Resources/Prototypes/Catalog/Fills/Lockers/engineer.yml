@@ -37,7 +37,7 @@
         prob: 0.3
       - id: CableApcStack
         prob: 0.3
-      - id: EngineerPainter
+      - id: OmniPainter
         prob: 0.7
 
 - type: entity

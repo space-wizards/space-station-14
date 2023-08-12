@@ -1,17 +1,17 @@
-using Content.Shared.EngineerPainter;
+using Content.Shared.OmniPainter;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.Utility;
 using System.Linq;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
-namespace Content.Client.EngineerPainter
+namespace Content.Client.OmniPainter
 {
-    public sealed class EngineerPainterSystem : SharedEngineerPainterSystem
+    public sealed class OmniPainterSystem : SharedOmniPainterSystem
     {
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
-        public List<EngineerPainterEntry> Entries { get; private set; } = new();
+        public List<OmniPainterEntry> Entries { get; private set; } = new();
 
         public override void Initialize()
         {
@@ -24,28 +24,28 @@ namespace Content.Client.EngineerPainter
                   .MaxBy(x => x.IconPriority)?.StylePaths[style];
                 if (iconPath == null)
                 {
-                    Entries.Add(new EngineerPainterEntry(style, null));
+                    Entries.Add(new OmniPainterEntry(style, null));
                     continue;
                 }
 
                 RSIResource doorRsi = _resourceCache.GetResource<RSIResource>(SpriteSpecifierSerializer.TextureRoot / new ResPath(iconPath));
                 if (!doorRsi.RSI.TryGetState("closed", out var icon))
                 {
-                    Entries.Add(new EngineerPainterEntry(style, null));
+                    Entries.Add(new OmniPainterEntry(style, null));
                     continue;
                 }
 
-                Entries.Add(new EngineerPainterEntry(style, icon.Frame0));
+                Entries.Add(new OmniPainterEntry(style, icon.Frame0));
             }
         }
     }
 
-    public sealed class EngineerPainterEntry
+    public sealed class OmniPainterEntry
     {
         public string Name;
         public Texture? Icon;
 
-        public EngineerPainterEntry(string name, Texture? icon)
+        public OmniPainterEntry(string name, Texture? icon)
         {
             Name = name;
             Icon = icon;

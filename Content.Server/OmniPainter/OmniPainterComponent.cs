@@ -1,9 +1,9 @@
 using Robust.Shared.Audio;
 
-namespace Content.Server.EngineerPainter
+namespace Content.Server.OmniPainter
 {
     [RegisterComponent]
-    public sealed class EngineerPainterComponent : Component
+    public sealed class OmniPainterComponent : Component
     {
         [DataField("spraySound")]
         public SoundSpecifier SpraySound = new SoundPathSpecifier("/Audio/Effects/spray2.ogg");

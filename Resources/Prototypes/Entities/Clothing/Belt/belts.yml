@@ -30,7 +30,7 @@
         - Multitool
         - AppraisalTool
       components:
-        - EngineerPainter
+        - OmniPainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo
@@ -103,7 +103,7 @@
         - Multitool
         - AppraisalTool
       components:
-        - EngineerPainter
+        - OmniPainter
         - NetworkConfigurator
         - RCD
         - RCDAmmo

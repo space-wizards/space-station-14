@@ -7,19 +7,19 @@ using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Doors.Components;
-using Content.Shared.EngineerPainter.Prototypes;
-using Content.Shared.EngineerPainter;
+using Content.Shared.OmniPainter.Prototypes;
+using Content.Shared.OmniPainter;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 
-namespace Content.Server.EngineerPainter
+namespace Content.Server.OmniPainter
 {
     /// <summary>
     /// A system for painting airlocks and pipes using enginner painter
     /// </summary>
     [UsedImplicitly]
-    public sealed class EngineerPainterSystem : SharedEngineerPainterSystem
+    public sealed class OmniPainterSystem : SharedOmniPainterSystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
@@ -33,15 +33,15 @@ namespace Content.Server.EngineerPainter
         {
             base.Initialize();
 
-            SubscribeLocalEvent<EngineerPainterComponent, ComponentInit>(OnInit);
-            SubscribeLocalEvent<EngineerPainterComponent, AfterInteractEvent>(AfterInteractOn);
-            SubscribeLocalEvent<EngineerPainterComponent, ActivateInWorldEvent>(OnActivate);
-            SubscribeLocalEvent<EngineerPainterComponent, EngineerPainterSpritePickedMessage>(OnSpritePicked);
-            SubscribeLocalEvent<EngineerPainterComponent, EngineerPainterColorPickedMessage>(OnColorPicked);
-            SubscribeLocalEvent<EngineerPainterComponent, EngineerPainterDoAfterEvent>(OnDoAfter);
+            SubscribeLocalEvent<OmniPainterComponent, ComponentInit>(OnInit);
+            SubscribeLocalEvent<OmniPainterComponent, AfterInteractEvent>(AfterInteractOn);
+            SubscribeLocalEvent<OmniPainterComponent, ActivateInWorldEvent>(OnActivate);
+            SubscribeLocalEvent<OmniPainterComponent, OmniPainterSpritePickedMessage>(OnSpritePicked);
+            SubscribeLocalEvent<OmniPainterComponent, OmniPainterColorPickedMessage>(OnColorPicked);
+            SubscribeLocalEvent<OmniPainterComponent, OmniPainterDoAfterEvent>(OnDoAfter);
         }
 
-        private void OnInit(EntityUid uid, EngineerPainterComponent component, ComponentInit args)
+        private void OnInit(EntityUid uid, OmniPainterComponent component, ComponentInit args)
         {
             if (component.ColorPalette.Count == 0)
                 return;
@@ -49,7 +49,7 @@ namespace Content.Server.EngineerPainter
             SetColor(uid, component, component.ColorPalette.First().Key);
         }
 
-        private void OnDoAfter(EntityUid uid, EngineerPainterComponent component, EngineerPainterDoAfterEvent args)
+        private void OnDoAfter(EntityUid uid, OmniPainterComponent component, OmniPainterDoAfterEvent args)
         {
             component.IsSpraying = false;
 
@@ -77,17 +77,17 @@ namespace Content.Server.EngineerPainter
             args.Handled = true;
         }
 
-        private void OnActivate(EntityUid uid, EngineerPainterComponent component, ActivateInWorldEvent args)
+        private void OnActivate(EntityUid uid, OmniPainterComponent component, ActivateInWorldEvent args)
         {
             if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
             DirtyUI(uid, component);
 
-            _userInterfaceSystem.TryOpen(uid, EngineerPainterUiKey.Key, actor.PlayerSession);
+            _userInterfaceSystem.TryOpen(uid, OmniPainterUiKey.Key, actor.PlayerSession);
             args.Handled = true;
         }
 
-        private void AfterInteractOn(EntityUid uid, EngineerPainterComponent component, AfterInteractEvent args)
+        private void AfterInteractOn(EntityUid uid, OmniPainterComponent component, AfterInteractEvent args)
         {
             if (component.IsSpraying || args.Target is not { Valid: true } target || !args.CanReach)
                 return;
@@ -109,7 +109,7 @@ namespace Content.Server.EngineerPainter
                 }
                 component.IsSpraying = true;
 
-                var doAfterEventArgs = new DoAfterArgs(args.User, component.AirlockSprayTime, new EngineerPainterDoAfterEvent(sprite, null), uid, target: target, used: uid)
+                var doAfterEventArgs = new DoAfterArgs(args.User, component.AirlockSprayTime, new OmniPainterDoAfterEvent(sprite, null), uid, target: target, used: uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
@@ -130,7 +130,7 @@ namespace Content.Server.EngineerPainter
                 if(!component.ColorPalette.TryGetValue(component.PickedColor, out var color))
                     return;
 
-                var doAfterEventArgs = new DoAfterArgs(args.User, component.PipeSprayTime, new EngineerPainterDoAfterEvent(null, color), uid, target, uid)
+                var doAfterEventArgs = new DoAfterArgs(args.User, component.PipeSprayTime, new OmniPainterDoAfterEvent(null, color), uid, target, uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = true,
@@ -144,18 +144,18 @@ namespace Content.Server.EngineerPainter
             }
         }
 
-        private void OnColorPicked(EntityUid uid, EngineerPainterComponent component, EngineerPainterColorPickedMessage args)
+        private void OnColorPicked(EntityUid uid, OmniPainterComponent component, OmniPainterColorPickedMessage args)
         {
             SetColor(uid, component, args.Key);
         }
 
-        private void OnSpritePicked(EntityUid uid, EngineerPainterComponent component, EngineerPainterSpritePickedMessage args)
+        private void OnSpritePicked(EntityUid uid, OmniPainterComponent component, OmniPainterSpritePickedMessage args)
         {
             component.Index = args.Index;
             DirtyUI(uid, component);
         }
 
-        private void SetColor(EntityUid uid, EngineerPainterComponent component, string? paletteKey)
+        private void SetColor(EntityUid uid, OmniPainterComponent component, string? paletteKey)
         {
             if (paletteKey == null)
                 return;
@@ -167,15 +167,15 @@ namespace Content.Server.EngineerPainter
             DirtyUI(uid, component);
         }
 
-        private void DirtyUI(EntityUid uid, EngineerPainterComponent? component = null)
+        private void DirtyUI(EntityUid uid, OmniPainterComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
 
             _userInterfaceSystem.TrySetUiState(
                 uid,
-                EngineerPainterUiKey.Key,
-                new EngineerPainterBoundUserInterfaceState(
+                OmniPainterUiKey.Key,
+                new OmniPainterBoundUserInterfaceState(
                     component.Index,
                     component.PickedColor,
                     component.ColorPalette));

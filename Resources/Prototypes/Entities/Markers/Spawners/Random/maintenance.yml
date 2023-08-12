@@ -161,7 +161,7 @@
         - NetworkConfigurator
         - trayScanner
         - GasAnalyzer
-        - EngineerPainter
+        - OmniPainter
         - AppraisalTool
         - Flare
         - HandheldGPSBasic

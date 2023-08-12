@@ -1,6 +1,6 @@
 using Robust.Shared.Prototypes;
 
-namespace Content.Shared.EngineerPainter.Prototypes
+namespace Content.Shared.OmniPainter.Prototypes
 {
     [Prototype("AirlockGroup")]
     public sealed class AirlockGroupPrototype : IPrototype
@@ -12,7 +12,7 @@ namespace Content.Shared.EngineerPainter.Prototypes
         public Dictionary<string, string> StylePaths = default!;
 
         // The priority determines, which sprite is used when showing
-        // the icon for a style in the engineer painter UI. The highest priority
+        // the icon for a style in the omnipainter UI. The highest priority
         // gets shown.
         [DataField("iconPriority")]
         public int IconPriority = 0;
