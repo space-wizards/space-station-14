@@ -16,6 +16,6 @@
   startNode: start
   targetNode: clownspeedboots
   category: construction-category-clothing
-  description: Modified SpeedBoots specifically for the clown. Now the officers will never catch up with you!
+  description: Modified speed boots specifically for the clown. Now the officers will never catch up with you!
   icon: { sprite: Clothing/Shoes/Boots/clownspeedboots.rsi, state: icon }
   objectType: Item
