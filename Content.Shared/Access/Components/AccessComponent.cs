@@ -1,5 +1,6 @@
 using Content.Shared.Access.Systems;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Access.Components
@@ -32,6 +33,18 @@ namespace Content.Shared.Access.Components
 
         public GetAdditionalAccessEvent()
         {
+        }
+    }
+
+    [ByRefEvent]
+    public record struct GetAccessTagsEvent(HashSet<string> Tags, IPrototypeManager PrototypeManager)
+    {
+        public void AddGroup(string group)
+        {
+            if (!PrototypeManager.TryIndex<AccessGroupPrototype>(group, out var groupPrototype))
+                return;
+
+            Tags.UnionWith(groupPrototype.Tags);
         }
     }
 }

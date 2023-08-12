@@ -100,6 +100,7 @@ namespace Content.Shared.Interaction
                 .Register<SharedInteractionSystem>();
 
             InitializeRelay();
+            InitializeBlocking();
         }
 
         public override void Shutdown()
