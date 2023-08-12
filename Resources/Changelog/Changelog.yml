@@ -1,10 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: The Syndicate has stopped making zombie bundles available to nuclear
-      operatives after learning that the included bioweapon has expired., type: Remove}
-  id: 4025
-  time: '2023-06-18T03:23:42.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Bananium now generates on expedition planets., type: Fix}
@@ -2994,3 +2988,13 @@ Entries:
       in more stations. Thanks Wookyskill.', type: Tweak}
   id: 4524
   time: '2023-08-11T22:18:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
+  - {message: 'Succumbing in crit is more accessible, as it''s also an action now',
+    type: Tweak}
+  - {message: 'You can now say your ''last words'' while in crit. This action will
+      let you whisper up to 30 characters, then kill you.', type: Add}
+  - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
+  id: 4525
+  time: '2023-08-12T05:56:34.0000000+00:00'
