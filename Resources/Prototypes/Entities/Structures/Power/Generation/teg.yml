@@ -183,4 +183,6 @@
           offset: 0, -0.75
     - type: TimedDespawn
       lifetime: 2
-    - type: NoContextMenu
+    - type: Tag
+      tags:
+        - HideContextMenu
