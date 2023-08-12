@@ -59,6 +59,7 @@
   meltingPoint: 1083.0
   metabolisms:
     Poison:
+      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
@@ -153,11 +154,19 @@
   boilingPoint: 1330.0
   metabolisms:
     Poison:
+      metabolismRate: 0.1
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 0.05
+      - !type:Emote
+        emote: Scream
+        probability: 0.05
+      - !type:Emote
+        emote: Laugh
+        probability: 0.05
+
   # TODO: cause confusion and some brain damage
 
 - type: reagent
@@ -176,7 +185,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 1
 
 - type: reagent
   id: Potassium
