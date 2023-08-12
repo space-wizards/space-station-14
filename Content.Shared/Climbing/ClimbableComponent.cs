@@ -19,5 +19,17 @@ namespace Content.Shared.Climbing
         /// </summary>
         [DataField("delay")]
         public float ClimbDelay = 0.8f;
+
+        /// <summary>
+        ///     Sound to be played when a climb is started.
+        /// </summary>
+        [DataField("startClimbSound")]
+        public SoundSpecifier? StartClimbSound = null;
+
+        /// <summary>
+        ///     Sound to be played when a climb finishes.
+        /// </summary>
+        [DataField("finishClimbSound")]
+        public SoundSpecifier? FinishClimbSound = null;
     }
 }

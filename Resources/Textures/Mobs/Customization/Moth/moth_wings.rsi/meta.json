@@ -16,11 +16,19 @@
       "directions": 4
     },
     {
-      "name": "dbushy",
+      "name": "dbushy_primary",
       "directions": 4
     },
     {
-      "name": "deathhead",
+      "name": "dbushy_secondary",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_primary",
+      "directions": 4
+    },
+    {
+      "name": "deathhead_secondary",
       "directions": 4
     },
     {
@@ -36,7 +44,11 @@
       "directions": 4
     },
     {
-      "name": "firewatch",
+      "name": "firewatch_primary",
+      "directions": 4
+    },
+    {
+      "name": "firewatch_secondary",
       "directions": 4
     },
     {
@@ -56,7 +68,11 @@
       "directions": 4
     },
     {
-      "name": "moffra",
+      "name": "moffra_primary",
+      "directions": 4
+    },
+    {
+      "name": "moffra_secondary",
       "directions": 4
     },
     {
@@ -64,7 +80,11 @@
       "directions": 4
     },
     {
-      "name": "plasmafire",
+      "name": "plasmafire_primary",
+      "directions": 4
+    },
+    {
+      "name": "plasmafire_secondary",
       "directions": 4
     },
     {
@@ -72,7 +92,11 @@
       "directions": 4
     },
     {
-      "name": "royal",
+      "name": "royal_primary",
+      "directions": 4
+    },
+    {
+      "name": "royal_secondary",
       "directions": 4
     },
     {

@@ -400,6 +400,8 @@
   id: WeaponAdvancedLaser
   description: An experimental laser gun with a self charging nuclear powered battery.
   components:
+  - type: Item
+    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -418,7 +420,7 @@
     fireCost: 100
   - type: BatterySelfRecharger
     autoRecharge: true
-    autoRechargeRate: 40
+    autoRechargeRate: 30
   - type: MagazineVisuals
     magState: mag
     steps: 5
