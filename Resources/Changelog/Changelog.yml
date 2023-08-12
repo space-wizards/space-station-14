@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Added artifact fragments. These can be uncovered in rock on planets
-      and asteroids. Combining a few of them will produce an artifact that science
-      can research., type: Add}
-  id: 4028
-  time: '2023-06-18T14:56:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The artifact division has finally remembered to wash alien artifacts
       before giving them to scientists. They should now look significantly better.,
     type: Tweak}
@@ -2999,3 +2992,8 @@ Entries:
   - {message: Traitors can now exist along with nuclear operatives., type: Add}
   id: 4527
   time: '2023-08-12T09:54:46.0000000+00:00'
+- author: terezi4real
+  changes:
+  - {message: Fixed errant transparency on jester outfit, type: Fix}
+  id: 4528
+  time: '2023-08-12T17:06:46.0000000+00:00'
