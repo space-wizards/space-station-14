@@ -92,7 +92,7 @@
   materials:
     Steel: 1100
     Plastic: 700
-    gold: 200
+    Gold: 200
 
 - type: latheRecipe
   id: ModularReceiver
