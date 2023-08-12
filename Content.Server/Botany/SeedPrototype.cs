@@ -125,7 +125,7 @@ public class SeedData
 
     #region Tolerances
 
-    [DataField("nutrientConsumption")] public float NutrientConsumption = 0.50f;
+    [DataField("nutrientConsumption")] public float NutrientConsumption = 0.70f;
 
     [DataField("waterConsumption")] public float WaterConsumption = 0.5f;
     [DataField("idealHeat")] public float IdealHeat = 293f;

@@ -34,8 +34,6 @@ namespace Content.Server.Polymorph.Systems
             var newmap = _mapManager.CreateMap();
             _mapManager.SetMapPaused(newmap, true);
             PausedMap = _mapManager.GetMapEntityId(newmap);
-
-            Dirty(PausedMap.Value);
         }
     }
 }
