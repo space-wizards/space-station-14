@@ -126,7 +126,7 @@
         probability: 0.3
   metabolisms:
     Poison:
-      metabolismRate : 3.00
+      metabolismRate : 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
@@ -165,7 +165,7 @@
         probability: 0.2
   metabolisms:
     Poison:
-      metabolismRate: 3.00
+      metabolismRate: 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
@@ -212,7 +212,7 @@
         probability: 0.1
   metabolisms:
     Poison:
-      metabolismRate: 3.00
+      metabolismRate: 3.00 # Okay damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
