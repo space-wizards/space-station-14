@@ -9,7 +9,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// in an item slot before transferring consciousness.
 /// Used for borg stuff.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
 public sealed class MMIComponent : Component
 {
     /// <summary>

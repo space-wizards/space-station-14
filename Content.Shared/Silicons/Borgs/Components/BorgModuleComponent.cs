@@ -1,10 +1,12 @@
-﻿namespace Content.Shared.Silicons.Borgs.Components;
+﻿using Robust.Shared.GameStates;
+
+namespace Content.Shared.Silicons.Borgs.Components;
 
 /// <summary>
 /// This is used for modules that can be inserted into borgs
 /// to give them unique abilities and attributes.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
 public sealed class BorgModuleComponent : Component
 {
     /// <summary>

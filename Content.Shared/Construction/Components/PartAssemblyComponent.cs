@@ -1,12 +1,11 @@
-﻿using Content.Server.Mech.Components;
-using Robust.Shared.Containers;
+﻿using Robust.Shared.Containers;
 
-namespace Content.Server.Construction.Components;
+namespace Content.Shared.Construction.Components;
 
 /// <summary>
 /// This is used for construction which requires a set of
 /// entities with specific tags to be inserted into another entity.
-/// todo: in a pr that isn't 5k loc, combine this with <see cref="MechAssemblyComponent"/>
+/// todo: in a pr that isn't 6k loc, combine this with MechAssemblyComponent
 /// </summary>
 [RegisterComponent]
 public sealed class PartAssemblyComponent : Component
@@ -35,4 +34,12 @@ public sealed class PartAssemblyComponent : Component
     /// </summary>
     [ViewVariables]
     public Container PartsContainer = default!;
+}
+
+/// <summary>
+/// Event raised when a valid part is inserted into the part assembly.
+/// </summary>
+public sealed class PartAssemblyPartInsertedEvent
+{
+
 }

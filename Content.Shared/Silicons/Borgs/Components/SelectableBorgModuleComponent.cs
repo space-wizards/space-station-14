@@ -1,12 +1,13 @@
 ﻿using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
 /// <summary>
 /// This is used for <see cref="BorgModuleComponent"/>s that can be "swapped" to, as opposed to having passive effects.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
 public sealed class SelectableBorgModuleComponent : Component
 {
     /// <summary>

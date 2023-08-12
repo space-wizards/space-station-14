@@ -1,4 +1,5 @@
 ﻿using Robust.Shared.Containers;
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
@@ -7,7 +8,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// <summary>
 /// This is used for a <see cref="BorgModuleComponent"/> that provides items to the entity it's installed into.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
 public sealed class ItemBorgModuleComponent : Component
 {
     /// <summary>

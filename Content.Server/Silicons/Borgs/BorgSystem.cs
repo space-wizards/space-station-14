@@ -247,6 +247,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _alerts.ShowAlert(uid, AlertType.BorgBattery, chargePercent);
     }
 
+    /// <summary>
+    /// Activates the borg, enabling all of its modules.
+    /// </summary>
     public void EnableBorgAbilities(EntityUid uid, BorgChassisComponent component)
     {
         if (component.Activated)
@@ -258,6 +261,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
+    /// <summary>
+    /// Deactivates the borg, disabling all of its modules and decreasing its speed.
+    /// </summary>
     public void DisableBorgAbilities(EntityUid uid, BorgChassisComponent component)
     {
         if (!component.Activated)
@@ -269,6 +275,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         _movementSpeedModifier.RefreshMovementSpeedModifiers(uid);
     }
 
+    /// <summary>
+    /// Activates a borg when a player occupies it
+    /// </summary>
     public void BorgActivate(EntityUid uid, BorgChassisComponent component)
     {
         component.HasPlayer = true;
@@ -278,6 +287,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
         Dirty(uid, component);
     }
 
+    /// <summary>
+    /// Deactivates a borg when a player leaves it.
+    /// </summary>
     public void BorgDeactivate(EntityUid uid, BorgChassisComponent component)
     {
         component.HasPlayer = false;

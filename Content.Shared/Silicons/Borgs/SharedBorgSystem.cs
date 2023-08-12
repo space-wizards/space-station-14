@@ -34,6 +34,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
         InitializeRelay();
     }
+
     private void OnItemSlotInsertAttempt(EntityUid uid, BorgChassisComponent component, ref ItemSlotInsertAttemptEvent args)
     {
         if (args.Cancelled)

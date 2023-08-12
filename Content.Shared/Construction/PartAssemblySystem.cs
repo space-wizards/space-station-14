@@ -1,17 +1,16 @@
-﻿using Content.Server.Construction.Components;
+﻿using Content.Shared.Construction.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
-using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
-namespace Content.Server.Construction;
+namespace Content.Shared.Construction;
 
 /// <summary>
 /// This handles <see cref="PartAssemblyComponent"/>
 /// </summary>
 public sealed class PartAssemblySystem : EntitySystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
     /// <inheritdoc/>
@@ -43,6 +42,9 @@ public sealed class PartAssemblySystem : EntitySystem
         component.CurrentAssembly = null;
     }
 
+    /// <summary>
+    /// Attempts to insert a part into the current assembly, starting one if there is none.
+    /// </summary>
     public bool TryInsertPart(EntityUid part, EntityUid uid, PartAssemblyComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -76,9 +78,14 @@ public sealed class PartAssemblySystem : EntitySystem
 
         component.CurrentAssembly = assemblyId;
         component.PartsContainer.Insert(part);
+        var ev = new PartAssemblyPartInsertedEvent();
+        RaiseLocalEvent(uid, ev);
         return true;
     }
 
+    /// <summary>
+    /// Checks if the given entity is a valid item for the assembly.
+    /// </summary>
     public bool IsPartValid(EntityUid uid, EntityUid part, string assemblyId, PartAssemblyComponent? component = null)
     {
         if (!Resolve(uid, ref component, false))

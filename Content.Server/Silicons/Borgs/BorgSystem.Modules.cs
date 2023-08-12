@@ -90,6 +90,9 @@ public sealed partial class BorgSystem
         args.Handled = true;
     }
 
+    /// <summary>
+    /// Selects a module, enablind the borg to use its provided abilities.
+    /// </summary>
     public void SelectModule(EntityUid chassis,
         EntityUid moduleUid,
         BorgChassisComponent? chassisComp = null,
@@ -115,6 +118,9 @@ public sealed partial class BorgSystem
         chassisComp.SelectedModule = moduleUid;
     }
 
+    /// <summary>
+    /// Unselects a module, removing its provided abilities
+    /// </summary>
     public void UnselectModule(EntityUid chassis,
         EntityUid? moduleUid,
         BorgChassisComponent? chassisComp = null,
@@ -217,6 +223,9 @@ public sealed partial class BorgSystem
         component.ProvidedItems.Clear();
     }
 
+    /// <summary>
+    /// Checks if a given module can be inserted into a borg
+    /// </summary>
     public bool CanInsertModule(EntityUid uid, EntityUid module, BorgChassisComponent? component = null, BorgModuleComponent? moduleComponent = null, EntityUid? user = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
@@ -235,6 +244,9 @@ public sealed partial class BorgSystem
         return true;
     }
 
+    /// <summary>
+    /// Installs and activates all modules currently inside the borg's module container
+    /// </summary>
     public void InstallAllModules(EntityUid uid, BorgChassisComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -250,6 +262,11 @@ public sealed partial class BorgSystem
         }
     }
 
+    /// <summary>
+    /// Deactivates all modules currently inside the borg's module container
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="component"></param>
     public void DisableAllModules(EntityUid uid, BorgChassisComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -265,6 +282,9 @@ public sealed partial class BorgSystem
         }
     }
 
+    /// <summary>
+    /// Installs a single module into a borg.
+    /// </summary>
     public void InstallModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
@@ -278,6 +298,9 @@ public sealed partial class BorgSystem
         RaiseLocalEvent(module, ref ev);
     }
 
+    /// <summary>
+    /// Uninstalls a single module from a borg.
+    /// </summary>
     public void UninstallModule(EntityUid uid, EntityUid module, BorgChassisComponent? component, BorgModuleComponent? moduleComponent = null)
     {
         if (!Resolve(uid, ref component) || !Resolve(module, ref moduleComponent))
