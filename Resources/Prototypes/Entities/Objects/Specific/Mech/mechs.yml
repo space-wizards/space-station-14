@@ -250,6 +250,14 @@
   parent: BaseMech
   id: MechMarauder
   components:
+  - type: Sprite
+    scale: 1.5, 1.5
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: marauder
   - type: Mech
     baseState: marauder
     openState: marauder-open
