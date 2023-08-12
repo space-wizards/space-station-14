@@ -72,6 +72,9 @@
     - Binary
     - Common
   - type: ZombieImmune
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
   - type: BorgChassis
   - type: WiresPanel
   - type: ActivatableUIRequiresPanel
