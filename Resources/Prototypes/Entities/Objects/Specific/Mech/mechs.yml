@@ -243,3 +243,29 @@
     containers:
       mech-battery-slot:
       - PowerCellHigh
+
+# Combat Mechs
+
+- type: entity
+  parent: BaseMech
+  id: MechMarauder
+  components:
+  - type: Mech
+    baseState: marauder
+    openState: marauder-open
+    brokenState: marauder-broken
+    maxIntegrity: 500
+    mechToPilotDamageMultiplier: 0.35
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.55
+    damage:
+      types:
+        Blunt: 50 #thwack
+        Structural: 55
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: StrongMetallic
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 1.0
+    baseSprintSpeed: 1.5
