@@ -1,16 +1,5 @@
 - type: entity
   parent: ClothingEyesBase
-  id: ClothingEyesGlassesBeer
-  name: beer goggles
-  description: A pair of sunglasses outfitted with apparatus to scan reagents, as well as providing an innate understanding of liquid viscosity while in motion.
-  components:
-  - type: Sprite
-    sprite: Clothing/Eyes/Glasses/beergoggles.rsi
-  - type: Clothing
-    sprite: Clothing/Eyes/Glasses/beergoggles.rsi
-
-- type: entity
-  parent: ClothingEyesBase
   id: ClothingEyesGlassesGar
   name: gar glasses
   description: Go beyond impossible and kick reason to the curb!
@@ -170,3 +159,15 @@
       coefficients:
         Heat: 0.95
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesChemical
+  name: chemical analysis goggles
+  description: Goggles that can scan the chemical composition of a solution.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: SolutionScanner

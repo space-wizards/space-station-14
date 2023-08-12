@@ -11,10 +11,18 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Fluids.Components;
+using Content.Shared.Hands.Components;
+using Content.Shared.Inventory;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
+using Content.Shared.Weapons.Melee;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Events;
+using Microsoft.Extensions.ObjectPool;
 using Robust.Server.Containers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
 
@@ -25,13 +33,26 @@ public sealed class NPCUtilitySystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
+    [Dependency] private readonly DrinkSystem _drink = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly InventorySystem _inventory = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
+
+    private EntityQuery<TransformComponent> _xformQuery;
+
+    private ObjectPool<HashSet<EntityUid>> _entPool =
+        new DefaultObjectPool<HashSet<EntityUid>>(new SetPolicy<EntityUid>(), 256);
+
+    public override void Initialize()
+    {
+        base.Initialize();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+    }
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -45,7 +66,7 @@ public sealed class NPCUtilitySystem : EntitySystem
         // TODO: PickHostilesop or whatever needs to juse be UtilityQueryOperator
 
         var weh = _proto.Index<UtilityQueryPrototype>(proto);
-        var ents = new HashSet<EntityUid>();
+        var ents = _entPool.Get();
 
         foreach (var query in weh.Query)
         {
@@ -61,7 +82,10 @@ public sealed class NPCUtilitySystem : EntitySystem
         }
 
         if (ents.Count == 0)
+        {
+            _entPool.Return(ents);
             return UtilityResult.Empty;
+        }
 
         var results = new Dictionary<EntityUid, float>();
         var highestScore = 0f;
@@ -99,6 +123,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
         var result = new UtilityResult(results);
         blackboard.Remove<EntityUid>(NPCBlackboard.UtilityTarget);
+        _entPool.Return(ents);
         return result;
     }
 
@@ -113,7 +138,7 @@ public sealed class NPCUtilitySystem : EntitySystem
             case PresetCurve presetCurve:
                 return GetScore(_proto.Index<UtilityCurvePresetPrototype>(presetCurve.Preset).Curve, conScore);
             case QuadraticCurve quadraticCurve:
-                return Math.Clamp(quadraticCurve.Slope * (float) Math.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
+                return Math.Clamp(quadraticCurve.Slope * MathF.Pow(conScore - quadraticCurve.XOffset, quadraticCurve.Exponent) + quadraticCurve.YOffset, 0f, 1f);
             default:
                 throw new NotImplementedException();
         }
@@ -132,9 +157,34 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
                     return 0f;
 
-                // no mouse don't eat the uranium-235
                 var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+
+                // only eat when hungry or if it will eat anything
+                if (TryComp<HungerComponent>(owner, out var hunger) && hunger.CurrentThreshold > HungerThreshold.Okay && avoidBadFood)
+                    return 0f;
+
+                // no mouse don't eat the uranium-235
                 if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
+                    return 0f;
+
+                return 1f;
+            }
+            case DrinkValueCon:
+            {
+                if (!TryComp<DrinkComponent>(targetUid, out var drink) || !drink.Opened)
+                    return 0f;
+
+                // only drink when thirsty
+                if (TryComp<ThirstComponent>(owner, out var thirst) && thirst.CurrentThirstThreshold > ThirstThreshold.Okay)
+                    return 0f;
+
+                // no janicow don't drink the blood puddle
+                if (HasComp<BadDrinkComponent>(targetUid))
+                    return 0f;
+
+                // needs to have something that will satiate thirst, mice wont try to drink 100% pure mutagen.
+                var hydration = _drink.TotalHydration(targetUid, drink);
+                if (hydration <= 1.0f)
                     return 0f;
 
                 return 1f;
@@ -162,6 +212,21 @@ public sealed class NPCUtilitySystem : EntitySystem
                 // TODO: Pathfind there, though probably do it in a separate con.
                 return 1f;
             }
+            case TargetAmmoMatchesCon:
+            {
+                if (!blackboard.TryGetValue(NPCBlackboard.ActiveHand, out Hand? activeHand, EntityManager) ||
+                    !TryComp<BallisticAmmoProviderComponent>(activeHand.HeldEntity, out var heldGun))
+                {
+                    return 0f;
+                }
+
+                if (heldGun.Whitelist?.IsValid(targetUid, EntityManager) != true)
+                {
+                    return 0f;
+                }
+
+                return 1f;
+            }
             case TargetDistanceCon:
             {
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
@@ -180,6 +245,23 @@ public sealed class NPCUtilitySystem : EntitySystem
 
                 return Math.Clamp(distance / radius, 0f, 1f);
             }
+            case TargetAmmoCon:
+            {
+                if (!HasComp<GunComponent>(targetUid))
+                    return 0f;
+
+                var ev = new GetAmmoCountEvent();
+                RaiseLocalEvent(targetUid, ref ev);
+
+                if (ev.Count == 0)
+                    return 0f;
+
+                // Wat
+                if (ev.Capacity == 0)
+                    return 1f;
+
+                return (float) ev.Count / ev.Capacity;
+            }
             case TargetHealthCon:
             {
                 return 0f;
@@ -195,7 +277,7 @@ public sealed class NPCUtilitySystem : EntitySystem
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
                 const float bufferRange = 0.5f;
 
-                if (blackboard.TryGetValue<EntityUid>("CombatTarget", out var currentTarget, EntityManager) &&
+                if (blackboard.TryGetValue<EntityUid>("Target", out var currentTarget, EntityManager) &&
                     currentTarget == targetUid &&
                     TryComp<TransformComponent>(owner, out var xform) &&
                     TryComp<TransformComponent>(targetUid, out var targetXform) &&
@@ -218,6 +300,15 @@ public sealed class NPCUtilitySystem : EntitySystem
             case TargetIsDeadCon:
             {
                 return _mobState.IsDead(targetUid) ? 1f : 0f;
+            }
+            case TargetMeleeCon:
+            {
+                if (TryComp<MeleeWeaponComponent>(targetUid, out var melee))
+                {
+                    return melee.Damage.Total.Float() * melee.AttackRate / 100f;
+                }
+
+                return 0f;
             }
             default:
                 throw new NotImplementedException();
@@ -248,29 +339,76 @@ public sealed class NPCUtilitySystem : EntitySystem
         switch (query)
         {
             case ComponentQuery compQuery:
+            {
                 var mapPos = Transform(owner).MapPosition;
-                foreach (var compReg in compQuery.Components.Values)
+                var comps = compQuery.Components.Values.ToList();
+                var compZero = comps[0];
+                comps.RemoveAt(0);
+
+                foreach (var comp in _lookup.GetComponentsInRange(compZero.Component.GetType(), mapPos, vision))
                 {
-                    foreach (var comp in _lookup.GetComponentsInRange(compReg.Component.GetType(), mapPos, vision))
+                    var ent = comp.Owner;
+
+                    if (ent == owner)
+                        continue;
+
+                    var othersFound = true;
+
+                    foreach (var compOther in comps)
                     {
-                        var ent = comp.Owner;
+                        if (!HasComp(ent, compOther.Component.GetType()))
+                        {
+                            othersFound = false;
+                            break;
+                        }
+                    }
 
-                        if (ent == owner)
-                            continue;
+                    if (!othersFound)
+                        continue;
 
-                        entities.Add(ent);
+                    entities.Add(ent);
+                }
+
+                break;
+            }
+            case InventoryQuery:
+            {
+                if (!_inventory.TryGetContainerSlotEnumerator(owner, out var enumerator))
+                    break;
+
+                while (enumerator.MoveNext(out var slot))
+                {
+                    foreach (var child in slot.ContainedEntities)
+                    {
+                        RecursiveAdd(child, entities);
                     }
                 }
 
                 break;
+            }
             case NearbyHostilesQuery:
+            {
                 foreach (var ent in _npcFaction.GetNearbyHostiles(owner, vision))
                 {
                     entities.Add(ent);
                 }
                 break;
+            }
             default:
                 throw new NotImplementedException();
+        }
+    }
+
+    private void RecursiveAdd(EntityUid uid, HashSet<EntityUid> entities)
+    {
+        // TODO: Probably need a recursive struct enumerator on engine.
+        var xform = _xformQuery.GetComponent(uid);
+        var enumerator = xform.ChildEnumerator;
+        entities.Add(uid);
+
+        while (enumerator.MoveNext(out var child))
+        {
+            RecursiveAdd(child.Value, entities);
         }
     }
 
@@ -278,10 +416,32 @@ public sealed class NPCUtilitySystem : EntitySystem
     {
         switch (filter)
         {
+            case ComponentFilter compFilter:
+            {
+                var toRemove = new ValueList<EntityUid>();
+
+                foreach (var ent in entities)
+                {
+                    foreach (var comp in compFilter.Components)
+                    {
+                        if (HasComp(ent, comp.Value.Component.GetType()))
+                            continue;
+
+                        toRemove.Add(ent);
+                        break;
+                    }
+                }
+
+                foreach (var ent in toRemove)
+                {
+                    entities.Remove(ent);
+                }
+
+                break;
+            }
             case PuddleFilter:
             {
                 var puddleQuery = GetEntityQuery<PuddleComponent>();
-
                 var toRemove = new ValueList<EntityUid>();
 
                 foreach (var ent in entities)

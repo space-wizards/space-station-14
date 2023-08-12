@@ -308,6 +308,8 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+  - type: ExaminableSolution
+    solution: injector
   - type: Spillable
     solution: injector
   - type: TrashOnEmpty

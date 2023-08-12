@@ -1,4 +1,5 @@
 ﻿using Content.Server.Administration.Commands;
+using Content.Server.Administration.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.FixedPoint;
@@ -11,9 +12,10 @@ using Robust.Shared.Prototypes;
 namespace Content.IntegrationTests.Tests.Commands
 {
     [TestFixture]
-    [TestOf(typeof(RejuvenateCommand))]
+    [TestOf(typeof(RejuvenateSystem))]
     public sealed class RejuvenateTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DamageableDummy
@@ -31,17 +33,13 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task RejuvenateDeadTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
-            var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var mobStateSystem = entManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
             var damSystem = entManager.EntitySysManager.GetEntitySystem<DamageableSystem>();
+            var rejuvenateSystem = entManager.EntitySysManager.GetEntitySystem<RejuvenateSystem>();
 
             await server.WaitAssertion(() =>
             {
@@ -78,7 +76,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 });
 
                 // Rejuvenate them
-                RejuvenateCommand.PerformRejuvenate(human);
+                rejuvenateSystem.PerformRejuvenate(human);
 
                 // Check that it is alive and with no damage
                 Assert.Multiple(() =>

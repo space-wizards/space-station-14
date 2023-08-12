@@ -49,13 +49,37 @@ entities:
       data:
         tiles:
           -1,-1:
-            0: 65528
+            0: 65535
           0,-1:
-            0: 12561
+            0: 65535
           -1,0:
-            0: 4095
+            0: 65535
           0,0:
-            0: 273
+            0: 65535
+          -2,-2:
+            0: 61152
+          -2,-1:
+            0: 61166
+          -1,-2:
+            0: 65520
+          0,-2:
+            0: 65520
+          1,-2:
+            0: 13104
+          1,-1:
+            0: 13107
+          -2,0:
+            0: 61166
+          -2,1:
+            0: 238
+          -1,1:
+            0: 255
+          0,1:
+            0: 255
+          1,0:
+            0: 13107
+          1,1:
+            0: 51
         uniqueMixes:
         - volume: 2500
           temperature: 293.15
@@ -75,8 +99,7 @@ entities:
         chunkSize: 4
       type: GridAtmosphere
     - type: GasTileOverlay
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
     - type: GridPathfinding
 - proto: MetalDoor
   entities:
@@ -164,8 +187,6 @@ entities:
     - pos: 4.4981737,4.558294
       parent: 10
       type: Transform
-    - nextSound: 950.8798126
-      type: EmitSoundOnCollide
 - proto: SpaceTickSpawner
   entities:
   - uid: 113
@@ -209,8 +230,6 @@ entities:
     - pos: -1.5018263,-0.4104561
       parent: 10
       type: Transform
-    - nextSound: 937.61323
-      type: EmitSoundOnCollide
 - proto: WallCult
   entities:
   - uid: 1

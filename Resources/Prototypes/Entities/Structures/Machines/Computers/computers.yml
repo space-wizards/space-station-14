@@ -316,7 +316,7 @@
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
-    board: CriminalRecordsComputerCircuitboard
+    board: StationRecordsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -516,7 +516,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -940,3 +940,35 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerMassMedia
+  name: mass-media console
+  description: Write your message to the world!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: service
+    - map: ["computerLayerKeys"]
+      state: service_keys
+  - type: Computer
+    board: ComputerMassMediaCircuitboard
+  - type: DeviceNetworkRequiresPower
+  - type: NewsWrite
+  - type: AccessReader
+    access: [[ "Command" ]]
+  - type: ActivatableUI
+    key: enum.NewsWriteUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NewsWriteUiKey.Key
+        type: NewsWriteBoundUserInterface

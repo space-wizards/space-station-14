@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Body.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Chemistry.EntitySystems;
@@ -10,25 +9,29 @@ using Content.Shared.Database;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
-using JetBrains.Annotations;
+using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Body.Systems
 {
-    [UsedImplicitly]
     public sealed class MetabolizerSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+
+        private EntityQuery<OrganComponent> _organQuery;
+        private EntityQuery<SolutionContainerManagerComponent> _solutionQuery;
 
         public override void Initialize()
         {
             base.Initialize();
+
+            _organQuery = GetEntityQuery<OrganComponent>();
+            _solutionQuery = GetEntityQuery<SolutionContainerManagerComponent>();
 
             SubscribeLocalEvent<MetabolizerComponent, ComponentInit>(OnMetabolizerInit);
             SubscribeLocalEvent<MetabolizerComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
@@ -40,7 +43,7 @@ namespace Content.Server.Body.Systems
             {
                 _solutionContainerSystem.EnsureSolution(uid, component.SolutionName);
             }
-            else if (CompOrNull<OrganComponent>(uid)?.Body is { } body)
+            else if (_organQuery.CompOrNull(uid)?.Body is { } body)
             {
                 _solutionContainerSystem.EnsureSolution(body, component.SolutionName);
             }
@@ -65,25 +68,30 @@ namespace Content.Server.Body.Systems
         {
             base.Update(frameTime);
 
-            foreach (var metab in EntityManager.EntityQuery<MetabolizerComponent>(false))
+            var metabolizers = new ValueList<(EntityUid Uid, MetabolizerComponent Component)>(Count<MetabolizerComponent>());
+            var query = EntityQueryEnumerator<MetabolizerComponent>();
+
+            while (query.MoveNext(out var uid, out var comp))
+            {
+                metabolizers.Add((uid, comp));
+            }
+
+            foreach (var (uid, metab) in metabolizers)
             {
                 metab.AccumulatedFrametime += frameTime;
 
                 // Only update as frequently as it should
-                if (metab.AccumulatedFrametime >= metab.UpdateFrequency)
-                {
-                    metab.AccumulatedFrametime -= metab.UpdateFrequency;
-                    TryMetabolize((metab).Owner, metab);
-                }
+                if (metab.AccumulatedFrametime < metab.UpdateFrequency)
+                    continue;
+
+                metab.AccumulatedFrametime -= metab.UpdateFrequency;
+                TryMetabolize(uid, metab);
             }
         }
 
-        private void TryMetabolize(EntityUid uid, MetabolizerComponent? meta = null, OrganComponent? organ = null)
+        private void TryMetabolize(EntityUid uid, MetabolizerComponent meta, OrganComponent? organ = null)
         {
-            if (!Resolve(uid, ref meta))
-                return;
-
-            Resolve(uid, ref organ, false);
+            _organQuery.Resolve(uid, ref organ, false);
 
             // First step is get the solution we actually care about
             Solution? solution = null;
@@ -95,16 +103,18 @@ namespace Content.Server.Body.Systems
             {
                 if (organ?.Body is { } body)
                 {
-                    if (!Resolve(body, ref manager, false))
+                    if (!_solutionQuery.Resolve(body, ref manager, false))
                         return;
+
                     _solutionContainerSystem.TryGetSolution(body, meta.SolutionName, out solution, manager);
                     solutionEntityUid = body;
                 }
             }
             else
             {
-                if (!Resolve(uid, ref manager, false))
+                if (!_solutionQuery.Resolve(uid, ref manager, false))
                     return;
+
                 _solutionContainerSystem.TryGetSolution(uid, meta.SolutionName, out solution, manager);
                 solutionEntityUid = uid;
             }
@@ -123,18 +133,22 @@ namespace Content.Server.Body.Systems
                 if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
                     continue;
 
-                FixedPoint2 mostToRemove = FixedPoint2.Zero;
+                var mostToRemove = FixedPoint2.Zero;
                 if (proto.Metabolisms == null)
                 {
                     if (meta.RemoveEmpty)
+                    {
                         _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
                             FixedPoint2.New(1));
+                    }
+
                     continue;
                 }
 
                 // we're done here entirely if this is true
                 if (reagents >= meta.MaxReagentsProcessable)
                     return;
+
                 reagents += 1;
 
                 // loop over all our groups and see which ones apply
@@ -152,7 +166,6 @@ namespace Content.Server.Body.Systems
                     if (entry.MetabolismRate > mostToRemove)
                         mostToRemove = entry.MetabolismRate;
 
-
                     mostToRemove *= group.MetabolismRateModifier;
 
                     mostToRemove = FixedPoint2.Clamp(mostToRemove, 0, reagent.Quantity);
@@ -169,7 +182,7 @@ namespace Content.Server.Body.Systems
                     }
 
                     var actualEntity = organ?.Body ?? solutionEntityUid.Value;
-                    var args = new ReagentEffectArgs(actualEntity, (meta).Owner, solution, proto, mostToRemove,
+                    var args = new ReagentEffectArgs(actualEntity, uid, solution, proto, mostToRemove,
                         EntityManager, null, scale);
 
                     // do all effects, if conditions apply
@@ -190,8 +203,10 @@ namespace Content.Server.Body.Systems
 
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
+                {
                     _solutionContainerSystem.TryRemoveReagent(solutionEntityUid.Value, solution, reagent.ReagentId,
                         mostToRemove);
+                }
             }
         }
     }

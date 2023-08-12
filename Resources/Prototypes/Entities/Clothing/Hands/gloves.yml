@@ -343,7 +343,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ForensicGloves
+  id: ClothingHandsGlovesForensic
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
   components:
@@ -352,4 +352,3 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/forensic.rsi
   - type: FingerprintMask
-

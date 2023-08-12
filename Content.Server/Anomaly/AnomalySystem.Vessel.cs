@@ -26,8 +26,20 @@ public sealed partial class AnomalySystem
         SubscribeLocalEvent<AnomalyVesselComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<AnomalyVesselComponent, ResearchServerGetPointsPerSecondEvent>(OnVesselGetPointsPerSecond);
         SubscribeLocalEvent<AnomalyVesselComponent, EntityUnpausedEvent>(OnUnpaused);
-        SubscribeLocalEvent<AnomalyShutdownEvent>(OnVesselAnomalyShutdown);
-        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnVesselAnomalyStabilityChanged);
+        SubscribeLocalEvent<AnomalyShutdownEvent>(OnShutdown);
+        SubscribeLocalEvent<AnomalyStabilityChangedEvent>(OnStabilityChanged);
+    }
+
+    private void OnStabilityChanged(ref AnomalyStabilityChangedEvent args)
+    {
+        OnVesselAnomalyStabilityChanged(ref args);
+        OnScannerAnomalyStabilityChanged(ref args);
+    }
+
+    private void OnShutdown(ref AnomalyShutdownEvent args)
+    {
+        OnVesselAnomalyShutdown(ref args);
+        OnScannerAnomalyShutdown(ref args);
     }
 
     private void OnExamined(EntityUid uid, AnomalyVesselComponent component, ExaminedEvent args)
