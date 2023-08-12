@@ -1,0 +1,45 @@
+- type: entity
+  parent: ClothingShoesBase
+  id: ClothingShoesSpeedBoots
+  name: speed boots
+  description: Allows you to run much faster!
+  components:
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+  - type: NoSlip
+  - type: StaticPrice
+    price: 500
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.3
+    enabled: true
+  - type: Tag
+    tags:
+    - ClothingShoesSpeedBoots
+
+- type: entity
+  parent: ClothingShoesBaseButcherable
+  id: ClothingShoesSpeedBootsClown
+  name: clown speed boots
+  description: Super power for clowns. Allows you to run away from security even faster!
+  components:
+  - type: Sprite
+    sprite: Clothing\Shoes\Boots\clownspeedboots.rsi
+  - type: Clothing
+    sprite: Clothing\Shoes\Boots\clownspeedboots.rsi
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepClown
+  - type: NoSlip
+  - type: StaticPrice
+    price: 500
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.3
+    enabled: true
+  - type: Construction
+    graph: Clownspeedboots
+    node: clownspeedboots

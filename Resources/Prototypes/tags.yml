@@ -171,6 +171,9 @@
   id: ClothMade
 
 - type: Tag
+  id: ClothingShoesSpeedBoots
+
+- type: Tag
   id: ClownMask
 
 - type: Tag

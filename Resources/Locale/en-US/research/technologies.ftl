@@ -44,6 +44,7 @@ research-technology-basic-anomalous-research = Basic Anomalous Research
 research-technology-basic-xenoarcheology = Basic XenoArcheology
 research-technology-alternative-research = Alternative Research
 research-technology-magnets-tech = Localized Magnetism
+research-technology-speed-tech = Localized Speed
 research-technology-advanced-parts = Advanced Parts
 research-technology-grappling = Grappling
 research-technology-abnormal-artifact-manipulation = Abnormal Artifact Manipulation

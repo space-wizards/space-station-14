@@ -86,6 +86,14 @@
     Plastic: 500
 
 - type: latheRecipe
+  id: ClothingShoesSpeedBoots
+  result: ClothingShoesSpeedBoots
+  completetime: 10
+  materials:
+    Steel: 1000
+    Plastic: 700
+
+- type: latheRecipe
   id: ModularReceiver
   result: ModularReceiver
   completetime: 12

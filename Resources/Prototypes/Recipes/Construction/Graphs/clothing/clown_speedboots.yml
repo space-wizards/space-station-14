@@ -1,0 +1,22 @@
+﻿- type: constructionGraph
+  id: Clownspeedboots
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: clownspeedboots
+          steps:
+            - tag: ClothingShoesSpeedBoots
+              name: An Speed Boots
+              icon:
+                sprite: Clothing/Shoes/Boots/speedboots.rsi
+                state: icon
+              doAfter: 1
+            - tag: ClownShoes
+              name: An clown shoes
+              icon:
+                sprite: Clothing/Shoes/Specific/clown.rsi
+                state: icon
+              doAfter: 1
+    - node: clownspeedboots
+      entity: ClothingShoesSpeedBootsClown
