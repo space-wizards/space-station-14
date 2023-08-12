@@ -19,8 +19,8 @@
       path: /Audio/Effects/hit_kick.ogg
   - type: Clickable
   - type: CombatMode
-  - type: Damageable
-    damageContainer: Inorganic
+  - type: StaticPrice
+    price: 1250
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
@@ -43,11 +43,12 @@
   - type: MobState
     allowedStates:
     - Alive
-    - Dead
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Dead
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
   - type: Physics
     bodyType: KinematicController
   - type: UserInterface
@@ -106,6 +107,22 @@
     - part-container
     - cell_slot
   - type: Flashable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
   - type: HandheldLight
     toggleOnInteract: false
     wattage: 0.2
@@ -149,5 +166,4 @@
   - type: Tag
     tags:
     - ShoesRequiredStepTriggerImmune
-    - FootstepSound
     - DoorBumpOpener

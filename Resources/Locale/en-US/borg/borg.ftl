@@ -8,7 +8,7 @@ borg-mind-removed = {CAPITALIZE($name)} shut off!
 
 borg-module-whitelist-deny = This module doesn't fit in this type of cyborg...
 
-borg-construction-guide-string = The cyborg limbs and torso must be attached to the exoskeleton.
+borg-construction-guide-string = The cyborg limbs and torso must be attached to the endoskeleton.
 
 borg-ui-menu-title = Cyborg Interface
 borg-ui-charge-label = Charge: {$charge}%

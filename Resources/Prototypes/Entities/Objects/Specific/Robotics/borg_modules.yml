@@ -6,8 +6,10 @@
   abstract: true
   components:
   - type: Sprite
-    sprite: Objects/Devices/borgmodule.rsi
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
   - type: BorgModule
+  - type: StaticPrice
+    price: 250
   - type: Tag
     tags:
     - BorgModuleGeneric

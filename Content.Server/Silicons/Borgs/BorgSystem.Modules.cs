@@ -79,7 +79,11 @@ public sealed partial class BorgSystem
             return;
 
         if (chassisComp.SelectedModule == uid)
+        {
+            UnselectModule(chassis, chassisComp.SelectedModule, chassisComp);
+            args.Handled = true;
             return;
+        }
 
         UnselectModule(chassis, chassisComp.SelectedModule, chassisComp);
         SelectModule(chassis, uid, chassisComp, component);

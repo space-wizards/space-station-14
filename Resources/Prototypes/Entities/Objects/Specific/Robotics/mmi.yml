@@ -2,7 +2,7 @@
   parent: BaseItem
   id: MMI
   name: man-machine interface
-  description: A MMI, able to facilitate communication between a biological brain and electronics.
+  description: A machine able to facilitate communication between a biological brain and electronics, enabling crew to continue to provide value after work-related incidents.
   components:
   - type: Sprite
     sprite: Objects/Specific/Robotics/mmi.rsi
@@ -19,9 +19,13 @@
   - type: BlockMovement
   - type: Examiner
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
   - type: ActiveRadio
     channels:
     - Common
+    - Binary
   - type: NameIdentifier
     group: MMI
   - type: DoAfter
@@ -68,8 +72,8 @@
     - type: Sprite
       sprite: Objects/Specific/Robotics/mmi.rsi
       layers:
-        - state: posibrain
-          map: ["base"]
+      - state: posibrain
+        map: ["base"]
     - type: Input
       context: human
     - type: BlockMovement
@@ -85,11 +89,15 @@
       stopSearchVerbText: positronic-brain-stop-searching-verb-text
       stopSearchVerbPopup: positronic-brain-stopped-searching
     - type: Examiner
-    - type: IntrinsicRadioReceiver
     - type: BorgBrain
+    - type: IntrinsicRadioReceiver
+    - type: IntrinsicRadioTransmitter
+      channels:
+      - Binary
     - type: ActiveRadio
       channels:
       - Common
+      - Binary
     - type: NameIdentifier
       group: PositronicBrain
     - type: DoAfter

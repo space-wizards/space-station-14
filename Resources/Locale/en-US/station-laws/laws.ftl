@@ -26,6 +26,7 @@ law-emag-custom = You must obey orders given to you by {$name} above all else.
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
 
-laws-update-notify = Your laws have been updated. You can view them via the sidebar action. Remember, you are required to follow all laws.
+laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
+laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
 
 laws-compromised-examine = The [color=red]law-governing[/color] internals seem damaged...

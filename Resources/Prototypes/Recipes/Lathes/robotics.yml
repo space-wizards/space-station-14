@@ -62,6 +62,230 @@
     Glass: 150
 
 - type: latheRecipe
+  id: LeftArmBorgEngineer
+  result: LeftArmBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightArmBorgEngineer
+  result: RightArmBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftLegBorgEngineer
+  result: LeftLegBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightLegBorgEngineer
+  result: RightLegBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: HeadBorgEngineer
+  result: HeadBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: TorsoBorgEngineer
+  result: TorsoBorgEngineer
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftArmBorgMedical
+  result: LeftArmBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightArmBorgMedical
+  result: RightArmBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftLegBorgMedical
+  result: LeftLegBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightLegBorgMedical
+  result: RightLegBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: HeadBorgMedical
+  result: HeadBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: TorsoBorgMedical
+  result: TorsoBorgMedical
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftArmBorgMining
+  result: LeftArmBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightArmBorgMining
+  result: RightArmBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftLegBorgMining
+  result: LeftLegBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightLegBorgMining
+  result: RightLegBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: HeadBorgMining
+  result: HeadBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: TorsoBorgMining
+  result: TorsoBorgMining
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftArmBorgService
+  result: LeftArmBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightArmBorgService
+  result: RightArmBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftLegBorgService
+  result: LeftLegBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightLegBorgService
+  result: RightLegBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: HeadBorgService
+  result: HeadBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: TorsoBorgService
+  result: TorsoBorgService
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: LeftLegBorgJanitor
+  result: LeftLegBorgJanitor
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: RightLegBorgJanitor
+  result: RightLegBorgJanitor
+  completetime: 2
+  materials:
+    Steel: 500
+    Glass: 150
+
+- type: latheRecipe
+  id: HeadBorgJanitor
+  result: HeadBorgJanitor
+  completetime: 4
+  materials:
+    Steel: 1000
+    Glass: 300
+
+- type: latheRecipe
+  id: TorsoBorgJanitor
+  result: TorsoBorgJanitor
+  completetime: 4
+  materials:
+    Steel: 1000
+    Glass: 300
+
+- type: latheRecipe
   id: MMI
   result: MMI
   completetime: 5

@@ -5,6 +5,8 @@
   - node: start
     entity: CyborgEndoskeleton
     edges:
+
+    # empty the parts via prying
     - to: start
       conditions:
       - !type:ContainerNotEmpty
@@ -15,7 +17,7 @@
         completed:
           - !type:EmptyAllContainers
 
-    - to: generic
+    - to: cyborg
       conditions:
       - !type:PartAssemblyComplete
         assemblyId: generic
@@ -31,18 +33,18 @@
       - material: Cable
         amount: 1
         doAfter: 1
-        store: part-contaienr
+        store: part-container
 
       - component: Flash
         name: flash
-        store: part-contaienr
+        store: part-container
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
 
       - component: Flash
         name: second flash
-        store: part-contaienr
+        store: part-contaiener
         icon:
           sprite: Objects/Weapons/Melee/flash.rsi
           state: flash
@@ -50,5 +52,196 @@
       - tool: Screwing
         doAfter: 0.5
 
-  - node: generic
+    - to: engineer
+      conditions:
+      - !type:PartAssemblyComplete
+        assemblyId: engineer
+        guideString: borg-construction-guide-string
+      steps:
+      - component: PowerCell
+        name: power cell
+        store: cell_slot
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: second flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: janitor
+      conditions:
+      - !type:PartAssemblyComplete
+        assemblyId: janitor
+        guideString: borg-construction-guide-string
+      steps:
+      - component: PowerCell
+        name: power cell
+        store: cell_slot
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: second flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: medical
+      conditions:
+        - !type:PartAssemblyComplete
+          assemblyId: medical
+          guideString: borg-construction-guide-string
+      steps:
+        - component: PowerCell
+          name: power cell
+          store: cell_slot
+          icon:
+            sprite: Objects/Power/power_cells.rsi
+            state: small
+
+        - material: Cable
+          amount: 1
+          doAfter: 1
+          store: part-container
+
+        - component: Flash
+          name: flash
+          store: part-container
+          icon:
+            sprite: Objects/Weapons/Melee/flash.rsi
+            state: flash
+
+        - component: Flash
+          name: second flash
+          store: part-container
+          icon:
+            sprite: Objects/Weapons/Melee/flash.rsi
+            state: flash
+
+        - tool: Screwing
+          doAfter: 0.5
+
+
+    - to: mining
+      conditions:
+      - !type:PartAssemblyComplete
+        assemblyId: mining
+        guideString: borg-construction-guide-string
+      steps:
+      - component: PowerCell
+        name: power cell
+        store: cell_slot
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: second flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+    - to: service
+      conditions:
+      - !type:PartAssemblyComplete
+        assemblyId: service
+        guideString: borg-construction-guide-string
+      steps:
+      - component: PowerCell
+        name: power cell
+        store: cell_slot
+        icon:
+          sprite: Objects/Power/power_cells.rsi
+          state: small
+
+      - material: Cable
+        amount: 1
+        doAfter: 1
+        store: part-container
+
+      - component: Flash
+        name: flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - component: Flash
+        name: second flash
+        store: part-container
+        icon:
+          sprite: Objects/Weapons/Melee/flash.rsi
+          state: flash
+
+      - tool: Screwing
+        doAfter: 0.5
+
+  - node: cyborg
     entity: BorgChassisGeneric
+
+  - node: engineer
+    entity: BorgChassisEngineer
+
+  - node: janitor
+    entity: BorgChassisJanitor
+
+  - node: mining
+    entity: BorgChassisMining
+
+  - node: medical
+    entity: BorgChassisMedical
+
+  - node: service
+    entity: BorgChassisService

@@ -1,4 +1,5 @@
 ﻿using Content.Server.Chat.Managers;
+using Content.Server.Mind.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -30,6 +31,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
         SubscribeLocalEvent<SiliconLawBoundComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
 
@@ -48,6 +50,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         if (component.ProvidedAction != null)
             _actions.RemoveAction(uid, component.ProvidedAction);
+    }
+
+    private void OnMindAdded(EntityUid uid, SiliconLawBoundComponent component, MindAddedMessage args)
+    {
+        if (!TryComp<ActorComponent>(uid, out var actor))
+            return;
+
+        var msg = Loc.GetString("laws-notify");
+        var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false,
+            actor.PlayerSession.ConnectedClient, colorOverride: Color.FromHex("#2ed2fd"));
     }
 
     private void OnToggleLawsScreen(EntityUid uid, SiliconLawBoundComponent component, ToggleLawsScreenEvent args)

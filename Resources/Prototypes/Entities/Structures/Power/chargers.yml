@@ -176,7 +176,7 @@
 - type: entity
   id: BorgCharger
   parent: [ BaseMachinePowered, ConstructibleMachine ]
-  name: robot recharging station
+  name: cyborg recharging station
   description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
   placement:
     mode: SnapgridCenter

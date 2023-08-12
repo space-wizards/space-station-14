@@ -83,7 +83,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
 
     private void OnChassisInteractUsing(EntityUid uid, BorgChassisComponent component, AfterInteractUsingEvent args)
     {
-        if (args.Handled || uid == args.User)
+        if (!args.CanReach || args.Handled || uid == args.User)
             return;
 
         var used = args.Used;
