@@ -22,6 +22,13 @@ namespace Content.Server.SensorMonitoring;
 
 public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 {
+    // TODO: THIS THING IS HEAVILY WIP AND NOT READY FOR GENERAL USE BY PLAYERS.
+    // Some of the issues, off the top of my head:
+    // Way too huge network load when opened
+    // UI doesn't update properly in cases like adding new streams/devices
+    // Deleting connected devices causes exceptions
+    // UI sucks. need a way to make basic dashboards like Grafana, and save them.
+
     private EntityQuery<DeviceNetworkComponent> _deviceNetworkQuery;
 
     [Dependency] private readonly IGameTiming _gameTiming = default!;
