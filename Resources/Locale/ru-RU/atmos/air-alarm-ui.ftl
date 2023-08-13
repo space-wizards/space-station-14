@@ -35,6 +35,8 @@ air-alarm-ui-mode-none = Нет
 ### General
 
 air-alarm-ui-widget-enable = Включено
+air-alarm-ui-widget-copy = Копировать настройки на похожие устройства
+air-alarm-ui-widget-copy-tooltip = Копирует настройки данного устройства на все устройства данной вкладки воздушной сигнализации.
 air-alarm-ui-widget-ignore = Игнорировать
 air-alarm-ui-atmos-net-device-label = Адрес: { $address }
 

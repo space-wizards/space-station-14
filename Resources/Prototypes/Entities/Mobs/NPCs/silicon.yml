@@ -159,6 +159,8 @@
     autoRot: true
   - type: TypingIndicator
     proto: robot
+  - type: TTS # Corvax-TTS
+    voice: Robold
 
 - type: entity
   parent: MobSiliconBase
