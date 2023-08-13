@@ -51,6 +51,11 @@ namespace Content.Client.Computer
                 _window?.Dispose();
             }
         }
+
+        protected override void ReceiveMessage(BoundUserInterfaceMessage message)
+        {
+            _window?.ReceiveMessage(message);
+        }
     }
 
     /// <summary>
@@ -77,6 +82,10 @@ namespace Content.Client.Computer
         }
 
         void UpdateState(TState state)
+        {
+        }
+
+        void ReceiveMessage(BoundUserInterfaceMessage message)
         {
         }
     }

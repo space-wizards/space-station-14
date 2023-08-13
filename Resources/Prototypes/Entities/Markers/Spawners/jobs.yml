@@ -265,6 +265,21 @@
         - state: green
         - state: boxer
 
+- type: entity
+  id: SpawnPointBorg
+  parent: SpawnPointJobBase
+  name: cyborg
+  components:
+  - type: SpawnPoint
+    job_id: Borg
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot_e
+
 # Command
 
 - type: entity
@@ -378,7 +393,7 @@
     layers:
       - state: green
       - state: doctor
-      
+
 - type: entity
   id: SpawnPointParamedic
   parent: SpawnPointJobBase
