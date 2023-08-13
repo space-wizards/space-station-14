@@ -37,6 +37,7 @@ public sealed partial class NoteEdit : FancyWindow
         TypeOption.OnItemSelected += OnTypeChanged;
 
 
+        SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-select"), -1);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-none"), (int) Shared.Database.NoteSeverity.None);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-low"), (int) Shared.Database.NoteSeverity.Minor);
         SeverityOption.AddItem(Loc.GetString("admin-note-editor-severity-medium"), (int) Shared.Database.NoteSeverity.Medium);
@@ -100,7 +101,7 @@ public sealed partial class NoteEdit : FancyWindow
         SeverityOption.ModulateSelfOverride = null;
     }
 
-    private NoteSeverity? _noteSeverity = Shared.Database.NoteSeverity.None;
+    private NoteSeverity? _noteSeverity = null;
 
     private string PlayerName { get; }
     private int NoteId { get; }
@@ -182,7 +183,7 @@ public sealed partial class NoteEdit : FancyWindow
 
     private void OnSeverityChanged(OptionButton.ItemSelectedEventArgs args)
     {
-        NoteSeverity = (NoteSeverity) args.Id;
+        NoteSeverity = args.Id == -1 ? NoteSeverity = null : (NoteSeverity) args.Id;
         SeverityOption.SelectId(args.Id);
     }
 
@@ -238,7 +239,7 @@ public sealed partial class NoteEdit : FancyWindow
             return;
         }
 
-        SubmitButton.Disabled = NoteSeverity == null || NoteSeverity == Shared.Database.NoteSeverity.None;
+        SubmitButton.Disabled = NoteSeverity == null;
     }
 
     private void ResetSubmitButton()
