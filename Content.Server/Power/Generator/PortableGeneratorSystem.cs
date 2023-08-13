@@ -1,5 +1,6 @@
 ﻿using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.Nodes;
 using Content.Shared.Power.Generator;
@@ -13,13 +14,16 @@ namespace Content.Server.Power.Generator;
 /// Implements logic for portable generators (the PACMAN). Primarily UI & power switching behavior.
 /// </summary>
 /// <seealso cref="PortableGeneratorComponent"/>
-public sealed class PortableGeneratorSystem : EntitySystem
+public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     public override void Initialize()
     {
+        base.Initialize();
+
         // Update UI after main system runs.
         UpdatesAfter.Add(typeof(GeneratorSystem));
 
@@ -38,7 +42,7 @@ public sealed class PortableGeneratorSystem : EntitySystem
         {
             Act = () =>
             {
-                ToggleActiveOutput(uid, component);
+                ToggleActiveOutput(uid, component, args.User);
             },
             Message = Loc.GetString(msg),
             Disabled = false,
@@ -49,7 +53,7 @@ public sealed class PortableGeneratorSystem : EntitySystem
         args.Verbs.Add(verb);
     }
 
-    private void ToggleActiveOutput(EntityUid uid, PortableGeneratorComponent component)
+    private void ToggleActiveOutput(EntityUid uid, PortableGeneratorComponent component, EntityUid user)
     {
         var supplier = Comp<PowerSupplierComponent>(uid);
         var nodeContainer = Comp<NodeContainerComponent>(uid);
@@ -72,6 +76,13 @@ public sealed class PortableGeneratorSystem : EntitySystem
             outputMV.Enabled = false;
             outputHV.Enabled = true;
         }
+
+        _popup.PopupEntity(
+            Loc.GetString("portable-generator-switched-output"),
+            uid,
+            user);
+
+        Dirty(uid, component);
 
         _nodeGroup.QueueReflood(outputMV);
         _nodeGroup.QueueReflood(outputHV);
