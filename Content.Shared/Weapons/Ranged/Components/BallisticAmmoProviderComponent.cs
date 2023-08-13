@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class BallisticAmmoProviderComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("soundRack")]
@@ -25,7 +25,6 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     public int Count => UnspawnedCount + Container.ContainedEntities.Count;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("unspawnedCount")]
-    [AutoNetworkedField]
     public int UnspawnedCount;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist")]
@@ -35,7 +34,6 @@ public sealed partial class BallisticAmmoProviderComponent : Component
 
     // TODO: Make this use stacks when the typeserializer is done.
     [DataField("entities")]
-    [AutoNetworkedField(true)]
     public List<EntityUid> Entities = new();
 
     /// <summary>
@@ -48,14 +46,12 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// Is the gun ready to shoot; if AutoCycle is true then this will always stay true and not need to be manually done.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
-    [AutoNetworkedField]
     public bool Cycled = true;
 
     /// <summary>
     /// Is the magazine allowed to be cycled
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycleable")]
-    [AutoNetworkedField]
     public bool Cycleable = true;
 
     /// <summary>

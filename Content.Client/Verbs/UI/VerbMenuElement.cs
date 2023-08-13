@@ -50,7 +50,7 @@ namespace Content.Client.Verbs.UI
                 {
                     OverrideDirection = Direction.South,
                     SetSize = new Vector2(ElementHeight, ElementHeight),
-                    Sprite = entManager.GetComponentOrNull<SpriteComponent>(verb.IconEntity.Value)
+                    Sprite = entManager.GetComponentOrNull<SpriteComponent>(entManager.ToEntity(verb.IconEntity.Value))
                 };
 
                 Icon.AddChild(spriteView);
