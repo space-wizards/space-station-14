@@ -11,4 +11,10 @@ public sealed class EmagSiliconLawComponent : Component
     /// </summary>
     [DataField("ownerName")]
     public string? OwnerName;
+
+    /// <summary>
+    /// Does the panel need to be open to EMAG this law provider.
+    /// </summary>
+    [DataField("requireOpenPanel")]
+    public bool RequireOpenPanel = true;
 }

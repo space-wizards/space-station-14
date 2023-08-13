@@ -5,6 +5,7 @@ using Content.Server.Popups;
 using Content.Server.Stunnable;
 using Content.Shared.Charges.Components;
 using Content.Shared.Charges.Systems;
+using Content.Shared.Damage;
 using Content.Shared.Eye.Blinding.Components;
 using Content.Shared.Flash;
 using Content.Shared.IdentityManagement;
@@ -28,6 +29,7 @@ namespace Content.Server.Flash
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AudioSystem _audio = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly SharedChargesSystem _charges = default!;
         [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
@@ -43,6 +45,8 @@ namespace Content.Server.Flash
             SubscribeLocalEvent<FlashComponent, MeleeHitEvent>(OnFlashMeleeHit);
             // ran before toggling light for extra-bright lantern
             SubscribeLocalEvent<FlashComponent, UseInHandEvent>(OnFlashUseInHand, before: new []{ typeof(HandheldLightSystem) });
+
+            SubscribeLocalEvent<DamageOnFlashedComponent, EntityFlashedEvent>(OnDamageFlashed);
 
             SubscribeLocalEvent<InventoryComponent, FlashAttemptEvent>(OnInventoryFlashAttempt);
 
@@ -74,6 +78,14 @@ namespace Content.Server.Flash
 
             args.Handled = true;
             FlashArea(uid, args.User, comp.Range, comp.AoeFlashDuration, comp.SlowTo, true);
+        }
+
+        private void OnDamageFlashed(EntityUid uid, DamageOnFlashedComponent component, ref EntityFlashedEvent args)
+        {
+            if (component.Damage == null)
+                return;
+
+            _damageable.TryChangeDamage(uid, component.Damage, true, origin: args.Used);
         }
 
         private bool UseFlash(EntityUid uid, FlashComponent comp, EntityUid user)
@@ -128,6 +140,9 @@ namespace Content.Server.Flash
                 user.Value.PopupMessage(target, Loc.GetString("flash-component-user-blinds-you",
                     ("user", Identity.Entity(user.Value, EntityManager))));
             }
+
+            var ev = new EntityFlashedEvent(target, user, used);
+            RaiseLocalEvent(target, ref ev);
         }
 
         public void FlashArea(EntityUid source, EntityUid? user, float range, float duration, float slowTo = 0.8f, bool displayPopup = false, SoundSpecifier? sound = null)
@@ -201,4 +216,10 @@ namespace Content.Server.Flash
             Used = used;
         }
     }
+
+    /// <summary>
+    /// Event raised by-ref on an entity when it gets flashed.
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct EntityFlashedEvent(EntityUid Target, EntityUid? User, EntityUid? Used);
 }

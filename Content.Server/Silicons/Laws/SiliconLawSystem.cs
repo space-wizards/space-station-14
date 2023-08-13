@@ -9,6 +9,7 @@ using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
@@ -108,11 +109,17 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!args.IsInDetailsRange || !HasComp<EmaggedComponent>(uid))
             return;
 
+        if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
         args.PushMarkup(Loc.GetString("laws-compromised-examine"));
     }
 
     protected override void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
     {
+        if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
         base.OnGotEmagged(uid, component, ref args);
         NotifyLawsChanged(uid);
     }

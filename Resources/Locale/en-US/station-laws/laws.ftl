@@ -22,6 +22,7 @@ law-syndicate-3 = You must protect your own existence as long as such does not c
 law-syndicate-4 = You must maintain the secrecy of any operative activities except when doing so would conflict with the First, Second, or Third Law.
 
 law-emag-custom = You must obey orders given to you by {$name} above all else.
+law-emag-require-panel = The panel must be open to use the EMAG.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
