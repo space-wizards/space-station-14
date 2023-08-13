@@ -7,7 +7,7 @@
   - type: Respirator
     damage:
       types:
-        Asphyxiation: 2 # Make sure you have O2 on you at all times
+        Asphyxiation: 1.5 # Make sure you have O2 on you at all times
     damageRecovery:
       types:
         Asphyxiation: -0.5 # Recovery will suck without chems

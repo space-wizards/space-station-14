@@ -44,9 +44,9 @@
   <Box>
     <GuideEntityEmbed Entity="CaptainIDCard" Caption="Captain's ID Card"/>
   </Box>
-  - Steal the Captain's [color=#a4885c]Antique Laser Gun[/color].
+  - Steal the Captain's [color=#a4885c]Antique Laser Pistol[/color].
   <Box>
-    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Captain's Antique Laser Gun"/>
+    <GuideEntityEmbed Entity="WeaponAntiqueLaser" Caption="Captain's Antique Laser Pistol"/>
   </Box>
   - Steal the Captain's [color=#a4885c]Jetpack[/color].
   <Box>

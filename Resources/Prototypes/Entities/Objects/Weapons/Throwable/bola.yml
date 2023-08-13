@@ -39,7 +39,7 @@
   - type: DamageOnLand
     damage:
       types:
-        Blunt: 5
+        Blunt: 3
         Stamina: 80
   - type: Ensnaring
     freeTime: 2.0

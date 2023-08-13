@@ -94,6 +94,9 @@ ghost-role-information-guardian-description = Listen to your owner. Don't tank d
 ghost-role-information-holoparasite-name = Holoparasite
 ghost-role-information-holoparasite-description = Listen to your owner. Don't tank damage. Punch people hard.
 
+ghost-role-information-holoclown-name = Holoclown
+ghost-role-information-holoclown-description = Listen to your owner. Utilize your pockets and hand to help your owner.
+
 ghost-role-information-ifrit-name = Ifrit
 ghost-role-information-ifrit-description = Listen to your owner. Don't tank damage. Punch people hard.
 

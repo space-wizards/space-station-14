@@ -189,3 +189,10 @@
   completetime: 2
   materials:
     Plastic: 100
+
+- type: latheRecipe
+  id: Jug
+  result: Jug
+  completetime: 4
+  materials:
+    Plastic: 700
