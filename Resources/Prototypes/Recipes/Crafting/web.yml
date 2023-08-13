@@ -1,0 +1,10 @@
+- type: construction
+  name: web tile
+  id: TileWeb
+  graph: TileWeb
+  startNode: start
+  targetNode: webtile
+  category: construction-category-tiles
+  description: "Nice and smooth."
+  icon: { sprite: Objects/Tiles/web.rsi, state: icon }
+  objectType: Item
