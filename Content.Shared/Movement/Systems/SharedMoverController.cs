@@ -20,6 +20,7 @@ using System.Numerics;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.Bed.Sleep;
 
 namespace Content.Shared.Movement.Systems
 {
@@ -123,6 +124,7 @@ namespace Content.Shared.Movement.Systems
             if (RelayTargetQuery.TryGetComponent(uid, out var relayTarget))
             {
                 if (_mobState.IsIncapacitated(relayTarget.Source) ||
+                    TryComp<SleepingComponent>(relayTarget.Source, out _) ||
                     !MoverQuery.TryGetComponent(relayTarget.Source, out var relayedMover))
                 {
                     canMove = false;
