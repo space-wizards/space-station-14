@@ -71,7 +71,8 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveSupplier(PowerSupplierComponent supplier)
         {
-            DebugTools.Assert(supplier.NetworkSupply.LinkedNetwork == NetworkNode.Id);
+            // Linked network can be default if it was re-connected twice in one tick.
+            DebugTools.Assert(supplier.NetworkSupply.LinkedNetwork == default || supplier.NetworkSupply.LinkedNetwork == NetworkNode.Id);
             supplier.NetworkSupply.LinkedNetwork = default;
             Suppliers.Remove(supplier);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -87,7 +88,8 @@ namespace Content.Server.Power.NodeGroups
 
         public void RemoveConsumer(PowerConsumerComponent consumer)
         {
-            DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == NetworkNode.Id);
+            // Linked network can be default if it was re-connected twice in one tick.
+            DebugTools.Assert(consumer.NetworkLoad.LinkedNetwork == default || consumer.NetworkLoad.LinkedNetwork == NetworkNode.Id);
             consumer.NetworkLoad.LinkedNetwork = default;
             Consumers.Remove(consumer);
             _powerNetSystem?.QueueReconnectPowerNet(this);
@@ -113,7 +115,8 @@ namespace Content.Server.Power.NodeGroups
             // Can be missing if the entity is being deleted, not a big deal.
             if (_entMan.TryGetComponent(discharger.Owner, out PowerNetworkBatteryComponent? battery))
             {
-                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
+                // Linked network can be default if it was re-connected twice in one tick.
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkDischarging == default || battery.NetworkBattery.LinkedNetworkDischarging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = default;
             }
 
@@ -141,7 +144,8 @@ namespace Content.Server.Power.NodeGroups
             // Can be missing if the entity is being deleted, not a big deal.
             if (_entMan.TryGetComponent(charger.Owner, out PowerNetworkBatteryComponent? battery))
             {
-                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
+                // Linked network can be default if it was re-connected twice in one tick.
+                DebugTools.Assert(battery.NetworkBattery.LinkedNetworkCharging == default || battery.NetworkBattery.LinkedNetworkCharging == NetworkNode.Id);
                 battery.NetworkBattery.LinkedNetworkCharging = default;
             }
 
