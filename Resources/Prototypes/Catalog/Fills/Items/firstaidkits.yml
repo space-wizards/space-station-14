@@ -53,8 +53,6 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeSpaceacillin
-        amount: 2
       - id: SyringeIpecac
         amount: 2
       - id: AntiPoisonMedipen
