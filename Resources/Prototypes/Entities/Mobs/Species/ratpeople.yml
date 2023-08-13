@@ -55,7 +55,7 @@
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MovementSpeedModifier
     baseWalkSpeed : 3.7
-    baseSprintSpeed : 5.5
+    baseSprintSpeed : 4.7
   - type: Perishable
 
 - type: entity
