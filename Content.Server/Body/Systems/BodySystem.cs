@@ -58,7 +58,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out BodyPartComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -75,7 +75,7 @@ public sealed class BodySystem : SharedBodySystem
             if (TryComp(slot.Child, out OrganComponent? child))
             {
                 child.ParentSlot = slot;
-                Dirty(slot.Child.Value);
+                Dirty(slot.Child.Value, child);
                 continue;
             }
 
@@ -101,7 +101,7 @@ public sealed class BodySystem : SharedBodySystem
         }
 
         child.ParentSlot = slot;
-        Dirty(slot.Child.Value);
+        Dirty(slot.Child.Value, child);
     }
 
     private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
@@ -179,22 +179,6 @@ public sealed class BodySystem : SharedBodySystem
         var layers = HumanoidVisualLayersExtension.Sublayers(layer.Value);
         _humanoidSystem.SetLayersVisibility(oldBody.Value, layers, false, true, humanoid);
         return true;
-    }
-
-    protected override void InitBody(BodyComponent body, BodyPrototype prototype)
-    {
-        var root = prototype.Slots[prototype.Root];
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
-        if (root.Part == null)
-            return;
-        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
-        var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
-        body.Root = slot;
-        partComponent.Body = bodyId;
-
-        AttachPart(bodyId, slot, partComponent);
-        InitPart(partComponent, prototype, prototype.Root);
     }
 
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)

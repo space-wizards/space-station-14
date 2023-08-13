@@ -283,6 +283,17 @@
 
 - type: entity
   parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtQMTurtleneck
+  name: quartermasters's turtleneck
+  description: A sharp turtleneck made for the hardy work environment of supply.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/qmturtleskirt.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
   id: ClothingUniformJumpskirtResearchDirector
   name: research director's turtleneck
   description: It's a turtleneck worn by those with the know-how to achieve the position of Research Director. Its fabric provides minor protection from biological contaminants.
@@ -748,3 +759,14 @@
     sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/senior_officer.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtSecGrey
+  name: grey security jumpskirt
+  description: A tactical relic of years past before Nanotrasen decided it was cheaper to dye the suits red instead of washing out the blood.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi

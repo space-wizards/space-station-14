@@ -22,6 +22,7 @@
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerWardenFilled
@@ -46,6 +47,7 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerSecurityFilled
@@ -69,6 +71,7 @@
       - id: ClothingShoesBootsJack
       - id: WeaponMeleeNeedle
         prob: 0.1
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -77,6 +80,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
@@ -111,6 +115,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
+        prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective

@@ -15,5 +15,6 @@ public enum AlertCategory
     Piloting,
     Hunger,
     Thirst,
-    Toxins
+    Toxins,
+    Battery
 }

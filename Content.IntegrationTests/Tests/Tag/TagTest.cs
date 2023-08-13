@@ -15,14 +15,15 @@ namespace Content.IntegrationTests.Tests.Tag
         private const string TagEntityId = "TagTestDummy";
 
         // Register these three into the prototype manager
-        private const string StartingTag = "A";
-        private const string AddedTag = "EIOU";
-        private const string UnusedTag = "E";
+        private const string StartingTag = "StartingTagDummy";
+        private const string AddedTag = "AddedTagDummy";
+        private const string UnusedTag = "UnusedTagDummy";
 
         // Do not register this one
         private const string UnregisteredTag = "AAAAAAAAA";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: Tag
   id: {StartingTag}
 
@@ -43,11 +44,7 @@ namespace Content.IntegrationTests.Tests.Tag
         [Test]
         public async Task TagComponentTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();

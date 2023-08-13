@@ -249,7 +249,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
-        var ev = new BeforeDoorOpenedEvent();
+        var ev = new BeforeDoorOpenedEvent(){User=user};
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
@@ -496,10 +496,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
-        // Can't click to close firelocks.
-        if (Resolve(uid, ref door) && door.State == DoorState.Open &&
+        // Anyone can click to open firelocks
+        if (Resolve(uid, ref door) && door.State == DoorState.Closed &&
             TryComp<FirelockComponent>(uid, out var firelock))
-            return false;
+            return true;
 
         if (!Resolve(uid, ref access, false))
             return true;

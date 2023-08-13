@@ -460,7 +460,6 @@
         - Plunger
         - WhitelistChameleon
     - type: Sprite
-      netsync: false
       sprite: Objects/Specific/Janitorial/plunger.rsi
       state: plunger
     - type: Item

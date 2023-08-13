@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mining;
+using Content.Shared.Mining;
 using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -20,7 +20,7 @@ public sealed class OreVeinComponent : Component
     /// <summary>
     /// The weighted random prototype used for determining what ore will be dropped.
     /// </summary>
-    [DataField("oreRarityPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    [DataField("oreRarityPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomOrePrototype>))]
     public string? OreRarityPrototypeId;
 
     /// <summary>

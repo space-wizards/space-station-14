@@ -28,7 +28,7 @@ namespace Content.Shared.Projectiles
         {
             base.Initialize();
             SubscribeLocalEvent<ProjectileComponent, PreventCollideEvent>(PreventCollision);
-            SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileCollideEvent>(OnEmbedProjectileCollide);
+            SubscribeLocalEvent<EmbeddableProjectileComponent, ProjectileHitEvent>(OnEmbedProjectileHit);
             SubscribeLocalEvent<EmbeddableProjectileComponent, ThrowDoHitEvent>(OnEmbedThrowDoHit);
             SubscribeLocalEvent<EmbeddableProjectileComponent, ActivateInWorldEvent>(OnEmbedActivate);
             SubscribeLocalEvent<EmbeddableProjectileComponent, RemoveEmbeddedProjectileEvent>(OnEmbedRemove);
@@ -80,14 +80,14 @@ namespace Content.Shared.Projectiles
             Embed(uid, args.Target, component);
         }
 
-        private void OnEmbedProjectileCollide(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileCollideEvent args)
+        private void OnEmbedProjectileHit(EntityUid uid, EmbeddableProjectileComponent component, ref ProjectileHitEvent args)
         {
-            Embed(uid, args.OtherEntity, component);
+            Embed(uid, args.Target, component);
 
             // Raise a specific event for projectiles.
             if (TryComp<ProjectileComponent>(uid, out var projectile))
             {
-                var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.OtherEntity);
+                var ev = new ProjectileEmbedEvent(projectile.Shooter, projectile.Weapon, args.Target);
                 RaiseLocalEvent(uid, ref ev);
             }
         }
@@ -142,10 +142,16 @@ namespace Content.Shared.Projectiles
             Coordinates = coordinates;
         }
     }
-}
 
-/// <summary>
-/// Raised when entity is just about to be hit with projectile but can reflect it
-/// </summary>
-[ByRefEvent]
-public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
+    /// <summary>
+    /// Raised when entity is just about to be hit with projectile but can reflect it
+    /// </summary>
+    [ByRefEvent]
+    public record struct ProjectileReflectAttemptEvent(EntityUid ProjUid, ProjectileComponent Component, bool Cancelled);
+
+    /// <summary>
+    /// Raised when projectile hits other entity
+    /// </summary>
+    [ByRefEvent]
+    public readonly record struct ProjectileHitEvent(EntityUid Target);
+}

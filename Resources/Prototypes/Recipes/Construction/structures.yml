@@ -627,6 +627,75 @@
   conditions:
   - !type:TileNotBlocked
 
+# Chain link fencing
+- type: construction
+  name: chain link fence
+  id: FenceMetal
+  graph: FenceMetal
+  startNode: start
+  targetNode: straight
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: straight
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence corner
+  id: FenceMetalCorner
+  graph: FenceMetal
+  startNode: start
+  targetNode: corner
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence end-piece
+  id: FenceMetalEnd
+  graph: FenceMetal
+  startNode: start
+  targetNode: end
+  category: construction-category-structures
+  description: Part of a chain link fence meant to cordon off areas.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: end
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
+- type: construction
+  name: chain link fence gate
+  id: FenceMetalGate
+  graph: FenceMetal
+  startNode: start
+  targetNode: gate
+  category: construction-category-structures
+  description: An easy way to get through a chain link fence.
+  icon:
+    sprite: Structures/Walls/fence.rsi
+    state: door_closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+  - !type:TileNotBlocked
+
 - type: construction
   name: airlock
   id: Airlock

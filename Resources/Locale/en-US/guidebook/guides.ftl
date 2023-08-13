@@ -9,6 +9,7 @@ guide-entry-network-configurator = Network Configurator
 guide-entry-power = Power
 guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity
+guide-entry-teg = Thermo-electric Generator (TEG)
 guide-entry-controls = Controls
 guide-entry-radio = Radio
 guide-entry-jobs = Jobs
@@ -44,3 +45,6 @@ guide-entry-dna = DNA
 
 guide-entry-antagonists = Antagonists
 guide-entry-nuclear-operatives = Nuclear Operatives
+guide-entry-traitors = Traitors
+guide-entry-zombies = Zombies
+guide-entry-minor-antagonists = Minor Antagonists

@@ -118,6 +118,9 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (component.Blacklist != null && component.Blacklist.IsValid(item))
             return false;
 
+        if (!_container.TryRemoveFromContainer(item))
+            return false;
+
         if (user != null)
         {
             _adminLog.Add(LogType.Action, LogImpact.High,

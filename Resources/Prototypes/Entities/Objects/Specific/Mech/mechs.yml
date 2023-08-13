@@ -113,8 +113,8 @@
 
 # TODO: have a whitelist for honker equipment
 - type: entity
-  id: MechHonker
   parent: BaseMech
+  id: MechHonker
   name: H.O.N.K.
   description: "Produced by \"Tyranny of Honk, INC\", this exosuit is designed as heavy clown-support. Used to spread the fun and joy of life. HONK!"
   components:
@@ -138,8 +138,8 @@
       - HumanoidAppearance
 
 - type: entity
-  id: MechHonkerBattery
   parent: MechHonker
+  id: MechHonkerBattery
   suffix: Battery
   components:
   - type: ContainerFill
@@ -148,8 +148,8 @@
       - PowerCellHigh
 
 - type: entity
-  id: MechHamtr
   parent: BaseMech
+  id: MechHamtr
   name: HAMTR
   description: "An experimental mech which uses a brain–computer interface to connect directly to a hamsters brain."
   components:
@@ -188,8 +188,73 @@
     baseSprintSpeed: 3.7
 
 - type: entity
-  id: MechHamtrBattery
   parent: MechHamtr
+  id: MechHamtrBattery
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
+
+# Vim!!!!!!!
+
+- type: entity
+  parent: BaseMech
+  id: MechVim
+  name: Vim
+  description: A minature exosuit from Nanotrasen, developed to let the irreplacable station pets live a little longer.
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    noRot: true
+    sprite: Objects/Specific/Mech/mecha.rsi
+    layers:
+    - map: [ "enum.MechVisualLayers.Base" ]
+      state: vim
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.15
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: FootstepModifier
+    footstepSoundCollection:
+      path: /Audio/Mecha/mechmove03.ogg
+      params:
+        volume: -10
+  - type: Mech
+    baseState: vim
+    openState: vim-open
+    brokenState: vim-broken
+    maxEquipmentAmount: 0
+    # keep mouse safe
+    mechToPilotDamageMultiplier: 0.1
+    airtight: true
+    pilotWhitelist:
+      tags:
+      - VimPilot
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
+  - type: MovementSpeedModifier
+    baseWalkSpeed: 2.25
+    baseSprintSpeed: 3.6
+  # TOOD: buzz / chime actions
+  # TODO: builtin flashlight
+
+- type: entity
+  parent: MechVim
+  id: MechVimBattery
   suffix: Battery
   components:
   - type: ContainerFill
