@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Removed chemistry from nukie planet., type: Remove}
-  id: 4059
-  time: '2023-06-21T00:50:35.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed a bug that allowed observers/ghosts to respawn by disconnecting
@@ -3019,3 +3014,9 @@ Entries:
       making sure that steel tiles do indeed take steel to create.', type: Fix}
   id: 4558
   time: '2023-08-13T12:43:01.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Added cocoa cultivation, type: Add}
+  - {message: Added a recipe for creating a chocolate bar, type: Add}
+  id: 4559
+  time: '2023-08-13T14:35:58.0000000+00:00'
