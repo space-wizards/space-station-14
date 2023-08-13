@@ -10,7 +10,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using TerraFX.Interop.DirectX;
 
 namespace Content.Client.SS220.GhostRoleCast;
 

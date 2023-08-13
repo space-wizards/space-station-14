@@ -9,7 +9,6 @@ using Content.Shared.Database;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
-using TerraFX.Interop.DirectX;
 using System.Runtime.Intrinsics.Arm;
 using Content.Shared.Mining;
 using System.Linq;
@@ -47,7 +46,7 @@ public sealed class MaterialStorageSystem : SharedMaterialStorageSystem
                 SpawnMultipleFromOre(amount, material, Transform(uid).Coordinates);
             }
             else // Руда в пластины
-                SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates); 
+                SpawnMultipleFromMaterial(amount, material, Transform(uid).Coordinates);
         }
     }
 

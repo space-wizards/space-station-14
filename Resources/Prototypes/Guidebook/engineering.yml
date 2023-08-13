@@ -51,13 +51,19 @@
   children:
   - AME
   - Singularity
-  
+  - TEG
+
 - type: guideEntry
   id: AME
   name: guide-entry-ame
   text: "/ServerInfo/Guidebook/Engineering/AME.xml"
-  
+
 - type: guideEntry
   id: Singularity
   name: guide-entry-singularity
   text: "/ServerInfo/Guidebook/Engineering/Singularity.xml"
+
+- type: guideEntry
+  id: TEG
+  name: guide-entry-teg
+  text: "/ServerInfo/Guidebook/Engineering/TEG.xml"
