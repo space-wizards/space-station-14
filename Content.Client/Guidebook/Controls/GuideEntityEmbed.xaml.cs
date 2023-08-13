@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Linq;
 using System.Numerics;
 using Content.Client.ContextMenu.UI;
 using Content.Client.Examine;
@@ -16,7 +15,6 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
-using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook.Controls;
 
@@ -171,17 +169,10 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         if (args.TryGetValue("Rotation", out var rotation))
         {
-            View.OverrideDirection = Angle.FromDegrees(double.Parse(rotation)).GetDir();
+            Sprite.Rotation = Angle.FromDegrees(double.Parse(rotation));
         }
 
-        if (args.TryGetValue("Margin", out var margin))
-        {
-            Margin = ParseThickness(margin);
-        }
-        else
-        {
-            Margin = new Thickness(4, 8);
-        }
+        Margin = new Thickness(4, 8);
 
         // By default, we will map-initialize guidebook entities.
         if (!args.TryGetValue("Init", out var mapInit) || !bool.Parse(mapInit))
@@ -189,21 +180,5 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
         control = this;
         return true;
-    }
-
-    private static Thickness ParseThickness(string value)
-    {
-        if (string.IsNullOrWhiteSpace(value))
-            return default;
-
-        var split = value.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(x => Parse.Float(x)).ToArray();
-        if (split.Length == 1)
-            return new Thickness(split[0]);
-        if (split.Length == 2)
-            return new Thickness(split[0], split[1]);
-        if (split.Length == 4)
-            return new Thickness(split[0], split[1], split[2], split[3]);
-
-        throw new Exception("Invalid Thickness format!");
     }
 }

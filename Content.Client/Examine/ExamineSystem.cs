@@ -359,9 +359,6 @@ namespace Content.Client.Examine
                     _idCounter = 0;
                 RaiseNetworkEvent(new ExamineSystemMessages.RequestExamineInfoMessage(entity, _idCounter, true));
             }
-
-            RaiseLocalEvent(entity, new ClientExaminedEvent(entity, playerEnt.Value));
-
             _lastExaminedEntity = entity;
         }
 
@@ -385,28 +382,6 @@ namespace Content.Client.Examine
                 _requestCancelTokenSource.Cancel();
                 _requestCancelTokenSource = null;
             }
-        }
-    }
-
-    /// <summary>
-    /// An entity was examined on the client.
-    /// </summary>
-    public sealed class ClientExaminedEvent : EntityEventArgs
-    {
-        /// <summary>
-        ///     The entity performing the examining.
-        /// </summary>
-        public readonly EntityUid Examiner;
-
-        /// <summary>
-        ///     Entity being examined, for broadcast event purposes.
-        /// </summary>
-        public readonly EntityUid Examined;
-
-        public ClientExaminedEvent(EntityUid examined, EntityUid examiner)
-        {
-            Examined = examined;
-            Examiner = examiner;
         }
     }
 }

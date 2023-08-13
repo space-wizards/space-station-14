@@ -250,14 +250,6 @@
           pipeDirection: South
     - type: Transform
       noRot: false
-    - type: DeviceNetwork
-      deviceNetId: AtmosDevices
-      receiveFrequencyId: AtmosMonitor
-      transmitFrequencyId: AtmosMonitor
-      sendBroadcastAttemptEvent: true
-      examinableAddress: true
-    - type: WiredNetworkConnection
-    - type: PowerSwitch
 
 - type: entity
   parent: BaseGasThermoMachine
@@ -289,8 +281,6 @@
       powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineFreezerMachineCircuitBoard
-    - type: DeviceNetwork
-      prefix: device-address-prefix-freezer
 
 - type: entity
   parent: GasThermoMachineFreezer
@@ -332,8 +322,6 @@
       powerDisabled: true #starts off
     - type: Machine
       board: ThermomachineHeaterMachineCircuitBoard
-    - type: DeviceNetwork
-      prefix: device-address-prefix-heater
 
 - type: entity
   parent: GasThermoMachineHeater

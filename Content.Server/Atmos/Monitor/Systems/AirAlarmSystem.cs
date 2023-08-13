@@ -166,7 +166,7 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
@@ -225,7 +225,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _activeUserInterfaces.Remove(uid);
     }
 
-    private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
+    private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
     {
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
