@@ -54,7 +54,7 @@
             ResearchAssistant: [ 4, 4]
             Boxer: [ 1, 1]
             Paramedic: [ 1, 1]
-            Reporter: [ 1, 1]
+            #Reporter: [ 1, 1]
             Psychologist: [ 1, 1]
             #SeniorEngineer: [ 1, 1] #SS220 No senior roles
             #SeniorOfficer: [ 1, 1] #SS220 No senior roles

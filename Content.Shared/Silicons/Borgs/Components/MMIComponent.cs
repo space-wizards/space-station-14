@@ -22,7 +22,7 @@ public sealed class MMIComponent : Component
     /// The <see cref="ItemSlot"/> for this implanter
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    public ItemSlot BrainSlot = default!;
+    public ItemSlot BrainSlot = new();
 
     [DataField("hasMindState")]
     public string HasMindState = "mmi_alive";
