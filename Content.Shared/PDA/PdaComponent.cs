@@ -30,7 +30,7 @@ namespace Content.Shared.PDA
         [DataField("id", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
         public string? IdCard;
 
-        [ViewVariables] public IdCardComponent? ContainedId;
+        [ViewVariables] public EntityUid? ContainedId;
         [ViewVariables] public bool FlashlightOn;
 
         [ViewVariables] public string? OwnerName;

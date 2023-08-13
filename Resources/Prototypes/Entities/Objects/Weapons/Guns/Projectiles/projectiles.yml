@@ -90,17 +90,6 @@
       fly-by: *flybyfixture
 
 - type: entity
-  id: BaseBulletHighVelocity
-  name: base bullet high-velocity
-  parent: BaseBullet
-  noSpawn: true
-  components:
-  - type: Projectile
-    damage:
-      types:
-        Piercing: 17
-
-- type: entity
   id: BaseBulletPractice
   name: base bullet practice
   parent: BaseBullet
@@ -143,6 +132,18 @@
     energy: 7.0
   - type: IgniteOnCollide
     fireStacks: 1
+
+- type: entity
+  id: BaseBulletAP
+  name: base bullet armor-piercing
+  parent: BaseBullet
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 11 # 20% decrease
+    ignoreResistances: true
 
 # Energy projectiles
 - type: entity
@@ -309,7 +310,7 @@
 - type: entity
   id: BulletKinetic
   name: kinetic bolt
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   noSpawn: true
   description: Not too bad, but you still don't want to get hit by it.
   components:
@@ -327,7 +328,7 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Blunt: 20
+        Blunt: 25
   # Short lifespan
   - type: TimedDespawn
     lifetime: 0.4
@@ -335,7 +336,7 @@
 - type: entity
   id: BulletCharge
   name: charge bolt
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   noSpawn: true
   description: Marks a target for additional damage.
   components:
@@ -693,14 +694,14 @@
   noSpawn: true
   components:
     - type: EmbeddableProjectile
+      deleteOnRemove: true
     - type: Clickable
+    - type: InteractionOutline
     - type: Sprite
       noRot: false
       sprite: Objects/Weapons/Guns/Launchers/grappling_gun.rsi
       layers:
         - state: hook
-        - state: hook-unshaded
-          shader: unshaded
     - type: Physics
       bodyType: Dynamic
       linearDamping: 0

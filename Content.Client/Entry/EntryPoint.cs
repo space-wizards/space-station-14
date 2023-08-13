@@ -109,7 +109,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("htnPrimitive");
             _prototypeManager.RegisterIgnore("gameMap");
             _prototypeManager.RegisterIgnore("gameMapPool");
-            _prototypeManager.RegisterIgnore("faction");
+            _prototypeManager.RegisterIgnore("npcFaction");
             _prototypeManager.RegisterIgnore("lobbyBackground");
             _prototypeManager.RegisterIgnore("advertisementsPack");
             _prototypeManager.RegisterIgnore("metabolizerType");
@@ -120,7 +120,6 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("noiseChannel");
             _prototypeManager.RegisterIgnore("spaceBiome");
             _prototypeManager.RegisterIgnore("worldgenConfig");
-            _prototypeManager.RegisterIgnore("gcQueue");
             _prototypeManager.RegisterIgnore("gameRule");
             _prototypeManager.RegisterIgnore("worldSpell");
             _prototypeManager.RegisterIgnore("entitySpell");

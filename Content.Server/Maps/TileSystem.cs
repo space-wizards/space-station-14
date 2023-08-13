@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
@@ -27,7 +27,12 @@ public sealed class TileSystem : EntitySystem
         return PryTile(tileRef);
     }
 
-    public bool PryTile(TileRef tileRef)
+	public bool PryTile(TileRef tileRef)
+    {
+        return PryTile(tileRef, false);
+    }
+
+    public bool PryTile(TileRef tileRef, bool pryPlating)
     {
         var tile = tileRef.Tile;
 
@@ -36,7 +41,7 @@ public sealed class TileSystem : EntitySystem
 
         var tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.TypeId];
 
-        if (!tileDef.CanCrowbar)
+        if (!tileDef.CanCrowbar && !(pryPlating && tileDef.CanAxe))
             return false;
 
         return DeconstructTile(tileRef);
@@ -69,7 +74,7 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
-        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
+        var variant = replacementTile.PickVariant();
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {

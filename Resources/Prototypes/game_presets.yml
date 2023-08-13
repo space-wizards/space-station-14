@@ -72,6 +72,19 @@
   rules:
     - Nukeops
     - BasicStationEventScheduler
+    
+- type: gamePreset
+  id: NukeopsTraitor
+  alias:
+    - nukeopstraitor
+    - syndinukies
+  name: nukeops-traitor-title
+  description: nukeops-traitor-description
+  showInVote: false
+  rules:
+    - Nukeops
+    - Traitor
+    - BasicStationEventScheduler
 
 - type: gamePreset
   id: Zombie

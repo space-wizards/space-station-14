@@ -68,7 +68,7 @@ public abstract partial class SharedGunSystem
 
         TakeCharge(uid, component);
         UpdateBatteryAppearance(uid, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnBatteryAmmoCount(EntityUid uid, BatteryAmmoProviderComponent component, ref GetAmmoCountEvent args)

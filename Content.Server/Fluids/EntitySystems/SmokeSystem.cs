@@ -208,7 +208,7 @@ public sealed class SmokeSystem : EntitySystem
         var tile = mapGrid.GetTileRef(xform.Coordinates.ToVector2i(EntityManager, _mapManager));
 
         var solutionFraction = 1 / Math.Floor(frameTime);
-        var ents = _lookup.GetEntitiesIntersecting(tile, LookupFlags.Uncontained).ToArray();
+        var ents = _lookup.GetEntitiesIntersecting(tile, 0f, flags: LookupFlags.Uncontained).ToArray();
 
         foreach (var reagentQuantity in solution.Contents.ToArray())
         {

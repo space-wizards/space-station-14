@@ -265,6 +265,21 @@
         - state: green
         - state: boxer
 
+- type: entity
+  id: SpawnPointBorg
+  parent: SpawnPointJobBase
+  name: cyborg
+  components:
+  - type: SpawnPoint
+    job_id: Borg
+  - type: Sprite
+    layers:
+    - state: green
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot
+    - sprite: Mobs/Silicon/chassis.rsi
+      state: robot_e
+
 # Command
 
 - type: entity
@@ -306,6 +321,18 @@
       - state: ce
 
 - type: entity
+  id: SpawnPointSeniorEngineer
+  parent: SpawnPointJobBase
+  name: seniorengineer
+  components:
+  - type: SpawnPoint
+    job_id: SeniorEngineer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorengineer
+
+- type: entity
   id: SpawnPointStationEngineer
   parent: SpawnPointJobBase
   name: stationengineer
@@ -344,6 +371,18 @@
       - state: cmo
 
 - type: entity
+  id: SpawnPointSeniorPhysician
+  parent: SpawnPointJobBase
+  name: seniorphysician
+  components:
+  - type: SpawnPoint
+    job_id: SeniorPhysician
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorphysician
+
+- type: entity
   id: SpawnPointMedicalDoctor
   parent: SpawnPointJobBase
   name: medicaldoctor
@@ -354,7 +393,7 @@
     layers:
       - state: green
       - state: doctor
-      
+
 - type: entity
   id: SpawnPointParamedic
   parent: SpawnPointJobBase
@@ -394,6 +433,18 @@
       - state: rd
 
 - type: entity
+  id: SpawnPointSeniorResearcher
+  parent: SpawnPointJobBase
+  name: seniorresearcher
+  components:
+  - type: SpawnPoint
+    job_id: SeniorResearcher
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorresearcher
+
+- type: entity
   id: SpawnPointScientist
   parent: SpawnPointJobBase
   name: scientist
@@ -430,6 +481,18 @@
     layers:
       - state: green
       - state: warden
+
+- type: entity
+  id: SpawnPointSeniorOfficer
+  parent: SpawnPointJobBase
+  name: seniorofficer
+  components:
+  - type: SpawnPoint
+    job_id: SeniorOfficer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: seniorofficer
 
 - type: entity
   id: SpawnPointSecurityOfficer

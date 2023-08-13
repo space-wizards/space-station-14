@@ -25,23 +25,23 @@ public sealed class PyroclasticAnomalySystem : EntitySystem
     {
         var xform = Transform(uid);
         var ignitionRadius = component.MaximumIgnitionRadius * args.Stability;
-        IgniteNearby(xform.Coordinates, args.Severity, ignitionRadius);
+        IgniteNearby(uid, xform.Coordinates, args.Severity, ignitionRadius);
     }
 
     private void OnSupercritical(EntityUid uid, PyroclasticAnomalyComponent component, ref AnomalySupercriticalEvent args)
     {
         var xform = Transform(uid);
-        IgniteNearby(xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
+        IgniteNearby(uid, xform.Coordinates, 1, component.MaximumIgnitionRadius * 2);
     }
 
-    public void IgniteNearby(EntityCoordinates coordinates, float severity, float radius)
+    public void IgniteNearby(EntityUid uid, EntityCoordinates coordinates, float severity, float radius)
     {
         foreach (var flammable in _lookup.GetComponentsInRange<FlammableComponent>(coordinates, radius))
         {
             var ent = flammable.Owner;
             var stackAmount = 1 + (int) (severity / 0.15f);
             _flammable.AdjustFireStacks(ent, stackAmount, flammable);
-            _flammable.Ignite(ent, flammable);
+            _flammable.Ignite(ent, uid, flammable);
         }
     }
 }

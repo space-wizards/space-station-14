@@ -35,7 +35,6 @@ public sealed class WieldableSystem : EntitySystem
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
         SubscribeLocalEvent<WieldableComponent, VirtualItemDeletedEvent>(OnVirtualItemDeleted);
         SubscribeLocalEvent<WieldableComponent, GetVerbsEvent<InteractionVerb>>(AddToggleWieldVerb);
-        SubscribeLocalEvent<WieldableComponent, DisarmAttemptEvent>(OnDisarmAttemptEvent);
 
         SubscribeLocalEvent<MeleeRequiresWieldComponent, AttemptMeleeEvent>(OnMeleeAttempt);
         SubscribeLocalEvent<GunRequiresWieldComponent, AttemptShootEvent>(OnShootAttempt);
@@ -85,12 +84,6 @@ public sealed class WieldableSystem : EntitySystem
         Dirty(gun);
     }
 
-    private void OnDisarmAttemptEvent(EntityUid uid, WieldableComponent component, DisarmAttemptEvent args)
-    {
-        if (component.Wielded)
-            args.Cancel();
-    }
-
     private void AddToggleWieldVerb(EntityUid uid, WieldableComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (args.Hands == null || !args.CanAccess || !args.CanInteract)
@@ -118,6 +111,9 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
+        args.Handled = true;
+
         if(!component.Wielded)
             AttemptWield(uid, component, args.User);
         else

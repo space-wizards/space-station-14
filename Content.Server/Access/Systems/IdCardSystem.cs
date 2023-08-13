@@ -1,4 +1,3 @@
-using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Kitchen.Components;
 using Content.Server.Popups;
@@ -7,8 +6,10 @@ using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Database;
 using Content.Shared.Popups;
+using Content.Shared.StatusIcon;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
@@ -18,6 +19,7 @@ namespace Content.Server.Access.Systems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
 
         public override void Initialize()
         {
@@ -112,8 +114,32 @@ namespace Content.Server.Access.Systems
             if (player != null)
             {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                    $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(id.Owner):entity} to {jobTitle} ");
+                    $"{ToPrettyString(player.Value):player} has changed the job title of {ToPrettyString(uid):entity} to {jobTitle} ");
             }
+            return true;
+        }
+
+        public bool TryChangeJobIcon(EntityUid uid, StatusIconPrototype jobIcon, IdCardComponent? id = null, EntityUid? player = null)
+        {
+            if (!Resolve(uid, ref id))
+            {
+                return false;
+            }
+
+            if (id.JobIcon == jobIcon.ID)
+            {
+                return true;
+            }
+
+            id.JobIcon = jobIcon.ID;
+            Dirty(id);
+
+            if (player != null)
+            {
+                _adminLogger.Add(LogType.Identity, LogImpact.Low,
+                    $"{ToPrettyString(player.Value):player} has changed the job icon of {ToPrettyString(id.Owner):entity} to {jobIcon} ");
+            }
+
             return true;
         }
 
@@ -149,7 +175,7 @@ namespace Content.Server.Access.Systems
             if (player != null)
             {
                 _adminLogger.Add(LogType.Identity, LogImpact.Low,
-                    $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(id.Owner):entity} to {fullName} ");
+                    $"{ToPrettyString(player.Value):player} has changed the name of {ToPrettyString(uid):entity} to {fullName} ");
             }
             return true;
         }
@@ -174,7 +200,7 @@ namespace Content.Server.Access.Systems
                 : Loc.GetString("access-id-card-component-owner-full-name-job-title-text",
                     ("fullName", id.FullName),
                     ("jobSuffix", jobSuffix));
-            EntityManager.GetComponent<MetaDataComponent>(id.Owner).EntityName = val;
+            _metaSystem.SetEntityName(uid, val);
         }
     }
 }

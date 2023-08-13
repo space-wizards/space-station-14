@@ -12,6 +12,7 @@
     sprite: Objects/Weapons/Guns/Pistols/water_pistol.rsi
     size: 10
   - type: Gun
+    clumsyProof: true
     cameraRecoilScalar: 0 #no recoil
     fireRate: 1
     selectedMode: SemiAuto

@@ -31,6 +31,12 @@ reagent-effect-guidebook-explosion-reaction-effect =
         *[other] cause
     } an explosion
 
+reagent-effect-guidebook-emp-reaction-effect =
+    { $chance ->
+        [1] Causes
+        *[other] cause
+    } an electromagnetic pulse
+
 reagent-effect-guidebook-foam-area-reaction-effect =
     { $chance ->
         [1] Creates
@@ -200,13 +206,13 @@ reagent-effect-guidebook-cure-disease =
 reagent-effect-guidebook-cure-eye-damage =
     { $chance ->
         [1] { $deltasign ->
-                [1] Heals
-                *[-1] Deals
+                [1] Deals
+                *[-1] Heals
             }
         *[other]
             { $deltasign ->
-                [1] heal
-                *[-1] deal
+                [1] deal
+                *[-1] heal
             }
     } eye damage
 
