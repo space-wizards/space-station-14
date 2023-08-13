@@ -56,5 +56,9 @@ alerts-pulling-name = Вы тянете
 alerts-pulling-desc = Вы что-то тянете. Щелкните по иконке, чтобы перестать.
 alerts-bleed-name = [color=red]Кровотечение[/color]
 alerts-bleed-desc = У вас [color=red]кровотечение[/color].
-alerts-pacified-name = [color=green]Pacified[/color]
-alerts-pacified-desc = You're pacified; you won't be able to attack anyone directly.
+alerts-pacified-name = [color=green]Пацифист[/color]
+alerts-pacified-desc = Вы - пацифист. Вы не сможете напрямую никого атаковать.
+alerts-battery-name = Заряд
+alerts-battery-desc = Если ваш заряд полностью истощится, вы не сможете использовать свои способности.
+alerts-no-battery-name = Разряжен
+alerts-no-battery-desc = У вас отсутствует заряд. Вы не можете использовать или заряжать свои способности.

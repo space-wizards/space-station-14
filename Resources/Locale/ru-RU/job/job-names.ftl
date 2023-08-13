@@ -63,6 +63,7 @@ JobClown = клоун
 JobDetective = детектив
 JobERTEngineer = инженер ОБР
 JobBrigmedic = бригмедик
+job-name-borg = киборг
 JobERTJanitor = уборщик ОБР
 JobERTLeader = лидер ОБР
 JobERTMedical = медик ОБР
