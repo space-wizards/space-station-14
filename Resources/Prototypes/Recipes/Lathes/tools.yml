@@ -143,8 +143,8 @@
     Glass: 300
 
 - type: latheRecipe
-  id: OmniPainter
-  result: OmniPainter
+  id: SprayPainter
+  result: SprayPainter
   completetime: 2
   materials:
     Steel: 300

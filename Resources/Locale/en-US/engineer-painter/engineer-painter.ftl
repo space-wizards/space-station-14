@@ -1,15 +1,14 @@
-engineer-painter-window-title = Omnipainter
+spray-painter-window-title = Spray painter
 
-engineer-painter-style-not-available = Cannot apply the selected style to this type of airlock
-engineer-painter-selected-style = Selected style
+spray-painter-style-not-available = Cannot apply the selected style to this type of airlock
+spray-painter-selected-style = Selected style:
 
-engineer-painter-no-color-selected = None
-engineer-painter-selected-color = Selected color:
-engineer-painter-color-red = red
-engineer-painter-color-yellow = yellow
-engineer-painter-color-brown = brown
-engineer-painter-color-green = green
-engineer-painter-color-cyan = cyan
-engineer-painter-color-blue = blue
-engineer-painter-color-white = white
-engineer-painter-color-black = black
+spray-painter-selected-color = Selected color:
+spray-painter-color-red = red
+spray-painter-color-yellow = yellow
+spray-painter-color-brown = brown
+spray-painter-color-green = green
+spray-painter-color-cyan = cyan
+spray-painter-color-blue = blue
+spray-painter-color-white = white
+spray-painter-color-black = black
