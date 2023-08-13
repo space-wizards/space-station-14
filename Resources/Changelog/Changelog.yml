@@ -1,10 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: The hand labeler and Syndicate agent ID now set their labels without
-      the player needing to hit enter on the input fields., type: Tweak}
-  id: 4053
-  time: '2023-06-20T04:52:03.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed lathe ui not expanding properly. Also gave it a facelift., type: Fix}
@@ -3012,3 +3006,11 @@ Entries:
       Airlock Safeguards, type: Add}
   id: 4552
   time: '2023-08-13T07:19:28.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Space Station staff are no longer immune to the toxic and caustic effects
+      of some pyrotechnic chemicals, as well as bleach. Drinking bleach now makes
+      you scream as your stomach lining is reduced to goop.', type: Tweak}
+  - {message: Phenol is now (accurately) toxic., type: Tweak}
+  id: 4553
+  time: '2023-08-13T07:22:08.0000000+00:00'
