@@ -346,6 +346,10 @@ namespace Content.Server.GameTicking
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
 
+            // Should already be empty, but just in case.
+            _expandPvsEntities.Clear();
+            _expandPvsPlayers.Clear();
+
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
@@ -406,8 +410,10 @@ namespace Content.Server.GameTicking
                 _expandPvsEntities.AddRange(entities);
 
                 foreach (var entity in entities)
+                {
                     if (TryComp<TransformComponent>(entity, out var xform))
                         RecursePvsEntities(xform.ChildEntities);
+                }
             }
 
             RecursePvsEntities(_expandPvsPlayers);
