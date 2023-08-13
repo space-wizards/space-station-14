@@ -53,7 +53,7 @@ public sealed partial class AdminNotesLine : BoxContainer
     private void Refresh()
     {
         string? iconPath;
-        if (Note.NoteSeverity is not null && Note.NoteType == NoteType.Note)
+        if (Note.NoteSeverity is not null && Note.NoteType != NoteType.Watchlist)
             SeverityIcons.TryGetValue(Note.NoteSeverity.Value, out iconPath);
         else
             NoteTypeIcons.TryGetValue(Note.NoteType, out iconPath);
