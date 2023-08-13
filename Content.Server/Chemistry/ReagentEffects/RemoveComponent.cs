@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Localizations;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 
@@ -18,7 +19,17 @@ public sealed class RemoveComponent : ReagentEffect
     public HashSet<string> Components = new();
 
     protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
-        => Loc.GetString("reagent-effect-guidebook-remove-component", ("chance", Probability));
+    {
+        var guidebookComponents = new List<string>();
+
+        foreach (var entry in Components)
+        {
+            guidebookComponents.Add(entry.ToString());
+        }
+        return Loc.GetString("reagent-effect-guidebook-remove-component",
+            ("chance", Probability),
+            ("components", ContentLocalizationManager.FormatList(guidebookComponents)));
+    }
 
     public override void Effect(ReagentEffectArgs args)
     {
