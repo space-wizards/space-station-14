@@ -91310,7 +91310,8 @@ entities:
       type: Transform
     - stampState: paper_stamp-syndicate
       stampedBy:
-      - Syndicate
+      - stampedName: stamp-component-stamped-name-syndicate
+        stampedColor: '#850000'
       content: >-
         Operative, i have succeeded in the mission and this is the remainder of the evidence. I am hiding it behind this wall and escaping ASAP.
 
