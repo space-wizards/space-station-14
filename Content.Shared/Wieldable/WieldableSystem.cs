@@ -100,8 +100,8 @@ public sealed class WieldableSystem : EntitySystem
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
             Act = component.Wielded
-                ? () => AttemptUnwield(uid, component, args.User)
-                : () => AttemptWield(uid, component, args.User)
+                ? () => TryUnwield(uid, component, args.User)
+                : () => TryWield(uid, component, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -113,9 +113,9 @@ public sealed class WieldableSystem : EntitySystem
             return;
 
         if(!component.Wielded)
-            args.Handled = AttemptWield(uid, component, args.User);
+            args.Handled = TryWield(uid, component, args.User);
         else
-            args.Handled = AttemptUnwield(uid, component, args.User);
+            args.Handled = TryUnwield(uid, component, args.User);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
@@ -155,7 +155,7 @@ public sealed class WieldableSystem : EntitySystem
     ///     Attempts to wield an item, creating a DoAfter..
     /// </summary>
     /// <returns>True if the attempt wasn't blocked.</returns>
-    public bool AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
+    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         if (!CanWield(used, component, user))
             return false;
@@ -180,7 +180,7 @@ public sealed class WieldableSystem : EntitySystem
     ///     Attempts to unwield an item, with no DoAfter.
     /// </summary>
     /// <returns>True if the attempt wasn't blocked.</returns>
-    public bool AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
+    public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         var ev = new BeforeUnwieldEvent();
         RaiseLocalEvent(used, ev);
@@ -264,7 +264,7 @@ public sealed class WieldableSystem : EntitySystem
     private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)
     {
         if (args.BlockingEntity == uid && component.Wielded)
-            AttemptUnwield(args.BlockingEntity, component, args.User);
+            TryUnwield(args.BlockingEntity, component, args.User);
     }
 
     private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)
