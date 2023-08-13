@@ -1,21 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Removed experimental stims., type: Remove}
-  - {message: Bumped stimulants metabolism from 0.2 to 1.0 per second, type: Tweak}
-  - {message: Reduced stimpacks from 5 minutes to 30 seconds., type: Tweak}
-  id: 4050
-  time: '2023-06-20T02:23:10.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove guaranteed cat ear spawns., type: Remove}
-  id: 4051
-  time: '2023-06-20T03:53:27.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed some bugs that prevented ghosts from spawning., type: Fix}
-  id: 4052
-  time: '2023-06-20T04:29:26.0000000+00:00'
 - author: Vordenburg
   changes:
   - {message: The hand labeler and Syndicate agent ID now set their labels without
@@ -3009,3 +2992,23 @@ Entries:
       but cost more.', type: Tweak}
   id: 4549
   time: '2023-08-13T07:17:10.0000000+00:00'
+- author: brainfood1183
+  changes:
+  - {message: Syndicate clowns may now purchase a holoclown injector via their syndicate
+      uplink., type: Add}
+  id: 4550
+  time: '2023-08-13T07:18:10.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: The various laser guns are now called rifles or pistols., type: Tweak}
+  - {message: Retro laser blasters now deal 20% more damage., type: Tweak}
+  - {message: Laser deliveries now contain 3 laser rifles instead of 3 retro laser
+      blasters., type: Tweak}
+  id: 4551
+  time: '2023-08-13T07:18:49.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Added guidebook entries for the Access Configurator and how to install
+      Airlock Safeguards, type: Add}
+  id: 4552
+  time: '2023-08-13T07:19:28.0000000+00:00'
