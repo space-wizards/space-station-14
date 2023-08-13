@@ -1,12 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: Fixed a bug that allowed observers/ghosts to respawn by disconnecting
-      and reconnecting., type: Fix}
-  id: 4060
-  time: '2023-06-21T01:04:08.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed usernames not showing up in the round end window., type: Fix}
   id: 4061
   time: '2023-06-21T01:18:16.0000000+00:00'
@@ -3020,3 +3014,9 @@ Entries:
   - {message: Added a recipe for creating a chocolate bar, type: Add}
   id: 4559
   time: '2023-08-13T14:35:58.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Player icons in the end-of-round summary window should now display properly.,
+    type: Fix}
+  id: 4560
+  time: '2023-08-13T16:55:05.0000000+00:00'
