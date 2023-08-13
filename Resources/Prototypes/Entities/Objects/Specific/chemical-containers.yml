@@ -49,12 +49,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (carbon)
+  name: jug (Carbon)
   id: JugCarbon
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Carbon
+      currentLabel: carbon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -64,12 +64,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (iodine)
+  name: jug (Iodine)
   id: JugIodine
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Iodine
+      currentLabel: iodine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -79,12 +79,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (fluorine)
+  name: jug (Fluorine)
   id: JugFluorine
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Fluorine
+      currentLabel: fluorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -94,12 +94,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (chlorine)
+  name: jug (Chlorine)
   id: JugChlorine
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Chlorine
+      currentLabel: chlorine
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -109,12 +109,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (aluminium)
+  name: jug (Aluminium)
   id: JugAluminium
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Aluminium
+      currentLabel: aluminium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -124,12 +124,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (phosphorus)
+  name: jug (Phosphorus)
   id: JugPhosphorus
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Phosphorus
+      currentLabel: phosphorus
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -139,12 +139,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (sulfur)
+  name: jug (Sulfur)
   id: JugSulfur
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sulfur
+      currentLabel: sulfur
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -154,12 +154,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (silicon)
+  name: jug (Silicon)
   id: JugSilicon
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Silicon
+      currentLabel: silicon
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -169,12 +169,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (hydrogen)
+  name: jug (Hydrogen)
   id: JugHydrogen
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Hydrogen
+      currentLabel: hydrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -184,12 +184,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (lithium)
+  name: jug (Lithium)
   id: JugLithium
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Lithium
+      currentLabel: lithium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -199,12 +199,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (sodium)
+  name: jug (Sodium)
   id: JugSodium
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sodium
+      currentLabel: sodium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -214,12 +214,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (potassium)
+  name: jug (Potassium)
   id: JugPotassium
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Potassium
+      currentLabel: potassium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -229,12 +229,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (radium)
+  name: jug (Radium)
   id: JugRadium
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Radium
+      currentLabel: radium
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -244,12 +244,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (iron)
+  name: jug (Iron)
   id: JugIron
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Iron
+      currentLabel: iron
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -259,12 +259,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (copper)
+  name: jug (Copper)
   id: JugCopper
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Copper
+      currentLabel: copper
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -274,12 +274,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (gold)
+  name: jug (Gold)
   id: JugGold
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Gold
+      currentLabel: gold
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -289,12 +289,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (mercury)
+  name: jug (Mercury)
   id: JugMercury
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Mercury
+      currentLabel: mercury
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -304,12 +304,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (silver)
+  name: jug (Silver)
   id: JugSilver
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Silver
+      currentLabel: silver
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -319,12 +319,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (ethanol)
+  name: jug (Ethanol)
   id: JugEthanol
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Ethanol
+      currentLabel: ethanol
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -334,12 +334,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (sugar)
+  name: jug (Sugar)
   id: JugSugar
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Sugar
+      currentLabel: sugar
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -349,12 +349,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (nitrogen)
+  name: jug (Nitrogen)
   id: JugNitrogen
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Nitrogen
+      currentLabel: nitrogen
     - type: SolutionContainerManager
       solutions:
         beaker:
@@ -364,12 +364,12 @@
 
 - type: entity
   parent: Jug
-  name: jug (oxygen)
+  name: jug (Oxygen)
   id: JugOxygen
   noSpawn: true
   components:
     - type: Label
-      currentLabel: Oxygen
+      currentLabel: oxygen
     - type: SolutionContainerManager
       solutions:
         beaker:
