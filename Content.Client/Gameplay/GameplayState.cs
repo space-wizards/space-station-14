@@ -1,4 +1,5 @@
 using Content.Client.Hands;
+using Content.Client.Options.UI;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -51,6 +52,8 @@ namespace Content.Client.Gameplay
             _fpsCounter.Visible = _configurationManager.GetCVar(CCVars.HudFpsCounterVisible);
             _configurationManager.OnValueChanged(CCVars.HudFpsCounterVisible, (show) => { _fpsCounter.Visible = show; });
             _configurationManager.OnValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
+            _configurationManager.OnValueChanged(CCVars.UIOpacity, UpdateUIOpacity);
+            _uiManager.WindowRoot.OnChildAdded += (child) => UpdateChildUIOpacity(child, _configurationManager.GetCVar(CCVars.UIOpacity));
         }
 
         protected override void Shutdown()
@@ -64,6 +67,21 @@ namespace Content.Client.Gameplay
             _uiManager.ClearWindows();
             _configurationManager.UnsubValueChanged(CCVars.UILayout, ReloadMainScreenValueChange);
             UnloadMainScreen();
+        }
+
+        private void UpdateChildUIOpacity(Control child, float value)
+        {
+            if (child is OptionsMenu || child is EscapeMenu)
+                return;
+            child.Modulate = child.Modulate.WithAlpha(value / 100f);
+        }
+
+        private void UpdateUIOpacity(float value)
+        {
+            foreach (var child in _uiManager.WindowRoot.Children)
+            {
+                UpdateChildUIOpacity(child, value);
+            }
         }
 
         private void ReloadMainScreenValueChange(string _)

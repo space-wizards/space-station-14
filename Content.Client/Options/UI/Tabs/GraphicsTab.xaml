@@ -16,6 +16,14 @@
                 <OptionButton Name="UIScaleOption" />
             </BoxContainer>
             <BoxContainer Orientation="Horizontal">
+                <Label Text="{Loc 'ui-options-opacity-label'}" />
+                <Slider Name="UIOpacitySlider"
+                        MinValue="0"
+                        MaxValue="100"
+                        Rounded="False"
+                        MinWidth="200" />
+            </BoxContainer>
+            <BoxContainer Orientation="Horizontal">
                 <Label Text="{Loc 'ui-options-hud-theme'}" />
                 <Control MinSize="4 0" />
                 <OptionButton Name="HudThemeOption" />

@@ -74,6 +74,11 @@ namespace Content.Client.Options.UI.Tabs
                 id++;
             }
 
+            UIOpacitySlider.OnValueChanged += _ =>
+            {
+                UpdateApplyButton();
+            };
+
             HudLayoutOption.OnItemSelected += args =>
             {
                 HudLayoutOption.SelectId(args.Id);
@@ -109,6 +114,7 @@ namespace Content.Client.Options.UI.Tabs
             FullscreenCheckBox.Pressed = ConfigIsFullscreen;
             LightingPresetOption.SelectId(GetConfigLightingQuality());
             UIScaleOption.SelectId(GetConfigUIScalePreset(ConfigUIScale));
+            UIOpacitySlider.Value = _cfg.GetCVar(CCVars.UIOpacity);
             HudThemeOption.SelectId(_cfg.GetCVar(CCVars.HudTheme));
             ViewportScaleSlider.Value = _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             ViewportStretchCheckBox.Pressed = _cfg.GetCVar(CCVars.ViewportStretch);
@@ -153,6 +159,7 @@ namespace Content.Client.Options.UI.Tabs
             _cfg.SetCVar(CVars.DisplayWindowMode,
                          (int) (FullscreenCheckBox.Pressed ? WindowMode.Fullscreen : WindowMode.Windowed));
             _cfg.SetCVar(CVars.DisplayUIScale, UIScaleOptions[UIScaleOption.SelectedId]);
+            _cfg.SetCVar(CCVars.UIOpacity, UIOpacitySlider.Value);
             _cfg.SetCVar(CCVars.ViewportStretch, ViewportStretchCheckBox.Pressed);
             _cfg.SetCVar(CCVars.ViewportFixedScaleFactor, (int) ViewportScaleSlider.Value);
             _cfg.SetCVar(CCVars.ViewportSnapToleranceMargin,
@@ -191,6 +198,7 @@ namespace Content.Client.Options.UI.Tabs
             var isLightingQualitySame = LightingPresetOption.SelectedId == GetConfigLightingQuality();
             var isHudThemeSame = HudThemeOption.SelectedId == _cfg.GetCVar(CCVars.HudTheme);
             var isUIScaleSame = MathHelper.CloseToPercent(UIScaleOptions[UIScaleOption.SelectedId], ConfigUIScale);
+            var isUIOpacitySame = MathHelper.CloseToPercent(UIOpacitySlider.Value, _cfg.GetCVar(CCVars.UIOpacity));
             var isVPStretchSame = ViewportStretchCheckBox.Pressed == _cfg.GetCVar(CCVars.ViewportStretch);
             var isVPScaleSame = (int) ViewportScaleSlider.Value == _cfg.GetCVar(CCVars.ViewportFixedScaleFactor);
             var isIntegerScalingSame = IntegerScalingCheckBox.Pressed == (_cfg.GetCVar(CCVars.ViewportSnapToleranceMargin) != 0);
@@ -206,6 +214,7 @@ namespace Content.Client.Options.UI.Tabs
                                    isFullscreenSame &&
                                    isLightingQualitySame &&
                                    isUIScaleSame &&
+                                   isUIOpacitySame &&
                                    isVPStretchSame &&
                                    isVPScaleSame &&
                                    isIntegerScalingSame &&

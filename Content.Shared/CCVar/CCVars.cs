@@ -1364,6 +1364,9 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> SeparatedScreenChatSize =
             CVarDef.Create("ui.separated_chat_size", "0.6,0", CVar.CLIENTONLY | CVar.ARCHIVE);
 
+        public static readonly CVarDef<float> UIOpacity =
+            CVarDef.Create("ui.ui_opacity", 100f, CVar.CLIENTONLY | CVar.ARCHIVE);
+
 
         /*
          * CHAT
