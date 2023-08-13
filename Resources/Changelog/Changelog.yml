@@ -1,11 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
-  id: 4065
-  time: '2023-06-21T21:45:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Fixed research console ui not updating when technology is unlocked on
       another console., type: Fix}
   id: 4066
@@ -3014,3 +3009,9 @@ Entries:
   - {message: Arachnid zombies no longer get functional hands., type: Fix}
   id: 4564
   time: '2023-08-13T19:51:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing inventory slots to sometimes ignore interactions
+      (e.g., not opening the context menu).', type: Fix}
+  id: 4565
+  time: '2023-08-13T21:55:18.0000000+00:00'
