@@ -1,6 +1,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTLeader
   id: ClothingHeadHelmetHardsuitImperialERTLeader
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Imperial/Clothing/Head/Hardsuits/ertleader.rsi
@@ -10,6 +11,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTMedical
   id: ClothingHeadHelmetHardsuitImperialERTMedical
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Imperial/Clothing/Head/Hardsuits/ertmedical.rsi
@@ -19,6 +21,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTEngineer
   id: ClothingHeadHelmetHardsuitImperialERTEngineer
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Imperial/Clothing/Head/Hardsuits/ertengineer.rsi
@@ -28,6 +31,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTSecurity
   id: ClothingHeadHelmetHardsuitImperialERTSecurity
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Imperial/Clothing/Head/Hardsuits/ertsecurity.rsi
@@ -37,6 +41,7 @@
 - type: entity
   parent: ClothingHeadHelmetHardsuitERTJanitor
   id: ClothingHeadHelmetHardsuitImperialERTJanitor
+  noSpawn: true
   components:
   - type: Sprite
     sprite: Imperial/Clothing/Head/Hardsuits/ertjanitor.rsi
