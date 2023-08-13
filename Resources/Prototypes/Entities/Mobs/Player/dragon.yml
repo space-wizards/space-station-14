@@ -130,6 +130,8 @@
   - type: Tag
     tags:
     - CannotSuicide
+  - type: ReplacementAccent #SS220 No talking dragons
+    accent: genericAggressive
 
 - type: entity
   parent: BaseMobDragon
