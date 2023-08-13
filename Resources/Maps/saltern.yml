@@ -45461,30 +45461,6 @@ entities:
     - pos: -3.5916028,13.622649
       parent: 31
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
-    - canCollide: True
-      type: Physics
   - uid: 4095
     components:
     - pos: -30.466906,-1.5231686
@@ -45515,26 +45491,6 @@ entities:
     - pos: 14.479344,-6.1264844
       parent: 31
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon: Objects/Tools/flashlight.rsi/flashlight.png
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
 - proto: LampBanana
   entities:
   - uid: 8941
@@ -45554,30 +45510,6 @@ entities:
     - pos: 7.632556,18.592802
       parent: 31
       type: Transform
-    - toggleAction:
-        sound: null
-        itemIconStyle: BigItem
-        icon:
-          sprite: Objects/Tools/flashlight.rsi
-          state: flashlight
-        iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
-        iconColor: '#FFFFFFFF'
-        name: action-name-toggle-light
-        description: action-description-toggle-light
-        keywords: []
-        enabled: True
-        useDelay: null
-        charges: null
-        checkCanInteract: True
-        clientExclusive: False
-        priority: 0
-        autoPopulate: True
-        autoRemove: True
-        temporary: False
-        event: !type:ToggleActionEvent {}
-      type: HandheldLight
-    - canCollide: True
-      type: Physics
   - uid: 4092
     components:
     - pos: -30.54503,-5.3981686
@@ -56679,6 +56611,27 @@ entities:
   - uid: 9600
     components:
     - pos: -37.5,19.5
+      parent: 31
+      type: Transform
+- proto: TegCenter
+  entities:
+  - uid: 7119
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 37.5,14.5
+      parent: 31
+      type: Transform
+- proto: TegCirculator
+  entities:
+  - uid: 7103
+    components:
+    - pos: 38.5,14.5
+      parent: 31
+      type: Transform
+  - uid: 7118
+    components:
+    - rot: 3.141592653589793 rad
+      pos: 36.5,14.5
       parent: 31
       type: Transform
 - proto: TelecomServer
