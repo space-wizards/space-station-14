@@ -15,3 +15,4 @@ chat-radio-syndicate = Синдикат
 chat-radio-handheld = Портативный
 
 chat-radio-no-id = Без ID
+chat-radio-binary = Двоичный

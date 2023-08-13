@@ -61,3 +61,7 @@ ent-CrateStoneGrave = могила
     .suffix = Камень
 ent-CrateSyndicate = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
+ent-CrateTrashCart = мусорная тележка
+    .desc = { ent-CrateBaseWeldable.desc }
+ent-CrateTrashCartJani = мусорная тележка уборщиков
+    .desc = { ent-CrateBaseSecure.desc }
