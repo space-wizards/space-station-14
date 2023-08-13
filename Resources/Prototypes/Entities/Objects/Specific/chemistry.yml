@@ -326,6 +326,9 @@
   parent: BaseSyringe
   id: Syringe
   components:
+  - type: Injector
+    transferAmount: 15
+    toggleState: Draw
   - type: Tag
     tags:
     - Syringe

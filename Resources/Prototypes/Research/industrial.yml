@@ -11,6 +11,7 @@
   cost: 7500
   recipeUnlocks:
   - MiningDrill
+  - BorgModuleMining
   - OreProcessorMachineCircuitboard
 
 - type: technology
@@ -81,6 +82,7 @@
   tier: 1
   cost: 7500
   recipeUnlocks:
+  - BorgModuleGasAnalyzer
   - ThermomachineFreezerMachineCircuitBoard
   - GasRecyclerMachineCircuitboard
 
@@ -96,7 +98,8 @@
   tier: 2
   cost: 5000
   recipeUnlocks:
-    - WeaponGrapplingGun
+  - WeaponGrapplingGun
+  - BorgModuleGrapplingGun
 
 - type: technology
   id: RapidConstruction
@@ -110,6 +113,7 @@
   recipeUnlocks:
   - RCD
   - RCDAmmo
+  - BorgModuleRCD
 
 - type: technology
   id: Shuttlecraft
@@ -185,6 +189,7 @@
     - WelderExperimental
     - PowerDrill
     - JawsOfLife
+    - BorgModuleAdvancedTool
 
 # Tier 3
 
