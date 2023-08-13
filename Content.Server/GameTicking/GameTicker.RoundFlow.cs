@@ -7,7 +7,6 @@ using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
-using Robust.Server.GameStates;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -46,22 +45,6 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private bool _startingRound;
 
-        /// <summary>
-        /// This is a list of players that are going to appear in the round-end
-        /// crew manifest so their children entities can be collected each update
-        /// and sent to far-away players.
-        /// </summary>
-        [ViewVariables]
-        private HashSet<EntityUid> _expandPvsPlayers = new();
-
-        /// <summary>
-        /// This is the list of the children entities that should be sent to
-        /// all players at the end of the round, to keep distant characters from
-        /// looking naked in the crew manifest.
-        /// </summary>
-        [ViewVariables]
-        private List<EntityUid> _expandPvsEntities = new();
-
         [ViewVariables]
         private GameRunLevel _runLevel;
 
@@ -83,7 +66,6 @@ namespace Content.Server.GameTicking
 
         private void InitializeRoundFlow()
         {
-            SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
         }
 
         /// <summary>
@@ -321,14 +303,6 @@ namespace Content.Server.GameTicking
             ShowRoundEndScoreboard(text);
         }
 
-        private void OnExpandPvs(ref ExpandPvsEvent args)
-        {
-            if (RunLevel != GameRunLevel.PostRound)
-                return;
-
-            args.Entities.AddRange(_expandPvsEntities);
-        }
-
         public void ShowRoundEndScoreboard(string text = "")
         {
             // Log end of round
@@ -345,10 +319,6 @@ namespace Content.Server.GameTicking
 
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
-
-            // Should already be empty, but just in case.
-            _expandPvsEntities.Clear();
-            _expandPvsPlayers.Clear();
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
@@ -383,8 +353,9 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
-                if (Exists(mind.OriginalOwnedEntity))
-                    _expandPvsPlayers.Add(mind.OriginalOwnedEntity.Value);
+                var entity = mind.OriginalOwnedEntity;
+                if (Exists(entity))
+                    _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
 
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
@@ -393,7 +364,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = mind.OriginalOwnedEntity,
+                    PlayerEntityUid = entity,
                     Role = antag
                         ? mind.AllRoles.First(role => role.Antagonist).Name
                         : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -403,20 +374,6 @@ namespace Content.Server.GameTicking
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
-
-            // Recursively collect entities for the crew manifest.
-            void RecursePvsEntities(IEnumerable<EntityUid> entities)
-            {
-                _expandPvsEntities.AddRange(entities);
-
-                foreach (var entity in entities)
-                {
-                    if (TryComp<TransformComponent>(entity, out var xform))
-                        RecursePvsEntities(xform.ChildEntities);
-                }
-            }
-
-            RecursePvsEntities(_expandPvsPlayers);
 
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
@@ -515,9 +472,6 @@ namespace Content.Server.GameTicking
             CurrentPreset = null;
 
             _allPreviousGameRules.Clear();
-
-            _expandPvsPlayers.Clear();
-            _expandPvsEntities.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
