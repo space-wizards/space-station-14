@@ -23,7 +23,7 @@ namespace Content.Server.SS220.VerbHandTransfer
 
         private void AddTransferVerb(EntityUid uid, HandsComponent component, GetVerbsEvent<EquipmentVerb> args)
         {
-            if (!args.CanInteract || args.Hands == null || args.Hands.ActiveHandEntity == null
+            if (!args.CanInteract || !args.CanAccess || args.Hands == null || args.Hands.ActiveHandEntity == null
                 || args.Target == args.User || !FindFreeHand(component, out var freeHand))
                 return;
 
