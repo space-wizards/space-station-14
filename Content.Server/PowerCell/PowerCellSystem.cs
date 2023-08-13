@@ -88,6 +88,9 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
     {
         base.OnCellRemoved(uid, component, args);
 
+        if (args.Container.ID != component.CellSlotId)
+            return;
+
         var ev = new PowerCellSlotEmptyEvent();
         RaiseLocalEvent(uid, ref ev);
     }
@@ -135,7 +138,7 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
         if (!Resolve(uid, ref battery, ref cell, false))
             return true;
 
-        return HasCharge(uid, float.MinValue, cell, user);
+        return HasCharge(uid, battery.DrawRate, cell, user);
     }
 
     #endregion
@@ -229,19 +232,26 @@ public sealed partial class PowerCellSystem : SharedPowerCellSystem
 
     private void OnCellExamined(EntityUid uid, PowerCellComponent component, ExaminedEvent args)
     {
-        if (TryComp<BatteryComponent>(uid, out var battery))
-            OnBatteryExamined(uid, battery, args);
+        TryComp<BatteryComponent>(uid, out var battery);
+        OnBatteryExamined(uid, battery, args);
     }
 
     private void OnCellSlotExamined(EntityUid uid, PowerCellSlotComponent component, ExaminedEvent args)
     {
-        if (TryGetBatteryFromSlot(uid, out var battery))
-            OnBatteryExamined(uid, battery, args);
+        TryGetBatteryFromSlot(uid, out var battery);
+        OnBatteryExamined(uid, battery, args);
     }
 
-    private void OnBatteryExamined(EntityUid uid, BatteryComponent component, ExaminedEvent args)
+    private void OnBatteryExamined(EntityUid uid, BatteryComponent? component, ExaminedEvent args)
     {
-        var charge = component.CurrentCharge / component.MaxCharge * 100;
-        args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+        if (component != null)
+        {
+            var charge = component.CurrentCharge / component.MaxCharge * 100;
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details", ("currentCharge", $"{charge:F0}")));
+        }
+        else
+        {
+            args.PushMarkup(Loc.GetString("power-cell-component-examine-details-no-battery"));
+        }
     }
 }

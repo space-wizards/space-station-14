@@ -55,11 +55,18 @@ public partial class ChatSystem
     /// <param name="hideLog">Whether or not this message should appear in the adminlog window</param>
     /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TryEmoteWithChat(EntityUid source, string emoteId, ChatTransmitRange range = ChatTransmitRange.Normal, bool hideLog = false, string? nameOverride = null)
+    public void TryEmoteWithChat(
+        EntityUid source,
+        string emoteId,
+        ChatTransmitRange range = ChatTransmitRange.Normal,
+        bool hideLog = false,
+        string? nameOverride = null,
+        bool ignoreActionBlocker = false
+        )
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
-        TryEmoteWithChat(source, proto, range, hideLog, nameOverride);
+        TryEmoteWithChat(source, proto, range, hideLog, nameOverride, ignoreActionBlocker);
     }
 
     /// <summary>
@@ -71,35 +78,44 @@ public partial class ChatSystem
     /// <param name="hideChat">Whether or not this message should appear in the chat window</param>
     /// <param name="range">Conceptual range of transmission, if it shows in the chat window, if it shows to far-away ghosts or ghosts at all...</param>
     /// <param name="nameOverride">The name to use for the speaking entity. Usually this should just be modified via <see cref="TransformSpeakerNameEvent"/>. If this is set, the event will not get raised.</param>
-    public void TryEmoteWithChat(EntityUid source, EmotePrototype emote, ChatTransmitRange range = ChatTransmitRange.Normal, bool hideLog = false, string? nameOverride = null)
+    public void TryEmoteWithChat(
+        EntityUid source,
+        EmotePrototype emote,
+        ChatTransmitRange range = ChatTransmitRange.Normal,
+        bool hideLog = false,
+        string? nameOverride = null,
+        bool ignoreActionBlocker = false
+        )
     {
         // check if proto has valid message for chat
         if (emote.ChatMessages.Count != 0)
         {
-            var action = _random.Pick(emote.ChatMessages);
-            SendEntityEmote(source, action, range, nameOverride, false, hideLog);
+            // not all emotes are loc'd, but for the ones that are we pass in entity
+            var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
+            SendEntityEmote(source, action, range, nameOverride, false, hideLog, ignoreActionBlocker);
         }
 
         // do the rest of emote event logic here
-        TryEmoteWithoutChat(source, emote);
+        TryEmoteWithoutChat(source, emote, ignoreActionBlocker);
     }
 
     /// <summary>
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
-    public void TryEmoteWithoutChat(EntityUid uid, string emoteId)
+    public void TryEmoteWithoutChat(EntityUid uid, string emoteId, bool ignoreActionBlocker = false)
     {
         if (!_prototypeManager.TryIndex<EmotePrototype>(emoteId, out var proto))
             return;
-        TryEmoteWithoutChat(uid, proto);
+
+        TryEmoteWithoutChat(uid, proto, ignoreActionBlocker);
     }
 
     /// <summary>
     ///     Makes selected entity to emote using <see cref="EmotePrototype"/> without sending any messages to chat.
     /// </summary>
-    public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto)
+    public void TryEmoteWithoutChat(EntityUid uid, EmotePrototype proto, bool ignoreActionBlocker = false)
     {
-        if (!_actionBlocker.CanEmote(uid))
+        if (!_actionBlocker.CanEmote(uid) && !ignoreActionBlocker)
             return;
 
         InvokeEmoteEvent(uid, proto);

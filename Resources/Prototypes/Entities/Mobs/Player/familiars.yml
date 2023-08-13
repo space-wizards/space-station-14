@@ -18,7 +18,8 @@
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel
@@ -72,7 +73,8 @@
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel

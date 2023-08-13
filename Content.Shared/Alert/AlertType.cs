@@ -22,6 +22,8 @@ namespace Content.Shared.Alert
         HumanCrit,
         HumanDead,
         HumanHealth,
+        BorgBattery,
+        BorgBatteryNone,
         PilotingShuttle,
         Peckish,
         Starving,
