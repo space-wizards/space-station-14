@@ -1,9 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Armor has been removed from jumpsuits., type: Tweak}
-  id: 4063
-  time: '2023-06-21T14:30:31.0000000+00:00'
 - author: liltenhead
   changes:
   - {message: Added Bicaridine pills to brute medkit., type: Add}
@@ -3014,3 +3009,9 @@ Entries:
   - {message: fixed pressure tanks to not show scientific notation., type: Fix}
   id: 4562
   time: '2023-08-13T16:56:30.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: 'Paper stamps have been heavily tweaked with new looks, now each paper
+      will lay out the stamps slightly differently and with an overlap.', type: Tweak}
+  id: 4563
+  time: '2023-08-13T18:28:10.0000000+00:00'
