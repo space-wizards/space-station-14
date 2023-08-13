@@ -761,3 +761,19 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatBeretRobo
+  name: robotics beret
+  description: You can't see fuel stains on black.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hats/beret_robo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hats/beret_robo.rsi
+  - type: Tag
+    tags:
+    - HamsterWearable
+    - WhitelistChameleon
+    

@@ -189,3 +189,12 @@
       shader: unshaded
   - type: Storage
     capacity: 9999
+
+- type: entity
+  parent: ClothingBackpackSatchel
+  id: ClothingBackpackSatchelRobo
+  name: robotics satchel
+  description: Used to store mechanical supplies.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Satchels/robo.rsi
