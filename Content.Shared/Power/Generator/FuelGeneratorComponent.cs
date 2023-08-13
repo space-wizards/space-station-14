@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.GameStates;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
 
@@ -44,44 +43,4 @@ public sealed class FuelGeneratorComponent : Component
     /// </summary>
     [DataField("fuelEfficiencyConstant")]
     public float FuelEfficiencyConstant = 1.3f;
-}
-
-/// <summary>
-/// Sent to the server to adjust the targeted power level.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SetTargetPowerMessage : BoundUserInterfaceMessage
-{
-    public int TargetPower;
-
-    public SetTargetPowerMessage(int targetPower)
-    {
-        TargetPower = targetPower;
-    }
-}
-
-/// <summary>
-/// Contains network state for FuelGeneratorComponent.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class SolidFuelGeneratorComponentBuiState : BoundUserInterfaceState
-{
-    public float RemainingFuel;
-    public float TargetPower;
-    public float MaximumPower;
-    public float OptimalPower;
-
-    public SolidFuelGeneratorComponentBuiState(FuelGeneratorComponent component)
-    {
-        RemainingFuel = component.RemainingFuel;
-        TargetPower = component.TargetPower;
-        MaximumPower = component.MaxTargetPower;
-        OptimalPower = component.OptimalPower;
-    }
-}
-
-[Serializable, NetSerializable]
-public enum GeneratorComponentUiKey
-{
-    Key
 }

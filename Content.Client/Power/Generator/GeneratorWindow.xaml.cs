@@ -11,9 +11,9 @@ public sealed partial class GeneratorWindow : FancyWindow
     [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private readonly FuelGeneratorComponent? _component;
-    private SolidFuelGeneratorComponentBuiState? _lastState;
+    private PortableGeneratorComponentBuiState? _lastState;
 
-    public GeneratorWindow(SolidFuelGeneratorBoundUserInterface bui, EntityUid vis)
+    public GeneratorWindow(PortableGeneratorBoundUserInterface bui, EntityUid vis)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
@@ -39,7 +39,7 @@ public sealed partial class GeneratorWindow : FancyWindow
         return true;
     }
 
-    public void Update(SolidFuelGeneratorComponentBuiState state)
+    public void Update(PortableGeneratorComponentBuiState state)
     {
         if (_component == null)
             return;

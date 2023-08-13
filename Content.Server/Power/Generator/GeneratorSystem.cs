@@ -11,11 +11,13 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Power.Generator;
 
 /// <inheritdoc/>
+/// <seealso cref="FuelGeneratorComponent"/>
+/// <seealso cref="ChemicalFuelGeneratorAdapterComponent"/>
+/// <seealso cref="SolidFuelGeneratorAdapterComponent"/>
 public sealed class GeneratorSystem : SharedGeneratorSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
 
     private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
@@ -26,7 +28,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
-        SubscribeLocalEvent<FuelGeneratorComponent, SetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
     }
 
     private void OnChemicalFuelAdapterInteractUsing(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, InteractUsingEvent args)
@@ -70,7 +72,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         return total;
     }
 
-    private void OnTargetPowerSet(EntityUid uid, FuelGeneratorComponent component, SetTargetPowerMessage args)
+    private void OnTargetPowerSet(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorSetTargetPowerMessage args)
     {
         component.TargetPower = Math.Clamp(args.TargetPower, 0, component.MaxTargetPower / 1000) * 1000;
     }
@@ -109,15 +111,6 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
 
             gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (gen.OptimalBurnRate * frameTime * eff), 0.0f);
-            UpdateUi(uid, gen);
         }
-    }
-
-    private void UpdateUi(EntityUid uid, FuelGeneratorComponent comp)
-    {
-        if (!_uiSystem.IsUiOpen(uid, GeneratorComponentUiKey.Key))
-            return;
-
-        _uiSystem.TrySetUiState(uid, GeneratorComponentUiKey.Key, new SolidFuelGeneratorComponentBuiState(comp));
     }
 }

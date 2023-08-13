@@ -25,7 +25,7 @@
     - type: UserInterface
       interfaces:
         - key: enum.GeneratorComponentUiKey.Key
-          type: SolidFuelGeneratorBoundUserInterface
+          type: PortableGeneratorBoundUserInterface
     - type: ActivatableUI
       key: enum.GeneratorComponentUiKey.Key
     - type: Electrified
@@ -36,14 +36,19 @@
       highVoltageNode: output
 
     # Core functionality
+    - type: PortableGenerator
     - type: FuelGenerator
     - type: SolidFuelGeneratorAdapter
     - type: NodeContainer
       examinable: true
       nodes:
-        output:
+        output_hv:
           !type:CableDeviceNode
           nodeGroupID: HVPower
+        output_mv:
+          !type:CableDeviceNode
+          nodeGroupID: MVPower
+          enabled: false
     - type: PowerSupplier
       supplyRate: 3000
       supplyRampRate: 500

@@ -5,11 +5,11 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Power.Generator;
 
 [UsedImplicitly]
-public sealed class SolidFuelGeneratorBoundUserInterface : BoundUserInterface
+public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
 {
     private GeneratorWindow? _window;
 
-    public SolidFuelGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+    public PortableGeneratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 
@@ -24,7 +24,7 @@ public sealed class SolidFuelGeneratorBoundUserInterface : BoundUserInterface
 
     protected override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is not SolidFuelGeneratorComponentBuiState msg)
+        if (state is not PortableGeneratorComponentBuiState msg)
             return;
 
         _window?.Update(msg);
@@ -37,6 +37,6 @@ public sealed class SolidFuelGeneratorBoundUserInterface : BoundUserInterface
 
     public void SetTargetPower(int target)
     {
-        SendMessage(new SetTargetPowerMessage(target));
+        SendMessage(new PortableGeneratorSetTargetPowerMessage(target));
     }
 }
