@@ -47,7 +47,7 @@ public sealed class RadarConsoleSystem : SharedRadarConsoleSystem
         if (_uiSystem.TryGetUi(uid, RadarConsoleUiKey.Key, out var bui))
             _uiSystem.SetUiState(bui, new RadarConsoleBoundInterfaceState(
                 component.MaxRange,
-                coordinates,
+                ToNetCoordinates(coordinates),
                 angle,
                 new List<DockingInterfaceState>()
             ));

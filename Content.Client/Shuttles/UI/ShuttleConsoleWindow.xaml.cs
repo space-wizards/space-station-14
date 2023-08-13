@@ -101,7 +101,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         MaxRadarRange.Text = $"{scc.MaxRange:0}";
     }
 
-    private void UpdateFTL(List<(EntityUid Entity, string Destination, bool Enabled)> destinations, FTLState state, TimeSpan time)
+    private void UpdateFTL(List<(NetEntity Entity, string Destination, bool Enabled)> destinations, FTLState state, TimeSpan time)
     {
         HyperspaceDestinations.DisposeAllChildren();
         _destinations.Clear();
@@ -126,7 +126,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     Text = destination.Destination,
                 };
 
-                _destinations[button] = destination.Entity;
+                _destinations[button] = _entManager.ToEntity(destination.Entity);
                 button.OnPressed += OnHyperspacePressed;
                 HyperspaceDestinations.AddChild(button);
             }
@@ -183,7 +183,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         foreach (var dock in docks)
         {
-            var grid = _docks.GetOrNew(dock.Coordinates.EntityId);
+            var grid = _docks.GetOrNew(_entManager.ToEntity(dock.Coordinates.NetEntity));
             grid.Add(dock);
         }
 
@@ -196,7 +196,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
             foreach (var state in gridDocks)
             {
-                var pressed = state.Entity == DockingScreen.ViewedDock;
+                var pressed = _entManager.ToEntity(state.Entity) == DockingScreen.ViewedDock;
 
                 string suffix;
 
@@ -233,7 +233,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = state.Entity;
+        RadarScreen.HighlightedDock = _entManager.ToEntity(state.Entity);
     }
 
     private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
@@ -246,12 +246,12 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     private void OnDockToggled(BaseButton.ButtonEventArgs obj, DockingInterfaceState state)
     {
-        var ent = state.Entity;
+        var ent = _entManager.ToEntity(state.Entity);
 
         if (_selectedDock != null)
         {
             // If it got untoggled via other means then we'll stop viewing the old dock.
-            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != state.Entity)
+            if (DockingScreen.ViewedDock != null && DockingScreen.ViewedDock != ent)
             {
                 StopAutodockPressed?.Invoke(DockingScreen.ViewedDock.Value);
             }
@@ -276,7 +276,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             if (_shuttleUid != null)
             {
-                DockingScreen.Coordinates = state.Coordinates;
+                DockingScreen.Coordinates = _entManager.ToCoordinates(state.Coordinates);
                 DockingScreen.Angle = state.Angle;
             }
             else

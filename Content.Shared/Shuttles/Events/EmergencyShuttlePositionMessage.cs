@@ -8,6 +8,6 @@ namespace Content.Shared.Shuttles.Events;
 [Serializable, NetSerializable]
 public sealed class EmergencyShuttlePositionMessage : EntityEventArgs
 {
-    public EntityUid? StationUid;
+    public NetEntity? StationUid;
     public Box2? Position;
 }

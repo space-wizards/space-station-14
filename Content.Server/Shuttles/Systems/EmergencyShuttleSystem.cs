@@ -163,7 +163,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
         RaiseNetworkEvent(new EmergencyShuttlePositionMessage()
         {
-            StationUid = targetGrid,
+            StationUid = ToNetEntity(targetGrid),
             Position = config.Area,
         });
     }

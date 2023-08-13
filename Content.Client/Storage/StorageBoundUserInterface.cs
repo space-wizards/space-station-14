@@ -54,7 +54,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendMessage(new StorageInteractWithItemEvent(entity));
+                SendMessage(new StorageInteractWithItemEvent(EntMan.ToNetEntity(entity)));
             }
             else if (EntMan.EntityExists(entity))
             {

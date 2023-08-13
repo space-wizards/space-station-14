@@ -67,14 +67,16 @@ public sealed class RenameCommand : IConsoleCommand
                     && entMan.TryGetComponent(idCard.Owner, out StationRecordKeyStorageComponent? keyStorage)
                     && keyStorage.Key != null)
                 {
-                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(keyStorage.Key.Value.OriginStation,
+                    var origin = entMan.ToEntity(keyStorage.Key.Value.OriginStation);
+
+                    if (recordsSystem.TryGetRecord<GeneralStationRecord>(origin,
                             keyStorage.Key.Value,
                             out var generalRecord))
                     {
                         generalRecord.Name = name;
                     }
 
-                    recordsSystem.Synchronize(keyStorage.Key.Value.OriginStation);
+                    recordsSystem.Synchronize(origin);
                 }
             }
         }

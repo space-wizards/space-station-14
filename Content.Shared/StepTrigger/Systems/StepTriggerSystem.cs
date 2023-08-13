@@ -166,18 +166,14 @@ public sealed class StepTriggerSystem : EntitySystem
         component.RequiredTriggerSpeed = state.RequiredTriggerSpeed;
         component.IntersectRatio = state.IntersectRatio;
         component.Active = state.Active;
+        var stepped = ToEntitySet(state.CurrentlySteppedOn);
+        var colliding = ToEntitySet(state.CurrentlySteppedOn);
 
-        if (!component.CurrentlySteppedOn.SetEquals(state.CurrentlySteppedOn))
-        {
-            component.CurrentlySteppedOn.Clear();
-            component.CurrentlySteppedOn.UnionWith(state.CurrentlySteppedOn);
-        }
+        component.CurrentlySteppedOn.Clear();
+        component.CurrentlySteppedOn.UnionWith(stepped);
 
-        if (!component.Colliding.SetEquals(state.Colliding))
-        {
-            component.Colliding.Clear();
-            component.Colliding.UnionWith(state.Colliding);
-        }
+        component.Colliding.Clear();
+        component.Colliding.UnionWith(colliding);
 
         if (component.Colliding.Count > 0)
         {
@@ -189,12 +185,12 @@ public sealed class StepTriggerSystem : EntitySystem
         }
     }
 
-    private static void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
+    private void TriggerGetState(EntityUid uid, StepTriggerComponent component, ref ComponentGetState args)
     {
         args.State = new StepTriggerComponentState(
             component.IntersectRatio,
-            component.CurrentlySteppedOn,
-            component.Colliding,
+            ToNetEntitySet(component.CurrentlySteppedOn),
+            ToNetEntitySet(component.Colliding),
             component.RequiredTriggerSpeed,
             component.Active);
     }

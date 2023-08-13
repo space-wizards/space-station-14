@@ -273,9 +273,9 @@ namespace Content.Server.Storage.EntitySystems
 
                     if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                     {
-                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid,
-                            new List<EntityUid> { target },
-                            new List<EntityCoordinates> { position },
+                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(ToNetEntity(uid),
+                            new List<NetEntity> { ToNetEntity(target) },
+                            new List<NetCoordinates> { ToNetCoordinates(position) },
                             new List<Angle> { transformOwner.LocalRotation }));
                     }
                 }
@@ -329,7 +329,7 @@ namespace Content.Server.Storage.EntitySystems
             if (successfullyInserted.Count > 0)
             {
                 _audio.PlayPvs(component.StorageInsertSound, uid);
-                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions, successfullyInsertedAngles));
+                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(ToNetEntity(uid), ToNetEntityList(successfullyInserted), ToNetCoordinatesList(successfullyInsertedPositions), successfullyInsertedAngles));
             }
 
             args.Handled = true;
@@ -359,13 +359,15 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
-            if (!Exists(args.InteractedItemUID))
+            var interacted = ToEntity(args.InteractedItemUID);
+
+            if (!Exists(interacted))
             {
-                Log.Error($"Player {args.Session} interacted with non-existent item {args.InteractedItemUID} stored in {ToPrettyString(uid)}");
+                Log.Error($"Player {args.Session} interacted with non-existent item {interacted} stored in {ToPrettyString(uid)}");
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || storageComp.Storage == null || !storageComp.Storage.Contains(args.InteractedItemUID))
+            if (!_actionBlockerSystem.CanInteract(player, interacted) || storageComp.Storage == null || !storageComp.Storage.Contains(interacted))
                 return;
 
             // Does the player have hands?
@@ -375,14 +377,14 @@ namespace Content.Server.Storage.EntitySystems
             // If the user's active hand is empty, try pick up the item.
             if (hands.ActiveHandEntity == null)
             {
-                if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
+                if (_sharedHandsSystem.TryPickupAnyHand(player, interacted, handsComp: hands)
                     && storageComp.StorageRemoveSound != null)
                     _audio.Play(storageComp.StorageRemoveSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, AudioParams.Default);
                 return;
             }
 
             // Else, interact using the held item
-            _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, args.InteractedItemUID, Transform(args.InteractedItemUID).Coordinates, checkCanInteract: false);
+            _interactionSystem.InteractUsing(player, hands.ActiveHandEntity.Value, interacted, Transform(interacted).Coordinates, checkCanInteract: false);
         }
 
         private void OnInsertItemMessage(EntityUid uid, ServerStorageComponent storageComp, StorageInsertItemMessage args)
@@ -732,7 +734,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var state = new StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
+            var state = new StorageBoundUserInterfaceState(ToNetEntityList(storageComp.Storage.ContainedEntities.ToList()), storageComp.StorageUsed, storageComp.StorageCapacityMax);
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)

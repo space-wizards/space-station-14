@@ -72,14 +72,18 @@ public sealed class CrewManifestSystem : EntitySystem
     // wrt the amount of players readied up.
     private void AfterGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        BuildCrewManifest(ev.Key.OriginStation);
-        UpdateEuis(ev.Key.OriginStation);
+        var origin = ToEntity(ev.Key.OriginStation);
+
+        BuildCrewManifest(origin);
+        UpdateEuis(origin);
     }
 
     private void OnRecordModified(RecordModifiedEvent ev)
     {
-        BuildCrewManifest(ev.Key.OriginStation);
-        UpdateEuis(ev.Key.OriginStation);
+        var origin = ToEntity(ev.Key.OriginStation);
+
+        BuildCrewManifest(origin);
+        UpdateEuis(origin);
     }
 
     private void OnBoundUiClose(EntityUid uid, CrewManifestViewerComponent component, BoundUIClosedEvent ev)

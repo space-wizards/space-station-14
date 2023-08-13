@@ -32,7 +32,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
     {
         SendMessage(new ShuttleConsoleFTLRequestMessage()
         {
-            Destination = obj,
+            Destination = EntMan.ToNetEntity(obj),
         });
     }
 
@@ -53,17 +53,17 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
 
     private void OnStopAutodockPressed(EntityUid obj)
     {
-        SendMessage(new StopAutodockRequestMessage() { DockEntity = obj });
+        SendMessage(new StopAutodockRequestMessage() { DockEntity = EntMan.ToNetEntity(obj) });
     }
 
     private void OnAutodockPressed(EntityUid obj)
     {
-        SendMessage(new AutodockRequestMessage() { DockEntity = obj });
+        SendMessage(new AutodockRequestMessage() { DockEntity = EntMan.ToNetEntity(obj) });
     }
 
     private void OnUndockPressed(EntityUid obj)
     {
-        SendMessage(new UndockRequestMessage() { DockEntity = obj });
+        SendMessage(new UndockRequestMessage() { DockEntity = EntMan.ToNetEntity(obj) });
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -71,7 +71,7 @@ public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
         base.UpdateState(state);
         if (state is not ShuttleConsoleBoundInterfaceState cState) return;
 
-        _window?.SetMatrix(cState.Coordinates, cState.Angle);
+        _window?.SetMatrix(EntMan.ToCoordinates(cState.Coordinates), cState.Angle);
         _window?.UpdateState(cState);
     }
 }

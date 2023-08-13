@@ -11,9 +11,9 @@ public readonly struct StationRecordKey
     public uint ID { get; }
 
     [ViewVariables]
-    public EntityUid OriginStation { get; }
+    public NetEntity OriginStation { get; }
 
-    public StationRecordKey(uint id, EntityUid originStation)
+    public StationRecordKey(uint id, NetEntity originStation)
     {
         ID = id;
         OriginStation = originStation;

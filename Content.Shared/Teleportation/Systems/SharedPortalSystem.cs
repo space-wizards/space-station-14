@@ -42,13 +42,13 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
     {
-        args.State = new PortalTimeoutComponentState(component.EnteredPortal);
+        args.State = new PortalTimeoutComponentState(ToNetEntity(component.EnteredPortal));
     }
 
     private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
     {
         if (args.Current is PortalTimeoutComponentState state)
-            component.EnteredPortal = state.EnteredPortal;
+            component.EnteredPortal = ToEntity(state.EnteredPortal);
     }
 
     private bool ShouldCollide(Fixture our, Fixture other)

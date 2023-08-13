@@ -95,7 +95,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(location, comp.Mode), uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(ToNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
@@ -115,7 +115,7 @@ public sealed class RCDSystem : EntitySystem
         if (args.Event?.DoAfter?.Args == null)
             return;
 
-        var location = args.Event.Location;
+        var location = ToCoordinates(args.Event.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))
@@ -140,7 +140,7 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var user = args.User;
-        var location = args.Location;
+        var location = ToCoordinates(args.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))
@@ -316,7 +316,7 @@ public sealed class RCDSystem : EntitySystem
 public sealed class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField("location", required: true)]
-    public readonly EntityCoordinates Location = default!;
+    public readonly NetCoordinates Location = default!;
 
     [DataField("startingMode", required: true)]
     public readonly RcdMode StartingMode = default!;
@@ -325,7 +325,7 @@ public sealed class RCDDoAfterEvent : DoAfterEvent
     {
     }
 
-    public RCDDoAfterEvent(EntityCoordinates location, RcdMode startingMode)
+    public RCDDoAfterEvent(NetCoordinates location, RcdMode startingMode)
     {
         Location = location;
         StartingMode = startingMode;

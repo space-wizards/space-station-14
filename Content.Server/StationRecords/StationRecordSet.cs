@@ -50,7 +50,7 @@ public sealed class StationRecordSet
     /// </summary>
     /// <param name="station">Station that we're adding the record for.</param>
     /// <returns>A key that represents the record in this set.</returns>
-    public StationRecordKey AddRecord(EntityUid station)
+    public StationRecordKey AddRecord(NetEntity station)
     {
         var key = new StationRecordKey(_currentRecordId++, station);
 
