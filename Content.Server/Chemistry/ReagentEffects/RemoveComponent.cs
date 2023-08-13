@@ -24,7 +24,7 @@ public sealed class RemoveComponent : ReagentEffect
 
         foreach (var entry in Components)
         {
-            guidebookComponents.Add(entry.ToString());
+            guidebookComponents.Add(entry.ToString().ToLower() + 's');
         }
         return Loc.GetString("reagent-effect-guidebook-remove-component",
             ("chance", Probability),

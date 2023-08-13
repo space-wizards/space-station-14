@@ -337,7 +337,7 @@ reagent-effect-guidebook-remove-component =
     { $chance ->
         [1] Removes
         *[other] remove
-    } the { $components } components
+    } { $components }
 
 reagent-effect-guidebook-missing =
     { $chance ->
