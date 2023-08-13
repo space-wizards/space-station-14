@@ -5,13 +5,13 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public sealed class PathBreadcrumbsMessage : EntityEventArgs
 {
-    public Dictionary<EntityUid, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
+    public Dictionary<NetEntity, Dictionary<Vector2i, List<PathfindingBreadcrumb>>> Breadcrumbs = new();
 }
 
 [Serializable, NetSerializable]
 public sealed class PathBreadcrumbsRefreshMessage : EntityEventArgs
 {
-    public EntityUid GridUid;
+    public NetEntity GridUid;
     public Vector2i Origin;
     public List<PathfindingBreadcrumb> Data = new();
 }
@@ -19,5 +19,5 @@ public sealed class PathBreadcrumbsRefreshMessage : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class PathPolysMessage : EntityEventArgs
 {
-    public Dictionary<EntityUid, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
+    public Dictionary<NetEntity, Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>> Polys = new();
 }

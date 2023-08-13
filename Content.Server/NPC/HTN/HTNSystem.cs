@@ -224,7 +224,7 @@ public sealed class HTNSystem : EntitySystem
 
                         RaiseNetworkEvent(new HTNMessage()
                         {
-                            Uid = uid,
+                            Uid = ToNetEntity(uid),
                             Text = text.ToString(),
                         }, session.ConnectedClient);
                     }

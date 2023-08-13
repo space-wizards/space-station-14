@@ -218,7 +218,7 @@ namespace Content.Server.Storage.EntitySystems
             // The last half of the if is because carpets exist and this is terrible
             if (storageComp.AreaInsert && (args.Target == null || !HasComp<ItemComponent>(args.Target.Value)))
             {
-                var validStorables = new List<EntityUid>();
+                var validStorables = new List<NetEntity>();
                 var itemQuery = GetEntityQuery<ItemComponent>();
 
                 foreach (var entity in _entityLookupSystem.GetEntitiesInRange(args.ClickLocation, storageComp.AreaInsertRadius, LookupFlags.Dynamic | LookupFlags.Sundries))
@@ -231,7 +231,7 @@ namespace Content.Server.Storage.EntitySystems
                         continue;
                     }
 
-                    validStorables.Add(entity);
+                    validStorables.Add(ToNetEntity(entity));
                 }
 
                 //If there's only one then let's be generous
@@ -294,8 +294,10 @@ namespace Content.Server.Storage.EntitySystems
             var xformQuery = GetEntityQuery<TransformComponent>();
             xformQuery.TryGetComponent(uid, out var xform);
 
-            foreach (var entity in args.Entities)
+            foreach (var nent in args.Entities)
             {
+                var entity = ToEntity(nent);
+
                 // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                 if (_containerSystem.IsEntityInContainer(entity)
                     || entity == args.Args.User

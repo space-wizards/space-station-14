@@ -5,7 +5,7 @@ namespace Content.Shared.NPC;
 [Serializable, NetSerializable]
 public sealed class PathPolysRefreshMessage : EntityEventArgs
 {
-    public EntityUid GridUid;
+    public NetEntity GridUid;
     public Vector2i Origin;
 
     /// <summary>

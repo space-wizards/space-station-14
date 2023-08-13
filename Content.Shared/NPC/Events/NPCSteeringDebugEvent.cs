@@ -19,13 +19,13 @@ public sealed class NPCSteeringDebugEvent : EntityEventArgs
 
 [Serializable, NetSerializable]
 public readonly record struct NPCSteeringDebugData(
-    EntityUid EntityUid,
+    NetEntity EntityUid,
     Vector2 Direction,
     float[] Interest,
     float[] Danger,
     List<Vector2> DangerPoints)
 {
-    public readonly EntityUid EntityUid = EntityUid;
+    public readonly NetEntity EntityUid = EntityUid;
     public readonly Vector2 Direction = Direction;
     public readonly float[] Interest = Interest;
     public readonly float[] Danger = Danger;

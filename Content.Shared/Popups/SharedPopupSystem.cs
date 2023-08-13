@@ -124,9 +124,9 @@ namespace Content.Shared.Popups
     [Serializable, NetSerializable]
     public sealed class PopupCoordinatesEvent : PopupEvent
     {
-        public EntityCoordinates Coordinates { get; }
+        public NetCoordinates Coordinates { get; }
 
-        public PopupCoordinatesEvent(string message, PopupType type, EntityCoordinates coordinates) : base(message, type)
+        public PopupCoordinatesEvent(string message, PopupType type, NetCoordinates coordinates) : base(message, type)
         {
             Coordinates = coordinates;
         }
@@ -138,9 +138,9 @@ namespace Content.Shared.Popups
     [Serializable, NetSerializable]
     public sealed class PopupEntityEvent : PopupEvent
     {
-        public EntityUid Uid { get; }
+        public NetEntity Uid { get; }
 
-        public PopupEntityEvent(string message, PopupType type, EntityUid uid) : base(message, type)
+        public PopupEntityEvent(string message, PopupType type, NetEntity uid) : base(message, type)
         {
             Uid = uid;
         }

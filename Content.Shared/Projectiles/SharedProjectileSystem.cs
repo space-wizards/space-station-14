@@ -134,9 +134,9 @@ namespace Content.Shared.Projectiles
     public sealed class ImpactEffectEvent : EntityEventArgs
     {
         public string Prototype;
-        public EntityCoordinates Coordinates;
+        public NetCoordinates Coordinates;
 
-        public ImpactEffectEvent(string prototype, EntityCoordinates coordinates)
+        public ImpactEffectEvent(string prototype, NetCoordinates coordinates)
         {
             Prototype = prototype;
             Coordinates = coordinates;
