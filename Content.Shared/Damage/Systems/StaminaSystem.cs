@@ -138,6 +138,7 @@ public sealed partial class StaminaSystem : EntitySystem
 
         component.StaminaDamage = 0;
         RemComp<ActiveStaminaComponent>(uid);
+        SetStaminaAlert(uid, component);
         Dirty(component);
     }
 
