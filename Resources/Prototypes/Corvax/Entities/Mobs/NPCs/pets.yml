@@ -50,6 +50,9 @@
       successChance: 1
       interactSuccessString: petting-success-gorilla
       interactFailureString: petting-failure-gorilla
+    - type: Speech
+      speechSounds: Monkey
+    - type: MonkeyAccent
     - type: Tag
       tags:
         - CannotSuicide
