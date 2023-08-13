@@ -1,9 +1,4 @@
 Entries:
-- author: lzk
-  changes:
-  - {message: Added paramedic and atmospherics windoor for mapping., type: Add}
-  id: 4047
-  time: '2023-06-19T17:29:45.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Added 4 new mercenary items, type: Add}
@@ -3007,3 +3002,10 @@ Entries:
   - {message: Bolas are now easier to make and more durable., type: Tweak}
   id: 4546
   time: '2023-08-13T07:11:11.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: 'Wheelchairs, unicycles and similar vehicles no longer act as a magical
+      barrier against stuns.', type: Fix}
+  - {message: Driving while asleep is no longer possible., type: Fix}
+  id: 4547
+  time: '2023-08-13T07:13:19.0000000+00:00'
