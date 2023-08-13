@@ -368,3 +368,10 @@
   spawn: FloorTileItemGratingMaint
   maxCount: 30
   itemSize: 5
+
+- type: stack
+  id: FloorTileWeb
+  name: web tile
+  spawn: FloorTileItemWeb
+  maxCount: 30
+  itemSize: 5

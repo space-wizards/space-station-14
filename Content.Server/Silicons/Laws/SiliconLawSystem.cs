@@ -1,8 +1,11 @@
-﻿using Content.Server.Chat.Managers;
+﻿using Content.Server.Administration;
+using Content.Server.Chat.Managers;
+using Content.Server.GameTicking;
 using Content.Server.Mind.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Administration;
 using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
@@ -12,6 +15,7 @@ using Content.Shared.Silicons.Laws.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Toolshed;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -34,12 +38,12 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
         SubscribeLocalEvent<SiliconLawBoundComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
+        SubscribeLocalEvent<SiliconLawBoundComponent, PlayerSpawnCompleteEvent>(OnPlayerSpawnComplete);
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
-
     private void OnComponentStartup(EntityUid uid, SiliconLawBoundComponent component, ComponentStartup args)
     {
         component.ProvidedAction = new (_prototype.Index<InstantActionPrototype>(component.ViewLawsAction));
@@ -76,6 +80,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         var state = new SiliconLawBuiState(GetLaws(uid));
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
+    }
+
+    private void OnPlayerSpawnComplete(EntityUid uid, SiliconLawBoundComponent component, PlayerSpawnCompleteEvent args)
+    {
+        component.LastLawProvider = args.Station;
     }
 
     private void OnDirectedGetLaws(EntityUid uid, SiliconLawProviderComponent component, ref GetSiliconLawsEvent args)
@@ -117,28 +126,55 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         NotifyLawsChanged(uid);
     }
 
-    public List<SiliconLaw> GetLaws(EntityUid uid)
+    public List<SiliconLaw> GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return new List<SiliconLaw>();
+
         var xform = Transform(uid);
 
         var ev = new GetSiliconLawsEvent(uid);
 
         RaiseLocalEvent(uid, ref ev);
         if (ev.Handled)
+        {
+            component.LastLawProvider = uid;
             return ev.Laws;
+        }
 
         if (_station.GetOwningStation(uid, xform) is { } station)
         {
             RaiseLocalEvent(station, ref ev);
             if (ev.Handled)
+            {
+                component.LastLawProvider = station;
                 return ev.Laws;
+            }
         }
 
         if (xform.GridUid is { } grid)
         {
             RaiseLocalEvent(grid, ref ev);
             if (ev.Handled)
+            {
+                component.LastLawProvider = grid;
                 return ev.Laws;
+            }
+        }
+
+        if (component.LastLawProvider == null ||
+            Deleted(component.LastLawProvider) ||
+            Terminating(component.LastLawProvider.Value))
+        {
+            component.LastLawProvider = null;
+        }
+        else
+        {
+            RaiseLocalEvent(component.LastLawProvider.Value, ref ev);
+            if (ev.Handled)
+            {
+                return ev.Laws;
+            }
         }
 
         RaiseLocalEvent(ref ev);
@@ -153,5 +189,32 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.ConnectedClient, colorOverride: Color.FromHex("#2ed2fd"));
+    }
+}
+
+[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
+public sealed class LawsCommand : ToolshedCommand
+{
+    private SiliconLawSystem? _law;
+
+    [CommandImplementation("list")]
+    public IEnumerable<EntityUid> List()
+    {
+        var query = EntityManager.EntityQueryEnumerator<SiliconLawBoundComponent>();
+        while (query.MoveNext(out var uid, out _))
+        {
+            yield return uid;
+        }
+    }
+
+    [CommandImplementation("get")]
+    public IEnumerable<string> Get([PipedArgument] EntityUid lawbound)
+    {
+        _law ??= GetSys<SiliconLawSystem>();
+
+        foreach (var law in _law.GetLaws(lawbound))
+        {
+            yield return $"law {law.LawIdentifierOverride ?? law.Order.ToString()}: {Loc.GetString(law.LawString)}";
+        }
     }
 }
