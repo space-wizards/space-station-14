@@ -1,24 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed lathe ui not expanding properly. Also gave it a facelift., type: Fix}
-  - {message: Lathes no longer have to be manually synced to servers., type: Tweak}
-  - {message: Removed useless sync button on the research console., type: Remove}
-  id: 4054
-  time: '2023-06-20T06:39:35.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Updated all cargo department clothing sprites., type: Tweak}
-  id: 4055
-  time: '2023-06-20T20:26:41.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Nanotrasen realized they could stuff even more asbestos into the Atmospherics
-      firesuits, and have promptly done so.', type: Tweak}
-  - {message: 'Due to a recent reallocation in asbestos supply, the Atmospherics hardsuits
-      are less heat resistant.', type: Tweak}
-  id: 4056
-  time: '2023-06-20T20:29:13.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: Added hidden items in multiple vending machines., type: Add}
@@ -3014,3 +2994,27 @@ Entries:
   - {message: Phenol is now (accurately) toxic., type: Tweak}
   id: 4553
   time: '2023-08-13T07:22:08.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Added jugs to the medical fabricator., type: Add}
+  - {message: Jugs now take up more space in bags., type: Tweak}
+  id: 4554
+  time: '2023-08-13T07:23:37.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Many basic elements from the periodic table are now mildly toxic or
+      caustic. Watch what you drink!, type: Tweak}
+  - {message: Crewmembers who drink lithium have reported very minor cases of serious
+      brain damage. Doctors should watch out for people who are laughing and screaming
+      at nothing., type: Tweak}
+  id: 4555
+  time: '2023-08-13T07:24:11.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: 'Nanotrasen stopped watering down their acid to save money. Drinking
+      or injecting acids is more dangerous now, and acids burn through your insides
+      much quicker.', type: Tweak}
+  - {message: Having corrosive acid in your body now makes you scream!, type: Tweak}
+  - {message: Polytrinic acid now requires plasma to make., type: Tweak}
+  id: 4556
+  time: '2023-08-13T07:24:50.0000000+00:00'
