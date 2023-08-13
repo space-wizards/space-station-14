@@ -457,7 +457,7 @@
       path: /Audio/Weapons/Guns/Gunshots/taser2.ogg
   - type: ProjectileBatteryAmmoProvider
     proto: AnomalousParticleDeltaStrong
-    fireCost: 100
+    fireCost: 100 
   - type: AlternativeFireModes
     fireModes:
     - proto: AnomalousParticleDeltaStrong
@@ -470,7 +470,7 @@
 - type: entity
   name: Experimental C.H.I.M.P. handcannon
   parent: WeaponPistolCHIMP
-  id: WeaponPistolCHIMPOmega  
+  id: WeaponPistolCHIMPUpgraded
   components: 
   - type: AlternativeFireModes
     fireModes:

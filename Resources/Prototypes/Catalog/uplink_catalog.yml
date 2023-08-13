@@ -940,10 +940,10 @@
     - Mime
 
 - type: listing
-  id: UplinkChimp
-  name: uplink-chimp-name
-  description: uplink-chimp-desc
-  productEntity: WeaponPistolCHIMPOmega
+  id: UplinkChimpUpgradeKit
+  name: uplink-chimp-upgrade-kit-name
+  description: uplink-chimp-upgrade-kit-desc
+  productEntity: WeaponPistolCHIMPUpgradeKit
   cost:
     Telecrystal: 4
   categories:
