@@ -5,9 +5,16 @@ namespace Content.Shared.Power.Generator;
 /// <summary>
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SharedGeneratorSystem))]
-public sealed class FuelGeneratorComponent : Component
+/// <seealso cref="SharedGeneratorSystem"/>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedGeneratorSystem))]
+public sealed partial class FuelGeneratorComponent : Component
 {
+    /// <summary>
+    /// Is the generator currently running?
+    /// </summary>
+    [DataField("on"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    public bool On;
+
     /// <summary>
     /// The amount of fuel left in the generator.
     /// </summary>

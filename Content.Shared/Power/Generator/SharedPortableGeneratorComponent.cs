@@ -53,6 +53,19 @@ public sealed class PortableGeneratorSetTargetPowerMessage : BoundUserInterfaceM
         TargetPower = targetPower;
     }
 }
+/// <summary>
+/// Sent to the server to set the power switch of a portable generator.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PortableGeneratorSetPowerSwitchMessage : BoundUserInterfaceMessage
+{
+    public bool PowerSwitch;
+
+    public PortableGeneratorSetPowerSwitchMessage(bool powerSwitch)
+    {
+        PowerSwitch = powerSwitch;
+    }
+}
 
 /// <summary>
 /// Contains network state for the portable generator.
@@ -64,6 +77,7 @@ public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
     public float TargetPower;
     public float MaximumPower;
     public float OptimalPower;
+    public bool On;
 
     public PortableGeneratorComponentBuiState(FuelGeneratorComponent component)
     {
@@ -71,6 +85,7 @@ public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
         TargetPower = component.TargetPower;
         MaximumPower = component.MaxTargetPower;
         OptimalPower = component.OptimalPower;
+        On = component.On;
     }
 }
 
@@ -78,4 +93,25 @@ public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
 public enum GeneratorComponentUiKey
 {
     Key
+}
+
+/// <summary>
+/// Sprite layers for generator prototypes.
+/// </summary>
+[Serializable, NetSerializable]
+public enum GeneratorVisualLayers : byte
+{
+    Body,
+}
+
+/// <summary>
+/// Appearance keys for generators.
+/// </summary>
+[Serializable, NetSerializable]
+public enum GeneratorVisuals : byte
+{
+    /// <summary>
+    /// Boolean: is the generator running?
+    /// </summary>
+    Running,
 }

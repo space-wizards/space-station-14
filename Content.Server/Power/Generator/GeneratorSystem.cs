@@ -1,4 +1,5 @@
-﻿using Content.Server.Chemistry.Components.SolutionManager;
+﻿using Content.Server.Audio;
+using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Shared.Chemistry.Components;
@@ -18,6 +19,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 {
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
 
 
     private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
@@ -29,6 +32,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetPowerSwitchMessage>(OnPowerSwitchSet);
     }
 
     private void OnChemicalFuelAdapterInteractUsing(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, InteractUsingEvent args)
@@ -77,6 +81,11 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         component.TargetPower = Math.Clamp(args.TargetPower, 0, component.MaxTargetPower / 1000) * 1000;
     }
 
+    private void OnPowerSwitchSet(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorSetPowerSwitchMessage args)
+    {
+        component.On = args.PowerSwitch;
+    }
+
     private void OnSolidFuelAdapterInteractUsing(EntityUid uid, SolidFuelGeneratorAdapterComponent component, InteractUsingEvent args)
     {
         if (args.Handled)
@@ -102,15 +111,21 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
         while (query.MoveNext(out var uid, out var gen, out var supplier, out var xform))
         {
-            supplier.Enabled = gen.RemainingFuel > 0.0f && xform.Anchored;
+            supplier.Enabled = gen.On && gen.RemainingFuel > 0.0f && xform.Anchored;
 
-            var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
+            if (supplier.Enabled)
+            {
+                var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
 
-            supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
+                supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
 
-            var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
+                var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
 
-            gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (gen.OptimalBurnRate * frameTime * eff), 0.0f);
+                gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (gen.OptimalBurnRate * frameTime * eff), 0.0f);
+            }
+
+            _appearance.SetData(uid, GeneratorVisuals.Running, supplier.Enabled);
+            _ambientSound.SetAmbience(uid, supplier.Enabled);
         }
     }
 }

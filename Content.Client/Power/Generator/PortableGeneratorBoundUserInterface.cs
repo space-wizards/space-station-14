@@ -39,4 +39,9 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
     {
         SendMessage(new PortableGeneratorSetTargetPowerMessage(target));
     }
+
+    public void SetPowerSwitch(bool on)
+    {
+        SendMessage(new PortableGeneratorSetPowerSwitchMessage(on));
+    }
 }

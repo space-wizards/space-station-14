@@ -1,20 +1,25 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                MinSize="350 130"
-                SetSize="360 180"
-                Title="{Loc 'generator-ui-title'}">
+                MinSize="450 210"
+                SetSize="450 210"
+                Title="{Loc 'portable-generator-ui-title'}">
     <BoxContainer Margin="4 0" Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Center" Margin="5">
             <GridContainer Margin="2 0 0 0" Columns="2" HorizontalExpand="True">
+                <Label Text="{Loc 'portable-generator-ui-power-switch'}" HorizontalExpand="True" />
+                <BoxContainer Orientation="Horizontal" MinWidth="120">
+                    <Button Name="OnButton" Text="{Loc 'portable-generator-ui-power-switch-on'}" StyleClasses="OpenRight" />
+                    <Button Name="OffButton" Text="{Loc 'portable-generator-ui-power-switch-off'}" StyleClasses="OpenLeft" />
+                </BoxContainer>
                 <!-- Power -->
-                <Label Text="{Loc 'generator-ui-target-power-label'}"/>
+                <Label Text="{Loc 'portable-generator-ui-target-power-label'}"/>
                 <SpinBox Name="TargetPower" HorizontalExpand="True"/>
-                <Label Text="{Loc 'generator-ui-efficiency-label'}"/>
+                <Label Text="{Loc 'portable-generator-ui-efficiency-label'}"/>
                 <Label Name="Efficiency" Text="???%" HorizontalExpand="True"/>
-                <Label Text="{Loc 'generator-ui-fuel-use-label'}"/>
+                <Label Text="{Loc 'portable-generator-ui-fuel-use-label'}"/>
                 <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
-                <Label Text="{Loc 'generator-ui-fuel-left-label'}"/>
+                <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
                 <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
             </GridContainer>
         </BoxContainer>

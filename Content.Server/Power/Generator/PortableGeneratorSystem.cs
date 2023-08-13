@@ -90,7 +90,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<PortableGeneratorComponent, FuelGeneratorComponent, AppearanceComponent>();
 
         while (query.MoveNext(out var uid, out var portGen, out var fuelGen, out var xform))
         {

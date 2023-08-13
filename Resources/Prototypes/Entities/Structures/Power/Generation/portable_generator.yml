@@ -8,10 +8,18 @@
       anchored: False
     - type: Physics
       bodyType: Dynamic
-    - type: Sprite
-      sprite: Structures/Power/Generation/portable_generator.rsi
     - type: StaticPrice
       price: 500
+    - type: AmbientSound
+      range: 5
+      sound:
+        path: /Audio/Ambience/Objects/engine_hum.ogg
+      enabled: false
+
+    # Visuals
+    - type: Appearance
+    - type: Sprite
+      sprite: Structures/Power/Generation/portable_generator.rsi
 
     # Construction, interaction
     - type: WiresPanel
@@ -61,7 +69,16 @@
   suffix: Plasma, 20 kW
   components:
     - type: Sprite
-      state: portgen0
+      layers:
+        - state: portgen0
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen0on }
+            False: { state: portgen0 }
+
     - type: Machine
       board: GeneratorPlasmaMachineCircuitboard
     - type: FuelGenerator
@@ -77,7 +94,16 @@
   suffix: Uranium, 30 kW
   components:
     - type: Sprite
-      state: portgen1
+      layers:
+        - state: portgen1
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen1on }
+            False: { state: portgen1 }
+
     - type: Machine
       board: GeneratorUraniumMachineCircuitboard
     - type: FuelGenerator
