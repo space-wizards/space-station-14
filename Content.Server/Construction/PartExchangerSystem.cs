@@ -59,7 +59,7 @@ public sealed class PartExchangerSystem : EntitySystem
         args.Handled = true;
     }
 
-    private void TryExchangeMachineParts(EntityUid uid, EntityUid storageUid, List<(EntityUid, MachinePartComponent)> machineParts)
+    private void TryExchangeMachineParts(EntityUid uid, EntityUid storageUid, List<(EntityUid part, MachinePartComponent partComp)> machineParts)
     {
         if (!TryComp<MachineComponent>(uid, out var machine))
             return;
@@ -79,17 +79,17 @@ public sealed class PartExchangerSystem : EntitySystem
             }
         }
 
-        machineParts.Sort((x, y) => y.Item2.Rating.CompareTo(x.Item2.Rating));
+        machineParts.Sort((x, y) => y.partComp.Rating.CompareTo(x.partComp.Rating));
 
-        var updatedParts = new List<(EntityUid, MachinePartComponent)>();
+        var updatedParts = new List<(EntityUid part, MachinePartComponent partComp)>();
         foreach (var (type, amount) in macBoardComp.Requirements)
         {
-            var target = machineParts.Where(p => p.Item2.PartType == type).Take(amount);
+            var target = machineParts.Where(p => p.partComp.PartType == type).Take(amount);
             updatedParts.AddRange(target);
         }
         foreach (var part in updatedParts)
         {
-            machine.PartContainer.Insert(part.Item1, EntityManager);
+            machine.PartContainer.Insert(part.part, EntityManager);
             machineParts.Remove(part);
         }
 
@@ -101,7 +101,7 @@ public sealed class PartExchangerSystem : EntitySystem
         _construction.RefreshParts(uid, machine);
     }
 
-    private void TryConstructMachineParts(EntityUid uid, EntityUid storageEnt, List<(EntityUid, MachinePartComponent)> machineParts)
+    private void TryConstructMachineParts(EntityUid uid, EntityUid storageEnt, List<(EntityUid part, MachinePartComponent partComp)> machineParts)
     {
         if (!TryComp<MachineFrameComponent>(uid, out var machine))
             return;
@@ -122,18 +122,18 @@ public sealed class PartExchangerSystem : EntitySystem
             }
         }
 
-        machineParts.Sort((x, y) => y.Item2.Rating.CompareTo(x.Item2.Rating));
+        machineParts.Sort((x, y) => y.partComp.Rating.CompareTo(x.partComp.Rating));
 
-        var updatedParts = new List<(EntityUid, MachinePartComponent)>();
+        var updatedParts = new List<(EntityUid part, MachinePartComponent partComp)>();
         foreach (var (type, amount) in macBoardComp.Requirements)
         {
-            var target = machineParts.Where(p => p.Item2.PartType == type).Take(amount);
+            var target = machineParts.Where(p => p.partComp.PartType == type).Take(amount);
             updatedParts.AddRange(target);
         }
         foreach (var pair in updatedParts)
         {
-            var part = pair.Item2;
-            var partEnt = pair.Item1;
+            var part = pair.partComp;
+            var partEnt = pair.part;
 
             if (!machine.Requirements.ContainsKey(part.PartType))
                 continue;
