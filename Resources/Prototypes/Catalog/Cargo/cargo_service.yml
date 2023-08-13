@@ -89,6 +89,16 @@
   group: market
 
 - type: cargoProduct
+  id: ServiceGuidebooks
+  icon:
+    sprite: Objects/Misc/books.rsi
+    state: book_engineering2
+  product: CrateServiceGuidebooks
+  cost: 1300
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: ServiceBoxes
   icon:
     sprite: Objects/Storage/boxes.rsi

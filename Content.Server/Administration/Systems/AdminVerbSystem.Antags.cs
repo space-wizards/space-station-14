@@ -28,7 +28,7 @@ public sealed partial class AdminVerbSystem
         if (!_adminManager.HasAdminFlag(player, AdminFlags.Fun))
             return;
 
-        var targetHasMind = TryComp(args.Target, out MindComponent? targetMindComp);
+        var targetHasMind = TryComp(args.Target, out MindContainerComponent? targetMindComp);
         if (!targetHasMind || targetMindComp == null)
             return;
 

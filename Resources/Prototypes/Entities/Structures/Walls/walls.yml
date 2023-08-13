@@ -22,7 +22,6 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
   - type: Icon
     state: full
@@ -145,6 +144,40 @@
     key: walls
     base: clown
 
+- type: entity
+  parent: BaseWall
+  id: WallMeat
+  name: meat wall
+  description: Sticky.
+  components:
+  - type: Tag
+    tags:
+      - RCDDeconstructWhitelist
+      - Wall
+      - Structure
+  - type: Sprite
+    sprite: Structures/Walls/meat.rsi
+  - type: Icon
+    sprite: Structures/Walls/meat.rsi
+  - type: Construction
+    graph: Girder
+    node: bananiumWall
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100 # weak
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          Girder:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: IconSmooth
+    key: walls
+    base: meat
 
 - type: entity
   parent: BaseWall
@@ -443,7 +476,6 @@
     - Wall
   components:
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Walls/plastitanium_diagonal.rsi
     state: state0
@@ -625,7 +657,6 @@
     tags:
     - Wall
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Walls/shuttle_diagonal.rsi
     state: state0
@@ -768,7 +799,6 @@
     - Wall
   components:
   - type: Sprite
-    netsync: false
     drawdepth: Walls
     sprite: Structures/Walls/solid_diagonal.rsi
     state: state0

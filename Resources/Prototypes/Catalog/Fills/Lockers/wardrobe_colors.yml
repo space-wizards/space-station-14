@@ -86,7 +86,7 @@
       - id: ClothingUniformJumpskirtColorYellow
       - id: ClothingShoesColorOrange
         amount: 2
-      - id: HatBandGold
+      - id: ClothingHeadBandGold
 
 
 - type: entity
@@ -137,8 +137,8 @@
       - id: ClothingUniformJumpskirtColorBlack
       - id: ClothingShoesColorBlack
         amount: 2
-      - id: HatBandBlack
-      - id: HatBandSkull
+      - id: ClothingHeadBandBlack
+      - id: ClothingHeadBandSkull
         prob: 0.4
 
 - type: entity
@@ -152,4 +152,4 @@
       - id: ClothingUniformJumpskirtColorGreen
       - id: ClothingShoesColorBlack
         amount: 2
-      - id: HatBandGreen
+      - id: ClothingHeadBandGreen

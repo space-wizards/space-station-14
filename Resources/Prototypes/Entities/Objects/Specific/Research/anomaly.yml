@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalyscanner.rsi
-    netsync: false
     state: icon
   - type: ActivatableUI
     key: enum.AnomalyScannerUiKey.Key
@@ -29,7 +28,6 @@
   components:
   - type: Sprite
     sprite: Objects/Specific/Research/anomalylocator.rsi
-    netsync: false
     layers:
     - state: icon
     - state: screen

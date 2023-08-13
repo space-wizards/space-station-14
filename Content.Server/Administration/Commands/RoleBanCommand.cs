@@ -12,6 +12,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Ban)]
 public sealed class RoleBanCommand : IConsoleCommand
 {
+    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private readonly RoleBanManager _bans = default!;
+
     public string Command => "roleban";
     public string Description => Loc.GetString("cmd-roleban-desc");
     public string Help => Loc.GetString("cmd-roleban-help");
@@ -49,7 +52,16 @@ public sealed class RoleBanCommand : IConsoleCommand
                 return;
         }
 
-        IoCManager.Resolve<RoleBanManager>().CreateJobBan(shell, target, job, reason, minutes);
+        var located = await _locator.LookupIdByNameOrIdAsync(target);
+
+        if (located == null)
+        {
+            shell.WriteError(Loc.GetString("cmd-roleban-name-parse"));
+            return;
+        }
+
+        _bans.CreateJobBan(shell, located, job, reason, minutes);
+        _bans.SendRoleBans(located);
     }
 
     public CompletionResult GetCompletion(IConsoleShell shell, string[] args)

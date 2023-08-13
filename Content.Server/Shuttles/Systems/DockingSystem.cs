@@ -18,7 +18,7 @@ namespace Content.Server.Shuttles.Systems
     public sealed partial class DockingSystem : EntitySystem
     {
         [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly AirlockSystem _airlocks = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
         [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
         [Dependency] private readonly PathfindingSystem _pathfinding = default!;
@@ -355,9 +355,9 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockAUid, doorA))
                 {
                     doorA.ChangeAirtight = false;
-                    if (TryComp<AirlockComponent>(dockAUid, out var airlockA))
+                    if (TryComp<DoorBoltComponent>(dockAUid, out var airlockA))
                     {
-                        _airlocks.SetBoltsWithAudio(dockAUid, airlockA, true);
+                        _bolts.SetBoltsWithAudio(dockAUid, airlockA, true);
                     }
                 }
             }
@@ -367,9 +367,9 @@ namespace Content.Server.Shuttles.Systems
                 if (_doorSystem.TryOpen(dockBUid, doorB))
                 {
                     doorB.ChangeAirtight = false;
-                    if (TryComp<AirlockComponent>(dockBUid, out var airlockB))
+                    if (TryComp<DoorBoltComponent>(dockBUid, out var airlockB))
                     {
-                        _airlocks.SetBoltsWithAudio(dockBUid, airlockB, true);
+                        _bolts.SetBoltsWithAudio(dockBUid, airlockB, true);
                     }
                 }
             }
@@ -453,14 +453,14 @@ namespace Content.Server.Shuttles.Systems
             if (dock.DockedWith == null)
                 return;
 
-            if (TryComp<AirlockComponent>(dockUid, out var airlockA))
+            if (TryComp<DoorBoltComponent>(dockUid, out var airlockA))
             {
-                _airlocks.SetBoltsWithAudio(dockUid, airlockA, false);
+                _bolts.SetBoltsWithAudio(dockUid, airlockA, false);
             }
 
-            if (TryComp<AirlockComponent>(dock.DockedWith, out var airlockB))
+            if (TryComp<DoorBoltComponent>(dock.DockedWith, out var airlockB))
             {
-                _airlocks.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
+                _bolts.SetBoltsWithAudio(dock.DockedWith.Value, airlockB, false);
             }
 
             if (TryComp(dockUid, out DoorComponent? doorA))

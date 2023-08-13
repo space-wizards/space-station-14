@@ -19,6 +19,12 @@ public sealed class CreateEntityReactionEffect : ReagentEffect
     [DataField("number")]
     public uint Number = 1;
 
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-create-entity-reaction-effect",
+            ("chance", Probability),
+            ("entname", IoCManager.Resolve<IPrototypeManager>().Index<EntityPrototype>(Entity).Name),
+            ("amount", Number));
+
     public override void Effect(ReagentEffectArgs args)
     {
         var transform = args.EntityManager.GetComponent<TransformComponent>(args.SolutionEntity);

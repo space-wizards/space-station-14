@@ -41,8 +41,6 @@ entities:
       type: Gravity
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 600.983382
-      type: GridPathfinding
     - chunkCollection:
         version: 2
         nodes:

@@ -70,7 +70,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 var map = sMapManager.CreateMap();
                 var player = sPlayerManager.ServerSessions.Single();
                 serverEnt = sEntityManager.SpawnEntity(null, new MapCoordinates((0, 0), map));
-                serverComponent = IoCManager.Resolve<IEntityManager>().AddComponent<PredictionTestComponent>(serverEnt);
+                serverComponent = sEntityManager.AddComponent<PredictionTestComponent>(serverEnt);
 
                 // Make client "join game" so they receive game state updates.
                 player.JoinGame();
@@ -364,7 +364,7 @@ namespace Content.IntegrationTests.Tests.Networking
                     Assert.That(clientComponent.Foo, Is.True);
                 }
             }
-            
+
             cfg.SetCVar(CVars.NetLogging, log);
             await pairTracker.CleanReturnAsync();
         }
@@ -432,7 +432,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var component = IoCManager.Resolve<IEntityManager>().GetComponent<PredictionTestComponent>(message.Uid);
+                var component = EntityManager.GetComponent<PredictionTestComponent>(message.Uid);
                 var old = component.Foo;
                 if (Allow)
                 {

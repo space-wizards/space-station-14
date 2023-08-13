@@ -54,7 +54,8 @@ namespace Content.Shared.Verbs
         public EntityUid EventTarget = EntityUid.Invalid;
 
         /// <summary>
-        ///     If a verb is only defined client-side, this should be set to true.
+        ///     Whether a verb is only defined client-side. Note that this has nothing to do with whether the target of
+        ///     the verb is client-side
         /// </summary>
         /// <remarks>
         ///     If true, the client will not also ask the server to run this verb when executed locally. This just

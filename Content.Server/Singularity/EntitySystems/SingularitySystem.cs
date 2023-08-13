@@ -24,7 +24,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
 #region Dependencies
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly PVSOverrideSystem _pvs = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvs = default!;
 #endregion Dependencies
 
     /// <summary>
@@ -313,7 +313,7 @@ public sealed class SingularitySystem : SharedSingularitySystem
             6 => 20,
             5 => 15,
             4 => 10,
-            3 => 5,
+            3 => 6,
             2 => 2,
             1 => 1,
             _ => 0

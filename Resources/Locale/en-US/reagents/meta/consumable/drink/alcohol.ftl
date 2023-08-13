@@ -91,9 +91,6 @@ reagent-desc-barefoot = Barefoot and pregnant.
 reagent-name-beepsky-smash = beepsky smash
 reagent-desc-beepsky-smash = Deny drinking this and prepare for THE LAW.
 
-reagent-name-bilk = bilk
-reagent-desc-bilk = This appears to be beer mixed with milk. Disgusting.
-
 reagent-name-black-russian = black russian
 reagent-desc-black-russian = For the lactose-intolerant. Still as classy as a White Russian.
 

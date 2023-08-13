@@ -49,7 +49,6 @@
   - type: Sprite
     sprite: Structures/Power/Generation/Singularity/singularity_1.rsi
     shader: unshaded
-    netsync: false
     layers:
     - map: [ "VisualLevel" ]
       state: singularity_1

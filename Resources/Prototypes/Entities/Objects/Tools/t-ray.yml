@@ -5,7 +5,6 @@
   components:
   - type: Sprite
     sprite: Objects/Tools/t-ray.rsi
-    netsync: false
     layers:
     - state: tray-off
       map: ["base"]

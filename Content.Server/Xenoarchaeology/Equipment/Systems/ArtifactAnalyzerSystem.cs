@@ -64,7 +64,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleServerSelectionMessage>(OnServerSelectionMessage);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleScanButtonPressedMessage>(OnScanButton);
         SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsolePrintButtonPressedMessage>(OnPrintButton);
-        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleDestroyButtonPressedMessage>(OnDestroyButton);
+        SubscribeLocalEvent<AnalysisConsoleComponent, AnalysisConsoleExtractButtonPressedMessage>(OnExtractButton);
 
         SubscribeLocalEvent<AnalysisConsoleComponent, ResearchClientServerSelectedMessage>((e,c,_) => UpdateUserInterface(e,c),
             after: new []{typeof(ResearchSystem)});
@@ -339,12 +339,12 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
     }
 
     /// <summary>
-    /// destroys the artifact and updates the server points
+    /// Extracts points from the artifact and updates the server points
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <param name="args"></param>
-    private void OnDestroyButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleDestroyButtonPressedMessage args)
+    private void OnExtractButton(EntityUid uid, AnalysisConsoleComponent component, AnalysisConsoleExtractButtonPressedMessage args)
     {
         if (component.AnalyzerEntity == null)
             return;
@@ -358,13 +358,14 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
 
         var pointValue = _artifact.GetResearchPointValue(artifact.Value);
 
+        // no new nodes triggered so nothing to add
         if (pointValue == 0)
             return;
 
         _research.ModifyServerPoints(server.Value, pointValue, serverComponent);
         _artifact.AdjustConsumedPoints(artifact.Value, pointValue);
 
-        _audio.PlayPvs(component.DestroySound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
+        _audio.PlayPvs(component.ExtractSound, component.AnalyzerEntity.Value, AudioParams.Default.WithVolume(2f));
 
         _popup.PopupEntity(Loc.GetString("analyzer-artifact-extract-popup"),
             component.AnalyzerEntity.Value, PopupType.Large);

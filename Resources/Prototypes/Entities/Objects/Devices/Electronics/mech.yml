@@ -81,3 +81,37 @@
     - type: GuideHelp
       guides:
       - Robotics
+
+# HAMTR
+
+- type: entity
+  id: HamtrCentralElectronics
+  parent: BaseElectronics
+  name: HAMTR central control module
+  description: The electrical control center for the HAMTR mech.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: mainboard
+    - type: Tag
+      tags:
+      - HamtrCentralControlModule
+    - type: GuideHelp
+      guides:
+      - Robotics
+
+- type: entity
+  id: HamtrPeripheralsElectronics
+  parent: BaseElectronics
+  name: HAMTR peripherals control module
+  description: The electrical peripherals control for the HAMTR mech.
+  components:
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: id_mod
+    - type: Tag
+      tags:
+      - HamtrPeripheralsControlModule
+    - type: GuideHelp
+      guides:
+      - Robotics

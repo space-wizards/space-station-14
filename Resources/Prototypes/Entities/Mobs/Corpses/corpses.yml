@@ -1,8 +1,6 @@
 - type: entity
   parent: SalvageHumanCorpse
   id: MobRandomServiceCorpse
-  name: unidentified corpse
-  description: I think he's dead.
   suffix: Dead, Service
   components:
   - type: Loadout

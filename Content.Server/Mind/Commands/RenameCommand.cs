@@ -48,7 +48,7 @@ public sealed class RenameCommand : IConsoleCommand
 
         var entSysMan = IoCManager.Resolve<IEntitySystemManager>();
 
-        if (entMan.TryGetComponent(entityUid, out MindComponent? mind) && mind.Mind != null)
+        if (entMan.TryGetComponent(entityUid, out MindContainerComponent? mind) && mind.Mind != null)
         {
             // Mind
             mind.Mind.CharacterName = name;
@@ -80,9 +80,9 @@ public sealed class RenameCommand : IConsoleCommand
         }
 
         // PDAs
-        if (entSysMan.TryGetEntitySystem<PDASystem>(out var pdaSystem))
+        if (entSysMan.TryGetEntitySystem<PdaSystem>(out var pdaSystem))
         {
-            var query = entMan.EntityQueryEnumerator<PDAComponent>();
+            var query = entMan.EntityQueryEnumerator<PdaComponent>();
             while (query.MoveNext(out var uid, out var pda))
             {
                 if (pda.OwnerName == oldName)

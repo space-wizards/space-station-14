@@ -4,7 +4,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Diona/organs.rsi
   - type: Organ
   - type: Food

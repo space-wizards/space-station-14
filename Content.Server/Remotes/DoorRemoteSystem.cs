@@ -17,6 +17,7 @@ namespace Content.Server.Remotes
     public sealed class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
         [Dependency] private readonly AirlockSystem _airlock = default!;
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly DoorSystem _doorSystem = default!;
@@ -88,10 +89,13 @@ namespace Content.Server.Remotes
                         _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)}: {doorComp.State}");
                     break;
                 case OperatingMode.ToggleBolts:
-                    if (!airlockComp.BoltWireCut)
+                    if (TryComp<DoorBoltComponent>(args.Target, out var boltsComp))
                     {
-                        _airlock.SetBoltsWithAudio(args.Target.Value, airlockComp, !airlockComp.BoltsDown);
-                        _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(airlockComp.BoltsDown ? "" : "un")}bolt it");
+                        if (!boltsComp.BoltWireCut)
+                        {
+                            _bolts.SetBoltsWithAudio(args.Target.Value, boltsComp, !boltsComp.BoltsDown);
+                            _adminLogger.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User):player} used {ToPrettyString(args.Used)} on {ToPrettyString(args.Target.Value)} to {(boltsComp.BoltsDown ? "" : "un")}bolt it");
+                        }
                     }
                     break;
                 case OperatingMode.ToggleEmergencyAccess:

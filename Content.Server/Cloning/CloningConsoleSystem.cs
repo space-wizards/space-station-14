@@ -164,7 +164,7 @@ namespace Content.Server.Cloning
             if (body is null)
                 return;
 
-            if (!TryComp<MindComponent>(body, out var mindComp))
+            if (!TryComp<MindContainerComponent>(body, out var mindComp))
                 return;
 
             var mind = mindComp.Mind;
@@ -214,7 +214,7 @@ namespace Content.Server.Cloning
                 {
                     scanBodyInfo = MetaData(scanBody.Value).EntityName;
 
-                    TryComp<MindComponent>(scanBody, out var mindComp);
+                    TryComp<MindContainerComponent>(scanBody, out var mindComp);
 
                     if (!_mobStateSystem.IsDead(scanBody.Value))
                     {

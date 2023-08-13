@@ -9,7 +9,9 @@ using Content.Shared.Tag;
 using Content.Shared.Verbs;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
+using Robust.Shared.Map;
 using Robust.Shared.Player;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Client.Guidebook;
@@ -19,6 +21,7 @@ namespace Content.Client.Guidebook;
 /// </summary>
 public sealed class GuidebookSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly VerbSystem _verbSystem = default!;
@@ -28,6 +31,8 @@ public sealed class GuidebookSystem : EntitySystem
 
     public event Action<List<string>, List<string>?, string?, bool, string?>? OnGuidebookOpen;
     public const string GuideEmbedTag = "GuideEmbeded";
+
+    private EntityUid _defaultUser;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -39,6 +44,23 @@ public sealed class GuidebookSystem : EntitySystem
         SubscribeLocalEvent<GuidebookControlsTestComponent, ActivateInWorldEvent>(OnGuidebookControlsTestActivateInWorld);
         SubscribeLocalEvent<GuidebookControlsTestComponent, GetVerbsEvent<AlternativeVerb>>(
             OnGuidebookControlsTestGetAlternateVerbs);
+    }
+
+    /// <summary>
+    /// Gets a user entity to use for verbs and examinations. If the player has no attached entity, this will use a
+    /// dummy client-side entity so that users can still use the guidebook when not attached to anything (e.g., in the
+    /// lobby)
+    /// </summary>
+    public EntityUid GetGuidebookUser()
+    {
+        var user = _playerManager.LocalPlayer!.ControlledEntity;
+        if (user != null)
+            return user.Value;
+
+        if (!Exists(_defaultUser))
+            _defaultUser = Spawn(null, MapCoordinates.Nullspace);
+
+        return _defaultUser;
     }
 
     private void OnGetVerbs(EntityUid uid, GuideHelpComponent component, GetVerbsEvent<ExamineVerb> args)
@@ -58,6 +80,9 @@ public sealed class GuidebookSystem : EntitySystem
 
     private void OnInteract(EntityUid uid, GuideHelpComponent component, ActivateInWorldEvent args)
     {
+        if (!_timing.IsFirstTimePredicted)
+            return;
+
         if (!component.OpenOnActivation || component.Guides.Count == 0 || _tags.HasTag(uid, GuideEmbedTag))
             return;
 
@@ -114,34 +139,26 @@ public sealed class GuidebookSystem : EntitySystem
         _audioSystem.PlayGlobal(speech.SpeechSounds, Filter.Local(), false, speech.AudioParams);
     }
 
-
     public void FakeClientActivateInWorld(EntityUid activated)
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity;
-        if (user is null)
-            return;
-        var activateMsg = new ActivateInWorldEvent(user.Value, activated);
-        RaiseLocalEvent(activated, activateMsg, true);
+        var activateMsg = new ActivateInWorldEvent(GetGuidebookUser(), activated);
+        RaiseLocalEvent(activated, activateMsg);
     }
 
     public void FakeClientAltActivateInWorld(EntityUid activated)
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity;
-        if (user is null)
-            return;
         // Get list of alt-interact verbs
-        var verbs = _verbSystem.GetLocalVerbs(activated, user.Value, typeof(AlternativeVerb));
+        var verbs = _verbSystem.GetLocalVerbs(activated, GetGuidebookUser(), typeof(AlternativeVerb), force: true);
 
         if (!verbs.Any())
             return;
 
-        _verbSystem.ExecuteVerb(verbs.First(), user.Value, activated);
+        _verbSystem.ExecuteVerb(verbs.First(), GetGuidebookUser(), activated);
     }
 
     public void FakeClientUse(EntityUid activated)
     {
-        var user = _playerManager.LocalPlayer!.ControlledEntity ?? EntityUid.Invalid;
-        var activateMsg = new InteractHandEvent(user, activated);
-        RaiseLocalEvent(activated, activateMsg, true);
+        var activateMsg = new InteractHandEvent(GetGuidebookUser(), activated);
+        RaiseLocalEvent(activated, activateMsg);
     }
 }

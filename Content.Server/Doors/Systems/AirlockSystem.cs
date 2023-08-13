@@ -18,6 +18,7 @@ namespace Content.Server.Doors.Systems
         [Dependency] private readonly WiresSystem _wiresSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DoorBoltSystem _bolts = default!;
 
         public override void Initialize()
         {
@@ -70,14 +71,8 @@ namespace Content.Server.Doors.Systems
             }
             else
             {
-                if (component.BoltWireCut)
-                    SetBoltsWithAudio(uid, component, true);
-
                 UpdateAutoClose(uid, door: door);
             }
-
-            // BoltLights also got out
-            UpdateBoltLightStatus(uid, component);
         }
 
         private void OnStateChanged(EntityUid uid, AirlockComponent component, DoorStateChangedEvent args)
@@ -91,7 +86,6 @@ namespace Content.Server.Doors.Systems
                 _wiresSystem.ChangePanelVisibility(uid, wiresPanel, component.OpenPanelVisible || args.State != DoorState.Open);
             }
             // If the door is closed, we should look if the bolt was locked while closing
-            UpdateBoltLightStatus(uid, component);
             UpdateAutoClose(uid, component);
 
             // Make sure the airlock auto closes again next time it is opened
@@ -180,12 +174,6 @@ namespace Content.Server.Doors.Systems
 
         private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorPryEvent args)
         {
-            if (component.BoltsDown)
-            {
-                Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
-                args.Cancel();
-            }
-
             if (this.IsPowered(uid, EntityManager))
             {
                 if (HasComp<ToolForcePoweredComponent>(args.Tool))
@@ -197,52 +185,7 @@ namespace Content.Server.Doors.Systems
 
         public bool CanChangeState(EntityUid uid, AirlockComponent component)
         {
-            return this.IsPowered(uid, EntityManager) && !component.BoltsDown;
-        }
-
-        public void UpdateBoltLightStatus(EntityUid uid, AirlockComponent component)
-        {
-            if (!TryComp<AppearanceComponent>(uid, out var appearance))
-                return;
-
-            Appearance.SetData(uid, DoorVisuals.BoltLights, GetBoltLightsVisible(uid, component), appearance);
-        }
-
-        public void SetBoltsWithAudio(EntityUid uid, AirlockComponent component, bool newBolts)
-        {
-            if (newBolts == component.BoltsDown)
-                return;
-
-            component.BoltsDown = newBolts;
-            Audio.PlayPvs(newBolts ? component.BoltDownSound : component.BoltUpSound, uid);
-            UpdateBoltLightStatus(uid, component);
-        }
-
-        public bool GetBoltLightsVisible(EntityUid uid, AirlockComponent component)
-        {
-            return component.BoltLightsEnabled &&
-                   component.BoltsDown &&
-                   this.IsPowered(uid, EntityManager) &&
-                   TryComp<DoorComponent>(uid, out var doorComponent) &&
-                   doorComponent.State == DoorState.Closed;
-        }
-
-        public void SetBoltLightsEnabled(EntityUid uid, AirlockComponent component, bool value)
-        {
-            if (component.BoltLightsEnabled == value)
-                return;
-
-            component.BoltLightsEnabled = value;
-            UpdateBoltLightStatus(uid, component);
-        }
-
-        public void SetBoltsDown(EntityUid uid, AirlockComponent component, bool value)
-        {
-            if (component.BoltsDown == value)
-                return;
-
-            component.BoltsDown = value;
-            UpdateBoltLightStatus(uid, component);
+            return this.IsPowered(uid, EntityManager) && !_bolts.IsBolted(uid);
         }
     }
 }

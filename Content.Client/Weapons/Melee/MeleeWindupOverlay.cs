@@ -104,7 +104,7 @@ public sealed class MeleeWindupOverlay : Overlay
         const float endX = 22f;
 
         // Area marking where to release
-        var releaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / (float) comp.WindupTime.TotalSeconds * EyeManager.PixelsPerMeter;
+        var releaseWidth = 2f * SharedMeleeWeaponSystem.GracePeriod / (float) _melee.GetWindupTime(meleeUid, owner.Value, comp).TotalSeconds * EyeManager.PixelsPerMeter;
         const float releaseMiddle = (endX - startX) / 2f + startX;
 
         var releaseBox = new Box2(new Vector2(releaseMiddle - releaseWidth / 2f, 3f) / EyeManager.PixelsPerMeter,
@@ -114,7 +114,7 @@ public sealed class MeleeWindupOverlay : Overlay
         handle.DrawRect(releaseBox, Color.LimeGreen);
 
         // Wraps around back to 0
-        var totalDuration = comp.WindupTime.TotalSeconds * 2;
+        var totalDuration = _melee.GetWindupTime(meleeUid, owner.Value, comp).TotalSeconds * 2;
 
         var elapsed = (currentTime - comp.WindUpStart.Value).TotalSeconds % (2 * totalDuration);
         var value = elapsed / totalDuration;

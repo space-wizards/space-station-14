@@ -1,5 +1,6 @@
 using Content.Server.Electrocution;
 using Content.Shared.Chemistry.Reagent;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
@@ -13,6 +14,9 @@ public sealed class Electrocute : ReagentEffect
     ///     true - refresh electrocute time,  false - accumulate electrocute time
     /// </remarks>
     [DataField("refresh")] public bool Refresh = true;
+
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-electrocute", ("chance", Probability), ("time", ElectrocuteTime));
 
     public override bool ShouldLog => true;
 

@@ -1,4 +1,4 @@
-﻿<controls:FancyWindow xmlns="https://spacestation14.io"
+<controls:FancyWindow xmlns="https://spacestation14.io"
                xmlns:ui="clr-namespace:Content.Client.Pinpointer.UI"
                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                Title="{Loc 'crew-monitoring-user-interface-title'}"
@@ -7,7 +7,7 @@
     <BoxContainer Orientation="Horizontal">
         <ScrollContainer HorizontalExpand="True"
                          VerticalExpand="True"
-                         Margin="0, 0, 8, 0">
+                         Margin="8, 8, 8, 8">
             <GridContainer Name="SensorsTable"
                            HorizontalExpand="True"
                            VerticalExpand="True"
@@ -26,6 +26,12 @@
 
                 <!-- Table rows are filled by code -->
             </GridContainer>
+            <Label  Name="NoServerLabel"
+                    Text="{Loc 'crew-monitoring-user-interface-no-server'}"
+                    StyleClasses="LabelHeading"
+                    FontColorOverride="Red"
+                    HorizontalAlignment="Center"
+                    Visible="false"/>
         </ScrollContainer>
         <ui:NavMapControl Name="NavMap"
                           Margin="5 5"/>

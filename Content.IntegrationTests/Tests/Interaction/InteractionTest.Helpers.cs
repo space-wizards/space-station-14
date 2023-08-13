@@ -493,7 +493,7 @@ public abstract partial class InteractionTest
         var pos = (coords ?? TargetCoords).ToMap(SEntMan, Transform);
         await Server.WaitPost(() =>
         {
-            if (MapMan.TryFindGridAt(pos, out var grid))
+            if (MapMan.TryFindGridAt(pos, out _, out var grid))
                 tile = grid.GetTileRef(coords ?? TargetCoords).Tile;
         });
 
@@ -663,7 +663,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            if (grid != null || MapMan.TryFindGridAt(pos, out grid))
+            if (grid != null || MapMan.TryFindGridAt(pos, out var gridUid, out grid))
             {
                 grid.SetTile(coords ?? TargetCoords, tile);
                 return;
@@ -673,11 +673,12 @@ public abstract partial class InteractionTest
                 return;
 
             grid = MapMan.CreateGrid(MapData.MapId);
-            var gridXform = SEntMan.GetComponent<TransformComponent>(grid.Owner);
+            gridUid = grid.Owner;
+            var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
             grid.SetTile(coords ?? TargetCoords, tile);
 
-            if (!MapMan.TryFindGridAt(pos, out grid))
+            if (!MapMan.TryFindGridAt(pos, out _, out grid))
                 Assert.Fail("Failed to create grid?");
         });
         await AssertTile(proto, coords);

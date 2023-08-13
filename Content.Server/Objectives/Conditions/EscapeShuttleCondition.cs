@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Components;
@@ -47,13 +48,14 @@ namespace Content.Server.Objectives.Conditions
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
+                var mindSystem = entMan.System<MindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
                     return 0f;
 
                 var shuttleContainsAgent = false;
-                var agentIsAlive = !_mind.CharacterDeadIC;
+                var agentIsAlive = !mindSystem.IsCharacterDeadIc(_mind);
                 var agentIsEscaping = true;
 
                 if (entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)

@@ -253,12 +253,10 @@ namespace Content.Client.NPC
             if ((_system.Modes & PathfindingDebugMode.Poly) != 0x0 &&
                 mouseWorldPos.MapId == args.MapId)
             {
-                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var grid) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
+                if (!_mapManager.TryFindGridAt(mouseWorldPos, out var gridUid, out var grid) || !xformQuery.TryGetComponent(gridUid, out var gridXform))
                     return;
 
-                var found = false;
-
-                if (!_system.Polys.TryGetValue(grid.Owner, out var data))
+                if (!_system.Polys.TryGetValue(gridUid, out var data))
                     return;
 
                 var tileRef = grid.GetTileRef(mouseWorldPos);

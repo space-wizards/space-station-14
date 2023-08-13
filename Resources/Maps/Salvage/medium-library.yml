@@ -165,8 +165,6 @@ entities:
       type: DecalGrid
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 3237.1863067
-      type: GridPathfinding
     - type: RadiationGridResistance
     - type: SpreaderGrid
 - proto: AlwaysPoweredLightLED

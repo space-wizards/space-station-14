@@ -7,7 +7,6 @@
     - type: Sprite
       sprite: Objects/Weapons/Bombs/hot_potato.rsi
       state: icon
-      netsync: false
       layers:
       - state: icon
         map: ["base"]
@@ -57,7 +56,6 @@
   - type: TimedDespawn
     lifetime: 0.6
   - type: Sprite
-    netsync: false
     noRot: true
     drawdepth: Effects
     sprite: Effects/chemsmoke.rsi

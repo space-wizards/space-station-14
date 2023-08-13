@@ -59,8 +59,6 @@ entities:
       type: Fixtures
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 8309.0552128
-      type: GridPathfinding
     - gravityShakeSound: !type:SoundPathSpecifier
         path: /Audio/Effects/alert.ogg
       type: Gravity

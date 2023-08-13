@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/telecomms.rsi
     snapCardinals: true
-    netsync: false
     layers:
     - state: icon
     - state: unlit
@@ -48,6 +47,7 @@
         acts: ["Destruction"]
   - type: Machine
     board: TelecomServerCircuitboard
+  - type: WiresPanel
   - type: Wires
     BoardName: "TelecomServer"
     LayoutId: TelecomServer

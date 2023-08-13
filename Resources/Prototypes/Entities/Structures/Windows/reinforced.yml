@@ -79,7 +79,6 @@
     - Window
   components:
   - type: Sprite
-    netsync: false
     sprite: Structures/Windows/directional.rsi
     state: reinforced_window
   - type: Icon

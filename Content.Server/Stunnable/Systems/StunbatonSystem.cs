@@ -2,6 +2,7 @@ using Content.Server.Power.Components;
 using Content.Server.Power.Events;
 using Content.Server.Stunnable.Components;
 using Content.Shared.Audio;
+using Content.Shared.Damage;
 using Content.Shared.Damage.Events;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
@@ -27,15 +28,16 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
-            SubscribeLocalEvent<StunbatonComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<StunbatonComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
 
-        private void OnMeleeHit(EntityUid uid, StunbatonComponent component, MeleeHitEvent args)
+        private void OnGetMeleeDamage(EntityUid uid, StunbatonComponent component, ref GetMeleeDamageEvent args)
         {
-            if (!component.Activated) return;
+            if (!component.Activated)
+                return;
 
             // Don't apply damage if it's activated; just do stamina damage.
-            args.BonusDamage -= args.BaseDamage;
+            args.Damage = new DamageSpecifier();
         }
 
         private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)

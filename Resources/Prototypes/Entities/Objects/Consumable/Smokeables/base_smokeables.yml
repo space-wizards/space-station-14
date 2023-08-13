@@ -6,7 +6,6 @@
   components:
   - type: Smokable
   - type: Sprite
-    netsync: false
   - type: Appearance
   - type: BurnStateVisuals
   - type: Tag

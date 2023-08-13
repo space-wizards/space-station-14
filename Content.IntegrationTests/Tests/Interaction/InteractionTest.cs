@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.Server.Body.Systems;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Server.Stack;
@@ -38,7 +39,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract partial class InteractionTest
 {
-    protected virtual string PlayerPrototype => "AdminObserver";
+    protected virtual string PlayerPrototype => "InteractionTestMob";
 
     protected PairTracker PairTracker = default!;
     protected TestMapData MapData = default!;
@@ -115,10 +116,28 @@ public abstract partial class InteractionTest
 
     public float TickPeriod => (float)STiming.TickPeriod.TotalSeconds;
 
+
+    // Simple mob that has one hand and can perform misc interactions.
+    public const string TestPrototypes = @"
+- type: entity
+  id: InteractionTestMob
+  components:
+  - type: Body
+    prototype: Aghost
+  - type: DoAfter
+  - type: Hands
+  - type: MindContainer
+  - type: Stripping
+  - type: Tag
+    tags:
+    - CanPilot
+  - type: UserInterface
+";
+
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings());
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = TestPrototypes});
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -166,7 +185,7 @@ public abstract partial class InteractionTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            ServerSession.ContentData()?.WipeMind();
+            SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);

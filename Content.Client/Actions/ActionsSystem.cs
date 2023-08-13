@@ -173,7 +173,7 @@ namespace Content.Client.Actions
         public void LinkAllActions(ActionsComponent? actions = null)
         {
              var player = _playerManager.LocalPlayer?.ControlledEntity;
-             if (player == null || !Resolve(player.Value, ref actions))
+             if (player == null || !Resolve(player.Value, ref actions, false))
              {
                  return;
              }

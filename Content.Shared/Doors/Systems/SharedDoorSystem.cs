@@ -464,7 +464,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
     private void PreventCollision(EntityUid uid, DoorComponent component, ref PreventCollideEvent args)
     {
-        if (component.CurrentlyCrushing.Contains(args.BodyB.Owner))
+        if (component.CurrentlyCrushing.Contains(args.OtherEntity))
         {
             args.Cancelled = true;
         }

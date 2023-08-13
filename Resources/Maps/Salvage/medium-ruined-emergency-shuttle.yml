@@ -48,8 +48,6 @@ entities:
       type: DecalGrid
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 332.1826128
-      type: GridPathfinding
     - type: RadiationGridResistance
     - type: SpreaderGrid
 - proto: AirlockGlass

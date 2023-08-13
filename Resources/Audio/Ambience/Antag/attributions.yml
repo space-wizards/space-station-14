@@ -1,0 +1,12 @@
+- files: ["﻿nukeops_start.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Taken from TG station."
+  source: "https://github.com/tgstation/tgstation/commit/827967c9650c23af64280ad1491405fed8f644c5"
+- files: ["pirate_start.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Made by @MIXnikita#1474 (Discord) for SS14"
+  source: "https://github.com/SerbiaStrong-220/space-station-14/blob/master/Resources/Audio/Ambience/Antag/pirate_start.ogg"
+- files: ["zombie_start.ogg"]
+  license: "CC-BY-NC-SA-3.0"
+  copyright: "Made by @MIXnikita#1474 (Discord) for SS14"
+  source: "https://github.com/SerbiaStrong-220/space-station-14/blob/master/Resources/Audio/Ambience/Antag/zombie_start.ogg"

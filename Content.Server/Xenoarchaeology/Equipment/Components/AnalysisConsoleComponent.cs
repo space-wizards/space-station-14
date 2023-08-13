@@ -26,10 +26,10 @@ public sealed class AnalysisConsoleComponent : Component
     public readonly string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
-    /// The sound played when an artifact is destroyed.
+    /// The sound played when an artifact has points extracted.
     /// </summary>
-    [DataField("destroySound")]
-    public SoundSpecifier DestroySound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
+    [DataField("extractSound")]
+    public SoundSpecifier ExtractSound = new SoundPathSpecifier("/Audio/Effects/radpulse11.ogg");
 
     /// <summary>
     /// The entity spawned by a report.

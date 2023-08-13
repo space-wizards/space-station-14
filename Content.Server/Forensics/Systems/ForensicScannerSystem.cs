@@ -188,7 +188,7 @@ namespace Content.Server.Forensics
             }
 
             // Spawn a piece of paper.
-            var printed = EntityManager.SpawnEntity("Paper", Transform(uid).Coordinates);
+            var printed = EntityManager.SpawnEntity(component.MachineOutput, Transform(uid).Coordinates);
             _handsSystem.PickupOrDrop(args.Session.AttachedEntity, printed, checkActionBlocker: false);
 
             if (!TryComp<PaperComponent>(printed, out var paper))

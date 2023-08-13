@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -188,7 +188,7 @@ namespace Content.IntegrationTests.Tests
             var shuttleSystem = entManager.EntitySysManager.GetEntitySystem<ShuttleSystem>();
             var xformQuery = entManager.GetEntityQuery<TransformComponent>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             await server.WaitPost(() =>
             {
@@ -352,7 +352,7 @@ namespace Content.IntegrationTests.Tests
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
             var cfg = server.ResolveDependency<IConfigurationManager>();
-            Assert.That(cfg.GetCVar(CCVars.DisableGridFill), Is.False);
+            Assert.That(cfg.GetCVar(CCVars.GridFill), Is.False);
 
             await server.WaitPost(() =>
             {

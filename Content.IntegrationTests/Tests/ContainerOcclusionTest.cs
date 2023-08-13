@@ -42,14 +42,15 @@ namespace Content.IntegrationTests.Tests
             var c = pairTracker.Pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
-            var ent2 = s.ResolveDependency<IMapManager>();
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
@@ -78,14 +79,15 @@ namespace Content.IntegrationTests.Tests
             var c = pairTracker.Pair.Client;
 
             var cEntities = c.ResolveDependency<IEntityManager>();
-            var ent2 = s.ResolveDependency<IMapManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
@@ -113,15 +115,16 @@ namespace Content.IntegrationTests.Tests
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
-            var ent2 = s.ResolveDependency<IMapManager>();
             var cEntities = c.ResolveDependency<IEntityManager>();
+            var ent = s.ResolveDependency<IEntityManager>();
 
             EntityUid dummy = default;
+            var mapManager = s.ResolveDependency<IMapManager>();
+            var mapId = mapManager.CreateMap();
+
             await s.WaitPost(() =>
             {
-                var mapId = ent2.GetAllMapIds().Last();
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
-                var ent = IoCManager.Resolve<IEntityManager>();
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);

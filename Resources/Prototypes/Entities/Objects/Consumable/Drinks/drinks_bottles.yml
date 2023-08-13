@@ -351,7 +351,7 @@
 
 - type: entity
   parent: DrinkBottleBaseFull
-  id: DrinkBeer # Needs to be renamed DrinkBeerBottleFull
+  id: DrinkBeerBottleFull
   name: beer  # beer it is. coffee. beer? coff-ee? be-er? c-o... b-e
   description: An alcoholic beverage made from malted grains, hops, yeast, and water.
   components:

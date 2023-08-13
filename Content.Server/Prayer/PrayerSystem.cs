@@ -8,6 +8,7 @@ using Content.Shared.Popups;
 using Robust.Server.Player;
 using Robust.Shared.Player;
 using Content.Shared.Chat;
+using Content.Shared.Prayer;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 
@@ -100,10 +101,9 @@ public sealed class PrayerSystem : EntitySystem
         if (sender.AttachedEntity == null)
             return;
 
-
         _popupSystem.PopupEntity(Loc.GetString(comp.SentMessage), sender.AttachedEntity.Value, sender, PopupType.Medium);
 
-        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotifiactionPrefix)} <{sender.Name}>: {message}");
-        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotifiactionPrefix)}): {message}");
+        _chatManager.SendAdminAnnouncement($"{Loc.GetString(comp.NotificationPrefix)} <{sender.Name}>: {message}");
+        _adminLogger.Add(LogType.AdminMessage, LogImpact.Low, $"{ToPrettyString(sender.AttachedEntity.Value):player} sent prayer ({Loc.GetString(comp.NotificationPrefix)}): {message}");
     }
 }

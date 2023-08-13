@@ -13,6 +13,13 @@
     containers:
       bodypart: !type:Container
         ents: []
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 3
+      - ReagentId: SpiderBlood
+        Quantity: 10
 
 - type: entity
   id: TorsoArachnid
@@ -20,7 +27,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "torso_m"
   - type: Icon
@@ -28,6 +34,13 @@
     state: "torso_m"
   - type: BodyPart
     partType: Torso
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 10
+      - ReagentId: SpiderBlood
+        Quantity: 20
 
 - type: entity
   id: HeadArachnid
@@ -35,7 +48,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "head_m"
   - type: Icon
@@ -54,6 +66,13 @@
   - type: Tag
     tags:
       - Head
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: Fat
+        Quantity: 5
+      - ReagentId: SpiderBlood
+        Quantity: 10
 
 - type: entity
   id: LeftArmArachnid
@@ -61,7 +80,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_arm"
   - type: Icon
@@ -77,7 +95,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_arm"
   - type: Icon
@@ -93,7 +110,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_hand"
   - type: Icon
@@ -109,7 +125,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_hand"
   - type: Icon
@@ -125,7 +140,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_leg"
   - type: Icon
@@ -144,7 +158,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_leg"
   - type: Icon
@@ -163,7 +176,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "l_foot"
   - type: Icon
@@ -179,7 +191,6 @@
   parent: PartArachnid
   components:
   - type: Sprite
-    netsync: false
     sprite: Mobs/Species/Arachnid/parts.rsi
     state: "r_foot"
   - type: Icon

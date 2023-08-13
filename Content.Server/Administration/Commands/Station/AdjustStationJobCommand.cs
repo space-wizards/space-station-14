@@ -1,3 +1,4 @@
+using Content.Server.Commands;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Administration;
@@ -30,7 +31,7 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
 
         var stationJobs = _entSysManager.GetEntitySystem<StationJobsSystem>();
 
-        if (!EntityUid.TryParse(args[0], out var station) || _entityManager.HasComponent<StationDataComponent>(station))
+        if (!EntityUid.TryParse(args[0], out var station) || !_entityManager.HasComponent<StationDataComponent>(station))
         {
             shell.WriteError(Loc.GetString("shell-argument-station-id-invalid", ("index", 1)));
             return;
@@ -57,5 +58,27 @@ public sealed class AdjustStationJobCommand : IConsoleCommand
         }
 
         stationJobs.TrySetJobSlot(station, job, amount, true);
+    }
+
+    public CompletionResult GetCompletion(IConsoleShell shell, string[] args)
+    {
+        if (args.Length == 1)
+        {
+            var options = ContentCompletionHelper.StationIds(_entityManager);
+            return CompletionResult.FromHintOptions(options, "<station id>");
+        }
+
+        if (args.Length == 2)
+        {
+            var options = CompletionHelper.PrototypeIDs<JobPrototype>();
+            return CompletionResult.FromHintOptions(options, "<job id>");
+        }
+
+        if (args.Length == 3)
+        {
+            return CompletionResult.FromHint("<amount>");
+        }
+
+        return CompletionResult.Empty;
     }
 }

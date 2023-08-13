@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
+using Content.Server.Disposal.Tube;
 using Content.Server.Disposal.Tube.Components;
 using Content.Server.Disposal.Unit.Components;
 using Content.Server.Popups;
@@ -29,6 +30,7 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
@@ -48,6 +50,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly DisposalTubeSystem _disposalTubeSystem = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+
 
         public override void Initialize()
         {
@@ -92,11 +97,13 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (component.Container.ContainedEntities.Count > 0)
             {
                 // Verbs to flush the unit
-                AlternativeVerb flushVerb = new();
-                flushVerb.Act = () => Engage(uid, component);
-                flushVerb.Text = Loc.GetString("disposal-flush-verb-get-data-text");
-                flushVerb.Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png"));
-                flushVerb.Priority = 1;
+                AlternativeVerb flushVerb = new()
+                {
+                    Act = () => Engage(uid, component),
+                    Text = Loc.GetString("disposal-flush-verb-get-data-text"),
+                    Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/delete_transparent.svg.192dpi.png")),
+                    Priority = 1,
+                };
                 args.Verbs.Add(flushVerb);
 
                 // Verb to eject the contents
@@ -143,7 +150,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (!_actionBlockerSystem.CanDrop(args.User))
                 return;
 
-            if (!CanInsert(component, args.Using.Value))
+            if (!CanInsert(uid, component, args.Using.Value))
                 return;
 
             InteractionVerb insertVerb = new()
@@ -186,10 +193,11 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            foreach (var (_, comp) in EntityQuery<ActiveDisposalUnitComponent, DisposalUnitComponent>())
+
+            var query = EntityQueryEnumerator<ActiveDisposalUnitComponent, DisposalUnitComponent>();
+            while (query.MoveNext(out var uid, out var _, out var unit))
             {
-                var uid = comp.Owner;
-                if (!Update(uid, comp, frameTime))
+                if (!Update(uid, unit, frameTime))
                     continue;
 
                 RemComp<ActiveDisposalUnitComponent>(uid);
@@ -199,7 +207,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         #region UI Handlers
         private void OnUiButtonPressed(EntityUid uid, DisposalUnitComponent component, SharedDisposalUnitComponent.UiButtonPressedMessage args)
         {
-            if (args.Session.AttachedEntity is not {Valid: true} player)
+            if (args.Session.AttachedEntity is not { Valid: true } player)
             {
                 return;
             }
@@ -218,7 +226,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                     _power.TogglePower(uid, user: args.Session.AttachedEntity);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException($"{ToPrettyString(player):player} attempted to hit a nonexistant button on {ToPrettyString(uid)}");
             }
         }
 
@@ -259,7 +267,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            if (!CanInsert(component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
+            if (!CanInsert(uid, component, args.Used) || !_handsSystem.TryDropIntoContainer(args.User, args.Used, component.Container))
             {
                 return;
             }
@@ -274,7 +282,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// </summary>
         private void HandleThrowCollide(EntityUid uid, DisposalUnitComponent component, ThrowHitByEvent args)
         {
-            if (!CanInsert(component, args.Thrown) ||
+            if (!CanInsert(uid, component, args.Thrown) ||
                 _robustRandom.NextDouble() > 0.75 ||
                 !component.Container.Insert(args.Thrown))
             {
@@ -295,7 +303,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (!HasComp<AnchorableComponent>(uid))
             {
-                Logger.WarningS("VitalComponentMissing", $"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
+                Log.Warning($"Disposal unit {uid} is missing an {nameof(AnchorableComponent)}");
             }
         }
 
@@ -307,8 +315,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
 
             _ui.TryCloseAll(uid, SharedDisposalUnitComponent.DisposalUnitUiKey.Key);
-            component.AutomaticEngageToken?.Cancel();
-            component.AutomaticEngageToken = null;
+            component.NextFlush = TimeSpan.MaxValue;
 
             component.Container = null!;
             RemComp<ActiveDisposalUnitComponent>(uid);
@@ -324,11 +331,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             // TODO: Need to check the other stuff.
             if (!args.Powered)
             {
-                component.AutomaticEngageToken?.Cancel();
-                component.AutomaticEngageToken = null;
+                component.NextFlush = TimeSpan.MaxValue;
             }
 
-            HandleStateChange(uid, component, args.Powered && component.State == SharedDisposalUnitComponent.PressureState.Pressurizing);
+            HandleStateChange(uid, component, args.Powered && (component.State == SharedDisposalUnitComponent.PressureState.Pressurizing || component.NextFlush != TimeSpan.MaxValue));
             UpdateVisualState(uid, component);
             UpdateInterface(uid, component, args.Powered);
 
@@ -341,7 +347,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
         /// <summary>
         /// Add or remove this disposal from the active ones for updating.
         /// </summary>
-        public void HandleStateChange(EntityUid uid, DisposalUnitComponent component, bool active)
+        public void HandleStateChange(EntityUid uid, DisposalUnitComponent _, bool active)
         {
             if (active)
             {
@@ -416,12 +422,19 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (component.State == SharedDisposalUnitComponent.PressureState.Pressurizing)
             {
                 var oldTimeElapsed = oldPressure / PressurePerSecond;
-                if (oldTimeElapsed < component.FlushTime && (oldTimeElapsed + frameTime) >= component.FlushTime)
+                if (oldTimeElapsed < component.FlushTime && oldTimeElapsed + frameTime >= component.FlushTime)
                 {
                     // We've crossed over the amount of time it takes to flush. This will switch the
                     // visuals over to a 'Charging' state.
                     UpdateVisualState(uid, component);
                 }
+            }
+            else if (component.State == SharedDisposalUnitComponent.PressureState.Ready && component.NextFlush < _gameTiming.CurTime)
+            {
+                if (!TryFlush(uid, component) && component.AutoFlushing)
+                    TryQueueEngage(uid, component);
+                else
+                    component.AutoFlushing = false;
             }
 
             Box2? disposalsBounds = null;
@@ -429,7 +442,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (count > 0)
             {
-                if (!TryComp(uid, out PhysicsComponent? disposalsBody))
+                if (!HasComp<PhysicsComponent>(uid))
                 {
                     component.RecentlyEjected.Clear();
                 }
@@ -442,8 +455,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             for (var i = component.RecentlyEjected.Count - 1; i >= 0; i--)
             {
                 var ejectedId = component.RecentlyEjected[i];
-                if (Exists(ejectedId) &&
-                    TryComp(ejectedId, out PhysicsComponent? body))
+                if (HasComp<PhysicsComponent>(ejectedId))
                 {
                     // TODO: We need to use a specific collision method (which sloth hasn't coded yet) for actual bounds overlaps.
                     // TODO: Come do this sloth :^)
@@ -460,7 +472,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             if (count != component.RecentlyEjected.Count)
                 Dirty(component);
 
-            return state == SharedDisposalUnitComponent.PressureState.Ready && component.RecentlyEjected.Count == 0;
+            return state == SharedDisposalUnitComponent.PressureState.Ready && component.NextFlush == TimeSpan.MaxValue && component.RecentlyEjected.Count == 0;
         }
 
         public bool TryInsert(EntityUid unitId, EntityUid toInsertId, EntityUid? userId, DisposalUnitComponent? unit = null)
@@ -474,7 +486,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
-            if (!CanInsert(unit, toInsertId))
+            if (!CanInsert(unitId, unit, toInsertId))
                 return false;
 
             var delay = userId == toInsertId ? unit.EntryDelay : unit.DraggedEntryDelay;
@@ -507,6 +519,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return false;
             }
 
+            component.NextFlush = TimeSpan.MaxValue;
+
             //Allows the MailingUnitSystem to add tags or prevent flushing
             var beforeFlushArgs = new BeforeDisposalFlushEvent();
             RaiseLocalEvent(uid, beforeFlushArgs);
@@ -534,17 +548,16 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             var entryComponent = Comp<DisposalEntryComponent>(entry);
             var indices = _transformSystem.GetGridOrMapTilePosition(uid, xform);
 
-            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is {Temperature: > 0} environment)
+            if (_atmosSystem.GetTileMixture(xform.GridUid, xform.MapUid, indices, true) is { Temperature: > 0f } environment)
             {
                 var transferMoles = 0.1f * (0.25f * Atmospherics.OneAtmosphere * 1.01f - air.Pressure) * air.Volume / (environment.Temperature * Atmospherics.R);
 
                 component.Air = environment.Remove(transferMoles);
             }
 
-            entryComponent.TryInsert(component, beforeFlushArgs.Tags);
+            _disposalTubeSystem.TryInsert(entry, component, beforeFlushArgs.Tags);
 
-            component.AutomaticEngageToken?.Cancel();
-            component.AutomaticEngageToken = null;
+            component.NextFlush = TimeSpan.MaxValue;
 
             if (!component.DisablePressure)
             {
@@ -642,8 +655,7 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (component.Container.ContainedEntities.Count == 0)
             {
-                component.AutomaticEngageToken?.Cancel();
-                component.AutomaticEngageToken = null;
+                component.NextFlush = TimeSpan.MaxValue;
             }
 
             if (!component.RecentlyEjected.Contains(toRemove))
@@ -669,7 +681,8 @@ namespace Content.Server.Disposal.Unit.EntitySystems
 
             if (CanFlush(uid, component))
             {
-                uid.SpawnTimer(component.FlushDelay, () => TryFlush(uid, component));
+                component.NextFlush = _gameTiming.CurTime + component.FlushDelay;
+                EnsureComp<ActiveDisposalUnitComponent>(uid);
             }
         }
 
@@ -691,9 +704,9 @@ namespace Content.Server.Disposal.Unit.EntitySystems
             }
         }
 
-        public override bool CanInsert(SharedDisposalUnitComponent component, EntityUid entity)
+        public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
         {
-            if (!base.CanInsert(component, entity) || component is not DisposalUnitComponent serverComp)
+            if (!base.CanInsert(uid, component, entity) || component is not DisposalUnitComponent serverComp)
                 return false;
 
             return serverComp.Container.CanInsert(entity);
@@ -709,15 +722,10 @@ namespace Content.Server.Disposal.Unit.EntitySystems
                 return;
             }
 
-            component.AutomaticEngageToken = new CancellationTokenSource();
+            component.NextFlush = _gameTiming.CurTime + component.AutomaticEngageTime;
+            component.AutoFlushing = true;
 
-            uid.SpawnTimer(component.AutomaticEngageTime, () =>
-            {
-                if (!TryFlush(uid, component))
-                {
-                    TryQueueEngage(uid, component);
-                }
-            }, component.AutomaticEngageToken.Token);
+            EnsureComp<ActiveDisposalUnitComponent>(uid);
         }
 
         public void AfterInsert(EntityUid uid, DisposalUnitComponent component, EntityUid inserted, EntityUid? user = null)

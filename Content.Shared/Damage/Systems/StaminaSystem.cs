@@ -203,7 +203,7 @@ public sealed class StaminaSystem : EntitySystem
             TakeStaminaDamage(ent, damage / toHit.Count, comp, source:args.User, with:args.Weapon);
             if (comp.StaminaDamage.Equals(oldDamage))
             {
-                _popup.PopupEntity(Loc.GetString("stamina-resist"), ent, args.User);
+                _popup.PopupClient(Loc.GetString("stamina-resist"), ent, args.User);
             }
         }
     }

@@ -105,7 +105,7 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
     {
         var targetCoordinates = new EntityCoordinates(uid, component.EnteringOffset).ToMap(EntityManager);
 
-        if (_map.TryFindGridAt(targetCoordinates, out var grid))
+        if (_map.TryFindGridAt(targetCoordinates, out _, out var grid))
         {
             return grid.GetTileRef(targetCoordinates);
         }

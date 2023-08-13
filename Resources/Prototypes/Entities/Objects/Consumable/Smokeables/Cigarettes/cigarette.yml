@@ -6,7 +6,6 @@
   components:
   - type: Sprite
     sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
-    netsync: false
     state: unlit-icon
   - type: Tag
     tags:

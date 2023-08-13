@@ -34,7 +34,6 @@
     transferAmount: 5
   - type: Sprite
     sprite: Objects/Consumable/Food/burger.rsi
-    netsync: false
   - type: SolutionContainerManager
     solutions:
       food:

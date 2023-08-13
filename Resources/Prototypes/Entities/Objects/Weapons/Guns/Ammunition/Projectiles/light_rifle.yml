@@ -41,3 +41,14 @@
     damage:
       types:
         Blunt: 3
+
+- type: entity
+  id: BulletLightRifleIncendiary
+  parent: BaseBulletIncendiary
+  name: bullet (.20 rifle incendiary)
+  noSpawn: true
+  components:
+  - type: Projectile
+    damage:
+      groups:
+        Burn: 17

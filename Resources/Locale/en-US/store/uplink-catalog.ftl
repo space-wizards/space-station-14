@@ -1,12 +1,12 @@
 # Weapons
 uplink-pistol-viper-name = Viper
-uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Use pistol magazines (.35 auto).
+uplink-pistol-viper-desc = A small, easily concealable, but somewhat underpowered gun. Retrofitted with a fully automatic receiver. Uses pistol magazines (.35 auto).
 
 uplink-revolver-python-name = Python
 uplink-revolver-python-desc = A loud and deadly revolver. Uses .45 Magnum.
 
 uplink-pistol-cobra-name = Cobra
-uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Use pistol magazines (.25 caseless).
+uplink-pistol-cobra-desc = A rugged, robust operator handgun with inbuilt silencer. Uses pistol magazines (.25 caseless).
 
 uplink-rifle-mosin-name = Surplus Rifle
 uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. Not modern by any standard, hand loaded, and terrible recoil, but it is cheap.
@@ -14,11 +14,17 @@ uplink-rifle-mosin-desc = A bolt action service rifle that has seen many wars. N
 uplink-esword-name = Energy Sword
 uplink-esword-desc = A very dangerous energy sword that can reflect shots. Can be stored in pockets when turned off. Makes a lot of noise when used or turned on.
 
+uplink-esword-double-name = Double Bladed Energy Sword
+uplink-esword-double-desc = A much more expensive counter part to the normal energy sword: with a much higher reflection chance, larger attack angle, higher structural damage, and faster swing, all at the cost of lower heat and slash damage. Makes a lot of noise when used or turned on. 
+
 uplink-edagger-name = Energy Dagger
 uplink-edagger-desc = A small energy blade conveniently disguised in the form of a pen.
 
 uplink-fire-axe-flaming-name = Fire Axe
 uplink-fire-axe-flaming-desc = A classic-style weapon infused with advanced atmos technology to allow it to set targets on fire.
+
+uplink-gloves-north-star-name = Gloves of the North Star
+uplink-gloves-north-star-desc = A pair of gloves that reduce your punching cooldown drastically, allowing you to beat people to death in a flurry of punches.
 
 # Explosives
 uplink-explosive-grenade-name = Explosive Grenade
@@ -182,7 +188,7 @@ uplink-clothing-no-slips-shoes-desc = Chameleon shoes that protect you from slip
 uplink-clothing-thieving-gloves-name = Thieving Gloves
 uplink-clothing-thieving-gloves-desc = Discretely steal from pockets and increase your thieving technique with these fancy new gloves, all while looking like normal gloves!
 
-uplink-clothing-outer-vest-web-name = Web West
+uplink-clothing-outer-vest-web-name = Web Vest
 uplink-clothing-outer-vest-web-desc = A synthetic armor vest. This one has added webbing and ballistic plates.
 
 uplink-hardsuit-syndie-name = Syndicate Hardsuit
@@ -207,6 +213,9 @@ uplink-decoy-disk-desc = A piece of plastic with a lenticular printing, made to 
 uplink-cigarettes-name = Syndicate Smokes Packet
 uplink-cigarettes-desc = Elite cigarettes for elite agents. Infused with medicine for when you need to do more than calm your nerves.
 
+uplink-eshield-name = Energy Shield
+uplink-eshield-desc = Exotic energy shield that reflects almost all laser beams, as well as a little protection from bullets and other physical attacks.
+
 uplink-soap-name = Soap
 uplink-soap-desc = An untrustworthy bar of soap. Smells of fear.
 
@@ -217,13 +226,10 @@ uplink-nocturine-chemistry-bottle-name = Nocturine Bottle
 uplink-nocturine-chemistry-bottle-desc = A chemical that makes it very hard for your target to stand up.
 
 uplink-stimpack-name = Stimpack
-uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 5 minutes.
+uplink-stimpack-desc = The legendary chemical produced by Donk Co. for the Syndicate. Injecting yourself with this will increase your run speed and let you recover from stuns faster for 30 seconds.
 
 uplink-stimkit-name = Stimkit
-uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for a minute.
-
-uplink-experimental-stimpack-name = Experimental Stimpack
-uplink-experimental-stimpack-desc = A prototype version of the Stimpack pulled from the market due to extreme side effects. Effects include virtual immunity to stuns, massively increased movement speed, and rapid tissue regeneration, but the chemical will constantly poison you while in your bloodstream.
+uplink-stimkit-desc = A medkit containing 6 stimulant microinjectors, which each inject you with enough stimulants to last for 15 seconds.
 
 uplink-syndicate-segway-crate-name = Syndicate Segway
 uplink-syndicate-segway-crate-desc = Be an enemy of the corporation, in style!

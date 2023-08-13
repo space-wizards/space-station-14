@@ -6,7 +6,6 @@
   suffix: Empty
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Misc/bureaucracy.rsi
     state: paper_bin0
     drawdepth: SmallObjects

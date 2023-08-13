@@ -23,18 +23,6 @@ public sealed class AirlockComponent : Component
     public bool EmergencyAccess = false;
 
     /// <summary>
-    /// Sound to play when the bolts on the airlock go up.
-    /// </summary>
-    [DataField("boltUpSound")]
-    public SoundSpecifier BoltUpSound = new SoundPathSpecifier("/Audio/Machines/boltsup.ogg");
-
-    /// <summary>
-    /// Sound to play when the bolts on the airlock go down.
-    /// </summary>
-    [DataField("boltDownSound")]
-    public SoundSpecifier BoltDownSound = new SoundPathSpecifier("/Audio/Machines/boltsdown.ogg");
-
-    /// <summary>
     /// Pry modifier for a powered airlock.
     /// Most anything that can pry powered has a pry speed bonus,
     /// so this default is closer to 6 effectively on e.g. jaws (9 seconds when applied to other default.)
@@ -54,24 +42,6 @@ public sealed class AirlockComponent : Component
     /// </summary>
     [DataField("keepOpenIfClicked")]
     public bool KeepOpenIfClicked = false;
-
-    /// <summary>
-    /// Whether the door bolts are currently deployed.
-    /// </summary>
-    [ViewVariables]
-    public bool BoltsDown;
-
-    /// <summary>
-    /// Whether the bolt lights are currently enabled.
-    /// </summary>
-    [ViewVariables]
-    public bool BoltLightsEnabled = true;
-
-    /// <summary>
-    /// True if the bolt wire is cut, which will force the airlock to always be bolted as long as it has power.
-    /// </summary>
-    [ViewVariables]
-    public bool BoltWireCut;
 
     /// <summary>
     /// Whether the airlock should auto close. This value is reset every time the airlock closes.

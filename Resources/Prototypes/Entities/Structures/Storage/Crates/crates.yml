@@ -372,3 +372,24 @@
   - type: EntityStorageVisuals
     stateDoorOpen: crate_open
     stateDoorClosed: crate_door
+
+- type: entity
+  parent: CratePirate
+  id: CrateToyBox
+  name: toy box
+  suffix: Empty
+  description: A box overflowing with fun.
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/Crates/toybox.rsi
+    layers:
+    - state: crate
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: crate_door
+      map: ["enum.StorageVisualLayers.Door"]
+    - state: welded
+      visible: false
+      map: ["enum.WeldableLayers.BaseWelded"]
+  - type: Icon
+    sprite: Structures/Storage/Crates/toybox.rsi
+    state: crate_icon

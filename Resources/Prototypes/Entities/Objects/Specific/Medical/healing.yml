@@ -42,6 +42,14 @@
     price: 10
 
 - type: entity
+  id: Ointment1
+  parent: Ointment
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 1
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
@@ -67,6 +75,14 @@
     count: 10
   - type: StackPrice
     price: 10
+
+- type: entity
+  id: Brutepack1
+  parent: Brutepack
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 1
 
 - type: entity
   name: blood pack
@@ -135,7 +151,6 @@
   id: AloeCream
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
   - type: Stack
@@ -144,7 +159,7 @@
 
 # Pills
 - type: entity
-  name: dexalin pill
+  name: dexalin pill (10u)
   parent: Pill
   id: PillDexalin
   components:
@@ -157,7 +172,7 @@
           Quantity: 10
 
 - type: entity
-  name: dylovene pill
+  name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
   components:
@@ -170,7 +185,7 @@
           Quantity: 10
 
 - type: entity
-  name: hyronalin pill
+  name: hyronalin pill (10u)
   parent: Pill
   id: PillHyronalin
   components:
@@ -183,7 +198,7 @@
           Quantity: 10
 
 - type: entity
-  name: iron pill
+  name: iron pill (10u)
   parent: Pill
   id: PillIron
   components:
@@ -196,7 +211,7 @@
           Quantity: 10
 
 - type: entity
-  name: kelotane pill
+  name: kelotane pill (10u)
   parent: Pill
   id: PillKelotane
   components:
@@ -206,6 +221,19 @@
         maxVol: 20
         reagents:
         - ReagentId: Kelotane
+          Quantity: 10
+
+- type: entity
+  name: dermaline pill (10u)
+  parent: Pill
+  id: PillDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
           Quantity: 10
 
 - type: entity
@@ -222,7 +250,7 @@
           Quantity: 15
 
 - type: entity
-  name: tricordrazine pill
+  name: tricordrazine pill (10u)
   parent: Pill
   id: PillTricordrazine
   components:
@@ -234,6 +262,19 @@
         - ReagentId: Tricordrazine
           Quantity: 10
 
+- type: entity
+  name: bicaridine pill (10u)
+  parent: Pill
+  id: PillBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
+          
 - type: entity
   name: romerol pill
   parent: Pill
@@ -300,6 +341,19 @@
         - ReagentId: Spaceacillin
           Quantity: 15
 
+- type: entity
+  name: bicaridine syringe
+  parent: BaseSyringe
+  id: SyringeBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 15        
+          
 - type: entity
   name: ipecac syringe
   parent: BaseSyringe

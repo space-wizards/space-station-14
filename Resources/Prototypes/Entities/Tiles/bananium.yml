@@ -6,7 +6,6 @@
   components:
   - type: Clickable
   - type: Sprite
-    netsync: false
     sprite: Tiles/Misc/bananium.rsi
     drawdepth: FloorTiles
     layers:

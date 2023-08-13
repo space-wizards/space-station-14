@@ -91,6 +91,7 @@ public sealed partial class ActivatableUISystem : EntitySystem
     private void OnUseInHand(EntityUid uid, ActivatableUIComponent component, UseInHandEvent args)
     {
         if (args.Handled) return;
+        if (component.rightClickOnly) return;
         args.Handled = InteractUI(args.User, component);
     }
 

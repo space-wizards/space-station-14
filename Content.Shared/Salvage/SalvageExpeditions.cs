@@ -100,9 +100,10 @@ public sealed record SalvageMission(
     string Faction,
     SalvageMissionType Mission,
     string Biome,
+    string Air,
     Color? Color,
     TimeSpan Duration,
-    Dictionary<string, int> Loot,
+    List<string> Rewards,
     List<string> Modifiers)
 {
     /// <summary>
@@ -136,6 +137,11 @@ public sealed record SalvageMission(
     public readonly string Biome = Biome;
 
     /// <summary>
+    /// Air mixture to be used for the mission's planet.
+    /// </summary>
+    public readonly string Air = Air;
+
+    /// <summary>
     /// Lighting color to be used (AKA outdoor lighting).
     /// </summary>
     public readonly Color? Color = Color;
@@ -145,7 +151,10 @@ public sealed record SalvageMission(
     /// </summary>
     public TimeSpan Duration = Duration;
 
-    public Dictionary<string, int> Loot = Loot;
+    /// <summary>
+    /// The list of items to order on mission completion.
+    /// </summary>
+    public List<string> Rewards = Rewards;
 
     /// <summary>
     /// Modifiers (outside of the above) applied to the mission.

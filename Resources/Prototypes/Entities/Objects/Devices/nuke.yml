@@ -8,7 +8,6 @@
     anchored: true
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
     noRot: true
     state: nuclearbomb_base
   - type: Physics
@@ -75,7 +74,6 @@
   - type: NukeLabel
   - type: Sprite
     sprite: Objects/Devices/nuke.rsi
-    netsync: false
     state: nuclearbomb_base
   - type: Physics
     bodyType: Dynamic

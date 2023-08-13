@@ -29,6 +29,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Replays;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -46,6 +47,8 @@ public sealed class ChatUIController : UIController
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IStateManager _state = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly IReplayRecordingManager _replayRecording = default!;
+    [Dependency] private readonly IConfigurationManager _cfg = default!;
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
@@ -758,7 +761,17 @@ public sealed class ChatUIController : UIController
         _manager.SendMessage(text, prefixChannel == 0 ? channel : prefixChannel);
     }
 
-    private void OnChatMessage(MsgChatMessage message) => ProcessChatMessage(message.Message);
+    private void OnChatMessage(MsgChatMessage message)
+    {
+        var msg = message.Message;
+        ProcessChatMessage(msg);
+
+        if ((msg.Channel & ChatChannel.AdminRelated) == 0 ||
+            _cfg.GetCVar(CCVars.ReplayRecordAdminChat))
+        {
+            _replayRecording.RecordClientMessage(msg);
+        }
+    }
 
     public void ProcessChatMessage(ChatMessage msg, bool speechBubble = true)
     {

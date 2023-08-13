@@ -22,7 +22,6 @@
         layer:
         - MachineLayer
   - type: Sprite
-    netsync: false
     sprite: Structures/Piping/Atmospherics/Portable/portable_scrubber.rsi
     noRot: true
     layers:

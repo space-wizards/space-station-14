@@ -5,7 +5,6 @@
   components:
   - type: Sprite
     drawdepth: Items
-    netsync: false
   - type: Fixtures
     fixtures:
       fix1:

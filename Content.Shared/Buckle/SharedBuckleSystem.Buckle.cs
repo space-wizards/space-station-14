@@ -114,7 +114,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBucklePreventCollide(EntityUid uid, BuckleComponent component, ref PreventCollideEvent args)
     {
-        if (args.BodyB.Owner != component.BuckledTo)
+        if (args.OtherEntity != component.BuckledTo)
             return;
 
         if (component.Buckled || component.DontCollide)

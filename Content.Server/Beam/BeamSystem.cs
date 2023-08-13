@@ -91,7 +91,7 @@ public sealed class BeamSystem : SharedBeamSystem
 
         _physics.SetBodyType(ent, BodyType.Dynamic, manager: manager, body: physics);
         _physics.SetCanCollide(ent, true, manager: manager, body: physics);
-        _broadphase.RegenerateContacts(physics, manager);
+        _broadphase.RegenerateContacts(ent, physics, manager);
 
         var beamVisualizerEvent = new BeamVisualizerEvent(ent, distanceLength, userAngle, bodyState, shader);
         RaiseNetworkEvent(beamVisualizerEvent);

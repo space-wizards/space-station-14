@@ -42,7 +42,7 @@ public sealed partial class ExplosionSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-    [Dependency] private readonly PVSOverrideSystem _pvsSys = default!;
+    [Dependency] private readonly PvsOverrideSystem _pvsSys = default!;
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
 
     /// <summary>

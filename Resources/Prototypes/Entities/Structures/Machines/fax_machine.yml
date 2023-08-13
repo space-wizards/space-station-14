@@ -7,7 +7,6 @@
   - type: Sprite
     sprite: Structures/Machines/fax_machine.rsi
     drawdepth: SmallObjects
-    netsync: false
     layers:
     - state: icon
       map: ["base"]

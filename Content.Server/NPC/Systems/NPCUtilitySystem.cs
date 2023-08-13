@@ -1,5 +1,7 @@
 using System.Linq;
+using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Examine;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.NPC.Queries;
 using Content.Server.NPC.Queries.Considerations;
 using Content.Server.NPC.Queries.Curves;
@@ -8,8 +10,10 @@ using Content.Server.Nutrition.Components;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Storage.Components;
 using Content.Shared.Examine;
+using Content.Shared.Fluids.Components;
 using Content.Shared.Mobs.Systems;
 using Robust.Server.Containers;
+using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.NPC.Systems;
@@ -23,9 +27,11 @@ public sealed class NPCUtilitySystem : EntitySystem
     [Dependency] private readonly ContainerSystem _container = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly FactionSystem _faction = default!;
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly FoodSystem _food = default!;
+    [Dependency] private readonly MobStateSystem _mobState = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
 
     /// <summary>
     /// Runs the UtilityQueryPrototype and returns the best-matching entities.
@@ -115,6 +121,7 @@ public sealed class NPCUtilitySystem : EntitySystem
 
     private float GetScore(NPCBlackboard blackboard, EntityUid targetUid, UtilityConsideration consideration)
     {
+        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
         switch (consideration)
         {
             case FoodValueCon:
@@ -122,9 +129,12 @@ public sealed class NPCUtilitySystem : EntitySystem
                 if (!TryComp<FoodComponent>(targetUid, out var food))
                     return 0f;
 
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-
                 if (!_food.IsDigestibleBy(owner, targetUid, food))
+                    return 0f;
+
+                // no mouse don't eat the uranium-235
+                var avoidBadFood = !HasComp<IgnoreBadFoodComponent>(owner);
+                if (avoidBadFood && HasComp<BadFoodComponent>(targetUid))
                     return 0f;
 
                 return 1f;
@@ -154,7 +164,6 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetDistanceCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
                 if (!TryComp<TransformComponent>(targetUid, out var targetXform) ||
@@ -177,14 +186,12 @@ public sealed class NPCUtilitySystem : EntitySystem
             }
             case TargetInLOSCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
 
                 return ExamineSystemShared.InRangeUnOccluded(owner, targetUid, radius + 0.5f, null) ? 1f : 0f;
             }
             case TargetInLOSOrCurrentCon:
             {
-                var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
                 var radius = blackboard.GetValueOrDefault<float>(NPCBlackboard.VisionRadius, EntityManager);
                 const float bufferRange = 0.5f;
 
@@ -269,10 +276,31 @@ public sealed class NPCUtilitySystem : EntitySystem
 
     private void Filter(NPCBlackboard blackboard, HashSet<EntityUid> entities, UtilityQueryFilter filter)
     {
-        var owner = blackboard.GetValue<EntityUid>(NPCBlackboard.Owner);
-
         switch (filter)
         {
+            case PuddleFilter:
+            {
+                var puddleQuery = GetEntityQuery<PuddleComponent>();
+
+                var toRemove = new ValueList<EntityUid>();
+
+                foreach (var ent in entities)
+                {
+                    if (!puddleQuery.TryGetComponent(ent, out var puddleComp) ||
+                        !_solutions.TryGetSolution(ent, puddleComp.SolutionName, out var sol) ||
+                        _puddle.CanFullyEvaporate(sol))
+                    {
+                        toRemove.Add(ent);
+                    }
+                }
+
+                foreach (var ent in toRemove)
+                {
+                    entities.Remove(ent);
+                }
+
+                break;
+            }
             default:
                 throw new NotImplementedException();
         }

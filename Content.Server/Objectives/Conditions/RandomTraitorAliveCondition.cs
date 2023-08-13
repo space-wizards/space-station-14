@@ -3,6 +3,7 @@ using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Mind;
 
 namespace Content.Server.Objectives.Conditions
 {
@@ -42,7 +43,15 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ("Objects/Misc/bureaucracy.rsi"), "folder-white");
 
-        public float Progress => (!_target?.CharacterDeadIC ?? true) ? 1f : 0f;
+        public float Progress
+        {
+            get
+            {
+                var entityManager = IoCManager.Resolve<EntityManager>();
+                var mindSystem = entityManager.System<MindSystem>();
+                return _target == null || mindSystem.IsCharacterDeadIc(_target) ? 1f : 0f;
+            }
+        }
 
         public float Difficulty => 1.75f;
 

@@ -279,6 +279,10 @@
     controlsLocked: true
     randomMode: false
     mode: SensorCords
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+    - PrisonUniform
 
 - type: entity
   parent: ClothingUniformSkirtBase
@@ -578,6 +582,21 @@
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/operative_s.rsi
+
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtTacticool
+  name: tacticool jumpskirt
+  description: Uniform for subpar operative LARPers performing tactical insulated glove theft in deep space.
+  components:
+    - type: Sprite
+      sprite: Clothing/Uniforms/Jumpskirt/tacticool_s.rsi
+    - type: Clothing
+      sprite: Clothing/Uniforms/Jumpskirt/tacticool_s.rsi
+    # Too cool for sensors to be on
+    - type: SuitSensor
+      randomMode: false
+      mode: SensorOff
 
 - type: entity
   parent: ClothingUniformSkirtBase

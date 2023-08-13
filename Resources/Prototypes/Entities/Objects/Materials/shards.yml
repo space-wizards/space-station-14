@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   abstract: true
   parent: BaseItem
   id: ShardBase
@@ -10,7 +10,6 @@
       - sprite: Objects/Materials/Shards/shard.rsi
         state: shard1
         map: [ "enum.DamageStateVisualLayers.Base" ]
-    netsync: false
   - type: RandomSprite
     available:
       - enum.DamageStateVisualLayers.Base:
@@ -27,6 +26,7 @@
         Slash: 3.5
   - type: Item
     sprite: Objects/Materials/Shards/shard.rsi
+    size: 4
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -116,7 +116,11 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 10
+        Piercing: 5
+  - type: Tag
+    tags:
+      - ReinforcedGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -125,7 +129,7 @@
   description: A small piece of plasma glass.
   components:
   - type: Sprite
-    color: "#f3b489"
+    color: "#FF72E7"
   - type: WelderRefinable
     refineResult:
     - SheetGlass1
@@ -133,7 +137,11 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 5
+  - type: Tag
+    tags:
+      - PlasmaGlassShard
+      - Trash
 
 - type: entity
   parent: ShardBase
@@ -150,4 +158,10 @@
   - type: DamageUserOnTrigger
     damage:
       types:
-        Piercing: 15
+        Piercing: 3
+        Radiation: 2
+  - type: Tag
+    tags:
+      - UraniumGlassShard
+      - Trash
+

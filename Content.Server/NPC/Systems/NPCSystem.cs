@@ -53,7 +53,7 @@ namespace Content.Server.NPC.Systems
 
         private void OnPlayerNPCDetach(EntityUid uid, NPCComponent component, PlayerDetachedEvent args)
         {
-            if (_mobState.IsIncapacitated(uid) || Deleted(uid))
+            if (_mobState.IsIncapacitated(uid) || TerminatingOrDeleted(uid))
                 return;
 
             WakeNPC(uid, component);

@@ -41,7 +41,7 @@ public sealed class StationSpawningSystem : EntitySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly IdCardSystem _cardSystem = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly PDASystem _pdaSystem = default!;
+    [Dependency] private readonly PdaSystem _pdaSystem = default!;
     [Dependency] private readonly SharedAccessSystem _accessSystem = default!;
     [Dependency] private readonly IdentitySystem _identity = default!;
 
@@ -211,10 +211,10 @@ public sealed class StationSpawningSystem : EntitySystem
         if (!_inventorySystem.TryGetSlotEntity(entity, "id", out var idUid))
             return;
 
-        if (!EntityManager.TryGetComponent(idUid, out PDAComponent? pdaComponent) || pdaComponent.ContainedID == null)
+        if (!EntityManager.TryGetComponent(idUid, out PdaComponent? pdaComponent) || pdaComponent.ContainedId == null)
             return;
 
-        var card = pdaComponent.ContainedID;
+        var card = pdaComponent.ContainedId;
         var cardId = card.Owner;
         _cardSystem.TryChangeFullName(cardId, characterName, card);
         _cardSystem.TryChangeJobTitle(cardId, jobPrototype.LocalizedName, card);

@@ -1214,6 +1214,17 @@
     FoodDoughPie: 1
     FoodGrape: 3
 
+- type: microwaveMealRecipe
+  id: RecipeDumplings
+  name: dumplings recipe
+  result: FoodBakedDumplings
+  time: 15
+  reagents:
+    Water: 10
+    UncookedAnimalProteins: 6
+  solids:
+    FoodDoughSlice: 3
+    
 #Donks i guess
 - type: microwaveMealRecipe
   id: RecipeWarmDonkpocket

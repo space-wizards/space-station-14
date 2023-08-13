@@ -1,13 +1,4 @@
 - type: entity
-  id: CrateMedicalDefib
-  parent: CrateMedical
-  components:
-  - type: StorageFill
-#    contents:
-#      - id: Defibrillator
-#        amount: 1
-
-- type: entity
   id: CrateMedicalSupplies
   parent: CrateMedical
   components:
@@ -61,9 +52,9 @@
       - id: UniformScrubsColorGreen
       - id: UniformScrubsColorPurple
       - id: UniformScrubsColorBlue
-      - id: HatBandBlue
-      - id: HatBandRed
-      - id: HatBandGreen
+      - id: ClothingHeadBandBlue
+      - id: ClothingHeadBandRed
+      - id: ClothingHeadBandGreen
       - id: ClothingMaskSterile
         amount: 3
 

@@ -69,3 +69,10 @@
   icon: { sprite: Objects/Materials/materials.rsi, state: bananium }
   color: "#32a852"
   price: 0.2
+
+- type: material
+  id: Meaterial # you can't take this pun from me
+  name: materials-meat
+  icon: { sprite: Objects/Materials/Sheets/meaterial.rsi, state: meat }
+  color: "#c53648"
+  price: 0.05

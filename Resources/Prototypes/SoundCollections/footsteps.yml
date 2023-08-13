@@ -147,3 +147,9 @@
   id: FootstepBounce
   files:
   - /Audio/Effects/Footsteps/bounce.ogg
+
+- type: soundCollection
+  id: FootstepClownFast
+  files:
+  - /Audio/Effects/Footsteps/clownspiderstep1.ogg
+  - /Audio/Effects/Footsteps/clownspiderstep2.ogg

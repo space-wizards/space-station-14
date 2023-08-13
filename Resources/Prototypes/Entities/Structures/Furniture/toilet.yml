@@ -14,7 +14,6 @@
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up
-    netsync: false
   - type: Toilet
   - type: SecretStash
     secretPartName: secret-stash-part-toilet

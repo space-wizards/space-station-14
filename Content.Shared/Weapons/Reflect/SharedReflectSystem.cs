@@ -1,5 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Audio;
+using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Weapons.Ranged.Events;
 using Robust.Shared.Physics.Components;
@@ -19,6 +21,7 @@ public abstract class SharedReflectSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -88,9 +91,15 @@ public abstract class SharedReflectSystem : EntitySystem
 
         if (Resolve(projectile, ref projectileComp, false))
         {
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(reflector)} reflected {ToPrettyString(projectile)} from {ToPrettyString(projectileComp.Weapon)} shot by {projectileComp.Shooter}");
+
             projectileComp.Shooter = reflector;
             projectileComp.Weapon = reflector;
             Dirty(projectileComp);
+        }
+        else
+        {
+            _adminLogger.Add(LogType.BulletHit, LogImpact.Medium, $"{ToPrettyString(reflector)} reflected {ToPrettyString(projectile)}");
         }
 
         return true;
@@ -101,7 +110,7 @@ public abstract class SharedReflectSystem : EntitySystem
         if (args.Reflected || hands.ActiveHandEntity == null)
             return;
 
-        if (TryReflectHitscan(hands.ActiveHandEntity.Value, args.Direction, out var dir))
+        if (TryReflectHitscan(hands.ActiveHandEntity.Value, args.Shooter, args.SourceItem, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
@@ -116,14 +125,14 @@ public abstract class SharedReflectSystem : EntitySystem
             return;
         }
 
-        if (TryReflectHitscan(uid, args.Direction, out var dir))
+        if (TryReflectHitscan(uid, args.Shooter, args.SourceItem, args.Direction, out var dir))
         {
             args.Direction = dir.Value;
             args.Reflected = true;
         }
     }
 
-    private bool TryReflectHitscan(EntityUid reflector, Vector2 direction,
+    private bool TryReflectHitscan(EntityUid reflector, EntityUid? shooter, EntityUid shotSource, Vector2 direction,
         [NotNullWhen(true)] out Vector2? newDirection)
     {
         if (!TryComp<ReflectComponent>(reflector, out var reflect) ||
@@ -142,6 +151,12 @@ public abstract class SharedReflectSystem : EntitySystem
 
         var spread = _random.NextAngle(-reflect.Spread / 2, reflect.Spread / 2);
         newDirection = -spread.RotateVec(direction);
+
+        if (shooter != null)
+            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(reflector)} reflected hitscan from {ToPrettyString(shotSource)} shot by {ToPrettyString(shooter.Value)}");
+        else
+            _adminLogger.Add(LogType.HitScanHit, LogImpact.Medium, $"{ToPrettyString(reflector)} reflected hitscan from {ToPrettyString(shotSource)}");
+
         return true;
     }
 }

@@ -201,7 +201,6 @@ binds:
 - function: ThrowItemInHand
   type: State
   key: Q
-  canFocus: true
   mod1: Control
 - function: TryPullObject
   type: State

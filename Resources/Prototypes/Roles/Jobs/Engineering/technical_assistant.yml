@@ -25,7 +25,7 @@
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
     id: TechnicalAssistantPDA
-    belt: ClothingBeltUtilityFilled
+    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtColorYellow
   satchel: ClothingBackpackSatchelEngineeringFilled

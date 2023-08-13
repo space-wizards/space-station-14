@@ -5,7 +5,6 @@
   description: It extinguishes fires.
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Misc/fire_extinguisher.rsi
     layers:
         - state: fire_extinguisher_closed
@@ -27,6 +26,7 @@
   - type: SolutionTransfer
   - type: ItemCooldown
   - type: Spray
+    transferAmount: 10
     spraySound:
       path: /Audio/Effects/extinguish.ogg
     sprayedPrototype: ExtinguisherSpray

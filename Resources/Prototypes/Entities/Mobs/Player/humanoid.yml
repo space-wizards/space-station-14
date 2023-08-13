@@ -7,7 +7,6 @@
   name: ERT leader
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertleader
     - type: RandomMetadata
@@ -39,7 +38,6 @@
   suffix: EVA
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertleadereva
     - type: RandomHumanoidSpawner
@@ -64,7 +62,6 @@
   name: ERT janitor
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertjanitor
     - type: RandomMetadata
@@ -96,7 +93,6 @@
   suffix: EVA
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertjanitoreva
     - type: RandomHumanoidSpawner
@@ -121,7 +117,6 @@
   name: ERT engineer
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertengineer
     - type: RandomMetadata
@@ -153,7 +148,6 @@
   suffix: EVA
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertengineereva
     - type: RandomHumanoidSpawner
@@ -178,7 +172,6 @@
   name: ERT security
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertsecurity
     - type: RandomMetadata
@@ -210,7 +203,6 @@
   suffix: EVA
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertsecurityeva
     - type: RandomHumanoidSpawner
@@ -235,7 +227,6 @@
   name: ERT medic
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertmedical
     - type: RandomMetadata
@@ -267,7 +258,6 @@
   suffix: EVA
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: ertmedicaleva
     - type: RandomHumanoidSpawner
@@ -291,7 +281,6 @@
   name: CBURN Agent
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: cburn
     - type: RandomHumanoidSpawner
@@ -317,7 +306,6 @@
   id: RandomHumanoidSpawnerCentcomOfficial
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: centcom
     - type: RandomHumanoidSpawner
@@ -340,7 +328,6 @@
   name: Syndicate Agent
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomMetadata
@@ -359,7 +346,6 @@
   name: Nuclear Operative
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Human/parts.rsi
       state: full
     - type: RandomHumanoidSpawner
@@ -376,7 +362,6 @@
   suffix: spawns a cluwne
   components:
     - type: Sprite
-      netsync: false
       sprite: Markers/jobs.rsi
       state: cluwne
     - type: RandomHumanoidSpawner

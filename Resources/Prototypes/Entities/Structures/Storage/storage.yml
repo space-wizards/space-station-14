@@ -18,7 +18,6 @@
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: rack
-    netsync: false
     snapCardinals: true
   - type: Fixtures
     fixtures:

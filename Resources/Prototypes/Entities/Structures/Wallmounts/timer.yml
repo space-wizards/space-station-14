@@ -15,7 +15,6 @@
   - type: InteractionOutline
   - type: Sprite
     sprite: Structures/Wallmounts/switch.rsi
-    netsync: false
     state: on
   - type: Appearance
   - type: Rotatable
@@ -87,7 +86,6 @@
     anchored: true
   - type: Sprite
     drawdepth: WallMountedItems
-    netsync: false
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
   - type: Construction

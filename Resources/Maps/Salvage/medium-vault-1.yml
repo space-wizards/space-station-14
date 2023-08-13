@@ -179,8 +179,6 @@ entities:
       type: DecalGrid
     - type: OccluderTree
     - type: Shuttle
-    - nextUpdate: 1384.2053934
-      type: GridPathfinding
     - type: RadiationGridResistance
     - version: 2
       data:

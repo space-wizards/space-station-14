@@ -27,7 +27,7 @@
     outerClothing: ClothingOuterVestHazard
     id: EngineerPDA
     eyes: ClothingEyesGlassesMeson
-    belt: ClothingBeltUtilityFilled
+    belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtEngineering
   satchel: ClothingBackpackSatchelEngineeringFilled

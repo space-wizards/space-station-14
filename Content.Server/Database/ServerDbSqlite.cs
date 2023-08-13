@@ -20,21 +20,20 @@ namespace Content.Server.Database
     {
         private readonly Func<DbContextOptions<SqliteServerDbContext>> _options;
 
-        // This doesn't allow concurrent access so that's what the semaphore is for.
-        // That said, this is bloody SQLite, I don't even think EFCore bothers to truly async it.
         private readonly SemaphoreSlim _prefsSemaphore;
 
         private readonly Task _dbReadyTask;
 
         private int _msDelay;
 
-        public ServerDbSqlite(Func<DbContextOptions<SqliteServerDbContext>> options, bool inMemory)
+        public ServerDbSqlite(
+            Func<DbContextOptions<SqliteServerDbContext>> options,
+            bool inMemory,
+            IConfigurationManager cfg)
         {
             _options = options;
 
             var prefsCtx = new SqliteServerDbContext(options());
-
-            var cfg = IoCManager.Resolve<IConfigurationManager>();
 
             // When inMemory we re-use the same connection, so we can't have any concurrency.
             var concurrency = inMemory ? 1 : cfg.GetCVar(CCVars.DatabaseSqliteConcurrency);
@@ -312,8 +311,9 @@ namespace Content.Server.Database
                 uid,
                 ban.Address,
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
-                ban.BanTime,
-                ban.ExpirationTime,
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(ban.BanTime, DateTimeKind.Utc),
+                ban.ExpirationTime == null ? null : DateTime.SpecifyKind(ban.ExpirationTime.Value, DateTimeKind.Utc),
                 ban.Reason,
                 aUid,
                 unban,
@@ -336,7 +336,8 @@ namespace Content.Server.Database
             return new ServerRoleUnbanDef(
                 unban.Id,
                 aUid,
-                unban.UnbanTime);
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
         #endregion
 
@@ -377,8 +378,9 @@ namespace Content.Server.Database
                 uid,
                 ban.Address,
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
-                ban.BanTime,
-                ban.ExpirationTime,
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(ban.BanTime, DateTimeKind.Utc),
+                ban.ExpirationTime == null ? null : DateTime.SpecifyKind(ban.ExpirationTime.Value, DateTimeKind.Utc),
                 ban.Reason,
                 aUid,
                 unban);
@@ -400,7 +402,8 @@ namespace Content.Server.Database
             return new ServerUnbanDef(
                 unban.Id,
                 aUid,
-                unban.UnbanTime);
+                // SQLite apparently always reads DateTime as unspecified, but we always write as UTC.
+                DateTime.SpecifyKind(unban.UnbanTime, DateTimeKind.Utc));
         }
 
         public override async Task<int>  AddConnectionLogAsync(

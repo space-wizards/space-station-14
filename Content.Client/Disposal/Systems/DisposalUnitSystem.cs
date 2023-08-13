@@ -9,12 +9,12 @@ namespace Content.Client.Disposal.Systems;
 
 public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 {
-    [Dependency] private readonly AppearanceSystem AppearanceSystem = default!;
-    [Dependency] private readonly AnimationPlayerSystem AnimationSystem = default!;
-    [Dependency] private readonly SharedAudioSystem SoundSystem = default!;
+    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     private const string AnimationKey = "disposal_unit_animation";
 
-    private List<EntityUid> PressuringDisposals = new();
+    private readonly List<EntityUid> _pressuringDisposals = new();
 
     public override void Initialize()
     {
@@ -28,25 +28,25 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     {
         if (active)
         {
-            if (!PressuringDisposals.Contains(disposalEntity))
-                PressuringDisposals.Add(disposalEntity);
+            if (!_pressuringDisposals.Contains(disposalEntity))
+                _pressuringDisposals.Add(disposalEntity);
         }
         else
         {
-            PressuringDisposals.Remove(disposalEntity);
+            _pressuringDisposals.Remove(disposalEntity);
         }
     }
 
     public override void FrameUpdate(float frameTime)
     {
         base.FrameUpdate(frameTime);
-        for (var i = PressuringDisposals.Count - 1; i >= 0; i--)
+        for (var i = _pressuringDisposals.Count - 1; i >= 0; i--)
         {
-            var disposal = PressuringDisposals[i];
+            var disposal = _pressuringDisposals[i];
             if (!UpdateInterface(disposal))
                 continue;
 
-            PressuringDisposals.RemoveAt(i);
+            _pressuringDisposals.RemoveAt(i);
         }
     }
 
@@ -79,17 +79,18 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
-        if(!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
+        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.Base, out var baseLayerIdx))
             return; // Couldn't find the "normal" layer to return to after flush animation
 
-        if(!sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
+        if (!sprite.LayerMapTryGet(DisposalUnitVisualLayers.BaseFlush, out var flushLayerIdx))
             return; // Couldn't find the flush animation layer
 
         var originalBaseState = sprite.LayerGetState(baseLayerIdx);
         var flushState = sprite.LayerGetState(flushLayerIdx);
 
         // Setup the flush animation to play
-        disposalUnit.FlushAnimation = new Animation {
+        disposalUnit.FlushAnimation = new Animation
+        {
             Length = TimeSpan.FromSeconds(disposalUnit.FlushTime),
             AnimationTracks = {
                 new AnimationTrackSpriteFlick {
@@ -109,9 +110,10 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (disposalUnit.FlushSound != null)
         {
             disposalUnit.FlushAnimation.AnimationTracks.Add(
-                new AnimationTrackPlaySound {
+                new AnimationTrackPlaySound
+                {
                     KeyFrames = {
-                        new AnimationTrackPlaySound.KeyFrame(SoundSystem.GetSound(disposalUnit.FlushSound), 0)
+                        new AnimationTrackPlaySound.KeyFrame(_audioSystem.GetSound(disposalUnit.FlushSound), 0)
                     }
                 });
         }
@@ -134,7 +136,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     // Update visuals and tick animation
     private void UpdateState(EntityUid uid, DisposalUnitComponent unit, SpriteComponent sprite)
     {
-        if (!AppearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state))
+        if (!_appearanceSystem.TryGetData<VisualState>(uid, Visuals.VisualState, out var state))
         {
             return;
         }
@@ -146,20 +148,20 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
         if (state == VisualState.Flushing)
         {
-            if (!AnimationSystem.HasRunningAnimation(uid, AnimationKey))
+            if (!_animationSystem.HasRunningAnimation(uid, AnimationKey))
             {
-                AnimationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
+                _animationSystem.Play(uid, unit.FlushAnimation, AnimationKey);
             }
         }
 
-        if (!AppearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
+        if (!_appearanceSystem.TryGetData<HandleState>(uid, Visuals.Handle, out var handleState))
         {
             handleState = HandleState.Normal;
         }
 
         sprite.LayerSetVisible(DisposalUnitVisualLayers.OverlayEngaged, handleState != HandleState.Normal);
 
-        if (!AppearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState))
+        if (!_appearanceSystem.TryGetData<LightStates>(uid, Visuals.Light, out var lightState))
         {
             lightState = LightStates.Off;
         }

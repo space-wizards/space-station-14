@@ -4,7 +4,6 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.CCVar;
 using Content.Shared.Parallax.Biomes;
-using Content.Shared.Procedural.Loot;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions.Modifiers;
 using Content.Shared.Shuttles.BUIStates;
@@ -191,29 +190,17 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label()
             {
-                Text = Loc.GetString("salvage-expedition-window-loot")
+                Text = Loc.GetString("salvage-expedition-window-rewards")
             });
 
-            if (mission.Loot.Count == 0)
+            // there will always be 3 rewards so no need for 0 check
+            lBox.AddChild(new Label()
             {
-                lBox.AddChild(new Label()
-                {
-                    Text = Loc.GetString("salvage-expedition-window-none"),
-                    FontColorOverride = StyleNano.ConcerningOrangeFore,
-                    HorizontalAlignment = HAlignment.Left,
-                    Margin = new Thickness(0f, 0f, 0f, 5f),
-                });
-            }
-            else
-            {
-                lBox.AddChild(new Label()
-                {
-                    Text = string.Join("\n", mission.Loot.Select(o => "- " + _prototype.Index<SalvageLootPrototype>(o.Key).Description + (o.Value > 1 ? $" x {o.Value}" : ""))).TrimEnd(),
-                    FontColorOverride = StyleNano.ConcerningOrangeFore,
-                    HorizontalAlignment = HAlignment.Left,
-                    Margin = new Thickness(0f, 0f, 0f, 5f),
-                });
-            }
+                Text = string.Join("\n", mission.Rewards.Select(id => "- " + _prototype.Index<EntityPrototype>(id).Name)),
+                FontColorOverride = StyleNano.ConcerningOrangeFore,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f)
+            });
 
             // Claim
             var claimButton = new Button()

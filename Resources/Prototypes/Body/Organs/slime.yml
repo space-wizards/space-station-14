@@ -5,7 +5,6 @@
   description: "The source of incredible, unending gooeyness."
   components:
     - type: Sprite
-      netsync: false
       sprite: Mobs/Species/Human/organs.rsi
       state: brain
     - type: Organ

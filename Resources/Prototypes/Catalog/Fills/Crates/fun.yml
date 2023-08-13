@@ -22,6 +22,7 @@
       - id: PlushieAtmosian
       - id: PlushieDiona
       - id: PlushieXeno
+      - id: PlushieHampter
 
 - type: entity
   id: CrateFunInstrumentsVariety
@@ -236,6 +237,27 @@
       - id: ClothingOuterCoatPirate
       - id: ClothingShoesBootsLaceup
         amount: 2
-      - id: HatBandRed
+      - id: ClothingHeadBandRed
       - id: FoamCutlass
         amount: 2
+
+- type: entity
+  id: CrateFunToyBox
+  parent: CrateToyBox
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrazyGlue
+        amount: 2
+      - id: PlasticBanana
+      - id: WhoopieCushion
+      - id: ToyHammer
+      - id: MrChips
+        orGroup: GiftPool
+      - id: MrDips
+        orGroup: Giftpool
+      - id: RevolverCapGun
+      - id: VehicleUnicycleFolded
+      - id: ClothingShoesClownLarge
+      - id: ClothingHeadHatMagician

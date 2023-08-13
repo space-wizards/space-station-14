@@ -17,8 +17,7 @@ expedition_cooldown = 30.0
 expedition_failed_cooldown = 30.0
 
 [shuttle]
-# Wastes startup time
+grid_fill = false
 auto_call_time = 0
-cargo = false
 emergency = false
 arrivals = false

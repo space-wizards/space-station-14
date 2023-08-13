@@ -43,6 +43,7 @@
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
   color: "#7e009e"
+  recognizable: true
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
   tileReactions:

@@ -95,6 +95,15 @@ public sealed class NavMapControl : MapGridControl
         };
     }
 
+    public void CenterToCoordinates(EntityCoordinates coordinates)
+    {
+        if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
+        {
+            _offset = new Vector2(coordinates.X, coordinates.Y) - physics.LocalCenter;
+        }
+        _recenter.Disabled = false;
+    }
+
     protected override void KeyBindDown(GUIBoundKeyEventArgs args)
     {
         base.KeyBindDown(args);

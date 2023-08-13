@@ -44,13 +44,13 @@ namespace Content.Server.Tools
             SubscribeLocalEvent<WelderComponent, ToolDoAfterEvent>(OnWelderDoAfter);
             SubscribeLocalEvent<WelderComponent, ComponentShutdown>(OnWelderShutdown);
             SubscribeLocalEvent<WelderComponent, ComponentGetState>(OnWelderGetState);
-            SubscribeLocalEvent<WelderComponent, MeleeHitEvent>(OnMeleeHit);
+            SubscribeLocalEvent<WelderComponent, GetMeleeDamageEvent>(OnGetMeleeDamage);
         }
 
-        private void OnMeleeHit(EntityUid uid, WelderComponent component, MeleeHitEvent args)
+        private void OnGetMeleeDamage(EntityUid uid, WelderComponent component, ref GetMeleeDamageEvent args)
         {
-            if (!args.Handled && component.Lit)
-                args.BonusDamage += component.LitMeleeDamageBonus;
+            if (component.Lit)
+                args.Damage += component.LitMeleeDamageBonus;
         }
 
         public (FixedPoint2 fuel, FixedPoint2 capacity) GetWelderFuelAndCapacity(EntityUid uid, WelderComponent? welder = null, SolutionContainerManagerComponent? solutionContainer = null)
