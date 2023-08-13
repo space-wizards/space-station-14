@@ -67,12 +67,6 @@
     spawned:
     - id: FoodMeatSpider
       amount: 12
-  # - type: AmbientSound
-  #   volume: 1000
-  #   range: 1000
-  #   enabled: true
-  #   sound: 
-  #     path: massacre.ogg
   - type: HTN
     rootTask: SimpleHostileCompound
   - type: Faction
@@ -88,7 +82,7 @@
       itemIconStyle: NoItem
       range: 200
       event: !type:SpiderWebSpitActionEvent
-      useDelay: 2
+      useDelay: 60
   - type: FasterSpiderWeb
 
 
@@ -111,19 +105,15 @@
       knockdownAmount: 5
 
 
-
 - type: entity
   noSpawn: true
   name: BroodyTrap
   description: BroodyTrap
   id: BroodyTrap
-  parent: [Handcuffs, ClothingShoesBase]
   components:
-  - type: Item
-    size: 5
   - type: Handcuff
     breakoutTime: 30
-    cuffedRSI: Objects/Misc/broodtrap.rsi
+    uncuffTime: 10
     bodyIconState: body-overlay
     breakOnRemove: true
     brokenPrototype: WebCuffsBroken
@@ -141,20 +131,6 @@
     sprite: Objects/Misc/broodtrap.rsi
     state: cuff
 
-- type: entity
-  noSpawn: true
-  name: broken web cuffs
-  description: The torn web
-  id: WebCuffsBroken
-  parent: BaseHandcuffsBroken
-  components:
-  - type: Sprite
-    sprite: Objects/Misc/broodtrap.rsi
-    state: cuff-broken
-  - type: Tag
-    tags:
-    - Trash
-
 
 #polymorph egg
 - type: polymorph
@@ -167,27 +143,29 @@
   allowRepeatedMorphs: false
   delay: 3
 
-
+#cocon
 - type: entity
   name: ???
   description: Someone in cocon...
   id: DudeInCocon
   parent: MobHuman
 
-
-
+#cocon
 - type: entity
   noSpawn: true
   name: BroodCocon
   parent: ClothingOuterBase
   id: BroodCocon
   components:
-  - type: Clothing
-    slots:
-    - outerClothing
   - type: Sprite
     sprite: Objects/Misc/broodtrap.rsi
     state: alive
+  - type: Clothing
+    slots:
+    - outerClothing
+    sprite: Objects/Misc/broodtrap.rsi
+    state: alive
+  - type: IdentityBlocker
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: ReplacementAccent
@@ -206,6 +184,25 @@
   - type: Tag
     tags:
     - HidesHair
+  - type: Unremoveable
+    deleteOnDrop: true
+
+
+#cocon
+- type: entity
+  noSpawn: true
+  name: broken web cuffs
+  description: The torn web
+  id: WebCuffsBroken
+  parent: BaseHandcuffsBroken
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/broodtrap.rsi
+    state: cuff-broken
+  - type: Tag
+    tags:
+    - Trash
+
 
 #broodservant
 - type: entity
@@ -262,8 +259,9 @@
   name: Brood's web
   description: Slow down your enemies.
   serverEvent: !type:SpiderWebActionEvent
-  useDelay: 5
+  useDelay: 10
   priority: -5
+
 
 #servantwebaction
 - type: instantAction
@@ -335,6 +333,6 @@
   name: Lay a spider egg
   description: While your side is falling, you are destroying the throne.
   icon: { sprite: Mobs/Animals/spideregg.rsi, state: egg }
-  useDelay: 20
+  useDelay: 60
   serverEvent: !type:EggLayInstantActionEvent
   priority: -4
