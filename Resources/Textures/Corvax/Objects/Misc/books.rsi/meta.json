@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "book_stationsagents taken from goonstation at commit https://github.com/goonstation/goonstation/commit/666034ca1da626e832c66980d7c28c5b8de72640 and edited by github:lapatison",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "book_stationsagents"
+    }
+  ]
+}
