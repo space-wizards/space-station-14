@@ -1,0 +1,160 @@
+- type: entity
+  id: BorgChassisGeneric
+  parent: BaseBorgChassis
+  components:
+  - type: Sprite
+    layers:
+    - state: robot
+    - state: robot_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: robot_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 5
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+    hasMindState: robot_e
+    noMindState: robot_e_r
+  - type: Construction
+    node: cyborg
+
+- type: entity
+  id: BorgChassisMining
+  parent: BaseBorgChassis
+  name: salvage cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: miner
+    - state: miner_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: miner_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleCargo
+    hasMindState: miner_e
+    noMindState: miner_e_r
+  - type: Construction
+    node: mining
+
+- type: entity
+  id: BorgChassisEngineer
+  parent: BaseBorgChassis
+  name: engineer cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: engineer
+    - state: engineer_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: engineer_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleEngineering
+    hasMindState: engineer_e
+    noMindState: engineer_e_r
+  - type: Construction
+    node: engineer
+
+- type: entity
+  id: BorgChassisJanitor
+  parent: BaseBorgChassis
+  name: janitor cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: janitor_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: janitor_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleJanitor
+    hasMindState: janitor_e
+    noMindState: janitor_e_r
+  - type: Construction
+    node: janitor
+
+- type: entity
+  id: BorgChassisMedical
+  parent: BaseBorgChassis
+  name: medical cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: medical_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: medical_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleMedical
+    hasMindState: medical_e
+    noMindState: medical_e_r
+  - type: Construction
+    node: medical
+
+- type: entity
+  id: BorgChassisService
+  parent: BaseBorgChassis
+  name: service cyborg
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: service_e_r
+      map: ["enum.BorgVisualLayers.Light"]
+      shader: unshaded
+      visible: false
+    - state: service_l
+      shader: unshaded
+      map: ["light"]
+      visible: false
+  - type: BorgChassis
+    maxModules: 3
+    moduleWhitelist:
+      tags:
+      - BorgModuleGeneric
+      - BorgModuleService
+    hasMindState: service_e
+    noMindState: service_e_r
+  - type: Construction
+    node: service
+

@@ -177,7 +177,7 @@ public sealed class FloorTileSystem : EntitySystem
     {
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
+        var variant = ((ContentTileDefinition) _tileDefinitionManager[tileId]).PickVariant();
         mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
         _audio.PlayPredicted(placeSound, location, user, AudioHelpers.WithVariation(0.125f, _random));
