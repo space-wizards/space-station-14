@@ -1,0 +1,17 @@
+- type: marking
+  id: RatEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Ratpeople]
+  sprites:
+  - sprite: Mobs/Customization/ratpeople_parts.rsi
+    state: rat_ears
+
+- type: marking
+  id: RatTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Ratpeople]
+  sprites:
+  - sprite: Mobs/Customization/ratpeople_parts.rsi
+    state: rat_tail

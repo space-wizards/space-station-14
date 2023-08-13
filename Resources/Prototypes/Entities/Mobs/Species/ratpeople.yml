@@ -1,0 +1,71 @@
+- type: entity
+  save: false
+  name: Urist McCheeze
+  parent: BaseMobOrganic
+  id: BaseMobRatpeople
+  abstract: true
+  components:
+  - type: HumanoidAppearance
+    species: Ratpeople
+  - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
+  - type: Thirst
+  - type: Icon
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: full
+  - type: Body
+    prototype: Ratpeople
+    requiredLegs: 2
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+    - id: FoodMeatHuman
+      amount: 5
+  - type: Speech
+    speechSounds: Human
+  - type: Vocal
+    sounds:
+      Male: UnisexRatpeople
+      Female: UnisexRatpeople
+      Unsexed: UnisexRatpeople
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Rat
+  - type: MeleeWeapon
+    hidden: true
+    soundHit:
+      path: /Audio/Weapons/pierce.ogg
+    angle: 30
+    animation: WeaponArcPunch
+    damage:
+      types:
+        Piercing: 5
+  - type: Temperature
+    heatDamageThreshold: 400
+    coldDamageThreshold: 285
+    currentTemperature: 310.15
+    specificHeat: 46
+    coldDamage:
+      types:
+        Cold : 0.2 #per second, scales with temperature & other constants
+    heatDamage:
+      types:
+        Heat : 0.1 #per second, scales with temperature & other constants
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.7
+    baseSprintSpeed : 5.5
+  - type: Perishable
+
+- type: entity
+  save: false
+  name: Urist McHands
+  parent: MobHumanDummy
+  id: MobRatpeopleDummy
+  noSpawn: true
+  description: A dummy Ratpeople meant to be used in character setup.
+  components:
+  - type: HumanoidAppearance
+    species: Ratpeople
+

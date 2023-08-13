@@ -1,0 +1,139 @@
+- type: species
+  id: Ratpeople
+  name: species-name-ratpeople
+  roundStart: true
+  prototype: MobRatpeople
+  sprites: MobRatpeopleSprites
+  defaultSkinTone: "#868686"
+  markingLimits: MobRatpeopleMarkingLimits
+  dollPrototype: MobRatpeopleDummy
+  skinColoration: Hues
+
+- type: speciesBaseSprites
+  id: MobRatpeopleSprites
+  sprites:
+    Head: MobRatpeopleHead
+    Chest: MobRatpeopleTorso
+    Hair: MobHumanoidAnyMarking
+    FacialHair: MobHumanoidAnyMarking
+    HeadTop: MobHumanoidAnyMarking
+    HeadSide: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
+    Eyes: MobHumanoidEyes
+    LArm: MobRatpeopleLArm
+    RArm: MobRatpeopleRArm
+    LHand: MobRatpeopleLHand
+    RHand: MobRatpeopleRHand
+    LLeg: MobRatpeopleLLeg
+    RLeg: MobRatpeopleRLeg
+    LFoot: MobRatpeopleLFoot
+    RFoot: MobRatpeopleRFoot
+    
+- type: markingPoints
+  id: MobRatpeopleMarkingLimits
+  onlyWhitelisted: false
+  points:
+    Hair:
+      points: 1
+      required: false
+    FacialHair:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: true
+      defaultMarkings: [ RatTail ]
+    Snout:
+      points: 0
+      required: false
+    HeadTop:
+      points: 1
+      required: true
+      defaultMarkings: [ RatEars ]
+    HeadSide:
+      points: 0
+      required: false
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleHead
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleHeadMale
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: head_m
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleHeadFemale
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: head_f
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleTorso
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleTorsoMale
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: torso_m
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleTorsoFemale
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: torso_f
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleLLeg
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: l_leg
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleLHand
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: l_hand
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleLArm
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: l_arm
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleLFoot
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: l_foot
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleRLeg
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: r_leg
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleRHand
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: r_hand
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleRArm
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: r_arm
+
+- type: humanoidBaseSprite
+  id: MobRatpeopleRFoot
+  baseSprite:
+    sprite: Mobs/Species/Ratpeople/parts.rsi
+    state: r_foot

@@ -129,6 +129,15 @@
     Cold: 1.5
     Heat: 0.9
     Poison: 0.9
+    
+- type: damageModifierSet
+  id: Rat #Immune to toxic, can tolerate environmental conditions better, but very fragliy
+  coefficients:
+    Blunt: 2.0
+    Slash: 1.4
+    Cold: 0.8
+    Heat: 0.8
+    Poison: 0.0
 
 - type: damageModifierSet
   id: Diona
