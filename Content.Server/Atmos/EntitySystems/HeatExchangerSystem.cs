@@ -12,7 +12,6 @@ using Content.Shared.CCVar;
 using Content.Shared.Interaction;
 using JetBrains.Annotations;
 using Robust.Shared.Configuration;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.EntitySystems;
 
@@ -21,7 +20,6 @@ public sealed class HeatExchangerSystem : EntitySystem
     [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private IGameTiming _gameTiming = default!;
 
     float tileLoss;
 
@@ -56,7 +54,7 @@ public sealed class HeatExchangerSystem : EntitySystem
         }
 
         // Positive dN flows from inlet to outlet
-        var dt = (float)(_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+        var dt = args.dt;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
 
         // What we want is dN/dt = G*dP (first-order constant-coefficient differential equation w.r.t. P).

@@ -242,7 +242,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
         {
             // pop up drag shadow under mouse
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             dragSprite.CopyFrom(draggedSprite);
@@ -405,7 +405,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         // find possible targets on screen even if not reachable
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
         var expansion = new Vector2(1.5f, 1.5f);
 
         var bounds = new Box2(mousePos.Position - expansion, mousePos.Position + expansion);
@@ -533,7 +533,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // Update position every frame to make it smooth.
         if (Exists(_dragShadow))
         {
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
             Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
         }
     }
