@@ -68,7 +68,8 @@
     - id: FoodMeatSpider
       amount: 12
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - Xeno
