@@ -52,7 +52,7 @@ namespace Content.Server.GameTicking
         /// and sent to far-away players.
         /// </summary>
         [ViewVariables]
-        private List<EntityUid> _expandPvsPlayers = new();
+        private HashSet<EntityUid> _expandPvsPlayers = new();
 
         /// <summary>
         /// This is the list of the children entities that should be sent to
