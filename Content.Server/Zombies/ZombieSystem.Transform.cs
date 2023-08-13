@@ -33,6 +33,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
+using System.Linq;
 
 namespace Content.Server.Zombies
 {
@@ -246,16 +247,12 @@ namespace Content.Server.Zombies
 
             //Goes through every hand, drops the items in it, then removes the hand
             //may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var hands))
+            if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                foreach (var hand in _hands.EnumerateHands(target))
-                {
-                    _hands.SetActiveHand(target, hand, hands);
-                    _hands.DoDrop(target, hand, handsComp: hands);
-                    _hands.RemoveHand(target, hand.Name, hands);
-                }
+                var hands = _hands.EnumerateHands(target);
+                RemoveAllHands(target, hands, handsComp);
 
-                RemComp(target, hands);
+                RemComp(target, handsComp);
             }
 
             // No longer waiting to become a zombie:
@@ -267,6 +264,19 @@ namespace Content.Server.Zombies
             RaiseLocalEvent(target, ref ev, true);
             //zombies get slowdown once they convert
             _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
+        }
+
+        private void RemoveAllHands(EntityUid target, IEnumerable<Hand> hands, HandsComponent handsComp)
+        {
+            if (!hands.Any())
+                return;
+
+            var hand = hands.First();
+            _hands.SetActiveHand(target, hand, handsComp);
+            _hands.DoDrop(target, hand, handsComp: handsComp);
+            _hands.RemoveHand(target, hand.Name, handsComp);
+
+            RemoveAllHands(target, hands, handsComp);
         }
     }
 }
