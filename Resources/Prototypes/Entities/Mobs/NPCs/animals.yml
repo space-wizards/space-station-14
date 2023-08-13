@@ -61,6 +61,9 @@
   - type: NoSlip
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: bee
@@ -96,7 +99,7 @@
       0: Alive
       10: Dead
   - type: Stamina
-    excess: 10
+    critThreshold: 10
   - type: DamageStateVisuals
     states:
       Alive:
@@ -133,7 +136,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -168,6 +172,7 @@
     tags:
     - DoorBumpOpener
     - Chicken
+    - VimPilot
   - type: Reproductive
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
@@ -251,8 +256,9 @@
         - MobLayer
   - type: Tag
     tags:
-      - DoorBumpOpener
-      - Duck
+    - DoorBumpOpener
+    - Duck
+    - VimPilot
   - type: Reproductive
     breedChance: 0.05
     birthPopup: reproductive-laid-egg-popup
@@ -470,7 +476,8 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: RuminantCompound
+    rootTask:
+      task: RuminantCompound
   - type: GuideHelp
     guides:
     - Chef
@@ -515,6 +522,9 @@
     interactFailureString: petting-failure-crab
   - type: Bloodstream
     bloodMaxVolume: 50
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: goat
@@ -588,7 +598,8 @@
   - type: Body
     prototype: AnimalRuminant
   - type: HTN
-    rootTask: RuminantCompound
+    rootTask:
+      task: RuminantCompound
 
 # Note that we gotta make this bitch vomit someday when you feed it anthrax or sumthin. Needs to be a small item thief too and aggressive if attacked.
 - type: entity
@@ -763,7 +774,8 @@
   - type: Loadout
     prototypes: [ BoxingKangarooGear ]
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -906,7 +918,8 @@
     factions:
       - Mouse
   - type: HTN
-    rootTask: MouseCompound
+    rootTask:
+      task: MouseCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -920,6 +933,13 @@
         layer:
         - SmallMobLayer
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -956,7 +976,7 @@
   - type: Tag
     tags:
     - Trash
-    - CannotSuicide
+    - VimPilot
     - Mouse
   - type: Respirator
     damage:
@@ -988,6 +1008,22 @@
     price: 50
   - type: Puller
     needsHands: true
+
+- type: entity
+  parent: MobMouse
+  suffix: Dead
+  save: false
+  id: MobMouseDead
+  name: mouse
+  description: Squeak!
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 6
+        Asphyxiation: 4
+        Slash: 7
+        Blunt: 3
 
 - type: entity
   parent: MobMouse
@@ -1045,8 +1081,8 @@
   description: A harmless dragon.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 2
-    baseSprintSpeed : 3
+    baseWalkSpeed: 2
+    baseSprintSpeed: 3
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1088,6 +1124,9 @@
     damageModifierSet: Scale
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 
 - type: entity
@@ -1141,8 +1180,8 @@
   description: Hop hop hop. Lookin' moist.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4
-    baseSprintSpeed : 6
+    baseWalkSpeed: 4
+    baseSprintSpeed: 6
   - type: Sprite
     drawdepth: Mobs
     layers:
@@ -1181,6 +1220,9 @@
     bloodMaxVolume: 50
   - type: Puller
     needsHands: true
+  - type: Tag
+    tags:
+    - VimPilot
 
 # Would be cool to have some functionality for the parrot to be able to sit on stuff
 - type: entity
@@ -1270,6 +1312,9 @@
     interactFailureString: petting-failure-generic
     interactSuccessSound:
       path: /Audio/Animals/penguin_squawk.ogg
+  - type: Tag
+    tags:
+    - VimPilot
   - type: NpcFactionMember
     factions:
     - Passive
@@ -1281,12 +1326,13 @@
   description: A small penguin with a grenade strapped around its neck. Harvested by the Syndicate from icy shit-hole planets.
   components:
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 5
+    baseWalkSpeed: 3.5
+    baseSprintSpeed: 5
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - Syndicate
@@ -1347,7 +1393,7 @@
         damage: 50
       behaviors:
       - !type:ExplodeBehavior
-      
+
 - type: entity
   name: monkey
   id: MobMonkeySyndicateAgent
@@ -1436,8 +1482,10 @@
   - type: GhostTakeoverAvailable
   - type: IdExaminable
   - type: Loadout
-    prototype: SyndicateOperativeGearMonkey
     prototypes: [SyndicateOperativeGearMonkey]
+  - type: Tag
+    tags:
+    - VimPilot
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
@@ -1562,7 +1610,8 @@
     - type: InputMover
     - type: MobMover
     - type: HTN
-      rootTask: SimpleHostileCompound
+      rootTask:
+        task: SimpleHostileCompound
     - type: GhostRole
       makeSentient: true
       name: ghost-role-information-giant-spider-name
@@ -1667,6 +1716,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: raccoon
@@ -1720,6 +1772,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: fox
@@ -1775,6 +1830,9 @@
       gender: epicene
   - type: Bloodstream
     bloodMaxVolume: 100
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: corgi
@@ -1834,6 +1892,9 @@
   - type: Puller
   - type: MobPrice
     price: 200
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: corrupted corgi
@@ -1866,7 +1927,8 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: NpcFactionMember
     factions:
     - SimpleHostile
@@ -1976,6 +2038,9 @@
       gender: epicene
   - type: MobPrice
     price: 200
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: calico cat
@@ -2010,6 +2075,10 @@
         Base: spacecat
       Dead:
         Base: spacecat_dead
+  - type: Temperature
+    heatDamageThreshold: 423
+    coldDamageThreshold: 0
+  - type: PressureImmunity
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-space-cat
@@ -2090,6 +2159,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: ferret
@@ -2144,6 +2216,9 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Tag
+    tags:
+    - VimPilot
 
 - type: entity
   name: hamster
@@ -2181,6 +2256,13 @@
         layer:
         - SmallMobLayer
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -2229,8 +2311,8 @@
     accent: mouse
   - type: Tag
     tags:
+    - VimPilot
     - Trash
-    - CannotSuicide
     - Hamster
   - type: Respirator
     damage:
@@ -2296,6 +2378,7 @@
     tags:
     - DoorBumpOpener
     - Pig
+    - VimPilot
   - type: Reproductive
     partnerWhitelist:
       tags:

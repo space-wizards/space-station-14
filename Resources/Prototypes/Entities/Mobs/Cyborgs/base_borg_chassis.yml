@@ -1,0 +1,172 @@
+﻿- type: entity
+  id: BaseBorgChassis
+  name: cyborg
+  description: A man-machine hybrid that assists in station activity. They love being asked to state their laws over and over.
+  save: false
+  abstract: true
+  components:
+  - type: Reactive
+    groups:
+      Acidic: [Touch]
+  - type: Input
+    context: "human"
+  - type: InputMover
+  - type: DamageOnHighSpeedImpact
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      path: /Audio/Effects/hit_kick.ogg
+  - type: Clickable
+  - type: CombatMode
+  - type: StaticPrice
+    price: 1250
+  - type: InteractionOutline
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 150
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 4.5
+  - type: Sprite
+    sprite: Mobs/Silicon/chassis.rsi
+    noRot: true
+    drawdepth: Mobs
+  - type: MobState
+    allowedStates:
+    - Alive
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+  - type: Physics
+    bodyType: KinematicController
+  - type: UserInterface
+    interfaces:
+    - key: enum.SiliconLawsUiKey.Key
+      type: SiliconLawBoundUserInterface
+    - key: enum.BorgUiKey.Key
+      type: BorgBoundUserInterface
+  - type: ActivatableUI
+    key: enum.BorgUiKey.Key
+  - type: SiliconLawBound
+  - type: EmagSiliconLaw
+  - type: Hands
+    showInHands: false
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
+  - type: ZombieImmune
+  - type: Repairable
+    doAfterDelay: 10
+    allowSelfRepair: false
+  - type: BorgChassis
+  - type: WiresPanel
+  - type: ActivatableUIRequiresPanel
+  - type: Wires
+    LayoutId: Borg
+  - type: NameIdentifier
+    group: Silicon
+  - type: ContainerContainer
+    containers:
+      borg_brain: !type:ContainerSlot { }
+      cell_slot: !type:ContainerSlot { }
+      borg_module: !type:Container { }
+      part-container: !type:Container
+  - type: PowerCellSlot
+    cellSlotId: cell_slot
+    fitsInCharger: true
+  - type: PowerCellDraw
+    drawRate: 0.6
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+  - type: DoAfter
+  - type: Body
+  - type: Actions
+  - type: TypingIndicator
+    proto: robot
+  - type: Speech
+    speechSounds: Pai
+  - type: Construction
+    graph: Cyborg
+    containers:
+    - part-container
+    - cell_slot
+  - type: Flashable
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound: /Audio/Effects/metalbreak.ogg
+      - !type:EmptyContainersBehaviour
+        containers:
+        - borg_brain
+        - borg_module
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: HandheldLight
+    toggleOnInteract: false
+    wattage: 0.2
+    blinkingBehaviourId: blinking
+    radiatingBehaviourId: radiating
+  - type: LightBehaviour
+    behaviours:
+    - !type:FadeBehaviour
+      id: radiating
+      interpolate: Linear
+      maxDuration: 2.0
+      startValue: 3.0
+      endValue: 2.0
+      isLooped: true
+      property: Radius
+      enabled: false
+      reverseWhenFinished: true
+    - !type:PulseBehaviour
+      id: blinking
+      interpolate: Nearest
+      maxDuration: 1.0
+      minValue: 0.1
+      maxValue: 2.0
+      isLooped: true
+      property: Radius
+      enabled: false
+  - type: ToggleableLightVisuals
+  - type: PointLight
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    radius: 4
+    netsync: false
+  - type: Pullable
+  - type: Puller
+    needsHands: false
+  - type: Examiner
+  - type: Appearance
+  - type: StandingState
+  - type: Alerts
+  - type: Tag
+    tags:
+    - ShoesRequiredStepTriggerImmune
+    - DoorBumpOpener

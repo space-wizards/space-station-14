@@ -14,7 +14,7 @@
       department: Medical
       time: 216000 # 60 hrs
   startingGear: SeniorPhysicianGear
-  icon: "SeniorPhysician"
+  icon: "JobIconSeniorPhysician"
   supervisors: job-supervisors-cmo
   access:
   - Medical

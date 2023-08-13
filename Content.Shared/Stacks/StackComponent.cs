@@ -28,17 +28,25 @@ namespace Content.Shared.Stacks
 
         /// <summary>
         ///     Set to true to not reduce the count when used.
+        ///     Note that <see cref="Count"/> still limits the amount that can be used at any one time.
         /// </summary>
         [DataField("unlimited")]
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
+
+        /// <summary>
+        /// Lingering stacks will remain present even when there are no items.
+        /// Instead, they will become transparent.
+        /// </summary>
+        [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
+        public bool Lingering;
 
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
 
         [ViewVariables]
         public bool UiUpdateNeeded { get; set; }
-    
+
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>

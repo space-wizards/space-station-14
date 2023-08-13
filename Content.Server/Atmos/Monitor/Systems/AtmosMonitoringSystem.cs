@@ -37,8 +37,8 @@ public sealed class AtmosMonitorSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<AtmosMonitorComponent, ComponentInit>(OnAtmosMonitorInit);
         SubscribeLocalEvent<AtmosMonitorComponent, ComponentStartup>(OnAtmosMonitorStartup);
+        SubscribeLocalEvent<AtmosMonitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AtmosMonitorComponent, AtmosDeviceUpdateEvent>(OnAtmosUpdate);
         SubscribeLocalEvent<AtmosMonitorComponent, TileFireEvent>(OnFireEvent);
         SubscribeLocalEvent<AtmosMonitorComponent, PowerChangedEvent>(OnPowerChangedEvent);
@@ -57,23 +57,28 @@ public sealed class AtmosMonitorSystem : EntitySystem
     {
         atmosMonitor.TileGas = _atmosphereSystem.GetContainingMixture(uid, true);
     }
-
-    private void OnAtmosMonitorInit(EntityUid uid, AtmosMonitorComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, AtmosMonitorComponent component, MapInitEvent args)
     {
         if (component.TemperatureThresholdId != null)
-            component.TemperatureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.TemperatureThresholdId));
+        {
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.TemperatureThresholdId);
+            component.TemperatureThreshold ??= new(proto);
+        }
 
         if (component.PressureThresholdId != null)
-            component.PressureThreshold = new(_prototypeManager.Index<AtmosAlarmThreshold>(component.PressureThresholdId));
-
-        if (component.GasThresholdIds != null)
         {
-            component.GasThresholds = new();
-            foreach (var (gas, id) in component.GasThresholdIds)
-            {
-                if (_prototypeManager.TryIndex<AtmosAlarmThreshold>(id, out var gasThreshold))
-                    component.GasThresholds.Add(gas, new(gasThreshold));
-            }
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(component.PressureThresholdId);
+            component.PressureThreshold ??= new(proto);
+        }
+
+        if (component.GasThresholdPrototypes == null)
+            return;
+
+        component.GasThresholds ??= new();
+        foreach (var (gas, id) in component.GasThresholdPrototypes)
+        {
+            var proto = _prototypeManager.Index<AtmosAlarmThresholdPrototype>(id);
+            component.GasThresholds.TryAdd(gas, new(proto));
         }
     }
 

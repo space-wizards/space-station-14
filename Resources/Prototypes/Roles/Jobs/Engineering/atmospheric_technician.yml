@@ -8,7 +8,7 @@
       department: Engineering
       time: 54000 # 15 hrs
   startingGear: AtmosphericTechnicianGear
-  icon: "AtmosphericTechnician"
+  icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce
   access:
   - Maintenance

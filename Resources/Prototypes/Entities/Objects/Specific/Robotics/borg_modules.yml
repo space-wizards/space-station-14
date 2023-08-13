@@ -1,0 +1,400 @@
+﻿- type: entity
+  id: BaseBorgModule
+  parent: BaseItem
+  name: borg module
+  description: A piece of tech that gives cyborgs new abilities.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Robotics/borgmodule.rsi
+  - type: BorgModule
+  - type: StaticPrice
+    price: 250
+  - type: Tag
+    tags:
+    - BorgModuleGeneric
+
+- type: entity
+  id: BaseProviderBorgModule
+  abstract: true
+  components:
+  - type: SelectableBorgModule
+  - type: ContainerContainer
+    containers:
+      provided_container: !type:Container { }
+
+- type: entity
+  id: BaseBorgModuleCargo
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleCargo
+
+- type: entity
+  id: BaseBorgModuleEngineering
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleEngineering
+
+- type: entity
+  id: BaseBorgModuleJanitor
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleJanitor
+
+- type: entity
+  id: BaseBorgModuleMedical
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleMedical
+
+- type: entity
+  id: BaseBorgModuleService
+  parent: BaseBorgModule
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - BorgModuleService
+
+# generic modules
+- type: entity
+  id: BorgModuleCable
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: cable cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-cables
+  - type: ItemBorgModule
+    items:
+    - CableApcStackLingering10
+    - CableMVStackLingering10
+    - CableHVStackLingering10
+    - Wirecutter
+    - trayScanner
+
+- type: entity
+  id: BorgModuleFireExtinguisher
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: fire extinguisher cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-fire-extinguisher
+  - type: ItemBorgModule
+    items:
+    - FireExtinguisher
+
+- type: entity
+  id: BorgModuleGPS
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: GPS cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-gps
+  - type: ItemBorgModule
+    items:
+    - HandheldGPSBasic
+    - HandheldStationMapUnpowered
+
+- type: entity
+  id: BorgModuleRadiationDetection
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: radiation detection cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-radiation
+  - type: ItemBorgModule
+    items:
+    - GeigerCounter
+
+- type: entity
+  id: BorgModuleTool
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: tool cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: generic
+    - state: icon-tools
+  - type: ItemBorgModule
+    items:
+    - Crowbar
+    - Wrench
+    - Screwdriver
+    - Wirecutter
+
+# cargo modules
+- type: entity
+  id: BorgModuleAppraisal
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: appraisal cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-appraisal
+  - type: ItemBorgModule
+    items:
+    - AppraisalTool
+
+- type: entity
+  id: BorgModuleMining
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: mining cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-mining
+  - type: ItemBorgModule
+    items:
+    - MiningDrill
+    - OreBag
+
+- type: entity
+  id: BorgModuleGrapplingGun
+  parent: [ BaseBorgModuleCargo, BaseProviderBorgModule ]
+  name: grappling gun cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: cargo
+    - state: icon-grappling-gun
+  - type: ItemBorgModule
+    items:
+    - WeaponGrapplingGun
+
+# engineering modules
+- type: entity
+  id: BorgModuleAdvancedTool
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: advanced tool cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-tools-adv
+  - type: ItemBorgModule
+    items:
+    - Omnitool
+    - WelderExperimental
+    - NetworkConfigurator
+
+- type: entity
+  id: BorgModuleGasAnalyzer
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: gas analyzer cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-gas-analyzer
+  - type: ItemBorgModule
+    items:
+    - GasAnalyzer
+
+- type: entity
+  id: BorgModuleRCD
+  parent: [ BaseBorgModuleEngineering, BaseProviderBorgModule ]
+  name: RCD cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: engineering
+    - state: icon-rcd
+  - type: ItemBorgModule
+    items:
+    - RCDRecharging
+
+# janitorial modules (this gets its own unique things because janis are epic)
+- type: entity
+  id: BorgModuleLightReplacer
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: light replacer cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-light-replacer
+  - type: ItemBorgModule
+    items:
+    - LightReplacer
+
+- type: entity
+  id: BorgModuleCleaning
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: cleaning cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-mop
+  - type: ItemBorgModule
+    items:
+    - MopItem
+    - Bucket
+    - Holoprojector
+
+- type: entity
+  id: BorgModuleTrashCollection
+  parent: [ BaseBorgModuleJanitor, BaseProviderBorgModule ]
+  name: trash collection cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: janitor
+    - state: icon-trash-bag
+  - type: ItemBorgModule
+    items:
+    - TrashBag
+
+# medical modules
+- type: entity
+  id: BorgModuleDiagnosis
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: diagnosis cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-diagnosis
+  - type: ItemBorgModule
+    items:
+    - HandheldHealthAnalyzerUnpowered
+    - ClothingNeckStethoscope
+
+- type: entity
+  id: BorgModuleTreatment
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: treatment cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-treatment
+  - type: ItemBorgModule
+    items:
+    - Brutepack10Lingering
+    - Ointment10Lingering
+    - Gauze10Lingering
+    - Bloodpack10Lingering
+    - Syringe
+
+- type: entity
+  id: BorgModuleDefibrillator
+  parent: [ BaseBorgModuleMedical, BaseProviderBorgModule ]
+  name: defibrillator cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: medical
+    - state: icon-defib
+  - type: ItemBorgModule
+    items:
+    - DefibrillatorOneHandedUnpowered
+
+# science modules
+# todo: if science ever gets their own custom robot, add more "sci" modules.
+- type: entity
+  id: BorgModuleArtifact
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: artifact cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: science
+    - state: icon-artifacts
+  - type: ItemBorgModule
+    items:
+    - NodeScanner
+
+- type: entity
+  id: BorgModuleAnomaly
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: anomaly cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: science
+    - state: icon-anomalies
+  - type: ItemBorgModule
+    items:
+    - AnomalyScanner
+    - AnomalyLocatorUnpowered
+
+# service modules
+- type: entity
+  id: BorgModuleLiteracy
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: literacy cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-pen
+  - type: ItemBorgModule
+    items:
+    - Pen
+
+- type: entity
+  id: BorgModuleMusique
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: musique cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-musique
+  - type: ItemBorgModule
+    items:
+    - SynthesizerInstrument
+
+- type: entity
+  id: BorgModuleGardening
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: gardening cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-gardening
+  - type: ItemBorgModule
+    items:
+    - HydroponicsToolMiniHoe
+    - HydroponicsToolSpade
+    - HydroponicsToolScythe
+    - HydroponicsToolClippers
+    - HydroponicsToolHatchet
+
+- type: entity
+  id: BorgModuleClowning
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: clowning cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-clown
+  - type: ItemBorgModule
+    items:
+    - BikeHorn
+    - ClownRecorder

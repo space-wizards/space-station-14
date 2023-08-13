@@ -48,6 +48,12 @@ namespace Content.Server.Mind
         [ViewVariables, Access(typeof(MindSystem))]
         public NetUserId? OriginalOwnerUserId { get; set; }
 
+        /// <summary>
+        ///     Entity UID for the first entity that this mind controlled. Used for round end.
+        ///     Might be relevant if the player has ghosted since.
+        /// </summary>
+        [ViewVariables] public EntityUid? OriginalOwnedEntity;
+
         [ViewVariables]
         public bool IsVisitingEntity => VisitingEntity != null;
 

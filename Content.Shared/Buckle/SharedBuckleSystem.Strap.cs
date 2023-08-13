@@ -306,7 +306,7 @@ public abstract partial class SharedBuckleSystem
 
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, true);
 
-        Dirty(strapComp);
+        Dirty(strapUid, strapComp);
         return true;
     }
 

@@ -152,7 +152,6 @@
     content: book-cnc-sheet
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi
-    netsync: false
     layers:
       - state: paper
         color: "#cccccc"
