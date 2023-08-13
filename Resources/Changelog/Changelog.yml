@@ -1,55 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Adds a gas mask for the ERT and death squadron., type: Add}
-  id: 4038
-  time: '2023-06-18T23:14:32.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Updated visuals for machine parts., type: Tweak}
-  id: 4039
-  time: '2023-06-18T23:28:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Due to new refinement procedures, Bags of Holding now require less
-      uranium to create.', type: Tweak}
-  id: 4040
-  time: '2023-06-18T23:37:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Removed security techfab board from expedition loot., type: Remove}
-  id: 4041
-  time: '2023-06-18T23:37:34.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added the extremely robust & highly coveted SWAT helmet. You can find
-      it as a reward in salvage expeditions., type: Add}
-  id: 4042
-  time: '2023-06-18T23:38:55.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Proto-kinetic accelerators have returned to the salvage vendor., type: Tweak}
-  id: 4043
-  time: '2023-06-19T00:53:01.0000000+00:00'
-- author: Owai-Seek
-  changes:
-  - {message: Provided some minor updates to Janitorial and Cryogenics guidebooks.,
-    type: Tweak}
-  id: 4044
-  time: '2023-06-19T01:15:01.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to craft artifacts without the proper amount of fragments.,
-    type: Fix}
-  id: 4045
-  time: '2023-06-19T04:02:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Quartz now generates on planets., type: Add}
-  - {message: Greatly increased the amount of ore that generates on planets. Grab
-      your picks!, type: Tweak}
-  id: 4046
-  time: '2023-06-19T04:03:41.0000000+00:00'
 - author: lzk
   changes:
   - {message: Added paramedic and atmospherics windoor for mapping., type: Add}
@@ -3008,3 +2957,53 @@ Entries:
       keybinds) to toggle bolt / cycling., type: Add}
   id: 4537
   time: '2023-08-13T05:58:08.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix the lack of whitelist check for hand gathering., type: Fix}
+  id: 4538
+  time: '2023-08-13T07:07:34.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Nerf pickaxe raw damage slightly., type: Tweak}
+  - {message: Nerf pickaxe and drill structural damage., type: Tweak}
+  id: 4539
+  time: '2023-08-13T07:07:48.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix bolt-less gun manual cycling (namely the wt550)., type: Fix}
+  id: 4540
+  time: '2023-08-13T07:08:00.0000000+00:00'
+- author: LightVillet
+  changes:
+  - {message: Fixed spilling empty containers, type: Fix}
+  id: 4541
+  time: '2023-08-13T07:08:54.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: You can no longer keep a cyborg's UI open after closing the panel.,
+    type: Fix}
+  - {message: Cyborgs now retain their laws when off-station., type: Fix}
+  id: 4542
+  time: '2023-08-13T07:09:30.0000000+00:00'
+- author: onoira
+  changes:
+  - {message: Spare pieces have been added to checkerboards allowing for more playable
+      variants., type: Tweak}
+  id: 4543
+  time: '2023-08-13T07:10:10.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Composting high-potency plants refills tray nutrients much more effectively.,
+    type: Tweak}
+  id: 4544
+  time: '2023-08-13T07:10:22.0000000+00:00'
+- author: Nimfar11
+  changes:
+  - {message: Adds a Secret Door for construction, type: Add}
+  id: 4545
+  time: '2023-08-13T07:10:46.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Bolas are now easier to make and more durable., type: Tweak}
+  id: 4546
+  time: '2023-08-13T07:11:11.0000000+00:00'
