@@ -50,4 +50,6 @@ rev-lost = All of the Head Revs were killed.
 
 rev-stalemate = All of the Head Revs died and so did all of command. We'll call it a draw.
 
+rev-reversestalemate = I think the Head Revs and command forgot to fight because they are both still alive.
+
 

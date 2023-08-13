@@ -112,6 +112,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 ev.AddLine(Loc.GetString("rev-stalemate"));
             }
+            if (!headrev.HeadsDied && !headrev.RevsLost)
+            {
+                ev.AddLine(Loc.GetString("rev-reversestalemate"));
+            }
             ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
             foreach (var player in headrev.HeadRevs)
             {
