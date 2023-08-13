@@ -7,6 +7,7 @@ namespace Content.Server.Labels.Components
         [DataField("currentLabel")]
         public string? CurrentLabel { get; set; }
 
+        [DataField("originalName")]
         public string? OriginalName { get; set; }
     }
 }

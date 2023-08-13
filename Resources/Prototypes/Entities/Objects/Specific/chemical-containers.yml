@@ -46,6 +46,8 @@
       fillBaseName: jug
     - type: StaticPrice
       price: 80
+    - type: Label
+      originalName: jug
 
 - type: entity
   parent: Jug
