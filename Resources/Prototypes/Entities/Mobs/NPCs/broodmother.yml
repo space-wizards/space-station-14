@@ -71,7 +71,7 @@
     rootTask: SimpleHostileCompound
   - type: Faction
     factions:
-      - Xeno
+    - Xeno
   - type: InputMover
   - type: MobMover
   - type: WebSpitStun
