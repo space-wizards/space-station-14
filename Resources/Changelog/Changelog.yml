@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Added 4 new mercenary items, type: Add}
-  id: 4048
-  time: '2023-06-19T17:38:57.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Lathe recipes no longer permanently duplicate and accumulate when trying
@@ -3009,3 +3004,8 @@ Entries:
   - {message: Driving while asleep is no longer possible., type: Fix}
   id: 4547
   time: '2023-08-13T07:13:19.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Vending machine sprites have been polished up., type: Tweak}
+  id: 4548
+  time: '2023-08-13T07:15:13.0000000+00:00'
