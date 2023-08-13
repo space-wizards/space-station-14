@@ -63,5 +63,5 @@ ent-CrateSyndicate = { ent-CrateGenericSteel }
     .desc = { ent-CrateGenericSteel.desc }
 ent-CrateTrashCart = мусорная тележка
     .desc = { ent-CrateBaseWeldable.desc }
-ent-CrateTrashCartJani = мусорная тележка уборщиков
+ent-CrateTrashCartJani = мусорная тележка уборщика
     .desc = { ent-CrateBaseSecure.desc }
