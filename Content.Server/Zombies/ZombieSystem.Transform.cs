@@ -245,14 +245,7 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var handsComp))
-            {
-                RemoveAllHands(target, _hands.EnumerateHands(target), handsComp);
-
-                RemComp(target, handsComp);
-            }
+            _hands.RemoveHands(target);
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
@@ -263,19 +256,6 @@ namespace Content.Server.Zombies
             RaiseLocalEvent(target, ref ev, true);
             //zombies get slowdown once they convert
             _movementSpeedModifier.RefreshMovementSpeedModifiers(target);
-        }
-
-        private void RemoveAllHands(EntityUid target, IEnumerable<Hand> hands, HandsComponent handsComp)
-        {
-            if (!hands.Any())
-                return;
-
-            var hand = hands.First();
-            _hands.SetActiveHand(target, hand, handsComp);
-            _hands.DoDrop(target, hand, handsComp: handsComp);
-            _hands.RemoveHand(target, hand.Name, handsComp);
-
-            RemoveAllHands(target, hands, handsComp);
         }
     }
 }

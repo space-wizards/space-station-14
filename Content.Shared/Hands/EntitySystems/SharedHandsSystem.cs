@@ -77,6 +77,35 @@ public abstract partial class SharedHandsSystem : EntitySystem
         Dirty(handsComp);
     }
 
+    /// <summary>
+    /// Gets rid of all the entity's hands. Also gets rid of HandsComponent.
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="handsComp"></param>
+
+    public void RemoveHands(EntityUid uid, HandsComponent? handsComp = null)
+    {
+        if (!Resolve(uid, ref handsComp))
+            return;
+
+        RemoveHands(uid, EnumerateHands(uid), handsComp);
+        RemComp(uid, handsComp);
+    }
+
+    private void RemoveHands(EntityUid uid, IEnumerable<Hand> hands, HandsComponent handsComp)
+    {
+        if (!hands.Any())
+            return;
+
+        var hand = hands.First();
+        SetActiveHand(uid, hand, handsComp);
+        DoDrop(uid, hand, handsComp: handsComp);
+        RemoveHand(uid, hand.Name, handsComp);
+
+        // Repeats it for any additional hands.
+        RemoveHands(uid, hands, handsComp);
+    }
+
     private void HandleSetHand(RequestSetHandEvent msg, EntitySessionEventArgs eventArgs)
     {
         if (eventArgs.SenderSession.AttachedEntity == null)
