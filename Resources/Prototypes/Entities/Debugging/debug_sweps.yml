@@ -21,6 +21,7 @@
       - FullAuto
   - type: AmmoCounter
   - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: ItemSlots
     slots:
       gun_magazine:

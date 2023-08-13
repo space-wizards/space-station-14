@@ -810,3 +810,19 @@
   - type: Stack
     stackType: FloorTileGratingMaint
 
+- type: entity
+  name: web tile
+  parent: FloorTileItemBase
+  id: FloorTileItemWeb
+  components:
+  - type: Sprite
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+  - type: FloorTile
+    outputs:
+      - FloorWebTile
+  - type: Stack
+    stackType: FloorTileWeb
+  - type: Construction
+    graph: TileWeb
+    node: webtile
