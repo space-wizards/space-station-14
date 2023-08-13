@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The security techfab no longer contains all the protolathe recipes.,
-    type: Fix}
-  id: 4036
-  time: '2023-06-18T22:35:19.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Turning around from the previous change to the CE''s belt: the CE no
@@ -3008,3 +3002,10 @@ Entries:
   - {message: Lockers now once again inform you if you cannot access them., type: Fix}
   id: 4535
   time: '2023-08-13T01:21:07.0000000+00:00'
+- author: RiceMar
+  changes:
+  - {message: 'To satiate the salvage department''s rabid hunger for firepower, Nanotrasen
+      has started manufacturing proto-kinetic accelerators with bulky cannon-like
+      frames around the same internal machinery.', type: Add}
+  id: 4536
+  time: '2023-08-13T04:50:42.0000000+00:00'
