@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
@@ -31,6 +32,7 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();
@@ -54,6 +56,7 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -455,7 +458,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (!TryComp<ToolComponent>(args.Used, out var tool) || !TryComp<WiresPanelComponent>(uid, out var panel))
             return;
 
-        if (panel.Open &&
+        if (panel.Open && panel.WiresAccessible &&
             (_toolSystem.HasQuality(args.Used, "Cutting", tool) ||
             _toolSystem.HasQuality(args.Used, "Pulsing", tool)))
         {
@@ -491,6 +494,15 @@ public sealed class WiresSystem : SharedWiresSystem
             _audio.PlayPvs(panel.ScrewdriverCloseSound, uid);
             _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
         }
+    }
+
+    private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || !TryComp<WiresPanelComponent>(uid, out var wires))
+            return;
+
+        if (component.RequireOpen != wires.Open)
+            args.Cancel();
     }
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
@@ -629,6 +641,23 @@ public sealed class WiresSystem : SharedWiresSystem
         component.Open = open;
         UpdateAppearance(uid, component);
         Dirty(component);
+    }
+
+    public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)
+    {
+        var wiresPanelSecurityLevelPrototype = _protoMan.Index<WiresPanelSecurityLevelPrototype>(wiresPanelSecurityLevelID);
+
+        if (wiresPanelSecurityLevelPrototype == null)
+            return;
+
+        component.WiresAccessible = wiresPanelSecurityLevelPrototype.WiresAccessible;
+        component.WiresPanelSecurityExamination = wiresPanelSecurityLevelPrototype.Examine;
+        Dirty(component);
+
+        if (wiresPanelSecurityLevelPrototype?.WiresAccessible == false)
+        {
+            _uiSystem.TryCloseAll(uid, WiresUiKey.Key);
+        }
     }
 
     private void UpdateAppearance(EntityUid uid, WiresPanelComponent panel)

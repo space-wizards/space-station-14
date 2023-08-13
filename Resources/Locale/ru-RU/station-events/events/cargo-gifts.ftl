@@ -1,6 +1,6 @@
 cargo-gifts-event-announcement = Поздравляем! { $sender } решили отправить { $description } { $dest } станции. Всё прибудет со следующей партией груза.
 cargo-gift-default-description = набор подарков
-cargo-gift-default-sender = Nanotrasen
+cargo-gift-default-sender = НаноТразен
 cargo-gift-default-dest = отделу снабжения
 cargo-gift-dest-bar = бару
 cargo-gift-dest-eng = инженерному отделу

@@ -1000,10 +1000,55 @@
   weather: true
 
 # Asteroid
+# TODO: Change the rock & pebbles into regular variants with a 20% chance to spawn (like SS13.) Give ironsand variants from /vg/station.
+# TODO: Probably remove asteroid coarse sand if it isn't resprited by the time tile migrations exist. It was likely made to co-exist with the CEV-Eris style rocks and doesn't look too good nowadays.
+
 - type: tile
   id: FloorAsteroidSand
-  name: tiles-asteroid-floor
-  sprite: /Textures/Tiles/Asteroid/asteroid_sand.png
+  name: tiles-asteroid-sand
+  sprite: /Textures/Tiles/Asteroid/asteroid.png
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandRocks
+  name: tiles-asteroid-sand-rocks
+  sprite: /Textures/Tiles/Asteroid/asteroid_rocks.png
+  variants: 8
+  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandRocksRed
+  name: tiles-asteroid-sand-rocks
+  sprite: /Textures/Tiles/Asteroid/asteroid_rocks_red.png
+  variants: 8
+  placementVariants: [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+  baseTurf: Space
+  isSubfloor: true
+  canCrowbar: false
+  footstepSounds:
+    collection: FootstepAsteroid
+  heatCapacity: 10000
+  weather: true
+
+- type: tile
+  id: FloorAsteroidSandPebbles
+  name: tiles-asteroid-sand-pebbles
+  sprite: /Textures/Tiles/Asteroid/asteroid_pebbles.png
+  variants: 4
+  placementVariants: [ 0, 1, 2, 3 ]
   baseTurf: Space
   isSubfloor: true
   canCrowbar: false

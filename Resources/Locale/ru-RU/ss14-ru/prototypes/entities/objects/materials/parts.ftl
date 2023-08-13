@@ -6,3 +6,6 @@ ent-PartRodMetal = металлические стержни
 ent-PartRodMetal1 = металлический стержень
     .suffix = Один
     .desc = { ent-PartRodMetal.desc }
+ent-PartRodMetal10 = металлический стержень
+    .suffix = Десять
+    .desc = { ent-PartRodMetal.desc }

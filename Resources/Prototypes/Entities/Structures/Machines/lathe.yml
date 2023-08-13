@@ -124,6 +124,7 @@
       - SMESMachineCircuitboard
       - SubstationMachineCircuitboard
       - CellRechargerCircuitboard
+      - BorgChargerCircuitboard
       - WeaponCapacitorRechargerCircuitboard
   - type: EmagLatheRecipes
     emagStaticRecipes:
@@ -148,14 +149,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -393,13 +386,70 @@
   - type: Lathe
     idleState: fab-idle
     runningState: fab-active
-    dynamicRecipes:
-    - ProximitySensor
+    staticRecipes:
+    - MMI
+    - PositronicBrain
+    - Flash
+    - BorgModuleCable
+    - BorgModuleFireExtinguisher
+    - BorgModuleGPS
+    - BorgModuleRadiationDetection
+    - BorgModuleTool
+    - BorgModuleAppraisal
+    - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
     - LeftLegBorg
     - RightLegBorg
     - LightHeadBorg
+    - TorsoBorg
+    - LeftArmBorgEngineer
+    - RightArmBorgEngineer
+    - LeftLegBorgEngineer
+    - RightLegBorgEngineer
+    - HeadBorgEngineer
+    - TorsoBorgEngineer
+    - LeftLegBorgJanitor
+    - RightLegBorgJanitor
+    - HeadBorgJanitor
+    - TorsoBorgJanitor
+    - LeftArmBorgMedical
+    - RightArmBorgMedical
+    - LeftLegBorgMedical
+    - RightLegBorgMedical
+    - HeadBorgMedical
+    - TorsoBorgMedical
+    - LeftArmBorgMining
+    - RightArmBorgMining
+    - LeftLegBorgMining
+    - RightLegBorgMining
+    - HeadBorgMining
+    - TorsoBorgMining
+    - LeftArmBorgService
+    - RightArmBorgService
+    - LeftLegBorgService
+    - RightLegBorgService
+    - HeadBorgService
+    - TorsoBorgService
+    dynamicRecipes:
+    - ProximitySensor
+    - BorgModuleLightReplacer
+    - BorgModuleCleaning
+    - BorgModuleTrashCollection
+    - BorgModuleMining
+    - BorgModuleGrapplingGun
+    - BorgModuleGasAnalyzer
+    - BorgModuleAdvancedTool
+    - BorgModuleRCD
+    - BorgModuleArtifact
+    - BorgModuleAnomaly
+    - BorgModuleGardening
+    - BorgModuleMusique
+    - BorgModuleLiteracy
+    - BorgModuleClowning
+    - BorgModuleDiagnosis
+    - BorgModuleTreatment
+    - BorgModuleDefibrillator
     - RipleyHarness
     - RipleyLArm
     - RipleyRArm
@@ -418,6 +468,7 @@
     - HamtrRArm
     - HamtrLLeg
     - HamtrRLeg
+    - VimHarness
   - type: MaterialStorage
     whitelist:
       tags:
@@ -452,6 +503,7 @@
     idleState: icon
     runningState: icon
     staticRecipes:
+      - ClothingEyesHudSecurity
       - Flash
       - Handcuffs
       - Zipties
@@ -483,14 +535,6 @@
       - MagazineBoxMagnumRubber
       - MagazineBoxRifleRubber
       - MagazineBoxLightRifleRubber
-      - CartridgePistolHighVelocity
-      - CartridgeMagnumHighVelocity
-      - CartridgeLightRifleHighVelocity
-      - CartridgeRifleHighVelocity
-      - MagazineBoxPistolHighVelocity
-      - MagazineBoxMagnumHighVelocity
-      - MagazineBoxLightRifleHighVelocity
-      - MagazineBoxRifleHighVelocity
       - ShellShotgunIncendiary
       - CartridgePistolIncendiary
       - CartridgeMagnumIncendiary
@@ -691,6 +735,8 @@
       - ClothingUniformJumpskirtPrisoner
       - ClothingUniformJumpsuitQM
       - ClothingUniformJumpskirtQM
+      - ClothingUniformJumpsuitQMTurtleneck
+      - ClothingUniformJumpskirtQMTurtleneck
       - ClothingUniformJumpsuitResearchDirector
       - ClothingUniformJumpskirtResearchDirector
       - ClothingUniformJumpsuitScientist

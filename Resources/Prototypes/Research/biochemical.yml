@@ -47,6 +47,20 @@
   - StasisBedMachineCircuitboard
 
 - type: technology
+  id: MechanizedTreatment
+  name: research-technology-mechanized-treatment
+  icon:
+    sprite: Mobs/Silicon/chassis.rsi
+    state: medical
+  discipline: Biochemical
+  tier: 1
+  cost: 7500
+  recipeUnlocks:
+  - BorgModuleDiagnosis
+  - BorgModuleTreatment
+  - BorgModuleDefibrillator
+
+- type: technology
   id: Virology
   name: research-technology-virology
   icon:

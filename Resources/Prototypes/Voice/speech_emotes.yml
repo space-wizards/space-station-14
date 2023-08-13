@@ -189,6 +189,37 @@
    - chittered.
    - chittered!
 
+- type: emote
+  id: Squeak
+  category: Vocal
+  chatMessages: [squeaks.]
+  chatTriggers:
+   - squeak
+   - squeak.
+   - squeak!
+   - squeaks
+   - squeaks.
+   - squeaks!
+   - squeaked
+   - squeaked.
+   - squeaked!
+   - пищит
+   - пищать
+   - пискнул
+   - пискнула
+   - запищал
+   - запищала
+   - пищит.
+   - пискнул.
+   - пискнула.
+   - запищал.
+   - запищала.
+   - пищит!
+   - пискнул!
+   - пискнула!
+   - запищал!
+   - запищала!
+
 # hand emotes
 - type: emote
   id: Clap
@@ -283,3 +314,9 @@
     - отдала честь.
     - отдала честь!
     # Corvax-Localization-End
+
+- type: emote
+  id: DefaultDeathgasp
+  chatMessages: ["emote-deathgasp"]
+  chatTriggers:
+  - deathgasp

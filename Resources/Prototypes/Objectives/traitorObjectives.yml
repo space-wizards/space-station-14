@@ -188,21 +188,6 @@
       owner: job-name-ce
 
 - type: objective
-  id: SupplyConsoleBoardStealObjective
-  issuer: syndicate
-  requirements:
-    - !type:TraitorRequirement {}
-    - !type:IncompatibleConditionsRequirement
-      conditions:
-        - DieCondition
-    - !type:NotRoleRequirement
-      roleId: Quartermaster
-  conditions:
-    - !type:StealCondition
-      prototype: CargoRequestComputerCircuitboard
-      owner: job-name-qm
-
-- type: objective
   id: CorgiMeatStealObjective
   issuer: syndicate
   requirements:
