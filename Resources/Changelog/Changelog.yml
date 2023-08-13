@@ -1,10 +1,4 @@
 Entries:
-- author: Wirdal
-  changes:
-  - {message: Changed fuel consumption for weldable things to be higher in general.,
-    type: Tweak}
-  id: 4034
-  time: '2023-06-18T21:56:09.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added the new Arsenal research discipline., type: Add}
@@ -3012,3 +3006,9 @@ Entries:
       singularities., type: Fix}
   id: 4533
   time: '2023-08-12T23:43:08.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Non-humanoids such as mice and pAIs can no longer be kill targets.,
+    type: Fix}
+  id: 4534
+  time: '2023-08-13T01:01:21.0000000+00:00'
