@@ -84,7 +84,6 @@ namespace Content.Server.GameTicking
         private void InitializeRoundFlow()
         {
             SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
-            EntityManager.EntityDeleted += OnEntityDeleted;
         }
 
         private void OnEntityDeleted(EntityUid uid)
@@ -355,6 +354,7 @@ namespace Content.Server.GameTicking
             // Should already be empty, but just in case.
             _expandPvsEntities.Clear();
             _expandPvsPlayers.Clear();
+            EntityManager.EntityDeleted += OnEntityDeleted;
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
@@ -522,6 +522,7 @@ namespace Content.Server.GameTicking
 
             _allPreviousGameRules.Clear();
 
+            EntityManager.EntityDeleted -= OnEntityDeleted;
             _expandPvsPlayers.Clear();
             _expandPvsEntities.Clear();
 

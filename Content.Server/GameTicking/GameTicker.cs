@@ -91,7 +91,6 @@ namespace Content.Server.GameTicking
             base.Shutdown();
 
             ShutdownGameRules();
-            EntityManager.EntityDeleted -= OnEntityDeleted;
         }
 
         private void SendServerMessage(string message)
