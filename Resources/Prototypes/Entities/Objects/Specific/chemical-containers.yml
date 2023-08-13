@@ -51,7 +51,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (carbon)
+  name: jug (Carbon)
   id: JugCarbon
   noSpawn: true
   components:
@@ -66,7 +66,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (iodine)
+  name: jug (Iodine)
   id: JugIodine
   noSpawn: true
   components:
@@ -81,7 +81,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (fluorine)
+  name: jug (Fluorine)
   id: JugFluorine
   noSpawn: true
   components:
@@ -96,7 +96,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (chlorine)
+  name: jug (Chlorine)
   id: JugChlorine
   noSpawn: true
   components:
@@ -111,7 +111,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (aluminium)
+  name: jug (Aluminium)
   id: JugAluminium
   noSpawn: true
   components:
@@ -126,7 +126,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (phosphorus)
+  name: jug (Phosphorus)
   id: JugPhosphorus
   noSpawn: true
   components:
@@ -141,7 +141,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (sulfur)
+  name: jug (Sulfur)
   id: JugSulfur
   noSpawn: true
   components:
@@ -156,7 +156,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (silicon)
+  name: jug (Silicon)
   id: JugSilicon
   noSpawn: true
   components:
@@ -171,7 +171,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (hydrogen)
+  name: jug (Hydrogen)
   id: JugHydrogen
   noSpawn: true
   components:
@@ -186,7 +186,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (lithium)
+  name: jug (Lithium)
   id: JugLithium
   noSpawn: true
   components:
@@ -201,7 +201,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (sodium)
+  name: jug (Sodium)
   id: JugSodium
   noSpawn: true
   components:
@@ -216,7 +216,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (potassium)
+  name: jug (Potassium)
   id: JugPotassium
   noSpawn: true
   components:
@@ -231,7 +231,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (radium)
+  name: jug (Radium)
   id: JugRadium
   noSpawn: true
   components:
@@ -246,7 +246,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (iron)
+  name: jug (Iron)
   id: JugIron
   noSpawn: true
   components:
@@ -261,7 +261,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (copper)
+  name: jug (Copper)
   id: JugCopper
   noSpawn: true
   components:
@@ -276,7 +276,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (gold)
+  name: jug (Gold)
   id: JugGold
   noSpawn: true
   components:
@@ -291,7 +291,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (mercury)
+  name: jug (Mercury)
   id: JugMercury
   noSpawn: true
   components:
@@ -306,7 +306,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (silver)
+  name: jug (Silver)
   id: JugSilver
   noSpawn: true
   components:
@@ -321,7 +321,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (ethanol)
+  name: jug (Ethanol)
   id: JugEthanol
   noSpawn: true
   components:
@@ -336,7 +336,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (sugar)
+  name: jug (Sugar)
   id: JugSugar
   noSpawn: true
   components:
@@ -351,7 +351,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (nitrogen)
+  name: jug (Nitrogen)
   id: JugNitrogen
   noSpawn: true
   components:
@@ -366,7 +366,7 @@
 
 - type: entity
   parent: Jug
-  name: jug (oxygen)
+  name: jug (Oxygen)
   id: JugOxygen
   noSpawn: true
   components:
