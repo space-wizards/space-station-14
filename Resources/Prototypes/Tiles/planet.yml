@@ -16,7 +16,13 @@
   name: tiles-desert-floor
   sprite: /Textures/Tiles/Planet/Desert/desert.png
   variants: 6
-  placementVariants: [0, 1, 2, 3, 4, 5]
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -30,7 +36,13 @@
   name: tiles-low-desert-floor
   sprite: /Textures/Tiles/Planet/Desert/low_desert.png
   variants: 6
-  placementVariants: [0, 1, 2, 3, 4, 5]
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -45,7 +57,11 @@
   name: tiles-grass-planet-floor
   sprite: /Textures/Tiles/Planet/Grass/grass.png
   variants: 4
-  placementVariants: [0, 1, 2, 3]
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   edgeSprites:
     SouthEast: /Textures/Tiles/Planet/Grass/single_edge.png
     NorthEast: /Textures/Tiles/Planet/Grass/single_edge.png
@@ -84,7 +100,20 @@
   name: tiles-snow-floor
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
-  placementVariants: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+  placementVariants:
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
+  - 1.0
   #cornerSprites:
   #  - /Textures/Tiles/Planet/Snow/single_edge.png
   #cardinalSprites:

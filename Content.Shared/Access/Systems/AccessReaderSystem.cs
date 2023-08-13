@@ -11,11 +11,13 @@ using Robust.Shared.GameStates;
 using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
 
 public sealed class AccessReaderSystem : EntitySystem
 {
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly InventorySystem _inventorySystem = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
@@ -272,23 +274,24 @@ public sealed class AccessReaderSystem : EntitySystem
     ///     Try to find <see cref="AccessComponent"/> on this item
     ///     or inside this item (if it's pda)
     /// </summary>
-    private bool FindAccessTagsItem(EntityUid uid, [NotNullWhen(true)] out HashSet<string>? tags)
+    private bool FindAccessTagsItem(EntityUid uid, out HashSet<string> tags)
     {
+        tags = new();
         if (TryComp(uid, out AccessComponent? access))
         {
-            tags = access.Tags;
-            return true;
+            tags.UnionWith(access.Tags);
         }
 
         if (TryComp(uid, out PdaComponent? pda) &&
             pda.ContainedId is { Valid: true } id)
         {
-            tags = EntityManager.GetComponent<AccessComponent>(id).Tags;
-            return true;
+            tags.UnionWith(EntityManager.GetComponent<AccessComponent>(id).Tags);
         }
 
-        tags = null;
-        return false;
+        var ev = new GetAccessTagsEvent(tags, _prototype);
+        RaiseLocalEvent(uid, ref ev);
+
+        return tags.Count != 0;
     }
 
     /// <summary>

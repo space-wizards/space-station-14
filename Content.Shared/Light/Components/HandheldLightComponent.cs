@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Light.Components;
 
-[NetworkedComponent, RegisterComponent, Access(typeof(SharedHandheldLightSystem))]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedHandheldLightSystem))]
 public sealed class HandheldLightComponent : Component
 {
     public byte? Level;
@@ -37,6 +37,13 @@ public sealed class HandheldLightComponent : Component
 
     [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string ToggleActionId = "ToggleLight";
+
+    /// <summary>
+    /// Whether or not the light can be toggled via standard interactions
+    /// (alt verbs, using in hand, etc)
+    /// </summary>
+    [DataField("toggleOnInteract")]
+    public bool ToggleOnInteract = true;
 
     [DataField("toggleAction")]
     public InstantAction? ToggleAction;
