@@ -109,7 +109,7 @@ namespace Content.Server.Administration.Systems
         private void OnClientTypingUpdated(BwoinkClientTypingUpdated msg, EntitySessionEventArgs args)
         {
             if (_typingUpdateTimestamps.TryGetValue(args.SenderSession.UserId, out var timestamp) &&
-                timestamp + TimeSpan.FromSeconds(3) > _timing.RealTime)
+                timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
             {
                 return;
             }

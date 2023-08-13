@@ -28,7 +28,7 @@ namespace Content.Client.Administration.Systems
 
         public void SendInputTextUpdated(NetUserId channel, string text)
         {
-            if (_lastTypingUpdateSent + TimeSpan.FromSeconds(3) > _timing.RealTime)
+            if (_lastTypingUpdateSent + TimeSpan.FromSeconds(1) > _timing.RealTime)
                 return;
 
             _lastTypingUpdateSent = _timing.RealTime;
