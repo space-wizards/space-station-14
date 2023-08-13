@@ -1438,6 +1438,20 @@
   itemDrop: MaterialWoodPlank1
   heatCapacity: 10000
 
+- type: tile
+  id: FloorWebTile
+  name: tiles-web
+  sprite: /Textures/Tiles/Misc/Web/web_tile.png
+  baseTurf: Plating
+  isSubfloor: false
+  canCrowbar: true
+  footstepSounds:
+    collection: FootstepCarpet
+  barestepSounds:
+    collection: BarestepCarpet
+  itemDrop: FloorTileItemWeb
+  heatCapacity: 10000
+
 #Hull tiles
 - type: tile
   id: FloorHull
