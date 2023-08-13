@@ -4,7 +4,6 @@ using Content.Server.Administration.Managers;
 using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
-using Content.Server.Players.PlayTimeTracking;
 using Content.Server.PowerCell;
 using Content.Server.UserInterface;
 using Content.Shared.Alert;
@@ -38,7 +37,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-    [Dependency] private readonly PlayTimeTrackingSystem _playTimeTracking = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly ThrowingSystem _throwing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
@@ -305,11 +303,6 @@ public sealed partial class BorgSystem : SharedBorgSystem
     /// </summary>
     public bool CanPlayerBeBorgged(IPlayerSession session, BorgChassisComponent component)
     {
-        var disallowedJobs = _playTimeTracking.GetDisallowedJobs(session);
-
-        if (disallowedJobs.Contains(component.BorgJobId))
-            return false;
-
         if (_banManager.GetJobBans(session.UserId)?.Contains(component.BorgJobId) == true)
             return false;
 

@@ -14,16 +14,16 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 5
-        Blunt: 5
-        Structural: 15
+        Blunt: 2.5
+        Piercing: 2.5
+        Structural: 10
   - type: Wieldable
   - type: IncreaseDamageOnWield
     damage:
       types:
         Blunt: 5
         Piercing: 5
-        Structural: 15
+        Structural: 10
   - type: Item
     size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
@@ -47,4 +47,4 @@
       types:
         Blunt: 5
         Piercing: 5
-        Structural: 15
+        Structural: 10
