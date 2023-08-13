@@ -1,30 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Command role requirements have been modified., type: Tweak}
-  id: 4033
-  time: '2023-06-18T21:53:05.0000000+00:00'
-- author: Wirdal
-  changes:
-  - {message: Changed fuel consumption for weldable things to be higher in general.,
-    type: Tweak}
-  id: 4034
-  time: '2023-06-18T21:56:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the new Arsenal research discipline., type: Add}
-  - {message: Added incendiary ammunition variants., type: Add}
-  - {message: Salvage Weapons and Signalling Tech are now part of the Arsenal discipline.,
-    type: Tweak}
-  - {message: Reduced taser shot count from 10 down to 5., type: Tweak}
-  id: 4035
-  time: '2023-06-18T21:56:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The security techfab no longer contains all the protolathe recipes.,
-    type: Fix}
-  id: 4036
-  time: '2023-06-18T22:35:19.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: 'Turning around from the previous change to the CE''s belt: the CE no
@@ -3011,3 +2985,27 @@ Entries:
     type: Add}
   id: 4532
   time: '2023-08-12T21:39:58.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Clicking on the screen now accounts for the distortion effect of nearby
+      singularities., type: Fix}
+  id: 4533
+  time: '2023-08-12T23:43:08.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Non-humanoids such as mice and pAIs can no longer be kill targets.,
+    type: Fix}
+  id: 4534
+  time: '2023-08-13T01:01:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lockers now once again inform you if you cannot access them., type: Fix}
+  id: 4535
+  time: '2023-08-13T01:21:07.0000000+00:00'
+- author: RiceMar
+  changes:
+  - {message: 'To satiate the salvage department''s rabid hunger for firepower, Nanotrasen
+      has started manufacturing proto-kinetic accelerators with bulky cannon-like
+      frames around the same internal machinery.', type: Add}
+  id: 4536
+  time: '2023-08-13T04:50:42.0000000+00:00'
