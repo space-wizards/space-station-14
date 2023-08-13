@@ -1,10 +1,4 @@
 Entries:
-- author: liltenhead
-  changes:
-  - {message: Added Bicaridine pills to brute medkit., type: Add}
-  - {message: Added Bicaridine syringe to combat medkit., type: Add}
-  id: 4064
-  time: '2023-06-21T20:35:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
@@ -3015,3 +3009,8 @@ Entries:
       will lay out the stamps slightly differently and with an overlap.', type: Tweak}
   id: 4563
   time: '2023-08-13T18:28:10.0000000+00:00'
+- author: PixelTheKermit
+  changes:
+  - {message: Arachnid zombies no longer get functional hands., type: Fix}
+  id: 4564
+  time: '2023-08-13T19:51:21.0000000+00:00'
