@@ -26,8 +26,8 @@
   - type: FingerprintMask
   - type: Tag
     tags:
-    - WhitelistChameleon
     - Kangaroo
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed

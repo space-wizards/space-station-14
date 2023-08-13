@@ -204,8 +204,8 @@
   - type: GroupExamine
   - type: Tag
     tags:
-    - WhitelistChameleon
     - Hardsuit
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterBaseLarge

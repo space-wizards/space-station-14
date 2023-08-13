@@ -168,7 +168,6 @@
   - type: IdentityBlocker
   - type: Tag
     tags:
-    - WhitelistChameleon
     - ClownMask
     - WhitelistChameleon
 

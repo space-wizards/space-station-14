@@ -11,8 +11,8 @@
     sprite: Clothing/OuterClothing/Suits/eva.rsi
   - type: Tag
     tags:
-    - WhitelistChameleon
     - SuitEVA
+    - WhitelistChameleon
 
 #Syndicate EVA
 - type: entity
@@ -27,8 +27,8 @@
     sprite: Clothing/OuterClothing/Suits/eva_syndicate.rsi
   - type: Tag
     tags:
-    - WhitelistChameleon
     - SuitEVA
+    - WhitelistChameleon
 
 #Emergency EVA
 - type: entity
@@ -65,8 +65,8 @@
     sprite: Clothing/OuterClothing/Suits/eva_prisoner.rsi
   - type: Tag
     tags:
-    - WhitelistChameleon
     - SuitEVA
+    - WhitelistChameleon
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity

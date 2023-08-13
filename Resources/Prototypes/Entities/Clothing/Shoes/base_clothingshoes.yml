@@ -19,8 +19,8 @@
           Quantity: 10
   - type: Tag
     tags:
-    - WhitelistChameleon
     - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   abstract: true
