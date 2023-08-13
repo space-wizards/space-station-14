@@ -56613,27 +56613,6 @@ entities:
     - pos: -37.5,19.5
       parent: 31
       type: Transform
-- proto: TegCenter
-  entities:
-  - uid: 7119
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 37.5,14.5
-      parent: 31
-      type: Transform
-- proto: TegCirculator
-  entities:
-  - uid: 7103
-    components:
-    - pos: 38.5,14.5
-      parent: 31
-      type: Transform
-  - uid: 7118
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 36.5,14.5
-      parent: 31
-      type: Transform
 - proto: TelecomServer
   entities:
   - uid: 10228
