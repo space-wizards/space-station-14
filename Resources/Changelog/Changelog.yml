@@ -1,15 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Added the new Arsenal research discipline., type: Add}
-  - {message: Added incendiary ammunition variants., type: Add}
-  - {message: Salvage Weapons and Signalling Tech are now part of the Arsenal discipline.,
-    type: Tweak}
-  - {message: Reduced taser shot count from 10 down to 5., type: Tweak}
-  id: 4035
-  time: '2023-06-18T21:56:49.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: The security techfab no longer contains all the protolathe recipes.,
     type: Fix}
   id: 4036
@@ -3012,3 +3003,8 @@ Entries:
     type: Fix}
   id: 4534
   time: '2023-08-13T01:01:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lockers now once again inform you if you cannot access them., type: Fix}
+  id: 4535
+  time: '2023-08-13T01:21:07.0000000+00:00'
