@@ -1,11 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: 'Turning around from the previous change to the CE''s belt: the CE no
-      longer spawns with their special belt, instead it''s in their locker again.',
-    type: Tweak}
-  id: 4037
-  time: '2023-06-18T23:13:53.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds a gas mask for the ERT and death squadron., type: Add}
@@ -3009,3 +3002,9 @@ Entries:
       frames around the same internal machinery.', type: Add}
   id: 4536
   time: '2023-08-13T04:50:42.0000000+00:00'
+- author: TaralGit
+  changes:
+  - {message: Added open bolt animations for most gun sprites. Use e and z (default
+      keybinds) to toggle bolt / cycling., type: Add}
+  id: 4537
+  time: '2023-08-13T05:58:08.0000000+00:00'
