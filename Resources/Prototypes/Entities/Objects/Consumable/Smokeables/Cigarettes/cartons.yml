@@ -81,15 +81,15 @@
 - type: entity
   id: CigCartonMixed
   parent: CigCartonGreen
-  name: Dan's Mixed Smokes
-  description: A carton containg 6 packets of Dan's spilled smokes.
+  name: Dan's soaked smokes
+  description: A carton containg 6 packets of Dan's soaked smokes.
   components:
   - type: Sprite
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
     layers:
       - state: closed
   - type: Item
-    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/mixed.rsi
   - type: StorageFill
     contents:
       - id: CigPackMixed
