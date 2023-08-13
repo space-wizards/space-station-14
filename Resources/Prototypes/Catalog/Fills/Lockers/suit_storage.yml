@@ -134,6 +134,7 @@
         - id: OxygenTankFilled
         - id: ClothingOuterHardsuitAtmos
         - id: ClothingMaskBreath
+        - id: ClothingShoesBootsMag
 
 #Security hardsuit
 - type: entity

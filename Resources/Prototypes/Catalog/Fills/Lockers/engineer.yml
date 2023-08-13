@@ -91,6 +91,7 @@
       - id: HolofanProjector
       - id: DoorRemoteFirefight
       - id: PipePainter
+      - id: ClothingShoesBootsMag
 
 - type: entity
   id: LockerAtmosphericsFilled
