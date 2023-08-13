@@ -1,0 +1,83 @@
+﻿- type: entity
+  abstract: true
+  id: PortableGeneratorBase
+  parent: [ BaseMachine, ConstructibleMachine ]
+  components:
+    # Basic properties
+    - type: Transform
+      anchored: False
+    - type: Physics
+      bodyType: Dynamic
+    - type: Sprite
+      sprite: Structures/Power/Generation/portable_generator.rsi
+    - type: StaticPrice
+      price: 500
+
+    # Construction, interaction
+    - type: WiresPanel
+    - type: Wires
+      BoardName: "Generator"
+      LayoutId: Generator
+    - type: UpgradePowerSupplier
+      powerSupplyMultiplier: 1.25
+      scaling: Exponential
+
+    - type: UserInterface
+      interfaces:
+        - key: enum.GeneratorComponentUiKey.Key
+          type: SolidFuelGeneratorBoundUserInterface
+    - type: ActivatableUI
+      key: enum.GeneratorComponentUiKey.Key
+    - type: Electrified
+      onHandInteract: false
+      onInteractUsing: false
+      onBump: false
+      requirePower: true
+      highVoltageNode: output
+
+    # Core functionality
+    - type: FuelGenerator
+    - type: SolidFuelGeneratorAdapter
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+    - type: PowerSupplier
+      supplyRate: 3000
+      supplyRampRate: 500
+      supplyRampTolerance: 500
+
+- type: entity
+  name: P.A.C.M.A.N.-type portable generator
+  parent: PortableGeneratorBase
+  id: PortableGeneratorPacman
+  suffix: Plasma, 20 kW
+  components:
+    - type: Sprite
+      state: portgen0
+    - type: Machine
+      board: GeneratorPlasmaMachineCircuitboard
+    - type: FuelGenerator
+      targetPower: 20000
+      optimalPower: 20000
+    - type: SolidFuelGeneratorAdapter
+      fuelMaterial: Plasma
+
+- type: entity
+  name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
+  parent: PortableGeneratorBase
+  id: PortableGeneratorSuperPacman
+  suffix: Uranium, 30 kW
+  components:
+    - type: Sprite
+      state: portgen1
+    - type: Machine
+      board: GeneratorUraniumMachineCircuitboard
+    - type: FuelGenerator
+      targetPower: 30000
+      optimalPower: 30000
+      optimalBurnRate: 0.00416666666
+    - type: SolidFuelGeneratorAdapter
+      fuelMaterial: Uranium

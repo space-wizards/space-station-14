@@ -164,3 +164,7 @@ WindowTintedDirectional: WindowFrostedDirectional
 
 # 2023-08-10
 SyringeSpaceacillin: null
+
+# TODO
+GeneratorPlasma: PortableGeneratorPacman
+GeneratorUranium: PortableGeneratorSuperPacman
