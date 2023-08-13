@@ -260,6 +260,7 @@
   materials:
     Steel: 1500
     Glass: 750
+   Plasma: 200
 
 
 - type: latheRecipe
@@ -269,6 +270,7 @@
   materials:
     Steel: 1000
     Plastic: 500
+    Plasma: 500
 
 - type: latheRecipe
   id: BorgModuleCable
