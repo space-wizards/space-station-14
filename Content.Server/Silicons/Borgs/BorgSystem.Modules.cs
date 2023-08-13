@@ -42,9 +42,6 @@ public sealed partial class BorgSystem
     {
         var chassis = args.Container.Owner;
 
-        if (Terminating(chassis))
-            return;
-
         if (!TryComp<BorgChassisComponent>(chassis, out var chassisComp) ||
             args.Container != chassisComp.ModuleContainer)
             return;
@@ -232,7 +229,11 @@ public sealed partial class BorgSystem
             return false;
 
         if (component.ModuleContainer.ContainedEntities.Count >= component.MaxModules)
+        {
+            if (user != null)
+                Popup.PopupEntity(Loc.GetString("borg-module-too-many"), uid, user.Value);
             return false;
+        }
 
         if (component.ModuleWhitelist?.IsValid(module, EntityManager) == false)
         {

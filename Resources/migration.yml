@@ -163,4 +163,5 @@ MountainRockMining: AsteroidRockMining
 WindowTintedDirectional: WindowFrostedDirectional
 
 # 2023-08-10
+# RedMediumLaserWeak: RedLightLaser # TODO migrations for non-entity prototypes
 SyringeSpaceacillin: null

@@ -34,3 +34,9 @@ public sealed partial class WiresPanelComponent : Component
     [AutoNetworkedField]
     public bool WiresAccessible = true;
 }
+
+/// <summary>
+/// Event raised when a panel is opened or closed.
+/// </summary>
+[ByRefEvent]
+public readonly record struct PanelChangedEvent(bool Open);
