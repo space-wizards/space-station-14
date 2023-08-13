@@ -1,0 +1,11 @@
+- type: entity
+  name: detective stamp
+  parent: RubberStampBase
+  id: RubberStampDetective
+  components:
+  - type: Stamp
+    stampedName: stamp-component-stamped-name-detective
+    stampState: "paper_stamp-detective"
+  - type: Sprite
+    sprite: Objects/Misc/bureaucracy.rsi
+    state: stamp-detective

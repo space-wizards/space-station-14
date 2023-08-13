@@ -138,6 +138,7 @@
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
       - id: ClothingHandsGlovesForensic
+      - id: RubberStampDetective
 
 - type: entity
   id: ClosetBombFilled

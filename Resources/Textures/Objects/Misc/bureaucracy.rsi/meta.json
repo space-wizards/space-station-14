@@ -120,6 +120,9 @@
     {
       "name": "paper_stamp-cmo"
     },
+	{
+      "name": "paper_stamp-detective"
+    },
     {
       "name": "paper_stamp-deny"
     },
@@ -280,6 +283,9 @@
     },
     {
       "name": "stamp-deny"
+    },
+	{
+      "name": "stamp-detective"
     },
     {
       "name": "stamp-approve"
