@@ -61,7 +61,7 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
-        if (args.Handled || component.BoltClosed == null)
+        if (args.Handled)
             return;
 
         args.Handled = true;
@@ -70,7 +70,7 @@ public abstract partial class SharedGunSystem
 
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
-        if (args.Handled || component.BoltClosed == null)
+        if (args.Handled)
             return;
 
         args.Handled = true;
@@ -94,7 +94,7 @@ public abstract partial class SharedGunSystem
 
     private void UseChambered(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
     {
-        if (component.BoltClosed == null || !component.BoltClosed.Value)
+        if (component.BoltClosed == false)
             return;
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
@@ -112,7 +112,7 @@ public abstract partial class SharedGunSystem
 
         CycleCartridge(uid, component, user);
 
-        if (component.BoltClosed.Value)
+        if (component.BoltClosed != false)
         {
             Audio.PlayPredicted(component.RackSound, uid, user);
         }
