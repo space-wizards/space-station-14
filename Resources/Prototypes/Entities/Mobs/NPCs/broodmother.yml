@@ -48,14 +48,14 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 35
+        Piercing: 12
         Poison: 12
   - type: Spider
     webActionName: BroodWebAction
   - type: EggLayer
-    hungerUsage: 10
-    eggLayCooldownMin: 120
-    eggLayCooldownMax: 180
+    hungerUsage: 0
+    eggLayCooldownMin: 60
+    eggLayCooldownMax: 60
     eggSpawn:
     - id: BroodServantEgg
     eggLayAction: SpiderLayEgg
@@ -165,7 +165,6 @@
     - outerClothing
     sprite: Objects/Misc/broodtrap.rsi
     state: alive
-  - type: IdentityBlocker
   - type: IngestionBlocker
   - type: AddAccentClothing
     accent: ReplacementAccent
@@ -244,8 +243,8 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 6
-        Poison: 12
+        Piercing: 2
+        Poison: 6
   - type: Spider
     webActionName: BroodServantWebAction
   - type: NoSlip
