@@ -202,3 +202,27 @@
     Glass: 500
     Plasma: 300
     Gold: 50
+
+#SS220 Craftable-Welding-Mask begin
+- type: latheRecipe
+  id: ClothingHeadHatWelding
+  icon:
+    sprite: Clothing/Head/Welding/welding.rsi
+    state: icon
+  result: ClothingHeadHatWelding
+  completetime: 3
+  materials:
+    Steel: 500
+    Glass: 200
+
+- type: latheRecipe
+  id: ClothingEyesGlassesMeson
+  icon:
+    sprite: Clothing/Eyes/Glasses/meson.rsi
+    state: icon
+  result: ClothingEyesGlassesMeson
+  completetime: 4
+  materials:
+    Steel: 150
+    Glass: 350
+#SS220 Craftable-Welding-Mask end

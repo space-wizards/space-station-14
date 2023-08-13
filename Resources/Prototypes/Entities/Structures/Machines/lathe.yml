@@ -81,6 +81,8 @@
     idleState: icon
     runningState: building
     staticRecipes:
+      - ClothingHeadHatWelding #SS220 Craftable-Welding-Mask
+      - ClothingEyesGlassesMeson #SS220 Craftable-Welding-Mask
       - Wirecutter
       - Screwdriver
       - Welder
