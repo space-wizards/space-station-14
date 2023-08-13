@@ -483,7 +483,7 @@ namespace Content.Server.Database
         {
             IQueryable<AdminLog> query = db.AdminLog;
             if (filter?.Search != null)
-                query = query.Where(log => EF.Functions.Like(log.Message, filter.Search));
+                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
 
             return query;
         }
