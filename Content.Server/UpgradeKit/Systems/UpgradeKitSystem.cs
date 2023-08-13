@@ -1,30 +1,39 @@
 using Content.Server.Hands.Systems;
 using Content.Server.Popups;
-using Content.Server.UpgradeKit.Components;
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction;
+using Content.Shared.UpgradeKit.Components;
+using static Content.Shared.UpgradeKit.Systems.SharedUpgradeKitSystem;
+using JetBrains.Annotations;
 
 namespace Content.Server.UpgradeKit.Systems;
 
+[UsedImplicitly]
 public sealed class UpgradeKitSystem : EntitySystem
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly HandsSystem _handsSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<UpgradeKitComponent, AfterInteractEvent>(AfterInteraction);
+        SubscribeLocalEvent<UpgradeKitComponent, UpgradeKitDoAfterEvent>(OnDoAfter);
     }
 
-    private void AfterInteraction(EntityUid uid, UpgradeKitComponent component, AfterInteractEvent args)
+    private void OnDoAfter(EntityUid uid, UpgradeKitComponent component, UpgradeKitDoAfterEvent args)
     {
+        if (args.Handled || args.Cancelled)
+            return;
+
         if (args.Target == null)
             return;
 
         var target = args.Target.Value;
-        var targetProto = _entityManager.GetComponent<MetaDataComponent>(target).EntityPrototype;
+        var targetProto = _entityManager.GetComponent<MetaDataComponent>(target)?.EntityPrototype;
 
         if (targetProto == null)
             return;
@@ -49,5 +58,27 @@ public sealed class UpgradeKitSystem : EntitySystem
             QueueDel(uid);
             QueueDel(target);
         }
+    }
+
+    private void AfterInteraction(EntityUid uid, UpgradeKitComponent component, AfterInteractEvent args)
+    {
+        if (args.Target == null)
+            return;
+
+        var target = args.Target.Value;
+        var targetProto = _entityManager.GetComponent<MetaDataComponent>(target)?.EntityPrototype;
+
+        if (targetProto == null)
+            return;
+
+        var doAfterEventArgs = new DoAfterArgs(args.User, component.DoAfterTime, new UpgradeKitDoAfterEvent(), uid, target: args.Target, used: uid)
+        {
+            BreakOnTargetMove = true,
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            NeedHand = true,
+        };
+
+        _doAfterSystem.TryStartDoAfter(doAfterEventArgs);
     }
 }

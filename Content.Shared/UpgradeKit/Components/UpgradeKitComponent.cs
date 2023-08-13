@@ -2,7 +2,7 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.UpgradeKit.Components;
+namespace Content.Shared.UpgradeKit.Components;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
@@ -15,4 +15,8 @@ public sealed partial class UpgradeKitComponent : Component
     [DataField("upgradedProto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     [AutoNetworkedField]
     public string UpgradedPrototype = default!;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("doAfter")]
+    public float DoAfterTime = 0f;
 }
