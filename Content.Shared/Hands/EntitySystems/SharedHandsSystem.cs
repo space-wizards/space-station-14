@@ -78,7 +78,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     }
 
     /// <summary>
-    /// Gets rid of all the entity's hands. Also gets rid of HandsComponent.
+    /// Gets rid of all the entity's hands.
     /// </summary>
     /// <param name="uid"></param>
     /// <param name="handsComp"></param>
@@ -89,7 +89,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return;
 
         RemoveHands(uid, EnumerateHands(uid), handsComp);
-        RemComp(uid, handsComp);
     }
 
     private void RemoveHands(EntityUid uid, IEnumerable<Hand> hands, HandsComponent handsComp)
@@ -98,8 +97,6 @@ public abstract partial class SharedHandsSystem : EntitySystem
             return;
 
         var hand = hands.First();
-        SetActiveHand(uid, hand, handsComp);
-        DoDrop(uid, hand, handsComp: handsComp);
         RemoveHand(uid, hand.Name, handsComp);
 
         // Repeats it for any additional hands.

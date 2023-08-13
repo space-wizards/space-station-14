@@ -245,7 +245,11 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            _hands.RemoveHands(target);
+            if (TryComp<HandsComponent>(target, out var handsComp))
+            {
+                _hands.RemoveHands(target);
+                RemComp(target, handsComp);
+            }
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
