@@ -5,8 +5,8 @@ action-name-toggle-phase-cloak = Phase cloak
 action-desc-toggle-phase-cloak = Toggles your suit's phase cloak. Beware that if you are hit, all abilities are disabled for 5 seconds, including your cloak!
 ninja-no-power = Not enough charge in suit battery!
 
-action-name-create-soap = Create soap
-action-desc-create-soap = Channels suit power into creating a bar of ninja soap. The future is now, old man!
+action-name-create-throwing-star = Create throwing star
+action-desc-create-throwing-star = Channels suit power into creating a throwing star that deals extra stamina damage.
 
 action-name-recall-katana = Recall katana
 action-desc-recall-katana = Teleports the Energy Katana linked to this suit to its wearer, cost based on distance.

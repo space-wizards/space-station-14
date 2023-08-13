@@ -50,9 +50,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     {
         args.Actions.Add(comp.TogglePhaseCloakAction);
         args.Actions.Add(comp.RecallKatanaAction);
-        // TODO: ninja stars instead of soap, when embedding is a thing
-        // The cooldown should also be reduced from 10 to 0.5 or so
-        args.Actions.Add(comp.CreateSoapAction);
+        args.Actions.Add(comp.CreateThrowingStarAction);
         args.Actions.Add(comp.KatanaDashAction);
         args.Actions.Add(comp.EmpAction);
     }

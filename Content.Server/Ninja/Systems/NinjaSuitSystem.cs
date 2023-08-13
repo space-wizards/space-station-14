@@ -26,7 +26,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
-        SubscribeLocalEvent<NinjaSuitComponent, CreateSoapEvent>(OnCreateSoap);
+        SubscribeLocalEvent<NinjaSuitComponent, CreateThrowingStarEvent>(OnCreateThrowingStar);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
     }
@@ -81,19 +81,19 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         });
     }
 
-    private void OnCreateSoap(EntityUid uid, NinjaSuitComponent comp, CreateSoapEvent args)
+    private void OnCreateThrowingStar(EntityUid uid, NinjaSuitComponent comp, CreateThrowingStarEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.SoapCharge) || _useDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge) || _useDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
         }
 
-        // try to put soap in hand, otherwise it goes on the ground
-        var soap = Spawn(comp.SoapPrototype, Transform(user).Coordinates);
-        _hands.TryPickupAnyHand(user, soap);
+        // try to put throwing star in hand, otherwise it goes on the ground
+        var star = Spawn(comp.ThrowingStarPrototype, Transform(user).Coordinates);
+        _hands.TryPickupAnyHand(user, star);
     }
 
     private void OnRecallKatana(EntityUid uid, NinjaSuitComponent comp, RecallKatanaEvent args)

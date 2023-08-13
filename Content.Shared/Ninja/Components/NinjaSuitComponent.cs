@@ -60,31 +60,31 @@ public sealed partial class NinjaSuitComponent : Component
     public TimeSpan DisableTime = TimeSpan.FromSeconds(5);
 
     /// <summary>
-    /// The action for creating throwing soap, in place of ninja throwing stars since embedding doesn't exist.
+    /// The action for creating throwing stars.
     /// </summary>
-    [DataField("createSoapAction")]
-    public InstantAction CreateSoapAction = new()
+    [DataField("createThrowingStarAction")]
+    public InstantAction CreateThrowingStarAction = new()
     {
-        UseDelay = TimeSpan.FromSeconds(10),
-        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Specific/Janitorial/soap.rsi"), "soap"),
+        UseDelay = TimeSpan.FromSeconds(0.5),
+        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Throwable/throwing_star.rsi"), "icon"),
         ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-create-soap",
-        Description = "action-desc-create-soap",
+        DisplayName = "action-name-create-throwing-star",
+        Description = "action-desc-create-throwing-star",
         Priority = -10,
-        Event = new CreateSoapEvent()
+        Event = new CreateThrowingStarEvent()
     };
 
     /// <summary>
-    /// Battery charge used to create a throwing soap. Can do it 25 times on a small-capacity power cell.
+    /// Battery charge used to create a throwing star. Can do it 25 times on a small-capacity power cell.
     /// </summary>
-    [DataField("soapCharge")]
-    public float SoapCharge = 14.4f;
+    [DataField("throwingStarCharge")]
+    public float ThrowingStarCharge = 14.4f;
 
     /// <summary>
-    /// Soap item to create with the action
+    /// Throwing star item to create with the action
     /// </summary>
-    [DataField("soapPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string SoapPrototype = "SoapNinja";
+    [DataField("throwingStarPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string ThrowingStarPrototype = "ThrowingStarNinja";
 
     /// <summary>
     /// The action for recalling a bound energy katana
@@ -159,7 +159,7 @@ public sealed partial class NinjaSuitComponent : Component
 
 public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
 
-public sealed class CreateSoapEvent : InstantActionEvent { }
+public sealed class CreateThrowingStarEvent : InstantActionEvent { }
 
 public sealed class RecallKatanaEvent : InstantActionEvent { }
 
