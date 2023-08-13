@@ -300,7 +300,12 @@ namespace Content.Server.Botany.Systems
                         ForceUpdateByExternalCause(uid, component);
                     }
                 }
-
+                var seed = produce.Seed;
+                if (seed != null)
+                {
+                    var nutrientBonus = seed.Potency / 2.5f;
+                    component.NutritionLevel += nutrientBonus;
+                }
                 EntityManager.QueueDeleteEntity(args.Used);
             }
         }
