@@ -27,6 +27,7 @@ gun-cartridge-unspent = It is [color=lime]not spent[/color].
 gun-battery-examine = It has enough charge for [color={$color}]{$count}[/color] shots.
 
 # CartridgeAmmoProvider
+gun-chamber-bolt-ammo = Gun not bolted
 gun-chamber-bolt = The bolt is [color={$color}]{$bolt}[/color].
 gun-chamber-bolt-closed = Closed bolt
 gun-chamber-bolt-opened = Opened bolt

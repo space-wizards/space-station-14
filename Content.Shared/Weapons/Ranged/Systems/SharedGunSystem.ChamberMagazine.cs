@@ -315,6 +315,7 @@ public abstract partial class SharedGunSystem
     {
         if (component.BoltClosed == false)
         {
+            args.Reason = Loc.GetString("gun-chamber-bolt-ammo");
             return;
         }
 
