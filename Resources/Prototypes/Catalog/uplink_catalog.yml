@@ -923,6 +923,21 @@
     - Clown
 
 - type: listing
+  id: UplinkHoloclownKit
+  name: uplink-holoclown-kit-name
+  description: uplink-holoclown-kit-desc
+  icon: { sprite: /Textures/Objects/Fun/figurines.rsi, state: holoclown }
+  productEntity: BoxHoloclown
+  cost:
+    Telecrystal: 12
+  categories:
+  - UplinkJob
+  conditions:
+  - !type:BuyerJobCondition
+    whitelist:
+    - Clown
+
+- type: listing
   id: uplinkHotPotato
   name: uplink-hot-potato-name
   description: uplink-hot-potato-desc
