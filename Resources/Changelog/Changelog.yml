@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
-  id: 4067
-  time: '2023-06-22T04:08:59.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added cargo bounties. Simply fill up a crate with the specified items,
@@ -3015,3 +3010,8 @@ Entries:
   - {message: Fix "remove hands" admin smite popup message., type: Fix}
   id: 4566
   time: '2023-08-13T22:50:58.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: AHelps now show a typing indicator to admins., type: Tweak}
+  id: 4567
+  time: '2023-08-13T23:03:17.0000000+00:00'
