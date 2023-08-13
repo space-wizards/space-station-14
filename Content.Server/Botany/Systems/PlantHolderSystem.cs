@@ -304,7 +304,7 @@ namespace Content.Server.Botany.Systems
                 if (seed != null)
                 {
                     var nutrientBonus = seed.Potency / 2.5f;
-                    component.NutritionLevel += nutrientBonus;
+                    AdjustNutrient(uid, nutrientBonus, component);
                 }
                 EntityManager.QueueDeleteEntity(args.Used);
             }
