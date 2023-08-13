@@ -399,6 +399,19 @@ namespace Content.Server.GameTicking
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
+
+            // Recursively collect entities for the crew manifest.
+            void RecursePvsEntities(IEnumerable<EntityUid> entities)
+            {
+                _expandPvsEntities.AddRange(entities);
+
+                foreach (var entity in entities)
+                    if (TryComp<TransformComponent>(entity, out var xform))
+                        RecursePvsEntities(xform.ChildEntities);
+            }
+
+            RecursePvsEntities(_expandPvsPlayers);
+
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
@@ -536,18 +549,6 @@ namespace Content.Server.GameTicking
             if (RunLevel == GameRunLevel.InRound)
             {
                 RoundLengthMetric.Inc(frameTime);
-            }
-            else if (RunLevel == GameRunLevel.PostRound)
-            {
-                _expandPvsEntities.Clear();
-
-                foreach (var entity in _expandPvsPlayers)
-                {
-                    if (Deleted(entity))
-                        continue;
-
-                    _expandPvsEntities.AddRange(Transform(entity).ChildEntities);
-                }
             }
 
             if (_roundStartTime == TimeSpan.Zero ||
