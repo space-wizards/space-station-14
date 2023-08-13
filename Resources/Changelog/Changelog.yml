@@ -1,10 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Added more dwarf accenting and fixed bug with the words 'over' 'moreover'
-      and 'more', type: Add}
-  id: 4058
-  time: '2023-06-20T20:30:57.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Removed chemistry from nukie planet., type: Remove}
@@ -3019,3 +3013,9 @@ Entries:
       for more details., type: Tweak}
   id: 4557
   time: '2023-08-13T07:38:05.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: 'Nanotrasen have fixed their accidental breakage of time space continuum,
+      making sure that steel tiles do indeed take steel to create.', type: Fix}
+  id: 4558
+  time: '2023-08-13T12:43:01.0000000+00:00'
