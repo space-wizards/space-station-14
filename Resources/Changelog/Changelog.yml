@@ -1,21 +1,4 @@
 Entries:
-- author: ElectroJr
-  changes:
-  - {message: Fixed usernames not showing up in the round end window., type: Fix}
-  id: 4061
-  time: '2023-06-21T01:18:16.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: The rate of which bleeding wounds passively clot has been doubled. (0.5u
-      to 1.0u), type: Tweak}
-  - {message: Max bleed rate has been halved (20u to 10u), type: Tweak}
-  - {message: blood puddles will always be created at a minimum of 1u of blood lost.
-      (5u to 1u), type: Tweak}
-  - {message: 'The refresh rate for all bloodstream effects (Losing blood, Regaining
-      blood, taking damage, Wound clotting) has been reduced to 3 seconds. This will
-      mean players will both bleed faster but also recover faster.', type: Tweak}
-  id: 4062
-  time: '2023-06-21T14:30:20.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Armor has been removed from jumpsuits., type: Tweak}
@@ -3020,3 +3003,14 @@ Entries:
     type: Fix}
   id: 4560
   time: '2023-08-13T16:55:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The DNA scrambler no longer has the power of magically transforming
+      various creatures into humanoids., type: Fix}
+  id: 4561
+  time: '2023-08-13T16:56:21.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: fixed pressure tanks to not show scientific notation., type: Fix}
+  id: 4562
+  time: '2023-08-13T16:56:30.0000000+00:00'
