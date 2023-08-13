@@ -9,18 +9,21 @@ namespace Content.Shared.Lock;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(LockSystem))]
-public sealed class LockComponent : Component
+[AutoGenerateComponentState]
+public sealed partial class LockComponent : Component
 {
     /// <summary>
     /// Whether or not the lock is locked.
     /// </summary>
     [DataField("locked"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public bool Locked  = true;
 
     /// <summary>
     /// Whether or not the lock is toggled by simply clicking.
     /// </summary>
     [DataField("lockOnClick"), ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
     public bool LockOnClick;
 
     /// <summary>
@@ -39,25 +42,19 @@ public sealed class LockComponent : Component
     /// Whether or not an emag disables it.
     /// </summary>
     [DataField("breakOnEmag")]
+    [AutoNetworkedField]
     public bool BreakOnEmag = true;
 }
 
-[Serializable, NetSerializable]
-public sealed class LockComponentState : ComponentState
-{
-    public bool Locked;
-
-    public bool LockOnClick;
-
-    public LockComponentState(bool locked, bool lockOnClick)
-    {
-        Locked = locked;
-        LockOnClick = lockOnClick;
-    }
-}
-
+/// <summary>
+/// Event raised on the lock when a toggle is attempted.
+/// Can be cancelled to prevent it.
+/// </summary>
 [ByRefEvent]
 public record struct LockToggleAttemptEvent(EntityUid User, bool Silent = false, bool Cancelled = false);
 
+/// <summary>
+/// Event raised on a lock after it has been toggled.
+/// </summary>
 [ByRefEvent]
 public readonly record struct LockToggledEvent(bool Locked);
