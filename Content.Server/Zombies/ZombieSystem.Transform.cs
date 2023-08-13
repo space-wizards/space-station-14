@@ -249,8 +249,7 @@ namespace Content.Server.Zombies
             //may become the source of various bugs.
             if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                var hands = _hands.EnumerateHands(target);
-                RemoveAllHands(target, hands, handsComp);
+                RemoveAllHands(target, _hands.EnumerateHands(target), handsComp);
 
                 RemComp(target, handsComp);
             }
