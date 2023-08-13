@@ -1,7 +1,7 @@
 ### Special messages used by internal localizer stuff.
 
 # Used internally by the PRESSURE() function.
-zzzz-fmt-pressure = { TOSTRING($divided, "G3") } { $places ->
+zzzz-fmt-pressure = { TOSTRING($divided, "G4") } { $places ->
     [0] kPa
     [1] MPa
     [2] GPa
