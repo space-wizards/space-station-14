@@ -1,0 +1,18 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:customControls="clr-namespace:Content.Client.Administration.UI.CustomControls"
+         xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
+         Margin="0 0 0 10">
+    <PanelContainer VerticalExpand="True">
+        <PanelContainer.PanelOverride>
+            <gfx:StyleBoxFlat BackgroundColor="#25252a"/>
+        </PanelContainer.PanelOverride>
+        <BoxContainer Orientation="Vertical"
+                      HorizontalExpand="True"
+                      VerticalExpand="True"
+                      Margin="5 5 5 5">
+            <Label Name="LawNumberLabel" StyleClasses="StatusFieldTitle"/>
+            <customControls:HSeparator Margin="0 5 0 5"/>
+            <RichTextLabel Name="LawLabel"/>
+        </BoxContainer>
+    </PanelContainer>
+</Control>

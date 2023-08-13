@@ -11,11 +11,6 @@
   cost: 5000
   recipeUnlocks:
   - ProximitySensor
-  - LeftArmBorg
-  - LightHeadBorg
-  - RightArmBorg
-  - LeftLegBorg
-  - RightLegBorg
   - Drone
   - ExosuitFabricatorMachineCircuitboard
 
@@ -31,6 +26,7 @@
   recipeUnlocks:
   - AnomalyScanner
   - AnomalyLocator
+  - BorgModuleAnomaly
   - APECircuitboard
   - AnomalyVesselCircuitboard
 
@@ -45,6 +41,7 @@
   cost: 10000
   recipeUnlocks:
   - NodeScanner
+  - BorgModuleArtifact
   - AnalysisComputerCircuitboard
   - ArtifactAnalyzerMachineCircuitboard
 

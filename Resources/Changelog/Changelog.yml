@@ -1,72 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: The Syndicate has stopped making zombie bundles available to nuclear
-      operatives after learning that the included bioweapon has expired., type: Remove}
-  id: 4025
-  time: '2023-06-18T03:23:42.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Bananium now generates on expedition planets., type: Fix}
-  id: 4026
-  time: '2023-06-18T07:11:30.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Added more dwarf accenting, type: Add}
-  id: 4027
-  time: '2023-06-18T09:12:10.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added artifact fragments. These can be uncovered in rock on planets
-      and asteroids. Combining a few of them will produce an artifact that science
-      can research., type: Add}
-  id: 4028
-  time: '2023-06-18T14:56:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The artifact division has finally remembered to wash alien artifacts
-      before giving them to scientists. They should now look significantly better.,
-    type: Tweak}
-  id: 4029
-  time: '2023-06-18T15:02:27.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Removed the spare CE belt., type: Remove}
-  id: 4030
-  time: '2023-06-18T17:06:09.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: 'Fixed equipped clothing sprites not working for some mobs (e.g., monkeys).',
-    type: Fix}
-  id: 4031
-  time: '2023-06-18T17:23:04.0000000+00:00'
-- author: FacePlus
-  changes:
-  - {message: Interns at Syndicate Command found a lost crate of Double Bladed Energy
-      Swords in the back. They will be giving them to agents at the cost of 16tc each
-      in their uplinks., type: Add}
-  id: 4032
-  time: '2023-06-18T19:35:23.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Command role requirements have been modified., type: Tweak}
-  id: 4033
-  time: '2023-06-18T21:53:05.0000000+00:00'
-- author: Wirdal
-  changes:
-  - {message: Changed fuel consumption for weldable things to be higher in general.,
-    type: Tweak}
-  id: 4034
-  time: '2023-06-18T21:56:09.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added the new Arsenal research discipline., type: Add}
-  - {message: Added incendiary ammunition variants., type: Add}
-  - {message: Salvage Weapons and Signalling Tech are now part of the Arsenal discipline.,
-    type: Tweak}
-  - {message: Reduced taser shot count from 10 down to 5., type: Tweak}
-  id: 4035
-  time: '2023-06-18T21:56:49.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The security techfab no longer contains all the protolathe recipes.,
@@ -2994,3 +2926,85 @@ Entries:
       in more stations. Thanks Wookyskill.', type: Tweak}
   id: 4524
   time: '2023-08-11T22:18:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Mobs with crit states that die will now perform a visible emote., type: Add}
+  - {message: 'Succumbing in crit is more accessible, as it''s also an action now',
+    type: Tweak}
+  - {message: 'You can now say your ''last words'' while in crit. This action will
+      let you whisper up to 30 characters, then kill you.', type: Add}
+  - {message: You can fake your own deathgasp emote using an action in crit., type: Add}
+  id: 4525
+  time: '2023-08-12T05:56:34.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Pickaxes are now 80 size and take more wood and steel to manufacture.,
+    type: Tweak}
+  id: 4526
+  time: '2023-08-12T06:17:26.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Traitors can now exist along with nuclear operatives., type: Add}
+  id: 4527
+  time: '2023-08-12T09:54:46.0000000+00:00'
+- author: terezi4real
+  changes:
+  - {message: Fixed errant transparency on jester outfit, type: Fix}
+  id: 4528
+  time: '2023-08-12T17:06:46.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Vim exosuit is now smaller and lighter for better maneuverability.,
+    type: Tweak}
+  id: 4529
+  time: '2023-08-12T19:03:08.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Added trash carts. Expect these to be mapped into maintenance soon.,
+    type: Add}
+  - {message: Added janitorial trash carts that can be locked and unlocked by janitors.
+      These are for janitors to store trash bags instead of lugging them around.,
+    type: Add}
+  id: 4530
+  time: '2023-08-12T19:05:33.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Nanotrasen finally decided to give engineering departments something
+      to do, and has finalized the schematics for the thermo-electric generator (TEG).',
+    type: Add}
+  - {message: The TEG creates power by exchanging energy between a hot and cold gas
+      on its two sides., type: Add}
+  - {message: You can turn on gas heaters/freezers with alt-click now., type: Tweak}
+  - {message: You can open air alarm and pump menus with activate (E) now., type: Tweak}
+  id: 4531
+  time: '2023-08-12T20:41:55.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added cyborgs. These creations are assembled part by part and can be
+      loaded up with various modules to give them unique abilities. Make sure you
+      charge them at their dedicated charging stations., type: Add}
+  - {message: Added silicon laws. These are laws that all robotic crew must abide
+      by. This Asimov guy had the right idea., type: Add}
+  - {message: Added new Mechanized Treatment and Robotic Cleanliness technologies.,
+    type: Add}
+  - {message: The EMAG is now able to force cyborgs to follow your orders. How devious!,
+    type: Add}
+  id: 4532
+  time: '2023-08-12T21:39:58.0000000+00:00'
+- author: TemporalOroboros
+  changes:
+  - {message: Clicking on the screen now accounts for the distortion effect of nearby
+      singularities., type: Fix}
+  id: 4533
+  time: '2023-08-12T23:43:08.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Non-humanoids such as mice and pAIs can no longer be kill targets.,
+    type: Fix}
+  id: 4534
+  time: '2023-08-13T01:01:21.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lockers now once again inform you if you cannot access them., type: Fix}
+  id: 4535
+  time: '2023-08-13T01:21:07.0000000+00:00'
