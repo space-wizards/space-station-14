@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed research console ui not updating when technology is unlocked on
-      another console., type: Fix}
-  id: 4066
-  time: '2023-06-22T00:59:58.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
@@ -3015,3 +3009,9 @@ Entries:
       (e.g., not opening the context menu).', type: Fix}
   id: 4565
   time: '2023-08-13T21:55:18.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
+  - {message: Fix "remove hands" admin smite popup message., type: Fix}
+  id: 4566
+  time: '2023-08-13T22:50:58.0000000+00:00'
