@@ -1,4 +1,4 @@
-﻿using Content.Shared.Administration;
+using Content.Shared.Administration;
 using Content.Shared.Maps;
 using Robust.Shared.Console;
 using Robust.Shared.Map;
@@ -42,7 +42,7 @@ public sealed class VariantizeCommand : IConsoleCommand
         foreach (var tile in gridComp.GetAllTiles())
         {
             var def = tile.GetContentTileDefinition();
-            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, random.Pick(def.PlacementVariants));
+            var newTile = new Tile(tile.Tile.TypeId, tile.Tile.Flags, def.PickVariant(random));
             gridComp.SetTile(tile.GridIndices, newTile);
         }
     }
