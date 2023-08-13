@@ -60,7 +60,7 @@ namespace Content.Server.GameTicking
         /// looking naked in the crew manifest.
         /// </summary>
         [ViewVariables]
-        private List<EntityUid> _expandPvsEntities = new();
+        private HashSet<EntityUid> _expandPvsEntities = new();
 
         [ViewVariables]
         private GameRunLevel _runLevel;
@@ -84,6 +84,12 @@ namespace Content.Server.GameTicking
         private void InitializeRoundFlow()
         {
             SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+            EntityManager.EntityDeleted += OnEntityDeleted;
+        }
+
+        private void OnEntityDeleted(EntityUid uid)
+        {
+            _expandPvsEntities.Remove(uid);
         }
 
         /// <summary>
@@ -407,7 +413,7 @@ namespace Content.Server.GameTicking
             // Recursively collect entities for the crew manifest.
             void RecursePvsEntities(IEnumerable<EntityUid> entities)
             {
-                _expandPvsEntities.AddRange(entities);
+                _expandPvsEntities.UnionWith(entities);
 
                 foreach (var entity in entities)
                 {
