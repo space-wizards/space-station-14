@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Lathe recipes no longer permanently duplicate and accumulate when trying
-      to sync., type: Fix}
-  id: 4049
-  time: '2023-06-19T17:43:20.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Removed experimental stims., type: Remove}
@@ -3009,3 +3003,9 @@ Entries:
   - {message: Vending machine sprites have been polished up., type: Tweak}
   id: 4548
   time: '2023-08-13T07:15:13.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: 'Blood-red magboots now slow you down less and have jetpack functionality,
+      but cost more.', type: Tweak}
+  id: 4549
+  time: '2023-08-13T07:17:10.0000000+00:00'
