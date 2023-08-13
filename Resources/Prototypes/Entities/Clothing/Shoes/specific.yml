@@ -25,8 +25,8 @@
   # for H.O.N.K. construction
   - type: Tag
     tags:
-    - WhitelistChameleon
     - ClownShoes
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBaseButcherable
