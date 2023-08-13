@@ -21,6 +21,7 @@ namespace Content.Shared.Doors
     /// </summary>
     public sealed class BeforeDoorOpenedEvent : CancellableEntityEventArgs
     {
+        public EntityUid? User = null;
     }
 
     /// <summary>

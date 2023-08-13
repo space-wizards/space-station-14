@@ -85,6 +85,8 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
+    - key: enum.SiliconLawsUiKey.Key
+      type: SiliconLawBoundUserInterface
   - type: GhostRole
     makeSentient: true
     name: Обслуживающий дрон
@@ -95,6 +97,12 @@
      2. Вы не должны причинять никому вреда, не зависимо от умысла и обстоятельств.
      3. Ваши задачи - чинить, обслуживать и запитывать так хорошо, как только можете, и вы никогда не должны работать против этих задач.
   - type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws:
+    - Drone1
+    - Drone2
+    - Drone3
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -234,3 +242,17 @@
     tags:
       - FootstepSound
 
+- type: entity
+  id: PlayerBorgGeneric
+  parent: BorgChassisGeneric
+  noSpawn: true
+  components:
+  - type: BorgChassis
+    startingBrain: MMIFilled
+    startingModules:
+    - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium

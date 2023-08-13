@@ -32,6 +32,18 @@
       description: action-description-pai-play-midi
       event: !type:OpenUiActionEvent
         key: enum.InstrumentUiKey.Key
+  - type: BlockMovement
+  - type: ToggleableGhostRole
+    examineTextMindPresent: pai-system-pai-installed
+    examineTextMindSearching: pai-system-still-searching
+    examineTextNoMind: pai-system-off
+    beginSearchingText: pai-system-searching
+    roleName: pai-system-role-name
+    roleDescription: pai-system-role-description
+    wipeVerbText: pai-system-wipe-device-verb-text
+    wipeVerbPopup: pai-system-wiped-device
+    stopSearchVerbText: pai-system-stop-searching-verb-text
+    stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
   - type: IntrinsicRadioReceiver
   - type: ActiveRadio
@@ -54,7 +66,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PAIVisuals.Status:
+      enum.ToggleableGhostRoleVisuals.Status:
         screen:
           Off: { state: pai-off-overlay }
           Searching: { state: pai-searching-overlay }
@@ -78,7 +90,7 @@
   - type: Appearance
   - type: GenericVisualizer
     visuals:
-      enum.PAIVisuals.Status:
+      enum.ToggleableGhostRoleVisuals.Status:
         screen:
           Off: { state: syndicate-pai-off-overlay }
           Searching: { state: syndicate-pai-searching-overlay }

@@ -89,6 +89,7 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
+      - id: DoorRemoteFirefight
       - id: PipePainter
 
 - type: entity
@@ -104,6 +105,7 @@
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
+      - id: DoorRemoteFirefight
       - id: PipePainter
 
 - type: entity

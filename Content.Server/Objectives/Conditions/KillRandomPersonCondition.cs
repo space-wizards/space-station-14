@@ -1,47 +1,35 @@
-using System.Linq;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
-using Content.Server.SS220.TraitorComponentTarget;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Components;
-using JetBrains.Annotations;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
-namespace Content.Server.Objectives.Conditions
+namespace Content.Server.Objectives.Conditions;
+
+[DataDefinition]
+public sealed class KillRandomPersonCondition : KillPersonCondition
 {
-    [UsedImplicitly]
-    [DataDefinition]
-    public sealed class KillRandomPersonCondition : KillPersonCondition 
+    public override IObjectiveCondition GetAssigned(Mind.Mind mind)
     {
-        // функция выбора задачи убийства со списка всех игорьков
-        public override IObjectiveCondition GetAssigned(Mind.Mind mind)
+        var allHumans = new List<Mind.Mind>();
+        var query = EntityManager.EntityQuery<MindContainerComponent, HumanoidAppearanceComponent>(true);
+        foreach (var (mc, _) in query)
         {
+            var entity = mc.Mind?.OwnedEntity;
+            if (entity == default)
+                continue;
 
-            var allTargets = EntityManager.EntityQuery<TraitorTargetComponent>(true).Where(tc => {
-
-                if (tc.Owner == default)
-                    return false;
-
-                if (EntityManager.IsQueuedForDeletion(tc.Owner))
-                    return false;
-
-                if (EntityManager.TryGetComponent<MindContainerComponent>(tc.Owner, out var mc))
-                    if (mc.Mind == mind || mc.Mind == null)
-                        return false;
-
-                return EntityManager.TryGetComponent(tc.Owner, out MobStateComponent? mobState) &&
-                    MobStateSystem.IsAlive(tc.Owner, mobState);
-            }).Select(
-                tc => {
-                    EntityManager.TryGetComponent<MindContainerComponent>(tc.Owner, out var mc);
-                    return mc?.Mind;
-            }).ToList();
-
-            // Проверка на кол-во найденных игроков на задачу убийства
-            if (allTargets.Count == 0)
-                return new DieCondition(); // I guess I'll die
-
-            return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allTargets) };
+            if (EntityManager.TryGetComponent(entity, out MobStateComponent? mobState) &&
+                MobStateSystem.IsAlive(entity.Value, mobState) &&
+                mc.Mind != mind && mc.Mind != null)
+            {
+                allHumans.Add(mc.Mind);
+            }
         }
+
+        if (allHumans.Count == 0)
+            return new DieCondition(); // I guess I'll die
+
+        return new KillRandomPersonCondition {Target = IoCManager.Resolve<IRobustRandom>().Pick(allHumans)};
     }
 }

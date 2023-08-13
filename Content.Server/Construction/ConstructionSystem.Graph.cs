@@ -360,8 +360,12 @@ namespace Content.Server.Construction
                     if (container == "clonepod-bodyContainer")
                         continue;
 
-                    // NOTE: Only Container is supported by Construction!
-                    var otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    if (!_container.TryGetContainer(newUid, container, out var otherContainer, newContainerManager))
+                    {
+                        // NOTE: Only Container is supported by Construction!
+                        // todo: one day, the ensured container should be the same type as ourContainer
+                        otherContainer = _container.EnsureContainer<Container>(newUid, container, newContainerManager);
+                    }
 
                     for (var i = ourContainer.ContainedEntities.Count - 1; i >= 0; i--)
                     {

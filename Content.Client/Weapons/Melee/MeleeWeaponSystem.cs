@@ -15,6 +15,7 @@ using Robust.Client.Player;
 using Robust.Client.State;
 using Robust.Shared.Input;
 using Robust.Shared.Map;
+using Robust.Shared.Player;
 using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
@@ -30,6 +31,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     [Dependency] private readonly IStateManager _stateManager = default!;
     [Dependency] private readonly AnimationPlayerSystem _animation = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
 
     private EntityQuery<TransformComponent> _xformQuery;
 
@@ -94,7 +96,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return;
         }
 
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
 
         if (mousePos.MapId == MapId.Nullspace)
         {
@@ -167,8 +169,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
     protected override void DoDamageEffect(List<EntityUid> targets, EntityUid? user, TransformComponent targetXform)
     {
         // Server never sends the event to us for predictiveeevent.
-        if (_timing.IsFirstTimePredicted)
-            RaiseLocalEvent(new ColorFlashEffectEvent(Color.Red, targets));
+        _color.RaiseEffect(Color.Red, targets, Filter.Local());
     }
 
     protected override bool DoDisarm(EntityUid user, DisarmAttackEvent ev, EntityUid meleeUid, MeleeWeaponComponent component, ICommonSession? session)

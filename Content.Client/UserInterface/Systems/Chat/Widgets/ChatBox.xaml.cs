@@ -11,7 +11,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.Input;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using TerraFX.Interop.Windows;
 using static Robust.Client.UserInterface.Controls.LineEdit;
 
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;

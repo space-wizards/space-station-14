@@ -46,6 +46,11 @@ namespace Content.Shared.Construction.Steps
                 return typeof(TemperatureConstructionGraphStep);
             }
 
+            if (node.Has("assemblyId") || node.Has("guideString"))
+            {
+                return typeof(PartAssemblyConstructionGraphStep);
+            }
+
             return null;
         }
 
