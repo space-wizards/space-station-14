@@ -111,16 +111,20 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     public bool GetNinjaRole(Mind.Mind? mind, [NotNullWhen(true)] out NinjaRole? role)
     {
+        role = null;
         if (mind == null)
-        {
-            role = null;
             return false;
+
+        foreach (var r in mind.AllRoles)
+        {
+            if (r is NinjaRole ninja)
+            {
+                role = ninja;
+                return true;
+            }
         }
 
-        role = (NinjaRole?) mind.AllRoles
-            .Where(r => r is NinjaRole)
-            .FirstOrDefault();
-        return role != null;
+        return false;
     }
 
     /// <summary>

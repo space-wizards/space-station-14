@@ -6,7 +6,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Random;
-using System.Linq;
 
 namespace Content.Server.StationEvents.Events;
 
