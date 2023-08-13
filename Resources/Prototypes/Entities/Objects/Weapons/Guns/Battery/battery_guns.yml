@@ -446,6 +446,9 @@
     magState: mag
     steps: 5
     zeroVisible: true
+  - type: BatterySelfRecharger
+    autoRecharge: true
+    autoRechargeRate: 40
   - type: Appearance
   - type: StaticPrice
     price: 150
