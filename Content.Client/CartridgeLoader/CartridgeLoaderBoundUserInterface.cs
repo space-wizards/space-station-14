@@ -17,8 +17,11 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private Control? _activeUiFragment;
 
+    private IEntityManager _entManager;
+
     protected CartridgeLoaderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
+        _entManager = IoCManager.Resolve<IEntityManager>();
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -31,13 +34,15 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
             return;
         }
 
-        var programs = GetCartridgeComponents(loaderUiState.Programs);
+        var programs = GetCartridgeComponents(_entManager.ToEntityList(loaderUiState.Programs));
         UpdateAvailablePrograms(programs);
 
-        _activeProgram = loaderUiState.ActiveUI;
+        var activeUI = _entManager.ToEntity(loaderUiState.ActiveUI);
 
-        var ui = RetrieveCartridgeUI(loaderUiState.ActiveUI);
-        var comp = RetrieveCartridgeComponent(loaderUiState.ActiveUI);
+        _activeProgram = activeUI;
+
+        var ui = RetrieveCartridgeUI(activeUI);
+        var comp = RetrieveCartridgeComponent(activeUI);
         var control = ui?.GetUIFragmentRoot();
 
         //Prevent the same UI fragment from getting disposed and attached multiple times

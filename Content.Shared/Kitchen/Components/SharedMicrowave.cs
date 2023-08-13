@@ -49,12 +49,12 @@ namespace Content.Shared.Kitchen.Components
     [NetSerializable, Serializable]
     public sealed class MicrowaveUpdateUserInterfaceState : BoundUserInterfaceState
     {
-        public EntityUid[] ContainedSolids;
+        public NetEntity[] ContainedSolids;
         public bool IsMicrowaveBusy;
         public int ActiveButtonIndex;
         public uint CurrentCookTime;
 
-        public MicrowaveUpdateUserInterfaceState(EntityUid[] containedSolids,
+        public MicrowaveUpdateUserInterfaceState(NetEntity[] containedSolids,
             bool isMicrowaveBusy, int activeButtonIndex, uint currentCookTime)
         {
             ContainedSolids = containedSolids;

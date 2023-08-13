@@ -74,7 +74,7 @@ public sealed partial class AnalysisConsoleMenu : FancyWindow
             return;
         }
 
-        UpdateArtifactIcon(state.Artifact);
+        UpdateArtifactIcon(_ent.ToEntity(state.Artifact));
 
         if (state.ScanReport == null)
         {

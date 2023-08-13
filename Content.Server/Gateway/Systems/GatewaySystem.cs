@@ -77,7 +77,7 @@ public sealed class GatewaySystem : EntitySystem
         }
 
         GetDestination(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, current, comp.NextClose, comp.LastOpen);
+        var state = new GatewayBoundUserInterfaceState(destinations, ToNetEntity(current), comp.NextClose, comp.LastOpen);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 

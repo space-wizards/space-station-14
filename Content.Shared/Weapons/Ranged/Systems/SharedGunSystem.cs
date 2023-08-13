@@ -128,18 +128,20 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-        if (ent != msg.Gun)
+        if (ent != ToEntity(msg.Gun))
             return;
 
-        gun.ShootCoordinates = msg.Coordinates;
+        gun.ShootCoordinates = ToCoordinates(msg.Coordinates);
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
         AttemptShoot(user.Value, ent, gun);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
     {
+        var gunUid = ToEntity(ev.Gun);
+
         if (args.SenderSession.AttachedEntity == null ||
-            !TryComp<GunComponent>(ev.Gun, out var gun) ||
+            !TryComp<GunComponent>(gunUid, out var gun) ||
             !TryGetGun(args.SenderSession.AttachedEntity.Value, out _, out var userGun))
         {
             return;
@@ -148,7 +150,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (userGun != gun)
             return;
 
-        StopShooting(ev.Gun, gun);
+        StopShooting(gunUid, gun);
     }
 
     public bool CanShoot(GunComponent component)
@@ -409,7 +411,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(gun, sprite, user == gun);
+        var ev = new MuzzleFlashEvent(ToNetEntity(gun), sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 
@@ -431,7 +433,7 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Serializable, NetSerializable]
     public sealed class HitscanEvent : EntityEventArgs
     {
-        public List<(EntityCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
+        public List<(NetCoordinates coordinates, Angle angle, SpriteSpecifier Sprite, float Distance)> Sprites = new();
     }
 }
 

@@ -362,8 +362,10 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
 
             foreach (var request in _bandRequestQueue)
             {
-                var nearby = GetBands(request.Entity);
-                _bui.TrySendUiMessage(request.Entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
+                var entity = ToEntity(request.Entity);
+
+                var nearby = GetBands(entity);
+                _bui.TrySendUiMessage(entity, request.UiKey, new InstrumentBandResponseBuiMessage(nearby),
                     (IPlayerSession)request.Session);
             }
 

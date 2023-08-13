@@ -31,7 +31,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// <summary>
     /// Which destination it is currently linked to, if any.
     /// </summary>
-    public readonly EntityUid? Current;
+    public readonly NetEntity? Current;
 
     /// <summary>
     /// Time the portal will close at.
@@ -44,7 +44,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     public readonly TimeSpan LastOpen;
 
     public GatewayBoundUserInterfaceState(List<(EntityUid, string, TimeSpan, bool)> destinations,
-        EntityUid? current, TimeSpan nextClose, TimeSpan lastOpen)
+        NetEntity? current, TimeSpan nextClose, TimeSpan lastOpen)
     {
         Destinations = destinations;
         Current = current;

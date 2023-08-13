@@ -206,7 +206,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 this.IsPowered(uid, EntityManager),
                 canJuice,
                 canGrind,
-                inputContainer.ContainedEntities.Select(item => item).ToArray(),
+                ToNetEntityArray(inputContainer.ContainedEntities.ToArray()),
                 containerSolution?.Contents.ToArray()
             );
             _userInterfaceSystem.TrySetUiState(uid, ReagentGrinderUiKey.Key, state);

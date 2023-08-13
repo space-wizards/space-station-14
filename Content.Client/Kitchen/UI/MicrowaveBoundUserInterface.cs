@@ -19,8 +19,11 @@ namespace Content.Client.Kitchen.UI
         [ViewVariables]
         private readonly Dictionary<int, Solution.ReagentQuantity> _reagents = new();
 
+        private IEntityManager _entManager;
+
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
+            _entManager = IoCManager.Resolve<IEntityManager>();
         }
 
         protected override void Open()
@@ -56,7 +59,6 @@ namespace Content.Client.Kitchen.UI
             _menu?.Dispose();
         }
 
-
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
@@ -66,7 +68,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
-            RefreshContentsDisplay(cState.ContainedSolids);
+            RefreshContentsDisplay(_entManager.ToEntityArray(cState.ContainedSolids));
 
             if (_menu == null) return;
 

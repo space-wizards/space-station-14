@@ -83,9 +83,9 @@ namespace Content.Shared.Kitchen
         public bool Powered;
         public bool CanJuice;
         public bool CanGrind;
-        public EntityUid[] ChamberContents;
+        public NetEntity[] ChamberContents;
         public Solution.ReagentQuantity[]? ReagentQuantities;
-        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, EntityUid[] chamberContents, Solution.ReagentQuantity[]? heldBeakerContents)
+        public ReagentGrinderInterfaceState(bool isBusy, bool hasBeaker, bool powered, bool canJuice, bool canGrind, NetEntity[] chamberContents, Solution.ReagentQuantity[]? heldBeakerContents)
         {
             IsBusy = isBusy;
             HasBeakerIn = hasBeaker;
