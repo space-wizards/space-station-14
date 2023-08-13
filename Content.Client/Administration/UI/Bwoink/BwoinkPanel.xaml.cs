@@ -89,7 +89,7 @@ namespace Content.Client.Administration.UI.Bwoink
                     return;
 
                 PeopleTyping.Add(name);
-                Timer.Spawn(TimeSpan.FromSeconds(15), () =>
+                Timer.Spawn(TimeSpan.FromSeconds(10), () =>
                 {
                     if (Disposed)
                         return;
