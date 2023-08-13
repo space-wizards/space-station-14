@@ -43,7 +43,7 @@ namespace Content.Server.Administration.Systems
         private Dictionary<NetUserId, string> _oldMessageIds = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
-        private readonly Dictionary<NetUserId, TimeSpan> _typingUpdateTimestamps = new();
+        private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
@@ -108,13 +108,14 @@ namespace Content.Server.Administration.Systems
 
         private void OnClientTypingUpdated(BwoinkClientTypingUpdated msg, EntitySessionEventArgs args)
         {
-            if (_typingUpdateTimestamps.TryGetValue(args.SenderSession.UserId, out var timestamp) &&
-                timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
+            if (_typingUpdateTimestamps.TryGetValue(args.SenderSession.UserId, out var tuple) &&
+                tuple.Typing == msg.Typing &&
+                tuple.Timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
             {
                 return;
             }
 
-            _typingUpdateTimestamps[args.SenderSession.UserId] = _timing.RealTime;
+            _typingUpdateTimestamps[args.SenderSession.UserId] = (_timing.RealTime, msg.Typing);
 
             // Non-admins can only ever type on their own ahelp, guard against fake messages
             var isAdmin = _adminManager.GetAdminData((IPlayerSession) args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;

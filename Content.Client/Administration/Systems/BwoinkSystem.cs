@@ -12,7 +12,7 @@ namespace Content.Client.Administration.Systems
         [Dependency] private readonly IGameTiming _timing = default!;
 
         public event EventHandler<BwoinkTextMessage>? OnBwoinkTextMessageRecieved;
-        private TimeSpan _lastTypingUpdateSent;
+        private (TimeSpan Timestamp, bool Typing) _lastTypingUpdateSent;
 
         protected override void OnBwoinkTextMessage(BwoinkTextMessage message, EntitySessionEventArgs eventArgs)
         {
@@ -24,15 +24,19 @@ namespace Content.Client.Administration.Systems
             // Reuse the channel ID as the 'true sender'.
             // Server will ignore this and if someone makes it not ignore this (which is bad, allows impersonation!!!), that will help.
             RaiseNetworkEvent(new BwoinkTextMessage(channelId, channelId, text));
+            SendInputTextUpdated(channelId, false);
         }
 
-        public void SendInputTextUpdated(NetUserId channel, string text)
+        public void SendInputTextUpdated(NetUserId channel, bool typing)
         {
-            if (_lastTypingUpdateSent + TimeSpan.FromSeconds(1) > _timing.RealTime)
+            if (_lastTypingUpdateSent.Typing == typing &&
+                _lastTypingUpdateSent.Timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
+            {
                 return;
+            }
 
-            _lastTypingUpdateSent = _timing.RealTime;
-            RaiseNetworkEvent(new BwoinkClientTypingUpdated(channel, text.Length > 0));
+            _lastTypingUpdateSent = (_timing.RealTime, typing);
+            RaiseNetworkEvent(new BwoinkClientTypingUpdated(channel, typing));
         }
     }
 }
