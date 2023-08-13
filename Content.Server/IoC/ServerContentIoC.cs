@@ -23,6 +23,7 @@ using Content.Server.Players.PlayTimeTracking;
 using Content.Server.Preferences.Managers;
 using Content.Server.ServerInfo;
 using Content.Server.ServerUpdates;
+using Content.Server.SS220.BackEndApi;
 using Content.Server.SS220.Discord;
 using Content.Server.SS220.PrimeWhitelist;
 using Content.Server.Voting.Managers;
@@ -72,6 +73,7 @@ namespace Content.Server.IoC
             IoCManager.Register<PoissonDiskSampler>();
             IoCManager.Register<Primelist>();
             IoCManager.Register<DiscordPlayerManager>();
+            IoCManager.Register<ServerControlController>();
         }
     }
 }
