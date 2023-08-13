@@ -70,7 +70,6 @@
   id: MobHumanSpaceNinja
   components:
   - type: Loadout
-    prototype: SpaceNinjaGear
     prototypes: [SpaceNinjaGear]
   - type: NpcFactionMember
     factions:
