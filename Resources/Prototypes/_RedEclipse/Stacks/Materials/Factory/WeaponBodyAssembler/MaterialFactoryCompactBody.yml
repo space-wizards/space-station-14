@@ -8,7 +8,7 @@
       materialComposition:
         FactoryCompactBody: 1
     - type: Stack
-      stackType: FactoryBasicCasings
+      stackType: FactoryCompactBody
 
 - type: entity
   parent: MaterialFactoryCompactBody
@@ -26,7 +26,7 @@
   id: FactoryCompactBody
   name: factory compact body
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryHeavyBody
+  spawn: FactoryCompactBody
   maxCount: 5
   itemSize: 1
 
