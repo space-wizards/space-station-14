@@ -100,3 +100,13 @@
   color: 3a758c
   reagent: Frezon
   pricePerMole: 7.5
+
+- type: gas
+  id: 9
+  name: gases-helium4
+  specificHeat: 7
+  heatCapacityRatio: 1.4
+  molarMass: 4
+  color: ffe900
+  reagent: Helium4
+  pricePerMole: 40 # TODO make this cheaper when metallic hydrogen hits

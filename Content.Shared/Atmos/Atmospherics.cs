@@ -168,7 +168,7 @@ namespace Content.Shared.Atmos
         /// <summary>
         ///     Total number of gases. Increase this if you want to add more!
         /// </summary>
-        public const int TotalNumberOfGases = 9;
+        public const int TotalNumberOfGases = 10;
 
         /// <summary>
         ///     This is the actual length of the gases arrays in mixtures.
@@ -204,6 +204,21 @@ namespace Content.Shared.Atmos
         public const float TritiumBurnTritFactor = 10f;
 
         public const float FrezonCoolLowerTemperature = 23.15f;
+
+        public const float FusionMinimumTemperatureToExist = 50000f;
+        //           1    Z1*Z2                                      10000x downscale
+        // E_coul = --- * ----- ≈ 970 keV (classical, ~= 11.3 GK; too much) ==> 97 eV (SS14, ~= 1.12MK)
+        //          4πε     r                                                 = Atmospherics.TritiumFusionIgnitionTemperature
+        //             0
+        /// <summary>
+        ///     Minimum total per-molecule "temperature" needed to fuse two tritium atoms into helium.
+        /// </summary>
+        public const float TritiumFusionIgnitionTemperature = 1125638.25f;
+
+        // Q = N_A * 11.3 MeV / 2 / 1000, energy released per mol of tritium fused. Really big number.
+        public const float TritiumFusionEnergyReleased = 545142112.256f;
+        public const float TritiumFusionFactor = 5f;
+        //public const float TritiumFusionRadiationScale = 20f;
 
         /// <summary>
         ///     Frezon cools better at higher temperatures.
@@ -345,6 +360,7 @@ namespace Content.Shared.Atmos
         WaterVapor = 5,
         Miasma = 6,
         NitrousOxide = 7,
-        Frezon = 8
+        Frezon = 8,
+        Helium4 = 9
     }
 }

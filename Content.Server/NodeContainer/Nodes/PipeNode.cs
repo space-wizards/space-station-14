@@ -113,6 +113,17 @@ namespace Content.Server.NodeContainer.Nodes
             CurrentPipeDirection = _originalPipeDirection.RotatePipeDirection(xform.LocalRotation);
         }
 
+        /*public void SetRadiation(bool radiate, float intensity) // TODO ATMOS: implement radiation support
+        {
+            if (radiate)
+            {
+                var rads = _entManager.EnsureComponent<RadiationSourceComponent>(Owner);
+                rads.Intensity = intensity;
+            }
+            else
+                _entManager.RemoveComponent<RadiationSourceComponent>(Owner);
+        }*/
+
         bool IRotatableNode.RotateNode(in MoveEvent ev)
         {
             if (_originalPipeDirection == PipeDirection.Fourway)

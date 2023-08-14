@@ -1,4 +1,17 @@
 ﻿- type: gasReaction
+  id: TritiumFusion
+  priority: -3
+  minimumTemperature: 50000 # Same as Atmospherics.FusionMinimumTemperatureToExist
+  minimumRequirements: # In this case, same as minimum mole count.
+    - 0     # oxygen
+    - 0     # nitrogen
+    - 0     # carbon dioxide
+    - 0     # plasma
+    - 0.02 # tritium
+  effects:
+    - !type:TritiumFusionReaction {}
+
+- type: gasReaction
   id: PlasmaFire
   priority: -2
   minimumTemperature: 373.149 # Same as Atmospherics.FireMinimumTemperatureToExist

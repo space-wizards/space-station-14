@@ -368,3 +368,38 @@
         - !type:ReagentThreshold
           reagent: Frezon
           min: 1
+
+- type: reagent
+  id: Helium4
+  name: reagent-name-helium4
+  desc: reagent-desc-helium4
+  physicalDesc: reagent-physical-desc-gaseous
+  flavor: light
+  color: "#ffe900"
+  boilingPoint: -268.93
+  meltingPoint: -273.13 # helium doesn't freeze
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 3 # liquid helium is extra cold
+    Gas:
+      effects:
+      - !type:PopupMessage
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Helium4
+          min: 0.5
+        type: Local
+        visualType: Medium
+        messages: [ "effect-sleepy" ] # humans can't tell if they're suffocating to helium
+        probability: 0.1
+      - !type:MovespeedModifier
+        conditions:
+        - !type:ReagentThreshold
+          reagent: Helium4
+          min: 1.5
+        walkSpeedModifier: 0.65
+        sprintSpeedModifier: 0.65

@@ -21,3 +21,6 @@ reagent-desc-nitrous-oxide = You know how everything seems funnier when you're t
 
 reagent-name-frezon = frezon
 reagent-desc-frezon = A highly effective coolant.. and hallucinogenic.
+
+reagent-name-helium4 = helium-4
+reagent-desc-helium4 = A completely inert gas, mostly known for making your voice go higher and running out in galactic stockpiles.
