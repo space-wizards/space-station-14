@@ -23,19 +23,13 @@ public sealed partial class MechSystem
         if (!TryComp<MechComponent>(uid, out var mech) || !mech.Airtight || !TryComp<MechAirComponent>(uid, out var mechAir))
             return;
 
-        var xform = Transform(uid);
-        var coordinates = Transform(uid).MapPosition;
-        if (!_map.TryFindGridAt(coordinates, out _, out var grid))
-            return;
-
-        var tile = grid.GetTileRef(coordinates);
-        if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is not { } environment)
-        {
-            return;
-        }
-
         // if the mech is filled there is nothing to do
         if (mechAir.Air.Pressure >= intake.Pressure)
+            return;
+
+        var environment = _atmosphere.GetContainingMixture(uid, true, true);
+        // nothing to intake from
+        if (environment == null)
             return;
 
         // absolute maximum pressure change
