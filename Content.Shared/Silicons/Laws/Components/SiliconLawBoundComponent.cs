@@ -24,6 +24,14 @@ public sealed class SiliconLawBoundComponent : Component
     public InstantAction? ProvidedAction;
 }
 
+/// <summary>
+/// Event raised to get the laws that a law-bound entity has.
+///
+/// Is first raised on the entity itself, then on the
+/// entity's station, then on the entity's grid,
+/// before being broadcast.
+/// </summary>
+/// <param name="Entity"></param>
 [ByRefEvent]
 public record struct GetSiliconLawsEvent(EntityUid Entity)
 {

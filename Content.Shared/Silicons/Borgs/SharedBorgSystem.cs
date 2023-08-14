@@ -69,7 +69,8 @@ public abstract partial class SharedBorgSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, BorgChassisComponent component, ComponentStartup args)
     {
-        var containerManager = EnsureComp<ContainerManagerComponent>(uid);
+        if (!TryComp<ContainerManagerComponent>(uid, out var containerManager))
+            return;
 
         component.BrainContainer = Container.EnsureContainer<ContainerSlot>(uid, component.BrainContainerId, containerManager);
         component.ModuleContainer = Container.EnsureContainer<Container>(uid, component.ModuleContainerId, containerManager);
