@@ -18,14 +18,15 @@
         - state: panel
           map: ["enum.WiresVisualLayers.MaintenancePanel"]
     - type: Machine
-      board: FactoryMedicalAssemblerMachineCircuitboard
+      board: FactoryWeaponBodyAssemblerMachineCircuitboard
     - type: Lathe
       idleState: icon
       runningState: building
       staticRecipes:
-        - FactoryMacroBombImplanter
-        - FactoryStorageImplanter
-        - FactoryFreedomImplanter
-        - FactoryHypopenBox
-        - FactorySyndicateSmokesPacket
-        - FactoryStimpack
+        - FactoryCompactBody
+        - FactoryMediumBody
+        - FactoryHeavyBody
+        - FactoryGunBarrel
+        - FactoryGunStock
+        - FactoryShortHilt
+        - FactoryLongHilt

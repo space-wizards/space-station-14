@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryPartBase
+  id: MaterialFactoryHeavyBody
+  name: heavy gun body
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryHeavyBody: 1
+    - type: Stack
+      stackType: FactoryBasicCasings
+
+- type: entity
+  parent: MaterialFactoryHeavyBody
+  id: FactoryHeavyBody
+  name: heavy gun body
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryHeavyBody
+      count: 1
+
+- type: stack
+  id: FactoryHeavyBody
+  name: factory heavy body
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryHeavyBody
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryHeavyBody
+  stackEntity: FactoryHeavyBody
+  name: materials-factory-heavy-body
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

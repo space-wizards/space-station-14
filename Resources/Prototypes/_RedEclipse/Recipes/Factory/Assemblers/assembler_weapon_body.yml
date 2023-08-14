@@ -1,0 +1,48 @@
+- type: latheRecipe
+  id: FactoryCompactBody
+  result: FactoryCompactBody
+  completetime: 4
+  materials: # TODO better recipe
+    Plastic : 100
+
+- type: latheRecipe
+  id: FactoryMediumBody
+  result: FactoryMediumBody
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 200
+
+- type: latheRecipe
+  id: FactoryHeavyBody
+  result: FactorySHeavyBody
+  completetime: 4
+  materials: # TODO better recipe
+    Plasteel : 300
+
+- type: latheRecipe
+  id: FactoryGunBarrel
+  result: FactoryGunBarrel
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 200
+
+- type: latheRecipe
+  id: FactoryGunStock
+  result: FactoryGunStock
+  completetime: 4
+  materials: # TODO better recipe
+    Plastic : 200
+
+- type: latheRecipe
+  id: FactoryLongHilt
+  result: FactoryLongHilt
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 300
+
+- type: latheRecipe
+  id: FactoryShortHilt
+  result: FactoryShortHilt
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 100
