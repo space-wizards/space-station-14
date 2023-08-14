@@ -43,9 +43,7 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
     private string GetCallout(KillCalloutRuleComponent component, KillReportedEvent ev)
     {
         // Do the humiliation callouts if you kill yourself or die from bleeding out or something lame.
-        if (ev.Primary is KillEnvironmentSource ||
-            ev.Primary is KillNpcSource npc && npc.NpcEnt == ev.Entity ||
-            ev.Primary is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(ev.Entity)?.PlayerSession.UserId)
+        if (ev.Primary is KillEnvironmentSource || ev.Suicide)
         {
             return Loc.GetString(_random.Pick(component.SelfKillCallouts),
                 ("victim", GetCalloutName(ev.Entity)));

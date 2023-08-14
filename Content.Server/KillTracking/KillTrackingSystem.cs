@@ -83,7 +83,17 @@ public sealed class KillTrackingSystem : EntitySystem
             }
         }
 
-        var ev = new KillReportedEvent(uid, killSource, assistSource);
+        // it's a suicide if:
+        // - you caused your own death
+        // - the kill source was the entity that died
+        // - the entity that died had an assist on themselves
+        var suicide = args.Origin == uid ||
+                      killSource is KillNpcSource npc && npc.NpcEnt == uid ||
+                      killSource is KillPlayerSource player && player.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId ||
+                      assistSource is KillNpcSource assistNpc && assistNpc.NpcEnt == uid ||
+                      assistSource is KillPlayerSource assistPlayer && assistPlayer.PlayerId == CompOrNull<ActorComponent>(uid)?.PlayerSession.UserId;
+
+        var ev = new KillReportedEvent(uid, killSource, assistSource, suicide);
         RaiseLocalEvent(uid, ref ev, true);
     }
 
@@ -115,5 +125,9 @@ public sealed class KillTrackingSystem : EntitySystem
 /// <summary>
 /// Event broadcasted and raised by-ref on an entity with <see cref="KillTrackerComponent"/> when they are killed.
 /// </summary>
+/// <param name="Entity">The entity that was killed</param>
+/// <param name="Primary">The primary source of the kill</param>
+/// <param name="Assist">A secondary source of the kill. Can be null.</param>
+/// <param name="Suicide">True if the entity that was killed caused their own death.</param>
 [ByRefEvent]
-public readonly record struct KillReportedEvent(EntityUid Entity, KillSource Primary, KillSource? Assist);
+public readonly record struct KillReportedEvent(EntityUid Entity, KillSource Primary, KillSource? Assist, bool Suicide);
