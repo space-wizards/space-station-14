@@ -1,10 +1,4 @@
 Entries:
-- author: FluidRock
-  changes:
-  - {message: Nuclear Operative Zombie bundle now contains Incendiary shotgun shells
-      instead of Flare shells., type: Tweak}
-  id: 4073
-  time: '2023-06-23T12:24:03.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fixed some jumpskirts gender masks, type: Fix}
@@ -3017,3 +3011,8 @@ Entries:
   - {message: Fixed the RPED sound effect cutting off at the end., type: Fix}
   id: 4572
   time: '2023-08-14T03:36:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin notes now require a severity to be set before saving., type: Tweak}
+  id: 4573
+  time: '2023-08-14T03:37:38.0000000+00:00'
