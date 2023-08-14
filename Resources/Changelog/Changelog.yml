@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: QM is now officially supervised by the Captain., type: Tweak}
-  - {message: The Cargo department is no longer supervised by the HoP., type: Tweak}
-  id: 4077
-  time: '2023-06-24T05:32:15.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Added Artifexium, a chemical that can activate artifacts when sprayed
@@ -3017,3 +3011,10 @@ Entries:
       on glass airlocks, type: Fix}
   id: 4576
   time: '2023-08-14T06:42:02.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: 'The new airlock painters are so accurate that you can use them to paint
+      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
+    type: Tweak}
+  id: 4577
+  time: '2023-08-14T12:06:21.0000000+00:00'
