@@ -8,7 +8,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// <summary>
 /// This is used for entities which are bound to silicon laws and can view them.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
 public sealed class SiliconLawBoundComponent : Component
 {
     /// <summary>

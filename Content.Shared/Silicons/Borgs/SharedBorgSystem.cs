@@ -30,7 +30,6 @@ public abstract partial class SharedBorgSystem : EntitySystem
         SubscribeLocalEvent<BorgChassisComponent, EntInsertedIntoContainerMessage>(OnInserted);
         SubscribeLocalEvent<BorgChassisComponent, EntRemovedFromContainerMessage>(OnRemoved);
         SubscribeLocalEvent<BorgChassisComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovementSpeedModifiers);
-        SubscribeLocalEvent<BorgChassisComponent, GetAccessTagsEvent>(OnGetAccessTags);
 
         InitializeRelay();
     }
@@ -97,12 +96,4 @@ public abstract partial class SharedBorgSystem : EntitySystem
         var sprintDif = movement.BaseWalkSpeed / movement.BaseSprintSpeed;
         args.ModifySpeed(1f, sprintDif);
     }
-
-    private void OnGetAccessTags(EntityUid uid, BorgChassisComponent component, ref GetAccessTagsEvent args)
-    {
-        if (!component.HasPlayer)
-            return;
-        args.AddGroup(component.AccessGroup);
-    }
-
 }

@@ -30,6 +30,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
@@ -125,11 +126,12 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     private void InternalEjectMind(EntityUid uid, MindContainerComponent? mind = null)
     {
-        if (!Resolve(uid, ref mind, false))
+        if (!Resolve(uid, ref mind, false) || mind.Mind == null)
             return;
 
+        var oldMind = mind.Mind;
         mind.Mind = null;
-        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
+        RaiseLocalEvent(uid, new MindRemovedMessage(oldMind), true);
     }
 
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
@@ -158,8 +160,6 @@ public sealed class MindSystem : EntitySystem
                 _ghostSystem.SetCanReturnToBody(ghost, false);
             return;
         }
-
-        TransferTo(mind, null);
 
         if (component.GhostOnShutdown && mind.Session != null)
         {
@@ -406,6 +406,16 @@ public sealed class MindSystem : EntitySystem
 
                 alreadyAttached = true;
             }
+        }
+        else
+        {
+            var position = mind.OwnedEntity == null
+                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                : Transform(mind.OwnedEntity.Value).MapPosition;
+
+            entity = Spawn("MobObserver", position);
+            var ghostComponent = Comp<GhostComponent>(entity.Value);
+            _ghostSystem.SetCanReturnToBody(ghostComponent, false);
         }
 
         var oldComp = mind.OwnedComponent;
