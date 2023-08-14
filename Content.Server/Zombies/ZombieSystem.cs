@@ -7,6 +7,7 @@ using Content.Server.Drone.Components;
 using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
 using Content.Server.Emoting.Systems;
+using Content.Server.Mind;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
@@ -49,6 +50,7 @@ namespace Content.Server.Zombies
             SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
             SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
             SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
 
             SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
 
@@ -114,6 +116,11 @@ namespace Content.Server.Zombies
         private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
         {
             args.Cancelled = true;
+        }
+
+        private void OnGetCharacterDeadIC(EntityUid uid, ZombieComponent component, ref GetCharactedDeadIcEvent args)
+        {
+            args.Dead = true;
         }
 
         private void OnStartup(EntityUid uid, ZombieComponent component, ComponentStartup args)
