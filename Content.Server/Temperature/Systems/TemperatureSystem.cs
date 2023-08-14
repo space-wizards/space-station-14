@@ -6,9 +6,11 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Alert;
+using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Inventory;
+using Content.Shared.Rejuvenate;
 using Content.Shared.Temperature;
 using Robust.Server.GameObjects;
 
@@ -37,6 +39,7 @@ namespace Content.Server.Temperature.Systems
         {
             SubscribeLocalEvent<TemperatureComponent, OnTemperatureChangeEvent>(EnqueueDamage);
             SubscribeLocalEvent<TemperatureComponent, AtmosExposedUpdateEvent>(OnAtmosExposedUpdate);
+            SubscribeLocalEvent<TemperatureComponent, RejuvenateEvent>(OnRejuvenate);
             SubscribeLocalEvent<AlertsComponent, OnTemperatureChangeEvent>(ServerAlert);
             SubscribeLocalEvent<TemperatureProtectionComponent, InventoryRelayedEvent<ModifyChangedTemperatureEvent>>(
                 OnTemperatureChangeAttempt);
@@ -78,14 +81,14 @@ namespace Content.Server.Temperature.Systems
 
         public void ForceChangeTemperature(EntityUid uid, float temp, TemperatureComponent? temperature = null)
         {
-            if (Resolve(uid, ref temperature))
-            {
-                float lastTemp = temperature.CurrentTemperature;
-                float delta = temperature.CurrentTemperature - temp;
-                temperature.CurrentTemperature = temp;
-                RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
-                    true);
-            }
+            if (!Resolve(uid, ref temperature))
+                return;
+
+            float lastTemp = temperature.CurrentTemperature;
+            float delta = temperature.CurrentTemperature - temp;
+            temperature.CurrentTemperature = temp;
+            RaiseLocalEvent(uid, new OnTemperatureChangeEvent(temperature.CurrentTemperature, lastTemp, delta),
+                true);
         }
 
         public void ChangeHeat(EntityUid uid, float heatAmount, bool ignoreHeatResistance = false,
@@ -125,6 +128,11 @@ namespace Content.Server.Temperature.Systems
             var heat = temperatureDelta * (tileHeatCapacity * temperature.HeatCapacity /
                                            (tileHeatCapacity + temperature.HeatCapacity));
             ChangeHeat(uid, heat * temperature.AtmosTemperatureTransferEfficiency, temperature: temperature);
+        }
+
+        private void OnRejuvenate(EntityUid uid, TemperatureComponent comp, RejuvenateEvent args)
+        {
+            ForceChangeTemperature(uid, Atmospherics.T20C, comp);
         }
 
         private void ServerAlert(EntityUid uid, AlertsComponent status, OnTemperatureChangeEvent args)
