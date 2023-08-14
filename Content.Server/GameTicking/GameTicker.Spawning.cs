@@ -227,54 +227,68 @@ namespace Content.Server.GameTicking
                 foreach (var loadout in character.LoadoutPreferences)
                 {
                     var slot = "";
+                    // Ignore loadouts that don't exist
                     if (!_prototypeManager.TryIndex<LoadoutPrototype>(loadout, out var loadoutProto))
                         continue;
 
-                    if (loadoutProto.JobWhitelist != null &&
-                        !loadoutProto.JobWhitelist.Contains(jobPrototype.ID) ||
-                        loadoutProto.JobBlacklist != null &&
-                        loadoutProto.JobBlacklist.Contains(jobPrototype.ID))
+                    // Check whitelists and blacklists for this loadout
+                    if (loadoutProto.EntityWhitelist != null && !loadoutProto.EntityWhitelist.IsValid(mob) ||
+                        loadoutProto.EntityBlacklist != null && loadoutProto.EntityBlacklist.IsValid(mob) ||
+                        loadoutProto.JobWhitelist != null && !loadoutProto.JobWhitelist.Contains(jobPrototype.ID) ||
+                        loadoutProto.JobBlacklist != null && loadoutProto.JobBlacklist.Contains(jobPrototype.ID) ||
+                        loadoutProto.SpeciesWhitelist != null && !loadoutProto.SpeciesWhitelist.Contains(character.Species) ||
+                        loadoutProto.SpeciesBlacklist != null && loadoutProto.SpeciesBlacklist.Contains(character.Species))
                         continue;
 
+                    // Spawn the loadout item
                     var spawned = EntityManager.SpawnEntity(loadoutProto.Item,
                         EntityManager.GetComponent<TransformComponent>(mob).Coordinates);
 
-                    if (EntityManager.TryGetComponent<ClothingComponent>(spawned, out var clothingComp))
+                    // If the loadout is a clothing item, try to equip it
+                    if (EntityManager.TryGetComponent<ClothingComponent>(spawned, out var clothingComp) &&
+                        invSystem.TryGetSlots(mob, out var slotDefinitions))
                     {
-                        if (invSystem.TryGetSlots(mob, out var slotDefinitions))
+                        var deleted = false;
+                        foreach (var curSlot in slotDefinitions)
                         {
-                            var deleted = false;
-                            foreach (var slotCur in slotDefinitions)
-                            {
-                                if (!clothingComp.Slots.HasFlag(slotCur.SlotFlags) || deleted)
-                                    continue;
+                            slot = curSlot.Name;
 
-                                if (invSystem.TryGetSlotEntity(mob, slotCur.Name, out var slotItem))
-                                {
-                                    var slotItemMeta = EntityManager.GetComponent<MetaDataComponent>(slotItem.Value);
-                                    if (loadoutProto.Exclusive ||
-                                        slotItemMeta.EntityPrototype!.ID is "ClothingUniformJumpsuitColorGrey"
-                                            or "ClothingUniformJumpskirtColorGrey")
-                                        EntityManager.DeleteEntity((EntityUid) slotItem);
-                                }
+                            // If the loadout can't equip here or we've already deleted an item from this slot, skip it
+                            if (!clothingComp.Slots.HasFlag(curSlot.SlotFlags) || deleted)
+                                continue;
 
-                                slot = slotCur.Name;
-                                deleted = true;
-                            }
+                            // Get the item in the slot
+                            if (!invSystem.TryGetSlotEntity(mob, curSlot.Name, out var slotItem))
+                                continue;
+
+                            // If the loadout is exclusive delete the equipped item
+                            if (!loadoutProto.Exclusive &&
+                                MetaData(slotItem.Value).EntityPrototype!.ID is not ("ClothingUniformJumpsuitColorGrey"
+                                    or "ClothingUniformJumpskirtColorGrey"))
+                                continue;
+
+                            EntityManager.DeleteEntity((EntityUid) slotItem);
+                            deleted = true;
                         }
                     }
 
+
+                    // Equip the loadout
                     if (invSystem.TryEquip(mob, spawned, slot))
                         continue;
 
-                    if (invSystem.TryGetSlotEntity(mob, "back", out var item) &&
-                        EntityManager.TryGetComponent<ServerStorageComponent>(item, out var inventory))
-                    {
-                        if (inventory.Storage == null)
-                            continue;
-                        if (inventory.Storage.CanInsert(spawned))
-                            inventory.Storage.Insert(spawned);
-                    }
+                    // If we couldn't equip it, try to find a backpack
+                    if (!invSystem.TryGetSlotEntity(mob, "back", out var item) ||
+                        !EntityManager.TryGetComponent<ServerStorageComponent>(item, out var inventory))
+                        continue;
+
+                    // If we can't insert it, skip it, leaving the loadout on the ground
+                    if (inventory.Storage == null)
+                        continue;
+
+                    // Insert the loadout into the backpack if possible
+                    if (inventory.Storage.CanInsert(spawned))
+                        inventory.Storage.Insert(spawned);
                 }
             }
 
