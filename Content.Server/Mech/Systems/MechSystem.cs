@@ -310,56 +310,6 @@ public sealed partial class MechSystem : SharedMechSystem
         UserInterfaceSystem.SetUiState(ui, state);
     }
 
-    public override bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!base.TryInsert(uid, toInsert, component))
-            return false;
-
-        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
-        {
-            var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out _, out var grid))
-            {
-                var tile = grid.GetTileRef(coordinates);
-
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
-                {
-                    _atmosphere.Merge(mechAir.Air, environment.RemoveVolume(MechAirComponent.GasMixVolume));
-                }
-            }
-        }
-        return true;
-    }
-
-    public override bool TryEject(EntityUid uid, MechComponent? component = null)
-    {
-        if (!Resolve(uid, ref component))
-            return false;
-
-        if (!base.TryEject(uid, component))
-            return false;
-
-        if (component.Airtight && TryComp(uid, out MechAirComponent? mechAir))
-        {
-            var coordinates = Transform(uid).MapPosition;
-            if (_map.TryFindGridAt(coordinates, out _, out var grid))
-            {
-                var tile = grid.GetTileRef(coordinates);
-
-                if (_atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true) is { } environment)
-                {
-                    _atmosphere.Merge(environment, mechAir.Air);
-                    mechAir.Air.Clear();
-                }
-            }
-        }
-
-        return true;
-    }
-
     public override void BreakMech(EntityUid uid, MechComponent? component = null)
     {
         base.BreakMech(uid, component);
