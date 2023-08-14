@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fixed some jumpskirts gender masks, type: Fix}
-  id: 4074
-  time: '2023-06-23T12:24:38.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: Nanotrasen has installed REAL wheels on the janitorial trolleys after
@@ -3016,3 +3011,9 @@ Entries:
   - {message: Admin notes now require a severity to be set before saving., type: Tweak}
   id: 4573
   time: '2023-08-14T03:37:38.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'The nuke detonation sound plays to all crew members again, no longer
+      will you have to sit in silence before your demise', type: Fix}
+  id: 4574
+  time: '2023-08-14T03:55:50.0000000+00:00'
