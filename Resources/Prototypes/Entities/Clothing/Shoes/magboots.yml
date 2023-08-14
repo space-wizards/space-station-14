@@ -34,7 +34,7 @@
       price: 200
     - type: Tag
       tags:
-        - WhitelistChameleon
+      - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag
