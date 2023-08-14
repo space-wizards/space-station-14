@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: The Head of Security's trenchcoat now clearly states it's armored.,
-    type: Tweak}
-  id: 4094
-  time: '2023-06-26T13:35:45.0000000+00:00'
 - author: CrigCrag
   changes:
   - {message: 'Following a lawsuit, some unshielded asbestos was removed from the
@@ -3025,3 +3019,9 @@ Entries:
       from them., type: Fix}
   id: 4593
   time: '2023-08-14T23:34:24.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: 'Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
+      acid, heat it up to 374k and receive your homemade plastic sheet.', type: Add}
+  id: 4594
+  time: '2023-08-14T23:40:48.0000000+00:00'
