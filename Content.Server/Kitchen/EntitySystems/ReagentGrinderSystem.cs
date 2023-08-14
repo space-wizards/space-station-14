@@ -242,10 +242,11 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
+            var ent = ToEntity(message.EntityId);
 
-            if (inputContainer.Remove(message.EntityId))
+            if (inputContainer.Remove(ent))
             {
-                message.EntityId.RandomOffset(0.4f);
+                ent.RandomOffset(0.4f);
                 ClickSound(uid, reagentGrinder);
                 UpdateUiState(uid);
             }

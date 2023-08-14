@@ -17,8 +17,8 @@ namespace Content.Shared.Kitchen.Components
     [Serializable, NetSerializable]
     public sealed class MicrowaveEjectSolidIndexedMessage : BoundUserInterfaceMessage
     {
-        public EntityUid EntityID;
-        public MicrowaveEjectSolidIndexedMessage(EntityUid entityId)
+        public NetEntity EntityID;
+        public MicrowaveEjectSolidIndexedMessage(NetEntity entityId)
         {
             EntityID = entityId;
         }

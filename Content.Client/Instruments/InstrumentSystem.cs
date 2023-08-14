@@ -54,10 +54,10 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     public void SetMaster(EntityUid uid, EntityUid? masterUid)
     {
-        if (!TryComp(uid, out InstrumentComponent? instrument))
+        if (!HasComp<InstrumentComponent>(uid))
             return;
 
-        RaiseNetworkEvent(new InstrumentSetMasterEvent(uid, masterUid));
+        RaiseNetworkEvent(new InstrumentSetMasterEvent(ToNetEntity(uid), ToNetEntity(masterUid)));
     }
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
@@ -68,7 +68,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if(value)
             instrument.Renderer?.SendMidiEvent(RobustMidiEvent.AllNotesOff((byte)channel, 0), false);
 
-        RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(uid, channel, value));
+        RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(ToNetEntity(uid), channel, value));
     }
 
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
@@ -109,7 +109,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
         if (!fromStateChange)
         {
-            RaiseNetworkEvent(new InstrumentStartMidiEvent(uid));
+            RaiseNetworkEvent(new InstrumentStartMidiEvent(ToNetEntity(uid)));
         }
     }
 
@@ -282,7 +282,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     private void OnMidiEventRx(InstrumentMidiEventEvent midiEv)
     {
-        var uid = midiEv.Uid;
+        var uid = ToEntity(midiEv.Uid);
 
         if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
@@ -354,7 +354,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     private void OnMidiStart(InstrumentStartMidiEvent ev)
     {
-        SetupRenderer(ev.Uid, true);
+        SetupRenderer(ToEntity(ev.Uid), true);
     }
 
     private void OnMidiStop(InstrumentStopMidiEvent ev)
@@ -425,7 +425,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             if (eventCount == 0)
                 continue;
 
-            RaiseNetworkEvent(new InstrumentMidiEventEvent(uid, events));
+            RaiseNetworkEvent(new InstrumentMidiEventEvent(ToNetEntity(uid), events));
 
             instrument.SentWithinASec += eventCount;
 

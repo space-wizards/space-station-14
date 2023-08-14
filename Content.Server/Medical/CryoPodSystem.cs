@@ -184,8 +184,8 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             HealthAnalyzerUiKey.Key,
-            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity,
-            temp != null ? temp.CurrentTemperature : 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
+            new HealthAnalyzerScannedUserMessage(ToNetEntity(cryoPodComponent.BodyContainer.ContainedEntity),
+            temp?.CurrentTemperature ?? 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

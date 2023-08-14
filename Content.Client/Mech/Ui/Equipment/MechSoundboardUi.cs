@@ -22,7 +22,8 @@ public sealed class MechSoundboardUi : UIFragment
         _fragment = new MechSoundboardUiFragment();
         _fragment.OnPlayAction += sound =>
         {
-            userInterface.SendMessage(new MechSoundboardPlayMessage(fragmentOwner.Value, sound));
+            // TODO: IDK dog
+            userInterface.SendMessage(new MechSoundboardPlayMessage(IoCManager.Resolve<IEntityManager>().ToNetEntity(fragmentOwner.Value), sound));
         };
     }
 

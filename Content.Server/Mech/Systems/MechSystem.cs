@@ -141,13 +141,15 @@ public sealed class MechSystem : SharedMechSystem
 
     private void OnRemoveEquipmentMessage(EntityUid uid, MechComponent component, MechEquipmentRemoveMessage args)
     {
-        if (!Exists(args.Equipment) || Deleted(args.Equipment))
+        var equip = ToEntity(args.Equipment);
+
+        if (!Exists(equip) || Deleted(equip))
             return;
 
-        if (!component.EquipmentContainer.ContainedEntities.Contains(args.Equipment))
+        if (!component.EquipmentContainer.ContainedEntities.Contains(equip))
             return;
 
-        RemoveEquipment(uid, args.Equipment, component);
+        RemoveEquipment(uid, equip, component);
     }
 
     private void OnOpenUi(EntityUid uid, MechComponent component, MechOpenUiEvent args)
@@ -277,9 +279,11 @@ public sealed class MechSystem : SharedMechSystem
     {
         var ev = new MechEquipmentUiMessageRelayEvent(args);
         var allEquipment = new List<EntityUid>(component.EquipmentContainer.ContainedEntities);
+        var argEquip = ToEntity(args.Equipment);
+
         foreach (var equipment in allEquipment)
         {
-            if (args.Equipment == equipment)
+            if (argEquip == equipment)
                 RaiseLocalEvent(equipment, ev);
         }
     }

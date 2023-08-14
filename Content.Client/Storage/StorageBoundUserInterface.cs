@@ -76,11 +76,11 @@ namespace Content.Client.Storage
             else if (args.Function == ContentKeyFunctions.ActivateItemInWorld)
             {
                 EntMan.EntityNetManager?.SendSystemNetworkMessage(
-                    new InteractInventorySlotEvent(entity, altInteract: false));
+                    new InteractInventorySlotEvent(EntMan.ToNetEntity(entity), altInteract: false));
             }
             else if (args.Function == ContentKeyFunctions.AltActivateItemInWorld)
             {
-                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(entity, altInteract: true));
+                EntMan.RaisePredictiveEvent(new InteractInventorySlotEvent(EntMan.ToNetEntity(entity), altInteract: true));
             }
             else
             {

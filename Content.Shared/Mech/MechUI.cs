@@ -13,7 +13,7 @@ public enum MechUiKey : byte
 /// </summary>
 public sealed class MechEquipmentUiStateReadyEvent : EntityEventArgs
 {
-    public Dictionary<EntityUid, BoundUserInterfaceState> States = new();
+    public Dictionary<NetEntity, BoundUserInterfaceState> States = new();
 }
 
 /// <summary>
@@ -35,9 +35,9 @@ public sealed class MechEquipmentUiMessageRelayEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
 {
-    public EntityUid Equipment;
+    public NetEntity Equipment;
 
-    public MechEquipmentRemoveMessage(EntityUid equipment)
+    public MechEquipmentRemoveMessage(NetEntity equipment)
     {
         Equipment = equipment;
     }
@@ -49,7 +49,7 @@ public sealed class MechEquipmentRemoveMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
 {
-    public EntityUid Equipment;
+    public NetEntity Equipment;
 }
 
 /// <summary>
@@ -58,9 +58,9 @@ public abstract class MechEquipmentUiMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class MechGrabberEjectMessage : MechEquipmentUiMessage
 {
-    public EntityUid Item;
+    public NetEntity Item;
 
-    public MechGrabberEjectMessage(EntityUid equipment, EntityUid uid)
+    public MechGrabberEjectMessage(NetEntity equipment, NetEntity uid)
     {
         Equipment = equipment;
         Item = uid;
@@ -75,7 +75,7 @@ public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 {
     public int Sound;
 
-    public MechSoundboardPlayMessage(EntityUid equipment, int sound)
+    public MechSoundboardPlayMessage(NetEntity equipment, int sound)
     {
         Equipment = equipment;
         Sound = sound;
@@ -106,13 +106,13 @@ public sealed class MechSoundboardPlayMessage : MechEquipmentUiMessage
 [Serializable, NetSerializable]
 public sealed class MechBoundUiState : BoundUserInterfaceState
 {
-    public Dictionary<EntityUid, BoundUserInterfaceState> EquipmentStates = new();
+    public Dictionary<NetEntity, BoundUserInterfaceState> EquipmentStates = new();
 }
 
 [Serializable, NetSerializable]
 public sealed class MechGrabberUiState : BoundUserInterfaceState
 {
-    public List<EntityUid> Contents = new();
+    public List<NetEntity> Contents = new();
     public int MaxContents;
 }
 

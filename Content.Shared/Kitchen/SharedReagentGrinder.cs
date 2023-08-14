@@ -31,8 +31,8 @@ namespace Content.Shared.Kitchen
     [Serializable, NetSerializable]
     public sealed class ReagentGrinderEjectChamberContentMessage : BoundUserInterfaceMessage
     {
-        public EntityUid EntityId;
-        public ReagentGrinderEjectChamberContentMessage(EntityUid entityId)
+        public NetEntity EntityId;
+        public ReagentGrinderEjectChamberContentMessage(NetEntity entityId)
         {
             EntityId = entityId;
         }

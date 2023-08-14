@@ -87,7 +87,7 @@ namespace Content.Shared.Movement.Systems
 
             component.RelativeRotation = state.RelativeRotation;
             component.TargetRelativeRotation = state.TargetRelativeRotation;
-            component.RelativeEntity = state.RelativeEntity;
+            component.RelativeEntity = ToEntity(state.RelativeEntity);
             component.LerpTarget = state.LerpAccumulator;
         }
 
@@ -98,7 +98,7 @@ namespace Content.Shared.Movement.Systems
                 component.CanMove,
                 component.RelativeRotation,
                 component.TargetRelativeRotation,
-                component.RelativeEntity,
+                ToNetEntity(component.RelativeEntity),
                 component.LerpTarget);
         }
 
@@ -579,10 +579,10 @@ namespace Content.Shared.Movement.Systems
             /// Target rotation relative to the <see cref="RelativeEntity"/>. Typically 0
             /// </summary>
             public Angle TargetRelativeRotation;
-            public EntityUid? RelativeEntity;
+            public NetEntity? RelativeEntity;
             public TimeSpan LerpAccumulator;
 
-            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, EntityUid? relativeEntity, TimeSpan lerpTarget)
+            public InputMoverComponentState(MoveButtons buttons, bool canMove, Angle relativeRotation, Angle targetRelativeRotation, NetEntity? relativeEntity, TimeSpan lerpTarget)
             {
                 Buttons = buttons;
                 CanMove = canMove;

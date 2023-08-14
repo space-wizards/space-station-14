@@ -36,7 +36,7 @@ namespace Content.Client.Kitchen.UI
             _menu.EjectButton.OnPressed += _ => SendMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new MicrowaveEjectSolidIndexedMessage(_solids[args.ItemIndex]));
+                SendMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.ToNetEntity(_solids[args.ItemIndex])));
             };
 
             _menu.OnCookTimeSelected += (args, buttonIndex) =>
