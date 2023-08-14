@@ -150162,8 +150162,6 @@ entities:
     - linkedPorts:
         15422:
         - Pressed: Toggle
-        invalid:
-        - Pressed: Toggle
         1455:
         - Pressed: Toggle
         17669:
