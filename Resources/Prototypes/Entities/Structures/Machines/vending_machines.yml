@@ -877,11 +877,10 @@
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
-    offState: off-real
+    offState: off
     brokenState: broken
-    normalState: off
+    normalState: normal-unshaded
     denyState: deny-unshaded
-    screenState: normal-unshaded
     loopDeny: false
   - type: Advertise
     pack: SmartFridgeAds
@@ -889,13 +888,10 @@
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/smartfridge.rsi
     layers:
-    - state: off-real
+    - state: off
       map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: off-real
+    - state: off
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
