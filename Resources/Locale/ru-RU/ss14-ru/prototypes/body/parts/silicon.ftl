@@ -10,3 +10,5 @@ ent-RightLegBorg = правая нога киборга
     .desc = { ent-PartSilicon.desc }
 ent-BaseBorgHead = голова киборга
     .desc = { ent-PartSilicon.desc }
+ent-BaseBorgTorso = тело киборга
+    .desc = { ent-PartSilicon.desc }
