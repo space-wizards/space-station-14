@@ -20,7 +20,10 @@ public abstract class SharedChatSystem : EntitySystem
     public const char AdminPrefix = ']';
     public const char WhisperPrefix = ',';
     public const char DefaultChannelKey = 'h';
+
+    [ValidatePrototypeId<RadioChannelPrototype>]
     public const string CommonChannel = "Common";
+
     public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;

@@ -1,149 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Removed chemistry from nukie planet., type: Remove}
-  id: 4059
-  time: '2023-06-21T00:50:35.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed a bug that allowed observers/ghosts to respawn by disconnecting
-      and reconnecting., type: Fix}
-  id: 4060
-  time: '2023-06-21T01:04:08.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: Fixed usernames not showing up in the round end window., type: Fix}
-  id: 4061
-  time: '2023-06-21T01:18:16.0000000+00:00'
-- author: Whisper
-  changes:
-  - {message: The rate of which bleeding wounds passively clot has been doubled. (0.5u
-      to 1.0u), type: Tweak}
-  - {message: Max bleed rate has been halved (20u to 10u), type: Tweak}
-  - {message: blood puddles will always be created at a minimum of 1u of blood lost.
-      (5u to 1u), type: Tweak}
-  - {message: 'The refresh rate for all bloodstream effects (Losing blood, Regaining
-      blood, taking damage, Wound clotting) has been reduced to 3 seconds. This will
-      mean players will both bleed faster but also recover faster.', type: Tweak}
-  id: 4062
-  time: '2023-06-21T14:30:20.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Armor has been removed from jumpsuits., type: Tweak}
-  id: 4063
-  time: '2023-06-21T14:30:31.0000000+00:00'
-- author: liltenhead
-  changes:
-  - {message: Added Bicaridine pills to brute medkit., type: Add}
-  - {message: Added Bicaridine syringe to combat medkit., type: Add}
-  id: 4064
-  time: '2023-06-21T20:35:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed many PDAs not having the correct colors in their UIs., type: Fix}
-  id: 4065
-  time: '2023-06-21T21:45:17.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed research console ui not updating when technology is unlocked on
-      another console., type: Fix}
-  id: 4066
-  time: '2023-06-22T00:59:58.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds an Energy Shield to the Syndicate uplink for 6 TC., type: Add}
-  id: 4067
-  time: '2023-06-22T04:08:59.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added cargo bounties. Simply fill up a crate with the specified items,
-      attach the manifest label, and sell it.', type: Add}
-  id: 4068
-  time: '2023-06-22T11:49:34.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Fixed dwarf accent word typo from 'anatag' to 'antag', type: Fix}
-  id: 4069
-  time: '2023-06-22T19:48:38.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Added 22 new bounties for cargo., type: Add}
-  id: 4070
-  time: '2023-06-23T04:31:53.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Uranium spears now have melee sounds, type: Fix}
-  id: 4071
-  time: '2023-06-23T12:23:09.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Mining drills are now weldable and have increased structural damage,
-    type: Add}
-  id: 4072
-  time: '2023-06-23T12:23:21.0000000+00:00'
-- author: FluidRock
-  changes:
-  - {message: Nuclear Operative Zombie bundle now contains Incendiary shotgun shells
-      instead of Flare shells., type: Tweak}
-  id: 4073
-  time: '2023-06-23T12:24:03.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed some jumpskirts gender masks, type: Fix}
-  id: 4074
-  time: '2023-06-23T12:24:38.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: Nanotrasen has installed REAL wheels on the janitorial trolleys after
-      complaints of fake wheels leaving marks on the tiling. They should be a bit
-      easier to move now., type: Tweak}
-  id: 4075
-  time: '2023-06-23T17:49:20.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Resprited the node scanner., type: Tweak}
-  id: 4076
-  time: '2023-06-24T04:20:27.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: QM is now officially supervised by the Captain., type: Tweak}
-  - {message: The Cargo department is no longer supervised by the HoP., type: Tweak}
-  id: 4077
-  time: '2023-06-24T05:32:15.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Added Artifexium, a chemical that can activate artifacts when sprayed
-      on their surface. Get it by grinding artifact fragments.', type: Add}
-  id: 4078
-  time: '2023-06-24T12:00:42.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Adds Amanita fly agaric seeds to the Vendomat of seeds after EMAG.,
-    type: Add}
-  id: 4079
-  time: '2023-06-24T12:03:09.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Chemist PDA's can now analyze patient health., type: Tweak}
-  id: 4080
-  time: '2023-06-24T12:11:48.0000000+00:00'
-- author: '0x6273'
-  changes:
-  - {message: 'Hotplates no longer use itemslots, which means you can see and interact
-      with the beaker while it''s being heated.', type: Tweak}
-  id: 4081
-  time: '2023-06-24T18:09:24.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed cap gun ammo to look less like real bullets, type: Tweak}
-  id: 4082
-  time: '2023-06-24T19:56:42.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: As part of a bounty program - whatever insulated gloves we could find
-      on Origin we have handed over to cargo., type: Remove}
-  id: 4083
-  time: '2023-06-24T19:57:56.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Changed bluespace and cryostasis beakers to not be weird when thrown,
@@ -3019,3 +2874,147 @@ Entries:
       making sure that steel tiles do indeed take steel to create.', type: Fix}
   id: 4558
   time: '2023-08-13T12:43:01.0000000+00:00'
+- author: FillerVK
+  changes:
+  - {message: Added cocoa cultivation, type: Add}
+  - {message: Added a recipe for creating a chocolate bar, type: Add}
+  id: 4559
+  time: '2023-08-13T14:35:58.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Player icons in the end-of-round summary window should now display properly.,
+    type: Fix}
+  id: 4560
+  time: '2023-08-13T16:55:05.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The DNA scrambler no longer has the power of magically transforming
+      various creatures into humanoids., type: Fix}
+  id: 4561
+  time: '2023-08-13T16:56:21.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: fixed pressure tanks to not show scientific notation., type: Fix}
+  id: 4562
+  time: '2023-08-13T16:56:30.0000000+00:00'
+- author: Cripes
+  changes:
+  - {message: 'Paper stamps have been heavily tweaked with new looks, now each paper
+      will lay out the stamps slightly differently and with an overlap.', type: Tweak}
+  id: 4563
+  time: '2023-08-13T18:28:10.0000000+00:00'
+- author: PixelTheKermit
+  changes:
+  - {message: Arachnid zombies no longer get functional hands., type: Fix}
+  id: 4564
+  time: '2023-08-13T19:51:21.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: 'Fixed a bug causing inventory slots to sometimes ignore interactions
+      (e.g., not opening the context menu).', type: Fix}
+  id: 4565
+  time: '2023-08-13T21:55:18.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix "remove single hand" admin smite having gone missing., type: Fix}
+  - {message: Fix "remove hands" admin smite popup message., type: Fix}
+  id: 4566
+  time: '2023-08-13T22:50:58.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: AHelps now show a typing indicator to admins., type: Tweak}
+  id: 4567
+  time: '2023-08-13T23:03:17.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
+  id: 4568
+  time: '2023-08-13T23:54:52.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed new players added to admin logs defaulting to selected, even
+      when not all players are selected.', type: Fix}
+  id: 4569
+  time: '2023-08-14T01:53:48.0000000+00:00'
+- author: Vordenburg
+  changes:
+  - {message: Substations produce hot CO2 when destroyed now., type: Tweak}
+  id: 4570
+  time: '2023-08-14T01:55:06.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Being turned into a cyborg or zombie now counts as a being dead for
+      survival and kill objectives., type: Fix}
+  - {message: Kill objectives no longer reveal a character's true name at all times.,
+    type: Fix}
+  id: 4571
+  time: '2023-08-14T03:34:19.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed the RPED sound effect cutting off at the end., type: Fix}
+  id: 4572
+  time: '2023-08-14T03:36:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin notes now require a severity to be set before saving., type: Tweak}
+  id: 4573
+  time: '2023-08-14T03:37:38.0000000+00:00'
+- author: Vasilis
+  changes:
+  - {message: 'The nuke detonation sound plays to all crew members again, no longer
+      will you have to sit in silence before your demise', type: Fix}
+  id: 4574
+  time: '2023-08-14T03:55:50.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
+      most lost functionality.', type: Fix}
+  id: 4575
+  time: '2023-08-14T04:03:20.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: Fixed an issue which was preventing airlock safeguards from being installed
+      on glass airlocks, type: Fix}
+  id: 4576
+  time: '2023-08-14T06:42:02.0000000+00:00'
+- author: kseandi
+  changes:
+  - {message: 'The new airlock painters are so accurate that you can use them to paint
+      pipes. Because of this, Nanotrasen decided to rename them to "Spray painters".',
+    type: Tweak}
+  id: 4577
+  time: '2023-08-14T12:06:21.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: Centcom will now sell Cargo gas canisters at a vastly reduced (and consistent!)
+      price after realizing the station has infinite gasses anyway., type: Tweak}
+  id: 4578
+  time: '2023-08-14T13:56:07.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Asteroid rocks and secret doors should look less weird in certain scenarios,
+    type: Fix}
+  id: 4579
+  time: '2023-08-14T15:59:14.0000000+00:00'
+- author: LightVillet
+  changes:
+  - {message: Fixed hand labeler recipe's name, type: Fix}
+  id: 4580
+  time: '2023-08-14T16:04:22.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
+  id: 4581
+  time: '2023-08-14T16:04:42.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
+      now perform wide melee attacks again. Most notably this fixes the borg mining
+      drill.', type: Fix}
+  id: 4582
+  time: '2023-08-14T16:10:16.0000000+00:00'
+- author: Titian3
+  changes:
+  - {message: Fixed Admin watchlists and messages., type: Fix}
+  id: 4583
+  time: '2023-08-14T19:50:33.0000000+00:00'
