@@ -54,14 +54,14 @@ namespace Content.Shared.Loadouts
         /// <summary>
         ///     Don't apply this loadout to entities this whitelist IS NOT valid for.
         /// </summary>
-        [DataField("whitelist")]
-        public EntityWhitelist? Whitelist;
+        [DataField("entityWhitelist")]
+        public EntityWhitelist? EntityWhitelist;
 
         /// <summary>
         ///     Don't apply this loadout to entities this whitelist IS valid for. (hence, a blacklist)
         /// </summary>
-        [DataField("blacklist")]
-        public EntityWhitelist? Blacklist;
+        [DataField("entityBlacklist")]
+        public EntityWhitelist? EntityBlacklist;
 
         /// <summary>
         ///     Need one of these jobs to give loadout.

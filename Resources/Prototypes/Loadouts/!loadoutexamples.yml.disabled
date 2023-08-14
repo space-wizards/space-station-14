@@ -33,7 +33,7 @@
   name: Purple Coat
   description: A nice purple coat
   cost: 3
-  whitelist:
+  entityWhitelist:
     components:
       - Nearsighted # Requires the person to have the Nearsighted Component (trait)
   item: ClothingOuterPurpleCoat
@@ -43,7 +43,7 @@
   name: Purple Coat
   description: A nice purple coat
   cost: 4
-  whitelist:
+  entityWhitelist:
     tags:
       - DroneUsable # This is a bad example and will always fail, as no mob should be given this tag
   item: ClothingOuterPurpleCoat

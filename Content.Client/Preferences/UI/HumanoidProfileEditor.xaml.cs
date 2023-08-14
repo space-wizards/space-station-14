@@ -1591,38 +1591,44 @@ namespace Content.Client.Preferences.UI
                 if (loadout.Description is { } desc)
                 {
                     tooltip += $"{Loc.GetString(desc)}";
-                    if (loadout.Whitelist != null || loadout.JobWhitelist != null || loadout.Blacklist != null || loadout.JobBlacklist != null) tooltip += "\n";
+                    if (loadout.EntityWhitelist != null || loadout.JobWhitelist != null || loadout.EntityBlacklist != null || loadout.JobBlacklist != null) tooltip += "\n";
                 }
 
-                if (loadout.Whitelist != null || loadout.JobWhitelist != null)
+                if (loadout.EntityWhitelist != null || loadout.JobWhitelist != null)
                 {
                     tooltip += "Whitelist:";
-                    if (loadout.Whitelist?.Components != null)
-                        foreach (var require in loadout.Whitelist.Components)
+                    if (loadout.EntityWhitelist?.Components != null)
+                        foreach (var require in loadout.EntityWhitelist.Components)
                             tooltip += $"\n - {require} (Component)";
-                    if (loadout.Whitelist?.Tags != null)
-                        foreach (var require in loadout.Whitelist.Tags)
+                    if (loadout.EntityWhitelist?.Tags != null)
+                        foreach (var require in loadout.EntityWhitelist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Whitelist?.RequireAll == true)
-                        tooltip += $"\n Require All: {loadout.Whitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
+                    if (loadout.EntityWhitelist?.RequireAll == true)
+                        tooltip += $"\n Require All: {loadout.EntityWhitelist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobWhitelist != null)
                         foreach (var require in loadout.JobWhitelist)
                             tooltip += $"\n - {require} (Job)";
+                    if (loadout.SpeciesWhitelist != null)
+                        foreach (var require in loadout.SpeciesWhitelist)
+                            tooltip += $"\n - {require} (Species)";
                 }
-                if (loadout.Blacklist != null || loadout.JobBlacklist != null)
+                if (loadout.EntityBlacklist != null || loadout.JobBlacklist != null)
                 {
                     tooltip += "Blacklist:";
-                    if (loadout.Blacklist?.Components != null)
-                        foreach (var require in loadout.Blacklist.Components)
+                    if (loadout.EntityBlacklist?.Components != null)
+                        foreach (var require in loadout.EntityBlacklist.Components)
                             tooltip += $"\n - {require} (Component)";
-                    if (loadout.Blacklist?.Tags != null)
-                        foreach (var require in loadout.Blacklist.Tags)
+                    if (loadout.EntityBlacklist?.Tags != null)
+                        foreach (var require in loadout.EntityBlacklist.Tags)
                             tooltip += $"\n - {require} (Tag)";
-                    if (loadout.Blacklist?.RequireAll == true)
-                        tooltip += $"\n Require All: {loadout.Blacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
+                    if (loadout.EntityBlacklist?.RequireAll == true)
+                        tooltip += $"\n Require All: {loadout.EntityBlacklist.RequireAll}"; // This comes first because job whitelist has no effect on requireall
                     if (loadout.JobBlacklist != null)
                         foreach (var require in loadout.JobBlacklist)
                             tooltip += $"\n - {require} (Job)";
+                    if (loadout.SpeciesBlacklist != null)
+                        foreach (var require in loadout.SpeciesBlacklist)
+                            tooltip += $"\n - {require} (Species)";
                 }
 
                 if (tooltip != "")
