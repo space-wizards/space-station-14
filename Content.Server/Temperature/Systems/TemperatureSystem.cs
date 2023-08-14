@@ -66,10 +66,11 @@ namespace Content.Server.Temperature.Systems
             {
                 MetaDataComponent? metaData = null;
 
-                if (Deleted(comp.Owner, metaData) || Paused(comp.Owner, metaData))
+                var uid = comp.Owner;
+                if (Deleted(uid, metaData) || Paused(uid, metaData))
                     continue;
 
-                ChangeDamage(comp.Owner, comp);
+                ChangeDamage(uid, comp);
             }
 
             ShouldUpdateDamage.Clear();
@@ -174,7 +175,7 @@ namespace Content.Server.Temperature.Systems
 
         private void ChangeDamage(EntityUid uid, TemperatureComponent temperature)
         {
-            if (!EntityManager.HasComponent<DamageableComponent>(uid))
+            if (!HasComp<DamageableComponent>(uid))
                 return;
 
             // See this link for where the scaling func comes from:
@@ -192,8 +193,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _adminLogger.Add(LogType.Temperature,
-                        $"{ToPrettyString(temperature.Owner):entity} started taking high temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking high temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -205,8 +205,7 @@ namespace Content.Server.Temperature.Systems
             {
                 if (!temperature.TakingDamage)
                 {
-                    _adminLogger.Add(LogType.Temperature,
-                        $"{ToPrettyString(temperature.Owner):entity} started taking low temperature damage");
+                    _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} started taking low temperature damage");
                     temperature.TakingDamage = true;
                 }
 
@@ -217,8 +216,7 @@ namespace Content.Server.Temperature.Systems
             }
             else if (temperature.TakingDamage)
             {
-                _adminLogger.Add(LogType.Temperature,
-                    $"{ToPrettyString(temperature.Owner):entity} stopped taking temperature damage");
+                _adminLogger.Add(LogType.Temperature, $"{ToPrettyString(uid):entity} stopped taking temperature damage");
                 temperature.TakingDamage = false;
             }
         }
