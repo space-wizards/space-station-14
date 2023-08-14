@@ -32,10 +32,8 @@ using Content.Shared.Inventory;
 using Robust.Shared.Map;
 using System.Numerics;
 using Content.Server.Storage.EntitySystems;
-using Content.Server.Construction.Completions;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
-using TerraFX.Interop.Windows;
 
 namespace Content.Server.GameTicking.Rules;
 

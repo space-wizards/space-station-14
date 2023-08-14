@@ -1,10 +1,8 @@
-using Content.Server.Mind;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Server.Popups;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Database;
-using TerraFX.Interop.Windows;
 using Content.Server.Administration.Logs;
 
 namespace Content.Server.Mindshield;
