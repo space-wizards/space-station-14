@@ -28,7 +28,8 @@
           Quantity: 30
   - type: Tag
     tags:
-      - ClothMade
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWinterCoat

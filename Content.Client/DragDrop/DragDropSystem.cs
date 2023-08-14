@@ -20,7 +20,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Linq;
 using System.Numerics;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
@@ -57,7 +56,10 @@ public sealed class DragDropSystem : SharedDragDropSystem
     // mousedown event so it can be treated like a regular click
     private const float MaxMouseDownTimeForReplayingClick = 0.85f;
 
+    [ValidatePrototypeId<ShaderPrototype>]
     private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
+
+    [ValidatePrototypeId<ShaderPrototype>]
     private const string ShaderDropTargetOutOfRange = "SelectionOutline";
 
     /// <summary>

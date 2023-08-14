@@ -1,5 +1,6 @@
 using Content.Server.Fluids.Components;
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Fluids.Components;
 
@@ -9,6 +10,7 @@ public sealed partial class PuddleSystem
 {
     private static readonly TimeSpan EvaporationCooldown = TimeSpan.FromSeconds(1);
 
+    [ValidatePrototypeId<ReagentPrototype>]
     public const string EvaporationReagent = "Water";
 
     private void OnEvaporationMapInit(EntityUid uid, EvaporationComponent component, MapInitEvent args)

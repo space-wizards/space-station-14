@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Fluids.Components;
@@ -14,6 +15,8 @@ namespace Content.Shared.Fluids.Components;
 public sealed class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
+
+    [ValidatePrototypeId<TagPrototype>]
     public const string PlungerTag = "Plunger";
 
     [DataField("accumulator")]

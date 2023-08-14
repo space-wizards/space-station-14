@@ -46,7 +46,6 @@ public sealed class AHelpUIController: UIController, IOnStateChanged<GameplaySta
 
     public void OnStateEntered(GameplayState state)
     {
-        DebugTools.Assert(UIHelper == null);
         _adminManager.AdminStatusUpdated += OnAdminStatusUpdated;
 
         CommandBinds.Builder
