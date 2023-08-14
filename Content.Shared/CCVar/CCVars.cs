@@ -1245,6 +1245,13 @@ namespace Content.Shared.CCVar
             CVarDef.Create("shuttle.emergency_transit_time_max", 180f, CVar.SERVERONLY);
 
         /// <summary>
+        /// The time in seconds that the server should wait after the shuttle arrives at centcomm to restart the round.
+        /// Defaults to 2 minutes.
+        /// </summary>
+        public static readonly CVarDef<float> EmergencyShuttleRoundRestartTime =
+            CVarDef.Create("shuttle.round_restart_time", 120f, CVar.SERVERONLY);
+
+        /// <summary>
         /// Whether the emergency shuttle is enabled or should the round just end.
         /// </summary>
         public static readonly CVarDef<bool> EmergencyShuttleEnabled =
