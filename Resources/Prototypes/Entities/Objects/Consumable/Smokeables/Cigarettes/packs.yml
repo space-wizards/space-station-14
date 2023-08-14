@@ -132,7 +132,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
-      - type: StorageFill
+  - type: StorageFill
     contents:
     - id: CigaretteMixed
       amount: 5

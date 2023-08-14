@@ -23,6 +23,30 @@
     node: cigarette
 
 - type: entity
+  id: SoakedCigarette
+  parent: BaseCigar
+  name: cigarette
+  description: A roll of tobacco and nicotine soaked in some chemical.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    state: unlit-icon
+  - type: Tag
+    tags:
+      - Cigarette
+      - Trash
+  - type: SpaceGarbage
+  - type: Clothing
+    sprite: Objects/Consumable/Smokeables/Cigarettes/cigarette.rsi
+    slots: [ mask ]
+    equippedPrefix: unlit
+  - type: Item
+    size: 1
+  - type: Construction
+    graph: smokeableCigarette
+    node: cigarette
+
+- type: entity
   id: CigaretteSpent
   parent: Cigarette
   suffix: spent
@@ -55,8 +79,8 @@
 - type: entity
   id: CigaretteMixed
   suffix: mixed
-  parent: Cigarette
-  name: cigarette
+  parent: SoakedCigarette
+  name: Omnizine laced cigarette
   components:
   - type: SolutionContainerManager
     solutions:
