@@ -184,6 +184,6 @@
     sprite: Objects/Fun/figurines.rsi
     state: fig_box
   product: CrateFunMysteryFigurines
-  cost: 4500
+  cost: 4000
   category: Fun
   group: market
