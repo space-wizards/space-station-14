@@ -41,7 +41,6 @@ public sealed class CommandRunTest : ToolshedTest
         await Server.WaitAssertion(() =>
         {
             ParseCommand("ent 1");
-            ParseCommand("ent c1");
 
             ExpectError<InvalidEntityUid>();
             ParseCommand("ent foodigity");

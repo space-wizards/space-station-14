@@ -202,7 +202,7 @@ public abstract partial class InteractionTest
 
         // Check player got attached.
         await RunTicks(5);
-        Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
+        Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(SEntMan.ToNetEntity(Player)));
 
         // Delete old player entity.
         await Server.WaitPost(() =>
@@ -228,7 +228,7 @@ public abstract partial class InteractionTest
         await PoolManager.ReallyBeIdle(PairTracker.Pair, 5);
         Assert.Multiple(() =>
         {
-            Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
+            Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(SEntMan.ToNetEntity(Player)));
             Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
         });
     }

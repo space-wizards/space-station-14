@@ -274,7 +274,7 @@ public abstract partial class InteractionTest
         // (e.g., servers attempt to assemble construction examine hints).
         if (Target != null)
         {
-            await Client.WaitPost(() => ExamineSys.DoExamine(Target.Value));
+            await Client.WaitPost(() => ExamineSys.DoExamine(CEntMan.ToEntity(SEntMan.ToNetEntity(Target.Value))));
         }
 
         await PlaceInHands(entity);
@@ -286,7 +286,9 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
     {
-        if (Target == null || !CEntMan.IsClientSide(Target.Value))
+        var clientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(Target));
+
+        if (clientTarget == null || !CEntMan.IsClientSide(clientTarget.Value))
         {
             await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
             await RunTicks(1);
@@ -294,7 +296,7 @@ public abstract partial class InteractionTest
         else
         {
             // The entity is client-side, so attempt to start construction
-            var ghost = CEntMan.GetComponent<ConstructionGhostComponent>(Target.Value);
+            var ghost = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget.Value);
             await Client.WaitPost(() => CConSys.TryStartConstruction(ghost.GhostId));
             await RunTicks(5);
         }
@@ -389,7 +391,8 @@ public abstract partial class InteractionTest
         EntityUid newTarget = default;
         if (Target == null)
             return;
-        var target = Target.Value;
+
+        var target = CEntMan.ToEntity(SEntMan.ToNetEntity(Target.Value));
 
         await RunTicks(5);
 
@@ -416,7 +419,7 @@ public abstract partial class InteractionTest
             Target = newTarget;
         }
 
-        if (Target != target)
+        if (Target != SEntMan.ToEntity(CEntMan.ToNetEntity(target)))
             await CheckTargetChange(shouldSucceed);
     }
 
