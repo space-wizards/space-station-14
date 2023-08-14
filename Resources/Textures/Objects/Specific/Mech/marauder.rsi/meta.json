@@ -1,0 +1,28 @@
+{
+    "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a, hamtr made by brainfood1183 (github)",
+    "license" : "CC-BY-SA-3.0",
+    "version": 1,
+    "size": {
+      "x": 64,
+      "y": 64
+    },
+    "states": [
+        {
+          "name": "marauder",
+          "directions": 4
+        },
+        {
+          "name": "marauder-open",
+          "delays": [
+            [
+              0.5,
+              0.1,
+              0.2
+            ]
+          ]
+        },
+        {
+          "name": "marauder-broken"
+        }
+    ]
+}

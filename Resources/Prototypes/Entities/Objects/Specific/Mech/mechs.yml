@@ -251,10 +251,9 @@
   id: MechMarauder
   components:
   - type: Sprite
-    scale: 1.5, 1.5
     drawdepth: Mobs
     noRot: true
-    sprite: Objects/Specific/Mech/mecha.rsi
+    sprite: Objects/Specific/Mech/marauder.rsi
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: marauder
@@ -264,6 +263,7 @@
     brokenState: marauder-broken
     maxIntegrity: 500
     mechToPilotDamageMultiplier: 0.35
+  - type: Reflect # Chance to reflect bullets/lasers
   - type: MeleeWeapon
     hidden: true
     attackRate: 0.55
@@ -277,3 +277,13 @@
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.0
     baseSprintSpeed: 1.5
+
+- type: entity
+  parent: MechMarauder
+  id: MechMarauderBattery
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      mech-battery-slot:
+      - PowerCellHigh
