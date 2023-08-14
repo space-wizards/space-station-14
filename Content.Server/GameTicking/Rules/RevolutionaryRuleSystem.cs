@@ -33,6 +33,9 @@ using Robust.Shared.Map;
 using System.Numerics;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Construction.Completions;
+using Content.Server.Administration.Logs;
+using Content.Shared.Database;
+using TerraFX.Interop.Windows;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -41,6 +44,7 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleComponent>
 {
+    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly IServerPreferencesManager _prefs = default!;
@@ -313,6 +317,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             _npcFaction.AddFaction(ev.Target, "Revolutionary");
             EnsureComp<RevolutionaryComponent>(ev.Target);
             _sharedStun.TryParalyze(ev.Target, stunTime, true);
+            if (ev.User != null)
+            {
+                _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
+            }
 
             var mind = _mindSystem.GetMind(ev.Target);
             if (mind != null && mind.OwnedEntity != null)
@@ -388,6 +396,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                         _sharedStun.TryParalyze(id, stunTime, true);
                         RemCompDeferred<RevolutionaryComponent>(id);
                         _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), id);
+                        _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(id)} was deconverted due to all Head Revolutionaries dying.");
                     }
                 }
             }

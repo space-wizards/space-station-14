@@ -102,7 +102,7 @@ public sealed partial class AdminVerbSystem
         {
             Text = Loc.GetString("head-rev-admin"),
             Category = VerbCategory.Antag,
-            Icon = null,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
             Act = () =>
             {
                 if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
