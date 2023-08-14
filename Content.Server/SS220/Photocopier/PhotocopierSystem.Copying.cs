@@ -1,4 +1,4 @@
-﻿﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Paper;
@@ -23,7 +23,7 @@ public sealed partial class PhotocopierSystem
         var components = _entityManager.GetComponents(uid);
         foreach (var iComponent in components)
         {
-            if(iComponent is not IPhotocopyableComponent copyableComponent)
+            if (iComponent is not IPhotocopyableComponent copyableComponent)
                 continue;
 
             var componentData = copyableComponent.GetPhotocopiedData();
@@ -72,10 +72,10 @@ public sealed partial class PhotocopierSystem
             if (iComponent is not Component component)
                 continue;
 
-            if(component is not IPhotocopyableComponent copyableComponent)
+            if (component is not IPhotocopyableComponent copyableComponent)
                 continue;
 
-            if(!dataToCopy.TryGetValue(copyableComponent.GetType(), out var componentData))
+            if (!dataToCopy.TryGetValue(copyableComponent.GetType(), out var componentData))
                 continue;
 
             componentData.RestoreFromData(uid, component);
