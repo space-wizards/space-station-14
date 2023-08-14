@@ -33,6 +33,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
+using System.Linq;
 
 namespace Content.Server.Zombies
 {
@@ -244,18 +245,10 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var hands))
+            if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                foreach (var hand in _hands.EnumerateHands(target))
-                {
-                    _hands.SetActiveHand(target, hand, hands);
-                    _hands.DoDrop(target, hand, handsComp: hands);
-                    _hands.RemoveHand(target, hand.Name, hands);
-                }
-
-                RemComp(target, hands);
+                _hands.RemoveHands(target);
+                RemComp(target, handsComp);
             }
 
             // No longer waiting to become a zombie:
