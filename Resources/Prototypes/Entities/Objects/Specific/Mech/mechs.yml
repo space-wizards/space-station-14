@@ -212,6 +212,17 @@
     layers:
     - map: [ "enum.MechVisualLayers.Base" ]
       state: vim
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.15
+        density: 80
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: FootstepModifier
     footstepSoundCollection:
       path: /Audio/Mecha/mechmove03.ogg
@@ -228,6 +239,13 @@
     pilotWhitelist:
       tags:
       - VimPilot
+  - type: MeleeWeapon
+    hidden: true
+    attackRate: 0.8
+    damage:
+      types:
+        Blunt: 10 #thwack
+        Structural: 2
   - type: MovementSpeedModifier
     baseWalkSpeed: 2.25
     baseSprintSpeed: 3.6

@@ -75,3 +75,5 @@ seeds-watermelon-name = watermelon
 seeds-watermelon-display-name = watermelon plant
 seeds-grape-name = grape
 seeds-grape-display-name = grape plant
+seeds-cocoa-name = cocoa
+seeds-cocoa-display-name = cocoa plant

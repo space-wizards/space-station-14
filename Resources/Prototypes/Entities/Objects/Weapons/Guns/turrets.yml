@@ -156,7 +156,6 @@
     - type: BallisticAmmoProvider
       proto: CartridgePistol
       capacity: 50
-      cycleable: false
     - type: Construction
       deconstructionTarget: null
       graph: WeaponTurretSyndicateDisposable
