@@ -21,4 +21,3 @@ ent-FunWaterGuns = { ent-CrateFunWaterGuns }
 
 ent-FunParty = { ent-CrateFunParty }
     .desc = { ent-CrateFunParty.desc }
-
