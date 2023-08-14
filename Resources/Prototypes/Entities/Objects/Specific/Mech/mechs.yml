@@ -6,6 +6,12 @@
   - type: MobMover
   - type: Mech
   - type: MechAir
+  - type: MechAirFilter
+  - type: MechAirIntake
+  # for intake and filter to work
+  - type: AtmosDevice
+    requireAnchored: false
+    joinSystem: true
   - type: DoAfter
   - type: Repairable
     fuelCost: 25
