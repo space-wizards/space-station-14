@@ -81,7 +81,7 @@
 - type: radioChannel
   id: Binary
   name: chat-radio-binary
-  keycode: 'b'
+  keycode: 'д' # Corvax-Localization
   frequency: 1001
   color: "#2ed2fd"
   # long range since otherwise it'd defeat the point of a handheld radio independent of telecomms

@@ -6,6 +6,7 @@ nuke-component-announcement-send-codes = Внимание! Запрошенны�
 nuke-component-doafter-warning = Вы начинаете перебирать провода и кнопки, в попытке обезвредить ядерную бомбу. Это может занять некоторое время.
 nuke-user-interface-title = Ядерная боеголовка
 nuke-user-interface-arm-button = ВЗВЕСТИ
+nuke-user-interface-disarm-button = ОБЕЗВРЕДИТЬ
 nuke-user-interface-anchor-button = ЗАКРЕПИТЬ
 nuke-user-interface-eject-button = ИЗВЛЕЧЬ
 

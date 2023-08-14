@@ -96,8 +96,6 @@ namespace Content.Server.DeviceLinking.Systems
                 _signalSystem.InvokePort(uid, door.OutOpen, data);
             }
             else if (args.State == DoorState.Open
-                     || args.State == DoorState.Opening
-                     || args.State == DoorState.Closing
                      || args.State == DoorState.Emagging)
             {
                 data[DeviceNetworkConstants.LogicState] = SignalState.High;
