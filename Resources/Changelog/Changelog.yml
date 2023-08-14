@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Changed cap gun ammo to look less like real bullets, type: Tweak}
-  id: 4082
-  time: '2023-06-24T19:56:42.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: As part of a bounty program - whatever insulated gloves we could find
@@ -3017,3 +3012,10 @@ Entries:
   - {message: 'Bike horn implant now has a short cooldown, sorry', type: Fix}
   id: 4581
   time: '2023-08-14T16:04:42.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Admin ghosts, robots, and other soulless monsters that never tire can
+      now perform wide melee attacks again. Most notably this fixes the borg mining
+      drill.', type: Fix}
+  id: 4582
+  time: '2023-08-14T16:10:16.0000000+00:00'
