@@ -374,7 +374,7 @@
   name: reagent-name-helium4
   desc: reagent-desc-helium4
   physicalDesc: reagent-physical-desc-gaseous
-  flavor: light
+  flavor: cold
   color: "#ffe900"
   boilingPoint: -268.93
   meltingPoint: -273.13 # helium doesn't freeze
