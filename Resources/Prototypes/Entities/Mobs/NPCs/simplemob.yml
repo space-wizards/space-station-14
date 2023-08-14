@@ -91,6 +91,13 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive

@@ -4,6 +4,7 @@ using Content.Shared.Inventory;
 using Content.Shared.PDA;
 using Content.Server.Store.Components;
 using Content.Shared.FixedPoint;
+using Content.Shared.Store;
 
 namespace Content.Server.Traitor.Uplink
 {
@@ -13,6 +14,7 @@ namespace Content.Server.Traitor.Uplink
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly StoreSystem _store = default!;
 
+        [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";
 
         /// <summary>

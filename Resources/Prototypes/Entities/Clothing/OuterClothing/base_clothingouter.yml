@@ -75,6 +75,7 @@
   - type: Tag
     tags:
     - Hardsuit
+    - WhitelistChameleon
 
 - type: entity
   abstract: true

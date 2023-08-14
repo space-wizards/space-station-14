@@ -84,6 +84,8 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
+    - key: enum.SiliconLawsUiKey.Key
+      type: SiliconLawBoundUserInterface
   #- type: GhostRole
   #  makeSentient: true
   #  name: Maintenance Drone
@@ -94,6 +96,12 @@
   #   2. You may not harm any being, regardless of intent or circumstance.
   #   3. Your goals are to build, maintain, repair, improve, and power to the best of your abilities, You must never actively work against these goals.
   #- type: GhostTakeoverAvailable
+  - type: SiliconLawBound
+  - type: SiliconLawProvider
+    laws:
+    - Drone1
+    - Drone2
+    - Drone3
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
@@ -233,3 +241,17 @@
     tags:
       - FootstepSound
 
+- type: entity
+  id: PlayerBorgGeneric
+  parent: BorgChassisGeneric
+  noSpawn: true
+  components:
+  - type: BorgChassis
+    startingBrain: MMIFilled
+    startingModules:
+    - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium

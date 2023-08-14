@@ -28,6 +28,8 @@
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/pistol.ogg
   - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/pistol_cock.ogg
   - type: ItemSlots
     slots:
       gun_magazine:
@@ -108,6 +110,8 @@
       map: ["enum.GunVisualLayers.Mag"]
   - type: Clothing
     sprite: Objects/Weapons/Guns/Pistols/cobra.rsi
+  - type: ChamberMagazineAmmoProvider
+    boltClosed: null
   - type: Gun
     fireRate: 4
     soundGunshot:

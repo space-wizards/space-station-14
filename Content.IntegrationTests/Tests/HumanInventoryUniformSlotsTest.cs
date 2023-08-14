@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -66,6 +67,7 @@ namespace Content.IntegrationTests.Tests
             EntityUid pocketItem = default;
 
             InventorySystem invSystem = default!;
+            var mapMan = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
@@ -126,6 +128,8 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(!invSystem.TryGetSlotEntity(human, "id", out _));
                     Assert.That(!invSystem.TryGetSlotEntity(human, "pocket1", out _));
                 });
+
+                mapMan.DeleteMap(testMap.MapId);
             });
 
             await pairTracker.CleanReturnAsync();

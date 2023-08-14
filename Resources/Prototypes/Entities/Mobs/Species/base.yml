@@ -198,6 +198,13 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
