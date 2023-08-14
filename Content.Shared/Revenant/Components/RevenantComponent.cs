@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.FixedPoint;
 using Content.Shared.Store;
 using Robust.Shared.GameStates;
@@ -65,7 +66,7 @@ public sealed class RevenantComponent : Component
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
     [DataField("harvestDebuffs")]
-    public Vector2 HarvestDebuffs = (5, 5);
+    public Vector2 HarvestDebuffs = new(5, 5);
 
     /// <summary>
     /// The amount that is given to the revenant each time it's max essence is upgraded.
@@ -89,7 +90,7 @@ public sealed class RevenantComponent : Component
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
     [DataField("defileDebuffs")]
-    public Vector2 DefileDebuffs = (1, 4);
+    public Vector2 DefileDebuffs = new(1, 4);
 
     /// <summary>
     /// The radius around the user that this ability affects
@@ -124,7 +125,7 @@ public sealed class RevenantComponent : Component
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
     [DataField("overloadDebuffs")]
-    public Vector2 OverloadDebuffs = (3, 8);
+    public Vector2 OverloadDebuffs = new(3, 8);
 
     /// <summary>
     /// The radius around the user that this ability affects
@@ -152,7 +153,7 @@ public sealed class RevenantComponent : Component
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
     [DataField("blightDebuffs")]
-    public Vector2 BlightDebuffs = (2, 5);
+    public Vector2 BlightDebuffs = new(2, 5);
 
     /// <summary>
     /// The radius around the user that this ability affects
@@ -174,7 +175,7 @@ public sealed class RevenantComponent : Component
     /// the second corresponds to the amount of time the entity is made solid.
     /// </summary>
     [DataField("malfunctionDebuffs")]
-    public Vector2 MalfunctionDebuffs = (2, 8);
+    public Vector2 MalfunctionDebuffs = new(2, 8);
 
     /// <summary>
     /// The radius around the user that this ability affects

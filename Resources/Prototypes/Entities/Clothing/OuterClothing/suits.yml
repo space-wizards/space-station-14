@@ -26,23 +26,52 @@
   parent: ClothingOuterBaseLarge
   id: ClothingOuterSuitFire
   name: fire suit
-  description: A suit that helps protect against fire and heat.
+  description: A suit that helps protect against hazardous temperatures.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/fire.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/fire.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+  - type: TemperatureProtection
+    coefficient: 0.005
   - type: Armor
     modifiers:
       coefficients:
         Slash: 0.9
-        Heat: 0.5
+        Heat: 0.3
+        Cold: 0.2
   - type: ClothingSpeedModifier
-    walkModifier: 0.7
+    walkModifier: 0.8
     sprintModifier: 0.7
-  - type: TemperatureProtection
-    coefficient: 0.01
   - type: GroupExamine
+    
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterSuitAtmosFire
+  name: atmos fire suit
+  description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
+  components:
+    - type: Sprite
+      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    - type: Clothing
+      sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
+    - type: PressureProtection
+      highPressureMultiplier: 0.02
+      lowPressureMultiplier: 1000
+    - type: TemperatureProtection
+      coefficient: 0.001
+    - type: Armor
+      modifiers:
+        coefficients:
+          Slash: 0.9
+          Heat: 0.3
+          Cold: 0.2
+    - type: ClothingSpeedModifier
+      walkModifier: 0.8
+      sprintModifier: 0.8
+    - type: GroupExamine
 
 - type: entity
   parent: [ClothingOuterBaseLarge, GeigerCounterClothing]
@@ -111,28 +140,3 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
-
-- type: entity
-  parent: ClothingOuterBaseLarge
-  id: ClothingOuterSuitAtmosFire
-  name: atmos fire suit
-  description: An expensive firesuit that protects against even the most deadly of station fires. Designed to protect even if the wearer is set aflame.
-  components:
-  - type: Sprite
-    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-  - type: PressureProtection
-    highPressureMultiplier: 0.25
-    lowPressureMultiplier: 1
-  - type: TemperatureProtection
-    coefficient: 0.005
-  - type: Clothing
-    sprite: Clothing/OuterClothing/Suits/atmos_firesuit.rsi
-  - type: Armor
-    modifiers:
-      coefficients:
-        Slash: 0.9
-        Heat: 0.15
-  - type: ClothingSpeedModifier
-    walkModifier: 0.7
-    sprintModifier: 0.75
-  - type: GroupExamine

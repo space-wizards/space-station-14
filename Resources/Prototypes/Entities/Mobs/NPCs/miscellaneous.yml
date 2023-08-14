@@ -1,0 +1,68 @@
+- type: entity
+  name: laser raptor
+  id: MobLaserRaptor
+  parent: SimpleMobBase
+  description: From the Viking age.
+  components:
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: HTN
+      rootTask:
+        task: SimpleRangedHostileCompound
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/laser_raptor.rsi
+      layers:
+        - map: [ "enum.DamageStateVisualLayers.Base" ]
+          state: laser_raptor
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.30
+          density: 80
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: laser_raptor
+        Dead:
+          Base: laser_raptor_dead
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        100: Dead
+    - type: MovementSpeedModifier
+      baseWalkSpeed: 2
+      baseSprintSpeed: 5
+    - type: Tag
+      tags:
+        - FootstepSound
+    - type: HitscanBatteryAmmoProvider
+      proto: RedLightLaser
+      fireCost: 50
+    - type: BatterySelfRecharger
+      autoRecharge: true
+      autoRechargeRate: 50
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000
+    - type: Gun
+      fireRate: 1
+      useKey: false
+      selectedMode: SemiAuto
+      availableModes:
+        - SemiAuto
+      soundGunshot: /Audio/Weapons/Guns/Gunshots/laser_cannon.ogg
+    - type: CombatMode
+    - type: InteractionPopup
+      successChance: 0.3
+      interactSuccessString: petting-success-reptile
+      interactFailureString: petting-failure-generic
+      interactSuccessSound:
+        path: /Audio/Animals/lizard_happy.ogg

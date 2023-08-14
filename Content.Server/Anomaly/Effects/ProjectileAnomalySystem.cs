@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Server.Anomaly.Components;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Anomaly.Components;

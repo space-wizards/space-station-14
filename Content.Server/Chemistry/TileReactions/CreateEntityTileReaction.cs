@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reaction;
+﻿using System.Numerics;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;

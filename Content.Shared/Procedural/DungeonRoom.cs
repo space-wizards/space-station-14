@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Shared.Procedural;
 
 public sealed record DungeonRoom(HashSet<Vector2i> Tiles, Vector2 Center, Box2i Bounds, HashSet<Vector2i> Exterior)

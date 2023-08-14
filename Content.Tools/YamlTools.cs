@@ -11,15 +11,15 @@ namespace Content.Tools
             switch (other)
             {
                 case YamlSequenceNode subSequence:
-                    YamlSequenceNode tmp1 = new YamlSequenceNode();
+                    var tmp1 = new YamlSequenceNode();
                     MergeYamlSequences(tmp1, new YamlSequenceNode(), subSequence, "");
                     return tmp1;
                 case YamlMappingNode subMapping:
-                    YamlMappingNode tmp2 = new YamlMappingNode();
-                    MergeYamlMappings(tmp2, new YamlMappingNode(), subMapping, "", new string[] {});
+                    var tmp2 = new YamlMappingNode();
+                    MergeYamlMappings(tmp2, new YamlMappingNode(), subMapping, "", Array.Empty<string>());
                     return tmp2;
                 case YamlScalarNode subScalar:
-                    YamlScalarNode tmp3 = new YamlScalarNode();
+                    var tmp3 = new YamlScalarNode();
                     CopyYamlScalar(tmp3, subScalar);
                     return tmp3;
                 default:
@@ -47,7 +47,7 @@ namespace Content.Tools
                     MergeYamlSequences((YamlSequenceNode) ours, (YamlSequenceNode) based, subSequence, path);
                     break;
                 case YamlMappingNode subMapping:
-                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, subMapping, path, new string[] {});
+                    MergeYamlMappings((YamlMappingNode) ours, (YamlMappingNode) based, subMapping, path, Array.Empty<string>());
                     break;
                 case YamlScalarNode subScalar:
                     // Console.WriteLine(path + " - " + ours + " || " + based + " || " + other);
@@ -67,7 +67,7 @@ namespace Content.Tools
 
         public static void MergeYamlSequences(YamlSequenceNode ours, YamlSequenceNode based, YamlSequenceNode other, string path)
         {
-            if ((ours.Children.Count == based.Children.Count) && (other.Children.Count == ours.Children.Count))
+            if (ours.Children.Count == based.Children.Count && other.Children.Count == ours.Children.Count)
             {
                 // this is terrible and doesn't do proper rearrange detection
                 // but it looks as if vectors might be arrays
@@ -95,7 +95,7 @@ namespace Content.Tools
                 var localPath = path + "/" + kvp.Key;
                 var deletedByOurs = !ours.Children.ContainsKey(kvp.Key);
                 var deletedByOther = !other.Children.ContainsKey(kvp.Key);
-                if (deletedByOther && (!deletedByOurs))
+                if (deletedByOther && !deletedByOurs)
                 {
                     // Delete
                     ours.Children.Remove(kvp.Key);
@@ -157,17 +157,14 @@ namespace Content.Tools
         {
             if (a.GetType() != b.GetType())
                 return 0.0f;
-            switch (a)
+
+            return a switch
             {
-                case YamlSequenceNode x:
-                    return YamlSequencesHeuristic(x, (YamlSequenceNode) b);
-                case YamlMappingNode y:
-                    return YamlMappingsHeuristic(y, (YamlMappingNode) b);
-                case YamlScalarNode z:
-                    return (z.Value == ((YamlScalarNode) b).Value) ? 1.0f : 0.0f;
-                default:
-                    throw new ArgumentException($"Unrecognized YAML node type: {a.GetType()}", nameof(a));
-            }
+                YamlSequenceNode x => YamlSequencesHeuristic(x, (YamlSequenceNode) b),
+                YamlMappingNode y => YamlMappingsHeuristic(y, (YamlMappingNode) b),
+                YamlScalarNode z => (z.Value == ((YamlScalarNode) b).Value) ? 1.0f : 0.0f,
+                _ => throw new ArgumentException($"Unrecognized YAML node type: {a.GetType()}", nameof(a))
+            };
         }
 
         public static float YamlSequencesHeuristic(YamlSequenceNode a, YamlSequenceNode b)

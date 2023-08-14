@@ -326,7 +326,7 @@ namespace Content.Server.Disposal.Tube
             }
 
             if (_uiSystem.TryGetUi(uid, SharedDisposalTaggerComponent.DisposalTaggerUiKey.Key, out var bui))
-                _uiSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
+                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(tagger.Tag));
         }
 
         /// <summary>
@@ -339,7 +339,7 @@ namespace Content.Server.Disposal.Tube
             if (router.Tags.Count <= 0)
             {
                 if (bui is not null)
-                    _uiSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(""));
+                    UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(""));
                 return;
             }
 
@@ -354,7 +354,7 @@ namespace Content.Server.Disposal.Tube
             taglist.Remove(taglist.Length - 2, 2);
 
             if (bui is not null)
-                _uiSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(taglist.ToString()));
+                UserInterfaceSystem.SetUiState(bui, new SharedDisposalTaggerComponent.DisposalTaggerUserInterfaceState(taglist.ToString()));
         }
 
         private void OnAnchorChange(EntityUid uid, DisposalTubeComponent component, ref AnchorStateChangedEvent args)

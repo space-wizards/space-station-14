@@ -13,11 +13,11 @@ public sealed class SalvageTimeMod : IPrototype, ISalvageMod
     /// Cost for difficulty modifiers.
     /// </summary>
     [DataField("cost")]
-    public float Cost { get; } = 0f;
+    public float Cost { get; }
 
     [DataField("minDuration")]
-    public int MinDuration = 900;
+    public int MinDuration = 630;
 
     [DataField("maxDuration")]
-    public int MaxDuration = 900;
+    public int MaxDuration = 570;
 }

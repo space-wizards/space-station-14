@@ -11,12 +11,13 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -42,7 +43,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Critical
       200: Dead
   - type: MeleeWeapon
     hidden: true
@@ -78,8 +78,6 @@
     states:
       Alive:
         Base: regalrat
-      Critical:
-        Base: dead
       Dead:
         Base: dead
   - type: GhostRole
@@ -122,6 +120,9 @@
     nameSegments:
     - RegalRatNameKingdom
     - RegalRatNameTitle
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   id: MobRatKingBuff
@@ -139,7 +140,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Critical
       350: Dead
   - type: MeleeWeapon
     hidden: true
@@ -166,6 +166,9 @@
     speedModifierThresholds:
       200: 0.7
       250: 0.5
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   name: Rat Servant
@@ -180,12 +183,13 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Reactive
     groups:
       Flammable: [Touch]
       Extinguish: [Touch]
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -214,7 +218,7 @@
       15: Critical
       30: Dead
   - type: Stamina
-    excess: 60
+    critThreshold: 60
   - type: MeleeWeapon
     hidden: true
     soundHit:
@@ -278,3 +282,6 @@
     price: 500 # rat wealth
   - type: MobsterAccent
     isBoss: false
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists

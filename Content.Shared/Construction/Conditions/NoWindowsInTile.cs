@@ -16,7 +16,7 @@ namespace Content.Shared.Construction.Conditions
             var sysMan = entManager.EntitySysManager;
             var tagSystem = sysMan.GetEntitySystem<TagSystem>();
 
-            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Approximate | LookupFlags.Static))
+            foreach (var entity in location.GetEntitiesInTile(LookupFlags.Static))
             {
                 if (tagSystem.HasTag(entity, "Window", tagQuery))
                     return false;

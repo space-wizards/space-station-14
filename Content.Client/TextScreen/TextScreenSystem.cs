@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.TextScreen;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;

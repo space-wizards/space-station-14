@@ -5,10 +5,13 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Server.Explosion.Components;
 using Content.Server.Flash;
 using Content.Server.Flash.Components;
+using Content.Server.Radio.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Payload.Components;
+using Robust.Shared.Prototypes;
+using Content.Shared.Radio;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Systems;
 using Content.Shared.Trigger;
@@ -17,7 +20,9 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Player;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Server.Explosion.EntitySystems
 {
@@ -53,6 +58,9 @@ namespace Content.Server.Explosion.EntitySystems
         [Dependency] private readonly SharedContainerSystem _container = default!;
         [Dependency] private readonly BodySystem _body = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
+        [Dependency] private readonly RadioSystem _radioSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -70,12 +78,37 @@ namespace Content.Server.Explosion.EntitySystems
             SubscribeLocalEvent<TriggerImplantActionComponent, ActivateImplantEvent>(OnImplantTrigger);
             SubscribeLocalEvent<TriggerOnStepTriggerComponent, StepTriggeredEvent>(OnStepTriggered);
             SubscribeLocalEvent<TriggerOnSlipComponent, SlipEvent>(OnSlipTriggered);
+            SubscribeLocalEvent<TriggerWhenEmptyComponent, OnEmptyGunShotEvent>(OnEmptyTriggered);
 
             SubscribeLocalEvent<SpawnOnTriggerComponent, TriggerEvent>(OnSpawnTrigger);
             SubscribeLocalEvent<DeleteOnTriggerComponent, TriggerEvent>(HandleDeleteTrigger);
             SubscribeLocalEvent<ExplodeOnTriggerComponent, TriggerEvent>(HandleExplodeTrigger);
             SubscribeLocalEvent<FlashOnTriggerComponent, TriggerEvent>(HandleFlashTrigger);
             SubscribeLocalEvent<GibOnTriggerComponent, TriggerEvent>(HandleGibTrigger);
+
+            SubscribeLocalEvent<AnchorOnTriggerComponent, TriggerEvent>(OnAnchorTrigger);
+            SubscribeLocalEvent<SoundOnTriggerComponent, TriggerEvent>(OnSoundTrigger);
+            SubscribeLocalEvent<RattleComponent, TriggerEvent>(HandleRattleTrigger);
+        }
+
+        private void OnSoundTrigger(EntityUid uid, SoundOnTriggerComponent component, TriggerEvent args)
+        {
+            _audio.PlayPvs(component.Sound, uid);
+            if (component.RemoveOnTrigger)
+                RemCompDeferred<SoundOnTriggerComponent>(uid);
+        }
+
+        private void OnAnchorTrigger(EntityUid uid, AnchorOnTriggerComponent component, TriggerEvent args)
+        {
+            var xform = Transform(uid);
+
+            if (xform.Anchored)
+                return;
+
+            _transformSystem.AnchorEntity(uid, xform);
+
+            if(component.RemoveOnTrigger)
+                RemCompDeferred<AnchorOnTriggerComponent>(uid);
         }
 
         private void OnSpawnTrigger(EntityUid uid, SpawnOnTriggerComponent component, TriggerEvent args)
@@ -96,14 +129,12 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
-        #region Flash
         private void HandleFlashTrigger(EntityUid uid, FlashOnTriggerComponent component, TriggerEvent args)
         {
             // TODO Make flash durations sane ffs.
             _flashSystem.FlashArea(uid, args.User, component.Range, component.Duration * 1000f);
             args.Handled = true;
         }
-        #endregion
 
         private void HandleDeleteTrigger(EntityUid uid, DeleteOnTriggerComponent component, TriggerEvent args)
         {
@@ -121,11 +152,40 @@ namespace Content.Server.Explosion.EntitySystems
             args.Handled = true;
         }
 
+        private void HandleRattleTrigger(EntityUid uid, RattleComponent component, TriggerEvent args)
+        {
+            if (!TryComp<SubdermalImplantComponent?>(uid, out var implanted))
+                return;
+
+            if (implanted.ImplantedEntity == null)
+                return;
+
+            // Gets location of the implant
+            var ownerXform = Transform(uid);
+            var pos = ownerXform.MapPosition;
+            var x = (int) pos.X;
+            var y = (int) pos.Y;
+            var posText = $"({x}, {y})";
+
+            var critMessage = Loc.GetString(component.CritMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
+            var deathMessage = Loc.GetString(component.DeathMessage, ("user", implanted.ImplantedEntity.Value), ("position", posText));
+
+            if (!TryComp<MobStateComponent>(implanted.ImplantedEntity, out var mobstate))
+                return;
+
+            // Sends a message to the radio channel specified by the implant
+            if (mobstate.CurrentState == MobState.Critical)
+                _radioSystem.SendRadioMessage(uid, critMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+            if (mobstate.CurrentState == MobState.Dead)
+                _radioSystem.SendRadioMessage(uid, deathMessage, _prototypeManager.Index<RadioChannelPrototype>(component.RadioChannel), uid);
+
+            args.Handled = true;
+        }
 
         private void OnTriggerCollide(EntityUid uid, TriggerOnCollideComponent component, ref StartCollideEvent args)
         {
-			if(args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
-				Trigger(component.Owner);
+            if (args.OurFixture.ID == component.FixtureID && (!component.IgnoreOtherNonHard || args.OtherFixture.Hard))
+                Trigger(component.Owner);
         }
 
         private void OnActivate(EntityUid uid, TriggerOnActivateComponent component, ActivateInWorldEvent args)
@@ -147,6 +207,11 @@ namespace Content.Server.Explosion.EntitySystems
         private void OnSlipTriggered(EntityUid uid, TriggerOnSlipComponent component, ref SlipEvent args)
         {
             Trigger(uid, args.Slipped);
+        }
+
+        private void OnEmptyTriggered(EntityUid uid, TriggerWhenEmptyComponent component, ref OnEmptyGunShotEvent args)
+        {
+            Trigger(uid, args.EmptyGun);
         }
 
         public bool Trigger(EntityUid trigger, EntityUid? user = null)

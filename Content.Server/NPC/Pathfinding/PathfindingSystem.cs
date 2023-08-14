@@ -1,11 +1,13 @@
 using System.Buffers;
 using System.Linq;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
 using Content.Shared.Administration;
+using Content.Shared.Climbing;
 using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -43,6 +45,7 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly DestructibleSystem _destructible = default!;
+        [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -82,12 +85,18 @@ namespace Content.Server.NPC.Pathfinding
         public override void Update(float frameTime)
         {
             base.Update(frameTime);
-            UpdateGrid();
+            var options = new ParallelOptions()
+            {
+                MaxDegreeOfParallelism = _parallel.ParallelProcessCount,
+            };
+
+            UpdateGrid(options);
             _stopwatch.Restart();
             var amount = Math.Min(PathTickLimit, _pathRequests.Count);
             var results = ArrayPool<PathResult>.Shared.Rent(amount);
 
-            Parallel.For(0, amount, i =>
+
+            Parallel.For(0, amount, options, i =>
             {
                 // If we're over the limit (either time-sliced or hard cap).
                 if (_stopwatch.Elapsed >= PathTime)
@@ -237,7 +246,7 @@ namespace Content.Server.NPC.Pathfinding
             PathFlags flags = PathFlags.None)
         {
             if (!TryComp<TransformComponent>(entity, out var start))
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var layer = 0;
             var mask = 0;
@@ -251,7 +260,7 @@ namespace Content.Server.NPC.Pathfinding
             var path = await GetPath(request);
 
             if (path.Result != PathResult.Path)
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             return new PathResultEvent(PathResult.Path, path.Path);
         }
@@ -279,14 +288,13 @@ namespace Content.Server.NPC.Pathfinding
                 return 0f;
 
             var distance = 0f;
-            var node = path.Path.Dequeue();
-            var lastNode = node;
+            var lastNode = path.Path[0];
 
-            do
+            for (var i = 1; i < path.Path.Count; i++)
             {
+                var node = path.Path[i];
                 distance += GetTileCost(request, lastNode, node);
-                lastNode = node;
-            } while (path.Path.TryDequeue(out node));
+            }
 
             return distance;
         }
@@ -300,7 +308,7 @@ namespace Content.Server.NPC.Pathfinding
         {
             if (!TryComp<TransformComponent>(entity, out var xform) ||
                 !TryComp<TransformComponent>(target, out var targetXform))
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
 
             var request = GetRequest(entity, xform.Coordinates, targetXform.Coordinates, range, cancelToken, flags);
             return await GetPath(request);
@@ -435,6 +443,11 @@ namespace Content.Server.NPC.Pathfinding
                 flags |= PathFlags.Smashing;
             }
 
+            if (blackboard.TryGetValue<bool>(NPCBlackboard.NavClimb, out var climb, EntityManager) && climb)
+            {
+                flags |= PathFlags.Climbing;
+            }
+
             if (blackboard.TryGetValue<bool>(NPCBlackboard.NavInteract, out var interact, EntityManager) && interact)
             {
                 flags |= PathFlags.Interact;
@@ -470,7 +483,7 @@ namespace Content.Server.NPC.Pathfinding
 
             if (!request.Task.IsCompletedSuccessfully)
             {
-                return new PathResultEvent(PathResult.NoPath, new Queue<PathPoly>());
+                return new PathResultEvent(PathResult.NoPath, new List<PathPoly>());
             }
 
             // Same context as do_after and not synchronously blocking soooo

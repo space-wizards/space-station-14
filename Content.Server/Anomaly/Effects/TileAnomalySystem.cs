@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Server.Maps;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
@@ -34,7 +35,7 @@ public sealed class TileAnomalySystem : EntitySystem
         var fleshTile = (ContentTileDefinition) _tiledef[component.FloorTileId];
         var localpos = xform.Coordinates.Position;
         var tilerefs = grid.GetLocalTilesIntersecting(
-            new Box2(localpos + (-radius, -radius), localpos + (radius, radius)));
+            new Box2(localpos + new Vector2(-radius, -radius), localpos + new Vector2(radius, radius)));
         foreach (var tileref in tilerefs)
         {
             if (!_random.Prob(0.33f))

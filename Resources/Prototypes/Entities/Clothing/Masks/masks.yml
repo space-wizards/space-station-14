@@ -39,7 +39,6 @@
     sprite: Clothing/Mask/gassyndicate.rsi
   - type: FlashImmunity
   - type: EyeProtection
-    protectionTime: 5
 
 - type: entity
   parent: ClothingMaskGas
@@ -167,11 +166,9 @@
     sprite: Clothing/Mask/clown.rsi
   - type: BreathMask
   - type: IdentityBlocker
-  # for H.O.N.K. construction
   - type: Tag
     tags:
     - ClownMask
-    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
@@ -180,6 +177,8 @@
   components:
   - type: Tag
     tags:
+    - ClownMask
+    - HamsterWearable
     - WhitelistChameleon
 
 - type: entity
@@ -419,6 +418,21 @@
     sprite: Clothing/Mask/bat.rsi
   - type: BreathMask
   - type: IdentityBlocker
+
+- type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskNeckGaiter
+  name: neck gaiter
+  description: Stylish neck gaiter for your neck, can protect from the cosmic wind?...
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/neckgaiter.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingMaskClownBase

@@ -537,6 +537,59 @@
   - type: Sprite
     state: poster56_contraband
 
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandMoth
+  name: "Syndie Moth - Nuclear Operation"
+  description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
+  components:
+    - type: Sprite
+      state: poster57_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandCybersun600
+  name: "Cybersun: 600 Years Commemorative Poster"
+  description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
+  components:
+    - type: Sprite
+      state: poster58_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandDonk
+  name: "DONK CO. BRAND MICROWAVEABLE FOOD"
+  description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
+  components:
+    - type: Sprite
+      state: poster59_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandEnlistGorlex
+  name: "Enlist"
+  description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
+  components:
+    - type: Sprite
+      state: poster60_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandInterdyne
+  name: "Interdyne Pharmaceutics: For the Health of Humankind"
+  description: "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
+  components:
+    - type: Sprite
+      state: poster61_contraband
+
+- type: entity
+  parent: PosterBase
+  id: PosterContrabandWaffleCorp
+  name: "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
+  description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
+  components:
+    - type: Sprite
+      state: poster62_contraband
 
 # Legit
 - type: entity
@@ -898,7 +951,7 @@
   components:
   - type: Sprite
     state: poster40_legit
-    
+
 - type: entity
   parent: PosterBase
   id: PosterLegitMime
@@ -916,7 +969,88 @@
   components:
   - type: Sprite
     state: poster42_legit
-    
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothDelam
+  name: "Safety Moth - Delamination Safety Precautions"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
+  components:
+    - type: Sprite
+      state: poster43_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothEpi
+  name: "Safety Moth - Epinephrine"
+  description: "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
+  components:
+    - type: Sprite
+      state: poster44_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothHardhat
+  name: "Safety Moth - Hardhats"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
+  components:
+    - type: Sprite
+      state: poster45_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothMeth
+  name: "Safety Moth - Methamphetamine"
+  description: "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
+  components:
+    - type: Sprite
+      state: poster46_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitSafetyMothPiping
+  name: "Safety Moth - Piping"
+  description: "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
+  components:
+    - type: Sprite
+      state: poster47_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitVacation
+  name: "Nanotrasen Corporate Perks: Vacation"
+  description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
+  components:
+    - type: Sprite
+      state: poster48_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitPeriodicTable
+  name: "Periodic Table of the Elements"
+  description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
+  components:
+    - type: Sprite
+      state: poster49_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitRenault
+  name: "Renault Poster"
+  description: "Yap."
+  components:
+    - type: Sprite
+      state: poster50_legit
+
+- type: entity
+  parent: PosterBase
+  id: PosterLegitNTTGC
+  name: "Nanotrasen Tactical Game Cards"
+  description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
+  components:
+    - type: Sprite
+      state: poster51_legit
+
 #maps
 
 - type: entity

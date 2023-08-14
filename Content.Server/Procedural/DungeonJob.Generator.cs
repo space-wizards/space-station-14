@@ -1,3 +1,4 @@
+using System.Numerics;
 using System.Threading.Tasks;
 using Content.Shared.Decals;
 using Content.Shared.Procedural;
@@ -64,7 +65,7 @@ public sealed partial class DungeonJob
             roomA.Sort((x, y) =>
                 string.Compare(x.ID, y.ID, StringComparison.Ordinal));
         }
-        
+
         var tiles = new List<(Vector2i, Tile)>();
         var dungeon = new Dungeon();
         var availablePacks = new List<DungeonRoomPackPrototype>();
@@ -183,7 +184,7 @@ public sealed partial class DungeonJob
                         {
                             for (var y = roomSize.Bottom; y < roomSize.Top; y++)
                             {
-                                var index = matty.Transform(new Vector2(x, y) + grid.TileSize / 2f - packCenter).Floored();
+                                var index = matty.Transform(new Vector2(x, y) + grid.TileSizeHalfVector - packCenter).Floored();
                                 tiles.Add((index, new Tile(_tileDefManager["FloorPlanetGrass"].TileId)));
                             }
                         }
@@ -221,7 +222,7 @@ public sealed partial class DungeonJob
                 var roomCenter = (room.Offset + room.Size / 2f) * grid.TileSize;
                 var roomTiles = new HashSet<Vector2i>(room.Size.X * room.Size.Y);
                 var exterior = new HashSet<Vector2i>(room.Size.X * 2 + room.Size.Y * 2);
-                var tileOffset = -roomCenter + grid.TileSize / 2f;
+                var tileOffset = -roomCenter + grid.TileSizeHalfVector;
                 Box2i? mapBounds = null;
 
                 // Load tiles
@@ -262,7 +263,7 @@ public sealed partial class DungeonJob
 
                 foreach (var tile in roomTiles)
                 {
-                    center += (Vector2) tile + grid.TileSize / 2f;
+                    center += (Vector2) tile + grid.TileSizeHalfVector;
                 }
 
                 center /= roomTiles.Count;
@@ -308,8 +309,8 @@ public sealed partial class DungeonJob
                         // Offset by 0.5 because decals are offset from bot-left corner
                         // So we convert it to center of tile then convert it back again after transform.
                         // Do these shenanigans because 32x32 decals assume as they are centered on bottom-left of tiles.
-                        var position = dungeonMatty.Transform(decal.Coordinates + 0.5f - roomCenter);
-                        position -= 0.5f;
+                        var position = dungeonMatty.Transform(decal.Coordinates + Vector2Helpers.Half - roomCenter);
+                        position -= Vector2Helpers.Half;
 
                         // Umm uhh I love decals so uhhhh idk what to do about this
                         var angle = (decal.Angle + finalRoomRotation).Reduced();

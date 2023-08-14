@@ -452,3 +452,26 @@
         - ReagentId: Protein
           Quantity: 2
 
+- type: entity
+  name: chèvre chaud
+  parent: FoodBakedBase
+  id: FoodBakedChevreChaud
+  description: A disk of slightly melted chèvre flopped on top of a crostini, and toasted all-round.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - bread
+      - nutty
+      - creamy
+      - smokey
+  - type: Sprite
+    state: chevrechaud
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 5
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 2
+        - ReagentId: Vitamin
+          Quantity: 0.5

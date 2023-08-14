@@ -78,6 +78,15 @@
     - type: Damageable
       damageContainer: Inorganic
       damageModifierSet: StrongMetallic
+    - type: BatterySensor
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-smes
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
 
 # SMES' in use
 

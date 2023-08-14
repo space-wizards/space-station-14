@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -14,6 +15,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     [TestOf(typeof(WirelessNetworkComponent))]
     public sealed class DeviceNetworkTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   name: DummyNetworkDevice
@@ -35,8 +37,8 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
     - type: ApcPowerReceiver
 
 - type: entity
-  name: DummyWirelessNetworkDevice
-  id: DummyWirelessNetworkDevice
+  name: WirelessNetworkDeviceDummy
+  id: WirelessNetworkDeviceDummy
   components:
     - type: DeviceNetwork
       transmitFrequency: 100
@@ -49,11 +51,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task NetworkDeviceSendAndReceive()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -113,11 +111,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task WirelessNetworkDeviceSendAndReceive()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
@@ -143,7 +137,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
 
             await server.WaitAssertion(() =>
             {
-                device1 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", coordinates);
+                device1 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", coordinates);
 
                 Assert.Multiple(() =>
                 {
@@ -156,7 +150,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
                     Assert.That(networkComponent1.Address, Is.Not.EqualTo(string.Empty));
                 });
 
-                device2 = entityManager.SpawnEntity("DummyWirelessNetworkDevice", new MapCoordinates(new Robust.Shared.Maths.Vector2(0, 50), testMap.MapId));
+                device2 = entityManager.SpawnEntity("WirelessNetworkDeviceDummy", new MapCoordinates(new Vector2(0, 50), testMap.MapId));
 
                 Assert.That(entityManager.TryGetComponent(device2, out networkComponent2), Is.True);
                 Assert.Multiple(() =>
@@ -202,11 +196,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         [Test]
         public async Task WiredNetworkDeviceSendAndReceive()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;

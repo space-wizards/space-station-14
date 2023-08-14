@@ -142,6 +142,13 @@ public partial class GunComponent : Component
     /// </summary>
     [DataField("showExamineText")]
     public bool ShowExamineText = true;
+
+    /// <summary>
+    /// Whether or not someone with the
+    /// clumsy trait can shoot this
+    /// </summary>
+    [DataField("clumsyProof")]
+    public bool ClumsyProof = false;
 }
 
 [Flags]

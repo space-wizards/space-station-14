@@ -5,9 +5,10 @@ namespace Content.Client.Research.UI
 {
     public sealed class ResearchClientBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private ResearchClientServerSelectionMenu? _menu;
 
-        public ResearchClientBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public ResearchClientBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
             SendMessage(new ResearchClientSyncMessage());
         }
