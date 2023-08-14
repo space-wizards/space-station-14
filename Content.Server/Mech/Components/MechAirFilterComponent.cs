@@ -11,18 +11,8 @@ public sealed class MechAirFilterComponent : Component
     /// <summary>
     /// Gases that will be filtered out of internal air
     /// </summary>
-    [DataField("gases")]
-    public HashSet<Gas> Gases = new HashSet<Gas>
-    {
-        Gas.CarbonDioxide,
-        Gas.Plasma,
-        Gas.Tritium,
-        Gas.WaterVapor,
-        Gas.Miasma,
-        Gas.NitrousOxide,
-        Gas.Frezon
-        //Gas.Helium4
-    };
+    [DataField("gases", required: true)]
+    public HashSet<Gas> Gases = new();
 
     /// <summary>
     /// Target volume to transfer every second.
