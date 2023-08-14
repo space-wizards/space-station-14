@@ -28,5 +28,5 @@ public sealed class MechAirFilterComponent : Component
     /// Target volume to transfer every second.
     /// </summary>
     [DataField("transferRate")]
-    public float TransferRate = Atmospherics.MaxTransferRate;
+    public float TransferRate = MechAirComponent.GasMixVolume * 0.1f;
 }
