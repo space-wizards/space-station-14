@@ -250,7 +250,7 @@ public sealed partial class StaminaSystem : EntitySystem
     public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
         if (!Resolve(uid, ref component, false))
-            return false;
+            return true;
 
         var oldStam = component.StaminaDamage;
 

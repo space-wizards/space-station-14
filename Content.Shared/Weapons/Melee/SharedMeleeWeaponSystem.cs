@@ -5,7 +5,6 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.Administration.Logs;
 using Content.Shared.CombatMode;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Components;
 using Content.Shared.Damage.Systems;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -567,8 +566,7 @@ public abstract class SharedMeleeWeaponSystem : EntitySystem
         if (targetMap.MapId != userXform.MapID)
             return false;
 
-        if (!_stamina.TryTakeStamina(user, component.HeavyStaminaCost)
-        && HasComp<StaminaComponent>(user))
+        if (!_stamina.TryTakeStamina(user, component.HeavyStaminaCost))
         {
             PopupSystem.PopupClient(Loc.GetString("melee-stamina"), user, user);
             return false;
