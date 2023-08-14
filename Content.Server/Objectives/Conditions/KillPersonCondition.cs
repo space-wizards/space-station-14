@@ -24,14 +24,11 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                var targetName = string.Empty;
+                var targetName = Target?.CharacterName ?? "Unknown";
                 var jobName = Target?.CurrentJob?.Name ?? "Unknown";
 
                 if (Target == null)
                     return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
-
-                if (Target.OwnedEntity is {Valid: true} owned)
-                    targetName = EntityManager.GetComponent<MetaDataComponent>(owned).EntityName;
 
                 return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
             }

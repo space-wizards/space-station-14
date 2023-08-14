@@ -67,6 +67,16 @@
     - type: SalvageExpeditionData
 
 - type: entity
+  id: BaseStationSiliconLawCrewsimov
+  abstract: true
+  components:
+  - type: SiliconLawProvider
+    laws:
+    - Crewsimov1
+    - Crewsimov2
+    - Crewsimov3
+
+- type: entity
   id: BaseStationAllEventsEligible
   abstract: true
   components:

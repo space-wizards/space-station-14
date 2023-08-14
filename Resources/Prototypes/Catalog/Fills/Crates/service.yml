@@ -164,3 +164,91 @@
         amount: 2
       - id: ClothingMaskSterile
         amount: 2
+
+- type: entity
+  id: CrateTrashCartFilled
+  suffix: Filled
+  parent: CrateTrashCart
+  components:
+    - type: StorageFill
+      contents:
+          # Food Packaging
+        - id: FoodPacketBoritosTrash
+          prob: 0.1
+        - id: FoodPacketCheesieTrash
+          prob: 0.1
+        - id: FoodPacketChipsTrash
+          prob: 0.1
+        - id: FoodPacketChocolateTrash
+          prob: 0.1
+        - id: FoodPacketEnergyTrash
+          prob: 0.1
+        - id: FoodPacketPopcornTrash
+          prob: 0.1
+        - id: FoodPacketSusTrash
+          prob: 0.1
+        - id: FoodPacketSyndiTrash
+          prob: 0.1
+        - id: FoodPacketChowMeinTrash
+          prob: 0.1
+        - id: FoodPacketDanDanTrash
+          prob: 0.1
+        - id: FoodPacketMRETrash
+          prob: 0.1
+        - id: FoodPacketPistachioTrash
+          prob: 0.1
+        - id: FoodPacketSemkiTrash
+          prob: 0.1
+        - id: FoodPacketRaisinsTrash
+          prob: 0.1
+          # Cans
+        - id: FoodTinBeansTrash
+          prob: 0.15
+        - id: FoodTinPeachesTrash
+          prob: 0.15
+        - id: FoodTinMRETrash
+          prob: 0.15
+          # Cigarette Stuff
+        - id: Ash
+          prob: 0.15
+        - id: CigarSpent
+          prob: 0.15
+        - id: CigaretteSpent
+          prob: 0.15
+          # Bacteria
+        - id: FoodBreadMoldySlice
+          prob: 0.15
+        - id: FoodPizzaMoldySlice
+          prob: 0.15
+          # Botanical Waste
+        - id: TrashBananaPeel
+          prob: 0.15
+        - id: FoodCornTrash
+          prob: 0.15
+          # Misc
+        - id: ShardGlass
+          prob: 0.1
+        - id: DrinkGlass
+          prob: 0.15
+        - id: BrokenBottle
+          prob: 0.15
+        - id: LightTubeBroken
+          prob: 0.15
+        - id: LightBulbBroken
+          prob: 0.15
+        - id: MousetrapArmed
+          prob: 0.15
+        - id: CableApcStack10
+          prob: 0.15
+        - id: MobMouseDead
+          prob: 0.1
+        - id: RagItem
+          prob: 0.1
+        - id: Flare
+          prob: 0.1
+        - id: FoodKebabSkewer
+          prob: 0.1
+        - id: Syringe
+          prob: 0.1
+        - id: ShardGlassPlasma
+          prob: 0.1

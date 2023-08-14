@@ -174,7 +174,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     if (!cartridge.DeleteOnSpawn && !Containers.IsEntityInContainer(ent!.Value))
                         EjectCartridge(ent.Value, angle);
 
-                    Dirty(cartridge);
+                    Dirty(ent!.Value, cartridge);
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:

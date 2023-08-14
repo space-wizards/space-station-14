@@ -5,7 +5,7 @@
   name: research-technology-salvage-weapons
   icon:
     sprite: Objects/Weapons/Guns/Basic/kinetic_accelerator.rsi
-    state: gun
+    state: icon
   discipline: Arsenal
   tier: 1
   cost: 10000

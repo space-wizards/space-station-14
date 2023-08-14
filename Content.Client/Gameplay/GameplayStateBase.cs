@@ -51,7 +51,7 @@ namespace Content.Client.Gameplay
 
             EntityUid? uid = null;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp && _inputManager.MouseScreenPosition.IsValid)
-                uid = GetClickedEntity(vp.ScreenToMap(_inputManager.MouseScreenPosition.Position));
+                uid = GetClickedEntity(vp.PixelToMap(_inputManager.MouseScreenPosition.Position));
             else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
                 uid = element.Entity;
 
@@ -166,7 +166,7 @@ namespace Content.Client.Gameplay
             EntityUid? entityToClick = null;
             if (args.Viewport is IViewportControl vp)
             {
-                var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
+                var mousePosWorld = vp.PixelToMap(kArgs.PointerLocation.Position);
                 entityToClick = GetClickedEntity(mousePosWorld);
 
                 coordinates = _mapManager.TryFindGridAt(mousePosWorld, out _, out var grid) ?
