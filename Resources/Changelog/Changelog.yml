@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Added taco and taco recipe!, type: Add}
-  id: 4093
-  time: '2023-06-26T03:05:08.0000000+00:00'
 - author: Lank
   changes:
   - {message: The Head of Security's trenchcoat now clearly states it's armored.,
@@ -3022,3 +3017,11 @@ Entries:
   - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
   id: 4592
   time: '2023-08-14T22:57:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Using the EMAG on borgs now requires the panel to be open. It also need
+      to be open to tell if it has been EMAG'ed in the past., type: Tweak}
+  - {message: Fixed wiping PAIs and Positronic Brains not actually removing the player
+      from them., type: Fix}
+  id: 4593
+  time: '2023-08-14T23:34:24.0000000+00:00'
