@@ -90,7 +90,6 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: PipePainter
       - id: ClothingShoesBootsMag
 
 - type: entity
@@ -107,7 +106,6 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: PipePainter
 
 - type: entity
   id: LockerEngineerFilledHardsuit
