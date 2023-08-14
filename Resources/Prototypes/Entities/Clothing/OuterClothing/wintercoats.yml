@@ -27,7 +27,7 @@
         - ReagentId: Fiber
           Quantity: 30
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
 
 - type: entity
@@ -407,4 +407,13 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
-
+- type: entity
+  parent: ClothingOuterWinterCoat
+  id: ClothingOuterWinterWeb
+  name: web winter coat
+  description: Feels like the inside of a cocoon.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
