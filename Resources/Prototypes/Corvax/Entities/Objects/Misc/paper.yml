@@ -7,4 +7,5 @@
     - type: Paper
       stampState: paper_stamp-centcom
       stampedBy:
-        - CentComm
+      - stampedName: Центком
+        stampedColor: "#006000"
