@@ -43,7 +43,7 @@
   category: construction-category-furniture
   description: Fun fact, you eating spiders in your sleep is false.
   icon:
-    sprite: Structures/Furniture/Web/bed.rsi
+    sprite: Structures/Web/bed.rsi
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter
@@ -61,7 +61,7 @@
   category: construction-category-furniture
   description: You want to get serious about web development? Get this chair!
   icon:
-    sprite: Structures/Furniture/Web/chair.rsi
+    sprite: Structures/Web/chair.rsi
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter
@@ -79,6 +79,22 @@
   icon:
     sprite: Structures/Storage/Crates/web.rsi
     state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+
+- type: construction
+  name: web closet
+  id: ClosetWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: closet
+  category: construction-category-storage
+  description: A simple closet made of web. Not very durable and can't be welded shut.
+  icon:
+    sprite: Structures/Web/closet.rsi
+    state: generic
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false

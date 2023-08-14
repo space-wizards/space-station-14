@@ -166,3 +166,40 @@
         bluespaceEffectOnTeleportSource: true
         destroyAfterUses: 2
         destroyType: DeleteComponent
+
+- type: entity
+  id: ClosetWeb
+  name: web closet
+  parent: ClosetBase
+  description: "It looks so comfortable, you might just fall asleep in it."
+  components:
+  - type: Sprite
+    sprite: "Structures/Web/closet.rsi"
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: generic
+    stateDoorOpen: generic_open
+    stateDoorClosed: generic_door
+  - type: Weldable
+    weldable: false
+  - type: Construction
+    graph: WebStructures
+    node: closet
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 3
+            max: 5

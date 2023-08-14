@@ -260,7 +260,7 @@
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
-    sprite: Structures/Furniture/Web/chair.rsi
+    sprite: Structures/Web/chair.rsi
     state: icon
   - type: MeleeSound
     soundGroups:
