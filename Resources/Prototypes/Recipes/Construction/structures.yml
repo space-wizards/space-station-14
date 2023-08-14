@@ -1045,3 +1045,20 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: solid secret door
+  id: SolidSecretDoor
+  graph: SecretDoor
+  startNode: start
+  targetNode: solidSecretDoor
+  category: construction-category-structures
+  description: A secret door for the wall.
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  icon:
+    sprite: Structures/Doors/secret_door.rsi
+    state: closed
+  conditions:
+    - !type:TileNotBlocked

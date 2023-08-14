@@ -8,7 +8,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
-using SpaceWizards.Sodium.Interop;
 
 namespace Content.Server.Tips;
 
