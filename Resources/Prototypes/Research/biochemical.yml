@@ -15,7 +15,7 @@
   - HotplateMachineCircuitboard
   - ChemicalPayload
   - ClothingEyesGlassesChemical
-  - Jug
+  - Jug # empty?
 
 - type: technology
   id: SurgicalTools
