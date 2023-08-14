@@ -217,7 +217,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -289,7 +289,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: held)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -349,7 +349,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,
@@ -424,7 +424,7 @@ namespace Content.Server.Strip
             var ev = new BeforeGettingStrippedEvent(userEv.Time, userEv.Stealth);
             RaiseLocalEvent(target, ev);
 
-            var doAfterArgs = new DoAfterArgs(user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
+            var doAfterArgs = new DoAfterArgs(EntityManager, user, ev.Time, new AwaitedDoAfterEvent(), null, target: target, used: item)
             {
                 ExtraCheck = Check,
                 AttemptFrequency = AttemptFrequency.EveryTick,

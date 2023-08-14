@@ -91,7 +91,7 @@ public sealed class InternalsSystem : EntitySystem
             //If no, do a short delay. There's no reason it should be beyond 1 second.
             var delay = !isUser ? internals.Delay : 1.0f;
 
-            _doAfter.TryStartDoAfter(new DoAfterArgs(user, delay, new InternalsDoAfterEvent(), uid, target: uid)
+            _doAfter.TryStartDoAfter(new DoAfterArgs(EntityManager, user, delay, new InternalsDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,

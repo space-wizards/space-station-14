@@ -20,7 +20,7 @@ public sealed partial class GatewayWindow : FancyWindow,
     private readonly IGameTiming _timing;
 
     public event Action<EntityUid>? OpenPortal;
-    private List<(EntityUid, string, TimeSpan, bool)> _destinations = default!;
+    private List<(NetEntity, string, TimeSpan, bool)> _destinations = default!;
     private EntityUid? _current;
     private TimeSpan _nextClose;
     private TimeSpan _lastOpen;
@@ -67,7 +67,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         var now = _timing.CurTime;
         foreach (var dest in _destinations)
         {
-            var uid = dest.Item1;
+            var uid = _entManager.ToEntity(dest.Item1);
             var name = dest.Item2;
             var nextReady = dest.Item3;
             var busy = dest.Item4;

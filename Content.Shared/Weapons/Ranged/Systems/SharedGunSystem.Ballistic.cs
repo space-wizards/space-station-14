@@ -149,7 +149,7 @@ public abstract partial class SharedGunSystem
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
-            if (ent.Value.IsClientSide())
+            if (IsClientSide(ent.Value))
                 Del(ent.Value);
         }
     }
@@ -259,7 +259,7 @@ public abstract partial class SharedGunSystem
                 // Put it back in if it doesn't auto-cycle
                 if (HasComp<CartridgeAmmoComponent>(entity) && !component.AutoCycle)
                 {
-                    if (!entity.IsClientSide())
+                    if (!IsClientSide(entity))
                     {
                         component.Entities.Add(entity);
                         component.Container.Insert(entity);

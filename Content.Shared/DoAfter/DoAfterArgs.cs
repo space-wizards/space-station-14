@@ -10,8 +10,11 @@ public sealed class DoAfterArgs
     /// <summary>
     ///     The entity invoking do_after
     /// </summary>
+    [NonSerialized]
     [DataField("user", required: true)]
     public readonly EntityUid User;
+
+    public readonly NetEntity NetUser;
 
     /// <summary>
     ///     How long does the do_after require to complete
@@ -22,14 +25,20 @@ public sealed class DoAfterArgs
     /// <summary>
     ///     Applicable target (if relevant)
     /// </summary>
+    [NonSerialized]
     [DataField("target")]
     public readonly EntityUid? Target;
+
+    public readonly NetEntity? NetTarget;
 
     /// <summary>
     ///     Entity used by the User on the Target.
     /// </summary>
+    [NonSerialized]
     [DataField("using")]
     public readonly EntityUid? Used;
+
+    public readonly NetEntity? NetUsed;
 
     #region Event options
     /// <summary>
@@ -48,8 +57,11 @@ public sealed class DoAfterArgs
     /// <summary>
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
     /// </summary>
+    [NonSerialized]
     [DataField("eventTarget")]
     public readonly EntityUid? EventTarget;
+
+    public readonly NetEntity? NetEventTarget;
 
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.
@@ -173,6 +185,7 @@ public sealed class DoAfterArgs
     /// <param name="target">The entity being targeted by the DoAFter. Not the same as <see cref="EventTarget"/></param>.
     /// <param name="used">The entity being used during the DoAfter. E.g., a tool</param>
     public DoAfterArgs(
+        IEntityManager entManager,
         EntityUid user,
         TimeSpan delay,
         DoAfterEvent @event,
@@ -186,6 +199,10 @@ public sealed class DoAfterArgs
         Used = used;
         EventTarget = eventTarget;
         Event = @event;
+
+        NetUser = entManager.ToNetEntity(User);
+        NetTarget = entManager.ToNetEntity(Target);
+        NetUsed = entManager.ToNetEntity(Used);
     }
 
     private DoAfterArgs()
@@ -202,13 +219,14 @@ public sealed class DoAfterArgs
     /// <param name="target">The entity being targeted by the DoAfter. Not the same as <see cref="EventTarget"/></param>.
     /// <param name="used">The entity being used during the DoAfter. E.g., a tool</param>
     public DoAfterArgs(
+        IEntityManager entManager,
         EntityUid user,
         float seconds,
         DoAfterEvent @event,
         EntityUid? eventTarget,
         EntityUid? target = null,
         EntityUid? used = null)
-        : this(user, TimeSpan.FromSeconds(seconds), @event, eventTarget, target, used)
+        : this(entManager, user, TimeSpan.FromSeconds(seconds), @event, eventTarget, target, used)
     {
     }
 

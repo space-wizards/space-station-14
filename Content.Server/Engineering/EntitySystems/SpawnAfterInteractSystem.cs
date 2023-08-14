@@ -45,7 +45,7 @@ namespace Content.Server.Engineering.EntitySystems
 
             if (component.DoAfterTime > 0)
             {
-                var doAfterArgs = new DoAfterArgs(args.User, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
+                var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.DoAfterTime, new AwaitedDoAfterEvent(), null)
                 {
                     BreakOnUserMove = true,
                 };

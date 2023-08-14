@@ -228,7 +228,7 @@ public sealed class DrainSystem : SharedDrainSystem
         _audioSystem.PlayPvs(component.PlungerSound, uid);
 
 
-        var doAfterArgs = new DoAfterArgs(args.User, component.UnclogDuration, new DrainDoAfterEvent(),uid, args.Target, args.Used)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, component.UnclogDuration, new DrainDoAfterEvent(),uid, args.Target, args.Used)
         {
             BreakOnTargetMove = true,
             BreakOnUserMove = true,

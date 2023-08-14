@@ -24,7 +24,7 @@ public sealed class DoAfterComponentState : ComponentState
     public readonly ushort NextId;
     public readonly Dictionary<ushort, DoAfter> DoAfters;
 
-    public DoAfterComponentState(DoAfterComponent component)
+    public DoAfterComponentState(IEntityManager entManager, DoAfterComponent component)
     {
         NextId = component.NextId;
 
@@ -38,7 +38,7 @@ public sealed class DoAfterComponentState : ComponentState
         DoAfters = new();
         foreach (var (id, doafter) in component.DoAfters)
         {
-            DoAfters.Add(id, new DoAfter(doafter));
+            DoAfters.Add(id, new DoAfter(entManager, doafter));
         }
 #endif
     }

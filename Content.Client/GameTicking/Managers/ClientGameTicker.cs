@@ -81,8 +81,18 @@ namespace Content.Client.GameTicking.Managers
 
         private void UpdateJobsAvailable(TickerJobsAvailableEvent message)
         {
-            _jobsAvailable = message.JobsAvailableByStation;
-            _stationNames = message.StationNames;
+            foreach (var (job, data) in message.JobsAvailableByStation)
+            {
+                _jobsAvailable.Clear();
+                _jobsAvailable[ToEntity(job)] = data;
+            }
+
+            _stationNames.Clear();
+            foreach (var weh in message.StationNames)
+            {
+                _stationNames[ToEntity(weh.Key)] = weh.Value;
+            }
+
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);
         }
 

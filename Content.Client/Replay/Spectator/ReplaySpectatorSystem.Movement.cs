@@ -55,7 +55,7 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        if (!player.IsClientSide() || !HasComp<ReplaySpectatorComponent>(player))
+        if (!IsClientSide(player) || !HasComp<ReplaySpectatorComponent>(player))
         {
             // Player is trying to move -> behave like the ghost-on-move component.
             SpawnSpectatorGhost(new EntityCoordinates(player, default), true);

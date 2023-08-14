@@ -180,7 +180,7 @@ namespace Content.Client.Verbs
         public SortedSet<Verb> GetVerbs(EntityUid target, EntityUid user, List<Type> verbTypes,
             bool force = false)
         {
-            if (!target.IsClientSide())
+            if (!IsClientSide(target))
             {
                 RaiseNetworkEvent(new RequestServerVerbsEvent(ToNetEntity(target), verbTypes, adminRequest: force));
             }
@@ -214,7 +214,7 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            if (verb.ClientExclusive || target.IsClientSide())
+            if (verb.ClientExclusive || IsClientSide(target))
                 // is this a client exclusive (gui) verb?
                 ExecuteVerb(verb, user.Value, target);
             else

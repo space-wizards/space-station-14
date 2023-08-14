@@ -346,7 +346,7 @@ namespace Content.Client.Examine
             var canSeeClearly = !HasComp<BlurryVisionComponent>(playerEnt);
 
             OpenTooltip(playerEnt.Value, entity, centeredOnCursor, false, knowTarget: canSeeClearly);
-            if (entity.IsClientSide()
+            if (IsClientSide(entity)
                 || _client.RunLevel == ClientRunLevel.SinglePlayerGame) // i.e. a replay
             {
                 message = GetExamineText(entity, playerEnt);

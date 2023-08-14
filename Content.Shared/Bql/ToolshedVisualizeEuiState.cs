@@ -6,9 +6,9 @@ namespace Content.Shared.Bql;
 [Serializable, NetSerializable]
 public sealed class ToolshedVisualizeEuiState : EuiStateBase
 {
-    public readonly (string name, EntityUid entity)[] Entities;
+    public readonly (string name, NetEntity entity)[] Entities;
 
-    public ToolshedVisualizeEuiState((string name, EntityUid entity)[] entities)
+    public ToolshedVisualizeEuiState((string name, NetEntity entity)[] entities)
     {
         Entities = entities;
     }

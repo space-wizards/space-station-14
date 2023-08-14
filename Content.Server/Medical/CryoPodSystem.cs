@@ -134,7 +134,7 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
         if (cryoPodComponent.BodyContainer.ContainedEntity != null)
             return;
 
-        var doAfterArgs = new DoAfterArgs(args.User, cryoPodComponent.EntryDelay, new CryoPodDragFinished(), uid, target: args.Dragged, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, args.User, cryoPodComponent.EntryDelay, new CryoPodDragFinished(), uid, target: args.Dragged, used: uid)
         {
             BreakOnDamage = true,
             BreakOnTargetMove = true,

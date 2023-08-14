@@ -50,7 +50,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await StartConstruction(WallConstruction.Wall);
         await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
-        Assert.That(Target.HasValue && Target.Value.IsClientSide());
+        Assert.That(Target.HasValue && CEntMan.IsClientSide(Target.Value));
 
         await Interact(Steel, 5);
         AssertPrototype(WallConstruction.Girder);

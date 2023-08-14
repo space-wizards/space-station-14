@@ -51,7 +51,7 @@ public sealed partial class ReplaySpectatorSystem
         if (old == null)
             return;
 
-        if (old.Value.IsClientSide())
+        if (IsClientSide(old.Value))
             Del(old.Value);
         else
             RemComp<ReplaySpectatorComponent>(old.Value);
@@ -77,7 +77,7 @@ public sealed partial class ReplaySpectatorSystem
 
         if (old != null)
         {
-            if (old.Value.IsClientSide())
+            if (IsClientSide(old.Value))
                 QueueDel(old.Value);
             else
                 RemComp<ReplaySpectatorComponent>(old.Value);

@@ -66,7 +66,7 @@ public sealed class SharpSystem : EntitySystem
             return;
 
         var doAfter =
-            new DoAfterArgs(user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
+            new DoAfterArgs(EntityManager, user, sharp.ButcherDelayModifier * butcher.ButcherDelay, new SharpDoAfterEvent(), knife, target: target, used: knife)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

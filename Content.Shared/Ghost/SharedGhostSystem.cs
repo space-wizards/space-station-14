@@ -59,7 +59,7 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public struct GhostWarp
     {
-        public GhostWarp(EntityUid entity, string displayName, bool isWarpPoint)
+        public GhostWarp(NetEntity entity, string displayName, bool isWarpPoint)
         {
             Entity = entity;
             DisplayName = displayName;
@@ -70,11 +70,13 @@ namespace Content.Shared.Ghost
         /// The entity representing the warp point.
         /// This is passed back to the server in <see cref="GhostWarpToTargetRequestEvent"/>
         /// </summary>
-        public EntityUid Entity { get; }
+        public NetEntity Entity { get; }
+
         /// <summary>
         /// The display name to be surfaced in the ghost warps menu
         /// </summary>
         public string DisplayName { get; }
+
         /// <summary>
         /// Whether this warp represents a warp point or a player
         /// </summary>
@@ -105,9 +107,9 @@ namespace Content.Shared.Ghost
     [Serializable, NetSerializable]
     public sealed class GhostWarpToTargetRequestEvent : EntityEventArgs
     {
-        public EntityUid Target { get; }
+        public NetEntity Target { get; }
 
-        public GhostWarpToTargetRequestEvent(EntityUid target)
+        public GhostWarpToTargetRequestEvent(NetEntity target)
         {
             Target = target;
         }

@@ -238,7 +238,7 @@ namespace Content.Server.Construction
                     interactDoAfter.User,
                     interactDoAfter.Used!.Value,
                     uid,
-                    interactDoAfter.ClickLocation);
+                    ToCoordinates(interactDoAfter.ClickLocation));
 
                 doAfterState = DoAfterState.Completed;
             }
@@ -279,9 +279,9 @@ namespace Content.Server.Construction
                     // If we still haven't completed this step's DoAfter...
                     if (doAfterState == DoAfterState.None && insertStep.DoAfter > 0)
                     {
-                        var doAfterEv = new ConstructionInteractDoAfterEvent(interactUsing);
+                        var doAfterEv = new ConstructionInteractDoAfterEvent(EntityManager, interactUsing);
 
-                        var doAfterEventArgs = new DoAfterArgs(interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
+                        var doAfterEventArgs = new DoAfterArgs(EntityManager, interactUsing.User, step.DoAfter, doAfterEv, uid, uid, interactUsing.Used)
                         {
                             BreakOnDamage = false,
                             BreakOnTargetMove = true,
@@ -365,7 +365,7 @@ namespace Content.Server.Construction
                         uid,
                         TimeSpan.FromSeconds(toolInsertStep.DoAfter),
                         new [] { toolInsertStep.Tool },
-                        new ConstructionInteractDoAfterEvent(interactUsing),
+                        new ConstructionInteractDoAfterEvent(EntityManager, interactUsing),
                         out var doAfter);
 
                     return result && doAfter != null ? HandleResult.DoAfter : HandleResult.False;

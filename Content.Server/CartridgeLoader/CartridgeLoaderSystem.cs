@@ -307,19 +307,21 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     private void OnLoaderUiMessage(EntityUid loaderUid, CartridgeLoaderComponent component, CartridgeLoaderUiMessage message)
     {
+        var cartridge = ToEntity(message.CartridgeUid);
+
         switch (message.Action)
         {
             case CartridgeUiMessageAction.Activate:
-                ActivateProgram(loaderUid, message.CartridgeUid, component);
+                ActivateProgram(loaderUid, cartridge, component);
                 break;
             case CartridgeUiMessageAction.Deactivate:
-                DeactivateProgram(loaderUid, message.CartridgeUid, component);
+                DeactivateProgram(loaderUid, cartridge, component);
                 break;
             case CartridgeUiMessageAction.Install:
-                InstallCartridge(loaderUid, message.CartridgeUid, component);
+                InstallCartridge(loaderUid, cartridge, component);
                 break;
             case CartridgeUiMessageAction.Uninstall:
-                UninstallProgram(loaderUid, message.CartridgeUid, component);
+                UninstallProgram(loaderUid, cartridge, component);
                 break;
             case CartridgeUiMessageAction.UIReady:
                 if (component.ActiveProgram.HasValue)

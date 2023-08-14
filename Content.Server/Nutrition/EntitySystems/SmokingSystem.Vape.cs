@@ -35,7 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
         }
 
-        private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args) 
+        private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args)
         {
             _solutionContainerSystem.TryGetRefillableSolution(uid, out var solution);
 
@@ -92,7 +92,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), args.Target.Value,
                     args.Target.Value);
-                
+
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced-user", ("target", targetName)), args.User,
                     args.User);
@@ -109,7 +109,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 comp.CancelToken = new CancellationTokenSource();
 
                 var vapeDoAfterEvent = new VapeDoAfterEvent(solution, forced);
-                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(args.User, delay, vapeDoAfterEvent, uid, target: args.Target, used: uid)
+                _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, args.User, delay, vapeDoAfterEvent, uid, target: args.Target, used: uid)
                 {
                     BreakOnTargetMove = true,
                     BreakOnUserMove = false,
@@ -148,7 +148,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _atmosphereSystem.Merge(environment, merger);
 
             args.Solution.RemoveAllSolution();
-            
+
             if (args.Forced)
             {
                 var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
@@ -157,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-forced", ("user", userName)), args.Args.Target.Value,
                     args.Args.Target.Value);
-                
+
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-user-forced", ("target", targetName)), args.Args.User,
                     args.Args.Target.Value);

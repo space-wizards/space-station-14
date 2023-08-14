@@ -48,7 +48,7 @@ namespace Content.Shared.Examine
 
         public bool IsInDetailsRange(EntityUid examiner, EntityUid entity)
         {
-            if (entity.IsClientSide())
+            if (IsClientSide(entity))
                 return true;
 
             // check if the mob is in critical or dead
@@ -72,7 +72,7 @@ namespace Content.Shared.Examine
         public bool CanExamine(EntityUid examiner, EntityUid examined)
         {
             // special check for client-side entities stored in null-space for some UI guff.
-            if (examined.IsClientSide())
+            if (IsClientSide(examined))
                 return true;
 
             return !Deleted(examined) && CanExamine(examiner, EntityManager.GetComponent<TransformComponent>(examined).MapPosition,

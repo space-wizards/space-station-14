@@ -6,9 +6,23 @@ namespace Content.Shared.Body.Part;
 [Serializable, NetSerializable]
 [Access(typeof(SharedBodySystem))]
 [DataRecord]
-public sealed record BodyPartSlot(string Id, EntityUid Parent, BodyPartType? Type)
+public sealed record BodyPartSlot(string Id, BodyPartType? Type)
 {
-    public EntityUid? Child { get; set; }
+    [NonSerialized]
+    public EntityUid Parent;
+
+    public NetEntity NetParent;
+
+    [NonSerialized]
+    public EntityUid? Child;
+
+    public NetEntity? NetChild;
+
+    public void SetChild(EntityUid? child, NetEntity? netChild)
+    {
+        Child = child;
+        NetChild = netChild;
+    }
 
     // Rider doesn't suggest explicit properties during deconstruction without this
     public void Deconstruct(out EntityUid? child, out string id, out EntityUid parent, out BodyPartType? type)

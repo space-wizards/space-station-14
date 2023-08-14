@@ -311,7 +311,7 @@ public sealed class DrinkSystem : EntitySystem
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(user, drinkSolution);
 
-        var doAfterEventArgs = new DoAfterArgs(
+        var doAfterEventArgs = new DoAfterArgs(EntityManager,
             user,
             forceDrink ? drink.ForceFeedDelay : drink.Delay,
             new ConsumeDoAfterEvent(drinkSolution.Name, flavors),

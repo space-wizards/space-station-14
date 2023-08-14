@@ -26,7 +26,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// <summary>
     /// List of enabled destinations and information about them.
     /// </summary>
-    public readonly List<(EntityUid, string, TimeSpan, bool)> Destinations;
+    public readonly List<(NetEntity, string, TimeSpan, bool)> Destinations;
 
     /// <summary>
     /// Which destination it is currently linked to, if any.
@@ -43,7 +43,7 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
     /// </summary>
     public readonly TimeSpan LastOpen;
 
-    public GatewayBoundUserInterfaceState(List<(EntityUid, string, TimeSpan, bool)> destinations,
+    public GatewayBoundUserInterfaceState(List<(NetEntity, string, TimeSpan, bool)> destinations,
         NetEntity? current, TimeSpan nextClose, TimeSpan lastOpen)
     {
         Destinations = destinations;
@@ -56,9 +56,9 @@ public sealed class GatewayBoundUserInterfaceState : BoundUserInterfaceState
 [Serializable, NetSerializable]
 public sealed class GatewayOpenPortalMessage : BoundUserInterfaceMessage
 {
-    public EntityUid Destination;
+    public NetEntity Destination;
 
-    public GatewayOpenPortalMessage(EntityUid destination)
+    public GatewayOpenPortalMessage(NetEntity destination)
     {
         Destination = destination;
     }

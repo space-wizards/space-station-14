@@ -237,7 +237,7 @@ namespace Content.Server.Storage.EntitySystems
                 //If there's only one then let's be generous
                 if (validStorables.Count > 1)
                 {
-                    var doAfterArgs = new DoAfterArgs(args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
+                    var doAfterArgs = new DoAfterArgs(EntityManager, args.User, 0.2f * validStorables.Count, new AreaPickupDoAfterEvent(validStorables), uid, target: uid)
                     {
                         BreakOnDamage = true,
                         BreakOnUserMove = true,

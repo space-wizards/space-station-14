@@ -286,7 +286,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
     {
-        if (Target == null || !Target.Value.IsClientSide())
+        if (Target == null || !CEntMan.IsClientSide(Target.Value))
         {
             await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
             await RunTicks(1);
@@ -393,7 +393,7 @@ public abstract partial class InteractionTest
 
         await RunTicks(5);
 
-        if (target.IsClientSide())
+        if (CEntMan.IsClientSide(target))
         {
             Assert.That(CEntMan.Deleted(target), Is.EqualTo(shouldSucceed),
                 $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");

@@ -31,7 +31,7 @@ public sealed class AdminFaxEui : BaseEui
         var entries = new List<AdminFaxEntry>();
         while (faxes.MoveNext(out var uid, out var fax, out var device))
         {
-            entries.Add(new AdminFaxEntry(uid, fax.FaxName, device.Address));
+            entries.Add(new AdminFaxEntry(_entityManager.ToNetEntity(uid), fax.FaxName, device.Address));
         }
         return new AdminFaxEuiState(entries);
     }
@@ -48,13 +48,13 @@ public sealed class AdminFaxEui : BaseEui
                     !_entityManager.HasComponent<GhostComponent>(Player.AttachedEntity.Value))
                     return;
 
-                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, followData.TargetFax);
+                _followerSystem.StartFollowingEntity(Player.AttachedEntity.Value, _entityManager.ToEntity(followData.TargetFax));
                 break;
             }
             case AdminFaxEuiMsg.Send sendData:
             {
                 var printout = new FaxPrintout(sendData.Content, sendData.Title, null, sendData.StampState, new() { sendData.From });
-                _faxSystem.Receive(sendData.Target, printout);
+                _faxSystem.Receive(_entityManager.ToEntity(sendData.Target), printout);
                 break;
             }
         }

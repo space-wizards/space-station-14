@@ -54,7 +54,7 @@ public partial class SharedBodySystem
     {
         if (part.ParentSlot is { } slot)
         {
-            slot.Child = null;
+            slot.SetChild(null, ToNetEntity(null));
             DirtyAllComponents(slot.Parent);
         }
 
@@ -73,7 +73,11 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, parent, partType);
+        var slot = new BodyPartSlot(slotId, partType)
+        {
+            Parent = parent,
+            NetParent = ToNetEntity(parent),
+        };
         part.Children.Add(slotId, slot);
 
         return slot;
@@ -91,7 +95,11 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, parentId.Value, null);
+        slot = new BodyPartSlot(id, null)
+        {
+            Parent = parentId.Value,
+            NetParent = ToNetEntity(parentId.Value),
+        };
         if (!parent.Children.TryAdd(id, slot))
         {
             slot = null;
@@ -191,7 +199,7 @@ public partial class SharedBodySystem
         if (!container.Insert(partId.Value))
             return false;
 
-        slot.Child = partId;
+        slot.SetChild(partId, ToNetEntity(partId));
         part.ParentSlot = slot;
 
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))
@@ -241,7 +249,7 @@ public partial class SharedBodySystem
 
         var oldBodyNullable = part.Body;
 
-        slot.Child = null;
+        slot.SetChild(null, null);
         part.ParentSlot = null;
         part.Body = null;
 

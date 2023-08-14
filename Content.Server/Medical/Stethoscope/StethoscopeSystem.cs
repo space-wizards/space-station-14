@@ -103,7 +103,7 @@ namespace Content.Server.Medical
         // construct the doafter and start it
         private void StartListening(EntityUid scope, EntityUid user, EntityUid target, StethoscopeComponent comp)
         {
-            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(EntityManager, user, comp.Delay, new StethoscopeDoAfterEvent(), scope, target: target, used: scope)
             {
                 BreakOnTargetMove = true,
                 BreakOnUserMove = true,

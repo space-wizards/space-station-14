@@ -43,7 +43,7 @@ public sealed partial class GunSystem
             EnsureComp<AmmoComponent>(ent.Value);
         }
 
-        if (ent != null && ent.Value.IsClientSide())
+        if (ent != null && IsClientSide(ent.Value))
             Del(ent.Value);
 
         var cycledEvent = new GunCycledEvent();

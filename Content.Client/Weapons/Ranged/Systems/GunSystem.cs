@@ -194,7 +194,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (throwItems)
             {
                 Recoil(user, direction, gun.CameraRecoilScalar);
-                if (ent!.Value.IsClientSide())
+                if (IsClientSide(ent!.Value))
                     Del(ent.Value);
                 else
                     RemComp<AmmoComponent>(ent.Value);
@@ -220,7 +220,7 @@ public sealed partial class GunSystem : SharedGunSystem
                         Audio.PlayPredicted(gun.SoundEmpty, gunUid, user);
                     }
 
-                    if (ent!.Value.IsClientSide())
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
 
                     break;
@@ -228,7 +228,7 @@ public sealed partial class GunSystem : SharedGunSystem
                     MuzzleFlash(gunUid, newAmmo, user);
                     Audio.PlayPredicted(gun.SoundGunshot, gunUid, user);
                     Recoil(user, direction, gun.CameraRecoilScalar);
-                    if (ent!.Value.IsClientSide())
+                    if (IsClientSide(ent!.Value))
                         Del(ent.Value);
                     else
                         RemComp<AmmoComponent>(ent.Value);

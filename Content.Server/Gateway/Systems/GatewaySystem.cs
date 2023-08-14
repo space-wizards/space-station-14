@@ -66,14 +66,14 @@ public sealed class GatewaySystem : EntitySystem
 
     private void UpdateUserInterface(EntityUid uid, GatewayComponent comp)
     {
-        var destinations = new List<(EntityUid, String, TimeSpan, bool)>();
+        var destinations = new List<(NetEntity, String, TimeSpan, bool)>();
         foreach (var destUid in comp.Destinations)
         {
             var dest = Comp<GatewayDestinationComponent>(destUid);
             if (!dest.Enabled)
                 continue;
 
-            destinations.Add((destUid, dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
+            destinations.Add((ToNetEntity(destUid), dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
         }
 
         GetDestination(uid, out var current);
@@ -89,15 +89,17 @@ public sealed class GatewaySystem : EntitySystem
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
+        var desto = ToEntity(args.Destination);
+
         if (HasComp<PortalComponent>(uid) ||
-            HasComp<PortalComponent>(args.Destination) ||
-            !TryComp<GatewayDestinationComponent>(args.Destination, out var dest) ||
+            HasComp<PortalComponent>(desto) ||
+            !TryComp<GatewayDestinationComponent>(desto, out var dest) ||
             !dest.Enabled ||
             _timing.CurTime < dest.NextReady)
             return;
 
         // TODO: admin log???
-        OpenPortal(uid, comp, args.Destination, dest);
+        OpenPortal(uid, comp, desto, dest);
     }
 
     private void OpenPortal(EntityUid uid, GatewayComponent comp, EntityUid dest, GatewayDestinationComponent destComp)

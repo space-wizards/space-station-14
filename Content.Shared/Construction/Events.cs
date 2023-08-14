@@ -110,15 +110,15 @@ public sealed class ResponseConstructionGuide : EntityEventArgs
 public sealed class ConstructionInteractDoAfterEvent : DoAfterEvent
 {
     [DataField("clickLocation")]
-    public readonly EntityCoordinates ClickLocation;
+    public readonly NetCoordinates ClickLocation;
 
     private ConstructionInteractDoAfterEvent()
     {
     }
 
-    public ConstructionInteractDoAfterEvent(InteractUsingEvent ev)
+    public ConstructionInteractDoAfterEvent(IEntityManager entManager, InteractUsingEvent ev)
     {
-        ClickLocation = ev.ClickLocation;
+        ClickLocation = entManager.ToNetCoordinates(ev.ClickLocation);
     }
 
     public override DoAfterEvent Clone() => this;

@@ -125,7 +125,7 @@ namespace Content.Client.RoundEnd
                     VerticalExpand = true,
                 };
 
-                if (_entityManager.TryGetComponent(playerInfo.PlayerEntityUid, out SpriteComponent? sprite))
+                if (_entityManager.TryGetComponent(_entityManager.ToEntity(playerInfo.PlayerEntityUid), out SpriteComponent? sprite))
                 {
                     hBox.AddChild(new SpriteView
                     {

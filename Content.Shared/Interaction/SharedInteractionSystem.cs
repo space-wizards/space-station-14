@@ -1097,7 +1097,7 @@ namespace Content.Shared.Interaction
                 return false;
             }
 
-            if (uid.IsClientSide())
+            if (IsClientSide(uid))
             {
                 Logger.WarningS("system.interaction",
                     $"Client sent interaction with client-side entity. Session={session}, Uid={uid}");

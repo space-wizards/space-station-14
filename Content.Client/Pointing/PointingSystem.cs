@@ -31,7 +31,7 @@ public sealed class PointingSystem : SharedPointingSystem
 
     private void AddPointingVerb(GetVerbsEvent<Verb> args)
     {
-        if (args.Target.IsClientSide())
+        if (IsClientSide(args.Target))
             return;
 
         // Really this could probably be a properly predicted event, but that requires reworking pointing. For now

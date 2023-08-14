@@ -95,7 +95,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var doAfterArgs = new DoAfterArgs(user, comp.Delay, new RCDDoAfterEvent(ToNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.Delay, new RCDDoAfterEvent(ToNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
