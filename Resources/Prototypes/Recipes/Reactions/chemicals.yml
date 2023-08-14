@@ -57,7 +57,7 @@
   reactants:
     SulfuricAcid:
       amount: 1
-    Chlorine:
+    Plasma:
       amount: 1
     Potassium:
       amount: 1

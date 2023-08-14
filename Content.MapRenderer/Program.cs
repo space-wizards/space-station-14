@@ -15,7 +15,7 @@ using SixLabors.ImageSharp.Formats.Webp;
 
 namespace Content.MapRenderer
 {
-    internal class Program
+    internal sealed class Program
     {
         private const string NoMapsChosenMessage = "No maps were chosen";
         private static readonly Func<string, string> ChosenMapIdNotIntMessage = id => $"The chosen id is not a valid integer: {id}";
@@ -166,7 +166,7 @@ namespace Content.MapRenderer
                         Directory.CreateDirectory(directory);
 
                         var fileName = Path.GetFileNameWithoutExtension(map);
-                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format.ToString()}";
+                        var savePath = $"{directory}{Path.DirectorySeparatorChar}{fileName}-{i}.{arguments.Format}";
 
                         Console.WriteLine($"Writing grid of size {grid.Width}x{grid.Height} to {savePath}");
 

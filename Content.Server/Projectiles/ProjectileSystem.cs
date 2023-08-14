@@ -1,4 +1,5 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Effects;
 using Content.Server.Weapons.Ranged.Systems;
 using Content.Shared.Camera;
 using Content.Shared.Damage;
@@ -15,6 +16,7 @@ namespace Content.Server.Projectiles;
 public sealed class ProjectileSystem : SharedProjectileSystem
 {
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ColorFlashEffectSystem _color = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly GunSystem _guns = default!;
     [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
@@ -53,7 +55,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
         {
             if (modifiedDamage.Total > FixedPoint2.Zero && !deleted)
             {
-                RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid> { target }), Filter.Pvs(target, entityManager: EntityManager));
+                _color.RaiseEffect(Color.Red, new List<EntityUid> { target }, Filter.Pvs(target, entityManager: EntityManager));
             }
 
             _adminLogger.Add(LogType.BulletHit,
