@@ -1,9 +1,4 @@
 Entries:
-- author: Alekshhh
-  changes:
-  - {message: Fixed dwarf accent word typo from 'anatag' to 'antag', type: Fix}
-  id: 4069
-  time: '2023-06-22T19:48:38.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Added 22 new bounties for cargo., type: Add}
@@ -3014,3 +3009,9 @@ Entries:
   - {message: 'Emagged recyclers now not only gib people, but other mobs too.', type: Fix}
   id: 4568
   time: '2023-08-13T23:54:52.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: 'Fixed new players added to admin logs defaulting to selected, even
+      when not all players are selected.', type: Fix}
+  id: 4569
+  time: '2023-08-14T01:53:48.0000000+00:00'
