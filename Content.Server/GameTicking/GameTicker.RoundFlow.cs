@@ -60,7 +60,7 @@ namespace Content.Server.GameTicking
         /// looking naked in the crew manifest.
         /// </summary>
         [ViewVariables]
-        private List<EntityUid> _expandPvsEntities = new();
+        private HashSet<EntityUid> _expandPvsEntities = new();
 
         [ViewVariables]
         private GameRunLevel _runLevel;
@@ -84,6 +84,11 @@ namespace Content.Server.GameTicking
         private void InitializeRoundFlow()
         {
             SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+        }
+
+        private void OnEntityDeleted(EntityUid uid)
+        {
+            _expandPvsEntities.Remove(uid);
         }
 
         /// <summary>
@@ -349,6 +354,7 @@ namespace Content.Server.GameTicking
             // Should already be empty, but just in case.
             _expandPvsEntities.Clear();
             _expandPvsPlayers.Clear();
+            EntityManager.EntityDeleted += OnEntityDeleted;
 
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
@@ -407,7 +413,7 @@ namespace Content.Server.GameTicking
             // Recursively collect entities for the crew manifest.
             void RecursePvsEntities(IEnumerable<EntityUid> entities)
             {
-                _expandPvsEntities.AddRange(entities);
+                _expandPvsEntities.UnionWith(entities);
 
                 foreach (var entity in entities)
                 {
@@ -516,6 +522,7 @@ namespace Content.Server.GameTicking
 
             _allPreviousGameRules.Clear();
 
+            EntityManager.EntityDeleted -= OnEntityDeleted;
             _expandPvsPlayers.Clear();
             _expandPvsEntities.Clear();
 

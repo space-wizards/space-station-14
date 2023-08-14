@@ -650,6 +650,15 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     public bool IsCharacterDeadIc(Mind mind)
     {
+        if (mind.OwnedEntity is { } owned)
+        {
+            var ev = new GetCharactedDeadIcEvent(null);
+            RaiseLocalEvent(owned, ref ev);
+
+            if (ev.Dead != null)
+                return ev.Dead.Value;
+        }
+
         return IsCharacterDeadPhysically(mind);
     }
 
@@ -665,3 +674,11 @@ public sealed class MindSystem : EntitySystem
         return "(originally " + mind.OriginalOwnerUserId + ")";
     }
 }
+
+/// <summary>
+/// Raised on an entity to determine whether or not they are "dead" in IC-logic.
+/// If not handled, then it will simply check if they are dead physically.
+/// </summary>
+/// <param name="Dead"></param>
+[ByRefEvent]
+public record struct GetCharactedDeadIcEvent(bool? Dead);
