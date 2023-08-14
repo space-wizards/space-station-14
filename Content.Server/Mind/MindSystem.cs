@@ -161,6 +161,8 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
+        TransferTo(mind, null, createGhost: false);
+
         if (component.GhostOnShutdown && mind.Session != null)
         {
             var xform = Transform(uid);
@@ -184,7 +186,7 @@ public sealed class MindSystem : EntitySystem
                 {
                     // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                     Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-                    TransferTo(mind, null);
+                    TransferTo(mind, null, createGhost: false);
                     return;
                 }
 
@@ -381,7 +383,7 @@ public sealed class MindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already owned by another mind.
     /// </exception>
-    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
+    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true)
     {
         if (entity == mind.OwnedEntity)
             return;
@@ -407,9 +409,9 @@ public sealed class MindSystem : EntitySystem
                 alreadyAttached = true;
             }
         }
-        else
+        else if (createGhost)
         {
-            var position = mind.OwnedEntity == null
+            var position = Deleted(mind.OwnedEntity)
                 ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
                 : Transform(mind.OwnedEntity.Value).MapPosition;
 
