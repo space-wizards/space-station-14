@@ -13,6 +13,7 @@ air-alarm-ui-window-device-count-label = Total Devices
 air-alarm-ui-window-resync-devices-label = Resync
 
 air-alarm-ui-window-mode-label = Mode
+air-alarm-ui-window-auto-mode-label = Auto mode
 
 air-alarm-ui-window-pressure = {$pressure} kPa
 air-alarm-ui-window-pressure-indicator = Pressure: [color={$color}]{$pressure} kPa[/color]
@@ -39,6 +40,8 @@ air-alarm-ui-mode-none = None
 ### General
 
 air-alarm-ui-widget-enable = Enabled
+air-alarm-ui-widget-copy = Copy settings to similar devices
+air-alarm-ui-widget-copy-tooltip = Copies the settings of this device to all devices in this air alarm tab.
 air-alarm-ui-widget-ignore = Ignore
 air-alarm-ui-atmos-net-device-label = Address: {$address}
 

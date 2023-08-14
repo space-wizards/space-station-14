@@ -1,10 +1,8 @@
 using Content.Client.Guidebook;
 using Content.Client.Guidebook.Richtext;
-using NUnit.Framework;
 using Robust.Shared.ContentPack;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Content.IntegrationTests.Tests.Guidebook;
 
@@ -17,7 +15,7 @@ public sealed class GuideEntryPrototypeTests
     [Test]
     public async Task ValidatePrototypeContents()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
+        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
         var client = pairTracker.Pair.Client;
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();

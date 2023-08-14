@@ -1,4 +1,4 @@
-﻿<windows:CharacterWindow
+<windows:CharacterWindow
     xmlns="https://spacestation14.io"
     xmlns:cc="clr-namespace:Content.Client.UserInterface.Controls"
     xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Character.Windows"

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Weapons.Reflect;
 
 namespace Content.Shared.Weapons.Ranged.Events;

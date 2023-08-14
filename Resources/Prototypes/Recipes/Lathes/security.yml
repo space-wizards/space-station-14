@@ -21,13 +21,21 @@
     Plastic: 300
 
 - type: latheRecipe
+  id: Truncheon
+  result: Truncheon
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 300
+
+- type: latheRecipe
   id: WeaponLaserCarbine
   result: WeaponLaserCarbine
-  completetime: 5
+  completetime: 8
   materials:
-    Steel: 750
-    Glass: 500
-    Plastic: 250
+    Steel: 2000
+    Glass: 800
+    Plastic: 500
 
 - type: latheRecipe
   id: WeaponAdvancedLaser
@@ -77,6 +85,14 @@
 - type: latheRecipe
   id: ClothingEyesGlassesSecurity
   result: ClothingEyesGlassesSecurity
+  completetime: 2
+  materials:
+    Steel: 300
+    Glass: 200
+    
+- type: latheRecipe
+  id: ClothingEyesHudSecurity
+  result: ClothingEyesHudSecurity
   completetime: 2
   materials:
     Steel: 300
@@ -295,62 +311,6 @@
   materials:
     Steel: 350
     Plastic: 600
-
-- type: latheRecipe
-  id: CartridgePistolHighVelocity
-  result: CartridgePistolHighVelocity
-  completetime: 2
-  materials:
-    Steel: 20
-
-- type: latheRecipe
-  id: CartridgeMagnumHighVelocity
-  result: CartridgeMagnumHighVelocity
-  completetime: 2
-  materials:
-    Steel: 40
-
-- type: latheRecipe
-  id: CartridgeLightRifleHighVelocity
-  result: CartridgeLightRifleHighVelocity
-  completetime: 2
-  materials:
-    Steel: 40
-
-- type: latheRecipe
-  id: CartridgeRifleHighVelocity
-  result: CartridgeRifleHighVelocity
-  completetime: 2
-  materials:
-    Steel: 30
-
-- type: latheRecipe
-  id: MagazineBoxPistolHighVelocity
-  result: MagazineBoxPistolHighVelocity
-  completetime: 5
-  materials:
-    Steel: 1250
-
-- type: latheRecipe
-  id: MagazineBoxMagnumHighVelocity
-  result: MagazineBoxMagnumHighVelocity
-  completetime: 5
-  materials:
-    Steel: 2450
-
-- type: latheRecipe
-  id: MagazineBoxLightRifleHighVelocity
-  result: MagazineBoxLightRifleHighVelocity
-  completetime: 5
-  materials:
-    Steel: 2050
-
-- type: latheRecipe
-  id: MagazineBoxRifleHighVelocity
-  result: MagazineBoxRifleHighVelocity
-  completetime: 5
-  materials:
-    Steel: 1850
 
 - type: latheRecipe
   id: ShellShotgunIncendiary

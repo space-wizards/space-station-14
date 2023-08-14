@@ -1,5 +1,8 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Construction;
 using Content.Server.Tools.Components;
+using Content.Server.Wires;
+using Content.Shared.Construction.Steps;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -7,8 +10,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Wires;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using System.Linq;
 
 namespace Content.Server.Tools.Systems;
 
@@ -18,6 +23,7 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
 
     public override void Initialize()
     {
@@ -36,6 +42,14 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)
     {
+        // If any construction graph edges has its conditions meet and requires welding, then this construction takes priority
+        if (_construction.GetCurrentNode(uid)?.Edges.Any(x => _construction.CheckConditions(uid, x.Conditions)
+            && x.Steps.Any(y => (y as ToolConstructionGraphStep)?.Tool == "Welding")) == true)
+        {
+            args.Handled = false;
+            return;
+        }
+
         if (args.Handled)
             return;
 
@@ -68,7 +82,7 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, tool, user, component))
             return false;
 
-        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent(), fuel: component.FuelConsumption))
+        if (!_toolSystem.UseTool(tool, user, uid, component.WeldingTime.Seconds, component.WeldingQuality, new WeldFinishedEvent()))
             return false;
 
         // Log attempt

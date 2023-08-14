@@ -8,6 +8,7 @@ using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
 using Content.Shared.Atmos;
@@ -18,7 +19,6 @@ using Content.Shared.Audio;
 using Content.Shared.Examine;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
@@ -28,9 +28,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -66,7 +66,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!vent.Enabled
                 || !TryComp(uid, out AtmosDeviceComponent? device)
                 || !TryComp(uid, out NodeContainerComponent? nodeContainer)
-                || !nodeContainer.TryGetNode(nodeName, out PipeNode? pipe))
+                || !_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
             {
                 return;
             }
@@ -79,7 +79,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
             }
 
-            var timeDelta =  (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta =  args.dt;
             var pressureDelta = (float) timeDelta * vent.TargetPressureChange;
 
             if (vent.PumpDirection == VentPumpDirection.Releasing && pipe.Air.Pressure > 0)
@@ -303,7 +303,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 VentPumpDirection.Siphoning => component.Outlet,
                 _ => throw new ArgumentOutOfRangeException()
             };
-            if(nodeContainer.TryGetNode(nodeName, out PipeNode? pipe))
+            if (_nodeContainer.TryGetNode(nodeContainer, nodeName, out PipeNode? pipe))
                 gasMixDict.Add(nodeName, pipe.Air);
 
             args.GasMixtures = gasMixDict;

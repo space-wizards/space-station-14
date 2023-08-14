@@ -14,8 +14,16 @@
     description: ghost-role-information-space-dragon-description
   - type: GhostTakeoverAvailable
   - type: HTN
-    rootTask: XenoCompound
-  - type: Faction
+    rootTask:
+      task: XenoCompound
+    blackboard:
+      NavInteract: !type:Bool
+        true
+      NavPry: !type:Bool
+        true
+      NavSmash: !type:Bool
+        true
+  - type: NpcFactionMember
     factions:
     - Dragon
   - type: Speech
@@ -64,6 +72,11 @@
         layer:
         - FlyingMobLayer
   - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -90,6 +103,7 @@
       path: /Audio/Animals/space_dragon_roar.ogg
     soundPerceivedByOthers: false # A 75% chance for a loud roar would get old fast.
   - type: MeleeWeapon
+    altDisarm: false
     hidden: true
     soundHit:
       path: /Audio/Weapons/Xeno/alien_claw_flesh3.ogg
@@ -132,6 +146,9 @@
       name: action-name-carp-rift
       description: action-description-carp-rift
       useDelay: 1
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   parent: BaseMobDragon
@@ -150,3 +167,8 @@
     spawned:
     - id: FoodMeatDragon
       amount: 1
+  # half damage, spread evenly
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 15

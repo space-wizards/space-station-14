@@ -6,8 +6,9 @@
   description: It looks friendly. Why don't you give it a hug?
   components:
   - type: HTN
-    rootTask: SimpleHostileCompound
-  - type: Faction
+    rootTask:
+      task: SimpleHostileCompound
+  - type: NpcFactionMember
     factions:
     - SimpleHostile
   - type: Sprite
@@ -33,10 +34,10 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      100: Critical
       150: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
+  - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
     bloodReagent: Cryoxadone
@@ -162,7 +163,7 @@
       Dead:
         Base: kangaroo-space-dead
   - type: Stamina
-    excess: 180
+    critThreshold: 180
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
@@ -217,17 +218,14 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       130: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:
         Base: spacespider
         BaseUnshaded: glow
-      Critical:
-        Base: spacespider_dead
       Dead:
         Base: spacespider_dead
   - type: Butcherable

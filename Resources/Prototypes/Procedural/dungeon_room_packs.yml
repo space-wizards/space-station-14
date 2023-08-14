@@ -1,132 +1,43 @@
-# Hook
+# 1341158413 seed cooked top 2 rooms are fucked
+# 17x5 Y
+# 11x5 Y
+# 7x5 YY
+# 5x5 YY
+# 3x5 YY
+
+# 13x3 YY
+# 11x3 Y
+# 7x3 Y
+# 7x7 Y
+
+- type: dungeonRoomPack
+  id: LargeArea0
+  size: 17,17
+  rooms:
+    - 0,0,5,17
+    - 10,10,17,17
+    - 12,0,17,3
+
+- type: dungeonRoomPack
+  id: LargeArea1
+  size: 17,17
+  rooms:
+    - 1,1,6,12
+    - 11,1,16,6
+    - 9,13,16,16
+
 - type: dungeonRoomPack
   id: LargeArea2
   size: 17,17
   rooms:
-    - 7,0,10,11
-    - 6,12,11,17
-    - 12,13,17,16
+    - 1,2,8,7
+    - 1,10,8,15
+    - 13,2,16,15
 
-# Wide corridor vertically up the middle and small corridors on left
 - type: dungeonRoomPack
   id: LargeArea3
   size: 17,17
   rooms:
-    - 6,0,11,11
-    - 6,12,11,17
-    - 0,13,5,16
-    - 1,5,4,12
-    - 0,1,5,4
-
-# Long horizontal corridor with rooms above
-#- type: dungeonRoomPack
-#  id: LargeArea4
-#  size: 17,17
-#  rooms:
-#    - 0,7,17,10
-#    - 0,11,5,16
-#    - 6,11,11,16
-
-# Corridor from botleft to topright with 2 rooms in top left
-- type: dungeonRoomPack
-  id: LargeArea5
-  size: 17,17
-  rooms:
-    # Corridor (with fat bot-left)
-    - 0,1,11,4
-    - 12,0,17,5
-    - 13,6,16,17
-    # Rooms (5x7)
-    - 7,9,12,16
-    - 1,5,6,12
-
-# 17x5 corridor through middle with 2 7x5 rooms off to the side.
-- type: dungeonRoomPack
-  id: LargeArea6
-  size: 17,17
-  rooms:
-    - 0,6,17,11
-    - 0,0,7,5
-    - 10,0,17,5
-
-# 3x7 corridor leading to 7x7 room.
-- type: dungeonRoomPack
-  id: LargeArea7
-  size: 17,17
-  rooms:
-    - 0,7,7,10
-    - 8,5,15,12
-
-# 17x5 corridor to 7x7
-- type: dungeonRoomPack
-  id: LargeArea8
-  size: 17,17
-  rooms:
-    - 0,1,17,6
-    - 5,7,12,14
-
-# Medium
-# Whole area room
-- type: dungeonRoomPack
-  id: MediumArea1
-  size: 5,17
-  rooms:
-    - 0,0,5,17
-
-# Three 5x5 rooms
-- type: dungeonRoomPack
-  id: MediumArea2
-  size: 5,17
-  rooms:
-    - 0,0,5,5
-    - 0,6,5,11
-    - 0,12,5,17
-
-# Two 5x5 and 3x5
-- type: dungeonRoomPack
-  id: MediumArea3
-  size: 5,17
-  rooms:
-    - 0,0,5,5
-    - 0,6,5,11
-    - 1,12,4,17
-
-# 3x5 -> 5x5 -> 3x5
-- type: dungeonRoomPack
-  id: MediumArea4
-  size: 5,17
-  rooms:
-    - 1,0,4,5
-    - 0,6,5,11
-    - 1,12,4,17
-
-# 3x5 then a 13x3
-- type: dungeonRoomPack
-  id: MediumArea5
-  size: 5,17
-  rooms:
-    - 0,0,5,3
-    - 1,4,4,17
-
-# 5x5 then a 11x3
-- type: dungeonRoomPack
-  id: MediumArea6
-  size: 5,17
-  rooms:
-    - 0,0,5,5
-    - 1,6,4,17
-
-# 5x5 then a 11x5
-- type: dungeonRoomPack
-  id: MediumArea7
-  size: 5,17
-  rooms:
-    - 0,0,5,5
-    - 0,6,5,17
-
-# Small
-- type: dungeonRoomPack
-  id: SmallArea1
-  size: 5,5
-  rooms:
-    - 0,0,5,5
+    - 2,3,5,8
+    - 1,10,6,15
+    - 13,2,16,15

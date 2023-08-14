@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
 using Content.Shared.Hands.Components;
@@ -34,6 +35,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly SharedInteractionSystem _interaction = default!;
+    [Dependency] private readonly SharedJointSystem _joints = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -261,6 +263,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             return true;
         }
 
+        _joints.RecursiveClearJoints(toInsert);
         var inside = EnsureComp<InsideEntityStorageComponent>(toInsert);
         inside.Storage = container;
         return component.Contents.Insert(toInsert, EntityManager);
@@ -329,7 +332,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         }
 
         //Checks to see if the opening position, if offset, is inside of a wall.
-        if (component.EnteringOffset != (0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
+        if (component.EnteringOffset != new Vector2(0, 0) && !HasComp<WallMountComponent>(target)) //if the entering position is offset
         {
             var newCoords = new EntityCoordinates(target, component.EnteringOffset);
             if (!_interaction.InRangeUnobstructed(target, newCoords, 0, collisionMask: component.EnteringOffsetCollisionFlags))
@@ -392,7 +395,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
-        var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
+        var allowedToEat = HasComp<ItemComponent>(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
@@ -410,6 +413,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
                 allowedToEat = storeEv is { Handled: true, Cancelled: false };
             }
         }
+
+        if (allowedToEat && whitelist != null)
+            allowedToEat = whitelist.IsValid(toInsert);
 
         return allowedToEat;
     }

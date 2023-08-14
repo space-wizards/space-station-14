@@ -1,9 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Chunking;
+using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
@@ -29,9 +32,12 @@ namespace Content.Server.Decals
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
+        private static readonly Vector2 _boundsMinExpansion = new(0.01f, 0.01f);
+        private static readonly Vector2 _boundsMaxExpansion = new(1.01f, 1.01f);
 
         // If this ever gets parallelised then you'll want to increase the pooled count.
         private ObjectPool<HashSet<Vector2i>> _chunkIndexPool =
@@ -100,7 +106,7 @@ namespace Content.Server.Decals
                 if (!oldChunkCollection.TryGetValue(chunkIndices, out var oldChunk))
                     continue;
 
-                var bounds = new Box2(tilePos - 0.01f, tilePos + 1.01f);
+                var bounds = new Box2(tilePos - _boundsMinExpansion, tilePos + _boundsMaxExpansion);
                 var toRemove = new RemQueue<uint>();
 
                 foreach (var (oldDecalId, decal) in oldChunk.Decals)
@@ -200,7 +206,19 @@ namespace Content.Server.Decals
             if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            TryAddDecal(ev.Decal, ev.Coordinates, out _);
+            if (!TryAddDecal(ev.Decal, ev.Coordinates, out _))
+                return;
+
+            if (eventArgs.SenderSession.AttachedEntity != null)
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{eventArgs.SenderSession.Name} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
         }
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
@@ -221,8 +239,19 @@ namespace Content.Server.Decals
                 return;
 
             // remove all decals on the same tile
-            foreach (var (decalId, _) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
+            foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
             {
+                if (eventArgs.SenderSession.AttachedEntity != null)
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+
                 RemoveDecal(gridId.Value, decalId);
             }
         }
@@ -283,7 +312,7 @@ namespace Content.Server.Decals
 
             foreach (var (uid, decal) in chunk.Decals)
             {
-                if ((position - decal.Coordinates-new Vector2(0.5f, 0.5f)).Length > distance)
+                if ((position - decal.Coordinates - new Vector2(0.5f, 0.5f)).Length() > distance)
                     continue;
 
                 if (validDelegate == null || validDelegate(decal))

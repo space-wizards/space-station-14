@@ -87,6 +87,7 @@
     whitelist:
       components:
       - PhysicalComposition
+      - MobState
       - SpaceGarbage
       tags:
       - Trash
@@ -96,7 +97,6 @@
       - Material
       - Pda
       - IdCard
-      - HumanoidAppearance
       tags:
       - HighRiskItem
     sound:

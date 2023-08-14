@@ -351,7 +351,7 @@ accent-dwarf-words-replace-115 = reddie
 accent-dwarf-words-116 = nuclear agent
 accent-dwarf-words-replace-116 = reddie
 
-accent-dwarf-words-117 = anatag
+accent-dwarf-words-117 = antag
 accent-dwarf-words-replace-117 = baddie
 
 accent-dwarf-words-118 = syndicate

@@ -2,7 +2,7 @@ using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using Content.Server.Chemistry.Components;
 using Content.Server.Chemistry.Components.SolutionManager;
-// using Content.Server.Weapons.Melee;
+using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
@@ -12,6 +12,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Timing;
+using Robust.Shared.GameStates;
 
 namespace Content.Server.Chemistry.EntitySystems
 {
@@ -25,6 +26,14 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, MeleeHitEvent>(OnAttack);
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
+            SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
+        }
+
+        private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
+        {
+            args.State = _solutions.TryGetSolution(uid, component.SolutionName, out var solution)
+                ? new HyposprayComponentState(solution.Volume, solution.MaxVolume)
+                : new HyposprayComponentState(FixedPoint2.Zero, FixedPoint2.Zero);
         }
 
         private void OnUseInHand(EntityUid uid, HyposprayComponent component, UseInHandEvent args)

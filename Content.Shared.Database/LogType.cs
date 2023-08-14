@@ -87,4 +87,5 @@ public enum LogType
     EntityDelete = 82,
     Vote = 83,
     ItemConfigure = 84,
+    DeviceLinking = 85,
 }

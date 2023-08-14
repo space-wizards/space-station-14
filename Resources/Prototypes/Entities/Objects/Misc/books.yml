@@ -249,7 +249,7 @@
 - type: entity
   id: BookChemicalCompendium
   parent: BaseItem
-  name: chemical compendium
+  name: chempendium
   description: A comprehensive guide written by some old skeleton of a professor about chemical synthesis.
   components:
   - type: Sprite

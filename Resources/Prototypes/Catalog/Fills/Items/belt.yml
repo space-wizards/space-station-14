@@ -75,9 +75,9 @@
       - id: Brutepack
         amount: 2
       - id: Ointment
-        amount: 2
+        amount: 1
       - id: Bloodpack
-        amount: 2
+        amount: 1
       - id: Gauze
       - id: EmergencyMedipen #You never know what people are going to latejoin into
 
@@ -117,6 +117,21 @@
   - type: StorageFill
     contents:
       - id: CaptainSabre
+
+- type: entity
+  id: ClothingBeltMilitaryWebbingGrenadeFilled
+  parent: ClothingBeltMilitaryWebbing
+  name: grenadier chest rig
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+      - id: ExGrenade
+        amount: 4
+      - id: SyndieMiniBomb
+        amount: 2
+      - id: EmpGrenade
+        amount: 2
 
 - type: entity
   id: ClothingBeltMilitaryWebbingMedFilled

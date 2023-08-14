@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 
@@ -62,10 +63,10 @@ namespace Content.Client.UserInterface.Controls
             foreach (var child in Children)
             {
                 child.Measure(availableSize);
-                size = Vector2.ComponentMax(size, child.DesiredSize);
+                size = Vector2.Max(size, child.DesiredSize);
             }
 
-            return size + (0, padSizeTotal);
+            return size + new Vector2(0, padSizeTotal);
         }
 
         protected override Vector2 ArrangeOverride(Vector2 finalSize)
@@ -112,7 +113,7 @@ namespace Content.Client.UserInterface.Controls
                     EdgeColor);
             }
 
-            GetActualStyleBox()?.Draw(handle, centerBox);
+            GetActualStyleBox()?.Draw(handle, centerBox, UIScale);
         }
 
         private StyleBox? GetActualStyleBox()

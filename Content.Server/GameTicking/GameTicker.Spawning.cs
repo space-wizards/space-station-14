@@ -1,5 +1,7 @@
 using System.Globalization;
 using System.Linq;
+using System.Numerics;
+using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
 using Content.Server.Players;
 using Content.Server.Spawners.Components;
@@ -8,9 +10,6 @@ using Content.Server.Station.Components;
 using Content.Server.Storage.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Database;
-using Content.Shared.GameTicking;
-using Content.Shared.Ghost;
-using Content.Shared.Inventory;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Content.Shared.Loadouts;
@@ -18,16 +17,21 @@ using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using Job = Content.Server.Roles.Job;
 using Content.Shared.Clothing.Components;
+using Content.Shared.Inventory;
 
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly IAdminManager _adminManager = default!;
+
+        [ValidatePrototypeId<EntityPrototype>]
         private const string ObserverPrototypeName = "MobObserver";
 
         /// <summary>
@@ -108,7 +112,7 @@ namespace Content.Server.GameTicking
         {
             var character = GetPlayerProfile(player);
 
-            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            var jobBans = _banManager.GetJobBans(player.UserId);
             if (jobBans == null || jobId != null && jobBans.Contains(jobId))
                 return;
 
@@ -139,6 +143,10 @@ namespace Content.Server.GameTicking
                 return;
             }
 
+            // Automatically de-admin players who are joining.
+            if (_cfg.GetCVar(CCVars.AdminDeadminOnJoin) && _adminManager.IsAdmin(player))
+                _adminManager.DeAdmin(player);
+
             // We raise this event to allow other systems to handle spawning this player themselves. (e.g. late-join wizard, etc)
             var bev = new PlayerBeforeSpawnEvent(player, character, jobId, lateJoin, station);
             RaiseLocalEvent(bev);
@@ -156,7 +164,7 @@ namespace Content.Server.GameTicking
             var getDisallowed = _playTimeTrackings.GetDisallowedJobs(player);
             restrictedRoles.UnionWith(getDisallowed);
 
-            var jobBans = _roleBanManager.GetJobBans(player.UserId);
+            var jobBans = _banManager.GetJobBans(player.UserId);
             if(jobBans != null) restrictedRoles.UnionWith(jobBans);
 
             // Pick best job best on prefs.
@@ -338,7 +346,6 @@ namespace Content.Server.GameTicking
 
             PlayerJoinGame(player);
             SpawnObserver(player);
-            RaiseNetworkEvent(GetStatusSingle(player, PlayerGameStatus.JoinedGame));
         }
 
         /// <summary>

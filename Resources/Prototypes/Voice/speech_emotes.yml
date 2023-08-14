@@ -110,6 +110,36 @@
     - squishes.
     - squishes!
 
+- type: emote
+  id: Chitter
+  category: Vocal
+  chatMessages: [chitters.]
+  chatTriggers:
+   - chitter
+   - chitter.
+   - chitter!
+   - chitters
+   - chitters.
+   - chitters!
+   - chittered
+   - chittered.
+   - chittered!
+
+- type: emote
+  id: Squeak
+  category: Vocal
+  chatMessages: [squeaks.]
+  chatTriggers:
+   - squeak
+   - squeak.
+   - squeak!
+   - squeaks
+   - squeaks.
+   - squeaks!
+   - squeaked
+   - squeaked.
+   - squeaked!
+
 # hand emotes
 - type: emote
   id: Clap
@@ -154,3 +184,8 @@
     - salutes.
     - salutes!
 
+- type: emote
+  id: DefaultDeathgasp
+  chatMessages: ["emote-deathgasp"]
+  chatTriggers:
+  - deathgasp

@@ -142,7 +142,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Blunt: 6
+        Blunt: 8
         Structural: 3
   - type: Tool
     qualities:
@@ -157,26 +157,18 @@
     price: 22
 
 - type: entity
-  name: emergency crowbar
   parent: Crowbar
   id: CrowbarRed
+  name: emergency crowbar
   components:
   - type: Tag
     tags:
     - Crowbar
     - CrowbarRed
   - type: Sprite
-    sprite: Objects/Tools/crowbar.rsi
     state: red-icon
   - type: Item
-    sprite: Objects/Tools/crowbar.rsi
-    size: 10
     heldPrefix: red
-  - type: MeleeWeapon
-    damage:
-      types:
-        Blunt: 8 #free man
-        Structural: 3
 
 - type: entity
   name: multitool
@@ -371,6 +363,19 @@
     charges: 0
 
 - type: entity
+  id: RCDRecharging
+  parent: RCD
+  name: experimental rcd
+  description: A bluespace-enhanced RCD that regenerates charges passively.
+  suffix: AutoRecharge
+  components:
+  - type: LimitedCharges
+    maxCharges: 3
+    charges: 3
+  - type: AutoRecharge
+    rechargeDuration: 30
+
+- type: entity
   id: RCDExperimental
   parent: RCD
   suffix: Admeme
@@ -483,6 +488,7 @@
       types:
         Blunt: 14
   - type: Item
+    size: 90
     sprite: Objects/Tools/shovel.rsi
   - type: PhysicalComposition
     materialComposition:

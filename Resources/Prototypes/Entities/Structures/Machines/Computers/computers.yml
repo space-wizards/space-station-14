@@ -316,7 +316,7 @@
     energy: 1.6
     color: "#1f8c28"
   - type: Computer
-    board: CriminalRecordsComputerCircuitboard
+    board: StationRecordsComputerCircuitboard
 
 - type: entity
   parent: BaseComputer
@@ -385,6 +385,8 @@
     priority: Low
   - type: Computer
     board: ResearchComputerCircuitboard
+  - type: AccessReader
+    access: [["Research"]]
   - type: PointLight
     radius: 1.5
     energy: 1.6
@@ -514,7 +516,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -714,6 +716,39 @@
       - OrderSender
 
 - type: entity
+  id: ComputerCargoBounty
+  parent: BaseComputer
+  name: cargo bounty computer
+  description: Used to manage currently active bounties.
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: bounty
+    - map: ["computerLayerKeys"]
+      state: tech_key
+  - type: CargoBountyConsole
+  - type: ActivatableUI
+    key: enum.CargoConsoleUiKey.Bounty
+  - type: UserInterface
+    interfaces:
+    - key: enum.CargoConsoleUiKey.Bounty
+      type: CargoBountyConsoleBoundUserInterface
+  - type: Computer
+    board: CargoBountyComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - CargoBounties
+
+- type: entity
   parent: BaseComputer
   id: ComputerCloningConsole
   name: cloning console computer
@@ -905,3 +940,78 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerMassMedia
+  name: mass-media console
+  description: Write your message to the world!
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: service
+    - map: ["computerLayerKeys"]
+      state: service_keys
+  - type: Computer
+    board: ComputerMassMediaCircuitboard
+  - type: DeviceNetworkRequiresPower
+  - type: NewsWrite
+  - type: AccessReader
+    access: [[ "Command" ]]
+  - type: ActivatableUI
+    key: enum.NewsWriteUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: Transform
+    anchored: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.NewsWriteUiKey.Key
+        type: NewsWriteBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSensorMonitoring
+  name: sensor monitoring computer
+  description: A flexible console for monitoring all kinds of sensors.
+  # Putting this as "DO NOT MAP" until the performance issues are fixed.
+  # And it's more fleshed out.
+  suffix: TESTING, DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: sensors
+        - map: ["computerLayerKeys"]
+          state: atmos_key
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#43ccb5"
+    - type: Computer
+      board: SensorConsoleCircuitboard
+    - type: SensorMonitoringConsole
+    - type: ActivatableUI
+      key: enum.SensorMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.SensorMonitoringConsoleUiKey.Key
+          type: SensorMonitoringConsoleBoundUserInterface
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-sensor-monitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: DeviceList
+    - type: AtmosDevice

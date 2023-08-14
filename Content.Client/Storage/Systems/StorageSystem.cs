@@ -30,7 +30,7 @@ public sealed class StorageSystem : EntitySystem
             var initialPosition = msg.EntityPositions[i];
             if (EntityManager.EntityExists(entity) && transformComp != null)
             {
-                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, EntityManager);
+                ReusableAnimations.AnimateEntityPickup(entity, initialPosition, transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
             }
         }
     }

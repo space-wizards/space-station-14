@@ -9,6 +9,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
@@ -31,7 +32,6 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -46,21 +46,21 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
-
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
         }
 
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
-            while(query.MoveNext(out var uid, out var comp, out var lathe))
+            while (query.MoveNext(out var uid, out var comp, out var lathe))
             {
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
+                if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(uid, lathe);
             }
         }
@@ -70,7 +70,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<string>();
-            var recipes =  GetAllBaseRecipes(component);
+            var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
@@ -108,7 +108,7 @@ namespace Content.Server.Lathe
             return ev.Recipes;
         }
 
-        public List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<string> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
@@ -186,7 +186,7 @@ namespace Content.Server.Lathe
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
-            _uiSys.SetUiState(ui, state);
+            UserInterfaceSystem.SetUiState(ui, state);
         }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
@@ -198,6 +198,24 @@ namespace Content.Server.Lathe
             {
                 if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
                     continue;
+                args.Recipes.Add(recipe);
+            }
+        }
+
+        private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+        {
+            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+                return;
+            if (!HasComp<EmaggedComponent>(uid))
+                return;
+            foreach (var recipe in component.EmagDynamicRecipes)
+            {
+                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
+            foreach (var recipe in component.EmagStaticRecipes)
+            {
                 args.Recipes.Add(recipe);
             }
         }
@@ -272,7 +290,6 @@ namespace Content.Server.Lathe
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
-
         #region UI Messages
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)

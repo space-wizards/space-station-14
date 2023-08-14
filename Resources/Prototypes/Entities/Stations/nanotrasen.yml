@@ -2,7 +2,7 @@
   abstract: true
   id: BaseStationNanotrasen
   components:
-    - type: Faction
+    - type: NpcFactionMember
       factions:
         - NanoTrasen
 
@@ -19,6 +19,7 @@
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationExpeditions
+    - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
   noSpawn: true

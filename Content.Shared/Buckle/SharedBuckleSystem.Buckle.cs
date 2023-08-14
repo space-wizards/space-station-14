@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
+using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Buckle.Components;
@@ -11,6 +12,7 @@ using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Content.Shared.Pulling.Components;
+using Content.Shared.Pulling.Events;
 using Content.Shared.Standing;
 using Content.Shared.Storage.Components;
 using Content.Shared.Stunnable;
@@ -129,6 +131,16 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleStandAttempt(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
     {
+        //Let entities stand back up while on vehicles so that they can be knocked down when slept/stunned
+        //This prevents an exploit that allowed people to become partially invulnerable to stuns
+        //while on vehicles
+
+        if (component.BuckledTo != null)
+        {
+            var buckle = component.BuckledTo;
+            if (TryComp<VehicleComponent>(buckle, out _))
+                return;
+        }
         if (component.Buckled)
             args.Cancel();
     }
@@ -312,6 +324,12 @@ public abstract partial class SharedBuckleSystem
             return false;
         }
 
+        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, true);
+        RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
+        RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
+        if (attemptEvent.Cancelled)
+            return false;
+
         return true;
     }
 
@@ -333,12 +351,6 @@ public abstract partial class SharedBuckleSystem
        if (!CanBuckle(buckleUid, userUid, strapUid, out var strapComp, buckleComp))
            return false;
 
-       var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, true);
-       RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
-       RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
-       if (attemptEvent.Cancelled)
-           return false;
-
        if (!StrapTryAdd(strapUid, buckleUid, buckleComp, false, strapComp))
        {
            var message = Loc.GetString(buckleUid == userUid
@@ -355,7 +367,8 @@ public abstract partial class SharedBuckleSystem
        ReAttach(buckleUid, strapUid, buckleComp, strapComp);
        SetBuckledTo(buckleUid,strapUid, strapComp, buckleComp);
        // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
-       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, null);
+       var audioSourceUid = userUid == buckleUid ? userUid : strapUid;
+       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, audioSourceUid);
 
        var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
        RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -407,14 +420,14 @@ public abstract partial class SharedBuckleSystem
             buckleComp.BuckledTo is not { } strapUid)
             return false;
 
-        var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, false);
-        RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
-        RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
-        if (attemptEvent.Cancelled)
-            return false;
-
         if (!force)
         {
+            var attemptEvent = new BuckleAttemptEvent(strapUid, buckleUid, userUid, false);
+            RaiseLocalEvent(attemptEvent.BuckledEntity, ref attemptEvent);
+            RaiseLocalEvent(attemptEvent.StrapEntity, ref attemptEvent);
+            if (attemptEvent.Cancelled)
+                return false;
+
             if (_gameTiming.CurTime < buckleComp.BuckleTime + buckleComp.UnbuckleDelay)
                 return false;
 
@@ -481,7 +494,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, null);
+        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
+        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);

@@ -1,17 +1,22 @@
 ﻿using Content.Server.Cuffs;
+using Content.Server.Humanoid;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Implants;
 using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Preferences;
 
 namespace Content.Server.Implants;
 
 public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private readonly CuffableSystem _cuffable = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly StoreSystem _store = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
 
@@ -21,6 +26,9 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         SubscribeLocalEvent<SubdermalImplantComponent, UseFreedomImplantEvent>(OnFreedomImplant);
         SubscribeLocalEvent<StoreComponent, ImplantRelayEvent<AfterInteractUsingEvent>>(OnStoreRelay);
+        SubscribeLocalEvent<SubdermalImplantComponent, ActivateImplantEvent>(OnActivateImplantEvent);
+        SubscribeLocalEvent<SubdermalImplantComponent, UseDnaScramblerImplantEvent>(OnDnaScramblerImplant);
+
     }
 
     private void OnStoreRelay(EntityUid uid, StoreComponent store, ImplantRelayEvent<AfterInteractUsingEvent> implantRelay)
@@ -55,5 +63,27 @@ public sealed class SubdermalImplantSystem : SharedSubdermalImplantSystem
 
         _cuffable.Uncuff(component.ImplantedEntity.Value, cuffs.LastAddedCuffs, cuffs.LastAddedCuffs);
         args.Handled = true;
+    }
+
+    private void OnActivateImplantEvent(EntityUid uid, SubdermalImplantComponent component, ActivateImplantEvent args)
+    {
+        args.Handled = true;
+    }
+
+    private void OnDnaScramblerImplant(EntityUid uid, SubdermalImplantComponent component, UseDnaScramblerImplantEvent args)
+    {
+        if (component.ImplantedEntity is not { } ent)
+            return;
+
+        if (TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+        {
+            var newProfile = HumanoidCharacterProfile.RandomWithSpecies(humanoid.Species);
+            _humanoidAppearance.LoadProfile(ent, newProfile, humanoid);
+            _metaData.SetEntityName(ent, newProfile.Name);
+            _popup.PopupEntity(Loc.GetString("scramble-implant-activated-popup"), ent, ent);
+        }
+
+        args.Handled = true;
+        QueueDel(uid);
     }
 }

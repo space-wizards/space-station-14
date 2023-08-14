@@ -8,6 +8,9 @@
   - type: HumanoidAppearance
     species: Reptilian
   - type: Hunger
+    starvationDamage:
+      types:
+        Cold: 1
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Reptilian/parts.rsi
@@ -39,7 +42,8 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Piercing: 5
+        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
+        Piercing: 4
   - type: Temperature
     heatDamageThreshold: 400
     coldDamageThreshold: 285

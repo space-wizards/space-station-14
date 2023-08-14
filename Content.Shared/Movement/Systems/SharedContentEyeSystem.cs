@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
@@ -113,7 +114,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     {
         var diff = content.TargetZoom - eye.Zoom;
 
-        if (diff.LengthSquared < 0.00001f)
+        if (diff.LengthSquared() < 0.00001f)
         {
             eye.Zoom = content.TargetZoom;
             Dirty(eye);
