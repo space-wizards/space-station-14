@@ -7,11 +7,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Chasm;
 
+/// <summary>
+///     Handles making entities fall into chasms when stepped on.
+/// </summary>
 public sealed class ChasmSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly ActionBlockerSystem _blocker = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {
@@ -43,17 +47,19 @@ public sealed class ChasmSystem : EntitySystem
 
     private void OnStepTriggered(EntityUid uid, ChasmComponent component, ref StepTriggeredEvent args)
     {
-        var falling = EnsureComp<ChasmFallingComponent>(args.Tripper);
+        // already doomed
+        if (HasComp<ChasmFallingComponent>(args.Tripper))
+            return;
+
+        var falling = AddComp<ChasmFallingComponent>(args.Tripper);
 
         falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
         _blocker.UpdateCanMove(args.Tripper);
+        _audio.PlayPredicted(component.FallingSound, uid, args.Tripper);
     }
 
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (TryComp<PhysicsComponent>(args.Tripper, out var phys) && phys.BodyStatus == BodyStatus.InAir)
-            return;
-
         args.Continue = true;
     }
 

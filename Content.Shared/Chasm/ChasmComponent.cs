@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Chasm;
 
@@ -8,4 +9,9 @@ namespace Content.Shared.Chasm;
 [NetworkedComponent, RegisterComponent, Access(typeof(ChasmSystem))]
 public sealed class ChasmComponent : Component
 {
+    /// <summary>
+    ///     Sound that should be played when an entity falls into the chasm
+    /// </summary>
+    [DataField("fallingSound")]
+    public SoundSpecifier FallingSound = new SoundPathSpecifier("/Audio/Effects/falling.ogg");
 }

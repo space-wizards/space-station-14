@@ -10,7 +10,7 @@
   - type: Chasm
   - type: StepTrigger
     requiredTriggeredSpeed: 0
-    intersectRatio: 0.3
+    intersectRatio: 0.9
     blacklist:
       tags:
       - Catwalk
@@ -37,7 +37,7 @@
           !type:PhysShapeAabb
           bounds: "-0.5,-0.5,0.5,0.5"
         layer:
-        - SlipLayer
+        - WallLayer
         mask:
         - ItemMask
         density: 1000
