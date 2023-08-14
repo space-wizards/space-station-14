@@ -24,7 +24,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Mech.Systems;
 
 /// <inheritdoc/>
-public sealed class MechSystem : SharedMechSystem
+public sealed partial class MechSystem : SharedMechSystem
 {
     [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
     [Dependency] private readonly ContainerSystem _container = default!;
@@ -34,7 +34,7 @@ public sealed class MechSystem : SharedMechSystem
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly BatterySystem _batterySystem = default!;
+    [Dependency] private readonly BatterySystem _battery = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -44,6 +44,8 @@ public sealed class MechSystem : SharedMechSystem
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("mech");
+
+        InitializeFiltering();
 
         SubscribeLocalEvent<MechComponent, InteractUsingEvent>(OnInteractUsing);
         SubscribeLocalEvent<MechComponent, EntInsertedIntoContainerMessage>(OnInsertBattery);
@@ -127,11 +129,14 @@ public sealed class MechSystem : SharedMechSystem
     private void OnMapInit(EntityUid uid, MechComponent component, MapInitEvent args)
     {
         var xform = Transform(uid);
-        foreach (var ent in component.StartingEquipment.Select(equipment => Spawn(equipment, xform.Coordinates)))
+        // TODO: this should use containerfill?
+        foreach (var equipment in component.StartingEquipment)
         {
+            var ent = Spawn(equipment, xform.Coordinates);
             InsertEquipment(uid, ent, component);
         }
 
+        // TODO: this should just be damage and battery
         component.Integrity = component.MaxIntegrity;
         component.Energy = component.MaxEnergy;
 
@@ -378,7 +383,7 @@ public sealed class MechSystem : SharedMechSystem
         if (!TryComp<BatteryComponent>(battery, out var batteryComp))
             return false;
 
-        _batterySystem.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
+        _battery.SetCharge(battery!.Value, batteryComp.CurrentCharge + delta.Float(), batteryComp);
         if (batteryComp.CurrentCharge != component.Energy) //if there's a discrepency, we have to resync them
         {
             _sawmill.Debug($"Battery charge was not equal to mech charge. Battery {batteryComp.CurrentCharge}. Mech {component.Energy}");
