@@ -1,0 +1,20 @@
+﻿- type: entity
+  id: OrganMothStomach
+  parent: [OrganAnimalStomach, OrganHumanStomach]
+  noSpawn: true
+  components:
+  - type: Stomach
+    specialDigestible:
+      tags:
+      - ClothMade
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Moth ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink

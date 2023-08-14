@@ -1,5 +1,6 @@
 using Content.Shared.Inventory;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Map;
 
 namespace Content.IntegrationTests.Tests
 {
@@ -9,10 +10,11 @@ namespace Content.IntegrationTests.Tests
     [TestFixture]
     public sealed class HumanInventoryUniformSlotsTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanUniformDummy
+  id: HumanUniformDummy
   components:
   - type: Inventory
   - type: ContainerContainer
@@ -54,7 +56,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var testMap = await PoolManager.CreateTestMap(pairTracker);
             var coordinates = testMap.GridCoords;
@@ -65,13 +67,14 @@ namespace Content.IntegrationTests.Tests
             EntityUid pocketItem = default;
 
             InventorySystem invSystem = default!;
+            var mapMan = server.ResolveDependency<IMapManager>();
             var entityMan = server.ResolveDependency<IEntityManager>();
 
             await server.WaitAssertion(() =>
             {
                 invSystem = entityMan.System<InventorySystem>();
 
-                human = entityMan.SpawnEntity("HumanDummy", coordinates);
+                human = entityMan.SpawnEntity("HumanUniformDummy", coordinates);
                 uniform = entityMan.SpawnEntity("UniformDummy", coordinates);
                 idCard = entityMan.SpawnEntity("IDCardDummy", coordinates);
                 pocketItem = entityMan.SpawnEntity("FlashlightDummy", coordinates);
@@ -125,6 +128,8 @@ namespace Content.IntegrationTests.Tests
                     Assert.That(!invSystem.TryGetSlotEntity(human, "id", out _));
                     Assert.That(!invSystem.TryGetSlotEntity(human, "pocket1", out _));
                 });
+
+                mapMan.DeleteMap(testMap.MapId);
             });
 
             await pairTracker.CleanReturnAsync();

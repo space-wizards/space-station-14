@@ -12,7 +12,8 @@ namespace Content.IntegrationTests.Tests.Utility
     {
         private const string BlockerDummyId = "BlockerDummy";
 
-        private static readonly string Prototypes = $@"
+        [TestPrototypes]
+        private const string Prototypes = $@"
 - type: entity
   id: {BlockerDummyId}
   name: {BlockerDummyId}
@@ -31,11 +32,7 @@ namespace Content.IntegrationTests.Tests.Utility
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var testMap = await PoolManager.CreateTestMap(pairTracker);

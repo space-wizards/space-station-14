@@ -516,7 +516,7 @@
   parent: BaseComputer
   id: ComputerComms
   name: communications computer
-  description: This can be used for various important functions. Still under development.
+  description: A computer used to make station wide announcements, set the appropriate alert level, and call the emergency shuttle.
   components:
   - type: Sprite
     layers:
@@ -961,6 +961,8 @@
     board: ComputerMassMediaCircuitboard
   - type: DeviceNetworkRequiresPower
   - type: NewsWrite
+  - type: AccessReader
+    access: [[ "Command" ]]
   - type: ActivatableUI
     key: enum.NewsWriteUiKey.Key
   - type: ActivatableUIRequiresVision
@@ -970,3 +972,46 @@
     interfaces:
       - key: enum.NewsWriteUiKey.Key
         type: NewsWriteBoundUserInterface
+
+- type: entity
+  parent: BaseComputer
+  id: ComputerSensorMonitoring
+  name: sensor monitoring computer
+  description: A flexible console for monitoring all kinds of sensors.
+  # Putting this as "DO NOT MAP" until the performance issues are fixed.
+  # And it's more fleshed out.
+  suffix: TESTING, DO NOT MAP
+  components:
+    - type: Sprite
+      layers:
+        - map: ["computerLayerBody"]
+          state: computer
+        - map: ["computerLayerKeyboard"]
+          state: generic_keyboard
+        - map: ["computerLayerScreen"]
+          state: sensors
+        - map: ["computerLayerKeys"]
+          state: atmos_key
+    - type: PointLight
+      radius: 1.5
+      energy: 1.6
+      color: "#43ccb5"
+    - type: Computer
+      board: SensorConsoleCircuitboard
+    - type: SensorMonitoringConsole
+    - type: ActivatableUI
+      key: enum.SensorMonitoringConsoleUiKey.Key
+    - type: UserInterface
+      interfaces:
+        - key: enum.SensorMonitoringConsoleUiKey.Key
+          type: SensorMonitoringConsoleBoundUserInterface
+    - type: DeviceNetwork
+      deviceNetId: AtmosDevices
+      receiveFrequencyId: AtmosMonitor
+      transmitFrequencyId: AtmosMonitor
+      prefix: device-address-prefix-sensor-monitor
+      sendBroadcastAttemptEvent: true
+      examinableAddress: true
+    - type: WiredNetworkConnection
+    - type: DeviceList
+    - type: AtmosDevice

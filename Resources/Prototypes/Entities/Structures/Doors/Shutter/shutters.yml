@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   id: BaseShutter
   parent: BaseStructure
   name: shutter
@@ -9,7 +9,7 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Shutters/shutters.rsi
-    drawdepth: Overdoors
+    drawdepth: BlastDoors
     layers:
     - state: closed
       map: ["enum.DoorVisualLayers.Base"]
@@ -33,6 +33,8 @@
     containers:
       board: !type:Container
   - type: Door
+    openDrawDepth: BlastDoors
+    closedDrawDepth: BlastDoors
     bumpOpen: false
     clickOpen: false
     closeTimeOne: 0.2

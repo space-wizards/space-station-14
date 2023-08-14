@@ -6,6 +6,9 @@
   abstract: true
   components:
   - type: Food
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
   - type: SolutionContainerManager
@@ -84,6 +87,9 @@
   - type: Item
     heldPrefix: chocolatebar
     size: 3
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketChocolateTrash
@@ -112,6 +118,8 @@
           Quantity: 10
         - ReagentId: Theobromine
           Quantity: 3
+        - ReagentId: CocoaPowder
+          Quantity: 1
 
 - type: entity
   name: energy bar
@@ -295,6 +303,9 @@
   components:
   - type: Item
     size: 10
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: nutribrick
@@ -336,6 +347,9 @@
   - type: Sprite
     sprite: Objects/Consumable/Food/snacks.rsi
     state: mre-brownie
+  - type: Tag
+    tags:
+      - FoodSnack
   - type: SpawnItemsOnUse
     items:
       - id: FoodPacketMRETrash

@@ -11,10 +11,6 @@ using Content.Shared.Storage.Components;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
 using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
-using Robust.Shared.Network;
-using Robust.Shared.Player;
-using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Lock;
@@ -25,7 +21,6 @@ namespace Content.Shared.Lock;
 [UsedImplicitly]
 public sealed class LockSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -36,27 +31,12 @@ public sealed class LockSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LockComponent, ComponentGetState>(OnGetState);
-        SubscribeLocalEvent<LockComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<LockComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<LockComponent, ActivateInWorldEvent>(OnActivated);
         SubscribeLocalEvent<LockComponent, StorageOpenAttemptEvent>(OnStorageOpenAttempt);
         SubscribeLocalEvent<LockComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<LockComponent, GetVerbsEvent<AlternativeVerb>>(AddToggleLockVerb);
         SubscribeLocalEvent<LockComponent, GotEmaggedEvent>(OnEmagged);
-    }
-
-    private void OnGetState(EntityUid uid, LockComponent component, ref ComponentGetState args)
-    {
-        args.State = new LockComponentState(component.Locked, component.LockOnClick);
-    }
-
-    private void OnHandleState(EntityUid uid, LockComponent component, ref ComponentHandleState args)
-    {
-        if (args.Current is not LockComponentState state)
-            return;
-        component.Locked = state.Locked;
-        component.LockOnClick = state.LockOnClick;
     }
 
     private void OnStartup(EntityUid uid, LockComponent lockComp, ComponentStartup args)
@@ -206,8 +186,8 @@ public sealed class LockSystem : EntitySystem
         if (_accessReader.IsAllowed(user, reader))
             return true;
 
-        if (!quiet && _timing.IsFirstTimePredicted)
-            _sharedPopupSystem.PopupEntity(Loc.GetString("lock-comp-has-user-access-fail"), uid, Filter.Local(), true);
+        if (!quiet)
+            _sharedPopupSystem.PopupClient(Loc.GetString("lock-comp-has-user-access-fail"), uid, user);
         return false;
     }
 

@@ -232,7 +232,8 @@ entities:
           tiles: XgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       type: MapGrid
     - type: Broadphase
-    - angularDamping: 0.05
+    - bodyStatus: InAir
+      angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
       bodyType: Dynamic
@@ -10430,7 +10431,8 @@ entities:
           tiles: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXwAAAF8AAABfAAAAUgAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATwAAAF8AAABfAAAAXwAAAF8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAF8AAABeAAAAXgAAAF8AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABfAAAAAAAAAF4AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAXgAAAAAAAAAAAAAAAAAAAF4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAF4AAABfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
       type: MapGrid
     - type: Broadphase
-    - angularDamping: 0.05
+    - bodyStatus: InAir
+      angularDamping: 0.05
       linearDamping: 0.05
       fixedRotation: False
       bodyType: Dynamic
@@ -44984,6 +44986,13 @@ entities:
     - pos: 2.0910594,1.3088007
       parent: 1
       type: Transform
+- proto: ClothingOuterCoatSyndieCapArmored
+  entities:
+  - uid: 5452
+    components:
+    - pos: 10.518993,-13.49486
+      parent: 1
+      type: Transform
 - proto: ClothingOuterHardsuitEVA
   entities:
   - uid: 5444
@@ -78957,13 +78966,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: Katana
-  entities:
-  - uid: 15947
-    components:
-    - pos: 10.51315,-13.515254
-      parent: 1
-      type: Transform
 - proto: KitchenKnife
   entities:
   - uid: 6953
@@ -79153,44 +79155,9 @@ entities:
       type: Transform
 - proto: LandMineExplosive
   entities:
-  - uid: 9641
-    components:
-    - pos: -26.981983,53.509666
-      parent: 1
-      type: Transform
   - uid: 14712
     components:
     - pos: -7.512268,-10.508881
-      parent: 5016
-      type: Transform
-  - uid: 14940
-    components:
-    - pos: -0.48651123,-1.4818726
-      parent: 5016
-      type: Transform
-  - uid: 14992
-    components:
-    - pos: 0.51348877,-4.4506226
-      parent: 5016
-      type: Transform
-  - uid: 14995
-    components:
-    - pos: -8.492249,8.49646
-      parent: 5016
-      type: Transform
-  - uid: 14998
-    components:
-    - pos: -10.507874,7.49646
-      parent: 5016
-      type: Transform
-  - uid: 15001
-    components:
-    - pos: -6.5021973,5.530884
-      parent: 5016
-      type: Transform
-  - uid: 15002
-    components:
-    - pos: -2.512085,2.461609
       parent: 5016
       type: Transform
   - uid: 15456
@@ -79218,31 +79185,6 @@ entities:
     - pos: -39.483685,68.52357
       parent: 1
       type: Transform
-  - uid: 15566
-    components:
-    - pos: -3.52771,0.5084839
-      parent: 5016
-      type: Transform
-  - uid: 15577
-    components:
-    - pos: -12.499573,-5.203064
-      parent: 5016
-      type: Transform
-  - uid: 15669
-    components:
-    - pos: -16.45288,-7.494507
-      parent: 5016
-      type: Transform
-  - uid: 15840
-    components:
-    - pos: -29.512676,52.40915
-      parent: 1
-      type: Transform
-  - uid: 15841
-    components:
-    - pos: -28.450176,55.34665
-      parent: 1
-      type: Transform
   - uid: 15920
     components:
     - pos: 14.582417,37.86743
@@ -79263,19 +79205,7 @@ entities:
     - pos: 21.273848,42.845383
       parent: 1
       type: Transform
-- proto: LandMineKick
-  entities:
-  - uid: 5452
-    components:
-    - pos: -24.148834,-7.530878
-      parent: 1
-      type: Transform
-  - uid: 5455
-    components:
-    - pos: -23.419668,-8.156313
-      parent: 1
-      type: Transform
-- proto: lantern
+- proto: Lantern
   entities:
   - uid: 621
     components:
@@ -80991,6 +80921,28 @@ entities:
   - uid: 14600
     components:
     - pos: -61.5,26.5
+      parent: 1
+      type: Transform
+- proto: MaintenancePlantSpawner
+  entities:
+  - uid: 9010
+    components:
+    - pos: -21.5,0.5
+      parent: 1
+      type: Transform
+  - uid: 9013
+    components:
+    - pos: -66.5,50.5
+      parent: 1
+      type: Transform
+  - uid: 9014
+    components:
+    - pos: 8.5,39.5
+      parent: 1
+      type: Transform
+  - uid: 9016
+    components:
+    - pos: 29.5,-5.5
       parent: 1
       type: Transform
 - proto: MaintenanceToolSpawner
@@ -83512,11 +83464,6 @@ entities:
   - uid: 2103
     components:
     - pos: -4.5,29.5
-      parent: 1
-      type: Transform
-  - uid: 2104
-    components:
-    - pos: 0.5,24.5
       parent: 1
       type: Transform
   - uid: 2664
@@ -92972,23 +92919,6 @@ entities:
     - pos: -3.5,-7.5
       parent: 5016
       type: Transform
-- proto: SpawnMobCarpHolo
-  entities:
-  - uid: 15131
-    components:
-    - pos: 8.5,-13.5
-      parent: 1
-      type: Transform
-  - uid: 15132
-    components:
-    - pos: 10.5,-14.5
-      parent: 1
-      type: Transform
-  - uid: 15133
-    components:
-    - pos: 11.5,-12.5
-      parent: 1
-      type: Transform
 - proto: SpawnMobCatRuntime
   entities:
   - uid: 14180
@@ -97697,6 +97627,15 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: -4.5,19.5
+      parent: 1
+      type: Transform
+- proto: VendingMachineChemicals
+  entities:
+  - uid: 2104
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 0.5,24.5
       parent: 1
       type: Transform
 - proto: VendingMachineCigs
@@ -110593,16 +110532,6 @@ entities:
   - uid: 7937
     components:
     - pos: -60.450623,64.62244
-      parent: 1
-      type: Transform
-- proto: WeaponTurretHostile
-  entities:
-  - uid: 14835
-    components:
-    - flags: SessionSpecific
-      type: MetaData
-    - rot: 1.5707963267948966 rad
-      pos: 8.5,-12.5
       parent: 1
       type: Transform
 - proto: WeaponTurretSyndicateBroken

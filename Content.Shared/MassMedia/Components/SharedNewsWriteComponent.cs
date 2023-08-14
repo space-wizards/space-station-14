@@ -1,5 +1,5 @@
-using Robust.Shared.Serialization;
 using Content.Shared.MassMedia.Systems;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.MassMedia.Components;
 
@@ -13,10 +13,12 @@ public enum NewsWriteUiKey : byte
 public sealed class NewsWriteBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NewsArticle[] Articles;
+    public bool ShareAvalible;
 
-    public NewsWriteBoundUserInterfaceState(NewsArticle[] articles)
+    public NewsWriteBoundUserInterfaceState(NewsArticle[] articles, bool shareAvalible)
     {
         Articles = articles;
+        ShareAvalible = shareAvalible;
     }
 }
 

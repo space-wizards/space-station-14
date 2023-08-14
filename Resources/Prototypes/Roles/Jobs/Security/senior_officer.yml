@@ -17,7 +17,7 @@
       department: Security
       time: 216000 # 60 hrs
   startingGear: SeniorOfficerGear
-  icon: "SeniorOfficer"
+  icon: "JobIconSeniorOfficer"
   supervisors: job-supervisors-hos
   canBeAntag: false
   access:

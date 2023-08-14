@@ -17,6 +17,19 @@
       coefficients:
         Slash: 0.95
         Heat: 0.90
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 30
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 30
+  - type: Tag
+    tags:
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWinterCoat

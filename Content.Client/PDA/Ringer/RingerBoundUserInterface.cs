@@ -43,7 +43,7 @@ namespace Content.Client.PDA.Ringer
                 return false;
             }
 
-            ringtone = new Note[4];
+            ringtone = new Note[_menu.RingerNoteInputs.Length];
 
             for (int i = 0; i < _menu.RingerNoteInputs.Length; i++)
             {
