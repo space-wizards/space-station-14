@@ -22,6 +22,12 @@ public sealed class SiliconLawBoundComponent : Component
     /// </summary>
     [DataField("providedAction")]
     public InstantAction? ProvidedAction;
+
+    /// <summary>
+    /// The last entity that provided laws to this entity.
+    /// </summary>
+    [DataField("lastLawProvider")]
+    public EntityUid? LastLawProvider;
 }
 
 [ByRefEvent]
