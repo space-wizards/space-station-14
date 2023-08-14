@@ -1,9 +1,4 @@
 Entries:
-- author: Nimfar11
-  changes:
-  - {message: Add solar tracker electronics to the circuit printer, type: Add}
-  id: 4092
-  time: '2023-06-26T03:04:06.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added taco and taco recipe!, type: Add}
@@ -3022,3 +3017,8 @@ Entries:
   - {message: Operating table won't get you stuck in walls anymore, type: Fix}
   id: 4591
   time: '2023-08-14T22:25:05.0000000+00:00'
+- author: TheArturZh
+  changes:
+  - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
+  id: 4592
+  time: '2023-08-14T22:57:33.0000000+00:00'
