@@ -1,34 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Emergency crowbar and regular crowbar now do the same damage. Please
-      leave emergency crowbars for emergencies!!!, type: Tweak}
-  id: 4085
-  time: '2023-06-24T20:05:03.0000000+00:00'
-- author: Myakot
-  changes:
-  - {message: Added additional information to guidebooks p.1, type: Add}
-  - {message: Some little typos in guidebook, type: Fix}
-  id: 4086
-  time: '2023-06-24T20:07:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The size of an item now scales with the amount of items in a stack.
-      A single sheet of metal takes up less space than a stack of 30., type: Add}
-  id: 4087
-  time: '2023-06-25T15:44:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The salvage magnet can now pull in randomly generated asteroids stuffed
-      with ores., type: Add}
-  - {message: Salvages are much less likely to fail to be pulled in., type: Fix}
-  id: 4088
-  time: '2023-06-25T17:50:41.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed artifact rocks to spit out 2-3 fragments instead of 1, type: Tweak}
-  id: 4089
-  time: '2023-06-25T18:12:47.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added beachball to the arcade prizes!, type: Add}
@@ -3017,3 +2987,37 @@ Entries:
   - {message: Observers can now hear the binary radio., type: Tweak}
   id: 4584
   time: '2023-08-14T21:00:08.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed singularity energy levels to require more energy overall to
+      increase in size., type: Tweak}
+  - {message: 'Changed singularity energy drain rates to keep them more stable, and
+      die quicker without food.', type: Tweak}
+  - {message: 'Changed level 2 and 3 PA to feed less energy, slowing the speed of
+      a singuloose slightly.', type: Tweak}
+  id: 4585
+  time: '2023-08-14T21:01:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Monkies go horizontal on crit/death again, type: Fix}
+  id: 4586
+  time: '2023-08-14T21:02:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixed condiment stations & smartfridges being too unshaded, type: Fix}
+  - {message: 'Booze dispenser now only contains booze, everything else it contained
+      was already in the soda dispenser', type: Tweak}
+  - {message: Fixed soda dispenser UI not being wide enough, type: Fix}
+  id: 4587
+  time: '2023-08-14T21:03:21.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
+      start and end., type: Fix}
+  id: 4588
+  time: '2023-08-14T21:03:35.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
+  id: 4589
+  time: '2023-08-14T21:03:53.0000000+00:00'
