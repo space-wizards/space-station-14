@@ -966,7 +966,7 @@
     key: walls
     base: wall
   - type: Construction
-    graph: WallWeb
+    graph: WebStructures
     node: wall
 
 

@@ -504,7 +504,7 @@
         path:
           "/Audio/Weapons/slash.ogg"
   - type: Construction
-    graph: TableWeb
+    graph: WebStructures
     node: table
 
 - type: entity

@@ -150,3 +150,6 @@
           MaterialWebSilk:
             min: 1
             max: 1
+  - type: Construction
+    graph: WebStructures
+    node: bed

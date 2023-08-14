@@ -1,7 +1,7 @@
 - type: construction
   name: web wall
   id: WallWeb
-  graph: WallWeb
+  graph: WebStructures
   startNode: start
   targetNode: wall
   category: construction-category-structures
@@ -19,7 +19,7 @@
 - type: construction
   name: web table
   id: TableWeb
-  graph: TableWeb
+  graph: WebStructures
   startNode: start
   targetNode: table
   category: construction-category-structures
@@ -33,3 +33,53 @@
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
+
+- type: construction
+  name: web bed
+  id: WebBed
+  graph: WebStructures
+  startNode: start
+  targetNode: bed
+  category: construction-category-structures
+  description: Fun fact, you eating spiders in your sleep is false.
+  icon:
+    sprite: /Textures/Structures/Furniture/Web/bed.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: web chair
+  id: ChairWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: chair
+  category: construction-category-structures
+  description: You want to get serious about web development? Get this chair!
+  icon:
+    sprite: /Textures/Structures/Furniture/Web/chair.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+
+- type: construction
+  name: web crate
+  id: CrateWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: crate
+  category: construction-category-structures
+  description: For containment of food and other things. Not as durable as a normal crate, and can't be welded shut.
+  icon:
+    sprite: /Textures/Structures/Storage/Crates/web.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false

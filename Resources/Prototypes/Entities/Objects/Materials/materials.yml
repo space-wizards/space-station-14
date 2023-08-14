@@ -472,6 +472,23 @@
     stackType: WebSilk
   - type: Item
     size: 50
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 3
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 3
+  - type: Tag
+    tags:
+      - ClothMade
+      - DroneUsable
+      - RawMaterial
 
 - type: entity
   parent: MaterialWebSilk
