@@ -5,6 +5,7 @@
   components:
   - type: Stamp
     stampedName: stamp-component-stamped-name-detective
+    stampedColor: "#5b0000"
     stampState: "paper_stamp-detective"
   - type: Sprite
     sprite: Objects/Misc/bureaucracy.rsi

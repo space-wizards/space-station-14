@@ -172,7 +172,7 @@
         - NetworkConfigurator
         - trayScanner
         - GasAnalyzer
-        - AirlockPainter
+        - SprayPainter
         - AppraisalTool
         - Flare
         - HandheldGPSBasic

@@ -37,7 +37,7 @@
         prob: 0.3
       - id: CableApcStack
         prob: 0.3
-      - id: AirlockPainter
+      - id: SprayPainter
         prob: 0.7
 
 - type: entity
@@ -90,7 +90,6 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: PipePainter
       - id: ClothingShoesBootsMag
 
 - type: entity
@@ -107,7 +106,6 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: PipePainter
 
 - type: entity
   id: LockerEngineerFilledHardsuit

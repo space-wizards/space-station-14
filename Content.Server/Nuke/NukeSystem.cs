@@ -292,7 +292,7 @@ public sealed class NukeSystem : EntitySystem
         // play alert sound if time is running out
         if (nuke.RemainingTime <= nuke.AlertSoundTime && !nuke.PlayedAlertSound)
         {
-            nuke.AlertAudioStream = _audio.Play(nuke.AlertSound, Filter.Broadcast(), uid, true, AudioParams.Default.AddVolume(-4)); // // Corvax: Reduce sound volume
+            _sound.PlayGlobalOnStation(uid, _audio.GetSound(nuke.AlertSound), AudioParams.Default.AddVolume(-4));
             _sound.StopStationEventMusic(uid, StationEventMusicType.Nuke);
             nuke.PlayedAlertSound = true;
         }

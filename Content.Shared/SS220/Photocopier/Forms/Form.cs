@@ -1,8 +1,8 @@
 ﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
+using Content.Shared.Paper;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.SS220.Photocopier.Forms;
 
@@ -30,7 +30,7 @@ public sealed class Form
     public string? StampState;
 
     [DataField("stampedBy")]
-    public List<string> StampedBy = new();
+    public List<StampDisplayInfo> StampedBy = new();
 
     private Form()
     {
@@ -43,14 +43,14 @@ public sealed class Form
         string? photocopierTitle = null,
         string? prototypeId = null,
         string? stampState = null,
-        List<string>? stampedBy = null)
+        List<StampDisplayInfo>? stampedBy = null)
     {
         EntityName = entityName;
         Content = content;
         FormId = formId;
         PrototypeId = prototypeId ?? DefaultPrototypeId;
         StampState = stampState;
-        StampedBy = stampedBy ?? new List<string>();
+        StampedBy = stampedBy ?? new List<StampDisplayInfo>();
 
         if (!string.IsNullOrEmpty(photocopierTitle))
             PhotocopierTitle = photocopierTitle;

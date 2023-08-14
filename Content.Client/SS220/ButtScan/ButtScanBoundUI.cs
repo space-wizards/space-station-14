@@ -29,7 +29,7 @@ public sealed class ButtScanBoundUserInterface : BoundUserInterface
 
         if (_entityMgr.TryGetComponent<ButtScanComponent>(_paperEntity, out var scan) &&
             _entityMgr.TryGetComponent<PaperVisualsComponent>(_paperEntity, out var paperVisuals))
-            _window.InitVisuals(scan, paperVisuals);
+            _window.InitVisuals(_paperEntity, scan, paperVisuals);
 
         _window.OpenCentered();
     }

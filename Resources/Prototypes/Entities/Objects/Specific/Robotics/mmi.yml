@@ -34,9 +34,6 @@
     proto: robot
   - type: Speech
     speechSounds: Pai
-  - type: MobState
-    allowedStates:
-    - Alive
   - type: ItemSlots
     slots:
       brain_slot:
