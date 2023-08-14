@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Added beachball to the arcade prizes!, type: Add}
-  id: 4090
-  time: '2023-06-26T02:07:02.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Disallow tile placement close to other grids., type: Tweak}
@@ -3021,3 +3016,9 @@ Entries:
   - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
   id: 4589
   time: '2023-08-14T21:03:53.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix editing an admin watchlist note making it temporarily appear as
+      a low severity note., type: Fix}
+  id: 4590
+  time: '2023-08-14T21:05:47.0000000+00:00'
