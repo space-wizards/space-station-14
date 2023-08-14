@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Disallow tile placement close to other grids., type: Tweak}
-  id: 4091
-  time: '2023-06-26T03:00:17.0000000+00:00'
 - author: Nimfar11
   changes:
   - {message: Add solar tracker electronics to the circuit printer, type: Add}
@@ -3022,3 +3017,8 @@ Entries:
       a low severity note., type: Fix}
   id: 4590
   time: '2023-08-14T21:05:47.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Operating table won't get you stuck in walls anymore, type: Fix}
+  id: 4591
+  time: '2023-08-14T22:25:05.0000000+00:00'
