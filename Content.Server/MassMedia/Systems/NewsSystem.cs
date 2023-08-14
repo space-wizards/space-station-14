@@ -31,6 +31,11 @@ public sealed class NewsSystem : EntitySystem
 
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
+    /*
+     *  if (_station.GetOwningStation(uid) is not { } station ||
+            !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDb))
+            return;
+     */
 
     private readonly List<NewsArticle> _articles = new List<NewsArticle>();
 
@@ -74,7 +79,7 @@ public sealed class NewsSystem : EntitySystem
         if (!_ui.TryGetUi(uid, NewsWriteUiKey.Key, out _))
             return;
 
-        var state = new NewsWriteBoundUserInterfaceState(_articles.ToArray(), component.ShareAvalible);
+        var state = new NewsWriteBoundUserInterfaceState(_articles.ToArray(), component.PublishEnabled);
         _ui.TrySetUiState(uid, NewsWriteUiKey.Key, state);
     }
 
@@ -144,8 +149,8 @@ public sealed class NewsSystem : EntitySystem
             _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}");
         _articles.Add(article);
 
-        component.ShareAvalible = false;
-        component.NextShare = _timing.CurTime + TimeSpan.FromSeconds(component.ShareCooldown);
+        component.PublishEnabled = false;
+        component.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(component.PublishCooldown);
 
         UpdateReadDevices();
         UpdateWriteDevices();
@@ -259,10 +264,10 @@ public sealed class NewsSystem : EntitySystem
         var query = EntityQueryEnumerator<NewsWriteComponent>();
         while (query.MoveNext(out var comp))
         {
-            if (comp.ShareAvalible || _timing.CurTime < comp.NextShare)
+            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
                 continue;
 
-            comp.ShareAvalible = true;
+            comp.PublishEnabled = true;
 
             UpdateWriteUi(comp.Owner, comp);
         }

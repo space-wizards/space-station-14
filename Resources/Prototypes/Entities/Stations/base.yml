@@ -77,6 +77,12 @@
     - Crewsimov3
 
 - type: entity
+  id: BaseStationNews
+  abstract: true
+  components:
+    - type: StationNews
+
+- type: entity
   id: BaseStationAllEventsEligible
   abstract: true
   components:
