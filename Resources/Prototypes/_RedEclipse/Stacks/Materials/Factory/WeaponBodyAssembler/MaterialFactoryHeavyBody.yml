@@ -8,7 +8,7 @@
       materialComposition:
         FactoryHeavyBody: 1
     - type: Stack
-      stackType: FactoryBasicCasings
+      stackType: FactoryHeavyBody
 
 - type: entity
   parent: MaterialFactoryHeavyBody

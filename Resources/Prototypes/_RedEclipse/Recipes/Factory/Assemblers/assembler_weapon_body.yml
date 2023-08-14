@@ -14,7 +14,7 @@
 
 - type: latheRecipe
   id: FactoryHeavyBody
-  result: FactorySHeavyBody
+  result: FactoryHeavyBody
   completetime: 4
   materials: # TODO better recipe
     Plasteel : 300
