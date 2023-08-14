@@ -40,7 +40,7 @@ public abstract partial class InteractionTest
 
         await Client.WaitPost(() =>
         {
-            Assert.That(CConSys.TrySpawnGhost(proto, TargetCoords, Direction.South, out Target),
+            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(SEntMan.ToNetCoordinates(TargetCoords)), Direction.South, out Target),
                 Is.EqualTo(shouldSucceed));
 
             if (!shouldSucceed)
@@ -272,9 +272,11 @@ public abstract partial class InteractionTest
     {
         // For every interaction, we will also examine the entity, just in case this breaks something, somehow.
         // (e.g., servers attempt to assemble construction examine hints).
-        if (Target != null)
+        var clientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(Target));
+
+        if (clientTarget != null)
         {
-            await Client.WaitPost(() => ExamineSys.DoExamine(CEntMan.ToEntity(SEntMan.ToNetEntity(Target.Value))));
+            await Client.WaitPost(() => ExamineSys.DoExamine(clientTarget.Value));
         }
 
         await PlaceInHands(entity);
@@ -396,7 +398,7 @@ public abstract partial class InteractionTest
 
         await RunTicks(5);
 
-        if (CEntMan.IsClientSide(target))
+        if (target.IsValid() && CEntMan.IsClientSide(target))
         {
             Assert.That(CEntMan.Deleted(target), Is.EqualTo(shouldSucceed),
                 $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");
@@ -469,7 +471,7 @@ public abstract partial class InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(SEntMan.Deleted(target), Is.EqualTo(deleted));
-            Assert.That(CEntMan.Deleted(target), Is.EqualTo(deleted));
+            Assert.That(CEntMan.Deleted(CEntMan.ToEntity(SEntMan.ToNetEntity(target))), Is.EqualTo(deleted));
         });
     }
 
