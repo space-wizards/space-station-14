@@ -61222,8 +61222,7 @@ entities:
       type: Transform
   - uid: 7444
     components:
-    - rot: -1.5707963267948966 rad
-      pos: -18.5,-16.5
+    - pos: -18.5,-16.5
       parent: 4812
       type: Transform
 - proto: OreProcessor
