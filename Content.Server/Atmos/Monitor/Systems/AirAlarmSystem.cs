@@ -161,11 +161,12 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+        SubscribeLocalEvent<AirAlarmComponent, AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
@@ -224,7 +225,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _activeUserInterfaces.Remove(uid);
     }
 
-    private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
+    private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
     {
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
@@ -299,6 +300,32 @@ public sealed class AirAlarmSystem : EntitySystem
         else
         {
             UpdateUI(uid, component);
+        }
+    }
+    
+    private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
+    {
+        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        {
+           UpdateUI(uid, component);
+            return;       
+        }
+
+        switch (args.Data)
+        {
+            case GasVentPumpData ventData:
+                foreach (string addr in component.VentData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
+                
+            case GasVentScrubberData scrubberData:
+                foreach (string addr in component.ScrubberData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
         }
     }
 

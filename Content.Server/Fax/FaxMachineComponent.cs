@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Paper;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -136,18 +137,18 @@ public sealed class FaxPrintout
     public string? StampState { get; }
 
     [DataField("stampedBy")]
-    public List<string> StampedBy { get; } = new();
+    public List<StampDisplayInfo> StampedBy { get; } = new();
 
     private FaxPrintout()
     {
     }
 
-    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<string>? stampedBy = null)
+    public FaxPrintout(string content, string name, string? prototypeId = null, string? stampState = null, List<StampDisplayInfo>? stampedBy = null)
     {
         Content = content;
         Name = name;
         PrototypeId = prototypeId ?? "";
         StampState = stampState;
-        StampedBy = stampedBy ?? new List<string>();
+        StampedBy = stampedBy ?? new List<StampDisplayInfo>();
     }
 }

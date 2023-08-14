@@ -17,6 +17,7 @@ using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Systems
@@ -27,6 +28,7 @@ namespace Content.Server.Administration.Systems
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IAdminManager _adminManager = default!;
         [Dependency] private readonly IConfigurationManager _config = default!;
+        [Dependency] private readonly IGameTiming _timing = default!;
         [Dependency] private readonly IPlayerLocator _playerLocator = default!;
         [Dependency] private readonly GameTicker _gameTicker = default!;
 
@@ -41,6 +43,7 @@ namespace Content.Server.Administration.Systems
         private Dictionary<NetUserId, string> _oldMessageIds = new();
         private readonly Dictionary<NetUserId, Queue<string>> _messageQueues = new();
         private readonly HashSet<NetUserId> _processingChannels = new();
+        private readonly Dictionary<NetUserId, (TimeSpan Timestamp, bool Typing)> _typingUpdateTimestamps = new();
 
         // Max embed description length is 4096, according to https://discord.com/developers/docs/resources/channel#embed-object-embed-limits
         // Keep small margin, just to be safe
@@ -67,6 +70,7 @@ namespace Content.Server.Administration.Systems
             _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
 
             SubscribeLocalEvent<GameRunLevelChangedEvent>(OnGameRunLevelChanged);
+            SubscribeNetworkEvent<BwoinkClientTypingUpdated>(OnClientTypingUpdated);
         }
 
         private void OnPlayerStatusChanged(object? sender, SessionStatusEventArgs e)
@@ -100,6 +104,31 @@ namespace Content.Server.Administration.Systems
             }
 
             _relayMessages.Clear();
+        }
+
+        private void OnClientTypingUpdated(BwoinkClientTypingUpdated msg, EntitySessionEventArgs args)
+        {
+            if (_typingUpdateTimestamps.TryGetValue(args.SenderSession.UserId, out var tuple) &&
+                tuple.Typing == msg.Typing &&
+                tuple.Timestamp + TimeSpan.FromSeconds(1) > _timing.RealTime)
+            {
+                return;
+            }
+
+            _typingUpdateTimestamps[args.SenderSession.UserId] = (_timing.RealTime, msg.Typing);
+
+            // Non-admins can only ever type on their own ahelp, guard against fake messages
+            var isAdmin = _adminManager.GetAdminData((IPlayerSession) args.SenderSession)?.HasFlag(AdminFlags.Adminhelp) ?? false;
+            var channel = isAdmin ? msg.Channel : args.SenderSession.UserId;
+            var update = new BwoinkPlayerTypingUpdated(channel, args.SenderSession.Name, msg.Typing);
+
+            foreach (var admin in GetTargetAdmins())
+            {
+                if (admin.UserId == args.SenderSession.UserId)
+                    continue;
+
+                RaiseNetworkEvent(update, admin);
+            }
         }
 
         private void OnServerNameChanged(string obj)

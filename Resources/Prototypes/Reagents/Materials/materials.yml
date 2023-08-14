@@ -76,3 +76,10 @@
   icon: { sprite: Objects/Materials/Sheets/meaterial.rsi, state: meat }
   color: "#c53648"
   price: 0.05
+
+- type: material
+  id: WebSilk
+  name: materials-web
+  icon: { sprite: Objects/Materials/silk.rsi, state: icon }
+  color: "#eeeeee" #eeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+  price: 0 # Maybe better for it to be priceless, knowing how greedy cargo is.
