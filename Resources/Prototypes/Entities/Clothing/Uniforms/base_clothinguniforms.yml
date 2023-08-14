@@ -44,6 +44,8 @@
   id: ClothingUniformBase
   components:
   - type: SuitSensor
+    randomMode: false
+    mode: SensorCords
   - type: DeviceNetwork
     deviceNetId: Wireless
     transmitFrequencyId: SuitSensor
