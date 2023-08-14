@@ -25,7 +25,7 @@
   category: construction-category-furniture
   description: Essential for any serious web development.
   icon:
-    sprite: Structures/Furniture/Web/Tables/web.rsi
+    sprite: Structures/Furniture/Tables/web.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
