@@ -824,5 +824,5 @@
   - type: Stack
     stackType: FloorTileWeb
   - type: Construction
-    graph: TileWeb
-    node: webtile
+    graph: WebObjects
+    node: tile

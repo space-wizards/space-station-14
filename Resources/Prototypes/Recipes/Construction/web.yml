@@ -7,7 +7,7 @@
   category: construction-category-structures
   description: A fairly weak yet silky smooth wall.
   icon:
-    sprite: /Textures/Structures/Walls/web.rsi
+    sprite: Structures/Walls/web.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -22,10 +22,10 @@
   graph: WebStructures
   startNode: start
   targetNode: table
-  category: construction-category-structures
+  category: construction-category-furniture
   description: Essential for any serious web development.
   icon:
-    sprite: /Textures/Structures/Furniture/Web/table.rsi
+    sprite: Structures/Furniture/Web/Tables/web.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -40,10 +40,10 @@
   graph: WebStructures
   startNode: start
   targetNode: bed
-  category: construction-category-structures
+  category: construction-category-furniture
   description: Fun fact, you eating spiders in your sleep is false.
   icon:
-    sprite: /Textures/Structures/Furniture/Web/bed.rsi
+    sprite: Structures/Furniture/Web/bed.rsi
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter
@@ -58,10 +58,10 @@
   graph: WebStructures
   startNode: start
   targetNode: chair
-  category: construction-category-structures
+  category: construction-category-furniture
   description: You want to get serious about web development? Get this chair!
   icon:
-    sprite: /Textures/Structures/Furniture/Web/chair.rsi
+    sprite: Structures/Furniture/Web/chair.rsi
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter
@@ -74,10 +74,10 @@
   graph: WebStructures
   startNode: start
   targetNode: crate
-  category: construction-category-structures
+  category: construction-category-storage
   description: For containment of food and other things. Not as durable as a normal crate, and can't be welded shut.
   icon:
-    sprite: /Textures/Structures/Storage/Crates/web.rsi
+    sprite: Structures/Storage/Crates/web.rsi
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter

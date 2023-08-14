@@ -1,10 +1,25 @@
 - type: construction
   name: web tile
   id: TileWeb
-  graph: TileWeb
+  graph: WebObjects
   startNode: start
-  targetNode: webtile
+  targetNode: tile
   category: construction-category-tiles
   description: "Nice and smooth."
-  icon: { sprite: Objects/Tiles/web.rsi, state: icon }
+  icon:
+    sprite: Objects/Tiles/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web winter coat
+  id: ClothingOuterWinterWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: coat
+  category: construction-category-clothing
+  description: "Surprisingly warm and durable."
+  icon:
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+    state: icon
   objectType: Item

@@ -417,3 +417,9 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+  - type: Construction
+    graph: WebObjects
+    node: coat
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
