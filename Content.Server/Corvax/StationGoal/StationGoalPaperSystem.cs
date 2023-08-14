@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Shared.GameTicking;
+using Content.Shared.Paper;
 using Content.Shared.Random.Helpers;
 using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Prototypes;
@@ -53,7 +54,12 @@ namespace Content.Server.Corvax.StationGoal
                 {
                     Content = Loc.GetString(goal.Text),
                     StampState = "paper_stamp-centcom",
-                    StampedBy = new List<string>{Loc.GetString("stamp-component-stamped-name-centcom")}
+                    StampedBy = new List<StampDisplayInfo>{
+                        new(){
+                            StampedName = Loc.GetString("stamp-component-stamped-name-centcom"),
+                            StampedColor = Color.FromHex("#006600")
+                        }
+                    }
                 };
                 dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
 

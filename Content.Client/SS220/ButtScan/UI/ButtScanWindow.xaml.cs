@@ -28,17 +28,21 @@ public sealed partial class ButtScanWindow : PaperWindow
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);
 
-        var layers = new Control();
-        layers.HorizontalExpand = true;
-        layers.VerticalExpand = true;
+        var layers = new Control
+        {
+            HorizontalExpand = true,
+            VerticalExpand = true
+        };
 
-        ButtTextureRect = new TextureRect();
-        ButtTextureRect.Stretch = TextureRect.StretchMode.Scale;
-        ButtTextureRect.CanShrink = true;
-        ButtTextureRect.SetSize = _buttRectSize;
-        ButtTextureRect.Margin = _buttRectMargin;
-        ButtTextureRect.HorizontalAlignment = HAlignment.Center;
-        ButtTextureRect.VerticalAlignment = VAlignment.Center;
+        ButtTextureRect = new TextureRect
+        {
+            Stretch = TextureRect.StretchMode.Scale,
+            CanShrink = true,
+            SetSize = _buttRectSize,
+            Margin = _buttRectMargin,
+            HorizontalAlignment = HAlignment.Center,
+            VerticalAlignment = VAlignment.Center
+        };
 
         PaperBackground.AddChild(layers);
         ScrollingContents.Orphan();
@@ -46,9 +50,9 @@ public sealed partial class ButtScanWindow : PaperWindow
         layers.AddChild(ScrollingContents);
     }
 
-    public void InitVisuals(ButtScanComponent scan, PaperVisualsComponent visuals)
+    public void InitVisuals(EntityUid owner, ButtScanComponent scan, PaperVisualsComponent visuals)
     {
-        base.InitVisuals(visuals);
+        base.InitVisuals(owner, visuals);
 
         var contentImage = _resCache.GetResource<TextureResource>(scan.ButtTexturePath);
         ButtTextureRect.Texture = contentImage;

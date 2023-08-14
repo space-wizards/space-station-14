@@ -1,4 +1,5 @@
 using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;

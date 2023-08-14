@@ -1,10 +1,11 @@
-﻿using Content.Server.DeviceNetwork.Components;
+using Content.Server.DeviceNetwork.Components;
 using Content.Server.EUI;
 using Content.Server.Ghost.Components;
 using Content.Server.Paper;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
 using Content.Shared.Follower;
+using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 
 namespace Content.Server.Fax.AdminUI;
@@ -60,7 +61,7 @@ public sealed class AdminFaxEui : BaseEui
                 {
                     Content = sendData.Content,
                     StampState = sendData.StampState,
-                    StampedBy = new List<string>{sendData.From}
+                    StampedBy = new() { new StampDisplayInfo { StampedName = sendData.From, StampedColor = sendData.StampColor } }
                 };
                 dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
 

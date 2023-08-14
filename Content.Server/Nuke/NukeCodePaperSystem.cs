@@ -5,6 +5,7 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -67,7 +68,10 @@ namespace Content.Server.Nuke
                 {
                     Content = paperContent,
                     StampState = "paper_stamp-centcom",
-                    StampedBy = new List<string>{Loc.GetString("stamp-component-stamped-name-centcom")}
+                    StampedBy = new List<StampDisplayInfo>
+                    {
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#006600") },
+                    }
                 };
                 dataToCopy.Add(typeof(PaperComponent), paperDataToCopy);
 
