@@ -7,6 +7,8 @@
     contents:
       - id: ClothingNeckCloakQm
       - id: ClothingHeadsetCargo
+      - id: ClothingUniformJumpsuitQMTurtleneck
+      - id: ClothingUniformJumpskirtQMTurtleneck
       - id: ClothingHandsGlovesColorBrown
       - id: ClothingShoesColorBrown
       - id: ClothingHeadHatQMsoft
@@ -268,6 +270,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
@@ -291,6 +294,7 @@
       - id: JetpackSecurityFilled
       - id: BoxEncryptionKeySecurity
       - id: HoloprojectorSecurity
+      - id: BookSecretDocuments
 
 - type: entity
   id: LockerHeadOfSecurityFilled
@@ -299,6 +303,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat

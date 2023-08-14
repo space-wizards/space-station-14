@@ -1515,7 +1515,7 @@
     MaterialCloth1: 1
   reagents:
     TranexamicAcid: 50
-    Spaceacillin: 50
+    Cryptobiolin: 50
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh

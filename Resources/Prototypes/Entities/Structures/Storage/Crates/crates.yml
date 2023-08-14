@@ -496,3 +496,26 @@
     sprite: Structures/Storage/Crates/syndicate.rsi
   - type: Sprite
     sprite: Structures/Storage/Crates/syndicate.rsi
+
+- type: entity
+  parent: CrateBaseWeldable
+  id: CrateTrashCart
+  name: trash cart
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/trashcart.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/trashcart.rsi
+
+- type: entity
+  parent: CrateBaseSecure
+  id: CrateTrashCartJani
+  name: janitorial trash cart
+  components:
+  - type: Icon
+    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+  - type: Sprite
+    sprite: Structures/Storage/Crates/trashcart_jani.rsi
+  - type: AccessReader
+    access: [["Janitor"]]
+
