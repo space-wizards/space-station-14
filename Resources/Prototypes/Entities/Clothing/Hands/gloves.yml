@@ -27,6 +27,7 @@
   - type: Tag
     tags:
     - Kangaroo
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
