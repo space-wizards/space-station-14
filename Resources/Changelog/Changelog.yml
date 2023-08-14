@@ -1,11 +1,4 @@
 Entries:
-- author: CrigCrag
-  changes:
-  - {message: Nanotrasen has installed REAL wheels on the janitorial trolleys after
-      complaints of fake wheels leaving marks on the tiling. They should be a bit
-      easier to move now., type: Tweak}
-  id: 4075
-  time: '2023-06-23T17:49:20.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Resprited the node scanner., type: Tweak}
@@ -3017,3 +3010,9 @@ Entries:
       will you have to sit in silence before your demise', type: Fix}
   id: 4574
   time: '2023-08-14T03:55:50.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The Syndicate have rebooted the chameleon clothing database, restoring
+      most lost functionality.', type: Fix}
+  id: 4575
+  time: '2023-08-14T04:03:20.0000000+00:00'
