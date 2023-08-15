@@ -76,14 +76,14 @@
           - ReagentId: Omnizine
             Quantity: 30
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: MixedPackFill
   wights:
     CigaretteRandomMecialGroups: 1
     CigaretteRandomFoodGroups: 1
     CigaretteRandomNastyGroups: 1
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: CigaretteRandomMedicalGroups
   weights:
     CigaretteOmnizine: 0.10
@@ -97,7 +97,7 @@
     CigarettePax: 0.10
     CigaretteIpecac: 0.10
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: CigaretteRandomFoodGroups
   weights:
     CigaretteBbqSauce: 0.70
@@ -108,7 +108,7 @@
     CigaretteBanana: 0.10
     CigaretteTHC: 0.70
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: CigaretteRandomNastyGroups
   weights:
     CigaretteSpaceDrugs: 0.50

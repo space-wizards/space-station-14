@@ -200,3 +200,4 @@
   - type: StorageFill
     contents:
       -id: MixedPackFill
+        amount: 2
