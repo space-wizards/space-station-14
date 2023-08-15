@@ -1,5 +1,6 @@
 ﻿using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Players;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
@@ -89,8 +90,10 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
                 if (!_playerManager.TryGetSessionById(player, out var session))
                     continue;
 
+                if (session.GetMind()?.OwnedEntity is { } entity)
+                    QueueDel(entity);
                 GameTicker.MakeJoinGame(session, station, silent: true);
-                tracker.RespawnQueue.Remove(session.UserId);
+                tracker.RespawnQueue.Remove(player);
             }
         }
     }
@@ -108,6 +111,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
             if (_station.GetStations().FirstOrNull() is not { } station)
                 return;
 
+            QueueDel(player);
             GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true);
             return;
         }
@@ -115,6 +119,6 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.ConnectedClient, Color.LimeGreen);
-        component.RespawnQueue.Add(actor.PlayerSession.UserId, _timing.CurTime + component.RespawnDelay);
+        component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
     }
 }
