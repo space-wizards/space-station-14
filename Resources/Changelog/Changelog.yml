@@ -1,10 +1,4 @@
 Entries:
-- author: Chief-Engineer
-  changes:
-  - {message: Nanotrasen has invested in higher quality grilles., type: Tweak}
-  - {message: The Hristov now does structural damage., type: Tweak}
-  id: 4097
-  time: '2023-06-27T01:19:09.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Added crate with two prestigious EVA hardsuits to cargo catalog, type: Add}
@@ -3024,3 +3018,8 @@ Entries:
   - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
   id: 4596
   time: '2023-08-15T00:25:58.0000000+00:00'
+- author: kalane15
+  changes:
+  - {message: Energy swords don't reflect in pockets anymore., type: Fix}
+  id: 4597
+  time: '2023-08-15T05:07:54.0000000+00:00'
