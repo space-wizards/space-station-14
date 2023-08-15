@@ -305,7 +305,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
         var stunTime = TimeSpan.FromSeconds(3);
-        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && HasComp<HumanoidAppearanceComponent>(ev.Target))
+        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && HasComp<HumanoidAppearanceComponent>(ev.Target)
+            && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive)
         {
             if (ev.Used != null)
             {
