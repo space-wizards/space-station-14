@@ -31,9 +31,7 @@ public sealed class AlternativeFireModesSystem : EntitySystem
         if (component.CurrentFireMode?.Prototype == null)
             return;
 
-        _prototypeManager.TryIndex(component.CurrentFireMode.Prototype, out EntityPrototype? proto);
-
-        if (proto == null)
+        if (!_prototypeManager.TryIndex<EntityPrototype>(component.CurrentFireMode.Prototype, out var proto)
             return;
 
         args.PushMarkup(Loc.GetString("gun-set-fire-mode", ("mode", proto.Name)));
