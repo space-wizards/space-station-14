@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
-  - {message: Fixed splitting stacks inside of storage not updating the available
-      capacity., type: Fix}
-  id: 4102
-  time: '2023-06-28T00:30:03.0000000+00:00'
 - author: Alekshhh
   changes:
   - {message: 'Added more pirate accenting, yarr.', type: Add}
@@ -3027,3 +3020,8 @@ Entries:
       crate., type: Fix}
   id: 4601
   time: '2023-08-15T20:22:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Radios no longer display a popup when messages fail to send., type: Remove}
+  id: 4602
+  time: '2023-08-15T20:56:42.0000000+00:00'
