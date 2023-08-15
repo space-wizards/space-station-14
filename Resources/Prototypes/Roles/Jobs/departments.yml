@@ -15,8 +15,8 @@
   sort: 2
   roles:
   - Bartender
-  - Botanist
   - Borg
+  - Botanist
   - Boxer
   - Chaplain
   - Chef

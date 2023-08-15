@@ -59749,8 +59749,7 @@ entities:
   entities:
   - uid: 5521
     components:
-    - rot: -1.5707963267948966 rad
-      pos: -24.5,22.5
+    - pos: -24.5,22.5
       parent: 1
       type: Transform
 - proto: OreProcessor

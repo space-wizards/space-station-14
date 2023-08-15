@@ -1,4 +1,3 @@
-using Content.Shared.Random.Helpers;
 using Robust.Server.Containers;
 using Robust.Shared.Containers;
 
@@ -13,9 +12,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
         [DataField("containers")]
         public List<string> Containers = new();
 
-        [DataField("randomOffset")]
-        public float RandomOffset = 0.25f;
-
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
             if (!system.EntityManager.TryGetComponent<ContainerManagerComponent>(owner, out var containerManager))
@@ -29,11 +25,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 if (!containerSys.TryGetContainer(owner, containerId, out var container, containerManager))
                     continue;
 
-                var entities = containerSys.EmptyContainer(container, true);
-                foreach (var ent in entities)
-                {
-                    ent.RandomOffset(RandomOffset);
-                }
+                containerSys.EmptyContainer(container, true);
             }
         }
     }

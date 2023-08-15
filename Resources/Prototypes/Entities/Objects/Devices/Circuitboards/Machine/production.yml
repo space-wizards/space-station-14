@@ -933,14 +933,30 @@
   name: salvage magnet machine board
   description: A machine printed circuit board for a salvage magnet.
   components:
-    - type: MachineBoard
-      prototype: SalvageMagnet
-      requirements:
-        Capacitor: 4
-      materialRequirements:
-        Steel: 5
-        CableHV: 5
-        Cable: 2
+  - type: MachineBoard
+    prototype: SalvageMagnet
+    requirements:
+      Capacitor: 4
+    materialRequirements:
+      Steel: 5
+      CableHV: 5
+      Cable: 2
+
+- type: entity
+  parent: BaseMachineCircuitboard
+  id: MiniGravityGeneratorCircuitboard
+  name: mini gravity generator machine board
+  description: A machine printed circuit board for a mini gravity generator.
+  components:
+  - type: MachineBoard
+    prototype: GravityGeneratorMini
+    requirements:
+      Capacitor: 4
+      MatterBin: 3
+    materialRequirements:
+      Steel: 5
+      CableHV: 5
+      Uranium: 2
 
 - type: entity
   id: PDANanotrasenMessengerServerCircuitboard

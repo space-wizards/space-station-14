@@ -1,11 +1,7 @@
-﻿using Content.Shared.Roles;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Silicons.Borgs.Components;
 
@@ -17,12 +13,6 @@ namespace Content.Shared.Silicons.Borgs.Components;
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem)), AutoGenerateComponentState]
 public sealed partial class BorgChassisComponent : Component
 {
-    /// <summary>
-    /// Whether or not the borg currently has a player occupying it
-    /// </summary>
-    [DataField("hasPlayer")]
-    public bool HasPlayer;
-
     /// <summary>
     /// Whether or not the borg is activated, meaning it has access to modules and a heightened movement speed
     /// </summary>
@@ -43,15 +33,9 @@ public sealed partial class BorgChassisComponent : Component
     public string BrainContainerId = "borg_brain";
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public ContainerSlot BrainContainer = default!;
+    public ContainerSlot BrainContainer = new();
 
     public EntityUid? BrainEntity => BrainContainer.ContainedEntity;
-
-    /// <summary>
-    /// A brain entity that fills the <see cref="BrainContainer"/> on roundstart
-    /// </summary>
-    [DataField("startingBrain", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? StartingBrain;
     #endregion
 
     #region Modules
@@ -77,32 +61,13 @@ public sealed partial class BorgChassisComponent : Component
     public Container ModuleContainer = default!;
 
     public int ModuleCount => ModuleContainer.ContainedEntities.Count;
-
-    /// <summary>
-    /// A list of modules that fill the borg on round start.
-    /// </summary>
-    [DataField("startingModules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> StartingModules = new();
     #endregion
-
-    /// <summary>
-    /// The job that corresponds to borgs
-    /// </summary>
-    [DataField("borgJobId", customTypeSerializer: typeof(PrototypeIdSerializer<JobPrototype>))]
-    public string BorgJobId = "Borg";
 
     /// <summary>
     /// The currently selected module
     /// </summary>
     [DataField("selectedModule")]
     public EntityUid? SelectedModule;
-
-    /// <summary>
-    /// The access this cyborg has when a player is inhabiting it.
-    /// </summary>
-    [DataField("access"), ViewVariables(VVAccess.ReadWrite)]
-    [AutoNetworkedField]
-    public string AccessGroup = "AllAccess";
 
     #region Visuals
     [DataField("hasMindState")]
