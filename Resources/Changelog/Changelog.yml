@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced folding chair damage., type: Tweak}
-  id: 4104
-  time: '2023-06-28T01:41:43.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Welders have been reworked to consume fuel when lit rather than after
@@ -3029,3 +3024,8 @@ Entries:
   - {message: Portals now snap to grid + show up properly in the entity menu, type: Fix}
   id: 4603
   time: '2023-08-15T20:56:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs can't get electrocuted anymore., type: Fix}
+  id: 4604
+  time: '2023-08-15T22:37:34.0000000+00:00'
