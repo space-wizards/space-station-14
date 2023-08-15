@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Remove the landing pad from expeditions., type: Tweak}
-  id: 4100
-  time: '2023-06-27T09:55:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Disable ambient music when expedition countdown starts. Also bumped
       countdown volume a lot., type: Tweak}
   id: 4101
@@ -3024,3 +3019,11 @@ Entries:
   - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
   id: 4599
   time: '2023-08-15T14:07:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Speech verbs will now change depending on the entity saying them and
+      from punctuation. Have fun chittering as a mothperson., type: Add}
+  - {message: Ending a message with '!!' will now bold the message., type: Add}
+  - {message: Mothpeople now have custom typing indicators., type: Add}
+  id: 4600
+  time: '2023-08-15T20:03:06.0000000+00:00'
