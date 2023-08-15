@@ -845,8 +845,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Botanist
-    - HeadOfPersonnel
-    - Captain
 
 - type: listing
   id: uplinkRiggedBoxingGloves
@@ -862,8 +860,6 @@
       whitelist:
         - Passenger
         - Boxer
-        - HeadOfPersonnel
-        - Captain
 
 - type: listing
   id: uplinkNecronomicon
@@ -878,8 +874,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
-    - HeadOfPersonnel
-    - Captain
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -898,8 +892,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
-    - HeadOfPersonnel
-    - Captain
 
 - type: listing
   id: uplinkRevolverCapGunFake
@@ -915,8 +907,6 @@
     whitelist:
     - Mime
     - Clown
-    - HeadOfPersonnel
-    - Captain
 
 - type: listing
   id: uplinkBananaPeelExplosive
@@ -931,8 +921,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
-    - HeadOfPersonnel
-    - Captain
 
 - type: listing
   id: UplinkHoloclownKit
@@ -965,8 +953,6 @@
     - Botanist
     - Clown
     - Mime
-    - HeadOfPersonnel
-    - Captain
 
 - type: listing
   id: UplinkChimpAmmo
@@ -978,12 +964,12 @@
   categories:
   - UplinkJob
   conditions:
-    - !type:BuyerJobCondition
+    - !type:BuyerDepartmentCondition
       whitelist:
-        - Scientist
-        - SeniorResearcher
-        - ResearchDirector
-        - Captain
+      - Science
+    - !type:BuyerJobCondition
+      blacklist:
+      - ResearchAssistant # No fun for trainee roles
 
 - type: listing
   id: uplinkProximityMine
@@ -998,8 +984,6 @@
   - !type:BuyerJobCondition
     whitelist:
     - Janitor
-    - HeadOfPersonnel
-    - Captain
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -1016,15 +1000,13 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerJobCondition # We can't use BuyerDepartmentCondition here since Zookeeper and Chef can also get this
     whitelist:
     - Zookeeper
     - Scientist
     - SeniorResearcher
     - ResearchDirector
     - Chef
-    - HeadOfPersonnel
-    - Captain
 
 # Armor
 
