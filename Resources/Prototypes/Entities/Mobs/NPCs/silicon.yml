@@ -311,6 +311,7 @@
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+    speechVerb: Robotic
   - type: HTN
     rootTask:
       task: MedibotCompound
