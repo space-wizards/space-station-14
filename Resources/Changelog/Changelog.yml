@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Removed smoke reactions until someone makes a better system., type: Remove}
-  id: 4107
-  time: '2023-06-28T02:08:47.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Vomit now only contains 10% of the reagents removed from the chem stream,
@@ -3031,3 +3026,8 @@ Entries:
   - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
   id: 4606
   time: '2023-08-15T22:49:30.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Added directional switches, type: Add}
+  id: 4607
+  time: '2023-08-15T23:01:50.0000000+00:00'
