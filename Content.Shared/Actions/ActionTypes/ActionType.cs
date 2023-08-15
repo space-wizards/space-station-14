@@ -249,6 +249,19 @@ public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneab
         return CompareTo(other) == 0;
     }
 
+    public static bool operator ==(ActionType? left, ActionType? right)
+    {
+        if (left is null)
+            return right is null;
+
+        return left.Equals(right);
+    }
+
+    public static bool operator !=(ActionType? left, ActionType? right)
+    {
+        return !(left == right);
+    }
+
     public override int GetHashCode()
     {
         unchecked

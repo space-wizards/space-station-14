@@ -18,6 +18,7 @@
       factions:
         - HonkHostile
     - type: Speech
+      speechVerb: Cluwne
     - type: CombatMode
     - type: MobMover
     - type: InputMover

@@ -48,10 +48,10 @@ namespace Content.Server.Damage.Systems
                 _sharedCameraRecoil.KickCamera(args.Target, direction);
             }
 
+            // TODO: If more stuff touches this then handle it after.
             if (TryComp<PhysicsComponent>(uid, out var physics))
             {
                 _thrownItem.LandComponent(args.Thrown, args.Component, physics, false);
-                _physics.ResetDynamics(physics);
             }
         }
 
