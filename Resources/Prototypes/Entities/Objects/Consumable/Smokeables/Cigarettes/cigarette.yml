@@ -76,47 +76,6 @@
           - ReagentId: Omnizine
             Quantity: 30
 
-- type: weightedRandomEntity
-  id: MixedPackFill
-  wights:
-    CigaretteRandomMecialGroups: 1
-    CigaretteRandomFoodGroups: 1
-    CigaretteRandomNastyGroups: 1
-
-- type: weightedRandomEntity
-  id: CigaretteRandomMedicalGroups
-  weights:
-    CigaretteOmnizine: 0.10
-    CigaretteIron: 0.10
-    CigaretteTricordrazine: 0.25
-    CigaretteDylovene: 0.10
-    CigaretteDermaline: 0.10
-    CigaretteArithrazine: 0.10
-    CigaretteBicaridine: 0.10
-    CigaretteDexalin: 0.10
-    CigarettePax: 0.10
-    CigaretteIpecac: 0.10
-
-- type: weightedRandomEntity
-  id: CigaretteRandomFoodGroups
-  weights:
-    CigaretteBbqSauce: 0.70
-    CigaretteBlackPepper: 0.70
-    CigaretteCapsaicinOil: 0.70
-    CigaretteBread: 0.70
-    CigaretteMilk: 0.70
-    CigaretteBanana: 0.10
-    CigaretteTHC: 0.70
-
-- type: weightedRandomEntity
-  id: CigaretteRandomNastyGroups
-  weights:
-    CigaretteSpaceDrugs: 0.50
-    CigaretteMuteToxin: 0.05
-    CigaretteMold: 0.50
-    CigaretteLicoxide: 0.10
-    CigaretteWeldingFuel: 0.50
-
 - type: entity
   id: CigaretteOmnizine
   parent: SoakedCigarette
@@ -220,7 +179,7 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Ipecac
-            Quantity: 2          
+            Quantity: 2
 
 - type: entity
   id: CigaretteBicaridine

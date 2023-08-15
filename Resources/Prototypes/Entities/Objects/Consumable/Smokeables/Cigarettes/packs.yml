@@ -188,6 +188,33 @@
       amount: 5
 
 - type: entity
+  id: CigPackMixedMedical
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteIron
+    - id: CigaretteTricordrazine
+    - id: CigaretteDylovene
+    - id: CigaretteDermaline
+    - id: CigaretteArithrazine
+    - id: CigaretteBicaridine
+    - id: CigaretteIpecac
+    - id: CigaretteOmnizine
+      prob: 0.25
+    - id: CigaretteDexalin
+      prob: 0.25
+    - id: CigarettePax
+      prob: 0.10
+
+
+- type: entity
   id: CigPackMixed
   parent: CigPackMixedBase
   name: Dan's soaked smokes
@@ -199,5 +226,49 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
-      -id: MixedPackFill
-        amount: 2
+    - id: CigaretteBbqSauce
+      prob: 0.70
+    - id: CigaretteBlackPepper
+      prob: 0.70
+    - id: CigaretteCapsaicinOil
+      prob: 0.70
+    - id: CigaretteBread
+      prob: 0.70
+    - id: CigaretteMilk
+      prob: 0.70
+    - id: CigaretteBanana
+      prob: 0.10
+    - id: CigaretteTHC
+      prob: 0.70
+    - id: CigaretteTricordrazine
+      prob: 0.25
+    - id: CigaretteSpaceDrugs
+      prob: 0.50
+    - id: CigaretteLicoxide
+      prob: 0.10
+
+- type: entity
+  id: CigPackMixedNasty
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteSpaceDrugs
+      amount: 2
+    - id: CigaretteWeldingFuel
+      amount: 2
+    - id: CigaretteMold
+      amount: 2
+    - id: CigaretteTHC
+    - id: CigaretteLicoxide
+      prob: 0.50
+    - id: CigarettePax
+      prob: 0.10
+    - id: CigaretteMuteToxin
+      prob: 0.05
