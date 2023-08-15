@@ -25,6 +25,29 @@ public abstract partial class SharedGunSystem
         SubscribeLocalEvent<BallisticAmmoProviderComponent, InteractUsingEvent>(OnBallisticInteractUsing);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, AfterInteractEvent>(OnBallisticAfterInteract);
         SubscribeLocalEvent<BallisticAmmoProviderComponent, UseInHandEvent>(OnBallisticUse);
+
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentGetState>(OnBallisticGetState);
+        SubscribeLocalEvent<BallisticAmmoProviderComponent, ComponentHandleState>(OnBallisticHandleState);
+    }
+
+    private void OnBallisticGetState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentGetState args)
+    {
+        args.State = new BallisticAmmoProviderComponentState()
+        {
+            UnspawnedCount = component.UnspawnedCount,
+            Cycleable = component.Cycleable,
+            Entities = ToNetEntityList(component.Entities),
+        };
+    }
+
+    private void OnBallisticHandleState(EntityUid uid, BallisticAmmoProviderComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not BallisticAmmoProviderComponentState state)
+            return;
+
+        component.UnspawnedCount = state.UnspawnedCount;
+        component.Cycleable = state.Cycleable;
+        component.Entities = ToEntityList(state.Entities);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)
@@ -245,5 +268,13 @@ public abstract partial class SharedGunSystem
 
         Appearance.SetData(uid, AmmoVisuals.AmmoCount, GetBallisticShots(component), appearance);
         Appearance.SetData(uid, AmmoVisuals.AmmoMax, component.Capacity, appearance);
+    }
+
+    [Serializable, NetSerializable]
+    private sealed class BallisticAmmoProviderComponentState : ComponentState
+    {
+        public int UnspawnedCount;
+        public List<NetEntity> Entities = new();
+        public bool Cycleable = true;
     }
 }
