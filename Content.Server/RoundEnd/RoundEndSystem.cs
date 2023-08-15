@@ -147,7 +147,7 @@ namespace Content.Server.RoundEnd
                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-auto-called-announcement",
                     ("time", time),
                     ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
+                    Loc.GetString("Системы Оповещений"),
                     false,
                     null,
                     Color.Gold);
@@ -157,7 +157,7 @@ namespace Content.Server.RoundEnd
                 _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
                     ("time", time),
                     ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
+                    Loc.GetString("Системы Оповещений"),
                     false,
                     null,
                     Color.Gold);
@@ -192,7 +192,7 @@ namespace Content.Server.RoundEnd
             }
 
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-recalled-announcement"),
-                Loc.GetString("Station"), false, colorOverride: Color.Gold);
+                Loc.GetString("Системы Оповещений"), false, colorOverride: Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlerecalled.ogg", Filter.Broadcast());
 

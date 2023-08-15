@@ -39,5 +39,5 @@ latejoin-arrival-announcement =
         [epicene] прибыли
        *[neuter] прибыл
     } на станцию!
-latejoin-arrival-sender = Станции
+latejoin-arrival-sender = Системы Оповещений
 latejoin-arrivals-direction = Вскоре прибудет шаттл, который доставит вас на станцию.
