@@ -117,7 +117,7 @@ ghost-role-information-onestar-mecha-name = Onestar Mecha
 ghost-role-information-onestar-mecha-description = You are an experimental mecha created by who-knows-what, all you know is that you have weapons and you detect fleshy moving targets nearby...
 ghost-role-information-onestar-mecha-rules = Use your weapons to cause havoc. You are an antagonist.
 
-ghost-role-information-remilia-name = Remilia2, the chaplain's familiar
+ghost-role-information-remilia-name = Remilia, the chaplain's familiar
 ghost-role-information-remilia-description = Obey your master. Eat fruit.
 ghost-role-information-remilia-rules = You are an intelligent fruit bat. Follow the chaplain around. Don't cause any trouble unless the chaplain tells you to.
 
