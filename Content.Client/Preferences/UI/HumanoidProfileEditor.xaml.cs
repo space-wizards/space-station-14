@@ -144,6 +144,7 @@ namespace Content.Client.Preferences.UI
             _tabContainer.SetTabTitle(0, Loc.GetString("humanoid-profile-editor-appearance-tab"));
 
             ShowClothes.OnPressed += ToggleClothes;
+            ShowLoadouts.OnPressed += ToggleClothes;
 
             #region Sex
 
@@ -457,8 +458,15 @@ namespace Content.Client.Preferences.UI
             _loadoutPreferences = new List<LoadoutPreferenceSelector>();
             var loadouts = prototypeManager.EnumeratePrototypes<LoadoutPrototype>().OrderBy(l => l.ID).ToList();
 
-            _tabContainer.SetTabVisible(4, _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled));
-            _configurationManager.OnValueChanged(CCVars.GameLoadoutsEnabled, enabled => { _tabContainer.SetTabVisible(4, enabled); });
+            var loadoutsEnabled = _configurationManager.GetCVar(CCVars.GameLoadoutsEnabled);
+            _tabContainer.SetTabVisible(4, loadoutsEnabled);
+            ShowLoadouts.Visible = loadoutsEnabled;
+            _configurationManager.OnValueChanged(CCVars.GameLoadoutsEnabled, enabled =>
+            {
+                _tabContainer.SetTabVisible(4, enabled);
+                ShowLoadouts.Visible = enabled;
+            });
+
             var points = _configurationManager.GetCVar(CCVars.GameLoadoutsPoints);
             _loadoutPoints.MaxValue = points;
             _loadoutPoints.Value = points;
@@ -1247,6 +1255,8 @@ namespace Content.Client.Preferences.UI
 
             if (ShowClothes.Pressed)
                 LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
+            if (ShowLoadouts.Pressed)
+                LobbyCharacterPreviewPanel.GiveDummyLoadoutItems(_previewDummy!.Value, Profile);
         }
 
         public void UpdateControls()

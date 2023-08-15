@@ -6,6 +6,7 @@ using Content.Client.Humanoid;
 using Content.Client.Inventory;
 using Content.Client.Preferences;
 using Content.Client.UserInterface.Controls;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid.Prototypes;
@@ -174,84 +175,10 @@ namespace Content.Client.Lobby.UI
 
         public static void GiveDummyLoadoutItems(EntityUid dummy, HumanoidCharacterProfile profile)
         {
-            var protoMan = IoCManager.Resolve<IPrototypeManager>();
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var handsSystem = entMan.System<HandsSystem>();
-            var invSystem = entMan.System<ClientInventorySystem>();
-
             var highPriorityJobId = profile.JobPriorities.FirstOrDefault(j => j.Value == JobPriority.High).Key;
+            var highPriorityJob = IoCManager.Resolve<IPrototypeManager>().Index<JobPrototype>(highPriorityJobId ?? SharedGameTicker.FallbackOverflowJob);
 
-            foreach (var loadoutId in profile.LoadoutPreferences)
-            {
-                // Ignore invalid loadouts
-                if (!protoMan.TryIndex<LoadoutPrototype>(loadoutId, out var loadout))
-                    continue;
-
-
-                var isEntityWhitelisted = loadout.EntityWhitelist != null &&
-                    !loadout.EntityWhitelist.IsValid(dummy);
-                var isEntityBlacklisted = loadout.EntityBlacklist != null &&
-                    loadout.EntityBlacklist.IsValid(dummy);
-                var isJobWhitelisted = highPriorityJobId != null &&
-                    loadout.JobWhitelist != null &&
-                    !loadout.JobWhitelist.Contains(highPriorityJobId);
-                var isJobBlacklisted = highPriorityJobId != null &&
-                    loadout.JobBlacklist != null &&
-                    loadout.JobBlacklist.Contains(highPriorityJobId);
-                var isSpeciesWhitelisted = loadout.SpeciesWhitelist != null &&
-                    !loadout.SpeciesWhitelist.Contains(profile.Species);
-                var isSpeciesBlacklisted = loadout.SpeciesBlacklist != null &&
-                    loadout.SpeciesBlacklist.Contains(profile.Species);
-
-                // Ignore loadouts that don't match the whitelists/blacklists
-                if (isEntityWhitelisted || isEntityBlacklisted || isJobWhitelisted || isJobBlacklisted || isSpeciesWhitelisted || isSpeciesBlacklisted)
-                    continue;
-
-                var entity = entMan.SpawnEntity(loadout.Item, MapCoordinates.Nullspace);
-
-                // Put in hand if not clothes
-                if (!entMan.TryGetComponent<ClothingComponent>(entity, out var clothing))
-                {
-                    handsSystem.TryPickup(dummy, entity);
-                    continue;
-                }
-
-                // Automatically search empty slot for clothes to equip
-                string? firstSlotName = null;
-                var isEquipped = false;
-                foreach (var slot in invSystem.GetSlots(dummy))
-                {
-                    // Ignore slots the clothing can't equip to
-                    if (!clothing.Slots.HasFlag(slot.SlotFlags))
-                        continue;
-
-                    // Remember first valid slot name
-                    firstSlotName ??= slot.Name;
-
-                    // Ignore slots that already have an item
-                    if (invSystem.TryGetSlotEntity(dummy, slot.Name, out _))
-                        continue;
-
-                    // Unequip item if the loadout overwrites it
-                    if (loadout.Exclusive && invSystem.TryUnequip(dummy, firstSlotName, out var removedItem, true, true))
-                        entMan.DeleteEntity(removedItem.Value);
-
-                    // Equip item
-                    if (!invSystem.TryEquip(dummy, entity, slot.Name, true))
-                        continue;
-
-                    isEquipped = true;
-                    break;
-                }
-
-                if (isEquipped || firstSlotName == null)
-                    continue;
-
-                // Force equip to first valid slot even if it's already occupied
-                if (invSystem.TryUnequip(dummy, firstSlotName, out var unequippedItem, true, true))
-                    entMan.DeleteEntity(unequippedItem.Value);
-                invSystem.TryEquip(dummy, entity, firstSlotName, true, true);
-            }
+            EntitySystem.Get<LoadoutSystem>().ApplyCharacterLoadout(dummy, highPriorityJob, profile);
         }
     }
 }

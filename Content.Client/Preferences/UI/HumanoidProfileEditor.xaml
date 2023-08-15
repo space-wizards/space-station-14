@@ -59,6 +59,12 @@
                                     <Control HorizontalExpand="True"/>
                                     <Button Name="ShowClothes" Pressed="True" ToggleMode="True" Text="{Loc 'Show'}" HorizontalAlignment="Right" />
                                 </BoxContainer>
+                                <!-- Show loadouts -->
+                                <BoxContainer HorizontalExpand="True">
+                                    <Label Text="{Loc 'humanoid-profile-editor-loadouts'}" />
+                                    <Control HorizontalExpand="True"/>
+                                    <Button Name="ShowLoadouts" Pressed="True" ToggleMode="True" Text="{Loc 'Show'}" HorizontalAlignment="Right" />
+                                </BoxContainer>
                                 <!-- Clothing -->
                                 <BoxContainer HorizontalExpand="True">
                                     <Label Text="{Loc 'humanoid-profile-editor-clothing-label'}" />
