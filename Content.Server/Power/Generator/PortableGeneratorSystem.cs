@@ -1,9 +1,5 @@
 ﻿using Content.Server.DoAfter;
-using Content.Server.NodeContainer;
-using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.Popups;
-using Content.Server.Power.Components;
-using Content.Server.Power.Nodes;
 using Content.Shared.DoAfter;
 using Content.Shared.Power.Generator;
 using Content.Shared.Verbs;
@@ -21,7 +17,6 @@ namespace Content.Server.Power.Generator;
 public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
@@ -35,7 +30,6 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         // Update UI after main system runs.
         UpdatesAfter.Add(typeof(GeneratorSystem));
 
-        SubscribeLocalEvent<PortableGeneratorComponent, GetVerbsEvent<InteractionVerb>>(GetInteractionVerbs);
         SubscribeLocalEvent<PortableGeneratorComponent, GetVerbsEvent<AlternativeVerb>>(GetAlternativeVerb);
         SubscribeLocalEvent<PortableGeneratorComponent, GeneratorStartedEvent>(GeneratorTugged);
     }
@@ -126,71 +120,6 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
             args.Verbs.Add(verb);
         }
-    }
-
-    private void GetInteractionVerbs(EntityUid uid, PortableGeneratorComponent component,
-        GetVerbsEvent<InteractionVerb> args)
-    {
-        if (!args.CanAccess || !args.CanInteract)
-            return;
-
-        var isCurrentlyHV = component.ActiveOutput == PortableGeneratorPowerOutput.HV;
-        var msg = isCurrentlyHV ? "portable-generator-switch-output-mv" : "portable-generator-switch-output-hv";
-
-        var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
-
-        InteractionVerb verb = new()
-        {
-            Act = () =>
-            {
-                ToggleActiveOutput(uid, component, args.User);
-            },
-            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
-            Text = Loc.GetString(msg),
-        };
-
-        if (fuelGenerator.On)
-        {
-            verb.Message = Loc.GetString("portable-generator-verb-switch-output-disabled");
-            verb.Disabled = true;
-        }
-
-        args.Verbs.Add(verb);
-    }
-
-    private void ToggleActiveOutput(EntityUid uid, PortableGeneratorComponent component, EntityUid user)
-    {
-        var supplier = Comp<PowerSupplierComponent>(uid);
-        var nodeContainer = Comp<NodeContainerComponent>(uid);
-        var outputMV = (CableDeviceNode) nodeContainer.Nodes["output_mv"];
-        var outputHV = (CableDeviceNode) nodeContainer.Nodes["output_hv"];
-
-        if (component.ActiveOutput == PortableGeneratorPowerOutput.HV)
-        {
-            component.ActiveOutput = PortableGeneratorPowerOutput.MV;
-            supplier.Voltage = Voltage.Medium;
-
-            outputMV.Enabled = true;
-            outputHV.Enabled = false;
-        }
-        else
-        {
-            component.ActiveOutput = PortableGeneratorPowerOutput.HV;
-            supplier.Voltage = Voltage.High;
-
-            outputMV.Enabled = false;
-            outputHV.Enabled = true;
-        }
-
-        _popup.PopupEntity(
-            Loc.GetString("portable-generator-switched-output"),
-            uid,
-            user);
-
-        Dirty(uid, component);
-
-        _nodeGroup.QueueReflood(outputMV);
-        _nodeGroup.QueueReflood(outputHV);
     }
 
     public override void Update(float frameTime)

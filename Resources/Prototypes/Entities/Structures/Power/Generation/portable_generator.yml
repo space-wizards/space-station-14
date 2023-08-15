@@ -61,6 +61,19 @@
       startSoundEmpty: { collection: GeneratorTugEmpty }
       startSound: { collection: GeneratorTug }
     - type: FuelGenerator
+    - type: PowerSupplier
+      supplyRate: 3000
+      supplyRampRate: 500
+      supplyRampTolerance: 500
+
+- type: entity
+  abstract: true
+  parent: PortableGeneratorBase
+  id: PortableGeneratorSwitchableBase
+  components:
+    - type: PowerSwitchableGenerator
+      switchSound:
+        path: /Audio/Machines/button.ogg
     - type: NodeContainer
       examinable: true
       nodes:
@@ -71,14 +84,10 @@
           !type:CableDeviceNode
           nodeGroupID: MVPower
           enabled: false
-    - type: PowerSupplier
-      supplyRate: 3000
-      supplyRampRate: 500
-      supplyRampTolerance: 500
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
-  parent: PortableGeneratorBase
+  parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorPacman
   suffix: Plasma, 20 kW
   components:
@@ -105,7 +114,7 @@
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
-  parent: PortableGeneratorBase
+  parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorSuperPacman
   suffix: Uranium, 30 kW
   components:
@@ -133,7 +142,7 @@
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
-  description: |
+  description: |-
     Intended for powering individual rooms in the case of emergencies.
     Rated ages 3 and up.
   parent: PortableGeneratorBase
@@ -180,3 +189,13 @@
     - type: PortableGenerator
       # Unreliable bugger
       startChance: 0.5
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: MVPower
+    - type: PowerSupplier
+      # No ramping needed on this bugger.
+      voltage: Medium
+      supplyRampTolerance: 2000

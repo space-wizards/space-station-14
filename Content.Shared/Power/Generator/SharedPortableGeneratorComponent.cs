@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Audio;
-using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
@@ -11,17 +10,10 @@ namespace Content.Shared.Power.Generator;
 /// A portable generator is expected to have the following components: <c>SolidFuelGeneratorAdapterComponent</c> <see cref="FuelGeneratorComponent"/>.
 /// </remarks>
 /// <seealso cref="SharedPortableGeneratorSystem"/>
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent]
 [Access(typeof(SharedPortableGeneratorSystem))]
-public sealed partial class PortableGeneratorComponent : Component
+public sealed class PortableGeneratorComponent : Component
 {
-    /// <summary>
-    /// Which output the portable generator is currently connected to.
-    /// </summary>
-    [DataField("activeOutput")]
-    [AutoNetworkedField]
-    public PortableGeneratorPowerOutput ActiveOutput { get; set; }
-
     /// <summary>
     /// Chance that this generator will start. If it fails, the user has to try again.
     /// </summary>
@@ -50,24 +42,6 @@ public sealed partial class PortableGeneratorComponent : Component
     [DataField("startSoundEmpty")]
     [ViewVariables(VVAccess.ReadWrite)]
     public SoundSpecifier? StartSoundEmpty { get; set; }
-}
-
-/// <summary>
-/// Possible power output for portable generators.
-/// </summary>
-/// <seealso cref="PortableGeneratorComponent"/>
-[Serializable, NetSerializable]
-public enum PortableGeneratorPowerOutput : byte
-{
-    /// <summary>
-    /// The generator is set to connect to a high-voltage power network.
-    /// </summary>
-    HV,
-
-    /// <summary>
-    /// The generator is set to connect to a medium-voltage power network.
-    /// </summary>
-    MV
 }
 
 /// <summary>
