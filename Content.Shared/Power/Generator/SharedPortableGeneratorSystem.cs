@@ -1,4 +1,6 @@
-﻿using Content.Shared.Examine;
+﻿using Content.Shared.DoAfter;
+using Content.Shared.Examine;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
 
@@ -17,5 +19,18 @@ public abstract class SharedPortableGeneratorSystem : EntitySystem
     {
         // Show which output is currently selected.
         args.PushMarkup(Loc.GetString("portable-generator-examine", ("output", component.ActiveOutput.ToString())));
+    }
+}
+
+/// <summary>
+/// Used to start a portable generator.
+/// </summary>
+/// <seealso cref="SharedPortableGeneratorSystem"/>
+[Serializable, NetSerializable]
+public sealed class GeneratorStartedEvent : DoAfterEvent
+{
+    public override DoAfterEvent Clone()
+    {
+        return this;
     }
 }

@@ -1,4 +1,5 @@
-﻿using Robust.Shared.GameStates;
+﻿using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Power.Generator;
@@ -20,6 +21,35 @@ public sealed partial class PortableGeneratorComponent : Component
     [DataField("activeOutput")]
     [AutoNetworkedField]
     public PortableGeneratorPowerOutput ActiveOutput { get; set; }
+
+    /// <summary>
+    /// Chance that this generator will start. If it fails, the user has to try again.
+    /// </summary>
+    [DataField("startChance")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public float StartChance { get; set; } = 0.5f;
+
+    /// <summary>
+    /// Amount of time it takes to attempt to start the generator.
+    /// </summary>
+    [DataField("startTime")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public TimeSpan StartTime { get; set; } = TimeSpan.FromSeconds(2);
+
+    /// <summary>
+    /// Sound that plays when attempting to start this generator.
+    /// </summary>
+    [DataField("startSound")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? StartSound { get; set; }
+
+    /// <summary>
+    /// Sound that plays when attempting to start this generator.
+    /// Plays instead of <see cref="StartSound"/> if the generator has no fuel (dumbass).
+    /// </summary>
+    [DataField("startSoundEmpty")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? StartSoundEmpty { get; set; }
 }
 
 /// <summary>

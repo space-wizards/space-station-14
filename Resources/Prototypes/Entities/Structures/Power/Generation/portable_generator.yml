@@ -12,9 +12,22 @@
       price: 500
     - type: AmbientSound
       range: 5
+      volume: -5
       sound:
         path: /Audio/Ambience/Objects/engine_hum.ogg
       enabled: false
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.40,-0.40,0.40,0.40"
+          # It has wheels
+          density: 45
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
 
     # Visuals
     - type: Appearance
@@ -45,8 +58,9 @@
 
     # Core functionality
     - type: PortableGenerator
+      startSoundEmpty: { collection: GeneratorTugEmpty }
+      startSound: { collection: GeneratorTug }
     - type: FuelGenerator
-    - type: SolidFuelGeneratorAdapter
     - type: NodeContainer
       examinable: true
       nodes:
@@ -86,6 +100,8 @@
       optimalPower: 20000
     - type: SolidFuelGeneratorAdapter
       fuelMaterial: Plasma
+    - type: PortableGenerator
+      startChance: 0.8
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -112,3 +128,55 @@
       optimalBurnRate: 0.00416666666
     - type: SolidFuelGeneratorAdapter
       fuelMaterial: Uranium
+    - type: PortableGenerator
+      startChance: 1
+
+- type: entity
+  name: J.R.P.A.C.M.A.N.-type portable generator
+  description: |
+    Intended for powering individual rooms in the case of emergencies.
+    Rated ages 3 and up.
+  parent: PortableGeneratorBase
+  id: PortableGeneratorJrPacman
+  suffix: Welding Fuel, 2 kW
+  components:
+    - type: AmbientSound
+      range: 4
+      volume: -8
+
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.30,-0.30,0.30,0.30"
+          # It has wheels
+          density: 30
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+
+    - type: Sprite
+      layers:
+        - state: portgen3
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen2on }
+            False: { state: portgen3 }
+
+    - type: Machine
+      board: GeneratorUraniumMachineCircuitboard
+    - type: FuelGenerator
+      targetPower: 30000
+      optimalPower: 30000
+      optimalBurnRate: 0.00416666666
+    - type: ChemicalFuelGeneratorAdapter
+      chemConversionFactors:
+        WeldingFuel: 0.1
+    - type: PortableGenerator
+      # Unreliable bugger
+      startChance: 0.5

@@ -32,7 +32,6 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
-        SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetPowerSwitchMessage>(OnPowerSwitchSet);
     }
 
     private void OnChemicalFuelAdapterInteractUsing(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, InteractUsingEvent args)
@@ -84,6 +83,14 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     private void OnPowerSwitchSet(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorSetPowerSwitchMessage args)
     {
         component.On = args.PowerSwitch;
+    }
+
+    public void SetFuelGeneratorOn(EntityUid uid, bool on, FuelGeneratorComponent? generator = null)
+    {
+        if (!Resolve(uid, ref generator))
+            return;
+
+        generator.On = on;
     }
 
     private void OnSolidFuelAdapterInteractUsing(EntityUid uid, SolidFuelGeneratorAdapterComponent component, InteractUsingEvent args)
