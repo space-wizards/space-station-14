@@ -103,7 +103,6 @@ public sealed class RadioSystem : EntitySystem
 
         var speakerQuery = GetEntityQuery<RadioSpeakerComponent>();
         var radioQuery = EntityQueryEnumerator<ActiveRadioComponent, TransformComponent>();
-        var sentAtLeastOnce = false;
         while (canSend && radioQuery.MoveNext(out var receiver, out var radio, out var transform))
         {
             if (!radio.Channels.Contains(channel.ID) || (TryComp<IntercomComponent>(receiver, out var intercom) && !intercom.SupportedChannels.Contains(channel.ID)))
@@ -126,10 +125,7 @@ public sealed class RadioSystem : EntitySystem
 
             // send the message
             RaiseLocalEvent(receiver, ref ev);
-            sentAtLeastOnce = true;
         }
-        if (!sentAtLeastOnce)
-            _popup.PopupEntity(Loc.GetString("failed-to-send-message"), messageSource, messageSource, PopupType.MediumCaution);
 
         if (name != Name(messageSource))
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"Radio message from {ToPrettyString(messageSource):user} as {name} on {channel.LocalizedName}: {message}");
