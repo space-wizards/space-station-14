@@ -8,7 +8,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// <summary>
 /// This is used for entities which are bound to silicon laws and can view them.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
 public sealed class SiliconLawBoundComponent : Component
 {
     /// <summary>
@@ -30,6 +30,14 @@ public sealed class SiliconLawBoundComponent : Component
     public EntityUid? LastLawProvider;
 }
 
+/// <summary>
+/// Event raised to get the laws that a law-bound entity has.
+///
+/// Is first raised on the entity itself, then on the
+/// entity's station, then on the entity's grid,
+/// before being broadcast.
+/// </summary>
+/// <param name="Entity"></param>
 [ByRefEvent]
 public record struct GetSiliconLawsEvent(EntityUid Entity)
 {
