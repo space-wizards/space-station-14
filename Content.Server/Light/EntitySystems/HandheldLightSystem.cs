@@ -23,6 +23,7 @@ namespace Content.Server.Light.EntitySystems
     [UsedImplicitly]
     public sealed class HandheldLightSystem : SharedHandheldLightSystem
     {
+        [Dependency] private readonly ActionsSystem _actions = default!;
         [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly PowerCellSystem _powerCell = default!;
         [Dependency] private readonly IPrototypeManager _proto = default!;
@@ -39,6 +40,9 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<HandheldLightComponent, ComponentRemove>(OnRemove);
             SubscribeLocalEvent<HandheldLightComponent, ComponentGetState>(OnGetState);
+
+            SubscribeLocalEvent<HandheldLightComponent, MapInitEvent>(OnMapInit);
+            SubscribeLocalEvent<HandheldLightComponent, ComponentShutdown>(OnShutdown);
 
             SubscribeLocalEvent<HandheldLightComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<HandheldLightComponent, GetVerbsEvent<ActivationVerb>>(AddToggleLightVerb);
@@ -100,6 +104,24 @@ namespace Content.Server.Light.EntitySystems
             args.State = new HandheldLightComponent.HandheldLightComponentState(component.Activated, GetLevel(uid, component));
         }
 
+        private void OnMapInit(EntityUid uid, HandheldLightComponent component, MapInitEvent args)
+        {
+            if (component.ToggleAction == null
+                && _proto.TryIndex(component.ToggleActionId, out InstantActionPrototype? act))
+            {
+                component.ToggleAction = new(act);
+            }
+
+            if (component.ToggleAction != null)
+                _actions.AddAction(uid, component.ToggleAction, null);
+        }
+
+        private void OnShutdown(EntityUid uid, HandheldLightComponent component, ComponentShutdown args)
+        {
+            if (component.ToggleAction != null)
+                _actions.RemoveAction(uid, component.ToggleAction);
+        }
+
         private byte? GetLevel(EntityUid uid, HandheldLightComponent component)
         {
             // Curently every single flashlight has the same number of levels for status and that's all it uses the charge for
@@ -121,7 +143,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnActivate(EntityUid uid, HandheldLightComponent component, ActivateInWorldEvent args)
         {
-            if (args.Handled)
+            if (args.Handled || !component.ToggleOnInteract)
                 return;
 
             if (ToggleStatus(args.User, uid, component))
@@ -176,7 +198,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void AddToggleLightVerb(EntityUid uid, HandheldLightComponent component, GetVerbsEvent<ActivationVerb> args)
         {
-            if (!args.CanAccess || !args.CanInteract)
+            if (!args.CanAccess || !args.CanInteract || !component.ToggleOnInteract)
                 return;
 
             ActivationVerb verb = new()

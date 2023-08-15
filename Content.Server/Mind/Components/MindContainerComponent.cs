@@ -40,6 +40,12 @@ namespace Content.Server.Mind.Components
 
     public sealed class MindRemovedMessage : EntityEventArgs
     {
+        public Mind OldMind;
+
+        public MindRemovedMessage(Mind oldMind)
+        {
+            OldMind = oldMind;
+        }
     }
 
     public sealed class MindAddedMessage : EntityEventArgs

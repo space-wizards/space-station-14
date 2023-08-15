@@ -797,6 +797,9 @@
     speciesId: monkey
   - type: InventorySlots
   - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: Fixtures
     fixtures:
       fix1:
@@ -1011,6 +1014,22 @@
     price: 50
   - type: Puller
     needsHands: true
+
+- type: entity
+  parent: MobMouse
+  suffix: Dead
+  save: false
+  id: MobMouseDead
+  name: mouse
+  description: Squeak!
+  components:
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 6
+        Asphyxiation: 4
+        Slash: 7
+        Blunt: 3
 
 - type: entity
   parent: MobMouse
@@ -1398,6 +1417,9 @@
     speciesId: monkey
   - type: InventorySlots
   - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: Fixtures
     fixtures:
       fix1:

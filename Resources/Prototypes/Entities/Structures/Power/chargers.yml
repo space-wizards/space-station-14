@@ -173,3 +173,99 @@
       machine_board: !type:Container
       machine_parts: !type:Container
 
+- type: entity
+  id: BorgCharger
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: cyborg recharging station
+  description: A stationary charger for various robotic and cyborg entities. Surprisingly spacious.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Power/borg_charger.rsi
+    snapCardinals: true
+    layers:
+      - state: borgcharger-u1
+        map: ["base"]
+      - state: borgcharger0
+        map: ["enum.PowerDeviceVisualLayers.Powered"]
+        shader: "unshaded"
+      - state: borgcharger1
+        map: ["charged"]
+        shader: "unshaded"
+        visible: false
+      - state: borgdecon1
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+        visible: false
+  - type: Charger
+    baseChargeRate: 30
+    slotId: entity_storage
+  - type: Construction
+    containers:
+    - machine_parts
+    - machine_board
+    - entity_storage
+  - type: Wires
+    LayoutId: borgcharger
+  - type: WiresPanel
+  - type: WiresVisuals
+  - type: Machine
+    board: BorgChargerCircuitboard
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.StorageVisuals.Open:
+        base:
+          True: { state: borgcharger-u0 }
+          False: { state: borgcharger-u1 }
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { state: borgcharger0 }
+          False: { state: borgcharger2 }
+        charged:
+          True: { visible: false }
+          False: { visible: true }
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+        charged:
+          True: { visible: true }
+          False: { visible: false }
+      enum.CellVisual.Light:
+        charged:
+          Off: { visible: false }
+          Empty: { visible: false }
+          Charging:
+            visible: true
+            state: borgcharger3
+          Charged:
+            visible: true
+            state: borgcharger1
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 80
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 40
+      behaviors:
+        - !type:EmptyAllContainersBehaviour
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+        - !type:PlaySoundBehavior
+          sound:
+            path: /Audio/Effects/metalbreak.ogg
+  - type: EntityStorage
+    capacity: 1
+    whitelist:
+      components:
+      - BorgChassis
+  - type: ContainerContainer
+    containers:
+      entity_storage: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container
