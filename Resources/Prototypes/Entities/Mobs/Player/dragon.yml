@@ -72,6 +72,11 @@
         layer:
         - FlyingMobLayer
   - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -141,6 +146,9 @@
       name: action-name-carp-rift
       description: action-description-carp-rift
       useDelay: 1
+  - type: GuideHelp
+    guides:
+    - MinorAntagonists
 
 - type: entity
   parent: BaseMobDragon
@@ -159,3 +167,8 @@
     spawned:
     - id: FoodMeatDragon
       amount: 1
+  # half damage, spread evenly
+  - type: MeleeWeapon
+    damage:
+      groups:
+        Brute: 15

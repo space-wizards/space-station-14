@@ -44,8 +44,11 @@ namespace Content.Client.Paper.UI
         ///     Initialize this UI according to <code>visuals</code> Initializes
         ///     textures, recalculates sizes, and applies some layout rules.
         /// </summary>
-        public void InitVisuals(PaperVisualsComponent visuals)
+        public void InitVisuals(EntityUid entity, PaperVisualsComponent visuals)
         {
+            // Randomize the placement of any stamps based on the entity UID
+            // so that there's some variety in different papers.
+            StampDisplay.PlacementSeed = (int)entity;
             var resCache = IoCManager.Resolve<IResourceCache>();
 
             // Initialize the background:
@@ -206,9 +209,10 @@ namespace Content.Client.Paper.UI
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;
 
             StampDisplay.RemoveAllChildren();
+            StampDisplay.RemoveStamps();
             foreach(var stamper in state.StampedBy)
             {
-                StampDisplay.AddChild(new StampWidget{ Stamper = stamper });
+                StampDisplay.AddStamp(new StampWidget{ StampInfo = stamper });
             }
         }
 
@@ -220,7 +224,7 @@ namespace Content.Client.Paper.UI
         /// </summary>
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
-            var mode = DragMode.Move;
+            var mode = DragMode.None;
 
             // Be quite generous with resize margins:
             if (relativeMousePos.Y < DRAG_MARGIN_SIZE)
@@ -241,6 +245,10 @@ namespace Content.Client.Paper.UI
                 mode |= DragMode.Right;
             }
 
+            if((mode & _allowedResizeModes) == DragMode.None)
+            {
+                return DragMode.Move;
+            }
             return mode & _allowedResizeModes;
         }
     }

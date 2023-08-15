@@ -124,6 +124,11 @@
         key: KnockedDown
         time: 3
         type: Remove
+      - !type:GenericStatusEffect
+        key: StaminaModifier
+        component: StaminaModifier
+        time: 3
+        type: Add
     Medicine:
       metabolismRate: 1.0
       effects:

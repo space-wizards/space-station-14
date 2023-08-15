@@ -11,7 +11,7 @@
 
 - type: cargoBounty
   id: BountyBaseballBat
-  reward: 800
+  reward: 8000
   description: bounty-description-baseball-bat
   entries:
   - name: bounty-item-baseball-bat
@@ -22,7 +22,7 @@
 
 - type: cargoBounty
   id: BountyBoxHug
-  reward: 600
+  reward: 6000
   description: bounty-description-box-hugs
   entries:
   - name: bounty-item-box-hugs
@@ -33,7 +33,7 @@
 
 - type: cargoBounty
   id: BountyBrain
-  reward: 2500
+  reward: 25000
   description: bounty-description-brain
   entries:
   - name: bounty-item-brain
@@ -44,7 +44,7 @@
 
 - type: cargoBounty
   id: BountyBread
-  reward: 400
+  reward: 4000
   description: bounty-description-bread
   entries:
   - name: bounty-item-bread
@@ -55,7 +55,7 @@
 
 - type: cargoBounty
   id: BountyBriefcase
-  reward: 1500
+  reward: 15000
   description: bounty-description-briefcase
   entries:
   - name: bounty-item-briefcase
@@ -66,7 +66,7 @@
 
 - type: cargoBounty
   id: BountyCarrot
-  reward: 1500
+  reward: 15000
   description: bounty-description-carrot
   entries:
   - name: bounty-item-carrot
@@ -77,7 +77,7 @@
 
 - type: cargoBounty
   id: BountyCarrotFries
-  reward: 1400
+  reward: 14000
   description: bounty-description-carrot-fries
   entries:
   - name: bounty-item-carrot-fries
@@ -88,7 +88,7 @@
 
 - type: cargoBounty
   id: BountyCarp
-  reward: 2500
+  reward: 25000
   description: bounty-description-carp
   entries:
   - name: bounty-item-carp
@@ -99,7 +99,7 @@
 
 - type: cargoBounty
   id: BountyClownCostume
-  reward: 1500
+  reward: 1700
   description: bounty-description-clown-costume
   entries:
   - name: bounty-item-clown-mask
@@ -115,7 +115,7 @@
 
 - type: cargoBounty
   id: BountyCorn
-  reward: 2000
+  reward: 20000
   description: bounty-description-corn
   entries:
   - name: bounty-item-corn
@@ -126,7 +126,7 @@
 
 - type: cargoBounty
   id: BountyCrayon
-  reward: 800
+  reward: 8000
   description: bounty-description-crayon
   entries:
   - name: bounty-item-crayon
@@ -137,7 +137,7 @@
 
 - type: cargoBounty
   id: BountyCubanCarp
-  reward: 3200
+  reward: 32000
   description: bounty-description-cuban-carp
   entries:
   - name: bounty-item-cuban-carp
@@ -148,7 +148,7 @@
 
 - type: cargoBounty
   id: BountyDonkPocket
-  reward: 1200
+  reward: 12000
   description: bounty-description-donk-pocket
   entries:
   - name: bounty-item-donk-pocket
@@ -159,7 +159,7 @@
 
 - type: cargoBounty
   id: BountyDonut
-  reward: 1200
+  reward: 12000
   description: bounty-description-donut
   entries:
   - name: bounty-item-donut
@@ -170,7 +170,7 @@
 
 - type: cargoBounty
   id: BountyFigurine
-  reward: 1600
+  reward: 16000
   description: bounty-description-figurine
   entries:
   - name: bounty-item-figurine
@@ -181,7 +181,7 @@
 
 - type: cargoBounty
   id: BountyFleshMonster
-  reward: 3000
+  reward: 30000
   description: bounty-description-flesh-monster
   entries:
   - name: bounty-item-flesh-monster
@@ -192,7 +192,7 @@
 
 - type: cargoBounty
   id: BountyFlower
-  reward: 400
+  reward: 4000
   description: bounty-description-flower
   entries:
   - name: bounty-item-flower
@@ -203,7 +203,7 @@
 
 - type: cargoBounty
   id: BountyGalaxyThistle
-  reward: 2400
+  reward: 24000
   description: bounty-description-galaxythistle
   entries:
   - name: bounty-item-galaxythistle
@@ -214,7 +214,7 @@
 
 - type: cargoBounty
   id: BountyHandcuffs
-  reward: 400
+  reward: 4000
   description: bounty-description-handcuffs
   entries:
   - name: bounty-item-handcuffs
@@ -225,7 +225,7 @@
 
 - type: cargoBounty
   id: BountyInstrument
-  reward: 1000
+  reward: 1900
   description: bounty-description-instrument
   entries:
   - name: bounty-item-instrument
@@ -236,7 +236,7 @@
 
 - type: cargoBounty
   id: BountyKnife
-  reward: 1200
+  reward: 12000
   description: bounty-description-knife
   entries:
   - name: bounty-item-knife
@@ -247,7 +247,7 @@
 
 - type: cargoBounty
   id: BountyLemon
-  reward: 2000
+  reward: 20000
   description: bounty-description-lemon
   entries:
   - name: bounty-item-lemon
@@ -258,7 +258,7 @@
 
 - type: cargoBounty
   id: BountyLime
-  reward: 2000
+  reward: 20000
   description: bounty-description-lime
   entries:
   - name: bounty-item-lime
@@ -269,7 +269,7 @@
 
 - type: cargoBounty
   id: BountyLung
-  reward: 3500
+  reward: 35000
   description: bounty-description-lung
   entries:
   - name: bounty-item-lung
@@ -280,7 +280,7 @@
 
 - type: cargoBounty
   id: BountyMonkeyCube
-  reward: 800
+  reward: 8000
   description: bounty-description-monkey-cube
   entries:
   - name: bounty-item-monkey-cube
@@ -291,7 +291,7 @@
 
 - type: cargoBounty
   id: BountyMouse
-  reward: 600
+  reward: 2400
   description: bounty-description-mouse
   entries:
   - name: bounty-item-mouse
@@ -302,7 +302,7 @@
 
 - type: cargoBounty
   id: BountyPancake
-  reward: 2000
+  reward: 20000
   description: bounty-description-pancake
   entries:
   - name: bounty-item-pancake
@@ -313,7 +313,7 @@
 
 - type: cargoBounty
   id: BountyPen
-  reward: 800
+  reward: 8000
   description: bounty-description-pen
   entries:
   - name: bounty-item-pen
@@ -324,7 +324,7 @@
 
 - type: cargoBounty
   id: BountyPercussion
-  reward: 2500
+  reward: 25000
   description: bounty-description-percussion
   entries:
   - name: bounty-item-percussion
@@ -335,7 +335,7 @@
 
 - type: cargoBounty
   id: BountyPie
-  reward: 3142
+  reward: 31415
   description: bounty-description-pie
   entries:
   - name: bounty-item-pie
@@ -346,7 +346,7 @@
 
 - type: cargoBounty
   id: BountyPrisonUniform
-  reward: 800
+  reward: 8000
   description: bounty-description-prison-uniform
   entries:
   - name: bounty-item-prison-uniform
@@ -357,7 +357,7 @@
 
 - type: cargoBounty
   id: BountyRadio
-  reward: 1000
+  reward: 10000
   description: bounty-description-radio
   entries:
   - name: bounty-item-radio
@@ -371,7 +371,7 @@
 
 - type: cargoBounty
   id: BountyResearchDisk
-  reward: 1200
+  reward: 12000
   description: bounty-description-research-disk
   entries:
   - name: bounty-item-research-disk
@@ -382,7 +382,7 @@
 
 - type: cargoBounty
   id: BountyShiv
-  reward: 800
+  reward: 8000
   description: bounty-description-shiv
   entries:
   - name: bounty-item-shiv
@@ -393,7 +393,7 @@
 
 - type: cargoBounty
   id: BountySoap
-  reward: 800
+  reward: 8000
   description: bounty-description-soap
   entries:
   - name: bounty-item-soap
@@ -404,7 +404,7 @@
 
 - type: cargoBounty
   id: BountySoup
-  reward: 1200
+  reward: 12000
   description: bounty-description-soup
   entries:
   - name: bounty-item-soup
@@ -415,7 +415,7 @@
 
 - type: cargoBounty
   id: BountySpear
-  reward: 800
+  reward: 8000
   description: bounty-description-spear
   entries:
   - name: bounty-item-spear
@@ -426,7 +426,7 @@
 
 - type: cargoBounty
   id: BountySyringe
-  reward: 1000
+  reward: 10000
   description: bounty-description-syringe
   entries:
   - name: bounty-item-syringe
@@ -437,7 +437,7 @@
 
 - type: cargoBounty
   id: BountyTechDisk
-  reward: 2500
+  reward: 25000
   description: bounty-description-tech-disk
   entries:
   - name: bounty-item-tech-disk
@@ -448,7 +448,7 @@
 
 - type: cargoBounty
   id: BountyToolbox
-  reward: 800
+  reward: 8000
   description: bounty-description-toolbox
   entries:
   - name: bounty-item-toolbox
@@ -459,7 +459,7 @@
 
 - type: cargoBounty
   id: BountyTrash
-  reward: 400
+  reward: 700
   description: bounty-description-trash
   entries:
   - name: bounty-item-trash

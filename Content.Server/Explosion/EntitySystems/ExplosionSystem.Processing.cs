@@ -435,7 +435,6 @@ public sealed partial class ExplosionSystem : EntitySystem
                 physics,
                 xform,
                 projectileQuery,
-                tagQuery,
                 throwForce);
         }
 

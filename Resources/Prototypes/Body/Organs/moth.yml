@@ -13,7 +13,7 @@
         maxVol: 50
   - type: Metabolizer
     maxReagents: 6
-    metabolizerTypes: [ Plant ]
+    metabolizerTypes: [ Moth ]
     removeEmpty: true
     groups:
       - id: Food
