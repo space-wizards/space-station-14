@@ -24,6 +24,7 @@ public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -511,10 +512,7 @@ public sealed class WiresSystem : SharedWiresSystem
         if (args.Open == component.RequireOpen)
             return;
 
-        if (!TryComp<ActivatableUIComponent>(uid, out var ui) || ui.Key == null)
-            return;
-
-        _uiSystem.TryCloseAll(uid, ui.Key);
+        _activatableUI.CloseAll(uid);
     }
 
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)

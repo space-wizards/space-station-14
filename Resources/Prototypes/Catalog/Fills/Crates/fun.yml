@@ -276,3 +276,15 @@
     contents:
       - id: BikeHornImplanter
         amount: 3
+
+- type: entity
+  id: CrateFunMysteryFigurines
+  parent: CratePlastic
+  components:
+  - type: StorageFill
+    contents:
+      - id: MysteryFigureBox
+        amount: 10
+      - id: MysteryFigureBox
+        amount: 15
+        prob: 0.05
