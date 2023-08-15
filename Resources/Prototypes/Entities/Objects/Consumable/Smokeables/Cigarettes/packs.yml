@@ -244,21 +244,21 @@
     - id: CigaretteTHC
       prob: 0.5
       orgroup: CigRandomNarc
-    - id: CigaretteBbqSauce
-      prob: 0.7
-      orgroup: CigRandomFood
-    - id: CigaretteBlackPepper
-      prob: 0.7
-      orgroup: CigRandomFood
-    - id: CigaretteCapsaicinOil
-      prob: 0.7
-      orgroup: CigRandomFood
-    - id: CigaretteBread
-      prob: 0.7
-      orgroup: CigRandomFood
-    - id: CigaretteMilk
-      prob: 0.7
-      orgroup: CigRandomFood
-    - id: CigaretteBanana
-      prob: 0.7
-      orgroup: CigRandomFood
+    #- id: CigaretteBbqSauce
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
+    #- id: CigaretteBlackPepper
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
+    #- id: CigaretteCapsaicinOil
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
+    #- id: CigaretteBread
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
+    #- id: CigaretteMilk
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
+    #- id: CigaretteBanana
+    #  prob: 0.7
+    #  orgroup: CigRandomFood
