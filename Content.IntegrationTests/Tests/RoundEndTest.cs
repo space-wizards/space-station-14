@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests
                 config.SetCVar(CCVars.GameLobbyEnabled, true);
                 config.SetCVar(CCVars.EmergencyShuttleMinTransitTime, 1f);
                 config.SetCVar(CCVars.EmergencyShuttleDockTime, 1f);
-                config.SetCVar(CCVars.EmergencyShuttleRoundRestartTime, 1f);
+                config.SetCVar(CCVars.RoundRestartTime, 1f);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromMilliseconds(100);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMilliseconds(300);
@@ -131,7 +131,7 @@ namespace Content.IntegrationTests.Tests
                 config.SetCVar(CCVars.GameLobbyEnabled, false);
                 config.SetCVar(CCVars.EmergencyShuttleMinTransitTime, CCVars.EmergencyShuttleMinTransitTime.DefaultValue);
                 config.SetCVar(CCVars.EmergencyShuttleDockTime, CCVars.EmergencyShuttleDockTime.DefaultValue);
-                config.SetCVar(CCVars.EmergencyShuttleRoundRestartTime, CCVars.EmergencyShuttleRoundRestartTime.DefaultValue);
+                config.SetCVar(CCVars.RoundRestartTime, CCVars.RoundRestartTime.DefaultValue);
 
                 roundEndSystem.DefaultCooldownDuration = TimeSpan.FromSeconds(30);
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);

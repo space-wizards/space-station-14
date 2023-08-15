@@ -211,7 +211,7 @@ namespace Content.Server.RoundEnd
             _countdownTokenSource?.Cancel();
             _countdownTokenSource = new();
 
-            var countdownTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.EmergencyShuttleRoundRestartTime));
+            var countdownTime = TimeSpan.FromSeconds(_cfg.GetCVar(CCVars.RoundRestartTime));
             int time;
             string unitsLocString;
             if (countdownTime.TotalSeconds < 60)
