@@ -343,8 +343,6 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-          - ReagentId: Nutrient
-            Quantity: 10
 
 - type: entity
   id: CigaretteMilk
@@ -358,7 +356,7 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-          - ReagentId: Nutrient
+          - ReagentId: Milk
             Quantity: 10
 
 - type: entity
@@ -373,5 +371,5 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-          - ReagentId: Nutrient
+          - ReagentId: BananaHonk
             Quantity: 10
