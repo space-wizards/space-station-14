@@ -40,13 +40,13 @@ public abstract partial class InteractionTest
 
         await Client.WaitPost(() =>
         {
-            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(SEntMan.ToNetCoordinates(TargetCoords)), Direction.South, out ClientTarget),
+            Assert.That(CConSys.TrySpawnGhost(proto, TargetCoords, Direction.South, out Target),
                 Is.EqualTo(shouldSucceed));
 
             if (!shouldSucceed)
                 return;
-
-            ConstructionGhostId = ClientTarget.GetHashCode();
+            var comp = CEntMan.GetComponent<ConstructionGhostComponent>(Target!.Value);
+            ConstructionGhostId = comp.GhostId;
         });
 
         await RunTicks(1);
@@ -83,13 +83,13 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(ClientTarget))]
+    [MemberNotNull(nameof(Target))]
     protected async Task SpawnTarget(string prototype)
     {
-        ClientTarget = EntityUid.Invalid;
+        Target = EntityUid.Invalid;
         await Server.WaitPost(() =>
         {
-            ClientTarget = SEntMan.SpawnEntity(prototype, TargetCoords);
+            Target = SEntMan.SpawnEntity(prototype, TargetCoords);
         });
 
         await RunTicks(5);
@@ -102,8 +102,8 @@ public abstract partial class InteractionTest
     protected async Task StartDeconstruction(string prototype)
     {
         await SpawnTarget(prototype);
-        Assert.That(SEntMan.TryGetComponent(ClientTarget, out ConstructionComponent? comp));
-        await Server.WaitPost(() => SConstruction.SetPathfindingTarget(ClientTarget!.Value, comp!.DeconstructionNode, comp));
+        Assert.That(SEntMan.TryGetComponent(Target, out ConstructionComponent? comp));
+        await Server.WaitPost(() => SConstruction.SetPathfindingTarget(Target!.Value, comp!.DeconstructionNode, comp));
         await RunTicks(5);
     }
 
@@ -186,7 +186,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Pickup(EntityUid? uid = null, bool deleteHeld = true)
     {
-        uid ??= ClientTarget;
+        uid ??= Target;
 
         if (Hands.ActiveHand == null)
         {
@@ -272,9 +272,9 @@ public abstract partial class InteractionTest
     {
         // For every interaction, we will also examine the entity, just in case this breaks something, somehow.
         // (e.g., servers attempt to assemble construction examine hints).
-        if (ClientTarget != null)
+        if (Target != null)
         {
-            await Client.WaitPost(() => ExamineSys.DoExamine(ClientTarget.Value));
+            await Client.WaitPost(() => ExamineSys.DoExamine(Target.Value));
         }
 
         await PlaceInHands(entity);
@@ -286,15 +286,16 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
     {
-        if (ClientTarget == null || !CEntMan.IsClientSide(ClientTarget.Value))
+        if (Target == null || !Target.Value.IsClientSide())
         {
-            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget))));
+            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
             await RunTicks(1);
         }
         else
         {
             // The entity is client-side, so attempt to start construction
-            await Client.WaitPost(() => CConSys.TryStartConstruction(ClientTarget.Value));
+            var ghost = CEntMan.GetComponent<ConstructionGhostComponent>(Target.Value);
+            await Client.WaitPost(() => CConSys.TryStartConstruction(ghost.GhostId));
             await RunTicks(5);
         }
 
@@ -386,60 +387,57 @@ public abstract partial class InteractionTest
     protected async Task CheckTargetChange(bool shouldSucceed)
     {
         EntityUid newTarget = default;
-        if (ClientTarget == null)
+        if (Target == null)
             return;
+        var target = Target.Value;
 
-        var target = ClientTarget.Value;
-        var serverTarget = SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget.Value));
         await RunTicks(5);
 
-        if (!SEntMan.EntityExists(serverTarget) || CEntMan.IsClientSide(target))
+        if (target.IsClientSide())
         {
             Assert.That(CEntMan.Deleted(target), Is.EqualTo(shouldSucceed),
                 $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");
 
             if (shouldSucceed)
             {
-                Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out var targetValue),
+                Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out newTarget),
                     $"Failed to get construction entity from ghost Id");
 
-                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {targetValue}"));
-                ClientTarget = targetValue;
-                newTarget = targetValue;
-                serverTarget = SEntMan.ToEntity(CEntMan.ToNetEntity(targetValue));
+                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newTarget}"));
+                Target = newTarget;
             }
         }
 
-        if (STestSystem.EntChanges.TryGetValue(serverTarget, out var newServerTarget))
+        if (STestSystem.EntChanges.TryGetValue(Target.Value, out newTarget))
         {
             await Server.WaitPost(
-                () => SLogger.Debug($"Construction entity {serverTarget} changed to {newServerTarget}"));
+                () => SLogger.Debug($"Construction entity {Target.Value} changed to {newTarget}"));
 
-            ClientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(newServerTarget));
+            Target = newTarget;
         }
 
-        if (ClientTarget != newTarget)
+        if (Target != target)
             await CheckTargetChange(shouldSucceed);
     }
 
     #region Asserts
 
-    protected void AssertPrototype(string? prototype, EntityUid? serverTarget = null)
+    protected void AssertPrototype(string? prototype, EntityUid? target = null)
     {
-        serverTarget ??= SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget));
-        if (serverTarget == null)
+        target ??= Target;
+        if (target == null)
         {
             Assert.Fail("No target specified");
             return;
         }
 
-        var meta = SEntMan.GetComponent<MetaDataComponent>(serverTarget.Value);
+        var meta = SEntMan.GetComponent<MetaDataComponent>(target.Value);
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
     }
 
     protected void AssertAnchored(bool anchored = true, EntityUid? target = null)
     {
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -458,7 +456,7 @@ public abstract partial class InteractionTest
 
     protected void AssertDeleted(bool deleted = true, EntityUid? target = null)
     {
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -468,7 +466,7 @@ public abstract partial class InteractionTest
         Assert.Multiple(() =>
         {
             Assert.That(SEntMan.Deleted(target), Is.EqualTo(deleted));
-            Assert.That(CEntMan.Deleted(CEntMan.ToEntity(SEntMan.ToNetEntity(target))), Is.EqualTo(deleted));
+            Assert.That(CEntMan.Deleted(target), Is.EqualTo(deleted));
         });
     }
 
@@ -477,7 +475,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected void AssertComp<T>(bool hasComp = true, EntityUid? target = null)
     {
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -547,7 +545,7 @@ public abstract partial class InteractionTest
                 if (ent == transform.MapUid
                     || ent == transform.GridUid
                     || ent == Player
-                    || ent == ClientTarget)
+                    || ent == Target)
                 {
                     toRemove.Add(ent);
                 }
@@ -650,7 +648,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected T Comp<T>(EntityUid? target = null) where T : IComponent
     {
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
             Assert.Fail("No target specified");
 
@@ -748,7 +746,7 @@ public abstract partial class InteractionTest
     protected bool TryGetBui(Enum key, [NotNullWhen(true)] out BoundUserInterface? bui, EntityUid? target = null, bool shouldSucceed = true)
     {
         bui = null;
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -963,15 +961,14 @@ public abstract partial class InteractionTest
     ///     Make the client press and then release a key. This assumes the key is currently released.
     /// </summary>
     protected async Task PressKey(
-        IEntityManager entManager,
         BoundKeyFunction key,
         int ticks = 1,
         EntityCoordinates? coordinates = null,
         EntityUid cursorEntity = default)
     {
-        await SetKey(entManager, key, BoundKeyState.Down, coordinates, cursorEntity);
+        await SetKey(key, BoundKeyState.Down, coordinates, cursorEntity);
         await RunTicks(ticks);
-        await SetKey(entManager, key, BoundKeyState.Up, coordinates, cursorEntity);
+        await SetKey(key, BoundKeyState.Up, coordinates, cursorEntity);
         await RunTicks(1);
     }
 
@@ -979,7 +976,6 @@ public abstract partial class InteractionTest
     ///     Make the client press or release a key
     /// </summary>
     protected async Task SetKey(
-        IEntityManager entManager,
         BoundKeyFunction key,
         BoundKeyState state,
         EntityCoordinates? coordinates = null,
@@ -990,7 +986,7 @@ public abstract partial class InteractionTest
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
         var message = new FullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId, state,
-            entManager.ToNetCoordinates(coords), screen, entManager.ToNetEntity(cursorEntity));
+            coords, screen, cursorEntity);
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));
     }
@@ -998,29 +994,29 @@ public abstract partial class InteractionTest
     /// <summary>
     ///     Variant of <see cref="SetKey"/> for setting movement keys.
     /// </summary>
-    protected async Task SetMovementKey(IEntityManager entManager, DirectionFlag dir, BoundKeyState state)
+    protected async Task SetMovementKey(DirectionFlag dir, BoundKeyState state)
     {
         if ((dir & DirectionFlag.South) != 0)
-            await SetKey(entManager, EngineKeyFunctions.MoveDown, state);
+            await SetKey(EngineKeyFunctions.MoveDown, state);
 
         if ((dir & DirectionFlag.East) != 0)
-            await SetKey(entManager, EngineKeyFunctions.MoveRight, state);
+            await SetKey(EngineKeyFunctions.MoveRight, state);
 
         if ((dir & DirectionFlag.North) != 0)
-            await SetKey(entManager, EngineKeyFunctions.MoveUp, state);
+            await SetKey(EngineKeyFunctions.MoveUp, state);
 
         if ((dir & DirectionFlag.West) != 0)
-            await SetKey(entManager, EngineKeyFunctions.MoveLeft, state);
+            await SetKey(EngineKeyFunctions.MoveLeft, state);
     }
 
     /// <summary>
     ///     Make the client hold the move key in some direction for some amount of time.
     /// </summary>
-    protected async Task Move(IEntityManager entManager, DirectionFlag dir, float seconds)
+    protected async Task Move(DirectionFlag dir, float seconds)
     {
-        await SetMovementKey(entManager, dir, BoundKeyState.Down);
+        await SetMovementKey(dir, BoundKeyState.Down);
         await RunSeconds(seconds);
-        await SetMovementKey(entManager, dir, BoundKeyState.Up);
+        await SetMovementKey(dir, BoundKeyState.Up);
         await RunTicks(1);
     }
 

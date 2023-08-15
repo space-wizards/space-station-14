@@ -49,21 +49,21 @@ public abstract partial class InteractionTest
     protected MapId MapId => MapData.MapId;
 
     /// <summary>
-    /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="ClientTarget"/>
+    /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="Target"/>
     /// entity.
     /// </summary>
-    protected EntityCoordinates TargetCoords;
+    protected NetCoordinates TargetCoords;
 
     /// <summary>
     /// Initial player coordinates. Note that this does not necessarily correspond to the position of the
     /// <see cref="Player"/> entity.
     /// </summary>
-    protected EntityCoordinates PlayerCoords;
+    protected NetCoordinates PlayerCoords;
 
     /// <summary>
     /// The player entity that performs all these interactions. Defaults to an admin-observer with 1 hand.
     /// </summary>
-    protected EntityUid Player;
+    protected NetEntity Player;
 
     protected ICommonSession ClientSession = default!;
     protected IPlayerSession ServerSession = default!;
@@ -76,7 +76,7 @@ public abstract partial class InteractionTest
     /// interactions often swap out entities, and there are helper methods that attempt to automatically upddate
     /// the target entity. See <see cref="CheckTargetChange"/>
     /// </remarks>
-    protected EntityUid? ClientTarget;
+    protected NetEntity? Target;
 
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.

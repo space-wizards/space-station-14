@@ -20,7 +20,7 @@ public sealed class GrilleWindowConstruction : InteractionTest
         await Interact(Rod, 10);
         AssertPrototype(Grille);
 
-        var grille = ClientTarget;
+        var grille = Target;
 
         // Construct Window
         await StartConstruction(Window);
@@ -32,7 +32,7 @@ public sealed class GrilleWindowConstruction : InteractionTest
         AssertDeleted();
 
         // Deconstruct Grille
-        ClientTarget = grille;
+        Target = grille;
         await Interact(Cut);
         AssertDeleted();
     }

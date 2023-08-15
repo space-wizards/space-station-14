@@ -48,7 +48,7 @@ public abstract class MovementTest : InteractionTest
     /// </summary>
     protected float Delta(EntityUid? target = null, EntityUid? other = null)
     {
-        target ??= ClientTarget;
+        target ??= Target;
         if (target == null)
         {
             Assert.Fail("No target specified");

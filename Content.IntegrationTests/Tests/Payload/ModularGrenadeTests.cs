@@ -18,7 +18,7 @@ public sealed class ModularGrenadeTests : InteractionTest
     {
         await PlaceInHands(Steel, 5);
         await CraftItem("ModularGrenadeRecipe");
-        ClientTarget = await FindEntity("ModularGrenade");
+        Target = await FindEntity("ModularGrenade");
 
         await Drop();
         await Interact(Cable);
