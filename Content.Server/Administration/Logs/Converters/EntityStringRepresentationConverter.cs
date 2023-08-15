@@ -46,18 +46,24 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
 
         if (_entityManager.TryGetComponent<LubedComponent>(value.Uid, out var lubedComponent))
         {
-            writer.WriteNumber("lubeSlipStrength", lubedComponent.SlipStrength);
-            writer.WriteNumber("lubeSlipsLeft", lubedComponent.SlipsLeft);
+            writer.WriteStartObject("lubed");
+            writer.WriteNumber("slipStrength", lubedComponent.SlipStrength);
+            writer.WriteNumber("slipsLeft", lubedComponent.SlipsLeft);
+            writer.WriteEndObject();
         }
 
         if (_entityManager.TryGetComponent<GluedComponent>(value.Uid, out var gluedComponent))
         {
-            writer.WriteNumber("gluedDuration", gluedComponent.Duration.TotalSeconds);
+            writer.WriteStartObject("glued");
+            writer.WriteNumber("duration", gluedComponent.Duration.TotalSeconds);
+            writer.WriteEndObject();
         }
 
         if (_entityManager.TryGetComponent<FlammableComponent>(value.Uid, out var flammableComponent) && flammableComponent.OnFire)
         {
+            writer.WriteStartObject("flammable");
             writer.WriteNumber("fireStacks", flammableComponent.FireStacks);
+            writer.WriteEndObject();
         }
 
         writer.WriteEndObject();
