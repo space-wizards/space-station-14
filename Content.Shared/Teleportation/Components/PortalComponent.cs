@@ -37,4 +37,14 @@ public sealed class PortalComponent : Component
     /// </remarks>
     [DataField("canTeleportToOtherMaps")]
     public bool CanTeleportToOtherMaps = false;
+
+    /// <summary>
+    ///     Maximum distance that portals can teleport to, in all cases. Mostly this matters for linked portals.
+    ///     Null means no restriction on distance.
+    /// </summary>
+    /// <remarks>
+    ///     Obviously this should strictly be larger than <see cref="MaxRandomRadius"/> (or null)
+    /// </remarks>
+    [DataField("maxTeleportRadius")]
+    public float? MaxTeleportRadius;
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Ghost;
+using Content.Shared.Pinpointer;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
@@ -182,7 +183,11 @@ public abstract class SharedPortalSystem : EntitySystem
 
         var ourCoords = Transform(portal).Coordinates;
         var onSameMap = ourCoords.GetMapId(EntityManager) == target.GetMapId(EntityManager);
-        if (!onSameMap && !portalComponent.CanTeleportToOtherMaps)
+        var distanceInvalid = portalComponent.MaxTeleportRadius != null
+                              && ourCoords.TryDistance(EntityManager, target, out var distance)
+                              && distance > portalComponent.MaxTeleportRadius;
+
+        if (!onSameMap && !portalComponent.CanTeleportToOtherMaps || distanceInvalid)
         {
             if (!_netMan.IsServer)
                 return;
