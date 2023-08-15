@@ -1,4 +1,4 @@
 ent-PersonalAI = персональный ИИ
     .desc = Ваш электронный друг, с которым весело!
-ent-SyndicatePersonalAI = Syndicate ai device
-    .desc = Your electronic pal made by the Syndicate!
+ent-SyndicatePersonalAI = персональный ИИ Синдиката
+    .desc = Ваш электронный друг, теперь от Синдиката!
