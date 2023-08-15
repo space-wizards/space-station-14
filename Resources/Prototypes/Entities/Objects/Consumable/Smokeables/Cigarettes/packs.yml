@@ -199,6 +199,10 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
   - type: StorageFill
     contents:
+    - id: CigaretteRandom
+        prob: 0.4
+        amount: 1
+        maxAmount: 5
     - id: CigaretteMuteToxin
       prob: 0.1
     - id: CigaretteTricordrazine
@@ -221,23 +225,23 @@
       prob: 0.1
     - id: CigaretteSpaceDrugs
       prob: 0.5
-    #- id: CigaretteMold
-    #  prob: 0.5
-    #- id: CigaretteLicoxide
-    #  prob: 0.5
-    #- id: CigaretteWeldingFuel
-    #  prob: 0.5
-    #- id: CigaretteTHC
-    #  prob: 0.5
-    #- id: CigaretteBbqSauce
-    #  prob: 0.7
-    #- id: CigaretteBlackPepper
-    #  prob: 0.7
-    #- id: CigaretteCapsaicinOil
-    #  prob: 0.7
-    #- id: CigaretteBread
-    #  prob: 0.7
-    #- id: CigaretteMilk
-    #  prob: 0.7
-    #- id: CigaretteBanana
-    #  prob: 0.7
+    - id: CigaretteMold
+      prob: 0.5
+    - id: CigaretteLicoxide
+      prob: 0.5
+    - id: CigaretteWeldingFuel
+      prob: 0.5
+    - id: CigaretteTHC
+      prob: 0.5
+    - id: CigaretteBbqSauce
+      prob: 0.7
+    - id: CigaretteBlackPepper
+      prob: 0.7
+    - id: CigaretteCapsaicinOil
+      prob: 0.7
+    - id: CigaretteBread
+      prob: 0.7
+    - id: CigaretteMilk
+      prob: 0.7
+    - id: CigaretteBanana
+      prob: 0.7
