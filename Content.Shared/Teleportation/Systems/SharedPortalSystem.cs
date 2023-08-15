@@ -1,7 +1,6 @@
 ﻿using System.Linq;
-using System.Net.Mail;
-using Content.Shared.Directions;
 using Content.Shared.Ghost;
+using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
@@ -12,6 +11,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
+using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -28,6 +28,7 @@ public abstract class SharedPortalSystem : EntitySystem
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedPullingSystem _pulling = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
 
     private const string PortalFixture = "portalFixture";
     private const string ProjectileFixture = "projectile";
@@ -178,6 +179,28 @@ public abstract class SharedPortalSystem : EntitySystem
     {
         if (!Resolve(portal, ref portalComponent))
             return;
+
+        var ourCoords = Transform(portal).Coordinates;
+        var onSameMap = ourCoords.GetMapId(EntityManager) == target.GetMapId(EntityManager);
+        if (!onSameMap && !portalComponent.CanTeleportToOtherMaps)
+        {
+            if (!_netMan.IsServer)
+                return;
+
+            // Early out if this is an invalid configuration
+            _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
+                ourCoords, Filter.Pvs(ourCoords, entityMan: EntityManager), true);
+
+            _popup.PopupCoordinates(Loc.GetString("portal-component-invalid-configuration-fizzle"),
+                target, Filter.Pvs(target, entityMan: EntityManager), true);
+
+            QueueDel(portal);
+
+            if (targetEntity != null)
+                QueueDel(targetEntity.Value);
+
+            return;
+        }
 
         var arrivalSound = CompOrNull<PortalComponent>(targetEntity)?.ArrivalSound ?? portalComponent.ArrivalSound;
         var departureSound = portalComponent.DepartureSound;
