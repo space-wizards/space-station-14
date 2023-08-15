@@ -347,6 +347,7 @@
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGravityGeneratorCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard
