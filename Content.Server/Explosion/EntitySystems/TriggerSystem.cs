@@ -196,7 +196,7 @@ namespace Content.Server.Explosion.EntitySystems
 
         private void OnImplantTrigger(EntityUid uid, TriggerImplantActionComponent component, ActivateImplantEvent args)
         {
-            Trigger(uid);
+            args.Handled = Trigger(uid);
         }
 
         private void OnStepTriggered(EntityUid uid, TriggerOnStepTriggerComponent component, ref StepTriggeredEvent args)
