@@ -15,4 +15,3 @@ construction-recipe-signal-switch-description = It's a switch for toggling power
 
 construction-recipe-signal-button = signal button
 construction-recipe-signal-button-description = It's a button for activating something.
-
