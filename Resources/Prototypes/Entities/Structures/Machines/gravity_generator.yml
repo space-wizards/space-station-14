@@ -132,7 +132,5 @@
     activePower: 500
     lightRadiusMin: 0.75
     lightRadiusMax: 2.5
-    #switchedOn: false   
-    #charge: 0
   - type: StaticPrice
     price: 2000
