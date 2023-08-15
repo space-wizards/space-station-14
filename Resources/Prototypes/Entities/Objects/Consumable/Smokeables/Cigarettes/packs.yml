@@ -205,43 +205,64 @@
         maxAmount: 5
     - id: CigaretteMuteToxin
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteTricordrazine
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteIron
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteOmnizine
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteIpecac
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteDylovene
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteArithrazine
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteBicaridine
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteDexalin
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigarettePax
       prob: 0.1
+      orgroup: CigRandom1
     - id: CigaretteSpaceDrugs
       prob: 0.5
+      orgroup: CigRandom2
     - id: CigaretteMold
       prob: 0.5
+      orgroup: CigRandom2
     - id: CigaretteLicoxide
       prob: 0.5
+      orgroup: CigRandom2
     - id: CigaretteWeldingFuel
       prob: 0.5
+      orgroup: CigRandom2
     - id: CigaretteTHC
       prob: 0.5
+      orgroup: CigRandom2
     - id: CigaretteBbqSauce
       prob: 0.7
+      orgroup: CigRandom3
     - id: CigaretteBlackPepper
       prob: 0.7
+      orgroup: CigRandom3
     - id: CigaretteCapsaicinOil
       prob: 0.7
+      orgroup: CigRandom3
     - id: CigaretteBread
       prob: 0.7
+      orgroup: CigRandom3
     - id: CigaretteMilk
       prob: 0.7
+      orgroup: CigRandom3
     - id: CigaretteBanana
       prob: 0.7
+      orgroup: CigRandom3
