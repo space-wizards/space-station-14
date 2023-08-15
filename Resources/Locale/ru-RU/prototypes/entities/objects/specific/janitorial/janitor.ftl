@@ -23,3 +23,6 @@ ent-RagItem = влажная тряпка
 ent-WetFloorSignMineExplosive = { ent-WetFloorSign }
     .desc = { ent-WetFloorSign.desc }
     .suffix = Мина
+ent-Plunger = Вантуз
+    .desc = Вантуз с красной пластиковой присоской и деревянной ручкой. Используется для прочистики канализационных стоков.
+

@@ -26,3 +26,6 @@ health-analyzer-window-damage-type-Radiation = Радиация
 
 health-analyzer-window-damage-group-Genetic = Генетические
 health-analyzer-window-damage-type-Cellular = Клеточные
+
+health-analyzer-window-entity-temperature-text = Температура: {$temperature}
+health-analyzer-window-entity-blood-level-text = Уровень крови: {$bloodLevel}

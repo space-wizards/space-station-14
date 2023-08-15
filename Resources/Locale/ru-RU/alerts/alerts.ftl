@@ -80,3 +80,10 @@ alerts-pulled-desc = Вас тянут за собой. Двигайтесь, ч
 
 alerts-pulling-name = Вы тянете
 alerts-pulling-desc = Вы что-то тянете. Щелкните по иконке, чтобы перестать.
+
+alerts-bleed-name = [color=red]Кровотечение[/color]
+alerts-bleed-desc = Вы [color=red]истекаете кровью[/color].
+
+alerts-suit-power-name = Энергия костюма
+"alerts-suit-power-desc = Каким уровнем энергии обладает ваш костюм
+космического ниндзя."
