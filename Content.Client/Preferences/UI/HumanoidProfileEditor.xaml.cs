@@ -1460,7 +1460,7 @@ namespace Content.Client.Preferences.UI
 
                 preferenceSelector.Preference = preference;
 
-                if (preference == true)
+                if (preference)
                 {
                     points -= preferenceSelector.Loadout.Cost;
                     _loadoutPoints.Value = points;

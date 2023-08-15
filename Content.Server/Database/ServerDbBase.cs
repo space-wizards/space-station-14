@@ -79,6 +79,7 @@ namespace Content.Server.Database
                 .Include(p => p.Jobs)
                 .Include(p => p.Antags)
                 .Include(p => p.Traits)
+                .Include(p => p.Loadouts)
                 .AsSplitQuery()
                 .SingleOrDefault(h => h.Slot == slot);
 
@@ -273,6 +274,8 @@ namespace Content.Server.Database
                 humanoid.TraitPreferences
                         .Select(t => new Trait {TraitName = t})
             );
+
+            profile.Loadouts.Clear();
             profile.Loadouts.AddRange(
                 humanoid.LoadoutPreferences
                         .Select(t => new Loadout {LoadoutName = t})
