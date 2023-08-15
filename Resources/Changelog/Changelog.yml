@@ -1,10 +1,4 @@
 Entries:
-- author: router
-  changes:
-  - {message: 'Added an alternative emotes prefix, *. Note that it doesn''t get treated
-      any differently than the normal @ prefix.', type: Add}
-  id: 4096
-  time: '2023-06-26T21:20:09.0000000+00:00'
 - author: Chief-Engineer
   changes:
   - {message: Nanotrasen has invested in higher quality grilles., type: Tweak}
@@ -3025,3 +3019,8 @@ Entries:
       by welding.', type: Tweak}
   id: 4595
   time: '2023-08-15T00:23:40.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
+  id: 4596
+  time: '2023-08-15T00:25:58.0000000+00:00'
