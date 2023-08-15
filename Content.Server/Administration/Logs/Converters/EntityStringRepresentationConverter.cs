@@ -44,11 +44,10 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
             writer.WriteBoolean("deleted", true);
         }
 
-        if (_entityManager.TryGetComponent<LubedComponent>(value.Uid, out var lubedComponent))
+        if (_entityManager.TryGetComponent<FlammableComponent>(value.Uid, out var flammableComponent) && flammableComponent.OnFire)
         {
-            writer.WriteStartObject("lubed");
-            writer.WriteNumber("slipStrength", lubedComponent.SlipStrength);
-            writer.WriteNumber("slipsLeft", lubedComponent.SlipsLeft);
+            writer.WriteStartObject("flammable");
+            writer.WriteNumber("fireStacks", flammableComponent.FireStacks);
             writer.WriteEndObject();
         }
 
@@ -59,10 +58,11 @@ public sealed class EntityStringRepresentationConverter : AdminLogConverter<Enti
             writer.WriteEndObject();
         }
 
-        if (_entityManager.TryGetComponent<FlammableComponent>(value.Uid, out var flammableComponent) && flammableComponent.OnFire)
+        if (_entityManager.TryGetComponent<LubedComponent>(value.Uid, out var lubedComponent))
         {
-            writer.WriteStartObject("flammable");
-            writer.WriteNumber("fireStacks", flammableComponent.FireStacks);
+            writer.WriteStartObject("lubed");
+            writer.WriteNumber("slipStrength", lubedComponent.SlipStrength);
+            writer.WriteNumber("slipsLeft", lubedComponent.SlipsLeft);
             writer.WriteEndObject();
         }
 
