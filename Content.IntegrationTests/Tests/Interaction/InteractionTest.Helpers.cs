@@ -40,13 +40,13 @@ public abstract partial class InteractionTest
 
         await Client.WaitPost(() =>
         {
-            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(SEntMan.ToNetCoordinates(TargetCoords)), Direction.South, out Target),
+            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(SEntMan.ToNetCoordinates(TargetCoords)), Direction.South, out ClientTarget),
                 Is.EqualTo(shouldSucceed));
 
             if (!shouldSucceed)
                 return;
-            var comp = CEntMan.GetComponent<ConstructionGhostComponent>(Target!.Value);
-            ConstructionGhostId = comp.GhostId;
+
+            ConstructionGhostId = ClientTarget.GetHashCode();
         });
 
         await RunTicks(1);
@@ -83,13 +83,13 @@ public abstract partial class InteractionTest
     /// <summary>
     /// Spawn an entity entity and set it as the target.
     /// </summary>
-    [MemberNotNull(nameof(Target))]
+    [MemberNotNull(nameof(ClientTarget))]
     protected async Task SpawnTarget(string prototype)
     {
-        Target = EntityUid.Invalid;
+        ClientTarget = EntityUid.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.SpawnEntity(prototype, TargetCoords);
+            ClientTarget = SEntMan.SpawnEntity(prototype, TargetCoords);
         });
 
         await RunTicks(5);
@@ -102,8 +102,8 @@ public abstract partial class InteractionTest
     protected async Task StartDeconstruction(string prototype)
     {
         await SpawnTarget(prototype);
-        Assert.That(SEntMan.TryGetComponent(Target, out ConstructionComponent? comp));
-        await Server.WaitPost(() => SConstruction.SetPathfindingTarget(Target!.Value, comp!.DeconstructionNode, comp));
+        Assert.That(SEntMan.TryGetComponent(ClientTarget, out ConstructionComponent? comp));
+        await Server.WaitPost(() => SConstruction.SetPathfindingTarget(ClientTarget!.Value, comp!.DeconstructionNode, comp));
         await RunTicks(5);
     }
 
@@ -186,7 +186,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Pickup(EntityUid? uid = null, bool deleteHeld = true)
     {
-        uid ??= Target;
+        uid ??= ClientTarget;
 
         if (Hands.ActiveHand == null)
         {
@@ -272,11 +272,9 @@ public abstract partial class InteractionTest
     {
         // For every interaction, we will also examine the entity, just in case this breaks something, somehow.
         // (e.g., servers attempt to assemble construction examine hints).
-        var clientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(Target));
-
-        if (clientTarget != null)
+        if (ClientTarget != null)
         {
-            await Client.WaitPost(() => ExamineSys.DoExamine(clientTarget.Value));
+            await Client.WaitPost(() => ExamineSys.DoExamine(ClientTarget.Value));
         }
 
         await PlaceInHands(entity);
@@ -288,18 +286,15 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
     {
-        var clientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(Target));
-
-        if (clientTarget == null || !CEntMan.IsClientSide(clientTarget.Value))
+        if (ClientTarget == null || !CEntMan.IsClientSide(ClientTarget.Value))
         {
-            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+            await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget))));
             await RunTicks(1);
         }
         else
         {
             // The entity is client-side, so attempt to start construction
-            var ghost = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget.Value);
-            await Client.WaitPost(() => CConSys.TryStartConstruction(ghost.GhostId));
+            await Client.WaitPost(() => CConSys.TryStartConstruction(ClientTarget.Value));
             await RunTicks(5);
         }
 
@@ -391,58 +386,60 @@ public abstract partial class InteractionTest
     protected async Task CheckTargetChange(bool shouldSucceed)
     {
         EntityUid newTarget = default;
-        if (Target == null)
+        if (ClientTarget == null)
             return;
 
-        var target = CEntMan.ToEntity(SEntMan.ToNetEntity(Target.Value));
-
+        var target = ClientTarget.Value;
+        var serverTarget = SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget.Value));
         await RunTicks(5);
 
-        if (target.IsValid() && CEntMan.IsClientSide(target))
+        if (!SEntMan.EntityExists(serverTarget) || CEntMan.IsClientSide(target))
         {
             Assert.That(CEntMan.Deleted(target), Is.EqualTo(shouldSucceed),
                 $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");
 
             if (shouldSucceed)
             {
-                Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out newTarget),
+                Assert.That(CTestSystem.Ghosts.TryGetValue(ConstructionGhostId, out var targetValue),
                     $"Failed to get construction entity from ghost Id");
 
-                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newTarget}"));
-                Target = newTarget;
+                await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {targetValue}"));
+                ClientTarget = targetValue;
+                newTarget = targetValue;
+                serverTarget = SEntMan.ToEntity(CEntMan.ToNetEntity(targetValue));
             }
         }
 
-        if (STestSystem.EntChanges.TryGetValue(Target.Value, out newTarget))
+        if (STestSystem.EntChanges.TryGetValue(serverTarget, out var newServerTarget))
         {
             await Server.WaitPost(
-                () => SLogger.Debug($"Construction entity {Target.Value} changed to {newTarget}"));
+                () => SLogger.Debug($"Construction entity {serverTarget} changed to {newServerTarget}"));
 
-            Target = newTarget;
+            ClientTarget = CEntMan.ToEntity(SEntMan.ToNetEntity(newServerTarget));
         }
 
-        if (Target != SEntMan.ToEntity(CEntMan.ToNetEntity(target)))
+        if (ClientTarget != newTarget)
             await CheckTargetChange(shouldSucceed);
     }
 
     #region Asserts
 
-    protected void AssertPrototype(string? prototype, EntityUid? target = null)
+    protected void AssertPrototype(string? prototype, EntityUid? serverTarget = null)
     {
-        target ??= Target;
-        if (target == null)
+        serverTarget ??= SEntMan.ToEntity(CEntMan.ToNetEntity(ClientTarget));
+        if (serverTarget == null)
         {
             Assert.Fail("No target specified");
             return;
         }
 
-        var meta = SEntMan.GetComponent<MetaDataComponent>(target.Value);
+        var meta = SEntMan.GetComponent<MetaDataComponent>(serverTarget.Value);
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
     }
 
     protected void AssertAnchored(bool anchored = true, EntityUid? target = null)
     {
-        target ??= Target;
+        target ??= ClientTarget;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -461,7 +458,7 @@ public abstract partial class InteractionTest
 
     protected void AssertDeleted(bool deleted = true, EntityUid? target = null)
     {
-        target ??= Target;
+        target ??= ClientTarget;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -480,7 +477,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected void AssertComp<T>(bool hasComp = true, EntityUid? target = null)
     {
-        target ??= Target;
+        target ??= ClientTarget;
         if (target == null)
         {
             Assert.Fail("No target specified");
@@ -550,7 +547,7 @@ public abstract partial class InteractionTest
                 if (ent == transform.MapUid
                     || ent == transform.GridUid
                     || ent == Player
-                    || ent == Target)
+                    || ent == ClientTarget)
                 {
                     toRemove.Add(ent);
                 }
@@ -653,7 +650,7 @@ public abstract partial class InteractionTest
     /// </summary>
     protected T Comp<T>(EntityUid? target = null) where T : IComponent
     {
-        target ??= Target;
+        target ??= ClientTarget;
         if (target == null)
             Assert.Fail("No target specified");
 
@@ -751,7 +748,7 @@ public abstract partial class InteractionTest
     protected bool TryGetBui(Enum key, [NotNullWhen(true)] out BoundUserInterface? bui, EntityUid? target = null, bool shouldSucceed = true)
     {
         bui = null;
-        target ??= Target;
+        target ??= ClientTarget;
         if (target == null)
         {
             Assert.Fail("No target specified");

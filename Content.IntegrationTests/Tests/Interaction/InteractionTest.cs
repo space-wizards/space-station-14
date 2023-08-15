@@ -49,7 +49,7 @@ public abstract partial class InteractionTest
     protected MapId MapId => MapData.MapId;
 
     /// <summary>
-    /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="Target"/>
+    /// Target coordinates. Note that this does not necessarily correspond to the position of the <see cref="ClientTarget"/>
     /// entity.
     /// </summary>
     protected EntityCoordinates TargetCoords;
@@ -76,7 +76,7 @@ public abstract partial class InteractionTest
     /// interactions often swap out entities, and there are helper methods that attempt to automatically upddate
     /// the target entity. See <see cref="CheckTargetChange"/>
     /// </remarks>
-    protected EntityUid? Target;
+    protected EntityUid? ClientTarget;
 
     /// <summary>
     /// When attempting to start construction, this is the client-side ID of the construction ghost.

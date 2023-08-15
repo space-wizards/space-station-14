@@ -27,6 +27,10 @@ public sealed class TryStartStructureConstructionMessage : EntityEventArgs
     /// <summary>
     ///     Identifier to be sent back in the acknowledgement so that the client can clean up its ghost.
     /// </summary>
+    /// <remarks>
+    /// So essentially the client is sending its own entity to the server so it knows to delete it when it gets server
+    /// response back.
+    /// </remarks>
     public readonly int Ack;
 
     public TryStartStructureConstructionMessage(NetCoordinates loc, string prototypeName, Angle angle, int ack)

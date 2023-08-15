@@ -63,7 +63,7 @@ public sealed class MachineConstruction : InteractionTest
         await SpawnTarget(Protolathe);
 
         // Initially has all quality-1 parts.
-        foreach (var part in SConstruction.GetAllParts(Target!.Value))
+        foreach (var part in SConstruction.GetAllParts(ClientTarget!.Value))
         {
             Assert.That(part.Rating, Is.EqualTo(1));
         }
@@ -78,7 +78,7 @@ public sealed class MachineConstruction : InteractionTest
         AssertPrototype(Protolathe);
 
         // Query now returns higher quality parts.
-        foreach (var part in SConstruction.GetAllParts(Target!.Value))
+        foreach (var part in SConstruction.GetAllParts(ClientTarget!.Value))
         {
             Assert.That(part.Rating, Is.EqualTo(4));
         }
