@@ -101384,7 +101384,7 @@ entities:
     - pos: 9.598311,-40.325493
       parent: 2
       type: Transform
-- proto: RevolverCapGunFake
+- proto: RevolverCapGun
   entities:
   - uid: 17116
     components:
