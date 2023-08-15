@@ -39,7 +39,7 @@
 
 - type: entity
   id: HandheldHealthAnalyzer
-  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotMediumItem]
   suffix: Powered
   components:
   - type: PowerCellDraw
