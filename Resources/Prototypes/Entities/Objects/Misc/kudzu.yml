@@ -75,6 +75,9 @@
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+      ignoreWhitelist:
+        components:
+        - IgnoreKudzu
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:

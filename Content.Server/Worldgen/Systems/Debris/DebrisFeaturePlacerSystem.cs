@@ -2,7 +2,6 @@
 using System.Numerics;
 using Content.Server.Worldgen.Components;
 using Content.Server.Worldgen.Components.Debris;
-using Content.Server.Worldgen.Systems.GC;
 using Content.Server.Worldgen.Tools;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
@@ -17,7 +16,6 @@ namespace Content.Server.Worldgen.Systems.Debris;
 /// </summary>
 public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
 {
-    [Dependency] private readonly GCQueueSystem _gc = default!;
     [Dependency] private readonly NoiseIndexSystem _noiseIndex = default!;
     [Dependency] private readonly PoissonDiskSampler _sampler = default!;
     [Dependency] private readonly TransformSystem _xformSys = default!;
@@ -35,17 +33,8 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
         SubscribeLocalEvent<DebrisFeaturePlacerControllerComponent, WorldChunkUnloadedEvent>(OnChunkUnloaded);
         SubscribeLocalEvent<OwnedDebrisComponent, ComponentShutdown>(OnDebrisShutdown);
         SubscribeLocalEvent<OwnedDebrisComponent, MoveEvent>(OnDebrisMove);
-        SubscribeLocalEvent<OwnedDebrisComponent, TryCancelGC>(OnTryCancelGC);
         SubscribeLocalEvent<SimpleDebrisSelectorComponent, TryGetPlaceableDebrisFeatureEvent>(
             OnTryGetPlacableDebrisEvent);
-    }
-
-    /// <summary>
-    ///     Handles GC cancellation in case the chunk is still loaded.
-    /// </summary>
-    private void OnTryCancelGC(EntityUid uid, OwnedDebrisComponent component, ref TryCancelGC args)
-    {
-        args.Cancelled |= HasComp<LoadedChunkComponent>(component.OwningController);
     }
 
     /// <summary>
@@ -102,12 +91,6 @@ public sealed class DebrisFeaturePlacerSystem : BaseWorldSystem
     private void OnChunkUnloaded(EntityUid uid, DebrisFeaturePlacerControllerComponent component,
         ref WorldChunkUnloadedEvent args)
     {
-        foreach (var (_, debris) in component.OwnedDebris)
-        {
-            if (debris is not null)
-                _gc.TryGCEntity(debris.Value); // gonb.
-        }
-
         component.DoSpawns = true;
     }
 

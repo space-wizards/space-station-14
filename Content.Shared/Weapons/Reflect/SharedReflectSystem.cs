@@ -174,8 +174,10 @@ public abstract class SharedReflectSystem : EntitySystem
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
-        reflection.Enabled = true;
+        if (args.Slot == "pocket1" || args.Slot == "pocket2")
+            return;
 
+        reflection.Enabled = comp.Enabled;
         // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
         // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
         reflection.ReflectProb += (1 - reflection.ReflectProb) * comp.ReflectProb;

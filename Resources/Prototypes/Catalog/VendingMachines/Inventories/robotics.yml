@@ -2,7 +2,7 @@
   id: RoboticsInventory
   startingInventory:
     CableApcStack: 4
-    #Flash: 4 add when robotics
+    Flash: 4
     ProximitySensor: 3
     RemoteSignaller: 3
     HandheldHealthAnalyzer: 3

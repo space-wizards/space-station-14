@@ -45,6 +45,12 @@ alerts-dead-desc = You're dead, note that you can still be revived!
 alerts-health-name = Health
 alerts-health-desc = [color=green]Green[/color] good. [color=red]Red[/color] bad.
 
+alerts-battery-name = Battery
+alerts-battery-desc = If your battery depletes, you will be unable to use your abilities.
+
+alerts-no-battery-name = No Battery
+alerts-no-battery-desc = You don't have a battery, rendering you unable to charge or use your abilities.
+
 alerts-internals-name = Toggle internals
 alerts-internals-desc = Toggles your gas tank internals on or off.
 
