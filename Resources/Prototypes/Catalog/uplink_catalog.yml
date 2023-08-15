@@ -845,6 +845,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Botanist
+    - HeadOfPersonnel
 
 - type: listing
   id: uplinkRiggedBoxingGloves
@@ -860,6 +861,7 @@
       whitelist:
         - Passenger
         - Boxer
+        - HeadOfPersonnel
 
 - type: listing
   id: uplinkNecronomicon
@@ -874,6 +876,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
+    - HeadOfPersonnel
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -892,6 +895,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Chaplain
+    - HeadOfPersonnel
 
 - type: listing
   id: uplinkRevolverCapGunFake
@@ -907,6 +911,7 @@
     whitelist:
     - Mime
     - Clown
+    - HeadOfPersonnel
 
 - type: listing
   id: uplinkBananaPeelExplosive
@@ -921,6 +926,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
+    - HeadOfPersonnel
 
 - type: listing
   id: UplinkHoloclownKit
@@ -936,6 +942,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Clown
+    - HeadOfPersonnel
 
 - type: listing
   id: uplinkHotPotato
@@ -953,6 +960,7 @@
     - Botanist
     - Clown
     - Mime
+    - HeadOfPersonnel
 
 - type: listing
   id: UplinkChimpAmmo
@@ -968,6 +976,7 @@
       whitelist:
         - Scientist
         - SeniorResearcher
+        - ResearchDirector
 
 - type: listing
   id: uplinkProximityMine
@@ -982,6 +991,7 @@
   - !type:BuyerJobCondition
     whitelist:
     - Janitor
+    - HeadOfPersonnel
   - !type:BuyerWhitelistCondition
     blacklist:
       components:
@@ -1004,6 +1014,7 @@
     - Scientist
     - SeniorResearcher
     - Chef
+    - ResearchDirector
 
 # Armor
 
