@@ -1,45 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Remove the landing pad from expeditions., type: Tweak}
-  id: 4100
-  time: '2023-06-27T09:55:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disable ambient music when expedition countdown starts. Also bumped
-      countdown volume a lot., type: Tweak}
-  id: 4101
-  time: '2023-06-27T11:28:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
-  - {message: Fixed splitting stacks inside of storage not updating the available
-      capacity., type: Fix}
-  id: 4102
-  time: '2023-06-28T00:30:03.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Added more pirate accenting, yarr.', type: Add}
-  id: 4103
-  time: '2023-06-28T00:40:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced folding chair damage., type: Tweak}
-  id: 4104
-  time: '2023-06-28T01:41:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Welders have been reworked to consume fuel when lit rather than after
-      welding something., type: Tweak}
-  id: 4105
-  time: '2023-06-28T01:46:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
-  id: 4106
-  time: '2023-06-28T02:04:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Removed smoke reactions until someone makes a better system., type: Remove}
   id: 4107
   time: '2023-06-28T02:08:47.0000000+00:00'
@@ -3024,3 +2985,49 @@ Entries:
   - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
   id: 4599
   time: '2023-08-15T14:07:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Speech verbs will now change depending on the entity saying them and
+      from punctuation. Have fun chittering as a mothperson., type: Add}
+  - {message: Ending a message with '!!' will now bold the message., type: Add}
+  - {message: Mothpeople now have custom typing indicators., type: Add}
+  id: 4600
+  time: '2023-08-15T20:03:06.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
+      crate., type: Fix}
+  id: 4601
+  time: '2023-08-15T20:22:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Radios no longer display a popup when messages fail to send., type: Remove}
+  id: 4602
+  time: '2023-08-15T20:56:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Portal sprites made less bad hopefully, type: Tweak}
+  - {message: Hand teleporter doafter reduced slightly, type: Tweak}
+  - {message: Portals can no longer teleport you to other maps, type: Fix}
+  - {message: Ghosts can now traverse linked portals silently using an altverb, type: Add}
+  - {message: Portals now snap to grid + show up properly in the entity menu, type: Fix}
+  id: 4603
+  time: '2023-08-15T20:56:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs can't get electrocuted anymore., type: Fix}
+  id: 4604
+  time: '2023-08-15T22:37:34.0000000+00:00'
+- author: Fahasor
+  changes:
+  - {message: Nanotrasen Department of Economics has reduced glue expenses in jug
+      production lines. Now labels from jugs can be deleted., type: Fix}
+  id: 4605
+  time: '2023-08-15T22:41:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts once again fit in artifact containers., type: Fix}
+  - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
+  - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
+  id: 4606
+  time: '2023-08-15T22:49:30.0000000+00:00'

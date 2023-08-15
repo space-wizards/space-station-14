@@ -58,6 +58,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
