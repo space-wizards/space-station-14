@@ -41,7 +41,7 @@
     slots: [ mask ]
     equippedPrefix: unlit
   - type: Item
-    size: 1
+    size: 0.1
   - type: Construction
     graph: smokeableCigarette
     node: cigarette
