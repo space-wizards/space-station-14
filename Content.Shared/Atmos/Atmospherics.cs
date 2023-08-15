@@ -217,7 +217,7 @@ namespace Content.Shared.Atmos
 
         // Q = N_A * 11.3 MeV / 2 / 1000, energy released per mol of tritium fused. Really big number.
         public const float TritiumFusionEnergyReleased = 545142112.256f;
-        public const float TritiumFusionFactor = 5f;
+        public const float TritiumFusionFactor = 2f;
         //public const float TritiumFusionRadiationScale = 20f;
 
         /// <summary>
