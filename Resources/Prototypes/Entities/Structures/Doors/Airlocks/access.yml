@@ -242,7 +242,7 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
-  parent: AirlockCommand
+  parent: AirlockCargo
   id: AirlockQuartermasterLocked
   suffix: Quartermaster, Locked
   components:
@@ -499,7 +499,7 @@
     access: [["HeadOfPersonnel"]]
 
 - type: entity
-  parent: AirlockCommandGlass
+  parent: AirlockCargoGlass
   id: AirlockQuartermasterGlassLocked
   suffix: Quartermaster, Locked
   components:
