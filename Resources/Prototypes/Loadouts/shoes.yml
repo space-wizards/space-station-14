@@ -1,3 +1,4 @@
+# Colored
 - type: loadout
   id: LoadoutShoesBlack
   name: Black Shoes
@@ -78,3 +79,14 @@
   cost: 1
   exclusive: true
   item: ClothingShoesColorYellow
+
+
+# Miscellaneous
+- type: loadout
+  id: LoadoutShoesSlippersDuck
+  name: Ducky Slippers
+  description: Quack up your downtime with these adorable duck slippers that waddle the line between comfort and quirkiness.
+  category: Accessories
+  cost: 1
+  exclusive: true
+  item: ClothingShoeSlippersDuck
