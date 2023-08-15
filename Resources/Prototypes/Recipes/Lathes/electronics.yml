@@ -661,3 +661,12 @@
   materials:
      Steel: 100
      Glass: 900
+
+- type: latheRecipe
+  id: MiniGravityGeneratorCircuitboard
+  result: MiniGravityGeneratorCircuitboard
+  completetime: 6
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100     

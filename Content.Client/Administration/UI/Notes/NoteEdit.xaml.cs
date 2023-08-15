@@ -239,7 +239,7 @@ public sealed partial class NoteEdit : FancyWindow
             return;
         }
 
-        SubmitButton.Disabled = NoteSeverity == null;
+        SubmitButton.Disabled = (NoteType != NoteType.Watchlist && NoteType != NoteType.Message) && NoteSeverity == null;
     }
 
     private void ResetSubmitButton()

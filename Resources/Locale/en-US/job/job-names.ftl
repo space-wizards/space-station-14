@@ -53,6 +53,7 @@ job-name-senior-officer = Senior Officer
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = Atmospheric Technician
 JobBartender = Bartender
+JobBorg = Borg
 JobBotanist = Botanist
 JobBoxer = Boxer
 JobBlueShield = Blue Shield
