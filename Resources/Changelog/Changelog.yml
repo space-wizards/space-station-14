@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Disable ambient music when expedition countdown starts. Also bumped
-      countdown volume a lot., type: Tweak}
-  id: 4101
-  time: '2023-06-27T11:28:52.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
@@ -3027,3 +3021,9 @@ Entries:
   - {message: Mothpeople now have custom typing indicators., type: Add}
   id: 4600
   time: '2023-08-15T20:03:06.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
+      crate., type: Fix}
+  id: 4601
+  time: '2023-08-15T20:22:28.0000000+00:00'
