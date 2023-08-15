@@ -20,6 +20,7 @@ using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Administration;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -279,6 +280,8 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
             if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
                 difficulty += objective.Difficulty;
         }
+
+        RaiseLocalEvent(new RequestObjectivesEvent(traitor.UserId));
 
         return true;
     }

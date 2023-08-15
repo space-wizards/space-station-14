@@ -21,17 +21,14 @@ public sealed class CharacterInfoSystem : EntitySystem
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
     }
 
-    public void RequestCharacterInfo()//EntityUid? entity = null)
+    public void RequestCharacterInfo()
     {
-        //if (entity == null)
-        //{
-            entity = _players.LocalPlayer?.ControlledEntity;
+        var entity = _players.LocalPlayer?.ControlledEntity;
 
-            if (entity == null)
-            {
-                return;
-            }
-        //}
+        if (entity == null)
+        {
+            return;
+        }
 
         RaiseNetworkEvent(new RequestCharacterInfoEvent(entity.Value));
     }
