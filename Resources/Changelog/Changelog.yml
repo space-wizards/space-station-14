@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
-  id: 4106
-  time: '2023-06-28T02:04:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Removed smoke reactions until someone makes a better system., type: Remove}
   id: 4107
   time: '2023-06-28T02:08:47.0000000+00:00'
@@ -3029,3 +3024,10 @@ Entries:
       production lines. Now labels from jugs can be deleted., type: Fix}
   id: 4605
   time: '2023-08-15T22:41:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts once again fit in artifact containers., type: Fix}
+  - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
+  - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
+  id: 4606
+  time: '2023-08-15T22:49:30.0000000+00:00'
