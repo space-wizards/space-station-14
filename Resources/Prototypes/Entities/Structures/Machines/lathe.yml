@@ -88,7 +88,7 @@
       - Crowbar
       - Multitool
       - NetworkConfigurator
-      - AirlockPainter
+      - SprayPainter
       - FlashlightLantern
       - CableStack
       - CableMVStack
@@ -347,6 +347,7 @@
       - EmitterCircuitboard
       - ThrusterMachineCircuitboard
       - GyroscopeMachineCircuitboard
+      - MiniGravityGeneratorCircuitboard
       - GasRecyclerMachineCircuitboard
       - SeedExtractorMachineCircuitboard
       - AnalysisComputerCircuitboard

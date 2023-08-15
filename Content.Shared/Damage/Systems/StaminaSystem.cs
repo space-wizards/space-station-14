@@ -249,8 +249,9 @@ public sealed partial class StaminaSystem : EntitySystem
     /// </summary>
     public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
     {
+        // Something that has no Stamina component automatically passes stamina checks
         if (!Resolve(uid, ref component, false))
-            return false;
+            return true;
 
         var oldStam = component.StaminaDamage;
 

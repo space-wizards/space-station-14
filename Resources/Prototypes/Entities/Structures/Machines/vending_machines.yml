@@ -100,16 +100,12 @@
   - type: VendingMachine
     pack: CondimentInventory
     offState: off
-    normalState: normal-unshaded
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/condiments.rsi
     drawdepth: SmallObjects
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: "off"
-      map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
   - type: Advertise
     pack: CondimentVendAds
   - type: Speech
@@ -877,11 +873,10 @@
   components:
   - type: VendingMachine
     pack: SmartFridgeInventory
-    offState: off-real
+    offState: off
     brokenState: broken
-    normalState: off
+    normalState: normal-unshaded
     denyState: deny-unshaded
-    screenState: normal-unshaded
     loopDeny: false
   - type: Advertise
     pack: SmartFridgeAds
@@ -889,13 +884,10 @@
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/smartfridge.rsi
     layers:
-    - state: off-real
+    - state: off
       map: ["enum.VendingMachineVisualLayers.Base"]
-    - state: off-real
+    - state: off
       map: ["enum.VendingMachineVisualLayers.BaseUnshaded"]
-      shader: unshaded
-    - state: normal-unshaded
-      map: ["enum.VendingMachineVisualLayers.Screen"]
       shader: unshaded
     - state: panel
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
