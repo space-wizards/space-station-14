@@ -16,6 +16,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Shuttles.Events;
+using Content.Shared.Tag;
 using Content.Shared.Tiles;
 using Robust.Server.GameObjects;
 using Robust.Server.Maps;
@@ -60,6 +61,7 @@ public sealed partial class EmergencyShuttleSystem : EntitySystem
 
     private bool _emergencyShuttleEnabled;
 
+    [ValidatePrototypeId<TagPrototype>]
     private const string DockTag = "DockEmergency";
 
     public override void Initialize()
