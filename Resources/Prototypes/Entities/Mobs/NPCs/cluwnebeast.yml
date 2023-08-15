@@ -10,6 +10,9 @@
   - type: HTN
     rootTask:
       task: SimpleHostileCompound
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: Reactive
     groups:
       Flammable: [Touch]
