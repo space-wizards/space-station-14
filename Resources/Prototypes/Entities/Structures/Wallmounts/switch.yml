@@ -14,7 +14,6 @@
   - type: Physics
     canCollide: false
   - type: Sprite
-    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: SignalSwitch
@@ -51,7 +50,6 @@
   - type: Physics
     canCollide: false
   - type: Sprite
-    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: dead
   - type: UseDelay
@@ -111,7 +109,6 @@
     - type: Transform
       anchored: true
     - type: Sprite
-      drawdepth: SmallObjects
       sprite: Structures/Wallmounts/switch.rsi
       state: on
     - type: Rotatable
@@ -124,7 +121,6 @@
     - type: Construction
       graph: LightSwitchGraph
       node: LightSwitchNode
-    - type: Fixtures
 
 - type: entity
   id: TwoWayLever
@@ -136,7 +132,6 @@
     - type: Clickable
     - type: InteractionOutline
     - type: Sprite
-      drawdepth: FloorObjects
       sprite: Structures/conveyor.rsi
       layers:
         - state: switch-off
@@ -175,3 +170,47 @@
         - Left
         - Right
         - Middle
+
+#directional
+
+- type: entity
+  id: SignalSwitchDirectional
+  name: signal switch
+  suffix: directional
+  parent: SignalSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalSwitchDirectionalGraph
+    node: SignalSwitchDirectionalNode
+
+- type: entity
+  id: SignalButtonDirectional
+  name: signal button
+  suffix: directional
+  parent: SignalButton
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalButtonDirectionalGraph
+    node: SignalButtonDirectionalNode
+
+- type: entity
+  id: ApcNetSwitchDirectional
+  name: apc net switch
+  suffix: directional
+  parent: ApcNetSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: LightSwitchDirectionalGraph
+    node: LightSwitchDirectionalNode
