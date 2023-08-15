@@ -79,7 +79,7 @@
 - type: entity
   id: CigaretteOmnizine
   parent: SoakedCigarette
-  name: Omnizine laced cigarette
+  name: Hot Dog Water Flavor Explosion
   components:
   - type: SolutionContainerManager
     solutions:
@@ -94,7 +94,7 @@
 - type: entity
   id: CigaretteIron
   parent: SoakedCigarette
-  name: Iron laced cigarette
+  name: Rusty Orange Baja Blast
   components:
   - type: SolutionContainerManager
     solutions:
@@ -109,7 +109,7 @@
 - type: entity
   id: CigaretteTricordrazine
   parent: SoakedCigarette
-  name: Tricordrazine laced cigarette
+  name: Licorice Allsorts
   components:
   - type: SolutionContainerManager
     solutions:
@@ -124,7 +124,7 @@
 - type: entity
   id: CigaretteDylovene
   parent: SoakedCigarette
-  name: Dylovene laced cigarette
+  name: Urinal Cake Disolver
   components:
   - type: SolutionContainerManager
     solutions:
@@ -139,7 +139,7 @@
 - type: entity
   id: CigaretteDermaline
   parent: SoakedCigarette
-  name: Dermaline laced cigarette
+  name: Aloe Peanut Butter Medley
   components:
   - type: SolutionContainerManager
     solutions:
@@ -154,7 +154,7 @@
 - type: entity
   id: CigaretteArithrazine
   parent: SoakedCigarette
-  name: Arithrazine laced cigarette
+  name: Roman Pipe Works
   components:
   - type: SolutionContainerManager
     solutions:
@@ -169,7 +169,7 @@
 - type: entity
   id: CigaretteIpecac
   parent: SoakedCigarette
-  name: Ipecac laced cigarette
+  name: Grandma's Christmas Fruitcake
   components:
   - type: SolutionContainerManager
     solutions:
@@ -184,7 +184,7 @@
 - type: entity
   id: CigaretteBicaridine
   parent: SoakedCigarette
-  name: Bicaridine laced cigarette
+  name: Wet Dog Enhanced Cigarette
   components:
   - type: SolutionContainerManager
     solutions:
@@ -199,7 +199,7 @@
 - type: entity
   id: CigaretteDexalin
   parent: SoakedCigarette
-  name: Dexalin laced cigarette
+  name: Rocky Mountain Musk
   components:
   - type: SolutionContainerManager
     solutions:
@@ -214,7 +214,7 @@
 - type: entity
   id: CigarettePax
   parent: SoakedCigarette
-  name: Pax laced cigarette
+  name: Switzerland Express
   components:
   - type: SolutionContainerManager
     solutions:
@@ -229,7 +229,7 @@
 - type: entity
   id: CigaretteBbqSauce
   parent: SoakedCigarette
-  name: BBQ sauce laced cigarette
+  name: Spicy Wood Aroma
   components:
   - type: SolutionContainerManager
     solutions:
@@ -244,7 +244,7 @@
 - type: entity
   id: CigaretteBlackPepper
   parent: SoakedCigarette
-  name: Black pepper sauce laced cigarette
+  name: English Spice
   components:
   - type: SolutionContainerManager
     solutions:
@@ -259,7 +259,7 @@
 - type: entity
   id: CigaretteCapsaicinOil
   parent: SoakedCigarette
-  name: Capsaicin oil sauce laced cigarette
+  name: Chilly P
   components:
   - type: SolutionContainerManager
     solutions:
@@ -274,7 +274,7 @@
 - type: entity
   id: CigaretteBread
   parent: SoakedCigarette
-  name: Bread laced cigarette
+  name: Double Toasted
   components:
   - type: SolutionContainerManager
     solutions:
@@ -287,7 +287,7 @@
 - type: entity
   id: CigaretteMilk
   parent: SoakedCigarette
-  name: Milk laced cigarette
+  name: Bovine Extract
   components:
   - type: SolutionContainerManager
     solutions:
@@ -302,7 +302,7 @@
 - type: entity
   id: CigaretteBanana
   parent: SoakedCigarette
-  name: Banana laced cigarette
+  name: Clown Adjancency Bonus
   components:
   - type: SolutionContainerManager
     solutions:
@@ -317,7 +317,7 @@
 - type: entity
   id: CigaretteSpaceDrugs
   parent: SoakedCigarette
-  name: Space drug laced cigarette
+  name: 80's Power Hour
   components:
   - type: SolutionContainerManager
     solutions:
@@ -332,7 +332,7 @@
 - type: entity
   id: CigaretteMuteToxin
   parent: SoakedCigarette
-  name: Mute toxin laced cigarette
+  name: Mixed Lozenges
   components:
   - type: SolutionContainerManager
     solutions:
@@ -347,7 +347,7 @@
 - type: entity
   id: CigaretteMold
   parent: SoakedCigarette
-  name: Mold laced cigarette
+  name: Beneath The Sink Experience
   components:
   - type: SolutionContainerManager
     solutions:
@@ -362,7 +362,7 @@
 - type: entity
   id: CigaretteLicoxide
   parent: SoakedCigarette
-  name: Licoxide laced cigarette
+  name: Wake Up Call
   components:
   - type: SolutionContainerManager
     solutions:
@@ -377,7 +377,7 @@
 - type: entity
   id: CigaretteWeldingFuel
   parent: SoakedCigarette
-  name: Welding fuel laced cigarette
+  name: Plasma Sauce
   components:
   - type: SolutionContainerManager
     solutions:
@@ -392,7 +392,7 @@
 - type: entity
   id: CigaretteTHC
   parent: SoakedCigarette
-  name: THC laced cigarette
+  name: Hippy Romance Novel
   components:
   - type: SolutionContainerManager
     solutions:
