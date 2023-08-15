@@ -29,7 +29,7 @@ namespace Content.Client.Construction.UI
         ItemList Recipes { get; }
         ItemList RecipeStepList { get; }
 
-        event EventHandler<(string search, string catagory)> PopulateRecipes;
+        event EventHandler<(string search, string category)> PopulateRecipes;
         event EventHandler<ItemList.Item?> RecipeSelected;
         event EventHandler<bool> BuildButtonToggled;
         event EventHandler<bool> EraseButtonToggled;
@@ -100,7 +100,7 @@ namespace Content.Client.Construction.UI
 
         public event EventHandler? ClearAllGhosts;
 
-        public event EventHandler<(string search, string catagory)>? PopulateRecipes;
+        public event EventHandler<(string search, string category)>? PopulateRecipes;
         public event EventHandler<ItemList.Item?>? RecipeSelected;
         public event EventHandler<bool>? BuildButtonToggled;
         public event EventHandler<bool>? EraseButtonToggled;
@@ -115,8 +115,8 @@ namespace Content.Client.Construction.UI
         {
             BuildButton.Disabled = false;
             BuildButton.Text = Loc.GetString(isItem ? "construction-menu-place-ghost" : "construction-menu-craft");
-            TargetName.SetMessage(name);
-            TargetDesc.SetMessage(description);
+            TargetName.SetMessage(Loc.GetString(name));
+            TargetDesc.SetMessage(Loc.GetString(description));
             TargetTexture.Texture = iconTexture;
         }
 

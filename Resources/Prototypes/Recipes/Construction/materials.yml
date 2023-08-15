@@ -1,17 +1,17 @@
 ﻿- type: construction
-  name: metal rod
+  name: construction-recipe-metal-rod
   id: MetalRod
   graph: MetalRod
   startNode: start
   targetNode: MetalRod
   category: construction-category-materials
-  description: A sturdy metal rod that can be used for various purposes.
+  description: construction-recipe-metal-rod-description
   icon: { sprite: Objects/Materials/parts.rsi, state: rods }
   objectType: Item
 
 - type: construction
-  name: reinforced glass
-  description: A reinforced sheet of glass.
+  name: construction-recipe-reinforced-glass
+  description: construction-recipe-reinforced-glass-description
   id: SheetRGlass
   graph: Glass
   startNode: start
@@ -21,8 +21,8 @@
   objectType: Item
 
 - type: construction
-  name: plasma glass
-  description: A sheet of translucent plasma.
+  name: construction-recipe-plasma-glass
+  description: construction-recipe-plasma-glass-description
   id: SheetPGlass
   graph: Glass
   startNode: start
@@ -32,8 +32,8 @@
   objectType: Item
 
 - type: construction
-  name: reinforced plasma glass
-  description: A reinforced sheet of translucent plasma.
+  name: construction-recipe-reinforced-plasma-glass
+  description:construction-recipe-reinforced-plasma-glass-description
   id: SheetRPGlass
   graph: Glass
   startNode: start
@@ -43,19 +43,19 @@
   objectType: Item
 
 - type: construction
-  name: durathread
+  name: construction-recipe-durathread
   id: MaterialDurathread
   graph: Durathread
   startNode: start
   targetNode: MaterialDurathread
   category: construction-category-materials
-  description: A high-quality thread used to make durable clothes.
+  description: construction-recipe-durathread-description
   icon: { sprite: Objects/Materials/materials.rsi, state: durathread }
   objectType: Item
 
 - type: construction
-  name: uranium glass
-  description: A sheet of uranium glass.
+  name: construction-recipe-uranium-glass
+  description: construction-recipe-uranium-glass-description
   id: SheetUGlass
   graph: Glass
   startNode: start
@@ -65,8 +65,8 @@
   objectType: Item
 
 - type: construction
-  name: reinforced uranium glass
-  description: A reinforced sheet of uranium glass.
+  name: construction-recipe-reinforced-uranium-glass
+  description: construction-recipe-reinforced-uranium-glass-description
   id: SheetRUGlass
   graph: Glass
   startNode: start

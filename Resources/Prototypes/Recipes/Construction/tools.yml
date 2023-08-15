@@ -1,32 +1,32 @@
 - type: construction
-  name: torch
+  name: construction-recipe-torch
   id: LightTorch
   graph: LightTorch
   startNode: start
   targetNode: torch
   category: construction-category-tools
-  description: A torch fashioned from some wood.
+  description: construction-recipe-torch-description
   icon: { sprite: Objects/Misc/torch.rsi, state: icon }
   objectType: Item
 
 - type: construction
-  name: logic gate
+  name: construction-recipe-logic-gate
   id: LogicGate
   graph: LogicGate
   startNode: start
   targetNode: logic_gate
   category: construction-category-tools
-  description: A binary logic gate for signals.
+  description: construction-recipe-logic-gate-description
   icon: { sprite: Objects/Devices/gates.rsi, state: or_icon }
   objectType: Item
 
 - type: construction
-  name: edge detector
+  name: construction-recipe-edge-detector
   id: EdgeDetector
   graph: LogicGate
   startNode: start
   targetNode: edge_detector
   category: construction-category-tools
-  description: An edge detector for signals.
+  description: construction-recipe-edge-detector-description
   icon: { sprite: Objects/Devices/gates.rsi, state: edge_detector }
   objectType: Item

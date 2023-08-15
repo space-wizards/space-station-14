@@ -1,11 +1,11 @@
 - type: construction
-  name: web wall
+  name: construction-recipe-web-wall
   id: WallWeb
   graph: WallWeb
   startNode: start
   targetNode: wall
   category: construction-category-structures
-  description: A fairly weak yet silky smooth wall.
+  description: construction-recipe-web-wall-description
   icon:
     sprite: /Textures/Structures/Walls/web.rsi
     state: full
@@ -17,13 +17,13 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: web table
+  name: construction-recipe-web-table
   id: TableWeb
   graph: TableWeb
   startNode: start
   targetNode: table
   category: construction-category-structures
-  description: Essential for any serious web development.
+  description: construction-recipe-web-table-description
   icon:
     sprite: /Textures/Structures/Furniture/Web/table.rsi
     state: full

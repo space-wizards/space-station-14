@@ -1,11 +1,11 @@
 ﻿- type: construction
-  name: computer
+  name: construction-recipe-computer
   id: Computer
   graph: Computer
   startNode: start
   targetNode: computer
   category: construction-category-machines
-  description: A frame used to construct anything with a computer circuitboard.
+  description: construction-recipe-computer-description
   placementMode: SnapgridCenter
   canBuildInImpassable: false
   icon:
@@ -13,8 +13,8 @@
     state: 4
 
 - type: construction
-  name: machine frame
-  description: A machine under construction. Needs more parts.
+  name: construction-recipe-machine-frame
+  description: construction-recipe-machine-frame-description
   id: MachineFrame
   graph: Machine
   startNode: start
@@ -28,13 +28,13 @@
 
 # Switching
 - type: construction
-  name: two-way lever
+  name: construction-recipe-two-way-lever
   id: TwoWayLeverRecipe
   graph: LeverGraph
   startNode: start
   targetNode: LeverNode
   category: construction-category-machines
-  description: A lever to control machines. It has 3 modes.
+  description: construction-recipe-two-way-lever-description
   objectType: Structure
   canBuildInImpassable: false
   icon:
@@ -44,13 +44,13 @@
     - !type:TileNotBlocked
 
 - type: construction
-  name: light switch
+  name: construction-recipe-light-switch
   id: LightSwitchRecipe
   graph: LightSwitchGraph
   startNode: start
   targetNode: LightSwitchNode
   category: construction-category-machines
-  description: A switch for toggling lights that are connected to the same apc.
+  description: construction-recipe-light-switch-descrpition
   icon:
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -62,13 +62,13 @@
     - !type:WallmountCondition
 
 - type: construction
-  name: signal switch
+  name: construction-recipe-signal-switch
   id: SignalSwitchRecipe
   graph: SignalSwitchGraph
   startNode: start
   targetNode: SignalSwitchNode
   category: construction-category-machines
-  description: It's a switch for toggling power to things.
+  description: construction-recipe-signal-switch-description
   icon:
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -80,13 +80,13 @@
     - !type:WallmountCondition
 
 - type: construction
-  name: signal button
+  name: construction-recipe-signal-button
   id: SignalButtonRecipe
   graph: SignalButtonGraph
   startNode: start
   targetNode: SignalButtonNode
   category: construction-category-machines
-  description: It's a button for activating something.
+  description: construction-recipe-signal-button-description
   icon:
     sprite: Structures/Wallmounts/switch.rsi
     state: on

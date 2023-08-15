@@ -1,10 +1,10 @@
 - type: construction
-  name: bananium horn
+  name: construction-recipe-bananium-horn
   id: HornBananium
   graph: BananiumHorn
   startNode: start
   targetNode: bananiumHorn
   category: construction-category-weapons
-  description: An air horn made from bananium.
+  description: construction-recipe-bananium-horn-description
   icon: { sprite: Objects/Fun/bananiumhorn.rsi, state: icon }
   objectType: Item

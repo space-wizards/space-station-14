@@ -1,65 +1,65 @@
 - type: construction
-  name: livestock crate
+  name: construction-recipe-livestock-crate
   id: CrateLivestock
   graph: CrateLivestock
   startNode: start
   targetNode: cratelivestock
   category: construction-category-storage
-  description: A wooden crate for holding livestock.
+  description: construction-recipe-livestock-crate-description
   icon: { sprite: Structures/Storage/Crates/livestock.rsi, state: base }
   objectType: Structure
 
 - type: construction
-  name: steel crate
+  name: construction-recipe-steel-crate
   id: CrateGenericSteel
   graph: CrateGenericSteel
   startNode: start
   targetNode: crategenericsteel
   category: construction-category-storage
-  description: A metal crate for storing things.
+  description: construction-recipe-steel-crate-description
   icon: { sprite: Structures/Storage/Crates/generic.rsi, state: icon }
   objectType: Structure
 
 - type: construction
-  name: plastic crate
+  name: construction-recipe-plastic-crate
   id: CratePlastic
   graph: CratePlastic
   startNode: start
   targetNode: crateplastic
   category: construction-category-storage
-  description: A plastic crate for storing things.
+  description: construction-recipe-plastic-crate-description
   icon: { sprite: Structures/Storage/Crates/plastic.rsi, state: icon }
   objectType: Structure
 
 - type: construction
-  name: cardboard box
+  name: construction-recipe-big-cardboard-box
   id: BigBox
   graph: BaseBigBox
   startNode: start
   targetNode: basebigbox
   category: construction-category-storage
-  description: A big box for storing things or hiding in.
+  description: construction-recipe-big-cardboard-box-description
   icon: { sprite: Structures/Storage/closet.rsi, state: cardboard }
   objectType: Structure
 
 - type: construction
-  name: cardboard box
+  name: construction-recipe-cardboard-box
   id: BoxCardboard
   graph: BoxCardboard
   startNode: start
   targetNode: boxcardboard
   category: construction-category-storage
-  description: A small box for storing things.
+  description: construction-recipe-cardboard-box-description
   icon: { sprite: Objects/Storage/boxes.rsi, state: box }
   objectType: Item
 
 - type: construction
-  name: coffin
+  name: construction-recipe-coffin
   id: CrateCoffin
   graph: CrateCoffin
   startNode: start
   targetNode: cratecoffin
   category: construction-category-storage
-  description: A coffin for storing corpses.
+  description: construction-recipe-coffin-description
   icon: { sprite: Structures/Storage/Crates/coffin.rsi, state: base }
   objectType: Structure

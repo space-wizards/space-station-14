@@ -1,164 +1,164 @@
 ﻿- type: construction
-  name: baseball bat
+  name: construction-recipe-baseball-bat
   id: bat
   graph: WoodenBat
   startNode: start
   targetNode: bat
   category: construction-category-weapons
-  description: A robust baseball bat.
+  description: construction-recipe-baseball-bat-description
   icon:
     sprite: Objects/Weapons/Melee/baseball_bat.rsi
     state: icon
   objectType: Item
 
 - type: construction
-  name: ghost sheet
+  name: construction-recipe-ghost-sheet
   id: ghost_sheet
   graph: GhostSheet
   startNode: start
   targetNode: ghost_sheet
   category: construction-category-clothing
-  description: Become a spooky ghost. Boo!
+  description: construction-recipe-ghost-sheet-description
   icon:
     sprite: Clothing/OuterClothing/Misc/ghostsheet.rsi
     state: icon
   objectType: Item
 
 - type: construction
-  name: makeshift handcuffs
+  name: construction-recipe-makeshift-handcuffs
   id: makeshifthandcuffs
   graph: makeshifthandcuffs
   startNode: start
   targetNode: cuffscable
   category: construction-category-tools
-  description: "Homemade handcuffs crafted from spare cables."
+  description: construction-recipe-makeshift-handcuffs-description
   icon: { sprite: Objects/Misc/cablecuffs.rsi, state: cuff }
   objectType: Item
 
 - type: construction
-  name: makeshift stunprod
+  name: construction-recipe-makeshift-stunprod
   id: makeshiftstunprod
   graph: makeshiftstunprod
   startNode: start
   targetNode: msstunprod
   category: construction-category-weapons
-  description: "Homemade stunprod."
+  description: construction-recipe-makeshift-stunprod-description
   icon: { sprite: Objects/Weapons/Melee/stunprod.rsi, state: stunprod_off }
   objectType: Item
 
 - type: construction
-  name: muzzle
+  name: construction-recipe-muzzle
   id: muzzle
   graph: Muzzle
   startNode: start
   targetNode: muzzle
   category: construction-category-tools
   objectType: Item
-  description: "A muzzle to shut your victim up."
+  description: construction-recipe-muzzle-description
   icon:
     sprite: Clothing/Mask/muzzle.rsi
     state: icon
 
 - type: construction
-  name: improvised pneumatic cannon
+  name: construction-recipe-improvised-pneumatic-cannon
   id: pneumaticcannon
   graph: PneumaticCannon
   startNode: start
   targetNode: cannon
   category: construction-category-weapons
   objectType: Item
-  description: This son of a gun can fire anything that fits in it using just a little gas.
+  description: construction-recipe-improvised-pneumatic-cannon-description
   icon:
     sprite: Objects/Weapons/Guns/Cannons/pneumatic_cannon.rsi
     state: icon
 
 - type: construction
-  name: gauze
+  name: construction-recipe-gauze
   id: gauze
   graph: Gauze
   startNode: start
   targetNode: gauze
   category: construction-category-tools
   objectType: Item
-  description: When you've really got nothing left.
+  description: construction-recipe-gauze-description
   icon:
     sprite: Objects/Specific/Medical/medical.rsi
     state: gauze
 
 - type: construction
-  name: blindfold
+  name: construction-recipe-blindfold
   id: blindfold
   graph: Blindfold
   startNode: start
   targetNode: blindfold
   category: construction-category-tools
   objectType: Item
-  description: Better hope everyone turns a blind eye to you crafting this sussy item...
+  description: construction-recipe-blindfold-description
   icon:
     sprite: Clothing/Eyes/Misc/blindfold.rsi
     state: icon
 
 - type: construction
-  name: hairflower
+  name: construction-recipe-hairflower
   id: hairflower
   graph: hairflower
   startNode: start
   targetNode: hairflower
   category: construction-category-clothing
-  description: "A red flower for beautiful ladies."
+  description: construction-recipe-hairflower-description
   icon:
     sprite: Clothing/Head/Misc/hairflower.rsi
     state: icon
   objectType: Item
 
 - type: construction
-  name: flower crown
+  name: construction-recipe-flower-crown
   id: flowercrown
   graph: flowercrown
   startNode: start
   targetNode: flowercrown
   category: construction-category-clothing
-  description: "A coronet of fresh and fragrant flowers."
+  description: construction-recipe-flower-crown-description
   icon:
     sprite: Clothing/Head/Misc/flower-crown.rsi
     state: icon
   objectType: Item
 
 - type: construction
-  name: damp rag
+  name: construction-recipe-damp-rag
   id: rag
   graph: Rag
   startNode: start
   targetNode: rag
   category: construction-category-tools
   objectType: Item
-  description: A damp rag to clean up the ground. Better than slipping around all day.
+  description: construction-recipe-damp-rag-description
   icon:
     sprite: Objects/Specific/Janitorial/rag.rsi
     state: rag
 
 - type: construction
-  name: improvised shotgun
+  name: construction-recipe-improvised-shotgun
   id: improvisedshotgun
   graph: ImprovisedShotgunGraph
   startNode: start
   targetNode: shotgun
   category: construction-category-weapons
   objectType: Item
-  description: A shitty, single-shot shotgun made from salvaged and hand-crafted gun parts. Ammo not included.
+  description: construction-recipe-improvised-shotgun-description
   icon:
     sprite: Objects/Weapons/Guns/Shotguns/improvised_shotgun.rsi
     state: icon
 
 - type: construction
-  name: rifle stock
+  name: construction-recipe-rifle-stock
   id: riflestock
   graph: RifleStockGraph
   startNode: start
   targetNode: riflestock
   category: construction-category-weapons
   objectType: Item
-  description: A stock carved out of wood, vital for improvised firearms.
+  description: construction-recipe-rifle-stock-description
   icon:
     sprite: Objects/Misc/rifle_stock.rsi
     state: icon

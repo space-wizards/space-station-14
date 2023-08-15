@@ -138,7 +138,7 @@ namespace Content.Client.Construction.UI
             PopulateInfo(_selected);
         }
 
-        private void OnViewPopulateRecipes(object? sender, (string search, string catagory) args)
+        private void OnViewPopulateRecipes(object? sender, (string search, string category) args)
         {
             var (search, category) = args;
             var recipesList = _constructionView.Recipes;
@@ -153,7 +153,7 @@ namespace Content.Client.Construction.UI
 
                 if (!string.IsNullOrEmpty(search))
                 {
-                    if (!recipe.Name.ToLowerInvariant().Contains(search.Trim().ToLowerInvariant()))
+                    if (!Loc.GetString(recipe.Name).ToLowerInvariant().Contains(search.Trim().ToLowerInvariant()))
                         continue;
                 }
 
@@ -162,6 +162,8 @@ namespace Content.Client.Construction.UI
                     if (recipe.Category != category)
                         continue;
                 }
+
+                recipe.Name = Loc.GetString(recipe.Name);
 
                 recipes.Add(recipe);
             }

@@ -20,7 +20,7 @@ public sealed class ConstructionPrototype : IPrototype
     ///     Friendly name displayed in the construction GUI.
     /// </summary>
     [DataField("name")]
-    public string Name= string.Empty;
+    public string Name = string.Empty;
 
     /// <summary>
     ///     "Useful" description displayed in the construction GUI.

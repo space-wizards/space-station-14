@@ -1,12 +1,12 @@
 ﻿- type: construction
-  name: alien artifact
+  name: construction-recipe-alien-artifact
   id: Artifact
   graph: Artifact
   startNode: start
   targetNode: done
   category: construction-category-misc
   objectType: Item
-  description: A strange alien artifact
+  description: construction-recipe-alien-artifact-description
   icon:
     sprite: Objects/Specific/Xenoarchaeology/item_artifacts.rsi
     state: ano01

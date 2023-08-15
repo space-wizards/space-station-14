@@ -1,12 +1,12 @@
 # SURVEILLANCE
 - type: construction
-  name: camera
+  name: construction-recipe-camera
   id: camera
   graph: SurveillanceCamera
   startNode: start
   targetNode: camera
   category: construction-category-utilities
-  description: "Surveillance camera. It's watching. Soon."
+  description: construction-recipe-camera-description
   icon:
     sprite: Structures/Wallmounts/camera.rsi
     state: camera
@@ -14,13 +14,13 @@
   placementMode: SnapgridCenter
 
 - type: construction
-  name: telescreen
+  name: construction-recipe-telescreen
   id: WallmountTelescreen
   graph: WallmountTelescreen
   startNode: start
   targetNode: Telescreen
   category: construction-category-utilities
-  description: "A surveillance camera monitor for the wall."
+  description: construction-recipe-telescreen-description
   icon:
     sprite: Structures/Machines/computers.rsi
     state: telescreen_frame
@@ -29,13 +29,13 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: station map
+  name: construction-recipe-station-map
   id: StationMap
   graph: StationMap
   startNode: start
   targetNode: station_map
   category: construction-category-structures
-  description: A station map.
+  description: construction-recipe-station-map-description
   icon:
     sprite: Structures/Machines/station_map.rsi
     state: station_map0
@@ -48,13 +48,13 @@
 
 # POWER
 - type: construction
-  name: APC
+  name: construction-recipe-apc
   id: APC
   graph: APC
   startNode: start
   targetNode: apc
   category: construction-category-utilities
-  description: "Area Power Controller (APC). Controls power. In an area."
+  description: construction-recipe-apc-description
   icon:
     sprite: Structures/Power/apc.rsi
     state: base
@@ -63,13 +63,13 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: solar assembly
+  name: construction-recipe-solar-assembly
   id: SolarPanel
   graph: SolarPanel
   startNode: start
   targetNode: solarpanel
   category: construction-category-utilities
-  description: "Can be turned into a solar panel or solar tracker."
+  description: construction-recipe-solar-assembly-description
   icon:
     sprite: Structures/Power/Generation/solar_panel.rsi
     state: solar_assembly
@@ -81,13 +81,13 @@
       failIfSpace: false
 
 - type: construction
-  name: cable terminal
+  name: construction-recipe-cable-terminal
   id: CableTerminal
   graph: CableTerminal
   startNode: start
   targetNode: cable_terminal
   category: construction-category-utilities
-  description: "Input of devices such as the SMES. The red cables needs to face the device."
+  description: construction-recipe-cable-terminal-description
   icon:
     sprite: Structures/Power/cable_terminal.rsi
     state: term
@@ -96,13 +96,13 @@
   canBuildInImpassable: false
 
 - type: construction
-  name: wallmount substation
+  name: construction-recipe-wallmount-substation
   id: WallmountSubstation
   graph: WallmountSubstation
   startNode: start
   targetNode: substation
   category: construction-category-utilities
-  description: "A wallmount substation for compact spaces. Make sure to place cable underneath before building the wall."
+  description: construction-recipe-wallmount-substation-description
   icon:
     sprite: Structures/Power/substation.rsi
     state: substation_wall
@@ -111,13 +111,13 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: wallmount generator
+  name: construction-recipe-wallmount-generator
   id: WallmountGenerator
   graph: WallmountGenerator
   startNode: start
   targetNode: generator
   category: construction-category-utilities
-  description: "A wallmount generator for compact spaces. Make sure to place cable underneath before building the wall."
+  description: construction-recipe-wallmount-generator-description
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -126,13 +126,13 @@
   canBuildInImpassable: true
 
 - type: construction
-  name: wallmount APU
+  name: construction-recipe-wallmount-apu
   id: WallmountGeneratorAPU
   graph: WallmountGenerator
   startNode: start
   targetNode: APU
   category: construction-category-utilities
-  description: "A wallmount APU for compact shuttles. Make sure to place cable underneath before building the wall."
+  description: construction-recipe-wallmount-apu-description
   icon:
     sprite: Structures/Power/Generation/wallmount_generator.rsi
     state: panel
@@ -142,8 +142,8 @@
 
 # DISPOSALS
 - type: construction
-  name: disposal unit
-  description: A pneumatic waste disposal unit.
+  name: construction-recipe-disposal-unit
+  description: construction-recipe-disposal-unit-description
   id: DisposalUnit
   graph: DisposalMachine
   startNode: start
@@ -156,8 +156,8 @@
     state: "disposal"
 
 - type: construction
-  name: mailing unit
-  description: A pneumatic mail delivery unit.
+  name: construction-recipe-mailing-unit
+  description: construction-recipe-mailing-unit-description
   id: MailingUnit
   graph: DisposalMachine
   startNode: start
@@ -170,9 +170,9 @@
     state: "mailing"
 
 - type: construction
-  name: disposal pipe
+  name: construction-recipe-disposal-pipe
   id: DisposalPipe
-  description: A huge pipe segment used for constructing disposal systems.
+  description: construction-recipe-disposal-pipe-description
   graph: DisposalPipe
   startNode: start
   targetNode: pipe
@@ -184,8 +184,8 @@
     state: conpipe-s
 
 - type: construction
-  name: disposal tagger
-  description: A pipe that tags entities for routing.
+  name: construction-recipe-disposal-tagger
+  description: construction-recipe-disposal-tagger-description
   id: DisposalTagger
   graph: DisposalPipe
   startNode: start
@@ -198,8 +198,8 @@
     state: conpipe-tagger
 
 - type: construction
-  name: disposal trunk
-  description: A pipe trunk used as an entry point for disposal systems.
+  name: construction-recipe-disposal-trunk
+  description: construction-recipe-disposal-trunk-description
   id: DisposalTrunk
   graph: DisposalPipe
   startNode: start
@@ -212,8 +212,8 @@
     state: conpipe-t
 
 - type: construction
-  name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side.
+  name: construction-recipe-disposal-router
+  description: construction-recipe-disposal-router-description
   id: DisposalRouter
   graph: DisposalPipe
   startNode: start
@@ -228,8 +228,8 @@
 
 - type: construction
   hide: true
-  name: disposal router
-  description: A three-way router. Entities with matching tags get routed to the side.
+  name: construction-recipe-disposal-router
+  description: construction-recipe-disposal-router-description
   id: DisposalRouterFlipped
   graph: DisposalPipe
   startNode: start
@@ -243,8 +243,8 @@
   mirror: DisposalRouter
 
 - type: construction
-  name: disposal junction
-  description: A three-way junction. The arrow indicates where items exit.
+  name: construction-recipe-disposal-junction
+  description: construction-recipe-disposal-junction-description
   id: DisposalJunction
   graph: DisposalPipe
   startNode: start
@@ -259,8 +259,8 @@
 
 - type: construction
   hide: true
-  name: disposal junction
-  description: A three-way junction. The arrow indicates where items exit.
+  name: construction-recipe-disposal-junction
+  description: construction-recipe-disposal-junction-description
   id: DisposalJunctionFlipped
   graph: DisposalPipe
   startNode: start
@@ -274,8 +274,8 @@
   mirror: DisposalJunction
 
 - type: construction
-  name: disposal Y junction
-  description: A three-way junction with another exit point.
+  name: construction-recipe-disposal-y-junction
+  description: construction-recipe-disposal-y-junction-description
   id: DisposalYJunction
   graph: DisposalPipe
   startNode: start
@@ -288,8 +288,8 @@
     state: conpipe-y
 
 - type: construction
-  name: disposal bend
-  description: A tube bent at a 90 degree angle.
+  name: construction-recipe-disposal-bend
+  description: construction-recipe-disposal-bend-description
   id: DisposalBend
   graph: DisposalPipe
   startNode: start
@@ -303,13 +303,13 @@
 
 # ATMOS
 - type: construction
-  name: air alarm
+  name: construction-recipe-air-alarm
   id: AirAlarmFixture
   graph: AirAlarm
   startNode: start
   targetNode: air_alarm
   category: construction-category-structures
-  description: An air alarm. Alarms... air?
+  description: construction-recipe-air-alarm-description
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: alarm0
@@ -321,13 +321,13 @@
   - !type:WallmountCondition {}
 
 - type: construction
-  name: fire alarm
+  name: construction-recipe-fire-alarm
   id: FireAlarm
   graph: FireAlarm
   startNode: start
   targetNode: fire_alarm
   category: construction-category-structures
-  description: A fire alarm. Spicy!
+  description: construction-recipe-fire-alarm-description
   icon:
     sprite: Structures/Wallmounts/air_monitors.rsi
     state: fire0
@@ -339,13 +339,13 @@
   - !type:WallmountCondition {}
 
 - type: construction
-  name: air sensor
+  name: construction-recipe-air-sensor
   id: AirSensor
   graph: AirSensor
   startNode: start
   targetNode: sensor
   category: construction-category-structures
-  description: An air sensor. Senses air.
+  description: construction-recipe-air-sensor-description
   icon:
     sprite: Structures/Specific/Atmospherics/sensor.rsi
     state: gsensor1
@@ -355,9 +355,9 @@
 
 # ATMOS PIPES
 - type: construction
-  name: gas pipe half
+  name: construction-recipe-gas-pipe-half
   id: GasPipeHalf
-  description: Half of a gas pipe. No skateboards.
+  description: construction-recipe-gas-pipe-half-description
   graph: GasPipe
   startNode: start
   targetNode: half
@@ -369,9 +369,9 @@
     state: pipeHalf
 
 - type: construction
-  name: gas pipe straight
+  name: construction-recipe-gas-pipe-straight
   id: GasPipeStraight
-  description: A straight pipe segment.
+  description: construction-recipe-gas-pipe-straight-description
   graph: GasPipe
   startNode: start
   targetNode: straight
@@ -383,9 +383,9 @@
     state: pipeStraight
 
 - type: construction
-  name: gas pipe bend
+  name: construction-recipe-gas-pipe-bend
   id: GasPipeBend
-  description: A pipe segment bent at a 90 degree angle.
+  description: construction-recipe-gas-pipe-bend-description
   graph: GasPipe
   startNode: start
   targetNode: bend
@@ -397,9 +397,9 @@
     state: pipeBend
 
 - type: construction
-  name: gas pipe T junction
+  name: construction-recipe-gas-pipe-t-junction
   id: GasPipeTJunction
-  description: A pipe segment with a T junction.
+  description: construction-recipe-gas-pipe-t-junction-description
   graph: GasPipe
   startNode: start
   targetNode: tjunction
@@ -411,9 +411,9 @@
     state: pipeTJunction
 
 - type: construction
-  name: gas pipe fourway
+  name: construction-recipe-gas-pipe-fourway
   id: GasPipeFourway
-  description: A pipe segment with a fourway junction.
+  description: construction-recipe-gas-pipe-fourway-description
   graph: GasPipe
   startNode: start
   targetNode: fourway
@@ -426,8 +426,8 @@
 
 # ATMOS UNARY
 - type: construction
-  name: air vent
-  description: Pumps gas into the room.
+  name: construction-recipe-air-vent
+  description: construction-recipe-air-vent-description
   id: GasVentPump
   graph: GasUnary
   startNode: start
@@ -447,8 +447,8 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: passive vent
-  description: Unpowered vent that equalises gases on both sides.
+  name: construction-recipe-passive-vent
+  description: construction-recipe-passive-vent-description
   id: GasPassiveVent
   graph: GasUnary
   startNode: start
@@ -468,8 +468,8 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: air scrubber
-  description: Sucks gas into connected pipes.
+  name: construction-recipe-air-scrubber
+  description: construction-recipe-air-scrubber-description
   id: GasVentScrubber
   graph: GasUnary
   startNode: start
@@ -489,8 +489,8 @@
     - !type:TileNotBlocked {}
 
 - type: construction
-  name: air injector
-  description: Injects air into the atmosphere.
+  name: construction-recipe-air-injector
+  description: construction-recipe-air-injector-description
   id: GasOutletInjector
   graph: GasUnary
   startNode: start
@@ -511,9 +511,9 @@
 
 # ATMOS BINARY
 - type: construction
-  name: gas pump
+  name: construction-recipe-gas-pump
   id: GasPressurePump
-  description: A pump that moves gas by pressure.
+  description: construction-recipe-gas-pump-description
   graph: GasBinary
   startNode: start
   targetNode: pressurepump
@@ -533,8 +533,8 @@
     - !type:NoUnstackableInTile
 
 - type: construction
-  name: volumetric gas pump
-  description: A pump that moves gas by volume.
+  name: construction-recipe-volumetric-gas-pump
+  description: construction-recipe-volumetric-gas-pump-description
   id: GasVolumePump
   graph: GasBinary
   startNode: start
@@ -556,8 +556,8 @@
 
 - type: construction
   id: GasPassiveGate
-  name: passive gate
-  description: A one-way air valve that does not require power.
+  name: construction-recipe-passive-gate
+  description: construction-recipe-passive-gate-description
   graph: GasBinary
   startNode: start
   targetNode: passivegate
@@ -578,8 +578,8 @@
 
 - type: construction
   id: GasValve
-  name: manual valve
-  description: A pipe with a valve that can be used to disable the flow of gas through it.
+  name: construction-recipe-manual-valve
+  description: construction-recipe-manual-valve-description
   graph: GasBinary
   startNode: start
   targetNode: valve
@@ -600,8 +600,8 @@
 
 - type: construction
   id: SignalControlledValve
-  name: signal valve
-  description: Valve controlled by signal inputs.
+  name: construction-recipe-signal-valve
+  description: construction-recipe-signal-valve-description
   graph: GasBinary
   startNode: start
   targetNode: signalvalve
@@ -622,8 +622,8 @@
 
 - type: construction
   id: GasPort
-  name: connector port
-  description: For connecting portable devices related to atmospherics control.
+  name: construction-recipe-gas-port
+  description: construction-recipe-gas-port-description
   graph: GasBinary
   startNode: start
   targetNode: port
@@ -644,8 +644,8 @@
 
 - type: construction
   id: GasDualPortVentPump
-  name: dual-port air vent
-  description: Has a valve and a pump attached to it. There are two ports, one is an input for releasing air, the other is an output when siphoning.
+  name: construction-recipe-dual-port-air-vent
+  description: construction-recipe-dual-port-air-vent-description
   graph: GasBinary
   startNode: start
   targetNode: dualportventpump
@@ -665,8 +665,8 @@
 
 - type: construction
   id: HeatExchanger
-  name: radiator
-  description: Transfers heat between the pipe and its surroundings.
+  name: construction-recipe-radiator
+  description: construction-recipe-radiator-description
   graph: GasBinary
   startNode: start
   targetNode: radiator
@@ -682,8 +682,8 @@
 # ATMOS TRINARY
 - type: construction
   id: GasFilter
-  name: gas filter
-  description: Very useful for filtering gases.
+  name: construction-recipe-gas-filter
+  description: construction-recipe-gas-filter-description
   graph: GasTrinary
   startNode: start
   targetNode: filter
@@ -701,8 +701,8 @@
 - type: construction
   id: GasFilterFlipped
   hide: true
-  name: gas filter
-  description: Very useful for filtering gases.
+  name: construction-recipe-gas-filter
+  description: construction-recipe-gas-filter-description
   graph: GasTrinary
   startNode: start
   targetNode: filterflipped
@@ -719,8 +719,8 @@
 
 - type: construction
   id: GasMixer
-  name: gas mixer
-  description: Very useful for mixing gases.
+  name: construction-recipe-gas-mixer
+  description: construction-recipe-gas-mixer-description
   graph: GasTrinary
   startNode: start
   targetNode: mixer
@@ -738,8 +738,8 @@
 - type: construction
   id: GasMixerFlipped
   hide: true
-  name: gas mixer
-  description: Very useful for mixing gases.
+  name: construction-recipe-gas-mixer
+  description: construction-recipe-gas-mixer-description
   graph: GasTrinary
   startNode: start
   targetNode: mixerflipped
@@ -756,8 +756,8 @@
 
 - type: construction
   id: PressureControlledValve
-  name: pneumatic valve
-  description: Valve controlled by pressure.
+  name: construction-recipe-pneumatic-valve
+  description: construction-recipe-pneumatic-valve-description
   graph: GasTrinary
   startNode: start
   targetNode: pneumaticvalve
@@ -773,13 +773,13 @@
 
 # INTERCOM
 - type: construction
-  name: intercom
+  name: construction-recipe-intercom
   id: IntercomAssesmbly
   graph: Intercom
   startNode: start
   targetNode: intercom
   category: construction-category-structures
-  description: An intercom. For when the station just needs to know something.
+  description: construction-recipe-intercom-description
   icon:
     sprite: Structures/Wallmounts/intercom.rsi
     state: base
@@ -792,13 +792,13 @@
 
 # TIMERS
 - type: construction
-  name: signal timer
+  name: construction-recipe-signal-timer
   id: SignalTimer
   graph: Timer
   startNode: start
   targetNode: signal
   category: construction-category-utilities
-  description: "A wallmounted timer for sending timed signals to things."
+  description: construction-recipe-signal-timer-description
   icon:
     sprite: Structures/Wallmounts/switch.rsi
     state: on
@@ -809,13 +809,13 @@
   - !type:WallmountCondition
 
 - type: construction
-  name: screen timer
+  name: construction-recipe-screen-timer
   id: ScreenTimer
   graph: Timer
   startNode: start
   targetNode: screen
   category: construction-category-utilities
-  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text."
+  description: construction-recipe-screen-timer-description
   icon:
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
@@ -827,13 +827,13 @@
   - !type:WallmountCondition
 
 - type: construction
-  name: brig timer
+  name: construction-recipe-brig-timer
   id: BrigTimer
   graph: Timer
   startNode: start
   targetNode: brig
   category: construction-category-utilities
-  description: "A wallmounted timer for sending timed signals to things. This one has a screen for displaying text and requires security access to use."
+  description: construction-recipe-brig-timer-description
   icon:
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
