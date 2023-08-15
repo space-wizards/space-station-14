@@ -25,12 +25,10 @@
 - type: startingGear
   id: SeniorEngineerGear
   equipment:
-    head: ClothingHeadHatBeretEngineering
     jumpsuit: ClothingUniformJumpsuitSeniorEngineer
     back: ClothingBackpackEngineeringFilled
     shoes: ClothingShoesBootsWork
     id: SeniorEngineerPDA
-    eyes: ClothingEyesGlassesMeson
     belt: ClothingBeltUtilityEngineering
     ears: ClothingHeadsetEngineering
   innerclothingskirt: ClothingUniformJumpskirtSeniorEngineer

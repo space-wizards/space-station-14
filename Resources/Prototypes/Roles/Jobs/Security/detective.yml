@@ -23,10 +23,8 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitDetective
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSunglasses
+    shoes: ClothingShoesColorBlack
     head: ClothingHeadHatFedoraBrown
-    outerClothing: ClothingOuterVestDetective
     id: DetectivePDA
     ears: ClothingHeadsetSecurity
     pocket1: ForensicPad

@@ -21,7 +21,6 @@
     jumpsuit: ClothingUniformJumpsuitSeniorResearcher
     back: ClothingBackpackScienceFilled
     shoes: ClothingShoesColorBlack
-    outerClothing: ClothingOuterCoatLabSeniorResearcher
     id: SeniorResearcherPDA
     ears: ClothingHeadsetScience
   innerclothingskirt: ClothingUniformJumpskirtSeniorResearcher

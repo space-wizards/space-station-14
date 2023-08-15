@@ -32,10 +32,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorOfficer
     back: ClothingBackpackSecurityFilled
-    shoes: ClothingShoesBootsCombatFilled
-    eyes: ClothingEyesGlassesSecurity
-    head: ClothingHeadHatBeret
-    outerClothing: ClothingOuterArmorBasic
+    shoes: ClothingShoesColorBlack
     id: SeniorOfficerPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
