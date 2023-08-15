@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Refactored dungeon generation for salvage expeditions., type: Tweak}
-  id: 4099
-  time: '2023-06-27T09:17:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Remove the landing pad from expeditions., type: Tweak}
   id: 4100
   time: '2023-06-27T09:55:21.0000000+00:00'
@@ -3024,3 +3019,8 @@ Entries:
       permanently active., type: Fix}
   id: 4598
   time: '2023-08-15T05:10:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
+  id: 4599
+  time: '2023-08-15T14:07:56.0000000+00:00'
