@@ -60,6 +60,9 @@ public sealed class ChasmSystem : EntitySystem
 
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
     {
+        if (TryComp<PhysicsComponent>(args.Tripper, out var physics) && physics.BodyStatus == BodyStatus.InAir)
+            return;
+
         args.Continue = true;
     }
 

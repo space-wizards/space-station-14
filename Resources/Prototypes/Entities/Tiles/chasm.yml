@@ -10,7 +10,7 @@
   - type: Chasm
   - type: StepTrigger
     requiredTriggeredSpeed: 0
-    intersectRatio: 0.9
+    intersectRatio: 0.4
     blacklist:
       tags:
       - Catwalk
