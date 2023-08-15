@@ -4,3 +4,6 @@ ent-HandheldStationMap = ручная карта станции
 ent-BaseHandheldStationMap = ручная карта станции
     .desc = Отображает схему текущей станции.
     .suffix = Ручной
+ent-BaseHandheldStationMapUnpowered = ручная карта станции
+    .desc = Отображает схему текущей станции.
+    .suffix = Ручной, Разряженный
