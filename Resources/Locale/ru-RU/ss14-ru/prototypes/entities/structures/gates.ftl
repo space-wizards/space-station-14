@@ -1,6 +1,6 @@
 ent-BaseLogicItem = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
-ent-LogicGate = logic gate
-    .desc = A logic gate with two inputs and one output. Technicians can change its mode of operation using a screwdriver.
-ent-EdgeDetector = edge detector
-    .desc = Splits rising and falling edges into unique pulses and detects how edgy you are.
+ent-LogicGate = логический модуль
+    .desc = Логический модуль с двумя входами и одним выходом. Технический персонал может поменять тип функционирования, используя отвертку.
+ent-EdgeDetector = импульсный сплиттер
+    .desc = Разделяет растущие и падающие части импульса в отдельные пульсы и отображает вашу импульсивность.
