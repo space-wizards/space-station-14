@@ -25,7 +25,7 @@
         - Knife
   - type: FootstepModifier
     footstepSoundCollection:
-      collection: FootstepClown
+      collection: FootstepHeavy
 
 - type: entity
   parent: ClothingShoesBaseButcherable
