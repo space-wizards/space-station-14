@@ -412,10 +412,6 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
-#  - type: Projectile
-#    damage:
-#      types:
-#        Heat: 10
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -425,14 +421,10 @@
   components:
   - type: Sprite
     layers:
-      - state: magicm_green
+      - state: magicm_cyan
         shader: unshaded
   - type: AnomalousParticle
     particleType: Epsilon
-#  - type: Projectile
-#    damage:
-#      types:
-#        Radiation: 5
 
 - type: entity
   parent: AnomalousParticleEpsilon
@@ -445,10 +437,6 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
-#  - type: Projectile
-#    damage:
-#      types:
-#        Radiation: 10
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -462,10 +450,6 @@
         shader: unshaded
   - type: AnomalousParticle
     particleType: Zeta
-#  - type: Projectile
-#    damage:
-#      types:
-#        Shock: 5 
         
 - type: entity
   parent: AnomalousParticleZeta
@@ -478,10 +462,6 @@
     stabilityPerDestabilizingHit: 0.08
     healthPerWeakeningeHit: -0.1
     stabilityPerWeakeningeHit: -0.2
-#  - type: Projectile
-#    damage:
-#      types:
-#        Shock: 10
 
 - type: entity
   parent: AnomalousParticleDelta
@@ -492,7 +472,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm
+      - state: magicm_green
         shader: unshaded
   - type: AnomalousParticle
     particleType: Default
@@ -506,7 +486,6 @@
     damage:
       types:
         Heat: 20
-#        Radiation: 10
 
 # Launcher projectiles (grenade / rocket)
 - type: entity

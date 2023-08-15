@@ -2,36 +2,27 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
-public sealed partial class AlternativeFireModesComponent : Component
+public sealed partial class BatteryWeaponFireModesComponent : Component
 {
-    [DataField("fireModes")]
+    [DataField("fireModes", required: true)]
     [AutoNetworkedField]
-    public List<FireMode> FireModes = new();
+    public List<BatteryWeaponFireMode> FireModes = new();
 
+    [DataField("currentFireMode")]
     [AutoNetworkedField]
-    public int CurrentFireModeIndex = 0;
-
-    public FireMode? CurrentFireMode
-    {
-        get
-        {
-            if (FireModes == null || !FireModes.Any())
-                return null;
-
-            return FireModes.ElementAtOrDefault(CurrentFireModeIndex);
-        }
-    }
+    public BatteryWeaponFireMode CurrentFireMode = default!;
 }
 
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed class FireMode
+public sealed class BatteryWeaponFireMode
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]

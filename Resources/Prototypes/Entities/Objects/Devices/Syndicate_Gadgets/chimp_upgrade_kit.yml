@@ -12,7 +12,6 @@
   - type: Item
     sprite: Objects/Storage/boxes.rsi
     size: 10
-  - type: UpgradeKit
-    baseProto: WeaponPistolCHIMP
-    upgradedProto: WeaponPistolCHIMPUpgraded
-    doAfter: 2
+  - type: Tag
+    tags:
+    - WeaponPistolCHIMPUpgradeKit
