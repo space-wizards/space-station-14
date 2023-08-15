@@ -1,4 +1,5 @@
 using Robust.Shared.Enums;
+using Content.Shared.Security;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.StationRecords;
