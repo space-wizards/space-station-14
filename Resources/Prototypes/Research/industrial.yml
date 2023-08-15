@@ -129,6 +129,7 @@
   - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard
 
 - type: technology
   id: RipleyAPLU

@@ -46,14 +46,19 @@
     stopSearchVerbPopup: pai-system-stopped-searching
   - type: Examiner
   - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
   - type: ActiveRadio
     channels:
+    - Binary
     - Common
   - type: DoAfter
   - type: Actions
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.

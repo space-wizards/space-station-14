@@ -4,6 +4,8 @@
   name: bluespace portal
   description: Transports you to a linked destination!
   components:
+  - type: Transform
+    anchored: True
   - type: InteractionOutline
   - type: Clickable
   - type: Physics
@@ -34,8 +36,8 @@
   - type: PointLight
     color: OrangeRed
     radius: 3
-    energy: 3
-    netsync: false
+    energy: 1
+
 - type: entity
   id: PortalBlue
   parent: BasePortal
@@ -46,7 +48,7 @@
   - type: PointLight
     color: SkyBlue
     radius: 3
-    energy: 3
+    energy: 1
 
 - type: entity
   id: PortalGreeny
@@ -74,7 +76,6 @@
   - type: TimedDespawn
     lifetime: 5
   - type: PointLight
-    netsync: false
     color: Green
     radius: 3
-    energy: 3
+    energy: 1
