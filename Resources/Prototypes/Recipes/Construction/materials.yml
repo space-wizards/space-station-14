@@ -33,7 +33,7 @@
 
 - type: construction
   name: construction-recipe-reinforced-plasma-glass
-  description:construction-recipe-reinforced-plasma-glass-description
+  description: construction-recipe-reinforced-plasma-glass-description
   id: SheetRPGlass
   graph: Glass
   startNode: start
