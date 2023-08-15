@@ -203,3 +203,6 @@
   - type: Construction
     graph: WebStructures
     node: closet
+    containers:
+    - entity_storage
+    - paper_label
