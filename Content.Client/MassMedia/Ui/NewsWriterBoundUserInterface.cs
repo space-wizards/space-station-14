@@ -9,10 +9,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.MassMedia.Ui
 {
     [UsedImplicitly]
-    public sealed class NewsWriteBoundUserInterface : BoundUserInterface
+    public sealed class NewsWriterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
-        private NewsWriteMenu? _menu;
+        private NewsWriterMenu? _menu;
 
         [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
@@ -21,14 +21,14 @@ namespace Content.Client.MassMedia.Ui
         [ViewVariables]
         private string _windowName = Loc.GetString("news-read-ui-default-title");
 
-        public NewsWriteBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
+        public NewsWriterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
 
         }
 
         protected override void Open()
         {
-            _menu = new NewsWriteMenu(_windowName);
+            _menu = new NewsWriterMenu(_windowName);
 
             _menu.OpenCentered();
             _menu.OnClose += Close;
@@ -38,7 +38,7 @@ namespace Content.Client.MassMedia.Ui
 
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
 
-            SendMessage(new NewsWriteArticlesRequestMessage());
+            SendMessage(new NewsWriterArticlesRequestMessage());
         }
 
         protected override void Dispose(bool disposing)
@@ -54,7 +54,7 @@ namespace Content.Client.MassMedia.Ui
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (_menu == null || state is not NewsWriteBoundUserInterfaceState cast)
+            if (_menu == null || state is not NewsWriterBoundUserInterfaceState cast)
                 return;
 
             _menu.UpdateUI(cast.Articles, cast.ShareAvalible);
@@ -80,14 +80,14 @@ namespace Content.Client.MassMedia.Ui
             _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
             _menu.NameInput.Text = string.Empty;
 
-            SendMessage(new NewsWriteShareMessage(article));
+            SendMessage(new NewsWriterShareMessage(article));
         }
 
         private void OnDeleteButtonPressed(int articleNum)
         {
             if (_menu == null) return;
 
-            SendMessage(new NewsWriteDeleteMessage(articleNum));
+            SendMessage(new NewsWriterDeleteMessage(articleNum));
         }
     }
 }

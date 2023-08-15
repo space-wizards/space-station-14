@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Server.MassMedia.Components;
 
 [RegisterComponent]
-public sealed class NewsWriteComponent : Component
+public sealed class NewsWriterComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("publishEnabled")]
     public bool PublishEnabled = false;

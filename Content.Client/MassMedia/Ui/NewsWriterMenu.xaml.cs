@@ -7,7 +7,7 @@ using Content.Shared.MassMedia.Systems;
 namespace Content.Client.MassMedia.Ui;
 
 [GenerateTypedNameReferences]
-public sealed partial class NewsWriteMenu : DefaultWindow
+public sealed partial class NewsWriterMenu : DefaultWindow
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
@@ -15,7 +15,7 @@ public sealed partial class NewsWriteMenu : DefaultWindow
     public event Action? ShareButtonPressed;
     public event Action<int>? DeleteButtonPressed;
 
-    public NewsWriteMenu(string name)
+    public NewsWriterMenu(string name)
     {
         RobustXamlLoader.Load(this);
         IoCManager.InjectDependencies(this);

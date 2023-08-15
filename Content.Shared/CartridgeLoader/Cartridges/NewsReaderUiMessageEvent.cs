@@ -3,18 +3,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.CartridgeLoader.Cartridges;
 
 [Serializable, NetSerializable]
-public sealed class NewsReadUiMessageEvent : CartridgeMessageEvent
+public sealed class NewsReaderUiMessageEvent : CartridgeMessageEvent
 {
-    public readonly NewsReadUiAction Action;
+    public readonly NewsReaderUiAction Action;
 
-    public NewsReadUiMessageEvent(NewsReadUiAction action)
+    public NewsReaderUiMessageEvent(NewsReaderUiAction action)
     {
         Action = action;
     }
 }
 
 [Serializable, NetSerializable]
-public enum NewsReadUiAction
+public enum NewsReaderUiAction
 {
     Next,
     Prev,

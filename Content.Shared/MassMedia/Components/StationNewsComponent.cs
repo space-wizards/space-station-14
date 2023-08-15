@@ -1,6 +1,6 @@
 ﻿using Content.Shared.MassMedia.Systems;
 
-namespace Content.Server.MassMedia.Components;
+namespace Content.Shared.MassMedia.Components;
 
 [RegisterComponent]
 public sealed class StationNewsComponent : Component

@@ -4,18 +4,18 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.MassMedia.Components;
 
 [Serializable, NetSerializable]
-public enum NewsWriteUiKey : byte
+public enum NewsWriterUiKey : byte
 {
     Key
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriteBoundUserInterfaceState : BoundUserInterfaceState
+public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
 {
     public NewsArticle[] Articles;
     public bool ShareAvalible;
 
-    public NewsWriteBoundUserInterfaceState(NewsArticle[] articles, bool shareAvalible)
+    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool shareAvalible)
     {
         Articles = articles;
         ShareAvalible = shareAvalible;
@@ -23,31 +23,31 @@ public sealed class NewsWriteBoundUserInterfaceState : BoundUserInterfaceState
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriteShareMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterShareMessage : BoundUserInterfaceMessage
 {
     public NewsArticle Article;
 
-    public NewsWriteShareMessage(NewsArticle article)
+    public NewsWriterShareMessage(NewsArticle article)
     {
         Article = article;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriteDeleteMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 {
     public int ArticleNum;
 
-    public NewsWriteDeleteMessage(int num)
+    public NewsWriterDeleteMessage(int num)
     {
         ArticleNum = num;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriteArticlesRequestMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
 {
-    public NewsWriteArticlesRequestMessage()
+    public NewsWriterArticlesRequestMessage()
     {
     }
 }

@@ -6,9 +6,9 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed class NewsReadUi : UIFragment
+public sealed class NewsReaderUi : UIFragment
 {
-    private NewsReadUiFragment? _fragment;
+    private NewsReaderUiFragment? _fragment;
 
     public override Control GetUIFragmentRoot()
     {
@@ -17,33 +17,33 @@ public sealed class NewsReadUi : UIFragment
 
     public override void Setup(BoundUserInterface userInterface, EntityUid? fragmentOwner)
     {
-        _fragment = new NewsReadUiFragment();
+        _fragment = new NewsReaderUiFragment();
 
         _fragment.OnNextButtonPressed += () =>
         {
-            SendNewsReadMessage(NewsReadUiAction.Next, userInterface);
+            SendNewsReaderMessage(NewsReaderUiAction.Next, userInterface);
         };
         _fragment.OnPrevButtonPressed += () =>
         {
-            SendNewsReadMessage(NewsReadUiAction.Prev, userInterface);
+            SendNewsReaderMessage(NewsReaderUiAction.Prev, userInterface);
         };
         _fragment.OnNotificationSwithPressed += () =>
         {
-            SendNewsReadMessage(NewsReadUiAction.NotificationSwith, userInterface);
+            SendNewsReaderMessage(NewsReaderUiAction.NotificationSwith, userInterface);
         };
     }
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is NewsReadBoundUserInterfaceState cast)
+        if (state is NewsReaderBoundUserInterfaceState cast)
             _fragment?.UpdateState(cast.Article, cast.TargetNum, cast.TotalNum, cast.NotificationOn);
-        else if (state is NewsReadEmptyBoundUserInterfaceState empty)
+        else if (state is NewsReaderEmptyBoundUserInterfaceState empty)
             _fragment?.UpdateEmptyState(empty.NotificationOn);
     }
 
-    private void SendNewsReadMessage(NewsReadUiAction action, BoundUserInterface userInterface)
+    private void SendNewsReaderMessage(NewsReaderUiAction action, BoundUserInterface userInterface)
     {
-        var newsMessage = new NewsReadUiMessageEvent(action);
+        var newsMessage = new NewsReaderUiMessageEvent(action);
         var message = new CartridgeUiMessage(newsMessage);
         userInterface.SendMessage(message);
     }

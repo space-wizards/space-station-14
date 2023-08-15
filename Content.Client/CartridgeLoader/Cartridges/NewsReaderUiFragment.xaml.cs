@@ -7,14 +7,14 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.CartridgeLoader.Cartridges;
 
 [GenerateTypedNameReferences]
-public sealed partial class NewsReadUiFragment : BoxContainer
+public sealed partial class NewsReaderUiFragment : BoxContainer
 {
     public event Action? OnNextButtonPressed;
     public event Action? OnPrevButtonPressed;
 
     public event Action? OnNotificationSwithPressed;
 
-    public NewsReadUiFragment()
+    public NewsReaderUiFragment()
     {
         RobustXamlLoader.Load(this);
         Orientation = LayoutOrientation.Vertical;

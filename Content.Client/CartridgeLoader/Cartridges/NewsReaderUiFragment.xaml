@@ -1,4 +1,4 @@
-<cartridges:NewsReadUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+<cartridges:NewsReaderUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
                                xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
                                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
                                xmlns="https://spacestation14.io" Margin="1 0 2 0">
@@ -51,4 +51,4 @@
         <RichTextLabel Margin="5,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
         <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>
     </BoxContainer>
-</cartridges:NewsReadUiFragment>
+</cartridges:NewsReaderUiFragment>
