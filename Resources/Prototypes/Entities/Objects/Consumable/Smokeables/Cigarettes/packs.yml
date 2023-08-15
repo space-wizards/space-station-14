@@ -114,7 +114,7 @@
   - type: StorageFill
     contents:
     - id: CigaretteRandom
-      amount: 5
+      amount: 14
   - type: ItemCounter
     count:
       tags: [Cigarette]
@@ -241,9 +241,9 @@
     - id: CigaretteWeldingFuel
       prob: 0.5
       orgroup: CigRandomHarm
-    - id: CigaretteTHC
-      prob: 0.5
-      orgroup: CigRandomNarc
+    #- id: CigaretteTHC
+    #  prob: 0.5
+    #  orgroup: CigRandomNarc
     #- id: CigaretteBbqSauce
     #  prob: 0.7
     #  orgroup: CigRandomFood
