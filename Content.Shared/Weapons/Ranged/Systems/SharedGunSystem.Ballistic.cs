@@ -123,7 +123,7 @@ public abstract partial class SharedGunSystem
                 SimulateInsertAmmo(ent.Value, args.Target.Value, Transform(args.Target.Value).Coordinates);
             }
 
-            if (ent.Value.IsClientSide())
+            if (IsClientSide(ent.Value))
                 Del(ent.Value);
         }
     }

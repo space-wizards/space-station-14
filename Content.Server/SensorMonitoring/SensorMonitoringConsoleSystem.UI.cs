@@ -36,7 +36,7 @@ public sealed partial class SensorMonitoringConsoleSystem
             else
             {
                 fullState ??= CalculateFullState();
-                UserInterfaceSystem.SetUiState(ui, fullState, session);
+                _userInterface.SetUiState(ui, fullState, session);
                 comp.InitialUIStateSent.Add(session);
             }
         }

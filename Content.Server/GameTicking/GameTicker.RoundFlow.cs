@@ -86,7 +86,7 @@ namespace Content.Server.GameTicking
             SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
         }
 
-        private void OnEntityDeleted(EntityUid uid)
+        private void OnEntityDeleted(EntityUid uid, MetaDataComponent metadata)
         {
             _expandPvsEntities.Remove(uid);
         }
