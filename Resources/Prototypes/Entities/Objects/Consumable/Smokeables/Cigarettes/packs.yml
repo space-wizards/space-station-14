@@ -108,13 +108,13 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 5
+    capacity: 10
   - type: Item
-    size: 5
+    size: 10
   - type: StorageFill
     contents:
     - id: CigaretteRandom
-      amount: 5
+      amount: 10
   - type: ItemCounter
     count:
       tags: [Cigarette]
