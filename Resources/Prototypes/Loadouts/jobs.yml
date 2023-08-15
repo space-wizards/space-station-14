@@ -1,9 +1,125 @@
 # Command
 
 - type: loadout
-  id: LoadoutCommandNeckMantleCE
+  id: LoadoutCommandCapNeckMantle
+  name: Captain Mantle
+  description: To show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckMantleCap
+
+- type: loadout
+  id: LoadoutCommandCapNeckCloak
+  name: Captain Cloak
+  description: To really show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckCloakCap
+
+- type: loadout
+  id: LoadoutCommandCapNeckCloakFormal
+  name: Captain Formal Cloak
+  description: More than just to show who has the authority, it also shows who has the greatest fashion sense.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckCloakCapFormal
+
+- type: loadout
+  id: LoadoutCommandCapJumpsuitFormal
+  name: Captain Formal Jumpsuit
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingUniformJumpsuitCapFormal
+
+- type: loadout
+  id: LoadoutCommandCapJumpskirtFormal
+  name: Captain Formal Dress
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingUniformJumpskirtCapFormalDress
+
+- type: loadout
+  id: LoadoutCommandCapOuterWinter
+  name: Captain Winter Coat
+  description: A warm coat for the cold of space.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - Captain
+  item: ClothingOuterWinterCap
+
+- type: loadout
+  id: LoadoutCommandCapGloves
+  name: Captain Gloves
+  description: The gloves of the captain. They are very nice gloves.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHandsGlovesCaptain
+
+- type: loadout
+  id: LoadoutCommandCapHat
+  name: Captain Hat
+  description: The hat of the captain. It is a very nice hat.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHeadHatCaptain
+
+- type: loadout
+  id: LoadoutCommandCapHatCapcap
+  name: Cap cap
+  description: The Captain's cap, pretty nice.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHeadHatCapcap
+
+- type: loadout
+  id: LoadoutCommandCapMaskGas
+  name: Captain Gas Mask
+  description: Why would the captain need this? I don't know, but it looks cool.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingMaskGasCaptain
+
+- type: loadout
+  id: LoadoutCommandCapItemDrinkFlask
+  name: Captain Flask
+  description: The finest of flasks, for the finest of drinks.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: DrinkFlask
+
+
+- type: loadout
+  id: LoadoutCommandCENeckMantle
   name: CE Mantle
-  description: "To really show who has the authority around here."
+  description: To show who has the authority around here. It seems over-engineered.
   category: Jobs
   cost: 2
   exclusive: true
@@ -12,9 +128,31 @@
   item: ClothingNeckMantleCE
 
 - type: loadout
-  id: LoadoutCommandNeckMantleCMO
+  id: LoadoutCommandCENeckCloak
+  name: CE Cloak
+  description: To really show who has the authority around here. It seems over-engineered.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefEngineer
+  item: ClothingNeckCloakCe
+
+- type: loadout
+  id: LoadoutCommandCEOuterWinter
+  name: CE Winter Coat
+  description: A warm coat for the cold of space. It seems over-engineered.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - ChiefEngineer
+  item: ClothingOuterWinterCE
+
+
+- type: loadout
+  id: LoadoutCommandCMONeckMantle
   name: CMO Mantle
-  description: "To really show who has the authority around here."
+  description: To show who has the authority around here. It seems unusually clean.
   category: Jobs
   cost: 2
   exclusive: true
@@ -23,9 +161,51 @@
   item: ClothingNeckMantleCMO
 
 - type: loadout
-  id: LoadoutCommandNeckMantleHOP
+  id: LoadoutCommandCMONeckCloak
+  name: CMO Cloak
+  description: To really show who has the authority around here. It seems unusually clean.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingCloakCmo
+
+- type: loadout
+  id: LoadoutCommandCMOOuterWinter
+  name: CMO Winter Coat
+  description: A warm coat for the cold of space. It seems unusually clean.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingOuterWinterCMO
+
+- type: loadout
+  id: LoadoutCommandCMOOuterLab
+  name: CMO Lab Coat
+  description: A lab coat for the CMO. It seems unusually clean.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: LoadoutCommandCMOHatBeret
+  name: CMO Beret
+  description: A beret for the CMO. It seems unusually clean.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingHeadHatBeretCmo
+
+
+- type: loadout
+  id: LoadoutCommandHOPNeckMantle
   name: HOP Mantle
-  description: "To really show who has the authority around here."
+  description: To show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -34,9 +214,42 @@
   item: ClothingNeckMantleHOP
 
 - type: loadout
-  id: LoadoutCommandNeckMantleHOS
+  id: LoadoutcommandHOPNeckCloak
+  name: HOP Cloak
+  description: To really show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfPersonnel
+  item: ClothingNeckCloakHop
+
+- type: loadout
+  id: LoadoutcommandHOPBackIan
+  name: Ian Backpack # looks like their pet dog
+  description: A backpack that looks like Ian, how cute!
+  category: Jobs
+  cost: 4
+  exclusive: true
+  jobWhitelist:
+    - HeadOfPersonnel
+  item: ClothingBackpackIan
+
+- type: loadout
+  id: LoadoutCommandHOPHatCap
+  name: HOP Cap
+  description: The HOP's cap, pretty nice.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfPersonnel
+  item: ClothingHeadHatHopcap
+
+
+- type: loadout
+  id: LoadoutCommandHOSNeckMantle
   name: HOS Mantle
-  description: "To really show who has the authority around here."
+  description: To really show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -45,9 +258,159 @@
   item: ClothingNeckMantleHOS
 
 - type: loadout
-  id: LoadoutCommandNeckMantleRD
+  id: LoadoutCommandHOSNeckCloak
+  name: HOS Cloak
+  description: To truly show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingNeckCloakHos
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitAlt
+  name: HOS Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSAlt
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitBlue
+  name: HOS Blue Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSBlue
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitGrey
+  name: HOS Grey Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitParade
+  name: HOS Parade Uniform
+  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSParadeMale
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitFormal
+  name: HOS Formal Jumpsuit
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHosFormal
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtAlt
+  name: HOS Jumpskirt
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHoSAlt
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtParade
+  name: HOS Parade Uniform
+  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHoSParadeMale
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtFormal
+  name: HOS Formal Dress
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHosFormal
+
+- type: loadout
+  id: LoadoutCommandHOSOuterWinter
+  name: HOS Winter Coat
+  description: A warm coat for the cold of space.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingOuterWinterHoS
+
+- type: loadout
+  id: LoadoutCommandHOSOuterTrench
+  name: HOS Trench Coat
+  description: A trench coat for the HOS.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingOuterCoatHoSTrench
+
+- type: loadout
+  id: LoadoutCommandHOSHatBeret
+  name: HOS Beret
+  description: A beret for the HOS.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingHeadHatBeretHoS
+
+- type: loadout
+  id: LoadoutCommandHOSHatHoshat
+  name: HOS Hat
+  description: The HOS's hat, pretty nice.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingHeadHatHoshat
+
+- type: loadout
+  id: LoadoutCommandHOSShoesJackboots
+  name: Jackboots
+  description: A really nice, heavy, pair of black boots.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingShoesBootsJack
+
+
+- type: loadout
+  id: LoadoutCommandRDNeckMantle
   name: RD Mantle
-  description: "To really show who has the authority around here."
+  description: To show who has the authority around here.
   category: Jobs
   cost: 2
   exclusive: true
@@ -55,61 +418,226 @@
     - ResearchDirector
   item: ClothingNeckMantleRD
 
+- type: loadout
+  id: LoadoutCommandRDNeckCloak
+  name: RD Cloak
+  description: To really show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ResearchDirector
+  item: ClothingNeckCloakRd
+
+- type: loadout
+  id: LoadoutCommandRDOuterWinter
+  name: RD Winter Coat
+  description: A warm coat for the cold of space.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - ResearchDirector
+  item: ClothingOuterWinterRD
+
+
+# What? This isn't a thing?? :(
+# - type: loadout
+#   id: LoadoutCommandQMNeckMantle
+#   name: QM Mantle
+#   description: To show who has the authority around here. It's stained with beer.
+#   category: Jobs
+#   cost: 2
+#   exclusive: true
+#   jobWhitelist:
+#     - Quartermaster
+#   item: ClothingNeckMantleQM
+
+- type: loadout
+  id: LoadoutCommandQMNeckCloak
+  name: QM Cloak
+  description: To really show who has the authority around here. It's stained with beer.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Quartermaster
+  item: ClothingNeckCloakQm
+
+- type: loadout
+  id: LoadoutCommandQMUniformTurtleneck
+  name: QM Turtleneck
+  description: An alternate job equipment. It's stained with beer.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Quartermaster
+  item: ClothingUniformJumpsuitQMTurtleneck
+
+- type: loadout
+  id: LoadoutCommandQMUniformTurtleneckSkirt
+  name: QM Skirtleneck
+  description: An alternate job equipment. It's stained with beer.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Quartermaster
+  item: ClothingUniformJumpskirtQMTurtleneck
+
+- type: loadout
+  id: LoadoutCommandQMHeadSoft
+  name: QM Hat
+  description: The QM's hat. It's stained with beer.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Quartermaster
+  item: ClothingHeadHatQMsoft
+
 
 # Security
 
 - type: loadout
   id: LoadoutSecurityUniformGrey
-  name: Grey Security jumpsuit
-  description: "An alternate job equipment."
+  name: Grey Security Jumpsuit
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
   jobWhitelist:
     - SecurityOfficer
+    - SecurityCadet
+    - Warden
   item: ClothingUniformJumpsuitSecGrey
 
 - type: loadout
-  id: LoadoutSecurityOuterKevlar
-  name: Kevlar vest
-  description: "For the Secoff who knows what's comin'"
+  id: LoadoutSecurityOuterArmorBasic
+  name: Basic Armor Vest
+  description: An alternate job equipment.
   category: Jobs
   cost: 4
   exclusive: true
   jobWhitelist:
     - SecurityOfficer
-  item: ClothingOuterVestKevlar
+    - SeniorOfficer
+  item: ClothingOuterArmorBasic
+
+- type: loadout
+  id: LoadoutSecurityHeadHelmetBasic
+  name: Basic Helmet
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SeniorOfficer
+  item: ClothingHeadHelmetBasic
+
+- type: loadout
+  id: LoadoutSecurityMaskGasSwat
+  name: SWAT Gas Mask
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingMaskGasSwat
+
+- type: loadout
+  id: LoadoutSecurityEyesGlasses
+  name: Security Glasses
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - SeniorOfficer
+    - Warden
+    - HeadOfSecurity
+  item: ClothingEyesGlassesSecurity
+
+- type: loadout
+  id: LoadoutSecurityEyesHud
+  name: Security HUD
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingEyesHudSecurity
+
+- type: loadout
+  id: LoadoutSecurityShoesBootsCombatFilled
+  name: Combat Boots
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Detective
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingShoesBootsCombatFilled
 
 
 # Medical
 
 - type: loadout
+  id: LoadoutMedicalGlovesNitrile
+  name: Nitrile gloves
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+    - Paramedic
+    - ChiefMedicalOfficer
+  item: ClothingHandsGlovesNitrile
+
+- type: loadout
   id: LoadoutMedicalEyesMediHUD
   name: Medical HUD
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 3
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
+    - Paramedic
     - ChiefMedicalOfficer
   item: ClothingEyesHudMedical
 
 - type: loadout
   id: LoadoutMedicalOuterLabcoat
   name: Lab coat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
   jobWhitelist:
     - MedicalDoctor
+    - Chemist
   item: ClothingOuterCoatLab
 
 - type: loadout
   id: LoadoutMedicalNeckStethoscope
   name: Stethoscope
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 1
   exclusive: true
@@ -119,42 +647,9 @@
   item: ClothingNeckStethoscope
 
 - type: loadout
-  id: LoadoutMedicalUniformChemistSuit
-  name: Chemist Jumpsuit
-  description: "An alternate job equipment."
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  item: ClothingUniformJumpskirtChemistry
-
-- type: loadout
-  id: LoadoutMedicalUniformChemistSkirt
-  name: Chemist Jumpskirt
-  description: "An alternate job equipment."
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  item: ClothingUniformJumpsuitChemistry
-
-- type: loadout
-  id: LoadoutMedicalOuterChemistLabcoat
-  name: Chemist lab coat
-  description: "An alternate job equipment."
-  category: Jobs
-  cost: 2
-  exclusive: true
-  jobWhitelist:
-    - MedicalDoctor
-  item: ClothingOuterCoatLabChem
-
-- type: loadout
   id: LoadoutMedicalUniformScrubsBlue
   name: Blue Scrubs
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -165,7 +660,7 @@
 - type: loadout
   id: LoadoutMedicalUniformScrubsGreen
   name: Green Scrubs
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -176,7 +671,7 @@
 - type: loadout
   id: LoadoutMedicalUniformScrubsPurple
   name: Purple Scrubs
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -185,31 +680,52 @@
   item: UniformScrubsColorPurple
 
 - type: loadout
-  id: LoadoutMedicalUniformParamedicJumpsuit
-  name: Paramedic jumpsuit
-  description: "An alternate job equipment."
+  id: LoadoutMedicalOuterLabcoatChem
+  name: Chemist Lab Coat
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
   jobWhitelist:
-    - MedicalDoctor
+    - Chemist
+  item: ClothingOuterCoatLabChem
+
+- type: loadout
+  id: LoadoutMedicalItemHandLabeler
+  name: Hand Labeler
+  description: An alternate job equipment.
+  category: Jobs
+  exclusive: true
+  jobWhitelist:
+    - Chemist
+  item: HandLabeler
+
+- type: loadout
+  id: LoadoutMedicalUniformParamedicJumpsuit
+  name: Paramedic Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Paramedic
   item: ClothingUniformJumpsuitParamedic
 
 - type: loadout
   id: LoadoutMedicalUniformParamedicJumpskirt
   name: Paramedic jumpskirt
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
   jobWhitelist:
-    - MedicalDoctor
+    - Paramedic
   item: ClothingUniformJumpskirtParamedic
 
 - type: loadout
   id: LoadoutMedicalHeadNurse
   name: Nurse hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -223,7 +739,7 @@
 - type: loadout
   id: LoadoutEngineeringUniformHazard
   name: Engineering hazard suit
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -234,7 +750,7 @@
 - type: loadout
   id: LoadoutEngineeringOuterHazard
   name: Engineering hazard vest
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -245,7 +761,7 @@
 - type: loadout
   id: LoadoutEngineeringOuterChickenSuit
   name: Eggmospheric Technician Suit
-  description: "For the Eggmos tech who always knows where home is..."
+  description: For the Eggmos tech who always knows where home is...
   category: Jobs
   cost: 3
   exclusive: true
@@ -256,7 +772,7 @@
 - type: loadout
   id: LoadoutEngineeringHeadChicken
   name: Eggmospheric Technician Helmet
-  description: "For the Eggmos tech who always knows where home is..."
+  description: For the Eggmos tech who always knows where home is...
   category: Jobs
   cost: 2
   exclusive: true
@@ -267,7 +783,7 @@
 - type: loadout
   id: LoadoutEngineeringEyesMeson
   name: Engineer goggles
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -277,9 +793,22 @@
   item: ClothingEyesGlassesMeson
 
 - type: loadout
+  id: LoadoutEngineeringHeadBeret
+  name: Engineering Beret
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+    - ChiefEngineer
+  item: ClothingHeadHatBeretEngineering
+
+- type: loadout
   id: LoadoutEngineeringHeadHardhatBlue
   name: Hard hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -291,7 +820,7 @@
 - type: loadout
   id: LoadoutEngineeringHeadHardhatOrange
   name: Hard hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -303,7 +832,7 @@
 - type: loadout
   id: LoadoutEngineeringHeadHardhatYellow
   name: Hard hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -315,7 +844,7 @@
 - type: loadout
   id: LoadoutEngineeringHeadHardhatWhite
   name: Hard hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -327,7 +856,7 @@
 - type: loadout
   id: LoadoutEngineeringHeadHardhatRed
   name: Hard hat
-  description: "An alternate job equipment."
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -339,7 +868,7 @@
 - type: loadout
   id: LoadoutEngineeringItemInflatable
   name: Emergency inflatable set
-  description: "A box containing infaltable walls and doors, for quickly patching up breaches."
+  description: A box containing infaltable walls and doors, for quickly patching up breaches.
   category: Jobs
   cost: 4
   jobWhitelist:
@@ -351,15 +880,52 @@
 # Science
 
 - type: loadout
-  id: LoadoutScienceOuterLabcoat
-  name: Lab coat
-  description: "An alternate job equipment."
+  id: LoadoutScienceOuterCoat
+  name: Science Lab Coat
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
   jobWhitelist:
     - Scientist
+    - ResearchAssistant
+    - ResearchDirector
+  item: ClothingOuterCoatRnd
+
+- type: loadout
+  id: LoadoutScienceOuterLabcoat
+  name: Lab coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+    - ResearchAssistant
   item: ClothingOuterCoatLab
+
+- type: loadout
+  id: LoadoutScienceOuterLabcoatSeniorResearcher
+  name: Senior Researcher Lab Coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SeniorResearcher
+  item: ClothingOuterCoatLabSeniorResearcher
+
+- type: loadout
+  id: LoadoutScienceHatBeret
+  name: Science Beret
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+    - ResearchAssistant
+  item: ClothingHeadHatBeretRND
 
 
 # Service
@@ -367,7 +933,7 @@
 - type: loadout
   id: LoadoutServiceClownUniformJesterAlt
   name: Jester suit
-  description: "For the fool who knows their place."
+  description: For the fool who knows their place.
   category: Jobs
   cost: 2
   exclusive: true
@@ -378,7 +944,7 @@
 - type: loadout
   id: LoadoutServiceClownShoesJester
   name: Jester shoes
-  description: "For the fool who knows their place."
+  description: For the fool who knows their place.
   category: Jobs
   cost: 1
   exclusive: true
@@ -389,7 +955,7 @@
 - type: loadout
   id: LoadoutServiceClownHeadJesterHatAlt
   name: Jester hat
-  description: "For the fool who knows their place."
+  description: For the fool who knows their place.
   category: Jobs
   cost: 1
   exclusive: true
@@ -399,8 +965,8 @@
 
 - type: loadout
   id: LoadoutServiceBartenderUniformPurple
-  name: Purple bartender jumpsuit
-  description: "An alternate job equipment."
+  name: Purple bartender Jumpsuit
+  description: An alternate job equipment.
   category: Jobs
   cost: 2
   exclusive: true
@@ -411,7 +977,7 @@
 - type: loadout
   id: LoadoutServiceBotanistUniformOveralls
   name: Overalls
-  description: "A rugged pair of overalls."
+  description: A rugged pair of overalls.
   category: Jobs
   cost: 2
   exclusive: true
