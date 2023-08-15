@@ -24,8 +24,8 @@
     - Binary
   - type: ActiveRadio
     channels:
-    - Common
     - Binary
+    - Common
   - type: NameIdentifier
     group: MMI
   - type: DoAfter
@@ -34,9 +34,6 @@
     proto: robot
   - type: Speech
     speechSounds: Pai
-  - type: MobState
-    allowedStates:
-    - Alive
   - type: ItemSlots
     slots:
       brain_slot:
@@ -96,8 +93,8 @@
       - Binary
     - type: ActiveRadio
       channels:
-      - Common
       - Binary
+      - Common
     - type: NameIdentifier
       group: PositronicBrain
     - type: DoAfter

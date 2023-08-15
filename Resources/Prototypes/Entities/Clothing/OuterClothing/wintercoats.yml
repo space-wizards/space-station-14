@@ -27,8 +27,9 @@
         - ReagentId: Fiber
           Quantity: 30
   - type: Tag
-    tags: 
-      - ClothMade
+    tags:
+    - ClothMade
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingOuterWinterCoat
