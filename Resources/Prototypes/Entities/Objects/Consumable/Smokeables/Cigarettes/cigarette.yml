@@ -76,6 +76,47 @@
           - ReagentId: Omnizine
             Quantity: 30
 
+- type: weightedRandom
+  id: MixedPackFill
+  wights:
+    CigaretteRandomMecialGroups: 1
+    CigaretteRandomFoodGroups: 1
+    CigaretteRandomNastyGroups: 1
+
+- type: weightedRandom
+  id: CigaretteRandomMedicalGroups
+  weights:
+    CigaretteOmnizine: 0.10
+    CigaretteIron: 0.10
+    CigaretteTricordrazine: 0.25
+    CigaretteDylovene: 0.10
+    CigaretteDermaline: 0.10
+    CigaretteArithrazine: 0.10
+    CigaretteBicaridine: 0.10
+    CigaretteDexalin: 0.10
+    CigarettePax: 0.10
+    CigaretteIpecac: 0.10
+
+- type: weightedRandom
+  id: CigaretteRandomFoodGroups
+  weights:
+    CigaretteBbqSauce: 0.70
+    CigaretteBlackPepper: 0.70
+    CigaretteCapsaicinOil: 0.70
+    CigaretteBread: 0.70
+    CigaretteMilk: 0.70
+    CigaretteBanana: 0.10
+    CigaretteTHC: 0.70
+
+- type: weightedRandom
+  id: CigaretteRandomNastyGroups
+  weights:
+    CigaretteSpaceDrugs: 0.50
+    CigaretteMuteToxin: 0.05
+    CigaretteMold: 0.50
+    CigaretteLicoxide: 0.10
+    CigaretteWeldingFuel: 0.50
+
 - type: entity
   id: CigaretteOmnizine
   parent: SoakedCigarette
@@ -137,6 +178,21 @@
             Quantity: 10
 
 - type: entity
+  id: CigaretteDermaline
+  parent: SoakedCigarette
+  name: Dermaline laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Dylovene
+            Quantity: 10
+
+- type: entity
   id: CigaretteArithrazine
   parent: SoakedCigarette
   name: Arithrazine laced cigarette
@@ -150,6 +206,21 @@
             Quantity: 10
           - ReagentId: Arithrazine
             Quantity: 10
+
+- type: entity
+  id: CigaretteIpecac
+  parent: SoakedCigarette
+  name: Ipecac laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Ipecac
+            Quantity: 2          
 
 - type: entity
   id: CigaretteBicaridine
@@ -242,6 +313,49 @@
             Quantity: 10
 
 - type: entity
+  id: CigaretteBread
+  parent: SoakedCigarette
+  name: Bread laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+
+- type: entity
+  id: CigaretteMilk
+  parent: SoakedCigarette
+  name: Milk laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Milk
+            Quantity: 10
+
+- type: entity
+  id: CigaretteBanana
+  parent: SoakedCigarette
+  name: Banana laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: BananaHonk
+            Quantity: 10
+
+- type: entity
   id: CigaretteSpaceDrugs
   parent: SoakedCigarette
   name: Space drug laced cigarette
@@ -284,21 +398,6 @@
           - ReagentId: Nicotine
             Quantity: 10
           - ReagentId: Mold
-            Quantity: 2
-
-- type: entity
-  id: CigaretteIpecac
-  parent: SoakedCigarette
-  name: Ipecac laced cigarette
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 40
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-          - ReagentId: Ipecac
             Quantity: 2
 
 - type: entity
@@ -345,46 +444,3 @@
             Quantity: 10
           - ReagentId: THC
             Quantity: 5
-
-- type: entity
-  id: CigaretteBread
-  parent: SoakedCigarette
-  name: Bread laced cigarette
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 40
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-
-- type: entity
-  id: CigaretteMilk
-  parent: SoakedCigarette
-  name: Milk laced cigarette
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 40
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-          - ReagentId: Milk
-            Quantity: 10
-
-- type: entity
-  id: CigaretteBanana
-  parent: SoakedCigarette
-  name: Banana laced cigarette
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      smokable:
-        maxVol: 40
-        reagents:
-          - ReagentId: Nicotine
-            Quantity: 10
-          - ReagentId: BananaHonk
-            Quantity: 10
