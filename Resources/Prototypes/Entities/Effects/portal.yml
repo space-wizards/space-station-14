@@ -36,6 +36,7 @@
     radius: 3
     energy: 3
     netsync: false
+
 - type: entity
   id: PortalBlue
   parent: BasePortal
