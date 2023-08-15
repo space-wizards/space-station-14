@@ -1,15 +1,4 @@
 Entries:
-- author: CrigCrag
-  changes:
-  - {message: 'Following a lawsuit, some unshielded asbestos was removed from the
-      atmos hardsuit helmet due to health concerns. They are now less heat resistant.',
-    type: Tweak}
-  - {message: 'Nanotrasen has released a new model of atmos firesuit. This model is
-      very resistant to heat, and has a bit more protection against high pressure.
-      However, it is not rated for low pressure environments and its helmet is notably
-      less sturdy.', type: Tweak}
-  id: 4095
-  time: '2023-06-26T20:33:50.0000000+00:00'
 - author: router
   changes:
   - {message: 'Added an alternative emotes prefix, *. Note that it doesn''t get treated
@@ -3025,3 +3014,14 @@ Entries:
       acid, heat it up to 374k and receive your homemade plastic sheet.', type: Add}
   id: 4594
   time: '2023-08-14T23:40:48.0000000+00:00'
+- author: Just_Art
+  changes:
+  - {message: Now a mini gravity generator can be constructed using a machine board
+      and deconstructed., type: Add}
+  - {message: 'The mini gravity generator can be improved by replacing capacitors,
+      which will increase the maximum charge of the generator.', type: Add}
+  - {message: 'The amount of damage required to destroy the mini gravity generator
+      has been changed, and now it is completely destroyed, but it can still be restored
+      by welding.', type: Tweak}
+  id: 4595
+  time: '2023-08-15T00:23:40.0000000+00:00'
