@@ -1,15 +1,19 @@
 ﻿using System.Linq;
+using System.Net.Mail;
 using Content.Shared.Directions;
+using Content.Shared.Ghost;
 using Content.Shared.Projectiles;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Teleportation.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Random;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Teleportation.Systems;
 
@@ -35,9 +39,40 @@ public abstract class SharedPortalSystem : EntitySystem
     {
         SubscribeLocalEvent<PortalComponent, StartCollideEvent>(OnCollide);
         SubscribeLocalEvent<PortalComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<PortalComponent, GetVerbsEvent<AlternativeVerb>>(OnGetVerbs);
 
         SubscribeLocalEvent<PortalTimeoutComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<PortalTimeoutComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
+    {
+        // Traversal altverb for ghosts to use that bypasses normal functionality
+        if (!args.CanAccess || !HasComp<SharedGhostComponent>(args.User))
+            return;
+
+        // Don't use the verb with unlinked or with multi-output portals
+        // (this is only intended to be useful for ghosts to see where a linked portal leads)
+        var disabled = !TryComp<LinkedEntityComponent>(uid, out var link) || link.LinkedEntities.Count != 1;
+
+        args.Verbs.Add(new AlternativeVerb
+        {
+            Priority = 11,
+            Act = () =>
+            {
+                if (link == null || disabled)
+                    return;
+
+                var ent = link.LinkedEntities.First();
+                TeleportEntity(uid, args.User, Transform(ent).Coordinates, ent, false);
+            },
+            Disabled = disabled,
+            Text = Loc.GetString("portal-component-ghost-traverse"),
+            Message = disabled
+                ? Loc.GetString("portal-component-no-linked-entities")
+                : Loc.GetString("portal-component-can-ghost-traverse"),
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"))
+        });
     }
 
     private void OnGetState(EntityUid uid, PortalTimeoutComponent component, ref ComponentGetState args)
@@ -138,7 +173,7 @@ public abstract class SharedPortalSystem : EntitySystem
         }
     }
 
-    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity=null,
+    private void TeleportEntity(EntityUid portal, EntityUid subject, EntityCoordinates target, EntityUid? targetEntity=null, bool playSound=true,
         PortalComponent? portalComponent = null)
     {
         if (!Resolve(portal, ref portalComponent))
@@ -158,6 +193,9 @@ public abstract class SharedPortalSystem : EntitySystem
         LogTeleport(portal, subject, Transform(subject).Coordinates, target);
 
         _transform.SetCoordinates(subject, target);
+
+        if (!playSound)
+            return;
 
         _audio.PlayPredicted(departureSound, portal, subject);
         _audio.PlayPredicted(arrivalSound, subject, subject);

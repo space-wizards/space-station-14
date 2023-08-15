@@ -4,6 +4,8 @@
   name: bluespace portal
   description: Transports you to a linked destination!
   components:
+  - type: Transform
+    anchored: True
   - type: InteractionOutline
   - type: Clickable
   - type: Physics

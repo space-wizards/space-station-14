@@ -38,7 +38,8 @@ public sealed class HandTeleporterComponent : Component
     /// <summary>
     ///     Delay for creating the portals in seconds.
     /// </summary>
-    [DataField("portalCreationDelay")] public float PortalCreationDelay = 2.5f;
+    [DataField("portalCreationDelay")]
+    public float PortalCreationDelay = 1.0f;
 }
 
 [Serializable, NetSerializable]
