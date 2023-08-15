@@ -108,13 +108,13 @@
       Steel: 50
   - type: SpaceGarbage
   - type: Storage
-    capacity: 5
+    capacity: 21
   - type: Item
     size: 5
   - type: StorageFill
     contents:
     - id: CigaretteRandom
-      amount: 14
+      amount: 21
   - type: ItemCounter
     count:
       tags: [Cigarette]
@@ -241,24 +241,24 @@
     - id: CigaretteWeldingFuel
       prob: 0.5
       orgroup: CigRandomHarm
-    #- id: CigaretteTHC
-    #  prob: 0.5
-    #  orgroup: CigRandomNarc
-    #- id: CigaretteBbqSauce
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
-    #- id: CigaretteBlackPepper
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
-    #- id: CigaretteCapsaicinOil
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
-    #- id: CigaretteBread
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
-    #- id: CigaretteMilk
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
-    #- id: CigaretteBanana
-    #  prob: 0.7
-    #  orgroup: CigRandomFood
+    - id: CigaretteTHC
+      prob: 0.5
+      orgroup: CigRandomNarc
+    - id: CigaretteBbqSauce
+      prob: 0.7
+      orgroup: CigRandomFood
+    - id: CigaretteBlackPepper
+      prob: 0.7
+      orgroup: CigRandomFood
+    - id: CigaretteCapsaicinOil
+      prob: 0.7
+      orgroup: CigRandomFood
+    - id: CigaretteBread
+      prob: 0.7
+      orgroup: CigRandomFood
+    - id: CigaretteMilk
+      prob: 0.7
+      orgroup: CigRandomFood
+    - id: CigaretteBanana
+      prob: 0.7
+      orgroup: CigRandomFood
