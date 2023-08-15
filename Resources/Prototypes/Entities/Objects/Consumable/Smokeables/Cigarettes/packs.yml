@@ -217,25 +217,27 @@
       prob: 0.1
     - id: CigaretteDexalin
       prob: 0.1
+    - id: CigarettePax
+      prob: 0.1
     - id: CigaretteSpaceDrugs
       prob: 0.5
-    - id: CigaretteMold
-      prob: 0.5
-    - id: CigaretteLicoxide
-      prob: 0.5
-    - id: CigaretteWeldingFuel
-      prob: 0.5
-    - id: CigaretteTHC
-      prob: 0.5
-    - id: CigaretteBbqSauce
-      prob: 0.7
-    - id: CigaretteBlackPepper
-      prob: 0.7
-    - id: CigaretteCapsaicinOil
-      prob: 0.7
-    - id: CigaretteBread
-      prob: 0.7
-    - id: CigaretteMilk
-      prob: 0.7
-    - id: CigaretteBanana
-      prob: 0.7
+    #- id: CigaretteMold
+    #  prob: 0.5
+    #- id: CigaretteLicoxide
+    #  prob: 0.5
+    #- id: CigaretteWeldingFuel
+    #  prob: 0.5
+    #- id: CigaretteTHC
+    #  prob: 0.5
+    #- id: CigaretteBbqSauce
+    #  prob: 0.7
+    #- id: CigaretteBlackPepper
+    #  prob: 0.7
+    #- id: CigaretteCapsaicinOil
+    #  prob: 0.7
+    #- id: CigaretteBread
+    #  prob: 0.7
+    #- id: CigaretteMilk
+    #  prob: 0.7
+    #- id: CigaretteBanana
+    #  prob: 0.7

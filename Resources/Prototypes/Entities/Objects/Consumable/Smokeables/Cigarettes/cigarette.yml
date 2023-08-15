@@ -182,6 +182,21 @@
             Quantity: 10
 
 - type: entity
+  id: CigarettePax
+  parent: SoakedCigarette
+  name: Pax laced cigarette
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      smokable:
+        maxVol: 40
+        reagents:
+          - ReagentId: Nicotine
+            Quantity: 10
+          - ReagentId: Pax
+            Quantity: 2
+
+- type: entity
   id: CigaretteBbqSauce
   parent: SoakedCigarette
   name: BBQ sauce laced cigarette
