@@ -1,0 +1,41 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation.....need to find this",
+    "states": [
+        {
+            "name": "stand-food",
+            "directions": 4
+        },
+        {
+            "name": "stand-ice",
+            "directions": 4
+        },
+        {
+            "name": "cart_hotsauce",
+            "directions": 4
+        },
+        {
+            "name": "cart_coldsauce",
+            "directions": 4
+        },
+        {
+            "name": "cart_bbqsauce",
+            "directions": 4
+        },
+        {
+            "name": "cart_ketchup",
+            "directions": 4
+        },
+        {
+            "name": "icon-hot"
+        },
+        {
+            "name": "icon-cold"
+        }
+    ]
+}
