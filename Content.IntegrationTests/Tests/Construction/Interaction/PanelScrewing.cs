@@ -1,4 +1,6 @@
+using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.DoAfter;
 using Content.Shared.Wires;
 
 namespace Content.IntegrationTests.Tests.Construction.Interaction;
@@ -24,12 +26,12 @@ public sealed class PanelScrewing : InteractionTest
 
         // Interrupted DoAfters
         await Interact(Screw, awaitDoAfters: false);
-        await CancelDoAfters();
+        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
         Assert.That(comp.Open, Is.False);
         await Interact(Screw);
         Assert.That(comp.Open, Is.True);
         await Interact(Screw, awaitDoAfters: false);
-        await CancelDoAfters();
+        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
         Assert.That(comp.Open, Is.True);
         await Interact(Screw);
         Assert.That(comp.Open, Is.False);

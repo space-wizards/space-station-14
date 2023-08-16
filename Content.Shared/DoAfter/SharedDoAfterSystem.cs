@@ -322,7 +322,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         }
 
         InternalCancel(doAfter, comp);
-        Dirty(comp);
+        Dirty(entity, comp);
     }
 
     private void InternalCancel(DoAfter doAfter, DoAfterComponent component)

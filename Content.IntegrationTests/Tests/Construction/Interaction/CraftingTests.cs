@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.IntegrationTests.Tests.Interaction;
+using Content.Shared.DoAfter;
 using Content.Shared.Stacks;
 using Robust.Shared.Containers;
 
@@ -105,7 +106,7 @@ public sealed class CraftingTests : InteractionTest
         });
 
         // Cancel the DoAfter. Should drop ingredients to the floor.
-        await CancelDoAfters();
+        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
         Assert.Multiple(async () =>
         {
             Assert.That(sys.IsEntityInContainer(rods), Is.False);

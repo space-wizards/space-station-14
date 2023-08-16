@@ -14,6 +14,7 @@ using Content.Server.Power.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
+using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
 using Robust.Client.GameObjects;
@@ -47,6 +48,7 @@ public abstract partial class InteractionTest
                 return;
 
             var comp = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget!.Value);
+            ClientTarget = clientTarget;
             ConstructionGhostId = comp.Owner.GetHashCode();
         });
 
@@ -292,7 +294,9 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task Interact(bool shouldSucceed = true, bool awaitDoAfters = true)
     {
-        if (Target == null || Target.Value.IsValid())
+        var clientTarget = ClientTarget;
+
+        if ((clientTarget?.IsValid() != true || CEntMan.Deleted(clientTarget)) && (Target == null || Target.Value.IsValid()))
         {
             await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.ToCoordinates(TargetCoords), SEntMan.ToEntity(Target)));
             await RunTicks(1);
@@ -300,9 +304,9 @@ public abstract partial class InteractionTest
         else
         {
             // The entity is client-side, so attempt to start construction
-            var clientEnt = CEntMan.ToEntity(Target.Value);
+            var clientEnt = ClientTarget ?? CEntMan.ToEntity(Target);
 
-            await Client.WaitPost(() => CConSys.TryStartConstruction(clientEnt));
+            await Client.WaitPost(() => CConSys.TryStartConstruction(clientEnt!.Value));
             await RunTicks(5);
         }
 
@@ -359,32 +363,59 @@ public abstract partial class InteractionTest
     /// Cancel any currently active DoAfters. Default arguments are such that it also checks that there is at least one
     /// active DoAfter to cancel.
     /// </summary>
-    protected async Task CancelDoAfters(int minExpected = 1, int maxExpected = 1)
+    protected async Task CancelDoAfters(bool isClient, List<Shared.DoAfter.DoAfter> doAfters, int minExpected = 1, int maxExpected = 1)
     {
-        Assert.That(ActiveDoAfters.Count(), Is.GreaterThanOrEqualTo(minExpected));
-        Assert.That(ActiveDoAfters.Count(), Is.LessThanOrEqualTo(maxExpected));
+        Assert.That(doAfters, Has.Count.GreaterThanOrEqualTo(minExpected));
+        Assert.That(doAfters, Has.Count.LessThanOrEqualTo(maxExpected));
 
-        if (!ActiveDoAfters.Any())
+        if (!doAfters.Any())
             return;
 
         // Cancel all the do-afters
-        var doAfters = ActiveDoAfters.ToList();
-        await Server.WaitPost(() =>
-        {
-            foreach (var doAfter in doAfters)
-            {
-                DoAfterSys.Cancel(SEntMan.ToEntity(Player), doAfter.Index, DoAfters);
-            }
-        });
+        EntityUid playerEnt = default;
 
-        await RunTicks(1);
+        if (isClient)
+        {
+            await Client.WaitPost(() =>
+            {
+                playerEnt = CEntMan.ToEntity(Player);
+
+                foreach (var doAfter in doAfters)
+                {
+                    CEntMan.System<SharedDoAfterSystem>().Cancel(playerEnt, doAfter.Index, CEntMan.GetComponent<DoAfterComponent>(playerEnt));
+                }
+            });
+        }
+        else
+        {
+            await Server.WaitPost(() =>
+            {
+                playerEnt = SEntMan.ToEntity(Player);
+
+                foreach (var doAfter in doAfters)
+                {
+                    SEntMan.System<SharedDoAfterSystem>().Cancel(playerEnt, doAfter.Index, SEntMan.GetComponent<DoAfterComponent>(playerEnt));
+                }
+            });
+        }
 
         foreach (var doAfter in doAfters)
         {
             Assert.That(doAfter.Cancelled);
         }
 
-        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
+        if (isClient)
+        {
+            var activeDoAfters = CEntMan.GetComponent<DoAfterComponent>(playerEnt).DoAfters
+                .Where(x => x.Value is { Cancelled: false, Completed: false }).ToList();
+            Assert.That(activeDoAfters, Is.Empty);
+        }
+        else
+        {
+            var activeDoAfters = SEntMan.GetComponent<DoAfterComponent>(playerEnt).DoAfters
+                .Where(x => x.Value is { Cancelled: false, Completed: false }).ToList();
+            Assert.That(activeDoAfters, Is.Empty);
+        }
     }
 
     /// <summary>
@@ -427,6 +458,19 @@ public abstract partial class InteractionTest
     }
 
     #region Asserts
+
+    protected void ClientAssertPrototype(string? prototype, NetEntity? target = null)
+    {
+        target ??= Target;
+        if (target == null)
+        {
+            Assert.Fail("No target specified");
+            return;
+        }
+
+        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.ToEntity(target.Value));
+        Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
+    }
 
     protected void AssertPrototype(string? prototype, NetEntity? target = null)
     {
