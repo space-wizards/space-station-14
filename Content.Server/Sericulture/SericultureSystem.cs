@@ -6,7 +6,7 @@ using Content.Shared.Nutrition.EntitySystems;
 namespace Content.Server.Sericulture;
 
 /// <summary>
-/// Allows mobs to produce materials with <see cref="SericultureComponent"/>.
+/// <inheritdoc/>.
 /// </summary>
 public sealed partial class SericultureSystem : SharedSericultureSystem
 {
