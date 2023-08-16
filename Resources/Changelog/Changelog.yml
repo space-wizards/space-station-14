@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: increased the rate of fire of the Deckard and Mateb revolvers, type: Tweak}
-  - {message: Deckard revolver price increased to 1500, type: Tweak}
-  id: 4109
-  time: '2023-06-28T02:12:02.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: added space lube tube - use it on items to make them slip out of hands!,
@@ -3031,3 +3025,8 @@ Entries:
       to bring you a new smoking sensation., type: Add}
   id: 4608
   time: '2023-08-16T00:27:18.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Syndicate pAI's are now equipped with radio transmitters., type: Tweak}
+  id: 4609
+  time: '2023-08-16T06:59:42.0000000+00:00'
