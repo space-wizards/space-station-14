@@ -5,7 +5,7 @@ namespace Content.Shared.DoAfter;
 
 [Serializable, NetSerializable]
 [DataDefinition]
-public sealed class DoAfterArgs
+public sealed partial class DoAfterArgs
 {
     /// <summary>
     ///     The entity invoking do_after

@@ -5,7 +5,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public sealed class PopupEveryone : IGraphAction
+    public sealed partial class PopupEveryone : IGraphAction
     {
         [DataField("text")] public string Text { get; } = string.Empty;
 

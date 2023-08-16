@@ -6,7 +6,7 @@ namespace Content.Shared.Wires;
 
 [NetworkedComponent, RegisterComponent]
 [Access(typeof(SharedWiresSystem))]
-public sealed class WiresPanelComponent : Component
+public sealed partial class WiresPanelComponent : Component
 {
     /// <summary>
     ///     Is the panel open for this entity's wires?

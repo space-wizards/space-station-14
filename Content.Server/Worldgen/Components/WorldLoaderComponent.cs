@@ -7,7 +7,7 @@ namespace Content.Server.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(WorldControllerSystem))]
-public sealed class WorldLoaderComponent : Component
+public sealed partial class WorldLoaderComponent : Component
 {
     /// <summary>
     ///     The radius in which the loader loads the world.

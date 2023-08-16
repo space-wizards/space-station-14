@@ -11,7 +11,7 @@ namespace Content.Shared.Stealth.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedStealthSystem))]
-public sealed class StealthComponent : Component
+public sealed partial class StealthComponent : Component
 {
     /// <summary>
     /// Whether or not the stealth effect should currently be applied.

@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ContainerEmpty : IGraphCondition
+    public sealed partial class ContainerEmpty : IGraphCondition
     {
         [DataField("container")]
         public string Container { get; } = string.Empty;

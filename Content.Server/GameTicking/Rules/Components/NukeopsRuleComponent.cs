@@ -15,7 +15,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
-public sealed class NukeopsRuleComponent : Component
+public sealed partial class NukeopsRuleComponent : Component
 {
     /// <summary>
     /// The minimum needed amount of players

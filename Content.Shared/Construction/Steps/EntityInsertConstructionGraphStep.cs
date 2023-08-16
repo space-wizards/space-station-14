@@ -1,7 +1,7 @@
 ﻿namespace Content.Shared.Construction.Steps
 {
     [ImplicitDataDefinitionForInheritors]
-    public abstract class EntityInsertConstructionGraphStep : ConstructionGraphStep
+    public abstract partial class EntityInsertConstructionGraphStep : ConstructionGraphStep
     {
         [DataField("store")] public string Store { get; } = string.Empty;
 

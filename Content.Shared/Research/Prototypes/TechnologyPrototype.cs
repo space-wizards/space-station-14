@@ -74,7 +74,7 @@ public sealed class TechnologyPrototype : IPrototype
 }
 
 [DataDefinition]
-public record struct GenericUnlock()
+public partial record struct GenericUnlock()
 {
     /// <summary>
     /// What event is raised when this is unlocked?

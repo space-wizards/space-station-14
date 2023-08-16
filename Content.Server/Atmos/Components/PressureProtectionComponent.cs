@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class PressureProtectionComponent : Component
+    public sealed partial class PressureProtectionComponent : Component
     {
         [DataField("highPressureMultiplier")]
         public float HighPressureMultiplier { get; } = 1f;

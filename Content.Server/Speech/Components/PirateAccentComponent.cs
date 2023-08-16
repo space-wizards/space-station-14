@@ -4,7 +4,7 @@ namespace Content.Server.Speech.Components;
 
 [RegisterComponent]
 [Access(typeof(PirateAccentSystem))]
-public sealed class PirateAccentComponent : Component
+public sealed partial class PirateAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("yarrChance")]

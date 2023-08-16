@@ -2,7 +2,7 @@ using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat;
 
-public sealed class JukeOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class JukeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

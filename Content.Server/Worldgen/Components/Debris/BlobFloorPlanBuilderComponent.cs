@@ -9,7 +9,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(BlobFloorPlanBuilderSystem))]
-public sealed class BlobFloorPlanBuilderComponent : Component
+public sealed partial class BlobFloorPlanBuilderComponent : Component
 {
     /// <summary>
     ///     The probability that placing a floor tile will add up to three-four neighboring tiles as well.

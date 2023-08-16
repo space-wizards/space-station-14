@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class MoveContainer : IGraphAction
+    public sealed partial class MoveContainer : IGraphAction
     {
         [DataField("from")] public string? FromContainer { get; }
         [DataField("to")] public string? ToContainer { get; }

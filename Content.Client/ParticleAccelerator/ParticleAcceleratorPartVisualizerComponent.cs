@@ -4,7 +4,7 @@ namespace Content.Client.ParticleAccelerator;
 
 [RegisterComponent]
 [Access(typeof(ParticleAcceleratorPartVisualizerSystem))]
-public sealed class ParticleAcceleratorPartVisualsComponent : Component
+public sealed partial class ParticleAcceleratorPartVisualsComponent : Component
 {
     [DataField("stateBase", required: true)]
     [ViewVariables(VVAccess.ReadWrite)]

@@ -14,7 +14,7 @@ namespace Content.Shared.CombatMode
     /// </summary>
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedCombatModeSystem))]
-    public sealed class CombatModeComponent : Component
+    public sealed partial class CombatModeComponent : Component
     {
         #region Disarm
 

@@ -1,7 +1,7 @@
 namespace Content.Client.Rotation;
 
 [RegisterComponent]
-public sealed class RotationVisualsComponent : Component
+public sealed partial class RotationVisualsComponent : Component
 {
     [DataField("defaultRotation")]
     [ViewVariables(VVAccess.ReadOnly)]

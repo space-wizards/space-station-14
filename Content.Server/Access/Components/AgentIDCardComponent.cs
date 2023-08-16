@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Access.Components
 {
     [RegisterComponent]
-    public sealed class AgentIDCardComponent : Component
+    public sealed partial class AgentIDCardComponent : Component
     {
         /// <summary>
         /// Set of job icons that the agent ID card can show.

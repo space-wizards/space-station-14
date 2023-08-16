@@ -13,7 +13,7 @@ namespace Content.Client.IconSmoothing
     ///     Any objects with the same <c>key</c> will connect.
     /// </remarks>
     [RegisterComponent]
-    public sealed class IconSmoothComponent : Component
+    public sealed partial class IconSmoothComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
         public bool Enabled = true;

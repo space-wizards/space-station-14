@@ -9,7 +9,7 @@ namespace Content.Shared.Access.Components
     /// </summary>
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedAccessSystem))]
-    public sealed class AccessComponent : Component
+    public sealed partial class AccessComponent : Component
     {
         [DataField("tags", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<AccessLevelPrototype>))]
         [Access(typeof(SharedAccessSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends

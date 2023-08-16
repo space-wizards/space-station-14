@@ -11,7 +11,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Moves an NPC to the specified target key. Hands the actual steering off to NPCSystem.Steering
 /// </summary>
-public sealed class MoveToOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class MoveToOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;

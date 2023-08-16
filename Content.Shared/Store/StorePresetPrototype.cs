@@ -10,7 +10,7 @@ namespace Content.Shared.Store;
 /// </summary>
 [Prototype("storePreset")]
 [DataDefinition]
-public sealed class StorePresetPrototype : IPrototype
+public sealed partial class StorePresetPrototype : IPrototype
 {
     [ViewVariables] [IdDataField] public string ID { get; } = default!;
 

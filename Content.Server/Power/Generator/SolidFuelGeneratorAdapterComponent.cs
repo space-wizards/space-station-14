@@ -7,7 +7,7 @@ namespace Content.Server.Power.Generator;
 /// This is used for allowing you to insert fuel into gens.
 /// </summary>
 [RegisterComponent, Access(typeof(GeneratorSystem))]
-public sealed class SolidFuelGeneratorAdapterComponent : Component
+public sealed partial class SolidFuelGeneratorAdapterComponent : Component
 {
     /// <summary>
     /// The material to accept as fuel.

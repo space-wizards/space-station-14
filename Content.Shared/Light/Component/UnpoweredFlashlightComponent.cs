@@ -9,7 +9,7 @@ namespace Content.Shared.Light.Component;
 /// It doesn't consume any power and can be toggle only by verb.
 /// </summary>
 [RegisterComponent]
-public sealed class UnpoweredFlashlightComponent : Robust.Shared.GameObjects.Component
+public sealed partial class UnpoweredFlashlightComponent : Robust.Shared.GameObjects.Component
 {
     [DataField("toggleFlashlightSound")]
     public SoundSpecifier ToggleSound = new SoundPathSpecifier("/Audio/Items/flashlight_pda.ogg");

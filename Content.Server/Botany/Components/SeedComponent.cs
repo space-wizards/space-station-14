@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent, Access(typeof(BotanySystem))]
-    public sealed class SeedComponent : Component
+    public sealed partial class SeedComponent : Component
     {
         /// <summary>
         ///     Seed data containing information about the plant type & properties that this seed can grow seed. If

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Fluids;
 
 [Serializable, NetSerializable]
-public sealed class AbsorbantDoAfterEvent : DoAfterEvent
+public sealed partial class AbsorbantDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
     public readonly string TargetSolution = default!;

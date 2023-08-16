@@ -16,7 +16,7 @@ namespace Content.Client.Parallax.Data;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class GeneratedParallaxTextureSource : IParallaxTextureSource
+public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSource
 {
     /// <summary>
     /// Parallax config path (the TOML file).

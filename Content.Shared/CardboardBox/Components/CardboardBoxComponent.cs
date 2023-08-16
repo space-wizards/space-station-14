@@ -9,7 +9,7 @@ namespace Content.Shared.CardboardBox.Components;
 /// Used for big cardboard box entities.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class CardboardBoxComponent : Component
+public sealed partial class CardboardBoxComponent : Component
 {
     /// <summary>
     /// The person in control of this box

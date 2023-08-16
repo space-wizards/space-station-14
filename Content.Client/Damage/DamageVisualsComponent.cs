@@ -3,7 +3,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Client.Damage;
 
 [RegisterComponent]
-public sealed class DamageVisualsComponent : Component
+public sealed partial class DamageVisualsComponent : Component
 {
     /// <summary>
     ///     Damage thresholds between damage state changes.
@@ -128,7 +128,7 @@ public sealed class DamageVisualsComponent : Component
 // deals with the edge case of human damage visuals not
 // being in color without making a Dict<Dict<Dict<Dict<Dict<Dict...
 [DataDefinition]
-public sealed class DamageVisualizerSprite
+public sealed partial class DamageVisualizerSprite
 {
     /// <summary>
     ///     The RSI path for the damage visualizer

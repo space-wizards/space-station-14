@@ -7,7 +7,7 @@ namespace Content.Server.Tabletop.Components
     /// A component that makes an object playable as a tabletop game.
     /// </summary>
     [RegisterComponent, Access(typeof(TabletopSystem))]
-    public sealed class TabletopGameComponent : Component
+    public sealed partial class TabletopGameComponent : Component
     {
         /// <summary>
         /// The localized name of the board. Shown in the UI.

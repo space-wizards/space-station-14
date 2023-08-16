@@ -6,7 +6,7 @@ namespace Content.Shared.Construction.NodeEntities;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class StaticNodeEntity : IGraphNodeEntity
+public sealed partial class StaticNodeEntity : IGraphNodeEntity
 {
     [DataField("id", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]

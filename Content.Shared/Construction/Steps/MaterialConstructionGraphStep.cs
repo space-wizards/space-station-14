@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
+    public sealed partial class MaterialConstructionGraphStep : EntityInsertConstructionGraphStep
     {
         // TODO: Make this use the material system.
         // TODO TODO: Make the material system not shit.

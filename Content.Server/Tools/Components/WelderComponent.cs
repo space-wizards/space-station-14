@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tools.Components
 {
     [RegisterComponent]
-    public sealed class WelderComponent : SharedWelderComponent
+    public sealed partial class WelderComponent : SharedWelderComponent
     {
         /// <summary>
         ///     Solution on the entity that contains the fuel.

@@ -4,7 +4,7 @@ namespace Content.Shared.Eye.Blinding.Components;
 /// For welding masks, sunglasses, etc.
 /// </summary>
 [RegisterComponent]
-public sealed class EyeProtectionComponent : Component
+public sealed partial class EyeProtectionComponent : Component
 {
     /// <summary>
     /// How many seconds to subtract from the status effect. If it's greater than the source

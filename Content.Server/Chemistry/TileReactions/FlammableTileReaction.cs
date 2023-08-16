@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.TileReactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class FlammableTileReaction : ITileReaction
+    public sealed partial class FlammableTileReaction : ITileReaction
     {
         [DataField("temperatureMultiplier")] private float _temperatureMultiplier = 1.15f;
 

@@ -11,7 +11,7 @@ namespace Content.Server.Construction.Conditions
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class MachineFrameComplete : IGraphCondition
+    public sealed partial class MachineFrameComplete : IGraphCondition
     {
         [DataField("guideIconBoard")]
         public SpriteSpecifier? GuideIconBoard { get; }

@@ -6,7 +6,7 @@ namespace Content.Server.Mind.Components
     ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
     /// </summary>
     [RegisterComponent, Access(typeof(MindSystem))]
-    public sealed class MindContainerComponent : Component
+    public sealed partial class MindContainerComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.

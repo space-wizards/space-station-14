@@ -3,7 +3,7 @@ using System.Numerics;
 namespace Content.Client.Paper;
 
 [RegisterComponent]
-public sealed class PaperVisualsComponent : Component
+public sealed partial class PaperVisualsComponent : Component
 {
     /// <summary>
     ///     The path to the image which will be used as a background for the paper itself

@@ -7,7 +7,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Climbing
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class ClimbableComponent : Component
+    public sealed partial class ClimbableComponent : Component
     {
         /// <summary>
         ///     The range from which this entity can be climbed.

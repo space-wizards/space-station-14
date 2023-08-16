@@ -6,7 +6,7 @@ namespace Content.Shared.DoAfter;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedDoAfterSystem))]
-public sealed class DoAfterComponent : Component
+public sealed partial class DoAfterComponent : Component
 {
     [DataField("nextId")]
     public ushort NextId;

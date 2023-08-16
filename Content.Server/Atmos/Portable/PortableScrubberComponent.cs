@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Portable
 {
     [RegisterComponent]
-    public sealed class PortableScrubberComponent : Component
+    public sealed partial class PortableScrubberComponent : Component
     {
         /// <summary>
         /// The air inside this machine.

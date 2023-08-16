@@ -9,7 +9,7 @@ namespace Content.Shared.Light
     [NetworkedComponent]
     [RegisterComponent]
     [Access(typeof(SharedHandheldLightSystem))]
-    public sealed class HandheldLightComponent : Robust.Shared.GameObjects.Component
+    public sealed partial class HandheldLightComponent : Robust.Shared.GameObjects.Component
     {
         public byte? Level;
         public bool Activated;

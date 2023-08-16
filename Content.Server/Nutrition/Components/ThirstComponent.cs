@@ -14,7 +14,7 @@ namespace Content.Server.Nutrition.Components
     }
 
     [RegisterComponent]
-    public sealed class ThirstComponent : Component
+    public sealed partial class ThirstComponent : Component
     {
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]

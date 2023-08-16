@@ -10,7 +10,7 @@ namespace Content.Server.Radio.Components;
 ///     radio headset).
 /// </summary>
 [RegisterComponent]
-public sealed class IntrinsicRadioTransmitterComponent : Component
+public sealed partial class IntrinsicRadioTransmitterComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public readonly HashSet<string> Channels = new() { SharedChatSystem.CommonChannel };

@@ -6,7 +6,7 @@ namespace Content.Server.Station.Components;
 /// This is used for setting up a station's name.
 /// </summary>
 [RegisterComponent]
-public sealed class StationNameSetupComponent : Component
+public sealed partial class StationNameSetupComponent : Component
 {
     /// <summary>
     /// The name template to use for the station.

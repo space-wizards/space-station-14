@@ -14,7 +14,7 @@ using static Content.Shared.Humanoid.HumanoidAppearanceState;
 namespace Content.Shared.Zombies;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ZombieComponent : Component
+public sealed partial class ZombieComponent : Component
 {
     /// <summary>
     /// The baseline infection chance you have if you are completely nude

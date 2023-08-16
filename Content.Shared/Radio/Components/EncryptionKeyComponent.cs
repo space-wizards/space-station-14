@@ -9,7 +9,7 @@ namespace Content.Shared.Radio.Components;
 ///     It should be used for intercoms and other radios in future.
 /// </summary>
 [RegisterComponent]
-public sealed class EncryptionKeyComponent : Component
+public sealed partial class EncryptionKeyComponent : Component
 {
     [DataField("channels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public HashSet<string> Channels = new();

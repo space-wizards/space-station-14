@@ -674,7 +674,7 @@ namespace Content.Shared.Chemistry.Components
 
         [Serializable, NetSerializable]
         [DataDefinition]
-        public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
+        public readonly partial struct ReagentQuantity: IComparable<ReagentQuantity>
         {
             [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
             public readonly string ReagentId;

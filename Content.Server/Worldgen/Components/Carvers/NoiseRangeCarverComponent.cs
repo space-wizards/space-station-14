@@ -10,7 +10,7 @@ namespace Content.Server.Worldgen.Components.Carvers;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(NoiseRangeCarverSystem))]
-public sealed class NoiseRangeCarverComponent : Component
+public sealed partial class NoiseRangeCarverComponent : Component
 {
     /// <summary>
     ///     The noise channel to use as a density controller.

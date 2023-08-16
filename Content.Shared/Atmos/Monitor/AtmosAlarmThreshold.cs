@@ -27,7 +27,7 @@ public sealed class AtmosAlarmThresholdPrototype : IPrototype
 }
 
 [Serializable, NetSerializable, DataDefinition]
-public sealed class AtmosAlarmThreshold
+public sealed partial class AtmosAlarmThreshold
 {
     [DataField("ignore")]
     public bool Ignore;
@@ -256,7 +256,7 @@ public sealed class AtmosAlarmThreshold
 }
 
 [DataDefinition, Serializable]
-public readonly struct AlarmThresholdSetting
+public readonly partial struct AlarmThresholdSetting
 {
     [DataField("enabled")]
     public bool Enabled { get; init; } = true;

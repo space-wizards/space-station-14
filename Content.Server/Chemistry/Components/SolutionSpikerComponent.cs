@@ -1,7 +1,7 @@
 namespace Content.Server.Chemistry.Components;
 
 [RegisterComponent]
-public sealed class SolutionSpikerComponent : Component
+public sealed partial class SolutionSpikerComponent : Component
 {
     /// <summary>
     ///     The source solution to take the reagents from in order

@@ -15,7 +15,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Anomalies and their related components were designed here: https://hackmd.io/@ss14-design/r1sQbkJOs
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalyComponent : Component
+public sealed partial class AnomalyComponent : Component
 {
     /// <summary>
     /// How likely an anomaly is to grow more dangerous. Moves both up and down.

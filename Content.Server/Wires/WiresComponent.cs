@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Wires;
 
 [RegisterComponent]
-public sealed class WiresComponent : Component
+public sealed partial class WiresComponent : Component
 {
     /// <summary>
     ///     The name of this entity's internal board.

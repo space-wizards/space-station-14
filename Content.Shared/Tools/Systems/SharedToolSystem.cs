@@ -197,7 +197,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     #region DoAfterEvents
 
     [Serializable, NetSerializable]
-    protected sealed class ToolDoAfterEvent : DoAfterEvent
+    protected sealed partial class ToolDoAfterEvent : DoAfterEvent
     {
         /// <summary>
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
@@ -233,7 +233,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class LatticeCuttingCompleteEvent : DoAfterEvent
+    protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
         public readonly EntityCoordinates Coordinates;
@@ -251,7 +251,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    protected sealed class TilePryingDoAfterEvent : DoAfterEvent
+    protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
         public readonly EntityCoordinates Coordinates;
@@ -270,7 +270,7 @@ public abstract partial class SharedToolSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class CableCuttingFinishedEvent : SimpleDoAfterEvent
+public sealed partial class CableCuttingFinishedEvent : SimpleDoAfterEvent
 {
 }
 

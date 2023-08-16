@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Spawners.Components;
 
 [RegisterComponent]
-public sealed class SpawnPointComponent : Component
+public sealed partial class SpawnPointComponent : Component
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

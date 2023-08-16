@@ -8,7 +8,7 @@ namespace Content.Server.StationEvents.Components;
 ///     Solar Flare event specific configuration
 /// </summary>
 [RegisterComponent, Access(typeof(SolarFlareRule))]
-public sealed class SolarFlareRuleComponent : Component
+public sealed partial class SolarFlareRuleComponent : Component
 {
     /// <summary>
     ///     If true, only headsets affected, but e.g. handheld radio will still work

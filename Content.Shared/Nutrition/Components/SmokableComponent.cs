@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Nutrition.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class SmokableComponent : Component
+    public sealed partial class SmokableComponent : Component
     {
         [DataField("solution")]
         public string Solution { get; } = "smokable";

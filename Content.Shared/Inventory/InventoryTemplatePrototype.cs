@@ -13,7 +13,7 @@ public sealed class InventoryTemplatePrototype : IPrototype
 }
 
 [DataDefinition]
-public sealed class SlotDefinition
+public sealed partial class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; } = string.Empty;
     [DataField("slotTexture")] public string TextureName { get; } = "pocket";

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(VentClogRule))]
-public sealed class VentClogRuleComponent : Component
+public sealed partial class VentClogRuleComponent : Component
 {
     /// <summary>
     /// Somewhat safe chemicals to put in foam that probably won't instantly kill you.

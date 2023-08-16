@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Repairable
 {
     [RegisterComponent]
-    public sealed class RepairableComponent : Component
+    public sealed partial class RepairableComponent : Component
     {
         /// <summary>
         ///     All the damage to change information is stored in this <see cref="DamageSpecifier"/>.

@@ -11,7 +11,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// in order to analyze artifacts and extract points.
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactAnalyzerComponent : Component
+public sealed partial class ArtifactAnalyzerComponent : Component
 {
     /// <summary>
     /// How long it takes to analyze an artifact

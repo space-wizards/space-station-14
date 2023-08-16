@@ -9,7 +9,7 @@ namespace Content.Shared.Lock;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(LockSystem))]
-public sealed class LockComponent : Component
+public sealed partial class LockComponent : Component
 {
     /// <summary>
     /// Whether or not the lock is locked.

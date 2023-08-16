@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Magic.Events;
 
-public sealed class TeleportSpellEvent : WorldTargetActionEvent, ISpeakSpell
+public sealed partial class TeleportSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
     [DataField("blinkSound")]
     public SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/Magic/blink.ogg");

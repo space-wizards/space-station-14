@@ -36,7 +36,7 @@ public sealed class CargoBountyPrototype : IPrototype
 }
 
 [DataDefinition, Serializable, NetSerializable]
-public readonly record struct CargoBountyItemEntry()
+public readonly partial record struct CargoBountyItemEntry()
 {
     /// <summary>
     /// A whitelist for determining what items satisfy the entry.

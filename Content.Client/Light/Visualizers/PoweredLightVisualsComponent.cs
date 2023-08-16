@@ -5,7 +5,7 @@ namespace Content.Client.Light.Visualizers;
 
 [RegisterComponent]
 [Access(typeof(PoweredLightVisualizerSystem))]
-public sealed class PoweredLightVisualsComponent : Component
+public sealed partial class PoweredLightVisualsComponent : Component
 {
     /// <summary>
     /// A map of the sprite states used by this visualizer indexed by the light state they correspond to.

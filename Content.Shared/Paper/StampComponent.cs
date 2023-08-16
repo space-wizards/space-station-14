@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.Paper
 {
     [RegisterComponent]
-    public sealed class StampComponent : Component
+    public sealed partial class StampComponent : Component
     {
         /// <summary>
         ///     The loc string name that will be stamped to the piece of paper on examine.

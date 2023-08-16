@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Magic.Events;
 
-public sealed class KnockSpellEvent : InstantActionEvent, ISpeakSpell
+public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
 {
     /// <summary>
     /// The range this spell opens doors in

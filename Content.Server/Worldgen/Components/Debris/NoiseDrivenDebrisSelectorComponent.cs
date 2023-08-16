@@ -12,7 +12,7 @@ namespace Content.Server.Worldgen.Components.Debris;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(NoiseDrivenDebrisSelectorSystem))]
-public sealed class NoiseDrivenDebrisSelectorComponent : Component
+public sealed partial class NoiseDrivenDebrisSelectorComponent : Component
 {
     private EntitySpawnCollectionCache? _cache;
 

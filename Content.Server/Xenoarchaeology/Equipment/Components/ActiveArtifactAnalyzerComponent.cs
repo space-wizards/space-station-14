@@ -1,5 +1,4 @@
-﻿using Robust.Shared.Audio;
-using Robust.Shared.Serialization.TypeSerializers.Implementations;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Components;
 
@@ -8,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// in the process of scanning an artifact.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveArtifactAnalyzerComponent : Component
+public sealed partial class ActiveArtifactAnalyzerComponent : Component
 {
     /// <summary>
     /// When did the scanning start?

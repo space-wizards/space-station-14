@@ -32,7 +32,7 @@ namespace Content.Shared.AirlockPainter
     }
 
     [Serializable, NetSerializable]
-    public sealed class AirlockPainterDoAfterEvent : DoAfterEvent
+    public sealed partial class AirlockPainterDoAfterEvent : DoAfterEvent
     {
         [DataField("sprite", required: true)]
         public readonly string Sprite = default!;

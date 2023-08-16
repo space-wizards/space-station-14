@@ -4,7 +4,7 @@ using Content.Shared.Storage;
 
 namespace Content.Server.Magic.Events;
 
-public sealed class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
+public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
     // TODO:This class needs combining with InstantSpawnSpellEvent
 

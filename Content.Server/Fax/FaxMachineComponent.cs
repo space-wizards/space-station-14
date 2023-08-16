@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Fax;
 
 [RegisterComponent]
-public sealed class FaxMachineComponent : Component
+public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
     /// Name with which the fax will be visible to others on the network
@@ -121,7 +121,7 @@ public sealed class FaxMachineComponent : Component
 }
 
 [DataDefinition]
-public sealed class FaxPrintout
+public sealed partial class FaxPrintout
 {
     [DataField("name", required: true)]
     public string Name { get; } = default!;

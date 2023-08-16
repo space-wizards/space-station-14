@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Lathe
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class LatheComponent : Component
+    public sealed partial class LatheComponent : Component
     {
         /// <summary>
         /// All of the recipes that the lathe has by default

@@ -54,7 +54,7 @@ namespace Content.Shared.Storage.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(SharedItemMapperSystem))]
-    public sealed class ItemMapperComponent : Component
+    public sealed partial class ItemMapperComponent : Component
     {
         [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
 

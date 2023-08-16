@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Stacks
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class StackComponent : Component
+    public sealed partial class StackComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("stackType", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<StackPrototype>))]
@@ -39,7 +39,7 @@ namespace Content.Shared.Stacks
 
         [ViewVariables]
         public bool UiUpdateNeeded { get; set; }
-    
+
         /// <summary>
         /// Default IconLayer stack.
         /// </summary>

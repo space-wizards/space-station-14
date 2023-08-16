@@ -1,13 +1,13 @@
 using Content.Shared.Construction;
-using JetBrains.Annotations;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
+using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DoorBolted : IGraphCondition
+    public sealed partial class DoorBolted : IGraphCondition
     {
         [DataField("value")]
         public bool Value { get; private set; } = true;

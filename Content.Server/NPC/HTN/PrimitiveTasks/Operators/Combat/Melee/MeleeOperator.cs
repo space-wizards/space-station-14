@@ -10,7 +10,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Melee;
 /// <summary>
 /// Attacks the specified key in melee combat.
 /// </summary>
-public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class MeleeOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 

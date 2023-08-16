@@ -5,7 +5,7 @@ namespace Content.Shared.Standing
 {
     [Access(typeof(StandingStateSystem))]
     [RegisterComponent, NetworkedComponent]
-    public sealed class StandingStateComponent : Component
+    public sealed partial class StandingStateComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSound")]

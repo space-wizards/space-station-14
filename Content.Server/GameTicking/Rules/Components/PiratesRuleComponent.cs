@@ -3,7 +3,7 @@
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(PiratesRuleSystem))]
-public sealed class PiratesRuleComponent : Component
+public sealed partial class PiratesRuleComponent : Component
 {
     [ViewVariables]
     public List<Mind.Mind> Pirates = new();

@@ -6,7 +6,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SetStackCount : IGraphAction
+    public sealed partial class SetStackCount : IGraphAction
     {
         [DataField("amount")] public int Amount { get; } = 1;
 

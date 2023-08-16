@@ -9,7 +9,7 @@ namespace Content.Shared.Cargo;
 /// A data structure for storing currently available bounties.
 /// </summary>
 [DataDefinition, NetSerializable, Serializable]
-public readonly record struct CargoBountyData(int Id, string Bounty, TimeSpan EndTime)
+public readonly partial record struct CargoBountyData(int Id, string Bounty, TimeSpan EndTime)
 {
     /// <summary>
     /// A numeric id used to identify the bounty

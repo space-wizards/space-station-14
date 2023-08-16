@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameStates;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class MachineBoardComponent : Component
+    public sealed partial class MachineBoardComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
@@ -42,7 +43,7 @@ namespace Content.Shared.Construction.Components
 
     [Serializable]
     [DataDefinition]
-    public struct GenericPartInfo
+    public partial struct GenericPartInfo
     {
         [DataField("Amount")]
         public int Amount;
@@ -50,5 +51,9 @@ namespace Content.Shared.Construction.Components
         public string ExamineName;
         [DataField("DefaultPrototype")]
         public string DefaultPrototype;
+
+#pragma warning disable CS8618
+        public GenericPartInfo() {}
+#pragma warning restore CS8618
     }
 }

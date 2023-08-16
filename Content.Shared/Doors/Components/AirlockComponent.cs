@@ -11,7 +11,7 @@ namespace Content.Shared.Doors.Components;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedAirlockSystem), Friend = AccessPermissions.ReadWriteExecute, Other = AccessPermissions.Read)]
-public sealed class AirlockComponent : Component
+public sealed partial class AirlockComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("safety")]

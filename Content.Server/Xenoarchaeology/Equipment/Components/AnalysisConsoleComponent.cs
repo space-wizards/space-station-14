@@ -9,7 +9,7 @@ namespace Content.Server.Xenoarchaeology.Equipment.Components;
 /// The console that is used for artifact analysis
 /// </summary>
 [RegisterComponent]
-public sealed class AnalysisConsoleComponent : Component
+public sealed partial class AnalysisConsoleComponent : Component
 {
     /// <summary>
     /// The analyzer entity the console is linked.
