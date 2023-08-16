@@ -21,10 +21,12 @@ public abstract class ToolshedTest : IInvocationContext
 
     protected RobustIntegrationTest.ServerIntegrationInstance Server = default!;
     protected RobustIntegrationTest.ClientIntegrationInstance? Client = null;
-    protected ToolshedManager Toolshed = default!;
+    public ToolshedManager Toolshed { get; private set; } = default!;
+    public ToolshedEnvironment Environment => Toolshed.DefaultEnvironment;
+
     protected IAdminManager AdminManager = default!;
 
-    protected IInvocationContext? Context = null;
+    protected IInvocationContext? InvocationContext = null;
 
     [TearDown]
     public virtual async Task TearDown()
@@ -70,9 +72,9 @@ public abstract class ToolshedTest : IInvocationContext
 
     public bool CheckInvokable(CommandSpec command, out IConError? error)
     {
-        if (Context is not null)
+        if (InvocationContext is not null)
         {
-            return Context.CheckInvokable(command, out error);
+            return InvocationContext.CheckInvokable(command, out error);
         }
 
         error = null;
@@ -85,9 +87,9 @@ public abstract class ToolshedTest : IInvocationContext
     {
         get
         {
-            if (Context is not null)
+            if (InvocationContext is not null)
             {
-                return Context.Session;
+                return InvocationContext.Session;
             }
 
             return InvocationSession;

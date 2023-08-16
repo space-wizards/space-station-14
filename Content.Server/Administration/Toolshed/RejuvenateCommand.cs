@@ -1,18 +1,13 @@
 ﻿using Content.Server.Administration.Systems;
-using Content.Server.Administration.Toolshed.Attributes;
 using Content.Shared.Administration;
-using Content.Shared.Database;
-using Content.Shared.Verbs;
 using Robust.Shared.Toolshed;
+using Robust.Shared.Toolshed.Errors;
 
 namespace Content.Server.Administration.Toolshed;
 
-[ToolshedCommand, AdminCommand(AdminFlags.Admin)]
-public sealed class RejuvenateCommand : ToolshedCommand, ICommandAsVerb
+[ToolshedCommand, AdminCommand(AdminFlags.Debug)]
+public sealed class RejuvenateCommand : ToolshedCommand
 {
-    public VerbCategory Category => VerbCategory.Debug;
-    public LogImpact Impact => LogImpact.Medium;
-
     private RejuvenateSystem? _rejuvenate;
 
     [CommandImplementation]
@@ -27,7 +22,18 @@ public sealed class RejuvenateCommand : ToolshedCommand, ICommandAsVerb
         }
     }
 
-
-
-
+    [CommandImplementation]
+    public void Rejuvenate([CommandInvocationContext] IInvocationContext ctx)
+    {
+        _rejuvenate ??= GetSys<RejuvenateSystem>();
+        if (ExecutingEntity(ctx) is not { } ent)
+        {
+            if (ctx.Session is {} session)
+                ctx.ReportError(new SessionHasNoEntityError(session));
+            else
+                ctx.ReportError(new NotForServerConsoleError());
+        }
+        else
+            _rejuvenate.PerformRejuvenate(ent);
+    }
 }

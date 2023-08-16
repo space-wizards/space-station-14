@@ -217,7 +217,7 @@ namespace Content.Server.Administration.Systems
             var player = actor.PlayerSession;
 
             // Delete verb
-            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.GetCommand("delete"), null), player, out _) ?? false)
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("delete"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
@@ -232,7 +232,7 @@ namespace Content.Server.Administration.Systems
             }
 
             // Rejuvenate verb
-            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.GetCommand("rejuvenate"), null), player, out _) ?? false)
+            if (_toolshed.ActivePermissionController?.CheckInvokable(new CommandSpec(_toolshed.DefaultEnvironment.GetCommand("rejuvenate"), null), player, out _) ?? false)
             {
                 Verb verb = new()
                 {
