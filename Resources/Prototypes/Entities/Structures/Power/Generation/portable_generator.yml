@@ -95,12 +95,19 @@
       layers:
         - state: portgen0
           map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen_on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
     - type: GenericVisualizer
       visuals:
         enum.GeneratorVisuals.Running:
           enum.GeneratorVisualLayers.Body:
             True: { state: portgen0on }
             False: { state: portgen0 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
 
     - type: Machine
       board: GeneratorPlasmaMachineCircuitboard
@@ -122,12 +129,19 @@
       layers:
         - state: portgen1
           map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen_on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
     - type: GenericVisualizer
       visuals:
         enum.GeneratorVisuals.Running:
           enum.GeneratorVisualLayers.Body:
             True: { state: portgen1on }
             False: { state: portgen1 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
 
     - type: Machine
       board: GeneratorUraniumMachineCircuitboard
@@ -170,12 +184,19 @@
       layers:
         - state: portgen3
           map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen3on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
     - type: GenericVisualizer
       visuals:
         enum.GeneratorVisuals.Running:
           enum.GeneratorVisualLayers.Body:
-            True: { state: portgen2on }
+            True: { state: portgen3on }
             False: { state: portgen3 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
 
     - type: Machine
       board: GeneratorUraniumMachineCircuitboard

@@ -117,6 +117,7 @@ public enum GeneratorComponentUiKey
 public enum GeneratorVisualLayers : byte
 {
     Body,
+    Unlit
 }
 
 /// <summary>
