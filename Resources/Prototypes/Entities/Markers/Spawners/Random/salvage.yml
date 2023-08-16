@@ -20,6 +20,20 @@
         - CrateSalvageEquipment
         - CrateMaterialSteel
         - CrateMaterialGlass
+        - CrateServiceJanitorialSupplies
+        - CrateHydroponicsSeedsMedicinal
+        - CrateVendingMachineRestockBooze
+        - CrateEmergencyInternals
+        - CrateFoodMRE
+        - CrateMaterialTextiles
+        - CrateMedicalSupplies
+        - CrateEngineeringCableBulk
+        - CrateMaterialCardboard
+        - CrateServiceBooks
+        - CrateServiceSmokeables
+        - CrateTrashCartFilled
+        - ClosetMaintenanceFilledRandom
+        - ClosetEmergencyFilledRandom
       rareChance: 0.4
       prototypes:
         - CrateSalvageAssortedGoodies
