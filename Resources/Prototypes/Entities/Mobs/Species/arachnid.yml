@@ -48,6 +48,8 @@
       Male: UnisexArachnid
       Female: UnisexArachnid
       Unsexed: UnisexArachnid
+  - type: TypingIndicator
+    proto: spider
   - type: Sprite
     noRot: true
     drawdepth: Mobs
