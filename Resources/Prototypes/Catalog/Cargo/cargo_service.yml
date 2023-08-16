@@ -116,4 +116,24 @@
   product: CrateJanitorBiosuit
   cost: 800
   category: Service
+  group: market  
+
+- type: cargoProduct
+  id: ServiceFoodCartHot
+  icon:
+    sprite: Objects/Specific/Kitchen/food_carts.rsi
+    state: icon-hot
+  product: FoodCartHot
+  cost: 2000
+  category: Service
+  group: market  
+
+- type: cargoProduct
+  id: ServiceFoodCartCold
+  icon:
+    sprite: Objects/Specific/Kitchen/food_carts.rsi
+    state: icon-cold
+  product: FoodCartCold
+  cost: 2000
+  category: Service
   group: market

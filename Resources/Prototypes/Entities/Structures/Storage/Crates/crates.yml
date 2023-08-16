@@ -338,7 +338,7 @@
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
-    capacity: 500
+    capacity: 1
     airtight: false
   - type: Fixtures
     fixtures:
