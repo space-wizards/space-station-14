@@ -110,6 +110,8 @@
     productionLength: 3
     entityProduced: MaterialWebSilk1
     hungerCost: 5
+  - type: Inventory
+    templateId: arachnid
   - type: Butcherable
     butcheringType: Spike
     spawned:

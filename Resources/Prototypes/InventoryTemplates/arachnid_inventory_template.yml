@@ -61,26 +61,14 @@
       uiWindowPos: 1,0
       strippingWindowPos: 1,0
       displayName: Head
-    - name: pocket1
-      slotTexture: pocket
-      slotFlags: POCKET
-      slotGroup: MainHotbar
+    - name: suitstorage
+      slotTexture: suit_storage
+      slotFlags:   SUITSTORAGE
       stripTime: 3
-      uiWindowPos: 0,3
-      strippingWindowPos: 0,4
-      dependsOn: jumpsuit
-      displayName: Pocket 1
-      stripHidden: true
-    - name: pocket2
-      slotTexture: pocket
-      slotFlags: POCKET
-      slotGroup: MainHotbar
-      stripTime: 3
-      uiWindowPos: 2,3
-      strippingWindowPos: 1,4
-      dependsOn: jumpsuit
-      displayName: Pocket 2
-      stripHidden: true
+      uiWindowPos: 2,0
+      strippingWindowPos: 2,5
+      dependsOn: outerClothing
+      displayName: Suit Storage
     - name: id
       slotTexture: id
       slotFlags: IDCARD
@@ -93,7 +81,7 @@
     - name: belt
       slotTexture: belt
       slotFlags: BELT
-      slotGroup: SecondHotbar
+      slotGroup: MainHotbar
       stripTime: 6
       uiWindowPos: 3,1
       strippingWindowPos: 1,5
@@ -106,17 +94,3 @@
       uiWindowPos: 3,0
       strippingWindowPos: 0,5
       displayName: Back
-    - name: web1
-      slotTexture: web
-      slotFlags: POCKET
-      stripTime: 3
-      uiWindowPos: 0,3
-      strippingWindowPos: 0,3
-      displayName: Left Web
-    - name: web2
-      slotTexture: web
-      slotFlags: POCKET
-      stripTime: 3
-      uiWindowPos: 6,3
-      strippingWindowPos: 2,3
-      displayName: Right Web
