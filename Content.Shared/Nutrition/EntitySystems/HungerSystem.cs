@@ -200,6 +200,17 @@ public sealed class HungerSystem : EntitySystem
         return result;
     }
 
+    /// <summary>
+    /// A check that returns if the entity is below a hunger threshold.
+    /// </summary>
+    public bool IsHungerBelowState(EntityUid uid, HungerThreshold threshold, HungerComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return false; // Probably doesn't need this check if it can't starve anyways.
+
+        return GetHungerThreshold(comp) < threshold;
+    }
+
     private bool GetMovementThreshold(HungerThreshold threshold)
     {
         switch (threshold)
