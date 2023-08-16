@@ -23,8 +23,9 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new OrganSlot(slotId)
+        var slot = new OrganSlot()
         {
+            Id = slotId,
             Parent = parent,
             NetParent = ToNetEntity(parent),
         };

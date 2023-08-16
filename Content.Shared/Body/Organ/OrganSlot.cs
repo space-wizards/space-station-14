@@ -5,15 +5,21 @@ namespace Content.Shared.Body.Organ;
 
 [Serializable, NetSerializable]
 [Access(typeof(SharedBodySystem))]
-[DataRecord]
-public sealed record OrganSlot(string Id)
+[DataDefinition]
+public sealed record OrganSlot
 {
+    [DataField("id")]
+    public string Id = string.Empty;
+
     [NonSerialized]
+    [DataField("parent")]
     public EntityUid Parent;
 
     public NetEntity NetParent;
 
-    [NonSerialized] public EntityUid? Child;
+    [NonSerialized]
+    [DataField("child")]
+    public EntityUid? Child;
 
     public NetEntity? NetChild;
 

@@ -5,15 +5,23 @@ namespace Content.Shared.Body.Part;
 
 [Serializable, NetSerializable]
 [Access(typeof(SharedBodySystem))]
-[DataRecord]
-public sealed record BodyPartSlot(string Id, BodyPartType? Type)
+[DataDefinition]
+public sealed record BodyPartSlot
 {
+    [DataField("id")]
+    public string Id = string.Empty;
+
+    [DataField("type")]
+    public BodyPartType? Type;
+
     [NonSerialized]
+    [DataField("parent")]
     public EntityUid Parent;
 
     public NetEntity NetParent;
 
     [NonSerialized]
+    [DataField("child")]
     public EntityUid? Child;
 
     public NetEntity? NetChild;

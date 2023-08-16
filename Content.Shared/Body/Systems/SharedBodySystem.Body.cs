@@ -72,8 +72,9 @@ public partial class SharedBodySystem
             body.Root != null)
             return false;
 
-        slot = new BodyPartSlot(slotId, null)
+        slot = new BodyPartSlot
         {
+            Id = slotId,
             Parent = bodyId.Value,
             NetParent = ToNetEntity(bodyId.Value),
         };
@@ -90,8 +91,10 @@ public partial class SharedBodySystem
             return;
         var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
         var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, partComponent.PartType)
+        var slot = new BodyPartSlot
         {
+            Id = root.Part,
+            Type = partComponent.PartType,
             Parent = body.Owner,
             NetParent = ToNetEntity(body.Owner),
         };

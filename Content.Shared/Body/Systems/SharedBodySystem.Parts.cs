@@ -73,8 +73,10 @@ public partial class SharedBodySystem
         if (!Resolve(parent, ref part, false))
             return null;
 
-        var slot = new BodyPartSlot(slotId, partType)
+        var slot = new BodyPartSlot
         {
+            Id = slotId,
+            Type = partType,
             Parent = parent,
             NetParent = ToNetEntity(parent),
         };
@@ -95,8 +97,9 @@ public partial class SharedBodySystem
             !Resolve(parentId.Value, ref parent, false))
             return false;
 
-        slot = new BodyPartSlot(id, null)
+        slot = new BodyPartSlot
         {
+            Id = id,
             Parent = parentId.Value,
             NetParent = ToNetEntity(parentId.Value),
         };
