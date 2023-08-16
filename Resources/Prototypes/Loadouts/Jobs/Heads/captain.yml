@@ -1,0 +1,114 @@
+- type: loadout
+  id: LoadoutCommandCapNeckMantle
+  name: Captain Mantle
+  description: To show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckMantleCap
+
+- type: loadout
+  id: LoadoutCommandCapNeckCloak
+  name: Captain Cloak
+  description: To really show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckCloakCap
+
+- type: loadout
+  id: LoadoutCommandCapNeckCloakFormal
+  name: Captain Formal Cloak
+  description: More than just to show who has the authority, it also shows who has the greatest fashion sense.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingNeckCloakCapFormal
+
+- type: loadout
+  id: LoadoutCommandCapJumpsuitFormal
+  name: Captain Formal Jumpsuit
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingUniformJumpsuitCapFormal
+
+- type: loadout
+  id: LoadoutCommandCapJumpskirtFormal
+  name: Captain Formal Dress
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - Captain
+  item: ClothingUniformJumpskirtCapFormalDress
+
+- type: loadout
+  id: LoadoutCommandCapOuterWinter
+  name: Captain Winter Coat
+  description: A warm coat for the cold of space.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - Captain
+  item: ClothingOuterWinterCap
+
+- type: loadout
+  id: LoadoutCommandCapGloves
+  name: Captain Gloves
+  description: The gloves of the captain. They are very nice gloves.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHandsGlovesCaptain
+
+- type: loadout
+  id: LoadoutCommandCapHat
+  name: Captain Hat
+  description: The hat of the captain. It is a very nice hat.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHeadHatCaptain
+
+- type: loadout
+  id: LoadoutCommandCapHatCapcap
+  name: Cap cap
+  description: The Captain's cap, pretty nice.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingHeadHatCapcap
+
+- type: loadout
+  id: LoadoutCommandCapMaskGas
+  name: Captain Gas Mask
+  description: Why would the captain need this? I don't know, but it looks cool.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: ClothingMaskGasCaptain
+
+- type: loadout
+  id: LoadoutCommandCapItemDrinkFlask
+  name: Captain Flask
+  description: The finest of flasks, for the finest of drinks.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Captain
+  item: DrinkFlask

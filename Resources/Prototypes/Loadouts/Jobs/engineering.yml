@@ -1,0 +1,139 @@
+- type: loadout
+  id: LoadoutEngineeringUniformHazard
+  name: Engineering hazard suit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+  item: ClothingUniformJumpsuitEngineeringHazard
+
+- type: loadout
+  id: LoadoutEngineeringOuterHazard
+  name: Engineering hazard vest
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+  item: ClothingOuterVestHazard
+
+- type: loadout
+  id: LoadoutEngineeringOuterChickenSuit
+  name: Eggmospheric Technician Suit
+  description: For the Eggmos tech who always knows where home is...
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - AtmosphericTechnician # :)
+  item: ClothingOuterSuitChicken
+
+- type: loadout
+  id: LoadoutEngineeringHeadChicken
+  name: Eggmospheric Technician Helmet
+  description: For the Eggmos tech who always knows where home is...
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - AtmosphericTechnician # :)
+  item: ClothingHeadHatChickenhead
+
+- type: loadout
+  id: LoadoutEngineeringEyesMeson
+  name: Engineer goggles
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingEyesGlassesMeson
+
+- type: loadout
+  id: LoadoutEngineeringHeadBeret
+  name: Engineering Beret
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+    - ChiefEngineer
+  item: ClothingHeadHatBeretEngineering
+
+- type: loadout
+  id: LoadoutEngineeringHeadHardhatBlue
+  name: Hard hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingHeadHatHardhatBlue
+
+- type: loadout
+  id: LoadoutEngineeringHeadHardhatOrange
+  name: Hard hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingHeadHatHardhatOrange
+
+- type: loadout
+  id: LoadoutEngineeringHeadHardhatYellow
+  name: Hard hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingHeadHatHardhatYellow
+
+- type: loadout
+  id: LoadoutEngineeringHeadHardhatWhite
+  name: Hard hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingHeadHatHardhatWhite
+
+- type: loadout
+  id: LoadoutEngineeringHeadHardhatRed
+  name: Hard hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: ClothingHeadHatHardhatRed
+
+- type: loadout
+  id: LoadoutEngineeringItemInflatable
+  name: Emergency inflatable set
+  description: A box containing infaltable walls and doors, for quickly patching up breaches.
+  category: Jobs
+  cost: 4
+  jobWhitelist:
+    - StationEngineer
+    - AtmosphericTechnician
+  item: BoxInflatable

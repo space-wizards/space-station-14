@@ -1,0 +1,51 @@
+- type: loadout
+  id: LoadoutCommandCMONeckMantle
+  name: CMO Mantle
+  description: To show who has the authority around here. It seems unusually clean.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingNeckMantleCMO
+
+- type: loadout
+  id: LoadoutCommandCMONeckCloak
+  name: CMO Cloak
+  description: To really show who has the authority around here. It seems unusually clean.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingCloakCmo
+
+- type: loadout
+  id: LoadoutCommandCMOOuterWinter
+  name: CMO Winter Coat
+  description: A warm coat for the cold of space. It seems unusually clean.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingOuterWinterCMO
+
+- type: loadout
+  id: LoadoutCommandCMOOuterLab
+  name: CMO Lab Coat
+  description: A lab coat for the CMO. It seems unusually clean.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingOuterCoatLabCmo
+
+- type: loadout
+  id: LoadoutCommandCMOHatBeret
+  name: CMO Beret
+  description: A beret for the CMO. It seems unusually clean.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - ChiefMedicalOfficer
+  item: ClothingHeadHatBeretCmo

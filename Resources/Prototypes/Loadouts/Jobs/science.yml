@@ -1,0 +1,47 @@
+- type: loadout
+  id: LoadoutScienceOuterCoat
+  name: Science Lab Coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+    - ResearchAssistant
+    - ResearchDirector
+  item: ClothingOuterCoatRnd
+
+- type: loadout
+  id: LoadoutScienceOuterLabcoat
+  name: Lab coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+    - ResearchAssistant
+  item: ClothingOuterCoatLab
+
+- type: loadout
+  id: LoadoutScienceOuterLabcoatSeniorResearcher
+  name: Senior Researcher Lab Coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SeniorResearcher
+  item: ClothingOuterCoatLabSeniorResearcher
+
+- type: loadout
+  id: LoadoutScienceHatBeret
+  name: Science Beret
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - Scientist
+    - ResearchAssistant
+  item: ClothingHeadHatBeretRND

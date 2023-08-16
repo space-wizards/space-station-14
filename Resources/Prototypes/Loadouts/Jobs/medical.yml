@@ -1,0 +1,136 @@
+- type: loadout
+  id: LoadoutMedicalGlovesNitrile
+  name: Nitrile gloves
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+    - Paramedic
+    - ChiefMedicalOfficer
+  item: ClothingHandsGlovesNitrile
+
+- type: loadout
+  id: LoadoutMedicalEyesMediHUD
+  name: Medical HUD
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+    - Paramedic
+    - ChiefMedicalOfficer
+  item: ClothingEyesHudMedical
+
+- type: loadout
+  id: LoadoutMedicalOuterLabcoat
+  name: Lab coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+    - Chemist
+  item: ClothingOuterCoatLab
+
+- type: loadout
+  id: LoadoutMedicalNeckStethoscope
+  name: Stethoscope
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+    - ChiefMedicalOfficer
+  item: ClothingNeckStethoscope
+
+- type: loadout
+  id: LoadoutMedicalUniformScrubsBlue
+  name: Blue Scrubs
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  item: UniformScrubsColorBlue
+
+- type: loadout
+  id: LoadoutMedicalUniformScrubsGreen
+  name: Green Scrubs
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  item: UniformScrubsColorGreen
+
+- type: loadout
+  id: LoadoutMedicalUniformScrubsPurple
+  name: Purple Scrubs
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  item: UniformScrubsColorPurple
+
+- type: loadout
+  id: LoadoutMedicalOuterLabcoatChem
+  name: Chemist Lab Coat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Chemist
+  item: ClothingOuterCoatLabChem
+
+- type: loadout
+  id: LoadoutMedicalItemHandLabeler
+  name: Hand Labeler
+  description: An alternate job equipment.
+  category: Jobs
+  exclusive: true
+  jobWhitelist:
+    - Chemist
+  item: HandLabeler
+
+- type: loadout
+  id: LoadoutMedicalUniformParamedicJumpsuit
+  name: Paramedic Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Paramedic
+  item: ClothingUniformJumpsuitParamedic
+
+- type: loadout
+  id: LoadoutMedicalUniformParamedicJumpskirt
+  name: Paramedic jumpskirt
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Paramedic
+  item: ClothingUniformJumpskirtParamedic
+
+- type: loadout
+  id: LoadoutMedicalHeadNurse
+  name: Nurse hat
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - MedicalDoctor
+  item: ClothingHeadNurseHat

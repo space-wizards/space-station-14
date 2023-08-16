@@ -1,0 +1,175 @@
+- type: loadout
+  id: LoadoutServiceClownUniformJesterAlt
+  name: Jester suit
+  description: For the fool who knows their place.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Clown
+  item: ClothingUniformJumpsuitJesterAlt
+
+- type: loadout
+  id: LoadoutServiceClownShoesJester
+  name: Jester shoes
+  description: For the fool who knows their place.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - Clown
+  item: ClothingShoesJester
+
+- type: loadout
+  id: LoadoutServiceClownHeadJesterHatAlt
+  name: Jester hat
+  description: For the fool who knows their place.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - Clown
+  item: ClothingHeadHatJesterAlt
+
+- type: loadout
+  id: LoadoutServiceBartenderUniformPurple
+  name: Purple bartender Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Bartender
+  item: ClothingUniformJumpsuitBartenderPurple
+
+- type: loadout
+  id: LoadoutServiceBotanistUniformOveralls
+  name: Overalls
+  description: A rugged pair of overalls.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Botanist
+  item: ClothingUniformOveralls
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformBlueSuit
+  name: Blue Lawyer's suit
+  description: A suit, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpsuitLawyerBlue
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformBlueSkirt
+  name: Blue Lawyer's skirt
+  description: A skirt, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpskirtLawyerBlue
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformRedSuit
+  name: Red Lawyer's suit
+  description: A suit, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpsuitLawyerRed
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformRedSkirt
+  name: Red Lawyer's skirt
+  description: A skirt, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpskirtLawyerRed
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformPurpleSuit
+  name: Purple Lawyer's suit
+  description: A suit, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpsuitLawyerPurple
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformPurpleSkirt
+  name: Purple Lawyer's skirt
+  description: A skirt, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpskirtLawyerPurple
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformGoodSuit
+  name: Grey Lawyer's suit
+  description: A suit, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpsuitLawyerGood
+
+- type: loadout
+  id: LoadoutServiceLawyerUniformGoodSkirt
+  name: Grey Lawyer's skirt
+  description: A skirt, very legal indeed.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Lawyer
+  item: ClothingUniformJumpskirtLawyerGood
+
+- type: loadout
+  id: LoadoutServiceReporterUniformJournalist
+  name: Journalist suit
+  description: For the reporter on the case!
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Reporter
+  item: ClothingUniformJumpsuitJournalist
+
+- type: loadout
+  id: LoadoutServiceReporterUniformDetectivesuit
+  name: Hard boiled suit
+  description: Always reminds you of the one that got away...
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Reporter
+  item: ClothingUniformJumpsuitDetective
+
+- type: loadout
+  id: LoadoutServiceReporterUniformDetectiveskirt
+  name: Hard boiled skirt
+  description: Always reminds you of the one that got away...
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - Reporter
+  item: ClothingUniformJumpskirtDetective

@@ -1,0 +1,106 @@
+- type: loadout
+  id: LoadoutSecurityUniformGrey
+  name: Grey Security Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+  item: ClothingUniformJumpsuitSecGrey
+
+- type: loadout
+  id: LoadoutSecurityOuterArmorBasic
+  name: Basic Armor Vest
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 4
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SeniorOfficer
+  item: ClothingOuterArmorBasic
+
+- type: loadout
+  id: LoadoutSecurityHeadHelmetBasic
+  name: Basic Helmet
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SeniorOfficer
+  item: ClothingHeadHelmetBasic
+
+- type: loadout
+  id: LoadoutSecurityMaskGasSwat
+  name: SWAT Gas Mask
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingMaskGasSwat
+
+- type: loadout
+  id: LoadoutSecurityEyesGlasses
+  name: Security Glasses
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 1
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - SeniorOfficer
+    - Warden
+    - HeadOfSecurity
+  item: ClothingEyesGlassesSecurity
+
+- type: loadout
+  id: LoadoutSecurityEyesHud
+  name: Security HUD
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingEyesHudSecurity
+
+- type: loadout
+  id: LoadoutSecurityShoesBootsCombatFilled
+  name: Combat Boots
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - SecurityOfficer
+    - Warden
+    - HeadOfSecurity
+  item: ClothingShoesBootsCombatFilled
+
+- type: loadout
+  id: LoadoutSecurityShoesJackboots
+  name: Jackboots
+  description: A really nice, heavy, pair of black boots.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - Detective
+    - SecurityOfficer
+    - SecurityCadet
+    - Warden
+    - HeadOfSecurity
+  item: ClothingShoesBootsJack

@@ -1,0 +1,31 @@
+- type: loadout
+  id: LoadoutCommandCENeckMantle
+  name: CE Mantle
+  description: To show who has the authority around here. It seems over-engineered.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefEngineer
+  item: ClothingNeckMantleCE
+
+- type: loadout
+  id: LoadoutCommandCENeckCloak
+  name: CE Cloak
+  description: To really show who has the authority around here. It seems over-engineered.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - ChiefEngineer
+  item: ClothingNeckCloakCe
+
+- type: loadout
+  id: LoadoutCommandCEOuterWinter
+  name: CE Winter Coat
+  description: A warm coat for the cold of space. It seems over-engineered.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - ChiefEngineer
+  item: ClothingOuterWinterCE

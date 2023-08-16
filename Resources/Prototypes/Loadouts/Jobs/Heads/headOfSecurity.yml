@@ -1,0 +1,149 @@
+- type: loadout
+  id: LoadoutCommandHOSNeckMantle
+  name: HOS Mantle
+  description: To really show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingNeckMantleHOS
+
+- type: loadout
+  id: LoadoutCommandHOSNeckCloak
+  name: HOS Cloak
+  description: To truly show who has the authority around here.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingNeckCloakHos
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitAlt
+  name: HOS Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSAlt
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitBlue
+  name: HOS Blue Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSBlue
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitGrey
+  name: HOS Grey Jumpsuit
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSGrey
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitParade
+  name: HOS Parade Uniform
+  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHoSParadeMale
+
+- type: loadout
+  id: LoadoutCommandHOSJumpsuitFormal
+  name: HOS Formal Jumpsuit
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpsuitHosFormal
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtAlt
+  name: HOS Jumpskirt
+  description: An alternate job equipment.
+  category: Jobs
+  cost: 2
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHoSAlt
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtParade
+  name: HOS Parade Uniform
+  description: A fancy uniform for a fancy officer, wonder what event they mey be attending.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHoSParadeMale
+
+- type: loadout
+  id: LoadoutCommandHOSJumpskirtFormal
+  name: HOS Formal Dress
+  description: The outfit is quite fancy. I am curious where the wearer could be heading to justify such a stylish look.
+  category: Jobs
+  cost: 3
+  exclusive: true
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingUniformJumpskirtHosFormal
+
+- type: loadout
+  id: LoadoutCommandHOSOuterWinter
+  name: HOS Winter Coat
+  description: A warm coat for the cold of space.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingOuterWinterHoS
+
+- type: loadout
+  id: LoadoutCommandHOSOuterTrench
+  name: HOS Trench Coat
+  description: A trench coat for the HOS.
+  category: Jobs
+  cost: 2
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingOuterCoatHoSTrench
+
+- type: loadout
+  id: LoadoutCommandHOSHatBeret
+  name: HOS Beret
+  description: A beret for the HOS.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingHeadHatBeretHoS
+
+- type: loadout
+  id: LoadoutCommandHOSHatHoshat
+  name: HOS Hat
+  description: The HOS's hat, pretty nice.
+  category: Jobs
+  cost: 1
+  jobWhitelist:
+    - HeadOfSecurity
+  item: ClothingHeadHatHoshat
