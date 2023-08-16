@@ -6,69 +6,69 @@ using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
-namespace Content.Client.Lathe.UI
+namespace Content.Client.Lathe.UI;
+
+[GenerateTypedNameReferences]
+public sealed partial class LatheMaterialsEjectionMenu : DefaultWindow
 {
-    [GenerateTypedNameReferences]
-    public sealed partial class LatheMaterialsEjectionMenu : DefaultWindow
+    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
+    private readonly SpriteSystem _spriteSystem;
+
+    public event Action<string, int>? OnEjectPressed;
+
+    public LatheMaterialsEjectionMenu()
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        RobustXamlLoader.Load(this);
+        IoCManager.InjectDependencies(this);
+        _spriteSystem = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
+    }
 
-        private readonly SpriteSystem _spriteSystem;
+    public void PopulateMaterials(EntityUid lathe)
+    {
+        if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
+            return;
 
-        public event Action<string, int>? OnEjectPressed;
+        MaterialsList.DisposeAllChildren();
 
-        public LatheMaterialsEjectionMenu()
+        foreach (var (materialId, volume) in materials.Storage)
         {
-            RobustXamlLoader.Load(this);
-            IoCManager.InjectDependencies(this);
-            _spriteSystem = _entityManager.EntitySysManager.GetEntitySystem<SpriteSystem>();
+            if (volume <= 0)
+                continue;
+
+            if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
+                continue;
+
+            var name = Loc.GetString(material.Name);
+            int volumePerSheet = 0;
+            int maxEjectableSheets = 0;
+
+            if (material.StackEntity != null)
+            {
+                var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                name = proto.Name;
+
+                if (proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                {
+                    volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == materialId).Value;
+                    maxEjectableSheets = (int) MathF.Floor(volume / volumePerSheet);
+                }
+            }
+
+            var row = new LatheMaterialEjector(materialId, OnEjectPressed, volumePerSheet, maxEjectableSheets)
+            {
+                Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
+                ProductName = { Text = name }
+            };
+
+            MaterialsList.AddChild(row);
         }
 
-        public void PopulateMaterials(EntityUid lathe)
+        if (MaterialsList.ChildCount == 0)
         {
-            if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
-                return;
-
-            MaterialsList.DisposeAllChildren();
-
-            foreach (var (materialId, volume) in materials.Storage)
-            {
-                if (volume <= 0)
-                    continue;
-
-                if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
-                    continue;
-
-                var name = Loc.GetString(material.Name);
-                int volumePerSheet = 0;
-                int maxEjectableSheets = 0;
-
-                if (material.StackEntity != null)
-                {
-                    var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
-                    name = proto.Name;
-
-                    if (proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
-                    {
-                        volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == materialId).Value;
-                        maxEjectableSheets = (int) MathF.Floor(volume / volumePerSheet);
-                    }
-                }
-
-                var row = new LatheMaterialEjector(materialId, OnEjectPressed, volumePerSheet, maxEjectableSheets)
-                {
-                    Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
-                    ProductName = { Text = name }
-                };
-
-                MaterialsList.AddChild(row);
-            }
-
-            if (MaterialsList.ChildCount == 0)
-            {
-                Close();
-            }
+            Close();
         }
     }
 }
+
