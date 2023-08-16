@@ -51,9 +51,9 @@
       - id: UniformScrubsColorGreen
       - id: UniformScrubsColorPurple
       - id: UniformScrubsColorBlue
-      - id: ClothingHeadBandBlue
-      - id: ClothingHeadBandRed
-      - id: ClothingHeadBandGreen
+      - id: ClothingHeadHatSurgcapBlue
+      - id: ClothingHeadHatSurgcapPurple
+      - id: ClothingHeadHatSurgcapGreen
       - id: ClothingMaskSterile
         amount: 3
 

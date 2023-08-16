@@ -8,9 +8,9 @@ using Content.Shared.PDA;
 using Content.Shared.StationRecords;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
@@ -69,6 +69,8 @@ public sealed class AccessReaderSystem : EntitySystem
     /// required entity.
     /// </summary>
     /// <param name="target">The entity to search for a container</param>
+    /// <param name="accessReader"></param>
+    /// <param name="result"></param>
     private bool FindAccessReadersInContainer(EntityUid target, AccessReaderComponent accessReader, out List<AccessReaderComponent> result)
     {
         result = new();
@@ -171,6 +173,11 @@ public sealed class AccessReaderSystem : EntitySystem
     {
         FindAccessItemsInventory(uid, out var items);
 
+        foreach (var item in new ValueList<EntityUid>(items))
+        {
+            items.UnionWith(FindPotentialAccessItems(item));
+        }
+
         var ev = new GetAdditionalAccessEvent
         {
             Entities = items
@@ -204,6 +211,7 @@ public sealed class AccessReaderSystem : EntitySystem
     /// Finds the access tags on the given entity
     /// </summary>
     /// <param name="uid">The entity that is being searched.</param>
+    /// <param name="recordKeys"></param>
     /// <param name="items">All of the items to search for access. If none are passed in, <see cref="FindPotentialAccessItems"/> will be used.</param>
     public bool FindStationRecordKeys(EntityUid uid, out ICollection<StationRecordKey> recordKeys, HashSet<EntityUid>? items = null)
     {
@@ -277,17 +285,6 @@ public sealed class AccessReaderSystem : EntitySystem
     private bool FindAccessTagsItem(EntityUid uid, out HashSet<string> tags)
     {
         tags = new();
-        if (TryComp(uid, out AccessComponent? access))
-        {
-            tags.UnionWith(access.Tags);
-        }
-
-        if (TryComp(uid, out PdaComponent? pda) &&
-            pda.ContainedId is { Valid: true } id)
-        {
-            tags.UnionWith(EntityManager.GetComponent<AccessComponent>(id).Tags);
-        }
-
         var ev = new GetAccessTagsEvent(tags, _prototype);
         RaiseLocalEvent(uid, ref ev);
 
