@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Snow planets now have minerals and rocks on them., type: Add}
-  id: 4112
-  time: '2023-06-28T11:32:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Added walls to lava planets., type: Add}
   id: 4113
   time: '2023-06-28T12:57:40.0000000+00:00'
@@ -3030,3 +3025,8 @@ Entries:
       range., type: Fix}
   id: 4611
   time: '2023-08-16T08:03:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lockers and crates work again., type: Fix}
+  id: 4612
+  time: '2023-08-16T13:08:53.0000000+00:00'
