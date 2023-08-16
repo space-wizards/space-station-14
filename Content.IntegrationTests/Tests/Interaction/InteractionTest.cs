@@ -68,6 +68,8 @@ public abstract partial class InteractionTest
     protected ICommonSession ClientSession = default!;
     protected IPlayerSession ServerSession = default!;
 
+    public EntityUid? ClientTarget;
+
     /// <summary>
     /// The current target entity. This is the default entity for various helper functions.
     /// </summary>
@@ -173,8 +175,8 @@ public abstract partial class InteractionTest
 
         // Setup map.
         MapData = await PoolManager.CreateTestMap(PairTracker);
-        PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
-        TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
+        PlayerCoords = SEntMan.ToNetCoordinates(MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
+        TargetCoords = SEntMan.ToNetCoordinates(MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan));
         await SetTile(Plating, grid: MapData.MapGrid);
 
         // Get player data
@@ -194,15 +196,16 @@ public abstract partial class InteractionTest
             SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
-            Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
-            Actor.Attach(Player, ServerSession);
-            Hands = SEntMan.GetComponent<HandsComponent>(Player);
-            DoAfters = SEntMan.GetComponent<DoAfterComponent>(Player);
+            Player = SEntMan.ToNetEntity(SEntMan.SpawnEntity(PlayerPrototype, SEntMan.ToCoordinates(PlayerCoords)));
+            var serverPlayerEnt = SEntMan.ToEntity(Player);
+            Actor.Attach(serverPlayerEnt, ServerSession);
+            Hands = SEntMan.GetComponent<HandsComponent>(serverPlayerEnt);
+            DoAfters = SEntMan.GetComponent<DoAfterComponent>(serverPlayerEnt);
         });
 
         // Check player got attached.
         await RunTicks(5);
-        Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(SEntMan.ToNetEntity(Player)));
+        Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
 
         // Delete old player entity.
         await Server.WaitPost(() =>
@@ -215,7 +218,7 @@ public abstract partial class InteractionTest
         await Server.WaitPost(() =>
         {
             var bodySystem = SEntMan.System<BodySystem>();
-            var hands = bodySystem.GetBodyChildrenOfType(Player, BodyPartType.Hand).ToArray();
+            var hands = bodySystem.GetBodyChildrenOfType(SEntMan.ToEntity(Player), BodyPartType.Hand).ToArray();
 
             for (var i = 1; i < hands.Length; i++)
             {
@@ -228,8 +231,8 @@ public abstract partial class InteractionTest
         await PoolManager.ReallyBeIdle(PairTracker.Pair, 5);
         Assert.Multiple(() =>
         {
-            Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(SEntMan.ToNetEntity(Player)));
-            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(Player));
+            Assert.That(CEntMan.ToNetEntity(cPlayerMan.LocalPlayer.ControlledEntity), Is.EqualTo(Player));
+            Assert.That(sPlayerMan.GetSessionByUserId(ClientSession.UserId).AttachedEntity, Is.EqualTo(SEntMan.ToEntity(Player)));
         });
     }
 
