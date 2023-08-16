@@ -65,7 +65,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSystem _stationSystem = default!;
     [Dependency] private readonly StorageSystem _storageSystem = default!;
 
-    private TimeSpan _timerWait = TimeSpan.FromSeconds(10);
+    private TimeSpan _timerWait = TimeSpan.FromSeconds(20);
 
     private TimeSpan _endRoundCheck = default!;
     public override void Initialize()
@@ -219,6 +219,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     private void GiveHeadRevRole(Mind.Mind mind, IPlayerSession headRev)
     {
+        if (HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
+            return;
+
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var uid, out var comp, out var gameRule))
         {
@@ -230,8 +233,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 {
                     RemComp<CommandStaffComponent>(mind.OwnedEntity.Value);
                 }
-                AddComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
-                AddComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
+                EnsureComp<HeadRevolutionaryComponent>(mind.OwnedEntity.Value);
+                EnsureComp<RevolutionaryComponent>(mind.OwnedEntity.Value);
                 if (_inventory.TryGetSlotContainer(mind.OwnedEntity.Value, "back", out var containerSlot, out var slotDefinition))
                 {
                     var bag = containerSlot.ContainedEntity;
