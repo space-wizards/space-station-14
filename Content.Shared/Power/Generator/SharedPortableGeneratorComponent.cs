@@ -75,6 +75,14 @@ public sealed class PortableGeneratorStopMessage : BoundUserInterfaceMessage
 }
 
 /// <summary>
+/// Sent to the server to try to change the power output of a power-switchable portable generator.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PortableGeneratorSwitchOutputMessage : BoundUserInterfaceMessage
+{
+}
+
+/// <summary>
 /// Contains network state for the portable generator.
 /// </summary>
 [Serializable, NetSerializable]

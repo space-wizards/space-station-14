@@ -22,6 +22,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly GeneratorSystem _generator = default!;
+    [Dependency] private readonly PowerSwitchableGeneratorSystem _switchableGenerator = default!;
 
     public override void Initialize()
     {
@@ -34,6 +35,15 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         SubscribeLocalEvent<PortableGeneratorComponent, GeneratorStartedEvent>(GeneratorTugged);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStartMessage>(GeneratorStartMessage);
         SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStopMessage>(GeneratorStopMessage);
+        SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorSwitchOutputMessage>(GeneratorSwitchOutputMessage);
+    }
+
+    private void GeneratorSwitchOutputMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorSwitchOutputMessage args)
+    {
+        if (args.Session.AttachedEntity == null)
+            return;
+
+        _switchableGenerator.ToggleActiveOutput(uid, args.Session.AttachedEntity.Value);
     }
 
     private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)

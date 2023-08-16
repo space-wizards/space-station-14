@@ -47,7 +47,7 @@ public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGenera
         {
             Act = () =>
             {
-                ToggleActiveOutput(uid, component, args.User);
+                ToggleActiveOutput(uid, args.User, component);
             },
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
             Text = Loc.GetString(msg),
@@ -62,8 +62,11 @@ public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGenera
         args.Verbs.Add(verb);
     }
 
-    private void ToggleActiveOutput(EntityUid uid, PowerSwitchableGeneratorComponent component, EntityUid user)
+    public void ToggleActiveOutput(EntityUid uid, EntityUid user, PowerSwitchableGeneratorComponent? component = null)
     {
+        if (!Resolve(uid, ref component))
+            return;
+
         var supplier = Comp<PowerSupplierComponent>(uid);
         var nodeContainer = Comp<NodeContainerComponent>(uid);
         var outputMV = (CableDeviceNode) nodeContainer.Nodes["output_mv"];

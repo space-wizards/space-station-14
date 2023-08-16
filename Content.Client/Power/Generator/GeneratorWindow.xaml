@@ -1,8 +1,8 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                MinSize="450 210"
-                SetSize="450 210"
+                MinSize="450 240"
+                SetSize="450 240"
                 Title="{Loc 'portable-generator-ui-title'}">
     <BoxContainer Margin="4 0" Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Center" Margin="5">
@@ -22,6 +22,8 @@
                 <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
                 <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
                 <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
+                <Label Name="OutputSwitchLabel" Text="{Loc 'portable-generator-ui-switch'}" Visible="False" />
+                <Button Name="OutputSwitchButton" Visible="False" />
             </GridContainer>
         </BoxContainer>
         <cc:VSeparator StyleClasses="LowDivider"/>

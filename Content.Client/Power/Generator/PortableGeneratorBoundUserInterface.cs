@@ -49,4 +49,9 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
     {
         SendMessage(new PortableGeneratorStopMessage());
     }
+
+    public void SwitchOutput()
+    {
+        SendMessage(new PortableGeneratorSwitchOutputMessage());
+    }
 }

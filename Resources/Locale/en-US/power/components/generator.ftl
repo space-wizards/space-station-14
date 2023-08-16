@@ -23,6 +23,12 @@ power-switchable-generator-examine = The power output is set to { $output ->
 *[MV] [color=yellow]MV[/color]
     }.
 
+portable-generator-ui-switch-hv = Current output: HV
+portable-generator-ui-switch-mv = Current output: MV
+
+portable-generator-ui-switch-to-hv = Switch to HV
+portable-generator-ui-switch-to-mv = Switch to MV
+
 power-switchable-generator-verb-hv = Switch output to HV
 power-switchable-generator-verb-mv = Switch output to MV
 power-switchable-generator-verb-disable-on = Turn the generator off first!

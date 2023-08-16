@@ -34,6 +34,7 @@ public sealed partial class GeneratorWindow : FancyWindow
 
         StartButton.OnPressed += _ => bui.Start();
         StopButton.OnPressed += _ => bui.Stop();
+        OutputSwitchButton.OnPressed += _ => bui.SwitchOutput();
     }
 
     private bool IsValid(int arg)
@@ -85,6 +86,19 @@ public sealed partial class GeneratorWindow : FancyWindow
             StartProgress.Visible = false;
             StartButton.Visible = true;
             StopButton.Visible = false;
+        }
+
+        var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableGeneratorComponent? switchable);
+        OutputSwitchLabel.Visible = canSwitch;
+        OutputSwitchButton.Visible = canSwitch;
+
+        if (canSwitch)
+        {
+            var isHV = switchable!.ActiveOutput == PowerSwitchableGeneratorOutput.HV;
+            OutputSwitchLabel.Text =
+                Loc.GetString(isHV ? "portable-generator-ui-switch-hv" : "portable-generator-ui-switch-mv");
+            OutputSwitchButton.Text =
+                Loc.GetString(isHV ? "portable-generator-ui-switch-to-mv" : "portable-generator-ui-switch-to-hv");
         }
     }
 
