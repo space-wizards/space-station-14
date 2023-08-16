@@ -1,7 +1,10 @@
 using System.Collections.Generic;
+using System.Linq;
+using Content.Shared.Access;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Robust.Shared.GameObjects;
+using Robust.Shared.Prototypes;
 
 namespace Content.IntegrationTests.Tests.Access
 {
@@ -10,9 +13,38 @@ namespace Content.IntegrationTests.Tests.Access
     public sealed class AccessReaderTest
     {
         [Test]
+        public async Task TestProtoTags()
+        {
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Pair.Server;
+
+            var protoManager = server.ResolveDependency<IPrototypeManager>();
+            var accessName = server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(AccessReaderComponent));
+
+            await server.WaitAssertion(() =>
+            {
+                foreach (var ent in protoManager.EnumeratePrototypes<EntityPrototype>())
+                {
+                    if (!ent.Components.TryGetComponent(accessName, out var access))
+                        continue;
+
+                    var reader = (AccessReaderComponent) access;
+                    var allTags = reader.AccessLists.SelectMany(c => c).Union(reader.DenyTags);
+
+                    foreach (var level in allTags)
+                    {
+                        Assert.That(protoManager.HasIndex<AccessLevelPrototype>(level), $"Invalid access level: {level} found on {ent}");
+                    }
+                }
+            });
+
+            await pair.CleanReturnAsync();
+        }
+
+        [Test]
         public async Task TestTags()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
 

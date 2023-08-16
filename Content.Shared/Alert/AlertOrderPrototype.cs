@@ -1,4 +1,6 @@
-﻿using Robust.Shared.Prototypes;
+﻿using System.Linq;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Alert
 {
@@ -14,21 +16,24 @@ namespace Content.Shared.Alert
         public string ID { get; } = default!;
 
         [DataField("order")]
-        private List<(string type, string alert)> Order
+        private (string type, string alert)[] Order
         {
+            // why would paul do this to me.
             get
             {
-                var res = new List<(string, string)>(_typeToIdx.Count + _categoryToIdx.Count);
+                var res = new (string, string)[_typeToIdx.Count + _categoryToIdx.Count];
 
                 foreach (var (type, id) in _typeToIdx)
                 {
-                    res.Insert(id, ("alertType", type.ToString()));
+                    res[id] = ("alertType", type.ToString());
                 }
 
                 foreach (var (category, id) in _categoryToIdx)
                 {
-                    res.Insert(id, ("category", category.ToString()));
+                    res[id] = ("category", category.ToString());
                 }
+
+                DebugTools.Assert(res.All(x => x != default));
 
                 return res;
             }

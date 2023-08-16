@@ -5,6 +5,7 @@
     - Syndicate
     - Xeno
     - PetsNT
+    - Zombie
 
 - type: npcFaction
   id: NanoTrasen
@@ -12,6 +13,7 @@
   - SimpleHostile
   - Syndicate
   - Xeno
+  - Zombie
 
 - type: npcFaction
   id: Mouse
@@ -26,6 +28,7 @@
   hostile:
   - Mouse
   - SimpleHostile
+  - Zombie
   - Xeno
 
 - type: npcFaction
@@ -35,6 +38,7 @@
   - Syndicate
   - Passive
   - PetsNT
+  - Zombie
 
 - type: npcFaction
   id: SimpleNeutral
@@ -46,11 +50,23 @@
   - SimpleHostile
   - Xeno
   - PetsNT
+  - Zombie
 
 - type: npcFaction
   id: Xeno
   hostile:
   - NanoTrasen
+  - Syndicate
+  - Passive
+  - PetsNT
+  - Zombie
+
+- type: npcFaction
+  id: Zombie
+  hostile:
+  - NanoTrasen
+  - SimpleNeutral
+  - SimpleHostile
   - Syndicate
   - Passive
   - PetsNT

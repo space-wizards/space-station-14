@@ -68,7 +68,7 @@ public sealed class HealingSystem : EntitySystem
             if (isBleeding != bloodstream.BleedAmount > 0)
             {
                 dontRepeat = true;
-                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid);
+                _popupSystem.PopupEntity(Loc.GetString("medical-item-stop-bleeding"), uid, args.User);
             }
         }
 
@@ -86,6 +86,9 @@ public sealed class HealingSystem : EntitySystem
         // Re-verify that we can heal the damage.
         _stacks.Use(args.Used.Value, 1);
 
+        if (_stacks.GetCount(args.Used.Value) <= 0)
+            dontRepeat = true;
+
         if (uid != args.User)
         {
             _adminLogger.Add(LogType.Healed,
@@ -102,7 +105,7 @@ public sealed class HealingSystem : EntitySystem
         // Logic to determine the whether or not to repeat the healing action
         args.Repeat = (HasDamage(component, healing) && !dontRepeat);
         if (!args.Repeat && !dontRepeat)
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-finished-using", ("item", args.Used)), uid, args.User);
         args.Handled = true;
     }
 
@@ -162,15 +165,12 @@ public sealed class HealingSystem : EntitySystem
 
         if (!HasDamage(targetDamage, component) && !(bloodstream.BloodSolution.Volume < bloodstream.BloodSolution.MaxVolume && component.ModifyBloodLevel > 0))
         {
-            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid);
+            _popupSystem.PopupEntity(Loc.GetString("medical-item-cant-use", ("item", uid)), uid, user);
             return false;
         }
 
-        if (component.HealingBeginSound != null)
-        {
-            _audio.PlayPvs(component.HealingBeginSound, uid,
+        _audio.PlayPvs(component.HealingBeginSound, uid,
                 AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
-        }
 
         var isNotSelf = user != target;
 

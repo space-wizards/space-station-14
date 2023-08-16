@@ -78,13 +78,6 @@ namespace Content.Shared.Containers.ItemSlots
         public SoundSpecifier EjectSound = new SoundPathSpecifier("/Audio/Weapons/Guns/MagOut/revolver_magout.ogg");
 
         /// <summary>
-        ///     Options used for playing the insert/eject sounds.
-        /// </summary>
-        [DataField("soundOptions")]
-        [Obsolete("Use the sound specifer parameters instead")]
-        public AudioParams SoundOptions = AudioParams.Default;
-
-        /// <summary>
         ///     The name of this item slot. This will be shown to the user in the verb menu.
         /// </summary>
         /// <remarks>
@@ -228,7 +221,6 @@ namespace Content.Shared.Containers.ItemSlots
             InsertSound = other.InsertSound;
             EjectSound = other.EjectSound;
 
-            SoundOptions = other.SoundOptions;
             Name = other.Name;
             Locked = other.Locked;
             InsertOnInteract = other.InsertOnInteract;
@@ -241,4 +233,16 @@ namespace Content.Shared.Containers.ItemSlots
             Priority = other.Priority;
         }
     }
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be inserted into an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be ejected from an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 }

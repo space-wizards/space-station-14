@@ -26,6 +26,8 @@
           Quantity: 5
   - type: Item
     size: 5
+  # let air cook and freeze meat for cooking and preservation
+  - type: AtmosExposed
   - type: Temperature
     currentTemperature: 290
   - type: Material
@@ -33,6 +35,25 @@
     materialComposition:
       Meaterial: 300
 
+- type: entity
+  parent: FoodMeatBase
+  id: FoodMeatRawBase
+  abstract: true
+  components:
+  - type: Tag
+    tags:
+    - Raw
+  - type: Perishable
+    # raw meat rots in 5 minutes, get it into the freezer fast
+    rotAfter: 300
+    # don't want meat giving off miasma only bodies
+    molsPerSecondPerUnitMass: 0
+  - type: RotInto
+    entity: FoodMeatRotten
+    # once it would say bloated, turn into the rotten prototype
+    stage: 1
+
+# bruh
 - type: Tag
   id: Raw
 
@@ -46,13 +67,10 @@
 
 - type: entity
   name: raw meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeat
   description: A slab of raw meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: plain
   - type: SolutionContainerManager
@@ -73,13 +91,10 @@
 
 - type: entity
   name: raw human meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatHuman
   description: Gross.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: plain
   - type: SolutionContainerManager
@@ -121,6 +136,7 @@
 
 - type: entity
   name: raw bacon
+  # bacon is cured so not raw = cant rot
   parent: FoodMeatBase
   id: FoodMeatBacon
   description: A raw piece of bacon.
@@ -141,13 +157,10 @@
 
 - type: entity
   name: raw bear meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatBear
   description: A very manly slab of raw bear meat.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bear
   - type: SolutionContainerManager
@@ -168,13 +181,10 @@
 
 - type: entity
   name: raw penguin meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatPenguin
   description: A slab of raw penguin meat. Can be used as a substitute for fish in recipes.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -195,13 +205,10 @@
 
 - type: entity
   name: raw chicken meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatChicken
   description: A slab of raw chicken. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -222,13 +229,10 @@
 
 - type: entity
   name: raw duck meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatDuck
   description: A slab of raw duck. Remember to wash your hands!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: bird
   - type: SolutionContainerManager
@@ -249,6 +253,7 @@
 
 - type: entity
   name: prime-cut corgi meat
+  # can't rot since that would be very bad for syndies
   parent: FoodMeatBase
   id: FoodMeatCorgi
   description: The tainted gift of an evil crime. The meat may be delicious, but at what cost?
@@ -270,16 +275,13 @@
 
 - type: entity
   name: raw crab meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatCrab
   description: A pile of raw crab meat.
   components:
   - type: FlavorProfile
     flavors:
       - crabby
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: crab
   - type: SolutionContainerManager
@@ -297,13 +299,10 @@
 
 - type: entity
   name: raw goliath meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatGoliath
   description: A slab of goliath meat. It's not very edible now, but it cooks great in lava.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: goliath
   - type: SolutionContainerManager
@@ -347,13 +346,10 @@
 
 - type: entity
   name: raw rat meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatRat
   description: Prime meat from maintenance!
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: plain
   - type: SolutionContainerManager
@@ -367,13 +363,10 @@
 
 - type: entity
   name: raw lizard meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatLizard
   description: Delicious dino damage.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: lizard
   - type: SolutionContainerManager
@@ -417,17 +410,18 @@
       food:
         reagents:
         - ReagentId: UncookedAnimalProteins
-          Quantity: 20
+          Quantity: 5
+        - ReagentId: Toxin
+          Quantity: 4
+        - ReagentId: Fat
+          Quantity: 4
 
 - type: entity
   name: raw spider meat
-  parent: FoodMeatBase
+  parent: FoodMeatRawBase
   id: FoodMeatSpider
   description: A slab of spider meat. That's so Kafkaesque.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: spider
   - type: SolutionContainerManager
@@ -448,9 +442,6 @@
   id: FoodMeatSpiderLeg
   description: A still twitching leg of a giant spider... you don't really want to eat this, do you?
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: spiderleg
   - type: SolutionContainerManager
@@ -468,9 +459,6 @@
   id: FoodMeatWheat
   description: This doesn't look like meat, but your standards aren't that high to begin with.
   components:
-  - type: Tag
-    tags:
-    - Raw
   - type: Sprite
     state: clump
   - type: SolutionContainerManager
@@ -482,6 +470,7 @@
 
 - type: entity
   name: raw xeno meat
+  # not raw since acid kills bacteria or something, same as xeno
   parent: FoodMeatBase
   id: FoodMeatXeno
   description: A slab of xeno meat, dripping with acid.
@@ -489,7 +478,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw
@@ -581,7 +570,7 @@
 - type: entity
   parent: BaseItem
   id: MaterialSmileExtract
-  name: extract smile
+  name: smile extract
   description: It's a real panacea. But at what cost?
   components:
   - type: Food
@@ -1080,7 +1069,7 @@
   - type: FlavorProfile
     flavors:
       - meaty
-      - acidic
+      - acid
   - type: Tag
     tags:
     - Raw

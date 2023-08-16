@@ -10,7 +10,11 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            {
+                DummyTicker = false,
+                Connected = true
+            });
             var server = pairTracker.Pair.Server;
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
 

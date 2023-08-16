@@ -676,15 +676,19 @@ namespace Content.Shared.Chemistry.Components
         [DataDefinition]
         public readonly struct ReagentQuantity: IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>))]
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
             public readonly string ReagentId;
-            [DataField("Quantity")]
+            [DataField("Quantity", required:true)]
             public readonly FixedPoint2 Quantity;
 
             public ReagentQuantity(string reagentId, FixedPoint2 quantity)
             {
                 ReagentId = reagentId;
                 Quantity = quantity;
+            }
+
+            public ReagentQuantity() : this(string.Empty, default)
+            {
             }
 
             [ExcludeFromCodeCoverage]

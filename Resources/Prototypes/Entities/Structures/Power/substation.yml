@@ -67,11 +67,19 @@
         sound:
           path: /Audio/Effects/metalbreak.ogg
       - !type:ExplodeBehavior
-      - !type:SpawnEntitiesBehavior # in future should also emit a cloud of hot gas
+      - !type:SpawnEntitiesBehavior
         spawn:
           MachineFrameDestroyed:
             min: 1
             max: 1
+      - !type:SpawnGasBehavior
+        gasMixture:
+          volume: 1000
+          moles:
+            - 0 # oxygen
+            - 0 # nitrogen
+            - 340.5701689 # carbon dioxide
+          temperature: 373.15
   - type: Explosive
     explosionType: Default
     maxIntensity: 100

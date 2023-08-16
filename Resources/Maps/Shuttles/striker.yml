@@ -260,13 +260,9 @@ entities:
           ents:
           - 331
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 191
     components:
     - pos: 1.5,-4.5
@@ -279,13 +275,9 @@ entities:
           ents:
           - 332
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 192
     components:
     - pos: -2.5,-5.5
@@ -298,13 +290,9 @@ entities:
           ents:
           - 333
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 193
     components:
     - pos: -2.5,-4.5
@@ -317,13 +305,9 @@ entities:
           ents:
           - 334
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 196
     components:
     - pos: 3.5,-1.5
@@ -336,13 +320,9 @@ entities:
           ents:
           - 337
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 198
     components:
     - pos: -1.5,1.5
@@ -355,13 +335,9 @@ entities:
           ents:
           - 339
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 199
     components:
     - pos: -1.5,2.5
@@ -374,13 +350,9 @@ entities:
           ents:
           - 340
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 200
     components:
     - pos: -0.5,2.5
@@ -393,13 +365,9 @@ entities:
           ents:
           - 341
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 201
     components:
     - pos: 0.5,2.5
@@ -412,13 +380,9 @@ entities:
           ents:
           - 342
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
   - uid: 202
     components:
     - pos: 0.5,1.5
@@ -431,13 +395,9 @@ entities:
           ents:
           - 343
       type: ContainerContainer
-    - inputs:
-        Open: []
-        Close: []
-        Toggle:
-        - port: Pressed
-          uid: 205
-      type: SignalReceiver
+    - links:
+      - 205
+      type: DeviceLinkSink
 - proto: BoxMRE
   entities:
   - uid: 320
@@ -1281,7 +1241,7 @@ entities:
       type: DeviceNetwork
     - enabled: False
       type: AmbientSound
-- proto: GeneratorUranium
+- proto: GeneratorBasic15kW
   entities:
   - uid: 41
     components:
@@ -2038,29 +1998,28 @@ entities:
       pos: -1.5,-3.5
       parent: 325
       type: Transform
-    - outputs:
-        Pressed:
-        - port: Toggle
-          uid: 193
-        - port: Toggle
-          uid: 192
-        - port: Toggle
-          uid: 190
-        - port: Toggle
-          uid: 191
-        - port: Toggle
-          uid: 196
-        - port: Toggle
-          uid: 202
-        - port: Toggle
-          uid: 201
-        - port: Toggle
-          uid: 200
-        - port: Toggle
-          uid: 199
-        - port: Toggle
-          uid: 198
-      type: SignalTransmitter
+    - linkedPorts:
+        193:
+        - Pressed: Toggle
+        192:
+        - Pressed: Toggle
+        190:
+        - Pressed: Toggle
+        191:
+        - Pressed: Toggle
+        196:
+        - Pressed: Toggle
+        202:
+        - Pressed: Toggle
+        201:
+        - Pressed: Toggle
+        200:
+        - Pressed: Toggle
+        199:
+        - Pressed: Toggle
+        198:
+        - Pressed: Toggle
+      type: DeviceLinkSource
 - proto: SignSpace
   entities:
   - uid: 230

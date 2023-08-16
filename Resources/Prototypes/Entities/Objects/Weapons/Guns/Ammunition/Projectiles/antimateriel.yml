@@ -1,11 +1,14 @@
 - type: entity
   noSpawn: true
-  parent: BaseBulletHighVelocity
+  parent: BaseBullet
   id: BulletAntiMateriel
   name: bullet (.60 anti-materiel)
   components:
   - type: Projectile
     damage:
       types:
-        Piercing: 49
+        Piercing: 45
         Structural: 30
+    ignoreResistances: true
+  - type: StaminaDamageOnCollide
+    damage: 75

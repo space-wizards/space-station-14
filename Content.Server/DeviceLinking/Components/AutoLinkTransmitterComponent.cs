@@ -6,7 +6,7 @@ namespace Content.Server.DeviceLinking.Components;
 [RegisterComponent]
 public sealed class AutoLinkTransmitterComponent : Component
 {
-    [DataField("channel", required: true, readOnly: true)]
+    [DataField("channel", required: true)]
     public string AutoLinkChannel = default!;
 }
 

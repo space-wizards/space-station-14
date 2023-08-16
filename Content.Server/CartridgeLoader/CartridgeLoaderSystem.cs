@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CartridgeLoader;
 
@@ -80,7 +81,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return new List<EntityUid>();
 
         //Don't count a cartridge that has already been installed as available to avoid confusion
-        if (loader.CartridgeSlot.HasItem && IsInstalled(Prototype(loader.CartridgeSlot.Item!.Value)?.ID, loader))
+        if (loader.CartridgeSlot.HasItem && TryFindInstalled(Prototype(loader.CartridgeSlot.Item!.Value)?.ID, loader, out _))
             return loader.InstalledPrograms;
 
         var available = new List<EntityUid>();
@@ -127,7 +128,13 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
             return false;
 
         //Prevent installing cartridges that have already been installed
-        if (IsInstalled(prototype, loader))
+        if (TryFindInstalled(prototype, loader, out _))
+            return false;
+
+        var ev = new ProgramInstallationAttempt(loaderUid, prototype);
+        RaiseLocalEvent(ref ev);
+
+        if (ev.Cancelled)
             return false;
 
         var installedProgram = Spawn(prototype, new EntityCoordinates(loaderUid, 0, 0));
@@ -139,6 +146,22 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         RaiseLocalEvent(installedProgram, new CartridgeAddedEvent(loaderUid));
         UpdateUserInterfaceState(loaderUid, loader);
         return true;
+    }
+
+    /// <summary>
+    /// Uninstalls a program using its prototype
+    /// </summary>
+    /// <param name="loaderUid">The cartridge loader uid</param>
+    /// <param name="prototype">The prototype name of the program to be uninstalled</param>
+    /// <param name="loader">The cartridge loader component</param>
+    /// <returns>Whether uninstalling the program was successful</returns>
+    public bool UninstallProgram(EntityUid loaderUid, string prototype, CartridgeLoaderComponent? loader = default!)
+    {
+        if (!Resolve(loaderUid, ref loader))
+            return false;
+
+        return TryFindInstalled(prototype, loader, out var programUid) &&
+               UninstallProgram(loaderUid, programUid.Value, loader);
     }
 
     /// <summary>
@@ -345,16 +368,20 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     }
 
     /// <summary>
-    /// Checks if a program is already installed by searching for its prototype name in the list of installed programs
+    /// Searches for a program by its prototype name in the list of installed programs
     /// </summary>
-    private bool IsInstalled(string? prototype, CartridgeLoaderComponent loader)
+    private bool TryFindInstalled(string? prototype, CartridgeLoaderComponent loader, [NotNullWhen(true)] out EntityUid? programUid)
     {
         foreach (var program in loader.InstalledPrograms)
         {
             if (Prototype(program)?.ID == prototype)
+            {
+                programUid = program;
                 return true;
+            }
         }
 
+        programUid = default;
         return false;
     }
 
@@ -414,3 +441,9 @@ public sealed class CartridgeAfterInteractEvent : EntityEventArgs
         InteractEvent = interactEvent;
     }
 }
+
+/// <summary>
+/// Raised on an attempt of program installation.
+/// </summary>
+[ByRefEvent]
+public record struct ProgramInstallationAttempt(EntityUid LoaderUid, string Prototype, bool Cancelled = false);

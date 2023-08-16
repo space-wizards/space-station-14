@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
 using Content.Shared.Alert;
 using Content.Shared.Bed.Sleep;
@@ -131,6 +131,16 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleStandAttempt(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
     {
+        //Let entities stand back up while on vehicles so that they can be knocked down when slept/stunned
+        //This prevents an exploit that allowed people to become partially invulnerable to stuns
+        //while on vehicles
+
+        if (component.BuckledTo != null)
+        {
+            var buckle = component.BuckledTo;
+            if (TryComp<VehicleComponent>(buckle, out _))
+                return;
+        }
         if (component.Buckled)
             args.Cancel();
     }
@@ -357,7 +367,8 @@ public abstract partial class SharedBuckleSystem
        ReAttach(buckleUid, strapUid, buckleComp, strapComp);
        SetBuckledTo(buckleUid,strapUid, strapComp, buckleComp);
        // TODO user is currently set to null because if it isn't the sound fails to play in some situations, fix that
-       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, null);
+       var audioSourceUid = userUid == buckleUid ? userUid : strapUid;
+       _audioSystem.PlayPredicted(strapComp.BuckleSound, strapUid, audioSourceUid);
 
        var ev = new BuckleChangeEvent(strapUid, buckleUid, true);
        RaiseLocalEvent(ev.BuckledEntity, ref ev);
@@ -483,7 +494,8 @@ public abstract partial class SharedBuckleSystem
         }
 
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
-        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, null);
+        var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
+        _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
 
         var ev = new BuckleChangeEvent(strapUid, buckleUid, false);
         RaiseLocalEvent(buckleUid, ref ev);
