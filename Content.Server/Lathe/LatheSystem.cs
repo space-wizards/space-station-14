@@ -72,10 +72,10 @@ namespace Content.Server.Lathe
                 if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
                     return;
 
-                var multipler = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
                 int sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
 
-                volume = sheetsToExtract * multipler;
+                volume = sheetsToExtract * volumePerSheet;
             }
 
             if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
