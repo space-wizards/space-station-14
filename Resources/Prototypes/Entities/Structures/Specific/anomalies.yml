@@ -47,6 +47,9 @@
   - type: EmitSoundOnSpawn
     sound:
       path: /Audio/Effects/teleport_arrival.ogg
+  - type: RadiationSource
+    intensity: 4
+    slope: 0.7
 
 - type: entity
   id: AnomalyPyroclastic
@@ -95,7 +98,6 @@
     castShadows: false
   - type: GravityAnomaly
   - type: GravityWell
-  - type: RadiationSource
 
 - type: entity
   id: AnomalyElectricity
