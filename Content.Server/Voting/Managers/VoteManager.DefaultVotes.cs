@@ -158,8 +158,13 @@ namespace Content.Server.Voting.Managers
 
         private void CreateMapVote(IPlayerSession? initiator)
         {
-            var maps = _gameMapManager.CurrentlyEligibleMaps().ToDictionary(map => map, map => map.MapName);
+            var maps = new Dictionary<string, GameMapPrototype>();
+            var eligibleMaps = _gameMapManager.CurrentlyEligibleMaps().ToList();
             maps.Add(Loc.GetString("ui-vote-secret-map"), _random.Pick(eligibleMaps));
+            foreach (var map in eligibleMaps)
+            {
+                maps.Add(map.MapName, map);
+            }
 
             var alone = _playerManager.PlayerCount == 1 && initiator != null;
             var options = new VoteOptions
