@@ -162,8 +162,8 @@
   components:
   - type: EncryptionKey
     channels:
-    - Science
-    defaultChannel: Science
+    - Binary
+    defaultChannel: Binary
   - type: Sprite
     layers:
     - state: crypt_gray
