@@ -9,4 +9,4 @@ lathe-menu-material-display = {$material} ({$amount} cm³)
 lathe-menu-tooltip-display = {$amount} cm³ of {$material}
 lathe-menu-no-materials-message = No materials loaded
 lathe-menu-materials-ejection = Reclaim materials
-lathe-menu-materials-ejection-title = Material reclaimation
+lathe-menu-materials-ejection-title = Material reclamation
