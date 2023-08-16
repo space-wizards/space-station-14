@@ -7,6 +7,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Lathe.UI;
 
+/// <summary>
+/// This widget is one row in the lathe eject menu.
+/// </summary>
+
 [GenerateTypedNameReferences]
 public sealed partial class LatheMaterialEjector : PanelContainer
 {
