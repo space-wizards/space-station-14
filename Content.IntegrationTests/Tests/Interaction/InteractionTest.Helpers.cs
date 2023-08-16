@@ -302,7 +302,6 @@ public abstract partial class InteractionTest
             // The entity is client-side, so attempt to start construction
             var clientEnt = CEntMan.ToEntity(Target.Value);
 
-            var ghost = CEntMan.GetComponent<ConstructionGhostComponent>(clientEnt);
             await Client.WaitPost(() => CConSys.TryStartConstruction(clientEnt));
             await RunTicks(5);
         }
