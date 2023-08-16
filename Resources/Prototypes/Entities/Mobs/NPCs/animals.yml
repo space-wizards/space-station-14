@@ -16,6 +16,7 @@
   - type: Physics
   - type: Speech
     speechSounds: Squeak
+    speechVerb: SmallMob
   - type: Fixtures
     fixtures:
       fix1:
@@ -796,6 +797,9 @@
     speciesId: monkey
   - type: InventorySlots
   - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: Fixtures
     fixtures:
       fix1:
@@ -841,6 +845,7 @@
           False: {visible: false}
   - type: Speech
     speechSounds: Monkey
+    speechVerb: Monkey
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
@@ -900,6 +905,7 @@
   - type: GhostTakeoverAvailable
   - type: Speech
     speechSounds: Squeak
+    speechVerb: SmallMob
   - type: Sprite
     drawdepth: SmallMobs
     sprite: Mobs/Animals/mouse.rsi
@@ -1411,6 +1417,9 @@
     speciesId: monkey
   - type: InventorySlots
   - type: Cuffable
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: Fixtures
     fixtures:
       fix1:
@@ -1456,6 +1465,7 @@
           False: {visible: false}
   - type: Speech
     speechSounds: Monkey
+    speechVerb: Monkey
   - type: Body
     prototype: Primate
     requiredLegs: 1 # TODO: More than 1 leg
@@ -2234,6 +2244,7 @@
     description: ghost-role-information-hamster-description
   - type: GhostTakeoverAvailable
   - type: Speech
+    speechVerb: SmallMob
     speechSounds: Squeak
   - type: Sprite
     drawdepth: SmallMobs

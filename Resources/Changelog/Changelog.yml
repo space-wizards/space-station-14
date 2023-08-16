@@ -1,172 +1,4 @@
 Entries:
-- author: Equivocateur
-  changes:
-  - {message: As part of a bounty program - whatever insulated gloves we could find
-      on Origin we have handed over to cargo., type: Remove}
-  id: 4083
-  time: '2023-06-24T19:57:56.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Changed bluespace and cryostasis beakers to not be weird when thrown,
-      and cryostasis contents can now be spilled when thrown.', type: Tweak}
-  id: 4084
-  time: '2023-06-24T20:01:04.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Emergency crowbar and regular crowbar now do the same damage. Please
-      leave emergency crowbars for emergencies!!!, type: Tweak}
-  id: 4085
-  time: '2023-06-24T20:05:03.0000000+00:00'
-- author: Myakot
-  changes:
-  - {message: Added additional information to guidebooks p.1, type: Add}
-  - {message: Some little typos in guidebook, type: Fix}
-  id: 4086
-  time: '2023-06-24T20:07:25.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The size of an item now scales with the amount of items in a stack.
-      A single sheet of metal takes up less space than a stack of 30., type: Add}
-  id: 4087
-  time: '2023-06-25T15:44:37.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The salvage magnet can now pull in randomly generated asteroids stuffed
-      with ores., type: Add}
-  - {message: Salvages are much less likely to fail to be pulled in., type: Fix}
-  id: 4088
-  time: '2023-06-25T17:50:41.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: Changed artifact rocks to spit out 2-3 fragments instead of 1, type: Tweak}
-  id: 4089
-  time: '2023-06-25T18:12:47.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added beachball to the arcade prizes!, type: Add}
-  id: 4090
-  time: '2023-06-26T02:07:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disallow tile placement close to other grids., type: Tweak}
-  id: 4091
-  time: '2023-06-26T03:00:17.0000000+00:00'
-- author: Nimfar11
-  changes:
-  - {message: Add solar tracker electronics to the circuit printer, type: Add}
-  id: 4092
-  time: '2023-06-26T03:04:06.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added taco and taco recipe!, type: Add}
-  id: 4093
-  time: '2023-06-26T03:05:08.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: The Head of Security's trenchcoat now clearly states it's armored.,
-    type: Tweak}
-  id: 4094
-  time: '2023-06-26T13:35:45.0000000+00:00'
-- author: CrigCrag
-  changes:
-  - {message: 'Following a lawsuit, some unshielded asbestos was removed from the
-      atmos hardsuit helmet due to health concerns. They are now less heat resistant.',
-    type: Tweak}
-  - {message: 'Nanotrasen has released a new model of atmos firesuit. This model is
-      very resistant to heat, and has a bit more protection against high pressure.
-      However, it is not rated for low pressure environments and its helmet is notably
-      less sturdy.', type: Tweak}
-  id: 4095
-  time: '2023-06-26T20:33:50.0000000+00:00'
-- author: router
-  changes:
-  - {message: 'Added an alternative emotes prefix, *. Note that it doesn''t get treated
-      any differently than the normal @ prefix.', type: Add}
-  id: 4096
-  time: '2023-06-26T21:20:09.0000000+00:00'
-- author: Chief-Engineer
-  changes:
-  - {message: Nanotrasen has invested in higher quality grilles., type: Tweak}
-  - {message: The Hristov now does structural damage., type: Tweak}
-  id: 4097
-  time: '2023-06-27T01:19:09.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Added crate with two prestigious EVA hardsuits to cargo catalog, type: Add}
-  id: 4098
-  time: '2023-06-27T04:45:30.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Refactored dungeon generation for salvage expeditions., type: Tweak}
-  id: 4099
-  time: '2023-06-27T09:17:42.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove the landing pad from expeditions., type: Tweak}
-  id: 4100
-  time: '2023-06-27T09:55:21.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Disable ambient music when expedition countdown starts. Also bumped
-      countdown volume a lot., type: Tweak}
-  id: 4101
-  time: '2023-06-27T11:28:52.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fixed being able to use stacks to overload storage containers, type: Fix}
-  - {message: Fixed splitting stacks inside of storage not updating the available
-      capacity., type: Fix}
-  id: 4102
-  time: '2023-06-28T00:30:03.0000000+00:00'
-- author: Alekshhh
-  changes:
-  - {message: 'Added more pirate accenting, yarr.', type: Add}
-  id: 4103
-  time: '2023-06-28T00:40:48.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Reduced folding chair damage., type: Tweak}
-  id: 4104
-  time: '2023-06-28T01:41:43.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Welders have been reworked to consume fuel when lit rather than after
-      welding something., type: Tweak}
-  id: 4105
-  time: '2023-06-28T01:46:49.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Crushers now leech 10 hp upon hitting damage marker targets., type: Add}
-  id: 4106
-  time: '2023-06-28T02:04:39.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Removed smoke reactions until someone makes a better system., type: Remove}
-  id: 4107
-  time: '2023-06-28T02:08:47.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Vomit now only contains 10% of the reagents removed from the chem stream,
-    type: Tweak}
-  id: 4108
-  time: '2023-06-28T02:08:57.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: increased the rate of fire of the Deckard and Mateb revolvers, type: Tweak}
-  - {message: Deckard revolver price increased to 1500, type: Tweak}
-  id: 4109
-  time: '2023-06-28T02:12:02.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added space lube tube - use it on items to make them slip out of hands!,
-    type: Add}
-  id: 4110
-  time: '2023-06-28T02:48:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Maps now draw their atmospheric gasses., type: Add}
-  id: 4111
-  time: '2023-06-28T11:22:03.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Snow planets now have minerals and rocks on them., type: Add}
@@ -3019,3 +2851,182 @@ Entries:
       drill.', type: Fix}
   id: 4582
   time: '2023-08-14T16:10:16.0000000+00:00'
+- author: Titian3
+  changes:
+  - {message: Fixed Admin watchlists and messages., type: Fix}
+  id: 4583
+  time: '2023-08-14T19:50:33.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Observers can now hear the binary radio., type: Tweak}
+  id: 4584
+  time: '2023-08-14T21:00:08.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Changed singularity energy levels to require more energy overall to
+      increase in size., type: Tweak}
+  - {message: 'Changed singularity energy drain rates to keep them more stable, and
+      die quicker without food.', type: Tweak}
+  - {message: 'Changed level 2 and 3 PA to feed less energy, slowing the speed of
+      a singuloose slightly.', type: Tweak}
+  id: 4585
+  time: '2023-08-14T21:01:57.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Monkies go horizontal on crit/death again, type: Fix}
+  id: 4586
+  time: '2023-08-14T21:02:28.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Fixed condiment stations & smartfridges being too unshaded, type: Fix}
+  - {message: 'Booze dispenser now only contains booze, everything else it contained
+      was already in the soda dispenser', type: Tweak}
+  - {message: Fixed soda dispenser UI not being wide enough, type: Fix}
+  id: 4587
+  time: '2023-08-14T21:03:21.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed having to reopen ahelp and popped-out ahelp windows after round
+      start and end., type: Fix}
+  id: 4588
+  time: '2023-08-14T21:03:35.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Faded admin notes now pop in when hovering over them., type: Tweak}
+  id: 4589
+  time: '2023-08-14T21:03:53.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix editing an admin watchlist note making it temporarily appear as
+      a low severity note., type: Fix}
+  id: 4590
+  time: '2023-08-14T21:05:47.0000000+00:00'
+- author: Emisse
+  changes:
+  - {message: Operating table won't get you stuck in walls anymore, type: Fix}
+  id: 4591
+  time: '2023-08-14T22:25:05.0000000+00:00'
+- author: TheArturZh
+  changes:
+  - {message: Ritual chair no longer deletes mobs on disassembly, type: Fix}
+  id: 4592
+  time: '2023-08-14T22:57:33.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Using the EMAG on borgs now requires the panel to be open. It also need
+      to be open to tell if it has been EMAG'ed in the past., type: Tweak}
+  - {message: Fixed wiping PAIs and Positronic Brains not actually removing the player
+      from them., type: Fix}
+  id: 4593
+  time: '2023-08-14T23:34:24.0000000+00:00'
+- author: mhamster
+  changes:
+  - {message: 'Added plastic sheets recipe. Mix together 5u oil, 3u ash and 2u sulfuric
+      acid, heat it up to 374k and receive your homemade plastic sheet.', type: Add}
+  id: 4594
+  time: '2023-08-14T23:40:48.0000000+00:00'
+- author: Just_Art
+  changes:
+  - {message: Now a mini gravity generator can be constructed using a machine board
+      and deconstructed., type: Add}
+  - {message: 'The mini gravity generator can be improved by replacing capacitors,
+      which will increase the maximum charge of the generator.', type: Add}
+  - {message: 'The amount of damage required to destroy the mini gravity generator
+      has been changed, and now it is completely destroyed, but it can still be restored
+      by welding.', type: Tweak}
+  id: 4595
+  time: '2023-08-15T00:23:40.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: There is now a delay when disconnecting someone else's internals., type: Tweak}
+  id: 4596
+  time: '2023-08-15T00:25:58.0000000+00:00'
+- author: kalane15
+  changes:
+  - {message: Energy swords don't reflect in pockets anymore., type: Fix}
+  id: 4597
+  time: '2023-08-15T05:07:54.0000000+00:00'
+- author: ElectroJr
+  changes:
+  - {message: Fixed replay playback a bug that could cause the damage overlay to stay
+      permanently active., type: Fix}
+  id: 4598
+  time: '2023-08-15T05:10:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate has stopped requesting ID card computer boards., type: Remove}
+  id: 4599
+  time: '2023-08-15T14:07:56.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Speech verbs will now change depending on the entity saying them and
+      from punctuation. Have fun chittering as a mothperson., type: Add}
+  - {message: Ending a message with '!!' will now bold the message., type: Add}
+  - {message: Mothpeople now have custom typing indicators., type: Add}
+  id: 4600
+  time: '2023-08-15T20:03:06.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: Nanotrasen no longer provides imitation head scrubs in the medical scrub
+      crate., type: Fix}
+  id: 4601
+  time: '2023-08-15T20:22:28.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Radios no longer display a popup when messages fail to send., type: Remove}
+  id: 4602
+  time: '2023-08-15T20:56:42.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Portal sprites made less bad hopefully, type: Tweak}
+  - {message: Hand teleporter doafter reduced slightly, type: Tweak}
+  - {message: Portals can no longer teleport you to other maps, type: Fix}
+  - {message: Ghosts can now traverse linked portals silently using an altverb, type: Add}
+  - {message: Portals now snap to grid + show up properly in the entity menu, type: Fix}
+  id: 4603
+  time: '2023-08-15T20:56:14.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Cyborgs can't get electrocuted anymore., type: Fix}
+  id: 4604
+  time: '2023-08-15T22:37:34.0000000+00:00'
+- author: Fahasor
+  changes:
+  - {message: Nanotrasen Department of Economics has reduced glue expenses in jug
+      production lines. Now labels from jugs can be deleted., type: Fix}
+  id: 4605
+  time: '2023-08-15T22:41:10.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Artifacts once again fit in artifact containers., type: Fix}
+  - {message: Brought crate capacity in line with other storage. (500 -> 30), type: Fix}
+  - {message: Hamlet's cage is now hamlet-sized and can only fit a single item., type: Fix}
+  id: 4606
+  time: '2023-08-15T22:49:30.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Added directional switches, type: Add}
+  id: 4607
+  time: '2023-08-15T23:01:50.0000000+00:00'
+- author: Tollhouse
+  changes:
+  - {message: Discount Dan has finalized a deal with NT chemistry and Shady Smokes
+      to bring you a new smoking sensation., type: Add}
+  id: 4608
+  time: '2023-08-16T00:27:18.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Syndicate pAI's are now equipped with radio transmitters., type: Tweak}
+  id: 4609
+  time: '2023-08-16T06:59:42.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Restructured cannabis!, type: Tweak}
+  id: 4610
+  time: '2023-08-16T07:04:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin ghosts are now able to interact with user interfaces from any
+      range., type: Fix}
+  id: 4611
+  time: '2023-08-16T08:03:42.0000000+00:00'

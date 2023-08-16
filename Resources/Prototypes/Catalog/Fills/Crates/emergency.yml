@@ -56,15 +56,15 @@
     - type: StorageFill
       contents:
         - id: ClothingMaskGas
-          amount: 12
+          amount: 6
         - id: ClothingMaskBreath
-          amount: 12
+          amount: 6
         - id: OxygenTankFilled
-          amount: 12
+          amount: 6
         - id: NitrogenTankFilled
-          amount: 12
+          amount: 6
         - id: ClothingOuterSuitEmergency
-          amount: 12
+          amount: 6
 
 - type: entity
   id: CrateSlimepersonLifeSupport

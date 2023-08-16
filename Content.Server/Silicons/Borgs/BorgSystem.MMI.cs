@@ -38,6 +38,7 @@ public sealed partial class BorgSystem
         var ent = args.Entity;
         var linked = EnsureComp<MMILinkedComponent>(ent);
         linked.LinkedMMI = uid;
+        Dirty(uid, component);
 
         if (_mind.TryGetMind(ent, out var mind))
             _mind.TransferTo(mind, uid, true);

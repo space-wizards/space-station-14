@@ -41,6 +41,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#162581"
   - type: Speech
+    speechVerb: Insect
     speechSounds: Arachnid
   - type: Vocal
     sounds:
