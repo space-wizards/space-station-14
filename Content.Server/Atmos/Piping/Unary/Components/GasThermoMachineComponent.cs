@@ -41,13 +41,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [ViewVariables(VVAccess.ReadOnly)]
         public bool HysteresisState = false;
 
-        public ThermoMachineMode Mode {
-            get
-            {
-                return Cp < 0 ? ThermoMachineMode.Freezer : ThermoMachineMode.Heater;
-            }
-        }
-
         /// <summary>
         ///     Coefficient of performance. Output power / input power.
         ///     Positive for heaters, negative for freezers.

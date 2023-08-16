@@ -75,11 +75,10 @@ namespace Content.Client.Atmos.UI
 
             _window.SetTemperature(cast.Temperature);
             _window.SetActive(cast.Enabled);
-            _window.Title = cast.Mode switch
+            _window.Title = cast.IsHeater switch
             {
-                ThermoMachineMode.Freezer => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
-                ThermoMachineMode.Heater => Loc.GetString("comp-gas-thermomachine-ui-title-heater"),
-                _ => string.Empty
+                false => Loc.GetString("comp-gas-thermomachine-ui-title-freezer"),
+                true => Loc.GetString("comp-gas-thermomachine-ui-title-heater")
             };
         }
 
