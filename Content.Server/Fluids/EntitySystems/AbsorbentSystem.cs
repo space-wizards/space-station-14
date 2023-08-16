@@ -168,14 +168,11 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
             _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", used)), used, user);
         }
 
-        var toTransferSolution = nonWater.SplitSolution(refillableSolution.AvailableVolume);
-
-        if (nonWater.Volume > 0 && !_solutionContainerSystem.TryAddSolution(target, refillableSolution, toTransferSolution))
+        if (nonWater.Volume > 0 && !_solutionContainerSystem.TryAddSolution(target, refillableSolution, nonWater))
         {
+            absorberSoln.AddSolution(nonWater, _prototype);
             _popups.PopupEntity(Loc.GetString("mopping-system-full", ("used", target)), user, user);
         }
-
-        _solutionContainerSystem.TryAddSolution(used, absorberSoln, nonWater);
         _audio.PlayPvs(component.TransferSound, target);
         _useDelay.BeginDelay(used);
         return true;
