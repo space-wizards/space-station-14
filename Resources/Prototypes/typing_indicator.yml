@@ -1,37 +1,37 @@
 ﻿- type: typingIndicator
   id: default
   typingState: default0
-  idleState: default2 # Corvax-TypingIndicator
+  idleState: default3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: robot
   typingState: robot0
-  idleState: robot2 # Corvax-TypingIndicator
+  idleState: robot3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: alien
   typingState: alien0
-  idleState: alien2 # Corvax-TypingIndicator
+  idleState: alien3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: guardian
   typingState: guardian0
-  idleState: guardian2 # Corvax-TypingIndicator
+  idleState: guardian3 # Corvax-TypingIndicator
 
 - type: typingIndicator
   id: holo
   typingState: holo0
-  idleState: holo2 # Corvax-TypingIndicator
-#  offset: 0, 0.0625 # Corvax-TypingIndicator: TODO: Make it 32px
+  idleState: holo3 # Corvax-TypingIndicator
+  offset: 0, 0.0625
 
 - type: typingIndicator
   id: lawyer
   typingState: lawyer0
-  idleState: lawyer2 # Corvax-TypingIndicator
-#  offset: 0, 0.125 # Corvax-TypingIndicator: TODO: Make it 32px
+  idleState: lawyer3 # Corvax-TypingIndicator
+  offset: 0, 0.125
 
 - type: typingIndicator
   id: moth
   typingState: moth0
-  idleState: moth2 # Corvax-TypingIndicator
-#  offset: 0, 0.125 # Corvax-TypingIndicator: TODO: Make it 32px
+  idleState: moth3 # Corvax-TypingIndicator
+  offset: 0, 0.125
