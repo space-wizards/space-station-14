@@ -31,6 +31,7 @@
       size: 50
     - type: ItemCooldown
     - type: Speech
+      speechVerb: Robotic
     - type: Defibrillator
       zapHeal:
         types:

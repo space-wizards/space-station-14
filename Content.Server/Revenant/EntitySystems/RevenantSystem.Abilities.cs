@@ -320,7 +320,7 @@ public sealed partial class RevenantSystem
 
         foreach (var ent in _lookup.GetEntitiesInRange(uid, component.MalfunctionRadius))
         {
-            _emag.DoEmagEffect(ent, ent); //it emags itself. spooky.
+            _emag.DoEmagEffect(uid, ent); //it does not emag itself. adorable.
         }
     }
 }

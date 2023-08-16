@@ -58,6 +58,7 @@
   - type: TypingIndicator
     proto: robot
   - type: Speech
+    speechVerb: Robotic
     speechSounds: Pai
     # This has to be installed because otherwise they're not "alive",
     #  so they can ghost and come back.
@@ -86,6 +87,12 @@
     - state: pai-base
     - state: syndicate-pai-off-overlay
       shader: unshaded
+  - type: ToggleableGhostRole
+    roleName: pai-system-role-name-syndicate
+    roleDescription: pai-system-role-description-syndicate
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Syndicate
   - type: ActiveRadio
     channels:
     - Syndicate
