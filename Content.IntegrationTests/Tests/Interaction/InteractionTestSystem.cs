@@ -13,7 +13,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 public sealed class InteractionTestSystem : EntitySystem
 {
     public Dictionary<int, EntityUid> Ghosts = new();
-    public Dictionary<EntityUid, EntityUid> EntChanges = new();
+    public Dictionary<NetEntity, NetEntity> EntChanges = new();
 
     public override void Initialize()
     {
@@ -23,7 +23,8 @@ public sealed class InteractionTestSystem : EntitySystem
 
     private void OnEntChange(ConstructionChangeEntityEvent ev)
     {
-        EntChanges[ev.Old] = ev.New;
+        Assert.That(!IsClientSide(ev.Old) && !IsClientSide(ev.New));
+        EntChanges[ToNetEntity(ev.Old)] = ToNetEntity(ev.New);
     }
 
     private void OnAck(AckStructureConstructionMessage ev)

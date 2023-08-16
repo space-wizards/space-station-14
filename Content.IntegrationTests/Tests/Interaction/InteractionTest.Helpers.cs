@@ -393,16 +393,15 @@ public abstract partial class InteractionTest
     /// </summary>
     protected async Task CheckTargetChange(bool shouldSucceed)
     {
-        if (ClientTarget == null || Target == null)
+        if (Target == null)
             return;
 
-        var target = ClientTarget.Value;
-
+        var target = Target.Value;
         await RunTicks(5);
 
-        if (!target.IsValid())
+        if (ClientTarget != null && CEntMan.IsClientSide(ClientTarget.Value))
         {
-            Assert.That(CEntMan.Deleted(target), Is.EqualTo(shouldSucceed),
+            Assert.That(CEntMan.Deleted(ClientTarget.Value), Is.EqualTo(shouldSucceed),
                 $"Construction ghost was {(shouldSucceed ? "not deleted" : "deleted")}.");
 
             if (shouldSucceed)
@@ -415,15 +414,15 @@ public abstract partial class InteractionTest
             }
         }
 
-        if (STestSystem.EntChanges.TryGetValue(SEntMan.ToEntity(Target.Value), out var newServerWeh))
+        if (STestSystem.EntChanges.TryGetValue(Target.Value, out var newServerWeh))
         {
             await Server.WaitPost(
                 () => SLogger.Debug($"Construction entity {Target.Value} changed to {newServerWeh}"));
 
-            Target = SEntMan.ToNetEntity(newServerWeh);
+            Target = newServerWeh;
         }
 
-        if (ClientTarget != target)
+        if (Target != target)
             await CheckTargetChange(shouldSucceed);
     }
 
