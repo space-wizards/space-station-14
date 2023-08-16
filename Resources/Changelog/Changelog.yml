@@ -1,10 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added space lube tube - use it on items to make them slip out of hands!,
-    type: Add}
-  id: 4110
-  time: '2023-06-28T02:48:06.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Maps now draw their atmospheric gasses., type: Add}
@@ -3030,3 +3024,8 @@ Entries:
   - {message: Syndicate pAI's are now equipped with radio transmitters., type: Tweak}
   id: 4609
   time: '2023-08-16T06:59:42.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Restructured cannabis!, type: Tweak}
+  id: 4610
+  time: '2023-08-16T07:04:26.0000000+00:00'
