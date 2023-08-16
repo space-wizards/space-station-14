@@ -7,3 +7,6 @@ lathe-menu-search-filter = Filter
 lathe-menu-amount = Amount:
 lathe-menu-material-display = {$material} {$amount} cm³
 lathe-menu-no-materials-message = No materials loaded
+lathe-menu-materials-ejection = Eject materials
+lathe-menu-materials-ejection-title = Select materials to eject
+lathe-menu-size-of-stack-to-eject = Number of items ejected
