@@ -204,10 +204,10 @@
 - type: entity
   parent: AirlockCommand
   id: AirlockChiefMedicalOfficerLocked
-  suffix: ChiefMedicalOfficer, Locked
   components:
   - type: AccessReader
     access: [["ChiefMedicalOfficer"]]
+  suffix: ChiefMedicalOfficer, Locked
 
 - type: entity
   parent: AirlockCommand
