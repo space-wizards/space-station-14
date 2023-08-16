@@ -7,11 +7,12 @@
     <BoxContainer Margin="4 0" Orientation="Horizontal">
         <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Center" Margin="5">
             <GridContainer Margin="2 0 0 0" Columns="2" HorizontalExpand="True">
-                <Label Text="{Loc 'portable-generator-ui-power-switch'}" HorizontalExpand="True" />
-                <BoxContainer Orientation="Horizontal" MinWidth="120">
-                    <Button Name="OnButton" Text="{Loc 'portable-generator-ui-power-switch-on'}" StyleClasses="OpenRight" />
-                    <Button Name="OffButton" Text="{Loc 'portable-generator-ui-power-switch-off'}" StyleClasses="OpenLeft" />
-                </BoxContainer>
+                <Label Name="StatusLabel" Text="{Loc 'portable-generator-ui-power-switch'}" HorizontalExpand="True" />
+                <Control MinWidth="120">
+                    <Button Name="StartButton" Text="{Loc 'portable-generator-ui-start'}" />
+                    <Button Name="StopButton" Text="{Loc 'portable-generator-ui-stop'}" />
+                    <ProgressBar Name="StartProgress" MaxValue="1" />
+                </Control>
                 <!-- Power -->
                 <Label Text="{Loc 'portable-generator-ui-target-power-label'}"/>
                 <SpinBox Name="TargetPower" HorizontalExpand="True"/>

@@ -57,18 +57,21 @@ public sealed class PortableGeneratorSetTargetPowerMessage : BoundUserInterfaceM
         TargetPower = targetPower;
     }
 }
+
 /// <summary>
-/// Sent to the server to set the power switch of a portable generator.
+/// Sent to the server to try to start a portable generator.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class PortableGeneratorSetPowerSwitchMessage : BoundUserInterfaceMessage
+public sealed class PortableGeneratorStartMessage : BoundUserInterfaceMessage
 {
-    public bool PowerSwitch;
+}
 
-    public PortableGeneratorSetPowerSwitchMessage(bool powerSwitch)
-    {
-        PowerSwitch = powerSwitch;
-    }
+/// <summary>
+/// Sent to the server to try to stop a portable generator.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PortableGeneratorStopMessage : BoundUserInterfaceMessage
+{
 }
 
 /// <summary>

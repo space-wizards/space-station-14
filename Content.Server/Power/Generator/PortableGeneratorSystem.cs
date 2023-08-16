@@ -32,6 +32,24 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
         SubscribeLocalEvent<PortableGeneratorComponent, GetVerbsEvent<AlternativeVerb>>(GetAlternativeVerb);
         SubscribeLocalEvent<PortableGeneratorComponent, GeneratorStartedEvent>(GeneratorTugged);
+        SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStartMessage>(GeneratorStartMessage);
+        SubscribeLocalEvent<PortableGeneratorComponent, PortableGeneratorStopMessage>(GeneratorStopMessage);
+    }
+
+    private void GeneratorStopMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStopMessage args)
+    {
+        if (args.Session.AttachedEntity == null)
+            return;
+
+        StopGenerator(uid, component, args.Session.AttachedEntity.Value);
+    }
+
+    private void GeneratorStartMessage(EntityUid uid, PortableGeneratorComponent component, PortableGeneratorStartMessage args)
+    {
+        if (args.Session.AttachedEntity == null)
+            return;
+
+        StartGenerator(uid, component, args.Session.AttachedEntity.Value);
     }
 
     private void StartGenerator(EntityUid uid, PortableGeneratorComponent component, EntityUid user)
