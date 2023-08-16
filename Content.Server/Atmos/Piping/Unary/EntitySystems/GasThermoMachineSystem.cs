@@ -50,8 +50,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
 
-            if (!(_power.IsPowered(uid) && TryComp(uid, out ApcPowerReceiverComponent? receiver))
-                || !TryComp(uid, out NodeContainerComponent? nodeContainer)
+            if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
+                || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
                 || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
             {
                 return;
@@ -84,7 +84,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             var heatCapacityPartRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
             thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(heatCapacityPartRating, 2);
-            if (TryComp(uid, out ApcPowerReceiverComponent? receiver))
+            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
             {
                 receiver.Load = thermoMachine.HeatCapacity;
             }
