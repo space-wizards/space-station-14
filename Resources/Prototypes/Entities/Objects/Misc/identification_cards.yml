@@ -558,6 +558,9 @@
     interfaces:
       - key: enum.AgentIDCardUiKey.Key
         type: AgentIDCardBoundUserInterface
+  - type: Access
+    tags:
+    - SyndicateAgent
 
 - type: entity
   parent: IDCardStandard
@@ -582,6 +585,7 @@
   - type: Access
     tags:
     - NuclearOperative
+    - SyndicateAgent
 
 - type: entity
   parent: IDCardStandard
