@@ -2,11 +2,8 @@
     xmlns="https://spacestation14.io"
     Title="{Loc 'lathe-menu-materials-ejection-title'}"
     MinSize="300 100"
-    SetSize="300 450">
-    <BoxContainer VerticalAlignment="Top" HorizontalAlignment="Right" VerticalExpand="True" HorizontalExpand="True">
-        <Label Text="{Loc 'lathe-menu-size-of-stack-to-eject'}"/>
-    </BoxContainer>
-    <ScrollContainer MinHeight="80" Margin="0 30 0 0">
+    SetSize="350 475">
+    <ScrollContainer MinHeight="80">
         <BoxContainer
             Name="MaterialsList"
             Orientation="Vertical"

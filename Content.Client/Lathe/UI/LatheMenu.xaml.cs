@@ -149,9 +149,7 @@ public sealed partial class LatheMenu : DefaultWindow
 
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
-                sb.Append(adjustedAmount);
-                sb.Append(' ');
-                sb.Append(Loc.GetString(proto.Name));
+                sb.Append(Loc.GetString("lathe-menu-tooltip-display", ("amount", adjustedAmount), ("material", Loc.GetString(proto.Name))));
             }
 
             var icon = prototype.Icon == null

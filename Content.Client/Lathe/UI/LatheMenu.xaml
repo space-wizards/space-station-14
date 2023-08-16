@@ -3,7 +3,7 @@
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="300 450"
-    SetSize="300 450">
+    SetSize="350 475">
     <BoxContainer
         Orientation="Vertical"
         VerticalExpand="True"
