@@ -76,7 +76,10 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     private void OnTargetPowerSet(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorSetTargetPowerMessage args)
     {
-        component.TargetPower = Math.Clamp(args.TargetPower, 0, component.MaxTargetPower / 1000) * 1000;
+        component.TargetPower = Math.Clamp(
+            args.TargetPower,
+            component.MinTargetPower / 1000,
+            component.MaxTargetPower / 1000) * 1000;
     }
 
     public void SetFuelGeneratorOn(EntityUid uid, bool on, FuelGeneratorComponent? generator = null)

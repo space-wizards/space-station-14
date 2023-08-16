@@ -34,6 +34,15 @@ public sealed partial class FuelGeneratorComponent : Component
     public float MaxTargetPower = 30_000.0f;
 
     /// <summary>
+    /// The minimum target power.
+    /// </summary>
+    /// <remarks>
+    /// Setting this to any value above 0 means that the generator can't idle without consuming some amount of fuel.
+    /// </remarks>
+    [DataField("minTargetPower"), ViewVariables(VVAccess.ReadWrite)]
+    public float MinTargetPower = 1_000;
+
+    /// <summary>
     /// The "optimal" power at which the generator is considered to be at 100% efficiency.
     /// </summary>
     [DataField("optimalPower"), ViewVariables(VVAccess.ReadWrite)]
