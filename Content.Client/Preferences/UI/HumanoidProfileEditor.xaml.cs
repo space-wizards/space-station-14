@@ -538,7 +538,7 @@ namespace Content.Client.Preferences.UI
 
             foreach (var department in _prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
             {
-                var departmentName = Loc.GetString($"department-{department.ID}");
+                var departmentName = Loc.GetString(department.Name); //Imperial department name localization
 
                 if (!_jobCategories.TryGetValue(department.ID, out var category))
                 {

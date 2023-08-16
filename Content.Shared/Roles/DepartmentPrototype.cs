@@ -24,4 +24,11 @@ public sealed class DepartmentPrototype : IPrototype
     [ViewVariables(VVAccess.ReadWrite),
      DataField("roles", customTypeSerializer: typeof(PrototypeIdListSerializer<JobPrototype>))]
     public List<string> Roles = new();
+
+    //Imperial Departments havent name in prototype!?
+    /// <summary>
+    ///     A name string to display in the character menu.
+    /// </summary>
+    [DataField("name", required: true)]
+    public string Name = default!;
 }
