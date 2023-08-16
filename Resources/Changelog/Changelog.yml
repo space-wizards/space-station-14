@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Maps now draw their atmospheric gasses., type: Add}
-  id: 4111
-  time: '2023-06-28T11:22:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Snow planets now have minerals and rocks on them., type: Add}
   id: 4112
   time: '2023-06-28T11:32:02.0000000+00:00'
@@ -3029,3 +3024,9 @@ Entries:
   - {message: Restructured cannabis!, type: Tweak}
   id: 4610
   time: '2023-08-16T07:04:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin ghosts are now able to interact with user interfaces from any
+      range., type: Fix}
+  id: 4611
+  time: '2023-08-16T08:03:42.0000000+00:00'
