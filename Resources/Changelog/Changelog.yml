@@ -1,12 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: 'Hazardous and Extreme expeditions can have more dangerous modifiers,
-      of which temperature has been added.', type: Tweak}
-  - {message: Hazardous and Extreme expeditions give 4 and 5 rewards respectively.,
-    type: Tweak}
-  id: 4115
-  time: '2023-06-28T14:01:27.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'Added Lead, a tasteless, incredibly powerful but slow-acting poison
@@ -3031,3 +3023,9 @@ Entries:
       is more varied and valuable overall.', type: Add}
   id: 4614
   time: '2023-08-16T19:11:02.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Higher rating stock parts are now cheaper to make. Print a bunch of
+      them and upgrade stuff!, type: Tweak}
+  id: 4615
+  time: '2023-08-16T22:12:09.0000000+00:00'
