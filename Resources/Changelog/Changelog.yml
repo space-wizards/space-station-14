@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: The lsobjectives command now has autocompletion., type: Tweak}
-  id: 4114
-  time: '2023-06-28T13:47:46.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: 'Hazardous and Extreme expeditions can have more dangerous modifiers,
@@ -3030,3 +3025,9 @@ Entries:
   - {message: 'Taxibots, cleanbots, and similar now have binary radio.', type: Add}
   id: 4613
   time: '2023-08-16T13:18:57.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: 'Reworked the loot table from salvage spawners, the stuff you can find
+      is more varied and valuable overall.', type: Add}
+  id: 4614
+  time: '2023-08-16T19:11:02.0000000+00:00'
