@@ -10,8 +10,8 @@ namespace Content.Shared.Sericulture;
 /// Should be applied to any mob that you want to be able to produce any material with an action and the cost of hunger.
 /// TODO: Probably adjust this to utilize organs?
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(SericultureSystem))]
-public sealed class SericultureComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedSericultureSystem))]
+public sealed partial class SericultureComponent : Component
 {
     /// <summary>
     /// The text that pops up whenever sericulture fails for not having enough hunger.
