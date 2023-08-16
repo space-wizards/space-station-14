@@ -37,3 +37,6 @@ ent-CrateFunToyBox = { ent-CrateToyBox }
     .desc = { ent-CrateToyBox.desc }
 ent-CrateFunBikeHornImplants = ящик хонк-имплантов
     .desc = Тысяча гудков за день отпугнёт СБ на день!
+ent-CrateFunMysteryFigurines = ящик минифигурок Загадочные космонавты
+    .desc = Коллекция из 10 коробок загадочных минифигурок. Дубликаты возврату не подлежат.
+
