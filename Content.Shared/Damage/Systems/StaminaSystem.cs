@@ -60,6 +60,8 @@ public sealed partial class StaminaSystem : EntitySystem
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ProjectileHitEvent>(OnProjectileHit);
         SubscribeLocalEvent<StaminaDamageOnCollideComponent, ThrowDoHitEvent>(OnThrowHit);
         SubscribeLocalEvent<StaminaDamageOnHitComponent, MeleeHitEvent>(OnMeleeHit);
+
+        SubscribeLocalEvent<StaminaDamageOnCollideComponent, StopThrowEvent>(OnThrowStopped);
     }
 
     private void OnStamUnpaused(EntityUid uid, StaminaComponent component, ref EntityUnpausedEvent args)
@@ -219,6 +221,9 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
+        if (!component.CanMakeStaminaDamage)
+            return;
+        component.CanMakeStaminaDamage = false;
         OnCollide(uid, component, args.Target);
     }
 
@@ -242,6 +247,11 @@ public sealed partial class StaminaSystem : EntitySystem
 
         var severity = ContentHelpers.RoundToLevels(MathF.Max(0f, component.CritThreshold - component.StaminaDamage), component.CritThreshold, 7);
         _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
+    }
+
+    private void OnThrowStopped(EntityUid uid, StaminaDamageOnCollideComponent component, StopThrowEvent args)
+    {
+        component.CanMakeStaminaDamage = true;
     }
 
     /// <summary>
