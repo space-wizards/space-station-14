@@ -50,7 +50,7 @@ public sealed class GrilleWindowConstruction : InteractionTest
         await Client.WaitPost(() =>
         {
             var proto = ProtoMan.Index<ConstructionPrototype>(second);
-            Assert.That(CConSys.TrySpawnGhost(proto, TargetCoords, Direction.South, out _), Is.False);
+            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(TargetCoords), Direction.South, out _), Is.False);
         });
     }
 }

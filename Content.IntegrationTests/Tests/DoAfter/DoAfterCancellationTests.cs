@@ -50,7 +50,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await StartConstruction(WallConstruction.Wall);
         await Interact(Steel, 5, awaitDoAfters: false);
         await CancelDoAfters();
-        Assert.That(Target.HasValue && CEntMan.IsClientSide(Target.Value));
+        Assert.That(Target.HasValue && CEntMan.IsClientSide(CEntMan.ToEntity(Target.Value)));
 
         await Interact(Steel, 5);
         AssertPrototype(WallConstruction.Girder);
@@ -84,7 +84,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await AssertTile(Floor);
 
         // Second DoAfter cancels the first.
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.ToCoordinates(TargetCoords), SEntMan.ToEntity(Target)));
         Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
         await AssertTile(Floor);
 
@@ -116,7 +116,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
 
         // Second DoAfter cancels the first.
         // Not using helper, because it runs too many ticks & causes the do-after to finish.
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.ToCoordinates(TargetCoords), SEntMan.ToEntity(Target)));
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
@@ -139,7 +139,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(1));
             Assert.That(comp.IsWelded, Is.True);
         });
-        await Server.WaitPost(() => InteractSys.UserInteraction(Player, TargetCoords, Target));
+        await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.ToCoordinates(TargetCoords), SEntMan.ToEntity(Target)));
         Assert.Multiple(() =>
         {
             Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
