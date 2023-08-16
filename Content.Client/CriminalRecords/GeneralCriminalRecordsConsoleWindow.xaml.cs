@@ -16,7 +16,8 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
     public Action<StationRecordKey?>? OnKeySelected;
     public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
     public Action<BaseButton.ButtonEventArgs, string?, string?>? OnArrestButtonPressed;
-    public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string?>? OnStatusOptionButtonSelected;
+    public Action<BaseButton.ButtonEventArgs, string?, string?>? OnReleaseButtonPressed;
+    public Action<BaseButton.ButtonEventArgs, string?, string?>? OnWantedButtonPressed;
     private bool _isPopulating;
     private string? _recordName;
     private GeneralStationRecordFilterType _currentFilterType;
@@ -74,13 +75,10 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
         };
 
         ArrestButton.OnPressed += e => OnArrestButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
-
-        StatusOptionButton.OnItemSelected += args =>
-        {
-            args.Button.SelectId(args.Id);
-            OnStatusOptionButtonSelected?.Invoke(args, (SecurityStatus) StatusOptionButton.GetItemMetadata(args.Id)!,
-                ReasonLineEdit.Text, _recordName);
-        };
+		
+		ReleaseButton.OnPressed += e => OnReleaseButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
+		
+		WantedButton.OnPressed += e => OnWantedButtonPressed?.Invoke(e, ReasonLineEdit.Text, _recordName);
 
     }
 	
@@ -121,38 +119,30 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
 
         RecordContainerStatus.Visible = state.CriminalRecord == null;
 
-        ArrestButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-records-release-button") : Loc.GetString("general-criminal-records-arrest-button");
-
+        ArrestButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-records-arrested-button") : Loc.GetString("general-criminal-records-arrest-button");
+		ReleaseButton.Text = state.CriminalRecord?.Status == SecurityStatus.Detained ? Loc.GetString("general-criminal-records-release-button") : state.CriminalRecord?.Status == SecurityStatus.Wanted ? Loc.GetString("general-criminal-records-not-wanted-button") : Loc.GetString("general-criminal-records-none-button");
+		WantedButton.Text = state.CriminalRecord?.Status == SecurityStatus.Wanted ? Loc.GetString("general-criminal-records-wanted-button") : Loc.GetString("general-criminal-records-set-wanted-button");
+		
+		
         ReasonLineEdit.Visible = state.SelectedKey != null;
         ArrestButton.Visible = state.SelectedKey != null;
+        ReleaseButton.Visible = state.SelectedKey != null;
+        WantedButton.Visible = state.SelectedKey != null;
         CriminalDivider.Visible = state.SelectedKey != null;
-        StatusOptionButton.Visible = state.SelectedKey != null;
-
-        StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
 
         if ((state.CriminalRecord != null) & (state.StationRecord != null))
         {
             ReasonLineEdit.Visible = state.SelectedKey != null;
             ArrestButton.Visible = state.SelectedKey != null;
             CriminalDivider.Visible = state.SelectedKey != null;
-            StatusOptionButton.Visible = state.SelectedKey != null;
+			ReleaseButton.Visible = state.SelectedKey != null;
+			WantedButton.Visible = state.SelectedKey != null;
 
-            StatusOptionButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
-
-            if (!StatusOptionButton.Disabled)
-            {
-                StatusOptionButton.Clear();
-
-                var idNone = AddStatusSelect(Loc.GetString(GetStatusString(SecurityStatus.None)), SecurityStatus.None);
-                if (SecurityStatus.None == state.CriminalRecord?.Status)
-                    StatusOptionButton.Select(idNone);
-
-                var idWanted = AddStatusSelect(Loc.GetString(GetStatusString(SecurityStatus.Wanted)), SecurityStatus.Wanted);
-                if (SecurityStatus.Wanted == state.CriminalRecord?.Status)
-                    StatusOptionButton.Select(idWanted);
-            }
-            else
-                StatusOptionButton.AddItem(Loc.GetString(GetStatusString(SecurityStatus.Detained)));
+            ArrestButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Detained;
+			
+			WantedButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.Wanted;
+			
+			ReleaseButton.Disabled = state.CriminalRecord?.Status == SecurityStatus.None;
 
             RecordContainerStatus.Visible = state.SelectedKey == null;
             RecordContainerStatus.Text = state.SelectedKey != null
@@ -276,13 +266,6 @@ public sealed partial class GeneralCriminalRecordsConsoleWindow : DefaultWindow
             label.SetMessage(criminalRecord.Reason);
             RecordContainer.AddChild(label);
         }
-    }
-
-    private int AddStatusSelect(string name, SecurityStatus status)
-    {
-        StatusOptionButton.AddItem(name);
-        StatusOptionButton.SetItemMetadata(StatusOptionButton.ItemCount - 1, status);
-        return StatusOptionButton.ItemCount - 1;
     }
 
     private void FilterListingOfRecords(string text = "")

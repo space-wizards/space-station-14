@@ -2,8 +2,15 @@ general-criminal-records-console-window-title = Criminal records console
 general-criminal-records-console-select-records-info = Select the record.
 general-criminal-records-console-empty-state = Records not found!
 general-criminal-records-console-no-records-found = No records that match the selected options.
-general-criminal-records-arrest-button = Arrest
+
+general-criminal-records-arrested-button = Detained
+general-criminal-records-arrest-button = Detain
 general-criminal-records-release-button = Release
+general-criminal-records-not-wanted-button = Put Off Wanted
+general-criminal-records-none-button = Not Wanted
+general-criminal-records-wanted-button = Wanted
+general-criminal-records-set-wanted-button = Put On Wanted
+
 general-criminal-records-reason-placeholder = Reason
 general-criminal-records-permission-denied = Access denied
 general-criminal-records-console-records-age = Age: {$age}
@@ -35,6 +42,6 @@ general-criminal-records-dna-filter = DNA
 general-criminal-records-console-search-records = Search
 general-criminal-records-console-reset-filters = Reset
 
-general-criminal-records-console-records-status-none = No Status
+general-criminal-records-console-records-status-none = Not Wanted
 general-criminal-records-console-records-status-detained = Detained
 general-criminal-records-console-records-status-wanted = Wanted

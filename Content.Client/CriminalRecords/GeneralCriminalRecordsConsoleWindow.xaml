@@ -25,7 +25,8 @@
                     <LineEdit Name="ReasonLineEdit" HorizontalExpand="True" Visible="False" PlaceHolder="{Loc 'general-criminal-records-reason-placeholder'}"/>
                     <BoxContainer Orientation="Horizontal" Margin="5 5 5 5" >
                         <Button Name="ArrestButton" Visible="False" HorizontalExpand="True" />
-                        <OptionButton Name="StatusOptionButton" Visible="False" HorizontalExpand="True" />
+						<Button Name="ReleaseButton" Visible="False" HorizontalExpand="True" />
+                        <Button Name="WantedButton" Visible="False" HorizontalExpand="True" />
                     </BoxContainer>
                 </BoxContainer>
             </BoxContainer>

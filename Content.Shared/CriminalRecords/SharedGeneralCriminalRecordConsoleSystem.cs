@@ -77,15 +77,26 @@ public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessag
 }
 
 [Serializable, NetSerializable]
-public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessage
+public sealed class CriminalRecordWantedButtonPressed : BoundUserInterfaceMessage
 {
-    public SecurityStatus Status;
     public string? Reason;
     public string? Name;
 
-    public CriminalStatusOptionButtonSelected(SecurityStatus status, string? reason, string? name)
+    public CriminalRecordWantedButtonPressed(string? reason, string? name)
     {
-        Status = status;
+        Reason = reason;
+        Name = name;
+    }
+}
+
+[Serializable, NetSerializable]
+public sealed class CriminalRecordReleaseButtonPressed : BoundUserInterfaceMessage
+{
+    public string? Reason;
+    public string? Name;
+
+    public CriminalRecordReleaseButtonPressed(string? reason, string? name)
+    {
         Reason = reason;
         Name = name;
     }

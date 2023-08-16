@@ -23,7 +23,8 @@ public sealed class GeneralCriminalRecordsConsoleBoundUserInterface : BoundUserI
         _window.OpenCentered();
 
         _window.OnArrestButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordArrestButtonPressed(reason, name));
-        _window.OnStatusOptionButtonSelected += (_, status, reason, name) => SendMessage(new CriminalStatusOptionButtonSelected(status, reason, name));
+		_window.OnReleaseButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordReleaseButtonPressed(reason, name));
+		_window.OnWantedButtonPressed += (_, reason, name) => SendMessage(new CriminalRecordWantedButtonPressed(reason, name));
     }
 
     private void OnKeySelected(StationRecordKey? key)

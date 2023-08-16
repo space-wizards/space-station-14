@@ -358,6 +358,7 @@
       - BoozeDispenserMachineCircuitboard
       - SodaDispenserMachineCircuitboard
       - TelecomServerCircuitboard
+      - CriminalRecordsComputerCircuitboard
       - MassMediaCircuitboard
   - type: MaterialStorage
     whitelist:

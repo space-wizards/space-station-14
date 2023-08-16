@@ -300,6 +300,15 @@
      Gold: 100
 
 - type: latheRecipe
+  id: CriminalRecordsComputerCircuitboard
+  result: CriminalRecordsComputerCircuitboard
+  completetime: 4
+  materials:
+     Steel: 100
+     Glass: 900
+     Gold: 100
+
+- type: latheRecipe
   id: RadarConsoleCircuitboard
   result: RadarConsoleCircuitboard
   completetime: 4
