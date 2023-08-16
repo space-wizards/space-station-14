@@ -57,12 +57,23 @@
 			"name": "regenerative-mesh"
 		},
 		{
-			"name": "regenerative-mesh-inhand-left",
-			"directions": 4
+			"name": "bloodpack-empty",
 		},
 		{
-			"name": "regenerative-mesh-inhand-right",
-			"directions": 4
+			"name": "bloodpack-liquid-1",
+		},
+                {
+			"name": "bloodpack-liquid-2"
+		},
+		{
+			"name": "bloodpack-liquid-3",
+		},
+		{
+			"name": "bloodpack-liquid-4",
+		},
+		{
+			"name": "bloodpack-liquid-5"
 		}
+
 	]
 }
