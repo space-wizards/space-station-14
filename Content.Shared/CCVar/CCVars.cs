@@ -1,6 +1,5 @@
 using Robust.Shared;
 using Robust.Shared.Configuration;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.CCVar
 {
@@ -866,11 +865,17 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<float> AdminLogsQueueSendDelay =
             CVarDef.Create("adminlogs.queue_send_delay_seconds", 5f, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save in-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsQueueMax =
             CVarDef.Create("adminlogs.queue_max", 5000, CVar.SERVERONLY);
 
+        // When to skip the waiting time to save pre-round admin logs, if no admin logs are currently being saved
         public static readonly CVarDef<int> AdminLogsPreRoundQueueMax =
             CVarDef.Create("adminlogs.pre_round_queue_max", 5000, CVar.SERVERONLY);
+
+        // When to start dropping logs
+        public static readonly CVarDef<int> AdminLogsDropThreshold =
+            CVarDef.Create("adminlogs.drop_threshold", 20000, CVar.SERVERONLY);
 
         // How many logs to send to the client at once
         public static readonly CVarDef<int> AdminLogsClientBatchSize =
