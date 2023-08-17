@@ -766,7 +766,7 @@
 - type: entity
   parent: AirlockSyndicate
   id: AirlockSyndicateLocked
-  suffix: Locked
+  suffix: Syndicate, Locked
   components:
   - type: AccessReader
     access: [["SyndicateAgent"]]
