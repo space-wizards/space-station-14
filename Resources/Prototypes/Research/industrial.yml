@@ -201,3 +201,15 @@
   - ClothingBackpackHolding
   - ClothingBackpackSatchelHolding
   - ClothingBackpackDuffelHolding
+
+- type: technology
+  id: SpeedTech
+  name: research-technology-speed-tech
+  icon:
+    sprite: Clothing/Shoes/Boots/speedboots.rsi
+    state: icon
+  discipline: Industrial
+  tier: 3
+  cost: 7500
+  recipeUnlocks:
+  - ClothingShoesSpeedBoots

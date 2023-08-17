@@ -93,6 +93,7 @@
     Steel: 1100
     Plastic: 700
     Gold: 200
+    Uranium: 150
 
 - type: latheRecipe
   id: ModularReceiver

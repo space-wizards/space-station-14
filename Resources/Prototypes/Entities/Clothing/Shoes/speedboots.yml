@@ -10,7 +10,7 @@
   - type: Clothing
     sprite: Clothing/Shoes/Boots/speedboots.rsi
   - type: StaticPrice
-    price: 500
+    price: 2000
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1.2
