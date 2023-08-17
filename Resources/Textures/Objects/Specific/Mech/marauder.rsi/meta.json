@@ -3,8 +3,8 @@
     "license" : "CC-BY-SA-3.0",
     "version": 1,
     "size": {
-      "x": 64,
-      "y": 64
+      "x": 32,
+      "y": 32
     },
     "states": [
         {

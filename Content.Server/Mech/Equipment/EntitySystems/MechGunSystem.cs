@@ -1,44 +1,44 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Numerics;
+using Content.Server.Mech.Equipment.Components;
+using Content.Server.Weapons.Ranged.Systems;
+using Content.Shared.Mech.Components;
+using Content.Shared.Mech.Equipment.Components;
+using Content.Shared.Throwing;
+using Content.Shared.Weapons.Ranged.Components;
+using Content.Shared.Weapons.Ranged.Systems;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
 
 namespace Content.Server.Mech.Equipment.EntitySystems;
-public sealed class MechGunSystem
+public sealed class MechGunSystem : EntitySystem
 {
+    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly GunSystem _gunSys = default!;
+    [Dependency] private readonly ThrowingSystem _throwing = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MechGunComponent, ComponentStartup>(OnStartup);
-        SubscribeLocalEvent<MechGunComponent, InteractNoHandEvent>(OnInteract);
+        SubscribeLocalEvent<MechEquipmentComponent, GunShotEvent>(MechGunShot);
     }
 
-    private void OnStartup(EntityUid uid, MechGunComponent component, ComponentStartu args)
+    private void MechGunShot(EntityUid uid, MechEquipmentComponent component, ref GunShotEvent args)
     {
-        component.GunContainer = _container.EnsureContainer<Container>(uid, "item-container");
-
-        if (!PrototypeManager.TryIndex<EntityPrototype>(component.GunPrototype, out var prototype))
+        if (!component.EquipmentOwner.HasValue)
             return;
 
-        var entity = _entityManager.SpawnEntity(component.GunPrototype, Transform(uid).Coordinates);
-        component.GunContainer.Insert(entity);
-    }
-
-    private void OnInteract(EntityUid uid, MechGunComponent component, InteractNoHandEvent args)
-    {
-        if (!component.GunContainer._containerList.Any())
+        if (!TryComp<MechComponent>(component.EquipmentOwner.Value, out var mech))
             return;
 
-        var entity = component.GunContainer._containerList.First(); // Should only be one element
-
-        if (!TryComp<GunComponent>(entity, out var gunComp))
-            return;
-
-        _gunSys.Shoot(entity, gunComp, new List<EntityUid>());
+        var equipment = new List<EntityUid>(mech.EquipmentContainer.ContainedEntities);
+        foreach (var ent in equipment)
+        {
+            if (HasComp<AmmoComponent>(ent))
+            {
+                mech.EquipmentContainer.Remove(ent);
+                _throwing.TryThrow(ent, _random.NextVector2(), _random.Next(5));
+            }
+        }
     }
 }
