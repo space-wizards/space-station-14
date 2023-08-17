@@ -55,6 +55,9 @@
         Slash: 6
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Damageable
+    damageContainer: Biological
+    damageModifierSet: Zombie
 
 - type: entity
   parent: BaseMobFlesh
