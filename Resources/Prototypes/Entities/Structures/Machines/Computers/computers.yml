@@ -281,6 +281,13 @@
   name: criminal records computer
   description: This can be used to check criminal records.
   components:
+  - type: GeneralCriminalRecordsConsole
+  - type: UserInterface
+    interfaces:
+      - key: enum.GeneralCriminalRecordsConsoleKey.Key
+        type: GeneralCriminalRecordsConsoleBoundUserInterface
+  - type: ActivatableUI
+    key: enum.GeneralCriminalRecordsConsoleKey.Key
   - type: Sprite
     layers:
     - map: ["computerLayerBody"]
@@ -295,6 +302,8 @@
     radius: 1.5
     energy: 1.6
     color: "#1f8c28"
+  - type: AccessReader
+    access: [["Security"]]
   - type: Computer
     board: CriminalRecordsComputerCircuitboard
 
