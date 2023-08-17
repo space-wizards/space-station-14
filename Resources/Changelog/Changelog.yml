@@ -1,16 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: The culprit sharpening everyone's rock guitars has been caught. They
-      should now be more dull and subsequently weaker as a result., type: Tweak}
-  id: 4123
-  time: '2023-06-28T20:03:44.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Janitor trolley is functional again. Its storage is temporarily removed.,
-    type: Fix}
-  id: 4124
-  time: '2023-06-28T20:10:22.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fixed slimes not being able to play sounds, type: Fix}
@@ -3023,3 +3011,14 @@ Entries:
   - {message: Fix emote sounds., type: Fix}
   id: 4622
   time: '2023-08-17T20:40:10.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: You no longer yell uncontrollably when feeling joy., type: Tweak}
+  id: 4623
+  time: '2023-08-17T22:00:13.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: 'Janitors have remembered how to wring a mop, mops can transfer chemicals
+      back to buckets etc again.', type: Fix}
+  id: 4624
+  time: '2023-08-17T22:00:46.0000000+00:00'
