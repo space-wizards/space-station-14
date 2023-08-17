@@ -35,18 +35,21 @@ public sealed class GeneralCriminalRecordConsoleState : BoundUserInterfaceState
     ///     Current selected key.
     /// </summary>
     public StationRecordKey? SelectedKey { get; }
+
     public GeneralCriminalRecord? CriminalRecord { get; }
     public GeneralStationRecord? StationRecord { get; }
     public Dictionary<StationRecordKey, string>? RecordListing { get; }
     public GeneralStationRecordsFilter? Filter { get; }
+    public bool HasAccess { get; }
 
-    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing, GeneralStationRecordsFilter? newFilter)
+    public GeneralCriminalRecordConsoleState(StationRecordKey? key, GeneralStationRecord? stationRecord, GeneralCriminalRecord? criminalRecord, Dictionary<StationRecordKey, string>? recordListing, bool hasAccess, GeneralStationRecordsFilter? newFilter)
     {
         SelectedKey = key;
         StationRecord = stationRecord;
         CriminalRecord = criminalRecord;
         RecordListing = recordListing;
         Filter = newFilter;
+        HasAccess = hasAccess;
     }
 
     public bool IsEmpty() => SelectedKey == null && StationRecord == null && CriminalRecord == null && RecordListing == null;
@@ -66,10 +69,10 @@ public sealed class SelectGeneralCriminalRecord : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessage
 {
-    public string? Reason;
+    public string Reason;
     public string Name;
 
-    public CriminalRecordArrestButtonPressed(string? reason, string name)
+    public CriminalRecordArrestButtonPressed(string reason, string name)
     {
         Reason = reason;
         Name = name;
@@ -80,10 +83,10 @@ public sealed class CriminalRecordArrestButtonPressed : BoundUserInterfaceMessag
 public sealed class CriminalStatusOptionButtonSelected : BoundUserInterfaceMessage
 {
     public SecurityStatus Status;
-    public string? Reason;
+    public string Reason;
     public string Name;
 
-    public CriminalStatusOptionButtonSelected(SecurityStatus status, string? reason, string name)
+    public CriminalStatusOptionButtonSelected(SecurityStatus status, string reason, string name)
     {
         Status = status;
         Reason = reason;

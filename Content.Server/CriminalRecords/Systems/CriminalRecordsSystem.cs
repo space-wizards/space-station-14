@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.StationRecords.Systems;
 using Content.Shared.CriminalRecords;
 using Content.Shared.Security;
@@ -8,7 +9,7 @@ namespace Content.Server.CriminalRecords.Systems;
 /// <summary>
 ///     Criminal records
 ///
-///     Criminal Records inherit Station Records' core and add roleplaying tools for Security:
+///     Criminal Records inherit Station Records' core and add role-playing tools for Security:
 ///         - Ability to track a person's status (Detained/Wanted/None)
 ///         - See security officers' actions in Criminal Records in the radio
 ///         - See reasons for any action with no need to ask the officer personally
@@ -37,10 +38,14 @@ public sealed class CriminalRecordsSystem : EntitySystem
         _stationRecordsSystem.Synchronize(ev.Key.OriginStation);
     }
 
+    /// <summary>
+    /// Tries to change the status of the record found by the StationRecordKey
+    /// </summary>
+    /// <returns>True if the status is changed, false if not</returns>
     public bool TryChangeStatus(EntityUid station, StationRecordKey key, SecurityStatus status,
-        out SecurityStatus updatedStatus, string? reason)
+        [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
     {
-        updatedStatus = default;
+        updatedStatus = null;
 
         if (!_stationRecordsSystem.TryGetRecord(station, key, out GeneralCriminalRecord? record)
             || status == record.Status)
@@ -56,9 +61,13 @@ public sealed class CriminalRecordsSystem : EntitySystem
         return true;
     }
 
-    public bool TryArrest(EntityUid station, StationRecordKey key, out SecurityStatus updatedStatus, string? reason)
+    /// <summary>
+    /// Tries to change the status of the record to Detained or None found by the StationRecordKey
+    /// </summary>
+    /// <returns>True if the status is changed, false if not</returns>
+    public bool TryArrest(EntityUid station, StationRecordKey key, [NotNullWhen(true)] out SecurityStatus? updatedStatus, string? reason)
     {
-        updatedStatus = default;
+        updatedStatus = null;
 
         return TryChangeStatus(station, key, SecurityStatus.Detained, out updatedStatus, reason)
                || TryChangeStatus(station, key, SecurityStatus.None, out updatedStatus, reason);

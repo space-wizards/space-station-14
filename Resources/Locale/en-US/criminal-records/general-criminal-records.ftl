@@ -16,25 +16,36 @@ general-criminal-record-console-record-species = Species: {$species}
 general-criminal-record-console-record-gender = Gender: {$gender}
 general-criminal-record-console-record-fingerprint = Fingerprint: {$fingerprint}
 general-criminal-record-console-record-dna = DNA: {$dna}
-general-criminal-record-console-record-status = Status: {$status}
+general-criminal-record-console-record-status = Status: {$status ->
+    *[none]    None
+    [wanted]   [color=red]Wanted[/color]
+    [detained] [color=dodgerblue]Detained[/color]
+}
 
 ## Security channel notifications
 ### On Arrest/Release button pressed
 
-general-criminal-record-console-detained-with-reason = {$name} has been detained for {$reason} by {$goodguyname}
-general-criminal-record-console-detained-without-reason = {$name} has been detained by {$goodguyname}
+general-criminal-record-console-detained = {$name} has been detained {$hasReason ->
+    *[zero] by {$officer}
+    [other] by {$officer} with reason: {$reason}
+}
 
-general-criminal-record-console-released-with-reason = {$name} has been released from the detention for {$reason} by {$goodguyname}
-general-criminal-record-console-released-without-reason = {$name} has been released from the detention by {$goodguyname}
+general-criminal-record-console-released = {$name} has been released from the detention {$hasReason ->
+    *[zero] by {$officer}
+    [other] by {$officer} with reason: {$reason}
+}
 
 ### On status changed
 
-general-criminal-record-console-wanted-with-reason = {$name} is wanted for {$reason} by {$goodguyname}
-general-criminal-record-console-wanted-without-reason = {$name} is wanted by {$goodguyname}
+general-criminal-record-console-wanted = {$name} is wanted {$hasReason ->
+    *[zero] by {$officer}
+    [other] by {$officer} with reason: {$reason}
+}
 
-general-criminal-record-console-not-wanted-with-reason = {$name} is not wanted anymore for {$reason} by {$goodguyname}
-general-criminal-record-console-not-wanted-without-reason = {$name} is not wanted anymore by {$goodguyname}
-
+general-criminal-record-console-not-wanted = {$name} is not wanted anymore {$hasReason ->
+    *[zero] by {$officer}
+    [other] by {$officer} with reason: {$reason}
+}
 
 ## Filters
 

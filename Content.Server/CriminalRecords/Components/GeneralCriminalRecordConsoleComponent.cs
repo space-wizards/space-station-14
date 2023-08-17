@@ -1,5 +1,7 @@
 using Content.Server.CriminalRecords.Systems;
+using Content.Shared.Radio;
 using Content.Shared.StationRecords;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.CriminalRecords.Components;
 
@@ -21,4 +23,9 @@ public sealed class GeneralCriminalRecordConsoleComponent : Component
     /// </summary>
     [DataField("filter"), ViewVariables]
     public GeneralStationRecordsFilter? Filter;
+
+    [DataField("securityChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
+    public string SecurityChannel = "Security";
+
+    public bool HasAccess = false;
 }

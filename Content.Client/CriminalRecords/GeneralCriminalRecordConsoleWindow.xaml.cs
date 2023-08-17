@@ -15,10 +15,12 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
 {
     public Action<StationRecordKey?>? OnKeySelected;
     public Action<GeneralStationRecordFilterType, string>? OnFiltersChanged;
-    public Action<BaseButton.ButtonEventArgs, string?, string>? OnArrestButtonPressed;
-    public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string?, string>? OnStatusOptionButtonSelected;
+    public Action<BaseButton.ButtonEventArgs, string, string>? OnArrestButtonPressed;
+    public Action<OptionButton.ItemSelectedEventArgs, SecurityStatus, string, string>? OnStatusOptionButtonSelected;
+
     private bool _isPopulating;
-    private string _recordName = String.Empty;
+    private string _recordName = string.Empty;
+
     private GeneralStationRecordFilterType _currentFilterType;
 
     public GeneralCriminalRecordConsoleWindow()
@@ -191,25 +193,6 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
     {
         RecordContainer.DisposeAllChildren();
         RecordContainer.RemoveAllChildren();
-        // sure
-        var status = new RichTextLabel() { };
-
-        if (criminalRecord.Status == SecurityStatus.None)
-        {
-            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
-                criminalRecord.Status.ToString())!));
-        }
-        else if (criminalRecord.Status == SecurityStatus.Wanted)
-        {
-            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
-                $"[color=red]{criminalRecord.Status.ToString()}[/color]")));
-        }
-        else if (criminalRecord.Status == SecurityStatus.Detained)
-        {
-            status.SetMarkup(Loc.GetString("general-criminal-record-console-record-status", ("status",
-                $"[color=dodgerblue]{criminalRecord.Status.ToString()}[/color]")));
-        }
-
 
         var recordControls = new Control[]
         {
@@ -247,22 +230,22 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
             {
                 StyleClasses = {"LowDivider"}, Margin = new Thickness(0, 5, 0, 5)
             },
-            status
+            new RichTextLabel()
+                .SetMarkup(Loc.GetString("general-criminal-record-console-record-status",
+                    ("status", criminalRecord.Status.ToString().ToLower())))
         };
-
-
 
         foreach (var control in recordControls)
         {
             RecordContainer.AddChild(control);
         }
 
-        if (criminalRecord.Reason != string.Empty)
-        {
-            var label = new RichTextLabel() { };
-            label.SetMessage(criminalRecord.Reason);
-            RecordContainer.AddChild(label);
-        }
+        if (criminalRecord.Reason == string.Empty)
+            return;
+
+        var label = new RichTextLabel();
+        label.SetMessage(criminalRecord.Reason);
+        RecordContainer.AddChild(label);
     }
 
     private int AddStatusSelect(string name, SecurityStatus status)
@@ -270,6 +253,14 @@ public sealed partial class GeneralCriminalRecordConsoleWindow : DefaultWindow
         StatusOptionButton.AddItem(name);
         StatusOptionButton.SetItemMetadata(StatusOptionButton.ItemCount - 1, status);
         return StatusOptionButton.ItemCount - 1;
+    }
+
+    private void SelectOption(OptionButton.ItemSelectedEventArgs args)
+    {
+        if (!)
+        args.Button.SelectId(args.Id);
+        OnStatusOptionButtonSelected?.Invoke(args, (SecurityStatus) StatusOptionButton.GetItemMetadata(args.Id)!,
+            ReasonLineEdit.Text, _recordName);
     }
 
     private void FilterListingOfRecords(string text = "")

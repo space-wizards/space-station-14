@@ -10,7 +10,6 @@ using Content.Server.StationRecords.Systems;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CriminalRecords;
-using Content.Shared.Emag.Components;
 using Content.Shared.StationRecords;
 using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
@@ -39,19 +38,16 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         SubscribeLocalEvent<GeneralCriminalRecordConsoleComponent, CriminalStatusOptionButtonSelected>(OnStatusSelected);
     }
 
-    private void OnFiltersChanged(EntityUid uid,
-        GeneralCriminalRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
-    {
-        if (component.Filter == null ||
-            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
-        {
-            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
-            UpdateUserInterface(uid, component);
-        }
-    }
-
     private void UpdateUserInterface<T>(EntityUid uid, GeneralCriminalRecordConsoleComponent component, T ev)
     {
+        UpdateUserInterface(uid, component);
+    }
+
+    private void UpdateUserInterface(EntityUid uid, GeneralCriminalRecordConsoleComponent component, BoundUIOpenedEvent ev)
+    {
+        if (ev.Session.AttachedEntity is { Valid: true } ent)
+            component.HasAccess = CanUse(ent, uid);
+
         UpdateUserInterface(uid, component);
     }
 
@@ -62,10 +58,18 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         UpdateUserInterface(uid, component);
     }
 
+    private void SendRadioMessage(EntityUid sender, string message, string channel)
+    {
+        _radioSystem.SendRadioMessage(sender, message,
+            _prototypeManager.Index<RadioChannelPrototype>(channel), sender);
+    }
+
     private void OnButtonPressed(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
         CriminalRecordArrestButtonPressed msg)
     {
-        if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
+        if (msg.Session.AttachedEntity is not {Valid: true} mob)
+            return;
+
         if (!CanUse(mob, uid))
         {
             _popupSystem.PopupEntity(Loc.GetString("general-criminal-record-permission-denied"), uid, msg.Session);
@@ -77,29 +81,19 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
         if (!_criminalRecordsSystem.TryArrest(station!.Value, component.ActiveKey!.Value, out var status, msg.Reason))
             return;
 
-        if (msg.Reason != string.Empty)
+        (string, object)[] args =
         {
-            var messages = new Dictionary<SecurityStatus, string>()
-            {
-                { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-released-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
-            };
+            ("name", msg.Name), ("reason", msg.Reason),
+            ("officer", Name(msg.Session.AttachedEntity.Value)), ("hasReason", msg.Reason.Length)
+        };
 
-            _radioSystem.SendRadioMessage(uid, messages[status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
-        }
-
-        else if (msg.Reason == string.Empty)
+        // Using dictionary because switch-statements don't seem to work here for some reason
+        var messages = new Dictionary<SecurityStatus, string>
         {
-            var messages = new Dictionary<SecurityStatus, string>()
-            {
-                { SecurityStatus.Detained, Loc.GetString("general-criminal-record-console-detained-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-released-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
-            };
-
-            _radioSystem.SendRadioMessage(uid, messages[status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
-        }
+            { SecurityStatus.Detained, "general-criminal-record-console-detained" },
+            { SecurityStatus.None, "general-criminal-record-console-released" }
+        };
+        SendRadioMessage(uid, Loc.GetString(messages[status.Value], args), component.SecurityChannel);
 
         UpdateUserInterface(uid, component);
     }
@@ -107,7 +101,9 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     private void OnStatusSelected(EntityUid uid, GeneralCriminalRecordConsoleComponent component,
         CriminalStatusOptionButtonSelected msg)
     {
-        if (msg.Session.AttachedEntity is not {Valid: true} mob) return;
+        if (msg.Session.AttachedEntity is not {Valid: true} mob)
+            return;
+
         if (!CanUse(mob, uid))
         {
             _popupSystem.PopupEntity(Loc.GetString("general-criminal-record-permission-denied"), uid, msg.Session);
@@ -120,39 +116,27 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 out var status, msg.Reason))
             return;
 
-        if (msg.Reason != string.Empty)
+        (string, object)[] args =
         {
-            var messages = new Dictionary<SecurityStatus, string>()
-            {
-                { SecurityStatus.Wanted, Loc.GetString("general-criminal-record-console-wanted-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-with-reason", ("name", msg.Name), ("reason", msg.Reason)!, ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
-            };
+            ("name", msg.Name), ("reason", msg.Reason),
+            ("officer", Name(msg.Session.AttachedEntity.Value)), ("hasReason", msg.Reason.Length)
+        };
 
-            _radioSystem.SendRadioMessage(uid, messages[status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
-        }
-
-        else if (msg.Reason == string.Empty)
+        // Using dictionary because switch-statements don't seem to work here for some reason
+        var messages = new Dictionary<SecurityStatus, string>
         {
-            var messages = new Dictionary<SecurityStatus, string>()
-            {
-                { SecurityStatus.Wanted, Loc.GetString("general-criminal-record-console-wanted-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) },
-                { SecurityStatus.None, Loc.GetString("general-criminal-record-console-not-wanted-without-reason", ("name", msg.Name), ("goodguyname", Name(msg.Session.AttachedEntity.Value))) }
-            };
-
-            _radioSystem.SendRadioMessage(uid, messages[status],
-                _prototypeManager.Index<RadioChannelPrototype>("Security"), uid);
-        }
+            { SecurityStatus.Wanted, "general-criminal-record-console-wanted"},
+            { SecurityStatus.None, "general-criminal-record-console-not-wanted"}
+        };
+        SendRadioMessage(uid, Loc.GetString(messages[status.Value], args), component.SecurityChannel);
 
         UpdateUserInterface(uid, component);
     }
 
     private bool CanUse(EntityUid user, EntityUid console)
     {
-        if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
-        {
+        if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent))
             return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
-        }
         return true;
     }
 
@@ -198,11 +182,11 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
                 break;
         }
 
-        GeneralStationRecord? stationRecord = null;
+        GeneralStationRecord? stationRecord;
         _stationRecordsSystem.TryGetRecord(owningStation.Value, console!.ActiveKey!.Value, out stationRecord,
                 stationRecordsComponent);
 
-        GeneralCriminalRecord? criminalRecord = null;
+        GeneralCriminalRecord? criminalRecord;
         _stationRecordsSystem.TryGetRecord(owningStation.Value, console.ActiveKey.Value, out criminalRecord,
                 stationRecordsComponent);
 
@@ -213,6 +197,18 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     private void SetStateForInterface(EntityUid uid, GeneralCriminalRecordConsoleState newState)
     {
         _userInterface.TrySetUiState(uid, GeneralCriminalRecordConsoleKey.Key, newState);
+    }
+
+    #region Filters
+    private void OnFiltersChanged(EntityUid uid,
+        GeneralCriminalRecordConsoleComponent component, GeneralStationRecordsFilterMsg msg)
+    {
+        if (component.Filter == null ||
+            component.Filter.Type != msg.Type || component.Filter.Value != msg.Value)
+        {
+            component.Filter = new GeneralStationRecordsFilter(msg.Type, msg.Value);
+            UpdateUserInterface(uid, component);
+        }
     }
 
     private bool IsSkippedRecord(GeneralStationRecordsFilter filter,
@@ -241,4 +237,5 @@ public sealed class GeneralCriminalRecordConsoleSystem : EntitySystem
     {
         return !value.ToLower().StartsWith(filter);
     }
+    #endregion
 }
