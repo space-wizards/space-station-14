@@ -6,7 +6,5 @@ namespace Content.Shared.Labels.Components
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentLabel")]
         public string? CurrentLabel { get; set; }
-
-        public string? OriginalName { get; set; }
     }
 }
