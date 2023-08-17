@@ -20,7 +20,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await Interact(Weld, awaitDoAfters: false);
 
         // Failed do-after has no effect
-        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
+        await CancelDoAfters();
         AssertPrototype(WallConstruction.WallSolid);
 
         // Second attempt works fine
@@ -30,7 +30,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         // Repeat for wrenching interaction
         AssertAnchored();
         await Interact(Wrench, awaitDoAfters: false);
-        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
+        await CancelDoAfters();
         AssertAnchored();
         AssertPrototype(WallConstruction.Girder);
         await Interact(Wrench);
@@ -39,7 +39,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         // Repeat for screwdriver interaction.
         AssertDeleted(false);
         await Interact(Screw, awaitDoAfters: false);
-        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
+        await CancelDoAfters();
         AssertDeleted(false);
         await Interact(Screw);
         AssertDeleted();
@@ -50,18 +50,17 @@ public sealed class DoAfterCancellationTests : InteractionTest
     {
         await StartConstruction(WallConstruction.Wall);
         await Interact(Steel, 5, awaitDoAfters: false);
-        var clientEnt = CEntMan.ToEntity(Player);
-        var clientDoAfters = CEntMan.GetComponent<DoAfterComponent>(clientEnt).DoAfters.Values.ToList();
-        await CancelDoAfters(true, clientDoAfters);
+        await CancelDoAfters();
 
         await Interact(Steel, 5);
-        // AssertPrototype(WallConstruction.Girder);
+        ClientAssertPrototype(WallConstruction.Girder, ClientTarget);
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
         await Interact(Steel, 5, awaitDoAfters: false);
-        await CancelDoAfters(true, CEntMan.GetComponent<DoAfterComponent>(clientEnt).DoAfters.Values.ToList());
-        // AssertPrototype(WallConstruction.Girder);
+        await CancelDoAfters();
+        AssertPrototype(WallConstruction.Girder);
 
         await Interact(Steel, 5);
-        // AssertPrototype(WallConstruction.WallSolid);
+        AssertPrototype(WallConstruction.WallSolid);
     }
 
     [Test]
@@ -69,7 +68,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
     {
         await SetTile(Floor);
         await Interact(Pry, awaitDoAfters: false);
-        await CancelDoAfters(false, SEntMan.GetComponent<DoAfterComponent>(SEntMan.ToEntity(Player)).DoAfters.Values.ToList());
+        await CancelDoAfters();
         await AssertTile(Floor);
 
         await Interact(Pry);

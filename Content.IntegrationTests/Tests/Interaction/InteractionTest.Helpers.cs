@@ -364,59 +364,32 @@ public abstract partial class InteractionTest
     /// Cancel any currently active DoAfters. Default arguments are such that it also checks that there is at least one
     /// active DoAfter to cancel.
     /// </summary>
-    protected async Task CancelDoAfters(bool isClient, List<Shared.DoAfter.DoAfter> doAfters, int minExpected = 1, int maxExpected = 1)
+    protected async Task CancelDoAfters(int minExpected = 1, int maxExpected = 1)
     {
-        Assert.That(doAfters, Has.Count.GreaterThanOrEqualTo(minExpected));
-        Assert.That(doAfters, Has.Count.LessThanOrEqualTo(maxExpected));
+        Assert.That(ActiveDoAfters.Count(), Is.GreaterThanOrEqualTo(minExpected));
+        Assert.That(ActiveDoAfters.Count(), Is.LessThanOrEqualTo(maxExpected));
 
-        if (!doAfters.Any())
+        if (!ActiveDoAfters.Any())
             return;
 
         // Cancel all the do-afters
-        EntityUid playerEnt = default;
-
-        if (isClient)
+        var doAfters = ActiveDoAfters.ToList();
+        await Server.WaitPost(() =>
         {
-            await Client.WaitPost(() =>
+            foreach (var doAfter in doAfters)
             {
-                playerEnt = CEntMan.ToEntity(Player);
+                DoAfterSys.Cancel(SEntMan.ToEntity(Player), doAfter.Index, DoAfters);
+            }
+        });
 
-                foreach (var doAfter in doAfters)
-                {
-                    CEntMan.System<SharedDoAfterSystem>().Cancel(playerEnt, doAfter.Index, CEntMan.GetComponent<DoAfterComponent>(playerEnt));
-                }
-            });
-        }
-        else
-        {
-            await Server.WaitPost(() =>
-            {
-                playerEnt = SEntMan.ToEntity(Player);
-
-                foreach (var doAfter in doAfters)
-                {
-                    SEntMan.System<SharedDoAfterSystem>().Cancel(playerEnt, doAfter.Index, SEntMan.GetComponent<DoAfterComponent>(playerEnt));
-                }
-            });
-        }
+        await RunTicks(1);
 
         foreach (var doAfter in doAfters)
         {
             Assert.That(doAfter.Cancelled);
         }
 
-        if (isClient)
-        {
-            var activeDoAfters = CEntMan.GetComponent<DoAfterComponent>(playerEnt).DoAfters
-                .Where(x => x.Value is { Cancelled: false, Completed: false }).ToList();
-            Assert.That(activeDoAfters, Is.Empty);
-        }
-        else
-        {
-            var activeDoAfters = SEntMan.GetComponent<DoAfterComponent>(playerEnt).DoAfters
-                .Where(x => x.Value is { Cancelled: false, Completed: false }).ToList();
-            Assert.That(activeDoAfters, Is.Empty);
-        }
+        Assert.That(ActiveDoAfters.Count(), Is.EqualTo(0));
     }
 
     /// <summary>

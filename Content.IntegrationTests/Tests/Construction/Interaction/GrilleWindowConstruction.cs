@@ -18,14 +18,16 @@ public sealed class GrilleWindowConstruction : InteractionTest
         // Construct Grille
         await StartConstruction(Grille);
         await Interact(Rod, 10);
-        AssertPrototype(Grille);
+        ClientAssertPrototype(Grille, ClientTarget);
 
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
         var grille = Target;
 
         // Construct Window
         await StartConstruction(Window);
         await Interact(Glass, 10);
-        AssertPrototype(Window);
+        ClientAssertPrototype(Window, ClientTarget);
+        Target = CTestSystem.Ghosts[ClientTarget!.Value.GetHashCode()];
 
         // Deconstruct Window
         await Interact(Screw, Wrench);
