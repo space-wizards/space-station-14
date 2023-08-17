@@ -110,6 +110,7 @@
   checkCanInteract: false
   icon: Interface/Actions/harmOff.png
   iconOn: Interface/Actions/harm.png
+  useDelay: 0.5
   event: !type:ToggleCombatActionEvent
 
 - type: instantAction
@@ -174,7 +175,7 @@
   icon: { sprite: Clothing/Head/Hats/pyjamasyndicatered.rsi, state: icon }
   checkCanInteract: false
   event: !type:WakeActionEvent
-    
+
 - type: instantAction
   id: CryopodSSDLeave
   name: action-name-cryopodSSDLeave
