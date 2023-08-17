@@ -70,3 +70,11 @@
   - Syndicate
   - Passive
   - PetsNT
+
+- type: npcFaction
+  id: Spider
+
+- type: npcFaction
+  id: Shoe
+  hostile:
+  - Spider

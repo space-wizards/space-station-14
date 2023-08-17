@@ -4,6 +4,9 @@
   parent: [BaseMobArachnid, BaseMob]
   id: MobArachnid
   components:
+  - type: NpcFactionMember
+    factions:
+    - Spider
   - type: Respirator
     damage:
       types:
