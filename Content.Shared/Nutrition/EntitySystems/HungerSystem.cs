@@ -206,7 +206,7 @@ public sealed class HungerSystem : EntitySystem
     public bool IsHungerBelowState(EntityUid uid, HungerThreshold threshold, HungerComponent? comp = null)
     {
         if (!Resolve(uid, ref comp))
-            return false; // Probably doesn't need this check if it can't starve anyways.
+            return false; // It's never going to go hungry, so it's probably fine to assume that it's not... you know, hungry.
 
         return GetHungerThreshold(comp) < threshold;
     }
