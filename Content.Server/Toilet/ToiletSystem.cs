@@ -137,7 +137,7 @@ namespace Content.Server.Toilet
             var verb = new AlternativeVerb()
             {
                 Act = () => {
-                    if(CanToggle(uid))
+                    if (CanToggle(uid))
                         ToggleToiletSeat(uid, component);
                 },
                 Text = alterToiletSeatText
