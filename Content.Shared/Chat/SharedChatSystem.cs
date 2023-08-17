@@ -1,5 +1,6 @@
 using Content.Shared.Popups;
 using Content.Shared.Radio;
+using Content.Shared.Speech;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -25,6 +26,9 @@ public abstract class SharedChatSystem : EntitySystem
     public const string CommonChannel = "Common";
 
     public static string DefaultChannelPrefix = $"{RadioChannelPrefix}{DefaultChannelKey}";
+
+    [ValidatePrototypeId<SpeechVerbPrototype>]
+    public const string DefaultSpeechVerb = "Default";
 
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
@@ -61,6 +65,30 @@ public abstract class SharedChatSystem : EntitySystem
     public override void Shutdown()
     {
         _prototypeManager.PrototypesReloaded -= OnPrototypeReload;
+    }
+
+    /// <summary>
+    ///     Attempts to find an applicable <see cref="SpeechVerbPrototype"/> for a speaking entity's message.
+    ///     If one is not found, returns <see cref="DefaultSpeechVerb"/>.
+    /// </summary>
+    public SpeechVerbPrototype GetSpeechVerb(EntityUid source, string message, SpeechComponent? speech = null)
+    {
+        if (!Resolve(source, ref speech, false))
+            return _prototypeManager.Index<SpeechVerbPrototype>(DefaultSpeechVerb);
+
+        // check for a suffix-applicable speech verb
+        SpeechVerbPrototype? current = null;
+        foreach (var (str, id) in speech.SuffixSpeechVerbs)
+        {
+            var proto = _prototypeManager.Index<SpeechVerbPrototype>(id);
+            if (message.EndsWith(Loc.GetString(str)) && proto.Priority >= (current?.Priority ?? 0))
+            {
+                current = proto;
+            }
+        }
+
+        // if no applicable suffix verb return the normal one used by the entity
+        return current ?? _prototypeManager.Index<SpeechVerbPrototype>(speech.SpeechVerb);
     }
 
     /// <summary>

@@ -31,11 +31,13 @@
   - type: StorageFill
     contents:
         # Normal (10%)
-      - id: ToolboxEmergencyFilled
-        prob: 0.1
-      - id: ClothingMaskBreath
-        prob: 0.1
       - id: OxygenTankFilled
+        prob: 0.1
+      - id: SheetPlasma
+        prob: 0.1
+      - id: IngotGold
+        prob: 0.1
+      - id: IngotSilver
         prob: 0.1
       - id: SheetPlasma
         prob: 0.1
@@ -43,7 +45,7 @@
         prob: 0.1
       - id: ResearchDisk
         prob: 0.1
-      - id: ClothingBeltStorageWaistbag
+      - id: SheetUranium
         prob: 0.1
         #  - Service
       - id: CrayonBox
@@ -55,21 +57,14 @@
         prob: 0.1
       - id: BoxBeaker
         prob: 0.1
-        #  - Scaf
-      - id: ClothingHeadHelmetScaf
-        prob: 0.1
-      - id: ClothingOuterArmorScaf
-        prob: 0.1
         #  - Heh
       - id: SalvageHumanCorpse
-        prob: 0.1
-      - id: LidSalami
         prob: 0.1
         # Interesting (1%)
         #  - Ammo
       - id: MagazineBoxMagnum
         prob: 0.01
-      - id: ResearchDisk5000
+      - id: ResearchDisk10000
         prob: 0.01
         # Just no (0.1%)
         #  - Working guns
@@ -82,51 +77,8 @@
         #  - Skub
       - id: Skub
         prob: 0.001
-      - id: ResearchDisk10000
-        prob: 0.001
       - id: ClothingHeadHatCatEars
         prob: 0.01
-        #  - Pins
-      - id: ClothingNeckLGBTPin
-        prob: 0.025
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckAromanticPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckAsexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckBisexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckIntersexPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckLesbianPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckNonBinaryPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckPansexualPin
-        orGroup: LGBTQIAPlusPins
-      - id: ClothingNeckTransPin
-        orGroup: LGBTQIAPlusPins
-      # Corvax-Pins-Start
-      - id: ClothingNeckUSSPPin
-        prob: 0.025
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckDonkPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckEarthPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckLogistikaPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckDeForestPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckNakamuraPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckNanoTrasenPin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckSyndicakePin
-        orGroup: CorporateAndGovermentPins
-      - id: ClothingNeckVitezstviPin
-        orGroup: CorporateAndGovermentPins
-      # Corvax-Pins-End
         # TRAITOR EQUIPMENT (0.01%)
       - id: Telecrystal10
         prob: 0.0001

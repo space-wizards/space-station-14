@@ -16,7 +16,7 @@
       food:
         reagents:
         - ReagentId: THC
-          Quantity: 5
+          Quantity: 15
 
 - type: entity
   name: dried cannabis leaves
@@ -32,7 +32,7 @@
       food:
         reagents:
         - ReagentId: THC
-          Quantity: 2
+          Quantity: 12
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/cannabis.rsi # Corvax-Resprite: Fix path
     state: dried
@@ -51,7 +51,7 @@
       food:
         reagents:
         - ReagentId: THC
-          Quantity: 10
+          Quantity: 20
   - type: Sprite
     sprite: Objects/Misc/reagent_fillings.rsi
     state: powderpile

@@ -2,8 +2,8 @@
   id: Barratry
   mapName: 'Barratry'
   mapPath: /Maps/barratry.yml
-  minPlayers: 35
-  maxPlayers: 70
+  minPlayers: 30
+  maxPlayers: 60
   stations:
     Barratry:
       stationProto: StandardNanotrasenStation
@@ -19,26 +19,26 @@
           overflowJobs:
             - Passenger
           availableJobs:
-            CargoTechnician: [ 3, 3 ]
+            CargoTechnician: [ 2, 2 ]
             Passenger: [ -1, -1 ]
             Bartender: [ 2, 2 ]
-            Botanist: [ 3, 4]
+            Botanist: [ 2, 2]
             Chef: [ 2, 2 ]
             Clown: [ 1, 1 ]
-            Janitor: [ 2, 3 ]
+            Janitor: [ 2, 2 ]
             Mime: [ 1, 1 ]
             Captain: [ 1, 1 ]
             IAA: [ 1, 1 ] # Corvax-IAA
             HeadOfPersonnel: [ 1, 1 ]
             ChiefEngineer: [ 1, 1 ]
-            StationEngineer: [ 4, 5 ]
+            StationEngineer: [ 4, 4 ]
             ChiefMedicalOfficer: [ 1, 1 ]
-            MedicalDoctor: [ 4, 4 ]
-            Chemist: [ 2, 3 ]
+            MedicalDoctor: [ 3, 3 ]
+            Chemist: [ 2, 2 ]
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 4, 4 ]
             HeadOfSecurity: [ 1, 1 ]
-            SecurityOfficer: [ 5, 5 ]
+            SecurityOfficer: [ 4, 4 ]
             Chaplain: [ 1, 1 ]
             Warden: [ 1, 1 ]
             Librarian: [ 1, 1 ]
@@ -46,7 +46,7 @@
             Quartermaster: [ 1, 1 ]
             SalvageSpecialist: [ 3, 3 ]
             Musician: [ 1, 1 ]
-            AtmosphericTechnician: [ 2, 3 ]
+            AtmosphericTechnician: [ 3, 3 ]
             TechnicalAssistant: [ 2, 4 ]
             MedicalIntern: [ 2, 4 ]
             ServiceWorker: [ 1, 2 ]
