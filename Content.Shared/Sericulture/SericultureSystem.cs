@@ -5,6 +5,7 @@ using Content.Shared.Nutrition.EntitySystems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Content.Shared.Popups;
+using Robust.Shared.Network;
 
 namespace Content.Shared.Sericulture;
 
@@ -18,6 +19,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private readonly INetManager _netManager = default!;
 
     public override void Initialize()
     {
@@ -54,7 +56,8 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     {
         if (_hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold))
         {
-            _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
+            if (_netManager.IsClient)
+                _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 
@@ -68,14 +71,16 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 
         _doAfterSystem.TryStartDoAfter(doAfter);
     }
-
-    /// <summary>
-    /// Should be relayed upon using the action.
-    /// </summary>
-    public sealed class SericultureActionEvent : InstantActionEvent { }
 }
 
+/// <summary>
+/// Should be relayed upon using the action.
+/// </summary>
+public sealed class SericultureActionEvent : InstantActionEvent { }
 
+/// <summary>
+/// Is relayed at the end of the sericulturing doafter.
+/// </summary>
 [Serializable, NetSerializable]
 public sealed class SericultureDoAfterEvent : SimpleDoAfterEvent { }
 
