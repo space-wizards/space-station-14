@@ -102,7 +102,6 @@
     - Stun
     - KnockedDown
     - SlowedDown
-    - Electrocution
   - type: Actions
   - type: TypingIndicator
     proto: robot
