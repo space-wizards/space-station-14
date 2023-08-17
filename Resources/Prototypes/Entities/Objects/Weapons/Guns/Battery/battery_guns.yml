@@ -469,7 +469,7 @@
     node: start
       
 - type: entity
-  name: Experimental C.H.I.M.P. handcannon
+  name: experimental C.H.I.M.P. handcannon
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
   components: 

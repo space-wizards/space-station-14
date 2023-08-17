@@ -1,4 +1,5 @@
 using Content.Server.Popups;
+using Content.Server.Weapons.Ranged.Components;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;

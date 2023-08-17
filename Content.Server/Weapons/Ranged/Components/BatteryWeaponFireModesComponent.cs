@@ -1,14 +1,14 @@
-using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Content.Server.Weapons.Ranged.Systems;
 
-namespace Content.Shared.Weapons.Ranged.Components;
+namespace Content.Server.Weapons.Ranged.Components;
 
 /// <summary>
 /// Allows battery weapons to fire different types of projectiles
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent]
+[Access(typeof(BatteryWeaponFireModesSystem))]
 [AutoGenerateComponentState]
 public sealed partial class BatteryWeaponFireModesComponent : Component
 {
@@ -28,20 +28,17 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
 }
 
 [DataDefinition]
-[Serializable, NetSerializable]
 public sealed class BatteryWeaponFireMode
 {
     /// <summary>
     /// The projectile prototype associated with this firing mode 
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;
 
     /// <summary>
     /// The battery cost to fire the projectile associated with this firing mode
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("fireCost")]
     public float FireCost = 100;
 }
