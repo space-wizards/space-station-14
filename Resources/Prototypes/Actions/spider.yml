@@ -11,5 +11,5 @@
   icon: Interface/Actions/web.png
   name: sericulture-action-name
   description: sericulture-action-description
-  serverEvent: !type:SericultureActionEvent
+  event: !type:SericultureActionEvent
   useDelay: 1
