@@ -134,4 +134,6 @@
       - id: ClothingUniformJumpsuitParamedic
       - id: ClothingUniformJumpskirtParamedic
       - id: ClothingEyesHudMedical
+      - id: MedkitFilled
+      - id: CrowbarRed
       
