@@ -31,8 +31,6 @@
     spawned:
     - id: FoodMeat
       amount: 5
-  - type: Speech
-    speechSounds: Moth
   - type: Vocal
     sounds:
       Male: UnisexMoth

@@ -96,5 +96,6 @@ JobSeniorResearcher = старший научный сотрудник
 JobStationEngineer = инженер
 JobTechnicalAssistant = технический ассистент
 JobWarden = смотритель
+JobBorg = киборг
 JobBoxer = боксёр
 JobZookeeper = зоотехник

@@ -15,5 +15,3 @@ ent-MechHamtr = ХАМЯК
 ent-MechHamtrBattery = { ent-MechHamtr }
     .suffix = Батарея
     .desc = { ent-MechHamtr.desc }
-ent-Onestar = Омнистар
-    .desc = Ваша смерть может попасть в его протокол инструкций.

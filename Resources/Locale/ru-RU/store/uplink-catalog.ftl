@@ -85,6 +85,9 @@ uplink-radio-jammer-desc = При активации это устройство
 # Implants
 uplink-storage-implanter-name = Имплантер Хранилище
 uplink-storage-implanter-desc = Прячьте предметы внутри себя благодаря новой блюспейс-технологии!
+uplink-holoclown-kit-name = Набор Голоклоуна
+uplink-holoclown-kit-desc = Общая инициатива Cybersun и Honk Co. Содержит инжектор с разумным метафизическим клоуном из твердого света, остающийся внутри своего владельца вне использования.
+	Голоклоун имеет карманы для хранения вещей, материальную руку для манипуляций с пространством, сам он обладает иммунитетом к окружающей среде и сопротивлением к получаемому урону, все еще разделяя полученный с владельцем.
 uplink-freedom-implanter-name = Имплантер Свобода
 uplink-freedom-implanter-desc = Сбегите от этих противных сотрудников СБ при помощи этого импланта, который можно использовать аж три раза!
 uplink-dna-scrambler-implanter-name = Имплантер Миксер ДНК
@@ -165,7 +168,7 @@ uplink-clothing-outer-vest-web-desc = { ent-ClothingOuterVestWeb.desc }
 uplink-hardsuit-syndie-name = Скафандр Синдиката
 uplink-hardsuit-syndie-desc = Широко известный бронированный кроваво-красный скафандр Синдиката, позволяющий выходить в открытый космос и устойчивый к пулям.
 uplink-clothing-shoes-boots-mag-syndie-name = { ent-ClothingShoesBootsMagSyndie }
-uplink-clothing-shoes-boots-mag-syndie-desc = Пара магнитных ботинок, которые удержат вас на полу, если гравитация не работает или была саботирована, давая вам преимущество в мобильности. Если их активировать при наличии гравитации, они защитят от подскальзывания, но замедлят скорость движения.
+uplink-clothing-shoes-boots-mag-syndie-desc = Пара магнитных ботинок, которые удержат вас на полу, если гравитация не работает или была саботирована, давая вам преимущество в мобильности. Если их активировать при наличии гравитации, они защитят от подскальзывания, но замедлят скорость движения. Дополнительно, имеют встроенный джетпак, повышая мобильность еще больше.
 uplink-eva-syndie-name = { ent-ClothingBackpackDuffelSyndicateEVABundle }
 uplink-eva-syndie-desc = Простой EVA-скафандр, который не даёт никакой защиты, кроме той, что необходима для выживания в космосе.
 uplink-clothing-outer-hardsuit-juggernaut-name = { ent-ClothingOuterHardsuitJuggernaut }
