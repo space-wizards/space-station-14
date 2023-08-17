@@ -97,7 +97,7 @@
 #  - type: Reflect 
 #    reflectProb: 1
 #    reflects:
-#    - energy # definign this doesn't seem to work, the vest just reflects everything, despite showing correctly in VV
+#    - energy # defining this doesn't seem to work, the vest just reflects everything, despite showing correctly in VV
 
 - type: entity
   parent: ClothingOuterBaseLarge
