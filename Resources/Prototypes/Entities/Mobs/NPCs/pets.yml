@@ -32,6 +32,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Old Ian
@@ -98,6 +99,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Exception
@@ -114,6 +116,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Floppa
@@ -138,6 +141,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Bandito
@@ -151,6 +155,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: bingus
@@ -209,6 +214,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: mcgriff
@@ -270,6 +276,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Paperwork
@@ -303,9 +310,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Walter
@@ -367,6 +371,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morty
@@ -383,6 +388,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morticia
@@ -399,6 +405,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Alexander
@@ -412,8 +419,7 @@
   - type: Tag
     tags:
     - CannotSuicide
-    - DoorBumpOpener
-    - Pig
+    - VimPilot
 
 - type: entity
   name: Renault
@@ -436,6 +442,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Hamlet
@@ -469,8 +476,8 @@
   - type: Tag
     tags:
     - CannotSuicide
-    - Trash
     - Hamster
+    - VimPilot
 
 - type: entity
   name: Shiva
@@ -539,6 +546,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Willow
@@ -594,6 +602,7 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
+    - VimPilot
   - type: DamageStateVisuals
     states:
       Alive:

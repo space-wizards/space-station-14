@@ -1,7 +1,5 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Interactable.Components
@@ -13,8 +11,13 @@ namespace Content.Client.Interactable.Components
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const float DefaultWidth = 1;
+
+        [ValidatePrototypeId<ShaderPrototype>]
         private const string ShaderInRange = "SelectionOutlineInrange";
+
+        [ValidatePrototypeId<ShaderPrototype>]
         private const string ShaderOutOfRange = "SelectionOutline";
+
         private bool _inRange;
         private ShaderInstance? _shader;
         private int _lastRenderScale;

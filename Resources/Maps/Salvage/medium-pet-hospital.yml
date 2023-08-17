@@ -1268,8 +1268,7 @@ entities:
   entities:
   - uid: 270
     components:
-    - rot: 3.141592653589793 rad
-      pos: 5.5,-1.5
+    - pos: 5.5,-1.5
       parent: 289
       type: Transform
 - proto: Paper

@@ -1,4 +1,3 @@
-﻿using System.Threading;
 using Robust.Shared.Audio;
 
 namespace Content.Server.Construction.Components;
