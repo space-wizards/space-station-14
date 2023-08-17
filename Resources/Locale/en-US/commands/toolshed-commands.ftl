@@ -54,3 +54,11 @@ command-description-tag-addmany =
     Adds a list of tags to the given entities.
 command-description-tag-rmmany =
     Removes a list of tags from the given entities.
+command-description-polymorph =
+    Polymorphs the input entity with the given prototype.
+command-description-unpolymorph =
+    Reverts a polymorph.
+command-description-solution-get =
+    Grabs the given solution off the given entity.
+command-description-solution-adjreagent =
+    Adjusts the given reagent on the given solution.

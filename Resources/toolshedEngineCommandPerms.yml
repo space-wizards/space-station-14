@@ -7,6 +7,18 @@
     - player
     - splat
     - emplace
+    - bin
+    - extremes
+    - reduce
+    - sortby
+    - sort
+    - sortdownby
+    - sortdown
+    - sortmapby
+    - sortmapdownby
+    - iota
+    - rep
+    - to
 
 - Flags: DEBUG
   Commands:
@@ -23,6 +35,12 @@
     - types
     - ecscomp
     - actor
+    - spawn
+    - mappos
+    - pos
+    - tp
+    - allcomps
+    - replace
 
 - Flags: HOST
   Commands:
@@ -68,3 +86,23 @@
     - '>='
     - '=='
     - '!='
+    - f
+    - i
+    - s
+    - b
+    - '+/'
+    - '-/'
+    - '*/'
+    - '//'
+    - join
+    - append
+    - '?'
+    - 'or?'
+    - '??'
+    - rng
+    - 'sum'
+    - take
+    - curtick
+    - curtime
+    - realtime
+    - servertime
