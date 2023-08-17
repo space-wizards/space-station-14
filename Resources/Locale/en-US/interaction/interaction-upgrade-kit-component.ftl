@@ -1,1 +1,0 @@
-interaction-upgrade-kit-applied = "{$targetName} has been upgraded."
