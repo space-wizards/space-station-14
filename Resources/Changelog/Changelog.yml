@@ -1,37 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: Vomit now only contains 10% of the reagents removed from the chem stream,
-    type: Tweak}
-  id: 4108
-  time: '2023-06-28T02:08:57.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: increased the rate of fire of the Deckard and Mateb revolvers, type: Tweak}
-  - {message: Deckard revolver price increased to 1500, type: Tweak}
-  id: 4109
-  time: '2023-06-28T02:12:02.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: added space lube tube - use it on items to make them slip out of hands!,
-    type: Add}
-  id: 4110
-  time: '2023-06-28T02:48:06.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Maps now draw their atmospheric gasses., type: Add}
-  id: 4111
-  time: '2023-06-28T11:22:03.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Snow planets now have minerals and rocks on them., type: Add}
-  id: 4112
-  time: '2023-06-28T11:32:02.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Added walls to lava planets., type: Add}
-  id: 4113
-  time: '2023-06-28T12:57:40.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: The lsobjectives command now has autocompletion., type: Tweak}
@@ -3031,3 +2998,35 @@ Entries:
   - {message: Added directional switches, type: Add}
   id: 4607
   time: '2023-08-15T23:01:50.0000000+00:00'
+- author: Tollhouse
+  changes:
+  - {message: Discount Dan has finalized a deal with NT chemistry and Shady Smokes
+      to bring you a new smoking sensation., type: Add}
+  id: 4608
+  time: '2023-08-16T00:27:18.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Syndicate pAI's are now equipped with radio transmitters., type: Tweak}
+  id: 4609
+  time: '2023-08-16T06:59:42.0000000+00:00'
+- author: Velcroboy
+  changes:
+  - {message: Restructured cannabis!, type: Tweak}
+  id: 4610
+  time: '2023-08-16T07:04:26.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Admin ghosts are now able to interact with user interfaces from any
+      range., type: Fix}
+  id: 4611
+  time: '2023-08-16T08:03:42.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lockers and crates work again., type: Fix}
+  id: 4612
+  time: '2023-08-16T13:08:53.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: 'Taxibots, cleanbots, and similar now have binary radio.', type: Add}
+  id: 4613
+  time: '2023-08-16T13:18:57.0000000+00:00'
