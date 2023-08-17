@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Edited by MaloTheDuck Original Sprite from pseudoroom.com with freeware licence",
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "alive",
+      "directions": 4
+    },
+    {
+      "name": "dead"
+    }
+  ]
+}
