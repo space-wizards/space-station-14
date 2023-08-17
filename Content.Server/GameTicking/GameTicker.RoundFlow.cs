@@ -2,6 +2,7 @@ using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
+using Content.Shared.Voting;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
@@ -20,6 +21,8 @@ using System.Linq;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 using PlayerData = Content.Server.Players.PlayerData;
+using Content.Shared.CCVar;
+
 
 namespace Content.Server.GameTicking
 {
@@ -473,6 +476,10 @@ namespace Content.Server.GameTicking
 
                 SendStatusToAll();
                 UpdateInfoText();
+
+                // Doesn't cancel previous vote because VoteManager is ultra giga cursed and I don't want to refucktor it.
+                if (AutoMapVote && _cfg.GetCVar(CCVars.VoteMapEnabled) && _cfg.GetCVar(CCVars.VoteEnabled))
+                    _voteManager.CreateStandardVote(null, StandardVoteType.Map);
 
                 ReqWindowAttentionAll();
             }

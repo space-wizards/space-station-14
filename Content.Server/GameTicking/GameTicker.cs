@@ -11,6 +11,7 @@ using Content.Server.Preferences.Managers;
 using Content.Server.ServerUpdates;
 using Content.Server.Shuttles.Systems;
 using Content.Server.Station.Systems;
+using Content.Server.Voting.Managers;
 using Content.Shared.Chat;
 using Content.Shared.Damage;
 using Content.Shared.GameTicking;
@@ -41,6 +42,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly IAdminLogManager _adminLogs = default!;
+        [Dependency] private readonly IVoteManager _voteManager = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;

@@ -1171,6 +1171,12 @@ namespace Content.Shared.CCVar
             CVarDef.Create("vote.map_enabled", false, CVar.SERVERONLY);
 
         /// <summary>
+        ///     Automatically start a map vote after each round restart
+        /// </summary>
+        public static readonly CVarDef<bool> AutoMapVote =
+            CVarDef.Create("vote.auto_map_vote", false, CVar.SERVERONLY);
+
+        /// <summary>
         ///     The required ratio of the server that must agree for a restart round vote to go through.
         /// </summary>
         public static readonly CVarDef<float> VoteRestartRequiredRatio =
