@@ -1,0 +1,50 @@
+- type: tileAlias
+  id: FloorBasaslt
+  target: FloorBasalt
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand1
+  target: FloorAsteroidCoarseSand0
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand2
+  target: FloorAsteroidCoarseSand0
+
+# 2023-08-13
+# It is very bloaty to have the un-variantized versions of asteroid tiles here, so they've been nuked.
+
+- type: tileAlias
+  id: FloorAsteroidSandRocks
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidSandRocksRed
+  target: FloorAsteroidSandRed
+
+- type: tileAlias
+  id: FloorAsteroidSandPebbles
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand1
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand2
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand3
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidIronsand4
+  target: FloorAsteroidIronsand
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSand0
+  target: FloorAsteroidSand
+
+- type: tileAlias
+  id: FloorAsteroidCoarseSandDug
+  target: FloorAsteroidSandDug
