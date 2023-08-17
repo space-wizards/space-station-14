@@ -80,7 +80,7 @@ public sealed class MachineConstruction : InteractionTest
         AssertPrototype(Protolathe);
 
         // Query now returns higher quality parts.
-        foreach (var part in SConstruction.GetAllParts(serverTarget))
+        foreach (var part in SConstruction.GetAllParts(SEntMan.ToEntity(Target!.Value)))
         {
             Assert.That(part.Rating, Is.EqualTo(4));
         }
