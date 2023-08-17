@@ -104,8 +104,8 @@ public sealed class DoAfter
         InitialHand = other.InitialHand;
         InitialItem = other.InitialItem;
 
-        NetUserPosition = entManager.ToNetCoordinates(UserPosition);
-        NetInitialItem = entManager.ToNetEntity(InitialItem);
+        NetUserPosition = other.NetUserPosition;
+        NetInitialItem = other.NetInitialItem;
     }
 }
 

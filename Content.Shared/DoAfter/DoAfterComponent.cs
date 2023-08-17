@@ -36,9 +36,10 @@ public sealed class DoAfterComponentState : ComponentState
         DoAfters = component.DoAfters;
 #else
         DoAfters = new();
-        foreach (var (id, doafter) in component.DoAfters)
+        foreach (var (id, doAfter) in component.DoAfters)
         {
-            DoAfters.Add(id, new DoAfter(entManager, doafter));
+            var newDoAfter = new DoAfter(entManager, doAfter);
+            DoAfters.Add(id, newDoAfter);
         }
 #endif
     }

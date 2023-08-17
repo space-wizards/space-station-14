@@ -115,7 +115,17 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Clear();
         foreach (var (id, doAfter) in state.DoAfters)
         {
-            comp.DoAfters.Add(id, new(EntityManager, doAfter));
+            comp.DoAfters.Add(id, new DoAfter(EntityManager, doAfter));
+
+            // Networking yay (if you have an easier way dear god please).
+            doAfter.UserPosition = ToCoordinates(doAfter.NetUserPosition);
+            doAfter.InitialItem = ToEntity(doAfter.NetInitialItem);
+
+            var doAfterArgs = doAfter.Args;
+            doAfterArgs.Target = ToEntity(doAfterArgs.NetTarget);
+            doAfterArgs.Used = ToEntity(doAfterArgs.NetUsed);
+            doAfterArgs.User = ToEntity(doAfterArgs.NetUser);
+            doAfterArgs.EventTarget = ToEntity(doAfterArgs.NetEventTarget);
         }
 
         comp.NextId = state.NextId;
@@ -195,6 +205,21 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         id = new DoAfterId(args.User, comp.NextId++);
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
+        // Networking yay
+        doAfter.NetUserPosition = ToNetCoordinates(doAfter.UserPosition);
+        doAfter.NetInitialItem = ToNetEntity(doAfter.InitialItem);
+
+        // Networking yay
+        args.NetTarget = ToNetEntity(args.Target);
+        args.NetUsed = ToNetEntity(args.Used);
+        args.NetUser = ToNetEntity(args.User);
+        args.NetEventTarget = ToNetEntity(args.EventTarget);
+
+        if (!args.User.IsValid())
+        {
+            // Weh
+        }
+
         if (args.BreakOnUserMove || args.BreakOnTargetMove)
             doAfter.UserPosition = Transform(args.User).Coordinates;
 
@@ -216,7 +241,7 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             doAfter.InitialItem = handsComponent.ActiveHandEntity;
         }
 
-        // Inital checks
+        // Initial checks
         if (ShouldCancel(doAfter, GetEntityQuery<TransformComponent>(), GetEntityQuery<HandsComponent>()))
             return false;
 

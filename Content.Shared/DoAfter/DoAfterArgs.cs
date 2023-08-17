@@ -12,9 +12,9 @@ public sealed class DoAfterArgs
     /// </summary>
     [NonSerialized]
     [DataField("user", required: true)]
-    public readonly EntityUid User;
+    public EntityUid User;
 
-    public readonly NetEntity NetUser;
+    public NetEntity NetUser;
 
     /// <summary>
     ///     How long does the do_after require to complete
@@ -27,18 +27,18 @@ public sealed class DoAfterArgs
     /// </summary>
     [NonSerialized]
     [DataField("target")]
-    public readonly EntityUid? Target;
+    public EntityUid? Target;
 
-    public readonly NetEntity? NetTarget;
+    public NetEntity? NetTarget;
 
     /// <summary>
     ///     Entity used by the User on the Target.
     /// </summary>
     [NonSerialized]
     [DataField("using")]
-    public readonly EntityUid? Used;
+    public EntityUid? Used;
 
-    public readonly NetEntity? NetUsed;
+    public NetEntity? NetUsed;
 
     #region Event options
     /// <summary>
@@ -59,9 +59,9 @@ public sealed class DoAfterArgs
     /// </summary>
     [NonSerialized]
     [DataField("eventTarget")]
-    public readonly EntityUid? EventTarget;
+    public EntityUid? EventTarget;
 
-    public readonly NetEntity? NetEventTarget;
+    public NetEntity? NetEventTarget;
 
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.
@@ -255,6 +255,12 @@ public sealed class DoAfterArgs
         BlockDuplicate = other.BlockDuplicate;
         CancelDuplicate = other.CancelDuplicate;
         DuplicateCondition = other.DuplicateCondition;
+
+        // Networked
+        NetUser = other.NetUser;
+        NetTarget = other.NetTarget;
+        NetUsed = other.NetUsed;
+        NetEventTarget = other.NetEventTarget;
 
         Event = other.Event.Clone();
     }
