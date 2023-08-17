@@ -150239,8 +150239,6 @@ entities:
     - linkedPorts:
         9923:
         - Pressed: Toggle
-        invalid:
-        - Pressed: Toggle
       type: DeviceLinkSource
   - uid: 5370
     components:
