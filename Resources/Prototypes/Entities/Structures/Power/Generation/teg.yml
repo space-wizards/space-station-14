@@ -166,8 +166,6 @@
 
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
-      light_color_fast: '#AA00FF'
-      light_color_slow: '#FF3300'
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity
