@@ -1,9 +1,4 @@
 Entries:
-- author: DadeKuma
-  changes:
-  - {message: It's no longer possible to unbuckle if you are handcuffed, type: Fix}
-  id: 4118
-  time: '2023-06-28T18:09:04.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Changed kukri knife icon and merc backpack sprite on player, type: Tweak}
@@ -3027,3 +3022,8 @@ Entries:
     type: Tweak}
   id: 4617
   time: '2023-08-17T04:10:06.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: New machine frame sprites, type: Tweak}
+  id: 4618
+  time: '2023-08-17T04:16:13.0000000+00:00'
