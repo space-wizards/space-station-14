@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using Content.Server.Administration.Logs;
 using Content.Server.Power.Components;
+using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.GameTicking;
@@ -23,6 +24,7 @@ public sealed class WiresSystem : SharedWiresSystem
 {
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
@@ -55,6 +57,8 @@ public sealed class WiresSystem : SharedWiresSystem
         SubscribeLocalEvent<WiresComponent, TimedWireEvent>(OnTimedWire);
         SubscribeLocalEvent<WiresComponent, PowerChangedEvent>(OnWiresPowered);
         SubscribeLocalEvent<WiresComponent, WireDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenActivatableUI);
+        SubscribeLocalEvent<ActivatableUIRequiresPanelComponent, PanelChangedEvent>(OnActivatableUIPanelChanged);
     }
 
     private void SetOrCreateWireLayout(EntityUid uid, WiresComponent? wires = null)
@@ -494,6 +498,23 @@ public sealed class WiresSystem : SharedWiresSystem
         }
     }
 
+    private void OnAttemptOpenActivatableUI(EntityUid uid, ActivatableUIRequiresPanelComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (args.Cancelled || !TryComp<WiresPanelComponent>(uid, out var wires))
+            return;
+
+        if (component.RequireOpen != wires.Open)
+            args.Cancel();
+    }
+
+    private void OnActivatableUIPanelChanged(EntityUid uid, ActivatableUIRequiresPanelComponent component, ref PanelChangedEvent args)
+    {
+        if (args.Open == component.RequireOpen)
+            return;
+
+        _activatableUI.CloseAll(uid);
+    }
+
     private void OnMapInit(EntityUid uid, WiresComponent component, MapInitEvent args)
     {
         if (!string.IsNullOrEmpty(component.LayoutId))
@@ -630,6 +651,9 @@ public sealed class WiresSystem : SharedWiresSystem
         component.Open = open;
         UpdateAppearance(uid, component);
         Dirty(component);
+
+        var ev = new PanelChangedEvent(component.Open);
+        RaiseLocalEvent(uid, ref ev);
     }
 
     public void SetWiresPanelSecurityData(EntityUid uid, WiresPanelComponent component, string wiresPanelSecurityLevelID)

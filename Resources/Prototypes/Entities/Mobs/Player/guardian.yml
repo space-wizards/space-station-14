@@ -77,6 +77,7 @@
     - type: Internals
     - type: Examiner
     - type: Speech
+      speechVerb: Robotic
     - type: TypingIndicator
       proto: guardian
     - type: Pullable
@@ -151,3 +152,76 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+
+- type: entity
+  name: HoloClown
+  id: MobHoloClownGuardian
+  parent: MobGuardianBase
+  description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-holoclown-name
+      description: ghost-role-information-holoclown-description
+    - type: GhostTakeoverAvailable
+    - type: NameIdentifier
+      group: Holoparasite
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepClown
+    - type: TypingIndicator
+      proto: holo
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+    - type: Sprite
+      layers:
+        - state: holoclown_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: holoclown_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#8adaff"
+          shader: unshaded
+    - type: Body
+      prototype: Primate
+    - type: Tag
+      tags:
+        - CannotSuicide
+        - FootstepSound
+    - type: Inventory
+      templateId: holoclown
+    - type: Hands
+    - type: Clumsy
+      clumsyDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
+    - type: InventorySlots
+    - type: MeleeWeapon
+      hidden: true
+      angle: 30
+      animation: WeaponArcFist
+      attackRate: 1.8
+      damage:
+        types:
+          Blunt: 5
+    - type: Loadout
+      prototypes: [ HoloClownGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_clown

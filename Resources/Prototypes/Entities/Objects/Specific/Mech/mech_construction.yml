@@ -446,11 +446,11 @@
       left_leg:
         whitelist:
           tags:
-          - BorgLeftLeg
+          - BorgLeg
       right_leg:
         whitelist:
           tags:
-          - BorgRightLeg
+          - BorgLeg
     sprite: Objects/Specific/Mech/vim_construction.rsi
   - type: ContainerContainer
     containers:
@@ -459,8 +459,7 @@
     finishedPrototype: VimChassis
     requiredParts:
       HelmetEVA: false
-      BorgLeftLeg: false
-      BorgRightLeg: false
+      BorgLeg: false
   - type: Sprite
     state: harness
     noRot: true

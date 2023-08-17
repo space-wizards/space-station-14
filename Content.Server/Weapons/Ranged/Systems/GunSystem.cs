@@ -177,7 +177,9 @@ public sealed partial class GunSystem : SharedGunSystem
                     {
                         EjectCartridge(ent.Value, angle);
                     }
-                    Dirty(cartridge);
+                    
+                    Dirty(ent!.Value, cartridge);
+                    
                     break;
                 // Ammo shoots itself
                 case AmmoComponent newAmmo:

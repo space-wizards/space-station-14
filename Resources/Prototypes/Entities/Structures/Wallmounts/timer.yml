@@ -14,6 +14,7 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Sprite
+    drawdepth: SmallObjects
     sprite: Structures/Wallmounts/switch.rsi
     state: on
   - type: Appearance
@@ -51,6 +52,7 @@
     canEditLabel: true
   - type: TextScreenVisuals
   - type: Sprite
+    drawdepth: WallMountedItems
     sprite: Structures/Wallmounts/textscreen.rsi
     state: textscreen
     noRot: true

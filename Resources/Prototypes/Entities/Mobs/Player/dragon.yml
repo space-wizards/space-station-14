@@ -27,6 +27,7 @@
     factions:
     - Dragon
   - type: Speech
+    speechVerb: LargeMob
   - type: CombatMode
   - type: MobMover
   - type: InputMover
