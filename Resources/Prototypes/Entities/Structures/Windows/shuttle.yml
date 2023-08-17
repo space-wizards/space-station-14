@@ -52,4 +52,4 @@
     damageOverlay:
       sprite: Structures/Windows/cracks.rsi
   - type: StaticPrice
-    price: 75
+    price: 100
