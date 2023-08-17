@@ -504,7 +504,7 @@
   icon: { sprite: /Textures/Actions/Implants/implants.rsi, state: freedom }
   productEntity: FreedomImplanter
   cost:
-    Telecrystal: 8
+    Telecrystal: 5
   categories:
     - UplinkImplants
 
