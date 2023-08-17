@@ -98,7 +98,7 @@
   suffix: Syndicate
   components:
   - type: Sprite
-    sprite: Structures/Doors/Airlocks/Standard/synidcate.rsi
+    sprite: Structures/Doors/Airlocks/Standard/syndicate.rsi
 
 # Glass
 
