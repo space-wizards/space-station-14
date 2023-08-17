@@ -94,8 +94,10 @@
         Slash: 0.9
         Piercing: 0.9
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
-  - type: Reflect
-    reflectProb: 1
+#  - type: Reflect 
+#    reflectProb: 1
+#    reflects:
+#    - energy # definign this doesn't seem to work, the vest just reflects everything, despite showing correctly in VV
 
 - type: entity
   parent: ClothingOuterBaseLarge
