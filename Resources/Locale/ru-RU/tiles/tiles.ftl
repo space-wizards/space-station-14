@@ -96,3 +96,6 @@ tiles-grass-planet-floor = пол трава планеты
 tiles-basalt-floor = пол базальт
 tiles-snow-floor = пол снег
 tiles-wood3 = пол сломанный деревянный
+tiles-hull = внешняя обшивка
+tiles-hull-reinforced = укрепленная внешняя обшивка
+tiles-web = паутинный пол

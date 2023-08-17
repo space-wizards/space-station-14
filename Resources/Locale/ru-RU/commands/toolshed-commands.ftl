@@ -26,4 +26,8 @@ command-description-tag-add = Adds a tag to the given entities.
 command-description-tag-rm = Removes a tag from the given entities.
 command-description-tag-addmany = Adds a list of tags to the given entities.
 command-description-tag-rmmany = Removes a list of tags from the given entities.
-command-description-solution-get = Returns a solution stored in an entity's solution container.
+command-description-solution-get = Returns a solution stored in an entity's solution container..
+command-description-laws-list =
+    Returns a list of all law bound entities.
+command-description-laws-get =
+    Returns all of the laws for a given entity.

@@ -110,3 +110,5 @@ ent-SalvageMagnetMachineCircuitboard = магнит обломков (машин
     .desc = Печатная плата магнита обломков.
 ent-BorgChargerCircuitboard = зарядная станция киборгов (машинная плата)
     .desc = Печатная плата зарядной станции киборгов.
+ent-MiniGravityGeneratorCircuitboard = мини-генератор гравитации (машинная плата)
+    .desc = Печатная плата для мини-генератора гравитации.

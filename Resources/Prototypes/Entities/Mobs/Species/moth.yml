@@ -22,13 +22,15 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: Speech
+    speechVerb: Insect
+  - type: TypingIndicator
+    proto: moth
   - type: Butcherable
     butcheringType: Spike
     spawned:
     - id: FoodMeat
       amount: 5
-  - type: Speech
-    speechSounds: Moth
   - type: Vocal
     sounds:
       Male: UnisexMoth

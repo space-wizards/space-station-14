@@ -69,8 +69,14 @@ public sealed partial class BorgSystem
         if (TryComp<NameIdentifierComponent>(uid, out var identifier))
             name = $"{name} {identifier.FullIdentifier}";
 
-        _metaData.SetEntityName(uid, name);
+        var metaData = MetaData(uid);
+
+        // don't change the name if the value doesn't actually change
+        if (metaData.EntityName.Equals(name, StringComparison.InvariantCulture))
+            return;
+
         _adminLog.Add(LogType.Action, LogImpact.High, $"{ToPrettyString(attachedEntity):player} set borg \"{ToPrettyString(uid)}\"'s name to: {name}");
+        _metaData.SetEntityName(uid, name, metaData);
     }
 
     private void OnRemoveModuleBuiMessage(EntityUid uid, BorgChassisComponent component, BorgRemoveModuleBuiMessage args)

@@ -27,3 +27,5 @@ ent-ChairFolding = раскладной стул
 ent-ChairFoldingSpawnFolded = { ent-ChairFolding }
     .suffix = Сложенный
     .desc = { ent-ChairFolding.desc }
+ent-WebChair = стул из паутины
+    .desc = Для настоящих веб-разработчиков.

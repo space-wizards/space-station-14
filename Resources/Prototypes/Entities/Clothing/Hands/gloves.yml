@@ -27,6 +27,7 @@
   - type: Tag
     tags:
     - Kangaroo
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -262,6 +263,20 @@
   - type: Fiber
     fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesFingerlessInsulated
+  name: fingerless insulated gloves
+  description: Insulated gloves resistant to shocks, or at least they used to.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/fingerlessinsuls.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/fingerlessinsuls.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-yellow
 
 - type: entity
   parent: ClothingHandsBase

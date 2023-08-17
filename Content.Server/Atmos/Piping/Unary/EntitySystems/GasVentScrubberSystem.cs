@@ -17,14 +17,12 @@ using Content.Shared.Atmos.Piping.Unary.Components;
 using Content.Shared.Audio;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
     public sealed class GasVentScrubberSystem : EntitySystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly DeviceNetworkSystem _deviceNetSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
@@ -54,7 +52,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
-            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta = args.dt;
 
             if (!scrubber.Enabled
             || !EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer)

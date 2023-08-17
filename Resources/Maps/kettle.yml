@@ -13912,7 +13912,7 @@ entities:
     - pos: -55.5,-29.5
       parent: 82
       type: Transform
-- proto: AirlockPainter
+- proto: SprayPainter
   entities:
   - uid: 11279
     components:

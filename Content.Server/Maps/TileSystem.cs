@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Content.Server.Decals;
 using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Decals;
@@ -26,7 +26,7 @@ public sealed class TileSystem : EntitySystem
         var tileRef = grid.GetTileRef(indices);
         return PryTile(tileRef);
     }
-	
+
 	public bool PryTile(TileRef tileRef)
     {
         return PryTile(tileRef, false);
@@ -74,7 +74,7 @@ public sealed class TileSystem : EntitySystem
         if (!Resolve(grid, ref component))
             return false;
 
-        var variant = _robustRandom.Pick(replacementTile.PlacementVariants);
+        var variant = replacementTile.PickVariant();
         var decals = _decal.GetDecalsInRange(tileref.GridUid, _turf.GetTileCenter(tileref).Position, 0.5f);
         foreach (var (id, _) in decals)
         {
