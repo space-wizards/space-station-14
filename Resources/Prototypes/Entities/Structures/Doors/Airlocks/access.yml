@@ -96,6 +96,22 @@
     access: [["Atmospherics"]]
 
 - type: entity
+  parent: AirlockExternal
+  id: AirlockExternalSyndicateLocked
+  suffix: External, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalNukeopLocked
+  suffix: External, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
+- type: entity
   parent: AirlockFreezer
   id: AirlockFreezerLocked
   suffix: Kitchen, Locked
@@ -337,6 +353,22 @@
   components:
   - type: AccessReader
     access: [["Cargo"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassSyndicateLocked
+  suffix: External, Glass, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassNukeopLocked
+  suffix: External, Glass, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockExternalGlass
@@ -731,6 +763,22 @@
   - type: AccessReader
     access: [["Captain"]]
 
+ type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateLocked
+  suffix: Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+ type: entity
+  parent: AirlockSyndicate
+  id: AirlockSyndicateNukeopLocked
+  suffix: Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
+
 # Shuttle airlocks
 - type: entity
   parent: AirlockShuttle
@@ -739,6 +787,22 @@
   components:
   - type: AccessReader
     access: [["External"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleSyndicateLocked
+  suffix: External, Docking, Syndicate, Locked
+  components:
+  - type: AccessReader
+    access: [["SyndicateAgent"]]
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockExternalShuttleNukeopLocked
+  suffix: External, Docking, Nukeop, Locked
+  components:
+  - type: AccessReader
+    access: [["NuclearOperative"]]
 
 - type: entity
   parent: AirlockGlassShuttle
