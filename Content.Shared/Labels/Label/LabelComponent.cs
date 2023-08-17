@@ -1,4 +1,4 @@
-namespace Content.Server.Labels.Components
+namespace Content.Shared.Labels.Components
 {
     /// <summary>
     /// Makes entities have a label in their name. Labels are normally given by <see cref="HandLabelerComponent"/>
