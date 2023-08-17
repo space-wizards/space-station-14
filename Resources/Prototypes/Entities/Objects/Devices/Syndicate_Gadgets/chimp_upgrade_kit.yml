@@ -8,8 +8,6 @@
     sprite: Objects/Misc/module.rsi
     state: abductor_mod  
   - type: Item
-    sprite: Objects/Misc/module.rsi
-    state: abductor_mod
     size: 10
   - type: Tag
     tags:
