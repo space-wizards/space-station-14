@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.GameStates;
@@ -13,16 +12,16 @@ namespace Content.Shared.Construction.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public readonly Dictionary<string, int> Requirements = new();
+        public Dictionary<string, int> Requirements { get; private set; } = new();
 
         [DataField("materialRequirements")]
-        public readonly Dictionary<string, int> MaterialIdRequirements = new();
+        public Dictionary<string, int> MaterialIdRequirements { get; private set; } = new();
 
         [DataField("tagRequirements")]
-        public readonly Dictionary<string, GenericPartInfo> TagRequirements = new();
+        public Dictionary<string, GenericPartInfo> TagRequirements { get; private set; } = new();
 
         [DataField("componentRequirements")]
-        public readonly Dictionary<string, GenericPartInfo> ComponentRequirements = new();
+        public Dictionary<string, GenericPartInfo> ComponentRequirements { get; private set; } = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype")]
@@ -51,9 +50,5 @@ namespace Content.Shared.Construction.Components
         public string ExamineName;
         [DataField("DefaultPrototype")]
         public string DefaultPrototype;
-
-#pragma warning disable CS8618
-        public GenericPartInfo() {}
-#pragma warning restore CS8618
     }
 }
