@@ -1,4 +1,4 @@
-﻿- type: entity
+- type: entity
   parent: SimpleMobBase
   id: BaseMobFlesh
   name: aberrant flesh
@@ -9,6 +9,8 @@
     rootTask:
       task: SimpleHostileCompound
     blackboard:
+      NavClimb: !type:Bool
+        true
       NavSmash: !type:Bool
         true
   - type: NpcFactionMember
@@ -34,7 +36,7 @@
       0: Alive
       75: Dead
   - type: Stamina
-    excess: 50
+    critThreshold: 50
   - type: Butcherable
     spawned:
     - id: FoodMeat

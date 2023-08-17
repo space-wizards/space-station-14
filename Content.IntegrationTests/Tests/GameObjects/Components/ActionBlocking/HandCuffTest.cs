@@ -16,10 +16,11 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
     [TestOf(typeof(HandcuffComponent))]
     public sealed class HandCuffTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
-  name: HumanDummy
-  id: HumanDummy
+  name: HumanHandcuffDummy
+  id: HumanHandcuffDummy
   components:
   - type: Cuffable
   - type: Hands
@@ -36,11 +37,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
-            {
-                NoClient = true,
-                ExtraPrototypes = Prototypes
-            });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             EntityUid human;
@@ -64,8 +61,8 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.ActionBlocking
                 var xformQuery = entityManager.GetEntityQuery<TransformComponent>();
 
                 // Spawn the entities
-                human = entityManager.SpawnEntity("HumanDummy", coordinates);
-                otherHuman = entityManager.SpawnEntity("HumanDummy", coordinates);
+                human = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
+                otherHuman = entityManager.SpawnEntity("HumanHandcuffDummy", coordinates);
                 cuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
                 secondCuffs = entityManager.SpawnEntity("HandcuffsDummy", coordinates);
 

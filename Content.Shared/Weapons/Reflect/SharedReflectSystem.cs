@@ -38,21 +38,21 @@ public abstract class SharedReflectSystem : EntitySystem
         SubscribeLocalEvent<HandsComponent, ProjectileReflectAttemptEvent>(OnHandReflectProjectile);
         SubscribeLocalEvent<HandsComponent, HitScanReflectAttemptEvent>(OnHandsReflectHitscan);
 
-        SubscribeLocalEvent<ReflectComponent, ProjectileCollideEvent>(OnReflectCollide);
+        SubscribeLocalEvent<ReflectComponent, ProjectileReflectAttemptEvent>(OnReflectCollide);
         SubscribeLocalEvent<ReflectComponent, HitScanReflectAttemptEvent>(OnReflectHitscan);
 
         SubscribeLocalEvent<ReflectComponent, GotEquippedEvent>(OnReflectEquipped);
         SubscribeLocalEvent<ReflectComponent, GotUnequippedEvent>(OnReflectUnequipped);
     }
 
-    private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileCollideEvent args)
+    private void OnReflectCollide(EntityUid uid, ReflectComponent component, ref ProjectileReflectAttemptEvent args)
     {
         if (args.Cancelled)
         {
             return;
         }
 
-        if (TryReflectProjectile(uid, args.OtherEntity, reflect: component))
+        if (TryReflectProjectile(uid, args.ProjUid, reflect: component))
             args.Cancelled = true;
     }
 
@@ -174,8 +174,10 @@ public abstract class SharedReflectSystem : EntitySystem
         if (!TryComp(args.Equipee, out ReflectComponent? reflection))
             return;
 
-        reflection.Enabled = true;
+        if (args.Slot == "pocket1" || args.Slot == "pocket2")
+            return;
 
+        reflection.Enabled = comp.Enabled;
         // reflection probability should be: (1 - old probability) * newly-equipped item probability + old probability
         // example: if entity has .25 reflection and newly-equipped item has .7, entity should have (1 - .25) * .7 + .25 = .775
         reflection.ReflectProb += (1 - reflection.ReflectProb) * comp.ReflectProb;

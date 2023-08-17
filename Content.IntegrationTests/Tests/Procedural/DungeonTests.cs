@@ -12,7 +12,7 @@ public sealed class DungeonTests
     [Test]
     public async Task TestDungeonRoomPackBounds()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
 
         await pairTracker.Pair.Server.WaitAssertion(() =>
@@ -62,7 +62,7 @@ public sealed class DungeonTests
     [Test]
     public async Task TestDungeonPresets()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
 
         await pairTracker.Pair.Server.WaitAssertion(() =>
