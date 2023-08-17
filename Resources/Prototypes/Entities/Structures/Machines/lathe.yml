@@ -397,6 +397,7 @@
     - BorgModuleRadiationDetection
     - BorgModuleTool
     - BorgModuleAppraisal
+    - BorgModuleConstruction
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
