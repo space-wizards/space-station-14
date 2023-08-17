@@ -99,6 +99,8 @@
   id: PartRodMetalLingering0
   suffix: Lingering, 0
   components:
+  - type: Item
+    size: 0
   - type: Stack
     lingering: true
     count: 0
