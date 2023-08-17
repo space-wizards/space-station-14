@@ -1,9 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Changed kukri knife icon and merc backpack sprite on player, type: Tweak}
-  id: 4119
-  time: '2023-06-28T19:59:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Modified the rewards and item amounts for several cargo bounties., type: Tweak}
@@ -3027,3 +3022,9 @@ Entries:
   - {message: New machine frame sprites, type: Tweak}
   id: 4618
   time: '2023-08-17T04:16:13.0000000+00:00'
+- author: hord-brayden
+  changes:
+  - {message: Whoopsie - Dan's Soaked Cigs finally hired some Quality Control. They've
+      resolved a small reagent solution in some of their swisher sweets., type: Fix}
+  id: 4619
+  time: '2023-08-17T05:15:39.0000000+00:00'
