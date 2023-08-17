@@ -649,7 +649,7 @@
 - type: entity
   id: WallShuttleDiagonal
   name: shuttle wall
-  suffix: diagonal
+  suffix: Diagonal
   description: Keeps the air in and the greytide out.
   placement:
     mode: SnapgridCenter
