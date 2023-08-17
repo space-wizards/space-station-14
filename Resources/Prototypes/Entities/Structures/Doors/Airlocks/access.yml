@@ -763,7 +763,7 @@
   - type: AccessReader
     access: [["Captain"]]
 
- type: entity
+- type: entity
   parent: AirlockSyndicate
   id: AirlockSyndicateLocked
   suffix: Locked
@@ -771,7 +771,7 @@
   - type: AccessReader
     access: [["SyndicateAgent"]]
 
- type: entity
+- type: entity
   parent: AirlockSyndicate
   id: AirlockSyndicateNukeopLocked
   suffix: Nukeop, Locked
