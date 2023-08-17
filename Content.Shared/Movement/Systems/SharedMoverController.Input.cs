@@ -493,11 +493,11 @@ namespace Content.Shared.Movement.Systems
                 _angle = direction.ToAngle();
             }
 
-            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (session?.AttachedEntity == null) return false;
 
-                if (full.State != BoundKeyState.Up)
+                if (message.State != BoundKeyState.Up)
                     return false;
 
                 _controller.RotateCamera(session.AttachedEntity.Value, _angle);
@@ -514,11 +514,11 @@ namespace Content.Shared.Movement.Systems
                 _controller = controller;
             }
 
-            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (session?.AttachedEntity == null) return false;
 
-                if (full.State != BoundKeyState.Up)
+                if (message.State != BoundKeyState.Up)
                     return false;
 
                 _controller.ResetCamera(session.AttachedEntity.Value);
@@ -537,11 +537,11 @@ namespace Content.Shared.Movement.Systems
                 _dir = dir;
             }
 
-            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (session?.AttachedEntity == null) return false;
 
-                _controller.HandleDirChange(session.AttachedEntity.Value, _dir, message.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleDirChange(session.AttachedEntity.Value, _dir, message.SubTick, message.State == BoundKeyState.Down);
                 return false;
             }
         }
@@ -555,11 +555,11 @@ namespace Content.Shared.Movement.Systems
                 _controller = controller;
             }
 
-            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (session?.AttachedEntity == null) return false;
 
-                _controller.HandleRunChange(session.AttachedEntity.Value, full.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleRunChange(session.AttachedEntity.Value, message.SubTick, message.State == BoundKeyState.Down);
                 return false;
             }
         }
@@ -604,11 +604,11 @@ namespace Content.Shared.Movement.Systems
                 _button = button;
             }
 
-            public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+            public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
             {
-                if (message is not FullInputCmdMessage full || session?.AttachedEntity == null) return false;
+                if (session?.AttachedEntity == null) return false;
 
-                _controller.HandleShuttleInput(session.AttachedEntity.Value, _button, full.SubTick, full.State == BoundKeyState.Down);
+                _controller.HandleShuttleInput(session.AttachedEntity.Value, _button, message.SubTick, message.State == BoundKeyState.Down);
                 return false;
             }
         }

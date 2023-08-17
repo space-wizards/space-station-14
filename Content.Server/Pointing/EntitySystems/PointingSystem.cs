@@ -97,15 +97,13 @@ namespace Content.Server.Pointing.EntitySystems
             }
         }
 
-        public bool TryPoint(ICommonSession? session, NetCoordinates netCoords, NetEntity netPointed)
+        public bool TryPoint(ICommonSession? session, EntityCoordinates coords, EntityUid pointed)
         {
             if (session?.AttachedEntity is not { } player)
             {
                 Log.Warning($"Player {session} attempted to point without any attached entity");
                 return false;
             }
-
-            var coords = ToCoordinates(netCoords);
 
             if (!coords.IsValid(EntityManager))
             {
@@ -118,8 +116,6 @@ namespace Content.Server.Pointing.EntitySystems
             {
                 return false;
             }
-
-            var pointed = ToEntity(netPointed);
 
             if (HasComp<PointingArrowComponent>(pointed))
             {
@@ -254,7 +250,7 @@ namespace Content.Server.Pointing.EntitySystems
             var target = ToEntity(ev.Target);
 
             if (TryComp(target, out TransformComponent? xform))
-                TryPoint(args.SenderSession, ToNetCoordinates(xform.Coordinates), ev.Target);
+                TryPoint(args.SenderSession, xform.Coordinates, target);
             else
                 Log.Warning($"User {args.SenderSession} attempted to point at a non-existent entity uid: {ev.Target}");
         }

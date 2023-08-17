@@ -113,12 +113,9 @@ public sealed partial class ReplaySpectatorSystem
             _dir = dir;
         }
 
-        public override bool HandleCmdMessage(ICommonSession? session, InputCmdMessage message)
+        public override bool HandleCmdMessage(IEntityManager entManager, ICommonSession? session, IFullInputCmdMessage message)
         {
-            if (message is not FullInputCmdMessage full)
-                return false;
-
-            if (full.State == BoundKeyState.Down)
+            if (message.State == BoundKeyState.Down)
                 _sys.Direction |= _dir;
             else
                 _sys.Direction &= ~_dir;

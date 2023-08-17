@@ -133,14 +133,16 @@ namespace Content.Client.ContextMenu.UI
                 var func = args.Function;
                 var funcId = _inputManager.NetworkBindMap.KeyFunctionID(func);
 
-                var message = new FullInputCmdMessage(
+                var message = new ClientFullInputCmdMessage(
                     _gameTiming.CurTick,
                     _gameTiming.TickFraction,
-                    funcId,
-                    BoundKeyState.Down,
-                    _entityManager.ToNetCoordinates(_entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates),
-                    args.PointerLocation,
-                    _entityManager.ToNetEntity(entity.Value));
+                    funcId)
+                {
+                    State = BoundKeyState.Down,
+                    Coordinates = _entityManager.GetComponent<TransformComponent>(entity.Value).Coordinates,
+                    ScreenCoordinates = args.PointerLocation,
+                    Uid = entity.Value,
+                };
 
                 var session = _playerManager.LocalPlayer?.Session;
                 if (session != null)
@@ -164,7 +166,7 @@ namespace Content.Client.ContextMenu.UI
             if (_combatMode.IsInCombatMode(args.Session?.AttachedEntity))
                 return false;
 
-            var coords = _entityManager.ToCoordinates(args.Coordinates).ToMap(_entityManager);
+            var coords = args.Coordinates.ToMap(_entityManager);
 
             if (_verbSystem.TryGetEntityMenuEntities(coords, out var entities))
                 OpenRootMenu(entities);

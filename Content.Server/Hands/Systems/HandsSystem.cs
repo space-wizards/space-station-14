@@ -178,7 +178,7 @@ namespace Content.Server.Hands.Systems
         #endregion
 
         #region interactions
-        private bool HandleThrowItem(ICommonSession? session, NetCoordinates netCoordinates, NetEntity netEntity)
+        private bool HandleThrowItem(ICommonSession? session, EntityCoordinates coordinates, EntityUid entity)
         {
             if (session is not IPlayerSession playerSession)
                 return false;
@@ -201,7 +201,7 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            var direction = ToCoordinates(netCoordinates).ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = coordinates.ToMapPos(EntityManager) - Transform(player).WorldPosition;
             if (direction == Vector2.Zero)
                 return true;
 

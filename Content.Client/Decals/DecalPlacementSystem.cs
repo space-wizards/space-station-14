@@ -49,13 +49,12 @@ public sealed class DecalPlacementSystem : EntitySystem
         _overlay.AddOverlay(new DecalPlacementOverlay(this, _transform, _sprite));
 
         CommandBinds.Builder.Bind(EngineKeyFunctions.EditorPlaceObject, new PointerStateInputCmdHandler(
-            (session, netCoords, uid) =>
+            (session, coords, uid) =>
             {
                 if (!_active || _placing || _decalId == null)
                     return false;
 
                 _placing = true;
-                var coords = ToCoordinates(netCoords);
 
                 if (_snap)
                 {
@@ -72,7 +71,7 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
 
                 var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, netCoords));
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, ToNetCoordinates(coords)));
 
                 return true;
             },
@@ -92,7 +91,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
                 _erasing = true;
 
-                RaiseNetworkEvent(new RequestDecalRemovalEvent(coords));
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(ToNetCoordinates(coords)));
 
                 return true;
             }, (session, coords, uid) =>

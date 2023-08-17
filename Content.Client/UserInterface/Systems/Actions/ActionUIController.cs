@@ -213,7 +213,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        var coords = EntityManager.ToCoordinates(args.Coordinates);
+        var coords = args.Coordinates;
 
         if (!_actionsSystem.ValidateWorldTarget(user, coords, action))
         {
@@ -235,7 +235,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.Coordinates));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, EntityManager.ToNetCoordinates(args.Coordinates)));
 
         if (!action.Repeat)
             StopTargeting();
@@ -248,7 +248,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
         if (_actionsSystem == null)
             return false;
 
-        var entity = EntityManager.ToEntity(args.EntityUid);
+        var entity = args.EntityUid;
 
         if (!_actionsSystem.ValidateEntityTarget(user, entity, action))
         {
@@ -269,7 +269,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             _actionsSystem.PerformAction(user, actionComp, action, action.Event, _timing.CurTime);
         }
         else
-            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, args.EntityUid));
+            EntityManager.RaisePredictiveEvent(new RequestPerformActionEvent(action, EntityManager.ToNetEntity(args.EntityUid)));
 
         if (!action.Repeat)
             StopTargeting();

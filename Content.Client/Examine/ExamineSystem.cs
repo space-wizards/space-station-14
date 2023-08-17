@@ -93,7 +93,7 @@ namespace Content.Client.Examine
 
         private bool HandleExamine(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            var entity = ToEntity(args.EntityUid);
+            var entity = args.EntityUid;
 
             if (!args.EntityUid.IsValid() || !EntityManager.EntityExists(entity))
             {

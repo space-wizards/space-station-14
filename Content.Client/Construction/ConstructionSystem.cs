@@ -37,6 +37,7 @@ namespace Content.Client.Construction
         {
             base.Initialize();
 
+            UpdatesOutsidePrediction = true;
             SubscribeLocalEvent<PlayerAttachSysMessage>(HandlePlayerAttached);
             SubscribeNetworkEvent<AckStructureConstructionMessage>(HandleAckStructure);
             SubscribeNetworkEvent<ResponseConstructionGuide>(OnConstructionGuideReceived);
@@ -149,15 +150,13 @@ namespace Content.Client.Construction
 
         private bool HandleUse(in PointerInputCmdHandler.PointerInputCmdArgs args)
         {
-            var entity = ToEntity(args.EntityUid);
-
-            if (!entity.IsValid() || !IsClientSide(entity))
+            if (!args.EntityUid.IsValid() || !IsClientSide(args.EntityUid))
                 return false;
 
-            if (!HasComp<ConstructionGhostComponent>(entity))
+            if (!HasComp<ConstructionGhostComponent>(args.EntityUid))
                 return false;
 
-            TryStartConstruction(entity);
+            TryStartConstruction(args.EntityUid);
             return true;
         }
 

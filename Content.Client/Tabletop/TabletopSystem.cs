@@ -198,7 +198,7 @@ namespace Content.Client.Tabletop
             if (_playerManager.LocalPlayer is not {ControlledEntity: { } playerEntity})
                 return false;
 
-            var entity = ToEntity(args.EntityUid);
+            var entity = args.EntityUid;
 
             // Return if can not see table or stunned/no hands
             if (!CanSeeTable(playerEntity, _table) || !CanDrag(playerEntity, entity, out _))

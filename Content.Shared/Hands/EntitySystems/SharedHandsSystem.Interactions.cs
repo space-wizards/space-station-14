@@ -89,10 +89,10 @@ public abstract partial class SharedHandsSystem : EntitySystem
         TrySetActiveHand(session.AttachedEntity.Value, nextHand, component);
     }
 
-    private bool DropPressed(ICommonSession? session, NetCoordinates coords, NetEntity netEntity)
+    private bool DropPressed(ICommonSession? session, EntityCoordinates coords, EntityUid netEntity)
     {
         if (TryComp(session?.AttachedEntity, out HandsComponent? hands) && hands.ActiveHand != null)
-            TryDrop(session.AttachedEntity.Value, hands.ActiveHand, ToCoordinates(coords), handsComp: hands);
+            TryDrop(session.AttachedEntity.Value, hands.ActiveHand, coords, handsComp: hands);
 
         // always send to server.
         return false;
