@@ -152,6 +152,7 @@ marking-HumanHairSpiky = Spiky 2
 marking-HumanHairSpiky2 = Spiky 3
 marking-HumanHairSwept = Swept Back Hair
 marking-HumanHairSwept2 = Swept Back Hair 2
+marking-HumanHairShoulderLengthOverEye = Shoulder-length Over Eye
 marking-HumanHairThinning = Thinning
 marking-HumanHairThinningfront = Thinning (Front)
 marking-HumanHairThinningrear = Thinning (Rear)
