@@ -45,7 +45,7 @@ job-name-boxer = боксёр
 job-name-zookeeper = зоотехник
 job-name-senior-engineer = ведущий инженер
 job-name-senior-researcher = старший научный сотрудник
-job-name-senior-physician = заведующий медицинским отделом
+job-name-senior-physician = заведующий
 job-name-senior-officer = инструктор СБ
 # Role timers - Make these alphabetical or I cut you
 JobAtmosphericTechnician = атмосферный техник
@@ -91,7 +91,7 @@ JobSecurityOfficer = офицер СБ
 JobServiceWorker = сервисный работник
 JobSeniorEngineer = ведущий инженер
 JobSeniorOfficer = инструктор СБ
-JobSeniorPhysician = заведующий медицинским отделом
+JobSeniorPhysician = заведующий
 JobSeniorResearcher = старший научный сотрудник
 JobStationEngineer = инженер
 JobTechnicalAssistant = технический ассистент
