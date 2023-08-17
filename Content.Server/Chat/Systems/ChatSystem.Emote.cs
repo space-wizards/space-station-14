@@ -92,7 +92,7 @@ public partial class ChatSystem
         {
             // not all emotes are loc'd, but for the ones that are we pass in entity
             var action = Loc.GetString(_random.Pick(emote.ChatMessages), ("entity", source));
-            SendEntityEmote(source, action, range, nameOverride, false, hideLog, ignoreActionBlocker);
+            SendEntityEmote(source, action, range, nameOverride, hideLog: hideLog, ignoreActionBlocker);
         }
 
         // do the rest of emote event logic here
