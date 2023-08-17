@@ -1,4 +1,4 @@
-namespace Content.Server.Labels.Components
+namespace Content.Shared.Labels.Components
 {
     [RegisterComponent]
     public sealed class LabelComponent : Component
