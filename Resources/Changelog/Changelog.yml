@@ -1,12 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'Added Lead, a tasteless, incredibly powerful but slow-acting poison
-      obtained in small amounts by grinding steel.', type: Add}
-  - {message: Grinding powercells now gives Zinc instead of Licoxide, type: Tweak}
-  - {message: Licoxide is now obtained through a combination of Zinc and Lead., type: Tweak}
-  id: 4116
-  time: '2023-06-28T17:53:56.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Salvages should be pulled in more reliably., type: Fix}
@@ -3029,3 +3021,8 @@ Entries:
       them and upgrade stuff!, type: Tweak}
   id: 4615
   time: '2023-08-16T22:12:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced freedom implanter cost from 8 -> 5 TC., type: Tweak}
+  id: 4616
+  time: '2023-08-17T04:08:47.0000000+00:00'
