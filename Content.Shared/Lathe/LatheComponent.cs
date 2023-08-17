@@ -33,7 +33,6 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
-
         #region Visualizer info
         [DataField("idleState", required: true)]
         public string IdleState = default!;

@@ -1504,6 +1504,32 @@
   solids:
     FoodAloe: 1
 
+- type: microwaveMealRecipe
+  id: RecipeMedicatedSuture
+  name: medicated suture recipe
+  result: MedicatedSuture
+  time: 10
+  solids: 
+    FoodPoppy: 1
+    Brutepack: 1
+    MaterialCloth1: 1
+  reagents:
+    TranexamicAcid: 50
+    Cryptobiolin: 50
+
+- type: microwaveMealRecipe
+  id: RecipeRegenerativeMesh
+  name: regenerative mesh recipe
+  result: RegenerativeMesh
+  time: 10
+  solids:
+    FoodAloe: 1
+    Ointment: 1
+    MaterialCloth1: 1
+  reagents:
+    Sigynate: 50
+    Dermaline: 50 
+
 # Suppermatter
 - type: microwaveMealRecipe
   id: RecipeSuppermatter
@@ -1597,3 +1623,20 @@
     FoodOnionSlice: 2
     FoodCheeseSlice: 1
     FoodMeatCutlet: 1
+
+- type: microwaveMealRecipe
+  id: RecipeFoodBakedChevreChaud
+  name: chevre chaud recipe
+  result: FoodBakedChevreChaud
+  time: 5
+  solids:
+    FoodChevreSlice: 1
+    FoodBreadBaguetteSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1

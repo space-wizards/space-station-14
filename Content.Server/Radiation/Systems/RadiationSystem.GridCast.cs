@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
 using Content.Shared.Radiation.Components;
@@ -101,7 +102,7 @@ public partial class RadiationSystem
 
         // get direction from rad source to destination and its distance
         var dir = destWorld - sourceWorld;
-        var dist = dir.Length;
+        var dist = dir.Length();
 
         // check if receiver is too far away
         if (dist > GridcastMaxDistance)

@@ -102,7 +102,7 @@ public abstract class SharedStealthSystem : EntitySystem
         if (args.NewPosition.EntityId != args.OldPosition.EntityId)
             return;
 
-        var delta = component.MovementVisibilityRate * (args.NewPosition.Position - args.OldPosition.Position).Length;
+        var delta = component.MovementVisibilityRate * (args.NewPosition.Position - args.OldPosition.Position).Length();
         ModifyVisibility(uid, delta);
     }
 

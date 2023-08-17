@@ -26,7 +26,8 @@
       - !type:AddToSolutionReaction
         solution: cube
   - type: Rehydratable
-    target: MobMonkey
+    possibleSpawns:
+    - MobMonkey
   - type: CollisionWake
     enabled: false
   - type: Fixtures
@@ -69,7 +70,8 @@
       - !type:AddToSolutionReaction
         solution: plushie
   - type: Rehydratable
-    target: MobCarp
+    possibleSpawns:
+    - MobCarp
   - type: CollisionWake
     enabled: false
   - type: Physics
@@ -99,3 +101,62 @@
     handle: false
     sound:
       path: /Audio/Effects/bite.ogg
+
+- type: entity
+  parent: BaseItem
+  id: SyndicateSponge
+  name: monkey cube
+  suffix: Syndicate
+  description: Just add water!
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      cube:
+        maxVol: 11 # needs room for water
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+  - type: Food
+    solution: cube
+  - type: RefillableSolution
+    solution: cube
+  - type: Sprite
+    sprite: Objects/Misc/monkeycube.rsi
+    state: cube
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: cube
+  - type: Rehydratable
+    possibleSpawns:
+    - MobRatServant
+    - MobCarpHolo
+    - MobXenoRavager
+    - MobAngryBee
+    - MobAdultSlimesYellowAngry
+    - MobSpiderSpace
+    - MobBearSpace
+    - MobPurpleSnake
+    - MobKangarooSpace
+    - MobTick
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        density: 5
+        mask:
+        - ItemMask
+      rehydrate:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.3,0.3,0.3"
+        hard: false
+        layer:
+        - LowImpassable

@@ -1,4 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Numerics;
 using Content.Client.Animations;
 using Content.Client.Examine;
 using Content.Client.Strip;
@@ -62,6 +64,18 @@ namespace Content.Client.Hands.Systems
                 return;
 
             var handsModified = component.Hands.Count != state.Hands.Count;
+            // we need to check that, even if we have the same amount, that the individual hands didn't change.
+            if (!handsModified)
+            {
+                foreach (var hand in component.Hands.Values)
+                {
+                    if (state.Hands.Contains(hand))
+                        continue;
+                    handsModified = true;
+                    break;
+                }
+            }
+
             var manager = EnsureComp<ContainerManagerComponent>(uid);
 
             if (handsModified)
@@ -86,12 +100,13 @@ namespace Content.Client.Hands.Systems
                     }
                 }
 
-                foreach (var hand in addedHands)
+                component.SortedHands = new(state.HandNames);
+                var sorted = addedHands.OrderBy(hand => component.SortedHands.IndexOf(hand.Name));
+
+                foreach (var hand in sorted)
                 {
                     AddHand(uid, hand, component);
                 }
-
-                component.SortedHands = new(state.HandNames);
             }
 
             _stripSys.UpdateUi(uid);
@@ -109,16 +124,16 @@ namespace Content.Client.Hands.Systems
         #region PickupAnimation
         private void HandlePickupAnimation(PickupAnimationEvent msg)
         {
-            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition);
+            PickupAnimation(msg.ItemUid, msg.InitialPosition, msg.FinalPosition, msg.InitialAngle);
         }
 
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
+        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
             EntityUid? exclude)
         {
-            PickupAnimation(item, initialPosition, finalPosition);
+            PickupAnimation(item, initialPosition, finalPosition, initialAngle);
         }
 
-        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition)
+        public void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle)
         {
             if (!_gameTiming.IsFirstTimePredicted)
                 return;
@@ -126,7 +141,7 @@ namespace Content.Client.Hands.Systems
             if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
                 return;
 
-            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition);
+            ReusableAnimations.AnimateEntityPickup(item, initialPosition, finalPosition, initialAngle);
         }
         #endregion
 
@@ -326,7 +341,7 @@ namespace Content.Client.Hands.Systems
             }
 
             var ev = new GetInhandVisualsEvent(uid, hand.Location);
-            RaiseLocalEvent(held, ev, false);
+            RaiseLocalEvent(held, ev);
 
             if (ev.Layers.Count == 0)
             {
@@ -339,7 +354,7 @@ namespace Content.Client.Hands.Systems
             {
                 if (!revealedLayers.Add(key))
                 {
-                    Logger.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
+                    Log.Warning($"Duplicate key for in-hand visuals: {key}. Are multiple components attempting to modify the same layer? Entity: {ToPrettyString(held)}");
                     continue;
                 }
 

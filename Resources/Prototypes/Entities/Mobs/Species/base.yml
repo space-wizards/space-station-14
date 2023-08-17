@@ -84,15 +84,13 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: Blindable
   # Other
   - type: Inventory
   - type: InventorySlots
   - type: Clickable
   - type: InteractionOutline
-  - type: Icon
-    sprite: Mobs/Species/Human/parts.rsi
-    state: full
   - type: Sprite
     noRot: true
     drawdepth: Mobs
@@ -120,11 +118,6 @@
       - map: ["enum.HumanoidVisualLayers.RFoot"]
       - map: ["enum.HumanoidVisualLayers.LHand"]
       - map: ["enum.HumanoidVisualLayers.RHand"]
-      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
-        color: "#ffffff"
-        sprite: Objects/Misc/handcuffs.rsi
-        state: body-overlay-2
-        visible: false
       - map: [ "id" ]
       - map: [ "gloves" ]
       - map: [ "shoes" ]
@@ -143,12 +136,20 @@
       - map: [ "head" ]
       - map: [ "pocket1" ]
       - map: [ "pocket2" ]
+      - map: ["enum.HumanoidVisualLayers.Handcuffs"]
+        color: "#ffffff"
+        sprite: Objects/Misc/handcuffs.rsi
+        state: body-overlay-2
+        visible: false
       - map: [ "clownedon" ] # Dynamically generated
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
   - type: Physics
     bodyType: KinematicController
+  - type: Reflect
+    enabled: false
+    reflectProb: 0
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
       fix1:
@@ -197,6 +198,13 @@
     thermalRegulationTemperatureThreshold: 25
   - type: Internals
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -262,7 +270,8 @@
     attackRate: 1
     damage:
       types:
-        Blunt: 5
+        # Actually does 5 damage due to +25% damage bonus on all single target melee attacks
+        Blunt: 4
   - type: Pullable
   - type: DoAfter
   - type: CreamPied
@@ -302,6 +311,7 @@
     price: 1500 # Kidnapping a living person and selling them for cred is a good move.
     deathPenalty: 0.01 # However they really ought to be living and intact, otherwise they're worth 100x less.
   - type: ContentEye
+  - type: SleepEmitSound
 
 - type: entity
   save: false
@@ -367,7 +377,6 @@
         - map: [ "pocket1" ]
         - map: [ "pocket2" ]
     - type: Physics
-      bodyType: Dynamic
     - type: Fixtures
       fixtures:
         fix1:

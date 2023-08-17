@@ -23,14 +23,14 @@ public abstract class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
+    [Dependency] private   readonly DamageableSystem _damageableSystem = default!;
+    [Dependency] private   readonly SharedStunSystem _stunSystem = default!;
     [Dependency] protected readonly TagSystem Tags = default!;
     [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookup = default!;
     [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] private readonly OccluderSystem _occluder = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReaderSystem = default!;
+    [Dependency] private   readonly OccluderSystem _occluder = default!;
+    [Dependency] private   readonly AccessReaderSystem _accessReaderSystem = default!;
 
     /// <summary>
     ///     A body must have an intersection percentage larger than this in order to be considered as colliding with a
@@ -249,7 +249,7 @@ public abstract class SharedDoorSystem : EntitySystem
         if (door.State == DoorState.Welded)
             return false;
 
-        var ev = new BeforeDoorOpenedEvent();
+        var ev = new BeforeDoorOpenedEvent(){User=user};
         RaiseLocalEvent(uid, ev, false);
         if (ev.Cancelled)
             return false;
@@ -445,7 +445,9 @@ public abstract class SharedDoorSystem : EntitySystem
             if (otherPhysics == physics)
                 continue;
 
-            if (!otherPhysics.CanCollide)
+            //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks
+            // Excludes Glasslayer for windows, GlassAirlockLayer for windoors, TableLayer for tables
+            if (!otherPhysics.CanCollide || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.GlassAirlockLayer || otherPhysics.CollisionLayer == (int) CollisionGroup.TableLayer)
                 continue;
 
             //If the colliding entity is a slippable item ignore it by the airlock
@@ -494,10 +496,10 @@ public abstract class SharedDoorSystem : EntitySystem
         if (TryComp<AirlockComponent>(uid, out var airlock) && airlock.EmergencyAccess)
             return true;
 
-        // Can't click to close firelocks.
-        if (Resolve(uid, ref door) && door.State == DoorState.Open &&
+        // Anyone can click to open firelocks
+        if (Resolve(uid, ref door) && door.State == DoorState.Closed &&
             TryComp<FirelockComponent>(uid, out var firelock))
-            return false;
+            return true;
 
         if (!Resolve(uid, ref access, false))
             return true;

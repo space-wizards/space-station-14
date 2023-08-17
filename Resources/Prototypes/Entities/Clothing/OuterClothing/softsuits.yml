@@ -12,11 +12,12 @@
   - type: Tag
     tags:
     - SuitEVA
+    - WhitelistChameleon
 
 #Syndicate EVA
 - type: entity
   parent: ClothingOuterEVASuitBase
-  id: ClothingOuterHardsuitSyndicate
+  id: ClothingOuterHardsuitSyndicate # TODO: rename to ClothingOuterEVASuitSyndicate
   name: syndicate EVA suit
   description: "Has a tag on the back that reads: 'Totally not property of an enemy corporation, honest!'"
   components:
@@ -27,6 +28,7 @@
   - type: Tag
     tags:
     - SuitEVA
+    - WhitelistChameleon
 
 #Emergency EVA
 - type: entity
@@ -64,6 +66,7 @@
   - type: Tag
     tags:
     - SuitEVA
+    - WhitelistChameleon
 
 #NTSRA Voidsuit / Ancient Voidsuit
 - type: entity

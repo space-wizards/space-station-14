@@ -20,7 +20,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using System.Linq;
+using System.Numerics;
 using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.DragDrop;
@@ -56,7 +56,10 @@ public sealed class DragDropSystem : SharedDragDropSystem
     // mousedown event so it can be treated like a regular click
     private const float MaxMouseDownTimeForReplayingClick = 0.85f;
 
+    [ValidatePrototypeId<ShaderPrototype>]
     private const string ShaderDropTargetInRange = "SelectionOutlineInrange";
+
+    [ValidatePrototypeId<ShaderPrototype>]
     private const string ShaderDropTargetOutOfRange = "SelectionOutline";
 
     /// <summary>
@@ -117,7 +120,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         _dropTargetOutOfRangeShader = _prototypeManager.Index<ShaderPrototype>(ShaderDropTargetOutOfRange).Instance();
         // needs to fire on mouseup and mousedown so we can detect a drag / drop
         CommandBinds.Builder
-            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false), new[] { typeof(SharedInteractionSystem) })
+            .BindBefore(EngineKeyFunctions.Use, new PointerInputCmdHandler(OnUse, false, true), new[] { typeof(SharedInteractionSystem) })
             .Register<DragDropSystem>();
     }
 
@@ -241,7 +244,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (TryComp<SpriteComponent>(_draggedEntity, out var draggedSprite))
         {
             // pop up drag shadow under mouse
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
             _dragShadow = EntityManager.SpawnEntity("dragshadow", mousePos);
             var dragSprite = Comp<SpriteComponent>(_dragShadow.Value);
             dragSprite.CopyFrom(draggedSprite);
@@ -404,8 +407,10 @@ public sealed class DragDropSystem : SharedDragDropSystem
 
         // find possible targets on screen even if not reachable
         // TODO: Duplicated in SpriteSystem and TargetOutlineSystem. Should probably be cached somewhere for a frame?
-        var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
-        var bounds = new Box2(mousePos.Position - 1.5f, mousePos.Position + 1.5f);
+        var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
+        var expansion = new Vector2(1.5f, 1.5f);
+
+        var bounds = new Box2(mousePos.Position - expansion, mousePos.Position + expansion);
         var pvsEntities = _lookup.GetEntitiesIntersecting(mousePos.MapId, bounds);
 
         var spriteQuery = GetEntityQuery<SpriteComponent>();
@@ -510,7 +515,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             case DragState.MouseDown:
             {
                 var screenPos = _inputManager.MouseScreenPosition;
-                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length > _deadzone)
+                if ((_mouseDownScreenPos!.Value.Position - screenPos.Position).Length() > _deadzone)
                 {
                     StartDrag();
                 }
@@ -530,7 +535,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         // Update position every frame to make it smooth.
         if (Exists(_dragShadow))
         {
-            var mousePos = _eyeManager.ScreenToMap(_inputManager.MouseScreenPosition);
+            var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
             Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
         }
     }

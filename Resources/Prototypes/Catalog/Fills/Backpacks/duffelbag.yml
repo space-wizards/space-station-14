@@ -26,8 +26,9 @@
         amount: 2
       - id: GrenadeFlashBang
         amount: 2
-      - id: PillRomerol
-        amount: 5
+      - id: PillAmbuzolPlus
+      - id: PillAmbuzol
+        amount: 4
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateMedicalBundle
@@ -45,20 +46,21 @@
       - id: ScalpelAdvanced
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledShotgun
   name: Bulldog bundle
-  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 2 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
+  description: "Lean and mean: Contains the popular Bulldog Shotgun, a 12g beanbag drum and 3 12g buckshot drums." #, and a pair of Thermal Imaging Goggles.
   components:
   - type: StorageFill
     contents:
       - id: WeaponShotgunBulldog
       - id: MagazineShotgun
+      - id: MagazineShotgun
       - id: MagazineShotgunBeanbag
 #     - id: ThermalImagingGoggles
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledSMG
   name: C-20r bundle
   description: "Old faithful: The classic C-20r Submachine Gun, bundled with three magazines." #, and a Suppressor.
@@ -71,19 +73,19 @@
 #     - id: SMGSuppressor
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledRevolver
   name: Python bundle
   description: "Go loud and proud with a fully loaded Magnum Python, bundled with two speed loaders."
   components:
   - type: StorageFill
     contents:
-      - id: WeaponRevolverPython
-      - id: SpeedLoaderMagnum
+      - id: WeaponRevolverPythonAP
+      - id: SpeedLoaderMagnumAP
         amount: 2
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledLMG
   name: L6 Saw bundle
   description: "More dakka: The iconic L6 lightmachinegun, bundled with 2 box magazines."
@@ -94,10 +96,10 @@
       - id: MagazineLightRifleBox
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledGrenadeLauncher
   name: China-Lake bundle
-  description: "An old China-Lake grenade launcher bundled with 8 rounds of various destruction capability."
+  description: "An old China-Lake grenade launcher bundled with 11 rounds of various destruction capability."
   components:
   - type: StorageFill
     contents:
@@ -108,7 +110,7 @@
         amount: 4
 
 - type: entity
-  parent: ClothingBackpackDuffelSyndicateAmmoBundle
+  parent: ClothingBackpackDuffelSyndicateBundle
   id: ClothingBackpackDuffelSyndicateFilledCarbine
   name: M-90gl bundle
   description: "A versatile battle rifle with an attached grenade launcher, bundled with 3 magazines and 6 grenades of various capabilities."
@@ -123,6 +125,21 @@
       - id: GrenadeFlash
         amount: 2
       - id: GrenadeFrag
+        amount: 2
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateAmmo
+  id: ClothingBackpackDuffelSyndicateAmmoFilled
+  name: ammo bundle
+  description: "Reloading! Contains 4 magazines for the C-20r, 4 drums for the Bulldog, and 2 ammo boxes for the L6 SAW."
+  components:
+  - type: StorageFill
+    contents:
+      - id: MagazinePistolSubMachineGun
+        amount: 4
+      - id: MagazineShotgun
+        amount: 4
+      - id: MagazineLightRifleBox
         amount: 2
 
 - type: entity
@@ -141,7 +158,7 @@
       - id: ClothingShoesBootsJack
       - id: ClothingHandsGlovesColorGray
       - id: ClothingHeadsetService
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterArmorBasic
       - id: Paper
       - id: Pen
       - id: CentcomPDA
@@ -223,6 +240,8 @@
     contents:
       - id: ClothingHeadHelmetSyndicate
       - id: ClothingOuterHardsuitSyndicate
+      - id: ClothingMaskGasSyndicate
+      - id: DoubleEmergencyOxygenTankFilled
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -233,6 +252,8 @@
   - type: StorageFill
     contents:
       - id: ClothingOuterHardsuitSyndie
+      - id: ClothingMaskGasSyndicate
+      - id: ClothingHandsGlovesCombat
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -242,10 +263,11 @@
   components:
   - type: StorageFill
     contents:
-      - id: SyringeCorpium
-      - id: WeaponFlareGun
-      - id: BoxShotgunIncendiary
-      - id: PillRomerol
+      - id: SyringeRomerol
+      - id: WeaponRevolverPython
+      - id: MagazineBoxMagnumIncendiary
+      - id: PillAmbuzolPlus
+      - id: PillAmbuzol
         amount: 3
 
 - type: entity
@@ -279,3 +301,20 @@
       - id: WeaponPistolViper
       - id: PinpointerNuclear
       - id: HandheldHealthAnalyzer
+      - id: CombatMedipen
+
+- type: entity
+  parent: ClothingBackpackDuffelSyndicateMedicalBundle
+  id: ClothingBackpackDuffelSyndicateMedicalBundleFilled
+  name: medical bundle
+  description: "All you need to get your comrades back in the fight."
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedkitCombatFilled
+      - id: Defibrillator
+      - id: CombatMedipen
+        amount: 3
+      - id: ClothingHandsGlovesLatex
+      - id: SyringeTranexamicAcid
+      - id: SyringeHyronalin

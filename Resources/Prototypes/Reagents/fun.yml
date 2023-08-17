@@ -34,6 +34,14 @@
   physicalDesc: reagent-physical-desc-fibrous
   flavor: fiber
   color: "#808080"
+  metabolisms:
+    Food:
+      effects:
+      - !type:SatiateHunger
+        conditions:
+        - !type:OrganType
+          type: Moth
+     
 
 - type: reagent
   id: BuzzochloricBees

@@ -16,10 +16,11 @@
   - type: InputMover
   - type: MobMover
   - type: HTN
-    rootTask: IdleCompound
+    rootTask:
+      task: IdleCompound
   - type: Input
     context: "human"
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
   - type: MovementSpeedModifier
@@ -90,6 +91,13 @@
       types:
         Heat : 0.1 #per second, scales with temperature & other constants
   - type: MobState
+  - type: Deathgasp
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritFakeDeath
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -193,6 +201,7 @@
       - ForcedSleep
       - TemporaryBlindness
       - Pacified
+      - StaminaModifier
   - type: ThermalRegulator
     metabolismHeat: 800
     radiatedHeat: 100

@@ -5,10 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterArmorBasicSlim
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
-      - id: ClothingEyesGlassesBeer
+      - id: ClothingEyesHudBeer
       - id: DrinkBottleBeer
         prob: 0.5
       - id: DrinkBottleBeer

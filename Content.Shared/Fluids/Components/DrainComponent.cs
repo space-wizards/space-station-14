@@ -1,3 +1,4 @@
+using Content.Shared.Tag;
 using Robust.Shared.Audio;
 
 namespace Content.Shared.Fluids.Components;
@@ -14,6 +15,8 @@ namespace Content.Shared.Fluids.Components;
 public sealed class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
+
+    [ValidatePrototypeId<TagPrototype>]
     public const string PlungerTag = "Plunger";
 
     [DataField("accumulator")]
@@ -64,7 +67,7 @@ public sealed class DrainComponent : Component
     /// What's the probability of uncloging on each try
     /// </summary>
     [DataField("unclogProbability"), ViewVariables(VVAccess.ReadWrite)]
-    public float UnclogProbability = 0.3f;
+    public float UnclogProbability = 0.75f;
 
     [DataField("manualDrainSound"), ViewVariables(VVAccess.ReadOnly)]
     public SoundSpecifier ManualDrainSound = new SoundPathSpecifier("/Audio/Effects/Fluids/slosh.ogg");

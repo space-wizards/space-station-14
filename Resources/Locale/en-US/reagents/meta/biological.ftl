@@ -7,6 +7,9 @@ reagent-desc-slime = You thought this was gradient blood at first, but you were 
 reagent-name-spider-blood = blue blood
 reagent-desc-spider-blood = Doesn't taste like blueberry juice.
 
+reagent-name-zombie-blood = zombie blood
+reagent-desc-zombie-blood = Would not advise eating. Can be used to create an inoculation against the infection.
+
 reagent-name-ichor = ichor
 reagent-desc-ichor = An extremely potent regenerative chemical, perfected by space fauna evolution. Produced in the dragon's digestive system, it is seen as an exotic commodity due to the gargantuan effort of hunting for it.
 

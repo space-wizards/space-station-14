@@ -15,6 +15,10 @@
         Slash: 17 #cmon, it has to be at least BETTER than the rest.
     soundHit:
         path: /Audio/Weapons/bladeslice.ogg
+  - type: Reflect
+    enabled: true
+    reflectProb: .5
+    spread: 90        
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/captain_sabre.rsi

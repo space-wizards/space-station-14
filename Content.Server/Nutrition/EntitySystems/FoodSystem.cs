@@ -27,6 +27,8 @@ using Content.Shared.Stacks;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
+using Content.Shared.Tag;
+using Content.Server.Storage.Components;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
@@ -50,6 +52,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly TagSystem _tags = default!;
 
         public const float MaxFeedDistance = 1.0f;
 
@@ -107,12 +110,20 @@ namespace Content.Server.Nutrition.EntitySystems
 
             var forceFeed = user != target;
 
+            // Check for special digestibles
             if (!IsDigestibleBy(food, foodComp, stomachs))
             {
                 _popupSystem.PopupEntity(
                     forceFeed
                         ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
                         : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
+                return (false, true);
+            }
+
+            // Check for used storage on the food item
+            if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
+            {
+                _popupSystem.PopupEntity(Loc.GetString("food-has-used-storage", ("food", food)), user, user);
                 return (false, true);
             }
 
@@ -367,27 +378,32 @@ namespace Content.Server.Nutrition.EntitySystems
         }
 
         /// <summary>
-        ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent"/> that is capable of
-        ///     digesting this <paramref name="food"/> (or if they even have enough stomachs in the first place).
+        ///     Returns true if <paramref name="stomachs"/> has a <see cref="StomachComponent.SpecialDigestible"/> that whitelists
+        ///     this <paramref name="food"/> (or if they even have enough stomachs in the first place).
         /// </summary>
         private bool IsDigestibleBy(EntityUid food, FoodComponent component, List<(StomachComponent, OrganComponent)> stomachs)
         {
             var digestible = true;
 
+            // Does the mob have enough stomachs?
             if (stomachs.Count < component.RequiredStomachs)
                 return false;
 
-            if (!component.RequiresSpecialDigestion)
-                return true;
-
+            // Run through the mobs' stomachs
             foreach (var (comp, _) in stomachs)
             {
+                // Find a stomach with a SpecialDigestible
                 if (comp.SpecialDigestible == null)
                     continue;
-
-                if (!comp.SpecialDigestible.IsValid(food, EntityManager))
-                    return false;
+                // Check if the food is in the whitelist
+                if (comp.SpecialDigestible.IsValid(food, EntityManager))
+                    return true;
+                // They can only eat whitelist food and the food isn't in the whitelist. It's not edible.
+                return false;
             }
+
+            if (component.RequiresSpecialDigestion)
+                    return false;
 
             return digestible;
         }

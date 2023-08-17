@@ -72,7 +72,7 @@ public sealed class SalvageExpeditionDataComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed record SalvageMissionParams
+public sealed record SalvageMissionParams : IComparable<SalvageMissionParams>
 {
     [ViewVariables]
     public ushort Index;
@@ -86,6 +86,14 @@ public sealed record SalvageMissionParams
     /// Base difficulty for this mission.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public DifficultyRating Difficulty;
+
+    public int CompareTo(SalvageMissionParams? other)
+    {
+        if (other == null)
+            return -1;
+
+        return Difficulty.CompareTo(other.Difficulty);
+    }
 }
 
 /// <summary>

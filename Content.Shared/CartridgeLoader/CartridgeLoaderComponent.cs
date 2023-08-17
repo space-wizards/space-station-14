@@ -42,6 +42,6 @@ public sealed class CartridgeLoaderComponent : Component
     [DataField("diskSpace")]
     public int DiskSpace = 5;
 
-    [DataField("uiKey", readOnly: true, required: true, customTypeSerializer: typeof(EnumSerializer))]
+    [DataField("uiKey", required: true, customTypeSerializer: typeof(EnumSerializer))]
     public Enum UiKey = default!;
 }
