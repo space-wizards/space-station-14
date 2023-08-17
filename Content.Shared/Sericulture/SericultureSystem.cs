@@ -56,7 +56,7 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     {
         if (_hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold))
         {
-            if (!_netManager.IsClient) /// It's gonna repeat the popup like 50 times otherwise, fun! Yes this does mean a noticable delay when doing it but there's not much I can do here apart from cry.
+            if (!_netManager.IsClient) /// It's gonna repeat the popup like 50 times otherwise, fun! Yes this does mean a noticable delay when doing it on the client but there's not much I can do here apart from cry.
                 _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
