@@ -198,10 +198,11 @@ public abstract partial class SharedGunSystem
     {
         // Try to put a new round in if possible.
         var magEnt = GetMagazineEntity(uid);
+        var chambered = GetChamberEntity(uid);
 
         // Similar to what takeammo does though that uses an optimised version where
         // multiple bullets may be fired in a single tick.
-        if (magEnt != null)
+        if (magEnt != null && chambered == null)
         {
             var relayedArgs = new TakeAmmoEvent(1,
                 new List<(EntityUid? Entity, IShootable Shootable)>(),
