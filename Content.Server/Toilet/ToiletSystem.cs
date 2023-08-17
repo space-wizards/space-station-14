@@ -124,9 +124,6 @@ namespace Content.Server.Toilet
                 }
             }
 
-            if (!CanToggle(uid))
-                return;
-
             args.Handled = true;
         }
 
@@ -135,11 +132,14 @@ namespace Content.Server.Toilet
             if (!args.CanInteract || !args.CanAccess || !CanToggle(uid))
                 return;
 
-            string alterToiletSeatText = component.IsSeatUp ? Loc.GetString("toilet-seat-close") : Loc.GetString("toilet-seat-open");
+            var alterToiletSeatText = component.IsSeatUp ? Loc.GetString("toilet-seat-close") : Loc.GetString("toilet-seat-open");
 
             var verb = new AlternativeVerb()
             {
-                Act = () => { ToggleToiletSeat(uid, component); },
+                Act = () => {
+                    if(CanToggle(uid))
+                        ToggleToiletSeat(uid, component);
+                },
                 Text = alterToiletSeatText
             };
 
