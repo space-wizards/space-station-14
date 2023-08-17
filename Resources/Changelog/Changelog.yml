@@ -1,27 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'Added Lead, a tasteless, incredibly powerful but slow-acting poison
-      obtained in small amounts by grinding steel.', type: Add}
-  - {message: Grinding powercells now gives Zinc instead of Licoxide, type: Tweak}
-  - {message: Licoxide is now obtained through a combination of Zinc and Lead., type: Tweak}
-  id: 4116
-  time: '2023-06-28T17:53:56.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Salvages should be pulled in more reliably., type: Fix}
-  id: 4117
-  time: '2023-06-28T18:06:31.0000000+00:00'
-- author: DadeKuma
-  changes:
-  - {message: It's no longer possible to unbuckle if you are handcuffed, type: Fix}
-  id: 4118
-  time: '2023-06-28T18:09:04.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Changed kukri knife icon and merc backpack sprite on player, type: Tweak}
-  id: 4119
-  time: '2023-06-28T19:59:30.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Modified the rewards and item amounts for several cargo bounties., type: Tweak}
@@ -3029,3 +3006,25 @@ Entries:
       them and upgrade stuff!, type: Tweak}
   id: 4615
   time: '2023-08-16T22:12:09.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced freedom implanter cost from 8 -> 5 TC., type: Tweak}
+  id: 4616
+  time: '2023-08-17T04:08:47.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: 'Increased crafting costs of the advanced laser, and laser cannon.',
+    type: Tweak}
+  id: 4617
+  time: '2023-08-17T04:10:06.0000000+00:00'
+- author: Ubaser
+  changes:
+  - {message: New machine frame sprites, type: Tweak}
+  id: 4618
+  time: '2023-08-17T04:16:13.0000000+00:00'
+- author: hord-brayden
+  changes:
+  - {message: Whoopsie - Dan's Soaked Cigs finally hired some Quality Control. They've
+      resolved a small reagent solution in some of their swisher sweets., type: Fix}
+  id: 4619
+  time: '2023-08-17T05:15:39.0000000+00:00'
