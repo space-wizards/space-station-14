@@ -472,7 +472,7 @@
   name: experimental C.H.I.M.P. handcannon
   parent: WeaponPistolCHIMP
   id: WeaponPistolCHIMPUpgraded
-  description: This C.H.I.M.P. seems even more punchier than usual...
+  description: This C.H.I.M.P. seems to have a greater punch than is usual...
   components: 
   - type: BatteryWeaponFireModes
     fireModes:
