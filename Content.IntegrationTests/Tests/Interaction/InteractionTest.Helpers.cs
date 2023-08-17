@@ -13,6 +13,7 @@ using Content.Server.Gravity;
 using Content.Server.Power.Components;
 using Content.Server.Tools.Components;
 using Content.Shared.Atmos;
+using Content.Shared.Construction;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.DoAfter;
 using Content.Shared.Gravity;
@@ -441,7 +442,7 @@ public abstract partial class InteractionTest
                     $"Failed to get construction entity from ghost Id");
 
                 await Client.WaitPost(() => CLogger.Debug($"Construction ghost {ConstructionGhostId} became entity {newWeh}"));
-                Target = CEntMan.ToNetEntity(newWeh);
+                Target = newWeh;
             }
         }
 
@@ -470,6 +471,12 @@ public abstract partial class InteractionTest
 
         var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.ToEntity(target.Value));
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
+    }
+
+    protected void ClientAssertPrototype(string? prototype, EntityUid? target)
+    {
+        var netEnt = CTestSystem.Ghosts[target.GetHashCode()];
+        AssertPrototype(prototype, netEnt);
     }
 
     protected void AssertPrototype(string? prototype, NetEntity? target = null)

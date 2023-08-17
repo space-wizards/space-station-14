@@ -105,6 +105,7 @@ namespace Content.Client.Construction
 
         private void HandleAckStructure(AckStructureConstructionMessage msg)
         {
+            // We get sent a NetEntity but it actually corresponds to our local Entity.
             ClearGhost(msg.GhostId);
         }
 

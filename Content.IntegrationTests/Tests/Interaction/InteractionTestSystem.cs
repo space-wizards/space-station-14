@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Interaction;
 /// </summary>
 public sealed class InteractionTestSystem : EntitySystem
 {
-    public Dictionary<int, EntityUid> Ghosts = new();
+    public Dictionary<int, NetEntity> Ghosts = new();
     public Dictionary<NetEntity, NetEntity> EntChanges = new();
 
     public override void Initialize()
@@ -30,6 +30,6 @@ public sealed class InteractionTestSystem : EntitySystem
     private void OnAck(AckStructureConstructionMessage ev)
     {
         if (ev.Uid != null)
-            Ghosts[ev.GhostId] = ToEntity(ev.Uid.Value);
+            Ghosts[ev.GhostId] = ev.Uid.Value;
     }
 }
