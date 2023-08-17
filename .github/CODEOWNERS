@@ -50,6 +50,8 @@
 /Resources/Prototypes/Entities/Structures/Specific/anomalies.yml @EmoGarbage404
 /Resources/Prototypes/Research/ @EmoGarbage404
 
+/Content.*/Forensics/ @ficcialfaint
+
 /Content.YAMLLinter @PaulRitter @DrSmugleaf
 /Content.*/Inventory @PaulRitter
 /Content.*/Arcade @PaulRitter

@@ -24,12 +24,21 @@ public sealed class MMIComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     public ItemSlot BrainSlot = default!;
 
+    /// <summary>
+    /// The sprite state when the brain inserted has a mind.
+    /// </summary>
     [DataField("hasMindState")]
     public string HasMindState = "mmi_alive";
 
+    /// <summary>
+    /// The sprite state when the brain inserted doesn't have a mind.
+    /// </summary>
     [DataField("noMindState")]
     public string NoMindState = "mmi_dead";
 
+    /// <summary>
+    /// The sprite state when there is no brain inserted.
+    /// </summary>
     [DataField("noBrainState")]
     public string NoBrainState = "mmi_off";
 }

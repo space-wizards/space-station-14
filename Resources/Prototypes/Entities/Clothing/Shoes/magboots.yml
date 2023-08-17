@@ -18,7 +18,7 @@
         name: action-name-magboot-toggle
         description: action-decription-magboot-toggle
         itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
+        event: !type:ToggleMagbootsEvent
     - type: ClothingSpeedModifier
       walkModifier: 0.85
       sprintModifier: 0.8
@@ -34,7 +34,7 @@
       price: 200
     - type: Tag
       tags:
-        - WhitelistChameleon
+      - WhitelistChameleon
 
 - type: entity
   parent: ClothingShoesBootsMag
@@ -54,7 +54,7 @@
       name: action-name-magboot-toggle
       description: action-decription-magboot-toggle
       itemIconStyle: NoItem
-      event: !type:ToggleActionEvent
+      event: !type:ToggleMagbootsEvent
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
@@ -84,25 +84,73 @@
   parent: ClothingShoesBase
   id: ClothingShoesBootsMagSyndie
   name: blood-red magboots
-  description: Reverse-engineered magnetic boots that have a heavy magnetic pull. Property of Gorlex Marauders.
+  description: Reverse-engineered magnetic boots that have a heavy magnetic pull and integrated thrusters.
   components:
-    - type: Sprite
-      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
-      state: icon
-    - type: Clothing
-      sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
-    - type: Magboots
-      toggleAction:
-        icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
-        iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
-        name: action-name-magboot-toggle
-        description: action-decription-magboot-toggle
-        itemIconStyle: NoItem
-        event: !type:ToggleActionEvent
-    - type: ClothingSpeedModifier
-      walkModifier: 0.85
-      sprintModifier: 0.8
-      enabled: false
-    - type: Tag
-      tags:
-        - WhitelistChameleon
+  - type: Sprite
+    sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+    state: icon
+  - type: Clothing
+    sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi
+  - type: Magboots
+    toggleAction:
+      icon: { sprite: Clothing/Shoes/Boots/magboots-syndicate.rsi, state: icon }
+      iconOn: Clothing/Shoes/Boots/magboots-syndicate.rsi/icon-on.png
+      name: action-name-magboot-toggle
+      description: action-decription-magboot-toggle
+      itemIconStyle: NoItem
+      event: !type:ToggleMagbootsEvent
+  - type: ClothingSpeedModifier
+    walkModifier: 0.95
+    sprintModifier: 0.9
+    enabled: false
+  - type: GasTank
+    toggleAction:
+      name: action-name-internals-toggle
+      description: action-description-internals-toggle
+      icon:
+        sprite: Interface/Alerts/internals.rsi
+        state: internal2
+      iconOn:
+        sprite: Interface/Alerts/internals.rsi
+        state: internal1
+      event: !type:ToggleActionEvent
+      useDelay: 1
+    outputPressure: 42.6
+    air:
+      # 2 minutes of thrust
+      volume: 0.75
+      temperature: 293.15
+      moles:
+        - 0.153853429 # oxygen
+        - 0.153853429 # nitrogen
+  - type: ActivatableUI
+    key: enum.SharedGasTankUiKey.Key
+  - type: UserInterface
+    interfaces:
+      - key: enum.SharedGasTankUiKey.Key
+        type: GasTankBoundUserInterface
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+  - type: Jetpack
+    moleUsage: 0.00085
+    toggleAction:
+      icon:
+        sprite: Objects/Tanks/Jetpacks/blue.rsi
+        state: icon
+      iconOn:
+        sprite: Objects/Tanks/Jetpacks/blue.rsi
+        state: icon-on
+      name: action-name-jetpack-toggle
+      description: action-description-jetpack-toggle
+      useDelay: 1.0
+      event: !type:ToggleJetpackEvent
+  - type: InputMover
+    toParent: true
+  - type: MovementSpeedModifier
+    weightlessAcceleration: 1
+    weightlessFriction: 0.3
+    weightlessModifier: 1.2
+  - type: Tag
+    tags:
+      - WhitelistChameleon

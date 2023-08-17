@@ -374,7 +374,6 @@
   description: It only has one wheel!
   components:
   - type: Vehicle
-    useHand: false
     northOver: true
     southOver: true
     northOverride: -0.15
@@ -432,7 +431,7 @@
   id: VehicleWheelchair
   parent: [BaseVehicle, BaseFoldable, BaseItem]
   name: Wheelchair
-  description: A chair with big wheels. It looks like you can move in this on your own.
+  description: A chair with big wheels. It looks like you can move in these on your own.
   components:
     - type: Vehicle
       northOver: true
@@ -447,7 +446,6 @@
       - state: vehicle_folded
         map: ["foldedLayer"]
         visible: false
-      netsync: false
       noRot: true
     - type: MovementSpeedModifier
       baseWalkSpeed: 2

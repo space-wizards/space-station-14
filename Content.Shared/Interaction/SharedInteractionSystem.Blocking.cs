@@ -6,6 +6,10 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Interaction;
 
+/// <summary>
+/// Handles <see cref="BlockMovementComponent"/>, which prevents various
+/// kinds of movement and interactions when attached to an entity.
+/// </summary>
 public partial class SharedInteractionSystem
 {
     public void InitializeBlocking()

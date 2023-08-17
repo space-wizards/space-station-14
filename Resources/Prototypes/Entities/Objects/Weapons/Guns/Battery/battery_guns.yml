@@ -45,7 +45,7 @@
     - Belt
 
 - type: entity
-  name: retro laser gun
+  name: retro laser blaster
   parent: BaseWeaponBatterySmall
   id: WeaponLaserGun
   description: A weapon using light amplified by the stimulated emission of radiation.
@@ -59,7 +59,7 @@
       map: ["enum.GunVisualLayers.MagUnshaded"]
       shader: unshaded
   - type: HitscanBatteryAmmoProvider
-    proto: RedLaser
+    proto: RedMediumLaser
     fireCost: 62.5
   - type: MagazineVisuals
     magState: mag
@@ -68,7 +68,7 @@
   - type: Appearance
 
 - type: entity
-  name: makeshift laser gun
+  name: makeshift laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponMakeshiftLaser
   description: Better pray it won't burn your hands off.
@@ -91,7 +91,7 @@
     startingCharge: 500
 
 - type: entity
-  name: laser gun
+  name: laser rifle
   parent: BaseWeaponBattery
   id: WeaponLaserCarbine
   description: Favoured by Nanotrasen Security for being cheap and easy to use.
@@ -115,10 +115,10 @@
     fireCost: 62.5
 
 - type: entity
-  name: practice laser gun
+  name: practice laser rifle
   parent: WeaponLaserCarbine
   id: WeaponLaserCarbinePractice
-  description: A modified version of the basic laser gun, this one fires less concentrated energy bolts designed for target practice.
+  description: This modified laser rifle fires harmless beams in the 40-watt range, for target practice.
   components:
   - type: HitscanBatteryAmmoProvider
     proto: RedLaserPractice
@@ -357,13 +357,11 @@
   - type: Appearance
 
 - type: entity
-  name: antique laser gun
+  name: antique laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAntiqueLaser
-  description: This is an antique laser gun. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
+  description: This is an antique laser pistol. All craftsmanship is of the highest quality. It is decorated with assistant leather and chrome. The object menaces with spikes of energy.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/antiquelasergun.rsi
     layers:
@@ -395,13 +393,13 @@
     price: 750
 
 - type: entity
-  name: advanced laser gun
+  name: advanced laser pistol
   parent: BaseWeaponBatterySmall
   id: WeaponAdvancedLaser
-  description: An experimental laser gun with a self charging nuclear powered battery.
+  description: An experimental high-energy laser pistol with a self-charging nuclear battery.
   components:
   - type: Item
-    size: 30
+    size: 30  # Intentionally larger than other pistols
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/advancedlasergun.rsi
     layers:
@@ -436,8 +434,6 @@
   id: WeaponBehonkerLaser
   description: The eye of a behonker, it fires a laser when squeezed.
   components:
-  - type: Item
-    size: 30
   - type: Sprite
     sprite: Objects/Weapons/Guns/Battery/behonker_eye.rsi
     layers:

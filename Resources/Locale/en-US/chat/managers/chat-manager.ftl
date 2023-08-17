@@ -21,7 +21,8 @@ chat-manager-whisper-headset-on-message = You can't whisper on the radio!
 chat-manager-server-wrap-message = [bold]{$message}[/bold]
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]{$sender} Announcement:[/font][font size=12]
                                                 {$message}[/bold][/font]
-chat-manager-entity-say-wrap-message = [bold]{$entityName}[/bold] says, "{$message}"
+chat-manager-entity-say-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}]"{$message}"[/font]
+chat-manager-entity-say-bold-wrap-message = [bold]{$entityName}[/bold] {$verb}, [font={$fontType} size={$fontSize}][bold]"{$message}"[/bold][/font]
 
 chat-manager-entity-whisper-wrap-message = [font size=11][italic]{$entityName} whispers, "{$message}"[/italic][/font]
 chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic]Someone whispers, "{$message}"[/italic][/font]
@@ -45,3 +46,34 @@ chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){$senderName}:[/bold] {$
 
 chat-manager-dead-channel-name = DEAD
 chat-manager-admin-channel-name = ADMIN
+
+## Speech verbs for chat
+
+chat-speech-verb-suffix-exclamation = !
+chat-speech-verb-suffix-exclamation-strong = !!
+chat-speech-verb-suffix-question = ?
+
+chat-speech-verb-default = says
+chat-speech-verb-exclamation = shouts
+chat-speech-verb-exclamation-strong = yells
+chat-speech-verb-question = asks
+
+chat-speech-verb-insect-1 = chitters
+chat-speech-verb-insect-2 = flutters
+
+chat-speech-verb-slime = chirps
+
+chat-speech-verb-robotic = states
+chat-speech-verb-reptilian = hisses
+
+chat-speech-verb-skeleton = rattles
+
+chat-speech-verb-small-mob = squeaks
+
+chat-speech-verb-large-mob = roars
+
+chat-speech-verb-monkey = chimpers
+
+chat-speech-verb-cluwne-1 = giggles
+chat-speech-verb-cluwne-2 = guffaws
+chat-speech-verb-cluwne-3 = laughs

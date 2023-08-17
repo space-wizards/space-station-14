@@ -22,6 +22,10 @@
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Moth
+  - type: Speech
+    speechVerb: Insect
+  - type: TypingIndicator
+    proto: moth
   - type: Butcherable
     butcheringType: Spike
     spawned:

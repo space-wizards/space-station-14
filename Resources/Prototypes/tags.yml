@@ -26,7 +26,10 @@
   id: Balloon
 
 - type: Tag
-  id: BaseballBat
+  id: BaseballBat 
+
+- type: Tag
+  id: BBQsauce
 
 - type: Tag
   id: Bee
@@ -303,7 +306,10 @@
   id: CluwneHorn
 
 - type: Tag #Ohioans die happy
-  id: Corn
+  id: Corn 
+
+- type: Tag
+  id: Coldsauce
 
 - type: Tag
   id: Cow
@@ -574,6 +580,9 @@
 - type: Tag
   id: HonkerRArm
 
+- type: Tag
+  id: Hotsauce
+
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
 
@@ -598,6 +607,8 @@
 - type: Tag
   id: Kangaroo
 
+- type: Tag
+  id: Ketchup
 
 - type: Tag
   id: KeyedInstrument
