@@ -434,6 +434,7 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
+    jobIcon: JobIconCentCom
   - type: Access
     groups:
     - AllAccess
@@ -464,6 +465,7 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Central Commander
+    jobIcon: JobIconCentCom
   - type: Access
     tags:
     - Maintenance
@@ -492,6 +494,7 @@
     heldPrefix: blue
   - type: IdCard
     jobTitle: Centcom Agent
+    jobIcon: JobIconCentCom
 
 - type: entity
   parent: PassengerIDCard
@@ -551,6 +554,7 @@
     - JobIconSeniorOfficer
     - JobIconSeniorEngineer
     - JobIconSeniorResearcher
+    jobIcon: JobIconCentCom
   - type: ActivatableUI
     key: enum.AgentIDCardUiKey.Key
     inHandsOnly: true
@@ -668,6 +672,7 @@
     - state: idcluwne
   - type: IdCard
     jobTitle: Cluwne
+    jobIcon: JobIconCluwne
   - type: Unremoveable
 
 - type: entity

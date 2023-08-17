@@ -132,6 +132,13 @@
 
 - type: statusIcon
   parent: JobIcon
+  id: JobIconCentCom
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: CentCom
+
+- type: statusIcon
+  parent: JobIcon
   id: JobIconLibrarian
   icon:
     sprite: Interface/Misc/job_icons.rsi
@@ -171,6 +178,13 @@
   icon:
     sprite: Interface/Misc/job_icons.rsi
     state: Clown
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconCluwne
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: Cluwne
 
 - type: statusIcon
   parent: JobIcon
