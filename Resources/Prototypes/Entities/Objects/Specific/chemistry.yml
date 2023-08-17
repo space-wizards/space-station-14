@@ -308,6 +308,8 @@
         maxVol: 15
   - type: Injector
     injectOnly: false
+  - type: ExaminableSolution
+    solution: injector
   - type: Spillable
     solution: injector
   - type: TrashOnEmpty
@@ -324,6 +326,9 @@
   parent: BaseSyringe
   id: Syringe
   components:
+  - type: Injector
+    transferAmount: 15
+    toggleState: Draw
   - type: Tag
     tags:
     - Syringe

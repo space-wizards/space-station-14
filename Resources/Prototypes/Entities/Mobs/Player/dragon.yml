@@ -27,6 +27,7 @@
     factions:
     - Dragon
   - type: Speech
+    speechVerb: LargeMob
   - type: CombatMode
   - type: MobMover
   - type: InputMover
@@ -72,6 +73,11 @@
         layer:
         - FlyingMobLayer
   - type: MobState
+  - type: MobStateActions
+    actions:
+      Critical:
+      - CritSuccumb
+      - CritLastWords
   - type: MobThresholds
     thresholds:
       0: Alive

@@ -40,5 +40,8 @@ namespace Content.Server.Atmos.Piping.Binary.Components
 
         [DataField("overclockThreshold")]
         public float OverclockThreshold { get; set; } = 1000;
+
+        [DataField("lastMolesTransferred")]
+        public float LastMolesTransferred;
     }
 }
