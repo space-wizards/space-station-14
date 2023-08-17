@@ -272,8 +272,11 @@ namespace Content.Server.Communications
             _chatSystem.DispatchGlobalAnnouncement(msg, title, colorOverride: comp.AnnouncementColor);
 
             if (message.Session.AttachedEntity != null)
+            {
+                RaiseLocalEvent<CommunicationConsoleUsed>(uid, new CommunicationConsoleUsed(message.Session));
                 _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(message.Session.AttachedEntity.Value):player} has sent the following {(comp.AnnounceGlobal ? "global" : "station")} announcement: {msg}");
-            // Corvax-Announcements-End
+                // Corvax-Announcements-End
+            }
         }
 
         private void OnCallShuttleMessage(EntityUid uid, CommunicationsConsoleComponent comp, CommunicationsConsoleCallEmergencyShuttleMessage message)

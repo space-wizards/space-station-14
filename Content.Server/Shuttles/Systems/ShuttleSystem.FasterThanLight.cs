@@ -90,7 +90,7 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason)
+    public bool CanFTL(EntityUid? uid, [NotNullWhen(false)] out string? reason, EntityUid shuttle)
     {
         if (HasComp<PreventPilotComponent>(uid))
         {
@@ -100,7 +100,7 @@ public sealed partial class ShuttleSystem
 
         if (uid != null)
         {
-            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty);
+            var ev = new ConsoleFTLAttemptEvent(uid.Value, false, string.Empty, shuttle);
             RaiseLocalEvent(uid.Value, ref ev, true);
 
             if (ev.Cancelled)

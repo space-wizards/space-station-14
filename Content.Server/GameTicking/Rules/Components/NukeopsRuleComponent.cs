@@ -1,3 +1,4 @@
+using Content.Server.ConsoleNuke;
 using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
@@ -14,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
-[RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule))]
+[RegisterComponent, Access(typeof(NukeopsRuleSystem), typeof(LoneOpsSpawnRule), typeof(ConsoleNukeSystem))]
 public sealed class NukeopsRuleComponent : Component
 {
     /// <summary>
@@ -93,6 +94,12 @@ public sealed class NukeopsRuleComponent : Component
     public EntityUid? NukieOutpost;
     public EntityUid? NukieShuttle;
     public EntityUid? TargetStation;
+
+    // SS220 Nukie-Declare-War-Begin
+    [DataField("isWarDeclared")]
+    public bool IsWarDeclated;
+    public int WhenAbleToMove;
+    // SS220 Nukie-Declare-War-End
 
     /// <summary>
     ///     Cached starting gear prototypes.
