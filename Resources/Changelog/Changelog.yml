@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: 'Fixed: dwarfs has no cough, sneeze etc sounds', type: Fix}
-  id: 4121
-  time: '2023-06-28T20:01:41.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Pulling objects is generally faster on most surfaces., type: Tweak}
@@ -3027,3 +3022,8 @@ Entries:
       office, drastically reducing the amount of bureaucracy.', type: Add}
   id: 4620
   time: '2023-08-17T10:08:51.0000000+00:00'
+- author: chromiumboy and PilgrimViis
+  changes:
+  - {message: Lathes and fabricators can now eject unused material sheets., type: Add}
+  id: 4621
+  time: '2023-08-17T17:22:01.0000000+00:00'
