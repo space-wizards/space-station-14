@@ -18,6 +18,7 @@
     toggleOnInteract: false
   - type: Intercom
   - type: Speech
+    speechVerb: Robotic
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline

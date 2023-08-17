@@ -41,6 +41,14 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -313,6 +321,7 @@
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+    speechVerb: Robotic
   - type: HTN
     rootTask:
       task: MedibotCompound
