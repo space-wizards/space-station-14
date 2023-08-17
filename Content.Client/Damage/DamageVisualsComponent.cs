@@ -55,7 +55,7 @@ public sealed partial class DamageVisualsComponent : Component
     ///     (for example, Brute), and has a value
     ///     of a DamageVisualizerSprite (see below)
     /// </summary>
-    [DataField("damageOverlayGroups")] public readonly Dictionary<string, DamageVisualizerSprite>? DamageOverlayGroups;
+    [DataField("damageOverlayGroups")] public Dictionary<string, DamageVisualizerSprite>? DamageOverlayGroups { get; private set; }
 
     /// <summary>
     ///     Sets if you want sprites to overlay the
@@ -68,7 +68,7 @@ public sealed partial class DamageVisualsComponent : Component
     ///     - There are no target layers
     ///     - There is no damage group
     /// </summary>
-    [DataField("overlay")] public readonly bool Overlay = true;
+    [DataField("overlay")] public bool Overlay { get; private set; } = true;
 
     /// <summary>
     ///     A single damage group to target.
@@ -84,7 +84,7 @@ public sealed partial class DamageVisualsComponent : Component
     ///     what kind of damage combination
     ///     you would want, on which threshold.
     /// </remarks>
-    [DataField("damageGroup")] public readonly string? DamageGroup;
+    [DataField("damageGroup")] public string? DamageGroup { get; private set; }
 
     /// <summary>
     ///     Set this if you want incoming damage to be
@@ -106,14 +106,14 @@ public sealed partial class DamageVisualsComponent : Component
     ///     This will only work if you have damageOverlay
     ///     defined - otherwise, it will not work.
     /// </remarks>
-    [DataField("trackAllDamage")] public readonly bool TrackAllDamage;
+    [DataField("trackAllDamage")] public bool TrackAllDamage { get; private set; }
     /// <summary>
     ///     This is the overlay sprite used, if _trackAllDamage is
     ///     enabled. Supports no complex per-group layering,
     ///     just an actually simple damage overlay. See
     ///     DamageVisualizerSprite for more information.
     /// </summary>
-    [DataField("damageOverlay")] public readonly DamageVisualizerSprite? DamageOverlay;
+    [DataField("damageOverlay")] public DamageVisualizerSprite? DamageOverlay { get; private set; }
 
     public readonly List<Enum> TargetLayerMapKeys = new();
     public bool Disabled = false;
@@ -151,11 +151,11 @@ public sealed partial class DamageVisualizerSprite
     ///     - DamageOverlay_{threshold} if not targeting
     ///       a layer.
     /// </remarks>
-    [DataField("sprite", required: true)] public readonly string Sprite = default!;
+    [DataField("sprite", required: true)] public string Sprite { get; private set; } = default!;
 
     /// <summary>
     ///     The color of this sprite overlay.
     ///     Supports only hexadecimal format.
     /// </summary>
-    [DataField("color")] public readonly string? Color;
+    [DataField("color")] public string? Color { get; private set; }
 }

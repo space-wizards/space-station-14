@@ -16,7 +16,7 @@ namespace Content.Shared.Polymorph
         public string ID { get; } = default!;
 
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<PolymorphPrototype>))]
         public string[]? Parents { get; private set; }

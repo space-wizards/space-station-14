@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Components
         public bool HasBoard => BoardContainer?.ContainedEntities.Count != 0;
 
         [DataField("progress", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public readonly Dictionary<string, int> Progress = new();
+        public Dictionary<string, int> Progress { get; private set; } = new();
 
         [ViewVariables]
         public readonly Dictionary<string, int> MaterialProgress = new();

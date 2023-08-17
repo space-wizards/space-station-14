@@ -8,7 +8,7 @@ public sealed partial class PirateAccentComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("yarrChance")]
-    public readonly float YarrChance = 0.5f;
+    public float YarrChance { get; private set; } = 0.5f;
 
     [ViewVariables]
     public readonly List<string> PirateWords = new()

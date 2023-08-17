@@ -4,5 +4,5 @@ namespace Content.Shared.AlertLevel;
 public sealed partial class AlertLevelDisplayComponent : Component
 {
     [DataField("alertVisuals")]
-    public readonly Dictionary<string, string> AlertVisuals = new();
+    public Dictionary<string, string> AlertVisuals { get; private set; } = new();
 }

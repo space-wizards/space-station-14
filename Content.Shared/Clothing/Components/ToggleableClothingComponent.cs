@@ -28,7 +28,7 @@ public sealed partial class ToggleableClothingComponent : Component
     ///     Default clothing entity prototype to spawn into the clothing container.
     /// </summary>
     [DataField("clothingPrototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public readonly string ClothingPrototype = default!;
+    public string ClothingPrototype { get; private set; } = default!;
 
     /// <summary>
     ///     The inventory slot that the clothing is equipped to.

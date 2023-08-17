@@ -4,5 +4,5 @@ namespace Content.Server.NPC.Queries.Curves;
 
 public sealed class PresetCurve : IUtilityCurve
 {
-    [DataField("preset", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityCurvePresetPrototype>))] public readonly string Preset = default!;
+    [DataField("preset", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<UtilityCurvePresetPrototype>))] public string Preset { get; private set; } = default!;
 }

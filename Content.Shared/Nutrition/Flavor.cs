@@ -9,10 +9,10 @@ public sealed class FlavorPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("flavorType")]
-    public FlavorType FlavorType { get; } = FlavorType.Base;
+    public FlavorType FlavorType { get; private set; } = FlavorType.Base;
 
     [DataField("description")]
-    public string FlavorDescription { get; } = default!;
+    public string FlavorDescription { get; private set; } = default!;
 }
 
 public enum FlavorType : byte

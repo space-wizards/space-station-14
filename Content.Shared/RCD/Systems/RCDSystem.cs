@@ -316,10 +316,10 @@ public sealed class RCDSystem : EntitySystem
 public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField("location", required: true)]
-    public readonly EntityCoordinates Location = default!;
+    public EntityCoordinates Location { get; private set; } = default!;
 
     [DataField("startingMode", required: true)]
-    public readonly RcdMode StartingMode = default!;
+    public RcdMode StartingMode { get; private set; } = default!;
 
     private RCDDoAfterEvent()
     {

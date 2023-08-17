@@ -92,14 +92,14 @@ namespace Content.Client.Changelog
             public int Id { get; private set; }
 
             [DataField("author")]
-            public string Author { get; } = "";
+            public string Author { get; private set; } = "";
 
             [DataField("time")] private string _time = default!;
 
             public DateTime Time { get; private set; }
 
             [DataField("changes")]
-            public List<ChangelogChange> Changes { get; } = default!;
+            public List<ChangelogChange> Changes { get; private set; } = default!;
 
             void ISerializationHooks.AfterDeserialization()
             {

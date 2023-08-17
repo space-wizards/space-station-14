@@ -10,13 +10,13 @@ namespace Content.Shared.Configurable
     public sealed partial class ConfigurationComponent : Component
     {
         [DataField("config")]
-        public readonly Dictionary<string, string?> Config = new();
+        public Dictionary<string, string?> Config { get; private set; } = new();
 
         [DataField("qualityNeeded", customTypeSerializer: typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
         public string QualityNeeded = "Pulsing";
 
         [DataField("validation")]
-        public readonly Regex Validation = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
+        public Regex Validation { get; private set; } = new("^[a-zA-Z0-9 ]*$", RegexOptions.Compiled);
 
         [Serializable, NetSerializable]
         public sealed class ConfigurationBoundUserInterfaceState : BoundUserInterfaceState

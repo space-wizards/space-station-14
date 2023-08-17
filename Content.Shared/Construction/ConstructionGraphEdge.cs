@@ -16,7 +16,7 @@ namespace Content.Shared.Construction
         private IGraphAction[] _completed = Array.Empty<IGraphAction>();
 
         [DataField("to", required:true)]
-        public string Target { get; } = string.Empty;
+        public string Target { get; private set; } = string.Empty;
 
         [ViewVariables]
         public IReadOnlyList<IGraphCondition> Conditions => _conditions;

@@ -28,7 +28,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
     /// </summary>
     [ViewVariables, DataField("recentlyEjected")]
-    public readonly List<EntityUid> RecentlyEjected = new();
+    public List<EntityUid> RecentlyEjected { get; private set; } = new();
 
     /// <summary>
     /// Next time the disposal unit will be pressurized.

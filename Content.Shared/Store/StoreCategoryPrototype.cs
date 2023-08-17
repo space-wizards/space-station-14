@@ -20,5 +20,5 @@ public sealed partial class StoreCategoryPrototype : IPrototype
     public string Name { get; private set; } = "";
 
     [DataField("priority")]
-    public int Priority { get; } = 0;
+    public int Priority { get; private set; } = 0;
 }

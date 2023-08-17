@@ -20,15 +20,15 @@ public sealed partial class SpellbookComponent : Component
     /// </summary>
     [DataField("worldSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, WorldTargetActionPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> WorldSpells = new();
+    public Dictionary<string, int> WorldSpells { get; private set; } = new();
 
     [DataField("entitySpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, EntityTargetActionPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> EntitySpells = new();
+    public Dictionary<string, int> EntitySpells { get; private set; }  = new();
 
     [DataField("instantSpells", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, InstantActionPrototype>))]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<string, int> InstantSpells = new();
+    public Dictionary<string, int> InstantSpells { get; private set; }  = new();
 
     [DataField("learnTime")]
     [ViewVariables(VVAccess.ReadWrite)]

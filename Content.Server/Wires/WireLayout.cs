@@ -29,11 +29,11 @@ public sealed class WireLayoutPrototype : IPrototype, IInheritingPrototype
     ///     initialization)
     /// </summary>
     [DataField("dummyWires")]
-    public int DummyWires { get; } = default!;
+    public int DummyWires { get; private set; } = default!;
 
     /// <summary>
     ///     All the valid IWireActions currently in this layout.
     /// </summary>
     [DataField("wires")]
-    public List<IWireAction>? Wires { get; }
+    public List<IWireAction>? Wires { get; private set; }
 }

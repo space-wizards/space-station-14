@@ -35,7 +35,7 @@ namespace Content.Shared.AirlockPainter
     public sealed partial class AirlockPainterDoAfterEvent : DoAfterEvent
     {
         [DataField("sprite", required: true)]
-        public readonly string Sprite = default!;
+        public string Sprite { get; private set; } = default!;
 
         private AirlockPainterDoAfterEvent()
         {

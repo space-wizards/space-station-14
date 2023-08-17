@@ -98,19 +98,19 @@ public sealed partial class NukeopsRuleComponent : Component
     ///     Cached starting gear prototypes.
     /// </summary>
     [DataField("startingGearPrototypes")]
-    public readonly Dictionary<string, StartingGearPrototype> StartingGearPrototypes = new ();
+    public Dictionary<string, StartingGearPrototype> StartingGearPrototypes { get; private set; } = new ();
 
     /// <summary>
     ///     Cached operator name prototypes.
     /// </summary>
     [DataField("operativeNames")]
-    public readonly Dictionary<string, List<string>> OperativeNames = new();
+    public Dictionary<string, List<string>> OperativeNames { get; private set; } = new();
 
     /// <summary>
     ///     Data to be used in <see cref="OnMindAdded"/> for an operative once the Mind has been added.
     /// </summary>
     [DataField("operativeMindPendingData")]
-    public readonly Dictionary<EntityUid, string> OperativeMindPendingData = new();
+    public Dictionary<EntityUid, string> OperativeMindPendingData { get; private set; } = new();
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
@@ -118,7 +118,7 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
-    public readonly Dictionary<string, IPlayerSession> OperativePlayers = new();
+    public Dictionary<string, IPlayerSession> OperativePlayers { get; private set; } = new();
 
     [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>), required: true)]
     public string Faction = default!;

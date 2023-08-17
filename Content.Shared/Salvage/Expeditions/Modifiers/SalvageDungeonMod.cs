@@ -10,15 +10,15 @@ public sealed class SalvageDungeonMod : IPrototype, IBiomeSpecificMod
 {
     [IdDataField] public string ID { get; } = default!;
 
-    [DataField("desc")] public string Description { get; } = string.Empty;
+    [DataField("desc")] public string Description { get; private set; } = string.Empty;
 
     /// <inheridoc/>
     [DataField("cost")]
-    public float Cost { get; } = 0f;
+    public float Cost { get; private set; } = 0f;
 
     /// <inheridoc/>
     [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
-    public List<string>? Biomes { get; } = null;
+    public List<string>? Biomes { get; private set; } = null;
 
     /// <summary>
     /// The config to use for spawning the dungeon.

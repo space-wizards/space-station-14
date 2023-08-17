@@ -6,7 +6,7 @@ namespace Content.Server.Objectives.Requirements
     public sealed partial class IncompatibleConditionsRequirement : IObjectiveRequirement
     {
         [DataField("conditions")]
-        private readonly List<string> _incompatibleConditions = new();
+        private List<string> _incompatibleConditions { get; set; } = new();
 
         public bool CanBeAssigned(Mind.Mind mind)
         {

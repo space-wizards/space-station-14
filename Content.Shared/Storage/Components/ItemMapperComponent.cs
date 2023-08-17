@@ -56,7 +56,7 @@ namespace Content.Shared.Storage.Components
     [Access(typeof(SharedItemMapperSystem))]
     public sealed partial class ItemMapperComponent : Component
     {
-        [DataField("mapLayers")] public readonly Dictionary<string, SharedMapLayerData> MapLayers = new();
+        [DataField("mapLayers")] public Dictionary<string, SharedMapLayerData> MapLayers { get; private set; } = new();
 
         [DataField("sprite")] public ResPath? RSIPath;
 

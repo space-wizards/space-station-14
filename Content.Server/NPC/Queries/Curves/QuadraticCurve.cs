@@ -2,11 +2,11 @@ namespace Content.Server.NPC.Queries.Curves;
 
 public sealed class QuadraticCurve : IUtilityCurve
 {
-    [DataField("slope")] public readonly float Slope = 1f;
+    [DataField("slope")] public float Slope { get; private set; } = 1f;
 
-    [DataField("exponent")] public readonly float Exponent = 1f;
+    [DataField("exponent")] public float Exponent { get; private set; } = 1f;
 
-    [DataField("yOffset")] public readonly float YOffset;
+    [DataField("yOffset")] public float YOffset { get; private set; }
 
-    [DataField("xOffset")] public readonly float XOffset;
+    [DataField("xOffset")] public float XOffset { get; private set; }
 }

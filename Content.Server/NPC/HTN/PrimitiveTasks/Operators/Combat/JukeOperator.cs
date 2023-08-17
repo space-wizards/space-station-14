@@ -10,7 +10,7 @@ public sealed partial class JukeOperator : HTNOperator, IHtnConditionalShutdown
     public JukeType JukeType = JukeType.AdjacentTile;
 
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.PlanFinished;
+    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.PlanFinished;
 
     public override void Startup(NPCBlackboard blackboard)
     {

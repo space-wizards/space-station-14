@@ -20,5 +20,5 @@ public sealed partial class ChangeComponentsSpellEvent : EntityTargetActionEvent
     public HashSet<string> ToRemove = new();
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 }

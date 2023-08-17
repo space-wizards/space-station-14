@@ -22,5 +22,5 @@ public sealed partial class StationDataComponent : Component
     /// List of all grids this station is part of.
     /// </summary>
     [DataField("grids")]
-    public readonly HashSet<EntityUid> Grids = new();
+    public HashSet<EntityUid> Grids { get; private set; } = new();
 }

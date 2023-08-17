@@ -43,7 +43,7 @@ namespace Content.Shared.Traits
         ///     The components that get added to the player, when they pick this trait.
         /// </summary>
         [DataField("components")]
-        public ComponentRegistry Components { get; } = default!;
+        public ComponentRegistry Components { get; private set; } = default!;
 
         /// <summary>
         ///     Gear that is given to the player, when they pick this trait.

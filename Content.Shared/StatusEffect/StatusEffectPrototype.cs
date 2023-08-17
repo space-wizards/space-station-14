@@ -10,13 +10,13 @@ namespace Content.Shared.StatusEffect
         public string ID { get; } = default!;
 
         [DataField("alert")]
-        public AlertType? Alert { get; }
+        public AlertType? Alert { get; private set; }
 
         /// <summary>
         ///     Whether a status effect should be able to apply to any entity,
         ///     regardless of whether it is in ALlowedEffects or not.
         /// </summary>
         [DataField("alwaysAllowed")]
-        public bool AlwaysAllowed { get; }
+        public bool AlwaysAllowed { get; private set; }
     }
 }

@@ -128,7 +128,7 @@ public abstract class LayerColoringType
     ///     Makes output color negative
     /// </summary>
     [DataField("negative")]
-    public bool Negative { get; } = false;
+    public bool Negative { get; private set; } = false;
     public abstract Color? GetCleanColor(Color? skin, Color? eyes, MarkingSet markingSet);
     public Color? GetColor(Color? skin, Color? eyes, MarkingSet markingSet)
     {

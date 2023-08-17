@@ -7,13 +7,13 @@ namespace Content.Server.Construction.Completions
     public sealed class RaiseEvent : IGraphAction
     {
         [DataField("event", required:true)]
-        public EntityEventArgs? Event { get; }
+        public EntityEventArgs? Event { get; private set; }
 
         [DataField("directed")]
-        public bool Directed { get; } = true;
+        public bool Directed { get; private set; } = true;
 
         [DataField("broadcast")]
-        public bool Broadcast { get; } = true;
+        public bool Broadcast { get; private set; } = true;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

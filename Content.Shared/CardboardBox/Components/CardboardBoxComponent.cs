@@ -55,7 +55,7 @@ public sealed partial class CardboardBoxComponent : Component
     /// Time between sound effects. Prevents effect spam
     /// </summary>
     [DataField("cooldownDuration")]
-    public readonly TimeSpan CooldownDuration = TimeSpan.FromSeconds(5f);
+    public TimeSpan CooldownDuration { get; private set; } = TimeSpan.FromSeconds(5f);
 }
 
 [Serializable, NetSerializable]

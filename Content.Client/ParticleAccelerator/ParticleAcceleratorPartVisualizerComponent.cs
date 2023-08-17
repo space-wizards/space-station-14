@@ -12,7 +12,7 @@ public sealed partial class ParticleAcceleratorPartVisualsComponent : Component
 
     [DataField("stateSuffixes")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public readonly Dictionary<ParticleAcceleratorVisualState, string> StatesSuffixes = new()
+    public Dictionary<ParticleAcceleratorVisualState, string> StatesSuffixes { get; private set; } = new()
     {
         {ParticleAcceleratorVisualState.Powered, "p"},
         {ParticleAcceleratorVisualState.Level0, "p0"},

@@ -8,12 +8,12 @@ namespace Content.Shared.Decals
     public sealed partial class Decal
     {
         // if these are made not-readonly, then decal grid state handling needs to be updated to clone decals.
-        [DataField("coordinates")] public readonly Vector2 Coordinates = Vector2.Zero;
-        [DataField("id")] public readonly string Id = string.Empty;
-        [DataField("color")] public readonly Color? Color;
-        [DataField("angle")] public readonly Angle Angle = Angle.Zero;
-        [DataField("zIndex")] public readonly int ZIndex;
-        [DataField("cleanable")] public readonly bool Cleanable;
+        [DataField("coordinates")] public Vector2 Coordinates { get; private set; } = Vector2.Zero;
+        [DataField("id")] public string Id { get; private set; } = string.Empty;
+        [DataField("color")] public Color? Color { get; private set; }
+        [DataField("angle")] public Angle Angle { get; private set; } = Angle.Zero;
+        [DataField("zIndex")] public int ZIndex { get; private set; }
+        [DataField("cleanable")] public bool Cleanable { get; private set; }
 
         public Decal() {}
 

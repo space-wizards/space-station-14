@@ -20,7 +20,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     Channels that will be disabled for a duration of event
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public readonly HashSet<string> AffectedChannels = new();
+    public HashSet<string> AffectedChannels { get; private set; } = new();
 
     /// <summary>
     ///     Chance light bulb breaks per second during event

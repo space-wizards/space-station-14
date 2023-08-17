@@ -172,7 +172,7 @@ public sealed partial class TileAtmosCollectionSerializer : ITypeSerializer<Dict
         /// Key is unique mix and value is bitflag of the affected tiles.
         /// </summary>
         [IncludeDataField(customTypeSerializer: typeof(DictionarySerializer<int, uint>))]
-        public readonly Dictionary<int, uint> Data = new();
+        public Dictionary<int, uint> Data { get; private set; } = new();
     }
 
     public void CopyTo(ISerializationManager serializationManager, Dictionary<Vector2i, TileAtmosphere> source, ref Dictionary<Vector2i, TileAtmosphere> target,

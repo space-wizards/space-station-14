@@ -23,13 +23,13 @@ public sealed partial class AtmosMonitorComponent : Component
     public bool NetEnabled = true;
 
     [DataField("temperatureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public readonly string? TemperatureThresholdId;
+    public string? TemperatureThresholdId { get; private set; }
 
     [DataField("temperatureThreshold")]
     public AtmosAlarmThreshold? TemperatureThreshold;
 
     [DataField("pressureThresholdId", customTypeSerializer: (typeof(PrototypeIdSerializer<AtmosAlarmThresholdPrototype>)))]
-    public readonly string? PressureThresholdId;
+    public string? PressureThresholdId { get; private set; }
 
     [DataField("pressureThreshold")]
     public AtmosAlarmThreshold? PressureThreshold;

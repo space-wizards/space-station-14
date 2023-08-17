@@ -20,19 +20,19 @@ public sealed class CargoBountyPrototype : IPrototype
     /// The monetary reward for completing the bounty
     /// </summary>
     [DataField("reward", required: true)]
-    public readonly int Reward;
+    public int Reward { get; private set; }
 
     /// <summary>
     /// A description for flava purposes.
     /// </summary>
     [DataField("description")]
-    public readonly string Description = string.Empty;
+    public string Description { get; private set; } = string.Empty;
 
     /// <summary>
     /// The entries that must be satisfied for the cargo bounty to be complete.
     /// </summary>
     [DataField("entries", required: true)]
-    public readonly List<CargoBountyItemEntry> Entries = new();
+    public List<CargoBountyItemEntry> Entries { get; private set; } = new();
 }
 
 [DataDefinition, Serializable, NetSerializable]
@@ -42,7 +42,7 @@ public readonly partial record struct CargoBountyItemEntry()
     /// A whitelist for determining what items satisfy the entry.
     /// </summary>
     [DataField("whitelist", required: true)]
-    public readonly EntityWhitelist Whitelist = default!;
+    public EntityWhitelist Whitelist { get; private init; }  = default!;
 
     // todo: implement some kind of simple generic condition system
 
@@ -50,11 +50,11 @@ public readonly partial record struct CargoBountyItemEntry()
     /// How much of the item must be present to satisfy the entry
     /// </summary>
     [DataField("amount")]
-    public readonly int Amount = 1;
+    public int Amount { get; private init; }  = 1;
 
     /// <summary>
     /// A player-facing name for the item.
     /// </summary>
     [DataField("name")]
-    public readonly string Name = string.Empty;
+    public string Name { get; private init; }  = string.Empty;
 }

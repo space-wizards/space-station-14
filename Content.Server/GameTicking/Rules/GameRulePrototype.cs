@@ -10,6 +10,6 @@ public sealed class GameRulePrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("config", required: true)]
-    public GameRuleConfiguration Configuration { get; } = default!;
+    public GameRuleConfiguration Configuration { get; private set; } = default!;
 }
 */

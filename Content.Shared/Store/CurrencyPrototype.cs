@@ -23,17 +23,17 @@ public sealed partial class CurrencyPrototype : IPrototype
     /// that which is displayed to the user.
     /// </summary>
     [DataField("displayName")]
-    public string DisplayName { get; } = string.Empty;
+    public string DisplayName { get; private set; } = string.Empty;
 
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
     [DataField("cash")] //TODO: you get your customTypeSerializer when FixedPoint2 works in them! -emo
-    public Dictionary<FixedPoint2, string>? Cash { get; }
+    public Dictionary<FixedPoint2, string>? Cash { get; private set; }
 
     /// <summary>
     /// Whether or not this currency can be withdrawn from a shop by a player. Requires a valid entityId.
     /// </summary>
     [DataField("canWithdraw")]
-    public bool CanWithdraw { get; } = true;
+    public bool CanWithdraw { get; private set; } = true;
 }

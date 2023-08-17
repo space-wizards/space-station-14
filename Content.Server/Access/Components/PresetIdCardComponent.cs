@@ -4,6 +4,6 @@ namespace Content.Server.Access.Components
     public sealed partial class PresetIdCardComponent : Component
     {
         [DataField("job")]
-        public readonly string? JobName;
+        public string? JobName { get; private set; }
     }
 }

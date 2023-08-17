@@ -28,5 +28,5 @@ public sealed partial class ToggleableLightVisualsComponent : Component
     ///     Layers to add to the sprite of the player that is wearing this entity (while the component is toggled on).
     /// </summary>
     [DataField("clothingVisuals")]
-    public readonly Dictionary<string, List<PrototypeLayerData>> ClothingVisuals = new();
+    public Dictionary<string, List<PrototypeLayerData>> ClothingVisuals { get; private set; } = new();
 }

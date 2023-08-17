@@ -11,7 +11,7 @@ namespace Content.Server.Jobs
 
         [DataField("components")]
         [AlwaysPushInheritance]
-        public ComponentRegistry Components { get; } = new();
+        public ComponentRegistry Components { get; private set; } = new();
 
         public override void AfterEquip(EntityUid mob)
         {

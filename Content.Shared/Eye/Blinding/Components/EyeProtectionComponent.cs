@@ -11,5 +11,5 @@ public sealed partial class EyeProtectionComponent : Component
     /// of blindness, do not blind.
     /// </summary>
     [DataField("protectionTime")]
-    public readonly TimeSpan ProtectionTime = TimeSpan.FromSeconds(10);
+    public TimeSpan ProtectionTime { get; private set; } = TimeSpan.FromSeconds(10);
 }

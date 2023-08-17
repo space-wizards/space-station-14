@@ -26,12 +26,12 @@ public sealed partial class BlobFloorPlanBuilderComponent : Component
     /// </summary>
     [DataField("floorTileset", required: true,
         customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
-    public List<string> FloorTileset { get; } = default!;
+    public List<string> FloorTileset { get; private set; } = default!;
 
     /// <summary>
     ///     The number of floor tiles to place when drawing the asteroid layout.
     /// </summary>
     [DataField("floorPlacements", required: true)]
-    public int FloorPlacements { get; }
+    public int FloorPlacements { get; private set; }
 }
 

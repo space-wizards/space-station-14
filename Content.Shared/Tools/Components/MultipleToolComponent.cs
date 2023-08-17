@@ -25,7 +25,7 @@ namespace Content.Shared.Tools.Components
         }
 
         [DataField("entries", required: true)]
-        public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
+        public ToolEntry[] Entries { get; private set; } = Array.Empty<ToolEntry>();
 
         [ViewVariables]
         public uint CurrentEntry = 0;

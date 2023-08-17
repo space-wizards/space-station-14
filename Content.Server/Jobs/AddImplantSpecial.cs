@@ -15,7 +15,7 @@ public sealed partial class AddImplantSpecial : JobSpecial
 {
 
     [DataField("implants", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<EntityPrototype>))]
-    public HashSet<String> Implants { get; } = new();
+    public HashSet<String> Implants { get; private set; } = new();
 
     public override void AfterEquip(EntityUid mob)
     {

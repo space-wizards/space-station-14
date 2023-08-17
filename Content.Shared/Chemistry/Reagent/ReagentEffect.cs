@@ -39,14 +39,14 @@ namespace Content.Shared.Chemistry.Reagent
 
         [JsonIgnore]
         [DataField("logImpact")]
-        public virtual LogImpact LogImpact { get; } = LogImpact.Low;
+        public virtual LogImpact LogImpact { get; private set; } = LogImpact.Low;
 
         /// <summary>
         ///     Should this reagent effect log at all?
         /// </summary>
         [JsonIgnore]
         [DataField("shouldLog")]
-        public virtual bool ShouldLog { get; } = false;
+        public virtual bool ShouldLog { get; private set; } = false;
 
         public abstract void Effect(ReagentEffectArgs args);
 

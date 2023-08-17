@@ -23,7 +23,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
     /// In client resources.
     /// </summary>
     [DataField("configPath")]
-    public ResPath ParallaxConfigPath { get; } = new("/parallax_config.toml");
+    public ResPath ParallaxConfigPath { get; private set; } = new("/parallax_config.toml");
 
     /// <summary>
     /// ID for debugging, caching, and so forth.
@@ -31,7 +31,7 @@ public sealed partial class GeneratedParallaxTextureSource : IParallaxTextureSou
     /// It is advisible to provide a roughly unique ID for any unique config contents.
     /// </summary>
     [DataField("id")]
-    public string Identifier { get; } = "other";
+    public string Identifier { get; private set; } = "other";
 
     /// <summary>
     /// Cached path.

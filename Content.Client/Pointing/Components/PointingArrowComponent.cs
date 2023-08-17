@@ -10,14 +10,14 @@ public sealed partial class PointingArrowComponent : SharedPointingArrowComponen
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("animationTime")]
-    public readonly float AnimationTime = 0.5f;
+    public float AnimationTime { get; private set; } = 0.5f;
 
     /// <summary>
     /// How far it goes in any direction.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public readonly Vector2 Offset = new(0, 0.25f);
+    public Vector2 Offset { get; private set; } = new(0, 0.25f);
 
     public readonly string AnimationKey = "pointingarrow";
 }
