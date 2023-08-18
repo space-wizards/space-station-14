@@ -124,6 +124,10 @@
     - type: UpgradePowerSupplier
       powerSupplyMultiplier: 1.25
       scaling: Exponential
+    - type: GeneratorExhaustGas
+      gasType: CarbonDioxide
+      # 2 moles of gas for every sheet of plasma.
+      moleRatio: 2
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
@@ -244,3 +248,7 @@
       # No ramping needed on this bugger.
       voltage: Apc
       supplyRampTolerance: 2000
+    - type: GeneratorExhaustGas
+      gasType: CarbonDioxide
+      # Full tank is 10 moles of gas
+      moleRatio: 0.2
