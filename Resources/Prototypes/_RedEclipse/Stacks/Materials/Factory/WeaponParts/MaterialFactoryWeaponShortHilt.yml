@@ -1,0 +1,38 @@
+- type: entity
+  parent: FactoryWeaponPartBase
+  id: MaterialFactoryWeaponShortHilt
+  name: short hilt
+  suffix: Full
+  components:
+    - type: PhysicalComposition
+      materialComposition:
+        FactoryWeaponShortHilt: 1
+    - type: Stack
+      stackType: FactoryWeaponBasicCasings
+
+- type: entity
+  parent: MaterialFactoryWeaponShortHilt
+  id: FactoryWeaponShortHilt
+  name: short hilt
+  suffix: single
+  components:
+    - type: Item
+      size: 1
+    - type: Stack
+      stackType: FactoryWeaponShortHilt
+      count: 1
+
+- type: stack
+  id: FactoryWeaponShortHilt
+  name: short hilt
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  spawn: FactoryWeaponShortHilt
+  maxCount: 5
+  itemSize: 1
+
+- type: material
+  id: FactoryWeaponShortHilt
+  stackEntity: FactoryWeaponShortHilt
+  name: materials-factory-weapon-short-hilt
+  icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
+  price: 0

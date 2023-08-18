@@ -1,38 +1,38 @@
 - type: entity
-  parent: FactoryPartBase
-  id: MaterialFactoryShortHilt
-  name: short hilt
+  parent: FactoryWeaponPartBase
+  id: MaterialFactoryWeaponLongHilt
+  name: long hilt
   suffix: Full
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryShortHilt: 1
+        FactoryWeaponLongHilt: 1
     - type: Stack
-      stackType: FactoryBasicCasings
+      stackType: FactoryWeaponBasicCasings
 
 - type: entity
-  parent: MaterialFactoryShortHilt
-  id: FactoryShortHilt
-  name: short hilt
+  parent: MaterialFactoryWeaponLongHilt
+  id: FactoryWeaponLongHilt
+  name: long hilt
   suffix: single
   components:
     - type: Item
       size: 1
     - type: Stack
-      stackType: FactoryShortHilt
+      stackType: FactoryWeaponLongHilt
       count: 1
 
 - type: stack
-  id: FactoryShortHilt
-  name: short hilt
+  id: FactoryWeaponLongHilt
+  name: long hilt
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryShortHilt
+  spawn: FactoryWeaponLongHilt
   maxCount: 5
   itemSize: 1
 
 - type: material
-  id: FactoryShortHilt
-  stackEntity: FactoryShortHilt
-  name: materials-factory-medium-body
+  id: FactoryWeaponLongHilt
+  stackEntity: FactoryWeaponLongHilt
+  name: materials-factory-weapon-long-hilt
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
   price: 0

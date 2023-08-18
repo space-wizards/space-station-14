@@ -1,38 +1,38 @@
 - type: entity
   parent: FactoryPartBase
-  id: MaterialFactoryMediumBody
-  name: medium gun body
+  id: MaterialFactoryWeaponCompactBody
+  name: compact gun body
   suffix: Full
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryMediumBody: 1
+        FactoryCompactBody: 1
     - type: Stack
-      stackType: FactoryBasicCasings
+      stackType: FactoryWeaponCompactBody
 
 - type: entity
-  parent: MaterialFactoryMediumBody
-  id: FactoryMediumBody
-  name: medium gun body
+  parent: MaterialFactoryWeaponCompactBody
+  id: FactoryWeaponCompactBody
+  name: compact gun body
   suffix: single
   components:
     - type: Item
       size: 1
     - type: Stack
-      stackType: FactoryMediumBody
+      stackType: FactoryWeaponCompactBody
       count: 1
 
 - type: stack
-  id: FactoryMediumBody
-  name: factory medium body
+  id: FactoryWeaponCompactBody
+  name: factory compact body
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryMediumBody
+  spawn: FactoryWeaponCompactBody
   maxCount: 5
   itemSize: 1
 
 - type: material
-  id: FactoryMediumBody
-  stackEntity: FactoryMediumBody
-  name: materials-factory-medium-body
+  id: FactoryWeaponCompactBody
+  stackEntity: FactoryWeaponCompactBody
+  name: materials-factory-weapon-compact-body
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
   price: 0
