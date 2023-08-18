@@ -1,0 +1,14 @@
+- type: entity
+  id: FactoryAdvancedAssembler
+  parent: BaseFactoryMachine
+  name: factory advanced assembler
+  description: assembles advanced parts for contraband # placeholder
+  components:
+    - type: Sprite # placeholder
+    - type: Machine
+      board: FactoryAdvancedAssemblerMachineCircuitboard
+    - type: Lathe
+      staticRecipes:
+        - FactoryMachineryPart
+        - FactoryLaserComponent
+        - FactoryMetalBlade

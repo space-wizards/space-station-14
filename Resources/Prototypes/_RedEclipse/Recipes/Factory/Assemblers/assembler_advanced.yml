@@ -1,0 +1,57 @@
+- type: latheRecipe
+  id: FactoryMachineryPart
+  result: FactoryMachineryPart
+  completetime: 6
+  materials: # TODO better recipe
+    Steel : 500
+
+- type: latheRecipe
+  id: FactoryLaserComponent
+  result: FactoryLaserComponent
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 200
+    FactorySimpleCircuits: 2
+    Plastic : 200
+
+- type: latheRecipe
+  id: FactoryExplosivePayload
+  result: FactoryExplosivePayload
+  completetime: 4
+  materials: # TODO better recipe
+    FactoryBasicCasings : 1
+    FactoryChemicalPacks : 1
+
+- type: latheRecipe
+  id: FactoryTimingComponent
+  result: FactoryTimingComponent
+  completetime: 3
+  materials: # TODO better recipe
+    FactorySimpleCircuits : 1
+    FactoryMachineryParts : 1
+
+- type: latheRecipe
+  id: FactoryMedicalPart
+  result: FactoryMedicalPart
+  completetime: 3
+  materials: # TODO better recipe
+    Steel : 100
+    FactoryBasicCasings : 1
+    FactorySimpleCircuits : 1
+
+- type: latheRecipe
+  id: FactoryInjector
+  result: FactoryInjector
+  completetime: 3
+  materials: # TODO better recipe
+    FactoryBasicCasings : 1
+    FactorySimpleCircuits : 1
+    FactoryMachineryParts : 1
+    FactoryMedicalParts: 1
+
+- type: latheRecipe
+  id: FactoryChemicalPack
+  result: FactoryChemicalPack
+  completetime: 3
+  materials: # TODO way better recipe (waaaaay better)
+    Steel : 100

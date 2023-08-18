@@ -1,0 +1,21 @@
+- type: latheRecipe
+  id: FactorySimpleCircuit
+  result: FactorySimpleCircuit
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 300
+    Plastic : 300
+
+- type: latheRecipe
+  id: FactoryBasicCasing
+  result: FactoryBasicCasing
+  completetime: 4
+  materials: # TODO better recipe
+    Steel : 500
+
+- type: latheRecipe
+  id: FactoryMetalBlade
+  result: FactoryMetalBlade
+  completetime: 3
+  materials: # TODO better recipe
+    Steel : 300

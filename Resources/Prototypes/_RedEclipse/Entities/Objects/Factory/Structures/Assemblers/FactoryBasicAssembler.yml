@@ -1,0 +1,14 @@
+- type: entity
+  id: FactoryBasicAssembler
+  parent: BaseFactoryMachine
+  name: factory basic assembler
+  description: assembles basic parts for contraband
+  components:
+    - type: Sprite # placeholder
+    - type: Machine
+      board: FactoryBasicAssemblerMachineCircuitboard
+    - type: Lathe
+      staticRecipes:
+        - FactorySimpleCircuit
+        - FactoryBasicCasing
+        - FactoryMetalBlade

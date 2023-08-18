@@ -1,0 +1,7 @@
+- type: entity
+  id: FactoryWeaponBodyAssemblerMachineCircuitboard
+  parent: BaseFactoryMachineCircuitboard
+  name: factory weapon body assembler machine board # placeholder
+  components:
+    - type: MachineBoard
+      prototype: FactoryWeaponBodyAssembler

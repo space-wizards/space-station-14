@@ -1,0 +1,8 @@
+- type: entity
+  id: FactoryAdvancedAssemblerMachineCircuitboard
+  parent: BaseFactoryMachineCircuitboard
+  name: factory advanced assembler machine board
+  description: the machine board for a very advanced assembler # placeholder
+  components:
+    - type: MachineBoard
+      prototype: FactoryAdvancedAssembler

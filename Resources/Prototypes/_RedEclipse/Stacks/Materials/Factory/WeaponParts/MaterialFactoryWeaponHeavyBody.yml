@@ -1,38 +1,38 @@
 - type: entity
   parent: FactoryPartBase
-  id: MaterialFactoryMachineryParts
-  name: factory machinery parts
+  id: MaterialFactoryWeaponHeavyBody
+  name: heavy gun body
   suffix: Full
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryMachineryParts: 1
+        FactoryWeaponHeavyBody: 1
     - type: Stack
-      stackType: FactoryMachineryParts
+      stackType: FactoryWeaponHeavyBody
 
 - type: entity
-  parent: MaterialFactoryMachineryParts
-  id: FactoryMachineryPart
-  name: factory machinery part
+  parent: MaterialFactoryWeaponHeavyBody
+  id: FactoryWeaponHeavyBody
+  name: heavy gun body
   suffix: single
   components:
     - type: Item
       size: 1
     - type: Stack
-      stackType: FactoryMachineryParts
+      stackType: FactoryWeaponHeavyBody
       count: 1
 
 - type: stack
-  id: FactoryMachineryParts
-  name: factory machinery parts
+  id: FactoryWeaponHeavyBody
+  name: factory heavy body
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryMachineryPart
+  spawn: FactoryWeaponHeavyBody
   maxCount: 5
   itemSize: 1
 
 - type: material
-  id: FactoryMachineryParts
-  stackEntity: FactoryMachineryPart
-  name: materials-factory-machinery-parts
+  id: FactoryWeaponHeavyBody
+  stackEntity: FactoryWeaponHeavyBody
+  name: materials-factory-weapon-heavy-body
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
   price: 0

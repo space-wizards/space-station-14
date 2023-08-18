@@ -1,38 +1,38 @@
 - type: entity
   parent: FactoryPartBase
-  id: MaterialFactoryMachineryParts
-  name: factory machinery parts
+  id: MaterialFactoryWeaponGunBarrel
+  name: gun barrel
   suffix: Full
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryMachineryParts: 1
+        FactoryWeaponGunBarrel: 1
     - type: Stack
-      stackType: FactoryMachineryParts
+      stackType: FactoryWeaponGunBarrel
 
 - type: entity
-  parent: MaterialFactoryMachineryParts
-  id: FactoryMachineryPart
-  name: factory machinery part
+  parent: MaterialFactoryWeaponGunBarrel
+  id: FactoryWeaponGunBarrel
+  name: gun barrel
   suffix: single
   components:
     - type: Item
       size: 1
     - type: Stack
-      stackType: FactoryMachineryParts
+      stackType: FactoryWeaponGunBarrel
       count: 1
 
 - type: stack
-  id: FactoryMachineryParts
-  name: factory machinery parts
+  id: FactoryWeaponGunBarrel
+  name: factory gun barrel
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
-  spawn: FactoryMachineryPart
+  spawn: FactoryWeaponGunBarrel
   maxCount: 5
   itemSize: 1
 
 - type: material
-  id: FactoryMachineryParts
-  stackEntity: FactoryMachineryPart
-  name: materials-factory-machinery-parts
+  id: FactoryWeaponGunBarrel
+  stackEntity: FactoryWeaponGunBarrel
+  name: materials-factory-weapon-gun-barrel
   icon: { sprite: /Textures/Objects/Misc/monkeycube.rsi, state: cube } # placeholder
   price: 0

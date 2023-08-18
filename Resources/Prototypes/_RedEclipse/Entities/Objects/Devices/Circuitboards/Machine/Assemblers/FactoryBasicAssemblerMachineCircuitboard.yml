@@ -1,0 +1,7 @@
+- type: entity
+  id: FactoryBasicAssemblerMachineCircuitboard
+  parent: BaseFactoryMachineCircuitboard
+  name: factory basic assembler machine board
+  components:
+    - type: MachineBoard
+      prototype: FactoryBasicAssembler
