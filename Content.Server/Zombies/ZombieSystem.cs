@@ -7,7 +7,6 @@ using Content.Server.Drone.Components;
 using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
 using Content.Server.Emoting.Systems;
-using Content.Server.GameTicking.Rules;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
@@ -53,6 +52,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
         SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
         SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
         SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
+            SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
 
         SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
     }
@@ -74,6 +74,11 @@ public sealed partial class ZombieSystem : SharedZombieSystem
     private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
     {
         args.Cancelled = true;
+        }
+
+        private void OnGetCharacterDeadIC(EntityUid uid, ZombieComponent component, ref GetCharactedDeadIcEvent args)
+        {
+            args.Dead = true;
     }
 
     private void OnMobState(EntityUid uid, ZombieComponent zombie, MobStateChangedEvent args)

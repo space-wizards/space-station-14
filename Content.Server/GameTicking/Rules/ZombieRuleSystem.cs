@@ -425,6 +425,11 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                         }
                     }
                 }
+				else if (HasComp<ZombieImmuneComponent>(player.AttachedEntity))
+				{
+				  // Immune
+				  continue
+				}
                 else
                 {
 	                playerList.Add(player);

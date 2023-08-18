@@ -100,6 +100,7 @@
     LayoutId: FatExtractor
   - type: Appearance
   - type: Speech
+    speechVerb: Robotic
   - type: Advertise
     pack: FatExtractorFacts
   - type: StaticPrice

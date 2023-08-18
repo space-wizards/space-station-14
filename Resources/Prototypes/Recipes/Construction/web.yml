@@ -1,0 +1,35 @@
+- type: construction
+  name: web wall
+  id: WallWeb
+  graph: WallWeb
+  startNode: start
+  targetNode: wall
+  category: construction-category-structures
+  description: A fairly weak yet silky smooth wall.
+  icon:
+    sprite: /Textures/Structures/Walls/web.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: web table
+  id: TableWeb
+  graph: TableWeb
+  startNode: start
+  targetNode: table
+  category: construction-category-structures
+  description: Essential for any serious web development.
+  icon:
+    sprite: /Textures/Structures/Furniture/Web/table.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

@@ -33,6 +33,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Zombies
 {
@@ -72,7 +73,7 @@ namespace Content.Server.Zombies
         public void ZombifyEntity(EntityUid target, MobStateComponent? mobState = null, ZombieComponent? zombie = null)
         {
             //Don't zombify living zombies
-            if (HasComp<LivingZombieComponent>(target))
+            if (HasComp<LivingZombieComponent>(target) || HasComp<ZombieImmuneComponent>(target))
                 return;
 
             if (!Resolve(target, ref mobState, logMissing: false))
@@ -248,18 +249,12 @@ namespace Content.Server.Zombies
 
             _passiveHeal.BeginHealing(target, zombie.Settings.HealingPerSec, zombie.Settings.PassiveHealing);
 
-            // Goes through every hand, drops the items in it, then removes the hand
-            // may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var hands))
+            //Goes through every hand, drops the items in it, then removes the hand
+            //may become the source of various bugs.
+            if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                foreach (var hand in _hands.EnumerateHands(target))
-                {
-                    _hands.SetActiveHand(target, hand, hands);
-                    _hands.DoDrop(target, hand, handsComp: hands);
-                    _hands.RemoveHand(target, hand.Name, hands);
-                }
-
-                RemComp(target, hands);
+                _hands.RemoveHands(target);
+                RemComp(target, handsComp);
             }
 
             // No longer waiting to become a zombie:

@@ -11,12 +11,12 @@ using Robust.UnitTesting;
 namespace Content.IntegrationTests.Tests.Toolshed;
 
 [TestFixture]
-[FixtureLifeCycle(LifeCycle.SingleInstance)]
+[FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
     protected PairTracker PairTracker = default!;
 
-    protected virtual bool NoClient => true;
+    protected virtual bool Connected => false;
     protected virtual bool AssertOnUnexpectedError => true;
 
     protected RobustIntegrationTest.ServerIntegrationInstance Server = default!;
@@ -27,19 +27,25 @@ public abstract class ToolshedTest : IInvocationContext
     protected IInvocationContext? Context = null;
 
     [TearDown]
-    public virtual async Task TearDown()
+    public async Task TearDownInternal()
+    {
+        await PairTracker.CleanReturnAsync();
+        await TearDown();
+    }
+
+    protected virtual async Task TearDown()
     {
         Assert.IsEmpty(_expectedErrors);
         ClearErrors();
     }
 
-    [OneTimeSetUp]
+    [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings {NoClient = NoClient});
+        PairTracker = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
         Server = PairTracker.Pair.Server;
 
-        if (!NoClient)
+        if (Connected)
         {
             Client = PairTracker.Pair.Client;
             await Client.WaitIdleAsync();

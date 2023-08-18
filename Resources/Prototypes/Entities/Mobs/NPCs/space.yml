@@ -36,7 +36,7 @@
       0: Alive
       150: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: MovementAlwaysTouching
   - type: Bloodstream
     bloodMaxVolume: 300
@@ -163,7 +163,7 @@
       Dead:
         Base: kangaroo-space-dead
   - type: Stamina
-    excess: 180
+    critThreshold: 180
   - type: Inventory
     speciesId: kangaroo
     templateId: spacekangaroo
@@ -220,7 +220,7 @@
       0: Alive
       130: Dead
   - type: Stamina
-    excess: 150
+    critThreshold: 150
   - type: DamageStateVisuals
     states:
       Alive:

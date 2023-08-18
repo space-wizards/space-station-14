@@ -25,9 +25,12 @@ public sealed class InteractWithOperator : HTNOperator
             return HTNOperatorStatus.Continuing;
         }
 
-        _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false);
-        _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget);
+        if (_entManager.TryGetComponent<CombatModeComponent>(owner, out var combatMode))
+        {
+            _entManager.System<SharedCombatModeSystem>().SetInCombatMode(owner, false, combatMode);
+        }
 
+        _entManager.System<InteractionSystem>().UserInteraction(owner, targetXform.Coordinates, moveTarget);
         return HTNOperatorStatus.Finished;
     }
 }

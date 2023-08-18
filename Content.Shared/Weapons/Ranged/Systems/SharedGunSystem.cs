@@ -56,8 +56,6 @@ public abstract partial class SharedGunSystem : EntitySystem
     [Dependency] protected readonly TagSystem TagSystem = default!;
     [Dependency] protected readonly ThrowingSystem ThrowingSystem = default!;
 
-    protected ISawmill Sawmill = default!;
-
     private const float InteractNextFire = 0.3f;
     private const double SafetyNextFire = 0.5;
     private const float EjectOffset = 0.4f;
@@ -67,8 +65,6 @@ public abstract partial class SharedGunSystem : EntitySystem
 
     public override void Initialize()
     {
-        Sawmill = Logger.GetSawmill("gun");
-        Sawmill.Level = LogLevel.Info;
         SubscribeAllEvent<RequestShootEvent>(OnShootRequest);
         SubscribeAllEvent<RequestStopShootEvent>(OnStopShootRequest);
         SubscribeLocalEvent<GunComponent, MeleeHitEvent>(OnGunMelee);
@@ -136,7 +132,7 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
 
         gun.ShootCoordinates = msg.Coordinates;
-        Sawmill.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
+        Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
         AttemptShoot(user.Value, ent, gun);
     }
 
@@ -193,10 +189,10 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (gun.ShotCounter == 0)
             return;
 
-        Sawmill.Debug($"Stopped shooting {ToPrettyString(uid)}");
+        Log.Debug($"Stopped shooting {ToPrettyString(uid)}");
         gun.ShotCounter = 0;
         gun.ShootCoordinates = null;
-        Dirty(gun);
+        Dirty(uid, gun);
     }
 
     /// <summary>
@@ -253,7 +249,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         }
 
         // NextFire has been touched regardless so need to dirty the gun.
-        Dirty(gun);
+        Dirty(gunUid, gun);
 
         // Get how many shots we're actually allowed to make, due to clip size or otherwise.
         // Don't do this in the loop so we still reset NextFire.
@@ -311,6 +307,11 @@ public abstract partial class SharedGunSystem : EntitySystem
             // If they're firing an existing clip then don't play anything.
             if (shots > 0)
             {
+                if (ev.Reason != null)
+                {
+                    PopupSystem.PopupClient(ev.Reason, gunUid, user);
+                }
+
                 // Don't spam safety sounds at gun fire rate, play it at a reduced rate.
                 // May cause prediction issues? Needs more tweaking
                 gun.NextFire = TimeSpan.FromSeconds(Math.Max(lastFire.TotalSeconds + SafetyNextFire, gun.NextFire.TotalSeconds));
@@ -471,4 +472,5 @@ public enum AmmoVisuals : byte
     AmmoMax,
     HasAmmo, // used for generic visualizers. c# stuff can just check ammocount != 0
     MagLoaded,
+    BoltClosed,
 }

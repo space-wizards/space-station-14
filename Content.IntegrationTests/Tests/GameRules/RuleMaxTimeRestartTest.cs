@@ -16,21 +16,12 @@ namespace Content.IntegrationTests.Tests.GameRules
         [Test]
         public async Task RestartTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
             var server = pairTracker.Pair.Server;
 
             var entityManager = server.ResolveDependency<IEntityManager>();
-            var configManager = server.ResolveDependency<IConfigurationManager>();
-            await server.WaitPost(() =>
-            {
-                configManager.SetCVar(CCVars.GameLobbyEnabled, true);
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
-            });
-
             var sGameTicker = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<GameTicker>();
             var sGameTiming = server.ResolveDependency<IGameTiming>();
-
 
             sGameTicker.StartGameRule("MaxTimeRestart", out var ruleEntity);
             Assert.That(entityManager.TryGetComponent<MaxTimeRestartRuleComponent>(ruleEntity, out var maxTime));
@@ -62,14 +53,6 @@ namespace Content.IntegrationTests.Tests.GameRules
             {
                 Assert.That(sGameTicker.RunLevel, Is.EqualTo(GameRunLevel.PreRoundLobby));
             });
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
-            await server.WaitPost(() =>
-            {
-                configManager.SetCVar(CCVars.GameLobbyEnabled, false);
-                var command = new RestartRoundNowCommand();
-                command.Execute(null, string.Empty, Array.Empty<string>());
-            });
-            await PoolManager.RunTicksSync(pairTracker.Pair, 30);
 
             await pairTracker.CleanReturnAsync();
         }
