@@ -25,6 +25,10 @@ public sealed partial class GunSystem
         if (!Timing.IsFirstTimePredicted)
             return;
 
+        //if the gun isn't cycled (so it being cycled right now) then don't bother ejecting ammo
+        if (!component.Cycled)
+            return;
+
         EntityUid? ent = null;
 
         // TODO: Combine with TakeAmmo
