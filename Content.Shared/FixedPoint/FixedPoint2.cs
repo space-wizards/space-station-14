@@ -199,6 +199,21 @@ namespace Content.Shared.FixedPoint
             return a > b ? a : b;
         }
 
+        public static int Sign(FixedPoint2 value)
+        {
+            if (value < Zero)
+            {
+                return -1;
+            }
+
+            if (value > Zero)
+            {
+                return 1;
+            }
+
+            return 0;
+        }
+
         public static FixedPoint2 Abs(FixedPoint2 a)
         {
             return FixedPoint2.New(Math.Abs(a.Value));
@@ -233,7 +248,12 @@ namespace Content.Shared.FixedPoint
 
         public void Deserialize(string value)
         {
-            Value = FromFloat(FloatFromString(value));
+            // TODO implement "lossless" serializer.
+            // I.e., dont use floats.
+            if (value == "MaxValue")
+                Value = int.MaxValue;
+            else
+                Value = FromFloat(FloatFromString(value));
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";
@@ -245,6 +265,11 @@ namespace Content.Shared.FixedPoint
 
         public readonly string Serialize()
         {
+            // TODO implement "lossless" serializer.
+            // I.e., dont use floats.
+            if (Value == int.MaxValue)
+                return "MaxValue";
+
             return ToString();
         }
 

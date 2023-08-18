@@ -72,6 +72,7 @@
   - type: CartridgeLoader
     uiKey: enum.PdaUiKey.Key
     preinstalled:
+      - CrewManifestCartridge
       - NotekeeperCartridge
       - NewsReadCartridge
     cartridgeSlot:

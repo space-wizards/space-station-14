@@ -71,3 +71,8 @@
   id: Stealth
   kind: source
   path: "/Textures/Shaders/stealth.swsl"
+
+- type: shader
+  id: PaperStamp
+  kind: source
+  path: "/Textures/Shaders/paperstamp.swsl"

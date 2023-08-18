@@ -7,9 +7,6 @@
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
-  - type: Icon
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart-y
   - type: UIFragment
     ui: !type:NotekeeperUi
   - type: Cartridge
@@ -28,9 +25,6 @@
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
-  - type: Icon
-    sprite: Objects/Devices/cartridge.rsi
-    state: cart-y
   - type: UIFragment
     ui: !type:NewsReadUi
   - type: Cartridge
@@ -42,14 +36,29 @@
 
 - type: entity
   parent: BaseItem
+  id: CrewManifestCartridge
+  name: Crew Manifest Cartridge
+  description: A program for listing your fellow crewmembers
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:CrewManifestUi
+    - type: Cartridge
+      programName: crew-manifest-program-name
+      icon:
+        sprite: Interface/Misc/program_icons.rsi
+        state: crew_manifest
+    - type: CrewManifestCartridge
+
+- type: entity
+  parent: BaseItem
   id: NetProbeCartridge
   name: NetProbe cartridge
   description: A program for getting the address and frequency of network devices
   components:
     - type: Sprite
-      sprite: Objects/Devices/cartridge.rsi
-      state: cart-y
-    - type: Icon
       sprite: Objects/Devices/cartridge.rsi
       state: cart-y
     - type: UIFragment

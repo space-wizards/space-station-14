@@ -310,6 +310,20 @@
         cellularReturnType: Distance2
       entities:
         - WallRockBasalt
+    # chasm time
+    - !type:BiomeEntityLayer
+      allowedTiles:
+      - FloorBasalt
+      threshold: 0.6
+      noise:
+        seed: 3
+        frequency: 0.02
+        fractalType: FBm
+        octaves: 5
+        lacunarity: 2
+        gain: 0.4
+      entities:
+      - FloorChasmEntity
     - !type:BiomeDummyLayer
       id: Loot
     # Fill basalt
@@ -439,6 +453,20 @@
         seed: 0
         frequency: 0.02
         fractalType: None
+    # Liquid plasma rivers. Ice moon baby
+    - !type:BiomeEntityLayer
+      allowedTiles:
+      - FloorSnow
+      threshold: 0.95
+      noise:
+        seed: 3
+        noiseType: OpenSimplex2
+        frequency: 0.003
+        lacunarity: 1.50
+        fractalType: Ridged
+        octaves: 1
+      entities:
+      - FloorLiquidPlasmaEntity
 
 # Caves
 - type: biomeTemplate

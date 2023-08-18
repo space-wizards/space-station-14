@@ -29,6 +29,10 @@ public sealed class PickRandomSystem : EntitySystem
 
         var user = args.User;
 
+        var enabled = false;
+        if (storage.StoredEntities != null)
+            enabled = storage.StoredEntities.Any(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true);
+
         // alt-click / alt-z to pick an item
         args.Verbs.Add(new AlternativeVerb
         {
@@ -37,8 +41,8 @@ public sealed class PickRandomSystem : EntitySystem
             }),
             Impact = LogImpact.Low,
             Text = Loc.GetString(comp.VerbText),
-            Disabled = !(storage.StoredEntities?.Any(item => comp.Whitelist?.IsValid(item, EntityManager) ?? true) ?? false),
-            Message = Loc.GetString(comp.EmptyText, ("storage", uid))
+            Disabled = !enabled,
+            Message = enabled ? null : Loc.GetString(comp.EmptyText, ("storage", uid))
         });
     }
 

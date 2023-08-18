@@ -62,34 +62,27 @@ public sealed class MeleeWeaponComponent : Component
     public bool Attacking = false;
 
     /// <summary>
-    /// When did we start a heavy attack.
-    /// </summary>
-    /// <returns></returns>
-    [ViewVariables(VVAccess.ReadWrite), DataField("windUpStart")]
-    public TimeSpan? WindUpStart;
-
-    /// <summary>
-    /// Heavy attack windup time gets multiplied by this value and the light attack cooldown.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("heavyWindupModifier")]
-    public float HeavyWindupModifier = 1.5f;
-
-    /// <summary>
-    /// Light attacks get multiplied by this over the base <see cref="Damage"/> value.
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
-    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(2);
-
-    /// <summary>
     /// Base damage for this weapon. Can be modified via heavy damage or other means.
     /// </summary>
     [DataField("damage", required:true)]
     [ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = default!;
 
-    [DataField("bluntStaminaDamageFactor")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public FixedPoint2 BluntStaminaDamageFactor { get; set; } = 0.5f;
+    [DataField("bluntStaminaDamageFactor")] [ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 BluntStaminaDamageFactor = FixedPoint2.New(0.5f);
+
+    /// <summary>
+    /// Multiplies damage by this amount for single-target attacks.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyDamageModifier")]
+    public FixedPoint2 HeavyDamageModifier = FixedPoint2.New(1.25);
+
+    //TODO: Was set to 0 value as of 2023-08-06, might want to delete later if we never go back to this idea
+    /// <summary>
+    /// How much stamina it costs for a heavy attack.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("heavyStaminaCost")]
+    public float HeavyStaminaCost = 0f;
 
     // TODO: Temporarily 1.5 until interactionoutline is adjusted to use melee, then probably drop to 1.2
     /// <summary>
@@ -155,18 +148,16 @@ public sealed class MeleeWeaponComponentState : ComponentState
     public float AttackRate;
     public bool Attacking;
     public TimeSpan NextAttack;
-    public TimeSpan? WindUpStart;
 
     public string ClickAnimation;
     public string WideAnimation;
     public float Range;
 
-    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, TimeSpan? windupStart, string clickAnimation, string wideAnimation, float range)
+    public MeleeWeaponComponentState(float attackRate, bool attacking, TimeSpan nextAttack, string clickAnimation, string wideAnimation, float range)
     {
         AttackRate = attackRate;
         Attacking = attacking;
         NextAttack = nextAttack;
-        WindUpStart = windupStart;
         ClickAnimation = clickAnimation;
         WideAnimation = wideAnimation;
         Range = range;

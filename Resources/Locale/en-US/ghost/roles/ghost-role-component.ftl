@@ -94,6 +94,9 @@ ghost-role-information-guardian-description = Listen to your owner. Don't tank d
 ghost-role-information-holoparasite-name = Holoparasite
 ghost-role-information-holoparasite-description = Listen to your owner. Don't tank damage. Punch people hard.
 
+ghost-role-information-holoclown-name = Holoclown
+ghost-role-information-holoclown-description = Listen to your owner. Utilize your pockets and hand to help your owner.
+
 ghost-role-information-ifrit-name = Ifrit
 ghost-role-information-ifrit-description = Listen to your owner. Don't tank damage. Punch people hard.
 
@@ -145,3 +148,6 @@ ghost-role-information-centcom-official-description = Inspect the station, jot d
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-taxibot-name = TaxiBot
+ghost-role-information-taxibot-description = Drive the station crew to their destination.
