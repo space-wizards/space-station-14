@@ -89,14 +89,16 @@ public sealed class PortableGeneratorSwitchOutputMessage : BoundUserInterfaceMes
 public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
 {
     public float RemainingFuel;
+    public bool Clogged;
     public float TargetPower;
     public float MaximumPower;
     public float OptimalPower;
     public bool On;
 
-    public PortableGeneratorComponentBuiState(FuelGeneratorComponent component, float remainingFuel)
+    public PortableGeneratorComponentBuiState(FuelGeneratorComponent component, float remainingFuel, bool clogged)
     {
         RemainingFuel = remainingFuel;
+        Clogged = clogged;
         TargetPower = component.TargetPower;
         MaximumPower = component.MaxTargetPower;
         OptimalPower = component.OptimalPower;

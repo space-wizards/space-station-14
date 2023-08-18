@@ -1,9 +1,11 @@
 ﻿using Content.Server.Audio;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Materials;
+using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Shared.FixedPoint;
+using Content.Shared.Popups;
 using Content.Shared.Power.Generator;
 using Robust.Server.GameObjects;
 
@@ -19,6 +21,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
 
     private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
 
@@ -33,6 +36,22 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorUseFuel>(SolidUseFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetFuel>(ChemicalGetFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorUseFuel>(ChemicalUseFuel);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetClogged>(ChemicalGetClogged);
+    }
+
+    private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetClogged args)
+    {
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+            return;
+
+        foreach (var reagentQuantity in solution)
+        {
+            if (reagentQuantity.ReagentId != component.Reagent)
+            {
+                args.Clogged = true;
+                return;
+            }
+        }
     }
 
     private void ChemicalUseFuel(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
@@ -132,6 +151,13 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
                 continue;
             }
 
+            if (GetIsClogged(uid))
+            {
+                _popup.PopupEntity(Loc.GetString("generator-clogged", ("generator", uid)), uid, PopupType.SmallCaution);
+                SetFuelGeneratorOn(uid, false, gen);
+                continue;
+            }
+
             supplier.Enabled = true;
 
             var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
@@ -151,6 +177,13 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         return getFuel.Fuel;
     }
 
+    public bool GetIsClogged(EntityUid generator)
+    {
+        GeneratorGetClogged getClogged = default;
+        RaiseLocalEvent(generator, ref getClogged);
+        return getClogged.Clogged;
+    }
+
     private void UpdateState(EntityUid generator, FuelGeneratorComponent component)
     {
         _appearance.SetData(generator, GeneratorVisuals.Running, component.On);
@@ -167,6 +200,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 public struct GeneratorGetFuel
 {
     public float Fuel;
+}
+
+/// <summary>
+/// Raised by <see cref="GeneratorSystem"/> to check if a generator is "clogged".
+/// For example there's bad chemicals in the fuel tank that prevent starting it.
+/// </summary>
+[ByRefEvent]
+public struct GeneratorGetClogged
+{
+    public bool Clogged;
 }
 
 /// <summary>

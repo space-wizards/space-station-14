@@ -1,4 +1,4 @@
-﻿generator-insert-material = Inserted {THE($item)} into {THE($generator)}...
+﻿generator-clogged = {THE($generator)} shuts off abruptly!
 
 portable-generator-verb-start = Start generator
 portable-generator-verb-start-msg-unreliable = Start the generator. This may take a few tries.
@@ -17,6 +17,7 @@ portable-generator-ui-target-power-label = Target Power (kW):
 portable-generator-ui-efficiency-label = Efficiency:
 portable-generator-ui-fuel-use-label = Fuel use:
 portable-generator-ui-fuel-left-label = Fuel left:
+portable-generator-ui-clogged = Contaminants detected in fuel tank!
 
 power-switchable-generator-examine = The power output is set to { $output ->
 [HV] [color=orange]HV[/color]
