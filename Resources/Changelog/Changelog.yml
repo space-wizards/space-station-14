@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed lubed item displacement after smart equip, type: Fix}
-  id: 4127
-  time: '2023-06-29T09:36:09.0000000+00:00'
 - author: lzk228
   changes:
   - {message: beach and basketball balls are now heavier and has specific sound on
@@ -3022,3 +3017,11 @@ Entries:
   - {message: Added two reboot themes., type: Add}
   id: 4626
   time: '2023-08-18T13:58:44.0000000+00:00'
+- author: Partmedia
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 4627
+  time: '2023-08-18T17:22:00.0000000+00:00'
