@@ -1,0 +1,41 @@
+- type: parallax
+  id: AvriteStation
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Corvax/Parallax/AvriteParallaxBG.png"
+      slowness: 0.998046875
+      scale: "0.5, 0.5"
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars.toml"
+      slowness: 0.996625
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim.toml"
+      slowness: 0.989375
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars-2.toml"
+      slowness: 0.987265625
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: "hq_wizard_stars_dim_faster"
+        configPath: "/Prototypes/Parallaxes/parallax_config_stars_dim-2.toml"
+      slowness: 0.984352
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Corvax/Parallax/AvriteParallaxNeb.png"
+      slowness: 0.978046875
+      scale: "1, 1"
+      tiled: false
+  layersLQ:
+    - texture:
+        !type:GeneratedParallaxTextureSource
+        id: ""
+        configPath: "/Prototypes/Parallaxes/parallax_config.toml"
+        slowness: 0.875
+  layersLQUseHQ: false

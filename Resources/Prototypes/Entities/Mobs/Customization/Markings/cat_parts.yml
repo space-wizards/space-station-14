@@ -38,3 +38,179 @@
   sprites:
   - sprite: Mobs/Customization/cat_parts.rsi
     state: tail_cat
+
+- type: marking
+  id: CatEarsStubby
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_stubby_outer
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_stubby_inner
+
+- type: marking
+  id: CatEarsCurled
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_curled_outer
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_curled_inner
+
+- type: marking
+  id: CatEarsTorn
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:SkinColoring
+    layers:
+      ears_cat_inner:
+        type:
+          !type:SimpleColoring
+          color: "#FFFFFF"
+  sprites:
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_torn_outer
+  - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+    state: ears_torn_inner
+
+- type: marking
+  id: CatTailStripes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [Human]
+  coloring:
+    default:
+      type:
+        !type:CategoryColoring
+        category: Hair
+      fallbackTypes:
+        - !type:CategoryColoring
+          category: FacialHair
+        - !type:SkinColoring
+  sprites:
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+      state: tail_cat_wag_stripes_prime
+    - sprite: Corvax/Mobs/Customization/cat_parts.rsi
+      state: tail_cat_wag_stripes_second
+
+- type: marking
+  id: FoxEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [Human]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
+    state: ears_fox_outer
+  - sprite: Corvax/Mobs/Customization/fox_parts.rsi
+    state: ears_fox_inner
+
+- type: marking
+  id: SlimeCatEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_cat_outer
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_cat_inner
+
+- type: marking
+  id: SlimeCatTail
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: slime_tail_cat_wag
+
+- type: marking
+  id: SlimeCatEarsStubby
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_stubby_outer
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_stubby_inner
+
+- type: marking
+  id: SlimeCatEarsCurled
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_curled_outer
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_curled_inner
+
+- type: marking
+  id: SlimeCatEarsTorn
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_torn_outer
+  - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+    state: ears_slime_torn_inner
+
+- type: marking
+  id: SlimeCatTailStripes
+  bodyPart: Tail
+  markingCategory: Tail
+  speciesRestriction: [SlimePerson]
+  sprites:
+    - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+      state: slime_tail_cat_wag_stripes_prime
+    - sprite: Corvax/Mobs/Customization/slime_cat_parts.rsi
+      state: slime_tail_cat_wag_stripes_second
+
+- type: marking
+  id: SlimeFoxEars
+  bodyPart: HeadTop
+  markingCategory: HeadTop
+  speciesRestriction: [SlimePerson]
+  sprites:
+  - sprite: Corvax/Mobs/Customization/slime_fox_parts.rsi
+    state: ears_slime_fox_outer
+  - sprite: Corvax/Mobs/Customization/slime_fox_parts.rsi
+    state: ears_slime_fox_inner
+

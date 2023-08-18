@@ -243,3 +243,19 @@
   sprites:
     - sprite: Mobs/Customization/human_facial_hair.rsi
       state: sideburn
+- type: marking
+  id: HumanFacialHairHandlebar
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: Corvax/Mobs/Customization/human_facial_hair.rsi
+      state: handlebar
+
+- type: marking
+  id: HumanFacialHairHandlebarAlt
+  bodyPart: FacialHair
+  markingCategory: FacialHair
+  sprites:
+    - sprite: Corvax/Mobs/Customization/human_facial_hair.rsi
+      state: handlebar2
+

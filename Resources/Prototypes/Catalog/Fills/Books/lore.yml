@@ -120,3 +120,16 @@
     content: book-text-detective
 
 # ---- End Library Salvage Fills ----
+
+- type: entity
+  parent: BookBase
+  id: BookStationsAndAgents
+  name: Stations and Syndicates 14th Edition Rulebook
+  description: A book detailing the ruleset for the tabletop RPG, Stations and Syndicates. You don't know what happened to the previous 13 editions but maybe its probably not worth looking for them.
+  components:
+    - type: Sprite
+      sprite: Corvax/Objects/Misc/books.rsi
+      layers:
+        - state: book_stationsagents
+    - type: Paper
+      content: book-text-rulebook

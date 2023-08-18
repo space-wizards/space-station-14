@@ -77,3 +77,15 @@
   cost: 2400
   category: Food
   group: market
+  
+- type: cargoProduct
+  id: FoodCrateKvassTank
+  icon:
+    sprite: Corvax/Structures/Storage/kvass.rsi
+    state: kvass
+  product: KvassTankFull
+  cost: 2000
+  category: Food
+  group: market
+
+
