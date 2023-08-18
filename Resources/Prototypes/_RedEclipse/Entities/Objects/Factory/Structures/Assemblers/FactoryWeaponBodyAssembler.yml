@@ -9,10 +9,10 @@
       board: FactoryWeaponBodyAssemblerMachineCircuitboard
     - type: Lathe
       staticRecipes:
-        - FactoryCompactBody
-        - FactoryMediumBody
-        - FactoryHeavyBody
-        - FactoryGunBarrel
-        - FactoryGunStock
-        - FactoryShortHilt
-        - FactoryLongHilt
+        - FactoryWeaponCompactBody
+        - FactoryWeaponMediumBody
+        - FactoryWeaponHeavyBody
+        - FactoryWeaponGunBarrel
+        - FactoryWeaponGunStock
+        - FactoryWeaponShortHilt
+        - FactoryWeaponLongHilt
