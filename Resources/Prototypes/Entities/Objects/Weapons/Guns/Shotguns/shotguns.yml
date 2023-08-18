@@ -32,6 +32,7 @@
     whitelist:
       tags:
       - ShellShotgun
+    autoCycle: false
     capacity: 7
     proto: ShellShotgun
     soundInsert:
