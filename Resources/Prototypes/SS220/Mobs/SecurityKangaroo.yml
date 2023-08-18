@@ -21,6 +21,8 @@
   description: Joe the security kangaroo.
   suffix: Роль
   components:
+  - type: Inventory
+    templateId: kangarooJoe
   - type: InteractionPopup
     successChance: 1
   - type: Grammar
@@ -43,6 +45,16 @@
   - type: GhostTakeoverAvailable
   - type: Loadout
     prototypes: [ JoeKangarooGear ]
+  - type: StaminaDamageOnHit
+    damage: 15
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 5
+    soundHit:
+      collection: BoxingHit
+    animation: WeaponArcFist
 
 - type: startingGear
   id: JoeKangarooGear

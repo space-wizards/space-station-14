@@ -4,6 +4,19 @@
   id: MobGorillaLargo
   description: Cargo's pet gorilla. He seems to have an 'I love Mom' tattoo.
   components:
+    - type: Inventory
+      speciesId: gorilla
+      templateId: gorillaLargo
+    - type: InventorySlots
+    - type: Strippable
+    - type: UserInterface
+      interfaces:
+      - key: enum.StrippingUiKey.Key
+        type: StrippableBoundUserInterface
+    - type: Hands
+    - type: Body
+      prototype: Primate
+      requiredLegs: 1 # TODO: More than 1 leg
     - type: Sprite
       drawdepth: Mobs
       layers:
@@ -56,6 +69,7 @@
     - type: Tag
       tags:
         - CannotSuicide
+        - DoorBumpOpener
 
 - type: entity
   name: Анатолий
