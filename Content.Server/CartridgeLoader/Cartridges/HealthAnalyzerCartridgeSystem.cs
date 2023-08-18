@@ -1,6 +1,5 @@
 using Content.Server.Medical.Components;
 using Content.Shared.CartridgeLoader;
-using FastAccessors.Monads;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
@@ -21,10 +20,15 @@ public sealed class HealthAnalyzerCartridgeSystem : EntitySystem
     /// </summary>
     private void OnAdded(EntityUid uid, HealthAnalyzerCartridgeComponent component, CartridgeAddedEvent args)
     {
+        if (TryComp(uid, out CartridgeComponent? cartridgeComponent) &&
+            cartridgeComponent.InstallationStatus != InstallationStatus.Installed)
+            return;
+
         var healthAnalyzerComponent = EnsureComp<HealthAnalyzerComponent>(args.Loader);
         healthAnalyzerComponent.ScanDelay = component.ScanDelay;
         healthAnalyzerComponent.ScanningBeginSound = component.ScanningBeginSound;
         healthAnalyzerComponent.ScanningEndSound = component.ScanningEndSound;
+
     }
 
     /// <summary>
