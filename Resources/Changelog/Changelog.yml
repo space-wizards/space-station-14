@@ -1,35 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: 'Fixed: dwarfs has no cough, sneeze etc sounds', type: Fix}
-  id: 4121
-  time: '2023-06-28T20:01:41.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Pulling objects is generally faster on most surfaces., type: Tweak}
-  - {message: Crates and lockers are now lighter and can be dragged easier., type: Tweak}
-  - {message: You can drag objects while in space. Note that Newton's laws still apply
-      and you won't be getting anywhere., type: Tweak}
-  - {message: Dragging objects while on a grid in 0 gravity now works., type: Tweak}
-  id: 4122
-  time: '2023-06-28T20:03:16.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: The culprit sharpening everyone's rock guitars has been caught. They
-      should now be more dull and subsequently weaker as a result., type: Tweak}
-  id: 4123
-  time: '2023-06-28T20:03:44.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Janitor trolley is functional again. Its storage is temporarily removed.,
-    type: Fix}
-  id: 4124
-  time: '2023-06-28T20:10:22.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed slimes not being able to play sounds, type: Fix}
-  id: 4125
-  time: '2023-06-28T20:13:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
@@ -3027,3 +2996,29 @@ Entries:
       office, drastically reducing the amount of bureaucracy.', type: Add}
   id: 4620
   time: '2023-08-17T10:08:51.0000000+00:00'
+- author: chromiumboy and PilgrimViis
+  changes:
+  - {message: Lathes and fabricators can now eject unused material sheets., type: Add}
+  id: 4621
+  time: '2023-08-17T17:22:01.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix emote sounds., type: Fix}
+  id: 4622
+  time: '2023-08-17T20:40:10.0000000+00:00'
+- author: OctoRocket
+  changes:
+  - {message: You no longer yell uncontrollably when feeling joy., type: Tweak}
+  id: 4623
+  time: '2023-08-17T22:00:13.0000000+00:00'
+- author: Repo
+  changes:
+  - {message: 'Janitors have remembered how to wring a mop, mops can transfer chemicals
+      back to buckets etc again.', type: Fix}
+  id: 4624
+  time: '2023-08-17T22:00:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
+  id: 4625
+  time: '2023-08-18T01:41:53.0000000+00:00'

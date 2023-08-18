@@ -32,6 +32,8 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -50,6 +52,36 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
             SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
+
+            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
+        }
+
+        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
+        {
+            if (!lathe.CanEjectStoredMaterials)
+                return;
+
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+                return;
+
+            int volume = 0;
+
+            if (material.StackEntity != null)
+            {
+                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return;
+
+                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+                int sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+
+                volume = sheetsToExtract * volumePerSheet;
+            }
+
+            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
+            {
+                _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out var overflow);
+            }
         }
 
         public override void Update(float frameTime)
