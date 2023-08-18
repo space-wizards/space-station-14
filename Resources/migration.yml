@@ -168,3 +168,5 @@ SyringeSpaceacillin: null
 # TODO
 GeneratorPlasma: PortableGeneratorPacman
 GeneratorUranium: PortableGeneratorSuperPacman
+GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
+GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard

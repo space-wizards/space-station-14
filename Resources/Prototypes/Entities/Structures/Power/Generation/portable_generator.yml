@@ -39,10 +39,6 @@
     - type: Wires
       BoardName: "Generator"
       LayoutId: Generator
-    - type: UpgradePowerSupplier
-      powerSupplyMultiplier: 1.25
-      scaling: Exponential
-
     - type: UserInterface
       interfaces:
         - key: enum.GeneratorComponentUiKey.Key
@@ -87,6 +83,9 @@
 
 - type: entity
   name: P.A.C.M.A.N.-type portable generator
+  description: |-
+    A standard issue backup generator for powering machinery and departments.
+    Runs off solid plasma sheets and is rated for up to 20 kW.
   parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorPacman
   suffix: Plasma, 20 kW
@@ -110,7 +109,7 @@
             False: { visible: false }
 
     - type: Machine
-      board: GeneratorPlasmaMachineCircuitboard
+      board: PortableGeneratorPacmanMachineCircuitboard
     - type: FuelGenerator
       targetPower: 20000
       optimalPower: 20000
@@ -122,9 +121,15 @@
       materialWhiteList: [Plasma]
     - type: PortableGenerator
       startChance: 0.8
+    - type: UpgradePowerSupplier
+      powerSupplyMultiplier: 1.25
+      scaling: Exponential
 
 - type: entity
   name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
+  description: |-
+    An advanced generator for powering machinery and departments.
+    Runs off uranium sheets and is rated for up to 30 kW.
   parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorSuperPacman
   suffix: Uranium, 30 kW
@@ -148,7 +153,7 @@
             False: { visible: false }
 
     - type: Machine
-      board: GeneratorUraniumMachineCircuitboard
+      board: PortableGeneratorSuperPacmanMachineCircuitboard
     - type: FuelGenerator
       targetPower: 30000
       optimalPower: 30000
@@ -160,11 +165,15 @@
       storageLimit: 3000
       materialWhiteList: [Uranium]
     - type: PortableGenerator
+    - type: UpgradePowerSupplier
+      powerSupplyMultiplier: 1.25
+      scaling: Exponential
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
   description: |-
-    Intended for powering individual rooms in the case of emergencies.
+    A small generator capable of powering individual rooms, in case of emergencies.
+    Runs off welding fuel and is rated for up to 2 kW.
     Rated ages 3 and up.
   parent: PortableGeneratorBase
   id: PortableGeneratorJrPacman
@@ -206,7 +215,7 @@
             False: { visible: false }
 
     - type: Machine
-      board: GeneratorUraniumMachineCircuitboard
+      board: PortableGeneratorJrPacmanMachineCircuitboard
     - type: FuelGenerator
       targetPower: 2000
       optimalPower: 2000
