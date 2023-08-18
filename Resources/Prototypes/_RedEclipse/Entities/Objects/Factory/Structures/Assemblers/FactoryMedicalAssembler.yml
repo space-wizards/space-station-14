@@ -2,7 +2,7 @@
   id: FactoryMedicalAssembler
   parent: BaseFactoryMachine
   name: factory medical assembler
-  description: Offical CyberSun-Medical-Assembler, its spotless.
+  description: Official CyberSun-Medical-Assembler, its spotless.
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi

@@ -2,7 +2,7 @@
   id: FactoryEnergyBladeAssembler
   parent: BaseFactoryMachine
   name: factory energy blade assembler
-  description: Offical CyberSun-EnergyBlade-Assembler, it is hot to the touch.
+  description: Official CyberSun-EnergyBlade-Assembler, it is hot to the touch.
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi

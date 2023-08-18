@@ -2,7 +2,7 @@
   id: FactoryGearAssembler
   parent: BaseFactoryMachine
   name: factory gear assembler
-  description: Offical CyberSun-Gear-Assembler, the gears run smoothly.
+  description: Official CyberSun-Gear-Assembler, the gears run smoothly.
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi

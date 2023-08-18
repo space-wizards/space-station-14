@@ -2,7 +2,7 @@
   id: FactoryWeaponBodyAssembler
   parent: BaseFactoryMachine
   name: factory weapon body assembler
-  description: Offical CyberSun-Weapon-Body-Assembler, its dangerous.
+  description: Official CyberSun-Weapon-Body-Assembler, its dangerous.
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi
