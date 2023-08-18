@@ -1,7 +1,7 @@
-using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 using Content.Shared.FixedPoint;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Shared.Store;
 
@@ -12,7 +12,7 @@ namespace Content.Shared.Store;
 [DataDefinition]
 public sealed partial class StorePresetPrototype : IPrototype
 {
-    [ViewVariables] [IdDataField] public string ID { get; } = default!;
+    [ViewVariables] [IdDataField] public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The name displayed at the top of the store window

@@ -15,7 +15,7 @@ public sealed partial class CurrencyPrototype : IPrototype
 {
     [ViewVariables]
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// The Loc string used for displaying the currency in the store ui.

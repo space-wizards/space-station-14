@@ -25,7 +25,7 @@ namespace Content.Shared.Chemistry.Reagent
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name", required: true)]
         private string Name { get; set; } = default!;

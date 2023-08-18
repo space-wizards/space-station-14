@@ -1,7 +1,5 @@
-﻿using Content.Shared.Item;
-using Content.Shared.Whitelist;
+﻿using Content.Shared.Whitelist;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 
 namespace Content.Shared.Xenoarchaeology.XenoArtifacts;
 
@@ -14,7 +12,7 @@ public sealed partial class ArtifactEffectPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     /// Components that are added to the artifact when the specfic effect is active.
