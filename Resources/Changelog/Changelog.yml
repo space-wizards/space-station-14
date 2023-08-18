@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fixed slimes not being able to play sounds, type: Fix}
-  id: 4125
-  time: '2023-06-28T20:13:31.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
@@ -3022,3 +3017,8 @@ Entries:
       back to buckets etc again.', type: Fix}
   id: 4624
   time: '2023-08-17T22:00:46.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
+  id: 4625
+  time: '2023-08-18T01:41:53.0000000+00:00'
