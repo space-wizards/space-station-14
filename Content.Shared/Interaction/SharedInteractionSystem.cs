@@ -422,7 +422,8 @@ namespace Content.Shared.Interaction
             if (coordinates.GetMapId(EntityManager) != Transform(user).MapID)
                 return false;
 
-            _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
+            if (!HasComp<NoRotateOnInteractComponent>(user))
+                _rotateToFaceSystem.TryFaceCoordinates(user, coordinates.ToMapPos(EntityManager));
 
             return true;
         }

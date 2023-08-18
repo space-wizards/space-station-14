@@ -110,9 +110,10 @@
         SoundTargetInLOS: !type:SoundPathSpecifier
           path: /Audio/Effects/double_beep.ogg
     - type: MouseRotator
+    - type: NoRotateOnInteract
+    - type: NoRotateOnMove
     - type: Input
       context: "human"
-    - type: Examiner
 
 - type: entity
   parent: BaseWeaponTurret
