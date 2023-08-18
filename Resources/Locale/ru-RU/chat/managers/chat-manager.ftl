@@ -46,14 +46,14 @@ chat-speech-verb-suffix-exclamation-strong = !!
 chat-speech-verb-suffix-question = ?
 
 chat-speech-verb-default = говорит
-chat-speech-verb-exclamation = выкрикивает
+chat-speech-verb-exclamation = заявляет
 chat-speech-verb-exclamation-strong = орёт
 chat-speech-verb-question = спрашивает
 
 chat-speech-verb-insect-1 = стрекочет
 chat-speech-verb-insect-2 = жужжит
 
-chat-speech-verb-slime = щебечет
+chat-speech-verb-slime = булькает
 
 chat-speech-verb-robotic = констатирует
 chat-speech-verb-reptilian = шипит
