@@ -115,13 +115,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         comp.DoAfters.Clear();
         foreach (var (id, doAfter) in state.DoAfters)
         {
-            comp.DoAfters.Add(id, new DoAfter(EntityManager, doAfter));
+            var newDoAfter = new DoAfter(EntityManager, doAfter);
+            comp.DoAfters.Add(id, newDoAfter);
 
             // Networking yay (if you have an easier way dear god please).
-            doAfter.UserPosition = ToCoordinates(doAfter.NetUserPosition);
-            doAfter.InitialItem = ToEntity(doAfter.NetInitialItem);
+            newDoAfter.UserPosition = ToCoordinates(newDoAfter.NetUserPosition);
+            newDoAfter.InitialItem = ToEntity(newDoAfter.NetInitialItem);
 
-            var doAfterArgs = doAfter.Args;
+            var doAfterArgs = newDoAfter.Args;
             doAfterArgs.Target = ToEntity(doAfterArgs.NetTarget);
             doAfterArgs.Used = ToEntity(doAfterArgs.NetUsed);
             doAfterArgs.User = ToEntity(doAfterArgs.NetUser);
