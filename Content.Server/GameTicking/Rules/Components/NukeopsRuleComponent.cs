@@ -1,15 +1,12 @@
 using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
 using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -43,6 +40,54 @@ public sealed class NukeopsRuleComponent : Component
     /// </summary>
     [DataField("spawnOutpost")]
     public bool SpawnOutpost = true;
+
+    /// <summary>
+    /// Whether or not nukie left their outpost
+    /// </summary>
+    [DataField("leftOutpost")]
+    public bool LeftOutpost = false;
+
+    /// <summary>
+    ///     Enables opportunity to get extra TC for war declaration
+    /// </summary>
+    [DataField("enableWarOps")]
+    public bool EnableWarOps = true;
+
+    /// <summary>
+    ///     Indicates whether war has been declared
+    /// </summary>
+    [DataField("warDeclaredTime")]
+    public TimeSpan? WarDeclaredTime;
+
+    /// <summary>
+    ///     Delay between declaration of war and enabling FTL at outpost map
+    /// </summary>
+    [DataField("warShuttleDelay")]
+    public bool PreventShuttleInDelay = true;
+
+    /// <summary>
+    ///     This amount of TC will be given to each nukie
+    /// </summary>
+    [DataField("warTCAmount")]
+    public int WarTCAmountPerNukie = 40;
+
+    /// <summary>
+    ///     Time allowed for declaration of war
+    /// </summary>
+    [DataField("warDeclarationTimeWindow")]
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
+
+    /// <summary>
+    ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
+    /// </summary>
+    [DataField("warNukieArriveDelay")]
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(20);
+
+    /// <summary>
+    ///     Minimal operatives count for war declaration
+    /// </summary>
+    [DataField("warDeclarationMinOpsSize")]
+    public int WarDeclarationMinOps = 1; // TODO: RETURN TO 4, FOR DEBUG
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
