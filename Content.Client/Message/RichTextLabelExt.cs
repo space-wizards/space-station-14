@@ -9,5 +9,5 @@ public static class RichTextLabelExt
     {
         label.SetMessage(FormattedMessage.FromMarkup(markup));
         return label;
-	}
+    }
 }
