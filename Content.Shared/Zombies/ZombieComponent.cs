@@ -2,37 +2,37 @@ using Content.Shared.Chat.Prototypes;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Damage;
 using Content.Shared.Roles;
-using Content.Shared.Humanoid;
 using Content.Shared.StatusIcon;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Shared.Zombies;
 
-    [DataDefinition, NetworkedComponent]
-    public sealed class ZombieSettings
+/// <summary>
+///   Applied to any mob that is carrying a zombie infection in any state.
+///   That mob will also have one of these additional components depending on the stage of infection:
+///   - InitialInfectedComponent - Human Patient0 players who are not being hurt by the infection yet.
+///   - PendingZombieComponent - The painful stage of the infection.
+///   - LivingZombieComponent - An active zombie either alive or in crit (and about to heal back to life)
+///   - [none of these] - This zombie has turned from undead to actually dead.
+/// </summary>
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedZombieSystem))]
+public sealed class ZombieComponent: Component
 {
-    /// <summary>
-    /// When zombie drops into crit, what is the chance they will die permanently?
-    /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float PermadeathChance = 0.80f;
-
-    /// <summary>
-    /// How many seconds it takes for a zombie to revive (min)
-    /// </summary>
-    [DataField("reviveTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float ReviveTime = 10;
-
-    /// <summary>
-    /// How many seconds it takes for a zombie to revive (max)
-    /// </summary>
-    [DataField("reviveTimeMax"), ViewVariables(VVAccess.ReadWrite)]
-    public float ReviveTimeMax = 60;
+    public void CopyFrom(ZombieComponent other)
+    {
+        // Victims copy their settings from the zombie that bit them
+        MinInfectionChance = other.MinInfectionChance;
+        MaxInfectionChance = other.MaxInfectionChance;
+        InfectionTurnTime = other.InfectionTurnTime;
+        DeadMinTurnTime = other.DeadMinTurnTime;
+        PassiveHealing = other.PassiveHealing;
+        VirusDamage = other.VirusDamage;
+        AttackDamage = other.AttackDamage;
+        HealingOnBite = other.HealingOnBite;
+    }
 
     /// The baseline infection chance you have if you are completely nude
     /// </summary>
@@ -50,13 +50,17 @@ namespace Content.Shared.Zombies;
     public float MovementSpeedDebuff = 0.70f;
 
     /// <summary>
+    /// How long you have until you begin to turn to a zombie
+    /// </summary>
     [DataField("infectionTurnTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float InfectionTurnTime = 30.0f;
+    public TimeSpan InfectionTurnTime = TimeSpan.FromSeconds(30.0f);
+
     /// <summary>
     /// Minimum time a zombie victim will lie dead before rising as a zombie.
     /// </summary>
     [DataField("deadMinTurnTime"), ViewVariables(VVAccess.ReadWrite)]
-    public float DeadMinTurnTime = 10.0f;
+    public TimeSpan DeadMinTurnTime = TimeSpan.FromSeconds(10.0f);
+
     /// The skin color of the zombie
     /// </summary>
     [DataField("skinColor")]
@@ -100,14 +104,6 @@ namespace Content.Shared.Zombies;
     /// </summary>
     [DataField("newBloodReagent", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>))]
     public string NewBloodReagent = "ZombieBlood";
-
-    public EmoteSoundsPrototype? EmoteSounds;
-
-    /// <summary>
-    /// Healing each second
-    /// </summary>
-    [DataField("healingPerSec"), ViewVariables(VVAccess.ReadWrite)]
-    public float HealingPerSec = 0.05f;
 
     /// <summary>
     /// Healing each second
@@ -181,84 +177,7 @@ namespace Content.Shared.Zombies;
     /// </summary>
     [DataField("greetSoundNotification")]
     public SoundSpecifier GreetSoundNotification = new SoundPathSpecifier("/Audio/Ambience/Antag/zombie_start.ogg");
-}
-
-[DataDefinition, NetworkedComponent]
-public sealed class ZombieFamily
-{
-    /// <summary>
-    /// Generation of this zombie (patient zero is 0, their victims are 1, etc)
-    /// </summary>
-    [DataField("generation"), ViewVariables(VVAccess.ReadOnly)]
-    public int Generation = default!;
-
-    /// <summary>
-    /// If this zombie is not patient 0, this is the player who infected this zombie.
-    /// </summary>
-    [DataField("infector"), ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid Infector = EntityUid.Invalid;
-
-    /// <summary>
-    /// When created by a ZombieRuleComponent, this points to the entity which unleashed this zombie horde.
-    /// </summary>
-    [DataField("rules"), ViewVariables(VVAccess.ReadOnly)]
-    public EntityUid Rules = EntityUid.Invalid;
-
-}
-
-/// <summary>
-///   Applied to any mob that is carrying a zombie infection in any state.
-///   That mob will also have one of these additional components depending on the stage of infection:
-///   - InitialInfectedComponent - Human Patient0 players who are not being hurt by the infection yet.
-///   - PendingZombieComponent - The painful stage of the infection.
-///   - LivingZombieComponent - An active zombie either alive or in crit (and about to heal back to life)
-///   - [none of these] - This zombie has turned from undead to actually dead.
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class ZombieComponent : Component
-{
-    /// <summary>
-    /// Our settings (describes what the zombie can do)
-    /// </summary>
-    [DataField("settings"), ViewVariables(VVAccess.ReadOnly)]
-    public ZombieSettings Settings = new();
-
-    /// <summary>
-    /// Settings for any victims we might have (if they are not the same as our settings)
-    /// </summary>
-    [DataField("victimSettings"), ViewVariables(VVAccess.ReadOnly)]
-    public ZombieSettings? VictimSettings;
-
-    /// <summary>
-    /// Our family (describes how we became a zombie and where the rules are)
-    /// </summary>
-    [DataField("family"), ViewVariables(VVAccess.ReadOnly)]
-    public ZombieFamily Family = new();
-
-    /// <summary>
-    /// The EntityName of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedEntityName"), ViewVariables(VVAccess.ReadOnly)]
-    public string BeforeZombifiedEntityName = string.Empty;
-
-    /// <summary>
-    /// The CustomBaseLayers of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedCustomBaseLayers")]
-    public Dictionary<HumanoidVisualLayers, CustomBaseLayerInfo> BeforeZombifiedCustomBaseLayers = new ();
-
-    /// <summary>
-    /// The skin color of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedSkinColor")]
-    public Color BeforeZombifiedSkinColor;
 
     [DataField("zombieStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
     public string ZombieStatusIcon = "ZombieFaction";
-
-    /// <summary>
-    /// The blood reagent of the humanoid to restore in case of cloning
-    /// </summary>
-    [DataField("beforeZombifiedBloodReagent")]
-    public string BeforeZombifiedBloodReagent = string.Empty;
 }

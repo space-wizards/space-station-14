@@ -73,11 +73,10 @@
   components:
   - type: ZombieRule
     winEndsRoundAbove: -1.0 # Always end round when zombies are wiped out.
-    earlySettings:
-      permadeathChance: 0.8
-      maxInfectionChance: 0.50
-      minInfectionChance: 0.20
-      infectionTurnTime: 30.0
+  - type: Zombie # Settings for the infected
+    maxInfectionChance: 0.50
+    minInfectionChance: 0.20
+    infectionTurnTime: 30.0
 
 # event schedulers
 - type: entity

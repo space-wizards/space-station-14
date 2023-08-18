@@ -47,6 +47,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly InitialInfectedSystem _initialZombie = default!;
+    [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
@@ -193,7 +194,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     }
 
     // See if the zombie infection controlled by this rule has completely died out. End rule if it has.
-    public void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent? zombies = null, GameRuleComponent? gameRule = null)
+    private void CheckRuleEnd(EntityUid ruleUid, ZombieRuleComponent? zombies = null, GameRuleComponent? gameRule = null)
     {
         if (!Resolve(ruleUid, ref zombies, ref gameRule))
             return;
@@ -211,9 +212,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var zombers = EntityQueryEnumerator<ZombieComponent>();
         while (zombers.MoveNext(out var uid, out var zombie))
         {
-            if (zombie.Family.Rules != ruleUid)
-                continue;
-
             if (livingQuery.HasComponent(uid))
             {
                 // Living zombie. Done
@@ -276,15 +274,6 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         var curTime = _timing.CurTime;
 
         component.InfectInitialAt = curTime + _random.Next(component.MinStartDelay, component.MaxStartDelay);
-
-        if (component.EarlySettings.EmoteSoundsId != null)
-        {
-            _prototypeManager.TryIndex(component.EarlySettings.EmoteSoundsId, out component.EarlySettings.EmoteSounds);
-        }
-        if (component.VictimSettings?.EmoteSoundsId != null)
-        {
-            _prototypeManager.TryIndex(component.VictimSettings.EmoteSoundsId, out component.VictimSettings.EmoteSounds);
-        }
     }
 
     protected override void ActiveTick(EntityUid uid, ZombieRuleComponent component, GameRuleComponent gameRule,
@@ -310,7 +299,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
         {
             // Shouldn't usually be necessary but a good forcing function especially if an admin uses VV on the
             // rules to decrease the FirstTurnAllowed time.
-            _initialZombie.ActivateZombifyOnDeath(uid, component);
+            _initialZombie.ActivateZombifyOnDeath();
             component.FirstTurnAllowed = null;
         }
     }
@@ -409,50 +398,17 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             // TODO: A
             if (player.AttachedEntity != null && HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
             {
-                if (TryComp<ZombieComponent>(player.AttachedEntity, out var zombie))
-                {
-                    // This player is already a zombie. If they don't already have a rule, add them to this one.
-                    if (zombie.Family.Rules == EntityUid.Invalid)
-                    {
-                        zombie.Family.Rules = uid;
-                        zombie.Settings = rules.EarlySettings;
-                        zombie.VictimSettings = rules.VictimSettings;
-
-                        var mind = player.Data.ContentData()?.Mind;
-                        if (mind?.Session != null)
-                        {
-                            rules.InitialInfectedNames[zombie.BeforeZombifiedEntityName] = mind.Session.Name;
-                        }
-                    }
-                }
-				else if (HasComp<ZombieImmuneComponent>(player.AttachedEntity))
+                if (HasComp<ZombieComponent>(player.AttachedEntity) // This player is already a zombie.
+				  || HasComp<ZombieImmuneComponent>(player.AttachedEntity)) // Immune
 				{
-				  // Immune
-				  continue;
+				    continue;
 				}
-                else
-                {
-	                playerList.Add(player);
 
-	                var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
-	                    if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeId))
-	                        prefList.Add(player);
-                }
-            }
-        }
+                playerList.Add(player);
 
-        // Check for mindless zombies (not attached to players) that still don't have a rules entity attached...
-        var zombers = EntityQueryEnumerator<ZombieComponent, LivingZombieComponent>();
-        while (zombers.MoveNext(out var zombUid, out var zombie, out var living))
-        {
-            if (zombie.Family.Rules == EntityUid.Invalid)
-            {
-                // Note that we add this zombie to the new rules, but we don't count them towards the num infected. They
-                // are not inhabited by a player. Were we to count them, we should probably also check they are still
-                // alive.
-                zombie.Family.Rules = uid;
-                zombie.Settings = rules.EarlySettings;
-                zombie.VictimSettings = rules.VictimSettings;
+	            var pref = (HumanoidCharacterProfile) _prefs.GetPreferences(player.UserId).SelectedCharacter;
+	                if (pref.AntagPreferences.Contains(rules.PatientZeroPrototypeId))
+	                    prefList.Add(player);
             }
         }
 
@@ -468,6 +424,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
         var curTime = _timing.CurTime;
         rules.FirstTurnAllowed ??= curTime + rules.TurnTimeMin;
+
+        // Load settings for our zombies from the rule's prototype
+        TryComp<ZombieComponent>(uid, out var ruleSettings);
 
         //   Varies randomly from 20 to 30 minutes. After this the virus begins and they start
         var groupTimelimit = _random.NextFloat(rules.MinZombieForceSecs, rules.MaxZombieForceSecs);
@@ -507,13 +466,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
                 mind.OwnedEntity.Value,
                 rules.FirstTurnAllowed ?? TimeSpan.Zero,
                 // Only take damage after this many seconds
-                curTime + TimeSpan.FromSeconds(groupTimelimit + personalDelay));
-
-            var zombie = EnsureComp<ZombieComponent>(mind.OwnedEntity.Value);
-            // Patient zero zombies get one set of zombie settings, later zombies get a different (less powerful) set.
-            zombie.Settings = rules.EarlySettings;
-            zombie.VictimSettings = rules.VictimSettings;
-            zombie.Family = new ZombieFamily() { Rules = uid, Generation = 0 };
+                curTime + TimeSpan.FromSeconds(groupTimelimit + personalDelay),
+                ruleSettings);
 
             inCharacterName = MetaData(mind.OwnedEntity.Value).EntityName;
             EnsureComp<IncurableZombieComponent>(ownedEntity);
@@ -554,17 +508,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
     public void InfectPlayer(EntityUid uid)
     {
-        var zombie = EnsureComp<ZombieComponent>(uid);
         var (rulesUid, rules) = FindActiveRule();
 
-        if (rules != null)
+        if (rules != null && TryComp<ZombieComponent>(rulesUid, out var ruleSettings))
         {
-            // Admin command added a new zombie to this existing rule.
-            zombie.Settings = rules.EarlySettings;
-            zombie.VictimSettings = rules.VictimSettings;
-            zombie.Family = new ZombieFamily(){ Rules = rulesUid, Generation = 0 };
+            _zombie.AddZombieTo(uid, ruleSettings, true);
         }
-
-        _initialZombie.ForceInfection(uid, zombie);
+        else
+        {
+            _zombie.AddZombieTo(uid, null, true);
+        }
     }
 }

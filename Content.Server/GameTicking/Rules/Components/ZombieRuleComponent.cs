@@ -33,18 +33,6 @@ public sealed class ZombieRuleComponent : Component
     [DataField("turnTimeMin"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan TurnTimeMin = TimeSpan.FromMinutes(5);
 
-    /// <summary>
-    ///   Settings for the first round of zombies (so called patient 0)
-    /// </summary>
-    [DataField("earlySettings"), ViewVariables(VVAccess.ReadWrite)]
-    public ZombieSettings EarlySettings = default!;
-
-    /// <summary>
-    ///   Settings for the later rounds of zombies (victims of the first). Probably weaker.
-    /// </summary>
-    [DataField("victimSettings", required: false), ViewVariables(VVAccess.ReadWrite)]
-    public ZombieSettings? VictimSettings;
-
     ///
     ///   Zombie time for a given player is:
     ///   random MinZombieForceSecs to MaxZombieForceSecs + up to PlayerZombieForceVariation

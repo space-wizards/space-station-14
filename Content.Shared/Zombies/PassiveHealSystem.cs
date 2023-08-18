@@ -5,9 +5,9 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Zombies;
 
 /// <summary>
-///   For providing a flat heal each second to a living mob. Currently only used by zombies.
+///   For providing a flat heal each second to a living mob.
 /// </summary>
-public class PassiveHealSystem : EntitySystem
+public sealed class PassiveHealSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
@@ -27,17 +27,22 @@ public class PassiveHealSystem : EntitySystem
 
     private void OnMobState(EntityUid uid, PassiveHealComponent component, MobStateChangedEvent args)
     {
-        if (args.NewMobState == MobState.Dead)
+        if (args.NewMobState == component.CancelState)
         {
             RemCompDeferred<PassiveHealComponent>(uid);
         }
     }
 
-    public void BeginHealing(EntityUid uid, float flatPerSec, DamageSpecifier? healPerSec)
+    public void BeginHealing(EntityUid uid, DamageSpecifier healPerSec,
+        MobState? cancelState = MobState.Critical, PassiveHealComponent? heal = null)
     {
-        var heal = EnsureComp<PassiveHealComponent>(uid);
-        heal.FlatPerSec = flatPerSec;
-        heal.healPerSec = healPerSec;
+        if (!Resolve(uid, ref heal))
+        {
+            heal = EnsureComp<PassiveHealComponent>(uid);
+        }
+        heal.HealPerSec = healPerSec;
+        heal.CancelState = cancelState;
+        heal.NextTick = _timing.CurTime;
     }
 
     public override void Update(float frameTime)
@@ -47,33 +52,19 @@ public class PassiveHealSystem : EntitySystem
 
         var query = EntityQueryEnumerator<PassiveHealComponent, DamageableComponent>();
 
-        // Heal the mobs (zombies, probably)
+        // Heal the mobs
         while (query.MoveNext(out var uid, out var heal, out var damage))
         {
             // Heal only once per second
             if (heal.NextTick > curTime)
                 continue;
 
+            // Don't heal again for a while.
+            heal.NextTick += TimeSpan.FromSeconds(1);
+
             if (damage.TotalDamage > 0.01)
             {
-                if (heal.healPerSec != null)
-                {
-                    // Do specific healing first
-                    _damageable.TryChangeDamage(uid, heal.healPerSec, true, false, damage);
-                }
-
-                // Now apply a flat heal across all damage types
-                // Autoheal a mix of damage to achieve a health improvement of heal.PointsPerSec
-                var multiplier = Math.Min(1.0f, (float) (heal.FlatPerSec / damage.TotalDamage ));
-                _damageable.TryChangeDamage(uid, -damage.Damage * multiplier, true, false, damage);
-
-                // Don't heal again for a while.
-                heal.NextTick += TimeSpan.FromSeconds(1);
-                if (heal.NextTick < curTime)
-                {
-                    // If the component is far behind the current time, reinitialize it.
-                    heal.NextTick = curTime + TimeSpan.FromSeconds(1);
-                }
+                _damageable.TryChangeDamage(uid, heal.HealPerSec, true, false, damage);
             }
         }
     }

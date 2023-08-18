@@ -3,13 +3,11 @@ using Content.Server.Body.Systems;
 using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Cloning;
-using Content.Server.Drone.Components;
 using Content.Server.Inventory;
 using Content.Shared.Bed.Sleep;
-using Content.Server.Emoting.Systems;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Ghost.Components;
 using Content.Server.Mind;
-using Content.Server.Speech.EntitySystems;
 using Content.Shared.Damage;
 using Content.Shared.Inventory;
 using Content.Shared.Mobs;
@@ -30,7 +28,6 @@ public sealed partial class ZombieSystem : SharedZombieSystem
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly BurstHealSystem _burstHealSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly ServerInventorySystem _inv = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -39,7 +36,6 @@ public sealed partial class ZombieSystem : SharedZombieSystem
     [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly PassiveHealSystem _passiveHeal = default!;
-    [Dependency] private readonly PendingZombieSystem _pending = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly ZombieRuleSystem _zombieRule = default!;
 
@@ -47,16 +43,26 @@ public sealed partial class ZombieSystem : SharedZombieSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ZombieComponent, EmoteEvent>(OnEmote, before:
-            new []{typeof(VocalSystem), typeof(BodyEmotesSystem)});
-
         SubscribeLocalEvent<LivingZombieComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<ZombieComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<ZombieComponent, CloningEvent>(OnZombieCloning);
+        SubscribeLocalEvent<BeforeZombieComponent, CloningEvent>(OnZombieCloning);
         SubscribeLocalEvent<ZombieComponent, TryingToSleepEvent>(OnSleepAttempt);
-            SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
+        SubscribeLocalEvent<ZombieComponent, GetCharactedDeadIcEvent>(OnGetCharacterDeadIC);
 
         SubscribeLocalEvent<PendingZombieComponent, MapInitEvent>(OnPendingMapInit);
+        SubscribeLocalEvent<PendingZombieComponent, GhostMoveAttempt>(OnAttemptGhost);
+    }
+
+    private void OnAttemptGhost(EntityUid uid, PendingZombieComponent component, GhostMoveAttempt args)
+    {
+        // Don't allow ghosting through movement while waiting to zombify
+        args.Cancel();
+    }
+
+    protected override void ZombifyNow(EntityUid uid, PendingZombieComponent pending, ZombieComponent zombie, MobStateComponent mobState)
+    {
+        // NB: This removes PendingZombieComponent
+        ZombifyEntity(uid, mobState: mobState, zombie:zombie);
     }
 
     private void OnPendingMapInit(EntityUid uid, PendingZombieComponent component, MapInitEvent args)
@@ -64,33 +70,19 @@ public sealed partial class ZombieSystem : SharedZombieSystem
         component.NextTick = _timing.CurTime + TimeSpan.FromSeconds(1f);
     }
 
-    private void OnEmote(EntityUid uid, ZombieComponent component, ref EmoteEvent args)
-    {
-        // always play zombie emote sounds and ignore others
-        if (args.Handled)
-            return;
-        args.Handled = _chat.TryPlayEmoteSound(uid, component.Settings.EmoteSounds, args.Emote);
-    }
-
-
     private void OnSleepAttempt(EntityUid uid, ZombieComponent component, ref TryingToSleepEvent args)
     {
         args.Cancelled = true;
-        }
-
-        private void OnGetCharacterDeadIC(EntityUid uid, ZombieComponent component, ref GetCharactedDeadIcEvent args)
-        {
-            args.Dead = true;
     }
 
-    private void OnMobState(EntityUid uid, ZombieComponent zombie, MobStateChangedEvent args)
+    private void OnGetCharacterDeadIC(EntityUid uid, ZombieComponent component, ref GetCharactedDeadIcEvent args)
     {
-        if (HasComp<InitialInfectedComponent>(uid))
-        {
-            // Not actually a zombie yet, don't need to process the below.
-            return;
-        }
-        if (args.NewMobState == MobState.Alive)
+        args.Dead = true;
+    }
+
+    private void SetupGroansEtc(EntityUid uid, ZombieComponent zombie, MobState state)
+    {
+        if (state == MobState.Alive)
         {
             // Don't run this routine for zombies who are still transforming...
             // Groaning when damaged
@@ -107,7 +99,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
             // LivingZombieComponent might get removed by zombie death roll below but if the zombie comes back to
             //   life somehow we must put it back.
             EnsureComp<LivingZombieComponent>(uid);
-            _passiveHeal.BeginHealing(uid, zombie.Settings.HealingPerSec, zombie.Settings.PassiveHealing);
+            _passiveHeal.BeginHealing(uid, zombie.PassiveHealing);
         }
         else
         {
@@ -118,27 +110,25 @@ public sealed partial class ZombieSystem : SharedZombieSystem
             _autoEmote.RemoveEmote(uid, "ZombieGroan");
             RemComp<PassiveHealComponent>(uid);
 
-            // Roll to see if this zombie is not coming back.
-            if ((args.NewMobState == MobState.Dead) || _random.Prob(zombie.Settings.PermadeathChance))
-            {
-                // You're dead! No reviving for you.
-                RemComp<LivingZombieComponent>(uid);
-                _popup.PopupEntity(Loc.GetString("zombie-permadeath"), uid, uid);
-
-                // Check if this was the last zombie that just got wiped out.
-                if (zombie.Family.Rules != EntityUid.Invalid)
-                    _zombieRule.CheckRuleEnd(zombie.Family.Rules);
-            }
-            else
-            {
-                _burstHealSystem.QueueBurstHeal(uid, zombie.Settings.ReviveTime, zombie.Settings.ReviveTimeMax);
-            }
+            // You're dead! No reviving for you.
+            RemComp<LivingZombieComponent>(uid);
         }
+    }
+
+    private void OnMobState(EntityUid uid, ZombieComponent zombie, MobStateChangedEvent args)
+    {
+        if (HasComp<InitialInfectedComponent>(uid))
+        {
+            // Not actually a zombie yet, don't need to process the below.
+            return;
+        }
+
+        SetupGroansEtc(uid, zombie, args.NewMobState);
     }
 
     private float GetZombieInfectionChance(EntityUid uid, ZombieComponent component)
     {
-        var baseChance = component.Settings.MaxInfectionChance;
+        var baseChance = component.MaxInfectionChance;
 
         if (!TryComp<InventoryComponent>(uid, out var inventoryComponent))
             return baseChance;
@@ -164,8 +154,8 @@ public sealed partial class ZombieSystem : SharedZombieSystem
                 items++;
         }
 
-        var max = component.Settings.MaxInfectionChance;
-        var min = component.Settings.MinInfectionChance;
+        var max = component.MaxInfectionChance;
+        var min = component.MinInfectionChance;
         //gets a value between the max and min based on how many items the entity is wearing
         var chance = (max-min) * ((total - items)/total) + min;
         return chance;
@@ -185,7 +175,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
             if (args.User == entity)
                 continue;
 
-            if (!TryComp<MobStateComponent>(entity, out var mobState) || HasComp<DroneComponent>(entity))
+            if (!TryComp<MobStateComponent>(entity, out var mobState))
                 continue;
 
             if (HasComp<ZombieComponent>(entity))
@@ -196,39 +186,19 @@ public sealed partial class ZombieSystem : SharedZombieSystem
                     args.BonusDamage = -args.BaseDamage;
                 }
 
-                if (_random.Prob(0.3f))
-                {
-                    // Tell the zombo that they are eating the dead
-                    _popup.PopupEntity(Loc.GetString("zombie-bite-already-infected"), uid, uid);
-                }
+                // Tell the zombo that they are eating the dead
+                _popup.PopupEntity(Loc.GetString("zombie-bite-already-infected"), uid, uid);
             }
             else
             {
                 // On a diceroll or if critical we infect this victim
                 if (!HasComp<ZombieImmuneComponent>(entity) &&
-                    (_random.Prob(GetZombieInfectionChance(entity, zombieAttacker)) ||
-                     mobState.CurrentState != MobState.Alive))
+                    (mobState.CurrentState != MobState.Alive || _random.Prob(GetZombieInfectionChance(entity, zombieAttacker))))
                 {
                     if (!HasComp<ZombieComponent>(entity))
                     {
-                        var pending = EnsureComp<PendingZombieComponent>(entity);
-                        pending.GracePeriod =
-                            _random.NextFloat(0.25f, 1.0f) * zombieAttacker.Settings.InfectionTurnTime;
-                        pending.InfectionStarted = _timing.CurTime;
-                        pending.VirusDamage = zombieAttacker.Settings.VirusDamage;
-                        pending.DeadMinTurnTime = zombieAttacker.Settings.DeadMinTurnTime;
-
-                        var zombie = EnsureComp<ZombieComponent>(entity);
                         // Our victims inherit our settings, which defines damage and more.
-                        zombie.Settings = zombieAttacker.VictimSettings ?? zombieAttacker.Settings;
-
-                        // Track who infected this new zombo
-                        zombie.Family = new ZombieFamily()
-                        {
-                            Rules = zombieAttacker.Family.Rules,
-                            Generation = zombieAttacker.Family.Generation + 1,
-                            Infector = uid
-                        };
+                        AddZombieTo(entity, zombieAttacker, true);
                     }
 
                     _popup.PopupEntity(Loc.GetString("zombie-bite-infected-victim"), uid, uid);
@@ -236,7 +206,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
 
             	if (mobState.CurrentState == MobState.Alive) //heals when zombies bite live entities
                 {
-                    _damageable.TryChangeDamage(uid, zombieAttacker.Settings.HealingOnBite, true, false);
+                    _damageable.TryChangeDamage(uid, zombieAttacker.HealingOnBite, true, false);
                 }
             }
         }
@@ -252,7 +222,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
     ///     this currently only restore the name and skin/eye color from before zombified
     ///     TODO: completely rethink how zombies are done to allow reversal.
     /// </remarks>
-    public bool UnZombify(EntityUid source, EntityUid target, ZombieComponent? zombiecomp)
+    public bool UnZombify(EntityUid source, EntityUid target, BeforeZombieComponent? zombiecomp)
     {
         if (!Resolve(source, ref zombiecomp))
             return false;
@@ -276,7 +246,7 @@ public sealed partial class ZombieSystem : SharedZombieSystem
         return true;
     }
 
-    private void OnZombieCloning(EntityUid uid, ZombieComponent zombiecomp, ref CloningEvent args)
+    private void OnZombieCloning(EntityUid uid, BeforeZombieComponent zombiecomp, ref CloningEvent args)
     {
         if (UnZombify(args.Source, args.Target, zombiecomp))
             args.NameHandled = true;

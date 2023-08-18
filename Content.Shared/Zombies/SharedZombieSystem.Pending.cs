@@ -3,6 +3,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
+using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Zombies;
@@ -10,19 +11,13 @@ namespace Content.Shared.Zombies;
 /// <summary>
 ///   Deals damage to bitten zombie victims each tick until they die. Then (serverside) zombifies them.
 /// </summary>
-public abstract class SharedPendingZombieSystem : EntitySystem
+public abstract partial class SharedZombieSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-
-    public override void Initialize()
-    {
-        base.Initialize();
-
-        SubscribeLocalEvent<PendingZombieComponent, EntityUnpausedEvent>(OnUnpause);
-    }
+    [Dependency] private readonly IRobustRandom _random = default!;
 
     // Hurt them each second. Once they die, PendingZombieSystem will call Zombify and remove PendingZombieComponent
     public override void Update(float frameTime)
@@ -41,9 +36,10 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             // Don't hurt again for a while.
             pending.NextTick = curTime + TimeSpan.FromSeconds(1);
 
-            var infectedSecs = (int)(curTime - pending.InfectionStarted).TotalSeconds;
+            var infectedTime = curTime - pending.InfectionStarted;
+            var infectedSecs = (int)infectedTime.TotalSeconds;
             // See if there should be a warning popup for the player.
-            if (zombie.Settings.InfectionWarnings.TryGetValue(infectedSecs, out var popupStr))
+            if (zombie.InfectionWarnings.TryGetValue(infectedSecs, out var popupStr))
             {
                 _popup.PopupEntity(Loc.GetString(popupStr), uid, uid);
             }
@@ -52,29 +48,40 @@ public abstract class SharedPendingZombieSystem : EntitySystem
             if (mobState.CurrentState == MobState.Dead)
             {
                 // DeadMinTurnTime is enforced to give the living a moment to realize their ally is converting
-                if (infectedSecs > pending.DeadMinTurnTime)
+                if (infectedTime > pending.DeadMinTurnTime)
                     ZombifyNow(uid, pending, zombie, mobState);  // NB: This removes PendingZombieComponent
                 continue;
             }
 
-            if (infectedSecs < pending.GracePeriod && mobState.CurrentState == MobState.Alive)
+            if (infectedTime < pending.GracePeriod && mobState.CurrentState == MobState.Alive)
             {
                 // Don't hurt this zombie yet.
-                return;
+                continue;
             }
 
             var painMultiple = mobState.CurrentState == MobState.Critical
                 ? pending.CritDamageMultiplier
                 : 1f;
 
-            _damageable.TryChangeDamage(uid, pending.VirusDamage * painMultiple, true, false, damage);
+            _damageable.TryChangeDamage(uid, zombie.VirusDamage * painMultiple, true, false, damage);
         }
+    }
+
+    public void Infect(EntityUid uid, TimeSpan gracePeriod, TimeSpan minTime)
+    {
+        var pending = EnsureComp<PendingZombieComponent>(uid);
+        pending.GracePeriod = gracePeriod;
+        pending.InfectionStarted = _timing.CurTime;
+        pending.DeadMinTurnTime = minTime;
+
+        Dirty(uid, pending);
     }
 
     private void OnUnpause(EntityUid uid, PendingZombieComponent component, ref EntityUnpausedEvent args)
     {
         component.NextTick += args.PausedTime;
         component.InfectionStarted += args.PausedTime;
+        Dirty(uid, component);
     }
 
     protected virtual void ZombifyNow(EntityUid uid, PendingZombieComponent pending, ZombieComponent zombie, MobStateComponent mobState)

@@ -32,7 +32,7 @@ public sealed class ZombieSystem : SharedZombieSystem
 
         for (var i = 0; i < sprite.AllLayers.Count(); i++)
         {
-            sprite.LayerSetColor(i, component.Settings.SkinColor);
+            sprite.LayerSetColor(i, component.SkinColor);
         }
     }
 

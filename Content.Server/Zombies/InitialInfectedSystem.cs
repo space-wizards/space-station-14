@@ -3,16 +3,27 @@ using Content.Server.GameTicking.Rules.Components;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Popups;
 using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Random;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Zombies;
 
-public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
+/// <summary>
+///   Manages the still-human "patient0" players who will turn into zombies when they choose to do unless we force
+///   them first. As soon as they start turning into zombies they gain PendingZombieComponent and no longer have
+///   InitialInfectedComponent.
+/// </summary>
+public sealed class InitialInfectedSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly ActionsSystem _action = default!;
+    [Dependency] protected readonly IGameTiming Timing = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] public readonly SharedPopupSystem Popup = default!;
 
     public override void Initialize()
     {
@@ -20,6 +31,42 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
 
         SubscribeLocalEvent<ZombieComponent, ZombifySelfActionEvent>(OnZombifySelf);
         SubscribeLocalEvent<InitialInfectedComponent, MobStateChangedEvent>(OnMobState);
+        SubscribeLocalEvent<InitialInfectedComponent, EntityUnpausedEvent>(OnUnpause);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+        var curTime = Timing.CurTime;
+
+        // Update all initial infected
+        var query = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent>();
+        while (query.MoveNext(out var initialUid, out var initial, out var zombie))
+        {
+            if (initial.TurnForced < curTime)
+            {
+                ForceInfection(initialUid, zombie);
+            }
+        }
+    }
+
+    public void ForceInfection(EntityUid uid, ZombieComponent? zombie = null)
+    {
+        if (!Resolve(uid, ref zombie))
+            return;
+
+        // Time to begin forcing this initial infected to turn.
+        _zombie.Infect(uid, _random.NextFloat(0.25f, 1.0f) * zombie.InfectionTurnTime, zombie.DeadMinTurnTime);
+
+        RemCompDeferred<InitialInfectedComponent>(uid);
+
+        Popup.PopupEntity(Loc.GetString("zombie-forced"), uid, uid);
+    }
+
+    private void OnUnpause(EntityUid uid, InitialInfectedComponent component, ref EntityUnpausedEvent args)
+    {
+        component.FirstTurnAllowed += args.PausedTime;
+        component.TurnForced += args.PausedTime;
     }
 
     // If they crit or die while Initially infected, switch to an active virus.
@@ -42,7 +89,7 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
     }
 
     // Both allowed and forced should be times relative to curTime.
-    public void AddInitialInfecton(EntityUid uid, TimeSpan allowed, TimeSpan forced)
+    public void AddInitialInfecton(EntityUid uid, TimeSpan allowed, TimeSpan forced, ZombieComponent? ruleSettings)
     {
         var initial = EnsureComp<InitialInfectedComponent>(uid);
         initial.FirstTurnAllowed = allowed;
@@ -56,24 +103,8 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
         if (allowed > curTime)
             action.Cooldown = (curTime, allowed);
         _action.AddAction(uid, action, null);
-    }
 
-    // Force every existing initial infected in this rule to turn very soon.
-    //
-    // Some players were "forgetting" that they were initial infected and playing most or all of the round
-    // as players, even after zombies had rampaged across the entire ship. This ensures that as the horde takes
-    // hold, all possible zombies convert.
-    public void ForceZombies(EntityUid ruleUid, ZombieRuleComponent zombies)
-    {
-        var pendingQuery = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent>();
-        while (pendingQuery.MoveNext(out var uid, out var initial, out var zombie))
-        {
-            if (zombie.Family.Rules == ruleUid)
-            {
-                // Immediately jump to an active virus for initial players
-                ForceInfection(uid, zombie);
-            }
-        }
+        _zombie.AddZombieTo(uid, ruleSettings);
     }
 
     private void OnZombifySelf(EntityUid uid, ZombieComponent zombie, ZombifySelfActionEvent args)
@@ -99,15 +130,11 @@ public sealed class InitialInfectedSystem : SharedInitialInfectedSystem
         _action.RemoveAction(uid, action);
     }
 
-    public void ActivateZombifyOnDeath(EntityUid ruleUid, ZombieRuleComponent component)
+    public void ActivateZombifyOnDeath()
     {
         var query = EntityQueryEnumerator<InitialInfectedComponent, ZombieComponent, MobStateComponent>();
         while (query.MoveNext(out var uid, out var initial, out var zombie, out var mobState))
         {
-            // Don't change zombies that don't belong to these rules.
-            if (zombie.Family.Rules != ruleUid)
-                continue;
-
             // This is probably already in the past, but just in case the rule has had a time shortened, set it now.
             initial.FirstTurnAllowed = TimeSpan.Zero;
 
