@@ -16,6 +16,8 @@
     Hair: MobSlimeMarkingFollowSkin
     FacialHair: MobSlimeMarkingFollowSkin
     Chest: MobSlimeTorso
+    HeadTop: MobHumanoidAnyMarking
+    Tail: MobHumanoidAnyMarking
     Eyes: MobHumanoidEyes
     LArm: MobSlimeLArm
     RArm: MobSlimeRArm
@@ -33,6 +35,12 @@
       points: 1
       required: false
     FacialHair:
+      points: 1
+      required: false
+    Tail:
+      points: 1
+      required: false
+    HeadTop:
       points: 1
       required: false
     Legs:
