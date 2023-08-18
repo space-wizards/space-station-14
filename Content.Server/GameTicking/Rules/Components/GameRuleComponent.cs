@@ -15,6 +15,12 @@ public sealed class GameRuleComponent : Component
     public bool Active;
 
     /// <summary>
+    /// Game time when game rule was activated
+    /// </summary>
+    [DataField("activatedAt")]
+    public TimeSpan ActivatedAt;
+
+    /// <summary>
     /// Whether or not the gamerule finished.
     /// Used for tracking whether a non-active gamerule has been started before.
     /// </summary>
