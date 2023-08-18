@@ -161,7 +161,7 @@
       - id: ClothingHeadsetAltCentComFake
       - id: ClothingOuterArmorBasic
       - id: Paper
-      - id: PenCentcom
+      - id: Pen
       - id: CentcomPDAFake
 
 - type: entity
