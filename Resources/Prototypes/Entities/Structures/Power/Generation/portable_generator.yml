@@ -52,6 +52,26 @@
       requirePower: true
       highVoltageNode: output
 
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+
     # Core functionality
     - type: PortableGenerator
       startSoundEmpty: { collection: GeneratorTugEmpty }
@@ -253,3 +273,34 @@
       gasType: CarbonDioxide
       # Full tank is 25 moles of gas
       moleRatio: 0.5
+    - type: Explosive
+      explosionType: Default
+      tileBreakScale: 0
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:SpillBehavior
+              solution: tank
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger:
+            !type:DamageTypeTrigger
+            damageType: Piercing
+            damage: 75
+          behaviors:
+            - !type:SolutionExplosionBehavior
+              solution: tank
