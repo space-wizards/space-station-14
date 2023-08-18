@@ -19,18 +19,18 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Changelog
 {
     [GenerateTypedNameReferences]
-    public sealed partial class ChangelogWindow : BaseWindow
+    public sealed partial class ChangelogWindow : DefaultWindow
     {
         [Dependency] private readonly ChangelogManager _changelog = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
 
         public ChangelogWindow()
         {
-            IoCManager.InjectDependencies(this);
             RobustXamlLoader.Load(this);
-
+            WindowHeader.StyleClasses.Add("AngleRect");
+            TitleLabel.StyleClasses.Add("LabelHeading");
+            ContentsContainer.Margin = new Thickness(0, 10, 0, 0);
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
-            CloseButton.OnPressed += _ => Close();
         }
 
         protected override void Opened()
@@ -193,7 +193,8 @@ namespace Content.Client.Changelog
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
-            return DragMode.Move;
+            var dragMode = base.GetDragModeFor(relativeMousePos);
+            return dragMode != DragMode.None ? dragMode : DragMode.Move;
         }
     }
 
