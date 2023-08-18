@@ -251,5 +251,5 @@
       supplyRampTolerance: 2000
     - type: GeneratorExhaustGas
       gasType: CarbonDioxide
-      # Full tank is 10 moles of gas
-      moleRatio: 0.2
+      # Full tank is 25 moles of gas
+      moleRatio: 0.5
