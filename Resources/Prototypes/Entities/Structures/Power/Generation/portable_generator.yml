@@ -230,8 +230,8 @@
       nodes:
         output:
           !type:CableDeviceNode
-          nodeGroupID: MVPower
+          nodeGroupID: Apc
     - type: PowerSupplier
       # No ramping needed on this bugger.
-      voltage: Medium
+      voltage: Apc
       supplyRampTolerance: 2000

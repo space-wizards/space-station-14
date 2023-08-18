@@ -155,6 +155,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         _appearance.SetData(generator, GeneratorVisuals.Running, component.On);
         _ambientSound.SetAmbience(generator, component.On);
+        if (!component.On)
+            Comp<PowerSupplierComponent>(generator).Enabled = false;
     }
 }
 
