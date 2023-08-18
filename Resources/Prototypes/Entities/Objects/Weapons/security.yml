@@ -134,9 +134,9 @@
           enum.FlashVisuals.LightLayer:
             True: {visible: true}
             False: {visible: false}
-  - type: GuideHelp
-    guides:
-    - Security
+    - type: GuideHelp
+      guides:
+      - Security
 
 - type: entity
   name: portable flasher
@@ -182,6 +182,6 @@
       radius: 0
       softness: 0
       enabled: true
-  - type: GuideHelp
-    guides:
-    - Security
+    - type: GuideHelp
+      guides:
+      - Security
