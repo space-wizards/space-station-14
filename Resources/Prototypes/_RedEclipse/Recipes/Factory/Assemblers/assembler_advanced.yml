@@ -53,5 +53,5 @@
   id: FactoryChemicalPack
   result: FactoryChemicalPack
   completetime: 3
-  materials: # TODO way better recipe
+  materials: # TODO way better recipe (waaaaay better)
     Steel : 100
