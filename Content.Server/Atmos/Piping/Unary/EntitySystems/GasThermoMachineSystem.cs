@@ -58,16 +58,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
-			bool heater = sign > 0;
+            bool heater = sign > 0;
             float targetTemp = thermoMachine.TargetTemperature;
             float dTHyst = sign * thermoMachine.TemperatureTolerance;
             float temp = inlet.Air.Temperature;
 
             // The 'heater ==' comparision flips the inequality if the thermomachine is a freezer by checking equality to false
-            if (heater == (temp > targetTemp + dTHyst)
-			|| temp == targetTemp + dTHyst)
+            if (heater == temp > targetTemp + dTHyst)
                 thermoMachine.HysteresisState = false;
-            if (heater == (temp < targetTemp))
+            if (heater == temp < targetTemp)
                 thermoMachine.HysteresisState = true;
             if (thermoMachine.HysteresisState)
                 targetTemp += dTHyst;
@@ -84,7 +83,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float dQ = dT * Cin;
             float dQLim = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
             // Clamps the heat transferred to not overshoot
-            float scale = MathF.Min(1f, dQ / dQLim);
+            float scale = 1f;
+            if (heater == dQ < dQLim)
+            {
+                scale = dQ / dQLim;
+                thermoMachine.HysteresisState = false;
+            }
             float dQActual = dQLim * scale;
             _atmosphereSystem.AddHeat(inlet.Air, dQActual);
 
