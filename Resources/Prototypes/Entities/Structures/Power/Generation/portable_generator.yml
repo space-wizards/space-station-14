@@ -116,6 +116,10 @@
       optimalPower: 20000
     - type: SolidFuelGeneratorAdapter
       fuelMaterial: Plasma
+      multiplier: 0.01
+    - type: MaterialStorage
+      storageLimit: 3000
+      materialWhiteList: [Plasma]
     - type: PortableGenerator
       startChance: 0.8
 
@@ -151,8 +155,11 @@
       optimalBurnRate: 0.00416666666
     - type: SolidFuelGeneratorAdapter
       fuelMaterial: Uranium
+      multiplier: 0.01
+    - type: MaterialStorage
+      storageLimit: 3000
+      materialWhiteList: [Uranium]
     - type: PortableGenerator
-      startChance: 1
 
 - type: entity
   name: J.R.P.A.C.M.A.N.-type portable generator
@@ -201,12 +208,20 @@
     - type: Machine
       board: GeneratorUraniumMachineCircuitboard
     - type: FuelGenerator
-      targetPower: 30000
-      optimalPower: 30000
-      optimalBurnRate: 0.00416666666
+      targetPower: 2000
+      optimalPower: 2000
+      maxTargetPower: 2000
+      # 7.5 minutes at full tank.
+      optimalBurnRate: 0.11111111
     - type: ChemicalFuelGeneratorAdapter
-      chemConversionFactors:
-        WeldingFuel: 0.1
+      solution: tank
+      reagent: WeldingFuel
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          maxVol: 50
+    - type: RefillableSolution
+      solution: tank
     - type: PortableGenerator
       # Unreliable bugger
       startChance: 0.5

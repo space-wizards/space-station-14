@@ -16,12 +16,6 @@ public sealed partial class FuelGeneratorComponent : Component
     public bool On;
 
     /// <summary>
-    /// The amount of fuel left in the generator.
-    /// </summary>
-    [DataField("remainingFuel"), ViewVariables(VVAccess.ReadWrite)]
-    public float RemainingFuel;
-
-    /// <summary>
     /// The generator's target power.
     /// </summary>
     [DataField("targetPower"), ViewVariables(VVAccess.ReadWrite)]

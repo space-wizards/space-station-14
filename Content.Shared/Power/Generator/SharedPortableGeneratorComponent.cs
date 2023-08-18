@@ -19,7 +19,7 @@ public sealed class PortableGeneratorComponent : Component
     /// </summary>
     [DataField("startChance")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public float StartChance { get; set; } = 0.5f;
+    public float StartChance { get; set; } = 1f;
 
     /// <summary>
     /// Amount of time it takes to attempt to start the generator.
@@ -94,9 +94,9 @@ public sealed class PortableGeneratorComponentBuiState : BoundUserInterfaceState
     public float OptimalPower;
     public bool On;
 
-    public PortableGeneratorComponentBuiState(FuelGeneratorComponent component)
+    public PortableGeneratorComponentBuiState(FuelGeneratorComponent component, float remainingFuel)
     {
-        RemainingFuel = component.RemainingFuel;
+        RemainingFuel = remainingFuel;
         TargetPower = component.TargetPower;
         MaximumPower = component.MaxTargetPower;
         OptimalPower = component.OptimalPower;

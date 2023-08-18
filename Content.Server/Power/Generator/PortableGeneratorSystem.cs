@@ -87,7 +87,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
         var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
 
-        var empty = fuelGenerator.RemainingFuel == 0;
+        var empty = _generator.GetFuel(uid) == 0;
 
         var sound = empty ? component.StartSoundEmpty : component.StartSound;
         _audio.Play(sound, Filter.Pvs(uid), uid, true);
@@ -165,6 +165,11 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (!_uiSystem.IsUiOpen(uid, GeneratorComponentUiKey.Key))
             return;
 
-        _uiSystem.TrySetUiState(uid, GeneratorComponentUiKey.Key, new PortableGeneratorComponentBuiState(fuelComp));
+        var fuel = _generator.GetFuel(uid);
+
+        _uiSystem.TrySetUiState(
+            uid,
+            GeneratorComponentUiKey.Key,
+            new PortableGeneratorComponentBuiState(fuelComp, fuel));
     }
 }

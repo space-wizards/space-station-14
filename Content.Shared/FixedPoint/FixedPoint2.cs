@@ -50,6 +50,14 @@ namespace Content.Shared.FixedPoint
             return new((int) MathF.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));
         }
 
+        /// <summary>
+        /// Create the closest <see cref="FixedPoint2"/> for a float value, always rounding up.
+        /// </summary>
+        public static FixedPoint2 NewCeiling(float value)
+        {
+            return new((int) MathF.Ceiling(value * ShiftConstant));
+        }
+
         public static FixedPoint2 New(double value)
         {
             return new((int) Math.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));

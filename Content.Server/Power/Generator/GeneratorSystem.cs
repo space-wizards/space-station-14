@@ -1,12 +1,10 @@
 ﻿using Content.Server.Audio;
-using Content.Server.Chemistry.Components.SolutionManager;
-using Content.Server.Popups;
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Materials;
 using Content.Server.Power.Components;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Interaction;
-using Content.Shared.Materials;
+using Content.Server.Power.EntitySystems;
+using Content.Shared.FixedPoint;
 using Content.Shared.Power.Generator;
-using Content.Shared.Stacks;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Power.Generator;
@@ -17,10 +15,10 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="SolidFuelGeneratorAdapterComponent"/>
 public sealed class GeneratorSystem : SharedGeneratorSystem
 {
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
     [Dependency] private readonly AppearanceSystem _appearance = default!;
     [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
+    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
 
     private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
 
@@ -28,53 +26,80 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         _upgradeQuery = GetEntityQuery<UpgradePowerSupplierComponent>();
 
-        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, InteractUsingEvent>(OnSolidFuelAdapterInteractUsing);
-        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, InteractUsingEvent>(OnChemicalFuelAdapterInteractUsing);
+        UpdatesBefore.Add(typeof(PowerNetSystem));
+
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorGetFuel>(SolidGetFuel);
+        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorUseFuel>(SolidUseFuel);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetFuel>(ChemicalGetFuel);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorUseFuel>(ChemicalUseFuel);
     }
 
-    private void OnChemicalFuelAdapterInteractUsing(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, InteractUsingEvent args)
+    private void ChemicalUseFuel(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
     {
-        if (args.Handled)
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
             return;
 
-        if (!TryComp<SolutionContainerManagerComponent>(args.Used, out var solutions) ||
-            !TryComp<FuelGeneratorComponent>(uid, out var generator))
-            return;
+        var availableReagent = solution.GetReagentQuantity(component.Reagent).Value;
+        var toRemove = RemoveFractionalFuel(
+            ref component.FractionalReagent,
+            args.FuelUsed,
+            component.Multiplier * FixedPoint2.Epsilon.Float(),
+            availableReagent);
 
-        if (!(component.Whitelist?.IsValid(args.Used) ?? true))
-            return;
-
-        if (TryComp<ChemicalFuelGeneratorDirectSourceComponent>(args.Used, out var source))
-        {
-            if (!solutions.Solutions.ContainsKey(source.Solution))
-            {
-                Log.Error($"Couldn't get solution {source.Solution} on {ToPrettyString(args.Used)}");
-                return;
-            }
-
-            var solution = solutions.Solutions[source.Solution];
-            generator.RemainingFuel += ReagentsToFuel(component, solution);
-            solution.RemoveAllSolution();
-            QueueDel(args.Used);
-        }
+        solution.RemoveReagent(component.Reagent, FixedPoint2.FromCents(toRemove));
     }
 
-    private float ReagentsToFuel(ChemicalFuelGeneratorAdapterComponent component, Solution solution)
+    private void ChemicalGetFuel(
+        EntityUid uid,
+        ChemicalFuelGeneratorAdapterComponent component,
+        ref GeneratorGetFuel args)
     {
-        var total = 0.0f;
-        foreach (var reagent in solution.Contents)
-        {
-            if (!component.ChemConversionFactors.ContainsKey(reagent.ReagentId))
-                continue;
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+            return;
 
-            total += reagent.Quantity.Float() * component.ChemConversionFactors[reagent.ReagentId];
-        }
-
-        return total;
+        var reagent = component.FractionalReagent * FixedPoint2.Epsilon.Float()
+                      + solution.GetReagentQuantity(component.Reagent).Float();
+        args.Fuel = reagent * component.Multiplier;
     }
 
-    private void OnTargetPowerSet(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorSetTargetPowerMessage args)
+    private void SolidUseFuel(EntityUid uid, SolidFuelGeneratorAdapterComponent component, GeneratorUseFuel args)
+    {
+        var availableMaterial = _materialStorage.GetMaterialAmount(uid, component.FuelMaterial);
+        var toRemove = RemoveFractionalFuel(
+            ref component.FractionalMaterial,
+            args.FuelUsed,
+            component.Multiplier,
+            availableMaterial);
+
+        _materialStorage.TryChangeMaterialAmount(uid, component.FuelMaterial, -toRemove);
+    }
+
+    private int RemoveFractionalFuel(ref float fractional, float fuelUsed, float multiplier, int availableQuantity)
+    {
+        fractional -= fuelUsed / multiplier;
+        if (fractional >= 0)
+            return 0;
+
+        // worst (unrealistic) case: -5.5 -> -6.0 -> 6
+        var toRemove = -(int) MathF.Floor(fractional);
+        toRemove = Math.Min(availableQuantity, toRemove);
+
+        fractional = Math.Max(0, fractional + toRemove);
+        return toRemove;
+    }
+
+    private void SolidGetFuel(
+        EntityUid uid,
+        SolidFuelGeneratorAdapterComponent component,
+        ref GeneratorGetFuel args)
+    {
+        var material = component.FractionalMaterial + _materialStorage.GetMaterialAmount(uid, component.FuelMaterial);
+        args.Fuel = material * component.Multiplier;
+    }
+
+    private void OnTargetPowerSet(EntityUid uid, FuelGeneratorComponent component,
+        PortableGeneratorSetTargetPowerMessage args)
     {
         component.TargetPower = Math.Clamp(
             args.TargetPower,
@@ -88,48 +113,64 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
             return;
 
         generator.On = on;
-    }
-
-    private void OnSolidFuelAdapterInteractUsing(EntityUid uid, SolidFuelGeneratorAdapterComponent component, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<PhysicalCompositionComponent>(args.Used, out var mat) ||
-            !HasComp<MaterialComponent>(args.Used)  ||
-            !TryComp<FuelGeneratorComponent>(uid, out var generator))
-            return;
-
-        if (!mat.MaterialComposition.ContainsKey(component.FuelMaterial))
-            return;
-
-        _popup.PopupEntity(Loc.GetString("generator-insert-material", ("item", args.Used), ("generator", uid)), uid);
-        generator.RemainingFuel += _stack.GetCount(args.Used) * component.Multiplier;
-        QueueDel(args.Used);
-        args.Handled = true;
+        UpdateState(uid, generator);
     }
 
     public override void Update(float frameTime)
     {
-        var query = EntityQueryEnumerator<FuelGeneratorComponent, PowerSupplierComponent, TransformComponent>();
+        var query = EntityQueryEnumerator<FuelGeneratorComponent, PowerSupplierComponent>();
 
-        while (query.MoveNext(out var uid, out var gen, out var supplier, out var xform))
+        while (query.MoveNext(out var uid, out var gen, out var supplier))
         {
-            supplier.Enabled = gen.On && gen.RemainingFuel > 0.0f && xform.Anchored;
+            if (!gen.On)
+                continue;
 
-            if (supplier.Enabled)
+            var fuel = GetFuel(uid);
+            if (fuel <= 0)
             {
-                var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
-
-                supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
-
-                var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
-
-                gen.RemainingFuel = MathF.Max(gen.RemainingFuel - (gen.OptimalBurnRate * frameTime * eff), 0.0f);
+                SetFuelGeneratorOn(uid, false, gen);
+                continue;
             }
 
-            _appearance.SetData(uid, GeneratorVisuals.Running, supplier.Enabled);
-            _ambientSound.SetAmbience(uid, supplier.Enabled);
+            supplier.Enabled = true;
+
+            var upgradeMultiplier = _upgradeQuery.CompOrNull(uid)?.ActualScalar ?? 1f;
+
+            supplier.MaxSupply = gen.TargetPower * upgradeMultiplier;
+
+            var eff = 1 / CalcFuelEfficiency(gen.TargetPower, gen.OptimalPower, gen);
+            var consumption = gen.OptimalBurnRate * frameTime * eff;
+            RaiseLocalEvent(uid, new GeneratorUseFuel(consumption));
         }
     }
+
+    public float GetFuel(EntityUid generator)
+    {
+        GeneratorGetFuel getFuel = default;
+        RaiseLocalEvent(generator, ref getFuel);
+        return getFuel.Fuel;
+    }
+
+    private void UpdateState(EntityUid generator, FuelGeneratorComponent component)
+    {
+        _appearance.SetData(generator, GeneratorVisuals.Running, component.On);
+        _ambientSound.SetAmbience(generator, component.On);
+    }
 }
+
+/// <summary>
+/// Raised by <see cref="GeneratorSystem"/> to calculate the amount of remaining fuel in the generator.
+/// </summary>
+[ByRefEvent]
+public struct GeneratorGetFuel
+{
+    public float Fuel;
+}
+
+/// <summary>
+/// Raised by <see cref="GeneratorSystem"/> to draw fuel from its adapters.
+/// </summary>
+/// <remarks>
+/// Implementations are expected to round fuel consumption up if the used fuel value is too small (e.g. reagent units).
+/// </remarks>
+public record struct GeneratorUseFuel(float FuelUsed);
