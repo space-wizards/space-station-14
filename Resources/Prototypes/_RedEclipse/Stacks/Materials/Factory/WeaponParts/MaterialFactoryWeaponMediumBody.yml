@@ -1,5 +1,5 @@
 - type: entity
-  parent: FactoryWeaponPartBase
+  parent: FactoryPartBase
   id: MaterialFactoryWeaponMediumBody
   name: medium gun body
   suffix: Full

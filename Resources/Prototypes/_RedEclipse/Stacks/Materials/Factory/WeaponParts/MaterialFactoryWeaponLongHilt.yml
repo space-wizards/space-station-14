@@ -1,5 +1,5 @@
 - type: entity
-  parent: FactoryWeaponPartBase
+  parent: FactoryPartBase
   id: MaterialFactoryWeaponLongHilt
   name: long hilt
   suffix: Full
