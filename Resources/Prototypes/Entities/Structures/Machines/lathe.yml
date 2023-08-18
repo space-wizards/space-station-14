@@ -817,6 +817,7 @@
     - type: Lathe
       idleState: icon
       runningState: building
+      canEjectStoredMaterials: false
       staticRecipes:
         - SheetSteel30
         - SheetGlass30
@@ -854,5 +855,6 @@
   - type: Lathe
     idleState: base_machine
     runningState: base_machine_processing
+    canEjectStoredMaterials: false
     staticRecipes:
     - MaterialSheetMeat
