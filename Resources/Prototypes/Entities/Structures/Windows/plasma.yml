@@ -81,3 +81,5 @@
         acts: [ "Destruction" ]
   - type: StaticPrice
     price: 30
+  - type: RadiationBlocker
+    resistance: 1
