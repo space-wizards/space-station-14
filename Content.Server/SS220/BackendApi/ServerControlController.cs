@@ -106,14 +106,18 @@ namespace Content.Server.SS220.BackEndApi
                 return;
             }
 
-            if (!context.RequestHeaders.TryGetValue("command", out var val))
+            var command = string.Empty;
+
+            try
             {
-                await context.RespondAsync("No command in header", HttpStatusCode.BadRequest);
+                command = await context.RequestBodyJsonAsync<string>();
+            }
+            catch (Exception exc)
+            {
+                await context.RespondAsync($"Error on comand parse. {Environment.NewLine}{exc.Message}", HttpStatusCode.BadRequest);
 
                 return;
             }
-
-            var command = val.ToString();
 
             if (string.IsNullOrWhiteSpace(command))
             {
