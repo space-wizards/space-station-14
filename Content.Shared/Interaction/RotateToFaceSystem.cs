@@ -86,6 +86,7 @@ namespace Content.Shared.Interaction
                     return false;
 
                 _transform.SetWorldRotation(xform, diffAngle);
+                return true;
             }
 
             if (EntityManager.TryGetComponent(user, out BuckleComponent? buckle) && buckle.Buckled)
