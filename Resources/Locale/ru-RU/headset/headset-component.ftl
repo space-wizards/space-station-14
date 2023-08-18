@@ -13,6 +13,6 @@ chat-radio-security = Безопасность
 chat-radio-service = Сервис
 chat-radio-supply = Снабжение
 chat-radio-syndicate = Синдикат
-chat-radio-binary = Синтетик
+chat-radio-binary = Бинарный
 # not headset but whatever
 chat-radio-handheld = Портативный
