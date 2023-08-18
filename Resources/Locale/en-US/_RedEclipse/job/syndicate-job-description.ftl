@@ -1,0 +1,2 @@
+job-description-syndicate-engineers-aide = Master the essentials of handling advanced Syndicate propulsion systems, as well as clandestine repairs to fortify the station's hull and secure its power sources.
+job-description-syndicate-clandestine-engineer = Ensure the Syndicate's advanced propulsion systems and solar arrays remain operational, optimize the covert power network, and conduct emergency repairs with your specialized hardsuit.

@@ -1,0 +1,32 @@
+- type: job
+  id: EngineersAide
+  name: job-name-syndicate-engineers-aide
+  description: job-description-syndicate-engineers-aide
+  playTimeTracker: JobSyndicateEngineersAide
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: SyndicateEngineering
+      time: 54000 #15 hrs
+      inverted: true # stop playing aide if you're good at engineering!
+  startingGear: SyndicateEngineersAideGear
+  icon: "JobIconSyndicateEngineersAide"
+  supervisors: job-supervisors-engineering
+  canBeAntag: false
+  access:
+    - Maintenance
+    - Engineering
+    - External
+
+- type: startingGear
+  id: SyndicateEngineersAideGear
+  equipment:
+    head: ClothingHeadHatWelding
+    jumpsuit: ClothingUniformJumpsuitColorYellow
+    back: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesBootsWork
+    id: EngineersAidePDA
+    belt: ClothingBeltUtilityEngineering
+    ears: ClothingHeadsetEngineering
+  innerclothingskirt: ClothingUniformJumpskirtColorYellow
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled

@@ -1,0 +1,7 @@
+- type: department
+  id: SyndicateEngineering
+  description: department-SyndicateEngineering-description
+  color: "#b51e0e"
+  roles:
+    - ClandestineEngineer
+    - EngineersAide

@@ -1,0 +1,35 @@
+- type: entity
+  parent: IDCardStandard
+  id: IDCardStandardSyndicate
+  abstract: true
+  name: syndicate identification card
+  description: A Syndicate-issued access token, your key to unlock concealed passageways and restricted zones within the covert station.
+  components:
+    - type: Sprite
+      sprite: _RedEclipse/Objects/Misc/id_cards.rsi
+
+
+- type: entity
+  parent: IDCardStandardSyndicate
+  id: EngineersAideIDCard
+  name: engineer's aide ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idintern-tech
+    - type: PresetIdCard
+      job: EngineersAide
+
+
+- type: entity
+  parent: IDCardStandardSyndicate
+  id: ClandestineEngineerIDCard
+  name: clandestine engineer ID card
+  components:
+    - type: Sprite
+      layers:
+        - state: default
+        - state: idstationengineer
+    - type: PresetIdCard
+      job: ClandestineEngineer

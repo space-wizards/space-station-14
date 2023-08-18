@@ -1,0 +1,13 @@
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSyndicateEngineersAide
+  icon:
+    sprite: _RedEclipse/Interface/Misc/job_icons.rsi
+    state: SyndicateEngineersAide
+
+- type: statusIcon
+  parent: JobIcon
+  id: JobIconSyndicateClandestineEngineer
+  icon:
+    sprite: _RedEclipse/Interface/Misc/job_icons.rsi
+    state: SyndicateClandestineEngineer

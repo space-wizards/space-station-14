@@ -1,0 +1,34 @@
+- type: job
+  id: ClandestineEngineer
+  name: job-name-syndicate-clandestine-engineer
+  description: job-description-syndicate-clandestine-engineer
+  playTimeTracker: JobSyndicateClandestineEngineer
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: SyndicateEngineering
+      time: 14400 #4 hrs
+  startingGear: SyndicateClandestineEngineerGear
+  icon: "JobIconSyndicateClandestineEngineer"
+  supervisors: job-supervisors-ce
+  access:
+    - Maintenance
+    - Engineering
+    - External
+  extendedAccess:
+    - Atmospherics
+
+- type: startingGear
+  id: SyndicateClandestineEngineerGear
+  equipment:
+    head: ClothingHeadHatHardhatYellow
+    jumpsuit: ClothingUniformJumpsuitEngineering
+    back: ClothingBackpackEngineeringFilled
+    shoes: ClothingShoesBootsWork
+    outerClothing: ClothingOuterVestHazard
+    id: ClandestineEngineerPDA
+    eyes: ClothingEyesGlassesMeson
+    belt: ClothingBeltUtilityEngineering
+    ears: ClothingHeadsetEngineering
+  innerclothingskirt: ClothingUniformJumpskirtEngineering
+  satchel: ClothingBackpackSatchelEngineeringFilled
+  duffelbag: ClothingBackpackDuffelEngineeringFilled
