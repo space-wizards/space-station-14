@@ -70,4 +70,21 @@
         state: server
     - type: NetProbeCartridge
 
-
+- type: entity
+  parent: BaseItem
+  id: HealthAnalyzerCartridge
+  name: Health Analyzer Cartridge
+  description: A program capable of distinguishing vital signs of a subject
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-cmo
+    - type: Cartridge
+      programName: health-analyzer-program-name
+      icon:
+        sprite: Objects/Specific/Medical/healthanalyzer.rsi
+        state: icon
+    - type: HealthAnalyzerCartridge
+      scanDelay: 1.4
+      scanningEndSound:
+        path: "/Audio/Items/Medical/healthscanner.ogg"

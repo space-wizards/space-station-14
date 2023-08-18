@@ -138,7 +138,7 @@
   parent: BasePDA
   id: MedicalInternPDA
   name: medical intern PDA
-  description: Why isn't it white? Has a built-in health analyzer.
+  description: Why isn't it white?
   components:
   - type: Pda
     id: MedicalInternIDCard
@@ -148,10 +148,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-internmed
-  - type: HealthAnalyzer
-    scanDelay: 1.4
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
     guides:
     - Medical Doctor
@@ -485,7 +481,7 @@
   parent: BasePDA
   id: CMOPDA
   name: chief medical officer PDA
-  description: Extraordinarily shiny and sterile. Has a built-in health analyzer.
+  description: Extraordinarily shiny and sterile.
   components:
   - type: Pda
     id: CMOIDCard
@@ -496,16 +492,12 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-cmo
-  - type: HealthAnalyzer
-    scanDelay: 1
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
   id: MedicalPDA
   name: medical PDA
-  description: Shiny and sterile. Has a built-in health analyzer.
+  description: Shiny and sterile.
   components:
   - type: Pda
     id: MedicalIDCard
@@ -515,10 +507,6 @@
     accentVColor: "#447987"
   - type: Icon
     state: pda-medical
-  - type: HealthAnalyzer
-    scanDelay: 1.2
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
   - type: GuideHelp
     guides:
     - Medical Doctor
@@ -527,7 +515,7 @@
   parent: BasePDA
   id: ParamedicPDA
   name: paramedic PDA
-  description: Shiny and sterile. Has a built-in rapid health analyzer.
+  description: Shiny and sterile.
   components:
   - type: Pda
     id: ParamedicIDCard
@@ -537,10 +525,6 @@
     accentVColor: "#2a4b5b"
   - type: Icon
     state: pda-paramedic
-  - type: HealthAnalyzer
-    scanDelay: 0.5
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -556,10 +540,6 @@
     accentVColor: "#B34200"
   - type: Icon
     state: pda-chemistry
-  - type: HealthAnalyzer
-    scanDelay: 1
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
@@ -851,7 +831,7 @@
   parent: BasePDA
   id: BrigmedicPDA
   name: brigmedic PDA
-  description: I wonder whose pulse is on the screen? I hope he doesnt stop... PDA has a built-in health analyzer.
+  description: I wonder whose pulse is on the screen? I hope he doesnt stop...
   components:
   - type: Pda
     id: BrigmedicIDCard
@@ -862,10 +842,6 @@
     accentVColor: "#d7d7d0"
   - type: Icon
     state: pda-brigmedic
-  - type: HealthAnalyzer
-    scanDelay: 1
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: ClownPDA
@@ -925,7 +901,7 @@
   parent: BasePDA
   id: SeniorPhysicianPDA
   name: senior physician PDA
-  description: Smells faintly like iron and chemicals. Has a built-in health analyzer.
+  description: Smells faintly like iron and chemicals.
   components:
   - type: Pda
     id: SeniorPhysicianIDCard
@@ -936,10 +912,6 @@
     accentVColor: "#B34200"
   - type: Icon
     state: pda-seniorphysician
-  - type: HealthAnalyzer
-    scanDelay: 1
-    scanningEndSound:
-      path: "/Audio/Items/Medical/healthscanner.ogg"
 
 - type: entity
   parent: BasePDA
