@@ -63,10 +63,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float dTHyst = sign * thermoMachine.TemperatureTolerance;
             float temp = inlet.Air.Temperature;
 
-            // The 'heater ==' comparision flips the inequality if the thermomachine is a freezer by checking equality to false
-            if (heater == temp > targetTemp + dTHyst)
+            if (sign * temp >= sign * (targetTemp + dTHyst))
                 thermoMachine.HysteresisState = false;
-            if (heater == temp < targetTemp)
+            if (sign * temp < sign * targetTemp)
                 thermoMachine.HysteresisState = true;
             if (thermoMachine.HysteresisState)
                 targetTemp += dTHyst;
