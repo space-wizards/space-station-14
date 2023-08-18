@@ -90984,8 +90984,7 @@ entities:
       type: Transform
   - uid: 17113
     components:
-    - rot: -1.5707963267948966 rad
-      pos: 63.5,30.5
+    - pos: 63.5,30.5
       parent: 2
       type: Transform
 - proto: OreProcessor
@@ -91310,7 +91309,8 @@ entities:
       type: Transform
     - stampState: paper_stamp-syndicate
       stampedBy:
-      - Syndicate
+      - stampedName: stamp-component-stamped-name-syndicate
+        stampedColor: '#850000'
       content: >-
         Operative, i have succeeded in the mission and this is the remainder of the evidence. I am hiding it behind this wall and escaping ASAP.
 
@@ -101384,7 +101384,7 @@ entities:
     - pos: 9.598311,-40.325493
       parent: 2
       type: Transform
-- proto: RevolverCapGunFake
+- proto: RevolverCapGun
   entities:
   - uid: 17116
     components:
