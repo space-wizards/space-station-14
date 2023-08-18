@@ -30,6 +30,19 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public float TargetTemperature = Atmospherics.T20C;
 
         /// <summary>
+        ///     Tolerance for temperature setpoint hysteresis.
+        /// </summary>
+       [ViewVariables(VVAccess.ReadOnly)]
+        public float TemperatureTolerance = 2f;
+
+        /// <summary>
+        ///     Implements setpoint hysteresis to prevent heater from rapidly cycling on and off at setpoint.
+        ///     If true, add Sign(Cp)*TemperatureTolerance to the temperature setpoint.
+        /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
+        public bool HysteresisState = false;
+
+        /// <summary>
         ///     Coefficient of performance. Output power / input power.
         ///     Positive for heaters, negative for freezers.
         /// </summary>
