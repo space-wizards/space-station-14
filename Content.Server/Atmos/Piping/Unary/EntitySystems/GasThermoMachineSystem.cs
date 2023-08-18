@@ -58,26 +58,25 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
+            float targetTemp = thermoMachine.TargetTemperature;
 
-            // Implement hysteresis
-            float hystTemp = thermoMachine.TargetTemperature;
-            if (thermoMachine.HysteresisState)
+            float dT = targetTemp - inlet.Air.Temperature;
+            if (sign != Math.Sign(dT))
             {
-                hystTemp += sign*thermoMachine.TemperatureTolerance;
-            }
-
-            // Stop if we've reached our target temperature.
-            if (sign*inlet.Air.Temperature > sign*hystTemp) // inequality flips if freezer
-            {
-                thermoMachine.HysteresisState = !thermoMachine.HysteresisState;
+                receiver.Load = 0f;
                 return;
             }
+            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
 
             // Multiply power in by coefficient of performance, add that heat to gas
-            float dQ = receiver.Load * thermoMachine.Cp * args.dt;
-            _atmosphereSystem.AddHeat(inlet.Air, dQ);
+            float dQ = dT * Cin;
+            float dQLim = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
+            // Clamps the heat transferred to not overshoot
+            float scale = MathF.Min(1f, dQ / dQLim);
+            float dQActual = dQLim * scale;
+            _atmosphereSystem.AddHeat(inlet.Air, dQActual);
 
-            // If temperature over/undershoots, that's okay! Min/Max temp is about the setpoint.
+            receiver.Load = thermoMachine.HeatCapacity * scale;
         }
 
         private bool IsHeater(GasThermoMachineComponent comp)
@@ -132,9 +131,11 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnChangeTemperature(EntityUid uid, GasThermoMachineComponent thermoMachine, GasThermomachineChangeTemperatureMessage args)
         {
-            thermoMachine.TargetTemperature =
-                Math.Clamp(args.Temperature, thermoMachine.MinTemperature, thermoMachine.MaxTemperature);
-
+            if (IsHeater(thermoMachine))
+                thermoMachine.TargetTemperature = MathF.Min(args.Temperature, thermoMachine.MaxTemperature);
+            else
+                thermoMachine.TargetTemperature = MathF.Max(args.Temperature, thermoMachine.MinTemperature);
+            thermoMachine.TargetTemperature = MathF.Max(thermoMachine.TargetTemperature, Atmospherics.TCMB);
             DirtyUI(uid, thermoMachine);
         }
 
