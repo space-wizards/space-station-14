@@ -1,10 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: beach and basketball balls are now heavier and has specific sound on
-      collide, type: Tweak}
-  id: 4128
-  time: '2023-06-29T09:36:53.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Chemical crates can now be ordered from cargo., type: Add}
@@ -3025,3 +3019,8 @@ Entries:
   - {message: Fixed fun!, type: Fix}
   id: 4627
   time: '2023-08-18T17:22:00.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: More shortcuts to guide entries on various items., type: Tweak}
+  id: 4628
+  time: '2023-08-18T23:53:45.0000000+00:00'
