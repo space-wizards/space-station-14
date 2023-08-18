@@ -6,7 +6,7 @@
   components:
     - type: PhysicalComposition
       materialComposition:
-        FactoryCompactBody: 1
+        FactoryWeaponCompactBody: 1
     - type: Stack
       stackType: FactoryWeaponCompactBody
 
