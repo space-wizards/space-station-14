@@ -391,6 +391,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b53ca1"
+  - type: GuideHelp
+    guides:
+    - Science
 
 - type: entity
   parent: BaseComputer
@@ -673,6 +676,9 @@
     color: "#b89f25"
   - type: AccessReader
     access: [["Cargo"]]
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoOrders
@@ -714,6 +720,9 @@
     range: 200
     ports:
       - OrderSender
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   id: ComputerCargoBounty
@@ -942,6 +951,9 @@
     radius: 1.5
     energy: 1.6
     color: "#b89f25"
+  - type: GuideHelp
+    guides:
+    - Cargo
 
 - type: entity
   parent: BaseComputer
