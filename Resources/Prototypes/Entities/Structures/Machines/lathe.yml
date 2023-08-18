@@ -633,6 +633,7 @@
       - HandLabeler
       - Defibrillator
       - HandheldHealthAnalyzer
+      - HealthAnalyzerCartridge
       - ClothingHandsGlovesLatex
       - ClothingMaskSterile
       - DiseaseSwab

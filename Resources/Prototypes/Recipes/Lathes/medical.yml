@@ -203,3 +203,12 @@
   completetime: 4
   materials:
     Plastic: 700
+
+- type: latheRecipe
+  id: HealthAnalyzerCartridge
+  result: HealthAnalyzerCartridge
+  completetime: 4
+  materials:
+    Glass: 500
+    Steel: 600
+    Plastic: 50
