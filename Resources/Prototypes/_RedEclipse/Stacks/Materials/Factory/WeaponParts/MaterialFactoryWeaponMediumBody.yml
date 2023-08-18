@@ -8,7 +8,7 @@
       materialComposition:
         FactoryWeaponMediumBody: 1
     - type: Stack
-      stackType: FactoryWeaponBasicCasings
+      stackType: FactoryWeaponMediumBody
 
 - type: entity
   parent: MaterialFactoryWeaponMediumBody

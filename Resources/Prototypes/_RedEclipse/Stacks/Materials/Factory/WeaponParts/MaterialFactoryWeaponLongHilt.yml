@@ -8,7 +8,7 @@
       materialComposition:
         FactoryWeaponLongHilt: 1
     - type: Stack
-      stackType: FactoryWeaponBasicCasings
+      stackType: FactoryWeaponLongHilt
 
 - type: entity
   parent: MaterialFactoryWeaponLongHilt
