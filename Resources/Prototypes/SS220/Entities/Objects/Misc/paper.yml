@@ -87,6 +87,18 @@
 - type: entity
   name: paper
   parent: Paper
+  id: PaperNtFormGoal
+  description: "A sheet of office paper with a NanoTrasen logo on it. There is a cargo department label on it."
+  components:
+    - type: PaperVisuals
+      headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_goal_form_header.png"
+      backgroundImagePath: "/Textures/Interface/Paper/paper_background_default.svg.96dpi.png"
+      backgroundPatchMargin: 16.0, 16.0, 16.0, 16.0
+      contentMargin: 32.0, 16.0, 32.0, 0.0
+
+- type: entity
+  name: paper
+  parent: Paper
   id: PaperNtFormEng
   description: "A sheet of office paper with a NanoTrasen logo on it. There is an engineering department label on it."
   components:

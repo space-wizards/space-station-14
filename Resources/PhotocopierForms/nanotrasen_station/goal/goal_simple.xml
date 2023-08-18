@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Form>
-  <FormId>cmd_cc_goal</FormId>
-  <PrototypeId>PaperNtFormCmd</PrototypeId>
+  <FormId>goal_simple</FormId>
+  <PrototypeId>PaperNtFormGoal</PrototypeId>
   <EntityName>форма НТ-КОМ-ЦК-ОВЦ</EntityName>
   <PhotocopierTitle>Отчёт о выполнении цели</PhotocopierTitle>
   <Content><![CDATA[Форма НТ-КОМ-ЦК-ОВЦ

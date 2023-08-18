@@ -19,6 +19,9 @@ ent-PaperNtFormMed = { ent-Paper }
 ent-PaperNtFormCargo = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Отдел снабжения станции".
 
+ent-PaperNtFormGoal = { ent-Paper }
+    .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Цель станции".
+
 ent-PaperNtFormEng = { ent-Paper }
     .desc = Лист белой бумаги с логотипом NanoTrasen и надписью "Инженерный отдел станции".
 

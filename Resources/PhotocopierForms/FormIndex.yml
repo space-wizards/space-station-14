@@ -21,6 +21,15 @@
     - /PhotocopierForms/nanotrasen_central_command/blank/blank_secure_cc.xml
 - Id: nanotrasen_station
   Groups:
+  - Id: goal
+    Name: Цели станции
+    Color: "#E5DD29"
+    IconPath: /Textures/SS220/DepartmentIcons/goal.png
+    Forms:
+    - /PhotocopierForms/nanotrasen_station/goal/goal_simple.xml
+    - /PhotocopierForms/nanotrasen_station/goal/goal_guests.xml
+    - /PhotocopierForms/nanotrasen_station/goal/goal_capsule.xml
+    - /PhotocopierForms/nanotrasen_station/goal/goal_expedition.xml
   - Id: command
     Name: Командование
     Color: "#5555FFFF"
@@ -30,7 +39,6 @@
     - /PhotocopierForms/nanotrasen_station/command/cmd_acap.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_acom.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_frs.xml
-    - /PhotocopierForms/nanotrasen_station/command/cmd_cc_goal.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_inv.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_cc_srt.xml
     - /PhotocopierForms/nanotrasen_station/command/cmd_dcr_award.xml

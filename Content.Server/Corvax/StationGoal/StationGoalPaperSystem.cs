@@ -36,7 +36,16 @@ namespace Content.Server.Corvax.StationGoal
             var goal = _random.Pick(availableGoals);
             return SendStationGoal(goal);
         }
+        public static string Random_planet_name()
+        {
+            var rand = new Random();
+            string name = $"{(char)rand.Next(65, 90)}-";
 
+            for (var i = 1; i <= 5; i++)
+                name += $"{rand.Next(0, 9)}{(i != 5 ? "-" : "")}";
+
+            return name;
+        }
         /// <summary>
         ///     Send a station goal to all faxes which are authorized to receive it.
         /// </summary>
@@ -52,7 +61,7 @@ namespace Content.Server.Corvax.StationGoal
                 var dataToCopy = new Dictionary<Type, IPhotocopiedComponentData>();
                 var paperDataToCopy = new PaperPhotocopiedData()
                 {
-                    Content = Loc.GetString(goal.Text),
+                    Content = Loc.GetString(goal.Text, ("rand_planet_name", Random_planet_name())),
                     StampState = "paper_stamp-centcom",
                     StampedBy = new List<StampDisplayInfo>{
                         new(){
