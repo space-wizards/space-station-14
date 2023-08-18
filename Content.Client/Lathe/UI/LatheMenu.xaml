@@ -1,9 +1,9 @@
-﻿<DefaultWindow
+<DefaultWindow
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
     MinSize="300 450"
-    SetSize="300 450">
+    SetSize="350 475">
     <BoxContainer
         Orientation="Vertical"
         VerticalExpand="True"
@@ -79,6 +79,13 @@
                 VerticalExpand="True">
             </ItemList>
         </BoxContainer>
+        <Button
+                Name="MaterialsEjectionButton"
+                Text="{Loc 'lathe-menu-materials-ejection'}"
+                TextAlign="Center"
+                Mode="Press"
+                StyleClasses="OpenRight">
+        </Button>
     </BoxContainer>
 </DefaultWindow>
 

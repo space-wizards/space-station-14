@@ -1,8 +1,8 @@
-﻿<DefaultWindow
+<DefaultWindow
     xmlns="https://spacestation14.io"
     Title="{Loc 'lathe-queue-menu-title'}"
     MinSize="300 450"
-    SetSize="300 450">
+    SetSize="350 475">
     <BoxContainer Orientation="Vertical">
         <BoxContainer
             Orientation="Horizontal"
@@ -19,7 +19,8 @@
                 SizeFlagsStretchRatio="3">
                 <Label
                     Name="NameLabel"
-                    RectClipContent="True">
+                    RectClipContent="True"
+                    Margin="36 0 0 0">                    
                 </Label>
                 <Label
                     Name="Description"
