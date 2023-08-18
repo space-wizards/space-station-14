@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
-  id: 4126
-  time: '2023-06-29T03:19:56.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed lubed item displacement after smart equip, type: Fix}
@@ -3022,3 +3017,8 @@ Entries:
   - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
   id: 4625
   time: '2023-08-18T01:41:53.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added two reboot themes., type: Add}
+  id: 4626
+  time: '2023-08-18T13:58:44.0000000+00:00'
