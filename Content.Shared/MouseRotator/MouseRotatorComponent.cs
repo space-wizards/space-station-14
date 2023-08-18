@@ -8,9 +8,29 @@ namespace Content.Shared.MouseRotator;
 /// This component allows overriding an entities local rotation based on the client's mouse movement
 /// </summary>
 /// <see cref="SharedMouseRotatorSystem"/>
-[RegisterComponent, NetworkedComponent]
-public sealed class MouseRotatorComponent : Component
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class MouseRotatorComponent : Component
 {
+    /// <summary>
+    ///     How much the desired angle needs to change before a predictive event is sent
+    /// </summary>
+    [DataField("angleTolerance")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public Angle AngleTolerance = Angle.FromDegrees(5.0);
+
+    /// <summary>
+    ///     The angle that will be lerped to
+    /// </summary>
+    [AutoNetworkedField]
+    [ViewVariables]
+    public Angle? GoalRotation;
+
+    /// <summary>
+    ///     Max degrees the entity can rotate per second
+    /// </summary>
+    [DataField("rotationSpeed")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public double RotationSpeed = float.MaxValue;
 }
 
 /// <summary>

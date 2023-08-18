@@ -14,8 +14,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IEyeManager _eye = default!;
-
-    private const double Precision = 0.001d;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Update(float frameTime)
     {
@@ -26,7 +25,7 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
 
         var player = _player.LocalPlayer?.ControlledEntity;
 
-        if (player == null || !HasComp<MouseRotatorComponent>(player))
+        if (player == null || !TryComp<MouseRotatorComponent>(player, out var rotator))
             return;
 
         var xform = Transform(player.Value);
@@ -40,12 +39,18 @@ public sealed class MouseRotatorSystem : SharedMouseRotatorSystem
 
         var angle = (mapPos.Position - xform.MapPosition.Position).ToWorldAngle();
 
-        var curRot = xform.LocalRotation;
+        var curRot = _transform.GetWorldRotation(xform);
 
-        // Don't raise event if mouse ~hasn't moved
-        if (curRot.EqualsApprox(angle, Precision))
-        {
+        // Don't raise event if mouse ~hasn't moved (or if too close to goal rotation already)
+        var diff = Angle.ShortestDistance(angle, curRot);
+        if (Math.Abs(diff.Theta) < rotator.AngleTolerance.Theta)
             return;
+
+        if (rotator.GoalRotation != null)
+        {
+            var goalDiff = Angle.ShortestDistance(angle, rotator.GoalRotation.Value);
+            if (Math.Abs(goalDiff.Theta) < rotator.AngleTolerance.Theta)
+                return;
         }
 
         RaisePredictiveEvent(new RequestMouseRotatorRotationEvent

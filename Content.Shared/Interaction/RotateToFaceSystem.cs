@@ -44,7 +44,7 @@ namespace Content.Shared.Interaction
                 if (Math.Abs(rotationDiff) > maxRotate)
                 {
                     var goalTheta = worldRot + Math.Sign(rotationDiff) * maxRotate;
-                    _transform.SetWorldRotation(xform, goalTheta);
+                    TryFaceAngle(uid, goalTheta, xform);
                     rotationDiff = (goalRotation - goalTheta);
 
                     if (Math.Abs(rotationDiff) > tolerance)
@@ -55,11 +55,11 @@ namespace Content.Shared.Interaction
                     return true;
                 }
 
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
             else
             {
-                _transform.SetWorldRotation(xform, goalRotation);
+                TryFaceAngle(uid, goalRotation, xform);
             }
 
             return true;
