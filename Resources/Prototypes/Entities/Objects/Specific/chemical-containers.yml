@@ -51,8 +51,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Carbon)
   id: JugCarbon
+  suffix: carbon
   noSpawn: true
   components:
     - type: Label
@@ -66,8 +66,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Iodine)
   id: JugIodine
+  suffix: iodine
   noSpawn: true
   components:
     - type: Label
@@ -81,8 +81,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Fluorine)
   id: JugFluorine
+  suffix: fluorine
   noSpawn: true
   components:
     - type: Label
@@ -96,8 +96,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Chlorine)
   id: JugChlorine
+  suffix: chlorine
   noSpawn: true
   components:
     - type: Label
@@ -111,8 +111,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Aluminium)
   id: JugAluminium
+  suffix: aluminium
   noSpawn: true
   components:
     - type: Label
@@ -126,8 +126,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Phosphorus)
   id: JugPhosphorus
+  suffix: phosphorus
   noSpawn: true
   components:
     - type: Label
@@ -141,8 +141,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Sulfur)
   id: JugSulfur
+  suffix: sulfur
   noSpawn: true
   components:
     - type: Label
@@ -156,8 +156,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Silicon)
   id: JugSilicon
+  suffix: silicon
   noSpawn: true
   components:
     - type: Label
@@ -171,8 +171,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Hydrogen)
   id: JugHydrogen
+  suffix: hydrogen
   noSpawn: true
   components:
     - type: Label
@@ -186,8 +186,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Lithium)
   id: JugLithium
+  suffix: lithium
   noSpawn: true
   components:
     - type: Label
@@ -201,8 +201,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Sodium)
   id: JugSodium
+  suffix: sodium
   noSpawn: true
   components:
     - type: Label
@@ -216,8 +216,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Potassium)
   id: JugPotassium
+  suffix: potassium
   noSpawn: true
   components:
     - type: Label
@@ -231,8 +231,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Radium)
   id: JugRadium
+  suffix: radium
   noSpawn: true
   components:
     - type: Label
@@ -246,8 +246,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Iron)
   id: JugIron
+  suffix: iron
   noSpawn: true
   components:
     - type: Label
@@ -261,8 +261,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Copper)
   id: JugCopper
+  suffix: copper
   noSpawn: true
   components:
     - type: Label
@@ -276,8 +276,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Gold)
   id: JugGold
+  suffix: gold
   noSpawn: true
   components:
     - type: Label
@@ -291,8 +291,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Mercury)
   id: JugMercury
+  suffix: mercury
   noSpawn: true
   components:
     - type: Label
@@ -306,8 +306,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Silver)
   id: JugSilver
+  suffix: silver
   noSpawn: true
   components:
     - type: Label
@@ -321,8 +321,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Ethanol)
   id: JugEthanol
+  suffix: ethanol
   noSpawn: true
   components:
     - type: Label
@@ -336,8 +336,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Sugar)
   id: JugSugar
+  suffix: sugar
   noSpawn: true
   components:
     - type: Label
@@ -351,8 +351,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Nitrogen)
   id: JugNitrogen
+  suffix: nitrogen
   noSpawn: true
   components:
     - type: Label
@@ -366,8 +366,8 @@
 
 - type: entity
   parent: Jug
-  name: jug (Oxygen)
   id: JugOxygen
+  suffix: oxygen
   noSpawn: true
   components:
     - type: Label
