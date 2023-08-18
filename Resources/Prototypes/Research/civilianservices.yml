@@ -50,7 +50,7 @@
     state: hamtr
   discipline: CivilianServices
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - HamtrHarness
   - HamtrLArm
@@ -85,7 +85,7 @@
     state: cameracase
   discipline: CivilianServices
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - SurveillanceCameraRouterCircuitboard
   - SurveillanceCameraWirelessRouterCircuitboard
@@ -165,7 +165,7 @@
     state: honker
   discipline: CivilianServices
   tier: 2
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - HonkerHarness
   - HonkerLArm

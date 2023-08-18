@@ -54,7 +54,7 @@ chat-speech-verb-suffix-exclamation-strong = !!
 chat-speech-verb-suffix-question = ?
 
 chat-speech-verb-default = says
-chat-speech-verb-exclamation = shouts
+chat-speech-verb-exclamation = exclaims
 chat-speech-verb-exclamation-strong = yells
 chat-speech-verb-question = asks
 
