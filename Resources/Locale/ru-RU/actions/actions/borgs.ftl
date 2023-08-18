@@ -1,5 +1,5 @@
-action-name-view-laws = Открыть Законы
+action-name-view-laws = Открыть законы
 action-description-view-laws = Отобразить законы, которым вы обязаны следовать.
 
-action-name-swap-module = Замена Модуля
+action-name-swap-module = Заменить модуль
 action-description-swap-module = Установить этот модуль, позволяя вам использовать инструменты, предоставляемые им.
