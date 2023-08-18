@@ -60,7 +60,7 @@
   name: research-technology-power-generation
   icon:
     sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
+    state: portgen0
   discipline: Industrial
   tier: 1
   cost: 10000
