@@ -2,7 +2,7 @@
   id: FactoryAdvancedAssembler
   parent: BaseFactoryMachine
   name: factory advanced assembler
-  description: assembles advanced parts for contraband
+  description: assembles advanced parts for contraband # placeholder
   components:
     - type: Sprite
       sprite: Structures/Machines/autolathe.rsi
