@@ -232,7 +232,7 @@ public sealed partial class ChatSystem : SharedChatSystem
                 SendEntityWhisper(source, message, range, null, nameOverride, hideLog, ignoreActionBlocker);
                 break;
             case InGameICChatType.Emote:
-                SendEntityEmote(source, message, range, nameOverride, hideLog, ignoreActionBlocker);
+                SendEntityEmote(source, message, range, nameOverride, hideLog: hideLog, ignoreActionBlocker: ignoreActionBlocker);
                 break;
         }
     }
