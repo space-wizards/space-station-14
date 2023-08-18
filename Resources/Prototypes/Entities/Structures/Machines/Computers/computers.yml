@@ -317,6 +317,9 @@
     color: "#1f8c28"
   - type: Computer
     board: StationRecordsComputerCircuitboard
+  - type: GuideHelp
+    guides:
+    - DNA
 
 - type: entity
   parent: BaseComputer

@@ -92,8 +92,7 @@
       sound:
         path: /Audio/Ambience/Objects/vending_machine_hum.ogg
     - type: GuideHelp
-      guides:
-      - TEG
+      guides: [ TEG, Power ]
 
 - type: entity
   id: TegCirculator
@@ -150,8 +149,7 @@
     - type: Anchorable
     - type: Pullable
     - type: GuideHelp
-      guides:
-      - TEG
+      guides: [ TEG, Power ]
 
     # functionality
     - type: NodeContainer
