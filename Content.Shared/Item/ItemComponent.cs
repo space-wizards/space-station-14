@@ -1,4 +1,5 @@
 using Content.Shared.Hands.Components;
+using Content.Shared.Hands.EntitySystems;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -10,13 +11,17 @@ namespace Content.Shared.Item;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-[Access(typeof(SharedItemSystem))]
+[Access(typeof(SharedItemSystem), typeof(SharedHandsSystem))]
 public sealed class ItemComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("size")]
     [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
     public int Size = 5;
+
+    [DataField("pickupTime")]
+    [Access(typeof(SharedItemSystem), Other = AccessPermissions.ReadExecute)]
+    public float PickupTime = 0;
 
     [Access(typeof(SharedItemSystem))]
     [DataField("inhandVisuals")]

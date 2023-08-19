@@ -1,19 +1,26 @@
 using System.Numerics;
 using Content.Shared.Database;
+using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
+using Content.Shared.Random;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    [Dependency] protected SharedDoAfterSystem DoAfter = default!;
     private void InitializePickup()
     {
         SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
+        SubscribeLocalEvent<HandsComponent, PickUpDoAfterEvent>(OnDoAfter);
     }
 
     protected virtual void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
@@ -105,23 +112,35 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (!CanPickupToHand(uid, entity, hand, checkActionBlocker, handsComp, item))
             return false;
 
-        if (animate)
+        if (item.PickupTime > 0)
         {
-            var xform = Transform(uid);
-            var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
-            var itemXform = Transform(entity);
-            var itemPos = itemXform.MapPosition;
-
-            if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
-                && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
+            if (TryComp<MobStateComponent>(entity, out var stateComp))
             {
-                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
-                PickupAnimation(entity, initialPosition, xform.LocalPosition, itemXform.LocalRotation, animateUser ? null : uid);
-            }
-        }
-        DoPickup(uid, hand, entity, handsComp);
+                if (stateComp.CurrentState == MobState.Critical || stateComp.CurrentState == MobState.Dead)
+                {
+                    DoPickup(uid, hand, entity, handsComp, animateUser, animate);
+                    return true;
+                }
 
+                var args = new DoAfterArgs(uid, item.PickupTime, new PickUpDoAfterEvent(hand, entity, animate, animateUser), uid, entity)
+                {
+                    NeedHand = true,
+                    BreakOnDamage = true,
+                    BreakOnHandChange = true,
+                    BreakOnTargetMove = true,
+                    BreakOnUserMove = true,
+                    BlockDuplicate = true,
+                    DuplicateCondition = DuplicateConditions.All
+                };
+
+                if (!DoAfter.TryStartDoAfter(args))
+                {
+                    return false;
+                }
+                return true;
+            }            
+        }
+        DoPickup(uid, hand, entity, handsComp, animateUser, animate);
         return true;
     }
 
@@ -210,10 +229,27 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Puts an entity into the player's hand, assumes that the insertion is allowed. In general, you should not be calling this function directly.
     /// </summary>
-    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, HandsComponent? hands = null)
+    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, HandsComponent? hands = null, bool animateUser = false,
+        bool animate = true)
     {
         if (!Resolve(uid, ref hands))
             return;
+
+        if (animate)
+        {
+            var xform = Transform(uid);
+            var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
+            var itemXform = Transform(entity);
+            var itemPos = itemXform.MapPosition;
+
+            if (itemPos.MapId == xform.MapID
+                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
+                && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
+            {
+                var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
+                PickupAnimation(entity, initialPosition, xform.LocalPosition, itemXform.LocalRotation, animateUser ? null : uid);
+            }
+        }
 
         var handContainer = hand.Container;
         if (handContainer == null || handContainer.ContainedEntity != null)
@@ -233,6 +269,29 @@ public abstract partial class SharedHandsSystem : EntitySystem
             RaiseLocalEvent(entity, new HandSelectedEvent(uid), false);
     }
 
+    public void OnDoAfter(EntityUid uid, HandsComponent component, PickUpDoAfterEvent args)
+    {
+        if (!args.Cancelled)
+            DoPickup(uid, args.HandForPickup, args.EntityForPickup, component, args.AnimateUser, args.Animate);
+    }
+
     public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
         EntityUid? exclude);
+
+    [Serializable, NetSerializable]
+    public sealed class PickUpDoAfterEvent : SimpleDoAfterEvent {
+        public Hand HandForPickup;
+        public EntityUid EntityForPickup;
+        public bool Animate;
+        public bool AnimateUser;
+        public PickUpDoAfterEvent(Hand hand, EntityUid entityForPickup, bool animate, bool animateUser)
+        {
+            HandForPickup = hand;
+            EntityForPickup = entityForPickup;
+            Animate = animate;
+            AnimateUser = animateUser;
+        }
+
+
+    }
 }

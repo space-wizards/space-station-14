@@ -2254,6 +2254,7 @@
       state: hamster-0
   - type: Item
     size: 5
+    pickupTime: 2
   - type: Physics
   - type: Fixtures
     fixtures:
