@@ -26,7 +26,7 @@ public sealed partial class AnomalySystem
         if (args.Length != 1)
             shell.WriteError("Argument length must be 1");
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid))
             return;
 
         if (!TryComp<AnomalyComponent>(uid, out var anomaly))
@@ -41,7 +41,7 @@ public sealed partial class AnomalySystem
         if (args.Length != 1)
             shell.WriteError("Argument length must be 1");
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid))
             return;
 
         if (!HasComp<AnomalyComponent>(uid))

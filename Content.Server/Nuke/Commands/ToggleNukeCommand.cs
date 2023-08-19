@@ -21,7 +21,7 @@ public sealed class ToggleNukeCommand : LocalizedCommands
 
         if (args.Length >= 2)
         {
-            if (!EntityUid.TryParse(args[1], out bombUid))
+            if (!NetEntity.TryParse(args[1], out var bombNet) || !_entManager.TryGetEntity(bombNet, out bombUid))
             {
                 shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
                 return;

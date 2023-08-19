@@ -10,6 +10,9 @@ namespace Content.Server.Administration.Commands;
 [AdminCommand(AdminFlags.Fun)]
 public sealed class PolymorphCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+
     public string Command => "polymorph";
 
     public string Description => Loc.GetString("polymorph-command-description");
@@ -24,24 +27,21 @@ public sealed class PolymorphCommand : IConsoleCommand
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var entityUid))
+        if (!NetEntity.TryParse(args[0], out var entityUidNet) || !_entManager.TryGetEntity(entityUidNet, out var entityUid))
         {
             shell.WriteError(Loc.GetString("shell-entity-uid-must-be-number"));
             return;
         }
 
-        var protoManager = IoCManager.Resolve<IPrototypeManager>();
-
-        if (!protoManager.TryIndex<PolymorphPrototype>(args[1], out var polyproto))
+        if (!_protoManager.TryIndex<PolymorphPrototype>(args[1], out var polyproto))
         {
             shell.WriteError(Loc.GetString("polymorph-not-valid-prototype-error"));
             return;
         }
 
-        var entityManager = IoCManager.Resolve<IEntityManager>();
-        var polySystem = entityManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
+        var polySystem = _entManager.EntitySysManager.GetEntitySystem<PolymorphSystem>();
 
-        entityManager.EnsureComponent<PolymorphableComponent>(entityUid);
+        _entManager.EnsureComponent<PolymorphableComponent>(entityUid);
         polySystem.PolymorphEntity(entityUid, polyproto);
     }
 }

@@ -122,7 +122,7 @@ public sealed partial class ReplaySpectatorSystem
         if (args.Length != 1)
             return CompletionResult.Empty;
 
-        return CompletionResult.FromHintOptions(CompletionHelper.EntityUids(args[0],
+        return CompletionResult.FromHintOptions(CompletionHelper.NetEntities(args[0],
             EntityManager), Loc.GetString("cmd-replay-spectate-hint"));
     }
 }

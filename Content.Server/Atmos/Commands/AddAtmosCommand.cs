@@ -24,21 +24,19 @@ namespace Content.Server.Atmos.Commands
                 return;
             }
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-
-            if (!EntityUid.TryParse(args[0], out var euid))
+            if (!NetEntity.TryParse(args[0], out var eNet) || !_entities.TryGetEntity(eNet, out var euid))
             {
                 shell.WriteError($"Failed to parse euid '{args[0]}'.");
                 return;
             }
 
-            if (!entMan.HasComponent<MapGridComponent>(euid))
+            if (!_entities.HasComponent<MapGridComponent>(euid))
             {
                 shell.WriteError($"Euid '{euid}' does not exist or is not a grid.");
                 return;
             }
 
-            var atmos = entMan.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
+            var atmos = _entities.EntitySysManager.GetEntitySystem<AtmosphereSystem>();
 
             if (atmos.HasAtmosphere(euid))
             {
