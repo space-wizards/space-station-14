@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix cave ores., type: Fix}
-  id: 4131
-  time: '2023-06-29T12:36:28.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Unlocking research on the RND console now requires science access.,
@@ -3033,3 +3028,9 @@ Entries:
       uplink, type: Remove}
   id: 4630
   time: '2023-08-19T22:54:53.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Solar Flares can randomly disable up to 2 radio channels, rather than
+      just service. Syndicate and CentCom channels remain unaffected.', type: Tweak}
+  id: 4631
+  time: '2023-08-19T23:39:36.0000000+00:00'
