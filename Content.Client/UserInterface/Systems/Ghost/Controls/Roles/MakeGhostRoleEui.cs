@@ -33,7 +33,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
                 return;
             }
 
-            _window.SetEntity(_entManager.ToEntity(uiState.EntityUid));
+            _window.SetEntity(_entManager.GetEntity(uiState.EntityUid));
         }
 
         public override void Opened()

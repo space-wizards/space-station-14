@@ -38,7 +38,7 @@ public sealed partial class GatewayWindow : FancyWindow,
     public void UpdateState(GatewayBoundUserInterfaceState state)
     {
         _destinations = state.Destinations;
-        _current = _entManager.ToEntity(state.Current);
+        _current = _entManager.GetEntity(state.Current);
         _nextClose = state.NextClose;
         _lastOpen = state.LastOpen;
 
@@ -67,7 +67,7 @@ public sealed partial class GatewayWindow : FancyWindow,
         var now = _timing.CurTime;
         foreach (var dest in _destinations)
         {
-            var uid = _entManager.ToEntity(dest.Item1);
+            var uid = _entManager.GetEntity(dest.Item1);
             var name = dest.Item2;
             var nextReady = dest.Item3;
             var busy = dest.Item4;
@@ -104,7 +104,7 @@ public sealed partial class GatewayWindow : FancyWindow,
                 OpenPortal?.Invoke(uid);
             };
 
-            if (uid == _entManager.ToEntity(state.Current))
+            if (uid == _entManager.GetEntity(state.Current))
             {
                 openButton.AddStyleClass(StyleBase.ButtonCaution);
             }

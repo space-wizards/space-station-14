@@ -31,7 +31,7 @@ namespace Content.Server.Administration.UI
         {
             return new SetOutfitEuiState
             {
-                TargetNetEntity = _entManager.ToNetEntity(_target)
+                TargetNetEntity = _entManager.GetNetEntity(_target)
             };
         }
 

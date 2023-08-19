@@ -35,7 +35,7 @@ namespace Content.Client.Administration
 
             foreach (var playerInfo in _system.PlayerList)
             {
-                var entity = _entityManager.ToEntity(playerInfo.NetEntity);
+                var entity = _entityManager.GetEntity(playerInfo.NetEntity);
 
                 // Otherwise the entity can not exist yet
                 if (entity == null || !_entityManager.EntityExists(entity))

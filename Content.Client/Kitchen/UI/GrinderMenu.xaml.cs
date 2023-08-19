@@ -57,7 +57,7 @@ namespace Content.Client.Kitchen.UI
             ChamberContentBox.EjectButton.Disabled = state.ChamberContents.Length <= 0;
             GrindButton.Disabled = !state.CanGrind || !state.Powered;
             JuiceButton.Disabled = !state.CanJuice || !state.Powered;
-            RefreshContentsDisplay(state.ReagentQuantities, _entityManager.ToEntityArray(state.ChamberContents), state.HasBeakerIn);
+            RefreshContentsDisplay(state.ReagentQuantities, _entityManager.GetEntityArray(state.ChamberContents), state.HasBeakerIn);
         }
 
         public void HandleMessage(BoundUserInterfaceMessage message)

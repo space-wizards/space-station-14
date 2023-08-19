@@ -27,11 +27,11 @@ public abstract class MovementTest : InteractionTest
     public override async Task Setup()
     {
         await base.Setup();
-        var pCoords = SEntMan.ToCoordinates(PlayerCoords);
+        var pCoords = SEntMan.GetCoordinates(PlayerCoords);
 
         for (var i = -Tiles; i <= Tiles; i++)
         {
-            await SetTile(Plating, SEntMan.ToNetCoordinates(pCoords.Offset(new Vector2(i, 0))), MapData.MapGrid);
+            await SetTile(Plating, SEntMan.GetNetCoordinates(pCoords.Offset(new Vector2(i, 0))), MapData.MapGrid);
         }
         AssertGridCount(1);
 
@@ -57,7 +57,7 @@ public abstract class MovementTest : InteractionTest
             return 0;
         }
 
-        var delta = Transform.GetWorldPosition(SEntMan.ToEntity(target.Value)) - Transform.GetWorldPosition(SEntMan.ToEntity(other ?? Player));
+        var delta = Transform.GetWorldPosition(SEntMan.GetEntity(target.Value)) - Transform.GetWorldPosition(SEntMan.GetEntity(other ?? Player));
         return delta.X;
     }
 }

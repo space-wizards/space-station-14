@@ -33,7 +33,7 @@ namespace Content.Client.UserInterface.Systems.Ghost.Controls
                         ? Loc.GetString("ghost-target-window-current-button", ("name", w.DisplayName))
                         : w.DisplayName;
 
-                    return (name, entManager.ToEntity(w.Entity));
+                    return (name, entManager.GetEntity(w.Entity));
                 })
                 .ToList();
         }

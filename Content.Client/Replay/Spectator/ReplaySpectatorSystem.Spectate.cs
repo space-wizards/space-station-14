@@ -100,11 +100,13 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var netEntity))
         {
             shell.WriteError(Loc.GetString("cmd-parse-failure-uid", ("arg", args[0])));
             return;
         }
+
+        var uid = ToEntity(netEntity);
 
         if (!Exists(uid))
         {

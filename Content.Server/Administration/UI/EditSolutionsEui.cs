@@ -37,7 +37,7 @@ namespace Content.Server.Administration.UI
         public override EuiStateBase GetNewState()
         {
             var solutions = _entityManager.GetComponentOrNull<SolutionContainerManagerComponent>(Target)?.Solutions;
-            return new EditSolutionsEuiState(_entityManager.ToNetEntity(Target), solutions);
+            return new EditSolutionsEuiState(_entityManager.GetNetEntity(Target), solutions);
         }
     }
 }

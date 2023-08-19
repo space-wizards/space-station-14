@@ -478,7 +478,7 @@ namespace Content.Server.Kitchen.EntitySystems
             if (!HasContents(component) || HasComp<ActiveMicrowaveComponent>(uid))
                 return;
 
-            component.Storage.Remove(EntityManager.ToEntity(args.EntityID));
+            component.Storage.Remove(EntityManager.GetEntity(args.EntityID));
             UpdateUserInterfaceState(uid, component);
         }
 

@@ -200,9 +200,9 @@ public sealed class DoAfterArgs
         EventTarget = eventTarget;
         Event = @event;
 
-        NetUser = entManager.ToNetEntity(User);
-        NetTarget = entManager.ToNetEntity(Target);
-        NetUsed = entManager.ToNetEntity(Used);
+        NetUser = entManager.GetNetEntity(User);
+        NetTarget = entManager.GetNetEntity(Target);
+        NetUsed = entManager.GetNetEntity(Used);
     }
 
     private DoAfterArgs()

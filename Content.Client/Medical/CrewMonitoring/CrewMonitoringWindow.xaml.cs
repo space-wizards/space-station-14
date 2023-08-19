@@ -64,8 +64,8 @@ namespace Content.Client.Medical.CrewMonitoring
             // add a row for each sensor
             foreach (var sensor in stSensors.OrderBy(a => a.Name))
             {
-                var sensorEntity = _entManager.ToEntity(sensor.SuitSensorUid);
-                var coordinates = _entManager.ToCoordinates(sensor.Coordinates);
+                var sensorEntity = _entManager.GetEntity(sensor.SuitSensorUid);
+                var coordinates = _entManager.GetCoordinates(sensor.Coordinates);
 
                 // add button with username
                 var nameButton = new CrewMonitoringButton()
@@ -148,7 +148,7 @@ namespace Content.Client.Medical.CrewMonitoring
 
         private BoxContainer GetPositionBox(SuitSensorStatus sensor, Vector2 monitorCoordsInStationSpace, bool snap, float precision)
         {
-            EntityCoordinates? coordinates = _entManager.ToCoordinates(sensor.Coordinates);
+            EntityCoordinates? coordinates = _entManager.GetCoordinates(sensor.Coordinates);
             var box = new BoxContainer() { Orientation = LayoutOrientation.Horizontal };
 
             if (coordinates == null || _stationUid == null)

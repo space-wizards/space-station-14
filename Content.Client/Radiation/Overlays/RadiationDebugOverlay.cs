@@ -61,7 +61,7 @@ public sealed class RadiationDebugOverlay : Overlay
 
             foreach (var (netGrid, blockers) in ray.Blockers)
             {
-                var gridUid = _entityManager.ToEntity(netGrid);
+                var gridUid = _entityManager.GetEntity(netGrid);
 
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;
@@ -86,7 +86,7 @@ public sealed class RadiationDebugOverlay : Overlay
         var query = _entityManager.GetEntityQuery<TransformComponent>();
         foreach (var (netGrid, resMap) in resistance)
         {
-            var gridUid = _entityManager.ToEntity(netGrid);
+            var gridUid = _entityManager.GetEntity(netGrid);
 
             if (!_mapManager.TryGetGrid(gridUid, out var grid))
                 continue;
@@ -125,7 +125,7 @@ public sealed class RadiationDebugOverlay : Overlay
 
             foreach (var (netGrid, blockers) in ray.Blockers)
             {
-                var gridUid = _entityManager.ToEntity(netGrid);
+                var gridUid = _entityManager.GetEntity(netGrid);
 
                 if (!_mapManager.TryGetGrid(gridUid, out var grid))
                     continue;

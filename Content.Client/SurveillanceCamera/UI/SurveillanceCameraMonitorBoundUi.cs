@@ -80,7 +80,7 @@ public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInter
             return;
         }
 
-        var active = EntMan.ToEntity(cast.ActiveCamera);
+        var active = EntMan.GetEntity(cast.ActiveCamera);
 
         if (active == null)
         {

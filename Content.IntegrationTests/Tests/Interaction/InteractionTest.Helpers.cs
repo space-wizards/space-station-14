@@ -42,7 +42,7 @@ public abstract partial class InteractionTest
 
         await Client.WaitPost(() =>
         {
-            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.ToCoordinates(TargetCoords), Direction.South, out var clientTarget),
+            Assert.That(CConSys.TrySpawnGhost(proto, CEntMan.GetCoordinates(TargetCoords), Direction.South, out var clientTarget),
                 Is.EqualTo(shouldSucceed));
 
             if (!shouldSucceed)
@@ -65,7 +65,7 @@ public abstract partial class InteractionTest
 
         // Please someone purge async construction code
         Task<bool> task = default!;
-        await Server.WaitPost(() => task = SConstruction.TryStartItemConstruction(prototype, SEntMan.ToEntity(Player)));
+        await Server.WaitPost(() => task = SConstruction.TryStartItemConstruction(prototype, SEntMan.GetEntity(Player)));
 
         Task? tickTask = null;
         while (!task.IsCompleted)
@@ -93,7 +93,7 @@ public abstract partial class InteractionTest
         Target = NetEntity.Invalid;
         await Server.WaitPost(() =>
         {
-            Target = SEntMan.ToNetEntity(SEntMan.SpawnEntity(prototype, SEntMan.ToCoordinates(TargetCoords)));
+            Target = SEntMan.GetNetEntity(SEntMan.SpawnEntity(prototype, SEntMan.GetCoordinates(TargetCoords)));
         });
 
         await RunTicks(5);
@@ -106,7 +106,7 @@ public abstract partial class InteractionTest
     protected async Task StartDeconstruction(string prototype)
     {
         await SpawnTarget(prototype);
-        var serverTarget = SEntMan.ToEntity(Target);
+        var serverTarget = SEntMan.GetEntity(Target);
         Assert.That(SEntMan.TryGetComponent(serverTarget, out ConstructionComponent? comp));
         await Server.WaitPost(() => SConstruction.SetPathfindingTarget(serverTarget!.Value, comp!.DeconstructionNode, comp));
         await RunTicks(5);
@@ -121,7 +121,7 @@ public abstract partial class InteractionTest
         {
             await Server.WaitPost(() =>
             {
-                Assert.That(HandSys.TryDrop(SEntMan.ToEntity(Player), null, false, true, Hands));
+                Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), null, false, true, Hands));
                 SEntMan.DeleteEntity(held);
                 SLogger.Debug($"Deleting held entity");
             });
@@ -166,12 +166,12 @@ public abstract partial class InteractionTest
         }
 
         // spawn and pick up the new item
-        var item = await SpawnEntity(entity, SEntMan.ToCoordinates(PlayerCoords));
+        var item = await SpawnEntity(entity, SEntMan.GetCoordinates(PlayerCoords));
         WelderComponent? welder = null;
 
         await Server.WaitPost(() =>
         {
-            var playerEnt = SEntMan.ToEntity(Player);
+            var playerEnt = SEntMan.GetEntity(Player);
 
             Assert.That(HandSys.TryPickup(playerEnt, item, Hands.ActiveHand, false, false, false, Hands));
 
@@ -204,7 +204,7 @@ public abstract partial class InteractionTest
         if (deleteHeld)
             await DeleteHeldEntity();
 
-        var uid = SEntMan.ToEntity(entity);
+        var uid = SEntMan.GetEntity(entity);
 
         if (!SEntMan.TryGetComponent(uid, out ItemComponent? item))
         {
@@ -214,7 +214,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryPickup(SEntMan.ToEntity(Player), uid.Value, Hands.ActiveHand, false, false, false, Hands, item));
+            Assert.That(HandSys.TryPickup(SEntMan.GetEntity(Player), uid.Value, Hands.ActiveHand, false, false, false, Hands, item));
         });
 
         await RunTicks(1);
@@ -234,7 +234,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            Assert.That(HandSys.TryDrop(SEntMan.ToEntity(Player), handsComp: Hands));
+            Assert.That(HandSys.TryDrop(SEntMan.GetEntity(Player), handsComp: Hands));
         });
 
         await RunTicks(1);
@@ -256,7 +256,7 @@ public abstract partial class InteractionTest
 
         await Server.WaitPost(() =>
         {
-            InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.GetComponent<TransformComponent>(target).Coordinates, target);
+            InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetComponent<TransformComponent>(target).Coordinates, target);
         });
     }
 
@@ -283,7 +283,7 @@ public abstract partial class InteractionTest
         // (e.g., servers attempt to assemble construction examine hints).
         if (Target != null)
         {
-            await Client.WaitPost(() => ExamineSys.DoExamine(CEntMan.ToEntity(Target.Value)));
+            await Client.WaitPost(() => ExamineSys.DoExamine(CEntMan.GetEntity(Target.Value)));
         }
 
         await PlaceInHands(entity);
@@ -299,13 +299,13 @@ public abstract partial class InteractionTest
 
         if ((clientTarget?.IsValid() != true || CEntMan.Deleted(clientTarget)) && (Target == null || Target.Value.IsValid()))
         {
-            await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.ToEntity(Player), SEntMan.ToCoordinates(TargetCoords), SEntMan.ToEntity(Target)));
+            await Server.WaitPost(() => InteractSys.UserInteraction(SEntMan.GetEntity(Player), SEntMan.GetCoordinates(TargetCoords), SEntMan.GetEntity(Target)));
             await RunTicks(1);
         }
         else
         {
             // The entity is client-side, so attempt to start construction
-            var clientEnt = ClientTarget ?? CEntMan.ToEntity(Target);
+            var clientEnt = ClientTarget ?? CEntMan.GetEntity(Target);
 
             await Client.WaitPost(() => CConSys.TryStartConstruction(clientEnt!.Value));
             await RunTicks(5);
@@ -378,7 +378,7 @@ public abstract partial class InteractionTest
         {
             foreach (var doAfter in doAfters)
             {
-                DoAfterSys.Cancel(SEntMan.ToEntity(Player), doAfter.Index, DoAfters);
+                DoAfterSys.Cancel(SEntMan.GetEntity(Player), doAfter.Index, DoAfters);
             }
         });
 
@@ -442,7 +442,7 @@ public abstract partial class InteractionTest
             return;
         }
 
-        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.ToEntity(target.Value));
+        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.GetEntity(target.Value));
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
     }
 
@@ -461,7 +461,7 @@ public abstract partial class InteractionTest
             return;
         }
 
-        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.ToEntity(target.Value));
+        var meta = SEntMan.GetComponent<MetaDataComponent>(SEntMan.GetEntity(target.Value));
         Assert.That(meta.EntityPrototype?.ID, Is.EqualTo(prototype));
     }
 
@@ -474,8 +474,8 @@ public abstract partial class InteractionTest
             return;
         }
 
-        var sXform = SEntMan.GetComponent<TransformComponent>(SEntMan.ToEntity(target.Value));
-        var cXform = CEntMan.GetComponent<TransformComponent>(CEntMan.ToEntity(target.Value));
+        var sXform = SEntMan.GetComponent<TransformComponent>(SEntMan.GetEntity(target.Value));
+        var cXform = CEntMan.GetComponent<TransformComponent>(CEntMan.GetEntity(target.Value));
 
         Assert.Multiple(() =>
         {
@@ -495,8 +495,8 @@ public abstract partial class InteractionTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(SEntMan.Deleted(SEntMan.ToEntity(target)), Is.EqualTo(deleted));
-            Assert.That(CEntMan.Deleted(CEntMan.ToEntity(target)), Is.EqualTo(deleted));
+            Assert.That(SEntMan.Deleted(SEntMan.GetEntity(target)), Is.EqualTo(deleted));
+            Assert.That(CEntMan.Deleted(CEntMan.GetEntity(target)), Is.EqualTo(deleted));
         });
     }
 
@@ -512,7 +512,7 @@ public abstract partial class InteractionTest
             return;
         }
 
-        Assert.That(SEntMan.HasComponent<T>(SEntMan.ToEntity(target)), Is.EqualTo(hasComp));
+        Assert.That(SEntMan.HasComponent<T>(SEntMan.GetEntity(target)), Is.EqualTo(hasComp));
     }
 
     /// <summary>
@@ -525,7 +525,7 @@ public abstract partial class InteractionTest
             : new Tile(TileMan[proto].TileId);
 
         var tile = Tile.Empty;
-        var serverCoords = SEntMan.ToCoordinates(coords ?? TargetCoords);
+        var serverCoords = SEntMan.GetCoordinates(coords ?? TargetCoords);
         var pos = serverCoords.ToMap(SEntMan, Transform);
         await Server.WaitPost(() =>
         {
@@ -572,7 +572,7 @@ public abstract partial class InteractionTest
             foreach (var ent in entities)
             {
                 var transform = xformQuery.GetComponent(ent);
-                var netEnt = SEntMan.ToNetEntity(ent);
+                var netEnt = SEntMan.GetNetEntity(ent);
 
                 if (ent == transform.MapUid
                     || ent == transform.GridUid
@@ -684,7 +684,7 @@ public abstract partial class InteractionTest
         if (target == null)
             Assert.Fail("No target specified");
 
-        return SEntMan.GetComponent<T>(SEntMan.ToEntity(target!.Value));
+        return SEntMan.GetComponent<T>(SEntMan.GetEntity(target!.Value));
     }
 
     /// <summary>
@@ -696,13 +696,13 @@ public abstract partial class InteractionTest
             ? Tile.Empty
             : new Tile(TileMan[proto].TileId);
 
-        var pos = SEntMan.ToCoordinates(coords ?? TargetCoords).ToMap(SEntMan, Transform);
+        var pos = SEntMan.GetCoordinates(coords ?? TargetCoords).ToMap(SEntMan, Transform);
 
         await Server.WaitPost(() =>
         {
             if (grid != null || MapMan.TryFindGridAt(pos, out var gridUid, out grid))
             {
-                grid.SetTile(SEntMan.ToCoordinates(coords ?? TargetCoords), tile);
+                grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
                 return;
             }
 
@@ -713,7 +713,7 @@ public abstract partial class InteractionTest
             gridUid = grid.Owner;
             var gridXform = SEntMan.GetComponent<TransformComponent>(gridUid);
             Transform.SetWorldPosition(gridXform, pos.Position);
-            grid.SetTile(SEntMan.ToCoordinates(coords ?? TargetCoords), tile);
+            grid.SetTile(SEntMan.GetCoordinates(coords ?? TargetCoords), tile);
 
             if (!MapMan.TryFindGridAt(pos, out _, out grid))
                 Assert.Fail("Failed to create grid?");
@@ -785,19 +785,19 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        var clientTarget = CEntMan.ToEntity(target);
+        var clientTarget = CEntMan.GetEntity(target);
 
         if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(clientTarget, out var ui))
         {
             if (shouldSucceed)
-                Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.ToEntity(target.Value))} does not have a bui component");
+                Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have a bui component");
             return false;
         }
 
         if (!ui.OpenInterfaces.TryGetValue(key, out bui))
         {
             if (shouldSucceed)
-                Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.ToEntity(target.Value))} does not have an open bui with key {key.GetType()}.{key}.");
+                Assert.Fail($"Entity {SEntMan.ToPrettyString(SEntMan.GetEntity(target.Value))} does not have an open bui with key {key.GetType()}.{key}.");
             return false;
         }
 

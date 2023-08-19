@@ -126,7 +126,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
                     Text = destination.Destination,
                 };
 
-                _destinations[button] = _entManager.ToEntity(destination.Entity);
+                _destinations[button] = _entManager.GetEntity(destination.Entity);
                 button.OnPressed += OnHyperspacePressed;
                 HyperspaceDestinations.AddChild(button);
             }
@@ -183,7 +183,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
         foreach (var dock in docks)
         {
-            var grid = _docks.GetOrNew(_entManager.ToEntity(dock.Coordinates.NetEntity));
+            var grid = _docks.GetOrNew(_entManager.GetEntity(dock.Coordinates.NetEntity));
             grid.Add(dock);
         }
 
@@ -196,7 +196,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
             foreach (var state in gridDocks)
             {
-                var pressed = _entManager.ToEntity(state.Entity) == DockingScreen.ViewedDock;
+                var pressed = _entManager.GetEntity(state.Entity) == DockingScreen.ViewedDock;
 
                 string suffix;
 
@@ -233,7 +233,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
 
     private void OnDockMouseEntered(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
     {
-        RadarScreen.HighlightedDock = _entManager.ToEntity(state.Entity);
+        RadarScreen.HighlightedDock = _entManager.GetEntity(state.Entity);
     }
 
     private void OnDockMouseExited(GUIMouseHoverEventArgs obj, DockingInterfaceState state)
@@ -246,7 +246,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// </summary>
     private void OnDockToggled(BaseButton.ButtonEventArgs obj, DockingInterfaceState state)
     {
-        var ent = _entManager.ToEntity(state.Entity);
+        var ent = _entManager.GetEntity(state.Entity);
 
         if (_selectedDock != null)
         {
@@ -276,7 +276,7 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
         {
             if (_shuttleUid != null)
             {
-                DockingScreen.Coordinates = _entManager.ToCoordinates(state.Coordinates);
+                DockingScreen.Coordinates = _entManager.GetCoordinates(state.Coordinates);
                 DockingScreen.Angle = state.Angle;
             }
             else

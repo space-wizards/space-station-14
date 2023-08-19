@@ -38,7 +38,7 @@ public sealed partial class BandMenu : DefaultWindow
 
         foreach (var (nent, name) in nearby)
         {
-            var uid = entManager.ToEntity(nent);
+            var uid = entManager.GetEntity(nent);
             var item = BandList.AddItem(name, null, true, uid);
             item.Selected = _owner.Instrument?.Master == uid;
         }

@@ -244,7 +244,7 @@ namespace Content.Client.Verbs.UI
 
         private void HandleVerbsResponse(VerbsResponseEvent msg)
         {
-            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != EntityManager.ToEntity(msg.Entity))
+            if (OpenMenu == null || !OpenMenu.Visible || CurrentTarget != EntityManager.GetEntity(msg.Entity))
                 return;
 
             AddServerVerbs(msg.Verbs, OpenMenu);

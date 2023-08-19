@@ -17,7 +17,7 @@ namespace Content.Server.Ghost.Roles.UI
 
         public override EuiStateBase GetNewState()
         {
-            return new MakeGhostRoleEuiState(_entManager.ToNetEntity(EntityUid));
+            return new MakeGhostRoleEuiState(_entManager.GetNetEntity(EntityUid));
         }
 
         public override void Closed()

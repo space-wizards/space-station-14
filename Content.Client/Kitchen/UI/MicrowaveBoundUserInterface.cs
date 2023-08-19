@@ -36,7 +36,7 @@ namespace Content.Client.Kitchen.UI
             _menu.EjectButton.OnPressed += _ => SendMessage(new MicrowaveEjectMessage());
             _menu.IngredientsList.OnItemSelected += args =>
             {
-                SendMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.ToNetEntity(_solids[args.ItemIndex])));
+                SendMessage(new MicrowaveEjectSolidIndexedMessage(EntMan.GetNetEntity(_solids[args.ItemIndex])));
             };
 
             _menu.OnCookTimeSelected += (args, buttonIndex) =>
@@ -68,7 +68,7 @@ namespace Content.Client.Kitchen.UI
             }
 
             _menu?.ToggleBusyDisableOverlayPanel(cState.IsMicrowaveBusy);
-            RefreshContentsDisplay(_entManager.ToEntityArray(cState.ContainedSolids));
+            RefreshContentsDisplay(_entManager.GetEntityArray(cState.ContainedSolids));
 
             if (_menu == null) return;
 

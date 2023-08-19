@@ -193,7 +193,7 @@ public sealed class ActionButton : Control
     private void UpdateItemIcon()
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
-        var entIcon = entityManager.ToEntity(Action?.EntityIcon);
+        var entIcon = entityManager.GetEntity(Action?.EntityIcon);
 
         if (!entityManager.EntityExists(entIcon))
         {

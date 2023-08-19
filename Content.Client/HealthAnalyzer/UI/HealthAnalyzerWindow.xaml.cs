@@ -24,7 +24,7 @@ namespace Content.Client.HealthAnalyzer.UI
         {
             var text = new StringBuilder();
             var entities = IoCManager.Resolve<IEntityManager>();
-            var target = entities.ToEntity(msg.TargetEntity);
+            var target = entities.GetEntity(msg.TargetEntity);
 
             if (msg.TargetEntity != null && entities.TryGetComponent<DamageableComponent>(target, out var damageable))
             {

@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
             var hit = false;
-            var clientEnt = clientEntManager.ToEntity(serverEntManager.ToNetEntity(serverEnt));
+            var clientEnt = clientEntManager.GetEntity(serverEntManager.GetNetEntity(serverEnt));
 
             await client.WaitPost(() =>
             {

@@ -57,7 +57,7 @@ namespace Content.IntegrationTests.Tests
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            var clientEnt = clientEntManager.ToEntity(serverEntManager.ToNetEntity(dummy));
+            var clientEnt = clientEntManager.GetEntity(serverEntManager.GetNetEntity(dummy));
 
             await client.WaitAssertion(() =>
             {
@@ -99,7 +99,7 @@ namespace Content.IntegrationTests.Tests
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            var clientEnt = clientEntManager.ToEntity(serverEntManager.ToNetEntity(dummy));
+            var clientEnt = clientEntManager.GetEntity(serverEntManager.GetNetEntity(dummy));
 
             await client.WaitAssertion(() =>
             {
@@ -143,7 +143,7 @@ namespace Content.IntegrationTests.Tests
 
             await PoolManager.RunTicksSync(pairTracker.Pair, 5);
 
-            var clientEnt = clientEntManager.ToEntity(serverEntManager.ToNetEntity(dummy));
+            var clientEnt = clientEntManager.GetEntity(serverEntManager.GetNetEntity(dummy));
 
             await client.WaitAssertion(() =>
             {

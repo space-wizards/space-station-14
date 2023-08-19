@@ -77,7 +77,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             await client.WaitPost(() =>
             {
-                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(cEntityManager.ToEntity(sEntityManager.ToNetEntity(serverEnt)));
+                clientComponent = cEntityManager.GetComponent<PredictionTestComponent>(cEntityManager.GetEntity(sEntityManager.GetNetEntity(serverEnt)));
             });
 
             var baseTick = sGameTiming.CurTick.Value;
@@ -110,7 +110,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 Assert.That(clientComponent.Foo, Is.False);
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.ToNetEntity(serverEnt), true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), true));
                 });
                 Assert.That(clientComponent.Foo, Is.True);
 
@@ -190,7 +190,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send event to server to change flag again, this time to disable it..
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.ToNetEntity(serverEnt), false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -270,7 +270,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send first event to disable the flag (reminder: it never got accepted by the server).
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.ToNetEntity(serverEnt), false));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), false));
 
                     Assert.That(clientComponent.Foo, Is.False);
                 });
@@ -298,7 +298,7 @@ namespace Content.IntegrationTests.Tests.Networking
                 // Send another event, to re-enable it.
                 await client.WaitPost(() =>
                 {
-                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.ToNetEntity(serverEnt), true));
+                    cEntityManager.RaisePredictiveEvent(new SetFooMessage(sEntityManager.GetNetEntity(serverEnt), true));
 
                     Assert.That(clientComponent.Foo, Is.True);
                 });

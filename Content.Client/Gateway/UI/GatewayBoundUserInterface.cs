@@ -20,7 +20,7 @@ public sealed class GatewayBoundUserInterface : BoundUserInterface
         _window = new GatewayWindow();
         _window.OpenPortal += destination =>
         {
-            SendMessage(new GatewayOpenPortalMessage(EntMan.ToNetEntity(destination)));
+            SendMessage(new GatewayOpenPortalMessage(EntMan.GetNetEntity(destination)));
         };
         _window.OnClose += Close;
         _window?.OpenCentered();

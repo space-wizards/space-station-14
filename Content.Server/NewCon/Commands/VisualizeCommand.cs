@@ -28,7 +28,7 @@ public sealed class VisualizeCommand : ToolshedCommand
         }
 
         var ui = new ToolshedVisualizeEui(
-            input.Select(e => (EntName(e), EntityManager.ToNetEntity(e))).ToArray()
+            input.Select(e => (EntName(e), EntityManager.GetNetEntity(e))).ToArray()
         );
         _euiManager.OpenEui(ui, (IPlayerSession) ctx.Session);
         _euiManager.QueueStateUpdate(ui);

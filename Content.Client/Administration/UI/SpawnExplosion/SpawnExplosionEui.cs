@@ -75,7 +75,7 @@ public sealed class SpawnExplosionEui : BaseEui
 
         foreach (var (nent, det) in data.Explosion.Tiles)
         {
-            tiles[_entManager.ToEntity(nent)] = det;
+            tiles[_entManager.GetEntity(nent)] = det;
         }
 
         _debugOverlay.SpaceTiles = data.Explosion.SpaceTiles;

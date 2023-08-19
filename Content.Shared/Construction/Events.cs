@@ -122,7 +122,7 @@ public sealed class ConstructionInteractDoAfterEvent : DoAfterEvent
 
     public ConstructionInteractDoAfterEvent(IEntityManager entManager, InteractUsingEvent ev)
     {
-        ClickLocation = entManager.ToNetCoordinates(ev.ClickLocation);
+        ClickLocation = entManager.GetNetCoordinates(ev.ClickLocation);
     }
 
     public override DoAfterEvent Clone() => this;
