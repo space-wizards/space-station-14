@@ -32,6 +32,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// <summary>
         ///     Tolerance for temperature setpoint hysteresis.
         /// </summary>
+        [ViewVariables(VVAccess.ReadOnly)]
         public float TemperatureTolerance = 2f;
 
         /// <summary>
@@ -46,11 +47,13 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Positive for heaters, negative for freezers.
         /// </summary>
         [DataField("coefficientOfPerformance")]
+        [ViewVariables(VVAccess.ReadWrite)]
         public float Cp = 0.9f; // output power / input power, positive is heat
 
         /// <summary>
         ///     Current minimum temperature, calculated from <see cref="InitialMinTemperature"/> and <see
         ///     cref="MinTemperatureDelta"/>.
+        ///     Ignored if heater.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float MinTemperature;
@@ -58,6 +61,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="InitialMaxTemperature"/> and <see
         ///     cref="MaxTemperatureDelta"/>.
+        ///     Ignored if freezer.
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         public float MaxTemperature;
