@@ -20,7 +20,7 @@ public sealed partial class SiliconLawMenu : FancyWindow
         LawDisplayContainer.Children.Clear();
         foreach (var law in state.Laws)
         {
-            var control = new LawDisplay(law);
+            var control = new LawDisplay(law, state.CanVerbalizeLaws, state.RadioChannels);
 
             LawDisplayContainer.AddChild(control);
         }

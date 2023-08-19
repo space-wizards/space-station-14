@@ -1,9 +1,10 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
+using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
@@ -16,6 +17,7 @@ using Content.Shared.Examine;
 using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Speech;
 using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -33,6 +35,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -93,7 +96,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
-        var state = new SiliconLawBuiState(GetLaws(uid));
+        _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
+        _entityManager.TryGetComponent<SpeechComponent>(uid, out var speech);
+
+        bool canSpeak = speech?.Enabled == true;
+        HashSet<string> radioChannels = intrinsicRadio != null ? intrinsicRadio.Channels : new HashSet<string>();
+
+        var state = new SiliconLawBuiState(GetLaws(uid), canSpeak, radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 

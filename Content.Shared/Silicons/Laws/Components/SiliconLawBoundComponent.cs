@@ -1,5 +1,6 @@
-﻿using Content.Shared.Actions;
+using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Radio;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -63,9 +64,13 @@ public enum SiliconLawsUiKey : byte
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
+    public bool CanVerbalizeLaws = true;
+    public HashSet<string> RadioChannels;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws)
+    public SiliconLawBuiState(List<SiliconLaw> laws, bool canVerbaliseLaws, HashSet<string> radioChannels)
     {
         Laws = laws;
+        CanVerbalizeLaws = canVerbaliseLaws;
+        RadioChannels = radioChannels;
     }
 }
