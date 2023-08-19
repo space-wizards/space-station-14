@@ -6,21 +6,16 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays
 {
-    public sealed class ShowHungerIconsSystem : ComponentAddedOverlaySystemBase<ShowHungerIconsComponent>
+    public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsComponent>
     {
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
-
-        private StatusIconPrototype? _overfed;
-        private StatusIconPrototype? _peckish;
-        private StatusIconPrototype? _starving;
 
         public override void Initialize()
         {
             base.Initialize();
 
             SubscribeLocalEvent<HungerComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-
         }
 
         private void OnGetStatusIconsEvent(EntityUid uid, HungerComponent hungerComponent, ref GetStatusIconsEvent @event)
@@ -46,24 +41,21 @@ namespace Content.Client.Overlays
             switch (hungerComponent.CurrentThreshold)
             {
                 case HungerThreshold.Overfed:
-                    if (_overfed != null ||
-                        _prototypeMan.TryIndex("HungerIcon_Overfed", out _overfed))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("HungerIconOverfed", out var overfed))
                     {
-                        result.Add(_overfed);
+                        result.Add(overfed);
                     }
                     break;
                 case HungerThreshold.Peckish:
-                    if (_peckish != null ||
-                        _prototypeMan.TryIndex("HungerIcon_Peckish", out _peckish))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("HungerIconPeckish", out var peckish))
                     {
-                        result.Add(_peckish);
+                        result.Add(peckish);
                     }
                     break;
                 case HungerThreshold.Starving:
-                    if (_starving != null ||
-                        _prototypeMan.TryIndex("HungerIcon_Starving", out _starving))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("HungerIconStarving", out var starving))
                     {
-                        result.Add(_starving);
+                        result.Add(starving);
                     }
                     break;
             }

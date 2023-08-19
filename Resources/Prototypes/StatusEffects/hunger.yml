@@ -1,6 +1,6 @@
 #Hunger
 - type: statusIcon
-  id: HungerIcon_Overfed
+  id: HungerIconOverfed
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi
@@ -8,7 +8,7 @@
   locationPreference: Right
 
 - type: statusIcon
-  id: HungerIcon_Peckish
+  id: HungerIconPeckish
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi
@@ -16,7 +16,7 @@
   locationPreference: Right
 
 - type: statusIcon
-  id: HungerIcon_Starving
+  id: HungerIconStarving
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi
@@ -25,7 +25,7 @@
 
 #Thirst
 - type: statusIcon
-  id: ThirstIcon_Overhydrated
+  id: ThirstIconOverhydrated
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi
@@ -33,7 +33,7 @@
   locationPreference: Left
 
 - type: statusIcon
-  id: ThirstIcon_Thirsty
+  id: ThirstIconThirsty
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi
@@ -41,7 +41,7 @@
   locationPreference: Left
 
 - type: statusIcon
-  id: ThirstIcon_Parched
+  id: ThirstIconParched
   priority: 5
   icon:
     sprite: Interface/Misc/food_icons.rsi

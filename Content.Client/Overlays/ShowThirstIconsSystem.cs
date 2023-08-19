@@ -6,14 +6,10 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays
 {
-    public sealed class ShowThirstIconsSystem : ComponentAddedOverlaySystemBase<ShowThirstIconsComponent>
+    public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsComponent>
     {
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
-
-        private StatusIconPrototype? _overhydrated;
-        private StatusIconPrototype? _thirsty;
-        private StatusIconPrototype? _parched;
 
         public override void Initialize()
         {
@@ -45,24 +41,21 @@ namespace Content.Client.Overlays
             switch (thirstComponent.CurrentThirstThreshold)
             {
                 case ThirstThreshold.OverHydrated:
-                    if (_overhydrated != null ||
-                        _prototypeMan.TryIndex("ThirstIcon_Overhydrated", out _overhydrated))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("ThirstIconOverhydrated", out var overhydrated))
                     {
-                        result.Add(_overhydrated);
+                        result.Add(overhydrated);
                     }
                     break;
                 case ThirstThreshold.Thirsty:
-                    if (_thirsty != null ||
-                        _prototypeMan.TryIndex("ThirstIcon_Thirsty", out _thirsty))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("ThirstIconThirsty", out var thirsty))
                     {
-                        result.Add(_thirsty);
+                        result.Add(thirsty);
                     }
                     break;
                 case ThirstThreshold.Parched:
-                    if (_parched != null ||
-                        _prototypeMan.TryIndex("ThirstIcon_Parched", out _parched))
+                    if (_prototypeMan.TryIndex<StatusIconPrototype>("ThirstIconParched", out var parched))
                     {
-                        result.Add(_parched);
+                        result.Add(parched);
                     }
                     break;
             }

@@ -13,6 +13,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 [UsedImplicitly]
 public sealed class ThirstSystem : EntitySystem
 {
+    [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
@@ -27,9 +28,33 @@ public sealed class ThirstSystem : EntitySystem
 
         _sawmill = Logger.GetSawmill("thirst");
 
+        SubscribeLocalEvent<ThirstComponent, ComponentGetState>(OnGetState);
+        SubscribeLocalEvent<ThirstComponent, ComponentHandleState>(OnHandleState);
         SubscribeLocalEvent<ThirstComponent, RefreshMovementSpeedModifiersEvent>(OnRefreshMovespeed);
         SubscribeLocalEvent<ThirstComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<ThirstComponent, RejuvenateEvent>(OnRejuvenate);
+    }
+
+    private void OnGetState(EntityUid uid, ThirstComponent component, ref ComponentGetState args)
+    {
+        args.State = new ThirstComponentState(component.BaseDecayRate,
+            component.ActualDecayRate,
+            component.CurrentThirstThreshold,
+            component.LastThirstThreshold,
+            component.CurrentThirst,
+            component.NextUpdateTime);
+    }
+
+    private void OnHandleState(EntityUid uid, ThirstComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ThirstComponentState state)
+            return;
+        component.BaseDecayRate = state.BaseDecayRate;
+        component.ActualDecayRate = state.ActualDecayRate;
+        component.CurrentThirstThreshold = state.CurrentThirstThreshold;
+        component.LastThirstThreshold = state.LastThirstThreshold;
+        component.CurrentThirst = state.CurrentThirst;
+        component.NextUpdateTime = state.NextUpdateTime;
     }
 
     private void OnComponentStartup(EntityUid uid, ThirstComponent component, ComponentStartup args)
@@ -156,22 +181,23 @@ public sealed class ThirstSystem : EntitySystem
 
     public override void Update(float frameTime)
     {
-        _accumulatedFrameTime += frameTime;
+        base.Update(frameTime);
 
-        if (_accumulatedFrameTime > 1)
+        var query = EntityQueryEnumerator<ThirstComponent>();
+        while (query.MoveNext(out var uid, out var thirst))
         {
-            var query = EntityManager.EntityQueryEnumerator<ThirstComponent>();
-            while (query.MoveNext(out var uid, out var comp))
+            if (_timing.CurTime < thirst.NextUpdateTime)
+                continue;
+            thirst.NextUpdateTime = _timing.CurTime + thirst.UpdateRate;
+
+            UpdateThirst(thirst, -thirst.ActualDecayRate);
+            var calculatedThirstThreshold = GetThirstThreshold(thirst, thirst.CurrentThirst);
+            if (calculatedThirstThreshold != thirst.CurrentThirstThreshold)
             {
-                UpdateThirst(comp, - comp.ActualDecayRate);
-                var calculatedThirstThreshold = GetThirstThreshold(comp, comp.CurrentThirst);
-                if (calculatedThirstThreshold != comp.CurrentThirstThreshold)
-                {
-                    comp.CurrentThirstThreshold = calculatedThirstThreshold;
-                    UpdateEffects(uid, comp);
-                }
+                thirst.CurrentThirstThreshold = calculatedThirstThreshold;
+                UpdateEffects(uid, thirst);
             }
-            _accumulatedFrameTime -= 1;
+            Dirty(thirst);
         }
     }
 }
