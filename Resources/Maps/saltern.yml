@@ -58139,8 +58139,6 @@ entities:
       parent: 31
       type: Transform
     - linkedPorts:
-        invalid:
-        - Pressed: Toggle
         6557:
         - Pressed: Toggle
       type: DeviceLinkSource
