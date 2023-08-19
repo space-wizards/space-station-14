@@ -28,9 +28,6 @@
 #  weather: false
 #  biome: null
 
-# Temperature mods -> not required
-# Also whitelist it
-
 # Weather mods -> not required
 - type: salvageWeatherMod
   id: SnowfallHeavy
