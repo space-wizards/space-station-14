@@ -71,7 +71,9 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
             if (!thermoMachine.HysteresisState) // Hysteresis is the same as "Should this be on?"
             {
-                receiver.Load = 0f;
+                // Turn dynamic load back on when power has been adjusted to not cause lights to
+                // blink every time this heater comes on.
+                //receiver.Load = 0f;
                 return;
             }
 
@@ -90,7 +92,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
             float dQActual = dQ * scale;
             _atmosphereSystem.AddHeat(inlet.Air, dQActual);
-            receiver.Load = thermoMachine.HeatCapacity * scale;
+            receiver.Load = thermoMachine.HeatCapacity;// * scale; // we're not ready for dynamic load yet, see note above
         }
 
         private bool IsHeater(GasThermoMachineComponent comp)
