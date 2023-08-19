@@ -220,6 +220,7 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         if (args.Function == EngineKeyFunctions.UIClick)
         {
             _inventorySystem.UIInventoryActivate(control.SlotName);
+            args.Handle();
             return;
         }
 
@@ -244,6 +245,12 @@ public sealed class InventoryUIController : UIController, IOnStateEntered<Gamepl
         {
             _inventorySystem.UIInventoryAltActivateItem(slot, _playerUid.Value);
         }
+        else
+        {
+            return;
+        }
+
+        args.Handle();
     }
 
     private void StoragePressed(GUIBoundKeyEventArgs args, SlotControl control)

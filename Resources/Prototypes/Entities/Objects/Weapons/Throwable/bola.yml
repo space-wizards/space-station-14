@@ -39,7 +39,7 @@
   - type: DamageOnLand
     damage:
       types:
-        Blunt: 5
+        Blunt: 3
   - type: Ensnaring
     freeTime: 2.0
     breakoutTime: 3.5 #all bola should generally be fast to remove

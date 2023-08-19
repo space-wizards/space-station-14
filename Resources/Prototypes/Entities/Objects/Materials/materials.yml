@@ -127,7 +127,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - Gauze
@@ -193,7 +193,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial
@@ -372,7 +372,7 @@
         - ReagentId: Fiber
           Quantity: 5
   - type: Tag
-    tags: 
+    tags:
       - ClothMade
       - DroneUsable
       - RawMaterial
@@ -453,3 +453,42 @@
     count: 1
   - type: Item
     size: 2
+
+- type: entity
+  parent: MaterialBase
+  id: MaterialWebSilk
+  name: silk
+  description: A webby material
+  suffix: Full
+  components:
+  - type: PhysicalComposition
+    materialComposition:
+      WebSilk: 100
+  - type: Sprite
+    sprite: Objects/Materials/silk.rsi
+    state: icon
+  - type: Stack
+    count: 50
+    stackType: WebSilk
+  - type: Item
+    size: 50
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk25
+  suffix: 25
+  components:
+  - type: Stack
+    count: 25
+  - type: Item
+    size: 25
+
+- type: entity
+  parent: MaterialWebSilk
+  id: MaterialWebSilk1
+  suffix: 1
+  components:
+  - type: Stack
+    count: 1
+  - type: Item
+    size: 1
