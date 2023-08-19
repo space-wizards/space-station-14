@@ -18,6 +18,7 @@ namespace Content.Server.Mind.Commands;
 public sealed class RenameCommand : IConsoleCommand
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IPlayerManager _playerManager = default!;
 
     public string Command => "rename";
     public string Description => "Renames an entity and its cloner entries, ID cards, and PDAs.";
@@ -100,14 +101,13 @@ public sealed class RenameCommand : IConsoleCommand
         }
     }
 
-    private static bool TryParseUid(string str, IConsoleShell shell,
+    private bool TryParseUid(string str, IConsoleShell shell,
         IEntityManager entMan, out EntityUid entityUid)
     {
-        if (EntityUid.TryParse(str, out entityUid) && entMan.EntityExists(entityUid))
+        if (NetEntity.TryParse(str, out var entityUidNet) && _entManager.TryGetEntity(entityUidNet, out entityUid) && entMan.EntityExists(entityUid))
             return true;
 
-        var playerMan = IoCManager.Resolve<IPlayerManager>();
-        if (playerMan.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
+        if (_playerManager.TryGetSessionByUsername(str, out var session) && session.AttachedEntity.HasValue)
         {
             entityUid = session.AttachedEntity.Value;
             return true;
@@ -117,6 +117,8 @@ public sealed class RenameCommand : IConsoleCommand
             shell.WriteError("Can't find username/uid: " + str);
         else
             shell.WriteError(str + " does not have an entity.");
+
+        entityUid = EntityUid.Invalid;
         return false;
     }
 }

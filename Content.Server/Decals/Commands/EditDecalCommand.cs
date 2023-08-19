@@ -9,6 +9,9 @@ namespace Content.Server.Decals;
 [AdminCommand(AdminFlags.Mapping)]
 public sealed class EditDecalCommand : IConsoleCommand
 {
+    [Dependency] private readonly IEntityManager _entManager = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
+
     public string Command => "editdecal";
     public string Description => "Edits a decal.";
     public string Help => $@"{Command} <gridId> <uid> <mode>\n
@@ -28,7 +31,7 @@ Possible modes are:\n
             return;
         }
 
-        if (!EntityUid.TryParse(args[0], out var gridId))
+        if (!NetEntity.TryParse(args[0], out var gridIdNet) || !_entManager.TryGetEntity(gridIdNet, out var gridId))
         {
             shell.WriteError($"Failed parsing gridId '{args[3]}'.");
             return;
@@ -40,13 +43,13 @@ Possible modes are:\n
             return;
         }
 
-        if (!IoCManager.Resolve<IMapManager>().GridExists(gridId))
+        if (!_mapManager.GridExists(gridId))
         {
             shell.WriteError($"No grid with gridId {gridId} exists.");
             return;
         }
 
-        var decalSystem = EntitySystem.Get<DecalSystem>();
+        var decalSystem = _entManager.System<DecalSystem>();
         switch (args[2].ToLower())
         {
             case "position":

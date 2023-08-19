@@ -31,7 +31,7 @@ namespace Content.Server.Disposal
                 return;
             }
 
-            if (!EntityUid.TryParse(args[0], out var id))
+            if (!NetEntity.TryParse(args[0], out var idNet) || !_entities.TryGetEntity(idNet, out var id))
             {
                 shell.WriteLine(Loc.GetString("shell-invalid-entity-uid",("uid", args[0])));
                 return;

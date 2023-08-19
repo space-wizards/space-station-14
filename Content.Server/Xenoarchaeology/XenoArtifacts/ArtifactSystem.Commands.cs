@@ -25,7 +25,7 @@ public partial class ArtifactSystem
         if (args.Length != 2)
             shell.WriteError("Argument length must be 2");
 
-        if (!EntityUid.TryParse(args[0], out var uid) || ! int.TryParse(args[1], out var id))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid) || !int.TryParse(args[1], out var id))
             return;
 
         if (!TryComp<ArtifactComponent>(uid, out var artifact))
@@ -39,7 +39,7 @@ public partial class ArtifactSystem
 
     private CompletionResult ForceArtifactNodeCompletions(IConsoleShell shell, string[] args)
     {
-        if (args.Length == 2 && EntityUid.TryParse(args[0], out var uid))
+        if (args.Length == 2 && NetEntity.TryParse(args[0], out var uidNet) && TryGetEntity(uidNet, out var uid))
         {
             if (TryComp<ArtifactComponent>(uid, out var artifact))
             {
@@ -56,7 +56,7 @@ public partial class ArtifactSystem
         if (args.Length != 1)
             shell.WriteError("Argument length must be 1");
 
-        if (!EntityUid.TryParse(args[0], out var uid))
+        if (!NetEntity.TryParse(args[0], out var uidNet) || !TryGetEntity(uidNet, out var uid))
             return;
 
         if (!TryComp<ArtifactComponent>(uid, out var artifact))

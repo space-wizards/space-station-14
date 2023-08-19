@@ -44,7 +44,9 @@ namespace Content.Server.Decals.Commands
                 return;
             }
 
-            if (!EntityUid.TryParse(args[3], out var gridIdRaw) || !_mapManager.TryGetGrid(gridIdRaw, out var grid))
+            if (!NetEntity.TryParse(args[3], out var gridIdNet) ||
+                !_entManager.TryGetEntity(gridIdNet, out var gridIdRaw) ||
+                !_mapManager.TryGetGrid(gridIdRaw, out var grid))
             {
                 shell.WriteError($"Failed parsing gridId '{args[3]}'.");
                 return;

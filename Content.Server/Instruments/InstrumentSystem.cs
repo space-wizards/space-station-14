@@ -30,7 +30,6 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [Dependency] private readonly UserInterfaceSystem _bui = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InteractionSystem _interactions = default!;
 
     private const float MaxInstrumentBandRange = 10f;
@@ -62,13 +61,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
     [AdminCommand(AdminFlags.Fun)]
     private void AddToBandCommand(IConsoleShell shell, string _, string[] args)
     {
-        if (!EntityUid.TryParse(args[0], out var firstUid))
+        if (!NetEntity.TryParse(args[0], out var firstUidNet) || !TryGetEntity(firstUidNet, out var firstUid))
         {
             shell.WriteError($"Cannot parse first Uid");
             return;
         }
 
-        if (!EntityUid.TryParse(args[1], out var secondUid))
+        if (!NetEntity.TryParse(args[1], out var secondUidNet) || !TryGetEntity(secondUidNet, out var secondUid))
         {
             shell.WriteError($"Cannot parse second Uid");
             return;

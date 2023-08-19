@@ -87,7 +87,7 @@ namespace Content.Server.Body.Commands
                 }
                 case 2:
                 {
-                    if (!EntityUid.TryParse(args[0], out var uid))
+                    if (!NetEntity.TryParse(args[0], out var netEnt) || !_entManager.TryGetEntity(netEnt, out var uid))
                     {
                         shell.WriteLine($"{args[0]} is not a valid entity uid.");
                         return;

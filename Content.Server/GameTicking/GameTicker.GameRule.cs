@@ -246,7 +246,7 @@ public sealed partial class GameTicker
 
         foreach (var rule in args)
         {
-            if (!EntityUid.TryParse(rule, out var ruleEnt))
+            if (!NetEntity.TryParse(rule, out var ruleEntNet) || !TryGetEntity(ruleEntNet, out var ruleEnt))
                 continue;
 
             EndGameRule(ruleEnt);
