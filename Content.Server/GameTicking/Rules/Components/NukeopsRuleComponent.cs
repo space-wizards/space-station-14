@@ -75,19 +75,19 @@ public sealed class NukeopsRuleComponent : Component
     ///     Time allowed for declaration of war
     /// </summary>
     [DataField("warDeclarationTimeWindow")]
-    public TimeSpan WarDeclarationDelay = TimeSpan.FromSeconds(30); // TODO: RETURN TO 6 mins, FOR DEBUG
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
 
     /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan WarNukieArriveDelay = TimeSpan.FromSeconds(50); // TODO: RETURN TO 20 mins, FOR DEBUG
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
     ///     Minimal operatives count for war declaration
     /// </summary>
     [DataField("warDeclarationMinOpsSize")]
-    public int WarDeclarationMinOps = 1; // TODO: RETURN TO 4, FOR DEBUG
+    public int WarDeclarationMinOps = 4;
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";
