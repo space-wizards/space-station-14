@@ -29,6 +29,8 @@
 
 -->
 
+<!--
+Make sure to take this Changelog template out of the comment block in order for it to show up.
 :cl:
 - add: Добавлено веселье!
 - remove: Убрано веселье!
