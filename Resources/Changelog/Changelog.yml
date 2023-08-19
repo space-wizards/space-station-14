@@ -1,9 +1,4 @@
 Entries:
-- author: benevo
-  changes:
-  - {message: Added Anchorable client side predictions, type: Add}
-  id: 4130
-  time: '2023-06-29T12:35:54.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix cave ores., type: Fix}
@@ -3025,3 +3020,16 @@ Entries:
       All human hairs have been cut with love!, type: Tweak}
   id: 4629
   time: '2023-08-19T22:37:56.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: 'The C.H.I.M.P. handcannon now has an internal power pack, much like
+      a laser, and different firing modes for the different particle types.', type: Tweak}
+  - {message: Each anomalous particle type now has a unique color, type: Tweak}
+  - {message: An upgrade kit for C.H.I.M.P. handcannons was added for purchase to
+      syndicate scientist uplinks for 4 TC, type: Add}
+  - {message: All C.H.I.M.P. particle cartridges have been removed from the game,
+    type: Remove}
+  - {message: The omega particle cartridge box has been removed from the syndicate
+      uplink, type: Remove}
+  id: 4630
+  time: '2023-08-19T22:54:53.0000000+00:00'
