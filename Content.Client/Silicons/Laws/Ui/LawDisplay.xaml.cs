@@ -31,24 +31,24 @@ public sealed partial class LawDisplay : Control
         LawNumberLabel.Text = lawIdentifier;
         LawLabel.SetMessage(lawDescription);
 
-        if (canVerbalize)
+        if (!canVerbalize) // If you can't talk, you can't state your laws...
+            return;
+
+        Button localButton = new Button
         {
-            Button localButton = new Button
-            {
-                Text = Loc.GetString("hud-chatbox-select-channel-Local"),
-                Modulate = Color.DarkGray,
-                StyleClasses = { "chatSelectorOptionButton" },
-                MinHeight = 35,
-                MinWidth = 75,
-            };
+            Text = Loc.GetString("hud-chatbox-select-channel-Local"),
+            Modulate = Color.DarkGray,
+            StyleClasses = { "chatSelectorOptionButton" },
+            MinHeight = 35,
+            MinWidth = 75,
+        };
 
-            localButton.OnPressed += _ =>
-            {
-                _chatManager.SendMessage($"{lawIdentifier}: {lawDescription}", ChatSelectChannel.Local);
-            };
+        localButton.OnPressed += _ =>
+        {
+            _chatManager.SendMessage($"{lawIdentifier}: {lawDescription}", ChatSelectChannel.Local);
+        };
 
-            LawAnnouncementButtons.AddChild(localButton);
-        }
+        LawAnnouncementButtons.AddChild(localButton);
 
         foreach (string radioChannel in radioChannels)
         {
