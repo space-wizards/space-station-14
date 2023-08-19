@@ -32,7 +32,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         /// <summary>
         ///     Tolerance for temperature setpoint hysteresis.
         /// </summary>
-       [ViewVariables(VVAccess.ReadOnly)]
+        [ViewVariables(VVAccess.ReadOnly)]
         public float TemperatureTolerance = 2f;
 
         /// <summary>

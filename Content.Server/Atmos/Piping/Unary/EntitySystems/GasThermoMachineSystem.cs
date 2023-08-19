@@ -71,7 +71,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 targetTemp += dTHyst;
 
             float dT = targetTemp - temp;
-            if (sign != Math.Sign(dT))
+            if (!thermoMachine.HysteresisState) // Hysteresis is the same as "Should this be on?"
             {
                 receiver.Load = 0f;
                 return;
