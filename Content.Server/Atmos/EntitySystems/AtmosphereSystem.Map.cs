@@ -72,10 +72,19 @@ public partial class AtmosphereSystem
 
     public void SetMapSpace(EntityUid uid, bool space, MapAtmosphereComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component) || component.Space == space)
             return;
 
         component.Space = space;
+        Dirty(component);
+    }
+
+    public void SetMapSimulated(EntityUid uid, bool simulated, MapAtmosphereComponent? component = null)
+    {
+        if (!Resolve(uid, ref component) || component.Simulated == simulated)
+            return;
+
+        component.Simulated = simulated;
         Dirty(component);
     }
 }
