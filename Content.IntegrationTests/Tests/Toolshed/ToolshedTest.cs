@@ -64,6 +64,13 @@ public abstract class ToolshedTest : IInvocationContext
         return Toolshed.InvokeCommand(this, command, null, out result);
     }
 
+    protected T InvokeCommand<T>(string command)
+    {
+        InvokeCommand(command, out var res);
+        Assert.That(res, Is.AssignableTo<T>());
+        return (T) res!;
+    }
+
     protected void ParseCommand(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
     {
         var parser = new ParserContext(command, Toolshed);
