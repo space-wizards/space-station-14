@@ -49,7 +49,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnThermoMachineUpdated(EntityUid uid, GasThermoMachineComponent thermoMachine, AtmosDeviceUpdateEvent args)
         {
-
             if (!(_power.IsPowered(uid) && TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
                 || !TryComp<NodeContainerComponent>(uid, out var nodeContainer)
                 || !_nodeContainer.TryGetNode(nodeContainer, thermoMachine.InletName, out PipeNode? inlet))
@@ -58,39 +57,39 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             }
 
             float sign = Math.Sign(thermoMachine.Cp); // 1 if heater, -1 if freezer
-            bool heater = sign > 0;
             float targetTemp = thermoMachine.TargetTemperature;
-            float dTHyst = sign * thermoMachine.TemperatureTolerance;
+            float highTemp = targetTemp + sign * thermoMachine.TemperatureTolerance;
             float temp = inlet.Air.Temperature;
 
-            if (sign * temp >= sign * (targetTemp + dTHyst))
-                thermoMachine.HysteresisState = false;
-            if (sign * temp < sign * targetTemp)
-                thermoMachine.HysteresisState = true;
-            if (thermoMachine.HysteresisState)
-                targetTemp += dTHyst;
+            if (sign * temp >= sign * highTemp) // upper bound
+                thermoMachine.HysteresisState = false; // turn off
+            else if (sign * temp < sign * targetTemp) // lower bound
+                thermoMachine.HysteresisState = true; // turn on
 
-            float dT = targetTemp - temp;
+            if (thermoMachine.HysteresisState)
+                targetTemp = highTemp; // when on, target upper hysteresis bound
+
             if (!thermoMachine.HysteresisState) // Hysteresis is the same as "Should this be on?"
             {
                 receiver.Load = 0f;
                 return;
             }
-            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
 
             // Multiply power in by coefficient of performance, add that heat to gas
-            float dQLim = dT * Cin;
             float dQ = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
+
             // Clamps the heat transferred to not overshoot
+            float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
+            float dT = targetTemp - temp;
+            float dQLim = dT * Cin;
             float scale = 1f;
-            if (heater == dQLim < dQ)
+            if (Math.Abs(dQ) > Math.Abs(dQLim))
             {
-                scale = dQLim / dQ;
-                thermoMachine.HysteresisState = false;
+                scale = dQLim / dQ; // reduce power consumption
+                thermoMachine.HysteresisState = false; // turn off
             }
             float dQActual = dQ * scale;
             _atmosphereSystem.AddHeat(inlet.Air, dQActual);
-
             receiver.Load = thermoMachine.HeatCapacity * scale;
         }
 
@@ -103,10 +102,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
         {
             var heatCapacityPartRating = args.PartRatings[thermoMachine.MachinePartHeatCapacity];
             thermoMachine.HeatCapacity = thermoMachine.BaseHeatCapacity * MathF.Pow(heatCapacityPartRating, 2);
-            if (TryComp<ApcPowerReceiverComponent>(uid, out var receiver))
-            {
-                receiver.Load = thermoMachine.HeatCapacity;
-            }
 
             var temperatureRangePartRating = args.PartRatings[thermoMachine.MachinePartTemperature];
             if (IsHeater(thermoMachine))
