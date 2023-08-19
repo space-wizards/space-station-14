@@ -7,6 +7,7 @@ guide-entry-shuttle-craft = Shuttle-craft
 guide-entry-networking = Networking
 guide-entry-network-configurator = Network Configurator
 guide-entry-power = Power
+guide-entry-portable-generator = Portable Generators
 guide-entry-ame = Antimatter Engine (AME)
 guide-entry-singularity = Singularity
 guide-entry-teg = Thermo-electric Generator (TEG)

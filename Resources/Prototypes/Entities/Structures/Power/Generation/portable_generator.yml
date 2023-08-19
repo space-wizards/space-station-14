@@ -71,6 +71,8 @@
               node: machineFrame
             - !type:DoActsBehavior
               acts: ["Destruction"]
+    - type: GuideHelp
+      guides: [ PortableGenerator, Power ]
 
     # Core functionality
     - type: PortableGenerator

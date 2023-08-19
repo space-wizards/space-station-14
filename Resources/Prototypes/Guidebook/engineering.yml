@@ -49,6 +49,7 @@
   name: guide-entry-power
   text: "/ServerInfo/Guidebook/Engineering/Power.xml"
   children:
+  - PortableGenerator
   - AME
   - Singularity
   - TEG
@@ -67,3 +68,8 @@
   id: TEG
   name: guide-entry-teg
   text: "/ServerInfo/Guidebook/Engineering/TEG.xml"
+
+- type: guideEntry
+  id: PortableGenerator
+  name: guide-entry-portable-generator
+  text: "/ServerInfo/Guidebook/Engineering/PortableGenerator.xml"
