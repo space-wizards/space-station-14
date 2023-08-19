@@ -40,6 +40,7 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
         private void Reset()
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
+            var xformSystem = entManager.System<SharedTransformSystem>();
             var playerManager = IoCManager.Resolve<IPlayerManager>();
             var player = playerManager.LocalPlayer?.ControlledEntity;
 
@@ -50,16 +51,16 @@ namespace Content.Client.Administration.UI.Tabs.AdminbusTab
             if (entManager.TryGetComponent<TransformComponent>(player, out var xform))
             {
                 currentMap = xform.MapID;
-                position = xform.WorldPosition;
+                position = xformSystem.GetWorldPosition(xform);
 
                 if (entManager.TryGetComponent<TransformComponent>(xform.GridUid, out var gridXform))
                 {
-                    rotation = gridXform.WorldRotation;
+                    rotation = xformSystem.GetWorldRotation(gridXform);
                 }
                 else
                 {
                     // MapId moment
-                    rotation = xform.WorldRotation - xform.LocalRotation;
+                    rotation = xformSystem.GetWorldRotation(xform) - xform.LocalRotation;
                 }
             }
 

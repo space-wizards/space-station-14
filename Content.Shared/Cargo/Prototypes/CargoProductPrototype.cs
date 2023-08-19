@@ -5,7 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Cargo.Prototypes
 {
-    [NetSerializable, Serializable, Prototype("cargoProduct")]
+    [Prototype("cargoProduct")]
     public sealed class CargoProductPrototype : IPrototype
     {
         [DataField("name")] private string _name = string.Empty;

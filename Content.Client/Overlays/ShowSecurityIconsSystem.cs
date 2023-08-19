@@ -1,90 +1,73 @@
 using Content.Shared.Access.Components;
-using Content.Shared.Body.Components;
-using Content.Shared.Inventory;
+using Content.Shared.Access.Systems;
 using Content.Shared.Overlays;
 using Content.Shared.PDA;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
-namespace Content.Client.Overlays
+namespace Content.Client.Overlays;
+public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
-    public sealed class ShowSecurityIconsSystem : ComponentAddedOverlaySystemBase<ShowSecurityIconsComponent>
+    [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string JobIconForNoId = "JobIconNoId";
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        base.Initialize();
 
-        private Dictionary<string, StatusIconPrototype> _jobIcons = new();
+        SubscribeLocalEvent<StatusIconComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+    }
 
-        public override void Initialize()
+    private void OnGetStatusIconsEvent(EntityUid uid, StatusIconComponent _, ref GetStatusIconsEvent @event)
+    {
+        if (!IsActive || @event.InContainer)
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<BodyComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
+            return;
         }
 
-        private void OnGetStatusIconsEvent(EntityUid uid, BodyComponent _, ref GetStatusIconsEvent @event)
+        var healthIcons = DecideSecurityIcon(uid);
+
+        @event.StatusIcons.AddRange(healthIcons);
+    }
+
+    private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
+    {
+        var result = new List<StatusIconPrototype>();
+
+        var jobIconToGet = JobIconForNoId;
+        if (_accessReader.FindAccessItemsInventory(uid, out var items))
         {
-            if (!IsActive)
-                return;
-
-            var healthIcons = DecideSecurityIcon(uid);
-
-            @event.StatusIcons.AddRange(healthIcons);
-        }
-
-        private IReadOnlyList<StatusIconPrototype> DecideSecurityIcon(EntityUid uid)
-        {
-            var result = new List<StatusIconPrototype>();
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
+            foreach (var item in items)
             {
-                return result;
-            }
-
-            var iconToGet = "NoId";
-            if (_inventorySystem.TryGetSlotEntity(uid, "id", out var idUid))
-            {
-                // PDA
-                if (EntityManager.TryGetComponent(idUid, out PdaComponent? pda))
-                {
-                    iconToGet = pda.ContainedId?.JobTitle ?? string.Empty;
-                }
                 // ID Card
-                else if (EntityManager.TryGetComponent(idUid, out IdCardComponent? id))
+                if (TryComp(item, out IdCardComponent? id))
                 {
-                    iconToGet = id.JobTitle ?? string.Empty;
+                    jobIconToGet = id.JobIcon;
+                    break;
                 }
 
-                iconToGet = iconToGet.Replace(" ", "");
-            }
-
-            iconToGet = EnsureIcon(iconToGet, _jobIcons);
-            result.Add(_jobIcons[iconToGet]);
-
-            // Add arrest icons here, WYCI.
-
-            return result;
-        }
-
-        private string EnsureIcon(string iconKey, Dictionary<string, StatusIconPrototype> icons)
-        {
-            if (!icons.ContainsKey(iconKey))
-            {
-                if (_prototypeMan.TryIndex<StatusIconPrototype>($"JobIcon_{iconKey}", out var securityIcon))
+                // PDA
+                if (TryComp(item, out PdaComponent? pda)
+                    && pda.ContainedId != null
+                    && TryComp(pda.ContainedId, out id))
                 {
-                    icons.Add(iconKey, securityIcon);
-                    return iconKey;
+                    jobIconToGet = id.JobIcon;
+                    break;
                 }
             }
-            else
-            {
-                return iconKey;
-            }
-
-            iconKey = "Unknown";
-            return EnsureIcon(iconKey, icons);
         }
+
+        if (_prototypeMan.TryIndex<StatusIconPrototype>(jobIconToGet, out var jobIcon))
+            result.Add(jobIcon);
+        else
+            Log.Error($"Invalid job icon prototype: {jobIcon}");
+
+        // Add arrest icons here, WYCI.
+
+        return result;
     }
 }

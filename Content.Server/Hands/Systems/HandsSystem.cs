@@ -94,7 +94,7 @@ namespace Content.Server.Hands.Systems
             args.Handled = true; // no shove/stun.
         }
 
-        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
+        public override void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
             EntityUid? exclude)
         {
             if (finalPosition.EqualsApprox(initialPosition.Position, tolerance: 0.1f))
@@ -105,7 +105,7 @@ namespace Content.Server.Hands.Systems
             if (exclude != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
-            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition), filter);
+            RaiseNetworkEvent(new PickupAnimationEvent(item, initialPosition, finalPosition, initialAngle), filter);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)

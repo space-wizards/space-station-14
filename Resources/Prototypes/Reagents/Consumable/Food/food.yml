@@ -13,9 +13,9 @@
       - !type:SatiateHunger
   plantMetabolism:
   - !type:PlantAdjustNutrition
-    amount: 1
+    amount: 1.5
   - !type:PlantAdjustHealth
-    amount: 0.5
+    amount: 0.75
   pricePerUnit: 2
 
 - type: reagent
@@ -39,6 +39,12 @@
       - !type:ModifyBleedAmount
         amount: -0.25
       - !type:SatiateHunger #Numbers are balanced with this in mind + it helps limit how much healing you can get from food
+  # Lets plants benefit too
+  plantMetabolism:
+  - !type:PlantAdjustNutrition
+    amount: 0.5
+  - !type:PlantAdjustHealth
+    amount: 1.5
   pricePerUnit: 2.5
 
 - type: reagent

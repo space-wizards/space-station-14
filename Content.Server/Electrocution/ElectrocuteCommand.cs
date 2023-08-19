@@ -12,6 +12,7 @@ namespace Content.Server.Electrocution
         public string Description => Loc.GetString("electrocute-command-description");
         public string Help => $"{Command} <uid> <seconds> <damage>";
 
+        [ValidatePrototypeId<StatusEffectPrototype>]
         public const string ElectrocutionStatusEffect = "Electrocution";
 
         public void Execute(IConsoleShell shell, string argStr, string[] args)

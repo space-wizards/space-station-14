@@ -12,6 +12,7 @@
   - type: Tag
     tags:
     - HelmetEVA
+    - WhitelistChameleon
 
 #Large EVA Helmet
 - type: entity

@@ -2,12 +2,12 @@ using Content.Server.Announcements;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
+using Robust.Server.GameStates;
 using Robust.Server.Maps;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
@@ -46,6 +46,22 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         private bool _startingRound;
 
+        /// <summary>
+        /// This is a list of players that are going to appear in the round-end
+        /// crew manifest so their children entities can be collected each update
+        /// and sent to far-away players.
+        /// </summary>
+        [ViewVariables]
+        private HashSet<EntityUid> _expandPvsPlayers = new();
+
+        /// <summary>
+        /// This is the list of the children entities that should be sent to
+        /// all players at the end of the round, to keep distant characters from
+        /// looking naked in the crew manifest.
+        /// </summary>
+        [ViewVariables]
+        private HashSet<EntityUid> _expandPvsEntities = new();
+
         [ViewVariables]
         private GameRunLevel _runLevel;
 
@@ -63,6 +79,16 @@ namespace Content.Server.GameTicking
 
                 RaiseLocalEvent(new GameRunLevelChangedEvent(old, value));
             }
+        }
+
+        private void InitializeRoundFlow()
+        {
+            SubscribeLocalEvent<ExpandPvsEvent>(OnExpandPvs);
+        }
+
+        private void OnEntityDeleted(EntityUid uid)
+        {
+            _expandPvsEntities.Remove(uid);
         }
 
         /// <summary>
@@ -112,6 +138,17 @@ namespace Content.Server.GameTicking
             else
             {
                 throw new Exception("invalid config; couldn't select a valid station map!");
+            }
+
+            if (CurrentPreset?.MapPool != null &&
+                _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
+                pool.Maps.Contains(mainStationMap.ID))
+            {
+                var msg = Loc.GetString("game-ticker-start-round-invalid-map",
+                    ("map", mainStationMap.MapName),
+                    ("mode", Loc.GetString(CurrentPreset.ModeTitle)));
+                Log.Debug(msg);
+                SendServerMessage(msg);
             }
 
             // Let game rules dictate what maps we should load.
@@ -170,6 +207,11 @@ namespace Content.Server.GameTicking
 
             _startingRound = true;
 
+            if (RoundId == 0)
+                IncrementRoundNumber();
+
+            ReplayStartRound();
+
             DebugTools.Assert(RunLevel == GameRunLevel.PreRoundLobby);
             _sawmill.Info("Starting round!");
 
@@ -198,7 +240,7 @@ namespace Content.Server.GameTicking
 #if DEBUG
                 DebugTools.Assert(_userDb.IsLoadComplete(session), $"Player was readied up but didn't have user DB data loaded yet??");
 #endif
-                if (_roleBanManager.GetRoleBans(userId) == null)
+                if (_banManager.GetRoleBans(userId) == null)
                 {
                     Logger.ErrorS("RoleBans", $"Role bans for player {session} {userId} have not been loaded yet.");
                     continue;
@@ -284,13 +326,21 @@ namespace Content.Server.GameTicking
             ShowRoundEndScoreboard(text);
         }
 
+        private void OnExpandPvs(ref ExpandPvsEvent args)
+        {
+            if (RunLevel != GameRunLevel.PostRound)
+                return;
+
+            args.Entities.AddRange(_expandPvsEntities);
+        }
+
         public void ShowRoundEndScoreboard(string text = "")
         {
             // Log end of round
             _adminLogger.Add(LogType.EmergencyShuttle, LogImpact.High, $"Round ended, showing summary");
 
             //Tell every client the round has ended.
-            var gamemodeTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var gamemodeTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
 
             // Let things add text here.
             var textEv = new RoundEndTextAppendEvent();
@@ -301,10 +351,15 @@ namespace Content.Server.GameTicking
             //Get the timespan of the round.
             var roundDuration = RoundDuration();
 
+            // Should already be empty, but just in case.
+            _expandPvsEntities.Clear();
+            _expandPvsPlayers.Clear();
+            EntityManager.EntityDeleted += OnEntityDeleted;
+
             //Generate a list of basic player info to display in the end round summary.
             var listOfPlayerInfo = new List<RoundEndMessageEvent.RoundEndPlayerInfo>();
             // Grab the great big book of all the Minds, we'll need them for this.
-            var allMinds = Get<MindTrackerSystem>().AllMinds;
+            var allMinds = _mindTracker.AllMinds;
             foreach (var mind in allMinds)
             {
                 // TODO don't list redundant observer roles?
@@ -334,6 +389,9 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
+                if (Exists(mind.OriginalOwnedEntity))
+                    _expandPvsPlayers.Add(mind.OriginalOwnedEntity.Value);
+
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
@@ -341,7 +399,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = mind.OwnedEntity,
+                    PlayerEntityUid = mind.OriginalOwnedEntity,
                     Role = antag
                         ? mind.AllRoles.First(role => role.Antagonist).Name
                         : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -351,6 +409,21 @@ namespace Content.Server.GameTicking
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
+
+            // Recursively collect entities for the crew manifest.
+            void RecursePvsEntities(IEnumerable<EntityUid> entities)
+            {
+                _expandPvsEntities.UnionWith(entities);
+
+                foreach (var entity in entities)
+                {
+                    if (TryComp<TransformComponent>(entity, out var xform))
+                        RecursePvsEntities(xform.ChildEntities);
+                }
+            }
+
+            RecursePvsEntities(_expandPvsPlayers);
+
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
@@ -364,6 +437,8 @@ namespace Content.Server.GameTicking
             // If this game ticker is a dummy, do nothing!
             if (DummyTicker)
                 return;
+
+            ReplayEndRound();
 
             // Handle restart for server update
             if (_serverUpdates.RoundEnded())
@@ -437,14 +512,19 @@ namespace Content.Server.GameTicking
 
             _mapManager.Restart();
 
-            _roleBanManager.Restart();
+            _banManager.Restart();
 
             _gameMapManager.ClearSelectedMap();
 
             // Clear up any game rules.
             ClearGameRules();
+            CurrentPreset = null;
 
             _allPreviousGameRules.Clear();
+
+            EntityManager.EntityDeleted -= OnEntityDeleted;
+            _expandPvsPlayers.Clear();
+            _expandPvsEntities.Clear();
 
             // Round restart cleanup event, so entity systems can reset.
             var ev = new RoundRestartCleanupEvent();
@@ -484,7 +564,8 @@ namespace Content.Server.GameTicking
                 RoundLengthMetric.Inc(frameTime);
             }
 
-            if (RunLevel != GameRunLevel.PreRoundLobby ||
+            if (_roundStartTime == TimeSpan.Zero ||
+                RunLevel != GameRunLevel.PreRoundLobby ||
                 Paused ||
                 _roundStartTime - RoundPreloadTime > _gameTiming.CurTime ||
                 _roundStartCountdownHasNotStartedYetDueToNoPlayers)
@@ -510,7 +591,7 @@ namespace Content.Server.GameTicking
 
         private void AnnounceRound()
         {
-            if (Preset == null) return;
+            if (CurrentPreset == null) return;
 
             var options = _prototypeManager.EnumeratePrototypes<RoundAnnouncementPrototype>().ToList();
 

@@ -175,9 +175,9 @@ public sealed class FloorTileSystem : EntitySystem
     private void PlaceAt(EntityUid user, EntityUid gridUid, MapGridComponent mapGrid, EntityCoordinates location,
         ushort tileId, SoundSpecifier placeSound, float offset = 0)
     {
-        _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
+        _adminLogger.Add(LogType.Tile, LogImpact.Low, $"{ToPrettyString(user):actor} placed tile {_tileDefinitionManager[tileId].Name} at {ToPrettyString(gridUid)} {location}");
 
-        var variant = _random.Pick(((ContentTileDefinition) _tileDefinitionManager[tileId]).PlacementVariants);
+        var variant = ((ContentTileDefinition) _tileDefinitionManager[tileId]).PickVariant();
         mapGrid.SetTile(location.Offset(new Vector2(offset, offset)), new Tile(tileId, 0, variant));
 
         _audio.PlayPredicted(placeSound, location, user, AudioHelpers.WithVariation(0.125f, _random));

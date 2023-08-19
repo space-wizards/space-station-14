@@ -1,4 +1,4 @@
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -31,13 +31,13 @@ public sealed class ConveyorComponent : Component
     [ViewVariables]
     public bool Powered;
 
-    [DataField("forwardPort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+    [DataField("forwardPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string ForwardPort = "Forward";
 
-    [DataField("reversePort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("reversePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string ReversePort = "Reverse";
 
-    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<TransmitterPortPrototype>))]
+    [DataField("offPort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
     public string OffPort = "Off";
 
     [ViewVariables]

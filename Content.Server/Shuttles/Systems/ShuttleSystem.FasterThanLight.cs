@@ -10,6 +10,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Utility;
 using System.Diagnostics.CodeAnalysis;
 using System.Numerics;
+using System.Linq;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Body.Components;
 using Content.Shared.Buckle.Components;
@@ -235,6 +236,7 @@ public sealed partial class ShuttleSystem
             var xform = Transform(uid);
             PhysicsComponent? body;
             ShuttleComponent? shuttle;
+            TryComp(uid, out shuttle);
 
             switch (comp.State)
             {
@@ -255,7 +257,8 @@ public sealed partial class ShuttleSystem
 
                     if (TryComp(uid, out body))
                     {
-                        Enable(uid, body);
+                        if (shuttle != null)
+                            Enable(uid, body, shuttle);
                         _physics.SetLinearVelocity(uid, new Vector2(0f, 20f), body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
                         _physics.SetLinearDamping(body, 0f);
@@ -282,7 +285,7 @@ public sealed partial class ShuttleSystem
                     // TODO: Arrival effects
                     // For now we'll just use the ss13 bubbles but we can do fancier.
 
-                    if (TryComp(uid, out shuttle))
+                    if (shuttle != null)
                     {
                         _thruster.DisableLinearThrusters(shuttle);
                         _thruster.EnableLinearThrustDirection(shuttle, DirectionFlag.South);
@@ -300,21 +303,36 @@ public sealed partial class ShuttleSystem
                     {
                         _physics.SetLinearVelocity(uid, Vector2.Zero, body: body);
                         _physics.SetAngularVelocity(uid, 0f, body: body);
-                        _physics.SetLinearDamping(body, ShuttleLinearDamping);
-                        _physics.SetAngularDamping(body, ShuttleAngularDamping);
+                        if (shuttle != null)
+                        {
+                            _physics.SetLinearDamping(body, shuttle.LinearDamping);
+                            _physics.SetAngularDamping(body, shuttle.AngularDamping);
+                        }
                     }
 
-                    TryComp(uid, out shuttle);
                     MapId mapId;
 
                     if (comp.TargetUid != null && shuttle != null)
                     {
-                        if (comp.Dock)
-                            TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
-                        else
-                            TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
+                        if (!Deleted(comp.TargetUid))
+                        {
+                            if (comp.Dock)
+                                TryFTLDock(uid, shuttle, comp.TargetUid.Value, comp.PriorityTag);
+                            else
+                                TryFTLProximity(uid, shuttle, comp.TargetUid.Value);
 
-                        mapId = Transform(comp.TargetUid.Value).MapID;
+                            mapId = Transform(comp.TargetUid.Value).MapID;
+                        }
+                        // oh boy, fallback time
+                        else
+                        {
+                            // Pick earliest map?
+                            var maps = EntityQuery<MapComponent>().Select(o => o.MapId).ToList();
+                            var map = maps.Min(o => o.GetHashCode());
+
+                            mapId = new MapId(map);
+                            TryFTLProximity(uid, shuttle, _mapManager.GetMapEntityId(mapId));
+                        }
                     }
                     else
                     {
@@ -333,9 +351,9 @@ public sealed partial class ShuttleSystem
                         {
                             Disable(uid, body);
                         }
-                        else
+                        else if (shuttle != null)
                         {
-                            Enable(uid, body);
+                            Enable(uid, body, shuttle);
                         }
                     }
 

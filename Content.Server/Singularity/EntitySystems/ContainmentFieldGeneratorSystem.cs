@@ -390,11 +390,11 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// <param name="uid">The entity the singularity is trying to eat.</param>
     /// <param name="comp">The containment field generator the singularity is trying to eat.</param>
     /// <param name="args">The event arguments.</param>
-    private void PreventBreach(EntityUid uid, ContainmentFieldGeneratorComponent comp, EventHorizonAttemptConsumeEntityEvent args)
+    private void PreventBreach(EntityUid uid, ContainmentFieldGeneratorComponent comp, ref EventHorizonAttemptConsumeEntityEvent args)
     {
         if (args.Cancelled)
             return;
         if (comp.IsConnected && !args.EventHorizon.CanBreachContainment)
-            args.Cancel();
+            args.Cancelled = true;
     }
 }

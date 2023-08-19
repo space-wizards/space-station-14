@@ -42,16 +42,16 @@ public sealed partial class ToolSystem
         var center = _turf.GetTileCenter(tile);
         if (args.Used != null)
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
+            _adminLogger.Add(LogType.Tile, LogImpact.Low,
                 $"{ToPrettyString(args.User):actor} used {ToPrettyString(args.Used.Value):tool} to pry {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
         }
         else
         {
-            _adminLogger.Add(LogType.Action, LogImpact.Low,
+            _adminLogger.Add(LogType.Tile, LogImpact.Low,
                 $"{ToPrettyString(args.User):actor} pried {_tileDefinitionManager[tile.Tile.TypeId].Name} at {center}");
         }
 
-        _tile.PryTile(tile);
+        _tile.PryTile(tile, component.Advanced);
     }
 
     private bool TryPryTile(EntityUid toolEntity, EntityUid user, TilePryingComponent component, EntityCoordinates clickLocation)
@@ -71,7 +71,7 @@ public sealed partial class ToolSystem
 
         var tileDef = (ContentTileDefinition)_tileDefinitionManager[tile.Tile.TypeId];
 
-        if (!tileDef.CanCrowbar)
+        if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
             return false;
 
         var ev = new TilePryingDoAfterEvent(coordinates);

@@ -236,6 +236,31 @@
 
 - type: entity
   parent: BaseFoodCondimentPacket
+  id: FoodCondimentPacketMustard
+  name: mustard
+  description: A condiment made from the ground-up seeds of the Mustard plant.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        reagents:
+        - ReagentId: Mustard
+          Quantity: 10
+  - type: Sprite
+    layers:
+      - state: packet-solid-2
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: true
+      - state: packet-layer
+  - type: Icon
+    state: packet-mustard
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 2
+    fillBaseName: packet-solid-
+
+- type: entity
+  parent: BaseFoodCondimentPacket
   id: FoodCondimentPacketPepper
   name: black pepper
   description: Often used to flavor food or make people sneeze.
@@ -392,6 +417,9 @@
       visible: true
   - type: Icon
     state: bottle-coldsauce
+  - type: Tag
+    tags:
+      - Coldsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -458,6 +486,9 @@
       visible: true
   - type: Icon
     state: bottle-hotsauce
+  - type: Tag
+    tags:
+      - Hotsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -480,6 +511,9 @@
       visible: true
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - Ketchup
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -503,6 +537,9 @@
   # So there's no error.
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - BBQsauce
 
 # Shakers
 

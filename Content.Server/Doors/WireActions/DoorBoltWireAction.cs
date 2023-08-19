@@ -28,7 +28,7 @@ public sealed class DoorBoltWireAction : ComponentWireAction<DoorBoltComponent>
 
     public override bool Mend(EntityUid user, Wire wire, DoorBoltComponent door)
     {
-        EntityManager.System<DoorBoltSystem>().SetBoltWireCut(door, true);
+        EntityManager.System<DoorBoltSystem>().SetBoltWireCut(door, false);
         return true;
     }
 

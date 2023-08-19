@@ -606,6 +606,22 @@
         amount: -0.5
 
 - type: reagent
+  id: Saline
+  name: reagent-name-saline
+  group: Medicine
+  desc: reagent-desc-saline
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 6
+        - !type:ModifyBloodLevel
+          amount: 6
+
+- type: reagent
   id: Siderlac
   name: reagent-name-siderlac
   group: Medicine
@@ -620,22 +636,6 @@
         damage:
           types:
             Caustic: -5
-
-- type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
-  group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: medicine
-  color: "#9942f5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

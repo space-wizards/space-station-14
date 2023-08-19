@@ -31,9 +31,9 @@
         - CartridgeMagnum
         - SpeedLoaderMagnum
     proto: CartridgeMagnum
-    capacity: 7
-    chambers: [ True, True, True, True, True, True, True ]
-    ammoSlots: [ null, null, null, null, null, null, null ]
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
     soundEject:
       path: /Audio/Weapons/Guns/MagOut/revolver_magout.ogg
     soundInsert:
@@ -95,7 +95,7 @@
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/mateba.rsi
   - type: Gun
-    fireRate: 2
+    fireRate: 3
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
 
@@ -109,6 +109,30 @@
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
   - type: Clothing
     sprite: Objects/Weapons/Guns/Revolvers/python.rsi
+  - type: Gun
+    selectedMode: SemiAuto
+    fireRate: 2
+    availableModes:
+    - SemiAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/revolver.ogg
+      params:
+        volume: 2.25
+
+- type: entity 
+  name: Python
+  parent: WeaponRevolverPython
+  id: WeaponRevolverPythonAP # For the uplink.
+  suffix: armor-piercing
+  description: A robust revolver favoured by Syndicate agents. Uses .45 magnum ammo.
+  components:
+  - type: RevolverAmmoProvider
+    whitelist:
+      tags:
+        - CartridgeMagnum
+        - SpeedLoaderMagnum
+    proto: CartridgeMagnumAP
+
 
 - type: entity
   name: pirate revolver

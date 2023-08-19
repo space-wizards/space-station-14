@@ -1,4 +1,4 @@
-﻿using Robust.Shared.GameStates;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.StatusIcon.Components;
 
@@ -24,4 +24,4 @@ public sealed partial class StatusIconComponent : Component
 /// </summary>
 /// <param name="StatusIcons"></param>
 [ByRefEvent]
-public record struct GetStatusIconsEvent(List<StatusIconData> StatusIcons);
+public record struct GetStatusIconsEvent(List<StatusIconData> StatusIcons, bool InContainer);

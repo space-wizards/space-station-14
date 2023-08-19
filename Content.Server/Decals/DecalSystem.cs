@@ -2,9 +2,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Shared.Administration;
 using Content.Shared.Chunking;
+using Content.Shared.Database;
 using Content.Shared.Decals;
 using Content.Shared.Maps;
 using Microsoft.Extensions.ObjectPool;
@@ -30,6 +32,7 @@ namespace Content.Server.Decals
         [Dependency] private readonly ChunkingSystem _chunking = default!;
         [Dependency] private readonly IConfigurationManager _conf = default!;
         [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
         private readonly Dictionary<EntityUid, HashSet<Vector2i>> _dirtyChunks = new();
         private readonly Dictionary<IPlayerSession, Dictionary<EntityUid, HashSet<Vector2i>>> _previousSentChunks = new();
@@ -203,7 +206,19 @@ namespace Content.Server.Decals
             if (!ev.Coordinates.IsValid(EntityManager))
                 return;
 
-            TryAddDecal(ev.Decal, ev.Coordinates, out _);
+            if (!TryAddDecal(ev.Decal, ev.Coordinates, out _))
+                return;
+
+            if (eventArgs.SenderSession.AttachedEntity != null)
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
+            else
+            {
+                _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                    $"{eventArgs.SenderSession.Name} drew a {ev.Decal.Color} {ev.Decal.Id} at {ev.Coordinates}");
+            }
         }
 
         private void OnDecalRemovalRequest(RequestDecalRemovalEvent ev, EntitySessionEventArgs eventArgs)
@@ -224,8 +239,19 @@ namespace Content.Server.Decals
                 return;
 
             // remove all decals on the same tile
-            foreach (var (decalId, _) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
+            foreach (var (decalId, decal) in GetDecalsInRange(gridId.Value, ev.Coordinates.Position))
             {
+                if (eventArgs.SenderSession.AttachedEntity != null)
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{ToPrettyString(eventArgs.SenderSession.AttachedEntity.Value):actor} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+                else
+                {
+                    _adminLogger.Add(LogType.CrayonDraw, LogImpact.High,
+                        $"{eventArgs.SenderSession.Name} removed a {decal.Color} {decal.Id} at {ev.Coordinates}");
+                }
+
                 RemoveDecal(gridId.Value, decalId);
             }
         }

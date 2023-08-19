@@ -128,6 +128,9 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   parent: ClothingEyesBase
@@ -159,3 +162,15 @@
       coefficients:
         Heat: 0.95
   - type: GroupExamine
+
+- type: entity
+  parent: ClothingEyesBase
+  id: ClothingEyesGlassesChemical
+  name: chemical analysis goggles
+  description: Goggles that can scan the chemical composition of a solution.
+  components:
+    - type: Sprite
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: Clothing
+      sprite: Clothing/Eyes/Glasses/science.rsi
+    - type: SolutionScanner

@@ -1,9 +1,10 @@
-﻿using System.Collections.Immutable;
+using System.Collections.Immutable;
 using System.Data;
 using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Shared.CCVar;
 using Microsoft.EntityFrameworkCore;
 using Robust.Shared.Configuration;
@@ -120,7 +121,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.Ban
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -169,7 +170,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -189,7 +190,10 @@ namespace Content.Server.Database
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef);
         }
@@ -222,10 +226,13 @@ namespace Content.Server.Database
                 Address = serverBan.Address,
                 HWId = serverBan.HWId?.ToArray(),
                 Reason = serverBan.Reason,
+                Severity = serverBan.Severity,
                 BanningAdmin = serverBan.BanningAdmin?.UserId,
                 BanTime = serverBan.BanTime.UtcDateTime,
                 ExpirationTime = serverBan.ExpirationTime?.UtcDateTime,
-                UserId = serverBan.UserId?.UserId
+                RoundId = serverBan.RoundId,
+                PlaytimeAtNote = serverBan.PlaytimeAtNote,
+                PlayerUserId = serverBan.UserId?.UserId
             });
 
             await db.PgDbContext.SaveChangesAsync();
@@ -310,7 +317,7 @@ namespace Content.Server.Database
             {
                 var newQ = db.PgDbContext.RoleBan
                     .Include(p => p.Unban)
-                    .Where(b => b.UserId == uid.UserId);
+                    .Where(b => b.PlayerUserId == uid.UserId);
 
                 query = query == null ? newQ : query.Union(newQ);
             }
@@ -351,7 +358,7 @@ namespace Content.Server.Database
             }
 
             NetUserId? uid = null;
-            if (ban.UserId is {} guid)
+            if (ban.PlayerUserId is {} guid)
             {
                 uid = new NetUserId(guid);
             }
@@ -371,7 +378,10 @@ namespace Content.Server.Database
                 ban.HWId == null ? null : ImmutableArray.Create(ban.HWId),
                 ban.BanTime,
                 ban.ExpirationTime,
+                ban.RoundId,
+                ban.PlaytimeAtNote,
                 ban.Reason,
+                ban.Severity,
                 aUid,
                 unbanDef,
                 ban.RoleId);
@@ -405,10 +415,13 @@ namespace Content.Server.Database
                 Address = serverRoleBan.Address,
                 HWId = serverRoleBan.HWId?.ToArray(),
                 Reason = serverRoleBan.Reason,
+                Severity = serverRoleBan.Severity,
                 BanningAdmin = serverRoleBan.BanningAdmin?.UserId,
                 BanTime = serverRoleBan.BanTime.UtcDateTime,
                 ExpirationTime = serverRoleBan.ExpirationTime?.UtcDateTime,
-                UserId = serverRoleBan.UserId?.UserId,
+                RoundId = serverRoleBan.RoundId,
+                PlaytimeAtNote = serverRoleBan.PlaytimeAtNote,
+                PlayerUserId = serverRoleBan.UserId?.UserId,
                 RoleId = serverRoleBan.Role,
             });
 
@@ -486,6 +499,21 @@ namespace Content.Server.Database
             var adminRanks = await db.DbContext.AdminRank.Include(a => a.Flags).ToArrayAsync(cancel);
 
             return (admins.Select(p => (p.a, p.LastSeenUserName)).ToArray(), adminRanks)!;
+        }
+
+        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        {
+            // https://learn.microsoft.com/en-us/ef/core/querying/sql-queries#passing-parameters
+            // Read the link above for parameterization before changing this method or you get the bullet
+            if (!string.IsNullOrWhiteSpace(filter?.Search))
+            {
+                return db.AdminLog.FromSql($"""
+SELECT a.admin_log_id, a.round_id, a.date, a.impact, a.json, a.message, a.type FROM admin_log AS a
+WHERE to_tsvector('english'::regconfig, a.message) @@ websearch_to_tsquery('english'::regconfig, {filter.Search})
+""");
+            }
+
+            return db.AdminLog;
         }
 
         private async Task<DbGuardImpl> GetDbImpl()
