@@ -1,4 +1,4 @@
-using Content.Shared.CharacterInfo;
+﻿using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
@@ -24,7 +24,6 @@ public sealed class CharacterInfoSystem : EntitySystem
     public void RequestCharacterInfo()
     {
         var entity = _players.LocalPlayer?.ControlledEntity;
-
         if (entity == null)
         {
             return;

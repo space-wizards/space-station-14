@@ -20,6 +20,7 @@ namespace Content.Client.Administration.UI.CustomControls
         private List<GameRuleInfo> _gameRulesList = new();
 
         public event Action<GameRuleInfo?>? OnSelectionChanged;
+        public IReadOnlyList<GameRuleInfo> PlayerInfo => _gameRulesList;
 
         public Func<GameRuleInfo, string, string>? OverrideText;
         public Comparison<GameRuleInfo>? Comparison;

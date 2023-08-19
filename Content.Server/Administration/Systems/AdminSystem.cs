@@ -10,7 +10,6 @@ using Content.Shared.Administration;
 using Content.Shared.Administration.Events;
 using Content.Shared.GameTicking;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Objectives;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -47,29 +46,9 @@ namespace Content.Server.Administration.Systems
             SubscribeLocalEvent<RoleAddedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoleRemovedEvent>(OnRoleEvent);
             SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestartCleanup);
-            SubscribeLocalEvent<RequestObjectivesEvent>(OnRequestObjectivesEvent);
             SubscribeLocalEvent<GameRuleAddedEvent>(OnGameRuleAdded);
             SubscribeLocalEvent<GameRuleStartedEvent>(OnGameRuleStarted);
             SubscribeLocalEvent<GameRuleEndedEvent>(OnGameRuleEnded);
-        }
-
-        private void OnRequestObjectivesEvent(RequestObjectivesEvent ev)
-        {
-            if (!_playerManager.TryGetPlayerData(ev.NetUserId, out var playerData))
-                return;
-
-            _playerManager.TryGetSessionById(ev.NetUserId, out var session);
-            _playerList[ev.NetUserId] = GetPlayerInfo(playerData, session);
-
-            var playerInfoChangedEvent = new PlayerInfoChangedEvent
-            {
-                PlayerInfo = _playerList[ev.NetUserId]
-            };
-
-            foreach (var admin in _adminManager.ActiveAdmins)
-            {
-                RaiseNetworkEvent(playerInfoChangedEvent, admin.ConnectedClient);
-            }
         }
 
         private void OnRoundRestartCleanup(RoundRestartCleanupEvent ev)
@@ -233,26 +212,9 @@ namespace Content.Server.Administration.Systems
 
             var antag = mind?.AllRoles.Any(r => r.Antagonist) ?? false;
 
-            var objectives = new Dictionary<string, List<ConditionInfo>>();
-
-            if (mind != null)
-            {
-                // Get objectives
-                foreach (var objective in mind.AllObjectives)
-                {
-                    if (!objectives.ContainsKey(objective.Prototype.Issuer))
-                        objectives[objective.Prototype.Issuer] = new List<ConditionInfo>();
-                    foreach (var condition in objective.Conditions)
-                    {
-                        objectives[objective.Prototype.Issuer].Add(new ConditionInfo(condition.Title,
-                            condition.Description, condition.Icon, condition.Progress));
-                    }
-                }
-            }
-
             var connected = session != null && session.Status is SessionStatus.Connected or SessionStatus.InGame;
 
-            return new PlayerInfo(name, entityName, identityName, startingRole, antag, objectives, session?.AttachedEntity, data.UserId,
+            return new PlayerInfo(name, entityName, identityName, startingRole, antag, session?.AttachedEntity, data.UserId,
                 connected, _roundActivePlayers.Contains(data.UserId));
         }
     }
