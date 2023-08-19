@@ -16,7 +16,6 @@ public sealed partial class LawDisplay : Control
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
 
-
     public event Action<BaseButton.ButtonEventArgs>? OnLawAnnouncementButtonPressed;
 
     public LawDisplay(SiliconLaw law, bool canVerbalize, HashSet<string> radioChannels)
