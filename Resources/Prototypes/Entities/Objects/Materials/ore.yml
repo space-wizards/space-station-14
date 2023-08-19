@@ -96,7 +96,7 @@
       steel:
         reagents:
         - ReagentId: Iron
-          Quantity: 8
+          Quantity: 18
         - ReagentId: Carbon
           Quantity: 3
         - ReagentId: Lead
