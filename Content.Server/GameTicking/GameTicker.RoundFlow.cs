@@ -64,10 +64,6 @@ namespace Content.Server.GameTicking
             }
         }
 
-        private void InitializeRoundFlow()
-        {
-        }
-
         /// <summary>
         /// Returns true if the round's map is eligible to be updated.
         /// </summary>

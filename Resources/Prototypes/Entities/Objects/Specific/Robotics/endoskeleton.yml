@@ -5,11 +5,6 @@
   components:
   - type: Clickable
   - type: InteractionOutline
-  - type: Transform
-    noRot: true
-  - type: CollisionWake
-  - type: TileFrictionModifier
-    modifier: 0.5
   - type: Physics
     bodyType: Dynamic
     fixedRotation: false

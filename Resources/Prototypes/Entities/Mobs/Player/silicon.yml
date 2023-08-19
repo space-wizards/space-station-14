@@ -52,6 +52,14 @@
     showInHands: false
   - type: Body
     prototype: Drone
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: DoAfter
   - type: Pullable
   - type: Examiner
@@ -244,12 +252,29 @@
 - type: entity
   id: PlayerBorgGeneric
   parent: BorgChassisGeneric
-  noSpawn: true
+  suffix: Battery, Tools
   components:
-  - type: BorgChassis
-    startingBrain: MMIFilled
-    startingModules:
-    - BorgModuleTool
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
+      borg_module:
+      - BorgModuleTool
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default
+        startingItem: PowerCellMedium
+
+- type: entity
+  id: PlayerBorgBattery
+  parent: BorgChassisGeneric
+  suffix: Battery
+  components:
+  - type: ContainerFill
+    containers:
+      borg_brain:
+      - MMIFilled
   - type: ItemSlots
     slots:
       cell_slot:
