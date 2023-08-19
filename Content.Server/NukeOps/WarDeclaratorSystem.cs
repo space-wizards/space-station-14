@@ -1,5 +1,6 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Rules;
+using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Popups;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
@@ -29,8 +30,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
 
         args.Handled = true;
 
-        var isNukeOps = _nukeopsRuleSystem.TryGetOperativeRuleComponents(args.User, out _);
-        if (!isNukeOps)
+        if (!_nukeopsRuleSystem.TryGetRuleFromOperative(args.User, out var comps))
         {
             var msg = Loc.GetString("war-declarator-not-nukeops");
             _popupSystem.PopupEntity(msg, uid);
@@ -38,19 +38,19 @@ public sealed class WarDeclaratorSystem : EntitySystem
         }
 
         _userInterfaceSystem.TryOpen(uid, WarDeclaratorUiKey.Key, actor.PlayerSession);
-        UpdateUI(uid, args.User);
+        UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
     }
 
     private void OnActivated(EntityUid uid, WarDeclaratorComponent component, WarDeclaratorActivateMessage args)
     {
         if (!args.Session.AttachedEntity.HasValue ||
-            !_nukeopsRuleSystem.TryGetOperativeRuleComponents(args.Session.AttachedEntity.Value, out var comps))
+            !_nukeopsRuleSystem.TryGetRuleFromOperative(args.Session.AttachedEntity.Value, out var comps))
             return;
 
         var condition = _nukeopsRuleSystem.GetWarCondition(comps.Value.Item1, comps.Value.Item2);
         if (condition != WarConditionStatus.YES_WAR)
         {
-            UpdateUI(uid, args.Session.AttachedEntity.Value);
+            UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
             return;
         }
 
@@ -82,32 +82,30 @@ public sealed class WarDeclaratorSystem : EntitySystem
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has declared war with this text: {message}");
     }
 
-    public void RefreshAllUI(EntityUid opsUid)
+    public void RefreshAllUI(NukeopsRuleComponent nukeops, GameRuleComponent gameRule)
     {
         var enumerator = EntityQueryEnumerator<WarDeclaratorComponent>();
         while (enumerator.MoveNext(out var uid, out _))
         {
-            UpdateUI(uid, opsUid);
+            UpdateUI(uid, nukeops, gameRule);
         }
     }
 
-    private void UpdateUI(EntityUid declaratorUid, EntityUid opsUid)
+    private void UpdateUI(EntityUid declaratorUid, NukeopsRuleComponent nukeops, GameRuleComponent gameRule)
     {
-        if (!_nukeopsRuleSystem.TryGetOperativeRuleComponents(opsUid, out var comps))
-            return;
-        var condition = _nukeopsRuleSystem.GetWarCondition(comps.Value.Item1, comps.Value.Item2);
+        var condition = _nukeopsRuleSystem.GetWarCondition(nukeops, gameRule);
 
         TimeSpan startTime;
         TimeSpan delayTime;
         switch(condition)
         {
             case WarConditionStatus.YES_WAR:
-                startTime = comps.Value.Item2.ActivatedAt;
-                delayTime = comps.Value.Item1.WarDeclarationDelay;
+                startTime = gameRule.ActivatedAt;
+                delayTime = nukeops.WarDeclarationDelay;
                 break;
             case WarConditionStatus.WAR_DELAY:
-                startTime = comps.Value.Item1.WarDeclaredTime!.Value;
-                delayTime = comps.Value.Item1.WarNukieArriveDelay;
+                startTime = nukeops.WarDeclaredTime!.Value;
+                delayTime = nukeops.WarNukieArriveDelay;
                 break;
             default:
                 startTime = TimeSpan.Zero;
@@ -120,7 +118,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
             WarDeclaratorUiKey.Key,
             new WarDeclaratorBoundUserInterfaceState(
                 condition,
-                comps.Value.Item1.WarDeclarationMinOps,
+                nukeops.WarDeclarationMinOps,
                 delayTime,
                 startTime));
     }

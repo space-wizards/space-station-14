@@ -41,6 +41,8 @@ public sealed partial class WarDeclaratorWindow : DefaultWindow
 
     public void UpdateState(WarDeclaratorBoundUserInterfaceState state)
     {
+        WarButton.Disabled = state.Status != WarConditionStatus.YES_WAR;
+
         _timeStamp = state.Delay;
         _endTime = state.EndTime;
         _status = state.Status;

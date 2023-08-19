@@ -54,7 +54,7 @@ public sealed class NukeopsRuleComponent : Component
     public bool EnableWarOps = true;
 
     /// <summary>
-    ///     Indicates whether war has been declared
+    ///     Indicates time when war has been declared, null if not declared
     /// </summary>
     [DataField("warDeclaredTime")]
     public TimeSpan? WarDeclaredTime;
@@ -75,13 +75,13 @@ public sealed class NukeopsRuleComponent : Component
     ///     Time allowed for declaration of war
     /// </summary>
     [DataField("warDeclarationTimeWindow")]
-    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromSeconds(30); // TODO: RETURN TO 6 mins, FOR DEBUG
 
     /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(20);
+    public TimeSpan WarNukieArriveDelay = TimeSpan.FromSeconds(50); // TODO: RETURN TO 20 mins, FOR DEBUG
 
     /// <summary>
     ///     Minimal operatives count for war declaration
