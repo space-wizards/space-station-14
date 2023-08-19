@@ -13,6 +13,13 @@
   id: Construction
   name: guide-entry-construction
   text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
+  children: 
+  - AirlockSecurity
+  
+- type: guideEntry
+  id: AirlockSecurity
+  name: guide-entry-airlock-security
+  text: "/ServerInfo/Guidebook/Engineering/AirlockSecurity.xml"
 
 - type: guideEntry
   id: Atmospherics
@@ -37,12 +44,17 @@
   text: "/ServerInfo/Guidebook/Engineering/Networking.xml"
   children:
   - NetworkConfigurator
+  - AccessConfigurator
 
 - type: guideEntry
   id: NetworkConfigurator
   name: guide-entry-network-configurator
   text: "/ServerInfo/Guidebook/Engineering/NetworkConfigurator.xml"
 
+- type: guideEntry
+  id: AccessConfigurator
+  name: guide-entry-access-configurator
+  text: "/ServerInfo/Guidebook/Engineering/AccessConfigurator.xml"
 
 - type: guideEntry
   id: Power

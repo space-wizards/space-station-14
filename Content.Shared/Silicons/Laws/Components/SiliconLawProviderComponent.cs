@@ -5,7 +5,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// <summary>
 /// This is used for an entity which grants laws to a <see cref="SiliconLawBoundComponent"/>
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
 public sealed class SiliconLawProviderComponent : Component
 {
     /// <summary>

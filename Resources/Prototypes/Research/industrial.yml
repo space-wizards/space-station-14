@@ -34,7 +34,7 @@
     state: panel
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - WallmountSubstationElectronics
   - WallmountGeneratorElectronics
@@ -48,7 +48,7 @@
     state: icon
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - ProtolatheMachineCircuitboard
   - AutolatheMachineCircuitboard
@@ -63,7 +63,7 @@
     state: portgen0
   discipline: Industrial
   tier: 1
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - PortableGeneratorPacmanMachineCircuitboard
   - PortableGeneratorSuperPacmanMachineCircuitboard
@@ -130,6 +130,7 @@
   - RadarConsoleCircuitboard
   - ThrusterMachineCircuitboard
   - GyroscopeMachineCircuitboard
+  - MiniGravityGeneratorCircuitboard
 
 - type: technology
   id: RipleyAPLU
@@ -139,7 +140,7 @@
     state: ripley
   discipline: Industrial
   tier: 2
-  cost: 10000
+  cost: 7500
   recipeUnlocks:
   - RipleyHarness
   - RipleyLArm
