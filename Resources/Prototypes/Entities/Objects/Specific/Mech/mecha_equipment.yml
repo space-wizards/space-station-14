@@ -83,7 +83,6 @@
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: MechGun
   - type: Gun
     minAngle: 24
     maxAngle: 45
