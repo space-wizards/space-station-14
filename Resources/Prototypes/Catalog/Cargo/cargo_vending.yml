@@ -17,6 +17,17 @@
   group: market
 
 - type: cargoProduct
+  id: CrateVendingMachineRestockChefvend
+  name: ChefVend restock crate
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockChefvendFilled
+  cost: 680
+  category: Service
+  group: market
+
+- type: cargoProduct
   id: CrateVendingMachineRestockClothes
   icon:
     sprite: Objects/Specific/Service/vending_machine_restock.rsi
@@ -33,6 +44,17 @@
     state: base
   product: CrateVendingMachineRestockDinnerwareFilled
   cost: 2000
+  category: Service
+  group: market
+
+- type: cargoProduct
+  id: CrateVendingMachineRestockCondimentStation
+  name: Condiment Station restock crate
+  icon:
+    sprite: Objects/Specific/Service/vending_machine_restock.rsi
+    state: base
+  product: CrateVendingMachineRestockCondimentStationFilled
+  cost: 300
   category: Service
   group: market
 
