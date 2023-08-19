@@ -52,10 +52,6 @@ public sealed partial class LawDisplay : Control
 
         foreach (string radioChannel in radioChannels)
         {
-            // The borg can always state their laws in binary, even if they are otherwise unable to speak
-            if (!canVerbalize && radioChannel != SharedChatSystem.BinaryChannel)
-                continue;
-
             if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
                 continue;
 
