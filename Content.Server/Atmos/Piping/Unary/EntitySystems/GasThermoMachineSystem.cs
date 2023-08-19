@@ -79,16 +79,16 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             float Cin = _atmosphereSystem.GetHeatCapacity(inlet.Air);
 
             // Multiply power in by coefficient of performance, add that heat to gas
-            float dQ = dT * Cin;
-            float dQLim = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
+            float dQLim = dT * Cin;
+            float dQ = thermoMachine.HeatCapacity * thermoMachine.Cp * args.dt;
             // Clamps the heat transferred to not overshoot
             float scale = 1f;
-            if (heater == dQ < dQLim)
+            if (heater == dQLim < dQ)
             {
-                scale = dQ / dQLim;
+                scale = dQLim / dQ;
                 thermoMachine.HysteresisState = false;
             }
-            float dQActual = dQLim * scale;
+            float dQActual = dQ * scale;
             _atmosphereSystem.AddHeat(inlet.Air, dQActual);
 
             receiver.Load = thermoMachine.HeatCapacity * scale;
