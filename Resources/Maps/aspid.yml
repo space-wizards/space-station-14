@@ -11893,7 +11893,7 @@ entities:
     - pos: -14.5,29.5
       parent: 1
       type: Transform
-- proto: AirlockPainter
+- proto: SprayPainter
   entities:
   - uid: 9885
     components:

@@ -417,6 +417,9 @@
       visible: true
   - type: Icon
     state: bottle-coldsauce
+  - type: Tag
+    tags:
+      - Coldsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -483,6 +486,9 @@
       visible: true
   - type: Icon
     state: bottle-hotsauce
+  - type: Tag
+    tags:
+      - Hotsauce
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -505,6 +511,9 @@
       visible: true
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - Ketchup
 
 - type: entity
   parent: BaseFoodCondimentBottle
@@ -528,6 +537,9 @@
   # So there's no error.
   - type: Icon
     state: bottle-ketchup
+  - type: Tag
+    tags:
+      - BBQsauce
 
 # Shakers
 
