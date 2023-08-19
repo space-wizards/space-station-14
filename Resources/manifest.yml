@@ -2,9 +2,4 @@
 windowIconSet: /Textures/Logo/icon
 splashLogo: /Textures/Logo/logo.png
 
-clientAssemblies:
-  - Content.Client
-  - Content.Shared
-  - Content.Shared.Database
-
 # PJB PLEASE

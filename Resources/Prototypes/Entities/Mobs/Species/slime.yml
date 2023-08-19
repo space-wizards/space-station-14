@@ -5,6 +5,9 @@
   abstract: true
   components:
   - type: Hunger
+    starvationDamage:
+      types:
+        Bloodloss: 0.5
   - type: Thirst
   - type: Icon
     sprite: Mobs/Species/Slime/parts.rsi
@@ -15,12 +18,13 @@
   - type: HumanoidAppearance
     species: SlimePerson
   - type: Speech
+    speechVerb: Slime
     speechSounds: Slime
   - type: Vocal
     sounds:
-      Male: UnisexSlime
-      Female: UnisexSlime
-      Unsexed: UnisexSlime
+      Male: MaleSlime
+      Female: FemaleSlime
+      Unsexed: MaleSlime
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Slime

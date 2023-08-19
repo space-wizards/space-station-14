@@ -9,6 +9,7 @@ using Content.Server.Power.EntitySystems;
 using Content.Server.Stack;
 using Content.Server.UserInterface;
 using Content.Shared.Database;
+using Content.Shared.Emag.Components;
 using Content.Shared.Lathe;
 using Content.Shared.Materials;
 using Content.Shared.Research.Components;
@@ -31,6 +32,7 @@ namespace Content.Server.Lathe
         [Dependency] private readonly UserInterfaceSystem _uiSys = default!;
         [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
         [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         public override void Initialize()
         {
@@ -46,21 +48,51 @@ namespace Content.Server.Lathe
             SubscribeLocalEvent<LatheComponent, LatheQueueRecipeMessage>(OnLatheQueueRecipeMessage);
             SubscribeLocalEvent<LatheComponent, LatheSyncRequestMessage>(OnLatheSyncRequestMessage);
 
-            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u,c,_) => UpdateUserInterfaceState(u,c));
+            SubscribeLocalEvent<LatheComponent, BeforeActivatableUIOpenEvent>((u, c, _) => UpdateUserInterfaceState(u, c));
             SubscribeLocalEvent<LatheComponent, MaterialAmountChangedEvent>(OnMaterialAmountChanged);
-
             SubscribeLocalEvent<TechnologyDatabaseComponent, LatheGetRecipesEvent>(OnGetRecipes);
+            SubscribeLocalEvent<EmagLatheRecipesComponent, LatheGetRecipesEvent>(GetEmagLatheRecipes);
+
+            SubscribeLocalEvent<LatheComponent, LatheEjectMaterialMessage>(OnLatheEjectMessage);
+        }
+
+        private void OnLatheEjectMessage(EntityUid uid, LatheComponent lathe, LatheEjectMaterialMessage message)
+        {
+            if (!lathe.CanEjectStoredMaterials)
+                return;
+
+            if (!_prototypeManager.TryIndex<MaterialPrototype>(message.Material, out var material))
+                return;
+
+            int volume = 0;
+
+            if (material.StackEntity != null)
+            {
+                var entProto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                if (!entProto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                    return;
+
+                var volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == message.Material).Value;
+                int sheetsToExtract = Math.Min(message.SheetsToExtract, _stack.GetMaxCount(material.StackEntity));
+
+                volume = sheetsToExtract * volumePerSheet;
+            }
+
+            if (volume > 0 && _materialStorage.TryChangeMaterialAmount(uid, message.Material, -volume))
+            {
+                _materialStorage.SpawnMultipleFromMaterial(volume, material, Transform(uid).Coordinates, out var overflow);
+            }
         }
 
         public override void Update(float frameTime)
         {
             var query = EntityQueryEnumerator<LatheProducingComponent, LatheComponent>();
-            while(query.MoveNext(out var uid, out var comp, out var lathe))
+            while (query.MoveNext(out var uid, out var comp, out var lathe))
             {
                 if (lathe.CurrentRecipe == null)
                     continue;
 
-                if ( _timing.CurTime - comp.StartTime >= comp.ProductionLength)
+                if (_timing.CurTime - comp.StartTime >= comp.ProductionLength)
                     FinishProducing(uid, lathe);
             }
         }
@@ -70,7 +102,7 @@ namespace Content.Server.Lathe
             if (args.Storage != uid)
                 return;
             var materialWhitelist = new List<string>();
-            var recipes =  GetAllBaseRecipes(component);
+            var recipes = GetAllBaseRecipes(component);
             foreach (var id in recipes)
             {
                 if (!_proto.TryIndex<LatheRecipePrototype>(id, out var proto))
@@ -108,7 +140,7 @@ namespace Content.Server.Lathe
             return ev.Recipes;
         }
 
-        public List<string> GetAllBaseRecipes(LatheComponent component)
+        public static List<string> GetAllBaseRecipes(LatheComponent component)
         {
             return component.StaticRecipes.Union(component.DynamicRecipes).ToList();
         }
@@ -186,7 +218,7 @@ namespace Content.Server.Lathe
             var producing = component.CurrentRecipe ?? component.Queue.FirstOrDefault();
 
             var state = new LatheUpdateState(GetAvailableRecipes(uid, component), component.Queue, producing);
-            _uiSys.SetUiState(ui, state);
+            UserInterfaceSystem.SetUiState(ui, state);
         }
 
         private void OnGetRecipes(EntityUid uid, TechnologyDatabaseComponent component, LatheGetRecipesEvent args)
@@ -198,6 +230,24 @@ namespace Content.Server.Lathe
             {
                 if (!component.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
                     continue;
+                args.Recipes.Add(recipe);
+            }
+        }
+
+        private void GetEmagLatheRecipes(EntityUid uid, EmagLatheRecipesComponent component, LatheGetRecipesEvent args)
+        {
+            if (uid != args.Lathe || !TryComp<TechnologyDatabaseComponent>(uid, out var technologyDatabase))
+                return;
+            if (!HasComp<EmaggedComponent>(uid))
+                return;
+            foreach (var recipe in component.EmagDynamicRecipes)
+            {
+                if (!technologyDatabase.UnlockedRecipes.Contains(recipe) || args.Recipes.Contains(recipe))
+                    continue;
+                args.Recipes.Add(recipe);
+            }
+            foreach (var recipe in component.EmagStaticRecipes)
+            {
                 args.Recipes.Add(recipe);
             }
         }
@@ -272,7 +322,6 @@ namespace Content.Server.Lathe
         {
             return GetAvailableRecipes(uid, component).Contains(recipe.ID);
         }
-
         #region UI Messages
 
         private void OnLatheQueueRecipeMessage(EntityUid uid, LatheComponent component, LatheQueueRecipeMessage args)

@@ -1,11 +1,7 @@
-using System.Linq;
-using System.Threading.Tasks;
-using Content.Server.Storage.Components;
+using System.Numerics;
 using Content.Server.Storage.EntitySystems;
-using NUnit.Framework;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Map;
 using Robust.Shared.Maths;
 
@@ -13,6 +9,7 @@ namespace Content.IntegrationTests.Tests
 {
     public sealed class ContainerOcclusionTest
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: entity
   id: ContainerOcclusionA
@@ -37,7 +34,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestA()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -64,8 +61,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded);
+                    Assert.That(light.ContainerOccluded);
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -74,7 +74,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestB()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -101,8 +101,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.False(sprite.ContainerOccluded);
-                Assert.False(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded, Is.False);
+                    Assert.That(light.ContainerOccluded, Is.False);
+                });
             });
 
             await pairTracker.CleanReturnAsync();
@@ -111,7 +114,7 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAb()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings{ExtraPrototypes = Prototypes});
+            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
             var s = pairTracker.Pair.Server;
             var c = pairTracker.Pair.Client;
 
@@ -140,8 +143,11 @@ namespace Content.IntegrationTests.Tests
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
                 var light = cEntities.GetComponent<PointLightComponent>(dummy);
-                Assert.True(sprite.ContainerOccluded);
-                Assert.True(light.ContainerOccluded);
+                Assert.Multiple(() =>
+                {
+                    Assert.That(sprite.ContainerOccluded);
+                    Assert.That(light.ContainerOccluded);
+                });
             });
 
             await pairTracker.CleanReturnAsync();

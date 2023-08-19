@@ -13,7 +13,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: ian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -33,20 +32,18 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Old Ian
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiIanOld
   description: Still the favorite pet corgi. Love his wheels.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: old_ian
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -55,32 +52,22 @@
         Base: old_ian_dead
       Dead:
         Base: old_ian_dead
-  - type: Grammar
-    attributes:
-      proper: true
-      gender: male
   - type: Butcherable
     spawned:
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Lisa
-  parent: MobCorgi
+  parent: MobCorgiIan
   id: MobCorgiLisa
   description: Ian's favorite corgi.
   components:
   - type: Sprite
-    drawdepth: Mobs
-    sprite: Mobs/Pets/corgi.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: lisa
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -93,13 +80,6 @@
     attributes:
       proper: true
       gender: female
-  - type: Butcherable
-    spawned:
-    - id: FoodMeatCorgi
-      amount: 2
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Runtime
@@ -107,17 +87,19 @@
   id: MobCatRuntime
   description: Professional mouse hunter. Escape artist.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Grammar
     attributes:
       gender: female
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Exception
@@ -125,7 +107,7 @@
   parent: MobCatCalico
   description: Ask nicely, and maybe they'll give you one of their spare lives.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Grammar
@@ -134,6 +116,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Floppa
@@ -158,6 +141,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Bandito
@@ -171,6 +155,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: bingus
@@ -196,7 +181,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: cat
     templateId: pet
@@ -230,6 +214,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: mcgriff
@@ -255,7 +240,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: puppy
     templateId: pet
@@ -292,6 +276,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Paperwork
@@ -305,7 +290,6 @@
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: paperwork
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
@@ -326,9 +310,6 @@
     attributes:
       proper: true
       gender: male
-  - type: Tag
-    tags:
-    - CannotSuicide
 
 - type: entity
   name: Walter
@@ -354,7 +335,6 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: Inventory
     speciesId: dog
     templateId: pet
@@ -391,6 +371,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morty
@@ -407,6 +388,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Morticia
@@ -423,6 +405,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Alexander
@@ -436,6 +419,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Renault
@@ -458,6 +442,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Hamlet
@@ -465,6 +450,12 @@
   id: MobHamsterHamlet
   description: A grumpy, cute and fluffy hamster.
   components:
+  - type: Sprite
+    drawdepth: SmallMobs
+    sprite: Mobs/Pets/hamlet.rsi
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hamster-0
   - type: GhostRole
     makeSentient: true
     allowSpeech: true
@@ -485,8 +476,8 @@
   - type: Tag
     tags:
     - CannotSuicide
-    - Trash
     - Hamster
+    - VimPilot
 
 - type: entity
   name: Shiva
@@ -494,7 +485,7 @@
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
-  - type: Faction
+  - type: NpcFactionMember
     factions:
       - PetsNT
   - type: Sprite
@@ -504,7 +495,8 @@
       state: shiva
       sprite: Mobs/Pets/shiva.rsi
   - type: HTN
-    rootTask: SimpleHostileCompound
+    rootTask:
+      task: SimpleHostileCompound
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -517,13 +509,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: Appearance
   - type: DamageStateVisuals
     states:
       Alive:
         Base: shiva
-      Critical:
-        Base: shiva_dead
       Dead:
         Base: shiva_dead
   - type: Butcherable
@@ -534,7 +523,6 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      90: Critical
       150: Dead
   - type: MeleeWeapon
     hidden: true
@@ -558,6 +546,7 @@
   - type: Tag
     tags:
     - CannotSuicide
+    - VimPilot
 
 - type: entity
   name: Willow
@@ -613,6 +602,7 @@
     - FootstepSound
     - DoorBumpOpener
     - CannotSuicide
+    - VimPilot
   - type: DamageStateVisuals
     states:
       Alive:
@@ -666,6 +656,7 @@
   description: A prominent representative of monkeys with unlimited access to alcohol.
   components:
   - type: GhostRole
+    prob: 1
     makeSentient: true
     allowSpeech: true
     allowMovement: true

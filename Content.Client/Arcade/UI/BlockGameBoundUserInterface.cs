@@ -7,7 +7,7 @@ public sealed class BlockGameBoundUserInterface : BoundUserInterface
 {
     private BlockGameMenu? _menu;
 
-    public BlockGameBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    public BlockGameBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
     }
 

@@ -4,7 +4,7 @@ Xenoarchaeology is a science subdepartment focused on researching and experiment
 
 ## Artifacts
 <Box>
-<GuideEntityEmbed Entity="SimpleXenoArtifact" Caption=""/>
+<GuideEntityEmbed Entity="ComplexXenoArtifact" Caption=""/>
 <GuideEntityEmbed Entity="SimpleXenoArtifactItem" Caption=""/>
 </Box>
 Artifacts consist of a randomly-generated graph structure. They consist of nodes connected to each other by edges, the traversal of which is the main goal of the scientists working on them.
@@ -24,6 +24,11 @@ The main equipment that you'll be using for Xenoarchaeology is the [color=#a4885
 
 To set them up, simply link them with a network configurator, set an artifact on top of the analyzer, and press the [color=#a4885c]Scan[/color] button.
 
-Using the console, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button. The amount of points you extract is based on how many of the nodes of the artifact have been activated.
+Using the console, you can extract points from the artifact using the [color=#a4885c]Extract[/color] button. The amount of points you extract is based on how many new nodes have been activated, since last extracting. You can extract multiple times, there is no reason not to!!!
+
+## Assembling Artifacts
+<GuideEntityEmbed Entity="ArtifactFragment" Caption="Artifact Fragment"/>
+
+It is possible to gather multiple artifact fragments and assemble them into a working artifact. You can ask for these from Salvage, they usually find these while mining asteroids or on Expeditions.
 
 </Document>

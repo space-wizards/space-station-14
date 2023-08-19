@@ -8,6 +8,9 @@
   id: AirSensor
 
 - type: Tag
+  id: Ambrosia
+
+- type: Tag
   id: AppraisalTool
 
 - type: Tag
@@ -18,6 +21,15 @@
 
 - type: Tag
   id: Baguette
+
+- type: Tag
+  id: Balloon
+
+- type: Tag
+  id: BaseballBat 
+
+- type: Tag
+  id: BBQsauce
 
 - type: Tag
   id: Bee
@@ -38,16 +50,130 @@
   id: BorgArm
 
 - type: Tag
+  id: BorgEngineerHead
+
+- type: Tag
+  id: BorgEngineerLArm
+
+- type: Tag
+  id: BorgEngineerLLeg
+
+- type: Tag
+  id: BorgEngineerRArm
+
+- type: Tag
+  id: BorgEngineerRLeg
+
+- type: Tag
+  id: BorgEngineerTorso
+
+- type: Tag
+  id: BorgGenericHead
+
+- type: Tag
+  id: BorgGenericLArm
+
+- type: Tag
+  id: BorgGenericLLeg
+
+- type: Tag
+  id: BorgGenericRArm
+
+- type: Tag
+  id: BorgGenericRLeg
+
+- type: Tag
+  id: BorgGenericTorso
+
+- type: Tag
   id: BorgHead
+
+- type: Tag
+  id: BorgJanitorHead
+
+- type: Tag
+  id: BorgJanitorLLeg
+
+- type: Tag
+  id: BorgJanitorRLeg
+
+- type: Tag
+  id: BorgJanitorTorso
 
 - type: Tag
   id: BorgLeg
 
 - type: Tag
-  id: BorgLeftLeg
+  id: BorgMedicalHead
 
 - type: Tag
-  id: BorgRightLeg
+  id: BorgMedicalLArm
+
+- type: Tag
+  id: BorgMedicalLLeg
+
+- type: Tag
+  id: BorgMedicalRArm
+
+- type: Tag
+  id: BorgMedicalRLeg
+
+- type: Tag
+  id: BorgMedicalTorso
+
+- type: Tag
+  id: BorgMiningHead
+
+- type: Tag
+  id: BorgMiningLArm
+
+- type: Tag
+  id: BorgMiningLLeg
+
+- type: Tag
+  id: BorgMiningRArm
+
+- type: Tag
+  id: BorgMiningRLeg
+
+- type: Tag
+  id: BorgMiningTorso
+
+- type: Tag
+  id: BorgModuleCargo
+
+- type: Tag
+  id: BorgModuleEngineering
+
+- type: Tag
+  id: BorgModuleGeneric
+
+- type: Tag
+  id: BorgModuleJanitor
+
+- type: Tag
+  id: BorgModuleMedical
+
+- type: Tag
+  id: BorgModuleService
+
+- type: Tag
+  id: BorgServiceHead
+
+- type: Tag
+  id: BorgServiceLArm
+
+- type: Tag
+  id: BorgServiceLLeg
+
+- type: Tag
+  id: BorgServiceRArm
+
+- type: Tag
+  id: BorgServiceRLeg
+
+- type: Tag
+  id: BorgServiceTorso
 
 - type: Tag
   id: BotanyHatchet
@@ -68,6 +194,12 @@
   id: BrassInstrument
 
 - type: Tag
+  id: Bread
+
+- type: Tag
+  id: Briefcase
+
+- type: Tag
   id: Brutepack
 
 - type: Tag
@@ -83,7 +215,13 @@
   id: CableCoil
 
 - type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
   id: Carrot
+
+- type: Tag
+  id: CarrotFries
 
 - type: Tag
   id: Carpet
@@ -138,6 +276,9 @@
   id: Catwalk
 
 - type: Tag
+  id: Chicken
+
+- type: Tag
   id: Cigarette
 
 - type: Tag
@@ -145,6 +286,9 @@
 
 - type: Tag
   id: CigPack
+
+- type: Tag
+  id: ClothMade
 
 - type: Tag
   id: ClownMask
@@ -160,6 +304,15 @@
 
 - type: Tag
   id: CluwneHorn
+
+- type: Tag #Ohioans die happy
+  id: Corn 
+
+- type: Tag
+  id: Coldsauce
+
+- type: Tag
+  id: Cow
 
 - type: Tag
   id: Crayon
@@ -210,6 +363,9 @@
   id: ComputerTelevisionCircuitboard
 
 - type: Tag
+  id: CubanCarp
+
+- type: Tag
   id: Debug
 
 - type: Tag
@@ -243,7 +399,13 @@
   id: Donut
 
 - type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
   id: DroneUsable
+
+- type: Tag
+  id: Duck
 
 - type: Tag
   id: Ectoplasm
@@ -259,6 +421,9 @@
 
 - type: Tag
   id: ExplosivePassable
+
+- type: Tag
+  id: Figurine
 
 - type: Tag
   id: FireAlarm
@@ -291,6 +456,9 @@
   id: Folder
 
 - type: Tag
+  id: FoodSnack
+
+- type: Tag
   id: FootstepSound
 
 - type: Tag
@@ -301,6 +469,9 @@
 
 - type: Tag
   id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: Galaxythistle
 
 - type: Tag
   id: GasScrubber
@@ -321,6 +492,9 @@
   id: GlassShard
 
 - type: Tag
+  id: Goat
+
+- type: Tag
   id: Grenade
 
 - type: Tag
@@ -329,6 +503,9 @@
 
 - type: Tag
   id: Hamster
+
+- type: Tag
+  id: HamsterWearable
 
 - type: Tag
   id: HamtrCentralControlModule
@@ -403,6 +580,9 @@
 - type: Tag
   id: HonkerRArm
 
+- type: Tag
+  id: Hotsauce
+
 - type: Tag #Drop this innate tool instead of deleting it.
   id: InnateDontDelete
 
@@ -427,6 +607,8 @@
 - type: Tag
   id: Kangaroo
 
+- type: Tag
+  id: Ketchup
 
 - type: Tag
   id: KeyedInstrument
@@ -436,6 +618,12 @@
 
 - type: Tag
   id: LavaBrig
+
+- type: Tag
+  id: Lemon
+
+- type: Tag
+  id: Lime
 
 - type: Tag
   id: Machete
@@ -530,10 +718,11 @@
   id: Mop
 
 - type: Tag
-  id: Multitool
+  id: Mouse
 
 - type: Tag
-  id: NoSpinOnThrow
+  id: Multitool
+
 
 - type: Tag
   id: NoBlockAnchoring
@@ -557,6 +746,9 @@
   id: PaintableAirlock
 
 - type: Tag
+  id: Pancake
+
+- type: Tag
   id: PercussionInstrument
 
 - type: Tag
@@ -564,6 +756,12 @@
 
 - type: Tag
   id: Pickaxe
+
+- type: Tag
+  id: Pie
+
+- type: Tag
+  id: Pig
 
 - type: Tag
   id: PillCanister
@@ -590,10 +788,20 @@
   id: Plastic
 
 - type: Tag
+  id: Plunger
+
+- type: Tag
   id: PlushieGhost
+
+
+- type: Tag
+  id: PowerCellSmall
 
 - type: Tag
   id: Powerdrill
+
+- type: Tag
+  id: PrisonUniform
 
 - type: Tag
   id: ProximitySensor
@@ -657,6 +865,9 @@
   id: ShellShotgun
 
 - type: Tag
+  id: Shiv
+
+- type: Tag
   id: ShoesRequiredStepTriggerImmune
 
 - type: Tag
@@ -679,6 +890,9 @@
 
 - type: Tag
   id: SolarTrackerElectronics
+
+- type: Tag
+  id: Soup
 
 - type: Tag
   id: Spray
@@ -732,6 +946,12 @@
   id: Taser
 
 - type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
   id: TimerBrigElectronics
 
 - type: Tag
@@ -741,16 +961,28 @@
   id: TimerSignalElectronics
 
 - type: Tag
+  id: Toolbox
+
+- type: Tag
   id: Trash
 
 - type: Tag
   id: TrashBag
 
 - type: Tag
+  id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
+
+- type: Tag
   id: UraniumGlassShard
 
 - type: Tag
   id: VehicleKey
+
+- type: Tag
+  id: VimPilot
+
+- type: Tag
+  id: VoiceTrigger
 
 - type: Tag
   id: Wall
@@ -793,3 +1025,10 @@
 
 - type: Tag
   id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver
+

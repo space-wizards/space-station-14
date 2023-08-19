@@ -1,4 +1,4 @@
-using Content.Server.Coordinates.Helpers;
+using Content.Shared.Coordinates.Helpers;
 using Content.Server.Engineering.Components;
 using Content.Server.Stack;
 using Content.Shared.DoAfter;

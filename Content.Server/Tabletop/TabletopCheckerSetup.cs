@@ -8,14 +8,12 @@ namespace Content.Server.Tabletop
     [UsedImplicitly]
     public sealed class TabletopCheckerSetup : TabletopSetup
     {
-        [DataField("boardPrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string CheckerBoardPrototype { get; } = "CheckerBoardTabletop";
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {
-            var checkerboard = entityManager.SpawnEntity(CheckerBoardPrototype, session.Position.Offset(-1, 0));
+            var checkerboard = entityManager.SpawnEntity(BoardPrototype, session.Position.Offset(-1, 0));
 
             session.Entities.Add(checkerboard);
 
@@ -35,13 +33,28 @@ namespace Content.Server.Tabletop
             // Queens
             for (int i = 1; i < 4; i++)
             {
-                EntityUid tempQualifier = entityManager.SpawnEntity("BlackCheckerQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - i * separation, mapId));
+                EntityUid tempQualifier = entityManager.SpawnEntity("BlackCheckerQueen", new MapCoordinates(x + 9 * separation + 9f / 32, y - (i - 1) * separation, mapId));
                 session.Entities.Add(tempQualifier);
 
-                EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteCheckerQueen", new MapCoordinates(x + 8 * separation + 9f / 32, y - i * separation, mapId));
+                EntityUid tempQualifier1 = entityManager.SpawnEntity("WhiteCheckerQueen", new MapCoordinates(x + 8 * separation + 9f / 32, y - (i - 1) * separation, mapId));
                 session.Entities.Add(tempQualifier1);
             }
 
+            var spares = new List<EntityUid>();
+            for (var i = 1; i < 7; i++)
+            {
+                var step = 3 + 0.25f * (i - 1);
+                spares.Add(
+                  entityManager.SpawnEntity("BlackCheckerPiece",
+                  new MapCoordinates(x + 9 * separation + 9f / 32, y - step * separation, mapId)
+                ));
+
+                spares.Add(
+                  entityManager.SpawnEntity("WhiteCheckerPiece",
+                  new MapCoordinates(x + 8 * separation + 9f / 32, y - step * separation, mapId)
+                ));
+            }
+            session.Entities.UnionWith(spares);
         }
 
         private void SpawnPieces(TabletopSession session, IEntityManager entityManager, string color, MapCoordinates left, float separation = 1f)

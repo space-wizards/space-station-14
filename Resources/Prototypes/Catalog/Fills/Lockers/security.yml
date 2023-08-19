@@ -22,6 +22,7 @@
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerWardenFilled
@@ -46,6 +47,7 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: HoloprojectorSecurity
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerSecurityFilled
@@ -58,8 +60,8 @@
         prob: 0.8
       - id: ClothingUniformJumpsuitSecGrey
         prob: 0.3
-      - id: ClothingHeadHelmetHelmet
-      - id: ClothingOuterArmorBulletproof
+      - id: ClothingHeadHelmetBasic
+      - id: ClothingOuterArmorBasic
       - id: ClothingBeltSecurityFilled
       - id: Flash
         prob: 0.5
@@ -67,6 +69,9 @@
       - id: ClothingHeadsetSecurity
       - id: ClothingHandsGlovesColorBlack
       - id: ClothingShoesBootsJack
+      - id: WeaponMeleeNeedle
+        prob: 0.1
+      - id: ClothingEyesHudSecurity
 
 - type: entity
   id: LockerBrigmedicFilled
@@ -75,6 +80,7 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
       - id: TrackingImplanter
         amount: 2
@@ -109,6 +115,8 @@
   components:
   - type: StorageFill
     contents:
+      - id: ClothingEyesHudSecurity
+        prob: 0.3
       - id: ClothingHeadHatFedoraBrown
       - id: ClothingNeckTieDet
       - id: ClothingOuterVestDetective
@@ -119,7 +127,7 @@
       - id: WeaponRevolverInspector
       - id: DrinkDetFlask
       - id: SpeedLoaderMagnum
-      - id: ForensicGloves
+      - id: ClothingHandsGlovesForensic
 
 - type: entity
   id: ClosetBombFilled

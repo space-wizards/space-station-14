@@ -5,7 +5,7 @@
         "y": 32
     },
     "license": "CC-BY-SA-3.0",
-    "copyright": "Taken from tgstation https://github.com/tgstation/tgstation/commit/f01afc7edd39b28dd718407d5bbfca3a5dfe995f#diff-378d1b8f0f0a73185e7c82e4ccfdb65102561992a7abb306090ce851f8419780",
+    "copyright": "'sink' and 'sink_stem' derived from tgstation https://github.com/tgstation/tgstation/commit/f01afc7edd39b28dd718407d5bbfca3a5dfe995f#diff-378d1b8f0f0a73185e7c82e4ccfdb65102561992a7abb306090ce851f8419780 and edited by Emisse for ss14, sink-fill-1 and sink_wide-fill-1 made by Topy for SS14",
     "states": [
         {
             "name": "sink",
@@ -17,6 +17,14 @@
         },
         {
             "name": "sink_stem",
+            "directions": 4
+        },
+		{
+            "name": "sink-fill-1",
+            "directions": 4
+        },
+        {
+            "name": "sink_wide-fill-1",
             "directions": 4
         }
     ]

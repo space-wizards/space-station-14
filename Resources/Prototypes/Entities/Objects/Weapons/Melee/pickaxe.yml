@@ -10,18 +10,22 @@
   - type: Sprite
     sprite: Objects/Weapons/Melee/pickaxe.rsi
     state: pickaxe
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 50
   - type: ItemCooldown
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 10
-        Blunt: 4
+        Blunt: 2.5
+        Piercing: 2.5
+        Structural: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Piercing: 5
+        Structural: 10
   - type: Item
-    size: 24
+    size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
 
 - type: entity
@@ -36,15 +40,11 @@
   - type: Sprite
     sprite: Objects/Tools/handdrill.rsi
     state: handdrill
-  - type: GatheringTool
-    damage:
-      types:
-        Structural: 75
-    gatheringTime: 0.50
-    MaxGatheringEntities: 2
   - type: ItemCooldown
   - type: MeleeWeapon
+    attackRate: 1.5
     damage:
       types:
-        Piercing: 10
-        Blunt: 4
+        Blunt: 5
+        Piercing: 5
+        Structural: 10

@@ -30,7 +30,7 @@ public sealed class CardboardBoxComponent : Component
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("effectSound")]
     public SoundSpecifier? EffectSound;
-	
+
 	/// <summary>
 	/// Whether to prevent the box from making the sound and effect
 	/// </summary>
@@ -46,18 +46,16 @@ public sealed class CardboardBoxComponent : Component
     public float Distance = 6f;
 
     /// <summary>
-    /// Current time + max effect cooldown to check to see if effect can play again
-    /// Prevents effect spam
+    /// Time at which the sound effect can next be played.
     /// </summary>
     [DataField("effectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public TimeSpan EffectCooldown = TimeSpan.FromSeconds(1f);
+    public TimeSpan EffectCooldown;
 
     /// <summary>
-    /// How much time should pass + current time until the effect plays again
-    /// Prevents effect spam
+    /// Time between sound effects. Prevents effect spam
     /// </summary>
-    [DataField("maxEffectCooldown", customTypeSerializer: typeof(TimeOffsetSerializer))]
-    public static readonly TimeSpan MaxEffectCooldown = TimeSpan.FromSeconds(5f);
+    [DataField("cooldownDuration")]
+    public readonly TimeSpan CooldownDuration = TimeSpan.FromSeconds(5f);
 }
 
 [Serializable, NetSerializable]

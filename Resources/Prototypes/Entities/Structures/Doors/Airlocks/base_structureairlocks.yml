@@ -62,7 +62,6 @@
     containers:
       board: !type:Container
   - type: Weldable
-    fuel: 5
     time: 3
   - type: Airlock
   - type: DoorBolt
@@ -129,6 +128,7 @@
     mode: NoSprite
   - type: PaintableAirlock
     group: Standard
+  - type: AccessReader
   - type: StaticPrice
     price: 150
   placement:

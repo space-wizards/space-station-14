@@ -7,13 +7,13 @@ using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Power.Components;
 using Content.Server.NodeContainer;
-using Robust.Shared.Timing;
 using Robust.Server.GameObjects;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.NodeContainer.NodeGroups;
 using Content.Server.Audio;
 using Content.Server.Administration.Logs;
 using Content.Server.Construction;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Shared.Database;
 
 namespace Content.Server.Atmos.Portable
@@ -24,11 +24,11 @@ namespace Content.Server.Atmos.Portable
         [Dependency] private readonly GasCanisterSystem _canisterSystem = default!;
         [Dependency] private readonly GasPortableSystem _gasPortableSystem = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
         [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -53,14 +53,14 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp(uid, out AtmosDeviceComponent? device))
                 return;
 
-            var timeDelta = (float) (_gameTiming.CurTime - device.LastProcess).TotalSeconds;
+            var timeDelta = args.dt;
 
             if (!component.Enabled)
                 return;
 
             // If we are on top of a connector port, empty into it.
             if (TryComp<NodeContainerComponent>(uid, out var nodeContainer)
-                && nodeContainer.TryGetNode(component.PortName, out PortablePipeNode? portableNode)
+                && _nodeContainer.TryGetNode(nodeContainer, component.PortName, out PortablePipeNode? portableNode)
                 && portableNode.ConnectionsEnabled)
             {
                 _atmosphereSystem.React(component.Air, portableNode);
@@ -104,7 +104,7 @@ namespace Content.Server.Atmos.Portable
             if (!TryComp(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(component.PortName, out PipeNode? portableNode))
+            if (!_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? portableNode))
                 return;
 
             portableNode.ConnectionsEnabled = (args.Anchored && _gasPortableSystem.FindGasPortIn(Transform(uid).GridUid, Transform(uid).Coordinates, out _));
@@ -166,7 +166,7 @@ namespace Content.Server.Atmos.Portable
             // If it's connected to a port, include the port side
             if (TryComp(uid, out NodeContainerComponent? nodeContainer))
             {
-                if(nodeContainer.TryGetNode(component.PortName, out PipeNode? port))
+                if (_nodeContainer.TryGetNode(nodeContainer, component.PortName, out PipeNode? port))
                     gasMixDict.Add(component.PortName, port.Air);
             }
             args.GasMixtures = gasMixDict;

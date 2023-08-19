@@ -213,7 +213,7 @@
             max: 150.0
           damage:
             types:
-             Cellular: -2 
+             Cellular: -2
 
 - type: reagent
   id: Dermaline
@@ -559,20 +559,37 @@
         probability: 0.05
 
 - type: reagent
-  id: Romerol
-  name: reagent-name-romerol
+  id: Ambuzol
+  name: reagent-name-ambuzol
   group: Medicine
-  desc: reagent-desc-romerol
-  physicalDesc: reagent-physical-desc-acrid
+  desc: reagent-desc-ambuzol
+  physicalDesc: reagent-physical-desc-crisp
   flavor: medicine
-  color: "#7e916e"
+  color: "#86caf7"
   metabolisms:
     Medicine:
       effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Poison: 0.5
+        - !type:CureZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 10
+
+- type: reagent
+  id: AmbuzolPlus
+  name: reagent-name-ambuzol-plus
+  group: Medicine
+  desc: reagent-desc-ambuzol-plus
+  physicalDesc: reagent-physical-desc-crisp
+  flavor: medicine
+  color: "#1274b5"
+  metabolisms:
+    Medicine:
+      effects:
+        - !type:CureZombieInfection
+          innoculate: true
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: PulpedBananaPeel
@@ -589,6 +606,22 @@
         amount: -0.5
 
 - type: reagent
+  id: Saline
+  name: reagent-name-saline
+  group: Medicine
+  desc: reagent-desc-saline
+  physicalDesc: reagent-physical-desc-salty
+  flavor: salty
+  color: "#0064C8"
+  metabolisms:
+    Drink:
+      effects:
+        - !type:SatiateThirst
+          factor: 6
+        - !type:ModifyBloodLevel
+          amount: 6
+
+- type: reagent
   id: Siderlac
   name: reagent-name-siderlac
   group: Medicine
@@ -603,22 +636,6 @@
         damage:
           types:
             Caustic: -5
-
-- type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
-  group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: medicine
-  color: "#9942f5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.5
 
 - type: reagent
   id: Stellibinin

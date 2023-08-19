@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.StationEvents.Components;
 using Content.Shared.Spawners.Components;
@@ -53,7 +54,7 @@ namespace Content.Server.StationEvents.Events
                 return;
             }
 
-            var minimumDistance = (playableArea.Value.TopRight - playableArea.Value.Center).Length + 50f;
+            var minimumDistance = (playableArea.Value.TopRight - playableArea.Value.Center).Length() + 50f;
             var maximumDistance = minimumDistance + 100f;
 
             var center = playableArea.Value.Center;
@@ -68,7 +69,7 @@ namespace Content.Server.StationEvents.Events
                 _physics.SetBodyStatus(physics, BodyStatus.InAir);
                 _physics.SetLinearDamping(physics, 0f);
                 _physics.SetAngularDamping(physics, 0f);
-                _physics.ApplyLinearImpulse(meteor, -offset.Normalized * component.MeteorVelocity * physics.Mass, body: physics);
+                _physics.ApplyLinearImpulse(meteor, -offset.Normalized() * component.MeteorVelocity * physics.Mass, body: physics);
                 _physics.ApplyAngularImpulse(
                     meteor,
                     physics.Mass * ((component.MaxAngularVelocity - component.MinAngularVelocity) * RobustRandom.NextFloat() + component.MinAngularVelocity),

@@ -28,4 +28,23 @@ public sealed class PortalComponent : Component
     /// </summary>
     [DataField("maxRandomRadius")]
     public float MaxRandomRadius = 7.0f;
+
+    /// <summary>
+    ///     If false, this portal will fail to teleport and fizzle out if attempting to send an entity to a different map
+    /// </summary>
+    /// <remarks>
+    ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
+    /// </remarks>
+    [DataField("canTeleportToOtherMaps")]
+    public bool CanTeleportToOtherMaps = false;
+
+    /// <summary>
+    ///     Maximum distance that portals can teleport to, in all cases. Mostly this matters for linked portals.
+    ///     Null means no restriction on distance.
+    /// </summary>
+    /// <remarks>
+    ///     Obviously this should strictly be larger than <see cref="MaxRandomRadius"/> (or null)
+    /// </remarks>
+    [DataField("maxTeleportRadius")]
+    public float? MaxTeleportRadius;
 }

@@ -3,6 +3,7 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Trinary.Components;
 using Content.Server.NodeContainer;
+using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping;
@@ -24,6 +25,7 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
         [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSoundSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 
         public override void Initialize()
         {
@@ -59,9 +61,9 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
             if (!EntityManager.TryGetComponent(uid, out NodeContainerComponent? nodeContainer))
                 return;
 
-            if (!nodeContainer.TryGetNode(mixer.InletOneName, out PipeNode? inletOne)
-                || !nodeContainer.TryGetNode(mixer.InletTwoName, out PipeNode? inletTwo)
-                || !nodeContainer.TryGetNode(mixer.OutletName, out PipeNode? outlet))
+            if (!_nodeContainer.TryGetNode(nodeContainer, mixer.InletOneName, out PipeNode? inletOne)
+                || !_nodeContainer.TryGetNode(nodeContainer, mixer.InletTwoName, out PipeNode? inletTwo)
+                || !_nodeContainer.TryGetNode(nodeContainer, mixer.OutletName, out PipeNode? outlet))
             {
                 _ambientSoundSystem.SetAmbience(mixer.Owner, false);
                 return;
@@ -216,14 +218,11 @@ namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 
             var gasMixDict = new Dictionary<string, GasMixture?>();
 
-            nodeContainer.TryGetNode(component.InletOneName, out PipeNode? inletOne);
-            nodeContainer.TryGetNode(component.InletTwoName, out PipeNode? inletTwo);
-
-            if(inletOne != null)
+            if(_nodeContainer.TryGetNode(nodeContainer, component.InletOneName, out PipeNode? inletOne))
                 gasMixDict.Add($"{inletOne.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletOne.Air);
-            if(inletTwo != null)
+            if(_nodeContainer.TryGetNode(nodeContainer, component.InletTwoName, out PipeNode? inletTwo))
                 gasMixDict.Add($"{inletTwo.CurrentPipeDirection} {Loc.GetString("gas-analyzer-window-text-inlet")}", inletTwo.Air);
-            if(nodeContainer.TryGetNode(component.OutletName, out PipeNode? outlet))
+            if(_nodeContainer.TryGetNode(nodeContainer, component.OutletName, out PipeNode? outlet))
                 gasMixDict.Add(Loc.GetString("gas-analyzer-window-text-outlet"), outlet.Air);
 
             args.GasMixtures = gasMixDict;

@@ -5,10 +5,10 @@
   components:
   - type: StorageFill
     contents:
-      - id: ClothingOuterVestKevlar
+      - id: ClothingOuterArmorBasicSlim
       - id: WeaponShotgunDoubleBarreledRubber
       - id: DrinkShaker
-      - id: ClothingEyesGlassesBeer
+      - id: ClothingEyesHudBeer
       - id: DrinkBottleBeer
         prob: 0.5
       - id: DrinkBottleBeer
@@ -70,6 +70,8 @@
       - id: SoapNT
         amount: 2
       - id: FlashlightLantern
+        amount: 2
+      - id: Plunger
         amount: 2
 
 - type: entity

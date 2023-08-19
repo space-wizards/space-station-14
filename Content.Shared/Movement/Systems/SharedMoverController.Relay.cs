@@ -30,7 +30,7 @@ public abstract partial class SharedMoverController
     {
         if (uid == relayEntity)
         {
-            Logger.Error($"An entity attempted to relay movement to itself. Entity:{ToPrettyString(uid)}");
+            Log.Error($"An entity attempted to relay movement to itself. Entity:{ToPrettyString(uid)}");
             return;
         }
 

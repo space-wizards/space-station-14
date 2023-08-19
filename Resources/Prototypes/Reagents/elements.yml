@@ -39,6 +39,13 @@
       amount: -3
     - !type:PlantAdjustHealth
       amount: -1
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 2
 
 - type: reagent
   id: Copper
@@ -50,6 +57,14 @@
   color: "#b05b3c"
   boilingPoint: 2595.0
   meltingPoint: 1083.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.1
 
 - type: reagent
   id: Fluorine
@@ -70,7 +85,14 @@
       amount: -4
     - !type:PlantAdjustHealth
       amount: -2
-
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 0.5
+            Poison: 0.5
 - type: reagent
   id: Gold
   name: reagent-name-gold
@@ -130,6 +152,21 @@
   color: "#c6c8cc"
   meltingPoint: 180.5
   boilingPoint: 1330.0
+  metabolisms:
+    Poison:
+      metabolismRate: 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.05
+      - !type:Emote
+        emote: Scream
+        probability: 0.05
+      - !type:Emote
+        emote: Laugh
+        probability: 0.05
+
   # TODO: cause confusion and some brain damage
 
 - type: reagent
@@ -148,7 +185,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 1
 
 - type: reagent
   id: Potassium
@@ -201,6 +238,13 @@
   color: "#364266"
   boilingPoint: 3265.0
   meltingPoint: 1414.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1.5
 
 - type: reagent
   id: Silver
@@ -223,6 +267,13 @@
   color: "#fff385"
   boilingPoint: 445.0
   meltingPoint: 120.0
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Caustic: 0.1
 
 - type: reagent
   id: Sodium
@@ -262,3 +313,14 @@
         damage:
           types:
             Radiation: 2
+
+- type: reagent
+  id: Zinc
+  name: reagent-name-zinc
+  group: Elements
+  desc: reagent-desc-zinc
+  physicalDesc: reagent-physical-desc-shiny
+  flavor: metallic
+  color: "#bababa"
+  meltingPoint: 419.5
+  boilingPoint: 907.0

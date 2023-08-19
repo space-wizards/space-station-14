@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Network;
+using Content.Shared.Roles;
 using Robust.Shared.Replays;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.Markdown.Mapping;
@@ -13,7 +13,9 @@ namespace Content.Shared.GameTicking
         // See ideally these would be pulled from the job definition or something.
         // But this is easier, and at least it isn't hardcoded.
         //TODO: Move these, they really belong in StationJobsSystem or a cvar.
+        [ValidatePrototypeId<JobPrototype>]
         public const string FallbackOverflowJob = "Passenger";
+
         public const string FallbackOverflowJobName = "job-name-passenger";
 
         // TODO network.
@@ -113,20 +115,6 @@ namespace Content.Shared.GameTicking
         {
             StartTime = startTime;
             Paused = paused;
-        }
-    }
-
-    [Serializable, NetSerializable]
-    public sealed class TickerLobbyReadyEvent : EntityEventArgs
-    {
-        /// <summary>
-        /// The Status of the Player in the lobby (ready, observer, ...)
-        /// </summary>
-        public Dictionary<NetUserId, PlayerGameStatus> Status { get; }
-
-        public TickerLobbyReadyEvent(Dictionary<NetUserId, PlayerGameStatus> status)
-        {
-            Status = status;
         }
     }
 

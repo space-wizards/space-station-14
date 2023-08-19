@@ -8,6 +8,7 @@
     sprite: Objects/Materials/ingots.rsi
   - type: Item
     sprite: Objects/Materials/ingots.rsi
+    size: 30
   - type: StaticPrice
     price: 0
   - type: ItemStatus
@@ -62,6 +63,8 @@
     state: gold
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
 
 - type: entity
   parent: IngotBase
@@ -99,3 +102,5 @@
     state: silver
   - type: Stack
     count: 1
+  - type: Item
+    size: 1

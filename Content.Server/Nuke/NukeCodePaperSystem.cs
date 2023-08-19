@@ -5,6 +5,7 @@ using Content.Server.Fax;
 using Content.Server.Paper;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Paper;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -65,8 +66,12 @@ namespace Content.Server.Nuke
                     paperContent,
                     Loc.GetString("nuke-codes-fax-paper-name"),
                     null,
-                    "paper_stamp-cent",
-                    new() { Loc.GetString("stamp-component-stamped-name-centcom") });
+                    "paper_stamp-centcom",
+                    new List<StampDisplayInfo>
+                    {
+                        new StampDisplayInfo { StampedName = Loc.GetString("stamp-component-stamped-name-centcom"), StampedColor = Color.FromHex("#BB3232") },
+                    }
+                );
                 _faxSystem.Receive(faxEnt, printout, null, fax);
 
                 wasSent = true;

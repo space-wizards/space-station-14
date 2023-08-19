@@ -55,17 +55,22 @@ namespace Content.Server.Repairable
                 return;
 
             // Only try repair the target if it is damaged
-            if (!EntityManager.TryGetComponent(uid, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
+            if (!TryComp<DamageableComponent>(uid, out var damageable) || damageable.TotalDamage == 0)
                 return;
 
             float delay = component.DoAfterDelay;
 
             // Add a penalty to how long it takes if the user is repairing itself
             if (args.User == args.Target)
-                delay *= component.SelfRepairPenalty;
+            {
+                if (!component.AllowSelfRepair)
+                    return;
 
-            // Can the tool actually repair this, does it have enough fuel?
-            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent(), component.FuelCost);
+                delay *= component.SelfRepairPenalty;
+            }
+
+            // Run the repairing doafter
+            args.Handled = _toolSystem.UseTool(args.Used, args.User, uid, delay, component.QualityNeeded, new RepairFinishedEvent());
         }
     }
 }

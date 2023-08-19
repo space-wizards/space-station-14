@@ -1,7 +1,7 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Parallax;
 using Content.Shared.Weather;
-using OpenToolkit.Graphics.ES11;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
@@ -201,7 +201,7 @@ public sealed class WeatherOverlay : Overlay
         {
             for (var y = flooredBL.Y; y < args.WorldAABB.Top; y += size.Y)
             {
-                var box = Box2.FromDimensions((x, y), size);
+                var box = Box2.FromDimensions(new Vector2(x, y), size);
                 worldHandle.DrawTextureRect(sprite, box, (weatherProto.Color ?? Color.White).WithAlpha(alpha));
             }
         }

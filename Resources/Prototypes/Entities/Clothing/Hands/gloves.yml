@@ -27,6 +27,7 @@
   - type: Tag
     tags:
     - Kangaroo
+    - WhitelistChameleon
 
 - type: entity
   parent: ClothingHandsGlovesBoxingRed
@@ -79,9 +80,7 @@
 - type: entity
   parent: ClothingHandsGlovesBoxingBlue
   id: ClothingHandsGlovesBoxingRigged
-  name: blue boxing gloves
   suffix: Rigged
-  description: Regal blue gloves, with a nice gold trim. Swanky.
   components:
   - type: StaminaDamageOnHit
     damage: 30
@@ -223,6 +222,17 @@
   - type: FingerprintMask
 
 - type: entity
+  parent: ClothingHandsGlovesCombat
+  id: ClothingHandsTacticalMaidGloves
+  name: tactical maid gloves
+  description: Tactical maid gloves, every self-respecting maid should be able to discreetly eliminate her goals.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+
+- type: entity
   parent: ClothingHandsBase
   id: ClothingHandsMercGlovesCombat
   name: mercenary combat gloves
@@ -253,6 +263,20 @@
   - type: Fiber
     fiberMaterial: fibers-synthetic
     fiberColor: fibers-black
+
+- type: entity
+  parent: ClothingHandsBase
+  id: ClothingHandsGlovesFingerlessInsulated
+  name: fingerless insulated gloves
+  description: Insulated gloves resistant to shocks, or at least they used to.
+  components:
+  - type: Sprite
+    sprite: Clothing/Hands/Gloves/fingerlessinsuls.rsi
+  - type: Clothing
+    sprite: Clothing/Hands/Gloves/fingerlessinsuls.rsi
+  - type: Fiber
+    fiberMaterial: fibers-insulative
+    fiberColor: fibers-yellow
 
 - type: entity
   parent: ClothingHandsBase
@@ -334,7 +358,7 @@
 
 - type: entity
   parent: ClothingHandsBase
-  id: ForensicGloves
+  id: ClothingHandsGlovesForensic
   name: forensic gloves
   description: Do not leave fibers or fingerprints. If you work without them, you're A TERRIBLE DETECTIVE.
   components:
@@ -343,4 +367,6 @@
   - type: Clothing
     sprite: Clothing/Hands/Gloves/forensic.rsi
   - type: FingerprintMask
-
+  - type: GuideHelp
+    guides:
+    - DNA
