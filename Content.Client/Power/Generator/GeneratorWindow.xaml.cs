@@ -56,8 +56,7 @@ public sealed partial class GeneratorWindow : FancyWindow
 
         var oldState = _lastState;
         _lastState = state;
-        // ReSharper disable once CompareOfFloatsByEqualityOperator
-        if (oldState?.TargetPower != state.TargetPower)
+        if (!TargetPower.LineEditControl.HasKeyboardFocus())
             TargetPower.OverrideValue((int)(state.TargetPower / 1000.0f));
         Efficiency.Text = SharedGeneratorSystem.CalcFuelEfficiency(state.TargetPower, state.OptimalPower, _component).ToString("P1");
         FuelFraction.Value = state.RemainingFuel - (int) state.RemainingFuel;
