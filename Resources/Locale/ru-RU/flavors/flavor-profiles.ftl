@@ -163,7 +163,7 @@ flavor-complex-juice = как сок
 
 flavor-complex-rocksandstones = как скалы и камни
 flavor-complex-water = как вода
-flavor-complex-beer = как моча
+flavor-complex-beer = как хмель
 flavor-complex-ale = как хлеб
 flavor-complex-cola = как кола
 flavor-complex-vodka = как забродившее зерно
