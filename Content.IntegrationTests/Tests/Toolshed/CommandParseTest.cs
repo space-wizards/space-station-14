@@ -25,24 +25,24 @@ public sealed class CommandRunTest : ToolshedTest
             ParseCommand("player:list with MetaData");
 
             ExpectError<ExpressionOfWrongType>();
-            ParseCommand("player:list", expectedType: typeof(IEnumerable<EntityUid>));
+            ParseCommand("player:list", expectedType: typeof(IEnumerable<NetEntity>));
 
             ParseCommand("entities not with MetaData");
-            ParseCommand("with MetaData select 2 any", inputType: typeof(List<EntityUid>));
+            ParseCommand("with MetaData select 2 any", inputType: typeof(List<NetEntity>));
 
             ParseCommand("entities not with MetaData => $myEntities");
-            ParseCommand("=> $fooBar with MetaData", inputType: typeof(List<EntityUid>));
+            ParseCommand("=> $fooBar with MetaData", inputType: typeof(List<NetEntity>));
         });
     }
 
     [Test]
-    public async Task EntityUidTypeParser()
+    public async Task NetEntityTypeParser()
     {
         await Server.WaitAssertion(() =>
         {
             ParseCommand("ent 1");
 
-            ExpectError<InvalidEntityUid>();
+            ExpectError<InvalidNetEntity>();
             ParseCommand("ent foodigity");
         });
     }

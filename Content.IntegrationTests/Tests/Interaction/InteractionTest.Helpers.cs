@@ -1019,8 +1019,13 @@ public abstract partial class InteractionTest
         ScreenCoordinates screen = default;
 
         var funcId = InputManager.NetworkBindMap.KeyFunctionID(key);
-        var message = new FullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId, state,
-            coords, screen, cursorEntity);
+        var message = new ClientFullInputCmdMessage(CTiming.CurTick, CTiming.TickFraction, funcId)
+        {
+            State = state,
+            Coordinates = SEntMan.GetCoordinates(coords),
+            ScreenCoordinates = screen,
+            Uid = SEntMan.GetEntity(cursorEntity),
+        };
 
         await Client.WaitPost(() => InputSystem.HandleInputCommand(ClientSession, key, message));
     }
