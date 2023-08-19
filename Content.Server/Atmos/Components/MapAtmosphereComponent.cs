@@ -20,4 +20,16 @@ public sealed class MapAtmosphereComponent : SharedMapAtmosphereComponent
     /// </summary>
     [DataField("space"), ViewVariables(VVAccess.ReadWrite)]
     public bool Space = true;
+
+    /// <summary>
+    ///     Whether reactions take place, e.g. plasma fires.
+    /// </summary>
+    [DataField("simulated"), ViewVariables(VVAccess.ReadWrite)]
+    public bool Simulated;
+
+    /// <summary>
+    ///     Seconds since last atmos update.
+    /// </summary>
+    [ViewVariables]
+    public float Timer;
 }

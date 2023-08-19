@@ -27,9 +27,11 @@ namespace Content.Server.Atmos.EntitySystems
         private const int InvalidCoordinatesLagCheckIterations = 50;
 
         private int _currentRunAtmosphereIndex = 0;
+        private int _currentRunMapIndex = 0;
         private bool _simulationPaused = false;
 
         private readonly List<GridAtmosphereComponent> _currentRunAtmosphere = new();
+        private readonly List<MapAtmosphereComponent> _currentRunMaps = new();
 
         /// <summary>
         ///     Revalidates all invalid coordinates in a grid atmosphere.
@@ -359,7 +361,10 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 _currentRunAtmosphereIndex = 0;
                 _currentRunAtmosphere.Clear();
-                _currentRunAtmosphere.AddRange(EntityManager.EntityQuery<GridAtmosphereComponent>());
+                _currentRunAtmosphere.AddRange(EntityQuery<GridAtmosphereComponent>());
+                _currentRunMapIndex = 0;
+                _currentRunMaps.Clear();
+                _currentRunMaps.AddRange(EntityQuery<MapAtmosphereComponent>());
             }
 
             // We set this to true just in case we have to stop processing due to time constraints.
@@ -490,6 +495,28 @@ namespace Content.Server.Atmos.EntitySystems
 
                 // And increase the update counter.
                 atmosphere.UpdateCounter++;
+            }
+
+            // process reactions on map atmospheres
+            // lets hot plasma burn, etc
+            for (; _currentRunMapIndex < _currentRunMaps.Count; _currentRunMapIndex++)
+            {
+                var map = _currentRunMaps[_currentRunMapIndex];
+                var uid = map.Owner;
+                TryComp(uid, out GasTileOverlayComponent? visuals);
+
+                if (map.LifeStage >= ComponentLifeStage.Stopping || Paused(uid) || !map.Simulated || map.Mixture == null)
+                    continue;
+
+                map.Timer += frameTime;
+
+                if (map.Timer < AtmosTime)
+                    continue;
+
+                // We subtract it so it takes lost time into account.
+                map.Timer -= AtmosTime;
+
+                React(map.Mixture, null);
             }
 
             // We finished processing all atmospheres successfully, therefore we won't be paused next tick.
