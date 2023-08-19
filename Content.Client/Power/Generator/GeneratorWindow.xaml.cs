@@ -100,6 +100,7 @@ public sealed partial class GeneratorWindow : FancyWindow
                 Loc.GetString(isHV ? "portable-generator-ui-switch-hv" : "portable-generator-ui-switch-mv");
             OutputSwitchButton.Text =
                 Loc.GetString(isHV ? "portable-generator-ui-switch-to-mv" : "portable-generator-ui-switch-to-hv");
+            OutputSwitchButton.Disabled = state.On;
         }
 
         CloggedLabel.Visible = state.Clogged;

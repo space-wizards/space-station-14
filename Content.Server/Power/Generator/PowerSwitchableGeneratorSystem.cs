@@ -47,6 +47,11 @@ public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGenera
         {
             Act = () =>
             {
+
+                var verbIsOn = TryComp(uid, out FuelGeneratorComponent? verbFuelGenerator) && verbFuelGenerator.On;
+                if (verbIsOn)
+                    return;
+
                 ToggleActiveOutput(uid, args.User, component);
             },
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),

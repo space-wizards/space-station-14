@@ -43,6 +43,10 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
         if (args.Session.AttachedEntity == null)
             return;
 
+        var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
+        if (fuelGenerator.On)
+            return;
+
         _switchableGenerator.ToggleActiveOutput(uid, args.Session.AttachedEntity.Value);
     }
 
