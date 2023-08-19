@@ -78,7 +78,7 @@ namespace Content.Client.ContextMenu.UI
             var representation = _entityManager.ToPrettyString(entity);
 
             var name = representation.Name;
-            var id = representation.Uid;
+            var id = representation.Uid.ToString();
             var prototype = representation.Prototype;
             var playerName = representation.Session?.Name ?? SearchPlayerName(entity);
             var deleted = representation.Deleted;
