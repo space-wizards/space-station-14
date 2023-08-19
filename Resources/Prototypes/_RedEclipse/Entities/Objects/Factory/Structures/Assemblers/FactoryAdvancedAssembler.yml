@@ -11,4 +11,8 @@
       staticRecipes:
         - FactoryMachineryPart
         - FactoryLaserComponent
-        - FactoryMetalBlade
+        - FactoryExplosivePayload
+        - FactoryTimingComponent
+        - FactoryMedicalPart
+        - FactoryInjector
+        - FactoryChemicalPack
