@@ -35,6 +35,7 @@ public sealed partial class GeneratorWindow : FancyWindow
         StartButton.OnPressed += _ => bui.Start();
         StopButton.OnPressed += _ => bui.Stop();
         OutputSwitchButton.OnPressed += _ => bui.SwitchOutput();
+        FuelEject.OnPressed += _ => bui.EjectFuel();
     }
 
     private bool IsValid(int arg)

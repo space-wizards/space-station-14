@@ -1,5 +1,6 @@
 ﻿using Content.Server.Audio;
 using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -22,6 +23,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     [Dependency] private readonly MaterialStorageSystem _materialStorage = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly PuddleSystem _puddle = default!;
 
     private EntityQuery<UpgradePowerSupplierComponent> _upgradeQuery;
 
@@ -32,11 +34,33 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         UpdatesBefore.Add(typeof(PowerNetSystem));
 
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
+        SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorEjectFuelMessage>(OnEjectFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorGetFuel>(SolidGetFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorUseFuel>(SolidUseFuel);
+        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorEmpty>(SolidEmpty);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetFuel>(ChemicalGetFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorUseFuel>(ChemicalUseFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetClogged>(ChemicalGetClogged);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorEmpty>(ChemicalEmpty);
+    }
+
+    private void OnEjectFuel(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorEjectFuelMessage args)
+    {
+        EmptyGenerator(uid);
+    }
+
+    private void SolidEmpty(EntityUid uid, SolidFuelGeneratorAdapterComponent component, GeneratorEmpty args)
+    {
+        _materialStorage.EjectAllMaterial(uid);
+    }
+
+    private void ChemicalEmpty(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, GeneratorEmpty args)
+    {
+        if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
+            return;
+
+        var spillSolution = _solutionContainer.SplitSolution(uid, solution, solution.Volume);
+        _puddle.TrySpillAt(uid, spillSolution, out _);
     }
 
     private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetClogged args)
@@ -184,6 +208,11 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         return getClogged.Clogged;
     }
 
+    public void EmptyGenerator(EntityUid generator)
+    {
+        RaiseLocalEvent(generator, GeneratorEmpty.Instance);
+    }
+
     private void UpdateState(EntityUid generator, FuelGeneratorComponent component)
     {
         _appearance.SetData(generator, GeneratorVisuals.Running, component.On);
@@ -219,3 +248,11 @@ public struct GeneratorGetClogged
 /// Implementations are expected to round fuel consumption up if the used fuel value is too small (e.g. reagent units).
 /// </remarks>
 public record struct GeneratorUseFuel(float FuelUsed);
+
+/// <summary>
+/// Raised by <see cref="GeneratorSystem"/> to empty a generator of its fuel contents.
+/// </summary>
+public sealed class GeneratorEmpty
+{
+    public static readonly GeneratorEmpty Instance = new();
+}

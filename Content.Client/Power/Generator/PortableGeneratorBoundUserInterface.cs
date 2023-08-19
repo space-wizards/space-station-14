@@ -54,4 +54,9 @@ public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
     {
         SendMessage(new PortableGeneratorSwitchOutputMessage());
     }
+
+    public void EjectFuel()
+    {
+        SendMessage(new PortableGeneratorEjectFuelMessage());
+    }
 }

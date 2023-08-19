@@ -18,6 +18,7 @@ portable-generator-ui-efficiency-label = Efficiency:
 portable-generator-ui-fuel-use-label = Fuel use:
 portable-generator-ui-fuel-left-label = Fuel left:
 portable-generator-ui-clogged = Contaminants detected in fuel tank!
+portable-generator-ui-eject = Eject
 
 power-switchable-generator-examine = The power output is set to { $output ->
 [HV] [color=orange]HV[/color]

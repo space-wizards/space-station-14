@@ -83,6 +83,14 @@ public sealed class PortableGeneratorSwitchOutputMessage : BoundUserInterfaceMes
 }
 
 /// <summary>
+/// Sent to the server to try to eject all fuel stored in a portable generator.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed class PortableGeneratorEjectFuelMessage : BoundUserInterfaceMessage
+{
+}
+
+/// <summary>
 /// Contains network state for the portable generator.
 /// </summary>
 [Serializable, NetSerializable]

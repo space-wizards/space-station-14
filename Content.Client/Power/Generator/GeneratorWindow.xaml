@@ -1,11 +1,12 @@
 ﻿<controls:FancyWindow xmlns="https://spacestation14.io"
                 xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
                 xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                MinSize="450 240"
-                SetSize="450 240"
+                MinSize="450 235"
+                SetSize="450 235"
+                Resizable="False"
                 Title="{Loc 'portable-generator-ui-title'}">
     <BoxContainer Margin="4 0" Orientation="Horizontal">
-        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Center" Margin="5">
+        <BoxContainer Orientation="Vertical" HorizontalExpand="True" SizeFlagsStretchRatio="2" VerticalAlignment="Top" Margin="5">
             <GridContainer Margin="2 0 0 0" Columns="2" HorizontalExpand="True">
                 <Label Name="StatusLabel" Text="{Loc 'portable-generator-ui-power-switch'}" HorizontalExpand="True" />
                 <Control MinWidth="120">
@@ -21,7 +22,10 @@
                 <Label Text="{Loc 'portable-generator-ui-fuel-use-label'}"/>
                 <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
                 <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
-                <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="FuelLeft" Text="0" HorizontalExpand="True"/>
+                    <Button Name="FuelEject" Text="{Loc 'portable-generator-ui-eject'}" />
+                </BoxContainer>
                 <Label Name="OutputSwitchLabel" Text="{Loc 'portable-generator-ui-switch'}" Visible="False" />
                 <Button Name="OutputSwitchButton" Visible="False" />
             </GridContainer>
