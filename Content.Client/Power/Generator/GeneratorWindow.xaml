@@ -18,7 +18,10 @@
                 <Label Text="{Loc 'portable-generator-ui-target-power-label'}"/>
                 <SpinBox Name="TargetPower" HorizontalExpand="True"/>
                 <Label Text="{Loc 'portable-generator-ui-efficiency-label'}"/>
-                <Label Name="Efficiency" Text="???%" HorizontalExpand="True"/>
+                <BoxContainer Orientation="Horizontal" HorizontalExpand="True">
+                    <Label Name="Efficiency" Text="???%" />
+                    <Label Name="Eta" HorizontalExpand="True" Margin="4 0 0 0" />
+                </BoxContainer>
                 <Label Text="{Loc 'portable-generator-ui-fuel-use-label'}"/>
                 <ProgressBar Name="FuelFraction" MinValue="0" MaxValue="1" HorizontalExpand="True"/>
                 <Label Text="{Loc 'portable-generator-ui-fuel-left-label'}"/>
