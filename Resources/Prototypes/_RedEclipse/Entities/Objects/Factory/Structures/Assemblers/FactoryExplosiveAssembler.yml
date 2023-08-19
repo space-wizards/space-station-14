@@ -14,7 +14,6 @@
         - FactoryC4
         - FactoryMinibomb
         - FactoryTinybomb
-        - FactoryMacroBombImplanter # move to MedicalAssembler
         - FactoryChinaLake
         - FactoryFragGrenade
         - FactoryBlastGrenade

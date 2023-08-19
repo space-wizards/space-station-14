@@ -14,5 +14,5 @@
         - FactoryWeaponHeavyBody
         - FactoryWeaponGunBarrel
         - FactoryWeaponGunStock
-        - FactoryWeaponShortHilt
         - FactoryWeaponLongHilt
+        - FactoryWeaponShortHilt
