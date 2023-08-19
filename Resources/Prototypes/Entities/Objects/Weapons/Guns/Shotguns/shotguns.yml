@@ -112,6 +112,7 @@
     fireRate: 2
   - type: BallisticAmmoProvider
     capacity: 2
+    autoCycle: true
   - type: Construction
     graph: ShotgunSawn
     node: start
@@ -125,6 +126,7 @@
   suffix: Non-Lethal
   components:
   - type: BallisticAmmoProvider
+    autoCycle: true
     proto: ShellShotgunBeanbag
 
 - type: entity
