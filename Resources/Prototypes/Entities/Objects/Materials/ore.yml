@@ -50,6 +50,20 @@
   - type: PhysicalComposition
     materialComposition:
       Gold: 500
+  - type: Extractable
+    grindableSolutionName: goldOre
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Gold
+          Quantity: 19
+        - ReagentId: Zinc # trace minerals often found in unrefined gold ore
+          Quantity: 2
+        - ReagentId: Copper
+          Quantity: 2
+        - ReagentId: Mercury
+          Quantity: 1 
 
 - type: entity
   parent: GoldOre
@@ -75,6 +89,28 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 500
+  - type: Extractable
+    grindableSolutionName: steelOre
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Iron
+          Quantity: 8
+        - ReagentId: Carbon
+          Quantity: 3
+        - ReagentId: Lead
+          Quantity: 0.1
+        - ReagentId: Oxygen # trace materials
+          Quantity: 2
+        - ReagentId: Phosphorus
+          Quantity: 2
+        - ReagentId: Sulfur
+          Quantity: 1
+
+
+       
+  
 
 - type: entity
   id: SteelOre1
@@ -99,7 +135,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Plasma: 500
+      Plasma: 500 # no grinder recipe, refine first
 
 - type: entity
   parent: PlasmaOre
@@ -125,6 +161,18 @@
   - type: PhysicalComposition
     materialComposition:
       Silver: 500
+  - type: Extractable
+    grindableSolutionName: silverOre
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Silver
+          Quantity: 19
+        - ReagentId: Sulfur # Silver Sulfide ore
+          Quantity: 7
+        - ReagentId: Hydrogen
+          Quantity: 3 # trace amounts of hydrogen for now
 
 - type: entity
   parent: SilverOre
@@ -150,6 +198,16 @@
   - type: PhysicalComposition
     materialComposition:
       Glass: 500
+  - type: Extractable
+    grindableSolutionName: spaceQuartz
+  - type: SolutionContainerManager
+    solutions:
+      steel:
+        reagents:
+        - ReagentId: Silicon # SiO4
+          Quantity: 4
+        - ReagentId: Oxygen
+          Quantity: 16
 
 - type: entity
   parent: SpaceQuartz
@@ -174,7 +232,7 @@
   - type: Material
   - type: PhysicalComposition
     materialComposition:
-      Uranium: 500
+      Uranium: 500 # no grinder recipe, refine first
 
 - type: entity
   parent: UraniumOre
