@@ -1,10 +1,4 @@
 Entries:
-- author: Jesse
-  changes:
-  - {message: Changed Sprites for Computers in de/construction to not have the glass
-      for monitors in states where it is removed., type: Tweak}
-  id: 4138
-  time: '2023-06-30T19:26:13.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Cargo technicians will be able to access salvage on the extended gamemode.,
@@ -3030,3 +3024,8 @@ Entries:
   - {message: 'Crusher can be used with one hand, but with less damage.', type: Tweak}
   id: 4637
   time: '2023-08-20T12:13:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Buff sniper firerate and nerf damage. Nerf stamina damage a lot., type: Tweak}
+  id: 4638
+  time: '2023-08-20T20:54:22.0000000+00:00'
