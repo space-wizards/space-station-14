@@ -4,6 +4,7 @@
   parent: BaseStorageItem
   description: A robust bag for salvage specialists and miners alike to carry large amounts of ore.
   components:
+  - type: MagnetPickup
   - type: Sprite
     sprite: Objects/Specific/Mining/ore_bag.rsi
     state: icon
