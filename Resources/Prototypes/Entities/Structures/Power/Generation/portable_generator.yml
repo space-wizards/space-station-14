@@ -170,7 +170,7 @@
     Runs off uranium sheets and is rated for up to 50 kW.
   parent: PortableGeneratorSwitchableBase
   id: PortableGeneratorSuperPacman
-  suffix: Uranium, 80 kW
+  suffix: Uranium, 50 kW
   components:
     - type: Sprite
       layers:
@@ -220,7 +220,7 @@
     Rated ages 3 and up.
   parent: PortableGeneratorBase
   id: PortableGeneratorJrPacman
-  suffix: Welding Fuel, 2 kW
+  suffix: Welding Fuel, 5 kW
   components:
     - type: AmbientSound
       range: 4
