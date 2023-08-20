@@ -31,6 +31,7 @@ using Content.Shared.Tools;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Timing;
+using Content.Server.Temperature.Components;
 
 namespace Content.Server.Medical;
 
@@ -177,10 +178,14 @@ public sealed partial class CryoPodSystem: SharedCryoPodSystem
 
     private void OnActivateUI(EntityUid uid, CryoPodComponent cryoPodComponent, AfterActivatableUIOpenEvent args)
     {
+        TryComp<TemperatureComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var temp);
+        TryComp<BloodstreamComponent>(cryoPodComponent.BodyContainer.ContainedEntity, out var bloodstream);
+
         _userInterfaceSystem.TrySendUiMessage(
             uid,
             HealthAnalyzerUiKey.Key,
-            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity));
+            new HealthAnalyzerScannedUserMessage(cryoPodComponent.BodyContainer.ContainedEntity,
+            temp != null ? temp.CurrentTemperature : 0, bloodstream != null ? bloodstream.BloodSolution.FillFraction : 0));
     }
 
     private void OnInteractUsing(EntityUid uid, CryoPodComponent cryoPodComponent, InteractUsingEvent args)

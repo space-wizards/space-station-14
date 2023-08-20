@@ -1,4 +1,4 @@
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardCommon
   weights:
     # basic materials
@@ -20,7 +20,7 @@
     SpaceCash500: 0.5
     SpaceCash1000: 0.25
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardRare
   weights:
     # rare materials
@@ -37,6 +37,7 @@
     CloningConsoleComputerCircuitboard: 0.5
     BiomassReclaimerMachineCircuitboard: 0.5
     # basic weapons
+    Machete: 0.25
     Katana: 0.25
     KukriKnife: 0.25
     WeaponLaserGun: 0.25
@@ -51,10 +52,11 @@
     SpaceCash1000: 0.75
     SpaceCash2500: 0.5
 
-- type: weightedRandom
+- type: weightedRandomEntity
   id: SalvageRewardEpic
   weights:
     # rare machinery
+    AmmoTechFabCircuitboard: 1.0
     ResearchAndDevelopmentServerMachineCircuitboard: 1.0
     CratePartsT4: 1.0
     PowerCellAntiqueProto: 0.25
@@ -62,6 +64,7 @@
     CrateArmorySMG: 1.0
     CrateArmoryLaser: 1.0
     CrateArmoryShotgun: 1.0
+    CrateArmoryPistols: 1.0
     # rare armor
     ClothingOuterArmorRiot: 1.0
     # rare chemicals

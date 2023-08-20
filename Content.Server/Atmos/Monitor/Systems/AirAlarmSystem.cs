@@ -33,6 +33,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 public sealed class AirAlarmSystem : EntitySystem
 {
     [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
     [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -160,11 +161,12 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAutoModeMessage>(OnUpdateAutoMode);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateAlarmThresholdMessage>(OnUpdateThreshold);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmUpdateDeviceDataMessage>(OnUpdateDeviceData);
+        SubscribeLocalEvent<AirAlarmComponent, AirAlarmCopyDeviceDataMessage>(OnCopyDeviceData);
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
-        SubscribeLocalEvent<AirAlarmComponent, InteractHandEvent>(OnInteract);
+        SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
     }
 
     private void OnDeviceListUpdate(EntityUid uid, AirAlarmComponent component, DeviceListUpdateEvent args)
@@ -223,7 +225,7 @@ public sealed class AirAlarmSystem : EntitySystem
         _activeUserInterfaces.Remove(uid);
     }
 
-    private void OnInteract(EntityUid uid, AirAlarmComponent component, InteractHandEvent args)
+    private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
     {
         if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
             return;
@@ -290,10 +292,41 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
     {
-        if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        if (AccessCheck(uid, args.Session.AttachedEntity, component)
+            && _deviceListSystem.ExistsInDeviceList(uid, args.Address))
+        {
             SetDeviceData(uid, args.Address, args.Data);
+        }
         else
+        {
             UpdateUI(uid, component);
+        }
+    }
+    
+    private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
+    {
+        if (!AccessCheck(uid, args.Session.AttachedEntity, component))
+        {
+           UpdateUI(uid, component);
+            return;       
+        }
+
+        switch (args.Data)
+        {
+            case GasVentPumpData ventData:
+                foreach (string addr in component.VentData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
+                
+            case GasVentScrubberData scrubberData:
+                foreach (string addr in component.ScrubberData.Keys)
+                {
+                    SetData(uid, addr, args.Data);
+                }
+                break;
+        }
     }
 
     private bool AccessCheck(EntityUid uid, EntityUid? user, AirAlarmComponent? component = null)

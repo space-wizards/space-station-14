@@ -32,7 +32,7 @@ namespace Content.Client.Inventory
         public Action<SlotData>? EntitySlotUpdate = null;
         public Action<SlotData>? OnSlotAdded = null;
         public Action<SlotData>? OnSlotRemoved = null;
-        public Action<InventorySlotsComponent>? OnLinkInventorySlots = null;
+        public Action<EntityUid, InventorySlotsComponent>? OnLinkInventorySlots = null;
         public Action? OnUnlinkInventory = null;
         public Action<SlotSpriteUpdate>? OnSpriteUpdate = null;
 
@@ -138,7 +138,7 @@ namespace Content.Client.Inventory
                 }
             }
 
-            OnLinkInventorySlots?.Invoke(component);
+            OnLinkInventorySlots?.Invoke(uid, component);
         }
 
         public override void Shutdown()
@@ -173,7 +173,7 @@ namespace Content.Client.Inventory
             }
 
             OnUnlinkInventory?.Invoke();
-            OnLinkInventorySlots?.Invoke(component);
+            OnLinkInventorySlots?.Invoke(player.Value, component);
         }
 
         public void SetSlotHighlight(EntityUid owner, InventorySlotsComponent component, string slotName, bool state)

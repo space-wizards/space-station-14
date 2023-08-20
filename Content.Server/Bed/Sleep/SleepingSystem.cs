@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
@@ -62,13 +63,14 @@ namespace Content.Server.Bed.Sleep
                 EnsureComp<StunnedComponent>(uid);
                 EnsureComp<KnockedDownComponent>(uid);
 
-                var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
-
-                // TODO WTF is this, these should a data fields and not hard-coded.
-                emitSound.Sound = new SoundCollectionSpecifier("Snores", AudioParams.Default.WithVariation(0.2f));
-                emitSound.PlayChance = 0.33f;
-                emitSound.RollInterval = 5f;
-                emitSound.PopUp = "sleep-onomatopoeia";
+                if (TryComp<SleepEmitSoundComponent>(uid, out var sleepSound))
+                {
+                    var emitSound = EnsureComp<SpamEmitSoundComponent>(uid);
+                    emitSound.Sound = sleepSound.Snore;
+                    emitSound.PlayChance = sleepSound.Chance;
+                    emitSound.RollInterval = sleepSound.Interval;
+                    emitSound.PopUp = sleepSound.PopUp;
+                }
 
                 if (wakeAction != null)
                 {

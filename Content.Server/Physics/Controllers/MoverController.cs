@@ -33,13 +33,13 @@ namespace Content.Server.Physics.Controllers
 
         private void OnRelayPlayerAttached(EntityUid uid, RelayInputMoverComponent component, PlayerAttachedEvent args)
         {
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
         private void OnRelayPlayerDetached(EntityUid uid, RelayInputMoverComponent component, PlayerDetachedEvent args)
         {
-            if (TryComp<InputMoverComponent>(component.RelayEntity, out var inputMover))
+            if (MoverQuery.TryGetComponent(component.RelayEntity, out var inputMover))
                 SetMoveInput(inputMover, MoveButtons.None);
         }
 
@@ -62,24 +62,16 @@ namespace Content.Server.Physics.Controllers
         {
             base.UpdateBeforeSolve(prediction, frameTime);
 
-            var bodyQuery = GetEntityQuery<PhysicsComponent>();
-            var relayQuery = GetEntityQuery<RelayInputMoverComponent>();
-            var relayTargetQuery = GetEntityQuery<MovementRelayTargetComponent>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            var moverQuery = GetEntityQuery<InputMoverComponent>();
-            var mobMoverQuery = GetEntityQuery<MobMoverComponent>();
-            var pullableQuery = GetEntityQuery<SharedPullableComponent>();
             var inputQueryEnumerator = AllEntityQuery<InputMoverComponent>();
-            var modifierQuery = GetEntityQuery<MovementSpeedModifierComponent>();
 
             while (inputQueryEnumerator.MoveNext(out var uid, out var mover))
             {
                 var physicsUid = uid;
 
-                if (relayQuery.HasComponent(uid))
+                if (RelayQuery.HasComponent(uid))
                     continue;
 
-                if (!xformQuery.TryGetComponent(uid, out var xform))
+                if (!XformQuery.TryGetComponent(uid, out var xform))
                 {
                     continue;
                 }
@@ -87,17 +79,17 @@ namespace Content.Server.Physics.Controllers
                 PhysicsComponent? body;
                 var xformMover = xform;
 
-                if (mover.ToParent && relayQuery.HasComponent(xform.ParentUid))
+                if (mover.ToParent && RelayQuery.HasComponent(xform.ParentUid))
                 {
-                    if (!bodyQuery.TryGetComponent(xform.ParentUid, out body) ||
-                        !TryComp(xform.ParentUid, out xformMover))
+                    if (!PhysicsQuery.TryGetComponent(xform.ParentUid, out body) ||
+                        !XformQuery.TryGetComponent(xform.ParentUid, out xformMover))
                     {
                         continue;
                     }
 
                     physicsUid = xform.ParentUid;
                 }
-                else if (!bodyQuery.TryGetComponent(uid, out body))
+                else if (!PhysicsQuery.TryGetComponent(uid, out body))
                 {
                     continue;
                 }
@@ -107,13 +99,7 @@ namespace Content.Server.Physics.Controllers
                     physicsUid,
                     body,
                     xformMover,
-                    frameTime,
-                    xformQuery,
-                    moverQuery,
-                    mobMoverQuery,
-                    relayTargetQuery,
-                    pullableQuery,
-                    modifierQuery);
+                    frameTime);
             }
 
             HandleShuttleMovement(frameTime);
@@ -414,7 +400,7 @@ namespace Content.Server.Physics.Controllers
                         }
                         else
                         {
-                            torque = MathF.Max(body.AngularVelocity / torqueMul, torque);
+                            torque = MathF.Min(-body.AngularVelocity / torqueMul, torque);
                         }
 
                         if (!torque.Equals(0f))

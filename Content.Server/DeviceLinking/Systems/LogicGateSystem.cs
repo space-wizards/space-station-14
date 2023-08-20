@@ -1,13 +1,10 @@
 using Content.Server.DeviceLinking.Components;
 using Content.Server.DeviceNetwork;
-using Content.Server.MachineLinking.Events;
 using Content.Shared.DeviceLinking;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.Utility;
 using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.DeviceLinking.Systems;

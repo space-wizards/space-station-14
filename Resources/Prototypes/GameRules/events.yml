@@ -56,8 +56,8 @@
   - type: BureaucraticErrorRule
 
 - type: entity
-  id: Dragon
   parent: BaseGameRule
+  id: Dragon
   noSpawn: true
   components:
   - type: StationEvent
@@ -65,11 +65,12 @@
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
-  - type: DragonRule
+  - type: RandomSpawnRule
+    prototype: SpawnPointGhostDragon
 
 - type: entity
-  id: RevenantSpawn
   parent: BaseGameRule
+  id: RevenantSpawn
   noSpawn: true
   components:
   - type: StationEvent
@@ -77,7 +78,8 @@
     duration: 1
     earliestStart: 45
     minimumPlayers: 20
-  - type: RevenantSpawnRule
+  - type: RandomSpawnRule
+    prototype: MobRevenant
 
 - type: entity
   id: FalseAlarm
@@ -307,6 +309,11 @@
     weight: 2.5
     duration: 1
   - type: ZombieRule
+    minStartDelay: 0 #let them know immediately
+    maxStartDelay: 10
+    maxInitialInfected: 3 #fewer zombies
+    minInitialInfectedGrace: 300 #less time to prepare
+    maxInitialInfectedGrace: 450
 
 - type: entity
   id: LoneOpsSpawn

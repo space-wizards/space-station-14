@@ -48,8 +48,7 @@ entities:
     - type: Shuttle
     - type: GridPathfinding
     - type: RadiationGridResistance
-    - nextUpdate: 0
-      type: SpreaderGrid
+    - type: SpreaderGrid
 - proto: AirlockAssembly
   entities:
   - uid: 38
@@ -476,8 +475,4 @@ entities:
     - pos: -1.2840745,-1.890625
       parent: 37
       type: Transform
-    - nextFire: 46.8663079
-      type: Gun
-    - nextSound: 47.0663079
-      type: EmitSoundOnCollide
 ...
