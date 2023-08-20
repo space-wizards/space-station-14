@@ -309,13 +309,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var amountRequired = FixedPoint2.New(component.OverflowVolume.Float() * LowThreshold);
         var slipperyAmount = FixedPoint2.Zero;
 
-        foreach (var reagent in solution.Contents)
+        foreach (var (reagent, quantity) in solution.Contents)
         {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
 
             if (reagentProto.Slippery)
             {
-                slipperyAmount += reagent.Quantity;
+                slipperyAmount += quantity;
 
                 if (slipperyAmount > amountRequired)
                 {
@@ -342,9 +342,9 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     private void UpdateSlow(EntityUid uid, Solution solution)
     {
         var maxViscosity = 0f;
-        foreach (var reagent in solution.Contents)
+        foreach (var (reagent, _) in solution.Contents)
         {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
             maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
         }
         if (maxViscosity > 0)
@@ -601,13 +601,13 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             // First, do all tile reactions
             for (var i = solution.Contents.Count - 1; i >= 0; i--)
             {
-                var reagent = solution.Contents[i];
-                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
-                var removed = proto.ReactionTile(tileRef, reagent.Quantity);
+                var (reagent, quantity) = solution.Contents[i];
+                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+                var removed = proto.ReactionTile(tileRef, quantity);
                 if (removed <= FixedPoint2.Zero)
                     continue;
 
-                solution.RemoveReagent(reagent.Reagent, removed);
+                solution.RemoveReagent(reagent, removed);
             }
         }
 

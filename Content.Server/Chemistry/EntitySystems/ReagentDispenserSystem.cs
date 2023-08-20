@@ -73,21 +73,21 @@ namespace Content.Server.Chemistry.EntitySystems
             return null;
         }
 
-        private List<Reagent> GetInventory(ReagentDispenserComponent reagentDispenser)
+        private List<ReagentId> GetInventory(ReagentDispenserComponent reagentDispenser)
         {
-            var inventory = new List<Reagent>();
+            var inventory = new List<ReagentId>();
 
             if (reagentDispenser.PackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.PackPrototypeId, out ReagentDispenserInventoryPrototype? packPrototype))
             {
-                inventory.AddRange(packPrototype.Inventory.Select(x => new Reagent(x, null)));
+                inventory.AddRange(packPrototype.Inventory.Select(x => new ReagentId(x, null)));
             }
 
             if (HasComp<EmaggedComponent>(reagentDispenser.Owner)
                 && reagentDispenser.EmagPackPrototypeId is not null
                 && _prototypeManager.TryIndex(reagentDispenser.EmagPackPrototypeId, out ReagentDispenserInventoryPrototype? emagPackPrototype))
             {
-                inventory.AddRange(emagPackPrototype.Inventory.Select(x => new Reagent(x, null)));
+                inventory.AddRange(emagPackPrototype.Inventory.Select(x => new ReagentId(x, null)));
             }
 
             return inventory;
@@ -111,18 +111,18 @@ namespace Content.Server.Chemistry.EntitySystems
         private void OnDispenseReagentMessage(EntityUid uid, ReagentDispenserComponent reagentDispenser, ReagentDispenserDispenseReagentMessage message)
         {
             // Ensure that the reagent is something this reagent dispenser can dispense.
-            if (!GetInventory(reagentDispenser).Contains(message.Reagent))
+            if (!GetInventory(reagentDispenser).Contains(message.ReagentId))
                 return;
 
             var outputContainer = _itemSlotsSystem.GetItemOrNull(reagentDispenser.Owner, SharedReagentDispenser.OutputSlotName);
             if (outputContainer is not {Valid: true} || !_solutionContainerSystem.TryGetFitsInDispenser(outputContainer.Value, out var solution))
                 return;
 
-            if (_solutionContainerSystem.TryAddReagent(outputContainer.Value, solution, message.Reagent, (int)reagentDispenser.DispenseAmount, out var dispensedAmount)
+            if (_solutionContainerSystem.TryAddReagent(outputContainer.Value, solution, message.ReagentId, (int)reagentDispenser.DispenseAmount, out var dispensedAmount)
                 && message.Session.AttachedEntity is not null)
             {
                 _adminLogger.Add(LogType.ChemicalReaction, LogImpact.Medium,
-                    $"{ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {message.Reagent} into {ToPrettyString(outputContainer.Value):entity}");
+                    $"{ToPrettyString(message.Session.AttachedEntity.Value):player} dispensed {dispensedAmount}u of {message.ReagentId} into {ToPrettyString(outputContainer.Value):entity}");
             }
 
             UpdateUiState(reagentDispenser);

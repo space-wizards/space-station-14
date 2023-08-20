@@ -10,7 +10,7 @@ namespace Content.Shared.Chemistry.Reagent;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public readonly struct Reagent : IEquatable<Reagent>
+public readonly struct ReagentId : IEquatable<ReagentId>
 {
     // TODO rename data field.
     [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
@@ -22,18 +22,18 @@ public readonly struct Reagent : IEquatable<Reagent>
     [DataField("data")]
     public readonly ReagentData? Data;
 
-    public Reagent(string prototype, ReagentData? data)
+    public ReagentId(string prototype, ReagentData? data)
     {
         Prototype = prototype;
         Data = data;
     }
 
-    public Reagent()
+    public ReagentId()
     {
         Prototype = default!;
     }
 
-    public bool Equals(Reagent other)
+    public bool Equals(ReagentId other)
     {
         if (Prototype != other.Prototype)
             return false;
@@ -63,7 +63,7 @@ public readonly struct Reagent : IEquatable<Reagent>
 
     public override bool Equals(object? obj)
     {
-        return obj is Reagent other && Equals(other);
+        return obj is ReagentId other && Equals(other);
     }
 
     public override int GetHashCode()
@@ -81,12 +81,12 @@ public readonly struct Reagent : IEquatable<Reagent>
         return Data?.ToString(Prototype) ?? Prototype;
     }
     
-    public static bool operator ==(Reagent left, Reagent right)
+    public static bool operator ==(ReagentId left, ReagentId right)
     {
         return left.Equals(right);
     }
 
-    public static bool operator !=(Reagent left, Reagent right)
+    public static bool operator !=(ReagentId left, ReagentId right)
     {
         return !(left == right);
     }

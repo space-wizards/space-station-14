@@ -365,14 +365,14 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// </summary>
     /// <param name="targetUid"></param>
     /// <param name="targetSolution">Container to which we are adding reagent</param>
-    /// <param name="reagent">The reagent to add.</param>
+    /// <param name="reagentId">The reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, Reagent reagent, FixedPoint2 quantity,
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
-        var quant = new ReagentQuantity(reagent, quantity);
+        var quant = new ReagentQuantity(reagentId, quantity);
         return TryAddReagent(targetUid, targetSolution, quant, out acceptedQuantity, temperature);
     }
 
@@ -414,12 +414,12 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// </summary>
     /// <param name="targetUid"></param>
     /// <param name="container">Solution container from which we are removing reagent</param>
-    /// <param name="reagent">The reagent to remove.</param>
+    /// <param name="reagentId">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(EntityUid targetUid, Solution? container, Reagent reagent, FixedPoint2 quantity)
+    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagentId, FixedPoint2 quantity)
     {
-        return RemoveReagent(targetUid, container, new ReagentQuantity(reagent, quantity));
+        return RemoveReagent(targetUid, container, new ReagentQuantity(reagentId, quantity));
     }
 
     /// <summary>
@@ -648,12 +648,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         // RemoveReagent does a RemoveSwap, meaning we don't have to copy the list if we iterate it backwards.
         for (var i = solution.Contents.Count-1; i >= 0; i--)
         {
-            var reagent = solution.Contents[i];
-
-            var removedQuantity = solution.RemoveReagent(reagent);
-
-            if(removedQuantity > 0)
-                removedSolution.AddReagent(reagent.Reagent, removedQuantity);
+            var (reagent, _) = solution.Contents[i];
+            var removedQuantity = solution.RemoveReagent(reagent, quantity);
+            removedSolution.AddReagent(reagent, removedQuantity);
         }
 
         UpdateChemicals(uid, solution);
@@ -714,15 +711,15 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (component.Solutions.Count == 0)
             return null;
 
-        var reagentCounts = new Dictionary<Reagent, FixedPoint2>();
+        var reagentCounts = new Dictionary<ReagentId, FixedPoint2>();
 
         foreach (var solution in component.Solutions.Values)
         {
-            foreach (var reagent in solution.Contents)
+            foreach (var (reagent, quantity) in solution.Contents)
             {
-                reagentCounts.TryGetValue(reagent.Reagent, out var existing);
-                existing += reagent.Quantity;
-                reagentCounts[reagent.Reagent] = existing;
+                reagentCounts.TryGetValue(reagent, out var existing);
+                existing += quantity;
+                reagentCounts[reagent] = existing;
             }
         }
 

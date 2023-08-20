@@ -106,10 +106,10 @@ namespace Content.Server.Chemistry.EntitySystems
             switch (chemMaster.Mode)
             {
                 case ChemMasterMode.Transfer:
-                    TransferReagents(chemMaster, message.Reagent, message.Amount.GetFixedPoint(), message.FromBuffer);
+                    TransferReagents(chemMaster, message.ReagentId, message.Amount.GetFixedPoint(), message.FromBuffer);
                     break;
                 case ChemMasterMode.Discard:
-                    DiscardReagents(chemMaster, message.Reagent, message.Amount.GetFixedPoint(), message.FromBuffer);
+                    DiscardReagents(chemMaster, message.ReagentId, message.Amount.GetFixedPoint(), message.FromBuffer);
                     break;
                 default:
                     // Invalid mode.
@@ -119,7 +119,7 @@ namespace Content.Server.Chemistry.EntitySystems
             ClickSound(chemMaster);
         }
 
-        private void TransferReagents(ChemMasterComponent chemMaster, Reagent id, FixedPoint2 amount, bool fromBuffer)
+        private void TransferReagents(ChemMasterComponent chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
         {
             var container = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.InputSlotName);
             if (container is null ||
@@ -145,7 +145,7 @@ namespace Content.Server.Chemistry.EntitySystems
             UpdateUiState(chemMaster, updateLabel: true);
         }
 
-        private void DiscardReagents(ChemMasterComponent chemMaster, Reagent id, FixedPoint2 amount, bool fromBuffer)
+        private void DiscardReagents(ChemMasterComponent chemMaster, ReagentId id, FixedPoint2 amount, bool fromBuffer)
         {
 
             if (fromBuffer)

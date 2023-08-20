@@ -59,10 +59,10 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     private float ReagentsToFuel(ChemicalFuelGeneratorAdapterComponent component, Solution solution)
     {
         var total = 0.0f;
-        foreach (var reagent in solution.Contents)
+        foreach (var (reagent, quantity) in solution.Contents)
         {
-            if (component.ChemConversionFactors.TryGetValue(reagent.Reagent.Prototype, out var factor))
-                total += reagent.Quantity.Float() * factor;
+            if (component.ChemConversionFactors.TryGetValue(reagent.Prototype, out var factor))
+                total += quantity.Float() * factor;
         }
 
         return total;

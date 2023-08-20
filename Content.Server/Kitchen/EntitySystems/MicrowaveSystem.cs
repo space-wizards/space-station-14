@@ -369,12 +369,12 @@ namespace Content.Server.Kitchen.EntitySystems
 
                 foreach (var (_, solution) in solMan.Solutions)
                 {
-                    foreach (var reagent in solution.Contents)
+                    foreach (var (reagent, quantity) in solution.Contents)
                     {
-                        if (reagentDict.ContainsKey(reagent.Reagent.Prototype))
-                            reagentDict[reagent.Reagent.Prototype] += reagent.Quantity;
+                        if (reagentDict.ContainsKey(reagent.Prototype))
+                            reagentDict[reagent.Prototype] += quantity;
                         else
-                            reagentDict.Add(reagent.Reagent.Prototype, reagent.Quantity);
+                            reagentDict.Add(reagent.Prototype, quantity);
                     }
                 }
             }

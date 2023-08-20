@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Reagent;
 
 /// <summary>
-/// Simple struct for storing a reagent id & quantity tuple.
+/// Simple struct for storing a <see cref="ReagentId"/> & quantity tuple.
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
@@ -15,14 +15,14 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     [IncludeDataField]
     [ViewVariables]
-    public readonly Reagent Reagent;
+    public readonly ReagentId Reagent;
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
-        : this(new Reagent(reagentId, data), quantity)
+        : this(new ReagentId(reagentId, data), quantity)
     {
     }
 
-    public ReagentQuantity(Reagent reagent, FixedPoint2 quantity)
+    public ReagentQuantity(ReagentId reagent, FixedPoint2 quantity)
     {
         Reagent = reagent;
         Quantity = quantity;
@@ -44,7 +44,7 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
         data = Reagent.Data;
     }
 
-    public void Deconstruct(out Reagent id, out FixedPoint2 quantity)
+    public void Deconstruct(out ReagentId id, out FixedPoint2 quantity)
     {
         id = Reagent;
         quantity = Quantity;

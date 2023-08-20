@@ -118,9 +118,11 @@ namespace Content.Client.Kitchen.UI
             }
             else
             {
-                foreach (var reagent in reagents)
+                foreach (var (reagent, quantity) in reagents)
                 {
-                    var reagentName = _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto) ? Loc.GetString($"{reagent.Quantity} {proto.LocalizedName}") : "???";
+                    var reagentName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? proto) 
+                        ? Loc.GetString($"{quantity} {proto.LocalizedName}") 
+                        : "???";
                     BeakerContentBox.BoxContents.AddItem(reagentName);
                 }
             }
