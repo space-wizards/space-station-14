@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Increased the danger of most artifact effects and added some new ones.,
-    type: Tweak}
-  id: 4137
-  time: '2023-06-30T19:25:34.0000000+00:00'
 - author: Jesse
   changes:
   - {message: Changed Sprites for Computers in de/construction to not have the glass
@@ -3031,3 +3025,8 @@ Entries:
     type: Tweak}
   id: 4636
   time: '2023-08-20T12:12:28.0000000+00:00'
+- author: kalane15
+  changes:
+  - {message: 'Crusher can be used with one hand, but with less damage.', type: Tweak}
+  id: 4637
+  time: '2023-08-20T12:13:45.0000000+00:00'
