@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Unlocking research on the RND console now requires science access.,
-    type: Add}
-  id: 4132
-  time: '2023-06-29T18:19:20.0000000+00:00'
 - author: Ubaser
   changes:
   - {message: Added a new evacuation shuttle for Marathon, type: Add}
@@ -3034,3 +3028,9 @@ Entries:
       just service. Syndicate and CentCom channels remain unaffected.', type: Tweak}
   id: 4631
   time: '2023-08-19T23:39:36.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Roundstart nukeops greeting sound is back, now they''ll remember their
+      main objective.', type: Fix}
+  id: 4632
+  time: '2023-08-20T01:07:09.0000000+00:00'
