@@ -9,7 +9,7 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 /// Can be used for sub-biomes.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class BiomeMetaLayer : IBiomeLayer
+public sealed partial class BiomeMetaLayer : IBiomeLayer
 {
     [DataField("noise")]
     public FastNoiseLite Noise { get; private set; } = new(0);

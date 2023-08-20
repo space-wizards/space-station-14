@@ -25,7 +25,7 @@ public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakS
 }
 
 [ImplicitDataDefinitionForInheritors]
-public abstract class MagicSpawnData
+public abstract partial class MagicSpawnData
 {
 
 }

@@ -21,7 +21,7 @@ public sealed class RulesPrototype : IPrototype
 }
 
 [ImplicitDataDefinitionForInheritors]
-public abstract class RulesRule
+public abstract partial class RulesRule
 {
 
 }

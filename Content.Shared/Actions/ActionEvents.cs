@@ -110,7 +110,7 @@ public abstract partial class WorldTargetActionEvent : BaseActionEvent
 ///     system.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class BaseActionEvent : HandledEntityEventArgs
+public abstract partial class BaseActionEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The user performing the action.

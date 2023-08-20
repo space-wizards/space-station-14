@@ -154,7 +154,7 @@ public struct NoiseGenerator
 ///     A processing class that adjusts the input coordinate space to a noise channel.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class NoiseCoordinateProcess
+public abstract partial class NoiseCoordinateProcess
 {
     public abstract Vector2 Process(Vector2 inp);
 }
@@ -163,7 +163,7 @@ public abstract class NoiseCoordinateProcess
 ///     A processing class that adjusts the final result of the noise channel.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class NoisePostProcess
+public abstract partial class NoisePostProcess
 {
     public abstract float Process(float inp);
 }

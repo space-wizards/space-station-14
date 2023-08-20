@@ -8,7 +8,7 @@ namespace Content.Server.Atmos.Reactions;
 ///     Takes in nitrogen and frezon and cools down the surrounding area.
 /// </summary>
 [UsedImplicitly]
-public sealed class FrezonCoolantReaction : IGasReactionEffect
+public sealed partial class FrezonCoolantReaction : IGasReactionEffect
 {
     public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
     {

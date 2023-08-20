@@ -122,7 +122,7 @@ public sealed partial class LayerColoringDefinition
 ///     An abstract class for coloring types
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class LayerColoringType
+public abstract partial class LayerColoringType
 {
     /// <summary>
     ///     Makes output color negative

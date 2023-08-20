@@ -16,7 +16,7 @@ namespace Content.Client.Light.Components
     /// </summary>
     [Serializable]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
+    public abstract partial class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;

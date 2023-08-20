@@ -10,7 +10,7 @@ namespace Content.Shared.Roles
     /// Abstract class for playtime and other requirements for role gates.
     /// </summary>
     [ImplicitDataDefinitionForInheritors]
-    public abstract class JobRequirement{}
+    public abstract partial class JobRequirement{}
 
     [UsedImplicitly]
     public sealed partial class DepartmentTimeRequirement : JobRequirement

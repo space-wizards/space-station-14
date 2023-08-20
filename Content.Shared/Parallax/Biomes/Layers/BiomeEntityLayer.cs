@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Parallax.Biomes.Layers;
 
 [Serializable, NetSerializable]
-public sealed class BiomeEntityLayer : IBiomeWorldLayer
+public sealed partial class BiomeEntityLayer : IBiomeWorldLayer
 {
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]

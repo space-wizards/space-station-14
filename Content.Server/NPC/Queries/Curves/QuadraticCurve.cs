@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.Queries.Curves;
 
-public sealed class QuadraticCurve : IUtilityCurve
+public sealed partial class QuadraticCurve : IUtilityCurve
 {
     [DataField("slope")] public float Slope { get; private set; } = 1f;
 

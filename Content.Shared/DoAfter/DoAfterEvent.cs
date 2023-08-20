@@ -7,7 +7,7 @@ namespace Content.Shared.DoAfter;
 /// </summary>
 [Serializable, NetSerializable]
 [ImplicitDataDefinitionForInheritors]
-public abstract class DoAfterEvent : HandledEntityEventArgs
+public abstract partial class DoAfterEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The do after that triggered this event. This will be set by the do after system before the event is raised.
