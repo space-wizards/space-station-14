@@ -11,7 +11,7 @@
         amount: 2
       - id: Ointment
         amount: 2
-      - id: Bloodpack
+      - id: Gauze
       - id: PillTricordrazine
         amount: 5
       # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
