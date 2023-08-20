@@ -1,15 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Changed the price of most objects found in the construction menu., type: Tweak}
-  id: 4140
-  time: '2023-06-30T19:32:03.0000000+00:00'
-- author: Vocal
-  changes:
-  - {message: Left-clicking a gas canister no longer unlock and open the UI at the
-      same time., type: Fix}
-  id: 4141
-  time: '2023-06-30T19:39:34.0000000+00:00'
 - author: kxvvv
   changes:
   - {message: Explosive pens are now linkable, type: Tweak}
@@ -3028,3 +3017,14 @@ Entries:
   - {message: Explosive banana peel can no longer spawn in a surplus crate., type: Tweak}
   id: 4639
   time: '2023-08-20T20:58:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added sound upon breaking rocks., type: Add}
+  id: 4640
+  time: '2023-08-20T21:05:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All of the emergency medkit cargo crates now only give a single kit
+      but are cheaper in return., type: Tweak}
+  id: 4641
+  time: '2023-08-20T21:05:58.0000000+00:00'
