@@ -955,10 +955,10 @@
     - Mime
 
 - type: listing
-  id: UplinkChimpAmmo
-  name: uplink-chimp-ammo-name
-  description: uplink-chimp-ammo-desc
-  productEntity: BoxMagazineChimpOmega
+  id: UplinkChimpUpgradeKit
+  name: uplink-chimp-upgrade-kit-name
+  description: uplink-chimp-upgrade-kit-desc
+  productEntity: WeaponPistolCHIMPUpgradeKit
   cost:
     Telecrystal: 4
   categories:
