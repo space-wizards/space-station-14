@@ -25,7 +25,6 @@ public abstract partial class SharedGunSystem
          * Racking does both in one hit and has a different sound (to avoid RSI + sounds cooler).
          */
 
-        SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<Verb>>(OnChamberVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<ActivationVerb>>(OnChamberActivationVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<InteractionVerb>>(OnChamberInteractionVerb);
         SubscribeLocalEvent<ChamberMagazineAmmoProviderComponent, GetVerbsEvent<AlternativeVerb>>(OnMagazineVerb);
@@ -47,20 +46,8 @@ public abstract partial class SharedGunSystem
         }
     }
 
-    private void OnChamberVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<Verb> args)
-    {
-        if (component.BoltClosed != null)
-        {
-            args.Verbs.Add(new Verb()
-            {
-                Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
-                Act = () => ToggleBolt(uid, component, args.User),
-            });
-        }
-    }
-
     /// <summary>
-    /// User "Activated In World" with the gun as the target 
+    /// Called when user "Activated In World" (E) with the gun as the target
     /// </summary>
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
@@ -72,7 +59,7 @@ public abstract partial class SharedGunSystem
     }
 
     /// <summary>
-    /// Gun was "Activated In Hand"
+    /// Called when gun was "Activated In Hand" (Z)
     /// </summary>
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
@@ -84,7 +71,7 @@ public abstract partial class SharedGunSystem
     }
 
     /// <summary>
-    /// Verb was used to Rack the gun.
+    /// Creates "Rack" verb on the gun
     /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
@@ -133,6 +120,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
+    /// <summary>
+    /// Creates "Open/Close bolt" verb on the gun
+    /// </summary>
     private void OnChamberInteractionVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<InteractionVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
@@ -263,16 +253,24 @@ public abstract partial class SharedGunSystem
         SetBoltClosed(uid, component, !component.BoltClosed.Value, user);
     }
 
+    /// <summary>
+    /// Called when the gun was Examined
+    /// </summary>
     private void OnChamberMagazineExamine(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ExaminedEvent args)
     {
         if (!args.IsInDetailsRange)
             return;
 
         var (count, _) = GetChamberMagazineCountCapacity(uid, component);
+        string boltState;
 
         if (component.BoltClosed != null)
         {
-            args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", component.BoltClosed), ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
+            if (component.BoltClosed == true)
+                boltState = Loc.GetString("gun-chamber-bolt-open-state");
+            else
+                boltState = Loc.GetString("gun-chamber-bolt-closed-state");
+            args.PushMarkup(Loc.GetString("gun-chamber-bolt", ("bolt", boltState), ("color", component.BoltClosed.Value ? Color.FromHex("#94e1f2") : Color.FromHex("#f29d94"))));
         }
 
         args.PushMarkup(Loc.GetString("gun-magazine-examine", ("color", AmmoExamineColor), ("count", count)));
