@@ -54,6 +54,6 @@ public abstract class SharedMouseRotatorSystem : EntitySystem
         }
 
         rotator.GoalRotation = msg.Rotation;
-        Dirty(rotator);
+        Dirty(ent, rotator);
     }
 }

@@ -52,6 +52,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
         protected EntityQuery<SharedPullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
+        protected EntityQuery<NoRotateOnMoveComponent> NoRotateQuery;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -82,6 +83,7 @@ namespace Content.Shared.Movement.Systems
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
             PullableQuery = GetEntityQuery<SharedPullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
+            NoRotateQuery = GetEntityQuery<NoRotateOnMoveComponent>();
 
             InitializeFootsteps();
             InitializeInput();
@@ -230,7 +232,7 @@ namespace Content.Shared.Movement.Systems
 
             if (worldTotal != Vector2.Zero)
             {
-                if (!HasComp<NoRotateOnMoveComponent>(uid))
+                if (!NoRotateQuery.HasComponent(uid))
                 {
                     // TODO apparently this results in a duplicate move event because "This should have its event run during
                     // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
