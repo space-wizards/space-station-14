@@ -1,4 +1,6 @@
 using System.Linq;
+using Content.Client.Chat.Managers;
+using Content.Shared.Chat;
 using Content.Shared.GameTicking;
 using Content.Shared.Popups;
 using Robust.Client.Graphics;
@@ -19,6 +21,7 @@ namespace Content.Client.Popups
 {
     public sealed class PopupSystem : SharedPopupSystem
     {
+        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly IConfigurationManager _configManager = default!;
         [Dependency] private readonly IInputManager _inputManager = default!;
         [Dependency] private readonly IOverlayManager _overlay = default!;
@@ -73,6 +76,7 @@ namespace Content.Client.Popups
             };
 
             _aliveWorldLabels.Add(label);
+            _chatManager.SendMessage($"notice {message}", ChatSelectChannel.Console);
         }
 
         #region Abstract Method Implementations
