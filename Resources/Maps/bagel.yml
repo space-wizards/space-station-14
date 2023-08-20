@@ -129941,8 +129941,6 @@ entities:
     - linkedPorts:
         14548:
         - Pressed: Toggle
-        invalid:
-        - Pressed: Toggle
         14547:
         - Pressed: Toggle
       type: DeviceLinkSource
