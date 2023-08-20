@@ -1,0 +1,16 @@
+- type: gameMap
+  id: Zero
+  mapName: Zero
+  mapPath: /Maps/zero.yml
+  minPlayers: 0
+  stations:
+    Zero:
+      stationProto: StandardNanotrasenStation
+      components:
+        - type: StationNameSetup
+          mapNameTemplate: "Zero"
+        - type: StationJobs
+          overflowJobs:
+          - Captain
+          availableJobs:
+            Captain: [ -1, -1 ]
