@@ -55,7 +55,7 @@ public abstract partial class SharedGunSystem
             return;
 
         args.Handled = true;
-        ToggleBolt(uid, component, args.User);
+        UseChambered(uid, component, args.User);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public abstract partial class SharedGunSystem
             return;
 
         args.Handled = true;
-        UseChambered(uid, component, args.User);
+        ToggleBolt(uid, component, args.User);
     }
 
     /// <summary>
@@ -80,10 +80,11 @@ public abstract partial class SharedGunSystem
 
         args.Verbs.Add(new ActivationVerb()
         {
-            Text = Loc.GetString("gun-chamber-rack"),
+            Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
             Act = () =>
             {
-                UseChambered(uid, component, args.User);
+                // Just toggling might be more user friendly instead of trying to set to whatever they think?
+                ToggleBolt(uid, component, args.User);
             }
         });
     }
@@ -95,7 +96,6 @@ public abstract partial class SharedGunSystem
     {
         if (component.BoltClosed == false)
         {
-            ToggleBolt(uid, component, user);
             return;
         }
 
@@ -130,11 +130,10 @@ public abstract partial class SharedGunSystem
 
         args.Verbs.Add(new InteractionVerb()
         {
-            Text = component.BoltClosed.Value ? Loc.GetString("gun-chamber-bolt-open") : Loc.GetString("gun-chamber-bolt-close"),
+            Text = Loc.GetString("gun-chamber-rack"),
             Act = () =>
             {
-                // Just toggling might be more user friendly instead of trying to set to whatever they think?
-                ToggleBolt(uid, component, args.User);
+                UseChambered(uid, component, args.User);
             }
         });
     }
