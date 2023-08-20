@@ -34,6 +34,8 @@ gun-chamber-bolt-closed = Closed bolt
 gun-chamber-bolt-opened = Opened bolt
 gun-chamber-bolt-close = Close bolt
 gun-chamber-bolt-open = Open bolt
+gun-chamber-bolt-closed-state = open
+gun-chamber-bolt-open-state = closed
 gun-chamber-rack = Rack
 
 # MagazineAmmoProvider
