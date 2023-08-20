@@ -16,5 +16,5 @@ public sealed class RiggableComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("reagent")]
-    public ReagentQuantity Reagent = new("plasma", FixedPoint2.New(5), null);
+    public ReagentQuantity Reagent = new("Plasma", FixedPoint2.New(5), null);
 }

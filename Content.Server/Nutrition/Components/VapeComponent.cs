@@ -19,7 +19,7 @@ namespace Content.Server.Nutrition.Components // Vapes are very nutritious.
         [ViewVariables(VVAccess.ReadWrite)]
         public float ExplosionIntensity { get; set; } = 2.5f;
 
-        // TODO use RiggedComponent.
+        // TODO use RiggableComponent.
         [DataField("explodeOnUse")]
         [ViewVariables(VVAccess.ReadWrite)]
         public bool ExplodeOnUse { get; set; } = false;
