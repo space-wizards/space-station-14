@@ -1,12 +1,14 @@
 using Content.Shared.Damage;
+using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
+using System.Linq;
 
 namespace Content.Client.Overlays
 {
-    public sealed class ShowHealthIconsSystem : ComponentAddedOverlaySystemBase<ShowHealthIconsComponent>
+    public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
     {
         [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
         [Dependency] private readonly IEntityManager _entManager = default!;
@@ -21,11 +23,11 @@ namespace Content.Client.Overlays
 
         }
 
-        protected override void OnApplyOverlay(ShowHealthIconsComponent component)
+        protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthIconsComponent> component)
         {
-            base.OnApplyOverlay(component);
+            base.UpdateInternal(component);
 
-            foreach (var damageContainerId in component.DamageContainers)
+            foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
             {
                 if (DamageContainers.Contains(damageContainerId))
                 {
@@ -36,9 +38,9 @@ namespace Content.Client.Overlays
             }
         }
 
-        protected override void OnRemoveOverlay()
+        protected override void DeactivateInternal()
         {
-            base.OnRemoveOverlay();
+            base.DeactivateInternal();
 
             DamageContainers.Clear();
         }

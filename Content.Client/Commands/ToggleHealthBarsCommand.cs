@@ -1,8 +1,7 @@
+using Content.Shared.Overlays;
 using Robust.Client.Player;
 using Robust.Shared.Console;
 using System.Linq;
-using Content.Client.Overlays;
-using Content.Shared.Overlays;
 
 namespace Content.Client.Commands
 {
@@ -31,19 +30,20 @@ namespace Content.Client.Commands
                 return;
             }
 
-            var showHealthBarsSystem = EntitySystem.Get<ShowHealthBarsSystem>();
             if (!_entityManager.HasComponent<ShowHealthBarsComponent>(playerEntity))
             {
-                var showHealthBarsComponent = _entityManager.AddComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
-                showHealthBarsComponent.DamageContainers = args.ToList();
-                showHealthBarsSystem.ApplyOverlay(showHealthBarsComponent);
+                using var showHealthBarsComponent = _entityManager.AddComponentUninitialized<ShowHealthBarsComponent>(playerEntity.Value);
+                showHealthBarsComponent.Comp.DamageContainers = args.ToList();
+
                 shell.WriteLine($"Enabled health overlay for DamageContainers: {string.Join(", ", args)}.");
                 return;
             }
+            else
+            {
+                _entityManager.RemoveComponentDeferred<ShowHealthBarsComponent>(playerEntity.Value);
+                shell.WriteLine("Disabled health overlay.");
+            }
 
-            _entityManager.RemoveComponent<ShowHealthBarsComponent>((EntityUid) playerEntity);
-            showHealthBarsSystem.RemoveOverlay();
-            shell.WriteLine("Disabled health overlay.");
             return;
         }
     }

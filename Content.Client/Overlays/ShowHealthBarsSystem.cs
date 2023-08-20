@@ -1,9 +1,11 @@
+using Content.Shared.Inventory.Events;
 using Content.Shared.Overlays;
 using Robust.Client.Graphics;
+using System.Linq;
 
 namespace Content.Client.Overlays
 {
-    public sealed class ShowHealthBarsSystem : ComponentAddedOverlaySystemBase<ShowHealthBarsComponent>
+    public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
     {
         [Dependency] private readonly IOverlayManager _overlayMan = default!;
 
@@ -16,11 +18,11 @@ namespace Content.Client.Overlays
             _overlay = new(EntityManager);
         }
 
-        protected override void OnApplyOverlay(ShowHealthBarsComponent component)
+        protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)
         {
-            base.OnApplyOverlay(component);
+            base.UpdateInternal(component);
 
-            foreach (var damageContainerId in component.DamageContainers)
+            foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
             {
                 if (_overlay.DamageContainers.Contains(damageContainerId))
                 {
@@ -33,9 +35,9 @@ namespace Content.Client.Overlays
             _overlayMan.AddOverlay(_overlay);
         }
 
-        protected override void OnRemoveOverlay()
+        protected override void DeactivateInternal()
         {
-            base.OnRemoveOverlay();
+            base.DeactivateInternal();
 
             _overlay.DamageContainers.Clear();
             _overlayMan.RemoveOverlay(_overlay);

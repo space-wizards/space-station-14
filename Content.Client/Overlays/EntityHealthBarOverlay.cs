@@ -149,16 +149,16 @@ namespace Content.Client.Overlays
             {
                 return SeaBlue;
             }
-            
+
             if (!crit)
             {
                 switch (progress)
                 {
-                    case > 0.75F:
+                    case > 0.90F:
                         return SeaBlue;
                     case > 0.50F:
                         return Violet;
-                    case > 0.25F:
+                    case > 0.15F:
                         return Ruber;
                 }
             }
