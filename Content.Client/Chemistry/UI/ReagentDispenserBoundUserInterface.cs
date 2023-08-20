@@ -53,11 +53,11 @@ namespace Content.Client.Chemistry.UI
             _window.DispenseButton100.OnPressed += _ => SendMessage(new ReagentDispenserSetDispenseAmountMessage(ReagentDispenserDispenseAmount.U100));
 
             // Setup reagent button actions.
-            _window.OnDispenseReagentButtonPressed += (args, button) => SendMessage(new ReagentDispenserDispenseReagentMessage(button.ReagentId));
+            _window.OnDispenseReagentButtonPressed += (args, button) => SendMessage(new ReagentDispenserDispenseReagentMessage(button.Reagent));
             _window.OnDispenseReagentButtonMouseEntered += (args, button) =>
             {
                 if (_lastState is not null)
-                    _window.UpdateContainerInfo(_lastState, button.ReagentId);
+                    _window.UpdateContainerInfo(_lastState, button.Reagent);
             };
             _window.OnDispenseReagentButtonMouseExited += (args, button) =>
             {

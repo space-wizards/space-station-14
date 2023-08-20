@@ -365,15 +365,15 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// </summary>
     /// <param name="targetUid"></param>
     /// <param name="targetSolution">Container to which we are adding reagent</param>
-    /// <param name="reagentId">The reagent to add.</param>
+    /// <param name="reagent">The reagent to add.</param>
     /// <param name="quantity">The amount of reagent to add.</param>
     /// <param name="acceptedQuantity">The amount of reagent successfully added.</param>
     /// <returns>If all the reagent could be added.</returns>
-    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, ReagentId reagentId, FixedPoint2 quantity,
+    public bool TryAddReagent(EntityUid targetUid, Solution targetSolution, Reagent reagent, FixedPoint2 quantity,
         out FixedPoint2 acceptedQuantity, float? temperature = null)
     {
-        var reagent = new ReagentQuantity(reagentId, quantity);
-        return TryAddReagent(targetUid, targetSolution, reagent, out acceptedQuantity, temperature);
+        var quant = new ReagentQuantity(reagent, quantity);
+        return TryAddReagent(targetUid, targetSolution, quant, out acceptedQuantity, temperature);
     }
 
     /// <summary>
@@ -417,7 +417,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     /// <param name="reagent">The reagent to remove.</param>
     /// <param name="quantity">The amount of reagent to remove.</param>
     /// <returns>If the reagent to remove was found in the container.</returns>
-    public bool RemoveReagent(EntityUid targetUid, Solution? container, ReagentId reagent, FixedPoint2 quantity)
+    public bool RemoveReagent(EntityUid targetUid, Solution? container, Reagent reagent, FixedPoint2 quantity)
     {
         return RemoveReagent(targetUid, container, new ReagentQuantity(reagent, quantity));
     }
@@ -714,7 +714,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         if (component.Solutions.Count == 0)
             return null;
 
-        var reagentCounts = new Dictionary<ReagentId, FixedPoint2>();
+        var reagentCounts = new Dictionary<Reagent, FixedPoint2>();
 
         foreach (var solution in component.Solutions.Values)
         {

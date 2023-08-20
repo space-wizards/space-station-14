@@ -88,7 +88,7 @@ namespace Content.Client.Chemistry.UI
             Tabs.SetTabTitle(1, Loc.GetString("chem-master-window-output-tab"));
         }
 
-        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
+        private ReagentButton MakeReagentButton(string text, ChemMasterReagentAmount amount, Reagent id, bool isBuffer, string styleClass)
         {
             var button = new ReagentButton(text, amount, id, isBuffer, styleClass);
             button.OnPressed += args
@@ -246,11 +246,11 @@ namespace Content.Client.Chemistry.UI
                     }
                 });
 
-                IEnumerable<(string Name, ReagentId Id, FixedPoint2 Quantity)> contents;
+                IEnumerable<(string Name, Reagent Id, FixedPoint2 Quantity)> contents;
 
                 if (info.Entities != null)
                 {
-                    contents = info.Entities.Select(x => (x.Id, default(ReagentId), x.Quantity));
+                    contents = info.Entities.Select(x => (x.Id, default(Reagent), x.Quantity));
                 }
                 else if (info.Reagents != null)
                 {
@@ -333,8 +333,8 @@ namespace Content.Client.Chemistry.UI
     {
         public ChemMasterReagentAmount Amount { get; set; }
         public bool IsBuffer = true;
-        public ReagentId Id { get; set; }
-        public ReagentButton(string text, ChemMasterReagentAmount amount, ReagentId id, bool isBuffer, string styleClass)
+        public Reagent Id { get; set; }
+        public ReagentButton(string text, ChemMasterReagentAmount amount, Reagent id, bool isBuffer, string styleClass)
         {
             AddStyleClass(styleClass);
             Text = text;

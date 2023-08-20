@@ -44,13 +44,13 @@ namespace Content.Shared.Chemistry
     [Serializable, NetSerializable]
     public sealed class ChemMasterReagentAmountButtonMessage : BoundUserInterfaceMessage
     {
-        public readonly ReagentId ReagentId;
+        public readonly Reagent.Reagent Reagent;
         public readonly ChemMasterReagentAmount Amount;
         public readonly bool FromBuffer;
 
-        public ChemMasterReagentAmountButtonMessage(ReagentId reagentId, ChemMasterReagentAmount amount, bool fromBuffer)
+        public ChemMasterReagentAmountButtonMessage(Reagent.Reagent reagent, ChemMasterReagentAmount amount, bool fromBuffer)
         {
-            ReagentId = reagentId;
+            Reagent = reagent;
             Amount = amount;
             FromBuffer = fromBuffer;
         }

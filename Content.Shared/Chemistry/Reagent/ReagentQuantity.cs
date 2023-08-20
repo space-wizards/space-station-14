@@ -15,16 +15,16 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     [IncludeDataField]
     [ViewVariables]
-    public readonly ReagentId Id;
+    public readonly Reagent Id;
 
     public string Prototype => Id.Prototype;
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
-        : this(new ReagentId(reagentId, data), quantity)
+        : this(new Reagent(reagentId, data), quantity)
     {
     }
 
-    public ReagentQuantity(ReagentId id, FixedPoint2 quantity)
+    public ReagentQuantity(Reagent id, FixedPoint2 quantity)
     {
         Id = id;
         Quantity = quantity;
@@ -46,7 +46,7 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
         data = Id.Data;
     }
 
-    public void Deconstruct(out ReagentId id, out FixedPoint2 quantity)
+    public void Deconstruct(out Reagent id, out FixedPoint2 quantity)
     {
         id = Id;
         quantity = Quantity;

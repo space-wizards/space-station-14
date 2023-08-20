@@ -48,7 +48,7 @@ namespace Content.Client.Chemistry.UI
         /// Update the button grid of reagents which can be dispensed.
         /// </summary>
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<ReagentId> inventory)
+        public void UpdateReagentsList(List<Reagent> inventory)
         {
             if (ChemicalList == null)
                 return;
@@ -123,7 +123,7 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data for the dispenser.</param>
         /// <param name="highlightedReagentId">Prototype ID of the reagent whose dispense button is currently being mouse hovered,
         /// or null if no button is being hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, ReagentId? highlightedReagentId = null)
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, Reagent? highlightedReagentId = null)
         {
             ContainerInfo.Children.Clear();
 
@@ -181,11 +181,11 @@ namespace Content.Client.Chemistry.UI
     }
 
     public sealed class DispenseReagentButton : Button {
-        public ReagentId ReagentId { get; }
+        public Reagent Reagent { get; }
 
-        public DispenseReagentButton(ReagentId reagentId, string text)
+        public DispenseReagentButton(Reagent reagent, string text)
         {
-            ReagentId = reagentId;
+            Reagent = reagent;
             Text = text;
         }
     }
