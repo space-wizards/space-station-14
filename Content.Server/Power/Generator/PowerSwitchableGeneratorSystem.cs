@@ -74,8 +74,8 @@ public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGenera
 
         var supplier = Comp<PowerSupplierComponent>(uid);
         var nodeContainer = Comp<NodeContainerComponent>(uid);
-        var outputMV = (CableDeviceNode) nodeContainer.Nodes["output_mv"];
-        var outputHV = (CableDeviceNode) nodeContainer.Nodes["output_hv"];
+        var outputMV = (CableDeviceNode) nodeContainer.Nodes[component.NodeOutputMV];
+        var outputHV = (CableDeviceNode) nodeContainer.Nodes[component.NodeOutputHV];
 
         if (component.ActiveOutput == PowerSwitchableGeneratorOutput.HV)
         {

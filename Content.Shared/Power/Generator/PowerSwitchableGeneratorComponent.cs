@@ -8,7 +8,7 @@ namespace Content.Shared.Power.Generator;
 /// Enables a generator to switch between HV and MV output.
 /// </summary>
 /// <remarks>
-/// Must have <c>CableDeviceNode</c>s for both <c>output_mv</c> and <c>output_hv</c>, and also a <c>PowerSupplierComponent</c>.
+/// Must have <c>CableDeviceNode</c>s for both <see cref="NodeOutputMV"/> and <see cref="NodeOutputHV"/>, and also a <c>PowerSupplierComponent</c>.
 /// </remarks>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 [Access(typeof(SharedPowerSwitchableGeneratorSystem))]
@@ -27,6 +27,18 @@ public sealed partial class PowerSwitchableGeneratorComponent : Component
     /// <returns></returns>
     [DataField("switchSound")]
     public SoundSpecifier? SwitchSound { get; set; }
+
+    /// <summary>
+    /// Which node is the MV output?
+    /// </summary>
+    [DataField("nodeOutputMV")]
+    public string NodeOutputMV { get; set; } = "output_mv";
+
+    /// <summary>
+    /// Which node is the HV output?
+    /// </summary>
+    [DataField("nodeOutputHV")]
+    public string NodeOutputHV { get; set; } = "output_hv";
 }
 
 /// <summary>
