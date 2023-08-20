@@ -59,6 +59,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
+    /// <summary>
+    /// User "Activated In World" with the gun as the target 
+    /// </summary>
     private void OnChamberActivate(EntityUid uid, ChamberMagazineAmmoProviderComponent component, ActivateInWorldEvent args)
     {
         if (args.Handled)
@@ -68,6 +71,9 @@ public abstract partial class SharedGunSystem
         ToggleBolt(uid, component, args.User);
     }
 
+    /// <summary>
+    /// Gun was "Activated In Hand"
+    /// </summary>
     private void OnChamberUse(EntityUid uid, ChamberMagazineAmmoProviderComponent component, UseInHandEvent args)
     {
         if (args.Handled)
@@ -77,6 +83,9 @@ public abstract partial class SharedGunSystem
         UseChambered(uid, component, args.User);
     }
 
+    /// <summary>
+    /// Verb was used to Rack the gun.
+    /// </summary>
     private void OnChamberActivationVerb(EntityUid uid, ChamberMagazineAmmoProviderComponent component, GetVerbsEvent<ActivationVerb> args)
     {
         if (!args.CanAccess || !args.CanInteract || component.BoltClosed == null)
@@ -92,10 +101,16 @@ public abstract partial class SharedGunSystem
         });
     }
 
+    /// <summary>
+    /// Opens then closes the bolt, or just closes it if currently open.
+    /// </summary>
     private void UseChambered(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
     {
         if (component.BoltClosed == false)
+        {
+            ToggleBolt(uid, component, user);
             return;
+        }
 
         if (TryTakeChamberEntity(uid, out var chamberEnt))
         {
@@ -134,6 +149,9 @@ public abstract partial class SharedGunSystem
         });
     }
 
+    /// <summary>
+    /// Updates the bolt to its new state
+    /// </summary>
     public void SetBoltClosed(EntityUid uid, ChamberMagazineAmmoProviderComponent component, bool value, EntityUid? user = null, AppearanceComponent? appearance = null, ItemSlotsComponent? slots = null)
     {
         if (component.BoltClosed == null || value == component.BoltClosed)
@@ -234,6 +252,9 @@ public abstract partial class SharedGunSystem
         }
     }
 
+    /// <summary>
+    /// Sets the bolt's positional value to the other state
+    /// </summary>
     public void ToggleBolt(EntityUid uid, ChamberMagazineAmmoProviderComponent component, EntityUid? user = null)
     {
         if (component.BoltClosed == null)
