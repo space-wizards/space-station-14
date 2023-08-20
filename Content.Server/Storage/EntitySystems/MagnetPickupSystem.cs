@@ -5,6 +5,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems;
 
+/// <summary>
+/// <see cref="MagnetPickupComponent"/>
+/// </summary>
 public sealed class MagnetPickupSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
