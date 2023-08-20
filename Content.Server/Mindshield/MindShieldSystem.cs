@@ -43,6 +43,7 @@ public sealed class MindShieldSystem : EntitySystem
             _sharedStun.TryParalyze(uid, stunTime, true);
             _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
+            //Can't remove role because it says they don't have it but can't run without having it (and they do have it) so need help.
             //if (mind != null && _mindSystem.HasRole<RevolutionaryRole>(mind))
             //{
             //    var role = new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("Rev"));

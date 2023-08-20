@@ -214,6 +214,7 @@ namespace Content.Server.Flash
     }
     /// <summary>
     /// Called after a flash is used via melee on another person to check for rev conversion.
+    /// Raised on the user of the flash, the target hit by the flash, and the flash used.
     /// </summary>
     [ByRefEvent]
     public readonly struct AfterFlashedEvent

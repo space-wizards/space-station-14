@@ -38,6 +38,7 @@ using Content.Server.Antag;
 using Robust.Shared.Audio;
 using Content.Shared.Tag;
 using Robust.Server.GameObjects;
+using System.Xml.Linq;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -99,8 +100,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
     private void OnRoundEndText(RoundEndTextAppendEvent ev)
     {
-        var query = EntityQuery<RevolutionaryRuleComponent>();
-        foreach (var headrev in query)
+        var query = AllEntityQuery<RevolutionaryRuleComponent>();
+        while (query.MoveNext(out var headrev))
         {
             if (headrev.HeadsDied && !headrev.RevsLost)
             {
@@ -128,6 +129,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             break;
         }
     }
+
     private void OnStartAttempt(RoundStartAttemptEvent ev)
     {
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
@@ -140,6 +142,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             continue;
         }
     }
+
     private void OnPlayerJobAssigned(RulePlayerJobsAssignedEvent ev)
     {
         var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
@@ -149,6 +152,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 continue;
 
             InitialAssignCommandStaff();
+
+            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
+                continue;
+
             _antagSelectionSystem.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen, false);
             GiveHeadRev(chosen, comp.RevPrototypeId);
@@ -188,12 +195,14 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         }
         AssignCommandStaff(playerList);
     }
+
     /// <summary>
     /// Gives heads the command component so they are tracked for Revs.
     /// </summary>
     /// <param name="playerList"></param>
-    private void AssignCommandStaff(List<IPlayerSession> playerList)
+    private void AssignCommandStaff(List<IPlayerSession> playerList, bool latejoin = false)
     {
+        var currentCommandStaff = 0;
         var jobs = _prototypeManager.Index<DepartmentPrototype>("Command");
         foreach (var player in playerList)
         {
@@ -207,7 +216,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                     if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
                     {
                         EnsureComp<CommandStaffComponent>(mind.OwnedEntity.Value);
+                        currentCommandStaff++;
                     }
+                }
+            }
+        }
+        if (latejoin == false)
+        {
+            if (currentCommandStaff == 0)
+            {
+                var query = AllEntityQuery<RevolutionaryRuleComponent, GameRuleComponent>();
+                while (query.MoveNext(out var uid, out var comp, out var gameRule))
+                {
+                    GameTicker.EndGameRule(uid, gameRule);
                 }
             }
         }
@@ -274,11 +295,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
             CheckFinish();
     }
+
     private void OnHeadRevMobStateChanged(EntityUid uid, HeadRevolutionaryComponent comp, MobStateChangedEvent ev)
     {
         if (ev.NewMobState == MobState.Dead || ev.NewMobState == MobState.Invalid)
             CheckFinish();
     }
+
     /// <summary>
     /// Checks if all Head Revs are dead and if all command is dead to either end the round or remove all revs. Or both.
     /// </summary>
@@ -293,12 +316,12 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
-            var headRevs = EntityQuery<HeadRevolutionaryComponent, MobStateComponent>(true);
+            var headRevs = AllEntityQuery<HeadRevolutionaryComponent, MobStateComponent>();
             var inRound = 0;
             var dead = 0;
-            foreach (var rev in headRevs)
+            while (headRevs.MoveNext(out var id, out var comp, out var state))
             {
-                if (rev.Item2.CurrentState == MobState.Dead || rev.Item2.CurrentState == MobState.Invalid)
+                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
                 {
                     dead++;
                 }
@@ -325,10 +348,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
             else
             {
-                if (revs.RevsLost)
-                {
-                    revs.RevsLost = false;
-                }
+                revs.RevsLost = false;
             }
             // Checks if all heads are dead to finish the round.
             var heads = AllEntityQuery<CommandStaffComponent, MobStateComponent>();
@@ -350,7 +370,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
             //Also now should set all command and sec jobs to zero.
-            if (dead == inRound && !revs.HeadsDied && _timing.CurTime >= TimeSpan.FromMinutes(revs.GracePeriod))
+            if (dead == inRound && !revs.HeadsDied)
             {
                 revs.HeadsDied = true;
                 foreach (var station in _stationSystem.GetStations())
@@ -370,6 +390,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
         }
     }
+
     /// <summary>
     /// Gives late join heads the head component so they also need to be killed.
     /// </summary>
@@ -380,7 +401,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var list = new List<IPlayerSession>();
             list.Add(ev.Player);
-            AssignCommandStaff(list);
+            AssignCommandStaff(list, true);
         }
     }
 }

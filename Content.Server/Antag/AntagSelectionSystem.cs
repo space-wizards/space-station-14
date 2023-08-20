@@ -20,6 +20,7 @@ using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Content.Shared.Destructible;
+using Robust.Shared.Containers;
 
 namespace Content.Server.Antag;
 
@@ -30,6 +31,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly IPlayerManager _playerSystem = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
@@ -133,20 +135,40 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         }
     }
     /// <summary>
-    /// Will attempt to spawn an item inside of a persons bag. (Will be stuck to them if it can't, might just delete item if people care)
+    /// Will attempt to spawn an item inside of a persons bag and then pockets. 
     /// </summary>
     /// <param name="antag">The entity that you want to spawn an item on</param>
     /// <param name="item">The prototype ID that you want to spawn in the bag.</param>
 
     public void GiveAntagBagGear(EntityUid antag, string item)
     {
-        if (_inventory.TryGetSlotContainer(antag, "back", out var containerSlot, out var slotDefinition))
+        var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
+        if (_inventory.TryGetSlotContainer(antag, "back", out var backSlot, out var slotDefinition))
         {
-            var bag = containerSlot.ContainedEntity;
-            var itemToSpawn = Spawn(item, new EntityCoordinates(antag, Vector2.Zero));
-            if (bag != null && _storageSystem.CanInsert((EntityUid) bag, itemToSpawn, out var reason))
+            var bag = backSlot.ContainedEntity;
+            if (bag != null && HasComp<ContainerManagerComponent>(bag) && _storageSystem.CanInsert((EntityUid) bag, itemToSpawn, out var reason))
             {
                 _storageSystem.Insert((EntityUid) bag, itemToSpawn);
+            }
+            else if (_inventory.TryGetSlotContainer(antag, "pocket1", out var pocket1slot, out var slotdef))
+            {
+                if (pocket1slot.ContainedEntity == null)
+                {
+                    if (pocket1slot.CanInsert(itemToSpawn))
+                    {
+                        pocket1slot.Insert(itemToSpawn);
+                    }
+                }
+                else if (_inventory.TryGetSlotContainer(antag, "pocket2", out var pocket2slot, out var slotdefs))
+                {
+                    if (pocket2slot.ContainedEntity == null)
+                    {
+                        if (pocket2slot.CanInsert(itemToSpawn))
+                        {
+                            pocket2slot.Insert(itemToSpawn);
+                        }
+                    }
+                }
             }
         }
     }
