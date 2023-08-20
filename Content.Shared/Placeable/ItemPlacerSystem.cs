@@ -7,6 +7,7 @@ namespace Content.Shared.Placeable;
 /// <summary>
 /// Tracks placed entities
 /// Subscribe to <see cref="ItemPlacedEvent"/> or <see cref="ItemRemovedEvent"/> to do things when items or placed or removed.
+/// Requires a fixture to be able to detect collisions with items.
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
