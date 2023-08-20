@@ -11,7 +11,7 @@ namespace Content.Shared.Power.Generator;
 /// <seealso cref="SharedGeneratorSystem"/>
 /// <seealso cref="FuelGeneratorComponent"/>
 [RegisterComponent]
-public sealed class GeneratorExhaustGasComponent : Component
+public sealed partial class GeneratorExhaustGasComponent : Component
 {
     /// <summary>
     /// The type of gas that will be emitted by the generator.

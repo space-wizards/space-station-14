@@ -17,7 +17,7 @@ namespace Content.Server.Power.Generator;
 /// </para>
 /// </remarks>
 [RegisterComponent, Access(typeof(GeneratorSystem))]
-public sealed class SolidFuelGeneratorAdapterComponent : Component
+public sealed partial class SolidFuelGeneratorAdapterComponent : Component
 {
     /// <summary>
     /// The material to accept as fuel.

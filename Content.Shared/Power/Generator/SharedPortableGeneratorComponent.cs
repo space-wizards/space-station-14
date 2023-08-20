@@ -12,7 +12,7 @@ namespace Content.Shared.Power.Generator;
 /// <seealso cref="SharedPortableGeneratorSystem"/>
 [RegisterComponent]
 [Access(typeof(SharedPortableGeneratorSystem))]
-public sealed class PortableGeneratorComponent : Component
+public sealed partial class PortableGeneratorComponent : Component
 {
     /// <summary>
     /// Chance that this generator will start. If it fails, the user has to try again.
