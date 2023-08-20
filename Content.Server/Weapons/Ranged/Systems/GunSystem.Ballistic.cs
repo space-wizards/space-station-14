@@ -11,7 +11,7 @@ public sealed partial class GunSystem
         EntityUid? ent = null;
 
         //if the gun isn't cycled (so it being cycled right now) then don't bother ejecting ammo
-        if (!component.Cycled)
+        if (!component.IsCycled)
             return;
 
         // TODO: Combine with TakeAmmo

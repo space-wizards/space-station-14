@@ -55,7 +55,9 @@ public sealed partial class BallisticAmmoProviderComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cycled")]
     [AutoNetworkedField]
-    public bool Cycled = true;
+    public bool? Cycled = true;
+
+    public bool IsCycled => Cycled == true || Cycled == null;
 
     /// <summary>
     /// Automatically cycles the firearm after firing a round

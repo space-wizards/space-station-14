@@ -211,7 +211,7 @@ public abstract partial class SharedGunSystem
     private void OnBallisticTakeAmmo(EntityUid uid, BallisticAmmoProviderComponent component, TakeAmmoEvent args)
     {
         //give up loading if the gun isn't cycled
-        if (!component.Cycled)
+        if (!component.IsCycled)
             return;
 
         for (var i = 0; i < args.Shots; i++)
