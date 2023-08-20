@@ -310,7 +310,7 @@ namespace Content.Server.Storage.EntitySystems
                 }
 
                 var position = EntityCoordinates.FromMap(
-                    xform.ParentUid.IsValid() ? xform.ParentUid : uid,
+                    IsValid(xform.ParentUid) ? xform.ParentUid : uid,
                     new MapCoordinates(_transform.GetWorldPosition(targetXform, xformQuery), targetXform.MapID),
                     _transform
                 );

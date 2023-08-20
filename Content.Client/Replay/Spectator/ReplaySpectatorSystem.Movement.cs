@@ -78,7 +78,7 @@ public sealed partial class ReplaySpectatorSystem
         var xform = query.GetComponent(player);
         var pos = _transform.GetWorldPosition(xform);
 
-        if (!xform.ParentUid.IsValid())
+        if (!IsValid(xform.ParentUid))
         {
             // Were they sitting on a grid as it was getting deleted?
             SetSpectatorPosition(default);
@@ -91,7 +91,7 @@ public sealed partial class ReplaySpectatorSystem
         // TODO do this properly somehow.
         _transform.SetGridId(player, xform, null);
         _transform.AttachToGridOrMap(player);
-        if (xform.ParentUid.IsValid())
+        if (IsValid(xform.ParentUid))
             _transform.SetGridId(player, xform, Transform(xform.ParentUid).GridUid);
 
         var parentRotation = _mover.GetParentGridAngle(mover);

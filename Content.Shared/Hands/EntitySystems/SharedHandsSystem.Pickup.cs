@@ -108,7 +108,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (animate)
         {
             var xform = Transform(uid);
-            var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
+            var coordinateEntity = IsValid(xform.ParentUid) ? xform.ParentUid : uid;
             var itemXform = Transform(entity);
             var itemPos = itemXform.MapPosition;
 

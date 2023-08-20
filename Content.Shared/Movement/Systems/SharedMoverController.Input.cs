@@ -292,7 +292,7 @@ namespace Content.Shared.Movement.Systems
             // We'll relay a movement input to the parent.
             if (_container.IsEntityInContainer(entity) &&
                 TryComp<TransformComponent>(entity, out var xform) &&
-                xform.ParentUid.IsValid() &&
+                IsValid(xform.ParentUid) &&
                 _mobState.IsAlive(entity))
             {
                 var relayMoveEvent = new ContainerRelayMovementEntityEvent(entity);
@@ -306,7 +306,7 @@ namespace Content.Shared.Movement.Systems
         {
             var xform = Transform(uid);
 
-            if (!xform.ParentUid.IsValid())
+            if (!IsValid(xform.ParentUid))
                 return;
 
             component.RelativeEntity = xform.GridUid ?? xform.MapUid;

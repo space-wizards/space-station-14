@@ -123,7 +123,7 @@ public sealed class FollowerSystem : EntitySystem
     {
         // No recursion for you
         var targetXform = Transform(entity);
-        while (targetXform.ParentUid.IsValid())
+        while (targetIsValid(xform.ParentUid))
         {
             if (targetXform.ParentUid == follower)
                 return;
