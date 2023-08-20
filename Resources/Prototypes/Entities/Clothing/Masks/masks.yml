@@ -435,6 +435,21 @@
     - WhitelistChameleon
 
 - type: entity
+  parent: ClothingMaskBase
+  id: ClothingMaskBalaclava
+  name: balaclava
+  description: Slightly suspicious face mask intended for keeping your face warm in cold environments, but you're not using it for that, are you?
+  components:
+  - type: Sprite
+    sprite: Clothing/Mask/balaclava.rsi
+  - type: Clothing
+    sprite: Clothing/Mask/balaclava.rsi
+  - type: IdentityBlocker
+  - type: Tag
+    tags:
+    - WhitelistChameleon
+
+- type: entity
   parent: ClothingMaskClownBase
   id: ClothingMaskSexyClown
   name: sexy clown mask
