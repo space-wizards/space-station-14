@@ -50,7 +50,6 @@
     - type: Tag
       tags:
         - DoorBumpOpener
-    - type: InteractionOutline
     - type: Construction
       graph: BaseBigBox
       node: basebigbox
@@ -74,6 +73,7 @@
   id: BigBox
   parent: BaseBigBox
   components:
+  - type: InteractionOutline
   - type: Destructible
     thresholds:
     - trigger:

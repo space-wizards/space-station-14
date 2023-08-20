@@ -63,7 +63,8 @@ public sealed class StealthSystem : SharedStealthSystem
 
     private void OnShutdown(EntityUid uid, StealthComponent component, ComponentShutdown args)
     {
-        SetShader(uid, false, component);
+        if (!Terminating(uid))
+            SetShader(uid, false, component);
     }
 
     private void OnShaderRender(EntityUid uid, StealthComponent component, BeforePostShaderRenderEvent args)
