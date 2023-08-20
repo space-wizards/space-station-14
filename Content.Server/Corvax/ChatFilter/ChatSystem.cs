@@ -254,7 +254,7 @@ public sealed partial class ChatSystem
         {"пиндосы","нехорошие люди"},
     };
 
-    private string ReplaceWords(string message)
+    public string ReplaceWords(string message)
     {
         if (string.IsNullOrEmpty(message))
             return message;

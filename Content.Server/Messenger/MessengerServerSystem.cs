@@ -2,6 +2,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Server.Administration.Logs;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
@@ -10,6 +11,7 @@ using Content.Server.Power.Components;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.CartridgeLoader.Cartridges;
+using Content.Shared.Database;
 using Content.Shared.Messenger;
 using Content.Shared.PDA;
 using Robust.Shared.Containers;
@@ -25,6 +27,8 @@ public sealed class MessengerServerSystem : EntitySystem
     [Dependency] private readonly IEntityManager _entityManager = default!;
     [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+
+    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
 
     public enum NetworkCommand
     {
@@ -214,8 +218,14 @@ public sealed class MessengerServerSystem : EntitySystem
                 var accessedChats = component.GetPublicChats();
                 accessedChats.UnionWith(component.GetPrivateChats(contactKey));
 
+                var chat = component.GetChat(chatKey);
+
                 if (!accessedChats.Contains(chatKey))
+                {
+                    _adminLogger.Add(LogType.MessengerServer, LogImpact.Low,
+                        $"No access: sender entity: {args.Sender}, chat: {chat.Name}, chatID: {chat.Id}, msg: {messageText}");
                     break; // no access
+                }
 
                 // create new message
                 var message = new MessengerMessage(chatKey.Id, contactKey.Id, _gameTiming.CurTime, messageText);
@@ -224,7 +234,6 @@ public sealed class MessengerServerSystem : EntitySystem
                 message.Id = messageKey.Id;
 
                 // assign new message to chat index
-                var chat = component.GetChat(chatKey);
                 chat.LastMessageId = messageKey.Id;
                 chat.MessagesId.Add(messageKey.Id);
 
@@ -241,6 +250,8 @@ public sealed class MessengerServerSystem : EntitySystem
                     }
                 }
 
+                _adminLogger.Add(LogType.MessengerServer, LogImpact.Low,
+                    $"Send: sender entity: {args.Sender}, chat: {chat.Name}, chatID: {chat.Id}, msg: {messageText}");
                 break;
             }
         }
