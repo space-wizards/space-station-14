@@ -45,6 +45,19 @@
     Shock: 10
     Heat: 10
 
+# Only using StrongMetallic version but thought I might as well include the regular Metallic version for fire resistance
+- type: damageModifierSet
+  id: FireRestMetallic
+  parent: Metallic
+  flatReductions:
+    Heat: 1000
+
+- type: damageModifierSet
+  id: FireResStrongMetallic
+  parent: StrongMetallic
+  flatReductions:
+    Heat: 1000
+
 - type: damageModifierSet
   id: Inflatable
   coefficients:

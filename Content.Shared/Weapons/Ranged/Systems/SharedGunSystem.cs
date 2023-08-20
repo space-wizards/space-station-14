@@ -167,21 +167,21 @@ public abstract partial class SharedGunSystem : EntitySystem
         gunEntity = default;
         gunComp = null;
 
-        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
-            hands.ActiveHandEntity is { } held &&
-            TryComp(held, out GunComponent? gun))
-        {
-            gunEntity = held;
-            gunComp = gun;
-            return true;
-        }
-
         if (TryComp<MechComponent>(entity, out var mech) &&
             mech.CurrentSelectedEquipment.HasValue &&
             TryComp<GunComponent>(mech.CurrentSelectedEquipment.Value, out var mechGun))
         {
             gunEntity = mech.CurrentSelectedEquipment.Value;
             gunComp = mechGun;
+            return true;
+        }
+
+        if (EntityManager.TryGetComponent(entity, out HandsComponent? hands) &&
+            hands.ActiveHandEntity is { } held &&
+            TryComp(held, out GunComponent? gun))
+        {
+            gunEntity = held;
+            gunComp = gun;
             return true;
         }
 

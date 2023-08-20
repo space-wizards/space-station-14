@@ -4,13 +4,13 @@
   name: Bang bang
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi
+    sprite: Objects/Weapons/Guns/SMGs/c20r.rsi # TODO: put actual sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
     - state: mag-0
       map: ["enum.GunVisualLayers.Mag"]
-  - type: Gun
+  - type: Gun # TODO: make bullets go less... everywhere
     minAngle: 24
     maxAngle: 45
     angleIncrease: 4
@@ -82,7 +82,7 @@
   description: A weapon using light amplified by the stimulated emission of radiation.
   components:
   - type: Sprite
-    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi
+    sprite: Objects/Weapons/Guns/Battery/laser_retro.rsi # TODO: put actual sprite
     layers:
     - state: base
       map: ["enum.GunVisualLayers.Base"]
@@ -97,3 +97,34 @@
     steps: 5
     zeroVisible: true
   - type: Appearance
+
+- type: entity
+  id: BaseMechPulseGun
+  parent: BaseMechEquipment
+  components:
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/Battery/disabler.rsi # TODO: put actual sprite
+      layers:
+        - state: base
+          map: ["enum.GunVisualLayers.Base"]
+        - state: mag-unshaded-0
+          map: ["enum.GunVisualLayers.MagUnshaded"]
+          shader: unshaded
+    - type: Gun
+      fireRate: 1
+      selectedMode: FullAuto
+      availableModes:
+        - FullAuto
+      soundGunshot:
+        path: /Audio/Weapons/Guns/Gunshots/taser2.ogg # TODO: change to a more intimidating sound
+    - type: ProjectileBatteryAmmoProvider
+      proto: EnergyPulse
+      fireCost: 50 # I would think a laser pulse would be less energy expenssive than a full beam
+    - type: MagazineVisuals
+      magState: mag
+      steps: 5
+      zeroVisible: true
+    - type: Appearance
+    - type: Battery
+      maxCharge: 1000
+      startingCharge: 1000

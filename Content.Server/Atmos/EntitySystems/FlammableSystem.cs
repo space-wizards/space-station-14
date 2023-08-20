@@ -9,6 +9,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Damage;
 using Content.Shared.Database;
 using Content.Shared.Interaction;
+using Content.Shared.Mech.Components;
 using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Rejuvenate;
@@ -246,6 +247,11 @@ namespace Content.Server.Atmos.EntitySystems
             EntityUid? ignitionSourceUser = null)
         {
             if (!Resolve(uid, ref flammable))
+                return;
+
+            // I would rather there be a cancellable event for this but I really don't wanna fuck with this janky system more than I have too.
+            // FlammableSystem rework when?
+            if (TryComp<MechPilotComponent>(uid, out var mechPilot) && TryComp<MechComponent>(mechPilot.Mech, out var mech) && mech.Airtight)
                 return;
 
             if (flammable.AlwaysCombustible)

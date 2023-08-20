@@ -279,22 +279,23 @@
     baseState: marauder
     openState: marauder-open
     brokenState: marauder-broken
+    airtight: true
     maxIntegrity: 500
     mechToPilotDamageMultiplier: 0.35
-  - type: Reflect # Chance to reflect bullets/lasers
+  - type: Reflect # Smol chance to reflect bullets/lasers
   - type: MeleeWeapon
     hidden: true
-    attackRate: 0.55
+    attackRate: 0.70 #Big slow arms
     damage:
       types:
-        Blunt: 50 #thwack
+        Blunt: 50 #THWACK
         Structural: 55
   - type: Damageable
     damageContainer: Inorganic
-    damageModifierSet: StrongMetallic
+    damageModifierSet: FireResStrongMetallic # Yes this thing is also fire resistant
   - type: MovementSpeedModifier
     baseWalkSpeed: 1.0
-    baseSprintSpeed: 1.5
+    baseSprintSpeed: 1.0
 
 - type: entity
   parent: MechMarauder
