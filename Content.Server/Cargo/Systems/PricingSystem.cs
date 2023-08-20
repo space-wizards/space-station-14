@@ -112,8 +112,10 @@ public sealed class PricingSystem : EntitySystem
         {
             foreach (var reagent in solution.Contents)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var reagentProto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var reagentProto))
                     continue;
+
+                // TODO check ReagentData for price information?
                 price += (float) reagent.Quantity * reagentProto.PricePerUnit;
             }
         }

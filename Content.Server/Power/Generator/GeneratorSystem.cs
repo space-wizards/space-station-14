@@ -61,10 +61,8 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         var total = 0.0f;
         foreach (var reagent in solution.Contents)
         {
-            if (!component.ChemConversionFactors.ContainsKey(reagent.ReagentId))
-                continue;
-
-            total += reagent.Quantity.Float() * component.ChemConversionFactors[reagent.ReagentId];
+            if (component.ChemConversionFactors.TryGetValue(reagent.Prototype, out var factor))
+                total += reagent.Quantity.Float() * factor;
         }
 
         return total;

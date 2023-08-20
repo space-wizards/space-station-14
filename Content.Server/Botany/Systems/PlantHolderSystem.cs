@@ -824,10 +824,10 @@ namespace Content.Server.Botany.Systems
             if (solution.Volume > 0 && component.MutationLevel < 25)
             {
                 var amt = FixedPoint2.New(1);
-                foreach (var (reagentId, quantity) in _solutionSystem.RemoveEachReagent(uid, solution, amt))
+                foreach (var reagent in _solutionSystem.RemoveEachReagent(uid, solution, amt))
                 {
-                    var reagentProto = _prototype.Index<ReagentPrototype>(reagentId);
-                    reagentProto.ReactionPlant(uid, new Solution.ReagentQuantity(reagentId, quantity), solution);
+                    var reagentProto = _prototype.Index<ReagentPrototype>(reagent.Prototype);
+                    reagentProto.ReactionPlant(uid, reagent, solution);
                 }
             }
 

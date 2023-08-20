@@ -1,4 +1,5 @@
 using Content.Shared.Chemistry.Components;
+using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Kitchen.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
@@ -17,7 +18,7 @@ namespace Content.Client.Kitchen.UI
         private readonly Dictionary<int, EntityUid> _solids = new();
 
         [ViewVariables]
-        private readonly Dictionary<int, Solution.ReagentQuantity> _reagents = new();
+        private readonly Dictionary<int, ReagentQuantity> _reagents = new();
 
         public MicrowaveBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
