@@ -1,74 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: You can no longer unbuckle yourself while cuffed., type: Fix}
-  id: 4126
-  time: '2023-06-29T03:19:56.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fixed lubed item displacement after smart equip, type: Fix}
-  id: 4127
-  time: '2023-06-29T09:36:09.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: beach and basketball balls are now heavier and has specific sound on
-      collide, type: Tweak}
-  id: 4128
-  time: '2023-06-29T09:36:53.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Chemical crates can now be ordered from cargo., type: Add}
-  id: 4129
-  time: '2023-06-29T10:14:23.0000000+00:00'
-- author: benevo
-  changes:
-  - {message: Added Anchorable client side predictions, type: Add}
-  id: 4130
-  time: '2023-06-29T12:35:54.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix cave ores., type: Fix}
-  id: 4131
-  time: '2023-06-29T12:36:28.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Unlocking research on the RND console now requires science access.,
-    type: Add}
-  id: 4132
-  time: '2023-06-29T18:19:20.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: Added a new evacuation shuttle for Marathon, type: Add}
-  id: 4133
-  time: '2023-06-29T18:46:39.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Acoustic guitars are now smash-able. Keep in mind they're fragile.,
-    type: Add}
-  id: 4134
-  time: '2023-06-29T19:27:08.0000000+00:00'
-- author: brainfood1183
-  changes:
-  - {message: Hamsters can now wear some clothing options. Hamsters have been resprited
-      by RamZ., type: Add}
-  id: 4135
-  time: '2023-06-29T22:36:20.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: you can't eat crazy glue anymore but you can drink it, type: Tweak}
-  - {message: space glue tube can now also be used to glue items, type: Tweak}
-  - {message: items are glued for longer duration (10 seconds per unit), type: Tweak}
-  - {message: glue tubes can be used multiple times and can be refilled with space
-      glue, type: Tweak}
-  - {message: removed empty crazy glue, type: Remove}
-  id: 4136
-  time: '2023-06-30T19:07:45.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Increased the danger of most artifact effects and added some new ones.,
-    type: Tweak}
-  id: 4137
-  time: '2023-06-30T19:25:34.0000000+00:00'
 - author: Jesse
   changes:
   - {message: Changed Sprites for Computers in de/construction to not have the glass
@@ -3022,3 +2952,81 @@ Entries:
   - {message: Research point requirement has been reduced for a lot of techs., type: Tweak}
   id: 4625
   time: '2023-08-18T01:41:53.0000000+00:00'
+- author: DogZeroX
+  changes:
+  - {message: Added two reboot themes., type: Add}
+  id: 4626
+  time: '2023-08-18T13:58:44.0000000+00:00'
+- author: Partmedia
+  changes:
+  - {message: Added fun!, type: Add}
+  - {message: Removed fun!, type: Remove}
+  - {message: Changed fun!, type: Tweak}
+  - {message: Fixed fun!, type: Fix}
+  id: 4627
+  time: '2023-08-18T17:22:00.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: More shortcuts to guide entries on various items., type: Tweak}
+  id: 4628
+  time: '2023-08-18T23:53:45.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: The legendary John Barber came to Centcomm with a business proposal.
+      All human hairs have been cut with love!, type: Tweak}
+  id: 4629
+  time: '2023-08-19T22:37:56.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: 'The C.H.I.M.P. handcannon now has an internal power pack, much like
+      a laser, and different firing modes for the different particle types.', type: Tweak}
+  - {message: Each anomalous particle type now has a unique color, type: Tweak}
+  - {message: An upgrade kit for C.H.I.M.P. handcannons was added for purchase to
+      syndicate scientist uplinks for 4 TC, type: Add}
+  - {message: All C.H.I.M.P. particle cartridges have been removed from the game,
+    type: Remove}
+  - {message: The omega particle cartridge box has been removed from the syndicate
+      uplink, type: Remove}
+  id: 4630
+  time: '2023-08-19T22:54:53.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Solar Flares can randomly disable up to 2 radio channels, rather than
+      just service. Syndicate and CentCom channels remain unaffected.', type: Tweak}
+  id: 4631
+  time: '2023-08-19T23:39:36.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: 'Roundstart nukeops greeting sound is back, now they''ll remember their
+      main objective.', type: Fix}
+  id: 4632
+  time: '2023-08-20T01:07:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Containment fields now have synced animations, type: Fix}
+  id: 4633
+  time: '2023-08-20T05:33:49.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Fixed modern hair trongles, type: Fix}
+  id: 4634
+  time: '2023-08-20T08:54:44.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: Pressing the "rack gun" key on a gun with an open bolt will now close
+      the bolt., type: Tweak}
+  - {message: Ghosts and animals without hands can no longer manipulate gun bolts.,
+    type: Fix}
+  id: 4635
+  time: '2023-08-20T11:42:36.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Loneops have grown impatient and may attack a bit earlier in the shift.,
+    type: Tweak}
+  id: 4636
+  time: '2023-08-20T12:12:28.0000000+00:00'
+- author: kalane15
+  changes:
+  - {message: 'Crusher can be used with one hand, but with less damage.', type: Tweak}
+  id: 4637
+  time: '2023-08-20T12:13:45.0000000+00:00'

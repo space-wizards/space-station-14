@@ -21,6 +21,9 @@
     slots:
     - ears
     sprite: Clothing/Ears/Headsets/base.rsi
+  - type: GuideHelp
+    guides:
+    - Radio
 
 - type: entity
   parent: ClothingHeadset
