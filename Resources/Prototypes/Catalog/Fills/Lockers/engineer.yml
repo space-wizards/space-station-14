@@ -90,7 +90,6 @@
       - id: GasAnalyzer
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: MedkitBurnFilled
       - id: PlushieAtmosian
         prob: 0.05
 
@@ -109,7 +108,6 @@
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
-      - id: MedkitBurnFilled
       - id: PlushieAtmosian
         prob: 0.05
 
