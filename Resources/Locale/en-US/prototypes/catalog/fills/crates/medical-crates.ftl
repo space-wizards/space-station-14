@@ -13,25 +13,25 @@ ent-CrateMedicalScrubs = Medical scrubs crate
     .desc = Medical clothings.
 
 ent-CrateEmergencyBurnKit = Emergency burn kit
-    .desc = Crate filled with four burn treatment kits 
+    .desc = Crate filled with a burn treatment kits
 
 ent-CrateEmergencyToxinKit = Emergency toxin kit
-    .desc = Crate filled with four toxin treatment kits
+    .desc = Crate filled with a toxin treatment kits
 
 ent-CrateEmergencyO2Kit = Emergency O2 kit
-    .desc = Crate filled with four O2 treatment kits
+    .desc = Crate filled with a O2 treatment kits
 
 ent-CrateEmergencyBruteKit = Emergency brute kit
-    .desc = Crate filled with four brute treatment kits
+    .desc = Crate filled with a brute treatment kits
 
 ent-CrateEmergencyAdvancedKit = Emergency advanced kit
-    .desc = Crate filled with four advanced treatment kits
+    .desc = Crate filled with a advanced treatment kits
 
 ent-CrateEmergencyRadiationKit = Emergency radiation kit
-    .desc = Crate filled with four radiation treatment kits
+    .desc = Crate filled with a radiation treatment kits
 
 ent-CrateBodyBags = Body bags crate
     .desc = Contains ten body bags.
-    
+
 ent-CrateVirologyBiosuit = Virology bio suit crate
     .desc = Contains 2 biohazard suits to ensure that no disease will distract you from treating the crew. Requires Medical access to open.
