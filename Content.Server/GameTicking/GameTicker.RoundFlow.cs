@@ -478,7 +478,7 @@ namespace Content.Server.GameTicking
                 UpdateInfoText();
 
                 // Doesn't cancel previous vote because VoteManager is ultra giga cursed and I don't want to refucktor it.
-                if (AutoMapVote && _cfg.GetCVar(CCVars.VoteMapEnabled) && _cfg.GetCVar(CCVars.VoteEnabled))
+                if (AutoMapVote)
                     _voteManager.CreateStandardVote(null, StandardVoteType.Map);
 
                 ReqWindowAttentionAll();
