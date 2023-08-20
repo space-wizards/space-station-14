@@ -1,10 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Cargo technicians will be able to access salvage on the extended gamemode.,
-    type: Tweak}
-  id: 4139
-  time: '2023-06-30T19:31:21.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Changed the price of most objects found in the construction menu., type: Tweak}
@@ -3029,3 +3023,8 @@ Entries:
   - {message: Buff sniper firerate and nerf damage. Nerf stamina damage a lot., type: Tweak}
   id: 4638
   time: '2023-08-20T20:54:22.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Explosive banana peel can no longer spawn in a surplus crate., type: Tweak}
+  id: 4639
+  time: '2023-08-20T20:58:22.0000000+00:00'
