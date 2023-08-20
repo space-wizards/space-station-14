@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: Acoustic guitars are now smash-able. Keep in mind they're fragile.,
-    type: Add}
-  id: 4134
-  time: '2023-06-29T19:27:08.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Hamsters can now wear some clothing options. Hamsters have been resprited
@@ -3034,3 +3028,8 @@ Entries:
   - {message: Containment fields now have synced animations, type: Fix}
   id: 4633
   time: '2023-08-20T05:33:49.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Fixed modern hair trongles, type: Fix}
+  id: 4634
+  time: '2023-08-20T08:54:44.0000000+00:00'
