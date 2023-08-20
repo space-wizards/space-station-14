@@ -54,7 +54,6 @@ public sealed partial class GeneratorWindow : FancyWindow
         if (_component == null)
             return;
 
-        var oldState = _lastState;
         _lastState = state;
         if (!TargetPower.LineEditControl.HasKeyboardFocus())
             TargetPower.OverrideValue((int)(state.TargetPower / 1000.0f));
@@ -70,30 +69,34 @@ public sealed partial class GeneratorWindow : FancyWindow
         FuelFraction.Value = state.RemainingFuel - (int) state.RemainingFuel;
         FuelLeft.Text = ((int) MathF.Floor(state.RemainingFuel)).ToString();
 
-        if (TryGetStartProgress(out var progress))
+        var progress = 0f;
+
+        var unanchored = !_entityManager.GetComponent<TransformComponent>(_entity).Anchored;
+        var starting = !unanchored && TryGetStartProgress(out progress);
+        var on = !unanchored && !starting && state.On;
+        var off = !unanchored && !starting && !state.On;
+
+        LabelUnanchored.Visible = unanchored;
+        StartProgress.Visible = starting;
+        StopButton.Visible = on;
+        StartButton.Visible = off;
+
+        if (starting)
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-starting");
             StatusLabel.SetOnlyStyleClass("Caution");
-            StartProgress.Visible = true;
+
             StartProgress.Value = progress;
-            StartButton.Visible = false;
-            StopButton.Visible = false;
         }
-        else if (state.On)
+        else if (on)
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-running");
             StatusLabel.SetOnlyStyleClass("Good");
-            StartProgress.Visible = false;
-            StartButton.Visible = false;
-            StopButton.Visible = true;
         }
         else
         {
             StatusLabel.Text = _loc.GetString("portable-generator-ui-status-stopped");
             StatusLabel.SetOnlyStyleClass("Danger");
-            StartProgress.Visible = false;
-            StartButton.Visible = true;
-            StopButton.Visible = false;
         }
 
         var canSwitch = _entityManager.TryGetComponent(_entity, out PowerSwitchableGeneratorComponent? switchable);

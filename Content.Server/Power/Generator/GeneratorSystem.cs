@@ -35,6 +35,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorEjectFuelMessage>(OnEjectFuel);
+        SubscribeLocalEvent<FuelGeneratorComponent, AnchorStateChangedEvent>(OnAnchorStateChanged);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorGetFuelEvent>(SolidGetFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorUseFuel>(SolidUseFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorEmpty>(SolidEmpty);
@@ -42,6 +43,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorUseFuel>(ChemicalUseFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetCloggedEvent>(ChemicalGetClogged);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorEmpty>(ChemicalEmpty);
+    }
+
+    private void OnAnchorStateChanged(EntityUid uid, FuelGeneratorComponent component, ref AnchorStateChangedEvent args)
+    {
+        // Turn off generator if unanchored while running.
+
+        if (!component.On)
+            return;
+
+        SetFuelGeneratorOn(uid, false, component);
     }
 
     private void OnEjectFuel(EntityUid uid, FuelGeneratorComponent component, PortableGeneratorEjectFuelMessage args)
@@ -154,6 +165,12 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     {
         if (!Resolve(uid, ref generator))
             return;
+
+        if (on && !Transform(uid).Anchored)
+        {
+            // Generator must be anchored to start.
+            return;
+        }
 
         generator.On = on;
         UpdateState(uid, generator);

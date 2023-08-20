@@ -69,7 +69,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
     private void StartGenerator(EntityUid uid, PortableGeneratorComponent component, EntityUid user)
     {
         var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
-        if (fuelGenerator.On)
+        if (fuelGenerator.On || !Transform(uid).Anchored)
             return;
 
         _doAfter.TryStartDoAfter(new DoAfterArgs(user, component.StartTime, new GeneratorStartedEvent(), uid, uid)
@@ -86,7 +86,7 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
 
     private void GeneratorTugged(EntityUid uid, PortableGeneratorComponent component, GeneratorStartedEvent args)
     {
-        if (args.Cancelled)
+        if (args.Cancelled || !Transform(uid).Anchored)
             return;
 
         var fuelGenerator = Comp<FuelGeneratorComponent>(uid);
@@ -143,13 +143,22 @@ public sealed class PortableGeneratorSystem : SharedPortableGeneratorSystem
                 {
                     StartGenerator(uid, component, args.User);
                 },
-                Message = Loc.GetString(reliable
-                    ? "portable-generator-verb-start-msg-reliable"
-                    : "portable-generator-verb-start-msg-unreliable"),
-                Disabled = false,
+
                 Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/zap.svg.192dpi.png")),
                 Text = Loc.GetString("portable-generator-verb-start"),
             };
+
+            if (!Transform(uid).Anchored)
+            {
+                verb.Disabled = true;
+                verb.Message = Loc.GetString("portable-generator-verb-start-msg-unanchored");
+            }
+            else
+            {
+                verb.Message = Loc.GetString(reliable
+                    ? "portable-generator-verb-start-msg-reliable"
+                    : "portable-generator-verb-start-msg-unreliable");
+            }
 
             args.Verbs.Add(verb);
         }

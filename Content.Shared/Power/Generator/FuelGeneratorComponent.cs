@@ -5,6 +5,11 @@ namespace Content.Shared.Power.Generator;
 /// <summary>
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
+/// <remarks>
+/// <para>
+/// Generators must be anchored to be able to run.
+/// </para>
+/// </remarks>
 /// <seealso cref="SharedGeneratorSystem"/>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedGeneratorSystem))]
 public sealed partial class FuelGeneratorComponent : Component

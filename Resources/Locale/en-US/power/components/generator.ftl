@@ -3,6 +3,7 @@
 portable-generator-verb-start = Start generator
 portable-generator-verb-start-msg-unreliable = Start the generator. This may take a few tries.
 portable-generator-verb-start-msg-reliable = Start the generator.
+portable-generator-verb-start-msg-unanchored = The generator must be anchored first!
 portable-generator-verb-stop = Stop generator
 portable-generator-start-fail = You tug the cord, but it didn't start.
 portable-generator-start-success = You tug the cord, and it whirrs to life.
@@ -20,6 +21,7 @@ portable-generator-ui-fuel-left-label = Fuel left:
 portable-generator-ui-clogged = Contaminants detected in fuel tank!
 portable-generator-ui-eject = Eject
 portable-generator-ui-eta = (~{ $minutes } min)
+portable-generator-ui-unanchored = Unanchored
 
 power-switchable-generator-examine = The power output is set to { $output ->
 [HV] [color=orange]HV[/color]

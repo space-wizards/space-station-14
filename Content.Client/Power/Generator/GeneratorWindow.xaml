@@ -13,6 +13,7 @@
                     <Button Name="StartButton" Text="{Loc 'portable-generator-ui-start'}" />
                     <Button Name="StopButton" Text="{Loc 'portable-generator-ui-stop'}" />
                     <ProgressBar Name="StartProgress" MaxValue="1" />
+                    <Label Name="LabelUnanchored" Text="{Loc 'portable-generator-ui-unanchored'}" />
                 </Control>
                 <!-- Power -->
                 <Label Text="{Loc 'portable-generator-ui-target-power-label'}"/>
