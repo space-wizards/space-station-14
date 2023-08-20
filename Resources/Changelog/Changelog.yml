@@ -1,14 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: you can't eat crazy glue anymore but you can drink it, type: Tweak}
-  - {message: space glue tube can now also be used to glue items, type: Tweak}
-  - {message: items are glued for longer duration (10 seconds per unit), type: Tweak}
-  - {message: glue tubes can be used multiple times and can be refilled with space
-      glue, type: Tweak}
-  - {message: removed empty crazy glue, type: Remove}
-  id: 4136
-  time: '2023-06-30T19:07:45.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Increased the danger of most artifact effects and added some new ones.,
@@ -3035,3 +3025,9 @@ Entries:
     type: Fix}
   id: 4635
   time: '2023-08-20T11:42:36.0000000+00:00'
+- author: CrigCrag
+  changes:
+  - {message: Loneops have grown impatient and may attack a bit earlier in the shift.,
+    type: Tweak}
+  id: 4636
+  time: '2023-08-20T12:12:28.0000000+00:00'
