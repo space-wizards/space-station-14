@@ -13,22 +13,22 @@ ent-CrateMedicalScrubs = Medical scrubs crate
     .desc = Medical clothings.
 
 ent-CrateEmergencyBurnKit = Emergency burn kit
-    .desc = Crate filled with a burn treatment kits
+    .desc = Crate filled with a burn treatment kit
 
 ent-CrateEmergencyToxinKit = Emergency toxin kit
-    .desc = Crate filled with a toxin treatment kits
+    .desc = Crate filled with a toxin treatment kit
 
 ent-CrateEmergencyO2Kit = Emergency O2 kit
-    .desc = Crate filled with a O2 treatment kits
+    .desc = Crate filled with an O2 treatment kit
 
 ent-CrateEmergencyBruteKit = Emergency brute kit
-    .desc = Crate filled with a brute treatment kits
+    .desc = Crate filled with a brute treatment kit
 
 ent-CrateEmergencyAdvancedKit = Emergency advanced kit
-    .desc = Crate filled with a advanced treatment kits
+    .desc = Crate filled with an advanced treatment kit
 
 ent-CrateEmergencyRadiationKit = Emergency radiation kit
-    .desc = Crate filled with a radiation treatment kits
+    .desc = Crate filled with a radiation treatment kit
 
 ent-CrateBodyBags = Body bags crate
     .desc = Contains ten body bags.
