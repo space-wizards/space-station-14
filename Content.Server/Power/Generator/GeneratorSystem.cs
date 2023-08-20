@@ -35,12 +35,12 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorSetTargetPowerMessage>(OnTargetPowerSet);
         SubscribeLocalEvent<FuelGeneratorComponent, PortableGeneratorEjectFuelMessage>(OnEjectFuel);
-        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorGetFuel>(SolidGetFuel);
+        SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorGetFuelEvent>(SolidGetFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorUseFuel>(SolidUseFuel);
         SubscribeLocalEvent<SolidFuelGeneratorAdapterComponent, GeneratorEmpty>(SolidEmpty);
-        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetFuel>(ChemicalGetFuel);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetFuelEvent>(ChemicalGetFuel);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorUseFuel>(ChemicalUseFuel);
-        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetClogged>(ChemicalGetClogged);
+        SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorGetCloggedEvent>(ChemicalGetClogged);
         SubscribeLocalEvent<ChemicalFuelGeneratorAdapterComponent, GeneratorEmpty>(ChemicalEmpty);
     }
 
@@ -63,7 +63,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         _puddle.TrySpillAt(uid, spillSolution, out _);
     }
 
-    private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetClogged args)
+    private void ChemicalGetClogged(EntityUid uid, ChemicalFuelGeneratorAdapterComponent component, ref GeneratorGetCloggedEvent args)
     {
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
             return;
@@ -96,7 +96,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     private void ChemicalGetFuel(
         EntityUid uid,
         ChemicalFuelGeneratorAdapterComponent component,
-        ref GeneratorGetFuel args)
+        ref GeneratorGetFuelEvent args)
     {
         if (!_solutionContainer.TryGetSolution(uid, component.Solution, out var solution))
             return;
@@ -135,7 +135,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
     private void SolidGetFuel(
         EntityUid uid,
         SolidFuelGeneratorAdapterComponent component,
-        ref GeneratorGetFuel args)
+        ref GeneratorGetFuelEvent args)
     {
         var material = component.FractionalMaterial + _materialStorage.GetMaterialAmount(uid, component.FuelMaterial);
         args.Fuel = material * component.Multiplier;
@@ -196,16 +196,16 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 
     public float GetFuel(EntityUid generator)
     {
-        GeneratorGetFuel getFuel = default;
-        RaiseLocalEvent(generator, ref getFuel);
-        return getFuel.Fuel;
+        GeneratorGetFuelEvent getFuelEvent = default;
+        RaiseLocalEvent(generator, ref getFuelEvent);
+        return getFuelEvent.Fuel;
     }
 
     public bool GetIsClogged(EntityUid generator)
     {
-        GeneratorGetClogged getClogged = default;
-        RaiseLocalEvent(generator, ref getClogged);
-        return getClogged.Clogged;
+        GeneratorGetCloggedEvent getCloggedEvent = default;
+        RaiseLocalEvent(generator, ref getCloggedEvent);
+        return getCloggedEvent.Clogged;
     }
 
     public void EmptyGenerator(EntityUid generator)
@@ -226,20 +226,14 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
 /// Raised by <see cref="GeneratorSystem"/> to calculate the amount of remaining fuel in the generator.
 /// </summary>
 [ByRefEvent]
-public struct GeneratorGetFuel
-{
-    public float Fuel;
-}
+public record struct GeneratorGetFuelEvent(float Fuel);
 
 /// <summary>
 /// Raised by <see cref="GeneratorSystem"/> to check if a generator is "clogged".
 /// For example there's bad chemicals in the fuel tank that prevent starting it.
 /// </summary>
 [ByRefEvent]
-public struct GeneratorGetClogged
-{
-    public bool Clogged;
-}
+public record struct GeneratorGetCloggedEvent(bool Clogged);
 
 /// <summary>
 /// Raised by <see cref="GeneratorSystem"/> to draw fuel from its adapters.
