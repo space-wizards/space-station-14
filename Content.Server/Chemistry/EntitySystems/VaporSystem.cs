@@ -120,7 +120,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 foreach (var reagentQuantity in contents.Contents.ToArray())
                 {
                     if (reagentQuantity.Quantity == FixedPoint2.Zero) continue;
-                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Prototype);
+                    var reagent = _protoManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
 
                     var reaction =
                         reagent.ReactionTile(tile, (reagentQuantity.Quantity / vapor.TransferAmount) * 0.25f);
@@ -131,7 +131,7 @@ namespace Content.Server.Chemistry.EntitySystems
                         reaction = reagentQuantity.Quantity;
                     }
 
-                    _solutionContainerSystem.RemoveReagent(vapor.Owner, contents, reagentQuantity.Id, reaction);
+                    _solutionContainerSystem.RemoveReagent(vapor.Owner, contents, reagentQuantity.Reagent, reaction);
                 }
             }
 

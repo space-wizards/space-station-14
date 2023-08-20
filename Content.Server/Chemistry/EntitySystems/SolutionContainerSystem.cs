@@ -332,11 +332,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         if (temperature == null)
         {
-            targetSolution.AddReagent(reagentQuantity.Id, acceptedQuantity);
+            targetSolution.AddReagent(reagentQuantity.Reagent, acceptedQuantity);
         }
         else
         {
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Prototype);
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
             targetSolution.AddReagent(proto, acceptedQuantity, temperature.Value, _prototypeManager);
         }
 
@@ -653,7 +653,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             var removedQuantity = solution.RemoveReagent(reagent);
 
             if(removedQuantity > 0)
-                removedSolution.AddReagent(reagent.Id, removedQuantity);
+                removedSolution.AddReagent(reagent.Reagent, removedQuantity);
         }
 
         UpdateChemicals(uid, solution);
@@ -720,9 +720,9 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         {
             foreach (var reagent in solution.Contents)
             {
-                reagentCounts.TryGetValue(reagent.Id, out var existing);
+                reagentCounts.TryGetValue(reagent.Reagent, out var existing);
                 existing += reagent.Quantity;
-                reagentCounts[reagent.Id] = existing;
+                reagentCounts[reagent.Reagent] = existing;
             }
         }
 

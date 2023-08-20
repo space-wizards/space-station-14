@@ -311,7 +311,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
 
         foreach (var reagent in solution.Contents)
         {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
 
             if (reagentProto.Slippery)
             {
@@ -344,7 +344,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
         var maxViscosity = 0f;
         foreach (var reagent in solution.Contents)
         {
-            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+            var reagentProto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
             maxViscosity = Math.Max(maxViscosity, reagentProto.Viscosity);
         }
         if (maxViscosity > 0)
@@ -602,12 +602,12 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             for (var i = solution.Contents.Count - 1; i >= 0; i--)
             {
                 var reagent = solution.Contents[i];
-                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Prototype);
+                var proto = _prototypeManager.Index<ReagentPrototype>(reagent.Reagent.Prototype);
                 var removed = proto.ReactionTile(tileRef, reagent.Quantity);
                 if (removed <= FixedPoint2.Zero)
                     continue;
 
-                solution.RemoveReagent(reagent.Id, removed);
+                solution.RemoveReagent(reagent.Reagent, removed);
             }
         }
 

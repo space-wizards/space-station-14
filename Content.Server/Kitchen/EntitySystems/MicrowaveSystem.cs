@@ -371,10 +371,10 @@ namespace Content.Server.Kitchen.EntitySystems
                 {
                     foreach (var reagent in solution.Contents)
                     {
-                        if (reagentDict.ContainsKey(reagent.Prototype))
-                            reagentDict[reagent.Prototype] += reagent.Quantity;
+                        if (reagentDict.ContainsKey(reagent.Reagent.Prototype))
+                            reagentDict[reagent.Reagent.Prototype] += reagent.Quantity;
                         else
-                            reagentDict.Add(reagent.Prototype, reagent.Quantity);
+                            reagentDict.Add(reagent.Reagent.Prototype, reagent.Quantity);
                     }
                 }
             }

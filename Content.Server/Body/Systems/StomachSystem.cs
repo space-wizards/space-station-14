@@ -46,10 +46,10 @@ namespace Content.Server.Body.Systems
                     delta.Increment(stomach.UpdateInterval);
                     if (delta.Lifetime > stomach.DigestionDelay)
                     {
-                        if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Id, out var reagent))
+                        if (stomachSolution.TryGetReagent(delta.ReagentQuantity.Reagent, out var reagent))
                         {
                             if (reagent.Quantity > delta.ReagentQuantity.Quantity)
-                                reagent = new(reagent.Id, delta.ReagentQuantity.Quantity);
+                                reagent = new(reagent.Reagent, delta.ReagentQuantity.Quantity);
 
                             _solutionContainerSystem.RemoveReagent((stomach).Owner, stomachSolution, reagent);
                             transferSolution.AddReagent(reagent);

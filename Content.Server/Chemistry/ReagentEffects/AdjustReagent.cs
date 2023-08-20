@@ -49,13 +49,13 @@ namespace Content.Server.Chemistry.ReagentEffects
                     var prototypeMan = IoCManager.Resolve<IPrototypeManager>();
                     foreach (var quant in args.Source.Contents.ToArray())
                     {
-                        var proto = prototypeMan.Index<ReagentPrototype>(quant.Prototype);
+                        var proto = prototypeMan.Index<ReagentPrototype>(quant.Reagent.Prototype);
                         if (proto.Metabolisms != null && proto.Metabolisms.ContainsKey(Group))
                         {
                             if (amount < 0)
-                                solutionSys.RemoveReagent(args.SolutionEntity, args.Source, quant.Id, amount);
+                                solutionSys.RemoveReagent(args.SolutionEntity, args.Source, quant.Reagent, amount);
                             if (amount > 0)
-                                solutionSys.TryAddReagent(args.SolutionEntity, args.Source, quant.Id, amount, out _);
+                                solutionSys.TryAddReagent(args.SolutionEntity, args.Source, quant.Reagent, amount, out _);
                         }
                     }
                 }

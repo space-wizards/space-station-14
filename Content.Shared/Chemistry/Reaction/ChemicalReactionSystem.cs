@@ -294,7 +294,7 @@ namespace Content.Shared.Chemistry.Reaction
             SortedSet<ReactionPrototype> reactions = new();
             foreach (var reactant in solution.Contents)
             {
-                if (_reactions.TryGetValue(reactant.Prototype, out var reactantReactions))
+                if (_reactions.TryGetValue(reactant.Reagent.Prototype, out var reactantReactions))
                     reactions.UnionWith(reactantReactions);
             }
 

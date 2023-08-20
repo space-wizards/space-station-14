@@ -52,7 +52,7 @@ public sealed class RiggableSystem : EntitySystem
             return;
 
         var wasRigged = component.IsRigged;
-        var quantity = args.Solution.GetReagentQuantity(component.Reagent.Id);
+        var quantity = args.Solution.GetReagentQuantity(component.Reagent.Reagent);
         component.IsRigged = quantity >= component.Reagent.Quantity;
 
         if (component.IsRigged && !wasRigged)

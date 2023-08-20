@@ -100,7 +100,7 @@ namespace Content.Shared.Chemistry.Components
             foreach (var reagent in Contents)
             {
                 _heatCapacity += (float) reagent.Quantity *
-                                 protoMan.Index<ReagentPrototype>(reagent.Prototype).SpecificHeat;
+                                 protoMan.Index<ReagentPrototype>(reagent.Reagent.Prototype).SpecificHeat;
             }
         }
 
@@ -182,7 +182,7 @@ namespace Content.Shared.Chemistry.Components
             DebugTools.Assert(!Contents.Any(x => x.Quantity <= FixedPoint2.Zero));
 
             // No duplicate reagents iDs
-            DebugTools.Assert(Contents.Select(x => x.Id).ToHashSet().Count == Contents.Count);
+            DebugTools.Assert(Contents.Select(x => x.Reagent).ToHashSet().Count == Contents.Count);
 
             // If it isn't flagged as dirty, check heat capacity is correct.
             if (!_heatCapacityDirty)
@@ -211,7 +211,7 @@ namespace Content.Shared.Chemistry.Components
         {
             foreach (var reagent in Contents)
             {
-                if (reagent.Prototype == prototype)
+                if (reagent.Reagent.Prototype == prototype)
                     return true;
             }
 
@@ -222,7 +222,7 @@ namespace Content.Shared.Chemistry.Components
         {
             foreach (var reagent in Contents)
             {
-                if (reagent.Id == id)
+                if (reagent.Reagent == id)
                     return true;
             }
 
@@ -236,7 +236,7 @@ namespace Content.Shared.Chemistry.Components
         {
             foreach (var reagent in Contents)
             {
-                if (reagent.Id != id)
+                if (reagent.Reagent != id)
                     continue;
 
                 DebugTools.Assert(reagent.Quantity > FixedPoint2.Zero);
@@ -294,7 +294,7 @@ namespace Content.Shared.Chemistry.Components
             var total = FixedPoint2.Zero;
             foreach (var reagent in Contents)
             {
-                if (reagent.Prototype == prototype)
+                if (reagent.Reagent.Prototype == prototype)
                     total += reagent.Quantity;
             }
 
@@ -316,7 +316,7 @@ namespace Content.Shared.Chemistry.Components
                 }
             }
 
-            return max.Id;
+            return max.Reagent;
         }
 
         /// <summary>
@@ -345,7 +345,7 @@ namespace Content.Shared.Chemistry.Components
             for (var i = 0; i < Contents.Count; i++)
             {
                 var reagent = Contents[i];
-                if (reagent.Id != id)
+                if (reagent.Reagent != id)
                     continue;
 
                 Contents[i] = new ReagentQuantity(id, reagent.Quantity + quantity);
@@ -369,7 +369,7 @@ namespace Content.Shared.Chemistry.Components
         }
 
         public void AddReagent(ReagentQuantity reagentQuantity)
-            => AddReagent(reagentQuantity.Id, reagentQuantity.Quantity);
+            => AddReagent(reagentQuantity.Reagent, reagentQuantity.Quantity);
 
         /// <summary>
         ///     Adds a given quantity of a reagent directly into the solution.
@@ -408,7 +408,7 @@ namespace Content.Shared.Chemistry.Components
             for (int i = 0; i < Contents.Count; i++)
             {
                 var old = Contents[i];
-                Contents[i] = new ReagentQuantity(old.Id, old.Quantity * scale);
+                Contents[i] = new ReagentQuantity(old.Reagent, old.Quantity * scale);
             }
             ValidateSolution();
         }
@@ -437,7 +437,7 @@ namespace Content.Shared.Chemistry.Components
                     Contents.RemoveSwap(i);
                 else
                 {
-                    Contents[i] = new ReagentQuantity(old.Id, newQuantity);
+                    Contents[i] = new ReagentQuantity(old.Reagent, newQuantity);
                     Volume += newQuantity;
                 }
             }
@@ -460,7 +460,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var reagent = Contents[i];
 
-                if(reagent.Id != toRemove.Id)
+                if(reagent.Reagent != toRemove.Reagent)
                     continue;
 
                 var curQuantity = reagent.Quantity;
@@ -475,7 +475,7 @@ namespace Content.Shared.Chemistry.Components
                     return curQuantity;
                 }
 
-                Contents[i] = new ReagentQuantity(reagent.Id, newQuantity);
+                Contents[i] = new ReagentQuantity(reagent.Reagent, newQuantity);
                 Volume -= toRemove.Quantity;
                 ValidateSolution();
                 return toRemove.Quantity;
@@ -526,7 +526,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 foreach (var reagent in Contents)
                 {
-                    if (reagent.Prototype != id)
+                    if (reagent.Reagent.Prototype != id)
                         continue;
 
                     excluded.Add(reagent);
@@ -586,11 +586,11 @@ namespace Content.Shared.Chemistry.Components
                 DebugTools.Assert(newQuantity >= 0);
 
                 if (newQuantity > FixedPoint2.Zero)
-                    Contents[i] = new ReagentQuantity(reagent.Id, newQuantity);
+                    Contents[i] = new ReagentQuantity(reagent.Reagent, newQuantity);
                 else
                     Contents.RemoveSwap(i);
 
-                newSolution.Contents.Add(new ReagentQuantity(reagent.Id, splitQuantity));
+                newSolution.Contents.Add(new ReagentQuantity(reagent.Reagent, splitQuantity));
                 Volume -= splitQuantity;
                 remaining -= split;
                 effVol -= reagent.Quantity.Value;
@@ -646,7 +646,7 @@ namespace Content.Shared.Chemistry.Components
                 var newQuantity = reagent.Quantity - splitQuantity;
 
                 if (newQuantity > FixedPoint2.Zero)
-                    Contents[i] = new ReagentQuantity(reagent.Id, newQuantity);
+                    Contents[i] = new ReagentQuantity(reagent.Reagent, newQuantity);
                 else
                     Contents.RemoveSwap(i);
 
@@ -691,17 +691,17 @@ namespace Content.Shared.Chemistry.Components
                 for (var j = 0; j < Contents.Count; j++)
                 {
                     var reagent = Contents[j];
-                    if (reagent.Id == otherReagent.Id)
+                    if (reagent.Reagent == otherReagent.Reagent)
                     {
                         found = true;
-                        Contents[j] = new ReagentQuantity(reagent.Id, reagent.Quantity + otherReagent.Quantity);
+                        Contents[j] = new ReagentQuantity(reagent.Reagent, reagent.Quantity + otherReagent.Quantity);
                         break;
                     }
                 }
 
                 if (!found)
                 {
-                    Contents.Add(new ReagentQuantity(otherReagent.Id, otherReagent.Quantity));
+                    Contents.Add(new ReagentQuantity(otherReagent.Reagent, otherReagent.Quantity));
                 }
             }
 
@@ -729,12 +729,12 @@ namespace Content.Shared.Chemistry.Components
 
             foreach (var reagent in Contents)
             {
-                if (without.Contains(reagent.Prototype))
+                if (without.Contains(reagent.Reagent.Prototype))
                     continue;
 
                 runningTotalQuantity += reagent.Quantity;
 
-                if (!protoMan.TryIndex(reagent.Prototype, out ReagentPrototype? proto))
+                if (!protoMan.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? proto))
                 {
                     continue;
                 }
@@ -792,7 +792,7 @@ namespace Content.Shared.Chemistry.Components
             var dict = new Dictionary<ReagentPrototype, FixedPoint2>(Contents.Count);
             foreach (var reagent in Contents)
             {
-                var proto = protoMan.Index<ReagentPrototype>(reagent.Prototype);
+                var proto = protoMan.Index<ReagentPrototype>(reagent.Reagent.Prototype);
                 dict[proto] = reagent.Quantity + dict.GetValueOrDefault(proto);
             }
             return dict;

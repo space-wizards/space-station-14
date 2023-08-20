@@ -183,10 +183,10 @@ namespace Content.Client.Administration.UI.ManageSolutions
             var spin = new FloatSpinBox(1, 2);
 
             spin.Value = reagentQuantity.Quantity.Float();
-            spin.OnValueChanged += (args) => SetReagent(args, reagentQuantity.Prototype);
+            spin.OnValueChanged += (args) => SetReagent(args, reagentQuantity.Reagent.Prototype);
             spin.HorizontalExpand = true;
 
-            box.AddChild(new Label() { Text = reagentQuantity.Prototype , HorizontalExpand = true});
+            box.AddChild(new Label() { Text = reagentQuantity.Reagent.Prototype , HorizontalExpand = true});
             box.AddChild(spin);
 
             ReagentList.AddChild(box);

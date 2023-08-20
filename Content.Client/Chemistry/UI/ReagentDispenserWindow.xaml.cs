@@ -150,7 +150,7 @@ namespace Content.Client.Chemistry.UI
             foreach (var reagent in state.OutputContainer.Reagents!)
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
-                var localizedName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? p)
+                var localizedName = _prototypeManager.TryIndex(reagent.Reagent.Prototype, out ReagentPrototype? p)
                     ? p.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
@@ -162,7 +162,7 @@ namespace Content.Client.Chemistry.UI
                 };
 
                 // Check if the reagent is being moused over. If so, color it green.
-                if (reagent.Id == highlightedReagentId) {
+                if (reagent.Reagent == highlightedReagentId) {
                     nameLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     quantityLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 }

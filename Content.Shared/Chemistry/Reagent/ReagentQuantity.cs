@@ -15,18 +15,16 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     [IncludeDataField]
     [ViewVariables]
-    public readonly Reagent Id;
-
-    public string Prototype => Id.Prototype;
+    public readonly Reagent Reagent;
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
         : this(new Reagent(reagentId, data), quantity)
     {
     }
 
-    public ReagentQuantity(Reagent id, FixedPoint2 quantity)
+    public ReagentQuantity(Reagent reagent, FixedPoint2 quantity)
     {
-        Id = id;
+        Reagent = reagent;
         Quantity = quantity;
     }
 
@@ -36,25 +34,25 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public override string ToString()
     {
-        return Id.ToString(Quantity);
+        return Reagent.ToString(Quantity);
     }
 
     public void Deconstruct(out string prototype, out FixedPoint2 quantity, out ReagentData? data)
     {
-        prototype = Id.Prototype;
+        prototype = Reagent.Prototype;
         quantity = Quantity;
-        data = Id.Data;
+        data = Reagent.Data;
     }
 
     public void Deconstruct(out Reagent id, out FixedPoint2 quantity)
     {
-        id = Id;
+        id = Reagent;
         quantity = Quantity;
     }
 
     public bool Equals(ReagentQuantity other)
     {
-        return Quantity != other.Quantity && Id.Equals(other.Id);
+        return Quantity != other.Quantity && Reagent.Equals(other.Reagent);
     }
 
     public override bool Equals(object? obj)
@@ -64,7 +62,7 @@ public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
 
     public override int GetHashCode()
     {
-        return HashCode.Combine(Id.GetHashCode(), Quantity);
+        return HashCode.Combine(Reagent.GetHashCode(), Quantity);
     }
 
     public static bool operator ==(ReagentQuantity left, ReagentQuantity right)

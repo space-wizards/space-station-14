@@ -80,7 +80,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 // just re-use the existing RiggableSystem.
                 foreach (var name in solution.Contents)
                 {
-                    if (name.Prototype != comp.SolutionNeeded)
+                    if (name.Reagent.Prototype != comp.SolutionNeeded)
                     {
                         exploded = true;
                         _explosionSystem.QueueExplosion(uid, "Default", comp.ExplosionIntensity, 0.5f, 3, canCreateVacuum: false);

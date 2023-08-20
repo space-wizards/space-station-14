@@ -826,7 +826,7 @@ namespace Content.Server.Botany.Systems
                 var amt = FixedPoint2.New(1);
                 foreach (var reagent in _solutionSystem.RemoveEachReagent(uid, solution, amt))
                 {
-                    var reagentProto = _prototype.Index<ReagentPrototype>(reagent.Prototype);
+                    var reagentProto = _prototype.Index<ReagentPrototype>(reagent.Reagent.Prototype);
                     reagentProto.ReactionPlant(uid, reagent, solution);
                 }
             }

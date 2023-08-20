@@ -130,7 +130,7 @@ namespace Content.Server.Body.Systems
             int reagents = 0;
             foreach (var reagent in list)
             {
-                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Prototype, out var proto))
+                if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.Reagent.Prototype, out var proto))
                     continue;
 
                 var mostToRemove = FixedPoint2.Zero;
@@ -138,7 +138,7 @@ namespace Content.Server.Body.Systems
                 {
                     if (meta.RemoveEmpty)
                     {
-                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent.Id,
+                        _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent.Reagent,
                             FixedPoint2.New(1));
                     }
 
@@ -204,7 +204,7 @@ namespace Content.Server.Body.Systems
                 // remove a certain amount of reagent
                 if (mostToRemove > FixedPoint2.Zero)
                 {
-                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent.Id, mostToRemove);
+                    _solutionContainerSystem.RemoveReagent(solutionEntityUid.Value, solution, reagent.Reagent, mostToRemove);
                 }
             }
         }

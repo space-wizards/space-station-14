@@ -28,7 +28,7 @@ namespace Content.Shared.Chemistry
         public void ReactionEntity(EntityUid uid, ReactionMethod method, ReagentQuantity reagentQuantity, Solution? source)
         {
             // We throw if the reagent specified doesn't exist.
-            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Prototype);
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagentQuantity.Reagent.Prototype);
             ReactionEntity(uid, method, proto, reagentQuantity, source);
         }
 
@@ -40,7 +40,7 @@ namespace Content.Shared.Chemistry
 
             // If we have a source solution, use the reagent quantity we have left. Otherwise, use the reaction volume specified.
             var args = new ReagentEffectArgs(uid, null, source, proto,
-                source?.GetReagentQuantity(reagentQuantity.Id) ?? reagentQuantity.Quantity, EntityManager, method, 1f);
+                source?.GetReagentQuantity(reagentQuantity.Reagent) ?? reagentQuantity.Quantity, EntityManager, method, 1f);
 
             // First, check if the reagent wants to apply any effects.
             if (proto.ReactiveEffects != null && reactive.ReactiveGroups != null)

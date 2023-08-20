@@ -61,7 +61,7 @@ public sealed class GeneratorSystem : SharedGeneratorSystem
         var total = 0.0f;
         foreach (var reagent in solution.Contents)
         {
-            if (component.ChemConversionFactors.TryGetValue(reagent.Prototype, out var factor))
+            if (component.ChemConversionFactors.TryGetValue(reagent.Reagent.Prototype, out var factor))
                 total += reagent.Quantity.Float() * factor;
         }
 
