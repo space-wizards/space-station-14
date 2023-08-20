@@ -33,29 +33,43 @@ namespace Content.Client.Overlays
         {
             var handle = args.WorldHandle;
             var rotation = args.Viewport.Eye?.Rotation ?? Angle.Zero;
-            var spriteQuery = _entManager.GetEntityQuery<SpriteComponent>();
             var xformQuery = _entManager.GetEntityQuery<TransformComponent>();
 
             const float scale = 1f;
             var scaleMatrix = Matrix3.CreateScale(new Vector2(scale, scale));
             var rotationMatrix = Matrix3.CreateRotation(-rotation);
 
-            foreach (var (thresholds, mob, dmg) in _entManager.EntityQuery<MobThresholdsComponent, MobStateComponent, DamageableComponent>(includePaused: true))
+            var query = _entManager.AllEntityQueryEnumerator<MobThresholdsComponent, MobStateComponent, DamageableComponent, SpriteComponent>();
+            while (query.MoveNext(out var uid,
+                out var mobThresholdsComponent,
+                out var mobStateComponent,
+                out var damageableComponent,
+                out var spriteComponent))
             {
-                if (_entManager.TryGetComponent<MetaDataComponent>(mob.Owner, out var metaDataComponent) &&
+                if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
                     metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
                 {
                     continue;
                 }
 
-                if (!xformQuery.TryGetComponent(mob.Owner, out var xform) ||
+                if (!xformQuery.TryGetComponent(uid, out var xform) ||
                     xform.MapID != args.MapId)
                 {
                     continue;
                 }
 
-                if (dmg.DamageContainerID == null || !DamageContainers.Contains(dmg.DamageContainerID))
+                if (damageableComponent.DamageContainerID == null || !DamageContainers.Contains(damageableComponent.DamageContainerID))
+                {
                     continue;
+                }
+
+                var bounds = spriteComponent.Bounds;
+                var worldPos = _transform.GetWorldPosition(xform, xformQuery);
+
+                if (!bounds.Translated(worldPos).Intersects(args.WorldAABB))
+                {
+                    continue;
+                }
 
                 var worldPosition = _transform.GetWorldPosition(xform);
                 var worldMatrix = Matrix3.CreateTranslation(worldPosition);
@@ -65,24 +79,13 @@ namespace Content.Client.Overlays
 
                 handle.SetTransform(matty);
 
-                float yOffset;
-                float widthOfMob;
-                if (spriteQuery.TryGetComponent(mob.Owner, out var sprite))
-                {
-                    yOffset = sprite.Bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
-                    widthOfMob = sprite.Bounds.Width * EyeManager.PixelsPerMeter;
-
-                }
-                else
-                {
-                    yOffset = -3f * EyeManager.PixelsPerMeter;
-                    widthOfMob = EyeManager.PixelsPerMeter;
-                }
+                var yOffset = spriteComponent.Bounds.Height * EyeManager.PixelsPerMeter / 2 - 3f;
+                var widthOfMob = spriteComponent.Bounds.Width * EyeManager.PixelsPerMeter;
 
                 var position = new Vector2(-widthOfMob / EyeManager.PixelsPerMeter / 2, yOffset / EyeManager.PixelsPerMeter);
 
                 // we are all progressing towards death every day
-                (float ratio, bool inCrit) deathProgress = CalcProgress(mob.Owner, mob, dmg, thresholds);
+                (float ratio, bool inCrit) deathProgress = CalcProgress(uid, mobStateComponent, damageableComponent, mobThresholdsComponent);
 
                 var color = GetProgressColor(deathProgress.ratio, deathProgress.inCrit);
 
@@ -144,16 +147,23 @@ namespace Content.Client.Overlays
         {
             if (progress >= 1.0f)
             {
-                return new Color(0f, 1f, 0f);
+                return SeaBlue;
             }
-            // lerp
+            
             if (!crit)
             {
-                var hue = 5f / 18f * progress;
-                return FromHsv((hue, 1f, 0.75f, 1f));
+                switch (progress)
+                {
+                    case > 0.75F:
+                        return SeaBlue;
+                    case > 0.50F:
+                        return Violet;
+                    case > 0.25F:
+                        return Ruber;
+                }
             }
 
-            return Red;
+            return VividGamboge;
         }
     }
 }
