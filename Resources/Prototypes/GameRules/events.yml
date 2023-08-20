@@ -194,8 +194,8 @@
   - type: RandomSentienceRule
 
 - type: entity
-  id: SolarFlare
   parent: BaseGameRule
+  id: SolarFlare
   noSpawn: true
   components:
   - type: StationEvent
@@ -210,7 +210,15 @@
     onlyJamHeadsets: true
     affectedChannels:
     - Common
+    extraChannels:
+    - Command
+    - Engineering
+    - Medical
+    - Science
+    - Security
     - Service
+    - Supply
+    extraCount: 2
     lightBreakChancePerSecond: 0.0003
     doorToggleChancePerSecond: 0.001
 
