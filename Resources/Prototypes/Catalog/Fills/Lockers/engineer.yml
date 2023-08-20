@@ -86,10 +86,13 @@
       - id: NitrogenTankFilled
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
+      - id: ClothingHandsGlovesColorYellow
       - id: GasAnalyzer
-      - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
+      - id: MedkitBurnFilled
+      - id: PlushieAtmosian
+        prob: 0.05
 
 - type: entity
   id: LockerAtmosphericsFilled
@@ -101,10 +104,14 @@
       - id: ClothingMaskGasAtmos
       - id: ClothingOuterSuitAtmosFire
       - id: ClothingHeadHelmetAtmosFire
+      - id: ClothingHandsGlovesColorYellow
       - id: GasAnalyzer
       - id: MedkitOxygenFilled
       - id: HolofanProjector
       - id: DoorRemoteFirefight
+      - id: MedkitBurnFilled
+      - id: PlushieAtmosian
+        prob: 0.05
 
 - type: entity
   id: LockerEngineerFilledHardsuit
@@ -119,6 +126,16 @@
       - id: OxygenTankFilled
       - id: NitrogenTankFilled
       - id: ClothingShoesBootsMag
+      - id: ToolboxMechanicalFilled
+        prob: 0.5
+      - id: ToolboxElectricalFilled
+        prob: 0.5
+      - id: FoodSnackChips
+        prob: 0.3
+      - id: DrinkBottleBeer
+        prob: 0.3
+      - id: PlushieSpaceLizard
+        prob: 0.05
 
 - type: entity
   id: LockerEngineerFilled
@@ -130,6 +147,16 @@
       - id: ClothingHandsGlovesColorYellow
       - id: ClothingMaskGas
       - id: trayScanner
+      - id: ToolboxMechanicalFilled
+        prob: 0.5
+      - id: ToolboxElectricalFilled
+        prob: 0.5
+      - id: FoodSnackChips
+        prob: 0.3
+      - id: DrinkBottleBeer
+        prob: 0.3
+      - id: PlushieSpaceLizard
+        prob: 0.05
 
 - type: entity
   id: ClosetRadiationSuitFilled
