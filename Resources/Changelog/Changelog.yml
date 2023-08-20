@@ -1,9 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: Added a new evacuation shuttle for Marathon, type: Add}
-  id: 4133
-  time: '2023-06-29T18:46:39.0000000+00:00'
 - author: Lank
   changes:
   - {message: Acoustic guitars are now smash-able. Keep in mind they're fragile.,
@@ -3034,3 +3029,8 @@ Entries:
       main objective.', type: Fix}
   id: 4632
   time: '2023-08-20T01:07:09.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Containment fields now have synced animations, type: Fix}
+  id: 4633
+  time: '2023-08-20T05:33:49.0000000+00:00'
