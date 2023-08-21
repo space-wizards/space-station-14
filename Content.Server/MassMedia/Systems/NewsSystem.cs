@@ -64,7 +64,7 @@ public sealed class NewsSystem : EntitySystem
         _ui.TryToggleUi(deviceEnt, NewsWriteUiKey.Key, actor.PlayerSession);
     }
 
-    public void OnReadUiReady(EntityUid uid, NewsReadCartridgeComponent component, CartridgeUiReadyEvent args)
+    public void OnReadUiReady(EntityUid uid, NewsReadCartridgeComponent component,CartridgeUiReadyEvent args)
     {
         UpdateReadUi(uid, args.Loader, component);
     }
