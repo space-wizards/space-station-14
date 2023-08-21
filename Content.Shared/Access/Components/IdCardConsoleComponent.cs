@@ -67,6 +67,7 @@ public sealed class IdCardConsoleComponent : Component
         "Medical",
         "Quartermaster",
         "Research",
+        "Robotics",
         "ResearchDirector",
         "Salvage",
         "Security",

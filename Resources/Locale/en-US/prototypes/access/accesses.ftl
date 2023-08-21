@@ -14,6 +14,7 @@ id-card-access-level-atmospherics = Atmospherics
 
 id-card-access-level-research-director = Research Director
 id-card-access-level-research = Research
+id-card-access-level-robotics = Robotics
 
 id-card-access-level-chief-medical-officer = Chief Medical Officer
 id-card-access-level-medical = Medical

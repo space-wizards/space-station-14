@@ -6,8 +6,13 @@
   id: Research
   name: id-card-access-level-research
 
+- type: accessLevel
+  id: Robotics
+  name: id-card-access-level-robotics
+
 - type: accessGroup
   id: Research
   tags:
   - ResearchDirector
   - Research
+  - Robotics
