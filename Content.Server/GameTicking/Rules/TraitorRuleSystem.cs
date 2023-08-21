@@ -203,7 +203,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return results;
     }
 
-    public bool MakeTraitor(IPlayerSession traitor)
+    public bool MakeTraitor(IPlayerSession traitor, bool giveUplink = true, bool giveObjectives = true)
     {
         var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
         if (traitorRule == null)
@@ -234,22 +234,27 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         // creadth: we need to create uplink for the antag.
         // PDA should be in place already
-        var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
-        if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
-            return false;
+        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
+        Note[]? code = null;
+        if (giveUplink)
+        {
+            var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
+            if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
+                return false;
 
-        // Add the ringtone uplink and get its code for greeting
-        var code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            // Add the ringtone uplink and get its code for greeting
+            code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
+            briefing = string.Format("{0}\n{1}", briefing,
+                Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
+        }
 
         // Prepare antagonist role
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeId);
         var traitorRole = new TraitorRole(mind, antagPrototype);
 
         // Give traitors their codewords and uplink code to keep in their character info menu
-        traitorRole.Mind.Briefing = string.Format(
-            "{0}\n{1}",
-            Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords))),
-            Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
+        // Non-human traitors with no pda
+        traitorRole.Mind.Briefing = briefing;
 
         // Assign traitor roles
         _mindSystem.AddRole(mind, traitorRole);
@@ -267,17 +272,21 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         _npcFaction.AddFaction(entity, "Syndicate");
 
         // Give traitors their objectives
-        var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
-        var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
-        var difficulty = 0f;
-        for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
+        if (giveObjectives)
         {
-            var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
+            var maxDifficulty = _cfg.GetCVar(CCVars.TraitorMaxDifficulty);
+            var maxPicks = _cfg.GetCVar(CCVars.TraitorMaxPicks);
+            var difficulty = 0f;
+            for (var pick = 0; pick < maxPicks && maxDifficulty > difficulty; pick++)
+            {
+                var objective = _objectivesManager.GetRandomObjective(traitorRole.Mind, "TraitorObjectiveGroups");
 
-            if (objective == null)
-                continue;
-            if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
-                difficulty += objective.Difficulty;
+                if (objective == null)
+                    continue;
+
+                if (_mindSystem.TryAddObjective(traitorRole.Mind, objective))
+                    difficulty += objective.Difficulty;
+            }
         }
 
         return true;
@@ -289,13 +298,14 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     /// <param name="mind">A mind (player)</param>
     /// <param name="codewords">Codewords</param>
     /// <param name="code">Uplink codes</param>
-    private void SendTraitorBriefing(Mind.Mind mind, string[] codewords, Note[] code)
+    private void SendTraitorBriefing(Mind.Mind mind, string[] codewords, Note[]? code)
     {
         if (_mindSystem.TryGetSession(mind, out var session))
         {
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-greeting"));
            _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-codewords", ("codewords", string.Join(", ", codewords))));
-           _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
+           if (code != null)
+               _chatManager.DispatchServerMessage(session, Loc.GetString("traitor-role-uplink-code", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
     }
 
