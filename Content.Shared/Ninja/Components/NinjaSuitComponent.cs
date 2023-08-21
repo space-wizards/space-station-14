@@ -14,26 +14,9 @@ namespace Content.Shared.Ninja.Components;
 /// Component for ninja suit abilities and power consumption.
 /// As an implementation detail, dashing with katana is a suit action which isn't ideal.
 /// </summary>
-[Access(typeof(SharedNinjaSuitSystem))]
-[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedNinjaSuitSystem))]
 public sealed partial class NinjaSuitComponent : Component
 {
-    [ViewVariables, AutoNetworkedField]
-    public bool Cloaked = false;
-
-    /// <summary>
-    /// The action for toggling suit phase cloak ability
-    /// </summary>
-    [DataField("togglePhaseCloakAction")]
-    public InstantAction TogglePhaseCloakAction = new()
-    {
-        UseDelay = TimeSpan.FromSeconds(5), // have to plan un/cloaking ahead of time
-        DisplayName = "action-name-toggle-phase-cloak",
-        Description = "action-desc-toggle-phase-cloak",
-        Priority = -9,
-        Event = new TogglePhaseCloakEvent()
-    };
-
     /// <summary>
     /// Battery charge used passively, in watts. Will last 1000 seconds on a small-capacity power cell.
     /// </summary>
@@ -101,6 +84,7 @@ public sealed partial class NinjaSuitComponent : Component
         Event = new RecallKatanaEvent()
     };
 
+    // TODO: move into separate thing
     /// <summary>
     /// The action for dashing somewhere using katana
     /// </summary>
@@ -117,6 +101,12 @@ public sealed partial class NinjaSuitComponent : Component
         CheckCanAccess = false,
         Range = 0f
     };
+
+    /// <summary>
+    /// Battery charge used per tile the katana teleported.
+    /// </summary>
+    [DataField("dashCharge")]
+    public float DashCharge = 3.6f;
 
     /// <summary>
     /// The action for creating an EMP burst
@@ -156,8 +146,6 @@ public sealed partial class NinjaSuitComponent : Component
     [DataField("empDuration")]
     public float EmpDuration = 60f;
 }
-
-public sealed class TogglePhaseCloakEvent : InstantActionEvent { }
 
 public sealed class CreateThrowingStarEvent : InstantActionEvent { }
 

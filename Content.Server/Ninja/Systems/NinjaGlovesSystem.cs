@@ -13,6 +13,8 @@ using Content.Shared.Toggleable;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Handles the toggle gloves action.
 public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 {
     [Dependency] private readonly EmagProviderSystem _emagProvider = default!;
@@ -54,6 +56,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
             return;
         }
 
+        // show its state to the user
         var enabling = comp.User == null;
         Appearance.SetData(uid, ToggleVisuals.Toggled, enabling);
         var message = Loc.GetString(enabling ? "ninja-gloves-on" : "ninja-gloves-off");
@@ -61,29 +64,33 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         if (enabling)
         {
-            comp.User = user;
-            _ninja.AssignGloves(ninja, uid);
-            // set up interaction relay for handling glove abilities, comp.User is used to see the actual user of the events
-            // TODO: remove, bad
-            Interaction.SetRelay(user, uid, EnsureComp<InteractionRelayComponent>(user));
-            Dirty(comp);
-
-            var drainer = EnsureComp<BatteryDrainerComponent>(user);
-            var stun = EnsureComp<StunProviderComponent>(user);
-            if (_ninja.GetNinjaBattery(user, out var battery, out var _))
-            {
-                _drainer.SetBattery(drainer, battery);
-                _stunProvider.SetBattery(stun, battery);
-            }
-
-            var emag = EnsureComp<EmagProviderComponent>(user);
-            _emagProvider.SetWhitelist(user, comp.DoorjackWhitelist, emag);
-
+            EnableGloves(uid, comp, user, ninja);
         }
         else
         {
             DisableGloves(uid, comp);
         }
+    }
+
+    private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
+    {
+        comp.User = user;
+        Dirty(comp);
+        _ninja.AssignGloves(ninja, uid);
+
+        var drainer = EnsureComp<BatteryDrainerComponent>(user);
+        var stun = EnsureComp<StunProviderComponent>(user);
+        if (_ninja.GetNinjaBattery(user, out var battery, out var _))
+        {
+            _drainer.SetBattery(drainer, battery);
+            _stunProvider.SetBattery(stun, battery);
+        }
+
+        var emag = EnsureComp<EmagProviderComponent>(user);
+        _emagProvider.SetWhitelist(user, comp.DoorjackWhitelist, emag);
+
+        EnsureComp<ResearchStealerComponent>(user);
+        EnsureComp<CommsHackerComponent>(user);
     }
 
     /// <inheritdoc/>

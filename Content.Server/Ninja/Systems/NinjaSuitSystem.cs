@@ -3,6 +3,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.PowerCell;
 using Content.Shared.Actions;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
@@ -15,7 +16,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
     [Dependency] private readonly EmpSystem _emp = default!;
     [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly new SpaceNinjaSystem _ninja = default!;
+    [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
@@ -25,7 +26,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, TogglePhaseCloakEvent>(OnTogglePhaseCloak);
+        SubscribeLocalEvent<NinjaSuitComponent, EnableStealthEvent>(OnEnableStealth);
         SubscribeLocalEvent<NinjaSuitComponent, CreateThrowingStarEvent>(OnCreateThrowingStar);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
@@ -60,32 +61,27 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         _ninja.SetSuitPowerAlert(user);
     }
 
-    private void OnTogglePhaseCloak(EntityUid uid, NinjaSuitComponent comp, TogglePhaseCloakEvent args)
+    private void OnEnableStealth(EntityUid uid, NinjaSuitComponent comp, EnableStealthEvent args)
     {
-        args.Handled = true;
-        var user = args.Performer;
+        var user = args.User;
         // need 1 second of charge to turn on stealth
-        var chargeNeeded = SuitWattage(comp);
-        if (!comp.Cloaked && (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || _useDelay.ActiveDelay(user)))
+        var chargeNeeded = SuitWattage(uid, comp);
+        // being attacked while cloaked gives no power message since it overloads the power supply or something
+        if (!_ninja.GetNinjaBattery(user, out var _, out var battery) || battery.CurrentCharge < chargeNeeded || UseDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
+            args.Cancel();
             return;
         }
 
-        comp.Cloaked = !comp.Cloaked;
-        SetCloaked(args.Performer, comp.Cloaked);
-        RaiseNetworkEvent(new SetCloakedMessage()
-        {
-            User = user,
-            Cloaked = comp.Cloaked
-        });
+        StealthClothing.SetEnabled(uid, user, true);
     }
 
     private void OnCreateThrowingStar(EntityUid uid, NinjaSuitComponent comp, CreateThrowingStarEvent args)
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge) || _useDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, comp.ThrowingStarCharge) || UseDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -108,7 +104,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length();
         var chargeNeeded = (float) distance * 3.6f;
-        if (!_ninja.TryUseCharge(user, chargeNeeded) || _useDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, chargeNeeded) || UseDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;
@@ -125,7 +121,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         args.Handled = true;
         var user = args.Performer;
-        if (!_ninja.TryUseCharge(user, comp.EmpCharge) || _useDelay.ActiveDelay(user))
+        if (!_ninja.TryUseCharge(user, comp.EmpCharge) || UseDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);
             return;

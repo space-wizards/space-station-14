@@ -17,6 +17,7 @@ using Content.Server.PowerCell;
 using Content.Server.Roles;
 using Content.Server.Warps;
 using Content.Shared.Alert;
+using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
@@ -53,10 +54,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
+    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
@@ -304,16 +306,16 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     private void UpdateNinja(EntityUid uid, SpaceNinjaComponent ninja, float frameTime)
     {
-        if (ninja.Suit == null || !TryComp<NinjaSuitComponent>(ninja.Suit, out var suit))
+        if (ninja.Suit == null)
             return;
 
-        float wattage = _suit.SuitWattage(suit);
+        float wattage = _suit.SuitWattage(ninja.Suit.Value);
 
         SetSuitPowerAlert(uid, ninja);
         if (!TryUseCharge(uid, wattage * frameTime))
         {
-            // ran out of power, reveal ninja
-            _suit.RevealNinja(ninja.Suit.Value, suit, uid);
+            // ran out of power, uncloak ninja
+            _stealthClothing.SetEnabled(ninja.Suit.Value, uid, false);
         }
     }
 
