@@ -1,0 +1,18 @@
+- type: entity
+  id: WarderobePrisonSecureFilled
+  parent: LockerSecurity
+  suffix: Filled
+  name: тюремный гардероб
+  description: Стандартное хранилище Nanotrasen для одежды и вещей заключённых.
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitPrisoner
+      amount: 2
+    - id: ClothingUniformJumpskirtPrisoner
+      amount: 2
+    - id: ClothingShoesColorBlack
+      amount: 2
+    - id: ClothingMaskMuzzle

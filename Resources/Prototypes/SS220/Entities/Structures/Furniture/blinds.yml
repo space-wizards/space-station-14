@@ -48,7 +48,6 @@
   id: BlindsSolo
   parent: BlindsBase
   name: Жалюзи (одиночные)
-  suffix: DONT_USE
   components:
   - type: Construction
     node: BlindsSolo
@@ -57,7 +56,6 @@
   id: BlindsLeft
   parent: BlindsBase
   name: Жалюзи (левые)
-  suffix: DONT_USE
   components:
   - type: Construction
     node: BlindsLeft
@@ -75,7 +73,6 @@
   id: BlindsMiddle
   parent: BlindsBase
   name: Жалюзи (середина)
-  suffix: DONT_USE
   components:
   - type: Construction
     node: BlindsMiddle
@@ -93,7 +90,6 @@
   id: BlindsRight
   parent: BlindsBase
   name: Жалюзи (правые)
-  suffix: DONT_USE
   components:
   - type: Construction
     node: BlindsRight

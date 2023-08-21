@@ -23,6 +23,7 @@
       - Atmospherics
       - Bar
       - Brig
+      - Blueshield
       - Detective
       - Captain
       - Cargo
@@ -62,12 +63,12 @@
     - type: UserInterface
       interfaces:
         - key: enum.AccessOverriderUiKey.Key
-          type: AccessOverriderBoundUserInterface        
-    - type: ActivatableUI  
+          type: AccessOverriderBoundUserInterface
+    - type: ActivatableUI
       key: enum.AccessOverriderUiKey.Key
-      requireHands: true      
-      closeOnHandDeselect: false  
-      singleUser: true      
+      requireHands: true
+      closeOnHandDeselect: false
+      singleUser: true
     - type: ItemSlots
     - type: ContainerContainer
       containers:
