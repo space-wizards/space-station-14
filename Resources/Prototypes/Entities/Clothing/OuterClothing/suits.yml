@@ -106,7 +106,7 @@
     toggleAction:
       # have to plan (un)cloaking ahead of time
       useDelay: 5
-      displayName: action-name-toggle-phase-cloak
+      name: action-name-toggle-phase-cloak
       description: action-desc-toggle-phase-cloak
       priority: -9
       event: !type:ToggleStealthEvent
