@@ -1,6 +1,7 @@
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Whitelist;
 using Robust.Shared.GameStates;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -8,14 +9,14 @@ namespace Content.Shared.Ninja.Components;
 /// Component for stunning mobs on click outside of harm mode.
 /// Knocks them down for a bit and deals shock damage.
 /// </summary>
-[RegisterComponent, Access(typeof(SharedStunProviderSystem))]
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState, Access(typeof(SharedStunProviderSystem))]
 public sealed partial class StunProviderComponent : Component
 {
     /// <summary>
     /// The powercell entity to take power from.
     /// Determines whether stunning is possible.
     /// </summary>
-    [DataField("batteryUid"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("batteryUid"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public EntityUid? BatteryUid;
 
     /// <summary>
@@ -39,7 +40,7 @@ public sealed partial class StunProviderComponent : Component
     /// <summary>
     /// How long stunning is disabled after stunning something.
     /// </summary>
-    [DataField("cooldown"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("cooldown", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>

@@ -1,6 +1,9 @@
+using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
+namespace Content.Shared.Communications;
 
 /// <summary>
 /// Component for hacking a communications console to call in a threat.

@@ -15,18 +15,18 @@ public sealed partial class SpaceNinjaComponent : Component
     /// <summary>
     /// Currently worn suit
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("suit"), AutoNetworkedField]
     public EntityUid? Suit = null;
 
     /// <summary>
     /// Currently worn gloves
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("gloves"), AutoNetworkedField]
     public EntityUid? Gloves = null;
 
     /// <summary>
     /// Bound katana, set once picked up and never removed
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
+    [DataField("katana"), AutoNetworkedField]
     public EntityUid? Katana = null;
 }

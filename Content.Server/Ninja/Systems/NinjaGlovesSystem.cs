@@ -30,9 +30,6 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaGlovesComponent, ToggleActionEvent>(OnToggleAction);
-
-        // TODO: move into r&d server???
-        SubscribeLocalEvent<NinjaDownloadComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
     }
 
     /// <summary>
@@ -94,49 +91,6 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
             _commsHacker.SetThreats(user, _ninja.RuleConfig().Threats, hacker);
-        }
-    }
-
-    // TODO: move all below into ResearchStealerSystem
-    /// <inheritdoc/>
-    private void OnDoAfter(EntityUid uid, ResearchStealerComponent comp, ResearchStealDoAfterEvent args)
-    {
-        if (args.Cancelled || args.Handled)
-            return;
-
-        var target = args.Target;
-
-        if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
-            return;
-
-/// <summary>
-/// Event raised on the user when research is stolen from a R&D server.
-/// Techs contains every technology id researched.
-/// </summary>
-[ByRefEvent]
-public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, HashSet<String> Techs);
-        var ev = new ResearchStolenEvent(uid, target, database.UnlockedTechnologies);
-        RaiseNewLocalEvent(args.User, ref ev);
-        // oops, no more advanced lasers!
-        database.UnlockedTechnologies.Clear();
-    }
-
-        SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
-    private void OnResearchStolen(EntityUid uid, SpaceNinjaComponent comp, ResearchStolenEvent args)
-    {
-        var gained = Download(uid, args.Techs);
-        var str = gained == 0
-            ? Loc.GetString("ninja-research-steal-fail")
-            : Loc.GetString("ninja-research-steal-success", ("count", gained), ("server", args.Target));
-
-        Popup.PopupEntity(str, user, user, PopupType.Medium);
-    }
-
-    private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ThreatCalledInEvent args)
-    {
-        if (_mind.TryGetRole(uid, out var role))
-        {
-            role.CalledInThreat = true;
         }
     }
 }

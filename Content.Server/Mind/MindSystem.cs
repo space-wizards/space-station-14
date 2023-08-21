@@ -584,6 +584,37 @@ public sealed class MindSystem : EntitySystem
     }
 
     /// <summary>
+    /// Gets the first role of a certain type on a player.
+    /// </summary>
+    /// <returns>Whether a role was found</returns>
+    public bool TryGetRole<T>(Mind.Mind? mind, [NotNullWhen(true)] out T? role) where T : Role
+    {
+        role = null;
+        if (mind == null)
+            return false;
+
+        foreach (var r in mind.AllRoles)
+        {
+            if (r is R cast)
+            {
+                role = cast;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// Gets a player's role of a certain type using the player's mind container.
+    /// </summary>
+    public bool TryGetRole<T>(EntityUid uid, [NotNullWhen(true)] out T? role, MindContainerComponent? comp = null) where T : Role
+    {
+        var mind = TryGetMind(uid, comp);
+        return TryGetRole(uid, out role);
+    }
+
+    /// <summary>
     /// Sets the Mind's OwnedComponent and OwnedEntity
     /// </summary>
     /// <param name="mind">Mind to set OwnedComponent and OwnedEntity on</param>

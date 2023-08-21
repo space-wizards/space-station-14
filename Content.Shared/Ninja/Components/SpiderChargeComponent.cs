@@ -1,10 +1,12 @@
+using Robust.Shared.GameStates;
+
 namespace Content.Shared.Ninja.Components;
 
 /// <summary>
 /// Component for the Space Ninja's unique Spider Charge.
 /// Only this component detonating can trigger the ninja's objective.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed class SpiderChargeComponent : Component
 {
     /// Range for planting within the target area
@@ -12,6 +14,6 @@ public sealed class SpiderChargeComponent : Component
     public float Range = 10f;
 
     /// The ninja that planted this charge
-    [ViewVariables]
+    [DataField("planter")]
     public EntityUid? Planter = null;
 }

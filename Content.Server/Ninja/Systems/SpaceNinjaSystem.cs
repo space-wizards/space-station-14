@@ -1,5 +1,6 @@
 using Content.Server.Administration.Commands;
 using Content.Server.Body.Systems;
+using Content.Server.Communications;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.StationEvents.Components;
@@ -14,6 +15,7 @@ using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
+using Content.Server.Research;
 using Content.Server.Roles;
 using Content.Server.Warps;
 using Content.Shared.Alert;
@@ -45,7 +47,7 @@ namespace Content.Server.Ninja.Systems;
 // TODO: when criminal records is merged, hack it to set everyone to arrest
 
 /// <summary>
-/// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
+/// Main ninja system that handles ninja setup and greentext, provides helper methods for the rest of the code to use.
 /// </summary>
 public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
@@ -73,6 +75,8 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         SubscribeLocalEvent<SpaceNinjaComponent, ComponentInit>(OnNinjaInit);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
+        SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
+        SubscribeLocalEvent<SpaceNinjaComponent, ThreatCalledInEvent>(OnThreatCalledIn);
     }
 
     public override void Update(float frameTime)
@@ -103,7 +107,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Download the given set of nodes, returning how many new nodes were downloaded.'
+    /// Download the given set of nodes, returning how many new nodes were downloaded.
     /// </summary>
     private int Download(EntityUid uid, List<string> ids)
     {
@@ -114,42 +118,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         role.DownloadedNodes.UnionWith(ids);
         var newCount = role.DownloadedNodes.Count;
         return newCount - oldCount;
-    }
-
-    // TODO: move to mind system
-    /// <summary>
-    /// Gets the first role of a certain type on a player.
-    /// </summary>
-    /// <returns>Whether a role was found</returns>
-    public bool TryGetRole<R>(Mind.Mind? mind, [NotNullWhen(true)] out R? role)
-        where R : Role
-    {
-        role = null;
-        if (mind == null)
-            return false;
-
-        foreach (var r in mind.AllRoles)
-        {
-            if (r is R cast)
-            {
-                role = cast;
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /// <summary>
-    /// Gets a player's role of a certain type using the player's mind container.
-    /// </summary>
-    public bool TryGetRole<R: Role>(EntityUid uid, [NotNullWhen(true)] out R? role, MindContainerComponent? comp = null)
-    {
-        role = null;
-        if (!Resolve(uid, ref comp))
-            return false;
-
-        return TryGetRole(comp.Mind, out role);
     }
 
     // TODO: make the gamerule entity a field on ninja role
@@ -356,5 +324,26 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // make sure it's a ninja doorjacking it
         if (_mind.TryGetRole<NinjaRole>(uid, out var role))
             role.DoorsJacked++;
+    }
+
+    /// <summary>
+    /// Add to greentext when stealing technologies.
+    /// </summary>
+    private void OnResearchStolen(EntityUid uid, SpaceNinjaComponent comp, ResearchStolenEvent args)
+    {
+        var gained = Download(uid, args.Techs);
+        var str = gained == 0
+            ? Loc.GetString("ninja-research-steal-fail")
+            : Loc.GetString("ninja-research-steal-success", ("count", gained), ("server", args.Target));
+
+        Popup.PopupEntity(str, user, user, PopupType.Medium);
+    }
+
+    private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ThreatCalledInEvent args)
+    {
+        if (_mind.TryGetRole<NinjaRole>(uid, out var role))
+        {
+            role.CalledInThreat = true;
+        }
     }
 }
