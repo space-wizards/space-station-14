@@ -120,11 +120,20 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
             return;
 
+        // Add the first emag law
         args.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
             Order = 0
         });
+
+        // Add new emagged laws
+        foreach (var law in component.EmagLaws)
+        {
+            args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+        }
+
+        args.Handled = true;
     }
 
     private void OnExamined(EntityUid uid, EmagSiliconLawComponent component, ExaminedEvent args)
