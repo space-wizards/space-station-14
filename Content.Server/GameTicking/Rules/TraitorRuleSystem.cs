@@ -232,29 +232,27 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         if (mind.CurrentJob != null)
             startingBalance = Math.Max(startingBalance - mind.CurrentJob.Prototype.AntagAdvantage, 0);
 
-        // creadth: we need to create uplink for the antag.
-        // PDA should be in place already
-        var briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
+        // Give traitors their codewords and uplink code to keep in their character info menu
+        mind.Briefing = Loc.GetString("traitor-role-codewords-short", ("codewords", string.Join(", ", traitorRule.Codewords)));
         Note[]? code = null;
         if (giveUplink)
         {
+            // creadth: we need to create uplink for the antag.
+            // PDA should be in place already
             var pda = _uplink.FindUplinkTarget(mind.OwnedEntity!.Value);
             if (pda == null || !_uplink.AddUplink(mind.OwnedEntity.Value, startingBalance))
                 return false;
 
             // Add the ringtone uplink and get its code for greeting
             code = EnsureComp<RingerUplinkComponent>(pda.Value).Code;
-            briefing = string.Format("{0}\n{1}", briefing,
+            // If giveUplink is false the uplink code part is omitted
+            mind.Briefing = string.Format("{0}\n{1}", mind.Briefing,
                 Loc.GetString("traitor-role-uplink-code-short", ("code", string.Join("-", code).Replace("sharp","#"))));
         }
 
         // Prepare antagonist role
         var antagPrototype = _prototypeManager.Index<AntagPrototype>(traitorRule.TraitorPrototypeId);
         var traitorRole = new TraitorRole(mind, antagPrototype);
-
-        // Give traitors their codewords and uplink code to keep in their character info menu
-        // If giveUplink is false the uplink code part is omitted
-        traitorRole.Mind.Briefing = briefing;
 
         // Assign traitor roles
         _mindSystem.AddRole(mind, traitorRole);
