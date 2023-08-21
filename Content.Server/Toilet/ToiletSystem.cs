@@ -3,6 +3,7 @@ using Content.Shared.Buckle;
 using Content.Server.Popups;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Audio;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Part;
 using Content.Shared.Buckle.Components;
@@ -158,7 +159,7 @@ namespace Content.Server.Toilet
                 return;
 
             component.IsSeatUp = !component.IsSeatUp;
-            _audio.PlayPvs(component.ToggleSound, uid, AudioParams.Default.WithVariation(0.05f));
+            _audio.PlayPvs(component.ToggleSound, uid, AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation));
             UpdateSprite(uid, component);
         }
 
