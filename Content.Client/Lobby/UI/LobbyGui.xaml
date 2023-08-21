@@ -64,7 +64,7 @@
                 <controls:HSpacer Spacing="10"/>
                 <!-- Voting & misc button bar -->
                 <BoxContainer Orientation="Horizontal" MinSize="0 40" HorizontalAlignment="Right">
-                    <cc:CommandButton Name = "AHelpButton" Command="openahelp" Access="Public" Text = "{Loc 'ui-lobby-ahelp-button'}" StyleClasses="ButtonBig" WithDialog="True" />
+                    <cc:CommandButton Name = "AHelpButton" Command="openahelp" Access="Public" Text = "{Loc 'ui-lobby-ahelp-button'}" StyleClasses="ButtonBig"/>
                     <vote:VoteCallMenuButton Name="CallVoteButton" StyleClasses="ButtonBig" />
                     <Button Name="OptionsButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-options-button'}" />
                     <Button Name="LeaveButton" Access="Public" StyleClasses="ButtonBig" Text="{Loc 'ui-lobby-leave-button'}" />

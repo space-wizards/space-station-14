@@ -7,11 +7,11 @@
     MinSize="50 50">
     <GridContainer
         Columns="3">
-        <cc:CommandButton Command="startround" Text="{Loc administration-ui-round-tab-start-round}" WithDialog="True" />
-        <cc:CommandButton Command="endround" Text="{Loc administration-ui-round-tab-end-round}" WithDialog="True" />
-        <cc:CommandButton Command="restartround" Text="{Loc administration-ui-round-tab-restart-round}" WithDialog="True" />
-        <cc:CommandButton Command="restartroundnow" Text="{Loc administration-ui-round-tab-restart-round-now}" WithDialog="True" />
-        <cc:CommandButton Name="Delay" Command="delaystart" Text="{Loc administration-ui-round-tab-delay-start}" ToggleMode="True" WithDialog="True" />
+        <cc:CommandButton Command="startround" Text="{Loc administration-ui-round-tab-start-round}" WithDialog="True"/>
+        <cc:CommandButton Command="endround" Text="{Loc administration-ui-round-tab-end-round}" WithDialog="True"/>
+        <cc:CommandButton Command="restartround" Text="{Loc administration-ui-round-tab-restart-round}" WithDialog="True"/>
+        <cc:CommandButton Command="restartroundnow" Text="{Loc administration-ui-round-tab-restart-round-now}" WithDialog="True"/>
+        <cc:CommandButton Name="Delay" Command="delaystart" Text="{Loc administration-ui-round-tab-delay-start}" ToggleMode="True"/>
         <cc:UICommandButton Command="showactivegamerules" Text="{Loc administration-ui-round-tab-active-gamerules}" WindowType="{x:Type rt:ActiveGameRulesWindow}" />
     </GridContainer>
 </Control>
