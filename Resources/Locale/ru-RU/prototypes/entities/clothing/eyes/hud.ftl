@@ -7,3 +7,10 @@ ent-ClothingEyesHudMedical = медицинский визор
 ent-ClothingEyesHudSecurity = охранный визор
     .desc = Окуляр с индикатором на стекле, который сканирует гуманоидов в поле зрения и предоставляет точные данные об их идентификационном статусе и записях в системе безопасности.
     .suffix = { "" }
+ent-ClothingEyesHudBeer = пивные очки
+    .desc = Пара солнезащитных очков, оснащенная приборами для сканирования реагентов, а также обеспечивающих врожденное понимание вязкости жидкости во время движения.
+ent-ClothingEyesHudMedOnionBeer = medthungerst hud
+    .desc = Filler
+ent-ClothingEyesHudOnionBeer = thungerst goggles
+    .desc = Filler
+

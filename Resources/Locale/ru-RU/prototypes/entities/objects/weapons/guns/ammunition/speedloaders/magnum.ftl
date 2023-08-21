@@ -13,3 +13,6 @@ ent-SpeedLoaderMagnumPractice = спидлоадер (.45 магнум учеб�
 ent-SpeedLoaderMagnumRubber = спидлоадер (.45 магнум резиновые)
     .desc = { ent-BaseSpeedLoaderMagnum.desc }
     .suffix = { "" }
+ent-SpeedLoaderMagnumAP = спидлоадер (.45 магнум бронебойный)
+    .desc = { ent-BaseSpeedLoaderMagnum.desc }
+
