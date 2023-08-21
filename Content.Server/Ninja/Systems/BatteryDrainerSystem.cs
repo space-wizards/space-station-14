@@ -9,6 +9,9 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Handles the doafter and power transfer when draining.
+/// </summary>
 public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
@@ -36,7 +39,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
         //args.Cancel();
 
-        if (IsBatteryFull(comp.BatteryUid.Value))
+        if (_battery.IsFull(comp.BatteryUid.Value))
         {
             _popup.PopupEntity(Loc.GetString("battery-drainer-full"), uid, uid, PopupType.Medium);
             return;
@@ -58,7 +61,7 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
     {
         base.OnDoAfterAttempt(uid, comp, args);
 
-        if (comp.BatteryUid == null || IsBatteryFull(comp.BatteryUid.Value))
+        if (comp.BatteryUid == null || _battery.IsFull(comp.BatteryUid.Value))
             args.Cancel();
     }
 
@@ -100,16 +103,5 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         }
 
         return false;
-    }
-
-    /// <summary>
-    /// Returns whether the suit battery is at least 99% charged, basically full.
-    /// </summary>
-    private bool IsBatteryFull(EntityUid uid)
-    {
-        if (!TryComp<BatteryComponent>(uid, out var battery))
-            return false;
-
-        return battery.CurrentCharge / battery.MaxCharge >= 0.99f;
     }
 }
