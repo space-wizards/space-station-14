@@ -21,9 +21,9 @@ public sealed class StealResearchCondition : IObjectiveCondition
         };
     }
 
-    public string Title => Loc.GetString("objective-condition-download-title", ("count", _target));
+    public string Title => Loc.GetString("objective-condition-steal-research-title", ("count", _target));
 
-    public string Description => Loc.GetString("objective-condition-download-description");
+    public string Description => Loc.GetString("objective-condition-steal-research-description");
 
     public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Structures/Machines/server.rsi"), "server");
 
