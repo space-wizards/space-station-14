@@ -121,24 +121,22 @@ public abstract partial class SharedHandsSystem : EntitySystem
                     DoPickup(uid, hand, entity, handsComp, animateUser, animate);
                     return true;
                 }
+            }
+            var args = new DoAfterArgs(uid, item.PickupTime, new PickUpDoAfterEvent(hand, entity, animate, animateUser), uid, entity, entity)
+            {
+                NeedHand = true,
+                BreakOnDamage = true,
+                BreakOnHandChange = true,
+                BlockDuplicate = true,
+                DistanceThreshold = 1,
+                DuplicateCondition = DuplicateConditions.All
+            };
 
-                var args = new DoAfterArgs(uid, item.PickupTime, new PickUpDoAfterEvent(hand, entity, animate, animateUser), uid, entity)
-                {
-                    NeedHand = true,
-                    BreakOnDamage = true,
-                    BreakOnHandChange = true,
-                    BreakOnTargetMove = true,
-                    BreakOnUserMove = true,
-                    BlockDuplicate = true,
-                    DuplicateCondition = DuplicateConditions.All
-                };
-
-                if (!DoAfter.TryStartDoAfter(args))
-                {
-                    return false;
-                }
-                return true;
-            }            
+            if (!DoAfter.TryStartDoAfter(args))
+            {
+                return false;
+            }
+            return true;
         }
         DoPickup(uid, hand, entity, handsComp, animateUser, animate);
         return true;
