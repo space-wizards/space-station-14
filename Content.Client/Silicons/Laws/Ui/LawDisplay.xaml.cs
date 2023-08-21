@@ -33,7 +33,7 @@ public sealed partial class LawDisplay : Control
         if (!canVerbalize) // If you can't talk, you can't state your laws...
             return;
 
-        Button localButton = new Button
+        var localButton = new Button
         {
             Text = Loc.GetString("hud-chatbox-select-channel-Local"),
             Modulate = Color.DarkGray,
