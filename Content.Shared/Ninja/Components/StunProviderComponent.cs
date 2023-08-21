@@ -40,7 +40,7 @@ public sealed partial class StunProviderComponent : Component
     /// <summary>
     /// How long stunning is disabled after stunning something.
     /// </summary>
-    [DataField("cooldown", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("cooldown"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>
@@ -54,7 +54,8 @@ public sealed partial class StunProviderComponent : Component
 
     /// <summary>
     /// When someone can next be stunned.
+    /// Essentially a UseDelay unique to this component.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite)]
+    [DataField("nextStun", customTypeSerializer: typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan NextStun = TimeSpan.Zero;
 }

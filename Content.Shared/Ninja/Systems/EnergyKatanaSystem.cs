@@ -94,7 +94,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
 
         _transform.SetCoordinates(user, args.Target);
         _transform.AttachToGridOrMap(user);
-        _audio.PlayPredicted(katana.BlinkSound, user, user, AudioParams.Default.WithVolume(katana.BlinkVolume));
+        _audio.PlayPredicted(katana.BlinkSound, user, user);
         if (charges != null)
             _charges.UseCharge(uid, charges);
     }

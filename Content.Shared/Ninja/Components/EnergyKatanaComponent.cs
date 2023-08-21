@@ -19,14 +19,11 @@ public sealed partial class EnergyKatanaComponent : Component
     /// <summary>
     /// Sound played when using dash action.
     /// </summary>
-    [DataField("blinkSound"), AutoNetworkedField]
-    public SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/Magic/blink.ogg");
-
-    /// <summary>
-    /// Volume control for katana dash action.
-    /// </summary>
-    [DataField("blinkVolume"), AutoNetworkedField]
-    public float BlinkVolume = 5f;
+    [DataField("blinkSound")]
+    public SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/Magic/blink.ogg")
+    {
+        Params = AudioParams.Default.WithVolume(5f);
+    }
 }
 
 public sealed class KatanaDashEvent : WorldTargetActionEvent { }
