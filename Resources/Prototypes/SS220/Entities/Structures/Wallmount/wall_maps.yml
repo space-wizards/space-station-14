@@ -10,6 +10,7 @@
     state: metamap64x
     sprite: Structures/Wallmounts/metamap.rsi
     snapCardinals: false
+    drawdepth: Overdoors
   - type: ActivatableUI
     key: enum.ViewableStationMapUiKey.Key
   - type: ActivatableUIRequiresVision

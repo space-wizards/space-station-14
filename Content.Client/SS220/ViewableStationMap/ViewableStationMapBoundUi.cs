@@ -28,7 +28,10 @@ public sealed class StationViewableMapBoundUserInterface : BoundUserInterface
         _window.OnClose += Close;
 
         if (_entMan.TryGetComponent(Owner, out ViewableStationMapComponent? comp))
-            _window.ViewedMap = SpriteSpecifierSerializer.TextureRoot/comp.MapTexture;
+        {
+            var path = SpriteSpecifierSerializer.TextureRoot / comp.MapTexture;
+            _window.ViewedMap = path;
+        }
     }
 
     protected override void Dispose(bool disposing)

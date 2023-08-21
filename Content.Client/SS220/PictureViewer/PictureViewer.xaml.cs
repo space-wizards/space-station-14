@@ -26,6 +26,7 @@ public sealed partial class PictureViewer : Control
         {
             _viewedPicture = value;
             Picture.TexturePath = value.ToString();
+            NoImageLabel.Visible = false;
         }
     }
 
@@ -48,7 +49,7 @@ public sealed partial class PictureViewer : Control
         base.MouseWheel(args);
         _zoom -= args.Delta.Y * ScrollSensitivity;
         _zoom = float.Clamp(_zoom, 1, MaxZoom);
-        Logger.DebugS("ZOOM: ", _zoom.ToString());
+        //ogger.DebugS("ZOOM: ", _zoom.ToString());
         UpdateZoom();
         UpdateOffset();
 
@@ -84,7 +85,7 @@ public sealed partial class PictureViewer : Control
 
         //_recentering = false;
         _offset += new Vector2(args.Relative.X, args.Relative.Y);
-        Logger.DebugS("OFFSET: ", _offset.ToString());
+        //Logger.DebugS("OFFSET: ", _offset.ToString());
         UpdateOffset();
 
         /*
