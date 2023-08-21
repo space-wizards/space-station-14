@@ -167,7 +167,7 @@
         Quantity: 10
   - type: SpawnItemsOnUse
     items:
-      - id: FoodBananaPeeled
+    - id: FoodBananaPeeled
     sound:
       path: /Audio/Effects/unwrap.ogg
 
