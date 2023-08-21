@@ -1,12 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: added rare immovable rod event that can happen late in the game and
-      can literally cut through entire station, type: Add}
-  - {message: immovable rods now move on spawn by default, type: Fix}
-  - {message: you can now warp to immovable rod as ghost, type: Tweak}
-  id: 4151
-  time: '2023-07-02T13:40:07.0000000+00:00'
 - author: brainfood1183
   changes:
   - {message: Fixed Hamlet sprite error on revival., type: Fix}
@@ -3031,3 +3023,8 @@ Entries:
   - {message: Changed medical locker contents, type: Tweak}
   id: 4650
   time: '2023-08-21T18:49:22.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Air alarms now have output signal ports for each state., type: Tweak}
+  id: 4651
+  time: '2023-08-21T21:18:30.0000000+00:00'
