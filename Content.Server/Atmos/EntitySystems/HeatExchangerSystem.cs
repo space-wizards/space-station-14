@@ -77,29 +77,54 @@ public sealed class HeatExchangerSystem : EntitySystem
         else
             xfer = outlet.Air.Remove(-dN);
 
+        float CXfer = _atmosphereSystem.GetHeatCapacity(xfer);
+        if (CXfer < Atmospherics.MinimumHeatCapacity)
+            return;
+
         var radTemp = Atmospherics.TCMB;
 
-        // Convection
         var environment = _atmosphereSystem.GetContainingMixture(uid, true, true);
-        if (environment != null && environment.TotalMoles != 0)
+        bool hasEnv = false;
+        float CEnv = 0f;
+        if (environment != null)
         {
-            radTemp = environment.Temperature;
-
-            // Positive dT is from pipe to surroundings
-            var dT = xfer.Temperature - environment.Temperature;
-            var dE = comp.K * dT * dt;
-            var envLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(environment) * dT * dt);
-            var xferLim = Math.Abs(_atmosphereSystem.GetHeatCapacity(xfer) * dT * dt);
-            var dEactual = Math.Sign(dE) * Math.Min(Math.Abs(dE), Math.Min(envLim, xferLim));
-            _atmosphereSystem.AddHeat(xfer, -dEactual);
-            _atmosphereSystem.AddHeat(environment, dEactual);
+            CEnv = _atmosphereSystem.GetHeatCapacity(environment);
+            hasEnv = CEnv >= Atmospherics.MinimumHeatCapacity && environment.TotalMoles > 0f;
+            if (hasEnv)
+                radTemp = environment.Temperature;
         }
+
+        // How ΔT' scales in respect to heat transferred
+        float TdivQ = 1f / CXfer;
+        // Since it's ΔT, also account for the environment's temperature change
+        if (hasEnv)
+            TdivQ += 1f / CEnv;
 
         // Radiation
         float dTR = xfer.Temperature - radTemp;
+        float dTRA = MathF.Abs(dTR);
         float a0 = tileLoss / MathF.Pow(Atmospherics.T20C, 4);
-        float dER = comp.alpha * a0 * MathF.Pow(dTR, 4) * dt;
+        // ΔT' = -kΔT^4, k = -ΔT'/ΔT^4
+        float kR = comp.alpha * a0 * TdivQ;
+        // Based on the fact that ((3t)^(-1/3))' = -(3t)^(-4/3) = -((3t)^(-1/3))^4, and ΔT' = -kΔT^4.
+        float dT2R = dTR * MathF.Pow((1f + 3f * kR * dt * dTRA * dTRA * dTRA), -1f/3f);
+        float dER = (dTR - dT2R) / TdivQ;
         _atmosphereSystem.AddHeat(xfer, -dER);
+        if (hasEnv && environment != null)
+        {
+            _atmosphereSystem.AddHeat(environment, dER);
+
+            // Convection
+
+            // Positive dT is from pipe to surroundings
+            float dT = xfer.Temperature - environment.Temperature;
+            // ΔT' = -kΔT, k = -ΔT' / ΔT
+            float k = comp.K * TdivQ;
+            float dT2 = dT * MathF.Exp(-k * dt);
+            float dE = (dT - dT2) / TdivQ;
+            _atmosphereSystem.AddHeat(xfer, -dE);
+            _atmosphereSystem.AddHeat(environment, dE);
+        }
 
         if (dN > 0)
             _atmosphereSystem.Merge(outlet.Air, xfer);
