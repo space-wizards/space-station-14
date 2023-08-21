@@ -160,7 +160,7 @@ namespace Content.Server.Power.EntitySystems
         /// <summary>
         /// Returns whether the battery is at least 99% charged, basically full.
         /// </summary>
-        private bool IsFull(EntityUid uid, BatteryComponent? battery = null)
+        public bool IsFull(EntityUid uid, BatteryComponent? battery = null)
         {
             if (!Resolve(uid, ref battery))
                 return false;
