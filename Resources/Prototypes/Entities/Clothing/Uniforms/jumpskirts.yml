@@ -770,3 +770,15 @@
     sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpskirt/security_grey.rsi
+ 
+- type: entity
+  parent: ClothingUniformSkirtBase
+  id: ClothingUniformJumpskirtCentcomOfficial
+  name: CentCom official's jumpskirt
+  description: It's a jumpskirt worn by CentCom's officials
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpskirt/centcom_official.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpskirt/centcom_official.rsi
+
