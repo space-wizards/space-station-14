@@ -967,9 +967,6 @@
     - !type:BuyerDepartmentCondition
       whitelist:
       - Science
-    - !type:BuyerJobCondition
-      blacklist:
-      - ResearchAssistant # No fun for trainee roles
 
 - type: listing
   id: uplinkProximityMine
