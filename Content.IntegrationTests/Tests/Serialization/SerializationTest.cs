@@ -74,7 +74,7 @@ public sealed class SerializationTest
     private enum TestEnum : byte { Aa, Bb, Cc, Dd }
 
     [DataDefinition]
-    private sealed class TestData
+    private sealed partial class TestData
     {
         [DataField("value")] public Enum Value = default!;
         [DataField("sequence")] public List<Enum> Sequence = default!;

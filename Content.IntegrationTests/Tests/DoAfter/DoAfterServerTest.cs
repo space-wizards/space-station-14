@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public sealed class DoAfterServerTest
+    public sealed partial class DoAfterServerTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
