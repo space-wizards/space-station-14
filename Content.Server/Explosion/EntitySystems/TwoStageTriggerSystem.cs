@@ -64,7 +64,6 @@ public sealed class TwoStageTriggerSystem : EntitySystem
             if (component.Triggered && !component.ComponentsIsLoaded)
                 LoadComponents(uid, component);
 
-            Console.WriteLine(_timing.CurTime.ToString() + " " + component.NextTriggerTime.ToString());
             if (_timing.CurTime < component.NextTriggerTime)
                 continue;
 
