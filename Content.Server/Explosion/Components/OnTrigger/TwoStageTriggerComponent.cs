@@ -26,5 +26,10 @@ public sealed class TwoStageTriggerComponent : Component
     [DataField("nextTriggerTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextTriggerTime;
 
-    [ViewVariables(VVAccess.ReadWrite), DataField("triggered")] public bool Triggered = false;
+
+    [DataField("triggered")]
+    public bool Triggered = false;
+
+    [DataField("ComponentsIsLoaded")]
+    public bool ComponentsIsLoaded = false;
 }

@@ -1,6 +1,8 @@
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager;
 using Content.Server.Explosion.Components.OnTrigger;
+using Content.Shared.Popups;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Content.Server.Explosion.EntitySystems;
 
@@ -47,6 +49,7 @@ public sealed class TwoStageTriggerSystem : EntitySystem
             _serializationManager.CopyTo(entry.Component, ref temp);
             EntityManager.AddComponent(uid, comp);
         }
+        component.ComponentsIsLoaded = true;
     }
 
     public override void Update(float frameTime)
@@ -60,11 +63,14 @@ public sealed class TwoStageTriggerSystem : EntitySystem
             if (component.NextTriggerTime == null)
                 continue;
 
+            if (component.Triggered && !component.ComponentsIsLoaded)
+                LoadComponents(uid, component);
+
+            Console.WriteLine(_timing.CurTime.ToString() + " " + component.NextTriggerTime.ToString());
             if (_timing.CurTime < component.NextTriggerTime)
                 continue;
 
             component.NextTriggerTime = null;
-            LoadComponents(uid, component);
             _triggerSystem.Trigger(uid);
         }
     }
