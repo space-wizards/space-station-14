@@ -17,7 +17,7 @@ ent-CrateFoodBarSupply = Bartending supplies crate
     .desc = Extra Bar supplies, in case the clown was allowed in the bar unsupervised.
 
 ent-CrateFoodSoftdrinks = Softdrinks crate
-    .desc = A variety of sodas to complement a small party, without having to empty the soda machines.
+    .desc = A variety of sodas to complement a small party, without having to empty the soda machines. Includes 14 sodas.
 
 ent-CrateFoodSoftdrinksLarge = Softdrinks bulk crate
-    .desc = Lots of sodas taken straight out of Centcomm's own vending machines, because you just can't leave your department.
+    .desc = Lots of sodas taken straight out of Centcomm's own vending machines, because you just can't leave your department. Includes 28 sodas.
