@@ -71,6 +71,7 @@
     - type: AtmosExposed
     - type: Kudzu
       growthTickChance: 0.3
+      spreadChance: 0.4
     - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
