@@ -54,7 +54,7 @@ public sealed partial class LawDisplay : Control
             if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
                 continue;
 
-            Button radioChannelButton = new Button
+            var radioChannelButton = new Button
             {
                 Text = Loc.GetString(radioChannelProto.Name),
                 Modulate = radioChannelProto.Color,
