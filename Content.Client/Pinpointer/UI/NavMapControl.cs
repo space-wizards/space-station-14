@@ -3,6 +3,7 @@ using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.Pinpointer;
 using Robust.Client.Graphics;
+using Robust.Client.ResourceManagement;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
@@ -23,7 +24,6 @@ public sealed class NavMapControl : MapGridControl
 
     public EntityUid? MapUid;
 
-
     public Dictionary<EntityCoordinates, (bool Visible, Color Color)> TrackedCoordinates = new();
 
     private Vector2 _offset;
@@ -32,6 +32,8 @@ public sealed class NavMapControl : MapGridControl
     private bool _recentering = false;
 
     private float _recenterMinimum = 0.05f;
+
+    private Font _font;
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -52,6 +54,10 @@ public sealed class NavMapControl : MapGridControl
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
+
+        var cache = IoCManager.Resolve<IResourceCache>();
+        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
+
         RectClipContent = true;
         HorizontalExpand = true;
         VerticalExpand = true;
@@ -312,6 +318,17 @@ public sealed class NavMapControl : MapGridControl
                     handle.DrawLine(Scale(position + new Vector2(0f, -grid.TileSize)), Scale(position + new Vector2(grid.TileSize, 0f)), lineColor);
                 }
             }
+        }
+
+        // Beacons
+        foreach (var beacon in navMap.Beacons)
+        {
+            var position = beacon.Position - offset;
+            position = Scale(new Vector2(position.X, -position.Y));
+
+            handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+
+            handle.DrawString(_font, position, beacon.Text);
         }
 
         var curTime = Timing.RealTime;
