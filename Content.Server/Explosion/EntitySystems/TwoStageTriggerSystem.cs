@@ -1,8 +1,6 @@
 using Robust.Shared.Timing;
 using Robust.Shared.Serialization.Manager;
 using Content.Server.Explosion.Components.OnTrigger;
-using Content.Shared.Popups;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Content.Server.Explosion.EntitySystems;
 
