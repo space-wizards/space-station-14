@@ -14,13 +14,14 @@ public sealed partial class SiliconLawMenu : FancyWindow
         IoCManager.InjectDependencies(this);
     }
 
-    public void Update(SiliconLawBuiState state)
+    public void Update(EntityUid uid, SiliconLawBuiState state)
     {
         state.Laws.Sort();
         LawDisplayContainer.Children.Clear();
+
         foreach (var law in state.Laws)
         {
-            var control = new LawDisplay(law, state.CanVerbalizeLaws, state.RadioChannels);
+            var control = new LawDisplay(uid, law, state.RadioChannels);
 
             LawDisplayContainer.AddChild(control);
         }

@@ -64,13 +64,11 @@ public enum SiliconLawsUiKey : byte
 public sealed class SiliconLawBuiState : BoundUserInterfaceState
 {
     public List<SiliconLaw> Laws;
-    public bool CanVerbalizeLaws = true;
-    public HashSet<string> RadioChannels;
+    public HashSet<string>? RadioChannels;
 
-    public SiliconLawBuiState(List<SiliconLaw> laws, bool canVerbaliseLaws, HashSet<string> radioChannels)
+    public SiliconLawBuiState(List<SiliconLaw> laws, HashSet<string>? radioChannels)
     {
         Laws = laws;
-        CanVerbalizeLaws = canVerbaliseLaws;
         RadioChannels = radioChannels;
     }
 }

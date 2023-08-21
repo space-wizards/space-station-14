@@ -97,12 +97,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     private void OnBoundUIOpened(EntityUid uid, SiliconLawBoundComponent component, BoundUIOpenedEvent args)
     {
         _entityManager.TryGetComponent<IntrinsicRadioTransmitterComponent>(uid, out var intrinsicRadio);
-        _entityManager.TryGetComponent<SpeechComponent>(uid, out var speech);
+        HashSet<string>? radioChannels = intrinsicRadio?.Channels;
 
-        bool canSpeak = speech?.Enabled == true;
-        HashSet<string> radioChannels = intrinsicRadio != null ? intrinsicRadio.Channels : new HashSet<string>();
-
-        var state = new SiliconLawBuiState(GetLaws(uid), canSpeak, radioChannels);
+        var state = new SiliconLawBuiState(GetLaws(uid), radioChannels);
         _userInterface.TrySetUiState(args.Entity, SiliconLawsUiKey.Key, state, (IPlayerSession) args.Session);
     }
 
