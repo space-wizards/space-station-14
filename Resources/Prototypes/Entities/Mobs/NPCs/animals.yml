@@ -1499,6 +1499,10 @@
     tags:
     - VimPilot
     - DoorBumpOpener
+  # make the player a traitor once its taken
+  - type: AutoTraitor
+    giveUplink: false
+    giveObjectives: false
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
