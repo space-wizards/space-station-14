@@ -40,6 +40,8 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterAtmos
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -50,6 +52,8 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterBase
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -60,6 +64,8 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcap.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterCaptain
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -70,6 +76,8 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatcargo.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterCargo
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -80,6 +88,8 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatce.rsi
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHatHeadHoodWinterCE
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -133,6 +143,8 @@
         Slash: 0.95
         Heat: 0.90
         Caustic: 0.75
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHatHeadHoodWinterCMO
 
 - type: entity
   parent: ClothingOuterWinterCoat

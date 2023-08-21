@@ -157,3 +157,89 @@
     tags:
     - HidesHair
     - WhitelistChameleon
+
+#Winter Coat Hoods
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodWinterAtmos
+  name: atmos winter coat hood
+  description: A hood to keep your head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodWinterBase
+  name: bartender winter coat hood
+  description: A hood to keep your head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodWinterCaptain
+  name: captain's winter coat hood
+  description: An expensive hood, to keep the captain's head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodWinterCargo
+  name: cargo winter coat hood
+  description: A hood, to keep your head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHatHeadHoodWinterCE
+  name: chief engineer's winter coat hood
+  description: A hood to keep your head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodce.rsi
+  - type: Tag
+    tags:
+    - HidesHair   
+    
+    
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHatHeadHoodWinterCMO
+  name: chief medical officer's winter coat hood
+  description: A hood to keep your head warm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+    
