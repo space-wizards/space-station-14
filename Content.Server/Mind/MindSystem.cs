@@ -473,9 +473,22 @@ public sealed class MindSystem : EntitySystem
             _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
         }
 
-
         mind.Objectives.Add(objective);
         return true;
+    }
+
+    /// <summary>
+    /// Adds an objective, by id, to this mind.
+    /// </summary>
+    private bool TryAddObjective(Mind.Mind mind, string name)
+    {
+        if (!_proto.TryIndex<ObjectivePrototype>(name, out var objective))
+        {
+            Log.Error($"Tried to add unknown objective prototype: {name}");
+            return false;
+        }
+
+        return TryAddObjective(mind, objective);
     }
 
     /// <summary>

@@ -267,7 +267,10 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // assign objectives - must happen after spider charge target so that the obj requirement works
         foreach (var objective in config.Objectives)
         {
-            AddObjective(mind, objective);
+            if (!_mind.Try.AddObjective(mind, objective))
+            {
+                Log.Error("Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
+            }
         }
 
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
@@ -290,22 +293,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         {
             // ran out of power, uncloak ninja
             _stealthClothing.SetEnabled(ninja.Suit.Value, uid, false);
-        }
-    }
-
-    // TODO: move into mind/objectives
-    /// <summary>
-    /// Helper function for objectives.
-    /// </summary>
-    private void AddObjective(Mind.Mind mind, string name)
-    {
-        if (_proto.TryIndex<ObjectivePrototype>(name, out var objective))
-        {
-            _mind.TryAddObjective(mind, objective);
-        }
-        else
-        {
-            Log.Error($"Tried to add unknown objective prototype: {name}");
         }
     }
 
