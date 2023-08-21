@@ -56,7 +56,7 @@ public sealed class NavMapControl : MapGridControl
         IoCManager.InjectDependencies(this);
 
         var cache = IoCManager.Resolve<IResourceCache>();
-        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 10);
+        _font = new VectorFont(cache.GetResource<FontResource>("/EngineFonts/NotoSans/NotoSans-Regular.ttf"), 16);
 
         RectClipContent = true;
         HorizontalExpand = true;
@@ -324,11 +324,11 @@ public sealed class NavMapControl : MapGridControl
         foreach (var beacon in navMap.Beacons)
         {
             var position = beacon.Position - offset;
-            position = Scale(new Vector2(position.X, -position.Y));
+            position = Scale(position with { Y = -position.Y });
 
             handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
 
-            handle.DrawString(_font, position, beacon.Text);
+            handle.DrawString(_font, position, beacon.Text, beacon.Color);
         }
 
         var curTime = Timing.RealTime;

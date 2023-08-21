@@ -5,12 +5,6 @@
     - type: StationData
 
 - type: entity
-  id: BaseStationMap
-  abstract: true
-  components:
-    - type: NavMap
-
-- type: entity
   id: BaseStationCargo
   abstract: true
   components:

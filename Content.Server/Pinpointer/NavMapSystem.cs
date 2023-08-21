@@ -28,12 +28,19 @@ public sealed class NavMapSystem : SharedNavMapSystem
 
         SubscribeLocalEvent<AnchorStateChangedEvent>(OnAnchorChange);
         SubscribeLocalEvent<ReAnchorEvent>(OnReAnchor);
+        SubscribeLocalEvent<StationGridAddedEvent>(OnStationInit);
         SubscribeLocalEvent<NavMapComponent, ComponentStartup>(OnNavMapStartup);
         SubscribeLocalEvent<NavMapComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<NavMapComponent, GridSplitEvent>(OnNavMapSplit);
 
         SubscribeLocalEvent<NavMapBeaconComponent, ComponentStartup>(OnNavMapBeaconStartup);
         SubscribeLocalEvent<NavMapBeaconComponent, AnchorStateChangedEvent>(OnNavMapBeaconAnchor);
+    }
+
+    private void OnStationInit(StationGridAddedEvent ev)
+    {
+        var comp = EnsureComp<NavMapComponent>(ev.GridId);
+        RefreshGrid(comp, Comp<MapGridComponent>(ev.GridId));
     }
 
     private void OnNavMapBeaconStartup(EntityUid uid, NavMapBeaconComponent component, ComponentStartup args)
@@ -125,7 +132,7 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (xform.GridUid != uid || !CanBeacon(beaconUid, xform))
                 continue;
 
-            beacons.Add(new NavMapBeacon(beacon.Color, beacon.Text, xform.LocalPosition));
+            beacons.Add(new NavMapBeacon(beacon.Color, beacon.Text ?? MetaData(beaconUid).EntityName, xform.LocalPosition));
         }
 
         // TODO: Diffs
