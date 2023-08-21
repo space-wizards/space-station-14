@@ -12,7 +12,7 @@ public sealed class InventoryTemplatePrototype : IPrototype
     [DataField("slots")] public SlotDefinition[] Slots { get; } = Array.Empty<SlotDefinition>();
 }
 
-[DataDefinition
+[DataDefinition]
 public sealed class SlotDefinition
 {
     [DataField("name", required: true)] public string Name { get; } = string.Empty;
