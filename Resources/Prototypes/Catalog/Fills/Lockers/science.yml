@@ -13,3 +13,18 @@
       - id: NodeScanner
       - id: NetworkConfigurator
         prob: 0.5
+
+- type: entity
+  id: LockerRoboticsFilled
+  suffix: Filled
+  parent: LockerRoboticist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesRobohands
+      - id: ClothingHeadsetRobotics
+      - id: ClothingMaskGas
+      - id: ClothingOuterCoatRobo
+      - id: ClothingHeadHatWelding
+      - id: ClothingBeltUtilityFilled
+        prob: 0.5

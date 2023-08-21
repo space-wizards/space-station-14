@@ -281,6 +281,19 @@
   - type: AccessReader
     access: [ [ "Research" ] ]
 
+- type: entity
+  id: LockerRoboticist
+  parent: LockerBase
+  name: roboticist's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: robotics
+    stateDoorOpen: robotics_open
+    stateDoorClosed: robotics_door
+  - type: AccessReader
+    access: [ [ "Robotics" ] ]
+
 # HoS
 - type: entity
   id: LockerHeadOfSecurity

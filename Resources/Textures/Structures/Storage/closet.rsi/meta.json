@@ -423,6 +423,15 @@
       "name": "rd_open"
     },
     {
+      "name": "robotics"
+    },
+    {
+      "name": "robotics_door"
+    },
+    {
+      "name": "robotics_open"
+    },
+    {
       "name": "red_door"
     },
     {
