@@ -1,6 +1,7 @@
 using Content.Shared.FixedPoint;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Store;
 
@@ -28,7 +29,7 @@ public sealed class CurrencyPrototype : IPrototype
     /// <summary>
     /// The physical entity of the currency
     /// </summary>
-    [DataField("cash")] //TODO: you get your customTypeSerializer when FixedPoint2 works in them! -emo
+    [DataField("cash", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<FixedPoint2, EntityPrototype>))]
     public Dictionary<FixedPoint2, string>? Cash { get; }
 
     /// <summary>

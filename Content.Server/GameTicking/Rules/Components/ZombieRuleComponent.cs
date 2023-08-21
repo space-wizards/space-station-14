@@ -1,4 +1,5 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Roles;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
@@ -93,5 +94,6 @@ public sealed class ZombieRuleComponent : Component
     [DataField("shuttleCalled")]
     public bool ShuttleCalled;
 
+    [ValidatePrototypeId<InstantActionPrototype>]
     public const string ZombifySelfActionPrototype = "TurnUndead";
 }

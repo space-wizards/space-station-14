@@ -323,6 +323,12 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
+            // The lobby song is set here instead of in RestartRound,
+            // because ShowRoundEndScoreboard triggers the start of the music playing
+            // at the end of a round, and this needs to be set before RestartRound
+            // in order for the lobby song status display to be accurate.
+            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
+
             ShowRoundEndScoreboard(text);
         }
 
@@ -453,7 +459,6 @@ namespace Content.Server.GameTicking
             PlayersJoinedRoundNormally = 0;
 
             RunLevel = GameRunLevel.PreRoundLobby;
-            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();
