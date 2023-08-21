@@ -11,6 +11,9 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Systems;
 
+/// <summary>
+/// Handles (un)equipping and provides some API functions.
+/// </summary>
 public abstract class SharedNinjaSuitSystem : EntitySystem
 {
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -104,6 +107,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
         UseDelay.BeginDelay(user, useDelay);
     }
 
+    // TODO: modify PowerCellDrain
     /// <summary>
     /// Returns the power used by a suit
     /// </summary>
@@ -124,13 +128,13 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     /// </summary>
     protected virtual void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
     {
+        if (!TryComp<SpaceNinjaComponent>(user, out var ninja))
+            return;
+
         // mark the user as not wearing a suit
-        if (TryComp<SpaceNinjaComponent>(user, out var ninja))
-        {
-            _ninja.AssignSuit(ninja, null);
-            // disable glove abilities
-            if (ninja.Gloves != null && TryComp<NinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
-                _gloves.DisableGloves(ninja.Gloves.Value, gloves);
-        }
+        _ninja.AssignSuit(user, null, ninja);
+        // disable glove abilities
+        if (ninja.Gloves != null && TryComp<NinjaGlovesComponent>(ninja.Gloves.Value, out var gloves))
+            _gloves.DisableGloves(ninja.Gloves.Value, gloves);
     }
 }

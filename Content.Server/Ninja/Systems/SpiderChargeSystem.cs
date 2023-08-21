@@ -7,6 +7,9 @@ using Robust.Shared.GameObjects;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Prevents planting a spider charge outside of its location and handles greentext.
+/// </summary>
 public sealed class SpiderChargeSystem : EntitySystem
 {
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;

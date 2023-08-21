@@ -3,6 +3,9 @@ using Content.Shared.DoAfter;
 
 namespace Content.Shared.Ninja.Systems;
 
+/// <summary>
+/// Basic draining prediction and API, all real logic is handled serverside.
+/// </summary>
 public abstract class SharedBatteryDrainerSystem : EntitySystem
 {
     public override void Initialize()

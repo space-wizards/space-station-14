@@ -1,9 +1,8 @@
 using Content.Server.Ninja.Systems;
 using Content.Server.Objectives;
+using Content.Shared.Communications;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -24,7 +23,7 @@ public sealed class NinjaRuleComponent : Component
     public readonly List<string> Implants = new();
 
     /// <summary>
-    /// List of threats that can be called in
+    /// List of threats that can be called in. Copied onto <see cref="CommsHackerComponent"/> when gloves are enabled.
     /// </summary>
     [DataField("threats", required: true)]
     public readonly List<Threat> Threats = new();
@@ -34,25 +33,4 @@ public sealed class NinjaRuleComponent : Component
     /// </summary>
     [DataField("greetingSound", customTypeSerializer: typeof(SoundSpecifierTypeSerializer))]
     public SoundSpecifier? GreetingSound = new SoundPathSpecifier("/Audio/Misc/ninja_greeting.ogg");
-}
-
-/// <summary>
-/// A threat that can be called in to the station by a ninja hacking a communications console.
-/// Generally some kind of mid-round minor antag, though you could make it call in scrubber backflow if you wanted to.
-/// You wouldn't do that, right?
-/// </summary>
-[DataDefinition]
-public sealed class Threat
-{
-    /// <summary>
-    /// Locale id for the announcement to be made from CentCom.
-    /// </summary>
-    [DataField("announcement")]
-    public readonly string Announcement = default!;
-
-    /// <summary>
-    /// The game rule for the threat to be added, it should be able to work when added mid-round otherwise this will do nothing.
-    /// </summary>
-    [DataField("rule", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public readonly string Rule = default!;
 }

@@ -13,8 +13,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
+// TODO: make dashing its own component
 /// <summary>
-/// System for katana dashing and binding
+/// System for katana dashing and binding. Recalling is handled by the suit.
 /// </summary>
 public sealed class EnergyKatanaSystem : EntitySystem
 {

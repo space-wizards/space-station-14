@@ -9,6 +9,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Shocks clicked mobs using battery charge.
+/// </summary>
 public sealed class StunProviderSystem : SharedStunProviderSystem
 {
     [Dependency] private readonly BatterySystem _battery = default!;
@@ -29,6 +32,7 @@ public sealed class StunProviderSystem : SharedStunProviderSystem
     /// </summary>
     private void OnInteract(EntityUid uid, StunProviderComponent comp, InteractionAttemptEvent args)
     {
+        // TODO: generic check
         if (comp.BatteryUid == null || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 

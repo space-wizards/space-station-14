@@ -1,5 +1,6 @@
 using Content.Shared.Actions;
 using Content.Shared.CombatMode;
+using Content.Shared.Communications;
 using Content.Shared.Doors.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -19,6 +20,9 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Shared.Ninja.Systems;
 
+/// <summary>
+/// Provides the toggle action and handles examining and unequipping.
+/// </summary>
 public abstract class SharedNinjaGlovesSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
@@ -37,39 +41,38 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         SubscribeLocalEvent<NinjaGlovesComponent, GetItemActionsEvent>(OnGetItemActions);
         SubscribeLocalEvent<NinjaGlovesComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<NinjaGlovesComponent, GotUnequippedEvent>(OnUnequipped);
-
-        // TODO: maybe move into r&d server???
-        SubscribeLocalEvent<NinjaDownloadComponent, InteractionAttemptEvent>(OnDownload);
     }
 
     /// <summary>
     /// Disable glove abilities and show the popup if they were enabled previously.
     /// </summary>
-    public void DisableGloves(EntityUid uid, NinjaGlovesComponent comp)
+    public void DisableGloves(EntityUid uid, NinjaGlovesComponent? comp = null)
     {
-        if (comp.User != null)
-        {
-            var user = comp.User.Value;
-            comp.User = null;
-            Dirty(comp);
+        // already disabled?
+        if (!Resolve(uid, ref comp) || comp.User == null)
+            return;
 
-            Appearance.SetData(uid, ToggleVisuals.Toggled, false);
-            RemComp<InteractionRelayComponent>(user);
-            Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
+        var user = comp.User.Value;
+        comp.User = null;
+        Dirty(comp);
 
-            RemComp<BatteryDrainerComponent>(user);
-            RemComp<EmagProviderComponent>(user);
-            RemComp<StunProviderComponent>(user);
-        }
+        Appearance.SetData(uid, ToggleVisuals.Toggled, false);
+        Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);
+
+        RemComp<BatteryDrainerComponent>(user);
+        RemComp<EmagProviderComponent>(user);
+        RemComp<StunProviderComponent>(user);
+        RemComp<ResearchStealerComponent>(user);
+        RemComp<CommsHackerComponent>(user);
     }
 
     /// <summary>
     /// Adds the toggle action when equipped.
-    /// Since the event does not pass user this can't be nice and just not add the action if it isn't a ninja wearing but oh well.
     /// </summary>
     private void OnGetItemActions(EntityUid uid, NinjaGlovesComponent comp, GetItemActionsEvent args)
     {
-        args.Actions.Add(comp.ToggleAction);
+        if (HasComp<SpaceNinjaComponent>(args.User))
+            args.Actions.Add(comp.ToggleAction);
     }
 
     /// <summary>
@@ -96,6 +99,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         }
     }
 
+    // TODO: generic event thing
     /// <summary>
     /// Helper for glove ability handlers, checks gloves, suit, range, combat mode and stuff.
     /// </summary>
@@ -147,27 +151,29 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         return false;
     }
 
+    // TODO: move to research stealer
     /// <summary>
     /// Start do after for downloading techs from a r&d server.
     /// Will only try if there is at least 1 tech researched.
     /// </summary>
-    private void OnDownload(EntityUid uid, NinjaDownloadComponent comp, InteractionAttemptEvent args)
+    private void OnInteractionAttempt(EntityUid uid, ResearchStealerComponent comp, InteractionAttemptEvent args)
     {
-        if (!GloveCheck(uid, args, out var gloves, out var user, out var target))
+        // TODO: generic event
+        if (!_gloves.AbilityCheck(uid, args, out var target))
             return;
 
         // can only hack the server, not a random console
         if (!TryComp<TechnologyDatabaseComponent>(target, out var database) || HasComp<ResearchClientComponent>(target))
             return;
 
-        // fail fast if theres no tech right now
+        // fail fast if theres no techs to steal right now
         if (database.UnlockedTechnologies.Count == 0)
         {
             Popup.PopupClient(Loc.GetString("ninja-download-fail"), user, user);
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(user, comp.DownloadTime, new DownloadDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(args.User, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,

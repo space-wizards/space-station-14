@@ -38,6 +38,12 @@ using System.Linq;
 
 namespace Content.Server.Ninja.Systems;
 
+// TODO: when syndiborgs are a thing have a borg converter with 6 second doafter
+// engi -> saboteur
+// medi -> idk reskin it
+// other -> assault
+// TODO: when criminal records is merged, hack it to set everyone to arrest
+
 /// <summary>
 /// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
 /// </summary>
@@ -160,13 +166,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return Comp<NinjaRuleComponent>(ruleEntity);
     }
 
-
-    // TODO: when syndiborgs are a thing have a borg converter with 6 second doafter
-    // engi -> saboteur
-    // medi -> idk reskin it
-    // other -> assault
-    // TODO: when criminal records is merged, hack it to set everyone to arrest
-
     // TODO: can probably copy paste borg code here
     /// <summary>
     /// Update the alert for the ninja's suit power indicator.
@@ -213,20 +212,14 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
     }
 
+    // TODO: move to comms hacker system
     /// <summary>
-    /// Completes the objective, makes announcement and adds rule of a random threat.
+    /// Makes announcement and adds game rule of the threat.
     /// </summary>
-    public void CallInThreat(EntityUid uid)
+    public void CallInThreat(Threat threat);
     {
-        var config = RuleConfig();
-        if (config.Threats.Count == 0 || !_mind.TryGetRole(uid, out var role) || role.CalledInThreat)
-            return;
-
-        role.CalledInThreat = true;
-
-        var threat = _random.Pick(config.Threats);
         _gameTicker.StartGameRule(threat.Rule, out _);
-        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: false, colorOverride: Color.Red);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: true, colorOverride: Color.Red);
     }
 
     /// <summary>
@@ -313,6 +306,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
 
+    // TODO: PowerCellDraw, modify when cloak enabled
     /// <summary>
     /// Handle constant power drains from passive usage and cloak.
     /// </summary>
@@ -331,6 +325,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         }
     }
 
+    // TODO: move into mind/objectives
     /// <summary>
     /// Helper function for objectives.
     /// </summary>
@@ -342,7 +337,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         }
         else
         {
-            Logger.Error($"Ninja has unknown objective prototype: {name}");
+            Log.Error($"Tried to add unknown objective prototype: {name}");
         }
     }
 
@@ -359,7 +354,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // make sure it's a ninja doorjacking it
-        if (_mind.TryGetRole(uid, out var role))
+        if (_mind.TryGetRole<NinjaRole>(uid, out var role))
             role.DoorsJacked++;
     }
 }

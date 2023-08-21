@@ -8,7 +8,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
-using System.Threading;
 
 namespace Content.Shared.Ninja.Components;
 
@@ -23,7 +22,7 @@ public sealed partial class NinjaGlovesComponent : Component
     /// <summary>
     /// Entity of the ninja using these gloves, usually means enabled
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField("user"), AutoNetworkedField]
     public EntityUid? User;
 
     /// <summary>
@@ -49,39 +48,6 @@ public sealed partial class NinjaGlovesComponent : Component
 }
 
 /// <summary>
-/// Component for stealing technologies from a R&D server, when gloves are enabled.
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class ResearchStealerComponent : Component
-{
-    /// <summary>
-    /// Time taken to steal research from a server
-    /// </summary>
-    [DataField("delay")]
-    public TimeSpan Delay = TimeSpan.FromSeconds(20);
-}
-
-/// <summary>
-/// Component for hacking a communications console to call in a threat.
-/// Can only be done once, the component is remove afterwards.
-/// </summary>
-[RegisterComponent, NetworkedComponent]
-public sealed class CommsHackerComponent : Component
-{
-    /// <summary>
-    /// Time taken to hack the console
-    /// </summary>
-    [DataField("delay")]
-    public TimeSpan Delay = TimeSpan.FromSeconds(20);
-
-    /// <summary>
-    /// Possible threats to choose from.
-    /// </summary>
-    [DataField("threats")]
-    public List<String> Threats
-}
-
-/// <summary>
 /// DoAfter event for drain ability.
 /// </summary>
 [Serializable, NetSerializable]
@@ -92,9 +58,3 @@ public sealed class DrainDoAfterEvent : SimpleDoAfterEvent { }
 /// </summary>
 [Serializable, NetSerializable]
 public sealed class ResearchStealDoAfterEvent : SimpleDoAfterEvent { }
-
-/// <summary>
-/// DoAfter event for comms console terror ability.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class TerrorDoAfterEvent : SimpleDoAfterEvent { }
