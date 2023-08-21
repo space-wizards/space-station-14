@@ -862,7 +862,7 @@
         reagents:
         - ReagentId: Aloe
           Quantity: 10
-        - ReagentId: Kelotane
+        - ReagentId: Dermaline
           Quantity: 10
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/aloe.rsi

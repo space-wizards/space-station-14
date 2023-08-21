@@ -45,12 +45,6 @@ public sealed class ArtifactAnalyzerComponent : Component
     [ViewVariables]
     public EntityUid? Console;
 
-    /// <summary>
-    /// All of the valid artifacts currently touching the analyzer.
-    /// </summary>
-    [ViewVariables]
-    public HashSet<EntityUid> Contacts = new();
-
     [ViewVariables(VVAccess.ReadWrite)]
     public bool ReadyToPrint = false;
 

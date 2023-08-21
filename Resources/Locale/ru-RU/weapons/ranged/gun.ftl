@@ -4,6 +4,7 @@ gun-selector-verb = Изменить на { $mode }
 gun-selected-mode = Выбран { $mode }
 gun-disabled = Вы не можете использовать оружие!
 gun-clumsy = Оружие взрывается вам в лицо!
+gun-set-fire-mode = Установлен {$mode} режим
 # SelectiveFire
 gun-SemiAuto = полуавто
 gun-Burst = очередь
@@ -23,6 +24,8 @@ gun-chamber-bolt-closed = Затвор заперт
 gun-chamber-bolt-opened = Затвор отперт
 gun-chamber-bolt-close = Запереть затвор
 gun-chamber-bolt-open = Отпереть затвор
+gun-chamber-bolt-closed-state = заперт
+gun-chamber-bolt-open-state = отперт
 gun-chamber-rack = Передернуть затвор
 
 # CartridgeAmmo
