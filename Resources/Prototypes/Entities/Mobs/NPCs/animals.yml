@@ -811,6 +811,7 @@
         - MobMask
         layer:
         - MobLayer
+  - type: Stripping
   - type: Strippable
   - type: UserInterface
     interfaces:
