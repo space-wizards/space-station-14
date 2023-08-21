@@ -1123,6 +1123,8 @@
   - type: Advertise
     pack: AutoDrobeAds
   - type: Speech
+  - type: AccessReader
+    access: [["Theatre"]]
   - type: Sprite
     sprite: Structures/Machines/VendingMachines/theater.rsi
     layers:

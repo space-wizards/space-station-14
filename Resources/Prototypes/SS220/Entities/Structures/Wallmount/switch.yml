@@ -1,0 +1,19 @@
+- type: entity
+  id: Lightswitch
+  parent: SignalSwitchDirectional
+  name: signal switch
+  description: It's a switch for toggling lights. Has a glowing indicator so it can be better seen in the dark.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: SignalSwitch
+    state: true
+  - type: Sprite
+    sprite: SS220/Structures/Wallmounts/lightswitch.rsi
+    layers:
+    - state: base
+    - state: off
+      shader: unshaded
+      map: [ "indicator" ]

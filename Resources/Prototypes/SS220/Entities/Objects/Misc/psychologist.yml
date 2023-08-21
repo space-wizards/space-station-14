@@ -1,0 +1,28 @@
+- type: entity
+  parent: Pill
+  id: PillPlacebo
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Enzyme
+          Quantity: 10
+
+- type: entity
+  parent: PillCanister
+  id: PlaceboPillCanister
+  name: плацебо
+  description: Ваше спасение от особо приставучих наркоманов.
+  components:
+  - type: StorageFill
+    contents:
+      - id: PillPlacebo
+        amount: 9
+
+- type: entity
+  parent: PersonalAI
+  id: TherapeuticPai
+  name: терапевтический ПИИ
+  description: "Для тех кому нужно с кем-нибудь поговорить. Внимание: производитель не несёт ответсвенность за потенциальную зависимость от продукта."

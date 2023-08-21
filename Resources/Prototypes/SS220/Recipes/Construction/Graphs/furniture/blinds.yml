@@ -1,0 +1,87 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: constructionGraph
+  id: Blinds
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DeleteEntity {}
+      edges:
+        - to: BlindsSolo
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: BlindsLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: BlindsRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: BlindsMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: BlindsSolo
+      entity: BlindsSolo
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: BlindsLeft
+      entity: BlindsLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: BlindsMiddle
+      entity: BlindsMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: BlindsRight
+      entity: BlindsRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1

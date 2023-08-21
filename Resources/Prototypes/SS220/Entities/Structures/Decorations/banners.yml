@@ -1,0 +1,19 @@
+- type: entity
+  id: BannerClown
+  parent: BannerBase
+  name: clown banner
+  description: A banner displaying the clown logo. It looks rather cheap.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_clown
+
+- type: entity
+  id: BannerMime
+  parent: BannerBase
+  name: mime banner
+  description: A banner displaying the mime logo. It looks rather cheap.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_mime

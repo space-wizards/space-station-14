@@ -1,0 +1,82 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  id: GrandFatherClocks
+  name: напольные часы
+  description: Антикварные и дорого выглядящие часы. Явно используются как украшение комнаты, но при этом работают всё еще исправно и громко.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: PhysicalClock
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/clocks.rsi
+    noRot: true
+    layers:
+      - state: clocks
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Anchorable
+    delay: 2
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.25,-0.5,0.25,0.5"
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+
+- type: entity
+  parent: BaseStructure
+  id: ClockOnWall #WallClock занят культом
+  name: настенные часы
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WallMount
+    arc: 360
+  - type: PhysicalClock
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/wall_clock.rsi
+    drawdepth: WallTops
+    layers:
+      - state: icon
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb

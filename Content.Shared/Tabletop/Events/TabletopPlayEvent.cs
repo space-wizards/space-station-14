@@ -12,13 +12,15 @@ namespace Content.Shared.Tabletop.Events
         public EntityUid CameraUid;
         public string Title;
         public Vector2i Size;
+        public Vector2i WindowSize;
 
-        public TabletopPlayEvent(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size)
+        public TabletopPlayEvent(EntityUid tableUid, EntityUid cameraUid, string title, Vector2i size, Vector2i windowSize)
         {
             TableUid = tableUid;
             CameraUid = cameraUid;
             Title = title;
             Size = size;
+            WindowSize = windowSize;
         }
     }
 }

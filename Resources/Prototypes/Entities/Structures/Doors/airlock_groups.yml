@@ -26,6 +26,7 @@
     medical:     Structures/Doors/Airlocks/Glass/medical.rsi
     security:    Structures/Doors/Airlocks/Glass/security.rsi
     virology:    Structures/Doors/Airlocks/Glass/virology.rsi
+    clown:       SS220/Structures/Doors/clown.rsi
 
 - type: AirlockGroup
   id: Windoor

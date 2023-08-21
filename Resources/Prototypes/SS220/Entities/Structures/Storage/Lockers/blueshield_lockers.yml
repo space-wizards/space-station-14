@@ -1,0 +1,40 @@
+- type: entity
+  id: LockerBlueshield
+  parent: LockerBaseSecure
+  name: blue shield's locker
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: blueshield
+    stateDoorOpen: blueshield_open
+    stateDoorClosed: blueshield_door
+  - type: AccessReader
+    access: [ [ "Blueshield" ] ]
+
+- type: entity
+  id: LockerBlueshieldFilled
+  suffix: Filled
+  parent: LockerBlueshield
+  components:
+  - type: StorageFill
+    contents:
+    - id: WeaponDisabler
+    - id: MedkitAdvancedFilled
+  
+- type: entity
+  parent: GunSafe
+  id: GunSafeBlueshield
+  name: blue shield's gun safe
+  components:
+  - type: AccessReader
+    access: [ [ "Blueshield" ] ]
+  - type: StorageFill
+    contents:
+    - id: WeaponDisabler
+      amount: 1
+    - id: WeaponSubMachineGunDrozd
+      amount: 1
+    - id: MagazinePistolSubMachineGun
+      amount: 2

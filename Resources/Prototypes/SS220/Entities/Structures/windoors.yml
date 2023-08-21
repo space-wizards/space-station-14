@@ -1,0 +1,7 @@
+- type: entity
+  parent: WindoorSecure
+  id: WindoorSecureCaptainLocked
+  suffix: Капитан, Закрыто
+  components:
+  - type: AccessReader
+    access: [["Captain"]]

@@ -37,6 +37,9 @@
     closedDrawDepth: BlastDoors
     bumpOpen: false
     clickOpen: false
+    canCrush: true
+    crushStaticEntities: false
+    performCollisionCheck: false
     closeTimeOne: 0.2
     closeTimeTwo: 1.2
     openTimeOne: 1.2
@@ -59,6 +62,7 @@
       type: WiresBoundUserInterface
   - type: Airtight
     fixVacuum: true
+    noAirWhenFullyAirBlocked: false
   - type: RadiationBlocker
     resistance: 2
   - type: Damageable

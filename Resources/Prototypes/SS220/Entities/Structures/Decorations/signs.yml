@@ -1,0 +1,39 @@
+- type: entity
+  parent: BaseSign
+  id: SignRestroom
+  name: знак "туалет"
+  description: Знак, указывающий на туалет.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Decorations/signs.rsi
+    state: rest
+
+- type: entity
+  parent: BaseSign
+  id: SignCourt
+  name: знак "суд"
+  description: Знак, указывающий на зал суда.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Decorations/signs.rsi
+    state: court
+
+- type: entity
+  parent: BaseSign
+  id: SignPsych
+  name: знак "психолог"
+  description: Знак, указывающий на офис психолога.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Decorations/signs.rsi
+    state: psych
+
+- type: entity
+  parent: BaseSign
+  id: SignNtFlag
+  name: настенный флаг NanoTrasen
+  description: Синий флаг с логотипом NanoTrasen.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Decorations/signs.rsi
+    state: ntflag

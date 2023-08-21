@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt",
+  "copyright": "TheArturZh (Artur Zhidkov) & SS220 Team",
+  "states": [
+	  {
+		"name": "off"
+	  },
+	  {
+		"name": "on"
+	  }
+  ]
+}

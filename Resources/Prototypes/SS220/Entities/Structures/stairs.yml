@@ -1,0 +1,90 @@
+- type: entity
+  id: StairsBase
+  name: stairs
+  abstract: true
+  description: Главное - не споткнуться!
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: Stairs
+  - type: Clickable
+  - type: Sprite
+    sprite: SS220/Structures/Floor/stairs.rsi
+    drawdepth: FloorTiles
+  - type: Transform
+    anchored: true
+  - type: FootstepModifier
+    footstepSoundCollection:
+      collection: FootstepCatwalk
+      params:
+        volume: 8
+  - type: Tag
+    tags:
+      - Catwalk
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 500
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal: # takes two to construct, so drop less than that
+            min: 0
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+- type: entity
+  id: StairsSolo
+  parent: StairsBase
+  name: ступеньки
+  suffix: Одиночные, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  components:
+  - type: Construction
+    node: StairsSolo
+  - type: Sprite
+    state: solo
+
+- type: entity
+  id: StairsLeft
+  parent: StairsBase
+  name: ступеньки
+  suffix: Левые, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  components:
+  - type: Construction
+    node: StairsLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  id: StairsMiddle
+  parent: StairsBase
+  name: ступеньки
+  suffix: По середине, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  components:
+  - type: Construction
+    node: StairsMiddle
+  - type: Sprite
+    state: middle
+
+- type: entity
+  id: StairsRight
+  parent: StairsBase
+  name: ступеньки
+  suffix: Правые, НЕ ИСПОЛЬЗОВАТЬ (ПОД ЗАМЕНУ)
+  components:
+  - type: Construction
+    node: StairsRight
+  - type: Sprite
+    state: right

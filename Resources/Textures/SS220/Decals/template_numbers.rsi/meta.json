@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "license": "OFL",
+  "copyright": "TheArturZh (Artur Zhidkov) & SS220 Team, the font is Wallpoet made by Lars Berggren",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "0"
+    },
+    {
+      "name": "1"
+    },
+    {
+      "name": "2"
+    },
+    {
+      "name": "3"
+    },
+    {
+      "name": "4"
+    },
+    {
+      "name": "5"
+    },
+    {
+      "name": "6"
+    },
+    {
+      "name": "7"
+    },
+	{
+      "name": "8"
+    },
+	{
+      "name": "9"
+    }
+  ]
+}

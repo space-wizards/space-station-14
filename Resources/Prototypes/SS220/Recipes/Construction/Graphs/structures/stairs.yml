@@ -1,0 +1,87 @@
+﻿- type: constructionGraph
+  id: Stairs
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: StairsSolo
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: StairsLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: StairsRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+        - to: StairsMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 2
+              doAfter: 1
+
+    - node: StairsSolo
+      entity: StairsSolo
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: StairsLeft
+      entity: StairsLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: StairsMiddle
+      entity: StairsMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: StairsRight
+      entity: StairsRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 2
+          - !type:DeleteEntity {}
+          steps:
+            - tool: Anchoring
+              doAfter: 1

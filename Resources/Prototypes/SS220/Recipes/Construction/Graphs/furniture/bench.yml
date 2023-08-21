@@ -1,0 +1,68 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: constructionGraph
+  id: Bench
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: BenchLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: BenchRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+        - to: BenchMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: Steel
+              amount: 1
+              doAfter: 1
+
+    - node: BenchLeft
+      entity: BenchLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: BenchMiddle
+      entity: BenchMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: BenchRight
+      entity: BenchRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: SheetSteel1
+                amount: 1
+          steps:
+            - tool: Anchoring
+              doAfter: 1

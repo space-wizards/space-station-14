@@ -1,0 +1,14 @@
+{
+    "version":1,
+    "size":{
+        "x":96,
+        "y":96
+    },
+    "license":"CC-BY-NC-SA-3.0",
+    "copyright":"Made TheArturZh, uses modified pedestal sprite that is licensed under CC BY-NC-SA and which is taken from Paradise SS13 build at commit (https://github.com/ParadiseSS13/Paradise/commit/4c928af9dea4dae0a2f65438774405c23505431d).",
+    "states":[
+        {
+            "name":"statue"
+        }
+    ]
+}

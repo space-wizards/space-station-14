@@ -9,6 +9,10 @@
 - type: accessLevel
   id: HeadOfPersonnel
   name: id-card-access-level-head-of-personnel
+  
+- type: accessLevel
+  id: Blueshield
+  name: id-card-access-level-blueshield
 
 - type: accessGroup
   id: Command
@@ -16,6 +20,7 @@
   - Command
   - Captain
   - HeadOfPersonnel
+  - Blueshield
 
 - type: accessLevel
   id: EmergencyShuttleRepealAll

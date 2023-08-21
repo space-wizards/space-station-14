@@ -1,5 +1,6 @@
 # © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
+# Kesha
 - type: entity
   name: Spawner Kesha
   id: SpawnMobParrotKesha
@@ -37,3 +38,52 @@
     description: ghost-role-information-kesha-description
     rules: "Вы НЕ разумный попугай, вы НЕ знаете слов, но можете запоминать и использовать их не взирая на смысл. Составлять осмысленные предложения или вести диалог запрещено."
   - type: GhostTakeoverAvailable
+
+# Boss
+- type: entity
+  name: Boss
+  parent: MobParrot
+  id: MobParrotBoss
+  description: Someone's Boss.
+  suffix: Питомец, Роль
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: parrot
+      sprite: SS220/Mobs/Animals/cuckadoo.rsi
+  - type: InteractionPopup
+    successChance: 1
+  - type: Grammar
+    attributes:
+      proper: true
+      gender: male
+  - type: Tag
+    tags:
+    - CannotSuicide
+    - DoorBumpOpener
+  - type: Access
+    tags:
+    - Command
+  - type: GhostRole
+    prob: 1
+    name: ghost-role-information-boss-name
+    description: ghost-role-information-boss-description
+    rules: "Вы НЕ разумный попугай, вы НЕ знаете слов, но можете запоминать и использовать их не взирая на смысл. Составлять осмысленные предложения или вести диалог запрещено."
+  - type: GhostTakeoverAvailable
+
+- type: entity
+  name: Spawner Parrrot Boss
+  id: SpawnMobParrotBoss
+  parent: MarkerBase
+  suffix: Роль
+  components:
+  - type: Sprite
+    layers:
+    - state: green
+    - state: icon
+      sprite: "SS220/Mobs/Animals/cuckadoo.rsi"
+  - type: ConditionalSpawner
+    prototypes:
+    - MobParrotBoss

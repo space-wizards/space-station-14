@@ -11,6 +11,7 @@ using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
@@ -412,7 +413,7 @@ public abstract class SharedDoorSystem : EntitySystem
 
         // Find entities and apply curshing effects
         var stunTime = door.DoorStunTime + door.OpenTimeOne;
-        foreach (var entity in GetColliding(uid, physics))
+        foreach (var entity in GetColliding(uid, physics, !door.CrushStaticEntities))
         {
             door.CurrentlyCrushing.Add(entity);
             if (door.CrushDamage != null)
@@ -432,7 +433,7 @@ public abstract class SharedDoorSystem : EntitySystem
     /// <summary>
     ///     Get all entities that collide with this door by more than <see cref="IntersectPercentage"/> percent.\
     /// </summary>
-    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null)
+    public IEnumerable<EntityUid> GetColliding(EntityUid uid, PhysicsComponent? physics = null, bool ignoreStaticObjects = false)
     {
         if (!Resolve(uid, ref physics))
             yield break;
@@ -444,6 +445,9 @@ public abstract class SharedDoorSystem : EntitySystem
         foreach (var otherPhysics in PhysicsSystem.GetCollidingEntities(Transform(uid).MapID, doorAABB))
         {
             if (otherPhysics == physics)
+                continue;
+
+            if (ignoreStaticObjects && otherPhysics.BodyType == BodyType.Static)
                 continue;
 
             //TODO: Make only shutters ignore these objects upon colliding instead of all airlocks

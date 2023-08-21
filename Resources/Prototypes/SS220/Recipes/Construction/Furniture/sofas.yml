@@ -1,0 +1,226 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+# Bench
+- type: construction
+  name: Скамейка (лево)
+  id: BenchLeft
+  graph: Bench
+  startNode: start
+  targetNode: BenchLeft
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/bench.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Скамейка (середина)
+  id: BenchMiddle
+  graph: Bench
+  startNode: start
+  targetNode: BenchMiddle
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/bench.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Скамейка (право)
+  id: BenchRight
+  graph: Bench
+  startNode: start
+  targetNode: BenchRight
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/bench.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Pew
+- type: construction
+  name: Церковная скамья (лево)
+  id: PewLeft
+  graph: Pew
+  startNode: start
+  targetNode: PewLeft
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/pew.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Церковная скамья (середина)
+  id: PewMiddle
+  graph: Pew
+  startNode: start
+  targetNode: PewMiddle
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/pew.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Церковная скамья (право)
+  id: PewRight
+  graph: Pew
+  startNode: start
+  targetNode: PewRight
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/pew.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Dinner Sofa
+- type: construction
+  name: Ресторанный диван (лево)
+  id: DinnerSofaLeft
+  graph: DinnerSofa
+  startNode: start
+  targetNode: DinnerSofaLeft
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/dinner_sofa.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Ресторанный диван (середина)
+  id: DinnerSofaMiddle
+  graph: DinnerSofa
+  startNode: start
+  targetNode: DinnerSofaMiddle
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/dinner_sofa.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Ресторанный диван (право)
+  id: DinnerSofaRight
+  graph: DinnerSofa
+  startNode: start
+  targetNode: DinnerSofaRight
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/dinner_sofa.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+# Sofa
+- type: construction
+  name: Диван (лево)
+  id: SofaLeft
+  graph: Sofa
+  startNode: start
+  targetNode: SofaLeft
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/sofa.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Диван (середина)
+  id: SofaMiddle
+  graph: Sofa
+  startNode: start
+  targetNode: SofaMiddle
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/sofa.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Диван (право)
+  id: SofaRight
+  graph: Sofa
+  startNode: start
+  targetNode: SofaRight
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/sofa.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: Диван (угол)
+  id: SofaCorner
+  graph: Sofa
+  startNode: start
+  targetNode: SofaCorner
+  category: construction-category-furniture
+  description: Вы сидите на этом. Либо по вашей воле, либо по принуждению.
+  icon:
+    sprite: SS220/Structures/Furniture/sofa.rsi
+    state: corner
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

@@ -1,0 +1,25 @@
+- type: entity
+  id: DeskWood
+  parent: TableWood
+  name: письменный стол
+  description: Беречь от огня. По слухам, он легко горит.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/wooddesk.rsi
+  - type: Icon
+    sprite: SS220/Structures/Furniture/wooddesk.rsi
+  - type: Construction
+    graph: Table
+    node: DeskWood
+
+- type: entity
+  id: DeskWoodNt
+  parent: DeskWood
+  name: письменный стол
+  suffix: NT Logo
+  description: Беречь от огня. По слухам, он легко горит.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/wooddesk_nt.rsi
+  - type: Icon
+    sprite: SS220/Structures/Furniture/wooddesk_nt.rsi

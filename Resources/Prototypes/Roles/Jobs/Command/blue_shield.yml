@@ -33,6 +33,7 @@
   - Atmospherics
   - Cargo
   - Medical
+  - Blueshield
 
 - type: startingGear
   id: BlueShieldGear

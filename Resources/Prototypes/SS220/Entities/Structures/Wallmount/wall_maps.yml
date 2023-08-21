@@ -1,0 +1,19 @@
+- type: entity
+  parent: PosterBase
+  id: ViewableMapFrankenstein
+  name: "карта станции"
+  description: "Карта станции Frankenstein."
+  components:
+  - type: ViewableStationMap
+    mapTexture: SS220/ViewableMaps/Frankenstein.png
+  - type: Sprite
+    state: metamap64x
+    sprite: Structures/Wallmounts/metamap.rsi
+    snapCardinals: false
+  - type: ActivatableUI
+    key: enum.ViewableStationMapUiKey.Key
+  - type: ActivatableUIRequiresVision
+  - type: UserInterface
+    interfaces:
+    - key: enum.ViewableStationMapUiKey.Key
+      type: StationViewableMapBoundUserInterface

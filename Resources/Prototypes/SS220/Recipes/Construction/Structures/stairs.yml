@@ -1,0 +1,87 @@
+- type: construction
+  name: ступеньки (одиночные)
+  id: StairsSolo
+  graph: Stairs
+  startNode: start
+  targetNode: StairsSolo
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/stairs.rsi
+    state: solo
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: ступеньки (левые)
+  id: StairsLeft
+  graph: Stairs
+  startNode: start
+  targetNode: StairsLeft
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/stairs.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: ступеньки (по середине)
+  id: StairsMiddle
+  graph: Stairs
+  startNode: start
+  targetNode: StairsMiddle
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/stairs.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: ступеньки (правые)
+  id: StairsRight
+  graph: Stairs
+  startNode: start
+  targetNode: StairsRight
+  category: construction-category-structures
+  description: Главное - не споткнуться!
+  conditions:
+    - !type:TileNotBlocked
+      failIfSpace: false
+    - !type:TileType
+      targets:
+        - Lattice
+        - Plating
+  icon:
+    sprite: SS220/Structures/Floor/stairs.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false

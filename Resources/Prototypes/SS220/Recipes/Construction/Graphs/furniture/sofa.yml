@@ -1,0 +1,87 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: constructionGraph
+  id: Sofa
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: SofaLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+        - to: SofaRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+        - to: SofaMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+        - to: SofaCorner
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 3
+              doAfter: 1
+
+    - node: SofaLeft
+      entity: SofaLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 3
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: SofaMiddle
+      entity: SofaMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 3
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: SofaRight
+      entity: SofaRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 3
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: SofaCorner
+      entity: SofaCorner
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 3
+          steps:
+            - tool: Anchoring
+              doAfter: 1

@@ -1,0 +1,229 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  id: FrankensteinTacmap
+  name: huge tactical map
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Misc/sec_tacmap.rsi
+    drawdepth: SmallObjects
+    layers:
+      - state: map
+  - type: Transform
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+  - type: TabletopGame
+    boardName: tabletop-frankenstein-tacmap
+    size: 678,591
+    windowSize: 855,770
+    setup:
+      !type:TabletopTacmapSetup
+      boardPrototype: FrankensteinTabletop
+
+# Background entity
+- type: entity
+  parent: BaseBoardTabletop
+  id: FrankensteinTabletop
+  name: frankenstein map
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Misc/sec_tacmap_tabletop.rsi
+    state: tabletop
+    noRot: false
+    drawdepth: FloorTiles
+
+# Figurines
+- type: entity
+  parent: BaseTabletopPiece
+  id: ToyFigurineTacmapBase
+  name: Base Tacmap Figurine
+  noSpawn: true
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Misc/sec_tacmap_figurines.rsi
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineSecurityTabletop
+  name: фигурка офицера СБ
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: security
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineNukieTabletop
+  name: фигурка оперативника синдиката
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: nukie
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurinePassengerTabletop
+  name: фигурка пассажира
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: passenger_greytide
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineCaptainTabletop
+  name: фигурка капитана
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: captain
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineClownTabletop
+  name: фигурка клоуна
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: clown
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineSpaceDragonTabletop
+  name: фигурка космического дракона
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: spacedragon
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineQueenTabletop
+  name: фигурка королевы ксеноморфов
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: queen
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineDetectiveTabletop
+  name: фигурка детектива
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: detective
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineHeadOfSecurityTabletop
+  name: фигурка ГСБ
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: hos
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineWardenTabletop
+  name: фигурка смотрителя
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: warden
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineRatkingTabletop
+  name: фигурка крысиного короля
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: ratking
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagATabletop
+  name: флаг А
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_a
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagBTabletop
+  name: флаг Б
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_b
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagCTabletop
+  name: флаг В
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_c
+    
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagDTabletop
+  name: флаг Г
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_d
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagETabletop
+  name: флаг Д
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_e
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: ToyFigurineFlagFTabletop
+  name: флаг Е
+  noSpawn: true
+  components:
+  - type: Sprite
+    state: flag_f
+
+- type: entity
+  parent: ToyFigurineTacmapBase
+  id: CigarSpentTabletop
+  name: окурок сигары
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Misc/sec_tacmap_cigar.rsi
+    state: burnt-icon

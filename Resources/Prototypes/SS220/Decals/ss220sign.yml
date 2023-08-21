@@ -1,0 +1,64 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: decal
+  id: SS220Sign1
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice1
+
+- type: decal
+  id: SS220Sign2
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice2
+
+- type: decal
+  id: SS220Sign3
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice3
+
+- type: decal
+  id: SS220Sign4
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice4
+
+- type: decal
+  id: SS220Sign5
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice5
+
+- type: decal
+  id: SS220Sign6
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice6
+
+- type: decal
+  id: SS220Sign7
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice7
+
+- type: decal
+  id: SS220Sign8
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice8
+
+- type: decal
+  id: SS220Sign9
+  tags: ["station"]
+  sprite:
+    sprite: SS220/Decals/ss220sign.rsi
+    state: slice9

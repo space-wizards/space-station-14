@@ -145,6 +145,8 @@ namespace Content.Client.Tabletop
                 Title = msg.Title
             };
 
+            _window.SetSize = new Vector2(msg.WindowSize.X, msg.WindowSize.Y);
+
             _window.OnClose += OnWindowClose;
         }
 

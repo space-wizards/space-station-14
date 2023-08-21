@@ -103,9 +103,10 @@
     mode: SnapgridCenter
   components:
   - type: Sprite
-    sprite: Structures/Power/wall_recharger.rsi
+    sprite: SS220/Structures/Wallmounts/wall_recharger.rsi # SS220/Directionl wall charger
     drawdepth: SmallObjects
-    snapCardinals: true
+    snapCardinals: false # SS220/Directionl wall charger
+    noRot: true # SS220/Directionl wall charger
     layers:
     - map: ["enum.PowerChargerVisualLayers.Base"]
       state: "empty"
@@ -149,15 +150,7 @@
               path: /Audio/Effects/metalbreak.ogg
   - type: Physics
     bodyType: Static
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb
-          bounds: "-0.10,-0.10,0.10,0.10"
-        density: 500
-        mask:
-          - TabletopMachineMask
+    canCollide: false
   - type: ItemSlots
     slots:
       charger_slot:

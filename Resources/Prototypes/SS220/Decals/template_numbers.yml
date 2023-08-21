@@ -1,0 +1,71 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: decal
+  id: TemplateNumber0
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "0"
+
+- type: decal
+  id: TemplateNumber1
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "1"
+
+- type: decal
+  id: TemplateNumber2
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "2"
+
+- type: decal
+  id: TemplateNumber3
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "3"
+
+- type: decal
+  id: TemplateNumber4
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "4"
+
+- type: decal
+  id: TemplateNumber5
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "5"
+
+- type: decal
+  id: TemplateNumber6
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "6"
+
+- type: decal
+  id: TemplateNumber7
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "7"
+
+- type: decal
+  id: TemplateNumber8
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "8"
+
+- type: decal
+  id: TemplateNumber9
+  tags: ["number"]
+  sprite:
+    sprite: SS220/Decals/template_numbers.rsi
+    state: "9"

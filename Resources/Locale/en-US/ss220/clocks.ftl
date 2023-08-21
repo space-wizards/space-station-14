@@ -1,0 +1,1 @@
+comp-clocks-time-description = The time is [color=white]{ $time }[/color].

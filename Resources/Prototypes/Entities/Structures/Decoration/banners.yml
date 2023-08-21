@@ -101,7 +101,7 @@
   id: BannerSecurity
   parent: BannerBase
   name: security banner
-  description: A banner displaying the colors of the shitcurity department. Security, my bad.
+  description: A banner displaying the logo of the shitcurity department. Security, my bad.
   components:
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi

@@ -28,6 +28,13 @@ namespace Content.Server.Tabletop.Components
         public Vector2i Size { get; } = (300, 300);
 
         /// <summary>
+        /// The initial size of a window that contains viewport.
+        /// </summary>
+        [DataField("windowSize")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public Vector2i WindowSize { get; set; } = (500, 436);
+
+        /// <summary>
         /// The zoom of the viewport camera.
         /// </summary>
         [DataField("cameraZoom")]

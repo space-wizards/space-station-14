@@ -154,6 +154,7 @@
   description: Cutting edge music technology, straight from the 90s.
   components:
   - type: Sprite
+    drawdepth: SmallObjects # SS220 Tabletop DAW
     layers:
     - state: daw-base
     - state: daw-display
@@ -168,6 +169,17 @@
     LayoutId: DawInstrument
   - type: Machine
     board: DawInstrumentMachineCircuitboard
+  - type: Fixtures # SS220 Tabletop DAW
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.45
+        density: 80
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
   - type: Instrument
     allowPercussion: true
     allowProgramChange: true

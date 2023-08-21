@@ -1,0 +1,25 @@
+- type: entity
+  name: стойка с микрофоном
+  parent: BasePlaceableInstrumentRotatable
+  id: MicStand
+  description: Щас спою!
+  components:
+  - type: Instrument
+    program: 52
+  - type: SwappableInstrument
+    instrumentList:
+      "Aah": {52: 0}
+      "Ooh": {53: 0}
+  - type: Sprite
+    sprite: SS220/Objects/Instruments/mic_stand.rsi
+    state: atlas
+    noRot: true
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 100
+        mask:
+        - TableMask

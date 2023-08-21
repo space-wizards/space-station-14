@@ -1,0 +1,68 @@
+﻿# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: constructionGraph
+  id: Pew
+  start: start
+  graph:
+    - node: start
+      actions:
+        - !type:DestroyEntity {}
+      edges:
+        - to: PewLeft
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 1
+        - to: PewRight
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 1
+        - to: PewMiddle
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+          steps:
+            - material: WoodPlank
+              amount: 2
+              doAfter: 1
+
+    - node: PewLeft
+      entity: PewLeft
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: PewMiddle
+      entity: PewMiddle
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1
+    - node: PewRight
+      entity: PewRight
+      edges:
+        - to: start
+          completed:
+          - !type:SpawnPrototype
+                prototype: MaterialWoodPlank1
+                amount: 2
+          steps:
+            - tool: Anchoring
+              doAfter: 1

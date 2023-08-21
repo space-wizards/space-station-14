@@ -1,0 +1,108 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  id: BlindsBase
+  name: Жалюзи
+  abstract: true
+  description: Могут полностью блокировать обзор когда требуется.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Construction
+    graph: Blinds
+  - type: UseDelay #No lagging the server
+    delay: 0.35
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/blinds.rsi
+    drawdepth: Overdoors
+    noRot: false
+    layers:
+      - state: solo
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: InteractionOutline
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+  - type: Blinds
+  - type: WallMount
+    arc: 180
+  - type: Occluder
+    enabled: false
+  - type: Appearance
+  - type: InteractionRange
+    range: 2.25
+  - type: GenericVisualizer
+    visuals:
+      enum.BlindsVisualState.State:
+        indicator:
+          True: {state: solo}
+          False: {state: solo_closed}
+
+- type: entity
+  id: BlindsSolo
+  parent: BlindsBase
+  name: Жалюзи (одиночные)
+  suffix: DONT_USE
+  components:
+  - type: Construction
+    node: BlindsSolo
+
+- type: entity
+  id: BlindsLeft
+  parent: BlindsBase
+  name: Жалюзи (левые)
+  suffix: DONT_USE
+  components:
+  - type: Construction
+    node: BlindsLeft
+  - type: Sprite
+    layers:
+      - state: left
+  - type: GenericVisualizer
+    visuals:
+      enum.BlindsVisualState.State:
+        indicator:
+          True: {state: left}
+          False: {state: left_closed}
+
+- type: entity
+  id: BlindsMiddle
+  parent: BlindsBase
+  name: Жалюзи (середина)
+  suffix: DONT_USE
+  components:
+  - type: Construction
+    node: BlindsMiddle
+  - type: Sprite
+    layers:
+      - state: right
+  - type: GenericVisualizer
+    visuals:
+      enum.BlindsVisualState.State:
+        indicator:
+          True: {state: middle}
+          False: {state: middle_closed}
+
+- type: entity
+  id: BlindsRight
+  parent: BlindsBase
+  name: Жалюзи (правые)
+  suffix: DONT_USE
+  components:
+  - type: Construction
+    node: BlindsRight
+  - type: Sprite
+    layers:
+      - state: right
+  - type: GenericVisualizer
+    visuals:
+      enum.BlindsVisualState.State:
+        indicator:
+          True: {state: right}
+          False: {state: right_closed}

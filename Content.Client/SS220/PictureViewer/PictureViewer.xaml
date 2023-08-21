@@ -1,0 +1,15 @@
+<Control xmlns="https://spacestation14.io"
+         MouseFilter="Stop"
+         MinSize="100 100">
+
+    <Label
+        Name="NoImageLabel" Text="{Loc 'image-viewer-no-image'}"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center"
+        MouseFilter="Ignore"/>
+
+        <TextureRect
+        Name="Picture"
+        Stretch="KeepCentered"
+        MouseFilter="Ignore"/>
+</Control>

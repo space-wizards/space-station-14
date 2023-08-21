@@ -1,0 +1,29 @@
+- type: entity
+  id: LockerPsychologist
+  parent: LockerBase
+  name: psychologist's locker
+  components:
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: psych_secure
+    stateDoorOpen: med_secure_open
+    stateDoorClosed: psych_secure_door
+  - type: AccessReader
+    access: [ [ "Medical" ] ]
+
+- type: entity
+  id: LockerPsychologistFilled
+  suffix: Filled
+  parent: LockerPsychologist
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSyringe
+      - id: PlaceboPillCanister
+        amount: 2
+      - id: ClothingHandsGlovesLatex
+      - id: BoxZiptie
+      - id: ClothingOuterStraightjacket
+        amount: 2
+      - id: TherapeuticPai
+        amount: 2

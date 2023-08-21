@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Shared.ActionBlocker;
@@ -7,7 +6,6 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Database;
-using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
@@ -21,6 +19,7 @@ using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Pulling;
 using Content.Shared.Pulling.Components;
+using Content.Shared.SS220.Interaction;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
 using Content.Shared.Timing;
@@ -28,7 +27,6 @@ using Content.Shared.Verbs;
 using Content.Shared.Wall;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
-using Robust.Shared.GameObjects;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Map;
@@ -319,9 +317,24 @@ namespace Content.Shared.Interaction
                 && !CanAccessViaStorage(user, target.Value))
                 return;
 
-            var inRangeUnobstructed = target == null
-                ? !checkAccess || InRangeUnobstructed(user, coordinates)
-                : !checkAccess || InRangeUnobstructed(user, target.Value); // permits interactions with wall mounted entities
+
+            var inRangeUnobstructed = !checkAccess;
+            if (!inRangeUnobstructed)
+            {
+                if (target == null)
+                {
+                    inRangeUnobstructed = InRangeUnobstructed(user, coordinates);
+                }
+                else
+                {
+                    var range = InteractionRange;
+
+                    if (TryComp<InteractionRangeComponent>(target.Value, out var rangeComp))
+                        range = rangeComp.Range;
+
+                    inRangeUnobstructed = InRangeUnobstructed(user, target.Value, range: range); // permits interactions with wall mounted entities
+                }
+            }
 
             // Does the user have hands?
             if (!TryComp(user, out HandsComponent? hands) || hands.ActiveHand == null)
@@ -918,8 +931,16 @@ namespace Content.Shared.Interaction
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
                 return false;
 
-            if (checkAccess && !InRangeUnobstructed(user, used))
-                return false;
+            if (checkAccess)
+            {
+                var range = InteractionRange;
+
+                if (TryComp<InteractionRangeComponent>(used, out var rangeComp))
+                    range = rangeComp.Range;
+
+                if (!InRangeUnobstructed(user, used, range: range))
+                    return false;
+            }
 
             // Check if interacted entity is in the same container, the direct child, or direct parent of the user.
             // This is bypassed IF the interaction happened through an item slot (e.g., backpack UI)

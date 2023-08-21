@@ -64,7 +64,8 @@ namespace Content.IntegrationTests.Tests
             "CorvaxAvrite",
             "CorvaxDelta",
             "CorvaxIshimura",
-            "220Delta"
+            "220Delta",
+            "Frankenstein"
         };
 
         /// <summary>

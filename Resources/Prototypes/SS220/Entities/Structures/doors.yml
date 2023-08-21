@@ -1,0 +1,37 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+# Clown
+- type: entity
+  parent: AirlockGlass
+  id: AirlockClown
+  suffix: Clown
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Doors/clown.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockClown
+  id: AirlockClownLocked
+  suffix: Clown, Locked
+  components:
+  - type: AccessReader
+    access: [["Theatre"]]
+
+# External access
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalSecGlass
+  suffix: Security, Glass, External, Locked
+  components:
+  - type: AccessReader
+    access: [["Security"]]
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalEngGlass
+  suffix: Engineering, Glass, External, Locked
+  components:
+  - type: AccessReader
+    access: [["Engineering"]]

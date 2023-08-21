@@ -1,0 +1,29 @@
+﻿- type: entity
+  id: FrankensteinStatue
+  name: NSS Frankenstein model
+  description: A precise model of NSS Frankenstein made in marble.
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Clickable
+  - type: SpriteFade
+  - type: Sprite
+    sprite: SS220/Structures/Decorations/frankenstein_statue.rsi
+    drawdepth: Overdoors
+    layers:
+      - state: statue
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-1.5,-1.5,1.5,0"
+        density: 600
+        layer:
+        - WallLayer
+  - type: StaticPrice
+    price: 5000

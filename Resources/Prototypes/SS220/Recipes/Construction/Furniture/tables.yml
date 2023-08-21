@@ -1,0 +1,16 @@
+- type: construction
+  name: письменный стол
+  id: DeskWood
+  graph: Table
+  startNode: start
+  targetNode: DeskWood
+  category: construction-category-furniture
+  description: Do not apply fire to this. Rumour says it burns easily.
+  icon:
+    sprite: SS220/Structures/Furniture/wooddesk.rsi
+    state: full
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

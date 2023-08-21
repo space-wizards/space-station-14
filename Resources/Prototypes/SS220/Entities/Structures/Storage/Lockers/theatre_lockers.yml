@@ -1,0 +1,61 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  id: LockerClown
+  parent: LockerBaseSecure
+  name: clown's locker
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: clown_sec
+    stateDoorOpen: clown_open
+    stateDoorClosed: clown_door
+  - type: AccessReader
+    access: [ [ "Theatre" ] ]
+
+- type: entity
+  id: LockerClownFilled
+  suffix: Filled
+  parent: LockerClown
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskClown
+    - id: ClothingShoesClown
+    - id: ClothingUniformJumpsuitClown
+    - id: BikeHorn
+    - id: ClothingBackpackSatchelClown
+    - id: ClothingBackpackClown
+    - id: ClothingBackpackDuffelClown
+    - id: CrayonRainbow
+
+- type: entity
+  id: LockerMime
+  parent: LockerBaseSecure
+  name: mime's locker
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/closet.rsi
+  - type: Appearance
+  - type: EntityStorageVisuals
+    stateBaseClosed: mime_sec
+    stateDoorOpen: mime_open
+    stateDoorClosed: mime_door
+  - type: AccessReader
+    access: [ [ "Theatre" ] ]
+
+- type: entity
+  id: LockerMimeFilled
+  suffix: Filled
+  parent: LockerMime
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingMaskMime
+    - id: ClothingBackpackDuffelMime
+    - id: ClothingBackpackMime
+    - id: ClothingUniformJumpsuitMime
+    - id: ClothingUniformJumpskirtMime
+    - id: CrayonMime

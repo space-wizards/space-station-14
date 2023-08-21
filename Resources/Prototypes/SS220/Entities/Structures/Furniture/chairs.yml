@@ -1,0 +1,216 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  name: bench
+  id: BenchBase
+  parent: SeatBase
+  abstract: true
+  components:
+  - type: Construction
+    graph: Bench
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/bench.rsi
+    noRot: false
+
+#Bench
+- type: entity
+  name: bench
+  suffix: DONT_USE, Left
+  id: BenchLeft
+  parent: BenchBase
+  components:
+  - type: Construction
+    node: BenchLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: bench
+  suffix: DONT_USE, Right
+  id: BenchRight
+  parent: BenchBase
+  components:
+  - type: Construction
+    node: BenchRight
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: bench
+  suffix: DONT_USE, Middle
+  id: BenchMiddle
+  parent: BenchBase
+  components:
+  - type: Construction
+    node: BenchMiddle
+  - type: Sprite
+    state: middle
+
+#Sofa
+- type: entity
+  name: sofa
+  id: SofaBase
+  parent: SeatBase
+  abstract: true
+  components:
+  - type: Construction
+    graph: Sofa
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/sofa.rsi
+    noRot: false
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Left
+  id: SofaLeft
+  parent: SofaBase
+  components:
+  - type: Construction
+    node: SofaLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Right
+  id: SofaRight
+  parent: SofaBase
+  components:
+  - type: Construction
+    node: SofaRight
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Middle
+  id: SofaMiddle
+  parent: SofaBase
+  components:
+  - type: Construction
+    node: SofaMiddle
+  - type: Sprite
+    state: middle
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Corner
+  id: SofaCorner
+  parent: SofaBase
+  components:
+  - type: Construction
+    node: SofaCorner
+  - type: Sprite
+    state: corner
+
+#Dinner Sofa
+- type: entity
+  name: sofa
+  id: DinnerSofaBase
+  parent: SeatBase
+  abstract: true
+  components:
+  - type: Construction
+    graph: DinnerSofa
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/dinner_sofa.rsi
+    noRot: false
+  - type: StaticPrice
+    price: 15
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Left
+  id: DinnerSofaLeft
+  parent: DinnerSofaBase
+  components:
+  - type: Construction
+    node: DinnerSofaLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Right
+  id: DinnerSofaRight
+  parent: DinnerSofaBase
+  components:
+  - type: Construction
+    node: DinnerSofaRight
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: sofa
+  suffix: DONT_USE, Middle
+  id: DinnerSofaMiddle
+  parent: DinnerSofaBase
+  components:
+  - type: Construction
+    node: DinnerSofaMiddle
+  - type: Sprite
+    state: middle
+
+#Pew
+- type: entity
+  name: pew
+  id: PewBase
+  parent: SeatBase
+  abstract: true
+  components:
+  - type: Construction
+    graph: Pew
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/pew.rsi
+    noRot: false
+
+- type: entity
+  name: pew
+  suffix: DONT_USE, Left
+  id: PewLeft
+  parent: PewBase
+  components:
+  - type: Construction
+    node: PewLeft
+  - type: Sprite
+    state: left
+
+- type: entity
+  name: pew
+  suffix: DONT_USE, Right
+  id: PewRight
+  parent: PewBase
+  components:
+  - type: Construction
+    node: PewRight
+  - type: Sprite
+    state: right
+
+- type: entity
+  name: pew
+  suffix: DONT_USE, Middle
+  id: PewMiddle
+  parent: PewBase
+  components:
+  - type: Construction
+    node: PewMiddle
+  - type: Sprite
+    state: middle

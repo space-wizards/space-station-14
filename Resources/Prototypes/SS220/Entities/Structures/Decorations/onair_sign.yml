@@ -1,0 +1,69 @@
+#﻿ © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+# The most hackiest proto of 2023
+
+- type: entity
+  id: SS220OnAirSign
+  name: знак "в эфире"
+  description: Вывеска, присущая любой студии. На обратной стороне есть выключатель.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
+  - type: WallMount
+    direction: 180
+    arc: 180
+  - type: SignalSwitch
+    state: true
+  - type: Sprite
+    drawdepth: Objects
+    sprite: SS220/Structures/Wallmounts/onair_sign.rsi
+    layers:
+    - state: on
+      map: [ "base" ]
+    - state: glow
+      shader: unshaded
+      map: [ "glow" ]
+    - state: off
+      map: [ "power" ]
+  - type: DeviceLinkSource
+    ports:
+      - On
+      - Off
+      - Status
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Appearance
+  - type: DeviceNetwork
+    deviceNetId: Wireless
+  - type: WirelessNetworkConnection
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 75
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: GenericVisualizer
+    visuals:
+      enum.SignalSwitchVisuals.State:
+        base:
+          True: { state: on }
+          False: { state: off }
+        glow:
+          True: { visible: true }
+          False: { visible: false }
+      enum.PowerDeviceVisuals.Powered:
+        power:
+          True: { visible: false }
+          False: { visible: true }

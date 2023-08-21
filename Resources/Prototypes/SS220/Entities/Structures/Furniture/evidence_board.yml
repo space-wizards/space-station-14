@@ -1,0 +1,39 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  parent: BaseStructure
+  id: EvidenceBoard
+  name: доска с заметками
+  description: Прошлое расследование, конспирологическая теория или просто коллекция бумажного мусора? Чтобы понять, вникать придётся долго.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    sprite: SS220/Structures/Furniture/evidence_board.rsi
+    drawdepth: WallTops
+    layers:
+      - state: icon
+  - type: Transform
+    anchored: true
+  - type: Clickable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb

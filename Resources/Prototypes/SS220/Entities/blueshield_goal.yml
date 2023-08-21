@@ -1,0 +1,11 @@
+- type: entity
+  parent: PaperNtFormCc
+  id: BlueshieldBriefing
+  name: blueshield briefing
+  components:
+    - type: Paper
+      content: blueshield-briefing-text
+      stampState: paper_stamp-centcom
+      stampedBy:
+      - stampedName: Центком
+        stampedColor: "#006000"

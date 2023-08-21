@@ -1,0 +1,7 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               xmlns:pv="clr-namespace:Content.Client.SS220.PictureViewer"
+               Title="{Loc 'viewable-station-map-ui-window-title'}"
+               MinSize="300 300"
+               SetSize="725 725">
+    <pv:PictureViewer Name="Viewer"/>
+</DefaultWindow>

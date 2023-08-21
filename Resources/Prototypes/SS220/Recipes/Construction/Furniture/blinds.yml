@@ -1,0 +1,61 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: construction
+  name: жалюзи (одиночные)
+  id: BlindsSolo
+  graph: Blinds
+  startNode: start
+  targetNode: BlindsSolo
+  category: construction-category-structures
+  description: Могут полностью блокировать обзор когда требуется.
+  icon:
+    sprite: SS220/Structures/Furniture/blinds.rsi
+    state: solo
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: жалюзи (левые)
+  id: BlindsLeft
+  graph: Blinds
+  startNode: start
+  targetNode: BlindsLeft
+  category: construction-category-structures
+  description: Могут полностью блокировать обзор когда требуется.
+  icon:
+    sprite: SS220/Structures/Furniture/blinds.rsi
+    state: left
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: жалюзи (по середине)
+  id: BlindsMiddle
+  graph: Blinds
+  startNode: start
+  targetNode: BlindsMiddle
+  category: construction-category-structures
+  description: Могут полностью блокировать обзор когда требуется.
+  icon:
+    sprite: SS220/Structures/Furniture/blinds.rsi
+    state: middle
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
+
+- type: construction
+  name: жалюзи (правые)
+  id: BlindsRight
+  graph: Blinds
+  startNode: start
+  targetNode: BlindsRight
+  category: construction-category-structures
+  description: Могут полностью блокировать обзор когда требуется.
+  icon:
+    sprite: SS220/Structures/Furniture/blinds.rsi
+    state: right
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: true
