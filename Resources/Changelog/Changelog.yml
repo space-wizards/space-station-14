@@ -1,21 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Fixed smg magazine sprite, type: Fix}
-  id: 4143
-  time: '2023-06-30T19:56:34.0000000+00:00'
-- author: Topy
-  changes:
-  - {message: Added the ability to empty a liquid container in a sink. If a sink reaches
-      max capacity it gets clogged, type: Add}
-  - {message: Added plungers, type: Add}
-  id: 4144
-  time: '2023-06-30T22:10:47.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fix issue with metamorphic glass name being reset, type: Fix}
-  id: 4145
-  time: '2023-06-30T22:57:28.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
@@ -3031,3 +3014,18 @@ Entries:
     type: Add}
   id: 4642
   time: '2023-08-21T01:02:12.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Slowed the speed at which kudzu spreads., type: Tweak}
+  id: 4643
+  time: '2023-08-21T01:03:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed botany locker contents, type: Tweak}
+  id: 4644
+  time: '2023-08-21T01:04:11.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed salvage and QM locker contents, type: Tweak}
+  id: 4645
+  time: '2023-08-21T01:04:43.0000000+00:00'
