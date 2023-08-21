@@ -66,6 +66,14 @@
 
 - type: entity
   parent: Airlock
+  id: AirlockRobotics
+  suffix: Robotics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Standard/robotics.rsi
+
+- type: entity
+  parent: Airlock
   id: AirlockCommand
   suffix: Command
   components:
@@ -202,6 +210,16 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/science.rsi
+  - type: PaintableAirlock
+    group: Glass
+
+- type: entity
+  parent: AirlockGlass
+  id: AirlockRoboticsGlass
+  suffix: Robotics
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/Airlocks/Glass/robotics.rsi
   - type: PaintableAirlock
     group: Glass
 

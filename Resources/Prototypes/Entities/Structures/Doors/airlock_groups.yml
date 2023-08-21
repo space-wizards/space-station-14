@@ -10,6 +10,7 @@
     maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
     medical:     Structures/Doors/Airlocks/Standard/medical.rsi
     science:     Structures/Doors/Airlocks/Standard/science.rsi
+    robotics:    Structures/Doors/Airlocks/Standard/robotics.rsi
     security:    Structures/Doors/Airlocks/Standard/security.rsi
     virology:    Structures/Doors/Airlocks/Standard/virology.rsi
 
@@ -20,6 +21,7 @@
     basic:       Structures/Doors/Airlocks/Glass/basic.rsi
     command:     Structures/Doors/Airlocks/Glass/command.rsi
     science:     Structures/Doors/Airlocks/Glass/science.rsi
+    robotics:    Structures/Doors/Airlocks/Glass/robotics.rsi
     cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
     engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
     maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
