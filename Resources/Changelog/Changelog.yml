@@ -1,31 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
-  id: 4146
-  time: '2023-06-30T23:24:23.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: MRP rules updated., type: Tweak}
-  id: 4147
-  time: '2023-07-01T00:15:04.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: 'The Cargo Telepad has been significantly improved, teleporting orders
-      over 4x faster.', type: Tweak}
-  id: 4148
-  time: '2023-07-01T19:00:33.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Windoors can now be bolted through the network system., type: Tweak}
-  id: 4149
-  time: '2023-07-01T19:00:53.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'Shutters are able to be closed again on windoors, tables, flaps and
-      windows.', type: Fix}
-  id: 4150
-  time: '2023-07-01T19:19:04.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: added rare immovable rod event that can happen late in the game and
@@ -3029,3 +3002,32 @@ Entries:
   - {message: Changed salvage and QM locker contents, type: Tweak}
   id: 4645
   time: '2023-08-21T01:04:43.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: 'Three "plastic crates" in cargo have now been given appropriate labels,
+      after Centcomm forgot to use tape on them. Disaster pizza crate, Softdrinks
+      crate, and Softdrinks bulk crate will now show up in orders appropriately.',
+    type: Fix}
+  id: 4646
+  time: '2023-08-21T18:16:21.0000000+00:00'
+- author: Errant-4
+  changes:
+  - {message: 'Crit/Dead people that somehow end up holding a gun can no longer fire
+      them. The Gundead aren''t real, they can''t hurt you.', type: Fix}
+  id: 4647
+  time: '2023-08-21T18:27:08.0000000+00:00'
+- author: Verslebas
+  changes:
+  - {message: Changed admin ghost's hands order, type: Tweak}
+  id: 4648
+  time: '2023-08-21T18:35:30.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Vending machines have been polished. Again., type: Tweak}
+  id: 4649
+  time: '2023-08-21T18:45:54.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed medical locker contents, type: Tweak}
+  id: 4650
+  time: '2023-08-21T18:49:22.0000000+00:00'
