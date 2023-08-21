@@ -62,6 +62,8 @@ namespace Content.Client.Examine
 
         private void OnExaminedItemDropped(DroppedEvent ev)
         {
+            if (!ev.User.Valid)
+                return;
             CloseTooltip();
         }
 
