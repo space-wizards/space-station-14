@@ -44,7 +44,7 @@ public sealed class StealthSystem : SharedStealthSystem
 
         if (!enabled)
         {
-            if (component.HadOutline)
+            if (component.HadOutline && !TerminatingOrDeleted(uid))
                 EnsureComp<InteractionOutlineComponent>(uid);
             return;
         }
