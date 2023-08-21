@@ -4,5 +4,5 @@ department-Command-description = Manage the crew and keep them working efficient
 department-Engineering-description = Keep the station operational.
 department-Medical-description = Keep the crew healthy.
 department-Security-description = Keep the peace around the station.
-department-Science-description = Research new technologies, dangerous artifacts, and build robots.
+department-Science-description = Research new technologies, dangerous artifacts and build robots.
 department-Specific-description = Jobs that not all stations have.
