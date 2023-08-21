@@ -99,9 +99,9 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Download the given set of nodes, returning how many new nodes were downloaded.'
     /// </summary>
-    public int Download(EntityUid uid, List<string> ids)
+    private int Download(EntityUid uid, List<string> ids)
     {
-        if (!GetNinjaRole(uid, out var role))
+        if (!_mind.TryGetRole<NinjaRole>(uid, out var role))
             return 0;
 
         var oldCount = role.DownloadedNodes.Count;
@@ -110,10 +110,13 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return newCount - oldCount;
     }
 
+    // TODO: move to mind system
     /// <summary>
-    /// Gets a ninja's role using the player's mind
+    /// Gets the first role of a certain type on a player.
     /// </summary>
-    public bool GetNinjaRole(Mind.Mind? mind, [NotNullWhen(true)] out NinjaRole? role)
+    /// <returns>Whether a role was found</returns>
+    public bool TryGetRole<R>(Mind.Mind? mind, [NotNullWhen(true)] out R? role)
+        where R : Role
     {
         role = null;
         if (mind == null)
@@ -121,9 +124,9 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         foreach (var r in mind.AllRoles)
         {
-            if (r is NinjaRole ninja)
+            if (r is R cast)
             {
-                role = ninja;
+                role = cast;
                 return true;
             }
         }
@@ -132,17 +135,18 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     }
 
     /// <summary>
-    /// Gets a ninja's role using the player's entity id
+    /// Gets a player's role of a certain type using the player's mind container.
     /// </summary>
-    public bool GetNinjaRole(EntityUid uid, [NotNullWhen(true)] out NinjaRole? role)
+    public bool TryGetRole<R: Role>(EntityUid uid, [NotNullWhen(true)] out R? role, MindContainerComponent? comp = null)
     {
         role = null;
-        if (!TryComp<MindContainerComponent>(uid, out var mind))
+        if (!Resolve(uid, ref comp))
             return false;
 
-        return GetNinjaRole(mind.Mind, out role);
+        return TryGetRole(comp.Mind, out role);
     }
 
+    // TODO: make the gamerule entity a field on ninja role
     /// <summary>
     /// Returns the global ninja gamerule config
     /// </summary>
@@ -156,6 +160,14 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return Comp<NinjaRuleComponent>(ruleEntity);
     }
 
+
+    // TODO: when syndiborgs are a thing have a borg converter with 6 second doafter
+    // engi -> saboteur
+    // medi -> idk reskin it
+    // other -> assault
+    // TODO: when criminal records is merged, hack it to set everyone to arrest
+
+    // TODO: can probably copy paste borg code here
     /// <summary>
     /// Update the alert for the ninja's suit power indicator.
     /// </summary>
@@ -207,7 +219,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     public void CallInThreat(EntityUid uid)
     {
         var config = RuleConfig();
-        if (config.Threats.Count == 0 || !GetNinjaRole(uid, out var role) || role.CalledInThreat)
+        if (config.Threats.Count == 0 || !_mind.TryGetRole(uid, out var role) || role.CalledInThreat)
             return;
 
         role.CalledInThreat = true;
@@ -347,7 +359,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
         // make sure it's a ninja doorjacking it
-        if (GetNinjaRole(uid, out var role))
+        if (_mind.TryGetRole(uid, out var role))
             role.DoorsJacked++;
     }
 }

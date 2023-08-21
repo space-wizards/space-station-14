@@ -12,6 +12,9 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Handles power cell upgrading and actions.
+/// </summary>
 public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
 {
     [Dependency] private readonly EmpSystem _emp = default!;
@@ -40,6 +43,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     }
 
     // TODO: if/when battery is in shared, put this there too
+    // TODO: or put MaxCharge in shared along with powercellslot
     private void OnSuitInsertAttempt(EntityUid uid, NinjaSuitComponent comp, ContainerIsInsertingAttemptEvent args)
     {
         // no power cell for some reason??? allow it

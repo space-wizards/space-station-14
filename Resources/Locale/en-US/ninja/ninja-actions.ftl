@@ -17,7 +17,5 @@ action-desc-katana-dash = Teleport to anywhere you can see, if your Energy Katan
 action-name-em-burst = EM Burst
 action-desc-em-burst = Disable any nearby technology with an electro-magnetic pulse.
 
-ninja-download-fail = No new research nodes were copied...
-ninja-download-success = Copied {$count} new nodes from {THE($server)}.
-
-ninja-terror-already-called = You already called in a threat!
+ninja-research-steal-fail = No new research nodes were stolen...
+ninja-research-steal-success = Stole {$count} new nodes from {THE($server)}.

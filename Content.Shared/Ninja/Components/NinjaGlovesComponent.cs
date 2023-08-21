@@ -39,42 +39,46 @@ public sealed partial class NinjaGlovesComponent : Component
     };
 
     /// <summary>
-    /// The whitelist used for the emag provider to emag doors only.
+    /// The whitelist used for the emag provider to emag airlocks only (not regular doors).
     /// </summary>
     [DataField("doorjackWhitelist")]
     public EntityWhitelist DoorjackWhitelist = new()
     {
-        Components = new[] {"Door"}
+        Components = new[] {"Airlock"}
     };
 }
 
 /// <summary>
-/// Component for downloading research nodes from a R&D server, when gloves are enabled.
-/// Requirement for greentext.
+/// Component for stealing technologies from a R&D server, when gloves are enabled.
 /// </summary>
-[RegisterComponent]
-public sealed class NinjaDownloadComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class ResearchStealerComponent : Component
 {
     /// <summary>
-    /// Time taken to download research from a server
+    /// Time taken to steal research from a server
     /// </summary>
-    [DataField("downloadTime")]
-    public float DownloadTime = 20f;
+    [DataField("delay")]
+    public TimeSpan Delay = TimeSpan.FromSeconds(20);
 }
-
 
 /// <summary>
 /// Component for hacking a communications console to call in a threat.
-/// Called threat is rolled from the ninja gamerule config.
+/// Can only be done once, the component is remove afterwards.
 /// </summary>
-[RegisterComponent]
-public sealed class NinjaTerrorComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed class CommsHackerComponent : Component
 {
     /// <summary>
     /// Time taken to hack the console
     /// </summary>
-    [DataField("terrorTime")]
-    public float TerrorTime = 20f;
+    [DataField("delay")]
+    public TimeSpan Delay = TimeSpan.FromSeconds(20);
+
+    /// <summary>
+    /// Possible threats to choose from.
+    /// </summary>
+    [DataField("threats")]
+    public List<String> Threats
 }
 
 /// <summary>
@@ -84,10 +88,10 @@ public sealed class NinjaTerrorComponent : Component
 public sealed class DrainDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>
-/// DoAfter event for research download ability.
+/// DoAfter event for research stealing ability.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class DownloadDoAfterEvent : SimpleDoAfterEvent { }
+public sealed class ResearchStealDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>
 /// DoAfter event for comms console terror ability.

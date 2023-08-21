@@ -8,6 +8,9 @@ using Content.Shared.Whitelist;
 
 namespace Content.Shared.Ninja.Systems;
 
+/// <summary>
+/// Handles emagging whitelisted objects when clicked.
+/// </summary>
 public sealed class EmagProviderSystem : EntitySystem
 {
     [Dependency] private readonly EmagSystem _emag = default!;
@@ -27,6 +30,7 @@ public sealed class EmagProviderSystem : EntitySystem
     /// </summary>
     private void OnInteract(EntityUid uid, EmagProviderComponent comp, InteractionAttemptEvent args)
     {
+        // TODO: change this into a generic check event thing
         if (!_gloves.AbilityCheck(uid, args, out var target))
             return;
 
