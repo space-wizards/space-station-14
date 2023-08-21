@@ -24,6 +24,7 @@ namespace Content.Server.Mind
 
         internal readonly List<Objective> Objectives = new();
 
+        [ViewVariables(VVAccess.ReadWrite)]
         public string Briefing = String.Empty;
 
         /// <summary>
