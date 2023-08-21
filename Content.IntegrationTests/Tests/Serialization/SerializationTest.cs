@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 namespace Content.IntegrationTests.Tests.Serialization;
 
 [TestFixture]
-public sealed class SerializationTest
+public sealed partial class SerializationTest
 {
     /// <summary>
     /// Check that serializing generic enums works as intended. This should really be in engine, but engine
