@@ -3,7 +3,6 @@
   name: job-name-senior-officer
   description: job-description-senior-officer
   playTimeTracker: JobSeniorOfficer
-  setPreference: false #SS220 No senior job
   requirements:
     - !type:RoleTimeRequirement
       role: JobWarden

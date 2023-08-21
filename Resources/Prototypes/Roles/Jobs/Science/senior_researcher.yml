@@ -3,7 +3,6 @@
   name: job-name-senior-researcher
   description: job-description-senior-researcher
   playTimeTracker: JobSeniorResearcher
-  setPreference: false #SS220 No senior job
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science

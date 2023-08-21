@@ -4,7 +4,6 @@
   description: job-description-senior-engineer
   playTimeTracker: JobSeniorEngineer
   radioBold: true
-  setPreference: false #SS220 No senior job
   requirements:
     - !type:RoleTimeRequirement
       role: JobAtmosphericTechnician

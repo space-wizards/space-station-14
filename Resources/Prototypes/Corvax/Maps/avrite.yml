@@ -56,7 +56,7 @@
             Detective: [ 1, 1 ]
             Boxer: [ 2, 2]
             Paramedic: [ 1, 1 ]
-            #SeniorOfficer: [ 1, 1 ] #SS220 No senior roles
-            #SeniorResearcher: [ 1, 1 ] #SS220 No senior roles
-            #SeniorPhysician: [ 1, 1 ] #SS220 No senior roles
-            #SeniorEngineer: [ 1, 1 ] #SS220 No senior roles
+            SeniorOfficer: [ 1, 1 ]
+            SeniorResearcher: [ 1, 1 ]
+            SeniorPhysician: [ 1, 1 ]
+            SeniorEngineer: [ 1, 1 ]

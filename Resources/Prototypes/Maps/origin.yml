@@ -56,8 +56,8 @@
             Paramedic: [ 1, 1]
             #Reporter: [ 1, 1]
             Psychologist: [ 1, 1]
-            #SeniorEngineer: [ 1, 1] #SS220 No senior roles
-            #SeniorOfficer: [ 1, 1] #SS220 No senior roles
-            #SeniorPhysician: [ 1, 1] #SS220 No senior roles
-            #SeniorResearcher: [ 1, 1] #SS220 No senior roles
+            SeniorEngineer: [ 1, 1]
+            SeniorOfficer: [ 1, 1]
+            SeniorPhysician: [ 1, 1]
+            SeniorResearcher: [ 1, 1]
             #Brigmedic: [ 1, 1 ]
