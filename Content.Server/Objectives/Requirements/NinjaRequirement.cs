@@ -4,6 +4,9 @@ using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Requirements;
 
+/// <summary>
+/// Requires the player to be a ninja.
+/// </summary>
 [DataDefinition]
 public sealed class NinjaRequirement : IObjectiveRequirement
 {

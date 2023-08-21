@@ -4,6 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Just requires that the player is not dead, ignores evac and what not.
+/// </summary>
 [DataDefinition]
 public sealed class SurviveCondition : IObjectiveCondition
 {

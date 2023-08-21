@@ -4,21 +4,16 @@ using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Requirements;
 
+/// <summary>
+/// Requires the player to be a ninja that has a spider charge target assigned, which is almost always the case.
+/// </summary>
 [DataDefinition]
 public sealed class SpiderChargeTargetRequirement : IObjectiveRequirement
 {
     public bool CanBeAssigned(Mind.Mind mind)
     {
-        foreach (var role in mind.Roles)
-        {
-            if (role is NinjaRole ninja)
-            {
-                // if ninja is on dev (no warps) dont tell it to blow up... somewhere?
-                // the charge can still be used but its not an obj
-                return ninja.SpiderChargeTarget != null;
-            }
-        }
-
-        return false;
+        var entityManager = IoCManager.Resolve<IEntityManager>();
+        var mindSystem = entityManager.System<MindSystem>();
+        return mindSystem.TryGetRole<NinjaRole>(mind)?.SpiderChargeTarget != null;
     }
 }

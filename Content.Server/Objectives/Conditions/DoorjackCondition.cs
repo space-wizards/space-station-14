@@ -1,10 +1,14 @@
-using Content.Server.Ninja.Systems;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have doorjacked at least a random number of airlocks.
+/// </summary>
 [DataDefinition]
 public sealed class DoorjackCondition : IObjectiveCondition
 {
@@ -35,9 +39,12 @@ public sealed class DoorjackCondition : IObjectiveCondition
                 return 1f;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var ninjaSystem = entMan.System<SpaceNinjaSystem>();
-            if (!ninjaSystem.GetNinjaRole(_mind, out var role))
+            var mindSystem = entMan.System<MindSystem>();
+            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
                 return 0f;
+
+            if (role.DoorsJacked >= _target)
+                return 1f;
 
             return (float) role.DoorsJacked / (float) _target;
         }

@@ -1,19 +1,20 @@
-using Content.Server.Ninja.Systems;
-using Content.Server.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have stolen at least a random number of technologies.
+/// </summary>
 [DataDefinition]
-public sealed class DownloadCondition : IObjectiveCondition
+public sealed class StealResearchCondition : IObjectiveCondition
 {
     private Mind.Mind? _mind;
     private int _target;
 
     public IObjectiveCondition GetAssigned(Mind.Mind mind)
     {
-        // TODO: clamp to number of research nodes in tree so easily maintainable
+        // TODO: clamp to number of research nodes in a single discipline maybe so easily maintainable
         return new DownloadCondition {
             _mind = mind,
             _target = IoCManager.Resolve<IRobustRandom>().Next(5, 10)
@@ -35,9 +36,12 @@ public sealed class DownloadCondition : IObjectiveCondition
                 return 1f;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var ninjaSystem = entMan.System<SpaceNinjaSystem>();
-            if (!ninjaSystem.GetNinjaRole(_mind, out var role))
+            var mindSystem = entMan.System<MindSystem>();
+            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
                 return 0f;
+
+            if (role.DownloadedNodes.Count >= _target)
+                return 1f;
 
             return (float) role.DownloadedNodes.Count / (float) _target;
         }

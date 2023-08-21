@@ -1,11 +1,15 @@
-using Content.Server.Ninja.Systems;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
 using Content.Server.Warps;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have detonated their spider charge.
+/// </summary>
 [DataDefinition]
 public sealed class SpiderChargeCondition : IObjectiveCondition
 {
@@ -23,8 +27,8 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var ninjaSystem = entMan.System<SpaceNinjaSystem>();
-            if (!ninjaSystem.GetNinjaRole(_mind, out var role)
+            var mindSystem = entMan.System<MindSystem>();
+            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role)
                 || role.SpiderChargeTarget == null
                 || !entMan.TryGetComponent<WarpPointComponent>(role.SpiderChargeTarget, out var warp)
                 || warp.Location == null)
@@ -44,8 +48,8 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<EntityManager>();
-            var ninjaSystem = entMan.System<SpaceNinjaSystem>();
-            if (!ninjaSystem.GetNinjaRole(_mind, out var role))
+            var mindSystem = entMan.System<MindSystem>();
+            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
                 return 0f;
 
             return role.SpiderChargeDetonated ? 1f : 0f;

@@ -1,9 +1,13 @@
-using Content.Server.Ninja.Systems;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions;
 
+/// <summary>
+/// Objective condition that requires the player to be a ninja and have called in a threat.
+/// </summary>
 [DataDefinition]
 public sealed class TerrorCondition : IObjectiveCondition
 {
@@ -25,8 +29,8 @@ public sealed class TerrorCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<EntityManager>();
-            var ninjaSystem = entMan.System<SpaceNinjaSystem>();
-            if (!ninjaSystem.GetNinjaRole(_mind, out var role))
+            var mindSystem = entMan.System<MindSystem>();
+            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
                 return 0f;
 
             return role.CalledInThreat ? 1f : 0f;
