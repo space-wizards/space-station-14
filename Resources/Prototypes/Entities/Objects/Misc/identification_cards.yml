@@ -235,6 +235,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: RoboticsIDCard
+  name: robotics ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+    - state: idroboticist
+  - type: PresetIdCard
+    job: Roboticist
+
+- type: entity
+  parent: IDCardStandard
   id: ClownIDCard
   name: clown ID card
   components:
