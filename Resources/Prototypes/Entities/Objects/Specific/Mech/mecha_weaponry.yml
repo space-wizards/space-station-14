@@ -112,9 +112,9 @@
           shader: unshaded
     - type: Gun
       fireRate: 1
-      selectedMode: FullAuto
+      selectedMode: SemiAuto
       availableModes:
-        - FullAuto
+        - SemiAuto
       soundGunshot:
         path: /Audio/Weapons/Guns/Gunshots/taser2.ogg # TODO: change to a more intimidating sound
     - type: ProjectileBatteryAmmoProvider
