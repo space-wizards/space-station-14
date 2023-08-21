@@ -81,3 +81,6 @@ marking-DionaVinesHead = Diona Vines Short (Vines)
 
 marking-DionaWildflowerHead-wildflower = Diona Wild Flowers (Flowers)
 marking-DionaWildflowerHead = Diona Wild Flowers (Flowers)
+
+marking-DionaVineOverlay-overlay = Diona Body Vines
+marking-DionaVineOverlay = Diona Body Vines
