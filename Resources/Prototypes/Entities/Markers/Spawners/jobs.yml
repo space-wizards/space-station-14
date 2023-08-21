@@ -456,6 +456,18 @@
       - state: green
       - state: scientist
 
+- type: entity
+  id: SpawnPointRoboticist
+  parent: SpawnPointJobBase
+  name: roboticist
+  components:
+  - type: SpawnPoint
+    job_id: Roboticist
+  - type: Sprite
+    layers:
+      - state: green
+      - state: roboticist
+
 # Security
 
 - type: entity

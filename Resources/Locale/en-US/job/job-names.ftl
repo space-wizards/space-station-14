@@ -22,6 +22,7 @@ job-name-captain = Captain
 job-name-serviceworker = Service Worker
 job-name-centcomoff = CentCom Official
 job-name-reporter = Reporter
+job-name-roboticist = Roboticist
 job-name-musician = Musician
 job-name-librarian = Librarian
 job-name-lawyer = Lawyer

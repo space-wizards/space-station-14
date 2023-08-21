@@ -1,0 +1,29 @@
+- type: job
+  id: Roboticist
+  name: job-name-roboticist
+  description: job-description-roboticist
+  playTimeTracker: JobRoboticist
+  requirements:
+    - !type:DepartmentTimeRequirement
+      department: Science
+      time: 21600 #6 hrs
+  startingGear: RoboticistGear
+  icon: "JobIconRoboticist"
+  supervisors: job-supervisors-rd
+  access:
+  - Research
+  - Robotics
+  - Maintenance
+
+- type: startingGear
+  id: RoboticistGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitRoboticist
+    back: ClothingBackpackRoboticsFilled
+    shoes: ClothingShoesBootsLaceup
+    outerClothing: ClothingOuterCoatRobo
+    id: RoboticsPDA
+    ears: ClothingHeadsetRobotics
+  innerclothingskirt: ClothingUniformJumpskirtRoboticist
+  satchel: ClothingBackpackSatchelRoboticsFilled
+  duffelbag: ClothingBackpackDuffelRoboticsFilled

@@ -116,6 +116,9 @@
   id: JobScientist
 
 - type: playTimeTracker
+  id: JobRoboticist
+
+- type: playTimeTracker
   id: JobSecurityCadet
 
 - type: playTimeTracker
