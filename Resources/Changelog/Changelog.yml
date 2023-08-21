@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: MRP rules updated., type: Tweak}
-  id: 4147
-  time: '2023-07-01T00:15:04.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'The Cargo Telepad has been significantly improved, teleporting orders
@@ -3032,3 +3027,9 @@ Entries:
     type: Fix}
   id: 4646
   time: '2023-08-21T18:16:21.0000000+00:00'
+- author: Errant-4
+  changes:
+  - {message: 'Crit/Dead people that somehow end up holding a gun can no longer fire
+      them. The Gundead aren''t real, they can''t hurt you.', type: Fix}
+  id: 4647
+  time: '2023-08-21T18:27:08.0000000+00:00'
