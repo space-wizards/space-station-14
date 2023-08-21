@@ -1,9 +1,4 @@
 Entries:
-- author: TemporalOroboros
-  changes:
-  - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
-  id: 4146
-  time: '2023-06-30T23:24:23.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: MRP rules updated., type: Tweak}
@@ -3029,3 +3024,11 @@ Entries:
   - {message: Changed salvage and QM locker contents, type: Tweak}
   id: 4645
   time: '2023-08-21T01:04:43.0000000+00:00'
+- author: EnDecc
+  changes:
+  - {message: 'Three "plastic crates" in cargo have now been given appropriate labels,
+      after Centcomm forgot to use tape on them. Disaster pizza crate, Softdrinks
+      crate, and Softdrinks bulk crate will now show up in orders appropriately.',
+    type: Fix}
+  id: 4646
+  time: '2023-08-21T18:16:21.0000000+00:00'
