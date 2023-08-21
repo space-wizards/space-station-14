@@ -144,6 +144,15 @@
 
 - type: entity
   noSpawn: true
+  parent: ClothingBackpackRobotics
+  id: ClothingBackpackRoboticsFilled
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvival
+
+- type: entity
+  noSpawn: true
   parent: ClothingBackpackHydroponics
   id: ClothingBackpackHydroponicsFilled
   components:

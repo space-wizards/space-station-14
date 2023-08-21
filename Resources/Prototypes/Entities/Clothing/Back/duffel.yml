@@ -147,6 +147,15 @@
 
 - type: entity
   parent: ClothingBackpackDuffel
+  id: ClothingBackpackDuffelRobotics
+  name: robotics duffel bag
+  description: A large red-striped duffel bag for holding extra robotics related parts and materials.
+  components:
+  - type: Sprite
+    sprite: Clothing/Back/Duffels/robotics.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffel
   id: ClothingBackpackDuffelHydroponics
   name: hydroponics duffel bag
   description: A large duffel bag for holding extra gardening tools.
