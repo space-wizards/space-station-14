@@ -86,8 +86,7 @@ namespace Content.Client.Preferences.UI
         private readonly List<AntagPreferenceSelector> _antagPreferences;
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
-        private Control _previewSpriteControl => CSpriteViewFront;
-        private Control _previewSpriteSideControl => CSpriteViewSide;
+        private BoxContainer _previewSpriteContainer => CSpriteViewContainer;
 
         private EntityUid? _previewDummy;
 
@@ -95,8 +94,6 @@ namespace Content.Client.Preferences.UI
         /// Used to avoid unnecessarily re-creating the entity.
         /// </summary>
         private string? _lastSpecies;
-        private SpriteView? _previewSprite;
-        private SpriteView? _previewSpriteSide;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
         private ColorSelectorSliders _rgbSkinColorSelector;
@@ -487,25 +484,13 @@ namespace Content.Client.Preferences.UI
             _lastSpecies = species;
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
-            _previewSprite = new SpriteView
-            {
-                Sprite = sprite,
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteControl.AddChild(_previewSprite);
-
-            _previewSpriteSide = new SpriteView
-            {
-                Sprite = sprite,
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.East,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            CreateSpriteViewsFromList(
+                _previewSpriteContainer,
+                true,
+                new List<Direction> { Direction.South, Direction.North, Direction.West, Direction.East },
+                sprite,
+                new Vector2(6, 6)
+            );
             #endregion Dummy
 
             #endregion Left
@@ -519,6 +504,26 @@ namespace Content.Client.Preferences.UI
 
 
             IsDirty = false;
+        }
+
+        private void CreateSpriteViewsFromList(Control container, bool clear, List<Direction> directions, SpriteComponent component, Vector2 scale)
+        {
+            if (clear)
+                container.DisposeAllChildren();
+
+            foreach (var direction in directions)
+            {
+                container.AddChild(new SpriteView
+                {
+                    Sprite = component,
+                    Scale = scale,
+                    MaxSize = new Vector2(32 * scale.X, 32 * scale.Y),
+                    Stretch = SpriteView.StretchMode.None,
+                    OverrideDirection = direction,
+                    VerticalAlignment = VAlignment.Center,
+                    Margin = new Thickness(0, 8, 0, 8)
+                });
+            }
         }
 
         private void ToggleClothes(BaseButton.ButtonEventArgs obj)
@@ -728,40 +733,14 @@ namespace Content.Client.Preferences.UI
             _lastSpecies = species;
             var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
-            if (_previewSprite == null)
-            {
-                // Front
-                _previewSprite = new SpriteView
-                {
-                    Sprite = sprite,
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.South,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteControl.AddChild(_previewSprite);
-            }
-            else
-            {
-                _previewSprite.SetEntity(_previewDummy.Value);
-            }
+            CreateSpriteViewsFromList(
+                _previewSpriteContainer,
+                true,
+                new List<Direction> { Direction.South, Direction.North, Direction.West, Direction.East },
+                sprite,
+                new Vector2(6, 6)
+            );
 
-            if (_previewSpriteSide == null)
-            {
-                _previewSpriteSide = new SpriteView
-                {
-                    Sprite = sprite,
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.East,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteSideControl.AddChild(_previewSpriteSide);
-            }
-            else
-            {
-                _previewSpriteSide.SetEntity(_previewDummy.Value);
-            }
             _needUpdatePreview = true;
         }
 

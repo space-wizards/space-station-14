@@ -143,9 +143,6 @@
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
-            <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
-        </BoxContainer>
+        <BoxContainer Name="CSpriteViewContainer" Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" />
     </BoxContainer>
 </Control>
