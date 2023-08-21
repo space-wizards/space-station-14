@@ -106,9 +106,8 @@
         amount: 2
       - id: RegenerativeMesh
         amount: 2
-      - id: Gauze
       - id: Bloodpack
-        amount: 1
+        amount: 2
 
 - type: entity
   id: MedkitCombatFilled
