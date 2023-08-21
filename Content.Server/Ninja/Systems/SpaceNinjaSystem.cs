@@ -20,7 +20,6 @@ using Content.Shared.Alert;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
-using Content.Shared.Implants.Components;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Roles;
@@ -38,6 +37,9 @@ using System.Linq;
 
 namespace Content.Server.Ninja.Systems;
 
+/// <summary>
+/// Main ninja system that handles ninja setup, provides helper methods for the rest of the code to use.
+/// </summary>
 public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
@@ -60,7 +62,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, ComponentStartup>(OnNinjaStartup);
+        SubscribeLocalEvent<SpaceNinjaComponent, ComponentInit>(OnNinjaInit);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
     }
@@ -215,8 +217,9 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
     /// <summary>
     /// Set up ninja when created.
+    /// Runs before Implanted's ComponentStartup so it will work
     /// </summary>
-    private void OnNinjaStartup(EntityUid uid, SpaceNinjaComponent comp, ComponentStartup args)
+    private void OnNinjaInit(EntityUid uid, SpaceNinjaComponent comp, ComponentInit args)
     {
         // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
         _internals.ToggleInternals(uid, uid, true);
@@ -233,17 +236,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </remarks>
     private void AddImplants(EntityUid uid)
     {
-        var config = RuleConfig();
-        var coords = Transform(uid).Coordinates;
-        foreach (var id in config.Implants)
-        {
-            var implant = Spawn(id, coords);
-
-            if (!TryComp<SubdermalImplantComponent>(implant, out var implantComp))
-                return;
-
-            _implants.ForceImplant(uid, implant, implantComp);
-        }
+        _implants.AddImplants(uid, RuleConfig().Implants);
     }
 
     /// <summary>

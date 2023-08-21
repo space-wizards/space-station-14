@@ -17,9 +17,8 @@ public sealed class NinjaRuleComponent : Component
     [DataField("objectives", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<ObjectivePrototype>))]
     public readonly List<string> Objectives = new();
 
-    // TODO: move to job and use job???
     /// <summary>
-    /// List of implants to inject on spawn
+    /// List of implants to inject on spawn.
     /// </summary>
     [DataField("implants", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public readonly List<string> Implants = new();
