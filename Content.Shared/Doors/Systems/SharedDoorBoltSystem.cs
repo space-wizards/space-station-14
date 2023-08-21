@@ -17,10 +17,21 @@ public abstract class SharedDoorBoltSystem : EntitySystem
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorClosedEvent>(OnBeforeDoorClosed);
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorDeniedEvent>(OnBeforeDoorDenied);
         SubscribeLocalEvent<DoorBoltComponent, BeforeDoorPryEvent>(OnDoorPry);
+        SubscribeLocalEvent<DoorBoltComponent, BeforeDoorEasyPryEvent>(OnDoorPry);
 
     }
 
     private void OnDoorPry(EntityUid uid, DoorBoltComponent component, BeforeDoorPryEvent args)
+    {
+        if (component.BoltsDown)
+        {
+            Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-bolted-message"), uid, args.User);
+            args.Cancel();
+        }
+    }
+
+
+    private void OnDoorPry(EntityUid uid, DoorBoltComponent component, BeforeDoorEasyPryEvent args)
     {
         if (component.BoltsDown)
         {

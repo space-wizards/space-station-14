@@ -27,6 +27,7 @@ public sealed class DoorSystem : SharedDoorSystem
     [Dependency] private readonly DoorBoltSystem _bolts = default!;
     [Dependency] private readonly AirtightSystem _airtightSystem = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
 
     public override void Initialize()
     {
@@ -49,7 +50,9 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Handled || !door.ClickOpen)
             return;
 
-        TryToggleDoor(uid, door, args.User);
+        if (!TryToggleDoor(uid, door, args.User))
+            TryEasyPryDoor(uid, args.User, door, out _);
+
         args.Handled = true;
     }
 
@@ -191,6 +194,36 @@ public sealed class DoorSystem : SharedDoorSystem
         _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool)} to pry {ToPrettyString(target)} while it is {door.State}"); // TODO move to generic tool use logging in a way that includes door state
         _toolSystem.UseTool(tool, user, target, TimeSpan.FromSeconds(modEv.PryTimeModifier * door.PryTime), new[] {door.PryingQuality}, new DoorPryDoAfterEvent(), out id);
         return true; // we might not actually succeeded, but a do-after has started
+    }
+
+    ///<summary>
+    ///    Pry open a door without tools.
+    /// </summary>
+    public bool TryEasyPryDoor(EntityUid target, EntityUid user, DoorComponent door, out DoAfterId? id)
+    {
+        id = null;
+
+        if (door.State == DoorState.Welded)
+            return false;
+
+        if (!door.EasyPry)
+            return false;
+
+        var canEv = new BeforeDoorEasyPryEvent(user);
+        RaiseLocalEvent(target, canEv, false);
+
+        if (canEv.Cancelled)
+            return false;
+
+        _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is prying {ToPrettyString(target)} while it is {door.State}");
+        var doAfterArgs = new DoAfterArgs(user, door.PryTime * 2, new DoorPryDoAfterEvent(), target, target)
+        {
+            BreakOnDamage = true,
+            BreakOnUserMove = true,
+            NeedHand = true,
+        };
+        _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
+        return true;
     }
 
     private void OnPryFinished(EntityUid uid, DoorComponent door, DoAfterEvent args)

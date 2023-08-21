@@ -93,4 +93,18 @@ namespace Content.Shared.Doors
             Tool = tool;
         }
     }
+
+    /// <summary>
+    /// Raised when an atempt to pry open the door without tools is made.
+    /// Cancel to stop the door from being pried open.
+    /// </summary>
+    public sealed class BeforeDoorEasyPryEvent : CancellableEntityEventArgs
+    {
+        public readonly EntityUid User;
+
+        public BeforeDoorEasyPryEvent(EntityUid user)
+        {
+            User = user;
+        }
+    }
 }

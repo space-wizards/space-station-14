@@ -298,6 +298,13 @@ public sealed class DoorComponent : Component
     [DataField("clickOpen")]
     public bool ClickOpen = true;
 
+    /// <summary>
+    /// Whether the door can be pried open when unpowered without tools
+    /// </summary>
+    [DataField("easyPry")]
+    public bool EasyPry = false;
+
+
     [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
     public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
 

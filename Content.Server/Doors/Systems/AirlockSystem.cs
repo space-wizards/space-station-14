@@ -32,6 +32,7 @@ public sealed class AirlockSystem : SharedAirlockSystem
         SubscribeLocalEvent<AirlockComponent, ActivateInWorldEvent>(OnActivate, before: new [] {typeof(DoorSystem)});
         SubscribeLocalEvent<AirlockComponent, DoorGetPryTimeModifierEvent>(OnGetPryMod);
         SubscribeLocalEvent<AirlockComponent, BeforeDoorPryEvent>(OnDoorPry);
+        SubscribeLocalEvent<AirlockComponent, BeforeDoorEasyPryEvent>(OnDoorPry);
 
     }
 
@@ -177,6 +178,15 @@ public sealed class AirlockSystem : SharedAirlockSystem
             if (HasComp<ToolForcePoweredComponent>(args.Tool))
                 return;
             Popup.PopupEntity(Loc.GetString("airlock-component-cannot-pry-is-powered-message"), uid, args.User);
+            args.Cancel();
+        }
+    }
+
+
+    private void OnDoorPry(EntityUid uid, AirlockComponent component, BeforeDoorEasyPryEvent args)
+    {
+        if (this.IsPowered(uid, EntityManager))
+        {
             args.Cancel();
         }
     }

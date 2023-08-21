@@ -1,0 +1,63 @@
+- type: entity
+  parent: AirlockExternal
+  id: AirlockExternalEasyPry
+  suffix: External, EasyPry
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockExternalGlass
+  id: AirlockExternalGlassEasyPry
+  suffix: External, Glass, EasyPry
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockGlassShuttle
+  id: AirlockGlassShuttleEasyPry
+  suffix: EasyPry, Docking
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockShuttle
+  id: AirlockShuttleEasyPry
+  suffix: EasyPry, Docking
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockExternalLocked
+  id: AirlockExternalEasyPryLocked
+  suffix: External, EasyPry, Locked
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockExternalGlassLocked
+  id: AirlockExternalGlassEasyPryLocked
+  suffix: External, Glass, EasyPry, Locked
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockExternalGlassShuttleLocked
+  id: AirlockGlassShuttleEasyPryLocked
+  suffix: EasyPry, Docking, Locked
+  components:
+  - type: Door
+    easyPry: true
+
+- type: entity
+  parent: AirlockExternalShuttleLocked
+  id: AirlockShuttleEasyPryLocked
+  suffix: EasyPry, Docking, Locked
+  components:
+  - type: Door
+    easyPry: true
