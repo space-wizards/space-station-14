@@ -984,6 +984,7 @@
     - Trash
     - VimPilot
     - Mouse
+    - DoorBumpOpener
   - type: Respirator
     damage:
       types:
@@ -1496,6 +1497,7 @@
   - type: Tag
     tags:
     - VimPilot
+    - DoorBumpOpener
 
   # I have included a snake_hiss.ogg sound file so if you want to use that be my guest
 - type: entity
