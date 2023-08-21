@@ -22,6 +22,7 @@ namespace Content.Server.Atmos.EntitySystems
         public float AtmosMaxProcessTime { get; private set; }
         public float AtmosTickRate { get; private set; }
         public float AtmosTime => 1f / AtmosTickRate;
+        public float SpacingEscapeRatio { get; private set; }//Imperial Move SpacingEscapeRatio to CVars
 
         private void InitializeCVars()
         {
@@ -39,6 +40,7 @@ namespace Content.Server.Atmos.EntitySystems
             _cfg.OnValueChanged(CCVars.AtmosTickRate, value => AtmosTickRate = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroups, value => ExcitedGroups = value, true);
             _cfg.OnValueChanged(CCVars.ExcitedGroupsSpaceIsAllConsuming, value => ExcitedGroupsSpaceIsAllConsuming = value, true);
+            _cfg.OnValueChanged(CCVars.SpacingEscapeRatio, value => SpacingEscapeRatio = value, true);
         }
     }
 }

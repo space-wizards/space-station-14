@@ -313,7 +313,7 @@ namespace Content.Shared.Atmos
         ///     What fraction of air from a spaced tile escapes every tick.
         ///     1.0 for instant spacing, 0.2 means 20% of remaining air lost each time
         /// </summary>
-        public const float SpacingEscapeRatio = 0.05f;
+        //public const float SpacingEscapeRatio = 0.5f;//Imperial Move this const to CVars
 
         /// <summary>
         ///     Minimum amount of air allowed on a spaced tile before it is reset to 0 immediately in kPa
