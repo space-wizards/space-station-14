@@ -32,9 +32,9 @@
        amount: 2
      - id: ClothingUniformJumpsuitRoboticist
      - id: ClothingUniformJumpskirtRoboticist
-     - id: ClothingShoesColorBlack
+     - id: ClothingShoesBootsLaceup
        amount: 2
-     - id: ClothingHandsGlovesFingerless
+     - id: ClothingHandsGlovesRobohands
        amount: 2
 
  - type: entity
