@@ -22,8 +22,8 @@ public sealed partial class EnergyKatanaComponent : Component
     [DataField("blinkSound")]
     public SoundSpecifier BlinkSound = new SoundPathSpecifier("/Audio/Magic/blink.ogg")
     {
-        Params = AudioParams.Default.WithVolume(5f);
-    }
+        Params = AudioParams.Default.WithVolume(5f)
+    };
 }
 
 public sealed class KatanaDashEvent : WorldTargetActionEvent { }
