@@ -253,7 +253,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var traitorRole = new TraitorRole(mind, antagPrototype);
 
         // Give traitors their codewords and uplink code to keep in their character info menu
-        // Non-human traitors with no pda
+        // If giveUplink is false the uplink code part is omitted
         traitorRole.Mind.Briefing = briefing;
 
         // Assign traitor roles
