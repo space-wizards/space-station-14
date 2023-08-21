@@ -6,7 +6,7 @@ namespace Content.Shared.Silicons.Laws;
 
 [Virtual, DataDefinition]
 [Serializable, NetSerializable]
-public class SiliconLaw : IComparable<SiliconLaw>
+public partial class SiliconLaw : IComparable<SiliconLaw>
 {
     /// <summary>
     /// A locale string which is the actual text of the law.

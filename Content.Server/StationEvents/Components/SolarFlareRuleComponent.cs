@@ -30,7 +30,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     Channels are not removed from this, so its possible to roll the same channel multiple times.
     /// </remarks>
     [DataField("extraChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
-    public readonly List<String> ExtraChannels = new();
+    public List<String> ExtraChannels = new();
 
     /// <summary>
     ///     Number of times to roll a channel from ExtraChannels.
