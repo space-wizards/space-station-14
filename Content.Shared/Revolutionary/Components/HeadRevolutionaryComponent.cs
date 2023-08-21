@@ -5,7 +5,7 @@ namespace Content.Shared.Revolutionary.Components;
 /// <summary>
 /// Component used for marking a Head Rev for conversion and winning/losing.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed class HeadRevolutionaryComponent : Component
 {
 }

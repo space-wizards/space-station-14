@@ -18,8 +18,6 @@ using Robust.Shared.Audio;
 using Robust.Server.GameObjects;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
-using Content.Shared.Destructible;
 using Robust.Shared.Containers;
 
 namespace Content.Server.Antag;

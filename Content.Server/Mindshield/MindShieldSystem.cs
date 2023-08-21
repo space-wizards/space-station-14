@@ -1,15 +1,11 @@
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Server.Popups;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Database;
 using Content.Server.Administration.Logs;
 using Content.Shared.Stunnable;
 using Content.Server.Mind;
-using Content.Server.Roles;
-using Content.Shared.Roles;
 using Robust.Shared.Prototypes;
-using System.Linq;
 
 namespace Content.Server.Mindshield;
 /// <summary>
@@ -26,22 +22,17 @@ public sealed class MindShieldSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<MindShieldComponent, ComponentInit>(MindShieldAdded);
+        SubscribeLocalEvent<MindShieldComponent, ComponentAdd>(MindShieldAdded);
     }
 
     /// <summary>
-    /// When the MindShield is added this will trigger to check if the implanted is a Rev or Head Rev and will remove Rev or "destroy" implant respectively.
+    /// When the MindShield is added this will trigger to check if the implanted is a Rev and remove their antag role.
     /// </summary>
-    private void MindShieldAdded(EntityUid uid, MindShieldComponent comp, ComponentInit init)
+    private void MindShieldAdded(EntityUid uid, MindShieldComponent comp, ComponentAdd init)
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))
         {
             var mind = _mindSystem.GetMind(uid);
-            var stunTime = TimeSpan.FromSeconds(4);
-            var name = Identity.Entity(uid, EntityManager);
-            RemComp<RevolutionaryComponent>(uid);
-            _sharedStun.TryParalyze(uid, stunTime, true);
-            _popup.PopupEntity(Loc.GetString("rev-break-control", ("name", name)), uid);
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
             //Can't remove role because it says they don't have it but can't run without having it (and they do have it) so need help.
             //if (mind != null && _mindSystem.HasRole<RevolutionaryRole>(mind))
@@ -50,11 +41,6 @@ public sealed class MindShieldSystem : EntitySystem
             //    _mindSystem.RemoveRole(mind, role);
             //}
 
-        }
-        else if (HasComp<HeadRevolutionaryComponent>(uid))
-        {
-            RemComp<MindShieldComponent>(uid);
-            _popup.PopupEntity(Loc.GetString("head-rev-break-mindshield"), uid);
         }
     }
 }

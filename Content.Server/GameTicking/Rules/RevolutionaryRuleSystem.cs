@@ -5,17 +5,14 @@ using Content.Server.NPC.Systems;
 using Content.Server.Players;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
-using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
-using Content.Shared.Preferences;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
 using System.Linq;
 using Content.Shared.Stunnable;
 using Content.Server.Chat.Systems;
@@ -28,17 +25,11 @@ using Content.Shared.IdentityManagement;
 using Content.Server.Flash;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Charges.Systems;
-using Content.Shared.Inventory;
-using Robust.Shared.Map;
-using System.Numerics;
-using Content.Server.Storage.EntitySystems;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Antag;
-using Robust.Shared.Audio;
-using Content.Shared.Tag;
 using Robust.Server.GameObjects;
-using System.Xml.Linq;
+using Content.Server.Speech.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -240,7 +231,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     public void OnPostFlash(EntityUid uid, HeadRevolutionaryComponent comp, ref AfterFlashedEvent ev)
     {
         var stunTime = TimeSpan.FromSeconds(3);
-        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && HasComp<HumanoidAppearanceComponent>(ev.Target)
+        if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && (HasComp<HumanoidAppearanceComponent>(ev.Target) || HasComp<MonkeyAccentComponent>(ev.Target))
             && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive)
         {
             if (ev.Used != null)
@@ -254,9 +245,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(ev.User.Value)} converted {ToPrettyString(ev.Target)} into a Revolutionary");
             }
-
-            var mind = _mindSystem.GetMind(ev.Target);
-            if (mind != null && mind.OwnedEntity != null)
+            if (_mindSystem.TryGetMind(ev.Target, out var mind))
             {
                 _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("Rev")));
                 if (mind.Session != null)
@@ -280,8 +269,8 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var player = new List<EntityUid>();
             player.Add((EntityUid) mind.OwnedEntity);
-            GiveHeadRev(player, "Rev");
             InitialAssignCommandStaff();
+            GiveHeadRev(player, "Rev");
         }
         if (mind.Session != null)
         {

@@ -7,7 +7,7 @@ namespace Content.Shared.Revolutionary.Components;
 /// <summary>
 /// Used for marking regular revs as well as storing icon prototypes so you can see fellow revs.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
 public sealed class RevolutionaryComponent : Component
 {
     [DataField("RevStatusIcon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
