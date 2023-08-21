@@ -1,11 +1,6 @@
 Entries:
 - author: Dygon
   changes:
-  - {message: Windoors can now be bolted through the network system., type: Tweak}
-  id: 4149
-  time: '2023-07-01T19:00:53.0000000+00:00'
-- author: Dygon
-  changes:
   - {message: 'Shutters are able to be closed again on windoors, tables, flaps and
       windows.', type: Fix}
   id: 4150
@@ -3032,3 +3027,8 @@ Entries:
   - {message: Changed admin ghost's hands order, type: Tweak}
   id: 4648
   time: '2023-08-21T18:35:30.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Vending machines have been polished. Again., type: Tweak}
+  id: 4649
+  time: '2023-08-21T18:45:54.0000000+00:00'
