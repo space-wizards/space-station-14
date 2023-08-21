@@ -1,4 +1,4 @@
-﻿using Content.IntegrationTests.Pair;
+﻿#nullable enable
 
 namespace Content.IntegrationTests;
 
