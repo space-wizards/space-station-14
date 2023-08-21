@@ -26,6 +26,8 @@
     damageModifierSet: Arachnid
   - type: Bloodstream
     bloodReagent: SpiderBlood
+  - type: Stamina
+    stunTime: 8
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcClaw
