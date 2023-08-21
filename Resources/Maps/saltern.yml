@@ -5071,30 +5071,28 @@ entities:
     - pos: 25.5,17.5
       parent: 31
       type: Transform
-- proto: AirlockScienceGlass
+- proto: AirlockScienceGlassLocked
   entities:
   - uid: 613
-    components:
-    - pos: -10.5,-23.5
-      parent: 31
-      type: Transform
-  - uid: 1280
-    components:
-    - pos: -13.5,-18.5
-      parent: 31
-      type: Transform
-  - uid: 2323
-    components:
-    - pos: -4.5,-27.5
-      parent: 31
-      type: Transform
-  - uid: 3952
     components:
     - pos: -12.5,-25.5
       parent: 31
       type: Transform
-- proto: AirlockScienceGlassLocked
-  entities:
+  - uid: 1280
+    components:
+    - pos: -4.5,-27.5
+      parent: 31
+      type: Transform
+  - uid: 2323
+    components:
+    - pos: -13.5,-18.5
+      parent: 31
+      type: Transform
+  - uid: 3952
+    components:
+    - pos: -10.5,-23.5
+      parent: 31
+      type: Transform
   - uid: 5219
     components:
     - pos: 1.5,-28.5
@@ -16061,6 +16059,21 @@ entities:
       type: Transform
     - enabled: True
       type: AmbientSound
+  - uid: 11255
+    components:
+    - pos: -24.5,-14.5
+      parent: 31
+      type: Transform
+  - uid: 11256
+    components:
+    - pos: -24.5,-15.5
+      parent: 31
+      type: Transform
+  - uid: 11257
+    components:
+    - pos: -24.5,-16.5
+      parent: 31
+      type: Transform
 - proto: CableApcStack
   entities:
   - uid: 94
