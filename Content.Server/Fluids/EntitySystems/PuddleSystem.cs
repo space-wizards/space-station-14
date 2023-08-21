@@ -43,17 +43,18 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
     [Dependency] private readonly AudioSystem _audio = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly ReactiveSystem _reactive = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
     [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly TileFrictionController _tile = default!;
+    [Dependency] private readonly StepTriggerSystem _stepTrigger = default!;
     [Dependency] private readonly SlowContactsSystem _slowContacts = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefMan = default!;
+    [Dependency] private readonly TileFrictionController _tile = default!;
 
     public static float PuddleVolume = 1000;
 
@@ -518,7 +519,7 @@ public sealed partial class PuddleSystem : SharedPuddleSystem
             _popups.PopupEntity(Loc.GetString("spill-land-spilled-on-other", ("spillable", uid), ("target", Identity.Entity(owner, EntityManager))), owner, PopupType.SmallCaution);
         }
 
-        RaiseNetworkEvent(new ColorFlashEffectEvent(solution.GetColor(_prototypeManager), targets), Filter.Pvs(uid, entityManager: EntityManager));
+        _color.RaiseEffect(solution.GetColor(_prototypeManager), targets, Filter.Pvs(uid, entityManager: EntityManager));
 
         return TrySpillAt(coordinates, solution, out puddleUid, sound);
     }

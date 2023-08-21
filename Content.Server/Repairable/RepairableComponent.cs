@@ -31,5 +31,11 @@ namespace Content.Server.Repairable
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)] [DataField("selfRepairPenalty")]
         public float SelfRepairPenalty = 3f;
+
+        /// <summary>
+        /// Whether or not an entity is allowed to repair itself.
+        /// </summary>
+        [DataField("allowSelfRepair")]
+        public bool AllowSelfRepair = true;
     }
 }

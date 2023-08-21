@@ -22,7 +22,6 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Stunnable;
 using Content.Shared.Tag;
-using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
@@ -53,7 +52,10 @@ public sealed class ElectrocutionSystem : SharedElectrocutionSystem
     [Dependency] private readonly SharedStutteringSystem _stuttering = default!;
     [Dependency] private readonly TagSystem _tag = default!;
 
+    [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "Electrocution";
+
+    [ValidatePrototypeId<DamageTypePrototype>]
     private const string DamageType = "Shock";
 
     // Yes, this is absurdly small for a reason.

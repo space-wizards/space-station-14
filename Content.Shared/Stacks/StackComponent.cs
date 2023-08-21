@@ -34,7 +34,14 @@ namespace Content.Shared.Stacks
         [ViewVariables(VVAccess.ReadOnly)]
         public bool Unlimited { get; set; }
 
-        [ViewVariables(VVAccess.ReadWrite)]
+        /// <summary>
+        /// Lingering stacks will remain present even when there are no items.
+        /// Instead, they will become transparent.
+        /// </summary>
+        [DataField("lingering"), ViewVariables(VVAccess.ReadWrite)]
+        public bool Lingering;
+
+        [DataField("throwIndividually"), ViewVariables(VVAccess.ReadWrite)]
         public bool ThrowIndividually { get; set; } = false;
 
         [ViewVariables]
@@ -77,12 +84,15 @@ namespace Content.Shared.Stacks
     public sealed class StackComponentState : ComponentState
     {
         public int Count { get; }
-        public int MaxCount { get; }
+        public int? MaxCount { get; }
 
-        public StackComponentState(int count, int maxCount)
+        public bool Lingering;
+
+        public StackComponentState(int count, int? maxCount, bool lingering)
         {
             Count = count;
             MaxCount = maxCount;
+            Lingering = lingering;
         }
     }
 }

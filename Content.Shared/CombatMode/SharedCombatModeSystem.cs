@@ -2,6 +2,7 @@ using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
+using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
@@ -14,6 +15,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly INetManager _netMan = default!;
 
     public override void Initialize()
     {
@@ -50,7 +52,10 @@ public abstract class SharedCombatModeSystem : EntitySystem
         args.Handled = true;
         SetInCombatMode(uid, !component.IsInCombatMode, component);
 
-        if (!_timing.IsFirstTimePredicted)
+        // TODO better handling of predicted pop-ups.
+        // This probably breaks if the client has prediction disabled.
+
+        if (!_netMan.IsClient || !_timing.IsFirstTimePredicted)
             return;
 
         var msg = component.IsInCombatMode ? "action-popup-combat-enabled" : "action-popup-combat-disabled";

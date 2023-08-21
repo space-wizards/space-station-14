@@ -11,10 +11,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("inlet")]
         public string InletName = "pipe";
 
-        [ViewVariables(VVAccess.ReadWrite)]
-        [DataField("enabled")]
-        public bool Enabled = false;
-
         /// <summary>
         ///     Current maximum temperature, calculated from <see cref="BaseHeatCapacity"/> and the quality of matter
         ///     bins. The heat capacity effectively determines the rate at which the thermo machine can add or remove
@@ -93,5 +89,11 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         [DataField("machinePartTemperature", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
         public string MachinePartTemperature = "Capacitor";
 
+        /// <summary>
+        /// Last amount of energy added/removed from the attached pipe network
+        /// </summary>
+        [DataField("lastEnergyDelta")]
+        [ViewVariables(VVAccess.ReadWrite)]
+        public float LastEnergyDelta;
     }
 }

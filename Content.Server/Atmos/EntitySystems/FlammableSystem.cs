@@ -148,15 +148,30 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (otherFlammable.OnFire)
                 {
-                    var fireSplit = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
-                    flammable.FireStacks = fireSplit;
-                    otherFlammable.FireStacks = fireSplit;
+                    if (flammable.CanExtinguish)
+                    {
+                        var fireSplit = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
+                        flammable.FireStacks = fireSplit;
+                        otherFlammable.FireStacks = fireSplit;
+                    }
+                    else
+                    {
+                        otherFlammable.FireStacks = flammable.FireStacks / 2;
+                    }
                 }
                 else
                 {
-                    flammable.FireStacks /= 2;
-                    otherFlammable.FireStacks += flammable.FireStacks;
-                    Ignite(otherUid, uid, otherFlammable);
+                    if (!flammable.CanExtinguish)
+                    {
+                        otherFlammable.FireStacks += flammable.FireStacks / 2;
+                        Ignite(otherUid, uid, otherFlammable);
+                    }
+                    else
+                    {
+                        flammable.FireStacks /= 2;
+                        otherFlammable.FireStacks += flammable.FireStacks;
+                        Ignite(otherUid, uid, otherFlammable);
+                    }
                 }
             }
             else if (otherFlammable.OnFire)
@@ -215,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable))
                 return;
 
-            if (!flammable.OnFire)
+            if (!flammable.OnFire || !flammable.CanExtinguish)
                 return;
 
             _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
@@ -232,6 +247,11 @@ namespace Content.Server.Atmos.EntitySystems
         {
             if (!Resolve(uid, ref flammable))
                 return;
+
+            if (flammable.AlwaysCombustible)
+            {
+                flammable.FireStacks = Math.Max(flammable.FirestacksOnIgnite, flammable.FireStacks);
+            }
 
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {

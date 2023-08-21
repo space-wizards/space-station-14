@@ -43,6 +43,7 @@ namespace Content.Shared.Cuffs
         [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly AlertsSystem _alerts = default!;
+        [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
         [Dependency] private readonly DamageableSystem _damageSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -592,7 +593,7 @@ namespace Content.Shared.Cuffs
 
                 if (target == user)
                 {
-                    RaiseNetworkEvent(new ColorFlashEffectEvent(Color.Red, new List<EntityUid>() { user }));
+                    _color.RaiseEffect(Color.Red, new List<EntityUid>() { user }, Filter.Pvs(user, entityManager: EntityManager));
                     _popup.PopupEntity(Loc.GetString("cuffable-component-start-uncuffing-self"), user, user);
                 }
                 else

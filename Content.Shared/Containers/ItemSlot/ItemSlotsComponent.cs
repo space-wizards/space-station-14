@@ -233,4 +233,16 @@ namespace Content.Shared.Containers.ItemSlots
             Priority = other.Priority;
         }
     }
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be inserted into an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotInsertAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
+
+    /// <summary>
+    /// Event raised on the slot entity and the item being inserted to determine if an item can be ejected from an item slot.
+    /// </summary>
+    [ByRefEvent]
+    public record struct ItemSlotEjectAttemptEvent(EntityUid SlotEntity, EntityUid Item, EntityUid? User, ItemSlot Slot, bool Cancelled = false);
 }

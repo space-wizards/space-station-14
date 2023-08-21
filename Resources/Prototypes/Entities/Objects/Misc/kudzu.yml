@@ -71,10 +71,14 @@
     - type: AtmosExposed
     - type: Kudzu
       growthTickChance: 0.3
+      spreadChance: 0.4
     - type: GrowingKudzu
     - type: SlowContacts
       walkSpeedModifier: 0.2
       sprintSpeedModifier: 0.2
+      ignoreWhitelist:
+        components:
+        - IgnoreKudzu
     - type: EdgeSpreader
     - type: NodeContainer
       nodes:

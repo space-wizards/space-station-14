@@ -638,22 +638,6 @@
             Caustic: -5
 
 - type: reagent
-  id: Spaceacillin
-  name: reagent-name-spaceacillin
-  group: Medicine
-  desc: reagent-desc-spaceacillin
-  physicalDesc: reagent-physical-desc-opaque
-  flavor: medicine
-  color: "#9942f5"
-  metabolisms:
-    Medicine:
-      effects:
-      - !type:HealthChange
-        damage:
-          types:
-            Cellular: 0.5
-
-- type: reagent
   id: Stellibinin
   name: reagent-name-stellibinin
   group: Medicine

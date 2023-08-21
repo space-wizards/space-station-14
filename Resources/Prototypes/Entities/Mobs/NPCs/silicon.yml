@@ -41,6 +41,14 @@
   - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -157,6 +165,8 @@
     softness: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+  - type: TypingIndicator
+    proto: robot
 
 - type: entity
   parent: MobSiliconBase
@@ -309,6 +319,7 @@
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+    speechVerb: Robotic
   - type: HTN
     rootTask:
       task: MedibotCompound
