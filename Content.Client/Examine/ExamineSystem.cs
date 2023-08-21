@@ -21,8 +21,6 @@ using Robust.Client;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
 using Content.Shared.Interaction.Events;
-using Content.Shared.Hands;
-using Content.Shared.Standing;
 using Content.Shared.Item;
 
 namespace Content.Client.Examine
