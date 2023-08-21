@@ -27,4 +27,3 @@
       - id: ClothingOuterCoatRobo
       - id: ClothingHeadHatWelding
       - id: ClothingBeltUtilityFilled
-        prob: 0.5
