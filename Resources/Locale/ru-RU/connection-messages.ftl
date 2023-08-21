@@ -25,8 +25,8 @@ command-whitelistremove-not-found = Пользователь '{$username}' не 
 command-kicknonwhitelisted-description = Кикнуть с сервера всех пользователей не из вайтлиста.
 command-kicknonwhitelisted-help = kicknonwhitelisted
 
-ban-banned-permanent = Этот бан можно только обжаловать. Для этого посетите наш Discord: нету
-ban-banned-permanent-appeal = Этот бан можно только обжаловать. Для этого посетите {$link}
+ban-banned-permanent = Вы получили перманентный бан.
+ban-banned-permanent-appeal = Вы получили перманентный бан.
 ban-expires = Вы получили бан на {$duration} минут, и он истечёт {$time} по UTC (для москосвкого времени добавьте 3 часа).
 ban-banned-1 = Вам, или другому пользователю этого компьютера или соединения, запрещено здесь играть.
 ban-banned-2 = Причина бана: "{$reason}"
@@ -37,3 +37,5 @@ panic-bunker-account-denied = Этот сервер находится в реж
 panic-bunker-account-denied-reason = Этот сервер находится в режиме "Бункер", и вам было отказано в доступе. Причина: "{$reason}"
 panic-bunker-account-reason-account = Ваш аккаунт должен быть старше {$minutes} минут
 panic-bunker-account-reason-overall = Необходимо минимальное отыгранное время {$hours} часов
+
+ban-you-can-appeal = Вы можете обжаловать бан, для этого откройте соотвествующий тикет в канале "поддержка" в нашем Discord
