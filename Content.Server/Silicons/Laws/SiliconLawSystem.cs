@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using Content.Shared.Stunnable;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -33,6 +34,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -155,6 +157,9 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         base.OnGotEmagged(uid, component, ref args);
         NotifyLawsChanged(uid);
         EnsureEmaggedRole(uid, component);
+
+        if(!HasComp<EmaggedComponent>(uid))
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(5), true);
     }
 
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)
