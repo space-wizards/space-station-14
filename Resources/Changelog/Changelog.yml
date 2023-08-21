@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'The Cargo Telepad has been significantly improved, teleporting orders
-      over 4x faster.', type: Tweak}
-  id: 4148
-  time: '2023-07-01T19:00:33.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Windoors can now be bolted through the network system., type: Tweak}
@@ -3033,3 +3027,8 @@ Entries:
       them. The Gundead aren''t real, they can''t hurt you.', type: Fix}
   id: 4647
   time: '2023-08-21T18:27:08.0000000+00:00'
+- author: Verslebas
+  changes:
+  - {message: Changed admin ghost's hands order, type: Tweak}
+  id: 4648
+  time: '2023-08-21T18:35:30.0000000+00:00'
