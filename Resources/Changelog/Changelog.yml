@@ -1,49 +1,4 @@
 Entries:
-- author: Jesse
-  changes:
-  - {message: Changed Sprites for Computers in de/construction to not have the glass
-      for monitors in states where it is removed., type: Tweak}
-  id: 4138
-  time: '2023-06-30T19:26:13.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Cargo technicians will be able to access salvage on the extended gamemode.,
-    type: Tweak}
-  id: 4139
-  time: '2023-06-30T19:31:21.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Changed the price of most objects found in the construction menu., type: Tweak}
-  id: 4140
-  time: '2023-06-30T19:32:03.0000000+00:00'
-- author: Vocal
-  changes:
-  - {message: Left-clicking a gas canister no longer unlock and open the UI at the
-      same time., type: Fix}
-  id: 4141
-  time: '2023-06-30T19:39:34.0000000+00:00'
-- author: kxvvv
-  changes:
-  - {message: Explosive pens are now linkable, type: Tweak}
-  id: 4142
-  time: '2023-06-30T19:47:47.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Fixed smg magazine sprite, type: Fix}
-  id: 4143
-  time: '2023-06-30T19:56:34.0000000+00:00'
-- author: Topy
-  changes:
-  - {message: Added the ability to empty a liquid container in a sink. If a sink reaches
-      max capacity it gets clogged, type: Add}
-  - {message: Added plungers, type: Add}
-  id: 4144
-  time: '2023-06-30T22:10:47.0000000+00:00'
-- author: themias
-  changes:
-  - {message: Fix issue with metamorphic glass name being reset, type: Fix}
-  id: 4145
-  time: '2023-06-30T22:57:28.0000000+00:00'
 - author: TemporalOroboros
   changes:
   - {message: The AME controller increases and decreases in steps of 2 again., type: Tweak}
@@ -3030,3 +2985,47 @@ Entries:
   - {message: 'Crusher can be used with one hand, but with less damage.', type: Tweak}
   id: 4637
   time: '2023-08-20T12:13:45.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Buff sniper firerate and nerf damage. Nerf stamina damage a lot., type: Tweak}
+  id: 4638
+  time: '2023-08-20T20:54:22.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Explosive banana peels now need to be armed before they can be used.,
+    type: Tweak}
+  id: 4639
+  time: '2023-08-20T20:58:22.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added sound upon breaking rocks., type: Add}
+  id: 4640
+  time: '2023-08-20T21:05:43.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: All of the emergency medkit cargo crates now only give a single kit
+      but are cheaper in return., type: Tweak}
+  id: 4641
+  time: '2023-08-20T21:05:58.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Fixed diona always being tinted brown., type: Fix}
+  - {message: Diona can now customize their eye color and the color of their vines.,
+    type: Add}
+  id: 4642
+  time: '2023-08-21T01:02:12.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Slowed the speed at which kudzu spreads., type: Tweak}
+  id: 4643
+  time: '2023-08-21T01:03:50.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed botany locker contents, type: Tweak}
+  id: 4644
+  time: '2023-08-21T01:04:11.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed salvage and QM locker contents, type: Tweak}
+  id: 4645
+  time: '2023-08-21T01:04:43.0000000+00:00'
