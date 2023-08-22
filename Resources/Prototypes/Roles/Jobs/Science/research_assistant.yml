@@ -1,17 +1,15 @@
-﻿- type: job
+- type: job
   id: ResearchAssistant
   name: job-name-research-assistant
   description: job-description-research-assistant
   playTimeTracker: JobResearchAssistant
   requirements:
-    - !type:DepartmentTimeRequirement
+    - !type:OverallPlaytimeRequirement
       department: Science
-      time: 54000 #15 hrs
-      inverted: true # stop playing intern if you're good at science!
+      time: 7200 #2 hrs
   startingGear: ResearchAssistantGear
   icon: "JobIconResearchAssistant"
   supervisors: job-supervisors-science
-  canBeAntag: true
   access:
   - Research
   - Maintenance
