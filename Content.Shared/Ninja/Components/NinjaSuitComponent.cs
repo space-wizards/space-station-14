@@ -72,7 +72,7 @@ public sealed partial class NinjaSuitComponent : Component
     /// <summary>
     /// The action for recalling a bound energy katana
     /// </summary>
-    [DataField("recallkatanaAction")]
+    [DataField("recallKatanaAction")]
     public InstantAction RecallKatanaAction = new()
     {
         UseDelay = TimeSpan.FromSeconds(1),
@@ -84,29 +84,11 @@ public sealed partial class NinjaSuitComponent : Component
         Event = new RecallKatanaEvent()
     };
 
-    // TODO: move into separate thing
-    /// <summary>
-    /// The action for dashing somewhere using katana
-    /// </summary>
-    [DataField("katanaDashAction")]
-    public WorldTargetAction KatanaDashAction = new()
-    {
-        Icon = new SpriteSpecifier.Rsi(new ResPath("Objects/Magic/magicactions.rsi"), "blink"),
-        ItemIconStyle = ItemActionIconStyle.NoItem,
-        DisplayName = "action-name-katana-dash",
-        Description = "action-desc-katana-dash",
-        Priority = -12,
-        Event = new KatanaDashEvent(),
-        // doing checks manually
-        CheckCanAccess = false,
-        Range = 0f
-    };
-
     /// <summary>
     /// Battery charge used per tile the katana teleported.
     /// </summary>
-    [DataField("dashCharge")]
-    public float DashCharge = 3.6f;
+    [DataField("recallCharge")]
+    public float RecallCharge = 3.6f;
 
     /// <summary>
     /// The action for creating an EMP burst

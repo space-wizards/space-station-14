@@ -1,39 +1,22 @@
-using Content.Shared.Charges.Components;
-using Content.Shared.Charges.Systems;
-using Content.Shared.Examine;
-using Content.Shared.Hands.EntitySystems;
-using Content.Shared.Interaction;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
-using Content.Shared.Physics;
-using Content.Shared.Popups;
-using Robust.Shared.Audio;
-using Robust.Shared.GameObjects;
-using Robust.Shared.Timing;
 
 namespace Content.Shared.Ninja.Systems;
 
-// TODO: make dashing its own component
 /// <summary>
-/// System for katana dashing and binding. Recalling is handled by the suit.
+/// System for katana binding and dash events. Recalling is handled by the suit.
 /// </summary>
 public sealed class EnergyKatanaSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedChargesSystem _charges = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedInteractionSystem _interaction = default!;
     [Dependency] private readonly SharedSpaceNinjaSystem _ninja = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeLocalEvent<EnergyKatanaComponent, GotEquippedEvent>(OnEquipped);
-        SubscribeLocalEvent<NinjaSuitComponent, KatanaDashEvent>(OnDash);
+        SubscribeLocalEvent<EnergyKatanaComponent, AddDashActionEvent>(OnAddDashAction);
+        SubscribeLocalEvent<EnergyKatanaComponent, DashAttemptEvent>(OnDashAttempt);
     }
 
     /// <summary>
@@ -41,61 +24,24 @@ public sealed class EnergyKatanaSystem : EntitySystem
     /// </summary>
     private void OnEquipped(EntityUid uid, EnergyKatanaComponent comp, GotEquippedEvent args)
     {
-        // check if already bound
-        if (comp.Ninja != null)
-            return;
-
-        // check if ninja already has a katana bound
+        // check if user isnt a ninja or already has a katana bound
         var user = args.Equipee;
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana != null)
             return;
 
-        // bind it
-        comp.Ninja = user;
+        // bind it since its unbound
         _ninja.BindKatana(ninja, uid);
     }
 
-    /// <summary>
-    /// Handle charges and teleport to a visible location.
-    /// </summary>
-    public void OnDash(EntityUid suit, NinjaSuitComponent comp, KatanaDashEvent args)
+    private void OnAddDashAction(EntityUid uid, EnergyKatanaComponent comp, AddDashActionEvent args)
     {
-        if (!_timing.IsFirstTimePredicted)
-            return;
+        if (!HasComp<SpaceNinjaComponent>(args.User))
+            args.Cancel();
+    }
 
-        var user = args.Performer;
-        args.Handled = true;
-        if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
-            return;
-
-        var uid = ninja.Katana.Value;
-        if (!TryComp<EnergyKatanaComponent>(uid, out var katana) || !_hands.IsHolding(user, uid, out var _))
-        {
-            _popup.PopupClient("ninja-katana-not-held", user, user);
-            return;
-        }
-
-        TryComp<LimitedChargesComponent>(uid, out var charges);
-        if (_charges.IsEmpty(uid, charges))
-        {
-            _popup.PopupClient("ninja-katana-no-charges", user, user);
-            return;
-        }
-
-        var origin = Transform(user).MapPosition;
-        var target = args.Target.ToMap(EntityManager, _transform);
-        // prevent collision with the user duh
-        if (!_interaction.InRangeUnobstructed(origin, target, 0f, CollisionGroup.Opaque, uid => uid == user))
-        {
-            // can only dash if the destination is visible on screen
-            _popup.PopupClient("ninja-katana-cant-see", user, user);
-            return;
-        }
-
-        _transform.SetCoordinates(user, args.Target);
-        _transform.AttachToGridOrMap(user);
-        _audio.PlayPredicted(katana.BlinkSound, user, user);
-        if (charges != null)
-            _charges.UseCharge(uid, charges);
+    private void OnDashAttempt(EntityUid uid, EnergyKatanaComponent comp, DashAttemptEvent args)
+    {
+        if (!TryComp<SpaceNinjaComponent>(args.User, out var ninja) || ninja.Katana != uid)
+            args.Cancel();
     }
 }

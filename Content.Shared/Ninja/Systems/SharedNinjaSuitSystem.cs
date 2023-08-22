@@ -54,7 +54,6 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
 
         args.Actions.Add(comp.RecallKatanaAction);
         args.Actions.Add(comp.CreateThrowingStarAction);
-        args.Actions.Add(comp.KatanaDashAction);
         args.Actions.Add(comp.EmpAction);
     }
 
