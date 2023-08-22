@@ -443,8 +443,8 @@
 - type: entity
   parent: BaseVendingMachineRestock
   id: VendingMachineRestockChemVend
-  name: ChemVend restock box
-  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a ChemVend to begin.
+  name: NanoDrug restock box
+  description: A box filled with chemicals and covered in dangerous-looking NFPA diamonds. Load it into a NanoDrug to begin.
   components:
   - type: VendingMachineRestock
     canRestock:
