@@ -648,6 +648,10 @@
     flavorKind: station-event-random-sentience-flavor-slime
   - type: MobPrice
     price: 3000 # it is a truly valuable creature
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-smile-name
+    description: ghost-role-information-smile-description
 
 - type: entity
   name: Pun Pun

@@ -49,3 +49,5 @@ guide-entry-traitors = Traitors
 guide-entry-zombies = Zombies
 guide-entry-minor-antagonists = Minor Antagonists
 guide-entry-space-ninja = Space Ninja
+
+guide-entry-writing = Writing
