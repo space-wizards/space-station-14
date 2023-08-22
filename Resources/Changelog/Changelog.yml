@@ -1,9 +1,4 @@
 Entries:
-- author: Geekyhobo
-  changes:
-  - {message: Nukie bundle prices have been adjusted for balance, type: Tweak}
-  id: 4157
-  time: '2023-07-03T21:33:53.0000000+00:00'
 - author: Jesse
   changes:
   - {message: Ale color more towards a Pale Ale color with foam and bubbles!, type: Tweak}
@@ -3029,3 +3024,10 @@ Entries:
       structural integrity is now safe!, type: Add}
   id: 4656
   time: '2023-08-22T04:43:37.0000000+00:00'
+- author: Errant
+  changes:
+  - {message: 'Mutes no longer make a sound when they die, and can''t fake their death
+      while in crit. They can still summon up their remaining strength to whisper
+      their first-last words.', type: Tweak}
+  id: 4657
+  time: '2023-08-22T06:05:16.0000000+00:00'
