@@ -73,7 +73,7 @@
       icon:
         sprite: Objects/Magic/magicactions.rsi
         state: blink
-      itemIcoNStyle: NoItem
+      itemIconStyle: NoItem
       name: "action-name-katana-dash"
       description: "action-desc-katana-dash"
       priority: -12
