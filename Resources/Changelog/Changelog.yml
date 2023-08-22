@@ -1,32 +1,4 @@
 Entries:
-- author: Jesse
-  changes:
-  - {message: Ale color more towards a Pale Ale color with foam and bubbles!, type: Tweak}
-  - {message: Fixed up the dingle line formatting of the Meta file, type: Fix}
-  id: 4158
-  time: '2023-07-03T21:34:26.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: The pyroclastic anomaly's ignition has gained otherworldly properties
-      and now permeates through solid structures., type: Add}
-  id: 4159
-  time: '2023-07-03T21:35:57.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: The pyroclastic anomaly's supercritical gas now ignores structures.,
-    type: Tweak}
-  id: 4160
-  time: '2023-07-03T21:36:23.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added unique ERT helmets for each ERT type., type: Add}
-  - {message: Removed the alternate security helmets (the ones with an abundance of
-      hueshifting.), type: Remove}
-  - {message: Riot helmets are now better than the standard Security helmet at resisting
-      blunt and slash., type: Tweak}
-  - {message: Fixed a single missing pixel on all EVA helmet inhands., type: Fix}
-  id: 4161
-  time: '2023-07-03T23:24:28.0000000+00:00'
 - author: Lomcastar
   changes:
   - {message: Crew monitor now uses colors for passenger status., type: Tweak}
@@ -3031,3 +3003,32 @@ Entries:
       their first-last words.', type: Tweak}
   id: 4657
   time: '2023-08-22T06:05:16.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'To increase employee retention and new staff experience, we''ve installed
+      a short range teleporter on our Arrivals Shuttle. However we only had sufficient
+      budget to use it once per shift per staff member.', type: Add}
+  - {message: 'You might notice yourself adjusting as you step off the arrivals shuttle,
+      with our patented rotation acclimation system. It might make you dizzy, but
+      it helps the station make sense.', type: Tweak}
+  id: 4658
+  time: '2023-08-22T10:46:50.0000000+00:00'
+- author: onoira
+  changes:
+  - {message: Nanotrasen no longer uses disappearing ink for official books and documents.
+      These can now be modified., type: Fix}
+  - {message: New pen technology enables stylish ways of writing. See the guidebook
+      for more info., type: Add}
+  id: 4659
+  time: '2023-08-22T11:50:04.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Smile the Slime now has unique ghost role text rather than standard
+      slimes., type: Add}
+  id: 4660
+  time: '2023-08-22T12:00:20.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed various head locker contents., type: Tweak}
+  id: 4661
+  time: '2023-08-22T14:49:53.0000000+00:00'
