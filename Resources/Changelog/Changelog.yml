@@ -1,9 +1,4 @@
 Entries:
-- author: brainfood1183
-  changes:
-  - {message: Fixed Hamlet sprite error on revival., type: Fix}
-  id: 4152
-  time: '2023-07-03T07:59:29.0000000+00:00'
 - author: HerCoyote23
   changes:
   - {message: You can now speak on your department's radio channel using .X, type: Tweak}
@@ -3028,3 +3023,9 @@ Entries:
   - {message: Air alarms now have output signal ports for each state., type: Tweak}
   id: 4651
   time: '2023-08-21T21:18:30.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Freshly spawned diona are no longer gray., type: Fix}
+  - {message: Skeletons are no longer extremely saturated in color., type: Fix}
+  id: 4652
+  time: '2023-08-22T02:05:24.0000000+00:00'
