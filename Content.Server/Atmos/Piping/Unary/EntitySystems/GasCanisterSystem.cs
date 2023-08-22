@@ -161,9 +161,17 @@ public sealed class GasCanisterSystem : EntitySystem
         }
         
         if (player != null)
-            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(player.Value):player} set the valve on {ToPrettyString(uid):canister} to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        {
+            _adminLogger.Add(LogType.CanisterValve,
+            impact,
+            $"{ToPrettyString(player.Value):player} set the valve on {ToPrettyString(uid):canister} to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        }
         else
-            _adminLogger.Add(LogType.CanisterValve, impact, $"Valve on {ToPrettyString(uid):canister} has been set to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        {
+            _adminLogger.Add(LogType.CanisterValve,
+            impact,
+            $"Valve on {ToPrettyString(uid):canister} has been set to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        }
 
         var data = new NetworkPayload()
         {
