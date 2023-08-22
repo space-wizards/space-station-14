@@ -28,12 +28,10 @@ public sealed class NavMapControl : MapGridControl
 
     private Vector2 _offset;
     private bool _draggin;
-
     private bool _recentering = false;
-
-    private float _recenterMinimum = 0.05f;
-
-    private Font _font;
+    private readonly float _recenterMinimum = 0.05f;
+    private readonly Font _font;
+    private static readonly Color TileColor = new(30, 67, 30);
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -181,7 +179,6 @@ public sealed class NavMapControl : MapGridControl
         }
 
         var offset = _offset;
-        var tileColor = new Color(30, 67, 30);
         var lineColor = new Color(102, 217, 102);
 
         if (_entManager.TryGetComponent<PhysicsComponent>(MapUid, out var physics))
@@ -206,7 +203,7 @@ public sealed class NavMapControl : MapGridControl
                     verts[i] = Scale(new Vector2(vert.X, -vert.Y));
                 }
 
-                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], tileColor);
+                handle.DrawPrimitives(DrawPrimitiveTopology.TriangleFan, verts[..poly.VertexCount], TileColor);
             }
         }
 
@@ -327,6 +324,9 @@ public sealed class NavMapControl : MapGridControl
             position = Scale(position with { Y = -position.Y });
 
             handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+            var buffer = new Vector2(8f, 0f);
+            handle.DrawRect(new UIBox2(position - buffer, position + textDimensions + buffer), TileColor);
 
             handle.DrawString(_font, position, beacon.Text, beacon.Color);
         }
