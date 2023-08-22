@@ -14,10 +14,10 @@ namespace Content.Server.Construction.Conditions
     public sealed partial class MachineFrameComplete : IGraphCondition
     {
         [DataField("guideIconBoard")]
-        public SpriteSpecifier? GuideIconBoard { get; private set; }
+        public SpriteSpecifier? GuideIconBoard { get; }
 
         [DataField("guideIconParts")]
-        public SpriteSpecifier? GuideIconPart { get; private set; }
+        public SpriteSpecifier? GuideIconPart { get; }
 
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)

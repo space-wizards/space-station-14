@@ -11,7 +11,7 @@ public sealed partial class MailingUnitComponent : Component
     /// Each target is just a disposal routing tag
     /// </summary>
     [DataField("targetList")]
-    public List<string> TargetList { get; private set; } = new();
+    public readonly List<string> TargetList = new();
 
     /// <summary>
     /// The target that gets attached to the disposal holders tag list on flush

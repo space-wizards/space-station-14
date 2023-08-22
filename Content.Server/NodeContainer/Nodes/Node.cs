@@ -49,7 +49,7 @@ namespace Content.Server.NodeContainer.Nodes
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("needAnchored")]
-        public bool NeedAnchored { get; private set; } = true;
+        public bool NeedAnchored { get; } = true;
 
         public virtual void OnAnchorStateChanged(IEntityManager entityManager, bool anchored) { }
 

@@ -13,10 +13,10 @@ namespace Content.Shared.Polymorph
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; private set; } = default!;
+        public string ID { get; } = default!;
 
         [DataField("name")]
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; } = string.Empty;
 
         [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<PolymorphPrototype>))]
         public string[]? Parents { get; private set; }

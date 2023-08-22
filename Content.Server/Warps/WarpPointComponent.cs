@@ -12,6 +12,6 @@ namespace Content.Server.Warps
         ///     If true, ghosts warping to this entity will begin following it.
         /// </summary>
         [DataField("follow")]
-        public bool Follow { get; private set; } = false;
+        public readonly bool Follow = false;
     }
 }

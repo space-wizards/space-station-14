@@ -5,7 +5,7 @@ namespace Content.Server.Wires;
 ///     toggle a value whenever a wire is cut, mended,
 ///     or pulsed.
 /// </summary>
-public abstract partial class BaseToggleWireAction : BaseWireAction
+public abstract class BaseToggleWireAction : BaseWireAction
 {
     /// <summary>
     ///     Toggles the value on the given entity. An implementor

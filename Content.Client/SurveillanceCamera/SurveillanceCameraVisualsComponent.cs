@@ -8,5 +8,5 @@ namespace Content.Client.SurveillanceCamera;
 public sealed partial class SurveillanceCameraVisualsComponent : Component
 {
     [DataField("sprites")]
-    public Dictionary<SurveillanceCameraVisuals, string> CameraSprites { get; private set; } = new();
+    public readonly Dictionary<SurveillanceCameraVisuals, string> CameraSprites = new();
 }

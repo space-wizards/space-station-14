@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed partial class HyposprayComponent : SharedHyposprayComponent
+    public sealed class HyposprayComponent : SharedHyposprayComponent
     {
         // TODO: This should be on clumsycomponent.
         [DataField("clumsyFailChance")]

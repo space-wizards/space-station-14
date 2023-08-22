@@ -2,7 +2,7 @@
 
 namespace Content.Server.Magic.Events;
 
-public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
+public sealed class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
 {
     /// <summary>
     ///     Should this smite delete all parts/mechanisms gibbed except for the brain?
@@ -11,5 +11,5 @@ public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpe
     public bool DeleteNonBrainParts = true;
 
     [DataField("speech")]
-    public string? Speech { get; private set; }
+    public string? Speech { get; }
 }

@@ -80,7 +80,7 @@ public sealed partial class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("printingQueue")]
-    public Queue<FaxPrintout> PrintingQueue { get; private set; } = new();
+    public Queue<FaxPrintout> PrintingQueue { get; } = new();
 
     /// <summary>
     /// Message sending timeout
@@ -125,19 +125,19 @@ public sealed partial class FaxMachineComponent : Component
 public sealed partial class FaxPrintout
 {
     [DataField("name", required: true)]
-    public string Name { get; private set; } = default!;
+    public string Name { get; } = default!;
 
     [DataField("content", required: true)]
-    public string Content { get; private set; } = default!;
+    public string Content { get; } = default!;
 
     [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; private set; } = default!;
+    public string PrototypeId { get; } = default!;
 
     [DataField("stampState")]
-    public string? StampState { get; private set; }
+    public string? StampState { get; }
 
     [DataField("stampedBy")]
-    public List<StampDisplayInfo> StampedBy { get; private set; } = new();
+    public List<StampDisplayInfo> StampedBy { get; } = new();
 
     private FaxPrintout()
     {

@@ -21,7 +21,7 @@ namespace Content.Shared.Containers;
 public sealed partial class ContainerFillComponent : Component
 {
     [DataField("containers", customTypeSerializer:typeof(ContainerFillSerializer))]
-    public Dictionary<string, List<string>> Containers { get; private set; } = new();
+    public Dictionary<string, List<string>> Containers = new();
 
     /// <summary>
     ///     If true, entities spawned via the construction system will not have entities spawned into containers managed

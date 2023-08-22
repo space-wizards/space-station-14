@@ -4,6 +4,6 @@ namespace Content.Server.Maps;
 public abstract partial class GameMapCondition
 {
     [DataField("inverted")]
-    public bool Inverted { get; private set; }
+    public bool Inverted { get; }
     public abstract bool Check(GameMapPrototype map);
 }

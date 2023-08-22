@@ -5,20 +5,20 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed partial class TabletopParchisSetup : TabletopSetup
+    public sealed class TabletopParchisSetup : TabletopSetup
     {
 
         [DataField("redPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string RedPiecePrototype { get; private set; } = "RedTabletopPiece";
+        public string RedPiecePrototype { get; } = "RedTabletopPiece";
 
         [DataField("greenPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string GreenPiecePrototype { get; private set; } = "GreenTabletopPiece";
+        public string GreenPiecePrototype { get; } = "GreenTabletopPiece";
 
         [DataField("yellowPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string YellowPiecePrototype { get; private set; } = "YellowTabletopPiece";
+        public string YellowPiecePrototype { get; } = "YellowTabletopPiece";
 
         [DataField("bluePiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string BluePiecePrototype { get; private set; } = "BlueTabletopPiece";
+        public string BluePiecePrototype { get; } = "BlueTabletopPiece";
 
         public override void SetupTabletop(TabletopSession session, IEntityManager entityManager)
         {

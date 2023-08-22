@@ -9,6 +9,6 @@ namespace Content.Shared.Dataset
         [IdDataField]
         public string ID { get; } = default!;
 
-        [DataField("values")] public IReadOnlyList<string> Values { get; private set; } = new List<string>();
+        [DataField("values")] public IList<string> Values { get; } = new List<string>();
     }
 }

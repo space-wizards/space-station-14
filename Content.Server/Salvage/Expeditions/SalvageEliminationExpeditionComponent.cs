@@ -12,5 +12,5 @@ public sealed partial class SalvageEliminationExpeditionComponent : Component
     /// List of mobs that need to be killed for the mission to be complete.
     /// </summary>
     [DataField("megafauna")]
-    public List<EntityUid> Megafauna { get; private set; } = new();
+    public readonly List<EntityUid> Megafauna = new();
 }

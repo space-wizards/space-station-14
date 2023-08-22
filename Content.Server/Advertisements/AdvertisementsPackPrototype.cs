@@ -10,6 +10,6 @@ namespace Content.Server.Advertisements
         public string ID { get; } = default!;
 
         [DataField("advertisements")]
-        public List<string> Advertisements { get; private set; } = new();
+        public List<string> Advertisements { get; } = new();
     }
 }

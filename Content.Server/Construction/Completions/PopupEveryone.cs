@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Completions
     [DataDefinition]
     public sealed partial class PopupEveryone : IGraphAction
     {
-        [DataField("text")] public string Text { get; private set; } = string.Empty;
+        [DataField("text")] public string Text { get; } = string.Empty;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

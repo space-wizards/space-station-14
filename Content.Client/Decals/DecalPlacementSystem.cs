@@ -195,7 +195,7 @@ public sealed class DecalPlacementSystem : EntitySystem
     }
 }
 
-public sealed partial class PlaceDecalActionEvent : WorldTargetActionEvent
+public sealed class PlaceDecalActionEvent : WorldTargetActionEvent
 {
     [DataField("decalId", customTypeSerializer:typeof(PrototypeIdSerializer<DecalPrototype>), required:true)]
     public string DecalId = string.Empty;

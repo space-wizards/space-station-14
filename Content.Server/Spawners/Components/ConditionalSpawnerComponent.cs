@@ -13,7 +13,7 @@ namespace Content.Server.Spawners.Components
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("gameRules", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public List<string> GameRules { get; private set; } = new();
+        public readonly List<string> GameRules = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("chance")]

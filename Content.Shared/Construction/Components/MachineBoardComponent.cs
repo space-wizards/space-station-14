@@ -12,16 +12,16 @@ namespace Content.Shared.Construction.Components
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
         [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
-        public Dictionary<string, int> Requirements { get; private set; } = new();
+        public readonly Dictionary<string, int> Requirements = new();
 
         [DataField("materialRequirements")]
-        public Dictionary<string, int> MaterialIdRequirements { get; private set; } = new();
+        public readonly Dictionary<string, int> MaterialIdRequirements = new();
 
         [DataField("tagRequirements")]
-        public Dictionary<string, GenericPartInfo> TagRequirements { get; private set; } = new();
+        public readonly Dictionary<string, GenericPartInfo> TagRequirements = new();
 
         [DataField("componentRequirements")]
-        public Dictionary<string, GenericPartInfo> ComponentRequirements { get; private set; } = new();
+        public readonly Dictionary<string, GenericPartInfo> ComponentRequirements = new();
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("prototype")]

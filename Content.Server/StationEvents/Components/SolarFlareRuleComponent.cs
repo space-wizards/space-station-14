@@ -21,7 +21,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     Channels that will be disabled for a duration of event
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
-    public HashSet<string> AffectedChannels { get; private set; } = new();
+    public readonly HashSet<string> AffectedChannels = new();
 
     /// <summary>
     ///     List of extra channels that can be random disabled on top of the starting channels.
@@ -30,7 +30,7 @@ public sealed partial class SolarFlareRuleComponent : Component
     ///     Channels are not removed from this, so its possible to roll the same channel multiple times.
     /// </remarks>
     [DataField("extraChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
-    public List<String> ExtraChannels = new();
+    public readonly List<String> ExtraChannels = new();
 
     /// <summary>
     ///     Number of times to roll a channel from ExtraChannels.

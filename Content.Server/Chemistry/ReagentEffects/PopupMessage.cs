@@ -6,7 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.ReagentEffects
 {
-    public sealed partial class PopupMessage : ReagentEffect
+    public sealed class PopupMessage : ReagentEffect
     {
         [DataField("messages", required: true)]
         public string[] Messages = default!;

@@ -8,7 +8,7 @@ namespace Content.Server.Engineering.Components
     public sealed partial class DisassembleOnAltVerbComponent : Component
     {
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Prototype { get; private set; }
+        public string? Prototype { get; }
 
         [DataField("doAfter")]
         public float DoAfterTime = 0;

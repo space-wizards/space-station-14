@@ -7,7 +7,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.ParticleAccelerator.Wires;
 
-public sealed partial class ParticleAcceleratorPowerWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
+public sealed class ParticleAcceleratorPowerWireAction : ComponentWireAction<ParticleAcceleratorControlBoxComponent>
 {
     public override string Name { get; set; } = "wire-name-pa-power";
     public override Color Color { get; set; } = Color.Yellow;

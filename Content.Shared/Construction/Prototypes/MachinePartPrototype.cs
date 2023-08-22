@@ -18,11 +18,11 @@ public sealed class MachinePartPrototype : IPrototype
     /// A human-readable name for the machine part type.
     /// </summary>
     [DataField("name")]
-    public string Name { get; private set; } = string.Empty;
+    public readonly string Name = string.Empty;
 
     /// <summary>
     /// A stock part entity based on the machine part.
     /// </summary>
     [DataField("stockPartPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string StockPartPrototype { get; private set; } = string.Empty;
+    public readonly string StockPartPrototype = string.Empty;
 }

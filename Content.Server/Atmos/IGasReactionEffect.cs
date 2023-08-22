@@ -4,7 +4,7 @@ using Content.Server.Atmos.Reactions;
 namespace Content.Server.Atmos
 {
     [ImplicitDataDefinitionForInheritors]
-    public partial interface IGasReactionEffect
+    public interface IGasReactionEffect
     {
         ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem);
     }

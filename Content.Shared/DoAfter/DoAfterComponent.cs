@@ -12,7 +12,7 @@ public sealed partial class DoAfterComponent : Component
     public ushort NextId;
 
     [DataField("doAfters")]
-    public Dictionary<ushort, DoAfter> DoAfters { get; private set; } = new();
+    public readonly Dictionary<ushort, DoAfter> DoAfters = new();
 
     // Used by obsolete async do afters
     public readonly Dictionary<ushort, TaskCompletionSource<DoAfterStatus>> AwaitedDoAfters = new();

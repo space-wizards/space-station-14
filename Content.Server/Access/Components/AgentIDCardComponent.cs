@@ -10,6 +10,6 @@ namespace Content.Server.Access.Components
         /// Set of job icons that the agent ID card can show.
         /// </summary>
         [DataField("icons", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<StatusIconPrototype>))]
-        public HashSet<string> Icons { get; private set; } = new();
+        public readonly HashSet<string> Icons = new();
     }
 }

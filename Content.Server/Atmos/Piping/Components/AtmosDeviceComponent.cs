@@ -21,7 +21,7 @@ namespace Content.Server.Atmos.Piping.Components
         ///     a grid atmosphere.
         /// </summary>
         [DataField("joinSystem")]
-        public bool JoinSystem { get; private set; } = false;
+        public bool JoinSystem { get; } = false;
 
         /// <summary>
         ///     If non-null, the grid that this device is part of.

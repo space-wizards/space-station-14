@@ -77,5 +77,5 @@ public sealed partial class StationJobsComponent : Component
 
     [DataField("availableJobs", required: true,
         customTypeSerializer: typeof(PrototypeIdDictionarySerializer<List<int?>, JobPrototype>))]
-    public Dictionary<string, List<int?>> SetupAvailableJobs { get; private set; }  = default!;
+    public readonly Dictionary<string, List<int?>> SetupAvailableJobs = default!;
 }

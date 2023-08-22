@@ -17,15 +17,15 @@ public sealed class SalvageAirMod : IPrototype, IBiomeSpecificMod
 
     /// <inheritdoc/>
     [DataField("desc")]
-    public string Description { get; private set; } = string.Empty;
+    public string Description { get; } = string.Empty;
 
     /// <inheritdoc/>
     [DataField("cost")]
-    public float Cost { get; private set; } = 0f;
+    public float Cost { get; } = 0f;
 
     /// <inheritdoc/>
     [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
-    public List<string>? Biomes { get; private set; } = null;
+    public List<string>? Biomes { get; } = null;
 
     /// <summary>
     /// Set to true if this planet will have no atmosphere.

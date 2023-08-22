@@ -11,32 +11,32 @@ public sealed partial class DoAfterArgs
     ///     The entity invoking do_after
     /// </summary>
     [DataField("user", required: true)]
-    public EntityUid User { get; private set; }
+    public readonly EntityUid User;
 
     /// <summary>
     ///     How long does the do_after require to complete
     /// </summary>
     [DataField("delay", required: true)]
-    public TimeSpan Delay { get; private set; }
+    public readonly TimeSpan Delay;
 
     /// <summary>
     ///     Applicable target (if relevant)
     /// </summary>
     [DataField("target")]
-    public EntityUid? Target { get; private set; }
+    public readonly EntityUid? Target;
 
     /// <summary>
     ///     Entity used by the User on the Target.
     /// </summary>
     [DataField("using")]
-    public EntityUid? Used { get; private set; }
+    public readonly EntityUid? Used;
 
     #region Event options
     /// <summary>
     ///     The event that will get raised when the DoAfter has finished. If null, this will simply raise a <see cref="SimpleDoAfterEvent"/>
     /// </summary>
     [DataField("event", required: true)]
-    public DoAfterEvent Event { get; private set; } = default!;
+    public readonly DoAfterEvent Event = default!;
 
     /// <summary>
     ///     This option determines how frequently the DoAfterAttempt event will get raised. Defaults to never raising the
@@ -49,7 +49,7 @@ public sealed partial class DoAfterArgs
     ///     Entity which will receive the directed event. If null, no directed event will be raised.
     /// </summary>
     [DataField("eventTarget")]
-    public EntityUid? EventTarget { get; private set; }
+    public readonly EntityUid? EventTarget;
 
     /// <summary>
     /// Should the DoAfter event broadcast? If this is false, then <see cref="EventTarget"/> should be a valid entity.

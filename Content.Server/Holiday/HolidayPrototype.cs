@@ -33,13 +33,13 @@ namespace Content.Server.Holiday
         public Month EndMonth { get; set; } = Month.Invalid;
 
         [DataField("shouldCelebrate")]
-        private IHolidayShouldCelebrate _shouldCelebrate { get; set; } = new DefaultHolidayShouldCelebrate();
+        private readonly IHolidayShouldCelebrate _shouldCelebrate = new DefaultHolidayShouldCelebrate();
 
         [DataField("greet")]
-        private IHolidayGreet _greet { get; set; } = new DefaultHolidayGreet();
+        private readonly IHolidayGreet _greet = new DefaultHolidayGreet();
 
         [DataField("celebrate")]
-        private IHolidayCelebrate? _celebrate { get; set; } = null;
+        private readonly IHolidayCelebrate? _celebrate = null;
 
         public bool ShouldCelebrate(DateTime date)
         {

@@ -7,7 +7,7 @@ namespace Content.Server.Objectives.Requirements
     public sealed partial class MultipleTraitorsRequirement : IObjectiveRequirement
     {
         [DataField("traitors")]
-        private int _requiredTraitors { get; set; } = 2;
+        private readonly int _requiredTraitors = 2;
 
         public bool CanBeAssigned(Mind.Mind mind)
         {

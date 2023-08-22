@@ -26,7 +26,7 @@ namespace Content.Server.Atmos.Components
 
         [ViewVariables]
         [IncludeDataField(customTypeSerializer:typeof(TileAtmosCollectionSerializer))]
-        public Dictionary<Vector2i, TileAtmosphere> Tiles { get; private set; } = new(1000);
+        public readonly Dictionary<Vector2i, TileAtmosphere> Tiles = new(1000);
 
         [ViewVariables]
         public readonly HashSet<TileAtmosphere> ActiveTiles = new(1000);

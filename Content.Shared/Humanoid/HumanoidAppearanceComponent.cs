@@ -50,7 +50,7 @@ public sealed partial class HumanoidAppearanceComponent : Component
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
     [DataField("initial", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidProfilePrototype>))]
-    public string? Initial { get; private set; }
+    public string? Initial { get; }
 
     /// <summary>
     ///     Skin color of this humanoid.

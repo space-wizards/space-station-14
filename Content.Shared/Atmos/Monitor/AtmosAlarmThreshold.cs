@@ -11,19 +11,19 @@ public sealed class AtmosAlarmThresholdPrototype : IPrototype
     public string ID { get; } = default!;
 
     [DataField("ignore")]
-    public bool Ignore { get; private set; }
+    public readonly bool Ignore;
 
     [DataField("upperBound")]
-    public AlarmThresholdSetting UpperBound { get; private set; } = AlarmThresholdSetting.Disabled;
+    public readonly AlarmThresholdSetting UpperBound = AlarmThresholdSetting.Disabled;
 
     [DataField("lowerBound")]
-    public AlarmThresholdSetting LowerBound { get; private set; } = AlarmThresholdSetting.Disabled;
+    public readonly AlarmThresholdSetting LowerBound = AlarmThresholdSetting.Disabled;
 
     [DataField("upperWarnAround")]
-    public AlarmThresholdSetting UpperWarningPercentage { get; private set; } = AlarmThresholdSetting.Disabled;
+    public readonly AlarmThresholdSetting UpperWarningPercentage = AlarmThresholdSetting.Disabled;
 
     [DataField("lowerWarnAround")]
-    public AlarmThresholdSetting LowerWarningPercentage { get; private set; } = AlarmThresholdSetting.Disabled;
+    public readonly AlarmThresholdSetting LowerWarningPercentage = AlarmThresholdSetting.Disabled;
 }
 
 [Serializable, NetSerializable, DataDefinition]

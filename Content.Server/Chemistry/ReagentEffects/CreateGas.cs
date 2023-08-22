@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class CreateGas : ReagentEffect
+public sealed class CreateGas : ReagentEffect
 {
     [DataField("gas", required: true)]
     public Gas Gas = default!;

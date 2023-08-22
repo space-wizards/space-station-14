@@ -15,25 +15,25 @@ namespace Content.Shared.Tools
         /// </summary>
         /// <remarks>This is a localization string ID.</remarks>
         [DataField("name")]
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         ///     Human-readable name for a tool of this type e.g. "Wrench"
         /// </summary>
         /// <remarks>This is a localization string ID.</remarks>
         [DataField("toolName")]
-        public string ToolName { get; private set; } = string.Empty;
+        public string ToolName { get; } = string.Empty;
 
         /// <summary>
         ///     An icon that will be used to represent this tool type.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier? Icon { get; private set; } = null;
+        public SpriteSpecifier? Icon { get; } = null;
 
         /// <summary>
         ///     The default entity prototype for this tool type.
         /// </summary>
         [DataField("spawn", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Spawn { get; private set; } = string.Empty;
+        public string Spawn { get; } = string.Empty;
     }
 }

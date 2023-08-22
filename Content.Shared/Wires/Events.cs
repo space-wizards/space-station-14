@@ -7,10 +7,10 @@ namespace Content.Shared.Wires;
 public sealed partial class WireDoAfterEvent : DoAfterEvent
 {
     [DataField("action", required: true)]
-    public WiresAction Action { get; private set; }
+    public readonly WiresAction Action;
 
     [DataField("id", required: true)]
-    public int Id { get; private set; }
+    public readonly int Id;
 
     private WireDoAfterEvent()
     {

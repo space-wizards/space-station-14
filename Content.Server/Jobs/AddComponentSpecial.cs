@@ -6,12 +6,12 @@ using Robust.Shared.Serialization.Manager;
 namespace Content.Server.Jobs
 {
     [UsedImplicitly]
-    public sealed partial class AddComponentSpecial : JobSpecial
+    public sealed class AddComponentSpecial : JobSpecial
     {
 
         [DataField("components")]
         [AlwaysPushInheritance]
-        public ComponentRegistry Components { get; private set; } = new();
+        public ComponentRegistry Components { get; } = new();
 
         public override void AfterEquip(EntityUid mob)
         {

@@ -9,7 +9,7 @@ namespace Content.Shared.Construction.Conditions
     public sealed partial class EmptyOrWindowValidInTile : IConstructionCondition
     {
         [DataField("tileNotBlocked")]
-        private TileNotBlocked _tileNotBlocked { get; set; } = new();
+        private readonly TileNotBlocked _tileNotBlocked = new();
 
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {

@@ -29,25 +29,25 @@ namespace Content.Shared.Humanoid
         }
 
         [DataField("hair")]
-        public string HairStyleId { get; private set; }
+        public string HairStyleId { get; }
 
         [DataField("hairColor")]
-        public Color HairColor { get; private set; }
+        public Color HairColor { get; }
 
         [DataField("facialHair")]
-        public string FacialHairStyleId { get; private set; }
+        public string FacialHairStyleId { get; }
 
         [DataField("facialHairColor")]
-        public Color FacialHairColor { get; private set; }
+        public Color FacialHairColor { get; }
 
         [DataField("eyeColor")]
-        public Color EyeColor { get; private set; }
+        public Color EyeColor { get; }
 
         [DataField("skinColor")]
-        public Color SkinColor { get; private set; }
+        public Color SkinColor { get; }
 
         [DataField("markings")]
-        public List<Marking> Markings { get; private set; }
+        public List<Marking> Markings { get; }
 
         public HumanoidCharacterAppearance WithHairStyleName(string newName)
         {

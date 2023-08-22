@@ -7,10 +7,10 @@ namespace Content.Server.Engineering.Components
     public sealed partial class SpawnAfterInteractComponent : Component
     {
         [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? Prototype { get; private set; }
+        public string? Prototype { get; }
 
         [DataField("ignoreDistance")]
-        public bool IgnoreDistance { get; private set; }
+        public bool IgnoreDistance { get; }
 
         [DataField("doAfter")]
         public float DoAfterTime = 0;

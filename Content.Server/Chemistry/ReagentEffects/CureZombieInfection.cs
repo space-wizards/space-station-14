@@ -6,7 +6,7 @@ using Content.Server.Zombies;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class CureZombieInfection : ReagentEffect
+public sealed class CureZombieInfection : ReagentEffect
 {
     [DataField("innoculate")]
     public bool Innoculate;

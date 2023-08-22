@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// Reset narcolepsy timer
 /// </summary>
 [UsedImplicitly]
-public sealed partial class ResetNarcolepsy : ReagentEffect
+public sealed class ResetNarcolepsy : ReagentEffect
 {
     /// <summary>
     /// The # of seconds the effect resets the narcolepsy timer to

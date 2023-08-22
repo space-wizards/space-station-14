@@ -13,5 +13,5 @@ public sealed class WeightedRandomEntityPrototype : IWeightedRandomPrototype
     public string ID { get; } = default!;
 
     [DataField("weights", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, EntityPrototype>))]
-    public Dictionary<string, float> Weights { get; private set; } = new();
+    public Dictionary<string, float> Weights { get; } = new();
 }

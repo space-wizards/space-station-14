@@ -44,7 +44,7 @@ public sealed class StatusIconPrototype : StatusIconData, IPrototype, IInheritin
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<StatusIconPrototype>))]
-    public string[]? Parents { get; private set; }
+    public string[]? Parents { get; }
 
     /// <inheritdoc />
     [NeverPushInheritance]

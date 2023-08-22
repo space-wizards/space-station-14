@@ -9,16 +9,16 @@ namespace Content.Shared.Fluids;
 public sealed partial class AbsorbantDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public string TargetSolution { get; private set; } = default!;
+    public readonly string TargetSolution = default!;
 
     [DataField("message", required: true)]
-    public string Message { get; private set; } = default!;
+    public readonly string Message = default!;
 
     [DataField("sound", required: true)]
-    public SoundSpecifier Sound { get; private set; } = default!;
+    public readonly SoundSpecifier Sound = default!;
 
     [DataField("transferAmount", required: true)]
-    public FixedPoint2 TransferAmount { get; private set; }
+    public readonly FixedPoint2 TransferAmount;
 
     private AbsorbantDoAfterEvent()
     {

@@ -18,5 +18,5 @@ public sealed partial class EncryptionKeyComponent : Component
     ///     This is the channel that will be used when using the default/department prefix (<see cref="SharedChatSystem.DefaultChannelKey"/>).
     /// </summary>
     [DataField("defaultChannel", customTypeSerializer: typeof(PrototypeIdSerializer<RadioChannelPrototype>))]
-    public string? DefaultChannel { get; private set; }
+    public readonly string? DefaultChannel;
 }

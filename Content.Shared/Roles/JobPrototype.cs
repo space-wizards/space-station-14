@@ -18,16 +18,16 @@ namespace Content.Shared.Roles
         public string ID { get; } = default!;
 
         [DataField("playTimeTracker", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<PlayTimeTrackerPrototype>))]
-        public string PlayTimeTracker { get; private set; } = string.Empty;
+        public string PlayTimeTracker { get; } = string.Empty;
 
         [DataField("supervisors")]
-        public string Supervisors { get; private set; } = "nobody";
+        public string Supervisors { get; } = "nobody";
 
         /// <summary>
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField("name")]
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; } = string.Empty;
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string LocalizedName => Loc.GetString(Name);
@@ -36,7 +36,7 @@ namespace Content.Shared.Roles
         ///     The name of this job as displayed to players.
         /// </summary>
         [DataField("description")]
-        public string? Description { get; private set; }
+        public string? Description { get; }
 
         [ViewVariables(VVAccess.ReadOnly)]
         public string? LocalizedDescription => Description is null ? null : Loc.GetString(Description);
@@ -45,16 +45,16 @@ namespace Content.Shared.Roles
         public HashSet<JobRequirement>? Requirements;
 
         [DataField("joinNotifyCrew")]
-        public bool JoinNotifyCrew { get; private set; } = false;
+        public bool JoinNotifyCrew { get; } = false;
 
         [DataField("requireAdminNotify")]
-        public bool RequireAdminNotify { get; private set; } = false;
+        public bool RequireAdminNotify { get; } = false;
 
         [DataField("setPreference")]
-        public bool SetPreference { get; private set; } = true;
+        public bool SetPreference { get; } = true;
 
         [DataField("canBeAntag")]
-        public bool CanBeAntag { get; private set; } = true;
+        public bool CanBeAntag { get; } = true;
 
         /// <summary>
         ///     Whether this job is a head.
@@ -82,21 +82,21 @@ namespace Content.Shared.Roles
         public string? JobEntity = null;
 
         [DataField("icon", customTypeSerializer: typeof(PrototypeIdSerializer<StatusIconPrototype>))]
-        public string Icon { get; private set; } = "JobIconUnknown";
+        public string Icon { get; } = "JobIconUnknown";
 
         [DataField("special", serverOnly: true)]
         public JobSpecial[] Special { get; private set; } = Array.Empty<JobSpecial>();
 
         [DataField("access", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-        public IReadOnlyCollection<string> Access { get; private set; } = Array.Empty<string>();
+        public IReadOnlyCollection<string> Access { get; } = Array.Empty<string>();
 
         [DataField("accessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
-        public IReadOnlyCollection<string> AccessGroups { get; private set; } = Array.Empty<string>();
+        public IReadOnlyCollection<string> AccessGroups { get; } = Array.Empty<string>();
 
         [DataField("extendedAccess", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessLevelPrototype>))]
-        public IReadOnlyCollection<string> ExtendedAccess { get; private set; } = Array.Empty<string>();
+        public IReadOnlyCollection<string> ExtendedAccess { get; } = Array.Empty<string>();
 
         [DataField("extendedAccessGroups", customTypeSerializer: typeof(PrototypeIdListSerializer<AccessGroupPrototype>))]
-        public IReadOnlyCollection<string> ExtendedAccessGroups { get; private set; } = Array.Empty<string>();
+        public IReadOnlyCollection<string> ExtendedAccessGroups { get; } = Array.Empty<string>();
     }
 }

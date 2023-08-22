@@ -31,7 +31,7 @@ public sealed partial class BatteryWeaponFireModesComponent : Component
 public sealed partial class BatteryWeaponFireMode
 {
     /// <summary>
-    /// The projectile prototype associated with this firing mode 
+    /// The projectile prototype associated with this firing mode
     /// </summary>
     [DataField("proto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = default!;

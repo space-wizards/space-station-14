@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed partial class NewsReadUi : UIFragment
+public sealed class NewsReadUi : UIFragment
 {
     private NewsReadUiFragment? _fragment;
 

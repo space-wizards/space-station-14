@@ -18,7 +18,7 @@ namespace Content.Shared.Chemistry.Reaction
         public string ID { get; } = default!;
 
         [DataField("name")]
-        public string Name { get; private set; } = string.Empty;
+        public string Name { get; } = string.Empty;
 
         /// <summary>
         /// Reactants required for the reaction to occur.

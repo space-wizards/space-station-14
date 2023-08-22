@@ -14,7 +14,7 @@ public sealed class BiomePrototype : IPrototype, IInheritingPrototype
 {
     /// <inheritdoc />
     [ParentDataField(typeof(AbstractPrototypeIdArraySerializer<EntityPrototype>))]
-    public string[]? Parents { get; private set; }
+    public string[]? Parents { get; }
 
     /// <inheritdoc />
     [NeverPushInheritance]
@@ -35,7 +35,7 @@ public sealed class BiomePrototype : IPrototype, IInheritingPrototype
     ///     Higher priority biomes get picked before lower priority ones.
     /// </summary>
     [DataField("priority", required: true)]
-    public int Priority { get; private set; }
+    public int Priority { get; }
 
     /// <summary>
     ///     The components that get added to the target map.

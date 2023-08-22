@@ -60,30 +60,30 @@ namespace Content.Shared.Cargo.Prototypes
         ///     Texture path used in the CargoConsole GUI.
         /// </summary>
         [DataField("icon")]
-        public SpriteSpecifier Icon { get; private set; } = SpriteSpecifier.Invalid;
+        public SpriteSpecifier Icon { get; } = SpriteSpecifier.Invalid;
 
         /// <summary>
         ///     The prototype name of the product.
         /// </summary>
         [DataField("product", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string Product { get; private set; } = string.Empty;
+        public string Product { get; } = string.Empty;
 
         /// <summary>
         ///     The point cost of the product.
         /// </summary>
         [DataField("cost")]
-        public int PointCost { get; private set; }
+        public int PointCost { get; }
 
         /// <summary>
         ///     The prototype category of the product. (e.g. Engineering, Medical)
         /// </summary>
         [DataField("category")]
-        public string Category { get; private set; } = string.Empty;
+        public string Category { get; } = string.Empty;
 
         /// <summary>
         ///     The prototype group of the product. (e.g. Contraband)
         /// </summary>
         [DataField("group")]
-        public string Group { get; private set; } = string.Empty;
+        public string Group { get; } = string.Empty;
     }
 }

@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffectConditions
 {
-    public sealed partial class TotalDamage : ReagentEffectCondition
+    public sealed class TotalDamage : ReagentEffectCondition
     {
         [DataField("max")]
         public FixedPoint2 Max = FixedPoint2.MaxValue;

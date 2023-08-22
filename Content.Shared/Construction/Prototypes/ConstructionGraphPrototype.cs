@@ -17,7 +17,7 @@ namespace Content.Shared.Construction.Prototypes
         public string ID { get; } = default!;
 
         [DataField("start")]
-        public string? Start { get; private set; }
+        public string? Start { get; }
 
         [DataField("graph", priority: 0)]
         private List<ConstructionGraphNode> _graph = new();

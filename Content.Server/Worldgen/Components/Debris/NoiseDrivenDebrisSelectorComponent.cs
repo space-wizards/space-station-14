@@ -39,6 +39,6 @@ public sealed partial class NoiseDrivenDebrisSelectorComponent : Component
     /// </summary>
     /// <remarks>This noise channel should be mapped to exactly the range [0, 1] unless you want a lot of warnings in the log.</remarks>
     [DataField("noiseChannel", customTypeSerializer: typeof(PrototypeIdSerializer<NoiseChannelPrototype>))]
-    public string NoiseChannel { get; private set; } = default!;
+    public string NoiseChannel { get; } = default!;
 }
 

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Weapons.Ranged.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed partial class RevolverAmmoProviderComponent : AmmoProviderComponent
+public sealed class RevolverAmmoProviderComponent : AmmoProviderComponent
 {
     /*
      * Revolver has an array of its slots of which we can fire from any index.

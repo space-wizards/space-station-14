@@ -22,13 +22,13 @@ namespace Content.Server.Construction.Conditions
         public bool HasEntity { get; private set; }
 
         [DataField("examineText")]
-        public string? ExamineText { get; private set; }
+        public string? ExamineText { get; }
 
         [DataField("guideText")]
-        public string? GuideText { get; private set; }
+        public string? GuideText { get; }
 
         [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon { get; private set; }
+        public SpriteSpecifier? GuideIcon { get; }
 
         /// <summary>
         ///     The component name in question.

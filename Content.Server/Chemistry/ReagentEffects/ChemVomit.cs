@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Forces you to vomit.
     /// </summary>
     [UsedImplicitly]
-    public sealed partial class ChemVomit : ReagentEffect
+    public sealed class ChemVomit : ReagentEffect
     {
         /// How many units of thirst to add each time we vomit
         [DataField("thirstAmount")]

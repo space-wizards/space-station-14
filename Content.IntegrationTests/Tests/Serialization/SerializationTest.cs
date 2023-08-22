@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 namespace Content.IntegrationTests.Tests.Serialization;
 
 [TestFixture]
-public sealed partial class SerializationTest
+public sealed class SerializationTest
 {
     /// <summary>
     /// Check that serializing generic enums works as intended. This should really be in engine, but engine
@@ -74,7 +74,7 @@ public sealed partial class SerializationTest
     private enum TestEnum : byte { Aa, Bb, Cc, Dd }
 
     [DataDefinition]
-    private sealed partial class TestData
+    private sealed class TestData
     {
         [DataField("value")] public Enum Value = default!;
         [DataField("sequence")] public List<Enum> Sequence = default!;

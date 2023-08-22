@@ -109,10 +109,10 @@ namespace Content.Shared.Chemistry.Reagent
         public Dictionary<string, ReactiveReagentEffectEntry>? ReactiveEffects = null;
 
         [DataField("tileReactions", serverOnly: true)]
-        public List<ITileReaction> TileReactions { get; private set; } = new(0);
+        public List<ITileReaction> TileReactions = new(0);
 
         [DataField("plantMetabolism", serverOnly: true)]
-        public List<ReagentEffect> PlantMetabolisms { get; private set; } = new(0);
+        public List<ReagentEffect> PlantMetabolisms = new(0);
 
         [DataField("pricePerUnit")] public float PricePerUnit;
 

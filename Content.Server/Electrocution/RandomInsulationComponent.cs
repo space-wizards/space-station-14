@@ -4,6 +4,6 @@ namespace Content.Server.Electrocution
     public sealed partial class RandomInsulationComponent : Component
     {
         [DataField("list")]
-        public float[] List { get; private set; } = { 0f };
+        public readonly float[] List = { 0f };
     }
 }

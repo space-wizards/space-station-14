@@ -9,7 +9,7 @@ namespace Content.Shared.Standing
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("downSound")]
-        public SoundSpecifier DownSound { get; private set; } = new SoundCollectionSpecifier("BodyFall");
+        public SoundSpecifier DownSound { get; } = new SoundCollectionSpecifier("BodyFall");
 
         [DataField("standing")]
         public bool Standing { get; set; } = true;

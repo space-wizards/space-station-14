@@ -29,7 +29,7 @@ public sealed partial class PowerChargerVisualsComponent : Component
     /// </summary>
     [DataField("lightStates")]
     [ViewVariables(VVAccess.ReadWrite)]
-    public Dictionary<CellChargerStatus, string> LightStates { get; private set; } = new()
+    public readonly Dictionary<CellChargerStatus, string> LightStates = new()
     {
         [CellChargerStatus.Off] = "light-off",
         [CellChargerStatus.Empty] = "light-empty",

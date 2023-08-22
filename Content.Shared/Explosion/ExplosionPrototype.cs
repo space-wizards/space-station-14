@@ -23,21 +23,21 @@ public sealed class ExplosionPrototype : IPrototype
     ///     Damage to deal to entities. This is scaled by the explosion intensity.
     /// </summary>
     [DataField("damagePerIntensity", required: true)]
-    public DamageSpecifier DamagePerIntensity { get; private set; } = default!;
+    public readonly DamageSpecifier DamagePerIntensity = default!;
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakIntensity"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakChance")]
-    private float[] _tileBreakChance { get; set; } = { 0f, 1f };
+    private readonly float[] _tileBreakChance = { 0f, 1f };
 
     /// <summary>
     ///     This set of points, together with <see cref="_tileBreakChance"/> define a function that maps the
     ///     explosion intensity to a tile break chance via linear interpolation.
     /// </summary>
     [DataField("tileBreakIntensity")]
-    private float[] _tileBreakIntensity { get; set; } = {0f, 15f };
+    private readonly float[] _tileBreakIntensity = {0f, 15f };
 
     /// <summary>
     ///     When a tile is broken by an explosion, the intensity is reduced by this amount and is used to try and
@@ -48,25 +48,25 @@ public sealed class ExplosionPrototype : IPrototype
     ///     chance to create a space tile.
     /// </remarks>
     [DataField("tileBreakRerollReduction")]
-    public float TileBreakRerollReduction { get; private set; } = 10f;
+    public readonly float TileBreakRerollReduction = 10f;
 
     /// <summary>
     ///     Color emitted by a point light at the center of the explosion.
     /// </summary>
     [DataField("lightColor")]
-    public Color LightColor { get; private set; } = Color.Orange;
+    public readonly Color LightColor = Color.Orange;
 
     /// <summary>
     ///     Color used to modulate the fire texture.
     /// </summary>
     [DataField("fireColor")]
-    public Color? FireColor { get; private set; }
+    public readonly Color? FireColor;
 
     [DataField("Sound")]
-    public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("explosion");
+    public readonly SoundSpecifier Sound = new SoundCollectionSpecifier("explosion");
 
     [DataField("texturePath")]
-    public ResPath TexturePath { get; private set; } = new("/Textures/Effects/fire.rsi");
+    public readonly ResPath TexturePath = new("/Textures/Effects/fire.rsi");
 
     /// <summary>
     ///     How intense does the explosion have to be at a tile to advance to the next fire texture state?
@@ -77,7 +77,7 @@ public sealed class ExplosionPrototype : IPrototype
     // Theres probably a better way to do this. Currently Atmos just hard codes a constant int, so I have no one to
     // steal code from.
     [DataField("fireStates")]
-    public int FireStates { get; private set; } = 3;
+    public readonly int FireStates = 3;
 
     /// <summary>
     ///     Basic function for linear interpolation of the _tileBreakChance and _tileBreakIntensity arrays

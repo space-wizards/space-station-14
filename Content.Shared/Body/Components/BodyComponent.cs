@@ -12,7 +12,7 @@ namespace Content.Shared.Body.Components;
 public sealed partial class BodyComponent : Component
 {
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<BodyPrototype>))]
-    public string? Prototype { get; private set; }
+    public readonly string? Prototype;
 
     [DataField("root")]
     public BodyPartSlot? Root;

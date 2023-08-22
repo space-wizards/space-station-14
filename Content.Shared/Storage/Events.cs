@@ -7,7 +7,7 @@ namespace Content.Shared.Storage;
 public sealed partial class AreaPickupDoAfterEvent : DoAfterEvent
 {
     [DataField("entities", required: true)]
-    public IReadOnlyList<EntityUid> Entities { get; private set; } = default!;
+    public readonly IReadOnlyList<EntityUid> Entities = default!;
 
     private AreaPickupDoAfterEvent()
     {

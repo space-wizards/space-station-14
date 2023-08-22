@@ -1,7 +1,7 @@
 using Content.Shared.Construction;
+using JetBrains.Annotations;
 using Content.Shared.Doors.Components;
 using Content.Shared.Examine;
-using JetBrains.Annotations;
 
 namespace Content.Server.Construction.Conditions
 {

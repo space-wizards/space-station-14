@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Dragon;
 
 [RegisterComponent]
-public sealed partial class DragonRiftComponent : SharedDragonRiftComponent
+public sealed class DragonRiftComponent : SharedDragonRiftComponent
 {
     /// <summary>
     /// Dragon that spawned this rift.

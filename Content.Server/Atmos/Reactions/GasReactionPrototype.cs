@@ -28,32 +28,32 @@ namespace Content.Server.Atmos.Reactions
         ///     Minimum gas amount requirements.
         /// </summary>
         [DataField("minimumRequirements")]
-        public float[] MinimumRequirements { get; private set; } = new float[Atmospherics.TotalNumberOfGases];
+        public float[] MinimumRequirements { get; } = new float[Atmospherics.TotalNumberOfGases];
 
         /// <summary>
         ///     Maximum temperature requirement.
         /// </summary>
         [DataField("maximumTemperature")]
-        public float MaximumTemperatureRequirement { get; private set; } = float.MaxValue;
+        public float MaximumTemperatureRequirement { get; } = float.MaxValue;
 
         /// <summary>
         ///     Minimum temperature requirement.
         /// </summary>
         [DataField("minimumTemperature")]
-        public float MinimumTemperatureRequirement { get; private set; } = Atmospherics.TCMB;
+        public float MinimumTemperatureRequirement { get; } = Atmospherics.TCMB;
 
         /// <summary>
         ///     Minimum energy requirement.
         /// </summary>
         [DataField("minimumEnergy")]
-        public float MinimumEnergyRequirement { get; private set; } = 0f;
+        public float MinimumEnergyRequirement { get; } = 0f;
 
         /// <summary>
         ///     Lower numbers are checked/react later than higher numbers.
         ///     If two reactions have the same priority, they may happen in either order.
         /// </summary>
         [DataField("priority")]
-        public int Priority { get; private set; } = int.MinValue;
+        public int Priority { get; } = int.MinValue;
 
         /// <summary>
         ///     A list of effects this will produce.

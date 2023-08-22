@@ -14,7 +14,7 @@ public sealed partial class SpawnPointComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("spawn_type")]
-    public SpawnPointType SpawnType { get; private set; } = SpawnPointType.Unset;
+    public SpawnPointType SpawnType { get; } = SpawnPointType.Unset;
 
     public JobPrototype? Job => string.IsNullOrEmpty(_jobId) ? null : _prototypeManager.Index<JobPrototype>(_jobId);
 }

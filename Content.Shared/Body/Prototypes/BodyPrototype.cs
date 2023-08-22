@@ -11,9 +11,9 @@ public sealed class BodyPrototype : IPrototype
     [DataField("name")]
     public string Name { get; private set; } = "";
 
-    [DataField("root")] public string Root { get; private set; } = string.Empty;
+    [DataField("root")] public string Root { get; } = string.Empty;
 
-    [DataField("slots")] public Dictionary<string, BodyPrototypeSlot> Slots { get; private set; } = new();
+    [DataField("slots")] public Dictionary<string, BodyPrototypeSlot> Slots { get; } = new();
 
     private BodyPrototype() { }
 
@@ -30,7 +30,7 @@ public sealed class BodyPrototype : IPrototype
 public sealed record BodyPrototypeSlot
 {
     [DataField("part", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string? Part { get; private set; }
+    public readonly string? Part;
     public readonly HashSet<string> Connections = new();
     public readonly Dictionary<string, string> Organs = new();
 

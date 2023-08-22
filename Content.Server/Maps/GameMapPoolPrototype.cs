@@ -18,5 +18,5 @@ public sealed class GameMapPoolPrototype : IPrototype
     ///     Which maps are in this pool.
     /// </summary>
     [DataField("maps", customTypeSerializer:typeof(PrototypeIdHashSetSerializer<GameMapPrototype>), required: true)]
-    public HashSet<string> Maps { get; private set; } = new(0);
+    public readonly HashSet<string> Maps = new(0);
 }

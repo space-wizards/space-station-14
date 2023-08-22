@@ -12,15 +12,15 @@ namespace Content.Shared.Parallax.Biomes.Layers;
 public sealed partial class BiomeMetaLayer : IBiomeLayer
 {
     [DataField("noise")]
-    public FastNoiseLite Noise { get; private set; } = new(0);
+    public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
-    public float Threshold { get; private set; } = -1f;
+    public float Threshold { get; } = -1f;
 
     /// <inheritdoc/>
     [DataField("invert")]
-    public bool Invert { get; private set; }
+    public bool Invert { get; }
 
     [DataField("template", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<BiomeTemplatePrototype>))]
     public string Template = string.Empty;

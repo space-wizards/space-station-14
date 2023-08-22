@@ -12,12 +12,12 @@ namespace Content.Shared.VendingMachines
         public string ID { get; } = default!;
 
         [DataField("startingInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint> StartingInventory { get; private set; } = new();
+        public Dictionary<string, uint> StartingInventory { get; } = new();
 
         [DataField("emaggedInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint>? EmaggedInventory { get; private set; }
+        public Dictionary<string, uint>? EmaggedInventory { get; }
 
         [DataField("contrabandInventory", customTypeSerializer:typeof(PrototypeIdDictionarySerializer<uint, EntityPrototype>))]
-        public Dictionary<string, uint>? ContrabandInventory { get; private set; }
+        public Dictionary<string, uint>? ContrabandInventory { get; }
     }
 }

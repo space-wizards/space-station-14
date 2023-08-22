@@ -38,6 +38,6 @@ public sealed partial class DebrisFeaturePlacerControllerComponent : Component
     ///     The noise channel to use as a density controller.
     /// </summary>
     [DataField("densityNoiseChannel", customTypeSerializer: typeof(PrototypeIdSerializer<NoiseChannelPrototype>))]
-    public string DensityNoiseChannel { get; private set; } = default!;
+    public string DensityNoiseChannel { get; } = default!;
 }
 

@@ -11,16 +11,16 @@ public sealed partial class BiomeEntityLayer : IBiomeWorldLayer
 {
     /// <inheritdoc/>
     [DataField("allowedTiles", customTypeSerializer:typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
-    public List<string> AllowedTiles { get; private set; } = new();
+    public List<string> AllowedTiles { get; } = new();
 
-    [DataField("noise")] public FastNoiseLite Noise { get; private set; } = new(0);
+    [DataField("noise")] public FastNoiseLite Noise { get; } = new(0);
 
     /// <inheritdoc/>
     [DataField("threshold")]
-    public float Threshold { get; private set; } = 0.5f;
+    public float Threshold { get; } = 0.5f;
 
     /// <inheritdoc/>
-    [DataField("invert")] public bool Invert { get; private set; } = false;
+    [DataField("invert")] public bool Invert { get; } = false;
 
     [DataField("entities", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
     public List<string> Entities = new();

@@ -22,5 +22,5 @@ public sealed partial class KnockSpellEvent : InstantActionEvent, ISpeakSpell
     public float KnockVolume = 5f;
 
     [DataField("speech")]
-    public string? Speech { get; private set; }
+    public string? Speech { get; }
 }

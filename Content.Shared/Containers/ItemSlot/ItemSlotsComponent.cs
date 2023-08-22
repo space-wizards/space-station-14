@@ -22,7 +22,7 @@ namespace Content.Shared.Containers.ItemSlots
         ///     cref="ItemSlotsSystem"/>.
         /// </summary>
         [DataField("slots", readOnly:true)]
-        public Dictionary<string, ItemSlot> Slots { get; private set; } = new();
+        public Dictionary<string, ItemSlot> Slots = new();
 
         // There are two ways to use item slots:
         //

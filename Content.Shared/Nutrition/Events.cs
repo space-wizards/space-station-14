@@ -11,10 +11,10 @@ namespace Content.Shared.Nutrition;
 public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public string Solution { get; private set; } = default!;
+    public readonly string Solution = default!;
 
     [DataField("flavorMessage", required: true)]
-    public string FlavorMessage { get; private set; } = default!;
+    public readonly string FlavorMessage = default!;
 
     private ConsumeDoAfterEvent()
     {
@@ -36,10 +36,10 @@ public sealed partial class ConsumeDoAfterEvent : DoAfterEvent
 public sealed partial class VapeDoAfterEvent : DoAfterEvent
 {
     [DataField("solution", required: true)]
-    public Solution Solution { get; private set; } = default!;
+    public readonly Solution Solution = default!;
 
     [DataField("forced", required: true)]
-    public bool Forced { get; private set; } = default!;
+    public readonly bool Forced = default!;
 
     private VapeDoAfterEvent()
     {

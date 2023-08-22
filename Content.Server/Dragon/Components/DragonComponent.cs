@@ -62,7 +62,7 @@ namespace Content.Server.Dragon
             };
     }
 
-    public sealed partial class DragonDevourActionEvent : EntityTargetActionEvent {}
+    public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
 
     public sealed partial class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }

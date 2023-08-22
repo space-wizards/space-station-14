@@ -8,7 +8,7 @@ namespace Content.Shared.Inventory;
 public sealed partial class InventoryComponent : Component
 {
     [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    public string TemplateId { get; private set; } = "human";
+    public string TemplateId { get; } = "human";
 
     [DataField("speciesId")] public string? SpeciesId { get; set; }
 }

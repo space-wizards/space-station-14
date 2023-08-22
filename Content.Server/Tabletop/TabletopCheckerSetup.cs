@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed partial class TabletopCheckerSetup : TabletopSetup
+    public sealed class TabletopCheckerSetup : TabletopSetup
     {
 
         // TODO: Un-hardcode the rest of entity prototype IDs, probably.

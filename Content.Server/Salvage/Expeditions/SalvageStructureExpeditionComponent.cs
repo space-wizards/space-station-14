@@ -9,5 +9,5 @@ namespace Content.Server.Salvage.Expeditions.Structure;
 public sealed partial class SalvageStructureExpeditionComponent : Component
 {
     [DataField("structures")]
-    public List<EntityUid> Structures { get; private set; } = new();
+    public readonly List<EntityUid> Structures = new();
 }

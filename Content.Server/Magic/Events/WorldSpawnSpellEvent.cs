@@ -4,7 +4,7 @@ using Content.Shared.Storage;
 
 namespace Content.Server.Magic.Events;
 
-public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
+public sealed class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
     // TODO:This class needs combining with InstantSpawnSpellEvent
 
@@ -28,6 +28,6 @@ public sealed partial class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpea
     [DataField("lifetime")] public float? Lifetime;
 
     [DataField("speech")]
-    public string? Speech { get; private set; }
+    public string? Speech { get; }
 }
 

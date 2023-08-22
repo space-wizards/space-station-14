@@ -16,19 +16,19 @@ public sealed class StackPrototype : IPrototype
     /// </summary>
     /// <remarks>This is a localization string ID.</remarks>
     [DataField("name")]
-    public string Name { get; private set; } = string.Empty;
+    public string Name { get; } = string.Empty;
 
     /// <summary>
     ///     An icon that will be used to represent this stack type.
     /// </summary>
     [DataField("icon")]
-    public SpriteSpecifier? Icon { get; private set; }
+    public SpriteSpecifier? Icon { get; }
 
     /// <summary>
     ///     The entity id that will be spawned by default from this stack.
     /// </summary>
     [DataField("spawn", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public string Spawn { get; private set; } = string.Empty;
+    public string Spawn { get; } = string.Empty;
 
     /// <summary>
     ///     The maximum amount of things that can be in a stack.
@@ -36,7 +36,7 @@ public sealed class StackPrototype : IPrototype
     ///     if null, simply has unlimited max count.
     /// </summary>
     [DataField("maxCount")]
-    public int? MaxCount { get; private set; }
+    public int? MaxCount { get; }
 
     /// <summary>
     /// The size of an individual unit of this stack.

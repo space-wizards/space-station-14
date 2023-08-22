@@ -6,10 +6,10 @@ namespace Content.Shared.Movement.Components;
 public sealed partial class MovementBodyPartComponent : Component
 {
     [DataField("walkSpeed")]
-    public float WalkSpeed { get; private set; } = MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
+    public readonly float WalkSpeed = MovementSpeedModifierComponent.DefaultBaseWalkSpeed;
 
     [DataField("sprintSpeed")]
-    public float SprintSpeed { get; private set; } = MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
+    public readonly float SprintSpeed = MovementSpeedModifierComponent.DefaultBaseSprintSpeed;
 
     [DataField("acceleration")]
     public float Acceleration = MovementSpeedModifierComponent.DefaultAcceleration;

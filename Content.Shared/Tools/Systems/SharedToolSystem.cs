@@ -203,10 +203,10 @@ public abstract partial class SharedToolSystem : EntitySystem
         ///     Entity that the wrapped do after event will get directed at. If null, event will be broadcast.
         /// </summary>
         [DataField("target")]
-        public EntityUid? OriginalTarget { get; private set; }
+        public readonly EntityUid? OriginalTarget;
 
         [DataField("wrappedEvent")]
-        public DoAfterEvent WrappedEvent { get; private set; } = default!;
+        public readonly DoAfterEvent WrappedEvent = default!;
 
         private ToolDoAfterEvent()
         {
@@ -236,7 +236,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     protected sealed partial class LatticeCuttingCompleteEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public EntityCoordinates Coordinates { get; private set; }
+        public readonly EntityCoordinates Coordinates;
 
         private LatticeCuttingCompleteEvent()
         {
@@ -254,7 +254,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     protected sealed partial class TilePryingDoAfterEvent : DoAfterEvent
     {
         [DataField("coordinates", required:true)]
-        public EntityCoordinates Coordinates { get; private set; }
+        public readonly EntityCoordinates Coordinates;
 
         private TilePryingDoAfterEvent()
         {

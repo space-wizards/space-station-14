@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed partial class ActivateArtifact : ReagentEffect
+public sealed class ActivateArtifact : ReagentEffect
 {
     public override void Effect(ReagentEffectArgs args)
     {

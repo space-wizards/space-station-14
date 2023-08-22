@@ -12,7 +12,7 @@ namespace Content.Shared.EntityList
         public string ID { get; } = default!;
 
         [DataField("entities", customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-        public ImmutableList<string> EntityIds { get; private set; } = ImmutableList<string>.Empty;
+        public ImmutableList<string> EntityIds { get; } = ImmutableList<string>.Empty;
 
         public IEnumerable<EntityPrototype> Entities(IPrototypeManager? prototypeManager = null)
         {

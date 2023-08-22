@@ -19,7 +19,7 @@ public sealed class AlertLevelPrototype : IPrototype
     /// Default level that the station is on upon initialization.
     /// If this isn't in the dictionary, this will default to whatever .First() gives.
     /// </summary>
-    [DataField("defaultLevel")] public string DefaultLevel { get; private set; } = default!;
+    [DataField("defaultLevel")] public string DefaultLevel { get; } = default!;
 }
 
 /// <summary>
@@ -32,12 +32,12 @@ public sealed partial class AlertLevelDetail
     /// <summary>
     /// What is announced upon this alert level change. Can be a localized string.
     /// </summary>
-    [DataField("announcement")] public string Announcement { get; private set; } = string.Empty;
+    [DataField("announcement")] public string Announcement { get; } = string.Empty;
 
     /// <summary>
     /// Whether this alert level is selectable from a communications console.
     /// </summary>
-    [DataField("selectable")] public bool Selectable { get; private set; } = true;
+    [DataField("selectable")] public bool Selectable { get; } = true;
 
     /// <summary>
     /// If this alert level disables user selection while it is active. Beware -
@@ -45,31 +45,31 @@ public sealed partial class AlertLevelDetail
     /// This should only apply to entities or gamemodes that auto-select an alert level,
     /// such as a nuclear bomb being set to active.
     /// </summary>
-    [DataField("disableSelection")] public bool DisableSelection { get; private set; }
+    [DataField("disableSelection")] public bool DisableSelection { get; }
 
     /// <summary>
     /// The sound that this alert level will play in-game once selected.
     /// </summary>
-    [DataField("sound")] public SoundSpecifier? Sound { get; private set; }
+    [DataField("sound")] public SoundSpecifier? Sound { get; }
 
     /// <summary>
     /// The color that this alert level will show in-game in chat.
     /// </summary>
-    [DataField("color")] public Color Color { get; private set; } = Color.White;
+    [DataField("color")] public Color Color { get; } = Color.White;
 
     /// <summary>
     /// The color to turn emergency lights on this station when they are active.
     /// </summary>
-    [DataField("emergencyLightColor")] public Color EmergencyLightColor { get; private set; } = Color.FromHex("#FF4020");
+    [DataField("emergencyLightColor")] public Color EmergencyLightColor { get; } = Color.FromHex("#FF4020");
 
     /// <summary>
     /// Will this alert level force emergency lights on for the station that's active?
     /// </summary>
-    [DataField("forceEnableEmergencyLights")] public bool ForceEnableEmergencyLights { get; private set; } = false;
+    [DataField("forceEnableEmergencyLights")] public bool ForceEnableEmergencyLights { get; } = false;
 
     /// <summary>
     /// How long it takes for the shuttle to arrive when called.
     /// </summary>
-    [DataField("shuttleTime")] public TimeSpan ShuttleTime { get; private set; } = TimeSpan.FromMinutes(5);
+    [DataField("shuttleTime")] public TimeSpan ShuttleTime { get; } = TimeSpan.FromMinutes(5);
 }
 

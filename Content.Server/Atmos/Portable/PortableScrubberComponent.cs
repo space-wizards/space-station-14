@@ -11,7 +11,7 @@ namespace Content.Server.Atmos.Portable
         /// The air inside this machine.
         /// </summary>
         [DataField("gasMixture"), ViewVariables(VVAccess.ReadWrite)]
-        public GasMixture Air { get; private set; } = new();
+        public GasMixture Air { get; } = new();
 
         [DataField("port"), ViewVariables(VVAccess.ReadWrite)]
         public string PortName { get; set; } = "port";

@@ -6,7 +6,7 @@ namespace Content.Server.Objectives.Requirements
     public sealed partial class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         [DataField("objectives")]
-        private List<string> _incompatibleObjectives { get; set; } = new();
+        private readonly List<string> _incompatibleObjectives = new();
 
         public bool CanBeAssigned(Mind.Mind mind)
         {

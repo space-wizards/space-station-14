@@ -45,10 +45,10 @@ public sealed partial class AtmosAlarmableComponent : Component
     ///     List of tags to check for when synchronizing alarms.
     /// </summary>
     [DataField("syncWith", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<TagPrototype>))]
-    public HashSet<string> SyncWithTags { get; private set; } = new();
+    public HashSet<string> SyncWithTags { get; } = new();
 
     [DataField("monitorAlertTypes")]
-    public HashSet<AtmosMonitorThresholdType>? MonitorAlertTypes { get; private set; }
+    public HashSet<AtmosMonitorThresholdType>? MonitorAlertTypes { get; }
 
     /// <summary>
     ///     If this device should receive only. If it can only
@@ -56,5 +56,5 @@ public sealed partial class AtmosAlarmableComponent : Component
     ///     will result in nothing happening.
     /// </summary>
     [DataField("receiveOnly")]
-    public bool ReceiveOnly { get; private set; }
+    public bool ReceiveOnly { get; }
 }

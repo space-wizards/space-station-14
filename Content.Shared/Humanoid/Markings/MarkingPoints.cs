@@ -47,5 +47,5 @@ public sealed class MarkingPointsPrototype : IPrototype
     [DataField("onlyWhitelisted")] public bool OnlyWhitelisted;
 
     [DataField("points", required: true)]
-    public Dictionary<MarkingCategories, MarkingPoints> Points { get; private set; } = default!;
+    public Dictionary<MarkingCategories, MarkingPoints> Points { get; } = default!;
 }

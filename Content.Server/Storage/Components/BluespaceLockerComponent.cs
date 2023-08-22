@@ -85,7 +85,7 @@ public sealed partial class BluespaceLockerComponent : Component
 }
 
 [DataDefinition]
-public partial record BluespaceLockerBehaviorProperties
+public record BluespaceLockerBehaviorProperties
 {
     /// <summary>
     /// Determines if gas will be transported.

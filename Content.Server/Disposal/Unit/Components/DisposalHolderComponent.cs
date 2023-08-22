@@ -5,7 +5,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Disposal.Unit.Components
 {
     [RegisterComponent]
-    public sealed partial class DisposalHolderComponent : Component, IGasMixtureHolder
+    public sealed class DisposalHolderComponent : Component, IGasMixtureHolder
     {
         public Container Container = null!;
 

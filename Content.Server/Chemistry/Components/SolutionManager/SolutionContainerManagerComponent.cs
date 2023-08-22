@@ -9,6 +9,6 @@ namespace Content.Server.Chemistry.Components.SolutionManager
     {
         [DataField("solutions")]
         [Access(typeof(SolutionContainerSystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-        public Dictionary<string, Solution> Solutions { get; private set; } = new();
+        public readonly Dictionary<string, Solution> Solutions = new();
     }
 }

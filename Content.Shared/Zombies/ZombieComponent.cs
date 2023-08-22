@@ -60,7 +60,7 @@ public sealed partial class ZombieComponent : Component
     /// The role prototype of the zombie antag role
     /// </summary>
     [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public string ZombieRoleId { get; private set; } = "Zombie";
+    public readonly string ZombieRoleId = "Zombie";
 
     /// <summary>
     /// The EntityName of the humanoid to restore in case of cloning

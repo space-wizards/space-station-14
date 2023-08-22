@@ -4,7 +4,7 @@ using Content.Shared.Timing;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 
-public sealed partial class InteractWithOperator : HTNOperator
+public sealed class InteractWithOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
