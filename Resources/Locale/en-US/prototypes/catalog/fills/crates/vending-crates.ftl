@@ -64,5 +64,5 @@ ent-CrateVendingMachineRestockDiscountDansFilled = Discount Dans restock crate
 ent-CrateVendingMachineRestockDonutFilled = Donut restock crate
     .desc = Contains a restock box for a Monkin' Donuts dispenser.
 
-ent-CrateVendingMachineRestockChemVendFilled = NanoDrug restock crate
-    .desc = Contains a restock box for the NanoDrug.
+ent-CrateVendingMachineRestockChemVendFilled = NanoChem restock crate
+    .desc = Contains a restock box for the NanoChem.
