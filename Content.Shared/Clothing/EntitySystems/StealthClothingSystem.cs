@@ -38,7 +38,7 @@ public sealed class StealthClothingSystem : EntitySystem
             return false;
 
         comp.Enabled = enabled;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         var stealth = EnsureComp<StealthComponent>(user);
         // slightly visible, but doesn't change when moving so it's ok
