@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: The pyroclastic anomaly's supercritical gas now ignores structures.,
-    type: Tweak}
-  id: 4160
-  time: '2023-07-03T21:36:23.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added unique ERT helmets for each ERT type., type: Add}
@@ -3037,3 +3031,9 @@ Entries:
       for more info., type: Add}
   id: 4659
   time: '2023-08-22T11:50:04.0000000+00:00'
+- author: Whisper
+  changes:
+  - {message: Smile the Slime now has unique ghost role text rather than standard
+      slimes., type: Add}
+  id: 4660
+  time: '2023-08-22T12:00:20.0000000+00:00'
