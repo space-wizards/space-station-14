@@ -256,7 +256,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         {
             if (!_mind.TryAddObjective(mind, objective))
             {
-                Log.Error("Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
+                Log.Error($"Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
             }
         }
 
