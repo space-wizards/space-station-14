@@ -21,13 +21,8 @@
   - type: Thirst
     baseDecayRate: 0.0125
   # Damage (Self)
-  - type: Damageable
-    damageContainer: Biological
-    damageModifierSet: Arachnid
   - type: Bloodstream
     bloodReagent: SpiderBlood
-  - type: Stamina
-    stunTime: 8
   # Damage (Others)
   - type: MeleeWeapon
     animation: WeaponArcClaw
@@ -36,6 +31,17 @@
     damage:
       types: # Realisically this is more like 5 slash
         Slash: 4
+  # Misc
+  - type: Sericulture
+    actionProto: SericultureAction
+    productionLength: 3
+    entityProduced: MaterialWebSilk1
+    hungerCost: 5
+  - type: Butcherable
+    butcheringType: Spike
+    spawned:
+      - id: FoodMeatSpider
+        amount: 5
   # Visual & Audio
   - type: DamageVisuals
     damageOverlayGroups:
@@ -106,19 +112,6 @@
         sprite: "Effects/creampie.rsi"
         state: "creampie_human"
         visible: false
-  # Misc
-  - type: Sericulture
-    actionProto: SericultureAction
-    productionLength: 3
-    entityProduced: MaterialWebSilk1
-    hungerCost: 5
-  - type: Inventory
-    templateId: arachnid
-  - type: Butcherable
-    butcheringType: Spike
-    spawned:
-      - id: FoodMeatSpider
-        amount: 5
 
 - type: entity
   save: false
