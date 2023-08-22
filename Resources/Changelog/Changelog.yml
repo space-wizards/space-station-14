@@ -1,10 +1,4 @@
 Entries:
-- author: Jesse
-  changes:
-  - {message: Ale color more towards a Pale Ale color with foam and bubbles!, type: Tweak}
-  - {message: Fixed up the dingle line formatting of the Meta file, type: Fix}
-  id: 4158
-  time: '2023-07-03T21:34:26.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: The pyroclastic anomaly's ignition has gained otherworldly properties
@@ -3031,3 +3025,13 @@ Entries:
       their first-last words.', type: Tweak}
   id: 4657
   time: '2023-08-22T06:05:16.0000000+00:00'
+- author: tom-leys
+  changes:
+  - {message: 'To increase employee retention and new staff experience, we''ve installed
+      a short range teleporter on our Arrivals Shuttle. However we only had sufficient
+      budget to use it once per shift per staff member.', type: Add}
+  - {message: 'You might notice yourself adjusting as you step off the arrivals shuttle,
+      with our patented rotation acclimation system. It might make you dizzy, but
+      it helps the station make sense.', type: Tweak}
+  id: 4658
+  time: '2023-08-22T10:46:50.0000000+00:00'
