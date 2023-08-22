@@ -14,6 +14,7 @@ public sealed class SpiderChargeTargetRequirement : IObjectiveRequirement
     {
         var entityManager = IoCManager.Resolve<IEntityManager>();
         var mindSystem = entityManager.System<MindSystem>();
-        return mindSystem.TryGetRole<NinjaRole>(mind)?.SpiderChargeTarget != null;
+        mindSystem.TryGetRole<NinjaRole>(mind, out var role);
+        return role?.SpiderChargeTarget != null;
     }
 }

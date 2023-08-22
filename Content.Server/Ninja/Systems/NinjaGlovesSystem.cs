@@ -1,7 +1,9 @@
 using Content.Server.Communications;
 using Content.Server.DoAfter;
+using Content.Server.Mind;
 using Content.Server.Ninja.Systems;
 using Content.Server.Power.Components;
+using Content.Server.Roles;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Components;
@@ -24,6 +26,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     [Dependency] private readonly SharedStunProviderSystem _stunProvider = default!;
     [Dependency] private readonly SpaceNinjaSystem _ninja = default!;
     [Dependency] private readonly CommsHackerSystem _commsHacker = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     public override void Initialize()
     {
@@ -72,7 +75,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     {
         comp.User = user;
         Dirty(uid, comp);
-        _ninja.AssignGloves(ninja, uid);
+        _ninja.AssignGloves(user, uid, ninja);
 
         var drainer = EnsureComp<BatteryDrainerComponent>(user);
         var stun = EnsureComp<StunProviderComponent>(user);
@@ -87,7 +90,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         EnsureComp<ResearchStealerComponent>(user);
         // prevent calling in multiple threats by toggling gloves after
-        if (_mind.TryGetRole<NinjaRole>(user) && !role.CalledInThreat)
+        if (_mind.TryGetRole<NinjaRole>(user, out var role) && !role.CalledInThreat)
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
             _commsHacker.SetThreats(user, _ninja.RuleConfig().Threats, hacker);

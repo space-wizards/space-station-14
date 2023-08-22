@@ -30,7 +30,7 @@ public sealed class EnergyKatanaSystem : EntitySystem
             return;
 
         // bind it since its unbound
-        _ninja.BindKatana(ninja, uid);
+        _ninja.BindKatana(user, uid, ninja);
     }
 
     private void OnAddDashAction(EntityUid uid, EnergyKatanaComponent comp, AddDashActionEvent args)

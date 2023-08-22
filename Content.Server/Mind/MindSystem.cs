@@ -18,6 +18,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -25,14 +26,15 @@ namespace Content.Server.Mind;
 
 public sealed class MindSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly ActorSystem _actor = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, Mind> _userMinds = new();
@@ -480,7 +482,7 @@ public sealed class MindSystem : EntitySystem
     /// <summary>
     /// Adds an objective, by id, to this mind.
     /// </summary>
-    private bool TryAddObjective(Mind.Mind mind, string name)
+    public bool TryAddObjective(Mind mind, string name)
     {
         if (!_proto.TryIndex<ObjectivePrototype>(name, out var objective))
         {
@@ -600,7 +602,7 @@ public sealed class MindSystem : EntitySystem
     /// Gets the first role of a certain type on a player.
     /// </summary>
     /// <returns>Whether a role was found</returns>
-    public bool TryGetRole<T>(Mind.Mind? mind, [NotNullWhen(true)] out T? role) where T : Role
+    public bool TryGetRole<T>(Mind? mind, [NotNullWhen(true)] out T? role) where T : Role
     {
         role = null;
         if (mind == null)
@@ -608,7 +610,7 @@ public sealed class MindSystem : EntitySystem
 
         foreach (var r in mind.AllRoles)
         {
-            if (r is R cast)
+            if (r is T cast)
             {
                 role = cast;
                 return true;
@@ -623,8 +625,8 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     public bool TryGetRole<T>(EntityUid uid, [NotNullWhen(true)] out T? role, MindContainerComponent? comp = null) where T : Role
     {
-        var mind = TryGetMind(uid, comp);
-        return TryGetRole(uid, out role);
+        TryGetMind(uid, out var mind, comp);
+        return TryGetRole(mind, out role);
     }
 
     /// <summary>

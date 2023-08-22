@@ -2,7 +2,6 @@ using Content.Server.Administration.Commands;
 using Content.Server.Body.Systems;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
-using Content.Server.Chat.Systems;
 using Content.Server.StationEvents.Components;
 using Content.Server.GameTicking;
 using Content.Server.GameTicking.Rules;
@@ -11,11 +10,10 @@ using Content.Server.Ghost.Roles.Events;
 using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
-using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.PowerCell;
-using Content.Server.Research;
+using Content.Server.Research.Systems;
 using Content.Server.Roles;
 using Content.Server.Warps;
 using Content.Shared.Alert;
@@ -25,8 +23,8 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Implants;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
-using Content.Shared.Roles;
 using Content.Shared.Popups;
+using Content.Shared.Roles;
 using Content.Shared.PowerCell.Components;
 using Content.Shared.Rounding;
 using Robust.Shared.Audio;
@@ -53,16 +51,15 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 {
     [Dependency] private readonly AlertsSystem _alerts = default!;
     [Dependency] private readonly BatterySystem _battery = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
@@ -180,16 +177,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
     }
 
-    // TODO: move to comms hacker system
-    /// <summary>
-    /// Makes announcement and adds game rule of the threat.
-    /// </summary>
-    public void CallInThreat(Threat threat);
-    {
-        _gameTicker.StartGameRule(threat.Rule, out _);
-        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: true, colorOverride: Color.Red);
-    }
-
     /// <summary>
     /// Set up ninja when created.
     /// Runs before Implanted's ComponentStartup so it will work
@@ -267,7 +254,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // assign objectives - must happen after spider charge target so that the obj requirement works
         foreach (var objective in config.Objectives)
         {
-            if (!_mind.Try.AddObjective(mind, objective))
+            if (!_mind.TryAddObjective(mind, objective))
             {
                 Log.Error("Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
             }
@@ -316,17 +303,17 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Add to greentext when stealing technologies.
     /// </summary>
-    private void OnResearchStolen(EntityUid uid, SpaceNinjaComponent comp, ResearchStolenEvent args)
+    private void OnResearchStolen(EntityUid uid, SpaceNinjaComponent comp, ref ResearchStolenEvent args)
     {
         var gained = Download(uid, args.Techs);
         var str = gained == 0
             ? Loc.GetString("ninja-research-steal-fail")
             : Loc.GetString("ninja-research-steal-success", ("count", gained), ("server", args.Target));
 
-        Popup.PopupEntity(str, user, user, PopupType.Medium);
+        _popup.PopupEntity(str, uid, uid, PopupType.Medium);
     }
 
-    private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ThreatCalledInEvent args)
+    private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
     {
         if (_mind.TryGetRole<NinjaRole>(uid, out var role))
         {

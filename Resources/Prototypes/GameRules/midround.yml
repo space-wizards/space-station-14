@@ -7,7 +7,7 @@
   components:
   - type: NinjaRule
     objectives:
-    - DownloadObjective
+    - StealResearchObjective
     - DoorjackObjective
     - SpiderChargeObjective
     - TerrorObjective

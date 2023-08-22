@@ -1,10 +1,17 @@
+using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Ninja.Systems;
+using Content.Shared.Popups;
 using Content.Shared.Research.Components;
 
 namespace Content.Shared.Research.Systems;
 
 public abstract class SharedResearchStealerSystem : EntitySystem
 {
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
+    [Dependency] private readonly SharedPopupSystem _popup = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -29,11 +36,11 @@ public abstract class SharedResearchStealerSystem : EntitySystem
         // fail fast if theres no techs to steal right now
         if (database.UnlockedTechnologies.Count == 0)
         {
-            Popup.PopupClient(Loc.GetString("ninja-download-fail"), user, user);
+            _popup.PopupClient(Loc.GetString("ninja-download-fail"), uid, uid);
             return;
         }
 
-        var doAfterArgs = new DoAfterArgs(args.User, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(uid, comp.Delay, new ResearchStealDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
@@ -44,4 +51,11 @@ public abstract class SharedResearchStealerSystem : EntitySystem
         _doAfter.TryStartDoAfter(doAfterArgs);
         args.Cancel();
     }
+}
+
+/// <summary>
+/// Raised on the research stealer when the doafter completes.
+/// </summary>
+public sealed class ResearchStealDoAfterEvent : SimpleDoAfterEvent
+{
 }

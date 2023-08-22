@@ -81,7 +81,7 @@ public abstract class SharedNinjaSuitSystem : EntitySystem
     protected virtual void NinjaEquippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
         // mark the user as wearing this suit, used when being attacked among other things
-        _ninja.AssignSuit(ninja, uid);
+        _ninja.AssignSuit(user, uid, ninja);
 
         // initialize phase cloak, but keep it off
         StealthClothing.SetEnabled(uid, user, false);

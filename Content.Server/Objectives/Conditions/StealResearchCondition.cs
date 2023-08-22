@@ -1,3 +1,6 @@
+using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -15,7 +18,7 @@ public sealed class StealResearchCondition : IObjectiveCondition
     public IObjectiveCondition GetAssigned(Mind.Mind mind)
     {
         // TODO: clamp to number of research nodes in a single discipline maybe so easily maintainable
-        return new DownloadCondition {
+        return new StealResearchCondition {
             _mind = mind,
             _target = IoCManager.Resolve<IRobustRandom>().Next(5, 10)
         };
@@ -51,14 +54,14 @@ public sealed class StealResearchCondition : IObjectiveCondition
 
     public bool Equals(IObjectiveCondition? other)
     {
-        return other is DownloadCondition cond && Equals(_mind, cond._mind) && _target == cond._target;
+        return other is StealResearchCondition cond && Equals(_mind, cond._mind) && _target == cond._target;
     }
 
     public override bool Equals(object? obj)
     {
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
-        return obj is DownloadCondition cond && cond.Equals(this);
+        return obj is StealResearchCondition cond && cond.Equals(this);
     }
 
     public override int GetHashCode()

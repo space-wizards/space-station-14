@@ -1,33 +1,41 @@
+using Content.Server.Chat.Systems;
+using Content.Server.GameTicking;
+using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction;
-using Robust.Shared.Serialization;
+using Content.Shared.Interaction.Events;
+using Robust.Shared.Random;
 
 namespace Content.Server.Communications;
 
 public sealed class CommsHackerSystem : SharedCommsHackerSystem
 {
+    [Dependency] private readonly ChatSystem _chat = default!;
+    [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly IRobustRandom _random = default!;
     // TODO: remove when generic check event is used
-    [Dependency] private readonly SharedNinjaGlovesSystem _gloves = default!;
+    [Dependency] private readonly NinjaGlovesSystem _gloves = default!;
+    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
 
-    public override void Intialize()
+    public override void Initialize()
     {
-        base.Intialize();
+        base.Initialize();
 
-        SubscribeLocalEvent<NinjaTerrorComponent, InteractionAttemptEvent>(OnTerror);
-        SubscribeLocalEvent<NinjaTerrorComponent, TerrorDoAfterEvent>(OnTerrorDoAfter);
+        SubscribeLocalEvent<CommsHackerComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+        SubscribeLocalEvent<CommsHackerComponent, TerrorDoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
     private void OnInteractionAttempt(EntityUid uid, CommsHackerComponent comp, InteractionAttemptEvent args)
     {
         // TODO: generic check event
-        if (!_gloves.GloveCheck(uid, args, out var gloves, out var user, out var target)
+        if (!_gloves.AbilityCheck(uid, args, out var target))
+            return;
 
         if (!HasComp<CommunicationsConsoleComponent>(target))
             return;
 
-        var doAfterArgs = new DoAfterArgs(args.User, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
+        var doAfterArgs = new DoAfterArgs(uid, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
@@ -44,7 +52,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
     /// </summary>
     private void OnDoAfter(EntityUid uid, CommsHackerComponent comp, TerrorDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled || comp.Threats.Count == 0)
+        if (args.Cancelled || args.Handled || comp.Threats.Count == 0 || args.Target == null)
             return;
 
         var threat = _random.Pick(comp.Threats);
@@ -53,15 +61,23 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
         // prevent calling in multiple threats
         RemComp<CommsHackerComponent>(uid);
 
-        var ev = new ThreatCalledInEvent(uid, args.Target);
+        var ev = new ThreatCalledInEvent(uid, args.Target.Value);
         RaiseLocalEvent(args.User, ref ev);
+    }
+
+    /// <summary>
+    /// Makes announcement and adds game rule of the threat.
+    /// </summary>
+    public void CallInThreat(Threat threat)
+    {
+        _gameTicker.StartGameRule(threat.Rule, out _);
+        _chat.DispatchGlobalAnnouncement(Loc.GetString(threat.Announcement), playSound: true, colorOverride: Color.Red);
     }
 }
 
 /// <summary>
 /// DoAfter event for comms console terror ability.
 /// </summary>
-[Serializable, NetSerializable]
 public sealed class TerrorDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>
@@ -72,4 +88,4 @@ public sealed class TerrorDoAfterEvent : SimpleDoAfterEvent { }
 /// For example, you could add a marker component after a threat is called in then check if the user doesn't have that marker before adding CommsHackerComponent.
 /// </remarks>
 [ByRefEvent]
-public record struct ThreatCalledEvent(EntityUid Used, EntityUid Target);
+public record struct ThreatCalledInEvent(EntityUid Used, EntityUid Target);

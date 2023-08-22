@@ -1,29 +1,33 @@
 using Content.Shared.Research.Components;
+using Content.Shared.Research.Systems;
 
 namespace Content.Server.Research.Systems;
 
 public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 {
+    [Dependency] private readonly SharedResearchSystem _research = default!;
+
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<ResearchStealerComponent, DownloadDoAfterEvent>(OnDownloadDoAfter);
+        SubscribeLocalEvent<ResearchStealerComponent, ResearchStealDoAfterEvent>(OnDoAfter);
     }
 
     private void OnDoAfter(EntityUid uid, ResearchStealerComponent comp, ResearchStealDoAfterEvent args)
     {
-        if (args.Cancelled || args.Handled)
+        if (args.Cancelled || args.Handled || args.Target == null)
             return;
 
-        var target = args.Target;
+        var target = args.Target.Value;
 
         if (!TryComp<TechnologyDatabaseComponent>(target, out var database))
             return;
+
         var ev = new ResearchStolenEvent(uid, target, database.UnlockedTechnologies);
-        RaiseNewLocalEvent(args.User, ref ev);
+        RaiseLocalEvent(uid, ref ev);
         // oops, no more advanced lasers!
-        database.UnlockedTechnologies.Clear();
+        _research.ClearTechs(target, database);
     }
 }
 
@@ -32,4 +36,4 @@ public sealed class ResearchStealerSystem : SharedResearchStealerSystem
 /// Techs contains every technology id researched.
 /// </summary>
 [ByRefEvent]
-public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, HashSet<String> Techs);
+public record struct ResearchStolenEvent(EntityUid Used, EntityUid Target, List<String> Techs);

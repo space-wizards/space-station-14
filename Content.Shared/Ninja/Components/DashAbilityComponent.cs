@@ -11,7 +11,7 @@ public sealed class DashAbilityComponent : Component
     /// The action for dashing.
     /// </summary>
     [DataField("dashAction", required: true)]
-    public WorldTargetAction KatanaDashAction = default!;
+    public WorldTargetAction DashAction = default!;
 
     /// <summary>
     /// Sound played when using dash action.

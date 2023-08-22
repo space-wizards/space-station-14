@@ -99,35 +99,8 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
         }
     }
 
+
     // TODO: generic event thing
-    /// <summary>
-    /// Helper for glove ability handlers, checks gloves, suit, range, combat mode and stuff.
-    /// </summary>
-    protected bool GloveCheck(EntityUid uid, InteractionAttemptEvent args, [NotNullWhen(true)] out NinjaGlovesComponent? gloves,
-        out EntityUid user, out EntityUid target)
-    {
-        if (args.Target != null && TryComp<NinjaGlovesComponent>(uid, out gloves)
-            && gloves.User != null
-            && _timing.IsFirstTimePredicted
-            && !_combatMode.IsInCombatMode(gloves.User)
-            && TryComp<SpaceNinjaComponent>(gloves.User, out var ninja)
-            && ninja.Suit != null
-            && !_useDelay.ActiveDelay(gloves.User.Value)
-            && TryComp<HandsComponent>(gloves.User, out var hands)
-            && hands.ActiveHandEntity == null)
-        {
-            user = gloves.User.Value;
-            target = args.Target.Value;
-
-            if (Interaction.InRangeUnobstructed(user, target))
-                return true;
-        }
-
-        gloves = null;
-        user = target = EntityUid.Invalid;
-        return false;
-    }
-
     /// <summary>
     /// GloveCheck but for abilities stored on the player, skips some checks.
     /// Intended to be more generic, doesn't require the user to be a ninja or have any ninja equipment.
