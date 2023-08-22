@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: The pyroclastic anomaly's ignition has gained otherworldly properties
-      and now permeates through solid structures., type: Add}
-  id: 4159
-  time: '2023-07-03T21:35:57.0000000+00:00'
 - author: Lank
   changes:
   - {message: The pyroclastic anomaly's supercritical gas now ignores structures.,
@@ -3035,3 +3029,11 @@ Entries:
       it helps the station make sense.', type: Tweak}
   id: 4658
   time: '2023-08-22T10:46:50.0000000+00:00'
+- author: onoira
+  changes:
+  - {message: Nanotrasen no longer uses disappearing ink for official books and documents.
+      These can now be modified., type: Fix}
+  - {message: New pen technology enables stylish ways of writing. See the guidebook
+      for more info., type: Add}
+  id: 4659
+  time: '2023-08-22T11:50:04.0000000+00:00'
