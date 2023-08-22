@@ -9,6 +9,7 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Players;
 
 namespace Content.Shared.Throwing
 {
@@ -22,6 +23,7 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly ISharedPlayerManager _playerManager = default!; 
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -35,6 +37,12 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
+            SubscribeLocalEvent<ThrownItemComponent, ThrowDoHitEvent>(OnThrownItemHit);
+        }
+
+        private void OnThrownItemHit(EntityUid uid, ThrownItemComponent component, ThrowDoHitEvent args)
+        {
+            StopThrow(uid, component);
         }
 
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)

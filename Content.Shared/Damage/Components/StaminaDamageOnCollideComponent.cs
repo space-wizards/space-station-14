@@ -13,5 +13,4 @@ public sealed class StaminaDamageOnCollideComponent : Component
 
     [DataField("sound")]
     public SoundSpecifier? Sound;
-    public bool CanMakeStaminaDamage = true;
 }
