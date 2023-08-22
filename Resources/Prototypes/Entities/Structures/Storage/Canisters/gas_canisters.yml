@@ -78,6 +78,14 @@
     - type: AtmosDevice
       requireAnchored: false
       joinSystem: true
+    - type: DeviceLinkSink
+      ports:
+        - Open
+        - Close
+        - Toggle
+    - type: DeviceLinkSource
+      ports:
+        - Status
     - type: ContainerContainer
       containers:
         GasCanisterTankHolder: !type:ContainerSlot {}

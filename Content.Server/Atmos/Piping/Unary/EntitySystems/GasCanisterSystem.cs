@@ -4,6 +4,9 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Atmos.Piping.Components;
 using Content.Server.Atmos.Piping.Unary.Components;
 using Content.Server.Cargo.Systems;
+using Content.Server.DeviceLinking.Components;
+using Content.Server.DeviceLinking.Systems;
+using Content.Server.DeviceNetwork;
 using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.NodeGroups;
@@ -17,6 +20,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Lock;
 using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
+using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEvent;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
@@ -31,6 +35,7 @@ public sealed class GasCanisterSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
     [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private readonly DeviceLinkSystem _signal = default!;
 
     public override void Initialize()
     {
@@ -45,6 +50,7 @@ public sealed class GasCanisterSystem : EntitySystem
         SubscribeLocalEvent<GasCanisterComponent, EntRemovedFromContainerMessage>(OnCanisterContainerRemoved);
         SubscribeLocalEvent<GasCanisterComponent, PriceCalculationEvent>(CalculateCanisterPrice);
         SubscribeLocalEvent<GasCanisterComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+        SubscribeLocalEvent<GasCanisterComponent, SignalReceivedEvent>(OnSignalReceived);
         // Bound UI subscriptions
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterHoldingTankEjectMessage>(OnHoldingTankEjectMessage);
         SubscribeLocalEvent<GasCanisterComponent, GasCanisterChangeReleasePressureMessage>(OnCanisterChangeReleasePressure);
@@ -81,6 +87,8 @@ public sealed class GasCanisterSystem : EntitySystem
         {
             _appearance.SetData(uid, GasCanisterVisuals.Locked, lockComp.Locked);
         }
+        _signal.EnsureSinkPorts(uid, comp.OpenPort, comp.ClosePort, comp.TogglePort);
+        _signal.EnsureSourcePorts(uid, comp.StatusPort);
     }
 
     private void DirtyUI(EntityUid uid,
@@ -134,14 +142,13 @@ public sealed class GasCanisterSystem : EntitySystem
         canister.ReleasePressure = pressure;
         DirtyUI(uid, canister);
     }
-
-    private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
+    
+    private void OnValveChanged(EntityUid uid, GasCanisterComponent canister, bool state, EntityUid? player = null)
     {
         var impact = LogImpact.High;
         if (TryComp<ContainerManagerComponent>(uid, out var containerManager)
             && containerManager.TryGetContainer(canister.ContainerName, out var container))
         {
-            // filling a jetpack with plasma is less important than filling a room with it
             impact = container.ContainedEntities.Count != 0 ? LogImpact.Medium : LogImpact.High;
         }
 
@@ -152,11 +159,42 @@ public sealed class GasCanisterSystem : EntitySystem
         {
             containedGasDict.Add((Gas)i, canister.Air.Moles[i]);
         }
+        
+        if (player != null)
+            _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(player.Value):player} set the valve on {ToPrettyString(uid):canister} to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        else
+            _adminLogger.Add(LogType.CanisterValve, impact, $"Valve on {ToPrettyString(uid):canister} has been set to {state:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
 
-        _adminLogger.Add(LogType.CanisterValve, impact, $"{ToPrettyString(args.Session.AttachedEntity.GetValueOrDefault()):player} set the valve on {ToPrettyString(uid):canister} to {args.Valve:valveState} while it contained [{string.Join(", ", containedGasDict)}]");
+        var data = new NetworkPayload()
+        {
+            { DeviceNetworkConstants.LogicState, SignalState.Momentary }
+        };
+        data[DeviceNetworkConstants.LogicState] = state ? SignalState.Low : SignalState.High;
+        _signal.InvokePort(uid, canister.StatusPort, data);
+    }
+
+    private void OnCanisterChangeReleaseValve(EntityUid uid, GasCanisterComponent canister, GasCanisterChangeReleaseValveMessage args)
+    {
+        OnValveChanged(uid, canister, args.Valve, args.Session.AttachedEntity.GetValueOrDefault());
 
         canister.ReleaseValve = args.Valve;
         DirtyUI(uid, canister);
+    }
+
+    private void OnSignalReceived(EntityUid uid, GasCanisterComponent canister, ref SignalReceivedEvent args)
+    {
+        var signalState = SignalState.Momentary;
+        args.Data?.TryGetValue(DeviceNetworkConstants.LogicState, out signalState);
+        if (signalState != SignalState.High && signalState != SignalState.Momentary)
+            return;
+
+        bool newState = args.Port == canister.OpenPort || (args.Port == canister.TogglePort && !canister.ReleaseValve);
+        if (canister.ReleaseValve != newState)
+        {
+            OnValveChanged(uid, canister, newState);
+            canister.ReleaseValve = newState;
+            DirtyUI(uid, canister);
+        }
     }
 
     private void OnCanisterUpdated(EntityUid uid, GasCanisterComponent canister, AtmosDeviceUpdateEvent args)
