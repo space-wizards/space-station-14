@@ -106,8 +106,8 @@
     Slash: 1.2
     Piercing: 1.2
     Cold: 1.5
-    Poison: 0.8
-    Cellular: 0.2
+    Poison: 0.4
+    Cellular: 0.0
 
 - type: damageModifierSet
   id: Infernal
@@ -206,8 +206,8 @@
     Blunt: 0.5
     Slash: 0.8
     Piercing: 0.8
-    Cold: 1.0
-    Poison: 0.2
+    Cold: 1.2
+    Poison: 0.0
     Cellular: 0.0
-    Radiation: 0.2
+    Radiation: 0.0
     Caustic: 0.0
