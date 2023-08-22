@@ -357,7 +357,7 @@ namespace Content.Server.GameTicking
 
                 var entity = mind.OriginalOwnedEntity;
                 if (Exists(entity))
-                    _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
+                    _pvsOverride.AddGlobalOverride(entity.Value);
 
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
