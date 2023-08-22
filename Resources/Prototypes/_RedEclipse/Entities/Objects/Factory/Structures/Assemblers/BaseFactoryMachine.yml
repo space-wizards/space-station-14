@@ -24,6 +24,7 @@
       whitelist:
         tags:
           - FactoryPart
+          - Sheet
     - type: Lathe
       idleState: icon
       runningState: building
