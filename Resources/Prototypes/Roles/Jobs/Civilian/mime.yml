@@ -5,7 +5,7 @@
   playTimeTracker: JobMime
   requirements:
     - !type:OverallPlaytimeRequirement
--     departament: Civilian
+      departament: Civilian
       time: 10800 #3 hrs           
   startingGear: MimeGear
   icon: "JobIconMime"
