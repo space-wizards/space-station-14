@@ -158,8 +158,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         NotifyLawsChanged(uid);
         EnsureEmaggedRole(uid, component);
 
-        if(!HasComp<EmaggedComponent>(uid))
-            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(5), true);
+        if(!HasComp<EmaggedComponent>(uid) && component.StunTime != 0)
+            _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.StunTime), true);
     }
 
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)

@@ -30,6 +30,12 @@ public sealed class EmagSiliconLawComponent : Component
     public List<string> EmagLaws = new();
 
     /// <summary>
+    /// How long the borg is stunned when it's emagged. Setting to 0 will disable it. 
+    /// </summary>
+    [DataField("stunTime"), ViewVariables(VVAccess.ReadWrite)]
+    public int StunTime = 0;
+
+    /// <summary>
     /// A role given to entities with this component when they are emagged.
     /// Mostly just for admin purposes.
     /// </summary>

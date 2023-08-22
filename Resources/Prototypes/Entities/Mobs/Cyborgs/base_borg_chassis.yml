@@ -58,6 +58,7 @@
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
+    stunTime: 5
     emagLaws:
     - Syndicate1
     - Syndicate2
