@@ -62,7 +62,7 @@ public sealed class StealthClothingSystem : EntitySystem
     }
 
     /// <summary>
-    /// Raises <see cref="EnableStealthEvent"/> if enabling.
+    /// Raises <see cref="AttemptStealthEvent"/> if enabling.
     /// </summary>
     private void OnToggleStealth(EntityUid uid, StealthClothingComponent comp, ToggleStealthEvent args)
     {
@@ -74,7 +74,7 @@ public sealed class StealthClothingSystem : EntitySystem
             return;
         }
 
-        var ev = new EnableStealthEvent(user);
+        var ev = new AttemptStealthEvent(user);
         RaiseLocalEvent(uid, ev);
         if (ev.Cancelled)
             return;
@@ -122,14 +122,14 @@ public class AddStealthActionEvent : CancellableEntityEventArgs
 /// <summary>
 /// Raised on the stealth clothing when the user is attemping to enable it.
 /// </summary>
-public class EnableStealthEvent : CancellableEntityEventArgs
+public class AttemptStealthEvent : CancellableEntityEventArgs
 {
     /// <summary>
     /// User that is attempting to enable the stealth clothing.
     /// </summary>
     public EntityUid User;
 
-    public EnableStealthEvent(EntityUid user)
+    public AttemptStealthEvent(EntityUid user)
     {
         User = user;
     }
