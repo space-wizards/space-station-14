@@ -10,8 +10,8 @@
   id: FloorAsteroidCoarseSand2
   target: FloorAsteroidCoarseSand0
 
-# 2023-08-13
-# It is very bloaty to have the un-variantized versions of asteroid tiles here, so they've been nuked.
+# 2023-08-21
+# Asteroid coarse sand has been nuked since it was made to fit in with the old CEV-Eris style rocks.
 
 - type: tileAlias
   id: FloorAsteroidSandRocks

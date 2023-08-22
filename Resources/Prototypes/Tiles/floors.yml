@@ -1187,7 +1187,7 @@
   weather: true
 
 - type: tile
-  id: FloorAsteroidRed
+  id: FloorAsteroidSandRed
   name: tiles-asteroid-sand
   sprite: /Textures/Tiles/Asteroid/asteroid_red.png
   variants: 13
