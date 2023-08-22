@@ -1,12 +1,4 @@
 Entries:
-- author: dmnct
-  changes:
-  - {message: Added fun!, type: Add}
-  - {message: Removed fun!, type: Remove}
-  - {message: Changed fun!, type: Tweak}
-  - {message: Fixed fun!, type: Fix}
-  id: 4156
-  time: '2023-07-03T21:31:53.0000000+00:00'
 - author: Geekyhobo
   changes:
   - {message: Nukie bundle prices have been adjusted for balance, type: Tweak}
@@ -3031,3 +3023,9 @@ Entries:
   - {message: Dropping item stops its examination, type: Fix}
   id: 4655
   time: '2023-08-22T04:28:45.0000000+00:00'
+- author: Interrobang01
+  changes:
+  - {message: The word "i" is now automatically capitalized in IC chat! Your pinky's
+      structural integrity is now safe!, type: Add}
+  id: 4656
+  time: '2023-08-22T04:43:37.0000000+00:00'
