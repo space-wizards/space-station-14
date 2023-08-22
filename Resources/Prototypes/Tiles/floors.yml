@@ -1154,7 +1154,7 @@
   variants: 13
   placementVariants:
   - 0.8
-  - 0.0166 #Should be roughly 20%.... I THINK? I don't fucking know. I'm just a YAML monkey.
+  - 0.0166 #Should be roughly 20%.... I think??? I don't know dude, I'm just a YAML monkey.
   - 0.0166
   - 0.0166
   - 0.0166
