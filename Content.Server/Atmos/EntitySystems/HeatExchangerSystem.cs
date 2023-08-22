@@ -57,19 +57,14 @@ public sealed class HeatExchangerSystem : EntitySystem
         var dt = args.dt;
         var dP = inlet.Air.Pressure - outlet.Air.Pressure;
 
+        // Approximation of how much the difference in pressure between the gases changes (designated ΔΔP) per mole transferred:
+        // ΔPV = ΔnRT; ΔP/Δn = RT/V; this is for one gas, ΔP being the change in its own pressure.
+        // For 2 gases (designated i and o): ΔΔP/Δn = (ΔPi - ΔPo)/Δn = (ΔnRTo/Vo - (-Δn)RTi/Vi)/Δn = R(To/Vo + Ti/Vi)
+        float dPdivdN = Atmospherics.R * (outlet.Air.Temperature / outlet.Air.Volume + inlet.Air.Temperature / inlet.Air.Volume);
         // What we want is dN/dt = G*dP (first-order constant-coefficient differential equation w.r.t. P).
-        // However, by approximating dN = G*dP*dt using Forward Euler dN can be larger than all of the gas
-        // available for sufficiently large dP. However, we know that dN cannot exceed:
-        //
-        //   dNMax = (n2T2/V2 - n1T1/V1)/(T2/V1 + T2/V2) = Δp/R/T2/(1/V1 + 1/V2)
-        //
-        // Because that is the amount of gas that needs to be transferred to equalize pressures [citation needed].
-        // So we just limit abs(dN) < abs(dNMax).
-        //
-        // Also, by factoring out dP we can avoid taking any abs().
-        // transferLimit below is equal to dNMax/dP
-        var transferLimit = 1/Atmospherics.R/outlet.Air.Temperature/(1/inlet.Air.Volume + 1/outlet.Air.Volume);
-        var dN = dP*Math.Min(comp.G*dt, transferLimit);
+        // This is done here via integrating ΔP' = kΔP, where k = -G * ΔΔP/Δn below.
+        float dP2 = dP * MathF.Exp(-comp.G * dPdivdN * dt);
+        float dN = (dP - dP2) / dPdivdN;
 
         GasMixture xfer;
         if (dN > 0)
