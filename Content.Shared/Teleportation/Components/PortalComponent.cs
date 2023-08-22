@@ -35,6 +35,7 @@ public sealed class PortalComponent : Component
     /// <remarks>
     ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
     /// </remarks>
+    [ViewVariables(VVAccess.ReadWrite)]
     [DataField("canTeleportToOtherMaps")]
     public bool CanTeleportToOtherMaps = false;
 
