@@ -4,7 +4,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
-    public sealed class RaiseEvent : IGraphAction
+    public sealed partial class RaiseEvent : IGraphAction
     {
         [DataField("event", required:true)]
         public EntityEventArgs? Event { get; private set; }

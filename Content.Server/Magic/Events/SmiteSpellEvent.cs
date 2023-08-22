@@ -2,7 +2,7 @@
 
 namespace Content.Server.Magic.Events;
 
-public sealed class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
+public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
 {
     /// <summary>
     ///     Should this smite delete all parts/mechanisms gibbed except for the brain?

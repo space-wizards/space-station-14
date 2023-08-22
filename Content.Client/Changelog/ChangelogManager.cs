@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Changelog
 {
-    public sealed class ChangelogManager
+    public sealed partial class ChangelogManager
     {
         [Dependency] private readonly IResourceManager _resource = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;

@@ -3,7 +3,7 @@ using Content.Server.Holiday;
 
 namespace Content.Server.Maps.Conditions;
 
-public sealed class HolidayMapCondition : GameMapCondition
+public sealed partial class HolidayMapCondition : GameMapCondition
 {
     [DataField("holidays")]
     public string[] Holidays { get; private set; } = default!;

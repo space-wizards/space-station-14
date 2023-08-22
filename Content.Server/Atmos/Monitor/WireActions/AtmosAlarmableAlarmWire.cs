@@ -6,7 +6,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Atmos.Monitor;
 
-public sealed class AtmosMonitorDeviceNetWire : ComponentWireAction<AtmosAlarmableComponent>
+public sealed partial class AtmosMonitorDeviceNetWire : ComponentWireAction<AtmosAlarmableComponent>
 {
     // whether or not this wire will send out an alarm upon
     // being pulsed

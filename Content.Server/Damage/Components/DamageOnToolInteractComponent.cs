@@ -13,10 +13,10 @@ namespace Content.Server.Damage.Components
         // TODO: Remove this snowflake stuff, make damage per-tool quality perhaps?
         [DataField("weldingDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier? WeldingDamage { get; }
+        public DamageSpecifier? WeldingDamage { get; private set; }
 
         [DataField("defaultDamage")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier? DefaultDamage { get; }
+        public DamageSpecifier? DefaultDamage { get; private set; }
     }
 }

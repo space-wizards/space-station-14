@@ -32,5 +32,5 @@ public sealed partial class SprayComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("spraySound", required: true)]
     [Access(typeof(SpraySystem), Other = AccessPermissions.ReadExecute)] // FIXME Friends
-    public SoundSpecifier SpraySound { get; } = default!;
+    public SoundSpecifier SpraySound { get; private set; } = default!;
 }

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Tabletop
 {
     [UsedImplicitly]
-    public sealed class TabletopParchisSetup : TabletopSetup
+    public sealed partial class TabletopParchisSetup : TabletopSetup
     {
 
         [DataField("redPiecePrototype", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]

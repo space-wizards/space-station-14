@@ -74,7 +74,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// <summary>
     ///     Adjusts the thermal energy of the solution involved in the reaction.
     /// </summary>
-    public sealed class AdjustSolutionThermalEnergyEffect : ReagentEffect
+    public sealed partial class AdjustSolutionThermalEnergyEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in energy.

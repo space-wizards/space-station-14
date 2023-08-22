@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed class NotekeeperUi : UIFragment
+public sealed partial class NotekeeperUi : UIFragment
 {
     private NotekeeperUiFragment? _fragment;
 

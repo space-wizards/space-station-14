@@ -11,7 +11,7 @@ using Robust.Shared.Reflection;
 namespace Content.Benchmarks
 {
     [Virtual]
-    public class EntityManagerGetAllComponents
+    public partial class EntityManagerGetAllComponents
     {
         private IEntityManager _entityManager;
 

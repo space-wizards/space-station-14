@@ -12,7 +12,7 @@ public sealed partial class PoweredLightVisualsComponent : Component
     /// </summary>
     [DataField("spriteStateMap")]
     [ViewVariables(VVAccess.ReadOnly)]
-    public readonly Dictionary<PoweredLightState, string> SpriteStateMap = new()
+    public Dictionary<PoweredLightState, string> SpriteStateMap = new()
     {
         [PoweredLightState.Empty] = "empty",
         [PoweredLightState.Off] = "off",
