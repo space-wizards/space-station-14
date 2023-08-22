@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
+using Content.Server.GameTicking.Rules;
 
 namespace Content.Server.RoundEnd
 {
@@ -51,12 +52,19 @@ namespace Content.Server.RoundEnd
 
         public TimeSpan AutoCallStartTime;
         private bool AutoCalledBefore = false;
+        private bool AutoCallEnabled = false;
 
         public override void Initialize()
         {
             base.Initialize();
             SubscribeLocalEvent<RoundRestartCleanupEvent>(_ => Reset());
+            SubscribeLocalEvent<EmergencyShuttleAutoCallStartedEvent>(OnAutoShuttleEnable);
             SetAutoCallTime();
+        }
+
+        private void OnAutoShuttleEnable(EmergencyShuttleAutoCallStartedEvent ev)
+        {
+            AutoCallEnabled = true;
         }
 
         private void SetAutoCallTime()
@@ -82,6 +90,7 @@ namespace Content.Server.RoundEnd
             ExpectedCountdownEnd = null;
             SetAutoCallTime();
             AutoCalledBefore = false;
+            AutoCallEnabled = false;
             RaiseLocalEvent(RoundEndSystemChangedEvent.Default);
         }
 
@@ -137,8 +146,8 @@ namespace Content.Server.RoundEnd
             }
             else
             {
-               time = countdownTime.Minutes;
-               units = "eta-units-minutes";
+                time = countdownTime.Minutes;
+                units = "eta-units-minutes";
             }
 
             if (autoCall)
@@ -252,6 +261,11 @@ namespace Content.Server.RoundEnd
 
         public override void Update(float frameTime)
         {
+            //should've done it in
+            //gamerule system, but I think it'll work for now
+            if (!AutoCallEnabled)
+                return;
+
             // Check if we should auto-call.
             int mins = AutoCalledBefore ? _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallExtensionTime)
                                         : _cfg.GetCVar(CCVars.EmergencyShuttleAutoCallTime);

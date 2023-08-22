@@ -73,6 +73,13 @@
   components:
   - type: ZombieRule
 
+- type: entity
+  id: EmergencyShuttleAutoCall
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: EmergencyShuttleAutoCallRule
+
 # event schedulers
 - type: entity
   id: BasicStationEventScheduler
