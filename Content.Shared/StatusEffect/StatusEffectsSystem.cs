@@ -41,6 +41,7 @@ namespace Content.Shared.StatusEffect
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
+                    RaiseLocalEvent(status.Owner, new StatusUpdatedEvent(status.Owner, state.Key, frameTime), true);
                     if (curTime > state.Value.Cooldown.Item2)
                     {
                         TryRemoveStatusEffect(status.Owner, state.Key, status);
@@ -514,6 +515,22 @@ namespace Content.Shared.StatusEffect
         {
             Uid = uid;
             Key = key;
+        }
+    }
+
+    public sealed class StatusUpdatedEvent : EntityEventArgs
+    {
+        public readonly EntityUid Uid;
+
+        public readonly string Key;
+
+        public float FrameTime;
+
+        public StatusUpdatedEvent(EntityUid uid, string key, float frameTime)
+        {
+            Uid = uid;
+            Key = key;
+            FrameTime = frameTime;
         }
     }
 }

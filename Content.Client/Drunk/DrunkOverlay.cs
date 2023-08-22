@@ -18,9 +18,10 @@ public sealed class DrunkOverlay : Overlay
     ISawmill s = default!;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
+
+    public float CurrentBoozePower = 0f;
     private readonly ShaderInstance _drunkShader;
 
-    public float CurrentBoozePower = 0.0f;
 
     private const float VisualThreshold = 10.0f;
     private const float PowerDivisor = 250.0f;
@@ -35,22 +36,19 @@ public sealed class DrunkOverlay : Overlay
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
+        s = Logger.GetSawmill("drink");
         var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
         if (playerEntity == null)
             return;
-
-        if (!_entityManager.HasComponent<DrunkComponent>(playerEntity)
+        s.Debug("11");
+        if (!_entityManager.TryGetComponent<DrunkComponent>(playerEntity, out var drunkComp)
             || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
             return;
+        s.Debug("22");
 
-        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
-        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrunkSystem.DrunkKey, out var time, status))
-            return;
-
-        var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-        CurrentBoozePower += (timeLeft - CurrentBoozePower) * args.DeltaSeconds / 16f;
-        s = Logger.GetSawmill("drink");
+        
+        
         s.Debug(CurrentBoozePower.ToString());
     }
 
@@ -59,6 +57,8 @@ public sealed class DrunkOverlay : Overlay
         if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
             return false;
 
+        if (!_entityManager.TryGetComponent<DrunkComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var drunkComp))
+            return false;
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
