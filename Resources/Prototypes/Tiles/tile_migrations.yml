@@ -11,7 +11,7 @@
   target: FloorAsteroidCoarseSand0
 
 # 2023-08-21
-# Asteroid coarse sand has been nuked since it was made to fit in with the old CEV-Eris style rocks.
+# Asteroid coarse sand has been nuked since it was made to fit in with the old CEV-Eris style rocks. This tile alias is inevitably not enough to fix every instance of it appearing since the tile is so common, but it's the only reasonable way forward since it's not the default anymore.
 
 - type: tileAlias
   id: FloorAsteroidSandRocks
