@@ -1,9 +1,4 @@
 Entries:
-- author: noudoit
-  changes:
-  - {message: Attempting to uncuff yourself damages you slightly, type: Tweak}
-  id: 4155
-  time: '2023-07-03T21:30:09.0000000+00:00'
 - author: dmnct
   changes:
   - {message: Added fun!, type: Add}
@@ -3031,3 +3026,8 @@ Entries:
       Employees can now properly sit on toilets., type: Tweak}
   id: 4654
   time: '2023-08-22T04:21:51.0000000+00:00'
+- author: kalane15
+  changes:
+  - {message: Dropping item stops its examination, type: Fix}
+  id: 4655
+  time: '2023-08-22T04:28:45.0000000+00:00'
