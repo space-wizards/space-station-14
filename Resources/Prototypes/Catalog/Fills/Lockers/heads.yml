@@ -33,6 +33,7 @@
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
+      - id: ClothingHeadHatCaptain
       - id: ClothingNeckCloakCap
       - id: ClothingHandsGlovesCaptain
       - id: ClothingOuterHardsuitCap
@@ -66,6 +67,7 @@
       - id: NukeDisk
       - id: PinpointerNuclear
       - id: CaptainIDCard
+      - id: ClothingHeadHatCaptain
       - id: ClothingNeckCloakCap
       - id: ClothingHandsGlovesCaptain
       - id: WeaponDisabler
@@ -262,6 +264,7 @@
     contents:
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
+      - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
@@ -294,6 +297,7 @@
     contents:
       - id: ClothingEyesHudSecurity
       - id: WeaponDisabler
+      - id: ClothingHeadHatBeretHoS
       - id: ClothingHeadHatHoshat
       - id: ClothingNeckCloakHos
       - id: ClothingOuterCoatHoSTrench
