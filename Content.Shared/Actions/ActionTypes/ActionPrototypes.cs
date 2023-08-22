@@ -13,7 +13,7 @@ namespace Content.Shared.Actions.ActionTypes;
 public sealed partial class WorldTargetActionPrototype : WorldTargetAction, IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     // This is a shitty hack to get around the fact that action-prototypes should not in general be sever-exclusive
     // prototypes, but some actions may need to use server-exclusive events, and there is no way to specify on a
@@ -30,7 +30,7 @@ public sealed partial class WorldTargetActionPrototype : WorldTargetAction, IPro
 public sealed partial class EntityTargetActionPrototype : EntityTargetAction, IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
     public EntityTargetActionEvent? ServerEvent
@@ -44,7 +44,7 @@ public sealed partial class EntityTargetActionPrototype : EntityTargetAction, IP
 public sealed partial class InstantActionPrototype : InstantAction, IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("serverEvent", serverOnly: true)]
     public InstantActionEvent? ServerEvent

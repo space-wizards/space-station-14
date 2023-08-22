@@ -16,7 +16,7 @@ public sealed partial class DoAfter
     public DoAfterId Id => new(Args.User, Index);
 
     [IncludeDataField]
-    public readonly DoAfterArgs Args = default!;
+    public DoAfterArgs Args = default!;
 
     /// <summary>
     ///     Time at which this do after was started.

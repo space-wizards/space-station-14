@@ -110,7 +110,7 @@ public sealed class ResponseConstructionGuide : EntityEventArgs
 public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 {
     [DataField("clickLocation")]
-    public readonly EntityCoordinates ClickLocation;
+    public EntityCoordinates ClickLocation;
 
     private ConstructionInteractDoAfterEvent()
     {

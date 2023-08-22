@@ -49,7 +49,7 @@ public sealed class SiliconLawPrototype : SiliconLaw, IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
 
 }

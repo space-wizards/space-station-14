@@ -28,6 +28,6 @@ public sealed class WorldSpawnSpellEvent : WorldTargetActionEvent, ISpeakSpell
     [DataField("lifetime")] public float? Lifetime;
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 }
 

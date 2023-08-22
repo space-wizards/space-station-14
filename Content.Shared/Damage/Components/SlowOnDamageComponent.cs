@@ -12,6 +12,6 @@ namespace Content.Shared.Damage.Components
         ///     Damage -> movespeed dictionary. This is -damage-, not -health-.
         /// </summary>
         [DataField("speedModifierThresholds", required: true)]
-        public readonly Dictionary<FixedPoint2, float> SpeedModifierThresholds = default!;
+        public Dictionary<FixedPoint2, float> SpeedModifierThresholds = default!;
     }
 }

@@ -16,7 +16,7 @@ public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakS
     public bool PreventCollideWithCaster = true;
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 
     /// <summary>
     /// Gets the targeted spawn positons; may lead to multiple entities being spawned.

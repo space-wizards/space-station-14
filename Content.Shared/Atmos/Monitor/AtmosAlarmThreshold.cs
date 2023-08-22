@@ -8,22 +8,22 @@ namespace Content.Shared.Atmos.Monitor;
 public sealed class AtmosAlarmThresholdPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("ignore")]
-    public readonly bool Ignore;
+    public bool Ignore;
 
     [DataField("upperBound")]
-    public readonly AlarmThresholdSetting UpperBound = AlarmThresholdSetting.Disabled;
+    public AlarmThresholdSetting UpperBound = AlarmThresholdSetting.Disabled;
 
     [DataField("lowerBound")]
-    public readonly AlarmThresholdSetting LowerBound = AlarmThresholdSetting.Disabled;
+    public AlarmThresholdSetting LowerBound = AlarmThresholdSetting.Disabled;
 
     [DataField("upperWarnAround")]
-    public readonly AlarmThresholdSetting UpperWarningPercentage = AlarmThresholdSetting.Disabled;
+    public AlarmThresholdSetting UpperWarningPercentage = AlarmThresholdSetting.Disabled;
 
     [DataField("lowerWarnAround")]
-    public readonly AlarmThresholdSetting LowerWarningPercentage = AlarmThresholdSetting.Disabled;
+    public AlarmThresholdSetting LowerWarningPercentage = AlarmThresholdSetting.Disabled;
 }
 
 [Serializable, NetSerializable, DataDefinition]

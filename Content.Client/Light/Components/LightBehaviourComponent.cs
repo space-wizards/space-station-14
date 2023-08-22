@@ -381,7 +381,7 @@ namespace Content.Client.Light.Components
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("behaviours")]
-        public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
+        public List<LightBehaviourAnimationTrack> Behaviours = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public readonly List<AnimationContainer> Animations = new();

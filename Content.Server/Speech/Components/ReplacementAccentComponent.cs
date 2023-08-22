@@ -8,7 +8,7 @@ namespace Content.Server.Speech.Components
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     If this array is non-null, the full text of anything said will be randomly replaced with one of these words.

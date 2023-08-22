@@ -14,7 +14,7 @@ public sealed partial class ArtifactTriggerPrototype : IPrototype
 {
     /// <inheritdoc/>
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("components", serverOnly: true)]
     public ComponentRegistry Components = new();

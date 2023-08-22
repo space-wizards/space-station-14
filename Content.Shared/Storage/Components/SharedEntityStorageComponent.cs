@@ -57,7 +57,7 @@ public abstract partial class SharedEntityStorageComponent : Component
 
     //The collision groups checked, so that items are depositied or grabbed from inside walls.
     [DataField("enteringOffsetCollisionFlags")]
-    public readonly CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
+    public CollisionGroup EnteringOffsetCollisionFlags = CollisionGroup.Impassable | CollisionGroup.MidImpassable;
 
     /// <summary>
     /// How close you have to be to the "entering" spot to be able to enter

@@ -8,23 +8,23 @@ namespace Content.Shared.Dice;
 public sealed partial class DiceComponent : Component
 {
     [DataField("sound")]
-    public SoundSpecifier Sound { get; } = new SoundCollectionSpecifier("Dice");
+    public SoundSpecifier Sound { get; private set; } = new SoundCollectionSpecifier("Dice");
 
     /// <summary>
     ///     Multiplier for the value  of a die. Applied after the <see cref="Offset"/>.
     /// </summary>
     [DataField("multiplier")]
-    public int Multiplier { get; } = 1;
+    public int Multiplier { get; private set; } = 1;
 
     /// <summary>
     ///     Quantity that is subtracted from the value of a die. Can be used to make dice that start at "0". Applied
     ///     before the <see cref="Multiplier"/>
     /// </summary>
     [DataField("offset")]
-    public int Offset { get; } = 0;
+    public int Offset { get; private set; } = 0;
 
     [DataField("sides")]
-    public int Sides { get; } = 20;
+    public int Sides { get; private set; } = 20;
 
     /// <summary>
     ///     The currently displayed value.

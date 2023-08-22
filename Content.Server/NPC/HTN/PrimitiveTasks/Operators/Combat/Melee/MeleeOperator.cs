@@ -18,7 +18,7 @@ public sealed class MeleeOperator : HTNOperator, IHtnConditionalShutdown
     /// When to shut the task down.
     /// </summary>
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
+    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.

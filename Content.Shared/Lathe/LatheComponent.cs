@@ -14,13 +14,13 @@ namespace Content.Shared.Lathe
         /// All of the recipes that the lathe has by default
         /// </summary>
         [DataField("staticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> StaticRecipes = new();
+        public List<string> StaticRecipes = new();
 
         /// <summary>
         /// All of the recipes that the lathe is capable of researching
         /// </summary>
         [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> DynamicRecipes = new();
+        public List<string> DynamicRecipes = new();
 
         /// <summary>
         /// The lathe's construction queue

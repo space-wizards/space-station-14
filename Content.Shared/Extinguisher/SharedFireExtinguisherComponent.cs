@@ -12,7 +12,7 @@ public abstract partial class SharedFireExtinguisherComponent : Component
     [DataField("safety")] public bool Safety = true;
 
     [DataField("safetySound")]
-    public SoundSpecifier SafetySound { get; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
+    public SoundSpecifier SafetySound { get; private set; } = new SoundPathSpecifier("/Audio/Machines/button.ogg");
 }
 
 

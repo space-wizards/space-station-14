@@ -213,14 +213,14 @@ public sealed partial class AnomalyComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("animationTime")]
-    public readonly float AnimationTime = 2f;
+    public float AnimationTime = 2f;
 
     /// <summary>
     /// How far it goes in any direction.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("offset")]
-    public readonly Vector2 FloatingOffset = new(0, 0.15f);
+    public Vector2 FloatingOffset = new(0, 0.15f);
 
     public readonly string AnimationKey = "anomalyfloat";
     #endregion

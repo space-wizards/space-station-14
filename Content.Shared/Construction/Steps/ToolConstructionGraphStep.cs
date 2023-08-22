@@ -9,11 +9,11 @@ namespace Content.Shared.Construction.Steps
     public sealed partial class ToolConstructionGraphStep : ConstructionGraphStep
     {
         [DataField("tool", required:true, customTypeSerializer:typeof(PrototypeIdSerializer<ToolQualityPrototype>))]
-        public string Tool { get; } = string.Empty;
+        public string Tool { get; private set; } = string.Empty;
 
-        [DataField("fuel")] public float Fuel { get; } = 10;
+        [DataField("fuel")] public float Fuel { get; private set; } = 10;
 
-        [DataField("examine")] public string ExamineOverride { get; } = string.Empty;
+        [DataField("examine")] public string ExamineOverride { get; private set; } = string.Empty;
 
         public override void DoExamine(ExaminedEvent examinedEvent)
         {

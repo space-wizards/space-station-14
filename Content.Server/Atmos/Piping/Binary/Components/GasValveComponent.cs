@@ -15,6 +15,6 @@ namespace Content.Server.Atmos.Piping.Binary.Components
         public string OutletName { get; set; } = "outlet";
 
         [DataField("valveSound")]
-        public SoundSpecifier ValveSound { get; } = new SoundCollectionSpecifier("valveSqueak");
+        public SoundSpecifier ValveSound { get; private set; } = new SoundCollectionSpecifier("valveSqueak");
     }
 }

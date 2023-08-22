@@ -166,19 +166,19 @@ namespace Content.Shared.Decals
         private readonly partial struct DecalData : IEquatable<DecalData>, IComparable<DecalData>
         {
             [DataField("id")]
-            public readonly string Id = string.Empty;
+            public string Id { get; init; } = string.Empty;
 
             [DataField("color")]
-            public readonly Color? Color;
+            public Color? Color { get; init; }
 
             [DataField("angle")]
-            public readonly Angle Angle = Angle.Zero;
+            public Angle Angle { get; init; } = Angle.Zero;
 
             [DataField("zIndex")]
-            public readonly int ZIndex;
+            public int ZIndex { get; init; }
 
             [DataField("cleanable")]
-            public readonly bool Cleanable;
+            public bool Cleanable { get; init; }
 
             public DecalData(string id, Color? color, Angle angle, int zIndex, bool cleanable)
             {

@@ -19,5 +19,5 @@ public sealed class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
     [DataField("posData")] public MagicSpawnData Pos = new TargetCasterPos();
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 }

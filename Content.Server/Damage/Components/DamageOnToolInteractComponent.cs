@@ -8,7 +8,7 @@ namespace Content.Server.Damage.Components
     public sealed partial class DamageOnToolInteractComponent : Component
     {
         [DataField("tools")]
-        public PrototypeFlags<ToolQualityPrototype> Tools { get; } = new ();
+        public PrototypeFlags<ToolQualityPrototype> Tools { get; private set; } = new ();
 
         // TODO: Remove this snowflake stuff, make damage per-tool quality perhaps?
         [DataField("weldingDamage")]

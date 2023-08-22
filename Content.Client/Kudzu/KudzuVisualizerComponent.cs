@@ -4,7 +4,7 @@ namespace Content.Client.Kudzu
     public sealed partial class KudzuVisualsComponent : Component
     {
         [DataField("layer")]
-        public int Layer { get; } = 0;
+        public int Layer { get; private set; } = 0;
     }
 
 }

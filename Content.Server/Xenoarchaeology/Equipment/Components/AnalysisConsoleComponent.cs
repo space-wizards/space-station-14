@@ -22,7 +22,7 @@ public sealed partial class AnalysisConsoleComponent : Component
     /// The machine linking port for the analyzer
     /// </summary>
     [DataField("linkingPort", customTypeSerializer: typeof(PrototypeIdSerializer<SourcePortPrototype>))]
-    public readonly string LinkingPort = "ArtifactAnalyzerSender";
+    public string LinkingPort = "ArtifactAnalyzerSender";
 
     /// <summary>
     /// The sound played when an artifact has points extracted.

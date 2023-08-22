@@ -32,6 +32,6 @@ public sealed partial class BlobFloorPlanBuilderComponent : Component
     ///     The number of floor tiles to place when drawing the asteroid layout.
     /// </summary>
     [DataField("floorPlacements", required: true)]
-    public int FloorPlacements { get; }
+    public int FloorPlacements { get; private set; }
 }
 

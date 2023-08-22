@@ -11,5 +11,5 @@ public sealed class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
     public bool DeleteNonBrainParts = true;
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 }

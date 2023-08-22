@@ -4,15 +4,15 @@
     public sealed partial class PressureProtectionComponent : Component
     {
         [DataField("highPressureMultiplier")]
-        public float HighPressureMultiplier { get; } = 1f;
+        public float HighPressureMultiplier { get; private set; } = 1f;
 
         [DataField("highPressureModifier")]
-        public float HighPressureModifier { get; } = 0f;
+        public float HighPressureModifier { get; private set; } = 0f;
 
         [DataField("lowPressureMultiplier")]
-        public float LowPressureMultiplier { get; } = 1f;
+        public float LowPressureMultiplier { get; private set; } = 1f;
 
         [DataField("lowPressureModifier")]
-        public float LowPressureModifier { get; } = 0f;
+        public float LowPressureModifier { get; private set; } = 0f;
     }
 }

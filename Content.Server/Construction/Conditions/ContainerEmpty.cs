@@ -12,16 +12,16 @@ namespace Content.Server.Construction.Conditions
     public sealed partial class ContainerEmpty : IGraphCondition
     {
         [DataField("container")]
-        public string Container { get; } = string.Empty;
+        public string Container { get; private set; } = string.Empty;
 
         [DataField("examineText")]
-        public string? ExamineText { get; }
+        public string? ExamineText { get; private set; }
 
         [DataField("guideStep")]
-        public string? GuideText { get; }
+        public string? GuideText { get; private set; }
 
         [DataField("guideIcon")]
-        public SpriteSpecifier? GuideIcon { get; }
+        public SpriteSpecifier? GuideIcon { get; private set; }
 
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {
