@@ -75,7 +75,7 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     /// Returns true/false.
     /// </summary>
     /// <remarks>
-    /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
+    /// Logs changes to an entity's battlecry
     /// </remarks>
     public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? meleeSpeechComp = null)
     {
@@ -85,9 +85,8 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         if (!string.IsNullOrWhiteSpace(battlecry))
         {
             battlecry = battlecry.Trim();
-
-
         }
+
         else
         {
             battlecry = null;

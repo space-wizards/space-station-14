@@ -11,11 +11,17 @@ public sealed partial class MeleeSpeechComponent : Component
     [ViewVariables]
     public EntityUid? User;
 
+    /// <summary>
+    /// The battlecry to be said when an entity attacks with this component
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-	[DataField("Battlecry")]
-	[AutoNetworkedField]
-	public string? Battlecry;
+    [DataField("Battlecry")]
+    [AutoNetworkedField]
+    public string? Battlecry;
 
+    /// <summary>
+    /// The maximum amount of characters allowed in a battlecry
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxBattlecryLength")]
     public int MaxBattlecryLength = 12;
@@ -42,7 +48,6 @@ public enum MeleeSpeechUiKey : byte
     Key,
 }
 
-//[Serializable, NetSerializable]
 public sealed class MeleeSpeechConfigureActionEvent : InstantActionEvent
 {
 }
