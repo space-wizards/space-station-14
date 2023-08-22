@@ -6,7 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 54000 # 15 hrs
+      time: 43200 #12 hrs
+    - !type:RoleTimeRequirement
+      role: JobStationEngineer
+      time: 18000 #5 hrs
   startingGear: AtmosphericTechnicianGear
   icon: "JobIconAtmosphericTechnician"
   supervisors: job-supervisors-ce

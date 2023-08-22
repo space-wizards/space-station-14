@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 36000 #10 hrs
+      time: 18000 #5 hrs
   startingGear: SecurityOfficerGear
   icon: "JobIconSecurityOfficer"
   supervisors: job-supervisors-hos
@@ -30,7 +30,6 @@
     id: SecurityPDA
     ears: ClothingHeadsetSecurity
     belt: ClothingBeltSecurityFilled
-    pocket1: WeaponPistolMk58Nonlethal
   innerclothingskirt: ClothingUniformJumpskirtSec
   satchel: ClothingBackpackSatchelSecurityFilled
   duffelbag: ClothingBackpackDuffelSecurityFilled

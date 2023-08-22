@@ -5,9 +5,6 @@
   playTimeTracker: JobSeniorOfficer
   requirements:
     - !type:RoleTimeRequirement
-      role: JobWarden
-      time: 21600 #6 hrs
-    - !type:RoleTimeRequirement
       role: JobDetective
       time: 7200 #2 hrs
     - !type:RoleTimeRequirement
@@ -15,7 +12,7 @@
       time: 21600 #6 hrs
     - !type:DepartmentTimeRequirement
       department: Security
-      time: 216000 # 60 hrs
+      time: 36000 # 10 hrs
   startingGear: SeniorOfficerGear
   icon: "JobIconSeniorOfficer"
   supervisors: job-supervisors-hos

@@ -6,7 +6,7 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Engineering
-      time: 14400 #4 hrs
+      time: 18000 #5 hrs
   startingGear: StationEngineerGear
   icon: "JobIconStationEngineer"
   supervisors: job-supervisors-ce

@@ -4,17 +4,16 @@
   description: job-description-rd
   playTimeTracker: JobResearchDirector
   requirements:
-    - !type:DepartmentTimeRequirement
-      department: Science
-      time: 36000 #10 hrs
+    - !type:RoleTimeRequirement
+      role: JobSeniorResearcher
+      time: 43200 #12 hrs
     - !type:OverallPlaytimeRequirement
-      time: 144000 #40 hrs            
+      time: 64800 #18 hrs            
   weight: 10
   startingGear: ResearchDirectorGear
   icon: "JobIconResearchDirector"
   requireAdminNotify: true
   supervisors: job-supervisors-captain
-  canBeAntag: true
   access:
   - Research
   - Command

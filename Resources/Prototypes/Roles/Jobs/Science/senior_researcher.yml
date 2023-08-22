@@ -6,7 +6,10 @@
   requirements:
     - !type:DepartmentTimeRequirement
       department: Science
-      time: 216000 #60 hrs
+      time: 32400 #9 hrs
+    - !type:RoleTimeRequirement
+      role: JobScientist
+      time: 18000 #5 hrs
   startingGear: SeniorResearcherGear
   icon: "JobIconSeniorResearcher"
   supervisors: job-supervisors-rd
