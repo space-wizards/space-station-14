@@ -10,20 +10,17 @@
         {
             "name": "icon"
         },
-        {
-            "name": "bolt-open"
+		{
+            "name": "open"
         },
-        {
-            "name": "inhand-left",
-            "directions": 4
+		{
+            "name": "open-lock-overlay"
         },
-        {
-            "name": "inhand-right",
-            "directions": 4
+		{
+            "name": "lock-closed"
         },
-        {
-            "name": "equipped-BELT",
-            "directions": 4
+		{
+            "name": "lock-open"
         }
     ]
 }

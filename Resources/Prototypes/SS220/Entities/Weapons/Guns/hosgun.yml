@@ -1,0 +1,72 @@
+- type: entity
+  name: Уника
+  parent: BaseWeaponRevolver
+  id: WeaponRevolverMatebaSouvenir
+  description: Сувенирная версия авторевольвера Матеба с золотым покрытием. Из-за других материалов обладает конструктивно уменьшенной скорострельностью. Использует патроны калибра .45 магнум.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Guns/hosgun.rsi
+  - type: Clothing
+    sprite: SS220/Objects/Weapons/Guns/hosgun.rsi
+  - type: RevolverAmmoProvider
+    capacity: 6
+    chambers: [ True, True, True, True, True, True ]
+    ammoSlots: [ null, null, null, null, null, null ]
+  - type: Gun
+    fireRate: 2.1
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/mateba.ogg
+      params:
+        volume: 0.8
+  - type: StaticPrice
+    price: 5000
+
+- type: entity
+  name: защищённый кейс для револьвера
+  description: Ударопрочный кейс с замком для хранения револьвера. Является аксессуаром к сувенирному револьверу "Уника".
+  id: LockedUnicaBox
+  parent: BaseStorageItem
+  components:
+  - type: Storage
+    capacity: 30
+  - type: Item
+    size: 30
+  - type: StorageFill
+    contents:
+      - id: WeaponRevolverMatebaSouvenir
+      - id: SpeedLoaderMagnum
+        amount: 2
+  - type: AccessReader
+    access: [["HeadOfSecurity"]]
+  - type: Lock
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Guns/hosgun_box.rsi
+    layers:
+    - state: icon
+      map: ["enum.StorageVisualLayers.Base"]
+    - state: open
+      map: ["openLayer"]
+      visible: false
+    - state: open-lock-overlay
+      map: ["openIndicator"]
+      visible: false
+      shader: unshaded
+    - state: lock-closed
+      map: ["enum.StorageVisualLayers.Lock"]
+      shader: unshaded
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.SharedBagOpenVisuals.BagState:
+        openLayer:
+          Open: { visible: true }
+          Closed: { visible: false }
+        openIndicator:
+          Open: { visible: true }
+          Closed: { visible: false }
+        enum.StorageVisualLayers.Lock:
+          Open: { visible: false }
+          Closed: { visible: true }
+  - type: EntityStorageVisuals
+    stateLocked: lock-closed
+    stateUnlocked: lock-open
