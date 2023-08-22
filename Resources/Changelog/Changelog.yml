@@ -1,9 +1,4 @@
 Entries:
-- author: HerCoyote23
-  changes:
-  - {message: You can now speak on your department's radio channel using .X, type: Tweak}
-  id: 4153
-  time: '2023-07-03T08:55:08.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Artifacts now make noises when activated., type: Add}
@@ -3029,3 +3024,9 @@ Entries:
   - {message: Skeletons are no longer extremely saturated in color., type: Fix}
   id: 4652
   time: '2023-08-22T02:05:24.0000000+00:00'
+- author: func_kenobi
+  changes:
+  - {message: "CentComm allowed the station architectors to place Schr\xF6dinger's\
+      \ grilles.", type: Add}
+  id: 4653
+  time: '2023-08-22T02:21:45.0000000+00:00'
