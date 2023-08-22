@@ -1,14 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added unique ERT helmets for each ERT type., type: Add}
-  - {message: Removed the alternate security helmets (the ones with an abundance of
-      hueshifting.), type: Remove}
-  - {message: Riot helmets are now better than the standard Security helmet at resisting
-      blunt and slash., type: Tweak}
-  - {message: Fixed a single missing pixel on all EVA helmet inhands., type: Fix}
-  id: 4161
-  time: '2023-07-03T23:24:28.0000000+00:00'
 - author: Lomcastar
   changes:
   - {message: Crew monitor now uses colors for passenger status., type: Tweak}
@@ -3037,3 +3027,8 @@ Entries:
       slimes., type: Add}
   id: 4660
   time: '2023-08-22T12:00:20.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed various head locker contents., type: Tweak}
+  id: 4661
+  time: '2023-08-22T14:49:53.0000000+00:00'
