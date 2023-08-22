@@ -17,7 +17,7 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-
+        ISawmill s = default!;
         public override void Initialize()
         {
             base.Initialize();
@@ -385,7 +385,9 @@ namespace Content.Shared.StatusEffect
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
-
+            s = Logger.GetSawmill("sas");
+            s.Debug(uid.ToString());
+            RaiseLocalEvent(uid, new StatusEffectTimeAddedEvent(uid, key), true);
             Dirty(status);
             return true;
         }
@@ -496,6 +498,19 @@ namespace Content.Shared.StatusEffect
         public readonly string Key;
 
         public StatusEffectEndedEvent(EntityUid uid, string key)
+        {
+            Uid = uid;
+            Key = key;
+        }
+    }
+
+    public sealed class StatusEffectTimeAddedEvent : EntityEventArgs
+    {
+        public readonly EntityUid Uid;
+
+        public readonly string Key;
+
+        public StatusEffectTimeAddedEvent(EntityUid uid, string key)
         {
             Uid = uid;
             Key = key;

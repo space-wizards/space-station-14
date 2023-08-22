@@ -9,10 +9,21 @@ public abstract class SharedDrunkSystem : EntitySystem
     [ValidatePrototypeId<StatusEffectPrototype>]
     public const string DrunkKey = "Drunk";
 
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+    [Dependency] protected readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
+    ISawmill s = default!;
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<DrunkComponent, StatusEffectTimeAddedEvent>(OnDrunkUpdated);
+        s = Logger.GetSawmill("up");
+    }
 
-    public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
+    private void OnDrunkUpdated(EntityUid uid, DrunkComponent component, StatusEffectTimeAddedEvent args)
+    {
+        s.Debug("1");
+    }
+public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
         StatusEffectsComponent? status = null)
     {
         if (!Resolve(uid, ref status, false))
