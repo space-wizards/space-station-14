@@ -31,7 +31,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
             return;
 
         comp.Suit = suit;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     /// <summary>
@@ -43,7 +43,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
             return;
 
         comp.Gloves = gloves;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     /// <summary>
@@ -55,7 +55,7 @@ public abstract class SharedSpaceNinjaSystem : EntitySystem
             return;
 
         comp.Katana = katana;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 
     /// <summary>

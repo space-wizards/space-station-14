@@ -54,7 +54,7 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
 
         var user = comp.User.Value;
         comp.User = null;
-        Dirty(comp);
+        Dirty(uid, comp);
 
         Appearance.SetData(uid, ToggleVisuals.Toggled, false);
         Popup.PopupClient(Loc.GetString("ninja-gloves-off"), user, user);

@@ -71,7 +71,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
     private void EnableGloves(EntityUid uid, NinjaGlovesComponent comp, EntityUid user, SpaceNinjaComponent ninja)
     {
         comp.User = user;
-        Dirty(comp);
+        Dirty(uid, comp);
         _ninja.AssignGloves(ninja, uid);
 
         var drainer = EnsureComp<BatteryDrainerComponent>(user);

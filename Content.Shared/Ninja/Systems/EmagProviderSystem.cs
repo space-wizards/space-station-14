@@ -60,7 +60,7 @@ public sealed class EmagProviderSystem : EntitySystem
             return;
 
         comp.Whitelist = whitelist;
-        Dirty(comp);
+        Dirty(uid, comp);
     }
 }
 
