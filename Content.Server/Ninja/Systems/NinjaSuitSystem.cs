@@ -29,7 +29,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
-        SubscribeLocalEvent<NinjaSuitComponent, EnableStealthEvent>(OnEnableStealth);
+        SubscribeLocalEvent<NinjaSuitComponent, AttemptStealthEvent>(OnAttemptStealth);
         SubscribeLocalEvent<NinjaSuitComponent, CreateThrowingStarEvent>(OnCreateThrowingStar);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
         SubscribeLocalEvent<NinjaSuitComponent, NinjaEmpEvent>(OnEmp);
@@ -65,7 +65,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         _ninja.SetSuitPowerAlert(user);
     }
 
-    private void OnEnableStealth(EntityUid uid, NinjaSuitComponent comp, EnableStealthEvent args)
+    private void OnAttemptStealth(EntityUid uid, NinjaSuitComponent comp, AttemptStealthEvent args)
     {
         var user = args.User;
         // need 1 second of charge to turn on stealth

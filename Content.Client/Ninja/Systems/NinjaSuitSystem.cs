@@ -14,10 +14,10 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NinjaSuitComponent, EnableStealthEvent>(OnEnableStealth);
+        SubscribeLocalEvent<NinjaSuitComponent, AttemptStealthEvent>(OnAttemptStealth);
     }
 
-    private void OnEnableStealth(EntityUid uid, NinjaSuitComponent comp, EnableStealthEvent args)
+    private void OnAttemptStealth(EntityUid uid, NinjaSuitComponent comp, AttemptStealthEvent args)
     {
         args.Cancel();
     }
