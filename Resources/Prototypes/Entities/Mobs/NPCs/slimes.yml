@@ -89,7 +89,7 @@
         scaled: true
         damage:
           types:
-            Heat: 3
+            Heat: 8
       - !type:PopupMessage
         type: Local
         messages: [ "slime-hurt-by-water-popup" ]
@@ -103,9 +103,9 @@
     animation: WeaponArcPunch
     damage:
       types:
-        Blunt: 6
+        Blunt: 10
         Structural: 4
-        Caustic: 4
+        Caustic: 5
   - type: InteractionPopup
     successChance: 0.5
     interactSuccessString: petting-success-slimes
@@ -160,10 +160,9 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 6
+          Blunt: 8
           Structural: 4
-          Caustic: 1
-          Poison: 4
+          Poison: 8
 
 - type: entity
   name: green slime
@@ -195,10 +194,9 @@
     - type: MeleeWeapon
       damage:
         types:
-          Blunt: 6
+          Blunt: 10
           Structural: 4
-          Caustic: 1
-          Cellular: 3
+          Cellular: 5
 
 - type: entity
   name: yellow slime
