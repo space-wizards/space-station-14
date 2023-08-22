@@ -153,17 +153,10 @@ namespace Content.IntegrationTests.Tests
                 .Select(p => p.ID)
                 .ToList();
 
-            // for whatever reason, stealth boxes are breaking this test. Surplus crates have a chance of spawning them.
-            // TODO fix whatever is going wrong here.
-            HashSet<string> ignored = new() { "GhostBox", "StealthBox", "CrateSyndicateSurplusBundle", "CrateSyndicateSuperSurplusBundle" };
-
             await server.WaitPost(() =>
             {
                 foreach (var protoId in protoIds)
                 {
-                    if (ignored.Contains(protoId))
-                        continue;
-
                     var mapId = mapManager.CreateMap();
                     var grid = mapManager.CreateGrid(mapId);
                     var ent = sEntMan.SpawnEntity(protoId, new EntityCoordinates(grid.Owner, 0.5f, 0.5f));

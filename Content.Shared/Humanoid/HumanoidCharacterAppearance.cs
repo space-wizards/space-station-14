@@ -163,9 +163,9 @@ namespace Content.Shared.Humanoid
                     break;
                 case HumanoidSkinColor.Hues:
                 case HumanoidSkinColor.TintedHues:
-                    var rbyte = random.Next(0, 255);
-                    var gbyte = random.Next(0, 255);
-                    var bbyte = random.Next(0, 255);
+                    var rbyte = random.NextByte();
+                    var gbyte = random.NextByte();
+                    var bbyte = random.NextByte();
                     newSkinColor = new Color(rbyte, gbyte, bbyte);
                     break;
             }
