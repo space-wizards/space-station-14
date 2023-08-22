@@ -1,11 +1,11 @@
-using Content.Server.Actions;
+//using Content.Server.Actions;
 using Content.Server.Administration.Logs;
 using Content.Shared.Actions;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
 using Content.Shared.Database;
 using Robust.Server.GameObjects;
-using Robust.Shared.Players;
+//using Robust.Shared.Players;
 
 namespace Content.Server.Speech.EntitySystems;
 
@@ -15,10 +15,12 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+
     public override void Initialize()
-	{
-		base.Initialize();
-		SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechBattlecryChangedMessage>(OnBattlecryChanged);
         SubscribeLocalEvent<MeleeSpeechComponent, MeleeSpeechConfigureActionEvent>(OnConfigureAction);
         SubscribeLocalEvent<MeleeSpeechComponent, GetItemActionsEvent>(OnGetActions);
         SubscribeLocalEvent<MeleeSpeechComponent, ComponentInit>(OnComponentInit);
@@ -29,16 +31,15 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         if (component.ConfigureAction != null)
             _actionSystem.AddAction(uid, component.ConfigureAction, uid);
     }
-    
+
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
     {
         if (component.ConfigureAction != null)
             args.Actions.Add(component.ConfigureAction);
     }
 
-	private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
-	{
-
+    private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
+    {
         if (!TryComp<MeleeSpeechComponent>(uid, out var meleeSpeechUser))
             return;
 
@@ -48,16 +49,15 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
             battlecry = battlecry[..comp.MaxBattlecryLength];
 
         TryChangeBattlecry(uid, battlecry, meleeSpeechUser);
-	}
+    }
+
     /// <summary>
     /// Attempts to open the Battlecry UI.
     /// </summary>
     private void OnConfigureAction(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechConfigureActionEvent args)
     {
-
         TryOpenUi(args.Performer, uid, comp);
     }
-
 
     public void TryOpenUi(EntityUid user, EntityUid source, MeleeSpeechComponent? component = null)
     {
@@ -70,7 +70,6 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
         _uiSystem.TryToggleUi(source, MeleeSpeechUiKey.Key, actor.PlayerSession);
     }
 
-
     /// <summary>
     /// Attempts to change the battlecry of an entity.
     /// Returns true/false.
@@ -79,31 +78,30 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     /// If provided with a player's EntityUid to the player parameter, adds the change to the admin logs.
     /// </remarks>
     public bool TryChangeBattlecry(EntityUid uid, string? battlecry, MeleeSpeechComponent? meleeSpeechComp = null)
-	{
-
+    {
         if (!Resolve(uid, ref meleeSpeechComp))
-			return false;
+            return false;
 
-		if (!string.IsNullOrWhiteSpace(battlecry))
-		{
-			battlecry = battlecry.Trim();
+        if (!string.IsNullOrWhiteSpace(battlecry))
+        {
+            battlecry = battlecry.Trim();
 
 
-		}
-		else
-		{
-			battlecry = null;
+        }
+        else
+        {
+            battlecry = null;
         }
 
         if (meleeSpeechComp.Battlecry == battlecry)
 
-			return true;
+            return true;
 
-		meleeSpeechComp.Battlecry = battlecry;
-		Dirty(meleeSpeechComp);
+        meleeSpeechComp.Battlecry = battlecry;
+        Dirty(meleeSpeechComp);
 
-		_adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
-		return true;
-	}
+        _adminLogger.Add(LogType.ItemConfigure, LogImpact.Medium, $" {ToPrettyString(uid):entity}'s battlecry has been changed to {battlecry}");
+        return true;
+    }
 }
 
