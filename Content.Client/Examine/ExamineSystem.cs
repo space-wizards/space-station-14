@@ -70,9 +70,8 @@ namespace Content.Client.Examine
             if (_examineTooltipOpen == null)
                 return;
 
-            if (item == _examinedEntity)
-                if (args.User == _playerManager.LocalPlayer.ControlledEntity)
-                    CloseTooltip();
+            if (item == _examinedEntity && args.User == _playerManager.LocalPlayer.ControlledEntity)
+                CloseTooltip();
         }
 
         public override void Update(float frameTime)
