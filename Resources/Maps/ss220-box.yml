@@ -13854,7 +13854,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -423530.9
+    - SecondsUntilStateChange: -424098.3
       changeAirtight: False
       state: Opening
       type: Door
@@ -13872,7 +13872,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -423530.9
+    - SecondsUntilStateChange: -424098.3
       changeAirtight: False
       state: Opening
       type: Door
@@ -144867,12 +144867,6 @@ entities:
       pos: 56.5,-16.5
       parent: 8364
       type: Transform
-  - uid: 6934
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 67.5,-16.5
-      parent: 8364
-      type: Transform
   - uid: 9575
     components:
     - pos: 58.5,-38.5
@@ -165238,6 +165232,13 @@ entities:
   - uid: 26768
     components:
     - pos: 77.44578,-54.439636
+      parent: 8364
+      type: Transform
+- proto: SheetPlasma1
+  entities:
+  - uid: 6934
+    components:
+    - pos: 18.575148,-20.84946
       parent: 8364
       type: Transform
 - proto: SheetPlasteel
@@ -199933,12 +199934,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: 46.5,-25.5
-      parent: 8364
-      type: Transform
-  - uid: 20802
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 18.5,-20.5
       parent: 8364
       type: Transform
   - uid: 21305
