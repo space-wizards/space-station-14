@@ -6,7 +6,6 @@ namespace Content.Server.Drunk;
 
 public sealed class DrunkSystem : SharedDrunkSystem
 {
-    ISawmill s = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -18,11 +17,9 @@ public sealed class DrunkSystem : SharedDrunkSystem
             return;
         if (!StatusEffectsSystem.TryGetTime(uid, DrunkKey, out var time, component))
             return;
-        s = Logger.GetSawmill("s");
 
         float timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
         drunkComp.CurrentBoozePower = timeLeft;
-        s.Debug(drunkComp.CurrentBoozePower.ToString());
         if (drunkComp.CurrentBoozePower > 200f)
         {
             if (StatusEffectsSystem.HasStatusEffect(uid, StatusEffectKey))

@@ -1,5 +1,6 @@
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Drunk;
+using Content.Shared.StatusEffect;
 using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
@@ -28,6 +29,8 @@ public sealed partial class Drunk : ReagentEffect
         boozePower *= args.Scale;
 
         var drunkSys = args.EntityManager.EntitySysManager.GetEntitySystem<SharedDrunkSystem>();
-        drunkSys.TryApplyDrunkenness(args.SolutionEntity, boozePower, SlurSpeech);
+
+        var comp = args.SolutionEntity.EnsureComponent<StatusEffectsComponent>();
+        drunkSys.TryApplyDrunkenness(args.SolutionEntity, boozePower, SlurSpeech, comp);
     }
 }
