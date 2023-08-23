@@ -10,7 +10,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges.Messenger;
 
-public sealed class MessengerUi : UIFragment
+public sealed partial class MessengerUi : UIFragment
 {
     private MessengerUiState? _messengerUiState;
     private string? _errorText;

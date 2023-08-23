@@ -7,7 +7,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.SS220.GhostRoleCast
 {
     [RegisterComponent]
-    public sealed class GhostRoleCastComponent : Component
+    public sealed partial class GhostRoleCastComponent : Component
     {
         public string GhostRoleName = "";
         public string GhostRoleDesc = "";
@@ -49,13 +49,13 @@ namespace Content.Shared.SS220.GhostRoleCast
             Repeat = true,
             DeselectOnMiss = false,
             //CanTargetSelf = false,
-        Event = new ToggleGhostRoleRemoveActionEvent(),
+            Event = new ToggleGhostRoleRemoveActionEvent(),
         };
     }
 
 
-    public sealed class ToggleGhostRoleCastSettingsEvent : InstantActionEvent { };
-    public sealed class ToggleGhostRoleCastActionEvent : EntityTargetActionEvent { };
-    public sealed class ToggleGhostRoleRemoveActionEvent : EntityTargetActionEvent { };
+    public sealed partial class ToggleGhostRoleCastSettingsEvent : InstantActionEvent { };
+    public sealed partial class ToggleGhostRoleCastActionEvent : EntityTargetActionEvent { };
+    public sealed partial class ToggleGhostRoleRemoveActionEvent : EntityTargetActionEvent { };
 
 }

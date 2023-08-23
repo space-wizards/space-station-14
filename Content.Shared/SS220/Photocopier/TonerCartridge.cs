@@ -3,7 +3,7 @@
 namespace Content.Shared.SS220.Photocopier;
 
 [RegisterComponent]
-public sealed class TonerCartridgeComponent : Component
+public sealed partial class TonerCartridgeComponent : Component
 {
     /// <summary>
     /// Maximum amount of charges of toner that cartridge contains.

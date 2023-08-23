@@ -17,171 +17,168 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
-namespace Content.Shared.SS220.CryopodSSD
+namespace Content.Shared.SS220.CryopodSSD;
+
+public abstract class SharedCryopodSSDSystem : EntitySystem
 {
-    public abstract class SharedCryopodSSDSystem : EntitySystem
+    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
+    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly StandingStateSystem _standingStateSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly EntityManager _entityManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        
-        public override void Initialize()
+        base.Initialize();
+
+        SubscribeLocalEvent<CryopodSSDComponent, CanDropTargetEvent>(OnCryopodSSDCanDropTarget);
+    }
+
+    /// <summary>
+    /// Inserts target inside cryopod
+    /// </summary>
+    /// <param name="uid"></param>
+    /// <param name="target"></param>
+    /// <param name="cryopodSsdComponent"></param>
+    /// <returns> true if we successfully inserted target inside cryopod, otherwise returns false</returns>
+    public bool InsertBody(EntityUid uid, EntityUid target, CryopodSSDComponent cryopodSsdComponent)
+    {
+        if (cryopodSsdComponent.BodyContainer.ContainedEntity != null)
+            return false;
+
+        if (!HasComp<MobStateComponent>(target))
+            return false;
+
+        var xform = Transform(target);
+        cryopodSsdComponent.BodyContainer.Insert(target, transform: xform, force: true);
+
+        if (_prototypeManager.TryIndex<InstantActionPrototype>("CryopodSSDLeave", out var leaveAction))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<CryopodSSDComponent, CanDropTargetEvent>(OnCryopodSSDCanDropTarget);
-        }
-        
-        /// <summary>
-        /// Inserts target inside cryopod
-        /// </summary>
-        /// <param name="uid"></param>
-        /// <param name="target"></param>
-        /// <param name="cryopodSsdComponent"></param>
-        /// <returns> true if we successfully inserted target inside cryopod, otherwise returns false</returns>
-        public bool InsertBody(EntityUid uid, EntityUid target, CryopodSSDComponent cryopodSsdComponent)
-        {
-            if (cryopodSsdComponent.BodyContainer.ContainedEntity != null)
-                return false;
-
-            if (!HasComp<MobStateComponent>(target))
-                return false;
-
-            var xform = Transform(target);
-            cryopodSsdComponent.BodyContainer.Insert(target, transform: xform, force: true);
-            
-            if (_prototypeManager.TryIndex<InstantActionPrototype>("CryopodSSDLeave", out var leaveAction))
-            {
-                _actionsSystem.AddAction(target, new InstantAction(leaveAction), uid);
-            }
-
-
-            _standingStateSystem.Stand(target, force: true);
-
-            cryopodSsdComponent.EntityLiedInCryopodTime = _gameTiming.CurTime;
-
-            UpdateAppearance(uid, cryopodSsdComponent);
-            return true;
-        }
-
-        public void TryEjectBody(EntityUid uid, EntityUid userId, CryopodSSDComponent? cryopodSsdComponent)
-        {
-            if (!Resolve(uid, ref cryopodSsdComponent))
-            {
-                return;
-            }
-
-            var ejected = EjectBody(uid, cryopodSsdComponent);
-            if (ejected != null)
-                _adminLogger.Add(LogType.Action, LogImpact.Medium,
-                    $"{ToPrettyString(ejected.Value)} ejected from {ToPrettyString(uid)} by {ToPrettyString(userId)}");
-        }
-
-        public virtual EntityUid? EjectBody(EntityUid uid, CryopodSSDComponent? cryopodSsdComponent)
-        {
-            if (!Resolve(uid, ref cryopodSsdComponent))
-            {
-                return null;
-            }
-
-            if (cryopodSsdComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
-            {
-                return null;
-            }
-
-            cryopodSsdComponent.BodyContainer.Remove(contained);
-
-            if (HasComp<KnockedDownComponent>(contained) || _mobStateSystem.IsIncapacitated(contained))
-            {
-                _standingStateSystem.Down(contained);
-            }
-            else
-            {
-                _standingStateSystem.Stand(contained);
-            }
-
-            _actionsSystem.RemoveProvidedActions(contained, uid);
-
-            UpdateAppearance(uid, cryopodSsdComponent);
-            return contained;
-        }
-
-        private void OnCryopodSSDCanDropTarget(EntityUid uid, CryopodSSDComponent component,
-            ref CanDropTargetEvent args)
-        {
-            if (args.Handled)
-                return;
-
-            args.CanDrop = HasComp<BodyComponent>(args.Dragged) && _mobStateSystem.IsAlive(args.Dragged);
-            args.Handled = true;
-        }
-
-        protected void OnComponentInit(EntityUid uid, CryopodSSDComponent cryopodSSDComponent, ComponentInit args)
-        {
-            cryopodSSDComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "pod-body");
-        }
-
-        protected void UpdateAppearance(EntityUid uid, CryopodSSDComponent? cryopodSSD = null,
-            AppearanceComponent? appearance = null)
-        {
-            if (!Resolve(uid, ref cryopodSSD))
-            {
-                return;
-            }
-
-            if (!Resolve(uid, ref appearance))
-            {
-                return;
-            }
-
-            _appearanceSystem.SetData(uid, CryopodSSDComponent.CryopodSSDVisuals.ContainsEntity,
-                cryopodSSD.BodyContainer.ContainedEntity is null || _entityManager.IsQueuedForDeletion(cryopodSSD.BodyContainer.ContainedEntity.Value), appearance);
-        }
-
-        protected void AddAlternativeVerbs(EntityUid uid, CryopodSSDComponent cryopodSSDComponent,
-            GetVerbsEvent<AlternativeVerb> args)
-        {
-            if (!args.CanAccess || !args.CanInteract || args.User != cryopodSSDComponent.BodyContainer.ContainedEntity)
-                return;
-
-            if (cryopodSSDComponent.BodyContainer.ContainedEntity != null)
-            {
-                args.Verbs.Add(new AlternativeVerb
-                {
-                    Text = Loc.GetString("cryopodSSD-verb-noun-occupant"),
-                    Category = VerbCategory.Eject,
-                    Priority = 1,
-                    Act = () => TryEjectBody(uid, args.User, cryopodSSDComponent)
-                });
-            }
+            _actionsSystem.AddAction(target, new InstantAction(leaveAction), uid);
         }
 
 
+        _standingStateSystem.Stand(target, force: true);
 
-        [Serializable, NetSerializable]
-        public sealed class CryopodSSDDragFinished : SimpleDoAfterEvent
+        cryopodSsdComponent.EntityLiedInCryopodTime = _gameTiming.CurTime;
+
+        UpdateAppearance(uid, cryopodSsdComponent);
+        return true;
+    }
+
+    public void TryEjectBody(EntityUid uid, EntityUid userId, CryopodSSDComponent? cryopodSsdComponent)
+    {
+        if (!Resolve(uid, ref cryopodSsdComponent))
         {
+            return;
         }
-        
-        [Serializable, NetSerializable]
-        public sealed class TeleportToCryoFinished : SimpleDoAfterEvent
-        {
-            public EntityUid PortalId { get; private set; }
 
-            public TeleportToCryoFinished(EntityUid portalId)
+        var ejected = EjectBody(uid, cryopodSsdComponent);
+        if (ejected != null)
+            _adminLogger.Add(LogType.Action, LogImpact.Medium,
+                $"{ToPrettyString(ejected.Value)} ejected from {ToPrettyString(uid)} by {ToPrettyString(userId)}");
+    }
+
+    public virtual EntityUid? EjectBody(EntityUid uid, CryopodSSDComponent? cryopodSsdComponent)
+    {
+        if (!Resolve(uid, ref cryopodSsdComponent))
+        {
+            return null;
+        }
+
+        if (cryopodSsdComponent.BodyContainer.ContainedEntity is not { Valid: true } contained)
+        {
+            return null;
+        }
+
+        cryopodSsdComponent.BodyContainer.Remove(contained);
+
+        if (HasComp<KnockedDownComponent>(contained) || _mobStateSystem.IsIncapacitated(contained))
+        {
+            _standingStateSystem.Down(contained);
+        }
+        else
+        {
+            _standingStateSystem.Stand(contained);
+        }
+
+        _actionsSystem.RemoveProvidedActions(contained, uid);
+
+        UpdateAppearance(uid, cryopodSsdComponent);
+        return contained;
+    }
+
+    private void OnCryopodSSDCanDropTarget(EntityUid uid, CryopodSSDComponent component,
+        ref CanDropTargetEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.CanDrop = HasComp<BodyComponent>(args.Dragged) && _mobStateSystem.IsAlive(args.Dragged);
+        args.Handled = true;
+    }
+
+    protected void OnComponentInit(EntityUid uid, CryopodSSDComponent cryopodSSDComponent, ComponentInit args)
+    {
+        cryopodSSDComponent.BodyContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, "pod-body");
+    }
+
+    protected void UpdateAppearance(EntityUid uid, CryopodSSDComponent? cryopodSSD = null,
+        AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref cryopodSSD))
+        {
+            return;
+        }
+
+        if (!Resolve(uid, ref appearance))
+        {
+            return;
+        }
+
+        _appearanceSystem.SetData(uid, CryopodSSDComponent.CryopodSSDVisuals.ContainsEntity,
+            cryopodSSD.BodyContainer.ContainedEntity is null || _entityManager.IsQueuedForDeletion(cryopodSSD.BodyContainer.ContainedEntity.Value), appearance);
+    }
+
+    protected void AddAlternativeVerbs(EntityUid uid, CryopodSSDComponent cryopodSSDComponent,
+        GetVerbsEvent<AlternativeVerb> args)
+    {
+        if (!args.CanAccess || !args.CanInteract || args.User != cryopodSSDComponent.BodyContainer.ContainedEntity)
+            return;
+
+        if (cryopodSSDComponent.BodyContainer.ContainedEntity != null)
+        {
+            args.Verbs.Add(new AlternativeVerb
             {
-                PortalId = portalId;
-            }
+                Text = Loc.GetString("cryopodSSD-verb-noun-occupant"),
+                Category = VerbCategory.Eject,
+                Priority = 1,
+                Act = () => TryEjectBody(uid, args.User, cryopodSSDComponent)
+            });
         }
     }
 }
 
-public sealed class CryopodSSDLeaveActionEvent : InstantActionEvent
+public sealed partial class CryopodSSDLeaveActionEvent : InstantActionEvent
 {
+}
+
+[Serializable, NetSerializable]
+public sealed partial class CryopodSSDDragFinished : SimpleDoAfterEvent
+{
+}
+
+[Serializable, NetSerializable]
+public sealed partial class TeleportToCryoFinished : SimpleDoAfterEvent
+{
+    public EntityUid PortalId { get; private set; }
+
+    public TeleportToCryoFinished(EntityUid portalId)
+    {
+        PortalId = portalId;
+    }
 }

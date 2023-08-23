@@ -1,7 +1,7 @@
 namespace Content.Shared.NukeOperative
 {
     [RegisterComponent]
-    public sealed class LoneNukeOperativeComponent : Component
+    public sealed partial class LoneNukeOperativeComponent : Component
     {
     }
 }

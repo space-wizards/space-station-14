@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SS220.Blinds;
 
 [RegisterComponent]
-public sealed class BlindsComponent : Component
+public sealed partial class BlindsComponent : Component
 {
     [DataField("isOpen"), ViewVariables(VVAccess.ReadOnly)]
     public bool IsOpen = true;

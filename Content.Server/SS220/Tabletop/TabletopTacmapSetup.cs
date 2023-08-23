@@ -5,7 +5,7 @@ using Robust.Shared.Map;
 namespace Content.Server.SS220.Tabletop;
 
 [UsedImplicitly]
-public sealed class TabletopTacmapSetup : TabletopSetup
+public sealed partial class TabletopTacmapSetup : TabletopSetup
 {
     private const float SeparationInRow = 0.75f;
 

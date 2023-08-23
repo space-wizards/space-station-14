@@ -139,7 +139,7 @@ public sealed partial class DoorComponent : Component
     /// (SS220) Whether to check for & crush static entities when closing. Doesn't affect PerformCollisionCheck.
     /// </summary>
     [DataField("crushStaticEntities")]
-    public readonly bool CrushStaticEntities = true;
+    public bool CrushStaticEntities = true;
 
     /// <summary>
     /// List of EntityUids of entities we're currently crushing. Cleared in OnPartialOpen().

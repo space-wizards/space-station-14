@@ -6,7 +6,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.SS220.SwitchableWeapon;
 
 [RegisterComponent]
-public sealed class SwitchableWeaponComponent : Component
+public sealed partial class SwitchableWeaponComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)][DataField("damageFolded")]
     public DamageSpecifier DamageFolded = new(){

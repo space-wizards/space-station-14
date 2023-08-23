@@ -11,7 +11,7 @@ namespace Content.Shared.SS220.CryopodSSD;
 /// Component for In-game leaving or AFK
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class CryopodSSDComponent : Component
+public sealed partial class CryopodSSDComponent : Component
 {
     /// <summary>
     /// Delay before climbing in cryopod
@@ -30,7 +30,7 @@ public sealed class CryopodSSDComponent : Component
 }
 
 /// <summary>
-/// Raises when somebody transfers to cryo storage 
+/// Raises when somebody transfers to cryo storage
 /// </summary>
 public sealed class TransferredToCryoStorageEvent : HandledEntityEventArgs
 {

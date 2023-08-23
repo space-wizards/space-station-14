@@ -9,7 +9,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.SS220.Photocopier;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class PhotocopierComponent : Component
+public sealed partial class PhotocopierComponent : Component
 {
     // ReSharper disable RedundantLinebreak
 

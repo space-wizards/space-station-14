@@ -7,7 +7,7 @@ using Content.Shared.Messenger;
 namespace Content.Server.Messenger;
 
 [RegisterComponent]
-public sealed class MessengerServerComponent : Component
+public sealed partial class MessengerServerComponent : Component
 {
     [DataField(("serverName"))] public string Name = "";
 

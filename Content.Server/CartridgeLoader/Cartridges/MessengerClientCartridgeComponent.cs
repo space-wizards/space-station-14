@@ -3,7 +3,7 @@
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
-public sealed class MessengerClientCartridgeComponent : Component
+public sealed partial class MessengerClientCartridgeComponent : Component
 {
     // to reduce the call to onInstall
     public bool IsInstalled = false;
