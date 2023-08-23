@@ -1,7 +1,7 @@
 namespace Content.Server.Morgue.Components;
 
 [RegisterComponent]
-public sealed class EntityStorageLayingDownOverrideComponent : Component
+public sealed partial class EntityStorageLayingDownOverrideComponent : Component
 {
 
 }

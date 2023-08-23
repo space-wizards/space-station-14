@@ -5,6 +5,6 @@ namespace Content.Server.Paper;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(PaperSystem))]
-public sealed class ActivateOnPaperOpenedComponent : Component
+public sealed partial class ActivateOnPaperOpenedComponent : Component
 {
 }

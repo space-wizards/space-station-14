@@ -15,10 +15,10 @@ namespace Content.Shared.Chemistry.Reaction
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name")]
-        public string Name { get; } = string.Empty;
+        public string Name { get; private set; } = string.Empty;
 
         /// <summary>
         /// Reactants required for the reaction to occur.
@@ -108,7 +108,7 @@ namespace Content.Shared.Chemistry.Reaction
     /// Prototype for chemical reaction reactants.
     /// </summary>
     [DataDefinition]
-    public sealed class ReactantPrototype
+    public sealed partial class ReactantPrototype
     {
         [DataField("amount")]
         private FixedPoint2 _amount = FixedPoint2.New(1);

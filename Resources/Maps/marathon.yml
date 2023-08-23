@@ -9111,16 +9111,25 @@ entities:
     - pos: 19.5,33.5
       parent: 30
       type: Transform
+    - links:
+      - 16041
+      type: DeviceLinkSink
   - uid: 6414
     components:
     - pos: 19.5,36.5
       parent: 30
       type: Transform
+    - links:
+      - 16042
+      type: DeviceLinkSink
   - uid: 6415
     components:
     - pos: 19.5,39.5
       parent: 30
       type: Transform
+    - links:
+      - 16116
+      type: DeviceLinkSink
   - uid: 6494
     components:
     - pos: 28.5,25.5
@@ -101272,7 +101281,7 @@ entities:
     - pos: -23.5,-11.5
       parent: 30
       type: Transform
-    - SecondsUntilStateChange: -5585.641
+    - SecondsUntilStateChange: -5695.3657
       state: Closing
       type: Door
   - uid: 21248
@@ -119242,6 +119251,38 @@ entities:
         21722:
         - Pressed: Toggle
       type: DeviceLinkSource
+- proto: SignalButtonDirectional
+  entities:
+  - uid: 16041
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 19.5,34.5
+      parent: 30
+      type: Transform
+    - linkedPorts:
+        6413:
+        - Pressed: DoorBolt
+      type: DeviceLinkSource
+  - uid: 16042
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 19.5,37.5
+      parent: 30
+      type: Transform
+    - linkedPorts:
+        6414:
+        - Pressed: DoorBolt
+      type: DeviceLinkSource
+  - uid: 16116
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 19.5,40.5
+      parent: 30
+      type: Transform
+    - linkedPorts:
+        6415:
+        - Pressed: DoorBolt
+      type: DeviceLinkSource
 - proto: SignArmory
   entities:
   - uid: 1927
@@ -120146,11 +120187,28 @@ entities:
     - pos: -40.5,-11.5
       parent: 30
       type: Transform
+  - uid: 16140
+    components:
+    - pos: 19.5,34.5
+      parent: 30
+      type: Transform
+- proto: SignRedThree
+  entities:
+  - uid: 16231
+    components:
+    - pos: 19.5,40.5
+      parent: 30
+      type: Transform
 - proto: SignRedTwo
   entities:
   - uid: 6885
     components:
     - pos: -40.5,-14.5
+      parent: 30
+      type: Transform
+  - uid: 16141
+    components:
+    - pos: 19.5,37.5
       parent: 30
       type: Transform
 - proto: SignRND
@@ -127334,6 +127392,31 @@ entities:
       pos: -40.5,59.5
       parent: 30
       type: Transform
+- proto: TegCenter
+  entities:
+  - uid: 16040
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: -7.5,-50.5
+      parent: 30
+      type: Transform
+- proto: TegCirculator
+  entities:
+  - uid: 15013
+    components:
+    - pos: -6.5,-50.5
+      parent: 30
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
+  - uid: 16038
+    components:
+    - rot: 3.141592653589793 rad
+      pos: -8.5,-50.5
+      parent: 30
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
 - proto: TelecomServer
   entities:
   - uid: 22621

@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.Components;
 namespace Content.Shared.Chemistry.Reaction;
 
 [RegisterComponent]
-public sealed class ReactionMixerComponent : Component
+public sealed partial class ReactionMixerComponent : Component
 {
     /// <summary>
     ///     A list of IDs for categories of reactions that can be mixed (i.e. HOLY for a bible, DRINK for a spoon)

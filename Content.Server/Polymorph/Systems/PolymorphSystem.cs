@@ -402,7 +402,7 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    public sealed class PolymorphActionEvent : InstantActionEvent
+    public sealed partial class PolymorphActionEvent : InstantActionEvent
     {
         /// <summary>
         /// The polymorph prototype containing all the information about
@@ -411,7 +411,7 @@ namespace Content.Server.Polymorph.Systems
         public PolymorphPrototype Prototype = default!;
     }
 
-    public sealed class RevertPolymorphActionEvent : InstantActionEvent
+    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent
     {
 
     }

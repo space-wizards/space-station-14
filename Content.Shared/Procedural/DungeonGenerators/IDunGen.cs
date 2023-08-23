@@ -1,7 +1,7 @@
 namespace Content.Shared.Procedural.DungeonGenerators;
 
 [ImplicitDataDefinitionForInheritors]
-public interface IDunGen
+public partial interface IDunGen
 {
 
 }
