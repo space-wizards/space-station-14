@@ -17,7 +17,6 @@ namespace Content.Shared.StatusEffect
         [Dependency] private readonly IComponentFactory _componentFactory = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        ISawmill s = default!;
         public override void Initialize()
         {
             base.Initialize();

@@ -88,13 +88,4 @@ public sealed class DrunkOverlay : Overlay
     {
         return Math.Clamp((boozePower - VisualThreshold) / PowerDivisor, 0.0f, 1.0f);
     }
-
-    public sealed class OnOverlayUpdateEvent : EventArgs
-    {
-        public float CurrentBoozePower;
-        public OnOverlayUpdateEvent(float currentBoozePower)
-        {
-            CurrentBoozePower = currentBoozePower;
-        }
-    }
 }
