@@ -387,3 +387,17 @@
   sprites:
   - sprite: Mobs/Customization/diona.rsi
     state: wildflower
+
+- type: marking
+  id: DionaVineOverlay
+  bodyPart: LLeg
+  markingCategory: Overlay
+  speciesRestriction: [Diona]
+  coloring:
+    default:
+      type:
+        !type:SimpleColoring
+        color: "#5f7039"
+  sprites:
+  - sprite: Mobs/Customization/diona.rsi
+    state: overlay

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Climbing;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ClimbingComponent : Component
+public sealed partial class ClimbingComponent : Component
 {
     /// <summary>
     /// Whether the owner is climbing on a climbable entity.

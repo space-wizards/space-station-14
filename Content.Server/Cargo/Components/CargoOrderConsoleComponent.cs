@@ -6,7 +6,7 @@ namespace Content.Server.Cargo.Components
     /// Handles sending order requests to cargo. Doesn't handle orders themselves via shuttle or telepads.
     /// </summary>
     [RegisterComponent]
-    public sealed class CargoOrderConsoleComponent : Component
+    public sealed partial class CargoOrderConsoleComponent : Component
     {
         [DataField("soundError")] public SoundSpecifier ErrorSound =
             new SoundPathSpecifier("/Audio/Effects/Cargo/buzz_sigh.ogg");

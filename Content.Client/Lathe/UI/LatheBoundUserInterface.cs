@@ -14,6 +14,9 @@ namespace Content.Client.Lathe.UI
         [ViewVariables]
         private LatheQueueMenu? _queueMenu;
 
+        [ViewVariables]
+        private LatheMaterialsEjectionMenu? _materialsEjectionMenu;
+
         public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -24,6 +27,7 @@ namespace Content.Client.Lathe.UI
 
             _menu = new LatheMenu(this);
             _queueMenu = new LatheQueueMenu();
+            _materialsEjectionMenu = new LatheMaterialsEjectionMenu();
 
             _menu.OnClose += Close;
 
@@ -34,13 +38,28 @@ namespace Content.Client.Lathe.UI
                 else
                     _queueMenu.OpenCenteredLeft();
             };
+
+            _menu.OnMaterialsEjectionButtonPressed += _ =>
+            {
+                if (_materialsEjectionMenu.IsOpen)
+                    _materialsEjectionMenu.Close();
+                else
+                    _materialsEjectionMenu.OpenCenteredRight();
+            };
+
             _menu.OnServerListButtonPressed += _ =>
             {
                 SendMessage(new ConsoleServerSelectionMessage());
             };
+
             _menu.RecipeQueueAction += (recipe, amount) =>
             {
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
+            };
+
+            _materialsEjectionMenu.OnEjectPressed += (material, sheetsToExtract) =>
+            {
+                SendMessage(new LatheEjectMaterialMessage(material, sheetsToExtract));
             };
 
             _menu.OpenCentered();
@@ -59,6 +78,7 @@ namespace Content.Client.Lathe.UI
                     _menu?.PopulateMaterials(Owner);
                     _queueMenu?.PopulateList(msg.Queue);
                     _queueMenu?.SetInfo(msg.CurrentlyProducing);
+                    _materialsEjectionMenu?.PopulateMaterials(Owner);
                     break;
             }
         }
@@ -70,6 +90,7 @@ namespace Content.Client.Lathe.UI
                 return;
             _menu?.Dispose();
             _queueMenu?.Dispose();
+            _materialsEjectionMenu?.Dispose();
         }
     }
 }

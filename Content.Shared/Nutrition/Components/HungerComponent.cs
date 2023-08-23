@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 namespace Content.Shared.Nutrition.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(HungerSystem))]
-public sealed class HungerComponent : Component
+public sealed partial class HungerComponent : Component
 {
     /// <summary>
     /// The current hunger amount of the entity

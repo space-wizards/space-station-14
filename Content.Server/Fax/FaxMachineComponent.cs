@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Fax;
 
 [RegisterComponent]
-public sealed class FaxMachineComponent : Component
+public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
     /// Name with which the fax will be visible to others on the network
@@ -80,7 +80,7 @@ public sealed class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("printingQueue")]
-    public Queue<FaxPrintout> PrintingQueue { get; } = new();
+    public Queue<FaxPrintout> PrintingQueue { get; private set; } = new();
 
     /// <summary>
     /// Message sending timeout
@@ -122,22 +122,22 @@ public sealed class FaxMachineComponent : Component
 }
 
 [DataDefinition]
-public sealed class FaxPrintout
+public sealed partial class FaxPrintout
 {
     [DataField("name", required: true)]
-    public string Name { get; } = default!;
+    public string Name { get; private set; } = default!;
 
     [DataField("content", required: true)]
-    public string Content { get; } = default!;
+    public string Content { get; private set; } = default!;
 
     [DataField("prototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>), required: true)]
-    public string PrototypeId { get; } = default!;
+    public string PrototypeId { get; private set; } = default!;
 
     [DataField("stampState")]
-    public string? StampState { get; }
+    public string? StampState { get; private set; }
 
     [DataField("stampedBy")]
-    public List<StampDisplayInfo> StampedBy { get; } = new();
+    public List<StampDisplayInfo> StampedBy { get; private set; } = new();
 
     private FaxPrintout()
     {

@@ -6,7 +6,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Server.Power.Nodes
 {
     [DataDefinition]
-    public sealed class CableTerminalNode : CableDeviceNode
+    public sealed partial class CableTerminalNode : CableDeviceNode
     {
         public override IEnumerable<Node> GetReachableNodes(TransformComponent xform,
             EntityQuery<NodeContainerComponent> nodeQuery,
