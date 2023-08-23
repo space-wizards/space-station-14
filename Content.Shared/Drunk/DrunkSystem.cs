@@ -13,7 +13,7 @@ public abstract class SharedDrunkSystem : EntitySystem
     [ValidatePrototypeId<StatusEffectPrototype>]
     public const string StatusEffectKey = "ForcedSleep";
 
-    [Dependency] protected readonly StatusEffectsSystem statusEffectsSystem = default!;
+    [Dependency] protected readonly StatusEffectsSystem StatusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
     public override void Initialize()
     {

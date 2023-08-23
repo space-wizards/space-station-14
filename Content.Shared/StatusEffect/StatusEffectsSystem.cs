@@ -514,20 +514,4 @@ namespace Content.Shared.StatusEffect
             Key = key;
         }
     }
-
-    public sealed class StatusUpdatedEvent : EntityEventArgs
-    {
-        public readonly EntityUid Uid;
-
-        public readonly string Key;
-
-        public float FrameTime;
-
-        public StatusUpdatedEvent(EntityUid uid, string key, float frameTime)
-        {
-            Uid = uid;
-            Key = key;
-            FrameTime = frameTime;
-        }
-    }
 }

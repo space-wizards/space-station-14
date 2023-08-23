@@ -57,8 +57,6 @@ public sealed class DrunkOverlay : Overlay
         if (!_entityManager.TryGetComponent(_playerManager.LocalPlayer?.ControlledEntity, out EyeComponent? eyeComp))
             return false;
 
-        if (!_entityManager.TryGetComponent<DrunkComponent>(_playerManager.LocalPlayer?.ControlledEntity, out var drunkComp))
-            return false;
         if (args.Viewport.Eye != eyeComp.Eye)
             return false;
 
