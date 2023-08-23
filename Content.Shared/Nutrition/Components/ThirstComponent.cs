@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Nutrition.Components
 {
     [RegisterComponent, NetworkedComponent, Access(typeof(ThirstSystem))]
-    public sealed class ThirstComponent : Component
+    public sealed partial class ThirstComponent : Component
     {
         // Base stuff
         [ViewVariables(VVAccess.ReadWrite)]
@@ -40,7 +40,7 @@ namespace Content.Shared.Nutrition.Components
         public TimeSpan UpdateRate = TimeSpan.FromSeconds(1);
 
         [DataField("thresholds")]
-        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; } = new()
+        public Dictionary<ThirstThreshold, float> ThirstThresholds { get; private set; } = new()
         {
             {ThirstThreshold.OverHydrated, 600.0f},
             {ThirstThreshold.Okay, 450.0f},

@@ -1,8 +1,8 @@
-﻿namespace Content.Shared.Overlays
+namespace Content.Shared.Overlays
 {
     /// <summary>
     /// This component allows you to see the thirstiness of mobs.
     /// </summary>
     [RegisterComponent]
-    public sealed class ShowThirstIconsComponent : Component { }
+    public sealed partial class ShowThirstIconsComponent : Component { }
 }
