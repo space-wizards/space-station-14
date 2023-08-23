@@ -42,7 +42,7 @@ public sealed class CommandRunTest : ToolshedTest
         {
             ParseCommand("ent 1");
 
-            ExpectError<EntityUid>();
+            ExpectError<InvalidEntity>();
             ParseCommand("ent foodigity");
         });
     }
