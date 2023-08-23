@@ -3,7 +3,7 @@
 namespace Content.Shared.Weapons.Melee.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMeleeWeaponSystem))]
-public sealed class BonusMeleeAttackRateComponent : Component
+public sealed partial class BonusMeleeAttackRateComponent : Component
 {
     /// <summary>
     /// The value added onto the attack rate of a melee weapon

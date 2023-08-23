@@ -7,12 +7,15 @@ using Robust.Client.UserInterface.CustomControls;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.XAML;
 using Robust.Shared.Utility;
+using Robust.Client.UserInterface.RichText;
 
 namespace Content.Client.Paper.UI
 {
     [GenerateTypedNameReferences]
     public sealed partial class PaperWindow : BaseWindow
     {
+        private static Color DefaultTextColor = new(25, 25, 25);
+
         // <summary>
         // Size of resize handles around the paper
         private const int DRAG_MARGIN_SIZE = 16;
@@ -27,14 +30,23 @@ namespace Content.Client.Paper.UI
 
         // If paper limits the size in one or both axes, it'll affect whether
         // we're able to resize this UI or not. Default to everything enabled:
-        private DragMode _allowedResizeModes  = ~DragMode.None;
+        private DragMode _allowedResizeModes = ~DragMode.None;
+
+        private readonly Type[] _allowedTags = new Type[] {
+            typeof(BoldItalicTag),
+            typeof(BoldTag),
+            typeof(BulletTag),
+            typeof(ColorTag),
+            typeof(HeadingTag),
+            typeof(ItalicTag)
+        };
 
         public PaperWindow()
         {
             RobustXamlLoader.Load(this);
 
             // We can't configure the RichTextLabel contents from xaml, so do it here:
-            BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"));
+            BlankPaperIndicator.SetMessage(Loc.GetString("paper-ui-blank-page-message"), null, DefaultTextColor);
 
             // Hook up the close button:
             CloseButton.OnPressed += _ => Close();
@@ -188,7 +200,10 @@ namespace Content.Client.Paper.UI
             var msg = new FormattedMessage();
             msg.AddMarkupPermissive(state.Text);
 
-            if (!wasEditing)
+            // For premade documents, we want to be able to edit them rather than
+            // replace them.
+            var shouldCopyText = 0 == Input.TextLength && 0 != state.Text.Length;
+            if (!wasEditing || shouldCopyText)
             {
                 // We can get repeated messages with state.Mode == Write if another
                 // player opens the UI for reading. In this case, don't update the
@@ -196,14 +211,14 @@ namespace Content.Client.Paper.UI
                 // don't want to lose any text they already input.
                 Input.TextRope = Rope.Leaf.Empty;
                 Input.CursorPosition = new TextEdit.CursorPos();
-                Input.InsertAtCursor(msg.ToString());
+                Input.InsertAtCursor(state.Text);
             }
 
             for (var i = 0; i <= state.StampedBy.Count * 3 + 1; i++)
             {
                 msg.AddMarkupPermissive("\r\n");
             }
-            WrittenTextLabel.SetMessage(msg);
+            WrittenTextLabel.SetMessage(msg, _allowedTags, DefaultTextColor);
 
             WrittenTextLabel.Visible = !isEditing && state.Text.Length > 0;
             BlankPaperIndicator.Visible = !isEditing && state.Text.Length == 0;

@@ -1,5 +1,6 @@
 ﻿#nullable enable
 using System.Collections.Generic;
+using Content.IntegrationTests.Pair;
 using Content.Server.Administration.Managers;
 using Robust.Server.Player;
 using Robust.Shared.Players;
@@ -14,7 +15,7 @@ namespace Content.IntegrationTests.Tests.Toolshed;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
-    protected PairTracker PairTracker = default!;
+    protected TestPair PairTracker = default!;
 
     protected virtual bool Connected => false;
     protected virtual bool AssertOnUnexpectedError => true;

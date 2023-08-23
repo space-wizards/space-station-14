@@ -1,7 +1,7 @@
 namespace Content.Server.Botany.Components
 {
     [RegisterComponent]
-    public sealed class PlantHolderComponent : Component
+    public sealed partial class PlantHolderComponent : Component
     {
         [ViewVariables]
         public TimeSpan NextUpdate = TimeSpan.Zero;

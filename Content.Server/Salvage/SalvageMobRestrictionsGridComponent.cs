@@ -14,7 +14,7 @@ namespace Content.Server.Salvage;
 ///     *This applies even if the mobs are off-grid at the time.*
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageMobRestrictionsGridComponent : Component
+public sealed partial class SalvageMobRestrictionsGridComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("mobsToKill")]
