@@ -1,10 +1,14 @@
+using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Shared.Chemistry.Reagent;
+using System.Linq;
 
 namespace Content.Server.Botany;
 
 public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 
     /// <summary>
     /// Main idea: Simulate genetic mutation using random binary flips.  Each
@@ -26,6 +30,7 @@ public sealed class MutationSystem : EntitySystem
 
         // Add up everything in the bits column and put the number here.
         const int totalbits = 245;
+        const int totalbits = 275;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
@@ -62,6 +67,13 @@ public sealed class MutationSystem : EntitySystem
         seed.BioluminescentColor = RandomColor(seed.BioluminescentColor, 10, totalbits, severity);
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
+
+        // Gas (10)
+        MutateGases(ref seed.ExudeGasses, 0.01f, 0.5f, 7, totalbits, severity);
+        MutateGases(ref seed.ConsumeGasses, 0.01f, 0.5f, 3, totalbits, severity);
+
+        // Chems (20)
+        MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
     }
 
     public SeedData Cross(SeedData a, SeedData b)
@@ -97,6 +109,8 @@ public sealed class MutationSystem : EntitySystem
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
+        result.ExudeGasses = Random(0.5f) ? a.ExudeGasses : result.ExudeGasses;
+        result.ConsumeGasses = Random(0.5f) ? a.ConsumeGasses : result.ConsumeGasses;
         result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
@@ -198,6 +212,63 @@ public sealed class MutationSystem : EntitySystem
 
         else if (val == HarvestType.Repeat)
             val = HarvestType.SelfHarvest;
+    }
+
+    private void MutateGases(ref Dictionary<Shared.Atmos.Gas, float> gases, float min, float max, int bits, int totalbits, float mult)
+    {
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
+            return;
+
+        List<Shared.Atmos.Gas> newGas = Enum.GetValues(typeof(Shared.Atmos.Gas)).Cast<Shared.Atmos.Gas>().ToList();
+        var rng = IoCManager.Resolve<IRobustRandom>();
+        float amount = _robustRandom.NextFloat(min, max);
+        Shared.Atmos.Gas gas = rng.Pick(newGas);
+        if (gases.ContainsKey(gas))
+        {
+            gases[gas] += amount;
+        }
+        else
+        {
+            gases.Add(gas, amount);
+        }
+
+    }
+
+    private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
+    {
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
+            return;
+
+        List<ReagentPrototype> all_chemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
+
+        var rng = IoCManager.Resolve<IRobustRandom>();
+        ReagentPrototype selected_chemical = rng.Pick(all_chemicals);
+        if (selected_chemical != null)
+        {
+            string chemical_id = selected_chemical.ID;
+            int amount = _robustRandom.Next(1, max);
+            SeedChemQuantity seed_chem_quantity = new SeedChemQuantity();
+            if (chemicals.ContainsKey(chemical_id))
+            {
+                seed_chem_quantity.Min = chemicals[chemical_id].Min;
+                seed_chem_quantity.Max = chemicals[chemical_id].Max + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
+                seed_chem_quantity.PotencyDivisor = potency;
+                chemicals[chemical_id] = seed_chem_quantity;
+            }
+            else
+            {
+                seed_chem_quantity.Min = 1;
+                seed_chem_quantity.Max = 1 + amount;
+                int potency = (int) Math.Ceiling(100.0f / (float) seed_chem_quantity.Max);
+                seed_chem_quantity.PotencyDivisor = potency;
+                chemicals.Add(chemical_id, seed_chem_quantity);
+            }
+        }
     }
 
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
