@@ -188,7 +188,7 @@
         Heat: 0.90
         Caustic: 0.9
   - type: ToggleableClothing
-    clothingPrototype: ClothingHatHeadHoodWinterGenetics
+    clothingPrototype: ClothingHatHeadHoodWinterSci
 
 - type: entity
   parent: ClothingOuterWinterCoat
