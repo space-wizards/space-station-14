@@ -36,6 +36,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using System.Linq;
+using Content.Shared.Cuffs.Components;
 
 namespace Content.Server.Zombies
 {
@@ -168,7 +169,7 @@ namespace Content.Server.Zombies
                 // humanoid zombies get to pry open doors and shit
                 var tool = EnsureComp<ToolComponent>(target);
                 tool.SpeedModifier = 0.75f;
-                tool.Qualities = new ("Prying");
+                tool.Qualities = new("Prying");
                 tool.UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
                 Dirty(tool);
             }
@@ -236,7 +237,7 @@ namespace Content.Server.Zombies
             else
             {
                 var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
+                htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
                 htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }
@@ -256,6 +257,9 @@ namespace Content.Server.Zombies
                 _hands.RemoveHands(target);
                 RemComp(target, handsComp);
             }
+
+            if (TryComp<CuffableComponent>(target, out CuffableComponent? cuffableComp))
+                RemComp(target, cuffableComp);
 
             // No longer waiting to become a zombie:
             // Requires deferral because this is (probably) the event which called ZombifyEntity in the first place.
