@@ -316,7 +316,7 @@ public sealed class RCDSystem : EntitySystem
 public sealed partial class RCDDoAfterEvent : DoAfterEvent
 {
     [DataField("location", required: true)]
-    public EntityCoordinates Location = default!;
+    public NetCoordinates Location = default!;
 
     [DataField("startingMode", required: true)]
     public RcdMode StartingMode = default!;

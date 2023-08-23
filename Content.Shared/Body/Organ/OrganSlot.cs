@@ -6,7 +6,7 @@ namespace Content.Shared.Body.Organ;
 [Serializable, NetSerializable]
 [Access(typeof(SharedBodySystem))]
 [DataDefinition]
-public sealed record OrganSlot
+public sealed partial record OrganSlot
 {
     [DataField("id")]
     public string Id = string.Empty;

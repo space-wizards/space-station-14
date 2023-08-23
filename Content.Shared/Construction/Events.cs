@@ -114,7 +114,7 @@ public sealed class ResponseConstructionGuide : EntityEventArgs
 public sealed partial class ConstructionInteractDoAfterEvent : DoAfterEvent
 {
     [DataField("clickLocation")]
-    public EntityCoordinates ClickLocation;
+    public NetCoordinates ClickLocation;
 
     private ConstructionInteractDoAfterEvent()
     {

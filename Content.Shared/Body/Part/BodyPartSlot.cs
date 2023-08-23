@@ -6,7 +6,7 @@ namespace Content.Shared.Body.Part;
 [Serializable, NetSerializable]
 [Access(typeof(SharedBodySystem))]
 [DataDefinition]
-public sealed record BodyPartSlot
+public sealed partial record BodyPartSlot
 {
     [DataField("id")]
     public string Id = string.Empty;
