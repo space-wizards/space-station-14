@@ -375,7 +375,7 @@
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/magic.rsi
     layers:
-      - state: magicm
+      - state: magicm_red
         shader: unshaded
   - type: Ammo
     muzzleFlash: null
@@ -416,6 +416,10 @@
   name: epsilon particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_cyan
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Epsilon
 
@@ -437,9 +441,13 @@
   name: zeta particles
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+      - state: magicm_yellow
+        shader: unshaded
   - type: AnomalousParticle
     particleType: Zeta
-
+        
 - type: entity
   parent: AnomalousParticleZeta
   id: AnomalousParticleZetaStrong
@@ -455,6 +463,7 @@
 - type: entity
   parent: AnomalousParticleDelta
   id: AnomalousParticleOmegaStrong
+  name: omega particles
   noSpawn: true
   components:
   - type: Sprite

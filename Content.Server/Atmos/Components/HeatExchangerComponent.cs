@@ -1,7 +1,7 @@
 namespace Content.Server.Atmos.Components;
 
 [RegisterComponent]
-public sealed class HeatExchangerComponent : Component
+public sealed partial class HeatExchangerComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("inlet")]

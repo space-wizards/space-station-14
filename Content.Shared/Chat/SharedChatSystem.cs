@@ -162,4 +162,33 @@ public abstract class SharedChatSystem : EntitySystem
         message = char.ToUpper(message[0]) + message.Remove(0, 1);
         return message;
     }
+
+    public string SanitizeMessageCapitalizeTheWordI(string message, string theWordI = "i")
+    {
+        if (string.IsNullOrEmpty(message))
+            return message;
+
+        for
+        (
+            var index = message.IndexOf(theWordI);
+            index != -1;
+            index = message.IndexOf(theWordI, index + 1)
+        )
+        {
+            // Stops the code If It's tryIng to capItalIze the letter I In the mIddle of words
+            // Repeating the code twice is the simplest option
+            if (index + 1 < message.Length && char.IsLetter(message[index + 1]))
+                continue;
+            if (index - 1 >= 0 && char.IsLetter(message[index - 1]))
+                continue;
+
+            var beforeTarget = message.Substring(0, index);
+            var target = message.Substring(index, theWordI.Length);
+            var afterTarget = message.Substring(index + theWordI.Length);
+
+            message = beforeTarget + target.ToUpper() + afterTarget;
+        }
+
+        return message;
+    }
 }

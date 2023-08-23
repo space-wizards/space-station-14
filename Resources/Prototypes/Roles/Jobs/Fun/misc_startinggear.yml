@@ -53,7 +53,7 @@
   innerclothingskirt: ClothingUniformJumpskirtColorBlack
   satchel: ClothingBackpackDuffelSyndicateAmmo
   duffelbag: ClothingBackpackDuffelSyndicateAmmo
-  
+
 # Syndicate Operative Outfit - Monkey
 - type: startingGear
   id: SyndicateOperativeGearMonkey

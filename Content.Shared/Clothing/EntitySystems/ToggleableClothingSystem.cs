@@ -308,11 +308,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
     }
 }
 
-public sealed class ToggleClothingEvent : InstantActionEvent
+public sealed partial class ToggleClothingEvent : InstantActionEvent
 {
 }
 
 [Serializable, NetSerializable]
-public sealed class ToggleClothingDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class ToggleClothingDoAfterEvent : SimpleDoAfterEvent
 {
 }

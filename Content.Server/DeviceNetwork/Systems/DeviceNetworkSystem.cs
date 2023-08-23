@@ -66,7 +66,7 @@ namespace Content.Server.DeviceNetwork.Systems
         /// <param name="frequency">The frequency to send on</param>
         /// <param name="data">The data to be sent</param>
         /// <returns>Returns true when the packet was successfully enqueued.</returns>
-        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, DeviceNetworkComponent? device = null)
+        public bool QueuePacket(EntityUid uid, string? address, NetworkPayload data, uint? frequency = null, int? network = null, DeviceNetworkComponent? device = null)
         {
             if (!Resolve(uid, ref device, false))
                 return false;
@@ -79,7 +79,9 @@ namespace Content.Server.DeviceNetwork.Systems
             if (frequency == null)
                 return false;
 
-            _nextQueue.Enqueue(new DeviceNetworkPacketEvent(device.DeviceNetId, address, frequency.Value, device.Address, uid, data));
+            network ??= device.DeviceNetId;
+
+            _nextQueue.Enqueue(new DeviceNetworkPacketEvent(network.Value, address, frequency.Value, device.Address, uid, data));
             return true;
         }
 

@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public sealed class GasRecyclerComponent : Component
+    public sealed partial class GasRecyclerComponent : Component
     {
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("reacting")]

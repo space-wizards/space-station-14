@@ -221,8 +221,8 @@ uplink-banana-peel-explosive-desc = They will burst into laughter when they slip
 uplink-hot-potato-name = Hot Potato
 uplink-hot-potato-desc = Once activated, this time bomb can't be dropped - only passed to someone else!
 
-uplink-chimp-ammo-name = Box of 10 Omega Cartridges.
-uplink-chimp-ammo-desc = A box of 10 omega particle cartridges for the CHIMP. Omega particles inflict severe burns and cause anomalies to go supercritical.
+uplink-chimp-upgrade-kit-name = C.H.I.M.P. Handcannon Upgrade Chip
+uplink-chimp-upgrade-kit-desc = Insert this chip into a standard C.H.I.M.P. handcannon to allow it to fire omega particles. Omega particles inflict severe burns and cause anomalies to go supercritical.
 
 uplink-proximity-mine-name = Proximity Mine
 uplink-proximity-mine-desc = A mine disguised as a wet floor sign.
