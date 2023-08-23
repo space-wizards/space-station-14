@@ -4,13 +4,14 @@
   <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-УКЗ</EntityName>
   <PhotocopierTitle>Приказ о награждении</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-КОМ-УКЗ
-Приказ о награждении
-Дата: ДЕНЬ/МЕСЯЦ/ГОД
+  <Content><![CDATA[[bold]Форма НТ-КОМ-УКЗ[/bold]
+[head=2]Приказ о награждении[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД [/italic]
 
 Я, (ПОЛНОЕ ИМЯ), в лице (ДОЛЖНОСТЬ)
 Награждаю (ПОЛНОЕ ИМЯ) (ВИД НАГРАДЫ - Медалью и т.п.)
 За следующие заслуги:
 
-Место для печатей]]></Content>
+[italic]Место для печатей[/italic]]]></Content>
 </Form>

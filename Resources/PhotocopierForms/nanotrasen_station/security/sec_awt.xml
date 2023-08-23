@@ -4,13 +4,13 @@
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-АРСТ</EntityName>
   <PhotocopierTitle>Ордер на арест</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-СБ-АРСТ
-Ордер на арест
+  <Content><![CDATA[[bold]Форма НТ-СБ-АРСТ[/bold]
+[head=2]Ордер на арест[/head]
 
 Заявитель ордера: (ПОЛНОЕ ИМЯ)
 Должность заявителя:
 Провести задержание и арест лиц(а):
 Причина:
 
-Место для печатей – Служба безопасности]]></Content>
+[italic]Место для печатей – Служба безопасности[/italic]]]></Content>
 </Form>

@@ -4,16 +4,19 @@
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-СУД-ЗАКЛ</EntityName>
   <PhotocopierTitle>Заключение суда</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-СБ-СУД-ЗАКЛ
-Заключение суда
-Дата: ДЕНЬ/МЕСЯЦ/ГОД
+  <Content><![CDATA[[bold]Форма НТ-СБ-СУД-ЗАКЛ[/bold]
+[head=2]Заключение суда[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД[/italic]
 
 Представитель судебной власти: (ПОЛНОЕ ИМЯ ПРЕДСТАВИТЕЛЯ)
 В должности: (ДОЛЖНОСТЬ ПРЕДСТАВИТЕЛЯ)
 
 (ПОЛНОЕ ИМЯ) нарушил XXX статью корпоративного закона NanoTrasen.
-Краткое описание дела:
-Приговор:
+[bold]Краткое описание дела:[/bold]
 
-Место для печатей]]></Content>
+[bold]Приговор:[/bold]
+
+
+[italic]Место для печатей[/italic]]]></Content>
 </Form>

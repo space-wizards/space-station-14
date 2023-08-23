@@ -4,13 +4,14 @@
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-РОЗ</EntityName>
   <PhotocopierTitle>Постановление о розыске</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-СБ-РОЗ
-Постановление о розыске
-Дата: ДЕНЬ/МЕСЯЦ/ГОД
+  <Content><![CDATA[[bold]Форма НТ-СБ-РОЗ[/bold]
+[head=2]Постановление о розыске[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД[/italic]
 
 Причина розыска:
 Имя подозреваемого: (ПОЛНОЕ ИМЯ)
 Дополнительные замечания:
 
-Место для печатей]]></Content>
+[italic]Место для печатей[/italic]]]></Content>
 </Form>

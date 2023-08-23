@@ -4,13 +4,13 @@
   <PrototypeId>PaperNtFormCmd</PrototypeId>
   <EntityName>форма НТ-КОМ-ОПД</EntityName>
   <PhotocopierTitle>Ордер на повышение доступа</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-КОМ-ОПД
-Ордер на повышение доступа
+  <Content><![CDATA[[bold]Форма НТ-КОМ-ОПД[/bold]
+[head=2]Ордер на повышение доступа[/head]
 
 Заявитель(и):
 Прошу предоставить доступ сотруднику(ам):
 в следующие отделы:
 Причина:
 
-Место для печатей – Глава(ы) отдела(ов)]]></Content>
+[italic]Место для печатей – Глава(ы) отдела(ов)[/italic]]]></Content>
 </Form>

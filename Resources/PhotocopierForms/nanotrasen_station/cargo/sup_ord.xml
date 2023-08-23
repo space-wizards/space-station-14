@@ -4,8 +4,8 @@
   <PrototypeId>PaperNtFormCargo</PrototypeId>
   <EntityName>форма НТ-СНБ-ЗАК</EntityName>
   <PhotocopierTitle>Заказ товара</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-СНБ-ЗАК
-Заказ товара
+  <Content><![CDATA[[bold]Форма НТ-СНБ-ЗАК[/bold]
+[head=2]Заказ товара[/head]
 
 Заявитель: (ПОЛНОЕ ИМЯ)
 Должность: (ПОЛНОЕ НАЗВАНИЕ ДОЛЖНОСТИ)
@@ -13,5 +13,5 @@
 Причина:
 Место доставки:
 
-Место для печатей – Квартирмейстер]]></Content>
+[italic]Место для печатей – Квартирмейстер[/italic]]]></Content>
 </Form>

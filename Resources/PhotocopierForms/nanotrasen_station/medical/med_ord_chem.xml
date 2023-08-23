@@ -4,8 +4,8 @@
   <PrototypeId>PaperNtFormMed</PrototypeId>
   <EntityName>форма НТ-МЕД-ЗАК</EntityName>
   <PhotocopierTitle>Заказ на химические вещества</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-МЕД-ЗАК
-Заказ на химические вещества
+  <Content><![CDATA[[bold]Форма НТ-МЕД-ЗАК[/bold]
+[head=2]Заказ на химические вещества[/head]
 
 Заявитель:
 Должность:
@@ -14,5 +14,5 @@
 Исполнение: (УКАЗАТЬ: таблетка/тара)
 Причина:
 
-Место для печатей – Главный врач]]></Content>
+[italic]Место для печатей – Главный врач[/italic]]]></Content>
 </Form>

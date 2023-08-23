@@ -4,8 +4,8 @@
   <PrototypeId>PaperNtFormSci</PrototypeId>
   <EntityName>форма НТ-ИСЛ-ЗАК</EntityName>
   <PhotocopierTitle>Заказ на производство продукта</PhotocopierTitle>
-  <Content><![CDATA[Форма: НТ-ИСЛ-ЗАК
-Заказ на производство продукта
+  <Content><![CDATA[[bold]Форма НТ-ИСЛ-ЗАК[/bold]
+[head=2]Заказ на производство продукта[/head]
 
 Заявитель: (ПОЛНОЕ ИМЯ)
 Должность заявителя:
@@ -13,5 +13,5 @@
 Количество:
 Причина:
 
-Место для печатей – Научный руководитель]]></Content>
+[italic]Место для печатей – Научный руководитель[/italic]]]></Content>
 </Form>

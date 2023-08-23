@@ -5,6 +5,7 @@
   parent: Paper
   id: PaperNtForm
   description: "A sheet of paper with a NanoTrasen logo on it."
+  suffix: Обычная форма
   components:
     - type: PaperVisuals
       headerImagePath: "/Textures/SS220/Interface/Paper/nanotrasen_form_header.png"
@@ -16,6 +17,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormSec
+  suffix: Форма СБ
   description: "A sheet of paper with a NanoTrasen logo on it. There is a security department label on it."
   components:
     - type: PaperVisuals
@@ -28,6 +30,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormLaw
+  suffix: Юр. форма
   description: "A sheet of paper with a NanoTrasen logo on it. There is a law department label on it."
   components:
     - type: PaperVisuals
@@ -40,6 +43,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormSci
+  suffix: Форма РнД
   description: "A sheet of paper with a NanoTrasen logo on it. There is a science department label on it."
   components:
     - type: PaperVisuals
@@ -52,6 +56,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormCmd
+  suffix: Форма командования
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a command department label on it."
   components:
     - type: PaperVisuals
@@ -64,6 +69,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormMed
+  suffix: Форма меда
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a medical department label on it."
   components:
     - type: PaperVisuals
@@ -76,6 +82,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormCargo
+  suffix: Форма карго
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a cargo department label on it."
   components:
     - type: PaperVisuals
@@ -88,6 +95,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormGoal
+  suffix: Форма цели
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a cargo department label on it."
   components:
     - type: PaperVisuals
@@ -100,6 +108,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormEng
+  suffix: Форма инженеров
   description: "A sheet of office paper with a NanoTrasen logo on it. There is an engineering department label on it."
   components:
     - type: PaperVisuals
@@ -112,6 +121,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormCc
+  suffix: Форма ЦК
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a central command label on it."
   components:
     - type: PaperVisuals
@@ -124,6 +134,7 @@
   name: paper
   parent: Paper
   id: PaperNtFormCcSecure
+  suffix: Форма ЦК 2
   description: "A sheet of office paper with a NanoTrasen logo on it. There is a central command label on it."
   components:
     - type: PaperVisuals
@@ -136,6 +147,7 @@
   name: paper
   parent: Paper
   id: PaperSyndieForm
+  suffix: Форма синди
   description: "A sheet of office paper. The logo on it looks very suspicious."
   components:
     - type: PaperVisuals

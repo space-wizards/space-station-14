@@ -66,6 +66,8 @@
     - /PhotocopierForms/nanotrasen_station/law/sec_rep_ia.xml
     - /PhotocopierForms/nanotrasen_station/law/sec_sopb.xml
     - /PhotocopierForms/nanotrasen_station/law/sec_sopb_crit.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_vdc.xml
+    - /PhotocopierForms/nanotrasen_station/law/sec_vdc_gop.xml
   - Id: security
     Name: Служба Безопасности
     Color: "#DD4040FF"
@@ -81,8 +83,6 @@
     - /PhotocopierForms/nanotrasen_station/security/sec_rep_itg.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_sur.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_swt.xml
-    - /PhotocopierForms/nanotrasen_station/security/sec_vdc.xml
-    - /PhotocopierForms/nanotrasen_station/security/sec_vdc_gop.xml
     - /PhotocopierForms/nanotrasen_station/security/sup_ord_wep.xml
     - /PhotocopierForms/nanotrasen_station/security/sec_sitrep.xml
   - Id: medical

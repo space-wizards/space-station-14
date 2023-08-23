@@ -4,9 +4,10 @@
   <PrototypeId>PaperNtFormMed</PrototypeId>
   <EntityName>форма НТ-МЕД-СВД</EntityName>
   <PhotocopierTitle>Свидетельство о смерти</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-МЕД-СВД
-Свидетельство о смерти
-Дата: ДЕНЬ/МЕСЯЦ/ГОД
+  <Content><![CDATA[[bold]Форма НТ-МЕД-СВД[/bold]
+[head=2]Свидетельство о смерти[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД[/italic]
 
 Имя умершего:
 Раса:
@@ -16,5 +17,5 @@
 Статус клонирования:
 Ответственный за отчет: (ПОЛНОЕ ИМЯ), (ДОЛЖНОСТЬ)
 
-Место для печатей – Главный врач]]></Content>
+[italic]Место для печатей – Главный врач[/italic]]]></Content>
 </Form>

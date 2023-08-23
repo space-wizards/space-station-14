@@ -4,13 +4,13 @@
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-ОБСК</EntityName>
   <PhotocopierTitle>Ордер на обыск</PhotocopierTitle>
-  <Content><![CDATA[Форма НТ-СБ-ОБСК
-Ордер на обыск
+  <Content><![CDATA[[bold]Форма НТ-СБ-ОБСК[/bold]
+[head=2]Ордер на обыск[/head]
 
 Заявитель ордера: (ПОЛНОЕ ИМЯ ЗАЯВИТЕЛЯ)
 Должность заявителя:
 Провести обыск лиц(а):
 Причина:
 
-Место для печатей – Служба безопасности]]></Content>
+[italic]Место для печатей – Служба безопасности[/italic]]]></Content>
 </Form>

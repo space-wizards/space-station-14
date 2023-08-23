@@ -4,14 +4,17 @@
   <PrototypeId>PaperNtFormSec</PrototypeId>
   <EntityName>форма НТ-СБ-ПКЗ</EntityName>
   <PhotocopierTitle>Показания</PhotocopierTitle>
-  <Content><![CDATA[Форма: НТ-СБ-ПКЗ
-Показания
-Дата: ДЕНЬ/МЕСЯЦ/ГОД
+  <Content><![CDATA[[bold]Форма: НТ-СБ-ПКЗ[/bold]
+[head=2]Показания[/head]
+
+[italic]Дата: ДЕНЬ/МЕСЯЦ/ГОД[/italic]
 
 Заявитель:
 Должность заявителя:
 Дознаватель:
 Должность дознавателя:
 По существу заданных мне вопросов я могу показать следующее:
-(РАССКАЗ О ПРОИСШЕСТВИИ)]]></Content>
+(РАССКАЗ О ПРОИСШЕСТВИИ)
+
+[italic]Место для печатей[/italic]]]></Content>
 </Form>
