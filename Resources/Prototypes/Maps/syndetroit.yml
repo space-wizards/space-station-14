@@ -5,7 +5,7 @@
   minPlayers: 30
   maxPlayers: 60
   stations:
-    Barratry:
+x    Syndetroit:
       stationProto: StandardNanotrasenStation
       components:
         - type: StationNameSetup
