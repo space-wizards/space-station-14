@@ -11,9 +11,6 @@ namespace Content.Shared.Speech.Components;
 
 public sealed partial class MeleeSpeechComponent : Component
 {
-    [ViewVariables]
-    public EntityUid? User;
-
     /// <summary>
     /// The battlecry to be said when an entity attacks with this component
     /// </summary>
@@ -55,10 +52,6 @@ public enum MeleeSpeechUiKey : byte
     Key,
 }
 
-public sealed class MeleeSpeechConfigureActionEvent : InstantActionEvent
-{
-}
-
 /// <summary>
 /// Represents an <see cref="MeleeSpeechComponent"/> state that can be sent to the client
 /// </summary>
@@ -83,12 +76,4 @@ public sealed class MeleeSpeechBattlecryChangedMessage : BoundUserInterfaceMessa
     }
 }
 
-public sealed class MeleeSpeechConfigureActionMessage : InstantActionEvent
-{
-    public EntityUid User { get; }
-
-    public MeleeSpeechConfigureActionMessage(EntityUid who)
-    {
-        User = who;
-    }
-}
+public sealed class MeleeSpeechConfigureActionEvent : InstantActionEvent{}
