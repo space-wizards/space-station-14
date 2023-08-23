@@ -9,7 +9,7 @@ namespace Content.Shared.Cabinet;
 ///     Used for entities that can be opened, closed, and can hold one item. E.g., fire extinguisher cabinets.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ItemCabinetComponent : Component
+public sealed partial class ItemCabinetComponent : Component
 {
     /// <summary>
     ///     Sound to be played when the cabinet door is opened.
