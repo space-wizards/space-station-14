@@ -8,7 +8,7 @@ namespace Content.Shared.Chasm;
 ///     Added to entities which have started falling into a chasm.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ChasmFallingComponent : Component
+public sealed partial class ChasmFallingComponent : Component
 {
     /// <summary>
     ///     Time it should take for the falling animation (scaling down) to complete.

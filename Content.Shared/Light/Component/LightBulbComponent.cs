@@ -10,7 +10,7 @@ namespace Content.Shared.Light.Component;
 /// </summary>
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class LightBulbComponent : Robust.Shared.GameObjects.Component
+public sealed partial class LightBulbComponent : Robust.Shared.GameObjects.Component
 {
     /// <summary>
     /// The color of the lightbulb and the light it produces.

@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [ImplicitDataDefinitionForInheritors]
-    public abstract class PlantAdjustAttribute : ReagentEffect
+    public abstract partial class PlantAdjustAttribute : ReagentEffect
     {
         [DataField("amount")] public float Amount { get; protected set; } = 1;
         [DataField("prob")] public float Prob { get; protected set; } = 1; // = (80);

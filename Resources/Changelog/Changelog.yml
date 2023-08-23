@@ -1,46 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added unique ERT helmets for each ERT type., type: Add}
-  - {message: Removed the alternate security helmets (the ones with an abundance of
-      hueshifting.), type: Remove}
-  - {message: Riot helmets are now better than the standard Security helmet at resisting
-      blunt and slash., type: Tweak}
-  - {message: Fixed a single missing pixel on all EVA helmet inhands., type: Fix}
-  id: 4161
-  time: '2023-07-03T23:24:28.0000000+00:00'
-- author: Lomcastar
-  changes:
-  - {message: Crew monitor now uses colors for passenger status., type: Tweak}
-  id: 4162
-  time: '2023-07-05T00:29:25.0000000+00:00'
-- author: Derby
-  changes:
-  - {message: Changed pizza to have 8 slices instead of 6., type: Tweak}
-  id: 4163
-  time: '2023-07-05T00:29:36.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: subfloor entities (wires and pipes) are now resistant to explosions
-      when hidden, type: Fix}
-  id: 4164
-  time: '2023-07-05T00:29:58.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: windows can now again be placed next to other windows, type: Fix}
-  id: 4165
-  time: '2023-07-05T00:31:10.0000000+00:00'
-- author: gagarinten
-  changes:
-  - {message: Balanced a laser carbine craft, type: Tweak}
-  id: 4166
-  time: '2023-07-05T00:31:20.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Due to improvements in Glass Airlock quality control, half the glass
-      will no longer be lost on disassembly.', type: Fix}
-  id: 4167
-  time: '2023-07-05T00:31:36.0000000+00:00'
 - author: Raitononai
   changes:
   - {message: NanoTrasen has begun hiring employees with Archaic accents to help expand
@@ -3037,3 +2995,44 @@ Entries:
       slimes., type: Add}
   id: 4660
   time: '2023-08-22T12:00:20.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed various head locker contents., type: Tweak}
+  id: 4661
+  time: '2023-08-22T14:49:53.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
+  - {message: 'When a zombie is cloned, the cloned person''s eyes are visible again.',
+    type: Fix}
+  id: 4662
+  time: '2023-08-23T04:52:00.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'R&D has developed the construction cyborg module for engineering cyborgs,
+      now they can construct anything with steel glass or rods.', type: Add}
+  id: 4663
+  time: '2023-08-23T21:34:39.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added several new Arachnid markings, including appendage stripes, chest
+      designs, chelicerae and an overlay.', type: Add}
+  id: 4664
+  time: '2023-08-23T21:37:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The dead body examine text is more accurate for dead, disconnected
+      players.', type: Tweak}
+  id: 4665
+  time: '2023-08-23T21:41:54.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed shape of short hair to be like the old one., type: Tweak}
+  id: 4666
+  time: '2023-08-23T21:42:33.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
+  - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
+  id: 4667
+  time: '2023-08-23T21:49:25.0000000+00:00'

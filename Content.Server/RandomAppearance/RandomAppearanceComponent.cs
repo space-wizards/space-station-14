@@ -5,7 +5,7 @@ namespace Content.Server.RandomAppearance;
 
 [RegisterComponent]
 [Access(typeof(RandomAppearanceSystem))]
-public sealed class RandomAppearanceComponent : Component, ISerializationHooks
+public sealed partial class RandomAppearanceComponent : Component, ISerializationHooks
 {
     [DataField("spriteStates")]
     public string[] SpriteStates = { "0", "1", "2", "3", "4" };

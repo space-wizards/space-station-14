@@ -12,7 +12,7 @@ namespace Content.Server.Salvage.Expeditions;
 /// Designates this entity as holding a salvage expedition.
 /// </summary>
 [RegisterComponent]
-public sealed class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
+public sealed partial class SalvageExpeditionComponent : SharedSalvageExpeditionComponent
 {
     public SalvageMissionParams MissionParams = default!;
 

@@ -8,12 +8,12 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Combat.Ranged;
 
-public sealed class GunOperator : HTNOperator, IHtnConditionalShutdown
+public sealed partial class GunOperator : HTNOperator, IHtnConditionalShutdown
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
 
     [DataField("shutdownState")]
-    public HTNPlanState ShutdownState { get; } = HTNPlanState.TaskFinished;
+    public HTNPlanState ShutdownState { get; private set; } = HTNPlanState.TaskFinished;
 
     /// <summary>
     /// Key that contains the target entity.

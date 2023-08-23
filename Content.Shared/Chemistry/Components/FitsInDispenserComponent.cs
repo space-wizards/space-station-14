@@ -11,7 +11,7 @@ namespace Content.Shared.Chemistry.Components
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent] // only needed for white-lists. Client doesn't actually need Solution data;
-    public sealed class FitsInDispenserComponent : Component
+    public sealed partial class FitsInDispenserComponent : Component
     {
         /// <summary>
         /// Solution name that will interact with ReagentDispenserComponent.

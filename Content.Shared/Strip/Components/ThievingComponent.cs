@@ -4,7 +4,7 @@ namespace Content.Shared.Strip.Components;
 /// Give this to an entity when you want to decrease stripping times
 /// </summary>
 [RegisterComponent]
-public sealed class ThievingComponent : Component
+public sealed partial class ThievingComponent : Component
 {
     /// <summary>
     /// How much the strip time should be shortened by

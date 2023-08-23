@@ -7,7 +7,7 @@ namespace Content.Server.Alert.Click
     /// Retake your mime vows
     ///</summary>
     [DataDefinition]
-    public sealed class RetakeVow : IAlertClick
+    public sealed partial class RetakeVow : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
