@@ -8,11 +8,11 @@ namespace Content.Server.Shuttle.Components;
 /// Lets you remotely control a shuttle.
 /// </summary>
 [RegisterComponent]
-public sealed class DroneConsoleComponent : Component
+public sealed partial class DroneConsoleComponent : Component
 {
     [DataField("components", required: true)]
     public ComponentRegistry Components = default!;
-    
+
     /// <summary>
     /// <see cref="ShuttleConsoleComponent"/> that we're proxied into.
     /// </summary>

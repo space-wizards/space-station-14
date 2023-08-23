@@ -12,7 +12,7 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class WallmountCondition : IConstructionCondition
+    public sealed partial class WallmountCondition : IConstructionCondition
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.UserInterface
 {
     [RegisterComponent]
-    public sealed class ActivatableUIComponent : Component,
+    public sealed partial class ActivatableUIComponent : Component,
             ISerializationHooks
     {
         [ViewVariables]

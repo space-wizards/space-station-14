@@ -4,7 +4,7 @@ namespace Content.Client.Disposal;
 
 [RegisterComponent]
 [ComponentReference(typeof(SharedDisposalUnitComponent))]
-public sealed class DisposalUnitComponent : SharedDisposalUnitComponent
+public sealed partial class DisposalUnitComponent : SharedDisposalUnitComponent
 {
 
 }

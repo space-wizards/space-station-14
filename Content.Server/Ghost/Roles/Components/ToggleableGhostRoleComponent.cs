@@ -3,8 +3,8 @@
 /// <summary>
 /// This is used for a ghost role which can be toggled on and off at will, like a PAI.
 /// </summary>
-[RegisterComponent]
-public sealed class ToggleableGhostRoleComponent : Component
+[RegisterComponent, Access(typeof(ToggleableGhostRoleSystem))]
+public sealed partial class ToggleableGhostRoleComponent : Component
 {
     [DataField("examineTextMindPresent")]
     public string ExamineTextMindPresent = string.Empty;
