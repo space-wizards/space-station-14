@@ -243,6 +243,14 @@ namespace Content.Server.Light.EntitySystems
         }
         #endregion
 
+        /// <summary>
+        /// Supply factor (0-1) as input x, returns linear light scale (0-1).
+        /// </summary>
+        private float LightCurve(float x)
+        {
+            return (float)(1/0.8*(x-0.2));
+        }
+
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
             ApcPowerReceiverComponent? powerReceiver = null,
@@ -267,8 +275,8 @@ namespace Content.Server.Light.EntitySystems
             switch (lightBulb.State)
             {
                 case LightBulbState.Normal:
-                    float factor = _power.SupplyFactor(uid, powerReceiver);
-                    if (factor > 0.3 && light.On)
+                    float factor = LightCurve(_power.SupplyFactor(uid, powerReceiver));
+                    if (factor > 0 && light.On)
                     {
                         SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius*factor, lightBulb.LightEnergy*factor, lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
