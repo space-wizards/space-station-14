@@ -7,7 +7,6 @@ using Content.Shared.Bed.Sleep;
 using Content.Shared.Damage;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Interaction;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.StatusEffect;
@@ -26,10 +25,10 @@ namespace Content.Server.Bed.Sleep
     public sealed class SleepingSystem : SharedSleepingSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
 
@@ -42,7 +41,6 @@ namespace Content.Server.Bed.Sleep
             SubscribeLocalEvent<MobStateComponent, WakeActionEvent>(OnWakeAction);
             SubscribeLocalEvent<SleepingComponent, MobStateChangedEvent>(OnMobStateChanged);
             SubscribeLocalEvent<SleepingComponent, GetVerbsEvent<AlternativeVerb>>(AddWakeVerb);
-            SubscribeLocalEvent<SleepingComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<SleepingComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<SleepingComponent, SlipAttemptEvent>(OnSlip);
             SubscribeLocalEvent<ForcedSleepingComponent, ComponentInit>(OnInit);
@@ -120,7 +118,7 @@ namespace Content.Server.Bed.Sleep
         /// </summary>
         private void OnMobStateChanged(EntityUid uid, SleepingComponent component, MobStateChangedEvent args)
         {
-            if (args.NewMobState == MobState.Dead)
+            if (args.NewMobState == Shared.Mobs.MobState.Dead)
             {
                 RemComp<SpamEmitSoundComponent>(uid);
                 RemComp<SleepingComponent>(uid);
@@ -154,14 +152,12 @@ namespace Content.Server.Bed.Sleep
         /// <summary>
         /// When you click on a sleeping person with an empty hand, try to wake them.
         /// </summary>
-        private void OnInteractHand(EntityUid uid, SleepingComponent component, InteractHandEvent args)
+        public void WakeWithHands(EntityUid uid, SleepingComponent component, EntityUid user)
         {
-            args.Handled = true;
-
             if (!TryWakeCooldown(uid))
                 return;
 
-            TryWaking(args.Target, user: args.User);
+            TryWaking(uid, user: user);
         }
 
         private void OnExamined(EntityUid uid, SleepingComponent component, ExaminedEvent args)
