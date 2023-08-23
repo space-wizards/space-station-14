@@ -144,7 +144,6 @@
   - type: StorageFill
     contents:
         - id: NitrogenTankFilled
-        - id: OxygenTankFilled
         - id: JetpackSecurityFilled
         - id: ClothingOuterHardsuitSecurity
         - id: ClothingMaskBreath
@@ -213,7 +212,6 @@
   - type: StorageFill
     contents:
         - id: NitrogenTankFilled
-        - id: OxygenTankFilled
         - id: JetpackSecurityFilled
         - id: ClothingOuterHardsuitWarden
         - id: ClothingMaskBreath
