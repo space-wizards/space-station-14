@@ -1,10 +1,4 @@
 Entries:
-- author: Raitononai
-  changes:
-  - {message: NanoTrasen has begun hiring employees with Archaic accents to help expand
-      employee diversity. Forsooth!, type: Add}
-  id: 4168
-  time: '2023-07-05T00:32:22.0000000+00:00'
 - author: JustinTrotter
   changes:
   - {message: Syndicate objectives are more readable, type: Tweak}
@@ -3036,3 +3030,11 @@ Entries:
   - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
   id: 4667
   time: '2023-08-23T21:49:25.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'The Syndicate EMAG now provides cyborgs with an updated lawset on use,
+      making typical laws only apply to the user and preventing your new "friend"
+      from outing your activities, in addition to stunning the cyborg for a short
+      time.', type: Tweak}
+  id: 4668
+  time: '2023-08-23T23:55:00.0000000+00:00'
