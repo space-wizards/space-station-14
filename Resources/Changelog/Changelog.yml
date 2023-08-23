@@ -1,10 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Due to improvements in Glass Airlock quality control, half the glass
-      will no longer be lost on disassembly.', type: Fix}
-  id: 4167
-  time: '2023-07-05T00:31:36.0000000+00:00'
 - author: Raitononai
   changes:
   - {message: NanoTrasen has begun hiring employees with Archaic accents to help expand
@@ -3036,3 +3030,9 @@ Entries:
   - {message: Changed shape of short hair to be like the old one., type: Tweak}
   id: 4666
   time: '2023-08-23T21:42:33.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
+  - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
+  id: 4667
+  time: '2023-08-23T21:49:25.0000000+00:00'
