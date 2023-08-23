@@ -5,7 +5,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 
-public sealed class MechSoundboardUi : UIFragment
+public sealed partial class MechSoundboardUi : UIFragment
 {
     private MechSoundboardUiFragment? _fragment;
 

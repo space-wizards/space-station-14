@@ -92,7 +92,7 @@ namespace Content.Shared.Standing
                         continue;
 
                     standingState.ChangedFixtures.Add(key);
-                    _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
+                    _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask & ~StandingCollisionLayer, manager: fixtureComponent);
                 }
             }
 
@@ -134,7 +134,7 @@ namespace Content.Shared.Standing
             }
 
             standingState.Standing = true;
-            Dirty(standingState);
+            Dirty(uid, standingState);
             RaiseLocalEvent(uid, new StoodEvent(), false);
 
             _appearance.SetData(uid, RotationVisuals.RotationState, RotationState.Vertical, appearance);
@@ -144,7 +144,7 @@ namespace Content.Shared.Standing
                 foreach (var key in standingState.ChangedFixtures)
                 {
                     if (fixtureComponent.Fixtures.TryGetValue(key, out var fixture))
-                        _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
+                        _physics.SetCollisionMask(uid, key, fixture, fixture.CollisionMask | StandingCollisionLayer, fixtureComponent);
                 }
             }
             standingState.ChangedFixtures.Clear();

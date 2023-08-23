@@ -21,7 +21,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.HVPower, NodeGroupID.MVPower)]
     [UsedImplicitly]
-    public sealed class PowerNet : BasePowerNet<IPowerNet>, IPowerNet
+    public sealed partial class PowerNet : BasePowerNet<IPowerNet>, IPowerNet
     {
         private PowerNetSystem? _powerNetSystem;
         private IEntityManager? _entMan;

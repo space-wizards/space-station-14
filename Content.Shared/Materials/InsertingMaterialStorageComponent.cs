@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Materials;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class InsertingMaterialStorageComponent : Component
+public sealed partial class InsertingMaterialStorageComponent : Component
 {
     /// <summary>
     /// The time when insertion ends.

@@ -9,13 +9,13 @@ namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class WaterVaporReaction : IGasReactionEffect
+    public sealed partial class WaterVaporReaction : IGasReactionEffect
     {
-        [DataField("reagent")] public string? Reagent { get; } = null;
+        [DataField("reagent")] public string? Reagent { get; private set; } = null;
 
-        [DataField("gas")] public int GasId { get; } = 0;
+        [DataField("gas")] public int GasId { get; private set; } = 0;
 
-        [DataField("molesPerUnit")] public float MolesPerUnit { get; } = 1;
+        [DataField("molesPerUnit")] public float MolesPerUnit { get; private set; } = 1;
 
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {

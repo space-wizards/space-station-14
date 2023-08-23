@@ -16,7 +16,7 @@ public abstract class SharedPortableGeneratorSystem : EntitySystem
 /// </summary>
 /// <seealso cref="SharedPortableGeneratorSystem"/>
 [Serializable, NetSerializable]
-public sealed class GeneratorStartedEvent : DoAfterEvent
+public sealed partial class GeneratorStartedEvent : DoAfterEvent
 {
     public override DoAfterEvent Clone()
     {

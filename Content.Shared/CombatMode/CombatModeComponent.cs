@@ -14,7 +14,7 @@ namespace Content.Shared.CombatMode
     /// </summary>
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(SharedCombatModeSystem))]
-    public sealed class CombatModeComponent : Component
+    public sealed partial class CombatModeComponent : Component
     {
         #region Disarm
 
@@ -26,10 +26,10 @@ namespace Content.Shared.CombatMode
         public bool? CanDisarm;
 
         [DataField("disarmSuccessSound")]
-        public readonly SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
+        public SoundSpecifier DisarmSuccessSound = new SoundPathSpecifier("/Audio/Effects/thudswoosh.ogg");
 
         [DataField("disarmFailChance")]
-        public readonly float BaseDisarmFailChance = 0.75f;
+        public float BaseDisarmFailChance = 0.75f;
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace Content.Shared.CombatMode
         private TargetingZone _activeZone;
 
         [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public readonly string CombatToggleActionId = "CombatModeToggle";
+        public string CombatToggleActionId = "CombatModeToggle";
 
         [DataField("combatToggleAction")]
         public InstantAction? CombatToggleAction;

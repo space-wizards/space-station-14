@@ -6,7 +6,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [Serializable]
     [DataDefinition]
-    public sealed class PlaySoundBehavior : IThresholdBehavior
+    public sealed partial class PlaySoundBehavior : IThresholdBehavior
     {
         /// <summary>
         ///     Sound played upon destruction.

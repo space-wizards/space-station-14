@@ -4,7 +4,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(SliceableFoodSystem))]
-    internal sealed class SliceableFoodComponent : Component
+    internal sealed partial class SliceableFoodComponent : Component
     {
         [DataField("slice")]
         [ViewVariables(VVAccess.ReadWrite)]
