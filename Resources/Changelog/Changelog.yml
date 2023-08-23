@@ -1,14 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: windows can now again be placed next to other windows, type: Fix}
-  id: 4165
-  time: '2023-07-05T00:31:10.0000000+00:00'
-- author: gagarinten
-  changes:
-  - {message: Balanced a laser carbine craft, type: Tweak}
-  id: 4166
-  time: '2023-07-05T00:31:20.0000000+00:00'
 - author: Errant
   changes:
   - {message: 'Due to improvements in Glass Airlock quality control, half the glass
@@ -3035,3 +3025,14 @@ Entries:
       designs, chelicerae and an overlay.', type: Add}
   id: 4664
   time: '2023-08-23T21:37:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The dead body examine text is more accurate for dead, disconnected
+      players.', type: Tweak}
+  id: 4665
+  time: '2023-08-23T21:41:54.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed shape of short hair to be like the old one., type: Tweak}
+  id: 4666
+  time: '2023-08-23T21:42:33.0000000+00:00'
