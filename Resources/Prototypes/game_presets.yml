@@ -98,3 +98,11 @@
   rules:
     - Pirates
     - BasicStationEventScheduler
+
+- type: gamePreset
+  id: PeaceAndTranquility
+  alias:
+    - events
+  name: peace-and-tranquility-title
+  description: peace-and-tranquility-desc
+  showInVote: true
