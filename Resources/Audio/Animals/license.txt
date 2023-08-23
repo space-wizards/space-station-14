@@ -38,6 +38,10 @@ The following sounds are taken from TGstation github (licensed under CC by 3.0):
 
     space_dragon_roar.ogg: taken at https://github.com/tgstation/tgstation/commit/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0
 
+The following sounds are taken from ParadiseSS13 github (licensed under CC-BY-SA-3.0)
+
+    nymph_chirp.ogg: taken at https://github.com/ParadiseSS13/Paradise/commit/a34f1054cef5a44a67fdac3b67b811137c6071dd
+
 The following sounds were used from youtube:
 
     penguin_squawk.ogg: audio is recorded/created by youtube user "ProSounds" (https://youtu.be/Anr35RbBL3Y) licensed under CC BY 3.0. The original audio was trimmed and converted from MP3 to OGG format.
