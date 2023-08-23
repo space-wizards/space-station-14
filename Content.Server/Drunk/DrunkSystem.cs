@@ -16,21 +16,21 @@ public sealed class DrunkSystem : SharedDrunkSystem
     {
         if (!TryComp<DrunkComponent>(uid, out var drunkComp))
             return;
-        if (!statusEffectsSystem.TryGetTime(uid, DrunkKey, out var time, component))
+        if (!StatusEffectsSystem.TryGetTime(uid, DrunkKey, out var time, component))
             return;
         s = Logger.GetSawmill("s");
 
         float timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
         drunkComp.CurrentBoozePower = timeLeft;
         s.Debug(drunkComp.CurrentBoozePower.ToString());
-        if (drunkComp.CurrentBoozePower > 10f)
+        if (drunkComp.CurrentBoozePower > 200f)
         {
-            if (statusEffectsSystem.HasStatusEffect(uid, StatusEffectKey))
+            if (StatusEffectsSystem.HasStatusEffect(uid, StatusEffectKey))
             {
-                statusEffectsSystem.TrySetTime(uid, StatusEffectKey, TimeSpan.FromSeconds(timeLeft));
+                StatusEffectsSystem.TrySetTime(uid, StatusEffectKey, TimeSpan.FromSeconds(timeLeft));
             }
 
-            statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10f), false);
+            StatusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10f), false);
         }
     }
 }

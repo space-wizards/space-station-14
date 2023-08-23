@@ -25,7 +25,7 @@ public abstract class SharedDrunkSystem : EntitySystem
     private void OnDrunkEnded(EntityUid uid, StatusEffectsComponent component, StatusEffectEndedEvent args)
     {
         if (args.Key == DrunkKey)
-            statusEffectsSystem.TryRemoveStatusEffect(uid, StatusEffectKey, component);
+            StatusEffectsSystem.TryRemoveStatusEffect(uid, StatusEffectKey, component);
     }
 
     public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
@@ -42,22 +42,22 @@ public abstract class SharedDrunkSystem : EntitySystem
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
         }
 
-        if (!statusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
+        if (!StatusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
-            statusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
+            StatusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
         }
         else
         {
-            statusEffectsSystem.TryAddTime(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
+            StatusEffectsSystem.TryAddTime(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), status);
         }
     }
 
     public void TryRemoveDrunkenness(EntityUid uid)
     {
-        statusEffectsSystem.TryRemoveStatusEffect(uid, DrunkKey);
+        StatusEffectsSystem.TryRemoveStatusEffect(uid, DrunkKey);
     }
     public void TryRemoveDrunkenessTime(EntityUid uid, double timeRemoved)
     {
-        statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
+        StatusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
     }
 }
