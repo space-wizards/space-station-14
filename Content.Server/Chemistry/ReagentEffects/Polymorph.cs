@@ -22,7 +22,7 @@ public sealed partial class Polymorph : ReagentEffect
             ("chance", Probability), ("protoname",
                 prototype.Index<EntityPrototype>(prototype.Index<PolymorphPrototype>(PolymorphPrototype).Entity).Name));
 
-            public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ReagentEffectArgs args)
     {
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
