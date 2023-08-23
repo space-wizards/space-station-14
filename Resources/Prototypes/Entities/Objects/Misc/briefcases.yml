@@ -9,6 +9,7 @@
   - type: Appearance
   - type: SubFloorHide
   - type: Anchorable
+  - type: CollideOnAnchor
   - type: Transform
     anchored: false
   - type: Storage
