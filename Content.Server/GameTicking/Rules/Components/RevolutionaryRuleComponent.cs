@@ -8,7 +8,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// Component for the RevolutionaryRuleSystem that stores info about winning/losing, player counts required for starting, as well as prototypes for Revolutionaries and their gear.
 /// </summary>
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
-public sealed class RevolutionaryRuleComponent : Component
+public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
     /// Stores sessions of Head Revs for end screen.

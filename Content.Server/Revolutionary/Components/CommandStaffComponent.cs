@@ -5,6 +5,6 @@ namespace Content.Server.Revolutionary.Components;
 /// Given to heads at round start for Revs. Used for tracking if heads died or not.
 /// </summary>
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
-public sealed class CommandStaffComponent : Component
+public sealed partial class CommandStaffComponent : Component
 {
 }

@@ -7,6 +7,6 @@ namespace Content.Shared.Mindshield.Components;
 /// If a player has a Mindshield they will get this component to prevent conversion.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedRevolutionarySystem))]
-public sealed class MindShieldComponent : Component
+public sealed partial class MindShieldComponent : Component
 {
 }
