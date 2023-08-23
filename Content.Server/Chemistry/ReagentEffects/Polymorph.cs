@@ -14,11 +14,11 @@ public sealed partial class Polymorph : ReagentEffect
     /// </summary>
     [DataField("prototype")] public string PolymorphPrototype { get; set; }
 
-    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys) =>
-        Loc.GetString("reagent-effect-guidebook-make-polymorph",
-            ("chance", Probability), ("protoname", prototype.Index<PolymorphPrototype>(PolymorphPrototype).Name));
+    protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        => Loc.GetString("reagent-effect-guidebook-make-polymorph",
+            ("chance", Probability), ("protoname", prototype.Index<PolymorphPrototype>(PolymorphPrototype).
 
-                    public override void Effect(ReagentEffectArgs args)
+    public override void Effect(ReagentEffectArgs args)
     {
         var entityManager = args.EntityManager;
         var uid = args.SolutionEntity;
