@@ -153,7 +153,7 @@
           - !type:OrganType
             type: Plant
           - !type:ReagentThreshold
-            min: 60
+            min: 50
 
 
 - type: reagent
