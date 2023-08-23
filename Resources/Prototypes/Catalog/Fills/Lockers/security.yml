@@ -21,6 +21,7 @@
       - id: RubberStampWarden
       - id: DoorRemoteArmory
       - id: ClothingOuterHardsuitWarden
+      - id: JetpackSecurityFilled
       - id: HoloprojectorSecurity
       - id: ClothingEyesHudSecurity
 
