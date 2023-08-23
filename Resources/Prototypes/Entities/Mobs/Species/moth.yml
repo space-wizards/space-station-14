@@ -13,6 +13,7 @@
         Cold: 0.5
         Bloodloss: 0.5
   - type: Thirst
+  - type: Perishable
   - type: Icon
     sprite: Mobs/Species/Moth/parts.rsi
     state: full
