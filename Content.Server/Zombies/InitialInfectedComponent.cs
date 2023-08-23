@@ -7,7 +7,7 @@ namespace Content.Server.Zombies;
 ///   Specifically for tracking players who will zombify later (on demand) but are not turned or turning yet.
 ///   Should also have ZombieComponent.
 /// </summary>
-[RegisterComponent, NetworkedComponent, Access(typeof(InitialInfectedSystem))]
+[RegisterComponent, Access(typeof(InitialInfectedSystem))]
 public sealed class InitialInfectedComponent : Component
 {
     /// <summary>

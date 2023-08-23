@@ -3,7 +3,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Zombies;
 
-[RegisterComponent, NetworkedComponent, Access(typeof(ZombieSystem))]
+[RegisterComponent, Access(typeof(ZombieSystem))]
 public sealed class BeforeZombieComponent : Component
 {
     /// <summary>
