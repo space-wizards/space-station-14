@@ -43,8 +43,7 @@
     - allcomps
     - replace
     - entitysystemupdateorder
-    - mind:get
-    - mind:control
+    - mind
 
 - Flags: HOST
   Commands:
