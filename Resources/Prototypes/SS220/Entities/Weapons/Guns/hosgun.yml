@@ -55,6 +55,10 @@
       map: ["enum.StorageVisualLayers.Lock"]
       shader: unshaded
   - type: Appearance
+  - type: EngraveNameOnOpen
+    autoEngraveLocKey: mateba-name-engraving
+    toEngrave:
+    - WeaponRevolverMatebaSouvenir
   - type: GenericVisualizer
     visuals:
       enum.SharedBagOpenVisuals.BagState:

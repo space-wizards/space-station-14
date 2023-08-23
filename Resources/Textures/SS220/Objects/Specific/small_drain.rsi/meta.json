@@ -1,0 +1,19 @@
+{
+   "version":1,
+   "size":{
+      "x":32,
+      "y":32
+   },
+   "license":"CC-BY-NC-SA-3.0",
+   "copyright":"fill-1.png is made for SS220 by TheArturZh. icon.png is taken from Goonstation at commit https://github.com/goonstation/goonstation/tree/66a62ad4c8a733a4c1baa65aa217c5dc71e1bec8",
+   "states":[
+      {
+         "name":"icon",
+         "directions": 4
+      },
+	  {
+		  "name": "fill-1",
+		  "directions": 4
+	  }
+   ]
+}

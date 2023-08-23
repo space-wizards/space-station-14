@@ -1,0 +1,21 @@
+- type: entity
+  parent: BaseSign
+  id: SignSecurityFrank
+  suffix: Frank
+  name: знак "СБ"
+  description: Знак, означающий что где-то поблизости живут герои этой станции.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Wallmounts/department_signs.rsi
+    state: sec
+
+- type: entity
+  parent: BaseSign
+  id: SignArmoryFrank
+  suffix: Frank
+  name: знак "оружейшая"
+  description: Знак, означающий что где-то поблизости находится склад с игрушками для взрослых.
+  components:
+  - type: Sprite
+    sprite: SS220/Structures/Wallmounts/department_signs.rsi
+    state: armory

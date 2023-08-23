@@ -61,9 +61,12 @@
           True: { state: on }
           False: { state: off }
         glow:
-          True: { visible: true }
-          False: { visible: false }
+          True: { state: glow }
+          False: { state: none }
       enum.PowerDeviceVisuals.Powered:
         power:
+          True: { visible: false }
+          False: { visible: true }
+        glow:
           True: { visible: false }
           False: { visible: true }

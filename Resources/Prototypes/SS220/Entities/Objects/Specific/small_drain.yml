@@ -1,0 +1,10 @@
+- type: entity
+  id: FloorDrainSmall
+  parent: FloorDrain
+  name: маленький дренаж
+  description: Сливает лужи вокруг в себя. Пригодится для опорожнения ведер или поддержания чистоты в определенных помещениях.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Specific/small_drain.rsi

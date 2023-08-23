@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "size": {
+    "x": 64,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Modified by TheArturZh, taken from Tau Ceti at commit https://github.com/TauCetiStation/TauCetiClassic/commit/fdb350d16e0a4e4ba93d02ede2172aa9a7d8acb3",
+  "states": [
+	  {
+		"name": "frank_map"
+	  }
+  ]
+}

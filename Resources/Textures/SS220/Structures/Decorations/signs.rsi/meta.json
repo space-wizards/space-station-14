@@ -5,7 +5,7 @@
         "y":32
     },
     "license":"CC-BY-SA-3.0",
-    "copyright":"Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/tree/724d11274bf173044330ddc5f230c3abd80df8d2",
+    "copyright":"court.png is modified by TheArturZh for SS220. Taken from Skyrat-tg at commit https://github.com/Skyrat-SS13/Skyrat-tg/tree/724d11274bf173044330ddc5f230c3abd80df8d2",
     "states":[
         {
             "name":"court"
@@ -18,6 +18,9 @@
         },
 		{
             "name":"ntflag"
+        },
+		{
+            "name":"bobross"
         }
     ]
 }

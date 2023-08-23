@@ -7,8 +7,8 @@
   - type: ViewableStationMap
     mapTexture: SS220/ViewableMaps/Frankenstein.png
   - type: Sprite
-    state: metamap64x
-    sprite: Structures/Wallmounts/metamap.rsi
+    state: frank_map
+    sprite: SS220/Structures/Wallmounts/wallmap.rsi
     snapCardinals: false
     drawdepth: Overdoors
   - type: ActivatableUI
