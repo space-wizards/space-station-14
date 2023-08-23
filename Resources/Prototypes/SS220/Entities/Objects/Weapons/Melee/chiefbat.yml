@@ -1,0 +1,16 @@
+- type: entity
+  name: chiefbat
+  parent: BaseItem
+  id: chiefbat
+  description: A tool to protect the honor of chefs.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/chiefbat.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 5
+        Stamina: 16
+  - type: Item
+    size: 30

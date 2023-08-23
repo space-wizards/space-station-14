@@ -48,6 +48,8 @@
       - id: ReagentContainerMilk
         amount: 2
       - id: ReagentContainerMilkSoy
+      - id: chiefbat
+        amount: 2
 
 - type: entity
   id: ClosetJanitorFilled
