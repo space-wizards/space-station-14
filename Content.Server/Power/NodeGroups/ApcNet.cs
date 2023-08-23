@@ -24,7 +24,7 @@ namespace Content.Server.Power.NodeGroups
 
     [NodeGroup(NodeGroupID.Apc)]
     [UsedImplicitly]
-    public sealed class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
+    public sealed partial class ApcNet : BaseNetConnectorNodeGroup<IApcNet>, IApcNet
     {
         private PowerNetSystem? _powerNetSystem;
 
