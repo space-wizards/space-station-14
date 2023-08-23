@@ -41,14 +41,17 @@ public sealed class DrunkOverlay : Overlay
 
         if (playerEntity == null)
             return;
-        s.Debug("11");
-        if (!_entityManager.TryGetComponent<DrunkComponent>(playerEntity, out var drunkComp)
+
+        if (!_entityManager.HasComponent<DrunkComponent>(playerEntity)
             || !_entityManager.TryGetComponent<StatusEffectsComponent>(playerEntity, out var status))
             return;
-        s.Debug("22");
 
-        
-        
+        var statusSys = _sysMan.GetEntitySystem<StatusEffectsSystem>();
+        if (!statusSys.TryGetTime(playerEntity.Value, SharedDrunkSystem.DrunkKey, out var time, status))
+            return;
+
+        var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
+        CurrentBoozePower += (timeLeft - CurrentBoozePower)/ 16f;
         s.Debug(CurrentBoozePower.ToString());
     }
 

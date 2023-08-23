@@ -11,42 +11,52 @@ public abstract class SharedDrunkSystem : EntitySystem
     public const string DrunkKey = "Drunk";
 
     [ValidatePrototypeId<StatusEffectPrototype>]
-    private const string StatusEffectKey = "ForcedSleep";
+    public const string StatusEffectKey = "ForcedSleep";
 
-    [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+    [Dependency] protected readonly StatusEffectsSystem _statusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
     ISawmill s = default!;
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StatusEffectsComponent, StatusUpdatedEvent>(OnDrunkUpdated);
-
+        //SubscribeLocalEvent<StatusEffectsComponent, StatusEffectTimeAddedEvent>(OnDrunkUpdated);
+        SubscribeLocalEvent<StatusEffectsComponent, StatusEffectEndedEvent>(OnDrunkEnded);
         s = Logger.GetSawmill("up");
     }
 
-    private void OnDrunkUpdated(EntityUid uid, StatusEffectsComponent component, StatusUpdatedEvent args)
+    private void OnDrunkEnded(EntityUid uid, StatusEffectsComponent component, StatusEffectEndedEvent args)
     {
-        s.Debug("1");
         if (args.Key == DrunkKey)
-        {
-            if (!TryComp<DrunkComponent>(uid, out var drunkComp))
-                return;
-            s.Debug("2");
-            s.Debug(uid.ToString());
-            if (!_statusEffectsSystem.TryGetTime(uid, DrunkKey, out var time, component))
-                return;
-            var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
-            drunkComp.CurrentBoozePower += (timeLeft - drunkComp.CurrentBoozePower) * args.FrameTime / 16f;
-            s.Debug(drunkComp.CurrentBoozePower.ToString());
-            UpdateOverlay(drunkComp.CurrentBoozePower);
-
-            if (drunkComp.CurrentBoozePower > 10f)
-            {
-                s.Debug("3");
-                _statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(3f), false);
-            }
-        }
+            _statusEffectsSystem.TryRemoveStatusEffect(uid, StatusEffectKey, component);
     }
+
+    //public virtual void OnDrunkUpdated(EntityUid uid, StatusEffectsComponent component, StatusEffectTimeAddedEvent args) { }
+    //{
+    //    s.Debug("1");
+    //    if (args.Key == DrunkKey)
+    //    {
+    //        if (!TryComp<DrunkComponent>(uid, out var drunkComp))
+    //            return;
+    //        s.Debug("2");
+    //        s.Debug(uid.ToString());
+    //        if (!_statusEffectsSystem.TryGetTime(uid, DrunkKey, out var time, component))
+    //            return;
+    //        var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
+    //        drunkComp.CurrentBoozePower += (timeLeft - drunkComp.CurrentBoozePower) / 16f;
+    //        s.Debug(drunkComp.CurrentBoozePower.ToString());
+    //        UpdateOverlay(drunkComp.CurrentBoozePower);
+
+    //        if (drunkComp.CurrentBoozePower > 10f)
+    //        {
+    //            if (_statusEffectsSystem.HasStatusEffect(uid, StatusEffectKey))
+    //            {
+    //_statusEffectsSystem.TrySetTime(uid, StatusEffectKey, TimeSpan.FromSeconds(timeLeft).tot);
+    //            }
+
+    //            _statusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(3f), false);
+    //        }
+    //    }
+    //}
 public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
         StatusEffectsComponent? status = null)
     {
@@ -79,7 +89,4 @@ public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur 
     {
         _statusEffectsSystem.TryRemoveTime(uid, DrunkKey, TimeSpan.FromSeconds(timeRemoved));
     }
-
-    public abstract void UpdateOverlay(float currentBoozePower);
-
 }
