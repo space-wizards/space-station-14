@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class EntitySpawnAnomalyComponent : Component
+public sealed partial class EntitySpawnAnomalyComponent : Component
 {
     /// <summary>
     /// A list of entities that are random picked to be spawned on each pulse

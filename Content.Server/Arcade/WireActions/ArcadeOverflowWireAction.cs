@@ -5,7 +5,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
 
-public sealed class ArcadeOverflowWireAction : BaseToggleWireAction
+public sealed partial class ArcadeOverflowWireAction : BaseToggleWireAction
 {
     public override Color Color { get; set; } = Color.Red;
     public override string Name { get; set; } = "wire-name-arcade-overflow";
