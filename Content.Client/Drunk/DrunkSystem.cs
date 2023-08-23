@@ -13,7 +13,6 @@ public sealed class DrunkSystem : SharedDrunkSystem
     [ValidatePrototypeId<StatusEffectPrototype>]
     private const string StatusEffectKey = "ForcedSleep";
     private DrunkOverlay _overlay = default!;
-    ISawmill s = default!;
     public override void Initialize()
     {
         base.Initialize();

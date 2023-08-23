@@ -18,9 +18,8 @@ public abstract class SharedDrunkSystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        //SubscribeLocalEvent<StatusEffectsComponent, StatusEffectTimeAddedEvent>(OnDrunkUpdated);
+
         SubscribeLocalEvent<StatusEffectsComponent, StatusEffectEndedEvent>(OnDrunkEnded);
-        s = Logger.GetSawmill("up");
     }
 
     private void OnDrunkEnded(EntityUid uid, StatusEffectsComponent component, StatusEffectEndedEvent args)

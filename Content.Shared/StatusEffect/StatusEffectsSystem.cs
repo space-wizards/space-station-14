@@ -386,8 +386,6 @@ namespace Content.Shared.StatusEffect
                 (TimeSpan, TimeSpan)? cooldown = GetAlertCooldown(uid, proto.Alert.Value, status);
                 _alertsSystem.ShowAlert(uid, proto.Alert.Value, null, cooldown);
             }
-            s = Logger.GetSawmill("sas");
-            s.Debug(uid.ToString());
             RaiseLocalEvent(uid, new StatusEffectTimeAddedEvent(uid, key), true);
             Dirty(status);
             return true;
