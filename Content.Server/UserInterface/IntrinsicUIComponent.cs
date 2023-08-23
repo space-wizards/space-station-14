@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Server.UserInterface;
 
 [RegisterComponent]
-public sealed class IntrinsicUIComponent : Component, ISerializationHooks
+public sealed partial class IntrinsicUIComponent : Component, ISerializationHooks
 {
     /// <summary>
     /// List of UIs and their actions that this entity has.
@@ -25,14 +25,14 @@ public sealed class IntrinsicUIComponent : Component, ISerializationHooks
 }
 
 [DataDefinition]
-public struct IntrinsicUIEntry
+public partial struct IntrinsicUIEntry
 {
-    [ViewVariables] public Enum? Key { get; set; } = null;
+    [ViewVariables] public Enum? Key { get; private set; } = null;
 
     /// <summary>
     /// The BUI key that this intrinsic UI should open.
     /// </summary>
-    [DataField("key", readOnly: true, required: true)]
+    [DataField("key", required: true)]
     private string _keyRaw = default!;
 
     /// <summary>

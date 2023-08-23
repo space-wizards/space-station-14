@@ -4,7 +4,7 @@ namespace Content.Server.Power.Components
     ///     Self-recharging battery.
     /// </summary>
     [RegisterComponent]
-    public sealed class BatterySelfRechargerComponent : Component
+    public sealed partial class BatterySelfRechargerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("autoRecharge")] public bool AutoRecharge { get; set; }
 

@@ -71,7 +71,7 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostOnDeleteMap()
     {
-        await using var pairTracker = await SetupPair();
+        await using var pairTracker = await SetupPair(dirty: true);
         var server = pairTracker.Pair.Server;
         var testMap = await PoolManager.CreateTestMap(pairTracker);
         var coordinates = testMap.GridCoords;
@@ -118,7 +118,7 @@ public sealed partial class MindTests
     public async Task TestGhostOnDelete()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await SetupPair();
+        await using var pairTracker = await SetupPair(dirty: true);
         var server = pairTracker.Pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();

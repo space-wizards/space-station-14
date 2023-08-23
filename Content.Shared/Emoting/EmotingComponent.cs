@@ -7,13 +7,13 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Emoting;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class EmotingComponent : Component
+public sealed partial class EmotingComponent : Component
 {
-    [DataField("enabled"), Access(typeof(EmoteSystem),
+   [DataField("enabled"), Access(typeof(EmoteSystem),
         Friend = AccessPermissions.ReadWrite,
         Other = AccessPermissions.Read)] public bool Enabled = true;
-
-    /// <summary>
+        
+   /// <summary>
     /// Open emotes action id
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
@@ -53,5 +53,4 @@ public sealed class SelectEmoteEvent : EntityEventArgs
 
 public sealed class OpenEmotesActionEvent : InstantActionEvent
 {
-
 }

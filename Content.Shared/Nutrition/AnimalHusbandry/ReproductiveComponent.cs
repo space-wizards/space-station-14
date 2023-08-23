@@ -11,7 +11,7 @@ namespace Content.Shared.Nutrition.AnimalHusbandry;
 /// can create several "child" entities.
 /// </summary>
 [RegisterComponent]
-public sealed class ReproductiveComponent : Component
+public sealed partial class ReproductiveComponent : Component
 {
     /// <summary>
     /// The next time when breeding will be attempted.
@@ -37,6 +37,12 @@ public sealed class ReproductiveComponent : Component
     /// </summary>
     [DataField("breedRange"), ViewVariables(VVAccess.ReadWrite)]
     public float BreedRange = 3f;
+
+    /// <summary>
+    /// How many other entities with this component are allowed in range before we stop.
+    /// </summary>
+    [DataField("capacity"), ViewVariables(VVAccess.ReadWrite)]
+    public int Capacity = 6;
 
     /// <summary>
     /// The chance that, on a given attempt,

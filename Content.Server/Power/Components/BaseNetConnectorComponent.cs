@@ -12,7 +12,7 @@ namespace Content.Server.Power.Components
         public string? NodeId { get; }
     }
 
-    public abstract class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
+    public abstract partial class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -25,20 +25,9 @@ namespace Content.Server.Power.Components
         public TNetType? Net { get => _net; set => SetNet(value); }
         private TNetType? _net;
 
-        [ViewVariables]
-        private bool _needsNet => _net != null;
+        [ViewVariables] public bool NeedsNet => _net != null;
 
         [DataField("node")] public string? NodeId { get; set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (_needsNet)
-            {
-                TryFindAndSetNet();
-            }
-        }
 
         protected override void OnRemove()
         {

@@ -25,9 +25,6 @@
     {
       "name": "mopbucket_water-3"
     },
-	{
-      "name": "plunger"
-    },
     {
       "name": "inhand-left",
       "directions": 4
@@ -39,14 +36,6 @@
     {
       "name": "equipped-BELT",
       "directions": 4
-    },
-	{
-      "name": "plunger-inhand-left",
-	  "directions": 4
-    },
-	{
-      "name": "plunger-inhand-right",
-	  "directions": 4
     }
   ]
 }

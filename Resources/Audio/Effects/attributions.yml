@@ -1,3 +1,8 @@
+- files: ["balloon-pop"]
+  license: "CC-BY-4.0"
+  copyright: "Taken from Aesterial-Arts on freesound.org and converted to mono by EmoGarbage404 (github)"
+  source: "https://freesound.org/people/Aesterial-Arts/sounds/633835/"
+
 - files: ["pill_insert.ogg", "pill_remove.ogg"]
   license: "CC-BY-NC-SA-3.0"
   copyright: "Amateur foley and audio editing by Bright0."
@@ -32,3 +37,23 @@
   license: "CC0-1.0"
   copyright: "Taken from thisusernameis via freesound.org + mixed from stereo to mono."
   source: "https://freesound.org/people/thisusernameis/sounds/426891/"
+
+- files: ["hallelujah.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Composer: Georg Friedrich Händel; Performed by: MIT Concert Choir; Directed by William C. Cutter; + cropped and mixed from stereo to mono"
+  source: "https://en.wikipedia.org/wiki/File:Handel_-_messiah_-_44_hallelujah.ogg"
+
+- files: ["fence_rattle1.ogg", "fence_rattle2.ogg", "fence_rattle3.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from MWsfx via freesound.org and cropped + mixed from stereo to mono."
+  source: "https://freesound.org/people/MWsfx/sounds/575388/"
+
+- files: ["falling.ogg"]
+  license: "CC0-1.0"
+  copyright: "Taken from MATRIXXX_ via freesound.org and mixed from stereo to mono."
+  source: "https://freesound.org/people/MATRIXXX_/sounds/415990/"
+
+- files: ["break_stone.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from tgstation"
+  source: "https://github.com/tgstation/tgstation/blob/e3a835b96043fad1269ee7b0c3a6cb340a466f3a/sound/effects/break_stone.ogg"

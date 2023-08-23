@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using Content.IntegrationTests.Tests.DeviceNetwork;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
@@ -16,7 +17,7 @@ namespace Content.Benchmarks;
 [MemoryDiagnoser]
 public class DeviceNetworkingBenchmark
 {
-    private PairTracker _pair = default!;
+    private TestPair _pair = default!;
     private DeviceNetworkTestSystem _deviceNetTestSystem = default!;
     private DeviceNetworkSystem _deviceNetworkSystem = default!;
     private EntityUid _sourceEntity;
@@ -26,10 +27,12 @@ public class DeviceNetworkingBenchmark
 
 
     private NetworkPayload _payload = default!;
+
+    [TestPrototypes]
     private const string Prototypes = @"
 - type: entity
-  name: DummyNetworkDevice
-  id: DummyNetworkDevice
+  name: DummyNetworkDevicePrivate
+  id: DummyNetworkDevicePrivate
   components:
     - type: DeviceNetwork
       transmitFrequency: 100
@@ -56,7 +59,7 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
-        _pair = await PoolManager.GetServerClient(new PoolSettings { NoClient = true, ExtraPrototypes = Prototypes });
+        _pair = await PoolManager.GetServerClient();
         var server = _pair.Pair.Server;
 
         await server.WaitPost(() =>
@@ -73,15 +76,21 @@ public class DeviceNetworkingBenchmark
                 ["testbool"] = true
             };
 
-            _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace);
+            _sourceEntity = entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace);
             _sourceWirelessEntity = entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace);
 
             for (var i = 0; i < EntityCount; i++)
             {
-                _targetEntities.Add(entityManager.SpawnEntity("DummyNetworkDevice", MapCoordinates.Nullspace));
+                _targetEntities.Add(entityManager.SpawnEntity("DummyNetworkDevicePrivate", MapCoordinates.Nullspace));
                 _targetWirelessEntities.Add(entityManager.SpawnEntity("DummyWirelessNetworkDevice", MapCoordinates.Nullspace));
             }
         });
+    }
+
+    [GlobalCleanup]
+    public async Task Cleanup()
+    {
+        await _pair.DisposeAsync();
     }
 
     [Benchmark(Baseline = true, Description = "Entity Events")]

@@ -1,12 +1,12 @@
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Components;
-using Content.Shared.MachineLinking;
+using Content.Shared.DeviceLinking;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
     [RegisterComponent]
-    public sealed class GasVentPumpComponent : Component
+    public sealed partial class GasVentPumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
@@ -122,12 +122,12 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Whether or not machine linking is enabled for this component.
         /// </summary>
         [DataField("canLink")]
-        public readonly bool CanLink = false;
+        public bool CanLink = false;
 
-        [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string PressurizePort = "Pressurize";
 
-        [DataField("depressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<ReceiverPortPrototype>))]
+        [DataField("depressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string DepressurizePort = "Depressurize";
 
         [ViewVariables(VVAccess.ReadWrite)]

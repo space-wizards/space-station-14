@@ -14,7 +14,7 @@ namespace Content.Server.Chemistry.TileReactions;
 /// Turns all of the reagents on a puddle into water.
 /// </summary>
 [DataDefinition]
-public sealed class CleanTileReaction : ITileReaction
+public sealed partial class CleanTileReaction : ITileReaction
 {
     /// <summary>
     /// How much it costs to clean 1 unit of reagent.
@@ -34,7 +34,7 @@ public sealed class CleanTileReaction : ITileReaction
     FixedPoint2 ITileReaction.TileReact(TileRef tile, ReagentPrototype reagent, FixedPoint2 reactVolume)
     {
         var entMan = IoCManager.Resolve<IEntityManager>();
-        var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile).ToArray();
+        var entities = entMan.System<EntityLookupSystem>().GetEntitiesIntersecting(tile, 0f).ToArray();
         var puddleQuery = entMan.GetEntityQuery<PuddleComponent>();
         var solutionContainerSystem = entMan.System<SolutionContainerSystem>();
         // Multiply as the amount we can actually purge is higher than the react amount.

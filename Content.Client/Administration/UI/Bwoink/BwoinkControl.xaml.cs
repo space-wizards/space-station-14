@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Content.Client.Administration.Managers;
@@ -123,12 +123,10 @@ namespace Content.Client.Administration.UI.Bwoink
                     _console.ExecuteCommand($"adminnotes \"{_currentPlayer.SessionId}\"");
             };
 
-            // ew
             Ban.OnPressed += _ =>
             {
-                var bw = new BanWindow();
-                bw.OnPlayerSelectionChanged(_currentPlayer);
-                bw.Open();
+                if (_currentPlayer is not null)
+                    _console.ExecuteCommand($"banpanel \"{_currentPlayer.SessionId}\"");
             };
 
             Kick.OnPressed += _ =>

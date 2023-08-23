@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Ghost.Components;
+using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -17,7 +18,15 @@ namespace Content.Server.GameTicking
     {
         public const float PresetFailedCooldownIncrease = 30f;
 
+        /// <summary>
+        /// The selected preset that will be used at the start of the next round.
+        /// </summary>
         public GamePresetPrototype? Preset { get; private set; }
+
+        /// <summary>
+        /// The preset that's currently active.
+        /// </summary>
+        public GamePresetPrototype? CurrentPreset { get; private set; }
 
         private bool StartPreset(IPlayerSession[] origReadyPlayers, bool force)
         {
@@ -27,7 +36,7 @@ namespace Content.Server.GameTicking
             if (!startAttempt.Cancelled)
                 return true;
 
-            var presetTitle = Preset != null ? Loc.GetString(Preset.ModeTitle) : string.Empty;
+            var presetTitle = CurrentPreset != null ? Loc.GetString(CurrentPreset.ModeTitle) : string.Empty;
 
             void FailedPresetRestart()
             {
@@ -93,6 +102,7 @@ namespace Content.Server.GameTicking
 
             Preset = preset;
             UpdateInfoText();
+            ValidateMap();
 
             if (force)
             {
@@ -131,12 +141,39 @@ namespace Content.Server.GameTicking
             return prototype != null;
         }
 
+        public bool IsMapEligible(GameMapPrototype map)
+        {
+            if (Preset == null)
+                return true;
+
+            if (Preset.MapPool == null || !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+                return true;
+
+            return pool.Maps.Contains(map.ID);
+        }
+
+        private void ValidateMap()
+        {
+            if (Preset == null || _gameMapManager.GetSelectedMap() is not { } map)
+                return;
+
+            if (Preset.MapPool == null ||
+                !_prototypeManager.TryIndex<GameMapPoolPrototype>(Preset.MapPool, out var pool))
+                return;
+
+            if (pool.Maps.Contains(map.ID))
+                return;
+
+            _gameMapManager.SelectMapRandom();
+        }
+
         [PublicAPI]
         private bool AddGamePresetRules()
         {
             if (DummyTicker || Preset == null)
                 return false;
 
+            CurrentPreset = Preset;
             foreach (var rule in Preset.Rules)
             {
                 AddGameRule(rule);

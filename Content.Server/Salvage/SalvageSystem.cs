@@ -347,7 +347,7 @@ namespace Content.Server.Salvage
             EntityUid? salvageEnt;
             if (_random.Prob(component.AsteroidChance))
             {
-                var asteroidProto = _prototypeManager.Index<WeightedRandomPrototype>(component.AsteroidPool).Pick(_random);
+                var asteroidProto = _prototypeManager.Index<WeightedRandomEntityPrototype>(component.AsteroidPool).Pick(_random);
                 salvageEnt = Spawn(asteroidProto, new MapCoordinates(0, 0, salvMap));
             }
             else

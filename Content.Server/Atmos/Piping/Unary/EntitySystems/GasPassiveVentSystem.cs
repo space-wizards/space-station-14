@@ -35,29 +35,15 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             if (!_nodeContainer.TryGetNode(nodeContainer, vent.InletName, out PipeNode? inlet))
                 return;
 
-            var environmentPressure = environment.Pressure;
-            var pressureDelta = MathF.Abs(environmentPressure - inlet.Air.Pressure);
+            var inletAir = inlet.Air.RemoveRatio(1f);
+            var envAir = environment.RemoveRatio(1f);
 
-            if ((environment.Temperature > 0 || inlet.Air.Temperature > 0) && pressureDelta > 0.5f)
-            {
-                if (environmentPressure < inlet.Air.Pressure)
-                {
-                    var airTemperature = environment.Temperature > 0 ? environment.Temperature : inlet.Air.Temperature;
-                    var transferMoles = pressureDelta * environment.Volume / (airTemperature * Atmospherics.R);
-                    var removed = inlet.Air.Remove(transferMoles);
-                    _atmosphereSystem.Merge(environment, removed);
-                }
-                else
-                {
-                    var airTemperature = inlet.Air.Temperature > 0 ? inlet.Air.Temperature : environment.Temperature;
-                    var outputVolume = inlet.Air.Volume;
-                    var transferMoles = (pressureDelta * outputVolume) / (airTemperature * Atmospherics.R);
-                    transferMoles = MathF.Min(transferMoles, environment.TotalMoles * inlet.Air.Volume / environment.Volume);
-                    var removed = environment.Remove(transferMoles);
-                    _atmosphereSystem.Merge(inlet.Air, removed);
-                }
-            }
+            var mergeAir = new GasMixture(inletAir.Volume + envAir.Volume);
+            _atmosphereSystem.Merge(mergeAir, inletAir);
+            _atmosphereSystem.Merge(mergeAir, envAir);
 
+            _atmosphereSystem.Merge(inlet.Air, mergeAir.RemoveVolume(inletAir.Volume));
+            _atmosphereSystem.Merge(environment, mergeAir);
         }
     }
 }

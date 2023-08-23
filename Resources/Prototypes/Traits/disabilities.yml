@@ -1,4 +1,4 @@
-﻿- type: trait
+- type: trait
   id: Blindness
   name: trait-blindness-name
   description: trait-blindness-desc
@@ -22,7 +22,7 @@
   id: Pacifist
   name: trait-pacifist-name
   components:
-    - type: Pacifist
+    - type: Pacified
 
 - type: trait
   id: Paracusia
@@ -49,3 +49,11 @@
   description: trait-uncloneable-desc
   components:
     - type: Uncloneable
+
+- type: trait
+  id: WheelchairBound
+  name: trait-wheelchair-bound-name
+  description: trait-wheelchair-bound-desc
+  components:
+    - type: WheelchairBound
+    - type: LegsParalyzed

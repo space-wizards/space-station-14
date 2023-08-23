@@ -11,7 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
-public sealed class MedibotInjectOperator : HTNOperator
+public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entMan = default!;
     private SharedAudioSystem _audio = default!;
@@ -36,9 +36,9 @@ public sealed class MedibotInjectOperator : HTNOperator
         _solution = sysManager.GetEntitySystem<SolutionContainerSystem>();
     }
 
-    public override void Shutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
+    public override void TaskShutdown(NPCBlackboard blackboard, HTNOperatorStatus status)
     {
-        base.Shutdown(blackboard, status);
+        base.TaskShutdown(blackboard, status);
         blackboard.Remove<EntityUid>(TargetKey);
     }
 

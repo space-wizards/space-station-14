@@ -74,7 +74,7 @@ namespace Content.Server.Atmos.EntitySystems
                     continue;
 
                 flammable.FireStacks += component.FireStacks;
-                Ignite(entity, flammable);
+                Ignite(entity, args.Weapon, flammable, args.User);
             }
         }
 
@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             flammable.FireStacks += component.FireStacks;
-            Ignite(otherEnt, flammable);
+            Ignite(otherEnt, uid, flammable);
             component.Count--;
 
             if (component.Count == 0)
@@ -125,7 +125,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!isHotEvent.IsHot)
                 return;
 
-            Ignite(uid, flammable);
+            Ignite(uid, args.Used, flammable, args.User);
             args.Handled = true;
         }
 
@@ -135,7 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             // Normal hard collisions, though this isn't generally possible since most flammable things are mobs
             // which don't collide with one another, shouldn't work here.
-            if (args.OtherFixture.ID != FlammableFixtureID && args.OurFixture.ID != FlammableFixtureID)
+            if (args.OtherFixtureId != FlammableFixtureID && args.OurFixtureId != FlammableFixtureID)
                 return;
 
             if (!EntityManager.TryGetComponent(otherUid, out FlammableComponent? otherFlammable))
@@ -148,22 +148,37 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (otherFlammable.OnFire)
                 {
-                    var fireSplit = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
-                    flammable.FireStacks = fireSplit;
-                    otherFlammable.FireStacks = fireSplit;
+                    if (flammable.CanExtinguish)
+                    {
+                        var fireSplit = (flammable.FireStacks + otherFlammable.FireStacks) / 2;
+                        flammable.FireStacks = fireSplit;
+                        otherFlammable.FireStacks = fireSplit;
+                    }
+                    else
+                    {
+                        otherFlammable.FireStacks = flammable.FireStacks / 2;
+                    }
                 }
                 else
                 {
-                    flammable.FireStacks /= 2;
-                    otherFlammable.FireStacks += flammable.FireStacks;
-                    Ignite(otherUid, otherFlammable);
+                    if (!flammable.CanExtinguish)
+                    {
+                        otherFlammable.FireStacks += flammable.FireStacks / 2;
+                        Ignite(otherUid, uid, otherFlammable);
+                    }
+                    else
+                    {
+                        flammable.FireStacks /= 2;
+                        otherFlammable.FireStacks += flammable.FireStacks;
+                        Ignite(otherUid, uid, otherFlammable);
+                    }
                 }
             }
             else if (otherFlammable.OnFire)
             {
                 otherFlammable.FireStacks /= 2;
                 flammable.FireStacks += otherFlammable.FireStacks;
-                Ignite(uid, flammable);
+                Ignite(uid, otherUid, flammable);
             }
         }
 
@@ -215,7 +230,7 @@ namespace Content.Server.Atmos.EntitySystems
             if (!Resolve(uid, ref flammable))
                 return;
 
-            if (!flammable.OnFire)
+            if (!flammable.OnFire || !flammable.CanExtinguish)
                 return;
 
             _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} stopped being on fire damage");
@@ -227,14 +242,23 @@ namespace Content.Server.Atmos.EntitySystems
             UpdateAppearance(uid, flammable);
         }
 
-        public void Ignite(EntityUid uid, FlammableComponent? flammable = null)
+        public void Ignite(EntityUid uid, EntityUid ignitionSource, FlammableComponent? flammable = null,
+            EntityUid? ignitionSourceUser = null)
         {
             if (!Resolve(uid, ref flammable))
                 return;
 
+            if (flammable.AlwaysCombustible)
+            {
+                flammable.FireStacks = Math.Max(flammable.FirestacksOnIgnite, flammable.FireStacks);
+            }
+
             if (flammable.FireStacks > 0 && !flammable.OnFire)
             {
-                _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(flammable.Owner):entity} is on fire");
+                if (ignitionSourceUser != null)
+                    _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):target} set on fire by {ToPrettyString(ignitionSourceUser.Value):actor} with {ToPrettyString(ignitionSource):tool}");
+                else
+                    _adminLogger.Add(LogType.Flammable, $"{ToPrettyString(uid):target} set on fire by {ToPrettyString(ignitionSource):actor}");
                 flammable.OnFire = true;
             }
 
@@ -272,11 +296,12 @@ namespace Content.Server.Atmos.EntitySystems
                 // 100 -> 1, 200 -> 2, 400 -> 3...
                 var fireStackMod = Math.Max(MathF.Log2(deltaTemp / 100) + 1, 0);
                 var fireStackDelta = fireStackMod - flammable.FireStacks;
+                var flammableEntity = flammable.Owner;
                 if (fireStackDelta > 0)
                 {
-                    AdjustFireStacks(flammable.Owner, fireStackDelta, flammable);
+                    AdjustFireStacks(flammableEntity, fireStackDelta, flammable);
                 }
-                Ignite(flammable.Owner, flammable);
+                Ignite(flammableEntity, flammableEntity, flammable);
             }
             _fireEvents.Clear();
 

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Throwing
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class ThrownItemComponent : Component
+    public sealed partial class ThrownItemComponent : Component
     {
         public EntityUid? Thrower { get; set; }
     }

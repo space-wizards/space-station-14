@@ -479,6 +479,35 @@
         acts: [ "Destruction" ]
 
 - type: entity
+  id: TableWeb
+  parent: TableBase
+  name: web table
+  description: Really smooth and surprisingly durable.
+  components:
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Sprite
+    sprite: Structures/Furniture/Web/table.rsi
+  - type: Icon
+    sprite: Structures/Furniture/Web/table.rsi
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/slash.ogg"
+  - type: Construction
+    graph: TableWeb
+    node: table
+
+- type: entity
   id: TableDebug
   parent: TableBase
   name: table

@@ -1,4 +1,3 @@
-using Content.Shared.Access.Systems;
 using Content.Shared.StationRecords;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
@@ -11,7 +10,7 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is authorized with these access levels.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class AccessReaderComponent : Component
+public sealed partial class AccessReaderComponent : Component
 {
     /// <summary>
     /// Whether or not the accessreader is enabled.
@@ -38,6 +37,14 @@ public sealed class AccessReaderComponent : Component
     /// </summary>
     [DataField("accessKeys")]
     public HashSet<StationRecordKey> AccessKeys = new();
+
+
+    /// <summary>
+    ///     The name of the container in which additional
+    ///     AccessReaderComponents may be found.
+    /// </summary>
+    [DataField("containerAccessProvider")]
+    public string? ContainerAccessProvider = null;
 }
 
 [Serializable, NetSerializable]
@@ -59,4 +66,3 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessKeys = accessKeys;
     }
 }
-

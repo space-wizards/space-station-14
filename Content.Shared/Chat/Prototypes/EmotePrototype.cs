@@ -12,7 +12,7 @@ namespace Content.Shared.Chat.Prototypes;
 public sealed class EmotePrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     /// <summary>
     ///     Icon representing this emote in the UI.

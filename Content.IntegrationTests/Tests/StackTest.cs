@@ -11,7 +11,7 @@ public sealed class StackTest
     [Test]
     public async Task StackCorrectItemSize()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+        await using var pairTracker = await PoolManager.GetServerClient();
         var server = pairTracker.Pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
@@ -19,7 +19,7 @@ public sealed class StackTest
 
         Assert.Multiple(() =>
         {
-            foreach (var entity in PoolManager.GetEntityPrototypes<StackComponent>(server))
+            foreach (var entity in PoolManager.GetPrototypesWithComponent<StackComponent>(server))
             {
                 if (!entity.TryGetComponent<StackComponent>(out var stackComponent, compFact) ||
                     !entity.TryGetComponent<ItemComponent>(out var itemComponent, compFact))

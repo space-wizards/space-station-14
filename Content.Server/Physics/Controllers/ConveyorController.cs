@@ -1,7 +1,5 @@
-
 using Content.Server.DeviceLinking.Events;
 using Content.Server.DeviceLinking.Systems;
-using Content.Server.MachineLinking.System;
 using Content.Server.Materials;
 using Content.Server.Power.Components;
 using Content.Shared.Conveyor;
@@ -127,7 +125,7 @@ public sealed class ConveyorController : SharedConveyorController
 
         if (beltTileRef != null)
         {
-            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value);
+            var intersecting = Lookup.GetEntitiesIntersecting(beltTileRef.Value, 0f);
 
             foreach (var entity in intersecting)
             {

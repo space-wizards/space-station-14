@@ -9,12 +9,12 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.VendingMachines
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class VendingMachineComponent : Component
+    public sealed partial class VendingMachineComponent : Component
     {
         /// <summary>
         /// PrototypeID for the vending machine's inventory, see <see cref="VendingMachineInventoryPrototype"/>
         /// </summary>
-        [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>))]
+        [DataField("pack", customTypeSerializer: typeof(PrototypeIdSerializer<VendingMachineInventoryPrototype>), required: true)]
         public string PackPrototypeId = string.Empty;
 
         /// <summary>
@@ -246,7 +246,7 @@ namespace Content.Shared.VendingMachines
         StatusKey,
     }
 
-    public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent
+    public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
     {
 
     };
