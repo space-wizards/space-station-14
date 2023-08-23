@@ -15,7 +15,6 @@ public sealed class DrunkOverlay : Overlay
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IEntitySystemManager _sysMan = default!;
-    ISawmill s = default!;
     public override OverlaySpace Space => OverlaySpace.WorldSpace;
     public override bool RequestScreenTexture => true;
 
@@ -36,7 +35,6 @@ public sealed class DrunkOverlay : Overlay
 
     protected override void FrameUpdate(FrameEventArgs args)
     {
-        s = Logger.GetSawmill("drink");
         var playerEntity = _playerManager.LocalPlayer?.ControlledEntity;
 
         if (playerEntity == null)
@@ -52,7 +50,6 @@ public sealed class DrunkOverlay : Overlay
 
         var timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
         CurrentBoozePower += (timeLeft - CurrentBoozePower)/ 16f;
-        s.Debug(CurrentBoozePower.ToString());
     }
 
     protected override bool BeforeDraw(in OverlayDrawArgs args)
