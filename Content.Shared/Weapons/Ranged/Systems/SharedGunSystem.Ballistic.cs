@@ -36,7 +36,7 @@ public abstract partial class SharedGunSystem
         {
             UnspawnedCount = component.UnspawnedCount,
             Cycleable = component.Cycleable,
-            Entities = ToNetEntityList(component.Entities),
+            Entities = GetNetEntityList(component.Entities),
         };
     }
 
@@ -47,7 +47,7 @@ public abstract partial class SharedGunSystem
 
         component.UnspawnedCount = state.UnspawnedCount;
         component.Cycleable = state.Cycleable;
-        component.Entities = ToEntityList(state.Entities);
+        component.Entities = GetEntityList(state.Entities);
     }
 
     private void OnBallisticUse(EntityUid uid, BallisticAmmoProviderComponent component, UseInHandEvent args)

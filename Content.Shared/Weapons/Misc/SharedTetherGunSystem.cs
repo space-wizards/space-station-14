@@ -96,7 +96,7 @@ public abstract partial class SharedTetherGunSystem : EntitySystem
             return;
         }
 
-        var coords = ToCoordinates(msg.Coordinates);
+        var coords = GetCoordinates(msg.Coordinates);
 
         if (!coords.TryDistance(EntityManager, TransformSystem, Transform(gunUid.Value).Coordinates,
                 out var distance) ||

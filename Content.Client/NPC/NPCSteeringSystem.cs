@@ -61,7 +61,7 @@ public sealed class NPCSteeringSystem : SharedNPCSteeringSystem
 
         foreach (var data in ev.Data)
         {
-            var entity = ToEntity(data.EntityUid);
+            var entity = GetEntity(data.EntityUid);
 
             if (!Exists(entity))
                 continue;

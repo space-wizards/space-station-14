@@ -19,7 +19,7 @@ public sealed class StorageSystem : EntitySystem
     /// <param name="msg"></param>
     public void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesEvent msg)
     {
-        var store = ToEntity(msg.Storage);
+        var store = GetEntity(msg.Storage);
 
         if (!HasComp<ClientStorageComponent>(store))
             return;
@@ -28,11 +28,11 @@ public sealed class StorageSystem : EntitySystem
 
         for (var i = 0; msg.StoredEntities.Count > i; i++)
         {
-            var entity = ToEntity(msg.StoredEntities[i]);
+            var entity = GetEntity(msg.StoredEntities[i]);
             var initialPosition = msg.EntityPositions[i];
             if (EntityManager.EntityExists(entity) && transformComp != null)
             {
-                ReusableAnimations.AnimateEntityPickup(entity, ToCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
+                ReusableAnimations.AnimateEntityPickup(entity, GetCoordinates(initialPosition), transformComp.LocalPosition, msg.EntityAngles[i], EntityManager);
             }
         }
     }

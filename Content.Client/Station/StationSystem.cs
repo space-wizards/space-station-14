@@ -27,6 +27,6 @@ public sealed class StationSystem : EntitySystem
     private void StationsUpdated(StationsUpdatedEvent ev)
     {
         _stations.Clear();
-        _stations.UnionWith(ToEntitySet(ev.Stations));
+        _stations.UnionWith(GetEntitySet(ev.Stations));
     }
 }

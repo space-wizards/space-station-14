@@ -19,7 +19,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
 
     private void OnProjectileImpact(ImpactEffectEvent ev)
     {
-        var coords = ToCoordinates(ev.Coordinates);
+        var coords = GetCoordinates(ev.Coordinates);
 
         if (Deleted(coords.EntityId))
             return;

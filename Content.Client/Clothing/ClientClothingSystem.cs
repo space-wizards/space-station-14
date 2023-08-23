@@ -170,7 +170,7 @@ public sealed class ClientClothingSystem : ClothingSystem
 
     private void OnVisualsChanged(EntityUid uid, InventoryComponent component, VisualsChangedEvent args)
     {
-        var item = ToEntity(args.Item);
+        var item = GetEntity(args.Item);
 
         if (!TryComp(item, out ClothingComponent? clothing) || clothing.InSlot == null)
             return;

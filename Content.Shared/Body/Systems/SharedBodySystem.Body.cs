@@ -76,7 +76,7 @@ public partial class SharedBodySystem
         {
             Id = slotId,
             Parent = bodyId.Value,
-            NetParent = ToNetEntity(bodyId.Value),
+            NetParent = GetNetEntity(bodyId.Value),
         };
         body.Root = slot;
 
@@ -96,7 +96,7 @@ public partial class SharedBodySystem
             Id = root.Part,
             Type = partComponent.PartType,
             Parent = body.Owner,
-            NetParent = ToNetEntity(body.Owner),
+            NetParent = GetNetEntity(body.Owner),
         };
         body.Root = slot;
         partComponent.Body = bodyId;

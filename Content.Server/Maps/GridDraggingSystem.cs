@@ -50,7 +50,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestVelocity(GridDragVelocityRequest ev, EntitySessionEventArgs args)
     {
-        var grid = ToEntity(ev.Grid);
+        var grid = GetEntity(ev.Grid);
 
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
@@ -67,7 +67,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 
     private void OnRequestDrag(GridDragRequestPosition msg, EntitySessionEventArgs args)
     {
-        var grid = ToEntity(msg.Grid);
+        var grid = GetEntity(msg.Grid);
 
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||

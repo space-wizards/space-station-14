@@ -64,7 +64,7 @@ public sealed class CrewManifestSystem : EntitySystem
             return;
         }
 
-        OpenEui(ToEntity(message.Id), sessionCast);
+        OpenEui(GetEntity(message.Id), sessionCast);
     }
 
     // Not a big fan of this one. Rebuilds the crew manifest every time
@@ -72,7 +72,7 @@ public sealed class CrewManifestSystem : EntitySystem
     // wrt the amount of players readied up.
     private void AfterGeneralRecordCreated(AfterGeneralRecordCreatedEvent ev)
     {
-        var origin = ToEntity(ev.Key.OriginStation);
+        var origin = GetEntity(ev.Key.OriginStation);
 
         BuildCrewManifest(origin);
         UpdateEuis(origin);
@@ -80,7 +80,7 @@ public sealed class CrewManifestSystem : EntitySystem
 
     private void OnRecordModified(RecordModifiedEvent ev)
     {
-        var origin = ToEntity(ev.Key.OriginStation);
+        var origin = GetEntity(ev.Key.OriginStation);
 
         BuildCrewManifest(origin);
         UpdateEuis(origin);

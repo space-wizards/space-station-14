@@ -406,7 +406,7 @@ namespace Content.IntegrationTests.Tests.Networking
 
             private void HandleMessage(SetFooMessage message, EntitySessionEventArgs args)
             {
-                var uid = ToEntity(message.Uid);
+                var uid = GetEntity(message.Uid);
 
                 var component = EntityManager.GetComponent<PredictionTestComponent>(uid);
                 var old = component.Foo;

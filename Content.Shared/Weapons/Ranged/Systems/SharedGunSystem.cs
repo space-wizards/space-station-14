@@ -131,17 +131,17 @@ public abstract partial class SharedGunSystem : EntitySystem
             return;
         }
 
-        if (ent != ToEntity(msg.Gun))
+        if (ent != GetEntity(msg.Gun))
             return;
 
-        gun.ShootCoordinates = ToCoordinates(msg.Coordinates);
+        gun.ShootCoordinates = GetCoordinates(msg.Coordinates);
         Log.Debug($"Set shoot coordinates to {gun.ShootCoordinates}");
         AttemptShoot(user.Value, ent, gun);
     }
 
     private void OnStopShootRequest(RequestStopShootEvent ev, EntitySessionEventArgs args)
     {
-        var gunUid = ToEntity(ev.Gun);
+        var gunUid = GetEntity(ev.Gun);
 
         if (args.SenderSession.AttachedEntity == null ||
             !TryComp<GunComponent>(gunUid, out var gun) ||
@@ -420,7 +420,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         if (sprite == null)
             return;
 
-        var ev = new MuzzleFlashEvent(ToNetEntity(gun), sprite, user == gun);
+        var ev = new MuzzleFlashEvent(GetNetEntity(gun), sprite, user == gun);
         CreateEffect(gun, ev, user);
     }
 

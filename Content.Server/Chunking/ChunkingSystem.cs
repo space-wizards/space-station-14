@@ -90,7 +90,7 @@ public sealed class ChunkingSystem : EntitySystem
 
             foreach (var grid in _mapManager.FindGridsIntersecting(xform.MapID, bounds, true))
             {
-                var netGrid = ToNetEntity(grid.Owner);
+                var netGrid = GetNetEntity(grid.Owner);
 
                 if (!chunks.TryGetValue(netGrid, out var set))
                 {

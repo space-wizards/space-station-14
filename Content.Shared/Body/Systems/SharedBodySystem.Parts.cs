@@ -26,7 +26,7 @@ public partial class SharedBodySystem
     private void OnPartGetState(EntityUid uid, BodyPartComponent part, ref ComponentGetState args)
     {
         args.State = new BodyPartComponentState(
-            ToNetEntity(part.Body),
+            GetNetEntity(part.Body),
             part.ParentSlot,
             part.Children,
             part.Organs,
@@ -41,7 +41,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyPartComponentState state)
             return;
 
-        part.Body = ToEntity(state.Body);
+        part.Body = GetEntity(state.Body);
         part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
         part.Children = state.Children; // TODO use containers. This is broken and does not work.
         part.Organs = state.Organs; // TODO end my suffering.
@@ -54,7 +54,7 @@ public partial class SharedBodySystem
     {
         if (part.ParentSlot is { } slot)
         {
-            slot.SetChild(null, ToNetEntity(null));
+            slot.SetChild(null, GetNetEntity(null));
             DirtyAllComponents(slot.Parent);
         }
 
@@ -78,7 +78,7 @@ public partial class SharedBodySystem
             Id = slotId,
             Type = partType,
             Parent = parent,
-            NetParent = ToNetEntity(parent),
+            NetParent = GetNetEntity(parent),
         };
         part.Children.Add(slotId, slot);
 
@@ -101,7 +101,7 @@ public partial class SharedBodySystem
         {
             Id = id,
             Parent = parentId.Value,
-            NetParent = ToNetEntity(parentId.Value),
+            NetParent = GetNetEntity(parentId.Value),
         };
         if (!parent.Children.TryAdd(id, slot))
         {
@@ -202,7 +202,7 @@ public partial class SharedBodySystem
         if (!container.Insert(partId.Value))
             return false;
 
-        slot.SetChild(partId, ToNetEntity(partId));
+        slot.SetChild(partId, GetNetEntity(partId));
         part.ParentSlot = slot;
 
         if (TryComp(slot.Parent, out BodyPartComponent? parentPart))

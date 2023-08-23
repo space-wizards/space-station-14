@@ -95,7 +95,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
             component.NextFlush,
             component.Powered,
             component.Engaged,
-            ToNetEntityList(component.RecentlyEjected));
+            GetNetEntityList(component.RecentlyEjected));
     }
 
     private void OnUnpaused(EntityUid uid, SharedDisposalUnitComponent component, ref EntityUnpausedEvent args)

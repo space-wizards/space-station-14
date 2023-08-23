@@ -41,7 +41,7 @@ public sealed class CrewManifestCartridgeSystem : EntitySystem
     /// </remarks>
     private void OnUiMessage(EntityUid uid, CrewManifestCartridgeComponent component, CartridgeMessageEvent args)
     {
-        UpdateUiState(uid, ToEntity(args.LoaderUid), component);
+        UpdateUiState(uid, GetEntity(args.LoaderUid), component);
     }
 
     /// <summary>

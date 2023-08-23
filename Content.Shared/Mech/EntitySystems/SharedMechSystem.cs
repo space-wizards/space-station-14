@@ -71,7 +71,7 @@ public abstract class SharedMechSystem : EntitySystem
             MaxIntegrity = component.MaxIntegrity,
             Energy = component.Energy,
             MaxEnergy = component.MaxEnergy,
-            CurrentSelectedEquipment = ToNetEntity(component.CurrentSelectedEquipment),
+            CurrentSelectedEquipment = GetNetEntity(component.CurrentSelectedEquipment),
             Broken = component.Broken
         };
     }
@@ -85,7 +85,7 @@ public abstract class SharedMechSystem : EntitySystem
         component.MaxIntegrity = state.MaxIntegrity;
         component.Energy = state.Energy;
         component.MaxEnergy = state.MaxEnergy;
-        component.CurrentSelectedEquipment = ToEntity(state.CurrentSelectedEquipment);
+        component.CurrentSelectedEquipment = GetEntity(state.CurrentSelectedEquipment);
         component.Broken = state.Broken;
     }
 
@@ -93,7 +93,7 @@ public abstract class SharedMechSystem : EntitySystem
     {
         args.State = new MechPilotComponentState
         {
-            Mech = ToNetEntity(component.Mech)
+            Mech = GetNetEntity(component.Mech)
         };
     }
 
@@ -102,7 +102,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (args.Current is not MechPilotComponentState state)
             return;
 
-        component.Mech = ToEntity(state.Mech);
+        component.Mech = GetEntity(state.Mech);
     }
 
     #endregion

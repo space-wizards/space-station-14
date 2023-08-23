@@ -63,8 +63,8 @@ namespace Content.Server.Interaction
 
         private void HandleDragDropRequestEvent(DragDropRequestEvent msg, EntitySessionEventArgs args)
         {
-            var dragged = ToEntity(msg.Dragged);
-            var target = ToEntity(msg.Target);
+            var dragged = GetEntity(msg.Dragged);
+            var target = GetEntity(msg.Target);
 
             if (Deleted(dragged) || Deleted(target))
                 return;

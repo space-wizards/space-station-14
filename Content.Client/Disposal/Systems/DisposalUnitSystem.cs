@@ -45,7 +45,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Powered = state.Powered;
         component.Engaged = state.Engaged;
         component.RecentlyEjected.Clear();
-        component.RecentlyEjected.AddRange(ToEntityList(state.RecentlyEjected));
+        component.RecentlyEjected.AddRange(GetEntityList(state.RecentlyEjected));
     }
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)

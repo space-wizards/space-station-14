@@ -203,7 +203,7 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
-            var coordinates = ToCoordinates(ev.Coordinates);
+            var coordinates = GetCoordinates(ev.Coordinates);
 
             if (!coordinates.IsValid(EntityManager))
                 return;
@@ -232,7 +232,7 @@ namespace Content.Server.Decals
             if (!_adminManager.HasAdminFlag(session, AdminFlags.Spawn))
                 return;
 
-            var coordinates = ToCoordinates(ev.Coordinates);
+            var coordinates = GetCoordinates(ev.Coordinates);
 
             if (!coordinates.IsValid(EntityManager))
                 return;
@@ -446,7 +446,7 @@ namespace Content.Server.Decals
 
             foreach (var (gridId, oldIndices) in previouslySent)
             {
-                var netGrid = ToNetEntity(gridId);
+                var netGrid = GetNetEntity(gridId);
 
                 // Mark the whole grid as stale and flag for removal.
                 if (!chunksInRange.TryGetValue(netGrid, out var chunks))
@@ -489,7 +489,7 @@ namespace Content.Server.Decals
             var updatedChunks = _chunkViewerPool.Get();
             foreach (var (netGrid, gridChunks) in chunksInRange)
             {
-                var gridId = ToEntity(netGrid);
+                var gridId = GetEntity(netGrid);
                 var newChunks = _chunkIndexPool.Get();
                 _dirtyChunks.TryGetValue(gridId, out var dirtyChunks);
 
@@ -539,7 +539,7 @@ namespace Content.Server.Decals
             var updatedDecals = new Dictionary<NetEntity, Dictionary<Vector2i, DecalChunk>>();
             foreach (var (netGrid, chunks) in updatedChunks)
             {
-                var gridId = ToEntity(netGrid);
+                var gridId = GetEntity(netGrid);
 
                 var collection = ChunkCollection(gridId);
                 if (collection == null)

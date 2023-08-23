@@ -92,13 +92,13 @@ namespace Content.Client.GameTicking.Managers
             foreach (var (job, data) in message.JobsAvailableByStation)
             {
                 _jobsAvailable.Clear();
-                _jobsAvailable[ToEntity(job)] = data;
+                _jobsAvailable[GetEntity(job)] = data;
             }
 
             _stationNames.Clear();
             foreach (var weh in message.StationNames)
             {
-                _stationNames[ToEntity(weh.Key)] = weh.Value;
+                _stationNames[GetEntity(weh.Key)] = weh.Value;
             }
 
             LobbyJobsAvailableUpdated?.Invoke(JobsAvailable);

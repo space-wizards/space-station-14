@@ -64,7 +64,7 @@ namespace Content.Server.Pointing.EntitySystems
         private void SendMessage(EntityUid source, IEnumerable<ICommonSession> viewers, EntityUid pointed, string selfMessage,
             string viewerMessage, string? viewerPointedAtMessage = null)
         {
-            var netSource = ToNetEntity(source);
+            var netSource = GetNetEntity(source);
 
             foreach (var viewer in viewers)
             {
@@ -247,7 +247,7 @@ namespace Content.Server.Pointing.EntitySystems
 
         private void OnPointAttempt(PointingAttemptEvent ev, EntitySessionEventArgs args)
         {
-            var target = ToEntity(ev.Target);
+            var target = GetEntity(ev.Target);
 
             if (TryComp(target, out TransformComponent? xform))
                 TryPoint(args.SenderSession, xform.Coordinates, target);

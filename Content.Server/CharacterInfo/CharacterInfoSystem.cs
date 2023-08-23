@@ -18,7 +18,7 @@ public sealed class CharacterInfoSystem : EntitySystem
     private void OnRequestCharacterInfoEvent(RequestCharacterInfoEvent msg, EntitySessionEventArgs args)
     {
         if (!args.SenderSession.AttachedEntity.HasValue
-            || args.SenderSession.AttachedEntity != ToEntity(msg.NetEntity))
+            || args.SenderSession.AttachedEntity != GetEntity(msg.NetEntity))
             return;
 
         var entity = args.SenderSession.AttachedEntity.Value;
@@ -55,6 +55,6 @@ public sealed class CharacterInfoSystem : EntitySystem
             briefing = mind.Briefing;
         }
 
-        RaiseNetworkEvent(new CharacterInfoEvent(ToNetEntity(entity), jobTitle, conditions, briefing), args.SenderSession);
+        RaiseNetworkEvent(new CharacterInfoEvent(GetNetEntity(entity), jobTitle, conditions, briefing), args.SenderSession);
     }
 }

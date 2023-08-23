@@ -67,7 +67,7 @@ namespace Content.Client.Atmos.EntitySystems
         {
             foreach (var (nent, removedIndicies) in ev.RemovedChunks)
             {
-                var grid = ToEntity(nent);
+                var grid = GetEntity(nent);
 
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;
@@ -80,7 +80,7 @@ namespace Content.Client.Atmos.EntitySystems
 
             foreach (var (nent, gridData) in ev.UpdatedChunks)
             {
-                var grid = ToEntity(nent);
+                var grid = GetEntity(nent);
 
                 if (!TryComp(grid, out GasTileOverlayComponent? comp))
                     continue;

@@ -97,7 +97,7 @@ namespace Content.Client.Decals
                 if (updatedGridChunks.Count == 0)
                     continue;
 
-                var gridId = ToEntity(netGrid);
+                var gridId = GetEntity(netGrid);
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {
@@ -114,7 +114,7 @@ namespace Content.Client.Decals
                 if (chunks.Count == 0)
                     continue;
 
-                var gridId = ToEntity(netGrid);
+                var gridId = GetEntity(netGrid);
 
                 if (!TryComp(gridId, out DecalGridComponent? gridComp))
                 {

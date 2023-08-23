@@ -60,7 +60,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
 
     private void GetDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentGetState args)
     {
-        args.State = new DeviceListComponentState(ToNetEntitySet(comp.Devices), comp.IsAllowList, comp.HandleIncomingPackets);
+        args.State = new DeviceListComponentState(GetNetEntitySet(comp.Devices), comp.IsAllowList, comp.HandleIncomingPackets);
     }
 
     private void HandleDeviceListState(EntityUid uid, DeviceListComponent comp, ref ComponentHandleState args)
@@ -70,7 +70,7 @@ public abstract class SharedDeviceListSystem : EntitySystem
             return;
         }
 
-        comp.Devices = ToEntitySet(state.Devices);
+        comp.Devices = GetEntitySet(state.Devices);
         comp.HandleIncomingPackets = state.HandleIncomingPackets;
         comp.IsAllowList = state.IsAllowList;
     }

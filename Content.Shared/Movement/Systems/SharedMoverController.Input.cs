@@ -87,7 +87,7 @@ namespace Content.Shared.Movement.Systems
 
             component.RelativeRotation = state.RelativeRotation;
             component.TargetRelativeRotation = state.TargetRelativeRotation;
-            component.RelativeEntity = ToEntity(state.RelativeEntity);
+            component.RelativeEntity = GetEntity(state.RelativeEntity);
             component.LerpTarget = state.LerpAccumulator;
         }
 
@@ -98,7 +98,7 @@ namespace Content.Shared.Movement.Systems
                 component.CanMove,
                 component.RelativeRotation,
                 component.TargetRelativeRotation,
-                ToNetEntity(component.RelativeEntity),
+                GetNetEntity(component.RelativeEntity),
                 component.LerpTarget);
         }
 

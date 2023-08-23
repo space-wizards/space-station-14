@@ -73,7 +73,7 @@ public sealed partial class DockingSystem
 
     private void OnRequestUndock(EntityUid uid, ShuttleConsoleComponent component, UndockRequestMessage args)
     {
-        var dork = ToEntity(args.DockEntity);
+        var dork = GetEntity(args.DockEntity);
 
         Log.Debug($"Received undock request for {ToPrettyString(dork)}");
 
@@ -90,7 +90,7 @@ public sealed partial class DockingSystem
 
     private void OnRequestAutodock(EntityUid uid, ShuttleConsoleComponent component, AutodockRequestMessage args)
     {
-        var dork = ToEntity(args.DockEntity);
+        var dork = GetEntity(args.DockEntity);
         Log.Debug($"Received autodock request for {ToPrettyString(dork)}");
         var player = args.Session.AttachedEntity;
 
@@ -108,7 +108,7 @@ public sealed partial class DockingSystem
 
     private void OnRequestStopAutodock(EntityUid uid, ShuttleConsoleComponent component, StopAutodockRequestMessage args)
     {
-        var dork = ToEntity(args.DockEntity);
+        var dork = GetEntity(args.DockEntity);
         Log.Debug($"Received stop autodock request for {ToPrettyString(dork)}");
 
         var player = args.Session.AttachedEntity;

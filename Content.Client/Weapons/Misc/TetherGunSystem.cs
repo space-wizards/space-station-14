@@ -91,7 +91,7 @@ public sealed class TetherGunSystem : SharedTetherGunSystem
 
         RaisePredictiveEvent(new RequestTetherMoveEvent()
         {
-            Coordinates = ToNetCoordinates(coords)
+            Coordinates = GetNetCoordinates(coords)
         });
     }
 

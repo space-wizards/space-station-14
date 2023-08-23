@@ -151,7 +151,7 @@ namespace Content.Server.Storage.EntitySystems
                 UtilityVerb verb = new()
                 {
                     Text = Loc.GetString("storage-component-transfer-verb"),
-                    IconEntity = ToNetEntity(args.Using),
+                    IconEntity = GetNetEntity(args.Using),
                     Act = () => TransferEntities(uid, args.Target, component, lockComponent, targetStorage, targetLock)
                 };
 
@@ -231,7 +231,7 @@ namespace Content.Server.Storage.EntitySystems
                         continue;
                     }
 
-                    validStorables.Add(ToNetEntity(entity));
+                    validStorables.Add(GetNetEntity(entity));
                 }
 
                 //If there's only one then let's be generous
@@ -273,9 +273,9 @@ namespace Content.Server.Storage.EntitySystems
 
                     if (PlayerInsertEntityInWorld(uid, args.User, target, storageComp))
                     {
-                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(ToNetEntity(uid),
-                            new List<NetEntity> { ToNetEntity(target) },
-                            new List<NetCoordinates> { ToNetCoordinates(position) },
+                        RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid),
+                            new List<NetEntity> { GetNetEntity(target) },
+                            new List<NetCoordinates> { GetNetCoordinates(position) },
                             new List<Angle> { transformOwner.LocalRotation }));
                     }
                 }
@@ -296,7 +296,7 @@ namespace Content.Server.Storage.EntitySystems
 
             foreach (var nent in args.Entities)
             {
-                var entity = ToEntity(nent);
+                var entity = GetEntity(nent);
 
                 // Check again, situation may have changed for some entities, but we'll still pick up any that are valid
                 if (_containerSystem.IsEntityInContainer(entity)
@@ -331,7 +331,7 @@ namespace Content.Server.Storage.EntitySystems
             if (successfullyInserted.Count > 0)
             {
                 _audio.PlayPvs(component.StorageInsertSound, uid);
-                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(ToNetEntity(uid), ToNetEntityList(successfullyInserted), ToNetCoordinatesList(successfullyInsertedPositions), successfullyInsertedAngles));
+                RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(GetNetEntity(uid), GetNetEntityList(successfullyInserted), GetNetCoordinatesList(successfullyInsertedPositions), successfullyInsertedAngles));
             }
 
             args.Handled = true;
@@ -361,7 +361,7 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Session.AttachedEntity is not EntityUid player)
                 return;
 
-            var interacted = ToEntity(args.InteractedItemUID);
+            var interacted = GetEntity(args.InteractedItemUID);
 
             if (!Exists(interacted))
             {
@@ -736,7 +736,7 @@ namespace Content.Server.Storage.EntitySystems
             if (storageComp.Storage == null)
                 return;
 
-            var state = new StorageBoundUserInterfaceState(ToNetEntityList(storageComp.Storage.ContainedEntities.ToList()), storageComp.StorageUsed, storageComp.StorageCapacityMax);
+            var state = new StorageBoundUserInterfaceState(GetNetEntityList(storageComp.Storage.ContainedEntities.ToList()), storageComp.StorageUsed, storageComp.StorageCapacityMax);
 
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
             if (bui != null)

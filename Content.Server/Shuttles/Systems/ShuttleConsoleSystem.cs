@@ -74,7 +74,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     private void OnDestinationMessage(EntityUid uid, ShuttleConsoleComponent component,
         ShuttleConsoleFTLRequestMessage args)
     {
-        var destination = ToEntity(args.Destination);
+        var destination = GetEntity(args.Destination);
 
         if (!TryComp<FTLDestinationComponent>(destination, out var dest))
         {
@@ -224,7 +224,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
     private void OnGetState(EntityUid uid, PilotComponent component, ref ComponentGetState args)
     {
-        args.State = new PilotComponentState(ToNetEntity(component.Console));
+        args.State = new PilotComponentState(GetNetEntity(component.Console));
     }
 
     /// <summary>
@@ -243,9 +243,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 
             var state = new DockingInterfaceState()
             {
-                Coordinates = ToNetCoordinates(xform.Coordinates),
+                Coordinates = GetNetCoordinates(xform.Coordinates),
                 Angle = xform.LocalRotation,
-                Entity = ToNetEntity(uid),
+                Entity = GetNetEntity(uid),
                 Connected = comp.Docked,
                 Color = comp.RadarColor,
                 HighlightedColor = comp.HighlightedRadarColor,
@@ -323,7 +323,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                     canTravel = false;
                 }
 
-                destinations.Add((ToNetEntity(destUid), name, canTravel));
+                destinations.Add((GetNetEntity(destUid), name, canTravel));
             }
         }
 
@@ -336,7 +336,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
                 ftlTime,
                 destinations,
                 range,
-                ToNetCoordinates(consoleXform?.Coordinates),
+                GetNetCoordinates(consoleXform?.Coordinates),
                 consoleXform?.LocalRotation,
                 docks
             ));

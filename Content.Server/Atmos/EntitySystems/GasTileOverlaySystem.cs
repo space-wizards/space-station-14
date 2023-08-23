@@ -301,7 +301,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (grid, oldIndices) in previouslySent)
             {
-                var netGrid = ToNetEntity(grid);
+                var netGrid = GetNetEntity(grid);
 
                 // Mark the whole grid as stale and flag for removal.
                 if (!chunksInRange.TryGetValue(netGrid, out var chunks))
@@ -336,14 +336,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var (netGrid, gridChunks) in chunksInRange)
             {
-                var grid = ToEntity(netGrid);
+                var grid = GetEntity(netGrid);
 
                 // Not all grids have atmospheres.
                 if (!TryComp(grid, out GasTileOverlayComponent? overlay))
                     continue;
 
                 List<GasOverlayChunk> dataToSend = new();
-                ev.UpdatedChunks[ToNetEntity(grid)] = dataToSend;
+                ev.UpdatedChunks[GetNetEntity(grid)] = dataToSend;
 
                 previouslySent.TryGetValue(grid, out var previousChunks);
 

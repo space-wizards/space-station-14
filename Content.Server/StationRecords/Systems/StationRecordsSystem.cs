@@ -160,7 +160,7 @@ public sealed class StationRecordsSystem : EntitySystem
     /// <returns>True if the record was removed, false otherwise.</returns>
     public bool RemoveRecord(EntityUid station, StationRecordKey key, StationRecordsComponent? records = null)
     {
-        if (ToNetEntity(station) != key.OriginStation || !Resolve(station, ref records))
+        if (GetNetEntity(station) != key.OriginStation || !Resolve(station, ref records))
         {
             return false;
         }
@@ -185,7 +185,7 @@ public sealed class StationRecordsSystem : EntitySystem
     {
         entry = default;
 
-        if (ToEntity(key.OriginStation) != station || !Resolve(station, ref records))
+        if (GetEntity(key.OriginStation) != station || !Resolve(station, ref records))
         {
             return false;
         }
@@ -228,7 +228,7 @@ public sealed class StationRecordsSystem : EntitySystem
             throw new ArgumentException($"Could not retrieve a {nameof(StationRecordsComponent)} from entity {station}");
         }
 
-        return records.Records.AddRecord(ToNetEntity(station));
+        return records.Records.AddRecord(GetNetEntity(station));
     }
 
     /// <summary>
@@ -241,7 +241,7 @@ public sealed class StationRecordsSystem : EntitySystem
     public void AddRecordEntry<T>(StationRecordKey key, T record,
         StationRecordsComponent? records = null)
     {
-        if (!Resolve(ToEntity(key.OriginStation), ref records))
+        if (!Resolve(GetEntity(key.OriginStation), ref records))
         {
             return;
         }

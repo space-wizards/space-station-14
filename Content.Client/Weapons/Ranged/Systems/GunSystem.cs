@@ -80,7 +80,7 @@ public sealed partial class GunSystem : SharedGunSystem
 
     private void OnMuzzleFlash(MuzzleFlashEvent args)
     {
-        CreateEffect(ToEntity(args.Uid), args);
+        CreateEffect(GetEntity(args.Uid), args);
     }
 
     private void OnHitscan(HitscanEvent ev)
@@ -91,7 +91,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (a.Sprite is not SpriteSpecifier.Rsi rsi)
                 continue;
 
-            var coords = ToCoordinates(a.coordinates);
+            var coords = GetCoordinates(a.coordinates);
 
             if (Deleted(coords.EntityId))
                 continue;
@@ -150,7 +150,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (_inputSystem.CmdStates.GetState(useKey) != BoundKeyState.Down)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = ToNetEntity(gunUid) });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
             return;
         }
 
@@ -162,7 +162,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (mousePos.MapId == MapId.Nullspace)
         {
             if (gun.ShotCounter != 0)
-                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = ToNetEntity(gunUid) });
+                EntityManager.RaisePredictiveEvent(new RequestStopShootEvent { Gun = GetNetEntity(gunUid) });
 
             return;
         }
@@ -174,8 +174,8 @@ public sealed partial class GunSystem : SharedGunSystem
 
         EntityManager.RaisePredictiveEvent(new RequestShootEvent
         {
-            Coordinates = ToNetCoordinates(coordinates),
-            Gun = ToNetEntity(gunUid),
+            Coordinates = GetNetCoordinates(coordinates),
+            Gun = GetNetEntity(gunUid),
         });
     }
 

@@ -290,7 +290,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             _userInterface.SetUiState(ui, new MicrowaveUpdateUserInterfaceState(
-                ToNetEntityArray(component.Storage.ContainedEntities.ToArray()),
+                GetNetEntityArray(component.Storage.ContainedEntities.ToArray()),
                 HasComp<ActiveMicrowaveComponent>(uid),
                 component.CurrentCookTimeButtonIndex,
                 component.CurrentCookTimerTime

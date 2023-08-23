@@ -102,7 +102,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        var target = ToEntity(ev.Target!.Value);
+        var target = GetEntity(ev.Target!.Value);
 
         if (!TryComp<HandsComponent>(target, out var targetHandsComponent))
         {
@@ -228,7 +228,7 @@ public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
             filter = Filter.Pvs(user, entityManager: EntityManager);
         }
 
-        RaiseNetworkEvent(new MeleeLungeEvent(ToNetEntity(user), angle, localPos, animation), filter);
+        RaiseNetworkEvent(new MeleeLungeEvent(GetNetEntity(user), angle, localPos, animation), filter);
     }
 
     private void OnSpeechHit(EntityUid owner, MeleeSpeechComponent comp, MeleeHitEvent args)

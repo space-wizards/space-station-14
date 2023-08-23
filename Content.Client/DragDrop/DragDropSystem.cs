@@ -392,7 +392,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             }
 
             // tell the server about the drop attempt
-            RaiseNetworkEvent(new DragDropRequestEvent(ToNetEntity(_draggedEntity.Value), ToNetEntity(entity)));
+            RaiseNetworkEvent(new DragDropRequestEvent(GetNetEntity(_draggedEntity.Value), GetNetEntity(entity)));
             EndDrag();
             return true;
         }

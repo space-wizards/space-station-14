@@ -81,7 +81,7 @@ public sealed class DumpableSystem : EntitySystem
                     StartDoAfter(uid, args.Target, args.User, dumpable);
                 },
                 Text = Loc.GetString("dump-disposal-verb-name", ("unit", args.Target)),
-                IconEntity = ToNetEntity(uid)
+                IconEntity = GetNetEntity(uid)
             };
             args.Verbs.Add(verb);
         }
@@ -95,7 +95,7 @@ public sealed class DumpableSystem : EntitySystem
                     StartDoAfter(uid, args.Target, args.User, dumpable);
                 },
                 Text = Loc.GetString("dump-placeable-verb-name", ("surface", args.Target)),
-                IconEntity = ToNetEntity(uid)
+                IconEntity = GetNetEntity(uid)
             };
             args.Verbs.Add(verb);
         }

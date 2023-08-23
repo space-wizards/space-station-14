@@ -24,7 +24,7 @@ namespace Content.Shared.Verbs
             if (user == null)
                 return;
 
-            var target = ToEntity(args.Target);
+            var target = GetEntity(args.Target);
 
             // It is possible that client-side prediction can cause this event to be raised after the target entity has
             // been deleted. So we need to check that the entity still exists.

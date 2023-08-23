@@ -171,8 +171,8 @@ public sealed class StepTriggerSystem : EntitySystem
         component.RequiredTriggerSpeed = state.RequiredTriggerSpeed;
         component.IntersectRatio = state.IntersectRatio;
         component.Active = state.Active;
-        var stepped = ToEntitySet(state.CurrentlySteppedOn);
-        var colliding = ToEntitySet(state.CurrentlySteppedOn);
+        var stepped = GetEntitySet(state.CurrentlySteppedOn);
+        var colliding = GetEntitySet(state.CurrentlySteppedOn);
 
         component.CurrentlySteppedOn.Clear();
         component.CurrentlySteppedOn.UnionWith(stepped);
@@ -194,8 +194,8 @@ public sealed class StepTriggerSystem : EntitySystem
     {
         args.State = new StepTriggerComponentState(
             component.IntersectRatio,
-            ToNetEntitySet(component.CurrentlySteppedOn),
-            ToNetEntitySet(component.Colliding),
+            GetNetEntitySet(component.CurrentlySteppedOn),
+            GetNetEntitySet(component.Colliding),
             component.RequiredTriggerSpeed,
             component.Active);
     }

@@ -20,7 +20,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 
     private void OnBoxEffect(PlayBoxEffectMessage msg)
     {
-        var source = ToEntity(msg.Source);
+        var source = GetEntity(msg.Source);
 
         if (!TryComp<CardboardBoxComponent>(source, out var box))
             return;
@@ -36,7 +36,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         //God mind rework needs to come faster so it can just check for mind
         //TODO: Replace with Mind Query when mind rework is in.
         var mobMoverEntities = _pool.GetEntitySet();
-        var mover = ToEntity(msg.Mover);
+        var mover = GetEntity(msg.Mover);
 
         //Filter out entities in range to see that they're a mob and add them to the mobMoverEntities hash for faster lookup
         foreach (var moverComp in _entityLookup.GetComponentsInRange<MobMoverComponent>(xform.Coordinates, box.Distance))

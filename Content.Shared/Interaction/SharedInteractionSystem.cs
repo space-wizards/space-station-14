@@ -205,7 +205,7 @@ namespace Content.Shared.Interaction
         /// </summary>
         private void HandleInteractInventorySlotEvent(InteractInventorySlotEvent msg, EntitySessionEventArgs args)
         {
-            var item = ToEntity(msg.ItemUid);
+            var item = GetEntity(msg.ItemUid);
 
             // client sanitization
             if (!TryComp(item, out TransformComponent? itemXform) || !ValidateClientInput(args.SenderSession, itemXform.Coordinates, item, out var user))

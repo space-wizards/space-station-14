@@ -100,7 +100,7 @@ namespace Content.Server.Polymorph.Systems
             var act = new InstantAction
             {
                 Event = new RevertPolymorphActionEvent(),
-                EntityIcon = ToNetEntity(component.Parent),
+                EntityIcon = GetNetEntity(component.Parent),
                 DisplayName = Loc.GetString("polymorph-revert-action-name"),
                 Description = Loc.GetString("polymorph-revert-action-description"),
                 UseDelay = TimeSpan.FromSeconds(proto.Delay),

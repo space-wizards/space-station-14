@@ -500,12 +500,12 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var neighbor in poly.Neighbors)
             {
-                neighbors.Add(ToNetCoordinates(neighbor.Coordinates));
+                neighbors.Add(GetNetCoordinates(neighbor.Coordinates));
             }
 
             return new DebugPathPoly()
             {
-                GraphUid = ToNetEntity(poly.GraphUid),
+                GraphUid = GetNetEntity(poly.GraphUid),
                 ChunkOrigin = poly.ChunkOrigin,
                 TileIndex = poly.TileIndex,
                 Box = poly.Box,
@@ -580,7 +580,7 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
-                var netGrid = ToNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(comp.Owner);
 
                 msg.Breadcrumbs.Add(netGrid, new Dictionary<Vector2i, List<PathfindingBreadcrumb>>(comp.Chunks.Count));
 
@@ -629,7 +629,7 @@ namespace Content.Server.NPC.Pathfinding
 
             foreach (var comp in EntityQuery<GridPathfindingComponent>(true))
             {
-                var netGrid = ToNetEntity(comp.Owner);
+                var netGrid = GetNetEntity(comp.Owner);
 
                 msg.Polys.Add(netGrid, new Dictionary<Vector2i, Dictionary<Vector2i, List<DebugPathPoly>>>(comp.Chunks.Count));
 
@@ -651,7 +651,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathBreadcrumbsRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = ToNetEntity(gridUid),
+                GridUid = GetNetEntity(gridUid),
                 Data = GetCrumbs(chunk),
             };
 
@@ -685,7 +685,7 @@ namespace Content.Server.NPC.Pathfinding
             var msg = new PathPolysRefreshMessage()
             {
                 Origin = chunk.Origin,
-                GridUid = ToNetEntity(gridUid),
+                GridUid = GetNetEntity(gridUid),
                 Polys = data,
             };
 

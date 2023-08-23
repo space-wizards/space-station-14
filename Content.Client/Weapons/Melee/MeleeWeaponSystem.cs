@@ -75,7 +75,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
         {
             if (weapon.Attacking)
             {
-                RaisePredictiveEvent(new StopAttackEvent(ToNetEntity(weaponUid)));
+                RaisePredictiveEvent(new StopAttackEvent(GetNetEntity(weaponUid)));
             }
         }
 
@@ -127,7 +127,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                     target = screen.GetClickedEntity(mousePos);
                 }
 
-                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(ToNetEntity(target), ToNetCoordinates(coordinates)));
+                EntityManager.RaisePredictiveEvent(new DisarmAttackEvent(GetNetEntity(target), GetNetCoordinates(coordinates)));
                 return;
             }
 
@@ -153,7 +153,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
                 target = screen.GetClickedEntity(mousePos);
             }
 
-            RaisePredictiveEvent(new LightAttackEvent(ToNetEntity(target), ToNetEntity(weaponUid), ToNetCoordinates(coordinates)));
+            RaisePredictiveEvent(new LightAttackEvent(GetNetEntity(target), GetNetEntity(weaponUid), GetNetCoordinates(coordinates)));
         }
     }
 
@@ -183,7 +183,7 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
             return false;
         }
 
-        var target = ToEntity(ev.Target);
+        var target = GetEntity(ev.Target);
 
         // They need to either have hands...
         if (!HasComp<HandsComponent>(target!.Value))
@@ -225,13 +225,13 @@ public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 
         // This should really be improved. GetEntitiesInArc uses pos instead of bounding boxes.
         // Server will validate it with InRangeUnobstructed.
-        var entities = ToNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
-        RaisePredictiveEvent(new HeavyAttackEvent(ToNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), ToNetCoordinates(coordinates)));
+        var entities = GetNetEntityList(ArcRayCast(userPos, direction.ToWorldAngle(), component.Angle, distance, userXform.MapID, user).ToList());
+        RaisePredictiveEvent(new HeavyAttackEvent(GetNetEntity(meleeUid), entities.GetRange(0, Math.Min(MaxTargets, entities.Count)), GetNetCoordinates(coordinates)));
     }
 
     private void OnMeleeLunge(MeleeLungeEvent ev)
     {
-        var ent = ToEntity(ev.Entity);
+        var ent = GetEntity(ev.Entity);
 
         // Entity might not have been sent by PVS.
         if (Exists(ent))

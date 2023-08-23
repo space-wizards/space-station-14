@@ -17,7 +17,7 @@ public sealed class BeamSystem : SharedBeamSystem
     //TODO: Sometime in the future this needs to be replaced with tiled sprites
     private void BeamVisualizerMessage(BeamVisualizerEvent args)
     {
-        var beam = ToEntity(args.Beam);
+        var beam = GetEntity(args.Beam);
 
         if (TryComp<SpriteComponent>(beam, out var sprites))
         {

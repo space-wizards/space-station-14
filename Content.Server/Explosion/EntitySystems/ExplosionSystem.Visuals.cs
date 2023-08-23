@@ -18,7 +18,7 @@ public sealed partial class ExplosionSystem : EntitySystem
         Dictionary<NetEntity, Dictionary<int, List<Vector2i>>> tileLists = new();
         foreach (var (grid, data) in component.Tiles)
         {
-            tileLists.Add(ToNetEntity(grid), data);
+            tileLists.Add(GetNetEntity(grid), data);
         }
 
         args.State = new ExplosionVisualsState(

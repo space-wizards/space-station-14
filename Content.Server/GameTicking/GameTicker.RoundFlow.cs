@@ -366,7 +366,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = ToNetEntity(entity),
+                    PlayerEntityUid = GetNetEntity(entity),
                     Role = antag
                         ? mind.AllRoles.First(role => role.Antagonist).Name
                         : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),

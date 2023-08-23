@@ -283,7 +283,7 @@ namespace Content.Client.Inventory
                 return;
 
             EntityManager.RaisePredictiveEvent(
-                new InteractInventorySlotEvent(ToNetEntity(item.Value), altInteract: false));
+                new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: false));
         }
 
         public void UIInventoryAltActivateItem(string slot, EntityUid uid)
@@ -291,7 +291,7 @@ namespace Content.Client.Inventory
             if (!TryGetSlotEntity(uid, slot, out var item))
                 return;
 
-            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(ToNetEntity(item.Value), altInteract: true));
+            EntityManager.RaisePredictiveEvent(new InteractInventorySlotEvent(GetNetEntity(item.Value), altInteract: true));
         }
 
         public sealed class SlotData

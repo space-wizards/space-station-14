@@ -182,7 +182,7 @@ namespace Content.Client.Verbs
         {
             if (!IsClientSide(target))
             {
-                RaiseNetworkEvent(new RequestServerVerbsEvent(ToNetEntity(target), verbTypes, adminRequest: force));
+                RaiseNetworkEvent(new RequestServerVerbsEvent(GetNetEntity(target), verbTypes, adminRequest: force));
             }
 
             // Some admin menu interactions will try get verbs for entities that have not yet been sent to the player.
@@ -218,7 +218,7 @@ namespace Content.Client.Verbs
                 // is this a client exclusive (gui) verb?
                 ExecuteVerb(verb, user.Value, target);
             else
-                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(ToNetEntity(target), verb));
+                EntityManager.RaisePredictiveEvent(new ExecuteVerbEvent(GetNetEntity(target), verb));
         }
 
         private void HandleVerbResponse(VerbsResponseEvent msg)

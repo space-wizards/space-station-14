@@ -206,7 +206,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 this.IsPowered(uid, EntityManager),
                 canJuice,
                 canGrind,
-                ToNetEntityArray(inputContainer.ContainedEntities.ToArray()),
+                GetNetEntityArray(inputContainer.ContainedEntities.ToArray()),
                 containerSolution?.Contents.ToArray()
             );
             _userInterfaceSystem.TrySetUiState(uid, ReagentGrinderUiKey.Key, state);
@@ -242,7 +242,7 @@ namespace Content.Server.Kitchen.EntitySystems
                 return;
 
             var inputContainer = _containerSystem.EnsureContainer<Container>(uid, SharedReagentGrinder.InputContainerId);
-            var ent = ToEntity(message.EntityId);
+            var ent = GetEntity(message.EntityId);
 
             if (inputContainer.Remove(ent))
             {

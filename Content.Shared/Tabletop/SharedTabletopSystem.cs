@@ -35,8 +35,8 @@ namespace Content.Shared.Tabletop
             if (args.SenderSession is not { AttachedEntity: { } playerEntity } playerSession)
                 return;
 
-            var table = ToEntity(msg.TableUid);
-            var moved = ToEntity(msg.MovedEntityUid);
+            var table = GetEntity(msg.TableUid);
+            var moved = GetEntity(msg.MovedEntityUid);
 
             if (!CanSeeTable(playerEntity, table) || !CanDrag(playerEntity, moved, out _))
                 return;
@@ -54,7 +54,7 @@ namespace Content.Shared.Tabletop
 
         private void OnDraggingPlayerChanged(TabletopDraggingPlayerChangedEvent msg, EntitySessionEventArgs args)
         {
-            var dragged = ToEntity(msg.DraggedEntityUid);
+            var dragged = GetEntity(msg.DraggedEntityUid);
 
             if (!TryComp(dragged, out TabletopDraggableComponent? draggableComponent))
                 return;

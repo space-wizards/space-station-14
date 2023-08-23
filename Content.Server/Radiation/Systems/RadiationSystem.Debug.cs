@@ -63,7 +63,7 @@ public partial class RadiationSystem
         while (gridQuery.MoveNext(out var gridUid, out _, out var resistance))
         {
             var resMap = resistance.ResistancePerTile;
-            dict.Add(ToNetEntity(gridUid), resMap);
+            dict.Add(GetNetEntity(gridUid), resMap);
         }
 
         var ev = new OnRadiationOverlayResistanceUpdateEvent(dict);

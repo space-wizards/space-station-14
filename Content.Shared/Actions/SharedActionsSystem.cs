@@ -45,7 +45,7 @@ public abstract class SharedActionsSystem : EntitySystem
         if (action.AttachedEntity == null)
             return;
 
-        var ent = ToEntity(action.AttachedEntity);
+        var ent = GetEntity(action.AttachedEntity);
 
         if (!TryComp(ent, out ActionsComponent? comp))
         {
@@ -133,14 +133,14 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
                 }
 
-                var entityTarget = ToEntity(netEntity);
+                var entityTarget = GetEntity(netEntity);
                 var targetWorldPos = _transformSystem.GetWorldPosition(entityTarget);
                 _rotateToFaceSystem.TryFaceCoordinates(user, targetWorldPos);
 
                 if (!ValidateEntityTarget(user, entityTarget, entityAction))
                     return;
 
-                var provider = ToEntity(act.Provider);
+                var provider = GetEntity(act.Provider);
 
                 if (provider == null)
                 {
@@ -169,13 +169,13 @@ public abstract class SharedActionsSystem : EntitySystem
                     return;
                 }
 
-                var entityCoordinatesTarget = ToCoordinates(netCoordinates);
+                var entityCoordinatesTarget = GetCoordinates(netCoordinates);
                 _rotateToFaceSystem.TryFaceCoordinates(user, entityCoordinatesTarget.Position);
 
                 if (!ValidateWorldTarget(user, entityCoordinatesTarget, worldAction))
                     return;
 
-                var provider = ToEntity(act.Provider);
+                var provider = GetEntity(act.Provider);
 
                 if (provider == null)
                 {
@@ -201,7 +201,7 @@ public abstract class SharedActionsSystem : EntitySystem
                 if (act.CheckCanInteract && !_actionBlockerSystem.CanInteract(user, null))
                     return;
 
-                var provider = ToEntity(act.Provider);
+                var provider = GetEntity(act.Provider);
 
                 if (provider == null)
                 {
@@ -297,7 +297,7 @@ public abstract class SharedActionsSystem : EntitySystem
         {
             // This here is required because of client-side prediction (RaisePredictiveEvent results in event re-use).
             actionEvent.Handled = false;
-            var provider = ToEntity(action.Provider);
+            var provider = GetEntity(action.Provider);
 
             if (provider == null)
                 RaiseLocalEvent(performer, (object) actionEvent, broadcast: true);
@@ -354,8 +354,8 @@ public abstract class SharedActionsSystem : EntitySystem
         }
 
         comp ??= EnsureComp<ActionsComponent>(uid);
-        action.Provider = ToNetEntity(provider);
-        action.AttachedEntity = ToNetEntity(uid);
+        action.Provider = GetNetEntity(provider);
+        action.AttachedEntity = GetNetEntity(uid);
         AddActionInternal(comp, action);
 
         if (dirty)
@@ -399,7 +399,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
         foreach (var act in comp.Actions.ToArray())
         {
-            var actProvider = ToEntity(act.Provider);
+            var actProvider = GetEntity(act.Provider);
 
             if (actProvider == provider)
                 RemoveAction(uid, act, comp, dirty: false);

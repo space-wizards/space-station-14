@@ -31,7 +31,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
         if (!_timing.IsFirstTimePredicted)
             return;
 
-        OnColorFlashEffect(new ColorFlashEffectEvent(color, ToNetEntityList(entities)));
+        OnColorFlashEffect(new ColorFlashEffectEvent(color, GetNetEntityList(entities)));
     }
 
     private void OnEffectAnimationCompleted(EntityUid uid, ColorFlashEffectComponent component, AnimationCompletedEvent args)
@@ -79,7 +79,7 @@ public sealed class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 
         foreach (var nent in ev.Entities)
         {
-            var ent = ToEntity(nent);
+            var ent = GetEntity(nent);
 
             if (Deleted(ent))
             {

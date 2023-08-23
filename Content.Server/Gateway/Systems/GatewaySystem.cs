@@ -73,11 +73,11 @@ public sealed class GatewaySystem : EntitySystem
             if (!dest.Enabled)
                 continue;
 
-            destinations.Add((ToNetEntity(destUid), dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
+            destinations.Add((GetNetEntity(destUid), dest.Name, dest.NextReady, HasComp<PortalComponent>(destUid)));
         }
 
         GetDestination(uid, out var current);
-        var state = new GatewayBoundUserInterfaceState(destinations, ToNetEntity(current), comp.NextClose, comp.LastOpen);
+        var state = new GatewayBoundUserInterfaceState(destinations, GetNetEntity(current), comp.NextClose, comp.LastOpen);
         _ui.TrySetUiState(uid, GatewayUiKey.Key, state);
     }
 
@@ -89,7 +89,7 @@ public sealed class GatewaySystem : EntitySystem
     private void OnOpenPortal(EntityUid uid, GatewayComponent comp, GatewayOpenPortalMessage args)
     {
         // can't link if portal is already open on either side, the destination is invalid or on cooldown
-        var desto = ToEntity(args.Destination);
+        var desto = GetEntity(args.Destination);
 
         if (HasComp<PortalComponent>(uid) ||
             HasComp<PortalComponent>(desto) ||

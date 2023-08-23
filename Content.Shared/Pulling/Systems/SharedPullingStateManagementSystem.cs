@@ -33,7 +33,7 @@ namespace Content.Shared.Pulling
 
         private void OnGetState(EntityUid uid, SharedPullableComponent component, ref ComponentGetState args)
         {
-            args.State = new PullableComponentState(ToNetEntity(component.Puller));
+            args.State = new PullableComponentState(GetNetEntity(component.Puller));
         }
 
         private void OnHandleState(EntityUid uid, SharedPullableComponent component, ref ComponentHandleState args)
@@ -41,7 +41,7 @@ namespace Content.Shared.Pulling
             if (args.Current is not PullableComponentState state)
                 return;
 
-            var puller = ToEntity(state.Puller);
+            var puller = GetEntity(state.Puller);
 
             if (!puller.HasValue)
             {

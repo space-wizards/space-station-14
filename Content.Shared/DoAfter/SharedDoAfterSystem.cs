@@ -119,14 +119,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
             comp.DoAfters.Add(id, newDoAfter);
 
             // Networking yay (if you have an easier way dear god please).
-            newDoAfter.UserPosition = ToCoordinates(newDoAfter.NetUserPosition);
-            newDoAfter.InitialItem = ToEntity(newDoAfter.NetInitialItem);
+            newDoAfter.UserPosition = GetCoordinates(newDoAfter.NetUserPosition);
+            newDoAfter.InitialItem = GetEntity(newDoAfter.NetInitialItem);
 
             var doAfterArgs = newDoAfter.Args;
-            doAfterArgs.Target = ToEntity(doAfterArgs.NetTarget);
-            doAfterArgs.Used = ToEntity(doAfterArgs.NetUsed);
-            doAfterArgs.User = ToEntity(doAfterArgs.NetUser);
-            doAfterArgs.EventTarget = ToEntity(doAfterArgs.NetEventTarget);
+            doAfterArgs.Target = GetEntity(doAfterArgs.NetTarget);
+            doAfterArgs.Used = GetEntity(doAfterArgs.NetUsed);
+            doAfterArgs.User = GetEntity(doAfterArgs.NetUser);
+            doAfterArgs.EventTarget = GetEntity(doAfterArgs.NetEventTarget);
         }
 
         comp.NextId = state.NextId;
@@ -207,14 +207,14 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
         var doAfter = new DoAfter(id.Value.Index, args, GameTiming.CurTime);
 
         // Networking yay
-        doAfter.NetUserPosition = ToNetCoordinates(doAfter.UserPosition);
-        doAfter.NetInitialItem = ToNetEntity(doAfter.InitialItem);
+        doAfter.NetUserPosition = GetNetCoordinates(doAfter.UserPosition);
+        doAfter.NetInitialItem = GetNetEntity(doAfter.InitialItem);
 
         // Networking yay
-        args.NetTarget = ToNetEntity(args.Target);
-        args.NetUsed = ToNetEntity(args.Used);
-        args.NetUser = ToNetEntity(args.User);
-        args.NetEventTarget = ToNetEntity(args.EventTarget);
+        args.NetTarget = GetNetEntity(args.Target);
+        args.NetUsed = GetNetEntity(args.Used);
+        args.NetUser = GetNetEntity(args.User);
+        args.NetEventTarget = GetNetEntity(args.EventTarget);
 
         if (!args.User.IsValid())
         {

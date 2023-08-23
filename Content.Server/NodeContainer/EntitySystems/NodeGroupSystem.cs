@@ -421,7 +421,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                     Name = n.Name,
                     NetId = n.NetId,
                     Reachable = n.ReachableNodes.Select(r => r.NetId).ToArray(),
-                    Entity = ToNetEntity(n.Owner),
+                    Entity = GetNetEntity(n.Owner),
                     Type = n.GetType().Name
                 }).ToArray(),
                 DebugData = group.GetDebugData()

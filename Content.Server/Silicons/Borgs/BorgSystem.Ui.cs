@@ -84,7 +84,7 @@ public sealed partial class BorgSystem
         if (args.Session.AttachedEntity is not { } attachedEntity)
             return;
 
-        var module = ToEntity(args.Module);
+        var module = GetEntity(args.Module);
 
         if (!component.ModuleContainer.Contains(module))
             return;

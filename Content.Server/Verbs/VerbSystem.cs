@@ -27,7 +27,7 @@ namespace Content.Server.Verbs
         {
             var player = (IPlayerSession) eventArgs.SenderSession;
 
-            if (!EntityManager.EntityExists(ToEntity(args.EntityUid)))
+            if (!EntityManager.EntityExists(GetEntity(args.EntityUid)))
             {
                 Log.Warning($"{nameof(HandleVerbRequest)} called on a non-existent entity with id {args.EntityUid} by player {player}.");
                 return;
@@ -58,7 +58,7 @@ namespace Content.Server.Verbs
             }
 
             var response =
-                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(ToEntity(args.EntityUid), attached, verbTypes, force));
+                new VerbsResponseEvent(args.EntityUid, GetLocalVerbs(GetEntity(args.EntityUid), attached, verbTypes, force));
             RaiseNetworkEvent(response, player.ConnectedClient);
         }
 

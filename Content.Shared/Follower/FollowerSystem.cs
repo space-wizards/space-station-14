@@ -48,7 +48,7 @@ public sealed class FollowerSystem : EntitySystem
     {
         args.State = new FollowedComponentState()
         {
-            Following = ToNetEntitySet(component.Following),
+            Following = GetNetEntitySet(component.Following),
         };
     }
 
@@ -58,7 +58,7 @@ public sealed class FollowerSystem : EntitySystem
             return;
 
         _pool.Return(component.Following);
-        component.Following = ToEntitySet(state.Following);
+        component.Following = GetEntitySet(state.Following);
     }
 
     private void OnBeforeSave(BeforeSaveEvent ev)

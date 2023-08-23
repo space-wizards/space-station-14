@@ -44,7 +44,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         foreach (var (nent, data) in state.Tiles)
         {
-            component.Tiles[ToEntity(nent)] = data;
+            component.Tiles[GetEntity(nent)] = data;
         }
 
         component.Intensity = state.Intensity;

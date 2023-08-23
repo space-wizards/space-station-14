@@ -103,7 +103,7 @@ public sealed partial class StoreSystem
 
     private void OnRequestUpdate(EntityUid uid, StoreComponent component, StoreRequestUpdateInterfaceMessage args)
     {
-        UpdateUserInterface(args.Session.AttachedEntity, ToEntity(args.Entity), component);
+        UpdateUserInterface(args.Session.AttachedEntity, GetEntity(args.Entity), component);
     }
 
     private void BeforeActivatableUiOpen(EntityUid uid, StoreComponent component, BeforeActivatableUIOpenEvent args)

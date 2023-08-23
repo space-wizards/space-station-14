@@ -1,6 +1,8 @@
 ﻿using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
 using System.Linq;
+using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Placeable;
 
@@ -10,6 +12,7 @@ namespace Content.Shared.Placeable;
 /// </summary>
 public sealed class ItemPlacerSystem : EntitySystem
 {
+    [Dependency] private readonly ObjectPoolManager _pool = default!;
     [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
 
@@ -19,6 +22,29 @@ public sealed class ItemPlacerSystem : EntitySystem
 
         SubscribeLocalEvent<ItemPlacerComponent, StartCollideEvent>(OnStartCollide);
         SubscribeLocalEvent<ItemPlacerComponent, EndCollideEvent>(OnEndCollide);
+        SubscribeLocalEvent<ItemPlacerComponent, ComponentGetState>(OnPlacerGetState);
+        SubscribeLocalEvent<ItemPlacerComponent, ComponentHandleState>(OnPlacerHandleState);
+    }
+
+    private void OnPlacerHandleState(EntityUid uid, ItemPlacerComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not ItemPlacerComponentState state)
+            return;
+
+        component.MaxEntities = state.MaxEntities;
+        component.PlacedEntities.Clear();
+        var ents = GetEntitySet(state.Entities);
+        component.PlacedEntities.UnionWith(ents);
+        _pool.Return(ents);
+    }
+
+    private void OnPlacerGetState(EntityUid uid, ItemPlacerComponent component, ref ComponentGetState args)
+    {
+        args.State = new ItemPlacerComponentState()
+        {
+            MaxEntities = component.MaxEntities,
+            Entities = GetNetEntitySet(component.PlacedEntities),
+        };
     }
 
     private void OnStartCollide(EntityUid uid, ItemPlacerComponent comp, ref StartCollideEvent args)
@@ -57,16 +83,23 @@ public sealed class ItemPlacerSystem : EntitySystem
 
         _placeableSurface.SetPlaceable(uid, true);
     }
+
+    [Serializable, NetSerializable]
+    private sealed class ItemPlacerComponentState : ComponentState
+    {
+        public uint MaxEntities;
+        public HashSet<NetEntity> Entities = default!;
+    }
 }
 
 /// <summary>
 /// Raised on the <see cref="ItemPlacer"/> when an item is placed and it is under the item limit.
 /// </summary>
 [ByRefEvent]
-public record struct ItemPlacedEvent(EntityUid OtherEntity);
+public readonly record struct ItemPlacedEvent(EntityUid OtherEntity);
 
 /// <summary>
 /// Raised on the <see cref="ItemPlacer"/> when an item is removed from it.
 /// </summary>
 [ByRefEvent]
-public record struct ItemRemovedEvent(EntityUid OtherEntity);
+public readonly record struct ItemRemovedEvent(EntityUid OtherEntity);

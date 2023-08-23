@@ -109,7 +109,7 @@ namespace Content.Client.Tabletop
             // Only send new position to server when Delay is reached
             if (_timePassed >= Delay && _table != null)
             {
-                RaisePredictiveEvent(new TabletopMoveEvent(ToNetEntity(_draggedEntity.Value), clampedCoords, ToNetEntity(_table.Value)));
+                RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), clampedCoords, GetNetEntity(_table.Value)));
                 _timePassed -= Delay;
             }
         }
@@ -125,10 +125,10 @@ namespace Content.Client.Tabletop
             // Close the currently opened window, if it exists
             _window?.Close();
 
-            _table = ToEntity(msg.TableUid);
+            _table = GetEntity(msg.TableUid);
 
             // Get the camera entity that the server has created for us
-            var camera = ToEntity(msg.CameraUid);
+            var camera = GetEntity(msg.CameraUid);
 
             if (!EntityManager.TryGetComponent<EyeComponent>(camera, out var eyeComponent))
             {
@@ -159,7 +159,7 @@ namespace Content.Client.Tabletop
         {
             if (_table != null)
             {
-                RaiseNetworkEvent(new TabletopStopPlayingEvent(ToNetEntity(_table.Value)));
+                RaiseNetworkEvent(new TabletopStopPlayingEvent(GetNetEntity(_table.Value)));
             }
 
             StopDragging();
@@ -184,8 +184,8 @@ namespace Content.Client.Tabletop
             {
                 var ev = new TabletopRequestTakeOut
                 {
-                    Entity = ToNetEntity(_draggedEntity.Value),
-                    TableUid = ToNetEntity(_table.Value)
+                    Entity = GetNetEntity(_draggedEntity.Value),
+                    TableUid = GetNetEntity(_table.Value)
                 };
                 RaiseNetworkEvent(ev);
             }
@@ -251,7 +251,7 @@ namespace Content.Client.Tabletop
         /// <param name="viewport">The viewport in which we are dragging.</param>
         private void StartDragging(EntityUid draggedEntity, ScalingViewport viewport)
         {
-            RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(ToNetEntity(draggedEntity), true));
+            RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(draggedEntity), true));
 
             _draggedEntity = draggedEntity;
             _viewport = viewport;
@@ -266,8 +266,8 @@ namespace Content.Client.Tabletop
             // Set the dragging player on the component to noone
             if (broadcast && _draggedEntity != null && EntityManager.HasComponent<TabletopDraggableComponent>(_draggedEntity.Value))
             {
-                RaisePredictiveEvent(new TabletopMoveEvent(ToNetEntity(_draggedEntity.Value), Transform(_draggedEntity.Value).MapPosition, ToNetEntity(_table!.Value)));
-                RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(ToNetEntity(_draggedEntity.Value), false));
+                RaisePredictiveEvent(new TabletopMoveEvent(GetNetEntity(_draggedEntity.Value), Transform(_draggedEntity.Value).MapPosition, GetNetEntity(_table!.Value)));
+                RaisePredictiveEvent(new TabletopDraggingPlayerChangedEvent(GetNetEntity(_draggedEntity.Value), false));
             }
 
             _draggedEntity = null;

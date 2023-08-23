@@ -95,7 +95,7 @@ public sealed class RCDSystem : EntitySystem
                 return;
         }
 
-        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.Delay, new RCDDoAfterEvent(ToNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
+        var doAfterArgs = new DoAfterArgs(EntityManager, user, comp.Delay, new RCDDoAfterEvent(GetNetCoordinates(location), comp.Mode), uid, target: args.Target, used: uid)
         {
             BreakOnDamage = true,
             NeedHand = true,
@@ -115,7 +115,7 @@ public sealed class RCDSystem : EntitySystem
         if (args.Event?.DoAfter?.Args == null)
             return;
 
-        var location = ToCoordinates(args.Event.Location);
+        var location = GetCoordinates(args.Event.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))
@@ -140,7 +140,7 @@ public sealed class RCDSystem : EntitySystem
             return;
 
         var user = args.User;
-        var location = ToCoordinates(args.Location);
+        var location = GetCoordinates(args.Location);
 
         var gridId = location.GetGridUid(EntityManager);
         if (!HasComp<MapGridComponent>(gridId))

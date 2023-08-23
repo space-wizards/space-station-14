@@ -56,7 +56,7 @@ public sealed class MechGrabberSystem : EntitySystem
         if (!_interaction.InRangeUnobstructed(mech, targetCoords))
             return;
 
-        var item = ToEntity(msg.Item);
+        var item = GetEntity(msg.Item);
 
         if (!component.ItemContainer.Contains(item))
             return;
@@ -115,10 +115,10 @@ public sealed class MechGrabberSystem : EntitySystem
     {
         var state = new MechGrabberUiState
         {
-            Contents = ToNetEntityList(component.ItemContainer.ContainedEntities.ToList()),
+            Contents = GetNetEntityList(component.ItemContainer.ContainedEntities.ToList()),
             MaxContents = component.MaxContents
         };
-        args.States.Add(ToNetEntity(uid), state);
+        args.States.Add(GetNetEntity(uid), state);
     }
 
     private void OnInteract(EntityUid uid, MechGrabberComponent component, InteractNoHandEvent args)

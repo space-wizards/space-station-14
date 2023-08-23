@@ -42,7 +42,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         if (!Resolve(loaderUid, ref loader))
             return;
 
-        state.ActiveUI = ToNetEntity(loader.ActiveProgram);
+        state.ActiveUI = GetNetEntity(loader.ActiveProgram);
         state.Programs = GetAvailablePrograms(loaderUid, loader);
 
         if (_userInterfaceSystem.TryGetUi(loaderUid, loader.UiKey, out var ui))
@@ -82,12 +82,12 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
         //Don't count a cartridge that has already been installed as available to avoid confusion
         if (loader.CartridgeSlot.HasItem && TryFindInstalled(Prototype(loader.CartridgeSlot.Item!.Value)?.ID, loader, out _))
-            return ToNetEntityList(loader.InstalledPrograms);
+            return GetNetEntityList(loader.InstalledPrograms);
 
-        var available = ToNetEntityList(loader.InstalledPrograms);
+        var available = GetNetEntityList(loader.InstalledPrograms);
 
         if (loader.CartridgeSlot.HasItem)
-            available.Add(ToNetEntity(loader.CartridgeSlot.Item!.Value));
+            available.Add(GetNetEntity(loader.CartridgeSlot.Item!.Value));
 
         return available;
     }
@@ -307,7 +307,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 
     private void OnLoaderUiMessage(EntityUid loaderUid, CartridgeLoaderComponent component, CartridgeLoaderUiMessage message)
     {
-        var cartridge = ToEntity(message.CartridgeUid);
+        var cartridge = GetEntity(message.CartridgeUid);
 
         switch (message.Action)
         {
@@ -338,7 +338,7 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
     private void OnUiMessage(EntityUid uid, CartridgeLoaderComponent component, CartridgeUiMessage args)
     {
         var cartridgeEvent = args.MessageEvent;
-        cartridgeEvent.LoaderUid = ToNetEntity(uid);
+        cartridgeEvent.LoaderUid = GetNetEntity(uid);
 
         RelayEvent(component, cartridgeEvent, true);
     }

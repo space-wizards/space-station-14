@@ -46,7 +46,7 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            var table = ToEntity(msg.TableUid);
+            var table = GetEntity(msg.TableUid);
 
             if (!TryComp(table, out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
@@ -54,7 +54,7 @@ namespace Content.Server.Tabletop
             if (!msg.Entity.IsValid())
                 return;
 
-            var entity = ToEntity(msg.Entity);
+            var entity = GetEntity(msg.Entity);
 
             if (!TryComp(entity, out TabletopHologramComponent? hologram))
             {
@@ -109,7 +109,7 @@ namespace Content.Server.Tabletop
             if (args.SenderSession is not IPlayerSession playerSession)
                 return;
 
-            if (!TryComp(ToEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
+            if (!TryComp(GetEntity(msg.TableUid), out TabletopGameComponent? tabletop) || tabletop.Session is not { } session)
                 return;
 
             // Check if player is actually playing at this table
@@ -156,7 +156,7 @@ namespace Content.Server.Tabletop
 
         private void OnStopPlaying(TabletopStopPlayingEvent msg, EntitySessionEventArgs args)
         {
-            CloseSessionFor((IPlayerSession)args.SenderSession, ToEntity(msg.TableUid));
+            CloseSessionFor((IPlayerSession)args.SenderSession, GetEntity(msg.TableUid));
         }
 
         private void OnPlayerDetached(EntityUid uid, TabletopGamerComponent component, PlayerDetachedEvent args)

@@ -26,7 +26,7 @@ public sealed partial class ToolSystem
         if (args.Cancelled)
             return;
 
-        var coords = ToCoordinates(args.Coordinates);
+        var coords = GetCoordinates(args.Coordinates);
         var gridUid = coords.GetGridUid(EntityManager);
         if (gridUid == null)
             return;
@@ -74,7 +74,7 @@ public sealed partial class ToolSystem
             return false;
         }
 
-        var ev = new LatticeCuttingCompleteEvent(ToNetCoordinates(coordinates));
+        var ev = new LatticeCuttingCompleteEvent(GetNetCoordinates(coordinates));
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev);
     }
 }

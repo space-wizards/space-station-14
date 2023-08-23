@@ -31,7 +31,7 @@ public sealed partial class ToolSystem
         if (args.Cancelled)
             return;
 
-        var coords = ToCoordinates(args.Coordinates);
+        var coords = GetCoordinates(args.Coordinates);
         var gridUid = coords.GetGridUid(EntityManager);
         if (!_mapManager.TryGetGrid(gridUid, out var grid))
         {
@@ -75,7 +75,7 @@ public sealed partial class ToolSystem
         if (!tileDef.CanCrowbar && !(tileDef.CanAxe && component.Advanced))
             return false;
 
-        var ev = new TilePryingDoAfterEvent(ToNetCoordinates(coordinates));
+        var ev = new TilePryingDoAfterEvent(GetNetCoordinates(coordinates));
 
         return UseTool(toolEntity, user, toolEntity, component.Delay, component.QualityNeeded, ev, toolComponent: tool);
     }

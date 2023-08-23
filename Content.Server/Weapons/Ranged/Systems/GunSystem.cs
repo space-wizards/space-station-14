@@ -422,7 +422,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (hitscan.MuzzleFlash != null)
             {
                 var coords = fromCoordinates.Offset(angle.ToVec().Normalized() / 2);
-                var netCoords = ToNetCoordinates(coords);
+                var netCoords = GetNetCoordinates(coords);
 
                 sprites.Add((netCoords, angle, hitscan.MuzzleFlash, 1f));
             }
@@ -430,7 +430,7 @@ public sealed partial class GunSystem : SharedGunSystem
             if (hitscan.TravelFlash != null)
             {
                 var coords = fromCoordinates.Offset(angle.ToVec() * (distance + 0.5f) / 2);
-                var netCoords = ToNetCoordinates(coords);
+                var netCoords = GetNetCoordinates(coords);
 
                 sprites.Add((netCoords, angle, hitscan.TravelFlash, distance - 1.5f));
             }
@@ -439,7 +439,7 @@ public sealed partial class GunSystem : SharedGunSystem
         if (hitscan.ImpactFlash != null)
         {
             var coords = fromCoordinates.Offset(angle.ToVec() * distance);
-            var netCoords = ToNetCoordinates(coords);
+            var netCoords = GetNetCoordinates(coords);
 
             sprites.Add((netCoords, angle.FlipPositive(), hitscan.ImpactFlash, 1f));
         }

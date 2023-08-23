@@ -38,7 +38,7 @@ namespace Content.Server.Examine
                 verbs = _verbSystem.GetLocalVerbs(target, player, typeof(ExamineVerb));
 
             var ev = new ExamineSystemMessages.ExamineInfoResponseMessage(
-                ToNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
+                GetNetEntity(target), 0, message, verbs?.ToList(), centerAtCursor
             );
 
             RaiseNetworkEvent(ev, session.ConnectedClient);
@@ -49,7 +49,7 @@ namespace Content.Server.Examine
             var player = (IPlayerSession) eventArgs.SenderSession;
             var session = eventArgs.SenderSession;
             var channel = player.ConnectedClient;
-            var entity = ToEntity(request.NetEntity);
+            var entity = GetEntity(request.NetEntity);
 
             if (session.AttachedEntity is not {Valid: true} playerEnt
                 || !EntityManager.EntityExists(entity))

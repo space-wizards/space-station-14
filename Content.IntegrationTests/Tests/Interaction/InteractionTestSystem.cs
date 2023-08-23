@@ -24,7 +24,7 @@ public sealed class InteractionTestSystem : EntitySystem
     private void OnEntChange(ConstructionChangeEntityEvent ev)
     {
         Assert.That(!IsClientSide(ev.Old) && !IsClientSide(ev.New));
-        EntChanges[ToNetEntity(ev.Old)] = ToNetEntity(ev.New);
+        EntChanges[GetNetEntity(ev.Old)] = GetNetEntity(ev.New);
     }
 
     private void OnAck(AckStructureConstructionMessage ev)

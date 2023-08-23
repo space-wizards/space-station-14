@@ -105,7 +105,7 @@ namespace Content.Server.Hands.Systems
             if (exclude != null)
                 filter = filter.RemoveWhereAttachedEntity(entity => entity == exclude);
 
-            RaiseNetworkEvent(new PickupAnimationEvent(ToNetEntity(item), ToNetCoordinates(initialPosition), finalPosition, initialAngle), filter);
+            RaiseNetworkEvent(new PickupAnimationEvent(GetNetEntity(item), GetNetCoordinates(initialPosition), finalPosition, initialAngle), filter);
         }
 
         protected override void HandleEntityRemoved(EntityUid uid, HandsComponent hands, EntRemovedFromContainerMessage args)

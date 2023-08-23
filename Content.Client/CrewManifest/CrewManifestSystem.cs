@@ -33,7 +33,7 @@ public sealed class CrewManifestSystem : EntitySystem
     /// <param name="uid">EntityUid of the entity we're requesting the crew manifest from.</param>
     public void RequestCrewManifest(EntityUid uid)
     {
-        RaiseNetworkEvent(new RequestCrewManifestMessage(ToNetEntity(uid)));
+        RaiseNetworkEvent(new RequestCrewManifestMessage(GetNetEntity(uid)));
     }
 
     private void OnPrototypesReload(PrototypesReloadedEventArgs _)

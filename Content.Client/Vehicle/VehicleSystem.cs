@@ -36,7 +36,7 @@ public sealed class VehicleSystem : SharedVehicleSystem
         if (args.Current is not RiderComponentState state)
             return;
 
-        var entity = ToEntity(state.Entity);
+        var entity = GetEntity(state.Entity);
 
         if (TryComp(uid, out EyeComponent? eyeComp) && eyeComp.Target == component.Vehicle)
             eyeComp.Target = entity;

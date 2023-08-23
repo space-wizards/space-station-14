@@ -212,7 +212,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var target = ToEntity(msg.Target);
+            var target = GetEntity(msg.Target);
 
             if (!EntityManager.EntityExists(target))
             {
@@ -250,7 +250,7 @@ namespace Content.Server.Ghost
             {
                 if (warp.Location != null)
                 {
-                    yield return new GhostWarp(ToNetEntity(uid), warp.Location, true);
+                    yield return new GhostWarp(GetNetEntity(uid), warp.Location, true);
                 }
             }
         }
@@ -268,7 +268,7 @@ namespace Content.Server.Ghost
                     string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
 
                     if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
-                        yield return new GhostWarp(ToNetEntity(attached), playerInfo, false);
+                        yield return new GhostWarp(GetNetEntity(attached), playerInfo, false);
                 }
             }
         }

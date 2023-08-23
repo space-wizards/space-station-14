@@ -240,7 +240,7 @@ namespace Content.Server.Construction
                     interactDoAfter.User,
                     interactDoAfter.Used!.Value,
                     uid,
-                    ToCoordinates(interactDoAfter.ClickLocation));
+                    GetCoordinates(interactDoAfter.ClickLocation));
 
                 doAfterState = DoAfterState.Completed;
             }

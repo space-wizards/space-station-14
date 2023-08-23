@@ -103,7 +103,7 @@ public sealed class NewsSystem : EntitySystem
         if (message.Action == NewsReadUiAction.NotificationSwith)
             component.NotificationOn = !component.NotificationOn;
 
-        UpdateReadUi(uid, ToEntity(args.LoaderUid), component);
+        UpdateReadUi(uid, GetEntity(args.LoaderUid), component);
     }
 
     public void OnWriteUiShareMessage(EntityUid uid, NewsWriteComponent component, NewsWriteShareMessage msg)

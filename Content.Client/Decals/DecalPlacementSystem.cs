@@ -71,7 +71,7 @@ public sealed class DecalPlacementSystem : EntitySystem
                     return false;
 
                 var decal = new Decal(coords.Position, _decalId, _decalColor, _decalAngle, _zIndex, _cleanable);
-                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, ToNetCoordinates(coords)));
+                RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(coords)));
 
                 return true;
             },
@@ -91,7 +91,7 @@ public sealed class DecalPlacementSystem : EntitySystem
 
                 _erasing = true;
 
-                RaiseNetworkEvent(new RequestDecalRemovalEvent(ToNetCoordinates(coords)));
+                RaiseNetworkEvent(new RequestDecalRemovalEvent(GetNetCoordinates(coords)));
 
                 return true;
             }, (session, coords, uid) =>
@@ -129,7 +129,7 @@ public sealed class DecalPlacementSystem : EntitySystem
         args.Target = args.Target.Offset(new Vector2(-0.5f, -0.5f));
 
         var decal = new Decal(args.Target.Position, args.DecalId, args.Color, Angle.FromDegrees(args.Rotation), args.ZIndex, args.Cleanable);
-        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, ToNetCoordinates(args.Target)));
+        RaiseNetworkEvent(new RequestDecalPlacementEvent(decal, GetNetCoordinates(args.Target)));
     }
 
     private void OnFillSlot(FillActionSlotEvent ev)

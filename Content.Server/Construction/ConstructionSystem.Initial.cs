@@ -432,7 +432,7 @@ namespace Content.Server.Construction
                 _beingBuilt[args.SenderSession] = newSet;
             }
 
-            var location = ToCoordinates(ev.Location);
+            var location = GetCoordinates(ev.Location);
 
             foreach (var condition in constructionPrototype.Conditions)
             {
@@ -517,11 +517,11 @@ namespace Content.Server.Construction
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
             xform.Anchored = false;
-            xform.Coordinates = ToCoordinates(ev.Location);
+            xform.Coordinates = GetCoordinates(ev.Location);
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 
-            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, ToNetEntity(structure)));
+            RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, GetNetEntity(structure)));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");
             Cleanup();
         }

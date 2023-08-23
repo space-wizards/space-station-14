@@ -106,7 +106,7 @@ public sealed partial class ReplaySpectatorSystem
             return;
         }
 
-        var uid = ToEntity(netEntity);
+        var uid = GetEntity(netEntity);
 
         if (!Exists(uid))
         {

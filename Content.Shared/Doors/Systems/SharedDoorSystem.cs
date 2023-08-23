@@ -101,7 +101,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
     #region StateManagement
     private void OnGetState(EntityUid uid, DoorComponent door, ref ComponentGetState args)
     {
-        args.State = new DoorComponentState(door, ToNetEntitySet(door.CurrentlyCrushing));
+        args.State = new DoorComponentState(door, GetNetEntitySet(door.CurrentlyCrushing));
     }
 
     private void OnHandleState(EntityUid uid, DoorComponent door, ref ComponentHandleState args)
@@ -110,7 +110,7 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         door.CurrentlyCrushing.Clear();
-        door.CurrentlyCrushing.UnionWith(ToEntitySet(state.CurrentlyCrushing));
+        door.CurrentlyCrushing.UnionWith(GetEntitySet(state.CurrentlyCrushing));
 
         door.State = state.DoorState;
         door.NextStateChange = state.NextStateChange;

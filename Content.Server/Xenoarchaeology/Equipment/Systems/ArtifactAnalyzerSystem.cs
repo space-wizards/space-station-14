@@ -214,7 +214,7 @@ public sealed class ArtifactAnalyzerSystem : EntitySystem
         var scanning = TryComp<ActiveArtifactAnalyzerComponent>(component.AnalyzerEntity, out var active);
         var remaining = active != null ? _timing.CurTime - active.StartTime : TimeSpan.Zero;
 
-        var state = new AnalysisConsoleScanUpdateState(ToNetEntity(artifact), analyzerConnected, serverConnected,
+        var state = new AnalysisConsoleScanUpdateState(GetNetEntity(artifact), analyzerConnected, serverConnected,
             canScan, canPrint, msg, scanning, remaining, totalTime, points);
 
         var bui = _ui.GetUi(uid, ArtifactAnalzyerUiKey.Key);

@@ -439,7 +439,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                     AlternativeVerb verb = new()
                     {
-                        IconEntity = ToNetEntity(args.Using),
+                        IconEntity = GetNetEntity(args.Using),
                         Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
                     };
 
@@ -493,7 +493,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 AlternativeVerb verb = new()
                 {
-                    IconEntity = ToNetEntity(slot.Item),
+                    IconEntity = GetNetEntity(slot.Item),
                     Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
                 };
 
@@ -532,7 +532,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 InteractionVerb takeVerb = new()
                 {
-                    IconEntity = ToNetEntity(slot.Item),
+                    IconEntity = GetNetEntity(slot.Item),
                     Act = () => TryEjectToHands(uid, slot, args.User, excludeUserAudio: true)
                 };
 
@@ -560,7 +560,7 @@ namespace Content.Shared.Containers.ItemSlots
 
                 InteractionVerb insertVerb = new()
                 {
-                    IconEntity = ToNetEntity(args.Using),
+                    IconEntity = GetNetEntity(args.Using),
                     Act = () => Insert(uid, slot, args.Using.Value, args.User, excludeUserAudio: true)
                 };
 

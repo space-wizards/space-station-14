@@ -75,7 +75,7 @@ namespace Content.Server.Medical
 
             OpenUserInterface(user, healthAnalyzer);
 
-            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(ToNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
+            _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(GetNetEntity(target), temp != null ? temp.CurrentTemperature : float.NaN,
                 bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
         }
     }
