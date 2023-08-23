@@ -8,6 +8,9 @@ using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Polymorph.Toolshed;
 
+/// <summary>
+///     Undoes a polymorph, reverting the target to it's original form.
+/// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
 public sealed class UnpolymorphCommand : ToolshedCommand
 {

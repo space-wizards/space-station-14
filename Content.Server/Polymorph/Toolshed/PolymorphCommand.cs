@@ -8,6 +8,9 @@ using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Polymorph.Toolshed;
 
+/// <summary>
+///     Polymorphs the given entity(s) into the target morph.
+/// </summary>
 [ToolshedCommand, AdminCommand(AdminFlags.Fun)]
 public sealed class PolymorphCommand : ToolshedCommand
 {

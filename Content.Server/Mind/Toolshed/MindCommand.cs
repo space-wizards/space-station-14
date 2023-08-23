@@ -8,6 +8,9 @@ using Robust.Shared.Toolshed.Syntax;
 
 namespace Content.Server.Mind.Toolshed;
 
+/// <summary>
+///     Contains various mind-manipulation commands like getting minds, controlling mobs, etc.
+/// </summary>
 [ToolshedCommand]
 public sealed class MindCommand : ToolshedCommand
 {
