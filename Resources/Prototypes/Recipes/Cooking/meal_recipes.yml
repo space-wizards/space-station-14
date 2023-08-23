@@ -948,7 +948,7 @@
   id: RecipePopcorn
   name: popcorn recipe
   result: FoodSnackPopcorn
-  time: 5
+  time: 20
   solids:
     FoodCorn: 1
 
@@ -1640,3 +1640,13 @@
   time: 5
   solids:
     FoodSpaceshroom: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCornInButter
+  name: corn in butter
+  result: FoodMealCornInButter
+  time: 10
+  solids:
+    FoodCorn: 1
+    FoodPlate: 1
+    FoodButter: 1

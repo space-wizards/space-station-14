@@ -559,3 +559,27 @@
       - onion
   - type: Sprite
     state: taco
+
+- type: entity
+  name: corn in butter
+  parent: FoodMealBase
+  id: FoodMealCornInButter
+  description: Buttery.
+  components:
+  - type: Food
+    trash: FoodPlate
+  - type: FlavorProfile
+    flavors:
+      - corn
+      - butter
+  - type: Sprite
+    state: corn-in-butter
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 4
+        - ReagentId: Vitamin
+          Quantity: 4
