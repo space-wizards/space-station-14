@@ -7,7 +7,7 @@ namespace Content.Server.Shuttles.Components;
 /// Added to a station that is available for arrivals shuttles.
 /// </summary>
 [RegisterComponent, Access(typeof(ArrivalsSystem))]
-public sealed class StationArrivalsComponent : Component
+public sealed partial class StationArrivalsComponent : Component
 {
     [DataField("shuttle")]
     public EntityUid Shuttle;

@@ -6,7 +6,7 @@ namespace Content.Shared.Buckle.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedBuckleSystem))]
-public sealed class BuckleComponent : Component
+public sealed partial class BuckleComponent : Component
 {
     /// <summary>
     /// The range from which this entity can buckle to a <see cref="StrapComponent"/>.

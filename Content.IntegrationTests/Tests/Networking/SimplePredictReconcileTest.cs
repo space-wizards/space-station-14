@@ -60,8 +60,8 @@ namespace Content.IntegrationTests.Tests.Networking
             });
 
             // Run some ticks and ensure that the buffer has filled up.
-            await PoolManager.SyncTicks(pairTracker.Pair);
-            await PoolManager.RunTicksSync(pairTracker.Pair, 25);
+            await pairTracker.SyncTicks();
+            await pairTracker.RunTicksSync(25);
             Assert.That(cGameTiming.TickTimingAdjustment, Is.EqualTo(0));
             Assert.That(sGameTiming.TickTimingAdjustment, Is.EqualTo(0));
 

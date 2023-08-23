@@ -71,7 +71,7 @@ public sealed class RequestPerformActionEvent : EntityEventArgs
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class InstantActionEvent : BaseActionEvent { }
+public abstract partial class InstantActionEvent : BaseActionEvent { }
 
 /// <summary>
 ///     This is the type of event that gets raised when an <see cref="EntityTargetAction"/> is performed. The <see
@@ -81,7 +81,7 @@ public abstract class InstantActionEvent : BaseActionEvent { }
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class EntityTargetActionEvent : BaseActionEvent
+public abstract partial class EntityTargetActionEvent : BaseActionEvent
 {
     /// <summary>
     ///     The entity that the user targeted.
@@ -97,7 +97,7 @@ public abstract class EntityTargetActionEvent : BaseActionEvent
 /// <remarks>
 ///     To define a new action for some system, you need to create an event that inherits from this class.
 /// </remarks>
-public abstract class WorldTargetActionEvent : BaseActionEvent
+public abstract partial class WorldTargetActionEvent : BaseActionEvent
 {
     /// <summary>
     ///     The coordinates of the location that the user targeted.
@@ -110,7 +110,7 @@ public abstract class WorldTargetActionEvent : BaseActionEvent
 ///     system.
 /// </summary>
 [ImplicitDataDefinitionForInheritors]
-public abstract class BaseActionEvent : HandledEntityEventArgs
+public abstract partial class BaseActionEvent : HandledEntityEventArgs
 {
     /// <summary>
     ///     The user performing the action.

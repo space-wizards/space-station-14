@@ -9,7 +9,7 @@ namespace Content.Server.Medical.Components
     ///    After scanning, retrieves the target Uid to use with its related UI.
     /// </summary>
     [RegisterComponent]
-    public sealed class HealthAnalyzerComponent : Component
+    public sealed partial class HealthAnalyzerComponent : Component
     {
         /// <summary>
         /// How long it takes to scan someone.

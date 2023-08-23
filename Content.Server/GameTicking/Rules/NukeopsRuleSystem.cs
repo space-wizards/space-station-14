@@ -201,9 +201,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         var filter = Filter.Empty();
         var query = EntityQueryEnumerator<NukeOperativeComponent, ActorComponent>();
-        while (query.MoveNext(out _, out _, out var actor))
+        while (query.MoveNext(out _, out var nukeops, out var actor))
         {
             _chatManager.DispatchServerMessage(actor.PlayerSession, Loc.GetString("nukeops-welcome", ("station", component.TargetStation.Value)));
+            _audioSystem.PlayGlobal(nukeops.GreetSoundNotification, actor.PlayerSession);
             filter.AddPlayer(actor.PlayerSession);
         }
     }

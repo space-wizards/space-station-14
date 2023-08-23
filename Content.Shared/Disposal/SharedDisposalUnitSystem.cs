@@ -18,7 +18,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Disposal;
 
 [Serializable, NetSerializable]
-public sealed class DisposalDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 {
 }
 

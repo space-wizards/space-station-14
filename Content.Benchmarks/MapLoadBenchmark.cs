@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BenchmarkDotNet.Attributes;
 using Content.IntegrationTests;
+using Content.IntegrationTests.Pair;
 using Content.Server.Maps;
 using Robust.Server.GameObjects;
 using Robust.Shared;
@@ -17,7 +18,7 @@ namespace Content.Benchmarks;
 [Virtual]
 public class MapLoadBenchmark
 {
-    private PairTracker _pair = default!;
+    private TestPair _pair = default!;
     private MapLoaderSystem _mapLoader = default!;
     private IMapManager _mapManager = default!;
 

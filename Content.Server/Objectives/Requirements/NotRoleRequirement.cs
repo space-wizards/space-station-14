@@ -6,7 +6,7 @@ namespace Content.Server.Objectives.Requirements
 {
 
     [DataDefinition]
-    public sealed class NotRoleRequirement : IObjectiveRequirement
+    public sealed partial class NotRoleRequirement : IObjectiveRequirement
     {
         [DataField("roleId", customTypeSerializer:typeof(PrototypeIdSerializer<JobPrototype>), required:true)]
         private string _roleId = default!;

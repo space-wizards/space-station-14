@@ -4,6 +4,7 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -42,6 +43,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -241,6 +243,14 @@ namespace Content.Server.Light.EntitySystems
         }
         #endregion
 
+        /// <summary>
+        /// Supply factor (0-1) as input x, returns linear light scale (0-1).
+        /// </summary>
+        private float LightCurve(float x)
+        {
+            return (float)(1/0.8*(x-0.2));
+        }
+
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
             ApcPowerReceiverComponent? powerReceiver = null,
@@ -265,9 +275,10 @@ namespace Content.Server.Light.EntitySystems
             switch (lightBulb.State)
             {
                 case LightBulbState.Normal:
-                    if (powerReceiver.Powered && light.On)
+                    float factor = LightCurve(_power.SupplyFactor(uid, powerReceiver));
+                    if (factor > 0 && light.On)
                     {
-                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
+                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius*factor, lightBulb.LightEnergy*factor, lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)

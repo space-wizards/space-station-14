@@ -81,10 +81,10 @@ public abstract class SharedDevourSystem : EntitySystem
     }
 }
 
-public sealed class DevourActionEvent : EntityTargetActionEvent { }
+public sealed partial class DevourActionEvent : EntityTargetActionEvent { }
 
 [Serializable, NetSerializable]
-public sealed class DevourDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class DevourDoAfterEvent : SimpleDoAfterEvent { }
 
 [Serializable, NetSerializable]
 public enum FoodPreference : byte

@@ -6,5 +6,5 @@ namespace Content.Shared.Overlays
     /// This component allows you to see job icons above mobs.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class ShowSecurityIconsComponent : Component { }
+    public sealed partial class ShowSecurityIconsComponent : Component { }
 }

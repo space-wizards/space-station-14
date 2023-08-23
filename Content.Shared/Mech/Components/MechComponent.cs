@@ -15,7 +15,7 @@ namespace Content.Shared.Mech.Components;
 /// powered via an internal battery.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class MechComponent : Component
+public sealed partial class MechComponent : Component
 {
     /// <summary>
     /// How much "health" the mech has left.

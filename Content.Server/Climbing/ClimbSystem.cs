@@ -49,7 +49,7 @@ public sealed class ClimbSystem : SharedClimbSystem
     private const string ClimbingFixtureName = "climb";
     private const int ClimbingCollisionGroup = (int) (CollisionGroup.TableLayer | CollisionGroup.LowImpassable);
 
-    private readonly Dictionary<EntityUid, List<Fixture>> _fixtureRemoveQueue = new();
+    private readonly Dictionary<EntityUid, Dictionary<string, Fixture>> _fixtureRemoveQueue = new();
 
     public override void Initialize()
     {
@@ -212,8 +212,8 @@ public sealed class ClimbSystem : SharedClimbSystem
                 || (fixture.CollisionMask & ClimbingCollisionGroup) == 0)
                 continue;
 
-            climbingComp.DisabledFixtureMasks.Add(fixture.ID, fixture.CollisionMask & ClimbingCollisionGroup);
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
+            climbingComp.DisabledFixtureMasks.Add(name, fixture.CollisionMask & ClimbingCollisionGroup);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask & ~ClimbingCollisionGroup, fixturesComp);
         }
 
         if (!_fixtureSystem.TryCreateFixture(
@@ -233,7 +233,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
     private void OnClimbEndCollide(EntityUid uid, ClimbingComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ClimbingFixtureName
+        if (args.OurFixtureId != ClimbingFixtureName
             || !component.IsClimbing
             || component.OwnerIsTransitioning)
             return;
@@ -262,18 +262,18 @@ public sealed class ClimbSystem : SharedClimbSystem
                 continue;
             }
 
-            _physics.SetCollisionMask(uid, fixture, fixture.CollisionMask | fixtureMask, fixtures);
+            _physics.SetCollisionMask(uid, name, fixture, fixture.CollisionMask | fixtureMask, fixtures);
         }
         climbing.DisabledFixtureMasks.Clear();
 
         if (!_fixtureRemoveQueue.TryGetValue(uid, out var removeQueue))
         {
-            removeQueue = new List<Fixture>();
+            removeQueue = new Dictionary<string, Fixture>();
             _fixtureRemoveQueue.Add(uid, removeQueue);
         }
 
         if (fixtures.Fixtures.TryGetValue(ClimbingFixtureName, out var climbingFixture))
-            removeQueue.Add(climbingFixture);
+            removeQueue.Add(ClimbingFixtureName, climbingFixture);
 
         climbing.IsClimbing = false;
         climbing.OwnerIsTransitioning = false;
@@ -440,7 +440,7 @@ public sealed class ClimbSystem : SharedClimbSystem
 
             foreach (var fixture in fixtures)
             {
-                _fixtureSystem.DestroyFixture(uid, fixture, body: physicsComp, manager: fixturesComp);
+                _fixtureSystem.DestroyFixture(uid, fixture.Key, fixture.Value, body: physicsComp, manager: fixturesComp);
             }
         }
 

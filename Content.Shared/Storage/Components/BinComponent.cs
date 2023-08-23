@@ -13,7 +13,7 @@ namespace Content.Shared.Storage.Components;
 /// you can only take off of the top of the bin.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(BinSystem))]
-public sealed class BinComponent : Component
+public sealed partial class BinComponent : Component
 {
     /// <summary>
     /// The containers that contain the items held in the bin
