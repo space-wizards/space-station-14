@@ -6,6 +6,11 @@
   components:
   - type: Item
     size: 60
+  - type: Appearance
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: Transform
+    anchored: false
   - type: Storage
     capacity: 60
   - type: Tag
