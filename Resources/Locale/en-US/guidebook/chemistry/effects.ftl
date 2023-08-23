@@ -267,11 +267,11 @@ reagent-effect-guidebook-make-sentient =
         *[other] make
     } the metabolizer sentient
 
-reagent-effect-guidebook-make-tree =
+reagent-effect-guidebook-make-polymorph =
     { $chance ->
-        [1] Makes
-        *[other] Make
-    } the metabolizer a tree
+        [1] Polymorphs
+        *[other] polymorph
+    } the metabolizer
 
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
