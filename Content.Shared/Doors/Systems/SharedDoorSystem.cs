@@ -20,7 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedDoorSystem : EntitySystem
+public abstract partial class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming GameTiming = default!;
     [Dependency] protected readonly SharedPhysicsSystem PhysicsSystem = default!;
@@ -674,7 +674,7 @@ public abstract class SharedDoorSystem : EntitySystem
     protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
 
     [Serializable, NetSerializable]
-    protected sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
+    protected sealed partial class DoorPryDoAfterEvent : SimpleDoAfterEvent
     {
     }
 }

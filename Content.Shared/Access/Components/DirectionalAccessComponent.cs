@@ -7,7 +7,7 @@ namespace Content.Shared.Access.Components;
 ///     and allows checking if something or somebody is activating it from an allowed direction
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class DirectionalAccessComponent : Component
+public sealed partial class DirectionalAccessComponent : Component
 {
     /// <summary>
     /// Whether or not the DirectionalAccess is enabled.

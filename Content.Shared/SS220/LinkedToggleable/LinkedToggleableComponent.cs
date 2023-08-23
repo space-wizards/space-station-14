@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.SS220.LinkedToggleable;
 
 [RegisterComponent]
-public sealed class LinkedToggleableComponent : Component
+public sealed partial class LinkedToggleableComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly)]
     [DataField("state")]

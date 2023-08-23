@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.VendingMachines
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class VendingMachineComponent : Component
+    public sealed partial class VendingMachineComponent : Component
     {
         public const string ContainerId = "VendingMachine";
 
@@ -267,7 +267,7 @@ namespace Content.Shared.VendingMachines
         StatusKey,
     }
 
-    public sealed class VendingMachineSelfDispenseEvent : InstantActionEvent
+    public sealed partial class VendingMachineSelfDispenseEvent : InstantActionEvent
     {
 
     };

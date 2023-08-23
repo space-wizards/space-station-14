@@ -6,6 +6,6 @@ namespace Content.Shared.Placeable;
 /// Forbidden to be placed on <see cref="PlaceableSurfaceComponent"/>
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class UnPlaceableComponent : Component
+public sealed partial class UnPlaceableComponent : Component
 {
 }

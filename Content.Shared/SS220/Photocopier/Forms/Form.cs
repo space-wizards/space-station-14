@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.SS220.Photocopier.Forms;
 
 [Serializable, DataDefinition]
-public sealed class Form
+public sealed partial class Form
 {
     private const string DefaultPrototypeId = "paper";
 
@@ -58,21 +58,21 @@ public sealed class Form
 }
 
 [Serializable, DataDefinition]
-public sealed class FormGroup
+public sealed partial class FormGroup
 {
     [DataField("name", required: true)]
-    public readonly string Name = default!;
+    public string Name { get; private set; } = default!;
 
     [DataField("groupId", required: true)]
-    public readonly string GroupId = default!;
+    public string GroupId { get; private set; } = default!;
 
     [DataField("color", required: true)]
-    public readonly Color Color = default!;
+    public Color Color { get; private set; } = default!;
 
-    public readonly string? IconPath;
+    public string? IconPath { get; private set; }
 
     [DataField("forms")]
-    public readonly Dictionary<string, Form> Forms = new();
+    public Dictionary<string, Form> Forms { get; private set; } = new();
 
     private FormGroup()
     {
@@ -88,13 +88,13 @@ public sealed class FormGroup
 }
 
 [Serializable, DataDefinition]
-public sealed class FormCollection
+public sealed partial class FormCollection
 {
     [DataField("collectionId", required: true)]
-    public readonly string CollectionId = default!;
+    public string CollectionId { get; private set; } = default!;
 
     [DataField("groups")]
-    public readonly List<FormGroup> Groups = new();
+    public List<FormGroup> Groups { get; private set; } = new();
 
     private FormCollection()
     {

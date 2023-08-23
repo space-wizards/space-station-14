@@ -4,6 +4,6 @@ namespace Content.Server.Explosion.Components;
 /// Triggers a gun when attempting to shoot while it's empty
 /// </summary>
 [RegisterComponent]
-public sealed class TriggerWhenEmptyComponent : Component
+public sealed partial class TriggerWhenEmptyComponent : Component
 {
 }

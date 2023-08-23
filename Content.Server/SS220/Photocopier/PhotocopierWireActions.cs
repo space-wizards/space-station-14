@@ -7,7 +7,7 @@ using Content.Shared.Wires;
 namespace Content.Server.SS220.Photocopier;
 
 [DataDefinition]
-public sealed class PhotocopierBurnButtWireAction : ComponentWireAction<PhotocopierComponent>
+public sealed partial class PhotocopierBurnButtWireAction : ComponentWireAction<PhotocopierComponent>
 {
     public override string Name { get; set; } = "wire-name-photocopier-burn";
     public override Color Color { get; set; } = Color.Red;
@@ -43,7 +43,7 @@ public sealed class PhotocopierBurnButtWireAction : ComponentWireAction<Photocop
 }
 
 [DataDefinition]
-public sealed class PhotocopierSusFormsWireAction : ComponentWireAction<PhotocopierComponent>
+public sealed partial class PhotocopierSusFormsWireAction : ComponentWireAction<PhotocopierComponent>
 {
     public override string Name { get; set; } = "wire-name-photocopier-contraband";
     public override Color Color { get; set; } = Color.Green;

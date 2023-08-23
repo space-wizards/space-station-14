@@ -33,18 +33,15 @@ public sealed class SignalSwitchSystem : EntitySystem
         comp.State = !comp.State;
         _appearance.SetData(uid, SignalSwitchVisuals.State, comp.State);
         _deviceLink.InvokePort(uid, comp.State ? comp.OnPort : comp.OffPort);
-        _audio.PlayPvs(comp.ClickSound, uid);
-
-        // Invoke status port
-        var data = new NetworkPayload
-        {
-            [DeviceNetworkConstants.LogicState] = comp.State ? SignalState.High : SignalState.Low
-        };
 
         // only send status if it's a toggle switch and not a button
         if (comp.OnPort != comp.OffPort)
         {
-            _deviceLink.InvokePort(uid, comp.StatusPort, data);
+            _deviceLink.SendSignal(uid, comp.StatusPort, comp.State);
         }
+
+        _audio.PlayPvs(comp.ClickSound, uid);
+
+        args.Handled = true;
     }
 }

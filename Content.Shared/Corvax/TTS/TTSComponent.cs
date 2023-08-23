@@ -8,7 +8,7 @@ namespace Content.Shared.Corvax.TTS;
 /// </summary>
 [RegisterComponent, NetworkedComponent]
 // ReSharper disable once InconsistentNaming
-public sealed class TTSComponent : Component
+public sealed partial class TTSComponent : Component
 {
     /// <summary>
     /// Prototype of used voice for TTS.

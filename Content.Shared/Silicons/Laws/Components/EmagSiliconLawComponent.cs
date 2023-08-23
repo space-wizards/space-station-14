@@ -8,7 +8,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// This is used for an entity that grants a special "obey" law when emagge.d
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedSiliconLawSystem))]
-public sealed class EmagSiliconLawComponent : Component
+public sealed partial class EmagSiliconLawComponent : Component
 {
     /// <summary>
     /// The name of the person who emagged this law provider.

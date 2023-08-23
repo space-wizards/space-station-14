@@ -42,7 +42,6 @@
       types:
         Heat: 10
     paperSlot:
-      insertSound: null #Is handled by Photocopier component, use paperInsertSound field of Photocopier
       ejectSound: /Audio/SS220/Effects/paper_pick_up.ogg
       whitelist:
         components:

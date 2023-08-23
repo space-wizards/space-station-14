@@ -96,7 +96,7 @@ public abstract partial class SharedGunSystem
     }
 
     // TODO: Actions need doing for guns anyway.
-    private sealed class CycleModeEvent : InstantActionEvent
+    private sealed partial class CycleModeEvent : InstantActionEvent
     {
         public SelectiveFire Mode;
     }

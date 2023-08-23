@@ -6,9 +6,9 @@ using Robust.Shared.Physics.Collision.Shapes;
 namespace Content.Shared.SS220.ShapeCollisionTracker;
 
 [RegisterComponent]
-public sealed class ShapeCollisionTrackerComponent : Component
+public sealed partial class ShapeCollisionTrackerComponent : Component
 {
-    public const string FixtureID  = "collision-tracker-fixture";
+    public const string FixtureID = "collision-tracker-fixture";
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("enabled")]

@@ -11,7 +11,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed class HijackShuttleCondition : IObjectiveCondition
+    public sealed partial class HijackShuttleCondition : IObjectiveCondition
     {
         private Mind.Mind? _mind;
 

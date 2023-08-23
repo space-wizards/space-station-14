@@ -3,7 +3,7 @@
 namespace Content.Shared.Construction.Steps
 {
     [DataDefinition]
-    public sealed class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
+    public sealed partial class PrototypeConstructionGraphStep : ArbitraryInsertConstructionGraphStep
     {
         [DataField("prototype")]
         private string _prototype = "BaseItem";

@@ -5,7 +5,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Paper;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class PaperComponent : SharedPaperComponent, IPhotocopyableComponent
+public sealed partial class PaperComponent : SharedPaperComponent, IPhotocopyableComponent
 {
     public PaperAction Mode;
     [DataField("content")]

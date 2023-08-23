@@ -1,7 +1,7 @@
 namespace Content.Server.SS220.AutoEngrave;
 
 [RegisterComponent]
-public sealed class EngraveNameOnOpenComponent : Component
+public sealed partial class EngraveNameOnOpenComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("activated")]
     public bool Activated;

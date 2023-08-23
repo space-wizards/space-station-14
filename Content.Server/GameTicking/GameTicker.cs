@@ -19,6 +19,7 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Roles;
 using Robust.Server;
 using Robust.Server.GameObjects;
+using Robust.Server.GameStates;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
 #if EXCEPTION_TOLERANCE
@@ -41,6 +42,7 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
         [Dependency] private readonly IAdminLogManager _adminLogs = default!;
         [Dependency] private readonly IVoteManager _voteManager = default!;
 
@@ -72,7 +74,6 @@ namespace Content.Server.GameTicking
                 "Overflow role does not have the correct name!");
             InitializeGameRules();
             InitializeReplays();
-            InitializeRoundFlow();
             _initialized = true;
         }
 

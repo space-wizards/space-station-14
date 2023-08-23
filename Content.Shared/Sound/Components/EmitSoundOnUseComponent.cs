@@ -6,7 +6,7 @@ namespace Content.Shared.Sound.Components;
 /// Simple sound emitter that emits sound on UseInHand
 /// </summary>
 [RegisterComponent]
-public sealed class EmitSoundOnUseComponent : BaseEmitSoundComponent
+public sealed partial class EmitSoundOnUseComponent : BaseEmitSoundComponent
 {
     /// <summary>
     ///     Whether or not to mark an interaction as handled after playing the sound. Useful if this component is

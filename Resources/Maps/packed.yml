@@ -76161,6 +76161,31 @@ entities:
     - pos: 27.5,8.5
       parent: 2
       type: Transform
+- proto: TegCenter
+  entities:
+  - uid: 13127
+    components:
+    - pos: 40.5,-46.5
+      parent: 2
+      type: Transform
+- proto: TegCirculator
+  entities:
+  - uid: 13128
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 40.5,-47.5
+      parent: 2
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
+  - uid: 13129
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 40.5,-45.5
+      parent: 2
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
 - proto: TelecomServer
   entities:
   - uid: 533

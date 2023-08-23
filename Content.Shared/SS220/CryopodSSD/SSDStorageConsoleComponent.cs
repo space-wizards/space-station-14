@@ -6,14 +6,14 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.SS220.CryopodSSD;
 
 [RegisterComponent]
-public sealed class SSDStorageConsoleComponent : Component
+public sealed partial class SSDStorageConsoleComponent : Component
 {
     /// <summary>
     /// List for IC knowing who went in cryo
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     public List<string> StoredEntities = new List<string>();
-    
+
     /// <summary>
     /// All items that are not whitelisted will be
     /// irretrievably lost after the essence is transferred to cryostorage.

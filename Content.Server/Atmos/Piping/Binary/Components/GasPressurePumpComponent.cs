@@ -3,7 +3,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Atmos.Piping.Binary.Components
 {
     [RegisterComponent]
-    public sealed class GasPressurePumpComponent : Component
+    public sealed partial class GasPressurePumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("enabled")]

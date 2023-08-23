@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Fax;
 
 [RegisterComponent]
-public sealed class FaxMachineComponent : Component
+public sealed partial class FaxMachineComponent : Component
 {
     /// <summary>
     /// Name with which the fax will be visible to others on the network
@@ -90,7 +90,7 @@ public sealed class FaxMachineComponent : Component
     /// </summary>
     [ViewVariables]
     [DataField("printingQueue")]
-    public Queue<FaxPrintout> PrintingQueue { get; } = new();
+    public Queue<FaxPrintout> PrintingQueue { get; private set; } = new();
 
     /// <summary>
     /// Message sending timeout
@@ -132,13 +132,13 @@ public sealed class FaxMachineComponent : Component
 }
 
 [DataDefinition]
-public sealed class FaxPrintout
+public sealed partial class FaxPrintout
 {
     [DataField("dataToCopy")]
-    public Dictionary<Type, IPhotocopiedComponentData>? DataToCopy;
+    public Dictionary<Type, IPhotocopiedComponentData>? DataToCopy { get; private set; }
 
     [DataField("metaData")]
-    public PhotocopyableMetaData? MetaData;
+    public PhotocopyableMetaData? MetaData { get; private set; }
 
     private FaxPrintout()
     {
