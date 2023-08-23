@@ -9,11 +9,11 @@ namespace Content.Shared.Emoting;
 [RegisterComponent, NetworkedComponent]
 public sealed partial class EmotingComponent : Component
 {
-   [DataField("enabled"), Access(typeof(EmoteSystem),
+    [DataField("enabled"), Access(typeof(EmoteSystem),
         Friend = AccessPermissions.ReadWrite,
         Other = AccessPermissions.Read)] public bool Enabled = true;
-        
-   /// <summary>
+
+    /// <summary>
     /// Open emotes action id
     /// </summary>
     [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
@@ -27,7 +27,7 @@ public sealed partial class EmotingComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class RequestEmoteMenuEvent : EntityEventArgs
+public sealed partial class RequestEmoteMenuEvent : EntityEventArgs
 {
     public readonly List<string> Prototypes = new();
     public EntityUid Target { get; }
@@ -39,7 +39,7 @@ public sealed class RequestEmoteMenuEvent : EntityEventArgs
 }
 
 [Serializable, NetSerializable]
-public sealed class SelectEmoteEvent : EntityEventArgs
+public sealed partial class SelectEmoteEvent : EntityEventArgs
 {
     public string PrototypeId { get; }
     public EntityUid Target { get; }
@@ -51,6 +51,6 @@ public sealed class SelectEmoteEvent : EntityEventArgs
     }
 }
 
-public sealed class OpenEmotesActionEvent : InstantActionEvent
+public sealed partial class OpenEmotesActionEvent : InstantActionEvent
 {
 }
