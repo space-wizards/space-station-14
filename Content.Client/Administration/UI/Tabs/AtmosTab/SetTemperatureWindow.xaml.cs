@@ -47,7 +47,7 @@ namespace Content.Client.Administration.UI.Tabs.AtmosTab
 
             var selectedGrid = _data[GridOptions.SelectedId];
             IoCManager.Resolve<IClientConsoleHost>()
-                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {selectedGrid} {TemperatureSpin.Value}");
+                .ExecuteCommand($"settemp {TileXSpin.Value} {TileYSpin.Value} {IoCManager.Resolve<IEntityManager>().GetNetEntity(selectedGrid)} {TemperatureSpin.Value}");
         }
     }
 }
