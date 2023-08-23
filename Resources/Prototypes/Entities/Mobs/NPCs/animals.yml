@@ -2481,7 +2481,7 @@
     interactSuccessString: petting-success-nymph
     interactFailureString: petting-failure-nymph
     interactSuccessSound:
-      path: /Audio/Animals/nymph_chirp.
+      path: /Audio/Animals/nymph_chirp
   - type: MobThresholds
     thresholds:
       0: Alive
