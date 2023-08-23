@@ -22,4 +22,4 @@
         tags:
           - Book
           - Document
-  - type: Dumpable
+    - type: Dumpable
