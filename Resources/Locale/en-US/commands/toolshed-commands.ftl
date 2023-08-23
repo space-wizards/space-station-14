@@ -66,3 +66,7 @@ command-description-solution-get =
     Grabs the given solution off the given entity.
 command-description-solution-adjreagent =
     Adjusts the given reagent on the given solution.
+command-description-mind-get =
+    Grabs the mind from the entity, if any.
+command-description-mind-control =
+    Assumes control of an entity with the given player.

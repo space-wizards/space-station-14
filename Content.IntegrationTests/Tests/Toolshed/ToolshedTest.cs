@@ -46,11 +46,11 @@ public abstract class ToolshedTest : IInvocationContext
     public virtual async Task Setup()
     {
         PairTracker = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
-        Server = PairTracker.Pair.Server;
+        Server = PairTracker.Server;
 
         if (Connected)
         {
-            Client = PairTracker.Pair.Client;
+            Client = PairTracker.Client;
             await Client.WaitIdleAsync();
         }
 
