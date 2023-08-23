@@ -173,33 +173,18 @@
 
 - type: entity
   name: banana
-  parent: FoodProduceBase
+  parent: FoodBanana
   suffix: Peeled
   id: FoodBananaPeeled
   description: Rich in potassium.
   components:
-  - type: FlavorProfile
-    flavors:
-      - banana
   - type: Food
     trash: TrashBananaPeel
-  - type: SolutionContainerManager
-    solutions:
-      food:
-        maxVol: 6
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 4
-        - ReagentId: Vitamin
-          Quantity: 2
   - type: Sprite
     sprite: Objects/Specific/Hydroponics/banana.rsi
     state: peeled
-  - type: Extractable
-    juiceSolution:
-      reagents:
-      - ReagentId: JuiceBanana
-        Quantity: 10
+  - type: SpawnItemsOnUse
+    uses: 0
 
 - type: entity
   name: banana peel
