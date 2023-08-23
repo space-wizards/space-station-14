@@ -40,7 +40,6 @@ namespace Content.Shared.StatusEffect
                 foreach (var state in status.ActiveEffects.ToArray())
                 {
                     // if we're past the end point of the effect
-                    RaiseLocalEvent(status.Owner, new StatusUpdatedEvent(status.Owner, state.Key, frameTime), true);
                     if (curTime > state.Value.Cooldown.Item2)
                     {
                         TryRemoveStatusEffect(status.Owner, state.Key, status);
