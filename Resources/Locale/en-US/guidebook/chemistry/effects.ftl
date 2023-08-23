@@ -267,6 +267,12 @@ reagent-effect-guidebook-make-sentient =
         *[other] make
     } the metabolizer sentient
 
+reagent-effect-guidebook-make-tree =
+    { $chance ->
+        [1] Makes
+        *[other] Make
+    } the metabolizer a tree
+
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
         [1] { $deltasign ->
