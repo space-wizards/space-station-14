@@ -382,10 +382,22 @@
     items:
     - HydroponicsToolMiniHoe
     - HydroponicsToolSpade
-    - HydroponicsToolScythe
     - HydroponicsToolClippers
-    - HydroponicsToolHatchet
     - Bucket
+
+- type: entity
+  id: BorgModuleHarvesting
+  parent: [ BaseBorgModuleService, BaseProviderBorgModule ]
+  name: harvesting cyborg module
+  components:
+  - type: Sprite
+    layers:
+    - state: service
+    - state: icon-gardening
+  - type: ItemBorgModule
+    items:
+    - HydroponicsToolScythe
+    - HydroponicsToolHatchet
     - PlantBag
 
 - type: entity
