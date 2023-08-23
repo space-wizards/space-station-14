@@ -271,7 +271,7 @@ reagent-effect-guidebook-make-polymorph =
     { $chance ->
         [1] Polymorphs
         *[other] polymorph
-    } the metabolizer into a { $protoname }
+    } the metabolizer into a { $entityname }
 
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
