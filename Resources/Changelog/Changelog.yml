@@ -1,14 +1,4 @@
 Entries:
-- author: Lomcastar
-  changes:
-  - {message: Crew monitor now uses colors for passenger status., type: Tweak}
-  id: 4162
-  time: '2023-07-05T00:29:25.0000000+00:00'
-- author: Derby
-  changes:
-  - {message: Changed pizza to have 8 slices instead of 6., type: Tweak}
-  id: 4163
-  time: '2023-07-05T00:29:36.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: subfloor entities (wires and pipes) are now resistant to explosions
@@ -3032,3 +3022,16 @@ Entries:
   - {message: Changed various head locker contents., type: Tweak}
   id: 4661
   time: '2023-08-22T14:49:53.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
+  - {message: 'When a zombie is cloned, the cloned person''s eyes are visible again.',
+    type: Fix}
+  id: 4662
+  time: '2023-08-23T04:52:00.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'R&D has developed the construction cyborg module for engineering cyborgs,
+      now they can construct anything with steel glass or rods.', type: Add}
+  id: 4663
+  time: '2023-08-23T21:34:39.0000000+00:00'
