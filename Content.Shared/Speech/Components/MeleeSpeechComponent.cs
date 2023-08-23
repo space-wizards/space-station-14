@@ -1,11 +1,14 @@
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Speech.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
+
+
 public sealed partial class MeleeSpeechComponent : Component
 {
     [ViewVariables]
@@ -24,8 +27,12 @@ public sealed partial class MeleeSpeechComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("MaxBattlecryLength")]
+    [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
 
+    /// <summary>
+    /// The action to open the battlecry UI
+    /// </summary>
     [DataField("configureAction")]
     public InstantAction ConfigureAction = new()
     {
