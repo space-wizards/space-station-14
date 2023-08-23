@@ -19,6 +19,7 @@ using Content.Shared.Zombies;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Content.Shared.Humanoid;
 
 namespace Content.Server.Zombies;
 
@@ -232,7 +233,11 @@ public sealed partial class ZombieSystem : SharedZombieSystem
             _sharedHuApp.SetBaseLayerColor(target, layer, info.Color);
             _sharedHuApp.SetBaseLayerId(target, layer, info.ID);
         }
-        _sharedHuApp.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
+            if(TryComp<HumanoidAppearanceComponent>(target, out var appcomp))
+            {
+                appcomp.EyeColor = zombiecomp.BeforeZombifiedEyeColor;
+            }
+            _humanoidAppearance.SetSkinColor(target, zombiecomp.BeforeZombifiedSkinColor);
         _bloodstream.ChangeBloodReagent(target, zombiecomp.BeforeZombifiedBloodReagent);
 
         _metaData.SetEntityName(target, zombiecomp.BeforeZombifiedEntityName);

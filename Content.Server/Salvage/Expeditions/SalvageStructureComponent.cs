@@ -4,7 +4,7 @@ namespace Content.Server.Salvage.Expeditions.Structure;
 /// Mission objective for salvage expeditions.
 /// </summary>
 [RegisterComponent, Access(typeof(SalvageSystem))]
-public sealed class SalvageStructureComponent : Component
+public sealed partial class SalvageStructureComponent : Component
 {
 
 }

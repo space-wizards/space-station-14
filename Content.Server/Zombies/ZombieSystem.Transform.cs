@@ -118,13 +118,16 @@ namespace Content.Server.Zombies
                 // If somehow a dead zombie gets zombified again, this data might get damaged.
                 var before = EnsureComp<BeforeZombieComponent>(target);
                 before.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                before.BeforeZombifiedEyeColor = huApComp.EyeColor;
                 before.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
                 if (TryComp<BloodstreamComponent>(target, out var stream))
                     before.BeforeZombifiedBloodReagent = stream.BloodReagent;
                 before.BeforeZombifiedEntityName = meta.EntityName;
 
                 _sharedHuApp.SetSkinColor(target, zombie.SkinColor, verify: false, humanoid: huApComp);
-                _sharedHuApp.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombie.EyeColor, humanoid: huApComp);
+                _humanoidAppearance.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
+                // Messing with the eye layer made it vanish upon cloning, and also it didn't even appear right
+                huApComp.EyeColor = zombiecomp.EyeColor;
 
                 // this might not resync on clone?
                 _sharedHuApp.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombie.BaseLayerExternal, humanoid: huApComp);

@@ -1,6 +1,6 @@
 namespace Content.Server.NPC.Queries.Considerations;
 
-public sealed class DrinkValueCon : UtilityConsideration
+public sealed partial class DrinkValueCon : UtilityConsideration
 {
 
 }

@@ -8,7 +8,7 @@ namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent]
     [Access(typeof(DrinkSystem))]
-    public sealed class DrinkComponent : Component
+    public sealed partial class DrinkComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = DefaultSolutionName;

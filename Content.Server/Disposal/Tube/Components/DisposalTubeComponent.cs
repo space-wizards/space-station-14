@@ -10,7 +10,7 @@ namespace Content.Server.Disposal.Tube.Components
 {
     [RegisterComponent]
     [Access(typeof(DisposalTubeSystem), typeof(DisposableSystem))]
-    public sealed class DisposalTubeComponent : Component
+    public sealed partial class DisposalTubeComponent : Component
     {
         [DataField("containerId")] public string ContainerId { get; set; } = "DisposalTube";
 

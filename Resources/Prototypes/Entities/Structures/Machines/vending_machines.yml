@@ -115,6 +115,17 @@
     layers:
     - state: "off"
       map: ["enum.VendingMachineVisualLayers.Base"]
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.3,-0.16,0.3,0.40"
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+        density: 190
   - type: Advertise
     pack: CondimentVendAds
   - type: Speech
@@ -770,6 +781,9 @@
     radius: 1.5
     energy: 1.6
     color: "#9dc5c9"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: VendingMachine
@@ -834,6 +848,9 @@
     radius: 1
     energy: 1.2
     color: "#78645c"
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   parent: VendingMachine
@@ -1182,6 +1199,9 @@
     radius: 1.5
     energy: 1.6
     color: "#B0ADA9"
+  - type: GuideHelp
+    guides:
+    - Robotics
 
 - type: entity
   parent: VendingMachine
@@ -1303,6 +1323,9 @@
     color: "#9dc5c9"
   - type: AccessReader
     access: [["Salvage"]]
+  - type: GuideHelp
+    guides:
+    - Salvage
 
 - type: entity
   parent: VendingMachine
@@ -1375,6 +1398,9 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Medical"]]
+  - type: GuideHelp
+    guides:
+    - Medical
 
 # job clothing
 
@@ -1963,3 +1989,6 @@
       map: ["enum.WiresVisualLayers.MaintenancePanel"]
   - type: AccessReader
     access: [["Chemistry"]]
+  - type: GuideHelp
+    guides:
+    - Chemicals

@@ -29,4 +29,10 @@ public sealed class BeforeZombieComponent : Component
     /// </summary>
     [DataField("beforeZombifiedBloodReagent")]
     public string BeforeZombifiedBloodReagent = string.Empty;
+
+    /// <summary>
+    /// The eye color of the humanoid to restore in case of cloning
+    /// </summary>
+    [DataField("beforeZombifiedEyeColor")]
+    public Color BeforeZombifiedEyeColor;
 }

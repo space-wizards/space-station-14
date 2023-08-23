@@ -19,7 +19,7 @@ namespace Content.Shared.Zombies;
 ///   - [none of these] - This zombie has turned from undead to actually dead.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedZombieSystem))]
-public sealed class ZombieComponent: Component
+public sealed partial class ZombieComponent : Component
 {
     public void CopyFrom(ZombieComponent other)
     {
@@ -94,7 +94,8 @@ public sealed class ZombieComponent: Component
     /// The role prototype of the zombie antag role
     /// </summary>
     [DataField("zombieRoleId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
-    public readonly string ZombieRoleId = "Zombie";
+    public string ZombieRoleId = "Zombie";
+
 
     [DataField("emoteId", customTypeSerializer: typeof(PrototypeIdSerializer<EmoteSoundsPrototype>))]
     public string? EmoteSoundsId = "Zombie";

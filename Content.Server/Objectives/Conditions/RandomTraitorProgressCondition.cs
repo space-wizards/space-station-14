@@ -8,7 +8,7 @@ using Content.Server.Roles;
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed class RandomTraitorProgressCondition : IObjectiveCondition
+    public sealed partial class RandomTraitorProgressCondition : IObjectiveCondition
     {
         private Mind.Mind? _target;
 

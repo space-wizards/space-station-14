@@ -12,7 +12,7 @@ namespace Content.Shared.Foldable;
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedFoldableSystem))]
-public sealed class FoldableComponent : Component
+public sealed partial class FoldableComponent : Component
 {
     [DataField("folded")]
     public bool IsFolded = false;

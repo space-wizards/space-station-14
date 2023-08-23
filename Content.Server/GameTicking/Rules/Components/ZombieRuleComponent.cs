@@ -1,4 +1,5 @@
-﻿using Content.Shared.Roles;
+using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Roles;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
@@ -7,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(ZombieRuleSystem))]
-public sealed class ZombieRuleComponent : Component
+public sealed partial class ZombieRuleComponent : Component
 {
     [DataField("initialInfectedNames")]
     public Dictionary<string, string> InitialInfectedNames = new();
@@ -96,6 +97,7 @@ public sealed class ZombieRuleComponent : Component
     // When Initial Infected can first turn
     [DataField("firstTurnAllowed", customTypeSerializer:typeof(TimeOffsetSerializer)), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan? FirstTurnAllowed;
-
+	
+    [ValidatePrototypeId<InstantActionPrototype>]
     public const string ZombifySelfActionPrototype = "TurnUndead";
 }

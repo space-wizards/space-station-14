@@ -8,7 +8,7 @@ namespace Content.Server.Ghost.Roles.Components
     /// </summary>
     [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
-    public sealed class GhostRoleMobSpawnerComponent : Component
+    public sealed partial class GhostRoleMobSpawnerComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)] [DataField("deleteOnSpawn")]
         public bool DeleteOnSpawn = true;
