@@ -7,7 +7,7 @@ namespace Content.Shared.Overlays
     /// This component allows you to see health status icons above damageable mobs.
     /// </summary>
     [RegisterComponent]
-    public sealed class ShowHealthIconsComponent : Component
+    public sealed partial class ShowHealthIconsComponent : Component
     {
         /// <summary>
         /// Displays health status icons of the damage containers.
