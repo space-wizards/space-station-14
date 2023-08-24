@@ -3,6 +3,7 @@ using Content.Server.KillTracking;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
 using Content.Shared.Points;
+using Content.Shared.Storage;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -39,7 +40,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
     private void OnKillReported(ref KillReportedEvent ev)
     {
         var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out _, out var point, out var rule))
+        while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
@@ -56,6 +57,9 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
 
             if (ev.Assist is KillPlayerSource assist)
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
+
+            var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns);
+            EntityManager.SpawnEntities(Transform(ev.Entity).MapPosition, spawns);
         }
     }
 

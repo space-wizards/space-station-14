@@ -1,5 +1,8 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Storage;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
@@ -27,4 +30,10 @@ public sealed partial class DeathMatchRuleComponent : Component
     /// </summary>
     [DataField("victor")]
     public NetUserId? Victor;
+
+    /// <summary>
+    /// An entity spawned after a player is killed.
+    /// </summary>
+    [DataField("rewardSpawns")]
+    public List<EntitySpawnEntry> RewardSpawns = new();
 }

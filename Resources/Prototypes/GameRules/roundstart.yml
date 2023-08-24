@@ -11,7 +11,24 @@
   noSpawn: true
   components:
   - type: DeathMatchRule
-    killCap: 3
+    rewardSpawns:
+    - id: HealingToolbox
+    - id: ClothingOuterArmorBasicSlim
+      orGroup: loot
+    - id: ClothingHeadHelmetBasic
+      orGroup: loot
+    - id: SoapNT
+      orGroup: loot
+    - id: Bola
+      orGroup: loot
+    - id: Spear
+      orGroup: loot
+    - id: ClothingShoesGaloshes
+      orGroup: loot
+    - id: FoodPieBananaCream
+      orGroup: loot
+    - id: Stimpack
+      orGroup: loot
   - type: KillCalloutRule
   - type: PointManager
   - type: RespawnDeadRule
@@ -78,24 +95,6 @@
   noSpawn: true
   components:
   - type: ZombieRule
-
-# Respawn
-- type: entity
-  id: RespawnInstantRule
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: RespawnTracker
-  - type: RespawnDeadRule
-
-- type: entity
-  id: Respawn5Rule
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: RespawnDeadRule
-  - type: RespawnTracker
-    respawnDelay: 5
 
 # event schedulers
 - type: entity
