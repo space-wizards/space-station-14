@@ -9,7 +9,7 @@ namespace Content.Shared.Damage.Prototypes
     public sealed class DamageTypePrototype : IPrototype
     {
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         /// The price for each 1% damage reduction in armors

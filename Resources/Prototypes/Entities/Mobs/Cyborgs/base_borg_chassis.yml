@@ -58,6 +58,12 @@
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
+    stunTime: 5
+    emagLaws:
+    - Syndicate1
+    - Syndicate2
+    - Syndicate3
+    - Syndicate4
   - type: Hands
     showInHands: false
   - type: IntrinsicRadioReceiver

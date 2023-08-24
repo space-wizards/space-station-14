@@ -18,6 +18,6 @@ namespace Content.Shared.Damage.Prototypes
         [IdDataField] public string ID { get; } = default!;
 
         [DataField("damageTypes", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<DamageTypePrototype>))]
-        public List<string> DamageTypes { get; } = default!;
+        public List<string> DamageTypes { get; private set; } = default!;
     }
 }

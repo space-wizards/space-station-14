@@ -137,8 +137,6 @@ namespace Content.IntegrationTests.Tests
                 roundEndSystem.DefaultCountdownDuration = TimeSpan.FromMinutes(4);
                 ticker.RestartRound();
             });
-            await PoolManager.ReallyBeIdle(pairTracker.Pair, 10);
-
             await pairTracker.CleanReturnAsync();
         }
     }

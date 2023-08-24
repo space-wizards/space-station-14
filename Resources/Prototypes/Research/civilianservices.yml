@@ -1,4 +1,4 @@
-﻿# Tier 1
+# Tier 1
 
 - type: technology
   id: JanitorialEquipment
@@ -39,6 +39,7 @@
   cost: 5000
   recipeUnlocks:
   - BorgModuleGardening
+  - BorgModuleHarvesting
   - SeedExtractorMachineCircuitboard
   - HydroponicsTrayMachineCircuitboard
 

@@ -6,6 +6,6 @@ namespace Content.Server.Power.Components
     /// This object is an APC electronics, used for constructing APCs
     /// </summary>
     [RegisterComponent]
-    public sealed class ApcElectronicsComponent : Component
+    public sealed partial class ApcElectronicsComponent : Component
     { }
 }

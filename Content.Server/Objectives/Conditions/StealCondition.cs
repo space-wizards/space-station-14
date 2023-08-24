@@ -10,7 +10,7 @@ namespace Content.Server.Objectives.Conditions
     // Oh god my eyes
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
+    public sealed partial class StealCondition : IObjectiveCondition, ISerializationHooks
     {
         private Mind.Mind? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;

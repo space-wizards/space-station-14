@@ -10,7 +10,7 @@ namespace Content.Shared.Silicons.Laws.Components;
 /// This is used for entities which are bound to silicon laws and can view them.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedSiliconLawSystem))]
-public sealed class SiliconLawBoundComponent : Component
+public sealed partial class SiliconLawBoundComponent : Component
 {
     /// <summary>
     /// The sidebar action that toggles the laws screen.
@@ -49,7 +49,7 @@ public record struct GetSiliconLawsEvent(EntityUid Entity)
     public bool Handled = false;
 }
 
-public sealed class ToggleLawsScreenEvent : InstantActionEvent
+public sealed partial class ToggleLawsScreenEvent : InstantActionEvent
 {
 
 }
