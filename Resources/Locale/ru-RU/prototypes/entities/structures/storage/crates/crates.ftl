@@ -76,3 +76,7 @@ ent-CrateChemistrySecure = защищённый химический ящик
 ent-CrateToyBox = коробка игрушек
     .desc = Коробка, переполненная весельем.
     .suffix = Пустой
+ent-CrateWoodenGrave = могила
+    .desc = Здесь кто-то умер...
+ent-CrateStoneGrave = могила
+    .desc = Здесь кто-то умер...

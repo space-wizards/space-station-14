@@ -130,3 +130,5 @@ ent-ClothingUniformJumpskirtSeniorOfficer = юбка-комбинезон ста
     .desc = Признак мастерства и престижа в отделе безопасности.
 ent-ClothingUniformJumpskirtSyndieFormalDress = официальное платье синдиката
     .desc = Униформа синдиката выполнена в элегантном стиле, в таком даже жалко делать пакости.
+ent-ClothingUniformJumpskirtTacticalMaid = тактический костюм горничной
+    .desc = Предполагается, что лучшие горничные должны иметь дизайнерские костюмы.

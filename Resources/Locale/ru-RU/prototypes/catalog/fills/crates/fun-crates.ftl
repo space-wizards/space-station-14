@@ -52,3 +52,6 @@ ent-CrateFunWaterGuns = Ящик с водяным пистолетом
 ent-CrateFunToyBox = { ent-CrateToyBox }
     .suffix = { "Заполненный" }
     .desc = { ent-CrateToyBox.desc }
+
+ent-CrateFunBikeHornImplants = Имплант велосипедного гудка
+    .desc = Тысяча гудков в день отпугивает сотрудников службы безопасности!

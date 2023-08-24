@@ -31,3 +31,6 @@ ent-ClothingBeltParamedicFilled = { ent-ClothingBeltMedical }
 ent-ClothingBeltUtilityEngineering = { ent-ClothingBeltUtility }
     .suffix = Инженерный
     .desc = { ent-ClothingBeltUtility.desc }
+ent-ClothingBeltMilitaryWebbingGrenadeFilled = гренадерский РПС
+    .suffix = Заполненный
+    .desc = Ременно-поясная система тактических ремней, которую носят абордажные группы.
