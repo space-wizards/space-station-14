@@ -26,7 +26,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
     head: ClothingHeadHatBeretBrigmedic
-    gloves: ClothingsHandsGlovesNitrile
+    gloves: ClothingHandsGlovesNitrile
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBlack
     outerClothing: ClothingOuterCoatLabSeniorPhysician
