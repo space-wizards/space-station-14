@@ -55,7 +55,7 @@ namespace Content.Server.Power.Components
 
         private bool TryFindNet([NotNullWhen(true)] out TNetType? foundNet)
         {
-            if (_entMan.TryGetComponent<NodeContainerComponent?>(Owner, out var container))
+            if (_entMan.TryGetComponent(Owner, out NodeContainerComponent? container))
             {
                 var compatibleNet = container.Nodes.Values
                     .Where(node => (NodeId == null || NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) Voltage)
