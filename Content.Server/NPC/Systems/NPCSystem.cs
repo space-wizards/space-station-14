@@ -12,7 +12,6 @@ namespace Content.Server.NPC.Systems
     /// <summary>
     ///     Handles NPCs running every tick.
     /// </summary>
-    [UsedImplicitly]
     public sealed partial class NPCSystem : EntitySystem
     {
         [Dependency] private readonly IConfigurationManager _configurationManager = default!;
@@ -42,12 +41,12 @@ namespace Content.Server.NPC.Systems
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
         }
 
-        private void OnPlayerNPCAttach(EntityUid uid, NPCComponent component, PlayerAttachedEvent args)
+        public void OnPlayerNPCAttach(EntityUid uid, NPCComponent component, PlayerAttachedEvent args)
         {
             SleepNPC(uid, component);
         }
 
-        private void OnPlayerNPCDetach(EntityUid uid, NPCComponent component, PlayerDetachedEvent args)
+        public void OnPlayerNPCDetach(EntityUid uid, NPCComponent component, PlayerDetachedEvent args)
         {
             if (_mobState.IsIncapacitated(uid) || TerminatingOrDeleted(uid))
                 return;
@@ -65,13 +64,13 @@ namespace Content.Server.NPC.Systems
             _configurationManager.UnsubValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates);
         }
 
-        private void OnNPCMapInit(EntityUid uid, NPCComponent component, MapInitEvent args)
+        public void OnNPCMapInit(EntityUid uid, NPCComponent component, MapInitEvent args)
         {
             component.Blackboard.SetValue(NPCBlackboard.Owner, uid);
             WakeNPC(uid, component);
         }
 
-        private void OnNPCShutdown(EntityUid uid, NPCComponent component, ComponentShutdown args)
+        public void OnNPCShutdown(EntityUid uid, NPCComponent component, ComponentShutdown args)
         {
             SleepNPC(uid, component);
         }
@@ -134,7 +133,7 @@ namespace Content.Server.NPC.Systems
             _htn.UpdateNPC(ref _count, _maxUpdates, frameTime);
         }
 
-        private void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
+        public void OnMobStateChange(EntityUid uid, NPCComponent component, MobStateChangedEvent args)
         {
             if (HasComp<ActorComponent>(uid))
                 return;
