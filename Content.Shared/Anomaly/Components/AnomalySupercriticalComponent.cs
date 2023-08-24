@@ -8,7 +8,7 @@ namespace Content.Shared.Anomaly.Components;
 /// Tracks anomalies going supercritical
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedAnomalySystem))]
-public sealed class AnomalySupercriticalComponent : Component
+public sealed partial class AnomalySupercriticalComponent : Component
 {
     /// <summary>
     /// The time when the supercritical animation ends and it does whatever effect.

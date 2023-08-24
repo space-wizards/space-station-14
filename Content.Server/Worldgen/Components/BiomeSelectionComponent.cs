@@ -9,7 +9,7 @@ namespace Content.Server.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(BiomeSelectionSystem))]
-public sealed class BiomeSelectionComponent : Component
+public sealed partial class BiomeSelectionComponent : Component
 {
     /// <summary>
     ///     The list of biomes available to this selector.

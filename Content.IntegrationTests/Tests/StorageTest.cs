@@ -79,7 +79,7 @@ namespace Content.IntegrationTests.Tests
 
             Assert.Multiple(() =>
             {
-                foreach (var proto in PoolManager.GetEntityPrototypes<StorageFillComponent>(server))
+                foreach (var proto in PoolManager.GetPrototypesWithComponent<StorageFillComponent>(server))
                 {
                     int capacity;
                     var isEntStorage = false;

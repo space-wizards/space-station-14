@@ -111,7 +111,7 @@ namespace Content.Shared.Throwing
 
                 if (fixture != null)
                 {
-                    _fixtures.DestroyFixture(uid, fixture, manager: manager);
+                    _fixtures.DestroyFixture(uid, ThrowingFixture, fixture, manager: manager);
                 }
             }
 

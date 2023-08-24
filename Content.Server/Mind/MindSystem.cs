@@ -212,7 +212,9 @@ public sealed class MindSystem : EntitySystem
         var dead = _mobStateSystem.IsDead(uid);
         var hasSession = mindContainer.Mind?.Session;
 
-        if (dead && hasSession == null)
+        if (dead && !mindContainer.HasMind)
+            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+        else if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");

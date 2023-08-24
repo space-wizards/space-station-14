@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Weapons.Melee.ItemToggle;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ItemToggleComponent : Component
+public sealed partial class ItemToggleComponent : Component
 {
     public bool Activated = false;
 

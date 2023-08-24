@@ -5,7 +5,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Arcade;
 
-public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
+public sealed partial class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
 {
     public override string Name { get; set; } = "wire-name-arcade-invincible";
 
@@ -43,7 +43,7 @@ public sealed class ArcadePlayerInvincibleWireAction : BaseToggleWireAction
     }
 }
 
-public sealed class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
+public sealed partial class ArcadeEnemyInvincibleWireAction : BaseToggleWireAction
 {
     public override string Name { get; set; } = "wire-name-player-invincible";
     public override Color Color { get; set; } = Color.Purple;
