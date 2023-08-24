@@ -11,7 +11,6 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
-    [UsedImplicitly]
     public sealed class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IClientConsoleHost _console = default!;
@@ -60,7 +59,7 @@ namespace Content.Client.Ghost
 
             SubscribeLocalEvent<GhostComponent, ComponentInit>(OnGhostInit);
             SubscribeLocalEvent<GhostComponent, ComponentRemove>(OnGhostRemove);
-            SubscribeLocalEvent<GhostComponent, ComponentHandleState>(OnGhostState);
+            SubscribeLocalEvent<GhostComponent, AfterAutoHandleStateEvent>(OnGhostState);
 
             SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnGhostPlayerAttach);
             SubscribeLocalEvent<GhostComponent, PlayerDetachedEvent>(OnGhostPlayerDetach);
@@ -70,14 +69,14 @@ namespace Content.Client.Ghost
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
 
-            SubscribeLocalEvent<GhostComponent, ToggleLightingActionEvent>(OnToggleLighting);
-            SubscribeLocalEvent<GhostComponent, ToggleFoVActionEvent>(OnToggleFoV);
-            SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
+            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleLightingActionEvent>(OnToggleLighting);
+            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleFoVActionEvent>(OnToggleFoV);
+            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
         {
-            if (TryComp(component.Owner, out SpriteComponent? sprite))
+            if (TryComp(uid, out SpriteComponent? sprite))
             {
                 sprite.Visible = GhostVisibility;
             }
@@ -87,7 +86,7 @@ namespace Content.Client.Ghost
             _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
 
-        private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
+        private void OnToggleLighting(EntityUid uid, GhostComponent component, GhostComponent.ToggleLightingActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -97,7 +96,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
-        private void OnToggleFoV(EntityUid uid, GhostComponent component, ToggleFoVActionEvent args)
+        private void OnToggleFoV(EntityUid uid, GhostComponent component, GhostComponent.ToggleFoVActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -107,7 +106,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
-        private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
+        private void OnToggleGhosts(EntityUid uid, GhostComponent component, GhostComponent.ToggleGhostsActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -146,7 +145,7 @@ namespace Content.Client.Ghost
             PlayerAttached?.Invoke(component);
         }
 
-        private void OnGhostState(EntityUid uid, GhostComponent component, ref ComponentHandleState args)
+        private void OnGhostState(EntityUid uid, GhostComponent component, ref AfterAutoHandleStateEvent args)
         {
             if (TryComp<SpriteComponent>(uid, out var sprite))
                 sprite.LayerSetColor(0, component.color);

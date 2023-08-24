@@ -1,7 +1,7 @@
 using System.Linq;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Shared.Ghost;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

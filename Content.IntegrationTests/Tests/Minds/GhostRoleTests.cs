@@ -1,10 +1,10 @@
 ﻿#nullable enable
 using System.Linq;
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind;
 using Content.Server.Players;
+using Content.Shared.Ghost;
 using Robust.Shared.Console;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

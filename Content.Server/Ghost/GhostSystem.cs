@@ -26,8 +26,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
 {
-    [UsedImplicitly]
-    public sealed class GhostSystem : SharedGhostSystem
+    public sealed partial class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
@@ -59,13 +58,13 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostReturnToBodyRequest>(OnGhostReturnToBodyRequest);
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
-            SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, GhostComponent.BooActionEvent>(OnActionPerform);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
         }
 
-        private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
+        private void OnActionPerform(EntityUid uid, GhostComponent component, GhostComponent.BooActionEvent args)
         {
             if (args.Handled)
                 return;
