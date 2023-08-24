@@ -252,7 +252,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
-            SendRoundStartDiscordMessage();
+            SendRoundStartedDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -445,6 +445,7 @@ namespace Content.Server.GameTicking
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();
+            SendRoundStartingDiscordMessage();
 
             if (!LobbyEnabled)
             {
@@ -462,8 +463,6 @@ namespace Content.Server.GameTicking
 
                 ReqWindowAttentionAll();
             }
-
-            SendRoundStartingDiscordMessage();
         }
 
         private async void SendRoundStartingDiscordMessage()
@@ -612,7 +611,7 @@ namespace Content.Server.GameTicking
                 SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
         }
 
-        private async void SendRoundStartDiscordMessage()
+        private async void SendRoundStartedDiscordMessage()
         {
             try
             {
@@ -620,7 +619,7 @@ namespace Content.Server.GameTicking
                     return;
 
                 var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
-                var content = Loc.GetString("discord-round-notifications-start", ("id", RoundId), ("map", mapName));
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
 
                 var payload = new WebhookPayload { Content = content };
 
@@ -628,7 +627,7 @@ namespace Content.Server.GameTicking
             }
             catch (Exception e)
             {
-                Log.Error($"Error while sending discord round starting message:\n{e}");
+                Log.Error($"Error while sending discord round start message:\n{e}");
             }
         }
     }
