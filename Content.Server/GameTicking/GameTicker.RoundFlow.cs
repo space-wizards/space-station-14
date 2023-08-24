@@ -467,7 +467,7 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var content = Loc.GetString("discord-round-notifications-start");
+                var content = Loc.GetString("discord-round-notifications-new");
 
                 var payload = new WebhookPayload
                 {
