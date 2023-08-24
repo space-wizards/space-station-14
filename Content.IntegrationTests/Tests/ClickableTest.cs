@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Let client sync up.
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             var hit = false;
 

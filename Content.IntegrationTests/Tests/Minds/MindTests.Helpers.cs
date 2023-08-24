@@ -48,7 +48,7 @@ public sealed partial class MindTests
             mindSys.TransferTo(mind, entity);
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
@@ -89,7 +89,7 @@ public sealed partial class MindTests
 
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         Assert.Multiple(() =>
         {
             Assert.That(entMan.HasComponent<GhostComponent>(ghostUid));
@@ -141,7 +141,7 @@ public sealed partial class MindTests
         {
             netManager.ClientDisconnect("Disconnect command used.");
         });
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
@@ -160,7 +160,7 @@ public sealed partial class MindTests
         await Task.WhenAll(pair.Client.WaitIdleAsync(), pair.Client.WaitIdleAsync());
         pair.Client.SetConnectTarget(pair.Server);
         await pair.Client.WaitPost(() => netManager.ClientConnect(null!, 0, username));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         var player = playerMan.ServerSessions.Single();
         Assert.That(player.Status, Is.EqualTo(SessionStatus.InGame));

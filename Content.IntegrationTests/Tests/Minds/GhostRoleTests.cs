@@ -55,14 +55,14 @@ public sealed class GhostRoleTests
         });
 
         // Check player got attached.
-        await PoolManager.RunTicksSync(pair, 10);
+        await pair.RunTicksSync(10);
         Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
         Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
         Assert.Null(originalMind.VisitingEntity);
 
         // Use the ghost command
         conHost.ExecuteCommand("ghost");
-        await PoolManager.RunTicksSync(pair, 10);
+        await pair.RunTicksSync(10);
         var ghost = session.AttachedEntity;
         Assert.That(entMan.HasComponent<GhostComponent>(ghost));
         Assert.That(ghost, Is.Not.EqualTo(originalMob));
@@ -82,7 +82,7 @@ public sealed class GhostRoleTests
         });
 
         // Check player got attached to ghost role.
-        await PoolManager.RunTicksSync(pair, 10);
+        await pair.RunTicksSync(10);
         var newMind = session.ContentData()!.Mind!;
         Assert.That(newMind, Is.Not.EqualTo(originalMind));
         Assert.That(session.AttachedEntity, Is.EqualTo(ghostRole));
@@ -96,7 +96,7 @@ public sealed class GhostRoleTests
 
         // Ghost again.
         conHost.ExecuteCommand("ghost");
-        await PoolManager.RunTicksSync(pair, 10);
+        await pair.RunTicksSync(10);
         var otherGhost = session.AttachedEntity;
         Assert.That(entMan.HasComponent<GhostComponent>(otherGhost));
         Assert.That(otherGhost, Is.Not.EqualTo(originalMob));
@@ -107,7 +107,7 @@ public sealed class GhostRoleTests
 
         // Next, control the original entity again:
         await server.WaitPost(() => mindSystem.SetUserId(originalMind, session.UserId));
-        await PoolManager.RunTicksSync(pair, 10);
+        await pair.RunTicksSync(10);
         Assert.That(session.AttachedEntity, Is.EqualTo(originalMob));
         Assert.That(originalMind.OwnedEntity, Is.EqualTo(originalMob));
         Assert.Null(originalMind.VisitingEntity);

@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 Assert.That(alerts, Has.Count.EqualTo(alertCount + 2));
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             AlertsUI clientAlertsUI = default;
             await client.WaitAssertion(() =>
@@ -98,7 +98,7 @@ namespace Content.IntegrationTests.Tests.GameObjects.Components.Mobs
                 alertsSystem.ClearAlert(playerUid, AlertType.Debug1);
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await client.WaitAssertion(() =>
             {

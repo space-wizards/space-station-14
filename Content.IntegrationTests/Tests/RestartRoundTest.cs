@@ -23,7 +23,7 @@ namespace Content.IntegrationTests.Tests
                 sysManager.GetEntitySystem<GameTicker>().RestartRound();
             });
 
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
             await pair.CleanReturnAsync();
         }
     }

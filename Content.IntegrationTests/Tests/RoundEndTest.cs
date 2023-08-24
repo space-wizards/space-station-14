@@ -120,7 +120,7 @@ namespace Content.IntegrationTests.Tests
                 var currentCount = Thread.VolatileRead(ref eventCount);
                 while (currentCount == Thread.VolatileRead(ref eventCount) && !timeout.IsCompleted)
                 {
-                    await PoolManager.RunTicksSync(pair, 5);
+                    await pair.RunTicksSync(5);
                 }
                 if (timeout.IsCompleted) throw new TimeoutException("Event took too long to trigger");
             }

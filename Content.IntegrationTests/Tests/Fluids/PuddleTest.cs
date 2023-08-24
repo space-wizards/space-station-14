@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests.Fluids
 
                 Assert.That(spillSystem.TrySpillAt(coordinates, solution, out _), Is.True);
             });
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await pair.CleanReturnAsync();
         }
@@ -63,7 +63,7 @@ namespace Content.IntegrationTests.Tests.Fluids
                 }
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await server.WaitAssertion(() =>
             {

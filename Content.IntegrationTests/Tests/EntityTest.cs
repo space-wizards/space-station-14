@@ -167,7 +167,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await PoolManager.RunTicksSync(pair, 15);
+            await pair.RunTicksSync(15);
 
             // Make sure the client actually received the entities
             // 500 is completely arbitrary. Note that the client & sever entity counts aren't expected to match.
