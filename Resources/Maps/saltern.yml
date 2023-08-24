@@ -60109,6 +60109,18 @@ entities:
     - pos: -11.5,-7.5
       parent: 31
       type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 11258
+    components:
+    - pos: -1.5,-29.5
+      parent: 31
+      type: Transform
+  - uid: 11259
+    components:
+    - pos: -0.5,-29.5
+      parent: 31
+      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 1103
