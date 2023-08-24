@@ -252,6 +252,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            SendRoundStartDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -608,6 +609,30 @@ namespace Content.Server.GameTicking
 
             if (proto.Sound != null)
                 SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+        }
+
+        private async void SendRoundStartDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
+                var content = Loc.GetString("discord-round-notifications-start", ("id", RoundId), ("map", mapName));
+
+                var payload = new WebhookPayload
+                {
+                    Content = content,
+                    Username = ServerName,
+                };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round starting message:\n{e}");
+            }
         }
     }
 
