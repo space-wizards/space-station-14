@@ -148,7 +148,7 @@ namespace Content.Server.Ghost
 
         private void SetCanSeeGhosts(EntityUid uid, bool canSee, EyeComponent? eyeComponent = null)
         {
-            if (!Resolve(uid, ref eyeComponent))
+            if (!Resolve(uid, ref eyeComponent, false))
                 return;
 
             if (canSee)
