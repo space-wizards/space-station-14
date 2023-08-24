@@ -341,6 +341,18 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> DiscordAHelpAvatar =
             CVarDef.Create("discord.ahelp_avatar", string.Empty, CVar.SERVERONLY);
 
+        /// <summary>
+        /// URL of the Discord webhook which will relay round restart messages.
+        /// </summary>
+        public static readonly CVarDef<string> DiscordRoundRestartWebhook =
+            CVarDef.Create("discord.round_restart_webhook", string.Empty, CVar.SERVERONLY);
+
+        /// <summary>
+        /// Role id for the Discord webhook to ping when the round ends.
+        /// </summary>
+        public static readonly CVarDef<long> DiscordRoundEndRoleWebhook =
+            CVarDef.Create("discord.round_end_role", 0L, CVar.SERVERONLY);
+
         /*
          * Suspicion
          */
