@@ -26,8 +26,8 @@ public sealed partial class LawDisplay : Control
         IoCManager.InjectDependencies(this);
 
         var identifier = law.LawIdentifierOverride ?? $"{law.Order}";
-        string lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
-        string lawDescription = Loc.GetString(law.LawString);
+        var lawIdentifier = Loc.GetString("laws-ui-law-header", ("id", identifier));
+        var lawDescription = Loc.GetString(law.LawString);
 
         LawNumberLabel.Text = lawIdentifier;
         LawLabel.SetMessage(lawDescription);
@@ -55,7 +55,7 @@ public sealed partial class LawDisplay : Control
         if (radioChannels == null)
             return;
 
-        foreach (string radioChannel in radioChannels)
+        foreach (var radioChannel in radioChannels)
         {
             if (!_prototypeManager.TryIndex<RadioChannelPrototype>(radioChannel, out var radioChannelProto))
                 continue;
