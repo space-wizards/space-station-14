@@ -23,6 +23,8 @@ public abstract class SharedContentEyeSystem : EntitySystem
     public static readonly Vector2 DefaultZoom = Vector2.One;
     public static readonly Vector2 MinZoom = DefaultZoom * (float)Math.Pow(ZoomMod, -3);
 
+    [Dependency] private readonly SharedEyeSystem _eye = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -84,7 +86,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
         var ignoreLimit = msg.IgnoreLimit && _admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug);
-        
+
         if (TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
             SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, ignoreLimit, eye: content);
     }
@@ -98,10 +100,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         if (TryComp<EyeComponent>(player, out var eyeComp))
-        {
-            eyeComp.DrawFov = msg.Fov;
-            Dirty(eyeComp);
-        }
+            _eye.SetDrawFov(player, msg.Fov, eyeComp);
     }
 
     private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
@@ -110,7 +109,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         component.TargetZoom = eyeComp.Zoom;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     protected void UpdateEye(EntityUid uid, ContentEyeComponent content, EyeComponent eye, float frameTime)
@@ -119,15 +118,13 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         if (diff.LengthSquared() < 0.00001f)
         {
-            eye.Zoom = content.TargetZoom;
-            Dirty(eye);
+            _eye.SetZoom(uid, content.TargetZoom, eye);
             return;
         }
 
         var change = diff * 8f * frameTime;
 
-        eye.Zoom += change;
-        Dirty(eye);
+        _eye.SetZoom(uid, eye.Zoom + change, eye);
     }
 
     public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)

@@ -140,6 +140,7 @@ namespace Content.Server.Tabletop
 
             // Add an eye component and disable FOV
             var eyeComponent = camera.EnsureComponent<EyeComponent>();
+            _eye.SetDrawFov(camera, );
             eyeComponent.DrawFov = false;
             eyeComponent.Zoom = tabletop.CameraZoom;
 

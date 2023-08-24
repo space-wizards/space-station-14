@@ -41,7 +41,7 @@ public sealed class InteractionOutlineSystem : EntitySystem
         base.Initialize();
 
         _configManager.OnValueChanged(CCVars.OutlineEnabled, SetCvarEnabled);
-        UpdatesAfter.Add(typeof(EyeUpdateSystem));
+        UpdatesAfter.Add(typeof(SharedEyeSystem));
     }
 
     public override void Shutdown()

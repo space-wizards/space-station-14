@@ -33,7 +33,7 @@ public sealed class EyeLerpingSystem : EntitySystem
 
         UpdatesAfter.Add(typeof(TransformSystem));
         UpdatesAfter.Add(typeof(PhysicsSystem));
-        UpdatesBefore.Add(typeof(EyeUpdateSystem));
+        UpdatesBefore.Add(typeof(SharedEyeSystem));
         UpdatesOutsidePrediction = true;
     }
 
