@@ -25,6 +25,7 @@
   id: SeniorPhysicianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitSeniorPhysician
+    head: ClothingHeadHatBeretBrigmedic
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesColorBlack
     outerClothing: ClothingOuterCoatLabSeniorPhysician
