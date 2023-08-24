@@ -5,10 +5,18 @@ using System.Linq;
 
 namespace Content.Server.Botany;
 
-public sealed class MutationSystem : EntitySystem
+public sealed class MutationSystem : EntitySystem, IPostInjectInit
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    private List<ReagentPrototype> _allChemicals = default!;
+    private List<Shared.Atmos.Gas> _allGasses = default!;
+
+    void IPostInjectInit.PostInject()
+    {
+        _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
+        _allGasses = Enum.GetValues(typeof(Shared.Atmos.Gas)).Cast<Shared.Atmos.Gas>().ToList();
+    }
 
     /// <summary>
     /// Main idea: Simulate genetic mutation using random binary flips.  Each
@@ -68,8 +76,8 @@ public sealed class MutationSystem : EntitySystem
         MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
 
         // Gas (10)
-        MutateGases(ref seed.ExudeGasses, 0.01f, 0.5f, 7, totalbits, severity);
-        MutateGases(ref seed.ConsumeGasses, 0.01f, 0.5f, 3, totalbits, severity);
+        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 7, totalbits, severity);
+        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 3, totalbits, severity);
 
         // Chems (20)
         MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
@@ -213,17 +221,15 @@ public sealed class MutationSystem : EntitySystem
             val = HarvestType.SelfHarvest;
     }
 
-    private void MutateGases(ref Dictionary<Shared.Atmos.Gas, float> gases, float min, float max, int bits, int totalbits, float mult)
+    private void MutateGasses(ref Dictionary<Shared.Atmos.Gas, float> gases, float min, float max, int bits, int totalbits, float mult)
     {
         float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
         if (!Random(p))
             return;
 
-        List<Shared.Atmos.Gas> newGas = Enum.GetValues(typeof(Shared.Atmos.Gas)).Cast<Shared.Atmos.Gas>().ToList();
         var rng = IoCManager.Resolve<IRobustRandom>();
         float amount = _robustRandom.NextFloat(min, max);
-        Shared.Atmos.Gas gas = rng.Pick(newGas);
         if (gases.ContainsKey(gas))
         {
             gases[gas] += amount;
@@ -242,10 +248,8 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(p))
             return;
 
-        List<ReagentPrototype> all_chemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
-
         var rng = IoCManager.Resolve<IRobustRandom>();
-        ReagentPrototype selected_chemical = rng.Pick(all_chemicals);
+        ReagentPrototype selected_chemical = rng.Pick(_allChemicals);
         if (selected_chemical != null)
         {
             string chemical_id = selected_chemical.ID;
