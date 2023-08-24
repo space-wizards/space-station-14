@@ -1,4 +1,5 @@
 using System.Numerics;
+using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
@@ -82,8 +83,10 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
     {
+        var ignoreLimit = msg.IgnoreLimit && _admin.HasAdminFlag(args.SenderSession, AdminFlags.Debug);
+        
         if (TryComp<ContentEyeComponent>(args.SenderSession.AttachedEntity, out var content))
-            SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, eye: content);
+            SetZoom(args.SenderSession.AttachedEntity.Value, msg.TargetZoom, ignoreLimit, eye: content);
     }
 
     private void OnRequestFov(RequestFovEvent msg, EntitySessionEventArgs args)
@@ -149,6 +152,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
     public sealed class RequestTargetZoomEvent : EntityEventArgs
     {
         public Vector2 TargetZoom;
+        public bool IgnoreLimit;
     }
 
     /// <summary>

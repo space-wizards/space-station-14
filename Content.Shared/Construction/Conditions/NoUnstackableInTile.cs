@@ -10,7 +10,7 @@ namespace Content.Shared.Construction.Conditions;
 /// </summary>
 [UsedImplicitly]
 [DataDefinition]
-public sealed class NoUnstackableInTile : IConstructionCondition
+public sealed partial class NoUnstackableInTile : IConstructionCondition
 {
     public const string GuidebookString = "construction-step-condition-no-unstackable-in-tile";
     public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)

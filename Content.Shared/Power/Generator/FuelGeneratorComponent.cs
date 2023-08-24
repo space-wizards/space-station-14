@@ -7,7 +7,7 @@ namespace Content.Shared.Power.Generator;
 /// This is used for generators that run off some kind of fuel.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGeneratorSystem))]
-public sealed class FuelGeneratorComponent : Component
+public sealed partial class FuelGeneratorComponent : Component
 {
     /// <summary>
     /// The amount of fuel left in the generator.

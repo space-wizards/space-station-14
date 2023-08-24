@@ -8,7 +8,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     Relies on <see cref="LinkedEntityComponent"/> being set up.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PortalComponent : Component
+public sealed partial class PortalComponent : Component
 {
     /// <summary>
     ///     Sound played on arriving to this portal, centered on the destination.

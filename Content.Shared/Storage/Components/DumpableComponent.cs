@@ -6,7 +6,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Storage.Components;
 
 [Serializable, NetSerializable]
-public sealed class DumpableDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DumpableDoAfterEvent : SimpleDoAfterEvent
 {
 }
 

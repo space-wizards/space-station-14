@@ -14,7 +14,7 @@ namespace Content.Shared.Roles
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     The name of this antag as displayed to players.

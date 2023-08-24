@@ -6,7 +6,7 @@ namespace Content.Shared.Tiles;
 /// Prevents floor tile updates when attached to a grid.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class ProtectedGridComponent : Component
+public sealed partial class ProtectedGridComponent : Component
 {
 
 }
