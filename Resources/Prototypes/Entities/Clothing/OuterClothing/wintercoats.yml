@@ -414,7 +414,7 @@
         Piercing: 0.8 #slightly less bulletproof then warden's normal coat
         Heat: 0.70
   - type: ToggleableClothing
-    clothingPrototype: ClothingHatHeadHoodWinterSec
+    clothingPrototype: ClothingHatHeadHoodWinterWarden
 
 - type: entity
   parent: ClothingOuterWinterCoat

@@ -417,7 +417,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
-    
+        
 - type: entity
   parent: ClothingHeadHatWinterHoodGeneral
   id: ClothingHatHeadHoodWinterSyndie
@@ -428,3 +428,15 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
   - type: Clothing
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
+
+- type: entity
+  parent: ClothingHeadHatWinterHoodGeneral
+  id: ClothingHatHeadHoodWinterWarden
+  noSpawn: true
+  name: warden's coat hood
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/Coat/hoodwarden.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/Coat/hoodwarden.rsi
+
