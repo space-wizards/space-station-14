@@ -55,6 +55,18 @@
     Bicaridine: 2
 
 - type: reaction
+  id: Libital
+  reactants:
+    Lipozine:
+      amount: 1
+    Nitrogen:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    Libital: 3
+
+- type: reaction
   id: Cryoxadone
   reactants:
     Dexalin:

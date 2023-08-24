@@ -167,6 +167,30 @@
       - !type:Drunk
 
 - type: reagent
+  id: Libital
+  name: reagent-name-libital
+  group: Medicine
+  desc: reagent-desc-libital
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: medicine
+  color: "ecec8d"
+  metabolisms:
+    Medicine:
+      effects:
+      - !type:HealthChange
+        damage:
+          groups:
+            Brute: -4
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 16
+        damage:
+          types:
+            Asphyxiation: 2
+            Poison: 2
+
+- type: reagent
   id: Cryoxadone
   name: reagent-name-cryoxadone
   group: Medicine
