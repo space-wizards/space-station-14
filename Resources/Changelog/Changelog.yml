@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: 'Cargo''s coupons have expired, and weapons of all kinds are now about
-      3x more expensive. EVA Suits are cheaper out of pity.', type: Tweak}
-  id: 4174
-  time: '2023-07-05T23:16:10.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Fix disposals units playing their flush animation whenever they come
@@ -3026,3 +3020,8 @@ Entries:
   - {message: All plates can now be made in the autolathe., type: Tweak}
   id: 4673
   time: '2023-08-24T18:01:14.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Added pinging a Discord role when the round ends., type: Add}
+  id: 4674
+  time: '2023-08-24T21:50:08.0000000+00:00'
