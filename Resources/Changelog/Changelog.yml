@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: puddles can no longer appear on space tiles (lattice), type: Tweak}
-  id: 4171
-  time: '2023-07-05T13:59:49.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Nanotrasen has begun issuing authentic Italian mustaches to all chefs,
@@ -3039,3 +3034,9 @@ Entries:
   - {message: Reduced both the damage and health of giant spiders., type: Tweak}
   id: 4670
   time: '2023-08-24T01:20:53.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Heaters and freezers now work faster. TEGs now have their power output
+      adjusted., type: Tweak}
+  id: 4671
+  time: '2023-08-24T02:18:48.0000000+00:00'
