@@ -11,6 +11,7 @@
   - type: Transform
     anchored: true
   - type: Physics
+    canCollide: false
     bodyType: Static
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi #here
@@ -779,6 +780,7 @@
   - type: Transform
     anchored: true
   - type: Physics
+    canCollide: false
     bodyType: Static
   - type: Sprite
     sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
