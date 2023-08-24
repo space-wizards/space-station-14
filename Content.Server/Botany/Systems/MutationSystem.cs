@@ -221,7 +221,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
             val = HarvestType.SelfHarvest;
     }
 
-    private void MutateGasses(ref Dictionary<Shared.Atmos.Gas, float> gases, float min, float max, int bits, int totalbits, float mult)
+    private void MutateGasses(ref Dictionary<Shared.Atmos.Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
     {
         float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
@@ -230,13 +230,14 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
 
         var rng = IoCManager.Resolve<IRobustRandom>();
         float amount = _robustRandom.NextFloat(min, max);
-        if (gases.ContainsKey(gas))
+        Shared.Atmos.Gas gas = rng.Pick(_allGasses);
+        if (gasses.ContainsKey(gas))
         {
-            gases[gas] += amount;
+            gasses[gas] += amount;
         }
         else
         {
-            gases.Add(gas, amount);
+            gasses.Add(gas, amount);
         }
 
     }
