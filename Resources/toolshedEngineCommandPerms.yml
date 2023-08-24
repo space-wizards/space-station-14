@@ -146,7 +146,7 @@
     - stepnext
     - stepprev
     - checkedto
-    - saturatedto
+    - saturateto
     - truncto
     - iscanonical
     - iscomplex
