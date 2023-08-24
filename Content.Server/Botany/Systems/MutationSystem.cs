@@ -29,7 +29,6 @@ public sealed class MutationSystem : EntitySystem
         }
 
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 245;
         const int totalbits = 275;
 
         // Tolerances (55)
