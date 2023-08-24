@@ -427,5 +427,3 @@
   - type: Construction
     graph: GasBinary
     node: radiator
-  - type: StaticPrice
-    price: 50
