@@ -8091,7 +8091,7 @@ entities:
       type: Transform
   - uid: 6050
     components:
-    - pos: -14.484429,-1.7459826
+    - pos: -14.475516,-1.6162148
       parent: 1
       type: Transform
 - proto: BoxBeanbag
@@ -8117,7 +8117,7 @@ entities:
   entities:
   - uid: 5306
     components:
-    - pos: 21.500244,15.609039
+    - pos: 21.502325,15.64172
       parent: 1
       type: Transform
 - proto: BoxFolderBase
@@ -8387,7 +8387,7 @@ entities:
   entities:
   - uid: 5308
     components:
-    - pos: 20.968994,15.609039
+    - pos: 21.022184,15.646895
       parent: 1
       type: Transform
 - proto: BoxLatexGloves
@@ -8482,7 +8482,7 @@ entities:
       type: Transform
   - uid: 6054
     components:
-    - pos: -14.480633,-1.5970023
+    - pos: -14.459891,-1.7880898
       parent: 1
       type: Transform
   - uid: 7183
@@ -8499,14 +8499,14 @@ entities:
       type: Transform
   - uid: 6049
     components:
-    - pos: -14.484429,-1.3866076
+    - pos: -14.459891,-1.9287148
       parent: 1
       type: Transform
 - proto: BoxZiptie
   entities:
   - uid: 5309
     components:
-    - pos: 20.42212,15.624664
+    - pos: 20.533396,15.646895
       parent: 1
       type: Transform
 - proto: BrbSign
@@ -57967,11 +57967,6 @@ entities:
       type: Transform
 - proto: KitchenReagentGrinder
   entities:
-  - uid: 3820
-    components:
-    - pos: -14.5,-0.5
-      parent: 1
-      type: Transform
   - uid: 4941
     components:
     - pos: 27.5,24.5
@@ -57980,6 +57975,11 @@ entities:
   - uid: 5870
     components:
     - pos: -10.5,16.5
+      parent: 1
+      type: Transform
+  - uid: 5914
+    components:
+    - pos: -14.5,-1.5
       parent: 1
       type: Transform
   - uid: 5967
@@ -58335,6 +58335,11 @@ entities:
       type: Transform
 - proto: LockerEngineerFilled
   entities:
+  - uid: 3797
+    components:
+    - pos: 19.5,-3.5
+      parent: 1
+      type: Transform
   - uid: 6770
     components:
     - pos: 23.5,-4.5
@@ -58490,6 +58495,11 @@ entities:
     - pos: -25.5,9.5
       parent: 1
       type: Transform
+  - uid: 5917
+    components:
+    - pos: -23.5,9.5
+      parent: 1
+      type: Transform
   - uid: 12608
     components:
     - pos: 21.5,5.5
@@ -58606,6 +58616,11 @@ entities:
   - uid: 3818
     components:
     - pos: -16.5,-0.5
+      parent: 1
+      type: Transform
+  - uid: 5912
+    components:
+    - pos: -15.5,-0.5
       parent: 1
       type: Transform
 - proto: LockerSecurityFilled
@@ -61156,11 +61171,6 @@ entities:
   - uid: 5664
     components:
     - pos: 16.5,-20.5
-      parent: 1
-      type: Transform
-  - uid: 7181
-    components:
-    - pos: 19.5,-3.5
       parent: 1
       type: Transform
   - uid: 7637
@@ -69356,6 +69366,13 @@ entities:
     - pos: 2.5,6.5
       parent: 1
       type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 5913
+    components:
+    - pos: -7.5,-12.5
+      parent: 1
+      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 6038
@@ -69590,6 +69607,34 @@ entities:
   - uid: 6040
     components:
     - pos: 13.5,9.5
+      parent: 1
+      type: Transform
+- proto: SpawnPointSeniorEngineer
+  entities:
+  - uid: 5915
+    components:
+    - pos: 19.5,-4.5
+      parent: 1
+      type: Transform
+- proto: SpawnPointSeniorOfficer
+  entities:
+  - uid: 5916
+    components:
+    - pos: 15.5,9.5
+      parent: 1
+      type: Transform
+- proto: SpawnPointSeniorPhysician
+  entities:
+  - uid: 5923
+    components:
+    - pos: -20.5,10.5
+      parent: 1
+      type: Transform
+- proto: SpawnPointSeniorResearcher
+  entities:
+  - uid: 770
+    components:
+    - pos: -16.5,-1.5
       parent: 1
       type: Transform
 - proto: SpawnPointServiceWorker
@@ -70639,12 +70684,6 @@ entities:
       pos: 20.5,15.5
       parent: 1
       type: Transform
-  - uid: 770
-    components:
-    - rot: 3.141592653589793 rad
-      pos: 21.5,15.5
-      parent: 1
-      type: Transform
   - uid: 771
     components:
     - pos: 16.5,13.5
@@ -70885,8 +70924,7 @@ entities:
       type: Transform
   - uid: 3812
     components:
-    - rot: 1.5707963267948966 rad
-      pos: -14.5,-0.5
+    - pos: 21.5,15.5
       parent: 1
       type: Transform
   - uid: 3813
@@ -73224,11 +73262,11 @@ entities:
       type: Transform
 - proto: VendingMachineSciDrobe
   entities:
-  - uid: 3797
+  - uid: 3820
     components:
     - flags: SessionSpecific
       type: MetaData
-    - pos: -15.5,-0.5
+    - pos: -14.5,-0.5
       parent: 1
       type: Transform
 - proto: VendingMachineSec

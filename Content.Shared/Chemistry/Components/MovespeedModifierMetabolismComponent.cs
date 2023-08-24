@@ -6,7 +6,7 @@ namespace Content.Shared.Chemistry.Components
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class MovespeedModifierMetabolismComponent : Component
+    public sealed partial class MovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }

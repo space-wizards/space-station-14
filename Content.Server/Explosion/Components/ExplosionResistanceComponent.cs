@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components;
 /// </remarks>
 [RegisterComponent]
 [Access(typeof(ExplosionSystem))]
-public sealed class ExplosionResistanceComponent : Component
+public sealed partial class ExplosionResistanceComponent : Component
 {
     /// <summary>
     ///     The explosive resistance coefficient, This fraction is multiplied into the total resistance.

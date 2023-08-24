@@ -8,7 +8,7 @@ using System.Linq;
 namespace Content.Server.Objectives.Conditions;
 
 [DataDefinition]
-public sealed class KillRandomHeadCondition : KillPersonCondition
+public sealed partial class KillRandomHeadCondition : KillPersonCondition
 {
     public override IObjectiveCondition GetAssigned(Mind.Mind mind)
     {

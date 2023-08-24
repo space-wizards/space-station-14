@@ -15,6 +15,7 @@ using Content.Shared.Popups;
 using Content.Shared.Toilet;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
+using Content.Shared.Verbs;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
@@ -37,10 +38,11 @@ namespace Content.Server.Toilet
             SubscribeLocalEvent<ToiletComponent, ComponentInit>(OnInit);
             SubscribeLocalEvent<ToiletComponent, MapInitEvent>(OnMapInit);
             SubscribeLocalEvent<ToiletComponent, InteractUsingEvent>(OnInteractUsing);
-            SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand, new []{typeof(SharedBuckleSystem)});
+            SubscribeLocalEvent<ToiletComponent, InteractHandEvent>(OnInteractHand);
             SubscribeLocalEvent<ToiletComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<ToiletComponent, SuicideEvent>(OnSuicide);
             SubscribeLocalEvent<ToiletComponent, ToiletPryDoAfterEvent>(OnToiletPried);
+            SubscribeLocalEvent<ToiletComponent, GetVerbsEvent<AlternativeVerb>>(OnToggleSeatVerb);
         }
 
         private void OnSuicide(EntityUid uid, ToiletComponent component, SuicideEvent args)
@@ -123,13 +125,26 @@ namespace Content.Server.Toilet
                 }
             }
 
-            // just want to up/down seat?
-            // check that nobody seats on seat right now
-            if (TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count != 0)
+            args.Handled = true;
+        }
+
+        private void OnToggleSeatVerb(EntityUid uid, ToiletComponent component, GetVerbsEvent<AlternativeVerb> args)
+        {
+            if (!args.CanInteract || !args.CanAccess || !CanToggle(uid))
                 return;
 
-            ToggleToiletSeat(uid, component);
-            args.Handled = true;
+            var alterToiletSeatText = component.IsSeatUp ? Loc.GetString("toilet-seat-close") : Loc.GetString("toilet-seat-open");
+
+            var verb = new AlternativeVerb()
+            {
+                Act = () => {
+                    if (CanToggle(uid))
+                        ToggleToiletSeat(uid, component);
+                },
+                Text = alterToiletSeatText
+            };
+
+            args.Verbs.Add(verb);
         }
 
         private void OnExamine(EntityUid uid, ToiletComponent component, ExaminedEvent args)
@@ -151,6 +166,11 @@ namespace Content.Server.Toilet
 
             toilet.LidOpen = !toilet.LidOpen;
             UpdateSprite(uid, toilet);
+        }
+
+        public bool CanToggle(EntityUid uid)
+        {
+            return TryComp<StrapComponent>(uid, out var strap) && strap.BuckledEntities.Count == 0;
         }
 
         public void ToggleToiletSeat(EntityUid uid, ToiletComponent? component = null)

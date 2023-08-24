@@ -1,7 +1,7 @@
 namespace Content.Server.Solar.Components
 {
     [RegisterComponent]
-    public sealed class SolarControlConsoleComponent : Component
+    public sealed partial class SolarControlConsoleComponent : Component
     {
     }
 }

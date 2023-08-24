@@ -12,7 +12,7 @@ namespace Content.Server.Objectives
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("issuer")] public string Issuer { get; private set; } = "Unknown";
 

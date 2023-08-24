@@ -6,9 +6,9 @@ using Robust.Shared.Containers;
 namespace Content.Server.Construction.Completions
 {
     [DataDefinition]
-    public sealed class DeleteEntitiesInContainer : IGraphAction
+    public sealed partial class DeleteEntitiesInContainer : IGraphAction
     {
-        [DataField("container")] public string Container { get; } = string.Empty;
+        [DataField("container")] public string Container { get; private set; } = string.Empty;
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {

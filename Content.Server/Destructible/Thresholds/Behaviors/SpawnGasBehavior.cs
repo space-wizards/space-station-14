@@ -5,7 +5,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class SpawnGasBehavior : IThresholdBehavior
+public sealed partial class SpawnGasBehavior : IThresholdBehavior
 {
     [DataField("gasMixture", required: true)]
     public GasMixture Gas = new();

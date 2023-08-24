@@ -10,7 +10,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
 {
     [TestFixture]
     [TestOf(typeof(DoAfterComponent))]
-    public sealed class DoAfterServerTest
+    public sealed partial class DoAfterServerTest
     {
         [TestPrototypes]
         private const string Prototypes = @"
@@ -21,7 +21,7 @@ namespace Content.IntegrationTests.Tests.DoAfter
   - type: DoAfter
 ";
 
-        private sealed class TestDoAfterEvent : DoAfterEvent
+        private sealed partial class TestDoAfterEvent : DoAfterEvent
         {
             public override DoAfterEvent Clone()
             {

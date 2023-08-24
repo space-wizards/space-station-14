@@ -8,7 +8,7 @@ namespace Content.Server.Worldgen.Components;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(LocalityLoaderSystem))]
-public sealed class LocalityLoaderComponent : Component
+public sealed partial class LocalityLoaderComponent : Component
 {
     /// <summary>
     ///     The maximum distance an entity can be from the loader for it to not load.

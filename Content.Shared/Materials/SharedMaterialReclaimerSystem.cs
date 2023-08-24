@@ -83,7 +83,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != component.FixtureId)
+        if (args.OurFixtureId != component.FixtureId)
             return;
         if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
             return;

@@ -9,4 +9,4 @@ namespace Content.Shared.Payload.Components;
 ///     triggered, it will forward the trigger onto any contained payload entity.
 /// </remarks>
 [RegisterComponent]
-public sealed class PayloadCaseComponent : Component { }
+public sealed partial class PayloadCaseComponent : Component { }
