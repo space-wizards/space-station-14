@@ -40,7 +40,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     ///     Applies explosion/recoil/etc kickback to the view of the entity.
     /// </summary>
     /// <remarks>
-    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="SharedEyeComponent" />,
+    ///     If the entity is missing <see cref="CameraRecoilComponent" /> and/or <see cref="EyeComponent" />,
     ///     this call will have no effect. It is safe to call this function on any entity.
     /// </remarks>
     public abstract void KickCamera(EntityUid euid, Vector2 kickback, CameraRecoilComponent? component = null);
@@ -49,7 +49,7 @@ public abstract class SharedCameraRecoilSystem : EntitySystem
     {
         base.FrameUpdate(frameTime);
 
-        foreach (var entity in EntityManager.EntityQuery<SharedEyeComponent, CameraRecoilComponent>(true))
+        foreach (var entity in EntityManager.EntityQuery<EyeComponent, CameraRecoilComponent>(true))
         {
             var recoil = entity.Item2;
             var eye = entity.Item1;

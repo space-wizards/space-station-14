@@ -2,6 +2,7 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Utility;
+using Robust.Shared.Graphics;
 using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.Clickable

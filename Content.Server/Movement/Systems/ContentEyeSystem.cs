@@ -9,7 +9,7 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
     {
         base.Update(frameTime);
 
-        var query = AllEntityQuery<ContentEyeComponent, SharedEyeComponent>();
+        var query = AllEntityQuery<ContentEyeComponent, EyeComponent>();
 
         while (query.MoveNext(out var uid, out var comp, out var eyeComp))
         {

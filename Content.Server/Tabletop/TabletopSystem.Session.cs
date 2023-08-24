@@ -1,7 +1,6 @@
 using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
-using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Utility;
 

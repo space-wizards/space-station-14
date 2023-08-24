@@ -97,7 +97,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (!HasComp<SharedGhostComponent>(player) && !_admin.IsAdmin(player))
             return;
 
-        if (TryComp<SharedEyeComponent>(player, out var eyeComp))
+        if (TryComp<EyeComponent>(player, out var eyeComp))
         {
             eyeComp.DrawFov = msg.Fov;
             Dirty(eyeComp);
@@ -106,14 +106,14 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
     private void OnContentEyeStartup(EntityUid uid, ContentEyeComponent component, ComponentStartup args)
     {
-        if (!TryComp<SharedEyeComponent>(uid, out var eyeComp))
+        if (!TryComp<EyeComponent>(uid, out var eyeComp))
             return;
 
         component.TargetZoom = eyeComp.Zoom;
         Dirty(component);
     }
 
-    protected void UpdateEye(EntityUid uid, ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
+    protected void UpdateEye(EntityUid uid, ContentEyeComponent content, EyeComponent eye, float frameTime)
     {
         var diff = content.TargetZoom - eye.Zoom;
 
