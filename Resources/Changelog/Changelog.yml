@@ -1,13 +1,6 @@
 Entries:
 - author: Flareguy
   changes:
-  - {message: 'Nanotrasen has begun issuing authentic Italian mustaches to all chefs,
-      allowing Chefs across the world to unify and unleash their true cooking prowess.
-      Or something like that.', type: Add}
-  id: 4172
-  time: '2023-07-05T22:59:19.0000000+00:00'
-- author: Flareguy
-  changes:
   - {message: All of Security now gets much more well-rounded armor that gives moderate
       protection against most kinds of damage., type: Add}
   - {message: Heavily nerfed helmet armor. Expect players in hardsuits and security
@@ -3040,3 +3033,9 @@ Entries:
       adjusted., type: Tweak}
   id: 4671
   time: '2023-08-24T02:18:48.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Secret doors can be manually rotated again (at least until a dynamic
+      solution is found)., type: Fix}
+  id: 4672
+  time: '2023-08-24T16:23:11.0000000+00:00'
