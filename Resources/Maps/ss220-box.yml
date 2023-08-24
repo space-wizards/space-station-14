@@ -13854,7 +13854,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -424098.3
+    - SecondsUntilStateChange: -424380.72
       changeAirtight: False
       state: Opening
       type: Door
@@ -13872,7 +13872,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -424098.3
+    - SecondsUntilStateChange: -424380.72
       changeAirtight: False
       state: Opening
       type: Door
@@ -18354,6 +18354,15 @@ entities:
     - pos: 5.5,9.5
       parent: 8364
       type: Transform
+  - uid: 8798
+    components:
+    - anchored: False
+      rot: 1.5707963267948966 rad
+      pos: 18.3,14.5
+      parent: 8364
+      type: Transform
+    - buckleOffset: 0,-0.175
+      type: Strap
   - uid: 9594
     components:
     - rot: 3.141592653589793 rad
@@ -18397,12 +18406,6 @@ entities:
     components:
     - rot: 3.141592653589793 rad
       pos: -5.5,-32.5
-      parent: 8364
-      type: Transform
-  - uid: 27779
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 18.5,15.5
       parent: 8364
       type: Transform
   - uid: 28992
@@ -18599,12 +18602,6 @@ entities:
       type: Transform
 - proto: BenchRight
   entities:
-  - uid: 8798
-    components:
-    - rot: 1.5707963267948966 rad
-      pos: 18.5,14.5
-      parent: 8364
-      type: Transform
   - uid: 9597
     components:
     - pos: -7.5,28.5
@@ -18661,6 +18658,15 @@ entities:
       pos: -3.5,-32.5
       parent: 8364
       type: Transform
+  - uid: 27779
+    components:
+    - anchored: False
+      rot: 1.5707963267948966 rad
+      pos: 18.3,13.5
+      parent: 8364
+      type: Transform
+    - buckleOffset: 0,-0.175
+      type: Strap
   - uid: 28991
     components:
     - rot: -1.5707963267948966 rad
@@ -177791,6 +177797,22 @@ entities:
     - flags: SessionSpecific
       type: MetaData
     - pos: 34.5,-33.5
+      parent: 8364
+      type: Transform
+- proto: VendingMachineWinter
+  entities:
+  - uid: 20802
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: -41.5,-11.5
+      parent: 8364
+      type: Transform
+  - uid: 29843
+    components:
+    - flags: SessionSpecific
+      type: MetaData
+    - pos: 18.5,15.5
       parent: 8364
       type: Transform
 - proto: VendingMachineYouTool

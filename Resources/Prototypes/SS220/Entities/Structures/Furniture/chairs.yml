@@ -1,9 +1,53 @@
 # © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 - type: entity
+  name: chair
+  id: StaticSeatBase
+  abstract: true
+  description: You sit in this. Either by will or force.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+    canCollide: False
+  - type: Fixtures
+  - type: Sprite
+    sprite: Structures/Furniture/chairs.rsi
+    noRot: true
+  - type: Strap
+    position: Stand
+    buckleOffset: "0,0.15"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+  - type: StaticPrice
+    price: 10
+
+#Bench
+- type: entity
   name: bench
   id: BenchBase
-  parent: SeatBase
+  parent: StaticSeatBase
   abstract: true
   components:
   - type: Construction
@@ -16,7 +60,6 @@
     sprite: SS220/Structures/Furniture/bench.rsi
     noRot: false
 
-#Bench
 - type: entity
   name: bench
   suffix: DONT_USE, Left
@@ -54,7 +97,7 @@
 - type: entity
   name: sofa
   id: SofaBase
-  parent: SeatBase
+  parent: StaticSeatBase
   abstract: true
   components:
   - type: Construction
@@ -117,7 +160,7 @@
 - type: entity
   name: sofa
   id: DinnerSofaBase
-  parent: SeatBase
+  parent: StaticSeatBase
   abstract: true
   components:
   - type: Construction
@@ -169,7 +212,7 @@
 - type: entity
   name: pew
   id: PewBase
-  parent: SeatBase
+  parent: StaticSeatBase
   abstract: true
   components:
   - type: Construction
