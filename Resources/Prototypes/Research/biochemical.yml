@@ -20,7 +20,7 @@
   id: SurgicalTools
   name: research-technology-surgical-tools
   icon:
-    sprite: Objects/Specific/Medical/Surgery/saw.rsi
+    sprite: Objects/Tools/Surgery/saw.rsi
     state: saw
   discipline: Biochemical
   tier: 1
@@ -30,7 +30,7 @@
   - Retractor
   - Cautery
   - Drill
-  - Saw
+  - CircularSaw
   - Hemostat
 
 - type: technology

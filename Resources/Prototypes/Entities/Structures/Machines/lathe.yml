@@ -204,7 +204,7 @@
       - Retractor
       - Cautery
       - Drill
-      - Saw
+      - CircularSaw
       - Hemostat
       - Beaker
       - LargeBeaker
@@ -660,7 +660,7 @@
       - Retractor
       - Cautery
       - Drill
-      - Saw
+      - CircularSaw
       - Hemostat
       - BluespaceBeaker
       - SyringeBluespace

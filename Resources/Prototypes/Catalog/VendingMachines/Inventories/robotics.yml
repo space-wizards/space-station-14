@@ -7,7 +7,7 @@
     RemoteSignaller: 3
     HandheldHealthAnalyzer: 3
     Scalpel: 2
-    SawElectric: 2
+    CircularSaw: 2
     #Bonesetter: 2 add when robotics
     NitrousOxideTankFilled: 2
     ClothingMaskBreathMedical: 5

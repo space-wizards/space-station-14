@@ -38,7 +38,7 @@
       - id: Retractor
       - id: Cautery
       - id: Drill
-      - id: Saw
+      - id: CircularSaw
       - id: Hemostat
       - id: ClothingMaskSterile
 

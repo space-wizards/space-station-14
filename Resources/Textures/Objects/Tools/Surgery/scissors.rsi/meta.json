@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /tg/station at commit https://github.com/tgstation/tgstation/commit/e09101cb4be860ff02e035b18bef93a08b9c204c, inhand sprites taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/07293228cf62cae54dcaf05910e7aa3e73e9740f",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "retractor"
+		},
+		{
+			"name": "hemostat"
+		},
+		{
+			"name": "setter"
+		},
+		{
+			"name": "inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "hemostat-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "hemostat-inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "setter-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "setter-inhand-right",
+			"directions": 4
+		}
+	]
+}

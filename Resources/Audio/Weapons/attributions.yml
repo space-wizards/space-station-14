@@ -8,7 +8,6 @@
   copyright: "User tosha73 on freesound.org"
   source: "https://freesound.org/people/tosha73/sounds/509902/"
 
-
 - files: ["chainsaw.ogg, chainsawidle.ogg, chainsawwield.ogg"]
   license: "Custom"
   copyright: "https://www.soundjay.com/tos.html"
@@ -28,3 +27,8 @@
   license: "CC-BY-SA-3.0"
   copyright: "Based on genhit3.ogg from tgstation, modified by deltanedas on github."
   source: "https://github.com/deltanedas"
+
+- files: ["circsawhit.ogg"]
+  license: "CC-BY-SA-3.0"
+  copyright: "Taken from /tg/station."
+  source: "https://github.com/tgstation/tgstation/blob/d4f678a1772007ff8d7eddd21cf7218c8e07bfc0/sound/weapons/circsawhit.ogg"

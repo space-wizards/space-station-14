@@ -7,7 +7,7 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: Saw
+      - id: CircularSaw
       - id: Drill
       - id: Cautery
       - id: Retractor
@@ -39,11 +39,11 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: SawAdvanced
+      - id: CircularSaw
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: ScalpelAdvanced
+      - id: Scalpel
 
 - type: entity
   parent: ClothingBackpackDuffelSyndicateBundle
@@ -291,11 +291,11 @@
   - type: StorageFill
     contents:
       - id: Hemostat
-      - id: SawAdvanced
+      - id: CircularSawPlasma
       - id: Drill
       - id: Cautery
       - id: Retractor
-      - id: ScalpelAdvanced
+      - id: ScalpelLaser
       - id: BoxSurvivalSyndicate
       - id: CombatKnife
       - id: WeaponPistolViper

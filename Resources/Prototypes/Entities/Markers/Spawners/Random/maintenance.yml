@@ -225,9 +225,7 @@
         - Gauze1
         - Bola
         - SurvivalKnife
-        - ScalpelShiv
         - Shiv
-        - SawImprov
         - HydroponicsToolMiniHoe
       chance: 0.6
       offset: 0.0

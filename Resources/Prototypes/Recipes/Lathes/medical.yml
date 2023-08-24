@@ -28,11 +28,11 @@
     Plastic: 100
 
 - type: latheRecipe
-  id: Saw
-  result: Saw
+  id: CircularSaw
+  result: CircularSaw
   completetime: 2
   materials:
-    Steel: 200
+    Steel: 750
 
 - type: latheRecipe
   id: Hemostat

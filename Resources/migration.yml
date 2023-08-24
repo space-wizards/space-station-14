@@ -81,3 +81,12 @@ SyringeSpaceacillin: null
 
 # 2023-08-13
 AirlockPainter: SprayPainter
+
+# 2023-08-24
+# The advanced circular saw hasn't been turned into the new plasma saw, since the current circular saw now deals the exact same amount of damage.
+ScalpelShiv: Scalpel
+ScalpelAdvanced: Scalpel
+Saw: CircularSaw
+SawImprov: CircularSaw
+SawElectric: CircularSaw
+SawAdvanced: CircularSaw

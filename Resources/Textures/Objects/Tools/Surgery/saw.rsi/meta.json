@@ -1,0 +1,38 @@
+{
+	"version": 1,
+	"license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /vg/station at https://github.com/vgstation-coders/vgstation13/commit/a78ad8ba15e0fceda3a4e63abe693a40b7f81b9c",
+	"size": {
+		"x": 32,
+		"y": 32
+	},
+	"states": [
+		{
+			"name": "saw"
+		},
+		{
+			"name": "plasmasaw",
+			"delays": [
+				[
+					0.1,
+					0.1
+				]
+			]},
+		{
+			"name": "inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "inhand-right",
+			"directions": 4
+		},
+		{
+			"name": "plasmasaw-inhand-left",
+			"directions": 4
+		},
+		{
+			"name": "plasmasaw-inhand-right",
+			"directions": 4
+		}
+	]
+}
