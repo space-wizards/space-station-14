@@ -398,14 +398,19 @@ namespace Content.Server.GameTicking
 
                 var duration = RoundDuration();
                 var content = Loc.GetString("discord-round-notifications-end",
+                    ("id", RoundId),
                     ("hours", Math.Truncate(duration.TotalHours)),
                     ("minutes", duration.Minutes),
                     ("seconds", duration.Seconds));
-                if (DiscordRoundEndRole != null)
-                    content += Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
-
                 var payload = new WebhookPayload { Content = content };
 
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+
+                if (DiscordRoundEndRole == null)
+                    return;
+
+                content = Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
+                payload = new WebhookPayload { Content = content };
                 payload.AllowedMentions.AllowRoleMentions();
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);

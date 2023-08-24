@@ -31,7 +31,7 @@ namespace Content.Server.GameTicking
         public string? ServerName { get; private set; }
 
         [ViewVariables]
-        private long? DiscordRoundEndRole { get; set; }
+        private string? DiscordRoundEndRole { get; set; }
 
         private WebhookIdentifier? _webhookIdentifier;
 
@@ -76,7 +76,7 @@ namespace Content.Server.GameTicking
             {
                 DiscordRoundEndRole = value;
 
-                if (value == 0)
+                if (value == string.Empty)
                 {
                     DiscordRoundEndRole = null;
                 }

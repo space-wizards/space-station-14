@@ -350,8 +350,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// Role id for the Discord webhook to ping when the round ends.
         /// </summary>
-        public static readonly CVarDef<long> DiscordRoundEndRoleWebhook =
-            CVarDef.Create("discord.round_end_role", 0L, CVar.SERVERONLY);
+        public static readonly CVarDef<string> DiscordRoundEndRoleWebhook =
+            CVarDef.Create("discord.round_end_role", string.Empty, CVar.SERVERONLY);
 
         /*
          * Suspicion
