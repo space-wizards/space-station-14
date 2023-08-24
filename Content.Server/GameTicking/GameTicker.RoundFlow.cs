@@ -395,9 +395,9 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var content = "The round has ended.";
+                var content = Loc.GetString("discord-round-notifications-end");
                 if (DiscordRoundEndRole != null)
-                    content += $"\n\n<@&{DiscordRoundEndRole}>, the server will reboot shortly!";
+                    content += Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
 
                 var payload = new WebhookPayload
                 {
@@ -467,7 +467,7 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var content = "New round starting!";
+                var content = Loc.GetString("discord-round-notifications-start");
 
                 var payload = new WebhookPayload
                 {
