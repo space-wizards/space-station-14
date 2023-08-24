@@ -52,7 +52,7 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;
@@ -93,7 +93,7 @@ public sealed class SolutionSystemTests
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -140,7 +140,7 @@ public sealed class SolutionSystemTests
 
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
         var coordinates = testMap.GridCoords;
 
@@ -195,7 +195,7 @@ public sealed class SolutionSystemTests
         var entityManager = server.ResolveDependency<IEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
         var containerSystem = entityManager.EntitySysManager.GetEntitySystem<SolutionContainerSystem>();
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         EntityUid beaker;

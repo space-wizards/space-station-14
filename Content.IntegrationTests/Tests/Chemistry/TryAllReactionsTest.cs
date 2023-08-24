@@ -32,7 +32,7 @@ namespace Content.IntegrationTests.Tests.Chemistry
 
             var entityManager = server.ResolveDependency<IEntityManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var solutionSystem = server.ResolveDependency<IEntitySystemManager>()
                 .GetEntitySystem<SolutionContainerSystem>();

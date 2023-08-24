@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var entMgr = server.ResolveDependency<IEntityManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var coordinates = testMap.GridCoords;

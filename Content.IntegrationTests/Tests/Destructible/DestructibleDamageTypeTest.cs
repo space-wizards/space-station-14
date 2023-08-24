@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();

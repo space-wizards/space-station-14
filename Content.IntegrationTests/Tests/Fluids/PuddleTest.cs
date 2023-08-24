@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();
@@ -45,7 +45,7 @@ namespace Content.IntegrationTests.Tests.Fluids
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var spillSystem = entitySystemManager.GetEntitySystem<PuddleSystem>();

@@ -25,7 +25,7 @@ public sealed class HandTests
         var mapMan = server.ResolveDependency<IMapManager>();
         var sys = entMan.System<SharedHandsSystem>();
 
-        var data = await PoolManager.CreateTestMap(pair);
+        var data = await pair.CreateTestMap();
         await pair.RunTicksSync(5);
 
         EntityUid item = default;

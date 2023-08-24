@@ -52,7 +52,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var actionBlocker = entityManager.System<ActionBlockerSystem>();
@@ -245,7 +245,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             EntityUid human = default;
@@ -338,7 +338,7 @@ namespace Content.IntegrationTests.Tests.Buckle
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
             var entityManager = server.ResolveDependency<IEntityManager>();
             var buckleSystem = entityManager.System<SharedBuckleSystem>();

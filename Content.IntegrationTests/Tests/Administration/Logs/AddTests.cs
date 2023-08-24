@@ -34,7 +34,7 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -83,7 +83,7 @@ public sealed class AddTests
 
         var guid = Guid.NewGuid();
 
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {
@@ -143,7 +143,7 @@ public sealed class AddTests
         var sEntities = server.ResolveDependency<IEntityManager>();
         var sAdminLogSystem = server.ResolveDependency<IAdminLogManager>();
 
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
         await server.WaitPost(() =>
         {

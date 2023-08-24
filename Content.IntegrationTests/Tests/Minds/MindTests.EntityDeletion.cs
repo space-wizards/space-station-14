@@ -73,7 +73,7 @@ public sealed partial class MindTests
     {
         await using var pair = await SetupPair(dirty: true);
         var server = pair.Server;
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();

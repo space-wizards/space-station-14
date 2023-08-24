@@ -24,7 +24,7 @@ public sealed class FilterTests
         var commonGuid = Guid.NewGuid();
         var firstGuid = Guid.NewGuid();
         var secondGuid = Guid.NewGuid();
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         await server.WaitPost(() =>
