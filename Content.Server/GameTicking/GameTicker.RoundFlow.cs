@@ -404,11 +404,7 @@ namespace Content.Server.GameTicking
                 if (DiscordRoundEndRole != null)
                     content += Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
 
-                var payload = new WebhookPayload
-                {
-                    Content = content,
-                    Username = ServerName,
-                };
+                var payload = new WebhookPayload { Content = content };
 
                 payload.AllowedMentions.AllowRoleMentions();
 
@@ -474,11 +470,7 @@ namespace Content.Server.GameTicking
 
                 var content = Loc.GetString("discord-round-notifications-new");
 
-                var payload = new WebhookPayload
-                {
-                    Content = content,
-                    Username = ServerName,
-                };
+                var payload = new WebhookPayload { Content = content };
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
             }
@@ -625,11 +617,7 @@ namespace Content.Server.GameTicking
                 var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
                 var content = Loc.GetString("discord-round-notifications-start", ("id", RoundId), ("map", mapName));
 
-                var payload = new WebhookPayload
-                {
-                    Content = content,
-                    Username = ServerName,
-                };
+                var payload = new WebhookPayload { Content = content };
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
             }
