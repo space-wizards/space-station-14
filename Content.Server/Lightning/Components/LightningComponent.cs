@@ -2,7 +2,7 @@
 
 namespace Content.Server.Lightning.Components;
 [RegisterComponent]
-public sealed class LightningComponent : SharedLightningComponent
+public sealed partial class LightningComponent : SharedLightningComponent
 {
 
 }

@@ -6,10 +6,10 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Tools.Components
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class MultipleToolComponent : Component
+    public sealed partial class MultipleToolComponent : Component
     {
         [DataDefinition]
-        public sealed class ToolEntry
+        public sealed partial class ToolEntry
         {
             [DataField("behavior", required: true)]
             public PrototypeFlags<ToolQualityPrototype> Behavior = new();
@@ -25,7 +25,7 @@ namespace Content.Shared.Tools.Components
         }
 
         [DataField("entries", required: true)]
-        public ToolEntry[] Entries { get; } = Array.Empty<ToolEntry>();
+        public ToolEntry[] Entries { get; private set; } = Array.Empty<ToolEntry>();
 
         [ViewVariables]
         public uint CurrentEntry = 0;

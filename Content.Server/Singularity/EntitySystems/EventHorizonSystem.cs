@@ -398,7 +398,7 @@ public sealed class EventHorizonSystem : SharedEventHorizonSystem
     {
         if (comp.BeingConsumedByAnotherEventHorizon)
             return;
-        if (args.OurFixture.ID != comp.ConsumerFixtureId)
+        if (args.OurFixtureId != comp.ConsumerFixtureId)
             return;
 
         AttemptConsumeEntity(uid, args.OtherEntity, comp);

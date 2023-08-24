@@ -117,7 +117,7 @@ public sealed class TegNodeGroup : BaseNodeGroup
 /// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegGeneratorComponent"/>
 [DataDefinition]
-public sealed class TegNodeGenerator : Node
+public sealed partial class TegNodeGenerator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
         TransformComponent xform,
@@ -169,7 +169,7 @@ public sealed class TegNodeGenerator : Node
 /// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegCirculatorComponent"/>
 [DataDefinition]
-public sealed class TegNodeCirculator : Node
+public sealed partial class TegNodeCirculator : Node
 {
     public override IEnumerable<Node> GetReachableNodes(
         TransformComponent xform,

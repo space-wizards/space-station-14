@@ -81,7 +81,7 @@
         acts: [ "Destruction" ]
   - type: PhysicalComposition
     materialComposition:
-      Glass: 100
+      Glass: 60
 
 - type: entity
   name: broken plate
@@ -124,6 +124,9 @@
             max: 1
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 30
 
 - type: entity
   parent: FoodPlateTrash
@@ -144,7 +147,7 @@
     state: plate-plastic
   - type: PhysicalComposition
     materialComposition:
-      Plastic: 100
+      Plastic: 60
 
 - type: entity
   parent: FoodPlatePlastic
@@ -154,6 +157,9 @@
   components:
   - type: Sprite
     state: plate-small-plastic
+  - type: PhysicalComposition
+    materialComposition:
+      Plastic: 30
 
 # Pie Tin
 
@@ -167,4 +173,4 @@
     state: tin
   - type: PhysicalComposition
     materialComposition:
-      Steel: 100
+      Steel: 60

@@ -5,6 +5,7 @@ using Content.Server.Administration.Logs.Converters;
 using Content.Server.Database;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Logs;
 
@@ -46,6 +47,7 @@ public sealed partial class AdminLogManager
             value = value switch
             {
                 IPlayerSession player => new SerializablePlayer(player),
+                EntityCoordinates entityCoordinates => new SerializableEntityCoordinates(_entityManager, entityCoordinates),
                 _ => value
             };
 
