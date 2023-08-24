@@ -19,13 +19,11 @@ public sealed class TwoStageTriggerComponent : Component
     /// <summary>
     /// This list of components that will be added for the second trigger.
     /// </summary>
-    [ViewVariables(VVAccess.ReadOnly)]
     [DataField("components", required: true)]
     public ComponentRegistry SecondStageComponents = new();
 
     [DataField("nextTriggerTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? NextTriggerTime;
-
 
     [DataField("triggered")]
     public bool Triggered = false;

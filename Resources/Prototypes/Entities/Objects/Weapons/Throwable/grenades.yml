@@ -148,7 +148,7 @@
   - type: AnchorOnTrigger
     removeOnTrigger: true
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 10.45
     components:
       - type: AmbientSound
         enabled: true
@@ -189,20 +189,15 @@
   - type: OnUseTimerTrigger
     delay: 3
     beepInterval: 0.69
-  - type: SoundOnTrigger
-    removeOnTrigger: true
-    sound:
-      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
-      volume: 5
-  - type: AmbientSound
-    enabled: false
-    volume: -5
-    range: 14
-    sound:
-      path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
   - type: TwoStageTrigger
-    triggerDelay: 10
+    triggerDelay: 11.14
     components:
+      - type: AmbientSound
+        enabled: true
+        volume: -5
+        range: 14
+        sound:
+          path: /Audio/Effects/Grenades/Supermatter/whitehole_loop.ogg
       - type: GravityWell
         maxRange: 10
         baseRadialAcceleration: -180
@@ -224,7 +219,6 @@
           params:
             volume: 5
       - type: DeleteOnTrigger
-
 
 - type: entity
   name: the nuclear option
