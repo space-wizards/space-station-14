@@ -65,7 +65,7 @@ namespace Content.Server.GameTicking
                 // TODO why tf is the server name on admin logs
                 ServerName = value;
             }, true);
-            _configurationManager.OnValueChanged(CCVars.DiscordRoundRestartWebhook, value =>
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundUpdateWebhook, value =>
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {

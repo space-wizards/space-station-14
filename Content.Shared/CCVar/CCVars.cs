@@ -344,8 +344,8 @@ namespace Content.Shared.CCVar
         /// <summary>
         /// URL of the Discord webhook which will relay round restart messages.
         /// </summary>
-        public static readonly CVarDef<string> DiscordRoundRestartWebhook =
-            CVarDef.Create("discord.round_restart_webhook", string.Empty, CVar.SERVERONLY);
+        public static readonly CVarDef<string> DiscordRoundUpdateWebhook =
+            CVarDef.Create("discord.round_update_webhook", string.Empty, CVar.SERVERONLY);
 
         /// <summary>
         /// Role id for the Discord webhook to ping when the round ends.
