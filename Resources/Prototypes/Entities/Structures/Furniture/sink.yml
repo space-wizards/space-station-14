@@ -15,7 +15,6 @@
       - map: [ "enum.SolutionContainerLayers.Fill" ]
         state: sink-fill-1
         visible: false
-    netsync: false
   - type: Appearance
   - type: SolutionContainerVisuals
     maxFillLevels: 1

@@ -58,6 +58,15 @@
     size: 1
 
 - type: entity
+  id: Ointment10Lingering
+  parent: Ointment
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
   name: regenerative mesh
   description: Used to treat even the nastiest burns. Also effective against caustic burns.
   parent: BaseHealingItem
@@ -139,6 +148,15 @@
     size: 1
 
 - type: entity
+  id: Brutepack10Lingering
+  parent: Brutepack
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
   name: medicated suture
   description: A suture soaked in medicine, treats blunt-force trauma effectively and closes wounds.
   parent: BaseHealingItem
@@ -208,6 +226,14 @@
     price: 10
 
 - type: entity
+  parent: Bloodpack
+  id: Bloodpack10Lingering
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+
+- type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: BaseHealingItem
@@ -249,6 +275,15 @@
     count: 1
   - type: Item
     size: 1
+
+- type: entity
+  id: Gauze10Lingering
+  parent: Gauze
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: aloe cream
@@ -458,19 +493,6 @@
         maxVol: 15
         reagents:
         - ReagentId: TranexamicAcid
-          Quantity: 15
-
-- type: entity
-  name: spaceacillin syringe
-  parent: BaseSyringe
-  id: SyringeSpaceacillin
-  components:
-  - type: SolutionContainerManager
-    solutions:
-      injector:
-        maxVol: 15
-        reagents:
-        - ReagentId: Spaceacillin
           Quantity: 15
 
 - type: entity

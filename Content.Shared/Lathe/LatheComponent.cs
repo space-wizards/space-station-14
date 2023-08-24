@@ -33,7 +33,6 @@ namespace Content.Shared.Lathe
         /// </summary>
         [DataField("producingSound")]
         public SoundSpecifier? ProducingSound;
-
         #region Visualizer info
         [DataField("idleState", required: true)]
         public string IdleState = default!;
@@ -47,6 +46,12 @@ namespace Content.Shared.Lathe
         /// </summary>
         [ViewVariables]
         public LatheRecipePrototype? CurrentRecipe;
+
+        /// <summary>
+        /// Whether the lathe can eject the materials stored within it
+        /// </summary>
+        [DataField("canEjectStoredMaterials")]
+        public bool CanEjectStoredMaterials = true;
 
         #region MachineUpgrading
         /// <summary>

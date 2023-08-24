@@ -1515,7 +1515,7 @@
     MaterialCloth1: 1
   reagents:
     TranexamicAcid: 50
-    Spaceacillin: 50
+    Cryptobiolin: 50
 
 - type: microwaveMealRecipe
   id: RecipeRegenerativeMesh
@@ -1632,3 +1632,11 @@
   solids:
     FoodChevreSlice: 1
     FoodBreadBaguetteSlice: 1
+
+- type: microwaveMealRecipe
+  id: RecipeCookedSpaceshroom
+  name: cooked spaceshroom recipe
+  result: FoodSpaceshroomCooked
+  time: 5
+  solids:
+    FoodSpaceshroom: 1

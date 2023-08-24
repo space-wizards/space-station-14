@@ -64,6 +64,71 @@
   - type: Appearance
 
 - type: entity
+  id: CigPackMixedBase
+  parent: [ BaseStorageItem, BaseBagOpenClose ]
+  name: soaked cigarette pack
+  abstract: true
+  components:
+  - type: Sprite
+    layers:
+    - state: closed
+    - state: open
+      map: ["openLayer"]
+      visible: false
+    - state: cig1
+      map: ["cig1"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig2
+      map: ["cig2"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig3
+      map: ["cig3"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig4
+      map: ["cig4"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig5
+      map: ["cig5"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+    - state: cig6
+      map: ["cig6"]
+      sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/visualizer.rsi
+      visible: false
+  - type: Tag
+    tags:
+    - CigPack
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Steel: 50
+  - type: SpaceGarbage
+  - type: Storage
+    capacity: 10
+  - type: Item
+    size: 10
+  - type: StorageFill
+    contents:
+    - id: CigaretteRandom
+      amount: 10
+  - type: ItemCounter
+    count:
+      tags: [Cigarette]
+    composite: true
+    layerStates:
+    - cig1
+    - cig2
+    - cig3
+    - cig4
+    - cig5
+    - cig6
+  - type: Appearance
+
+- type: entity
   id: CigPackGreen
   parent: CigPackBase
   name: Spessman's Smokes packet
@@ -121,3 +186,89 @@
     contents:
     - id: CigaretteSyndicate
       amount: 5
+
+- type: entity
+  id: CigPackMixedMedical
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteIron
+    - id: CigaretteTricordrazine
+    - id: CigaretteDylovene
+    - id: CigaretteDermaline
+    - id: CigaretteArithrazine
+    - id: CigaretteBicaridine
+    - id: CigaretteIpecac
+    - id: CigaretteOmnizine
+      prob: 0.25
+    - id: CigaretteDexalin
+      prob: 0.25
+    - id: CigarettePax
+      prob: 0.10
+
+
+- type: entity
+  id: CigPackMixed
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteBbqSauce
+      prob: 0.70
+    - id: CigaretteBlackPepper
+      prob: 0.70
+    - id: CigaretteCapsaicinOil
+      prob: 0.70
+    - id: CigaretteBread
+      prob: 0.70
+    - id: CigaretteMilk
+      prob: 0.70
+    - id: CigaretteBanana
+      prob: 0.10
+    - id: CigaretteTHC
+      prob: 0.70
+    - id: CigaretteTricordrazine
+      prob: 0.25
+    - id: CigaretteSpaceDrugs
+      prob: 0.50
+    - id: CigaretteLicoxide
+      prob: 0.10
+
+- type: entity
+  id: CigPackMixedNasty
+  parent: CigPackMixedBase
+  name: Dan's soaked smokes
+  description: Dan worked with NT chemistry to dispose of excess chemicals, ENJOY.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigarettes/Packs/mixed.rsi
+  - type: StorageFill
+    contents:
+    - id: CigaretteSpaceDrugs
+      amount: 2
+    - id: CigaretteWeldingFuel
+      amount: 2
+    - id: CigaretteMold
+      amount: 2
+    - id: CigaretteTHC
+    - id: CigaretteLicoxide
+      prob: 0.50
+    - id: CigarettePax
+      prob: 0.10
+    - id: CigaretteMuteToxin
+      prob: 0.05

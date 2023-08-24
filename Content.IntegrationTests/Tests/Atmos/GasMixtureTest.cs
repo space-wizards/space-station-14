@@ -12,7 +12,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TestMerge()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             var atmosphereSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<AtmosphereSystem>();
@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests.Atmos
         [TestCase(Atmospherics.BreathPercentage)]
         public async Task RemoveRatio(float ratio)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
 
             await server.WaitAssertion(() =>

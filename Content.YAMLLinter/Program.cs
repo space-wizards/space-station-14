@@ -15,6 +15,7 @@ namespace Content.YAMLLinter
     {
         private static async Task<int> Main(string[] _)
         {
+            PoolManager.Startup(null);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
@@ -25,6 +26,7 @@ namespace Content.YAMLLinter
             if (count == 0)
             {
                 Console.WriteLine($"No errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+                PoolManager.Shutdown();
                 return 0;
             }
 
@@ -42,13 +44,14 @@ namespace Content.YAMLLinter
             }
 
             Console.WriteLine($"{count} errors found in {(int) stopwatch.Elapsed.TotalMilliseconds} ms.");
+            PoolManager.Shutdown();
             return -1;
         }
 
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateClient()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, Disconnected = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var client = pairTracker.Pair.Client;
             var result = await ValidateInstance(client);
             await pairTracker.CleanReturnAsync();
@@ -58,7 +61,7 @@ namespace Content.YAMLLinter
         private static async Task<(Dictionary<string, HashSet<ErrorNode>> YamlErrors, List<string> FieldErrors)>
             ValidateServer()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { DummyTicker = true, NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var result = await ValidateInstance(server);
             await pairTracker.CleanReturnAsync();

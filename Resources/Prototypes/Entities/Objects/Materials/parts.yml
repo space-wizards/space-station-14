@@ -62,6 +62,23 @@
 
 - type: entity
   parent: PartRodMetal
+  id: PartRodMetal10
+  name: metal rod
+  suffix: 10
+  components:
+  - type: Tag
+    tags:
+    - RodMetal1
+    - DroneUsable
+  - type: Sprite
+    state: rods
+  - type: Stack
+    count: 10
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: PartRodMetal
   id: PartRodMetal1
   name: metal rod
   suffix: Single

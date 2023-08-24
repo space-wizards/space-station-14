@@ -18,7 +18,7 @@ namespace Content.IntegrationTests.Tests
         {
             const string mapPath = @"/Maps/Test/TestMap.yml";
 
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { NoClient = true });
+            await using var pairTracker = await PoolManager.GetServerClient();
             var server = pairTracker.Pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var sEntities = server.ResolveDependency<IEntityManager>();
