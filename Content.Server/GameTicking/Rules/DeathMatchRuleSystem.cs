@@ -12,6 +12,7 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
     [Dependency] private readonly PointSystem _point = default!;
+    [Dependency] private readonly RespawnRuleSystem _respawn = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
 
     public override void Initialize()
@@ -26,6 +27,13 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
     private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)
     {
         EnsureComp<KillTrackerComponent>(ev.Mob);
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out var tracker, out var rule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, rule))
+                continue;
+            _respawn.AddToTracker(ev.Mob, uid, tracker);
+        }
     }
 
     private void OnKillReported(ref KillReportedEvent ev)

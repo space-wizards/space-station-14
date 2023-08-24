@@ -26,17 +26,27 @@ public sealed partial class KillTrackerComponent : Component
 public abstract record KillSource;
 
 [DataDefinition, Serializable]
-public sealed partial record KillPlayerSource(NetUserId PlayerId) : KillSource
+public sealed partial record KillPlayerSource : KillSource
 {
     [DataField("playerId")]
-    public NetUserId PlayerId { get; } = PlayerId;
+    public NetUserId PlayerId;
+
+    public KillPlayerSource(NetUserId playerId)
+    {
+        PlayerId = playerId;
+    }
 }
 
 [DataDefinition, Serializable]
-public sealed partial record KillNpcSource(EntityUid NpcEnt) : KillSource
+public sealed partial record KillNpcSource : KillSource
 {
     [DataField("npcEnt")]
-    public EntityUid NpcEnt { get; } = NpcEnt;
+    public EntityUid NpcEnt;
+
+    public KillNpcSource(EntityUid npcEnt)
+    {
+        NpcEnt = npcEnt;
+    }
 }
 
 [DataDefinition, Serializable]

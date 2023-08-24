@@ -98,6 +98,14 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         }
     }
 
+    public void AddToTracker(EntityUid player, EntityUid tracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
+    {
+        if (!Resolve(tracker, ref component) || !Resolve(player, ref actor, false))
+            return;
+
+        component.Players.Add(actor.PlayerSession.UserId);
+    }
+
     public void RespawnPlayer(EntityUid player, EntityUid respawnTracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
     {
         if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))

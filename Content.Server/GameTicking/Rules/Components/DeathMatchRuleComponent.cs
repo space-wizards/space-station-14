@@ -4,7 +4,7 @@ using Robust.Shared.Network;
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// Gamerule that ends when a player gets a
+/// Gamerule that ends when a player gets a certain number of kills.
 /// </summary>
 [RegisterComponent, Access(typeof(DeathMatchRuleSystem))]
 public sealed partial class DeathMatchRuleComponent : Component
