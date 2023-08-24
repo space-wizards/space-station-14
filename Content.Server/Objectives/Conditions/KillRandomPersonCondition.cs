@@ -7,7 +7,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Objectives.Conditions;
 
 [DataDefinition]
-public sealed class KillRandomPersonCondition : KillPersonCondition
+public sealed partial class KillRandomPersonCondition : KillPersonCondition
 {
     public override IObjectiveCondition GetAssigned(Mind.Mind mind)
     {

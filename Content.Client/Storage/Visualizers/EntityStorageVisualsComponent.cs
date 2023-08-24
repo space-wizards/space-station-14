@@ -2,7 +2,7 @@ namespace Content.Client.Storage.Visualizers;
 
 [RegisterComponent]
 [Access(typeof(EntityStorageVisualizerSystem))]
-public sealed class EntityStorageVisualsComponent : Component
+public sealed partial class EntityStorageVisualsComponent : Component
 {
     /// <summary>
     /// The RSI state used for the base layer of the storage entity sprite while the storage is closed.

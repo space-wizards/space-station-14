@@ -4,7 +4,7 @@ using Content.Server.StationEvents.Events;
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(PowerGridCheckRule))]
-public sealed class PowerGridCheckRuleComponent : Component
+public sealed partial class PowerGridCheckRuleComponent : Component
 {
     public CancellationTokenSource? AnnounceCancelToken;
 
