@@ -742,6 +742,7 @@
   name: brown briefcase
   parent: BriefcaseBase
   id: BriefcaseCash
+  suffix: Smuggler, No Map, Use Spawner
   description: A handy briefcase.
   components:
   #Moved to base so all bags could be stashed under tiles.

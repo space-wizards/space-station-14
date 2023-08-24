@@ -10,6 +10,7 @@
   - type: SubFloorHide
   - type: Anchorable
   - type: CollideOnAnchor
+    enable: false
   - type: Transform
     anchored: false
   - type: Storage
@@ -36,6 +37,13 @@
   id: BriefcaseSyndieBase
   description: Useful for carrying items in your hands.
   components:
+  - type: Appearance
+  - type: SubFloorHide
+  - type: Anchorable
+  - type: CollideOnAnchor
+    enable: false
+  - type: Transform
+    anchored: false
   - type: Item
     size: 80
   - type: Storage

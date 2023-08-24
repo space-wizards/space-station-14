@@ -13,6 +13,7 @@
   - type: SubFloorHide
   - type: Anchorable
   - type: CollideOnAnchor
+    enable: false
   - type: Transform
     anchored: false
   - type: Clothing
