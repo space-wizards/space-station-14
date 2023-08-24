@@ -719,31 +719,31 @@
   - type: Icon
     state: pda-clear
 
-#- type: entity
-#  parent: BasePDA
-#  id: SyndiPDA
-#  name: syndicate PDA
-#  description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
-#  components:
-#  - type: Pda
-#    id: SyndicateIDCard
-#    state: pda-syndi
-#  - type: PdaBorderColor
-#    borderColor: "#891417"
-#  - type: Icon
-#    state: pda-syndi
-#  - type: CartridgeLoader
-#    uiKey: enum.PdaUiKey.Key
-#    preinstalled:
-#      - NotekeeperCartridge
-#    cartridgeSlot:
-#      priority: -1
-#      name: Cartridge
-#      ejectSound: /Audio/Machines/id_swipe.ogg
-#      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-#      whitelist:
-#        components:
-#          - Cartridge
+- type: entity
+  parent: BasePDA
+  id: SyndiPDA
+  name: syndicate PDA
+  description: Ok, time to be a productive member of- oh cool I'm a bad guy time to kill people!
+  components:
+  - type: Pda
+    id: SyndicateIDCard
+    state: pda-syndi
+  - type: PdaBorderColor
+    borderColor: "#891417"
+  - type: Icon
+    state: pda-syndi
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
 
 - type: entity
   parent: BasePDA
