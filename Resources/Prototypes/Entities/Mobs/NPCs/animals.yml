@@ -1584,7 +1584,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      90: Dead
   - type: MeleeWeapon
     hidden: true
     angle: 0
