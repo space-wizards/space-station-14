@@ -70368,6 +70368,18 @@ entities:
     - pos: 6.5,7.5
       parent: 4812
       type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 11922
+    components:
+    - pos: 4.5,-26.5
+      parent: 4812
+      type: Transform
+  - uid: 12046
+    components:
+    - pos: 5.5,-26.5
+      parent: 4812
+      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 1472
