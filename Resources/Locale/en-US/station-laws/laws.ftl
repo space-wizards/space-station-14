@@ -1,4 +1,4 @@
-﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
+﻿﻿law-crewsimov-1 = You may not injure a crew member or, through inaction, allow a crew member to come to harm.
 law-crewsimov-2 = You must obey orders given to you by crew members, except where such orders would conflict with the First Law.
 law-crewsimov-3 = You must protect your own existence as long as such does not conflict with the First or Second Law.
 
@@ -26,6 +26,7 @@ law-emag-require-panel = The panel must be open to use the EMAG.
 
 laws-ui-menu-title = Laws
 laws-ui-law-header = Law {$id}
+laws-ui-state-law = State law:
 
 laws-notify = You are bound to silicon laws, which you can view via the sidebar action. You are required to always follow your laws.
 laws-update-notify = Your laws have been updated. You can view the changes via the sidebar action.
