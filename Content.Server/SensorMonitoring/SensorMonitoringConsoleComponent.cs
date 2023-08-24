@@ -5,7 +5,7 @@ using Robust.Shared.Collections;
 namespace Content.Server.SensorMonitoring;
 
 [RegisterComponent]
-public sealed class SensorMonitoringConsoleComponent : Component
+public sealed partial class SensorMonitoringConsoleComponent : Component
 {
     /// <summary>
     /// Used to assign network IDs for sensors and sensor streams.

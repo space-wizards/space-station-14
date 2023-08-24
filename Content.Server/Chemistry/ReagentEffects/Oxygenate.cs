@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class Oxygenate : ReagentEffect
+public sealed partial class Oxygenate : ReagentEffect
 {
     [DataField("factor")]
     public float Factor = 1f;

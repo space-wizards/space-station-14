@@ -10,7 +10,7 @@ namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(ThrusterSystem))]
-    public sealed class ThrusterComponent : Component
+    public sealed partial class ThrusterComponent : Component
     {
         /// <summary>
         /// Whether the thruster has been force to be enabled / disabled (e.g. VV, interaction, etc.)

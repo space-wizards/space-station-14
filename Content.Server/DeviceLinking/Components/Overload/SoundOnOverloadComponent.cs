@@ -10,7 +10,7 @@ namespace Content.Server.DeviceLinking.Components.Overload;
 /// </summary>
 [RegisterComponent]
 [Access(typeof(DeviceLinkOverloadSystem))]
-public sealed class SoundOnOverloadComponent : Component
+public sealed partial class SoundOnOverloadComponent : Component
 {
     /// <summary>
     /// Sound to play when the device overloads

@@ -72904,6 +72904,13 @@ entities:
     - pos: 38.5,-10.5
       parent: 2
       type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 13142
+    components:
+    - pos: 45.5,10.5
+      parent: 2
+      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 6750
@@ -76161,6 +76168,31 @@ entities:
     - pos: 27.5,8.5
       parent: 2
       type: Transform
+- proto: TegCenter
+  entities:
+  - uid: 13127
+    components:
+    - pos: 40.5,-46.5
+      parent: 2
+      type: Transform
+- proto: TegCirculator
+  entities:
+  - uid: 13128
+    components:
+    - rot: -1.5707963267948966 rad
+      pos: 40.5,-47.5
+      parent: 2
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
+  - uid: 13129
+    components:
+    - rot: 1.5707963267948966 rad
+      pos: 40.5,-45.5
+      parent: 2
+      type: Transform
+    - color: '#FF3300FF'
+      type: PointLight
 - proto: TelecomServer
   entities:
   - uid: 533
@@ -87160,6 +87192,88 @@ entities:
     - pos: 48.5,-29.5
       parent: 2
       type: Transform
+- proto: WarpPoint
+  entities:
+  - uid: 13130
+    components:
+    - pos: 27.5,46.5
+      parent: 2
+      type: Transform
+    - location: bridge
+      type: WarpPoint
+  - uid: 13131
+    components:
+    - pos: 34.5,23.5
+      parent: 2
+      type: Transform
+    - location: security
+      type: WarpPoint
+  - uid: 13132
+    components:
+    - pos: 11.5,23.5
+      parent: 2
+      type: Transform
+    - location: cargo
+      type: WarpPoint
+  - uid: 13133
+    components:
+    - pos: -15.5,-13.5
+      parent: 2
+      type: Transform
+    - location: arrivals
+      type: WarpPoint
+  - uid: 13134
+    components:
+    - pos: -3.5,-0.5
+      parent: 2
+      type: Transform
+  - uid: 13135
+    components:
+    - pos: 17.5,-4.5
+      parent: 2
+      type: Transform
+  - uid: 13136
+    components:
+    - pos: 37.5,7.5
+      parent: 2
+      type: Transform
+    - location: chapel
+      type: WarpPoint
+  - uid: 13137
+    components:
+    - pos: 59.5,18.5
+      parent: 2
+      type: Transform
+    - location: science
+      type: WarpPoint
+  - uid: 13138
+    components:
+    - pos: 60.5,-1.5
+      parent: 2
+      type: Transform
+    - location: med
+      type: WarpPoint
+  - uid: 13139
+    components:
+    - pos: 33.5,-5.5
+      parent: 2
+      type: Transform
+    - location: bar
+      type: WarpPoint
+  - uid: 13140
+    components:
+    - pos: 21.5,-30.5
+      parent: 2
+      type: Transform
+    - location: engi
+      type: WarpPoint
+  - uid: 13141
+    components:
+    - pos: 39.5,-24.5
+      parent: 2
+      type: Transform
+    - location: atmos
+      type: WarpPoint
 - proto: WaterCooler
   entities:
   - uid: 5379

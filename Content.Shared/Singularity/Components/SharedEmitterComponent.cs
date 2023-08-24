@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Singularity.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class EmitterComponent : Component
+public sealed partial class EmitterComponent : Component
 {
     public CancellationTokenSource? TimerCancel;
 

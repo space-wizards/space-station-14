@@ -95,8 +95,8 @@ public sealed partial class ShuttleSystem : SharedShuttleSystem
     {
         foreach (var fixture in args.NewFixtures)
         {
-            _physics.SetDensity(uid, fixture, TileMassMultiplier, false, manager);
-            _fixtures.SetRestitution(uid, fixture, 0.1f, false, manager);
+            _physics.SetDensity(uid, fixture.Key, fixture.Value, TileMassMultiplier, false, manager);
+            _fixtures.SetRestitution(uid, fixture.Key, fixture.Value, 0.1f, false, manager);
         }
     }
 

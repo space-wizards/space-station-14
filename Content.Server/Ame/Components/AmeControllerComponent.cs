@@ -6,12 +6,12 @@ using Robust.Shared.Containers;
 namespace Content.Server.Ame.Components;
 
 /// <summary>
-/// The component used to make an entity the controller/fuel injector port of an AntiMatter Engine. 
+/// The component used to make an entity the controller/fuel injector port of an AntiMatter Engine.
 /// Connects to adjacent entities with this component or <see cref="AmeShieldComponent"/> to make an AME.
 /// </summary>
 [Access(typeof(AmeControllerSystem), typeof(AmeNodeGroup))]
 [RegisterComponent]
-public sealed class AmeControllerComponent : SharedAmeControllerComponent
+public sealed partial class AmeControllerComponent : SharedAmeControllerComponent
 {
     /// <summary>
     /// The id of the container used to store the current fuel container for the AME.

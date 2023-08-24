@@ -8,7 +8,7 @@ namespace Content.Shared.Wall;
 ///     in a limited arc, providing basic functionality for directional wall mounts.
 /// </remarks>
 [RegisterComponent]
-public sealed class WallMountComponent : Component
+public sealed partial class WallMountComponent : Component
 {
     /// <summary>
     ///     Range of angles for which the exemption applies. Bigger is more permissive.

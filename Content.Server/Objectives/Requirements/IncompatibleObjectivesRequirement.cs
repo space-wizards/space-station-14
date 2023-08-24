@@ -3,10 +3,10 @@
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public sealed class IncompatibleObjectivesRequirement : IObjectiveRequirement
+    public sealed partial class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         [DataField("objectives")]
-        private readonly List<string> _incompatibleObjectives = new();
+        private List<string> _incompatibleObjectives = new();
 
         public bool CanBeAssigned(Mind.Mind mind)
         {

@@ -4,7 +4,7 @@ namespace Content.Server.Tabletop.Components
     ///     Component for marking an entity as currently playing a tabletop.
     /// </summary>
     [RegisterComponent, Access(typeof(TabletopSystem))]
-    public sealed class TabletopGamerComponent : Component
+    public sealed partial class TabletopGamerComponent : Component
     {
         [DataField("tabletop")]
         public EntityUid Tabletop { get; set; } = EntityUid.Invalid;
