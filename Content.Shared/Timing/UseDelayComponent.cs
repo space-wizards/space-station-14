@@ -9,7 +9,7 @@ namespace Content.Shared.Timing
     /// </summary>
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class UseDelayComponent : Component
+    public sealed partial class UseDelayComponent : Component
     {
         public TimeSpan LastUseTime;
 

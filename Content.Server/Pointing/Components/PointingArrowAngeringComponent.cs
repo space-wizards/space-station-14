@@ -4,7 +4,7 @@
 /// Causes pointing arrows to go mode and murder this entity.
 /// </summary>
 [RegisterComponent]
-public sealed class PointingArrowAngeringComponent : Component
+public sealed partial class PointingArrowAngeringComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("remainingAnger")]

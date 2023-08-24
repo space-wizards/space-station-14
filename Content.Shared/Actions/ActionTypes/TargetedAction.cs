@@ -5,7 +5,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Actions.ActionTypes;
 
 [Serializable, NetSerializable]
-public abstract class TargetedAction : ActionType
+public abstract partial class TargetedAction : ActionType
 {
     /// <summary>
     ///     For entity- or map-targeting actions, if this is true the action will remain selected after it is used, so
@@ -71,7 +71,7 @@ public abstract class TargetedAction : ActionType
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual]
-public class EntityTargetAction : TargetedAction
+public partial class EntityTargetAction : TargetedAction
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.
@@ -119,7 +119,7 @@ public class EntityTargetAction : TargetedAction
 /// </summary>
 [Serializable, NetSerializable]
 [Virtual]
-public class WorldTargetAction : TargetedAction
+public partial class WorldTargetAction : TargetedAction
 {
     /// <summary>
     ///     The local-event to raise when this action is performed.

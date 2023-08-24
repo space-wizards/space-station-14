@@ -5,10 +5,10 @@ namespace Content.Shared.Inventory;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(InventorySystem))]
-public sealed class InventoryComponent : Component
+public sealed partial class InventoryComponent : Component
 {
     [DataField("templateId", customTypeSerializer: typeof(PrototypeIdSerializer<InventoryTemplatePrototype>))]
-    public string TemplateId { get; } = "human";
+    public string TemplateId { get; private set; } = "human";
 
     [DataField("speciesId")] public string? SpeciesId { get; set; }
 }

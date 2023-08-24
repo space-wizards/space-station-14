@@ -1,7 +1,10 @@
-﻿using Content.Server.Administration;
+﻿using System.Linq;
+using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
+using Content.Server.Roles;
 using Content.Server.Station.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
@@ -10,12 +13,15 @@ using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
+using Content.Shared.Wires;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using Content.Shared.Stunnable;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -24,9 +30,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -35,6 +43,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<SiliconLawBoundComponent, ComponentShutdown>(OnComponentShutdown);
+        SubscribeLocalEvent<SiliconLawBoundComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<SiliconLawBoundComponent, MindAddedMessage>(OnMindAdded);
         SubscribeLocalEvent<SiliconLawBoundComponent, ToggleLawsScreenEvent>(OnToggleLawsScreen);
         SubscribeLocalEvent<SiliconLawBoundComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
@@ -42,8 +51,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         SubscribeLocalEvent<SiliconLawProviderComponent, GetSiliconLawsEvent>(OnDirectedGetLaws);
         SubscribeLocalEvent<EmagSiliconLawComponent, GetSiliconLawsEvent>(OnDirectedEmagGetLaws);
+        SubscribeLocalEvent<EmagSiliconLawComponent, MindAddedMessage>(OnEmagMindAdded);
+        SubscribeLocalEvent<EmagSiliconLawComponent, MindRemovedMessage>(OnEmagMindRemoved);
         SubscribeLocalEvent<EmagSiliconLawComponent, ExaminedEvent>(OnExamined);
     }
+
     private void OnComponentStartup(EntityUid uid, SiliconLawBoundComponent component, ComponentStartup args)
     {
         component.ProvidedAction = new (_prototype.Index<InstantActionPrototype>(component.ViewLawsAction));
@@ -54,6 +66,11 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     {
         if (component.ProvidedAction != null)
             _actions.RemoveAction(uid, component.ProvidedAction);
+    }
+
+    private void OnMapInit(EntityUid uid, SiliconLawBoundComponent component, MapInitEvent args)
+    {
+        GetLaws(uid, component);
     }
 
     private void OnMindAdded(EntityUid uid, SiliconLawBoundComponent component, MindAddedMessage args)
@@ -105,11 +122,20 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
             return;
 
+        // Add the first emag law
         args.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
             Order = 0
         });
+
+        // Add new emagged laws
+        foreach (var law in component.EmagLaws)
+        {
+            args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+        }
+
+        args.Handled = true;
     }
 
     private void OnExamined(EntityUid uid, EmagSiliconLawComponent component, ExaminedEvent args)
@@ -117,21 +143,55 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (!args.IsInDetailsRange || !HasComp<EmaggedComponent>(uid))
             return;
 
+        if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
         args.PushMarkup(Loc.GetString("laws-compromised-examine"));
     }
 
     protected override void OnGotEmagged(EntityUid uid, EmagSiliconLawComponent component, ref GotEmaggedEvent args)
     {
+        if (component.RequireOpenPanel && TryComp<WiresPanelComponent>(uid, out var panel) && !panel.Open)
+            return;
+
         base.OnGotEmagged(uid, component, ref args);
         NotifyLawsChanged(uid);
+        EnsureEmaggedRole(uid, component);
+
+        _stunSystem.TryParalyze(uid, component.StunTime, true);
+    }
+
+    private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)
+    {
+        if (HasComp<EmaggedComponent>(uid))
+            EnsureEmaggedRole(uid, component);
+    }
+
+    private void OnEmagMindRemoved(EntityUid uid, EmagSiliconLawComponent component, MindRemovedMessage args)
+    {
+        if (component.AntagonistRole == null)
+            return;
+
+        if (args.OldMind.Roles.FirstOrDefault(r => r is SubvertedSiliconRole) is not { } role)
+            return;
+
+        _mind.RemoveRole(args.OldMind, role);
+    }
+
+    private void EnsureEmaggedRole(EntityUid uid, EmagSiliconLawComponent component)
+    {
+        if (component.AntagonistRole == null || !_mind.TryGetMind(uid, out var mind))
+            return;
+
+        if (_mind.HasRole<SubvertedSiliconRole>(mind))
+            return;
+        _mind.AddRole(mind, new SubvertedSiliconRole(mind, _prototype.Index<AntagPrototype>(component.AntagonistRole)));
     }
 
     public List<SiliconLaw> GetLaws(EntityUid uid, SiliconLawBoundComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return new List<SiliconLaw>();
-
-        var xform = Transform(uid);
 
         var ev = new GetSiliconLawsEvent(uid);
 
@@ -141,6 +201,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
             component.LastLawProvider = uid;
             return ev.Laws;
         }
+
+        var xform = Transform(uid);
 
         if (_station.GetOwningStation(uid, xform) is { } station)
         {
@@ -188,7 +250,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 
         var msg = Loc.GetString("laws-update-notify");
         var wrappedMessage = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
-        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.ConnectedClient, colorOverride: Color.FromHex("#2ed2fd"));
+        _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMessage, default, false, actor.PlayerSession.ConnectedClient, colorOverride: Color.Red);
     }
 }
 

@@ -10,7 +10,7 @@ namespace Content.Server.ParticleAccelerator.Components;
 ///     Also contains primary logic for actual PA behavior, part scanning, etc...
 /// </summary>
 [RegisterComponent]
-public sealed class ParticleAcceleratorControlBoxComponent : Component
+public sealed partial class ParticleAcceleratorControlBoxComponent : Component
 {
     /// <summary>
     /// Whether the PA parts have been correctly arranged to make a functional device.

@@ -16,7 +16,7 @@ namespace Content.Client.Light.Components
     /// </summary>
     [Serializable]
     [ImplicitDataDefinitionForInheritors]
-    public abstract class LightBehaviourAnimationTrack : AnimationTrackProperty
+    public abstract partial class LightBehaviourAnimationTrack : AnimationTrackProperty
     {
         protected IEntityManager _entMan = default!;
         protected IRobustRandom _random = default!;
@@ -111,7 +111,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that alternates between StartValue and EndValue
     /// </summary>
     [UsedImplicitly]
-    public sealed class PulseBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class PulseBehaviour : LightBehaviourAnimationTrack
     {
         public override (int KeyFrameIndex, float FramePlayingTime) AdvancePlayback(
             object context, int prevKeyFrameIndex, float prevPlayingTime, float frameTime)
@@ -166,7 +166,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that interpolates from StartValue to EndValue
     /// </summary>
     [UsedImplicitly]
-    public sealed class FadeBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class FadeBehaviour : LightBehaviourAnimationTrack
     {
         /// <summary>
         /// Automatically reverse the animation when EndValue is reached. In this particular case, MaxTime specifies the
@@ -229,7 +229,7 @@ namespace Content.Client.Light.Components
     /// A light behaviour that interpolates using random values chosen between StartValue and EndValue.
     /// </summary>
     [UsedImplicitly]
-    public sealed class RandomizeBehaviour : LightBehaviourAnimationTrack
+    public sealed partial class RandomizeBehaviour : LightBehaviourAnimationTrack
     {
         private float _randomValue1;
         private float _randomValue2;
@@ -295,7 +295,7 @@ namespace Content.Client.Light.Components
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
+    public sealed partial class ColorCycleBehaviour : LightBehaviourAnimationTrack, ISerializationHooks
     {
         [DataField("property")]
         public override string Property { get; protected set; } = "Color";
@@ -357,7 +357,7 @@ namespace Content.Client.Light.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
-    public sealed class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
+    public sealed partial class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
@@ -381,7 +381,7 @@ namespace Content.Client.Light.Components
 
         [ViewVariables(VVAccess.ReadOnly)]
         [DataField("behaviours")]
-        public readonly List<LightBehaviourAnimationTrack> Behaviours = new();
+        public List<LightBehaviourAnimationTrack> Behaviours = new();
 
         [ViewVariables(VVAccess.ReadOnly)]
         public readonly List<AnimationContainer> Animations = new();

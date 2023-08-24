@@ -4,4 +4,4 @@ namespace Content.Server.NPC.Components;
 /// Added to NPCs that are actively being updated.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveNPCComponent : Component {}
+public sealed partial class ActiveNPCComponent : Component {}

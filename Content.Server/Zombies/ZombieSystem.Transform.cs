@@ -33,6 +33,7 @@ using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
+using System.Linq;
 
 namespace Content.Server.Zombies
 {
@@ -132,12 +133,15 @@ namespace Content.Server.Zombies
             {
                 //store some values before changing them in case the humanoid get cloned later
                 zombiecomp.BeforeZombifiedSkinColor = huApComp.SkinColor;
+                zombiecomp.BeforeZombifiedEyeColor = huApComp.EyeColor;
                 zombiecomp.BeforeZombifiedCustomBaseLayers = new(huApComp.CustomBaseLayers);
                 if (TryComp<BloodstreamComponent>(target, out var stream))
                     zombiecomp.BeforeZombifiedBloodReagent = stream.BloodReagent;
 
                 _humanoidAppearance.SetSkinColor(target, zombiecomp.SkinColor, verify: false, humanoid: huApComp);
-                _humanoidAppearance.SetBaseLayerColor(target, HumanoidVisualLayers.Eyes, zombiecomp.EyeColor, humanoid: huApComp);
+
+                // Messing with the eye layer made it vanish upon cloning, and also it didn't even appear right
+                huApComp.EyeColor = zombiecomp.EyeColor;
 
                 // this might not resync on clone?
                 _humanoidAppearance.SetBaseLayerId(target, HumanoidVisualLayers.Tail, zombiecomp.BaseLayerExternal, humanoid: huApComp);
@@ -244,18 +248,10 @@ namespace Content.Server.Zombies
                 ghostRole.RoleRules = Loc.GetString("zombie-role-rules");
             }
 
-            //Goes through every hand, drops the items in it, then removes the hand
-            //may become the source of various bugs.
-            if (TryComp<HandsComponent>(target, out var hands))
+            if (TryComp<HandsComponent>(target, out var handsComp))
             {
-                foreach (var hand in _hands.EnumerateHands(target))
-                {
-                    _hands.SetActiveHand(target, hand, hands);
-                    _hands.DoDrop(target, hand, handsComp: hands);
-                    _hands.RemoveHand(target, hand.Name, hands);
-                }
-
-                RemComp(target, hands);
+                _hands.RemoveHands(target);
+                RemComp(target, handsComp);
             }
 
             // No longer waiting to become a zombie:

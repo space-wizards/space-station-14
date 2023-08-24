@@ -9,7 +9,7 @@ namespace Content.Client.Storage
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public sealed class ClientStorageComponent : SharedStorageComponent
+    public sealed partial class ClientStorageComponent : SharedStorageComponent
     {
         private List<EntityUid> _storedEntities = new();
         public override IReadOnlyList<EntityUid> StoredEntities => _storedEntities;
