@@ -14,7 +14,7 @@ reagent-name-bicaridine = bicaridine
 reagent-desc-bicaridine = An analgesic which is highly effective at treating brute damage. It's useful for stabilizing people who have been severely beaten, as well as treating less life-threatening injuries.
 
 reagent-name-libital = libital
-reagent-desc-libital = A very effective medicine for treating brute damage, although quite dangerous when overdosed or mixed incorrectly.
+reagent-desc-libital = A very effective medicine for treating brute damage, although quite dangerous when overdosed.
 
 reagent-name-cryoxadone = cryoxadone
 reagent-desc-cryoxadone = Required for the proper function of cryogenics. Heals all standard types of damage very swiftly, but only works in temperatures under 150K.

@@ -188,7 +188,7 @@
         damage:
           types:
             Asphyxiation: 2
-            Poison: 2
+            Poison: 3
 
 - type: reagent
   id: Cryoxadone
