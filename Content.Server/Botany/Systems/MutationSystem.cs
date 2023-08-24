@@ -2,6 +2,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Content.Shared.Chemistry.Reagent;
 using System.Linq;
+using Content.Shared.Atmos;
 
 namespace Content.Server.Botany;
 
@@ -10,12 +11,10 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private List<ReagentPrototype> _allChemicals = default!;
-    private List<Shared.Atmos.Gas> _allGasses = default!;
 
     void IPostInjectInit.PostInject()
     {
         _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
-        _allGasses = Enum.GetValues(typeof(Shared.Atmos.Gas)).Cast<Shared.Atmos.Gas>().ToList();
     }
 
     /// <summary>
@@ -37,7 +36,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
         }
 
         // Add up everything in the bits column and put the number here.
-        const int totalbits = 275;
+        const int totalbits = 270;
 
         // Tolerances (55)
         MutateFloat(ref seed.NutrientConsumption   , 0.05f , 1.2f , 5 , totalbits , severity);
@@ -75,9 +74,9 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
         // ConstantUpgade (10)
         MutateHarvestType(ref seed.HarvestRepeat   , 10 , totalbits , severity);
 
-        // Gas (10)
-        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 7, totalbits, severity);
-        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 3, totalbits, severity);
+        // Gas (5)
+        MutateGasses(ref seed.ExudeGasses, 0.01f, 0.5f, 4, totalbits, severity);
+        MutateGasses(ref seed.ConsumeGasses, 0.01f, 0.5f, 1, totalbits, severity);
 
         // Chems (20)
         MutateChemicals(ref seed.Chemicals, 5, 20, totalbits, severity);
@@ -221,7 +220,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
             val = HarvestType.SelfHarvest;
     }
 
-    private void MutateGasses(ref Dictionary<Shared.Atmos.Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
+    private void MutateGasses(ref Dictionary<Gas, float> gasses, float min, float max, int bits, int totalbits, float mult)
     {
         float p = mult * bits / totalbits;
         p = Math.Clamp(p, 0, 1);
@@ -230,7 +229,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
 
         var rng = IoCManager.Resolve<IRobustRandom>();
         float amount = _robustRandom.NextFloat(min, max);
-        Shared.Atmos.Gas gas = rng.Pick(_allGasses);
+        Gas gas = rng.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
         if (gasses.ContainsKey(gas))
         {
             gasses[gas] += amount;
