@@ -744,6 +744,8 @@
   id: BriefcaseCash
   suffix: Smuggler, No Map, Use Spawner
   description: A handy briefcase.
+  placement:
+    mode: SnapgridCenter
   components:
   #Moved to base so all bags could be stashed under tiles.
   - type: Transform
