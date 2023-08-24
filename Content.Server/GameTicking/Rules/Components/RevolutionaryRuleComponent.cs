@@ -11,29 +11,10 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class RevolutionaryRuleComponent : Component
 {
     /// <summary>
-    /// Stores sessions of Head Revs for end screen.
+    /// Stores player username and their ingame name for endscreen.
     /// </summary>
     [DataField("headRevs")]
     public Dictionary<string, string> HeadRevs = new();
-
-    /// <summary>
-    /// If all Head Revs die this will be set for the end screen.
-    /// </summary>
-    [DataField("revsLost")]
-    public bool RevsLost = false;
-
-    /// <summary>
-    /// If all of command on station dies this will be set for end screen.
-    /// </summary>
-    [DataField("headsDied")]
-    public bool HeadsDied = false;
-    /// <summary>
-    /// Grace period for Heads to join the game before Revs win by default.
-    /// </summary>
-
-    [DataField("gracePeriod")]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public int GracePeriod = 5;
 
     [DataField("headRevPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<AntagPrototype>))]
     public string HeadRevPrototypeId = "HeadRev";

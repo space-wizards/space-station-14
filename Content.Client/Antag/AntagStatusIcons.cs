@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Antag;
 
-public abstract class AntagStatusIcons<T, TB> : EntitySystem
+public abstract class AntagStatusIcons<T, TB> : SharedStatusIconSystem
     where T : Component
     where TB : Component
 {

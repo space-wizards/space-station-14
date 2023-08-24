@@ -55,11 +55,8 @@ public abstract class SharedSubdermalImplantSystem : EntitySystem
                 }
             }
         }
-
-        if (_tag.HasTag(uid, "MindShield"))
-        {
-            EnsureComp<MindShieldComponent>(component.ImplantedEntity.Value);
-        }
+        var check = new ImplantCheckEvent(uid, component.ImplantedEntity.Value);
+        RaiseLocalEvent(uid, ref check);
     }
 
     private void OnRemoveAttempt(EntityUid uid, SubdermalImplantComponent component, ContainerGettingRemovedAttemptEvent args)
@@ -164,5 +161,18 @@ public sealed class ImplantRelayEvent<T> where T : notnull
     public ImplantRelayEvent(T ev)
     {
         Event = ev;
+    }
+}
+
+[ByRefEvent]
+public readonly struct ImplantCheckEvent
+{
+    public readonly EntityUid Implant;
+    public readonly EntityUid? Implanted;
+
+    public ImplantCheckEvent(EntityUid implant, EntityUid? implanted)
+    {
+        Implant = implant;
+        Implanted = implanted;
     }
 }

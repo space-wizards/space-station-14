@@ -6,6 +6,9 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Stunnable;
 using Content.Server.Mind;
 using Robust.Shared.Prototypes;
+using Content.Shared.Implants;
+using Content.Shared.Tag;
+using Content.Shared.Implants.Components;
 
 namespace Content.Server.Mindshield;
 /// <summary>
@@ -18,12 +21,23 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly TagSystem _tag = default!;
 
     public override void Initialize()
     {
         base.Initialize();
+        SubscribeLocalEvent<SubdermalImplantComponent, ImplantCheckEvent>(ImplantCheck);
         SubscribeLocalEvent<MindShieldComponent, ComponentAdd>(MindShieldAdded);
     }
+
+    public void ImplantCheck(EntityUid uid, SubdermalImplantComponent comp, ref ImplantCheckEvent ev)
+    {
+        if (_tag.HasTag(ev.Implant, "MindShield") && ev.Implanted != null)
+        {
+            EnsureComp<MindShieldComponent>((EntityUid) ev.Implanted);
+        }
+    }
+
 
     /// <summary>
     /// When the MindShield is added this will trigger to check if the implanted is a Rev and remove their antag role.

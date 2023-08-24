@@ -30,6 +30,7 @@ using Content.Shared.Database;
 using Content.Server.Antag;
 using Robust.Server.GameObjects;
 using Content.Server.Speech.Components;
+using Content.Server.Mind.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -56,8 +57,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     [Dependency] private readonly StationSystem _stationSystem = default!;
 
     private TimeSpan _timerWait = TimeSpan.FromSeconds(20);
-
     private TimeSpan _endRoundCheck = default!;
+    private bool _headsDied = false;
+    private bool _revsLost = false;
     public override void Initialize()
     {
         base.Initialize();
@@ -94,19 +96,19 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         var query = AllEntityQuery<RevolutionaryRuleComponent>();
         while (query.MoveNext(out var headrev))
         {
-            if (headrev.HeadsDied && !headrev.RevsLost)
+            if (_headsDied && !_revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-won"));
             }
-            if (!headrev.HeadsDied && headrev.RevsLost)
+            if (!_headsDied && _revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-lost"));
             }
-            if (headrev.HeadsDied && headrev.RevsLost)
+            if (!_headsDied && !_revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-stalemate"));
             }
-            if (!headrev.HeadsDied && !headrev.RevsLost)
+            if (_headsDied && _revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-reversestalemate"));
             }
@@ -149,15 +151,16 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             _antagSelectionSystem.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen, false);
-            GiveHeadRev(chosen, comp.RevPrototypeId);
+            GiveHeadRev(chosen, comp.RevPrototypeId, comp);
             continue;
         }
     }
 
-    private void GiveHeadRev(List<EntityUid> chosen, string antagProto)
+    private void GiveHeadRev(List<EntityUid> chosen, string antagProto, RevolutionaryRuleComponent? comp)
     {
         foreach (var headRev in chosen)
         {
+            var inCharacterName = MetaData(headRev).EntityName;
             var mind = _mindSystem.GetMind(headRev);
             _antagSelectionSystem.GiveAntagBagGear(headRev, "Flash");
             _antagSelectionSystem.GiveAntagBagGear(headRev, "ClothingEyesGlassesSunglasses");
@@ -166,6 +169,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             if (mind != null)
             {
                 _mindSystem.AddRole(mind, new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>(antagProto)));
+                if (comp != null)
+                {
+                    if (_mindSystem.TryGetSession(mind, out var session))
+                    {
+                        comp.HeadRevs.Add(inCharacterName, session.Name);
+                    }
+                }
             }
         }
     }
@@ -175,13 +185,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// </summary>
     private void InitialAssignCommandStaff()
     {
-        var allPlayers = _playerSystem.ServerSessions.ToList();
-        var playerList = new List<IPlayerSession>();
-        foreach (var player in allPlayers)
+        var playerList = new List<EntityUid>();
+        var query = AllEntityQuery<MindContainerComponent>();
+        while (query.MoveNext(out var uid, out var comp))
         {
-            if (player.AttachedEntity == null || HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
+            if (HasComp<HumanoidAppearanceComponent>(uid))
             {
-                playerList.Add(player);
+                playerList.Add(uid);
             }
         }
         AssignCommandStaff(playerList);
@@ -191,13 +201,13 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     /// Gives heads the command component so they are tracked for Revs.
     /// </summary>
     /// <param name="playerList"></param>
-    private void AssignCommandStaff(List<IPlayerSession> playerList, bool latejoin = false)
+    private void AssignCommandStaff(List<EntityUid> playerList, bool latejoin = false)
     {
         var currentCommandStaff = 0;
         var jobs = _prototypeManager.Index<DepartmentPrototype>("Command");
         foreach (var player in playerList)
         {
-            var mind = player.GetMind();
+            var mind = _mindSystem.GetMind(player);
             if (mind != null && mind.CurrentJob != null)
             {
                 var currentJob = mind.CurrentJob.Name;
@@ -270,7 +280,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var player = new List<EntityUid>();
             player.Add((EntityUid) mind.OwnedEntity);
             InitialAssignCommandStaff();
-            GiveHeadRev(player, "Rev");
+            GiveHeadRev(player, "Rev", null);
         }
         if (mind.Session != null)
         {
@@ -320,7 +330,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             // If no Head Revs are alive all normal Revs will lose their Rev status and rejoin Nanotrasen
             if (dead == inRound)
             {
-                revs.RevsLost = true;
+                _revsLost = true;
                 var rev = AllEntityQuery<RevolutionaryComponent>();
                 while (rev.MoveNext(out var id, out var comp))
                 {
@@ -337,7 +347,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
             else
             {
-                revs.RevsLost = false;
+                _revsLost = false;
             }
             // Checks if all heads are dead to finish the round.
             var heads = AllEntityQuery<CommandStaffComponent, MobStateComponent>();
@@ -359,9 +369,9 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
 
             //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
             //Also now should set all command and sec jobs to zero.
-            if (dead == inRound && !revs.HeadsDied)
+            if (dead == inRound && _headsDied)
             {
-                revs.HeadsDied = true;
+                _headsDied = true;
                 foreach (var station in _stationSystem.GetStations())
                 {
                     var jobs = _stationJobs.GetJobs(station).Keys.ToList();
@@ -378,7 +388,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
 
         }
-    }
+    } 
 
     /// <summary>
     /// Gives late join heads the head component so they also need to be killed.
@@ -386,10 +396,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
     private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
     {
         var mind = ev.Player.GetMind();
-        if (mind != null && HasComp<PendingClockInComponent>(mind.OwnedEntity))
+        if (mind != null && HasComp<PendingClockInComponent>(mind.OwnedEntity) && ev.Player.AttachedEntity != null)
         {
-            var list = new List<IPlayerSession>();
-            list.Add(ev.Player);
+            var list = new List<EntityUid>();
+            list.Add((EntityUid) ev.Player.AttachedEntity);
             AssignCommandStaff(list, true);
         }
     }
