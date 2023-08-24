@@ -76,11 +76,11 @@ public abstract partial class SharedSericultureSystem : EntitySystem
 /// <summary>
 /// Should be relayed upon using the action.
 /// </summary>
-public sealed class SericultureActionEvent : InstantActionEvent { }
+public sealed partial class SericultureActionEvent : InstantActionEvent { }
 
 /// <summary>
 /// Is relayed at the end of the sericulturing doafter.
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class SericultureDoAfterEvent : SimpleDoAfterEvent { }
+public sealed partial class SericultureDoAfterEvent : SimpleDoAfterEvent { }
 
