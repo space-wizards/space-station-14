@@ -1,22 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: All of Security now gets much more well-rounded armor that gives moderate
-      protection against most kinds of damage., type: Add}
-  - {message: Heavily nerfed helmet armor. Expect players in hardsuits and security
-      members to be much less spongey., type: Tweak}
-  - {message: Slightly rebalanced all hardsuits to have resistances that make more
-      sense., type: Tweak}
-  - {message: Winter coats no longer as resistant to heat as they once were., type: Tweak}
-  - {message: 'The security backpack no longer covers a large portion of the front
-      sprite, allowing you to properly see what kind of armor you are wearing.', type: Tweak}
-  - {message: 'Bartenders now start with regular, unarmored vests.', type: Tweak}
-  - {message: Removed the kevlar vest for the crime of being ugly. The bulletproof
-      vest is statistically identical., type: Remove}
-  - {message: Security Officers no longer receive bulletproof armor in their lockers.
-      You can find them in the armory instead., type: Remove}
-  id: 4173
-  time: '2023-07-05T23:03:16.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'Cargo''s coupons have expired, and weapons of all kinds are now about
@@ -3039,3 +3021,8 @@ Entries:
       solution is found)., type: Fix}
   id: 4672
   time: '2023-08-24T16:23:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: All plates can now be made in the autolathe., type: Tweak}
+  id: 4673
+  time: '2023-08-24T18:01:14.0000000+00:00'
