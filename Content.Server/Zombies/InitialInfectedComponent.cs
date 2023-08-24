@@ -8,7 +8,7 @@ namespace Content.Server.Zombies;
 ///   Should also have ZombieComponent.
 /// </summary>
 [RegisterComponent, Access(typeof(InitialInfectedSystem))]
-public sealed class InitialInfectedComponent : Component
+public sealed partial class InitialInfectedComponent : Component
 {
     /// <summary>
     /// A time after which this initial infected player can turn.

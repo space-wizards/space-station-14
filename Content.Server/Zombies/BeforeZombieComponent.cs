@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Server.Zombies;
 
 [RegisterComponent, Access(typeof(ZombieSystem))]
-public sealed class BeforeZombieComponent : Component
+public sealed partial class BeforeZombieComponent : Component
 {
     /// <summary>
     /// The EntityName of the humanoid to restore in case of cloning
