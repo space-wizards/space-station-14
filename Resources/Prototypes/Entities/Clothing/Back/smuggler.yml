@@ -10,6 +10,7 @@
   #Moved to base so all bags could be stashed under tiles.
   - type: Transform
     anchored: true
+  - type: CollideOnAnchor
   - type: Sprite
     sprite: Clothing/Back/Satchels/smuggler.rsi #here
     state: icon
@@ -124,9 +125,9 @@
       - id: SpaceCash10
         prob: 0.85 
         orGroup: Clothing1
-      - id: ClothingHeadHatCatEars
-        prob: 0.15 
-        orGroup: Clothing1
+      #- id: ClothingHeadHatCatEars
+      #  prob: 0.15 
+      #  orGroup: Clothing1
       - id: ClothingHeadHatOutlawHat
         prob: 0.15 
         orGroup: Clothing1             
@@ -750,6 +751,7 @@
   #Moved to base so all bags could be stashed under tiles.
   - type: Transform
     anchored: true
+  - type: CollideOnAnchor
   - type: Sprite
     sprite: Objects/Storage/Briefcases/briefcase_brown.rsi
     state: icon
