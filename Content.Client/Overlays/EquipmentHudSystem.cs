@@ -62,7 +62,7 @@ public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 
     private void OnRemove(EntityUid uid, T component, ComponentRemove args)
     {
-        Deactivate();
+        RefreshOverlay(uid);
     }
 
     private void OnPlayerAttached(PlayerAttachedEvent args)
