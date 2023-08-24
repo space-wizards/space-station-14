@@ -1593,8 +1593,16 @@
       path: /Audio/Effects/bite.ogg
     damage:
       types:
-        Piercing: 12
-        Poison: 4
+        Piercing: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    transferAmount: 1.5
+    solution: melee
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -1669,7 +1677,6 @@
       damage:
         types:
           Piercing: 8
-          Poison: 6
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
