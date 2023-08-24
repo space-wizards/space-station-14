@@ -162,7 +162,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             var inCharacterName = MetaData(headRev).EntityName;
             var mind = _mindSystem.GetMind(headRev);
-            _antagSelectionSystem.GiveAntagBagGear(headRev, "Flash");
+            _antagSelectionSystem.GiveAntagBagGear(headRev, "RevFlash");
             _antagSelectionSystem.GiveAntagBagGear(headRev, "ClothingEyesGlassesSunglasses");
             EnsureComp<RevolutionaryComponent>(headRev);
             EnsureComp<HeadRevolutionaryComponent>(headRev);
@@ -210,8 +210,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var mind = _mindSystem.GetMind(player);
             if (mind != null && mind.CurrentJob != null)
             {
-                var currentJob = mind.CurrentJob.Name;
-                currentJob = currentJob.Replace(" ", "");
+                var currentJob = mind.CurrentJob.Prototype.ID;
                 if (mind.OwnedEntity != null && jobs.Roles.Contains(currentJob))
                 {
                     if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
@@ -244,10 +243,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         if (!HasComp<RevolutionaryComponent>(ev.Target) && !HasComp<MindShieldComponent>(ev.Target) && (HasComp<HumanoidAppearanceComponent>(ev.Target) || HasComp<MonkeyAccentComponent>(ev.Target))
             && TryComp<MobStateComponent>(ev.Target, out var mobState) && mobState.CurrentState == MobState.Alive)
         {
-            if (ev.Used != null)
-            {
-                _charges.AddCharges(ev.Used.Value, 1);
-            }
             _npcFaction.AddFaction(ev.Target, "Revolutionary");
             EnsureComp<RevolutionaryComponent>(ev.Target);
             _sharedStun.TryParalyze(ev.Target, stunTime, true);
@@ -388,7 +383,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
 
         }
-    } 
+    }
 
     /// <summary>
     /// Gives late join heads the head component so they also need to be killed.
