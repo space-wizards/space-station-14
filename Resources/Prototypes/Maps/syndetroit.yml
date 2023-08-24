@@ -1,7 +1,7 @@
 - type: gameMap
   id: Syndetroit
   mapName: 'Syndetroit'
-  mapPath: /Maps/syndetroit.yml
+  mapPath: /Maps/_RedEclipse/syndetroit.yml
   minPlayers: 30
   maxPlayers: 60
   stations:
