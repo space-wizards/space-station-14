@@ -34,7 +34,7 @@ namespace Content.Server.Construction.Conditions
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (!entityManager.TryGetComponent<MachineFrameComponent?>(entity, out var machineFrame))
+            if (!entityManager.TryGetComponent(entity, out MachineFrameComponent? machineFrame))
                 return false;
 
             if (!machineFrame.HasBoard)

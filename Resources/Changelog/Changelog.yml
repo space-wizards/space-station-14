@@ -1,85 +1,4 @@
 Entries:
-- author: Lomcastar
-  changes:
-  - {message: Crew monitor now uses colors for passenger status., type: Tweak}
-  id: 4162
-  time: '2023-07-05T00:29:25.0000000+00:00'
-- author: Derby
-  changes:
-  - {message: Changed pizza to have 8 slices instead of 6., type: Tweak}
-  id: 4163
-  time: '2023-07-05T00:29:36.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: subfloor entities (wires and pipes) are now resistant to explosions
-      when hidden, type: Fix}
-  id: 4164
-  time: '2023-07-05T00:29:58.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: windows can now again be placed next to other windows, type: Fix}
-  id: 4165
-  time: '2023-07-05T00:31:10.0000000+00:00'
-- author: gagarinten
-  changes:
-  - {message: Balanced a laser carbine craft, type: Tweak}
-  id: 4166
-  time: '2023-07-05T00:31:20.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Due to improvements in Glass Airlock quality control, half the glass
-      will no longer be lost on disassembly.', type: Fix}
-  id: 4167
-  time: '2023-07-05T00:31:36.0000000+00:00'
-- author: Raitononai
-  changes:
-  - {message: NanoTrasen has begun hiring employees with Archaic accents to help expand
-      employee diversity. Forsooth!, type: Add}
-  id: 4168
-  time: '2023-07-05T00:32:22.0000000+00:00'
-- author: JustinTrotter
-  changes:
-  - {message: Syndicate objectives are more readable, type: Tweak}
-  id: 4169
-  time: '2023-07-05T00:33:11.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The Emergency Shuttle will now take 20 minutes to arrive on green alert,
-      and 10 minutes to arrive on blue alert.', type: Tweak}
-  - {message: Alert levels above blue no longer decrease the amount of time it takes
-      to leave., type: Tweak}
-  id: 4170
-  time: '2023-07-05T04:38:09.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: puddles can no longer appear on space tiles (lattice), type: Tweak}
-  id: 4171
-  time: '2023-07-05T13:59:49.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'Nanotrasen has begun issuing authentic Italian mustaches to all chefs,
-      allowing Chefs across the world to unify and unleash their true cooking prowess.
-      Or something like that.', type: Add}
-  id: 4172
-  time: '2023-07-05T22:59:19.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: All of Security now gets much more well-rounded armor that gives moderate
-      protection against most kinds of damage., type: Add}
-  - {message: Heavily nerfed helmet armor. Expect players in hardsuits and security
-      members to be much less spongey., type: Tweak}
-  - {message: Slightly rebalanced all hardsuits to have resistances that make more
-      sense., type: Tweak}
-  - {message: Winter coats no longer as resistant to heat as they once were., type: Tweak}
-  - {message: 'The security backpack no longer covers a large portion of the front
-      sprite, allowing you to properly see what kind of armor you are wearing.', type: Tweak}
-  - {message: 'Bartenders now start with regular, unarmored vests.', type: Tweak}
-  - {message: Removed the kevlar vest for the crime of being ugly. The bulletproof
-      vest is statistically identical., type: Remove}
-  - {message: Security Officers no longer receive bulletproof armor in their lockers.
-      You can find them in the armory instead., type: Remove}
-  id: 4173
-  time: '2023-07-05T23:03:16.0000000+00:00'
 - author: Lank
   changes:
   - {message: 'Cargo''s coupons have expired, and weapons of all kinds are now about
@@ -3032,3 +2951,78 @@ Entries:
   - {message: Changed various head locker contents., type: Tweak}
   id: 4661
   time: '2023-08-22T14:49:53.0000000+00:00'
+- author: Doru991
+  changes:
+  - {message: Zombies' eyes turn red the way they were supposed to., type: Fix}
+  - {message: 'When a zombie is cloned, the cloned person''s eyes are visible again.',
+    type: Fix}
+  id: 4662
+  time: '2023-08-23T04:52:00.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'R&D has developed the construction cyborg module for engineering cyborgs,
+      now they can construct anything with steel glass or rods.', type: Add}
+  id: 4663
+  time: '2023-08-23T21:34:39.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added several new Arachnid markings, including appendage stripes, chest
+      designs, chelicerae and an overlay.', type: Add}
+  id: 4664
+  time: '2023-08-23T21:37:42.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: 'The dead body examine text is more accurate for dead, disconnected
+      players.', type: Tweak}
+  id: 4665
+  time: '2023-08-23T21:41:54.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed shape of short hair to be like the old one., type: Tweak}
+  id: 4666
+  time: '2023-08-23T21:42:33.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Changed the contents of the snack vendor to better fit snacks., type: Tweak}
+  - {message: 'Added C&Ds, Bob''s sunflower seeds and Sweetie''s pistachios.', type: Add}
+  id: 4667
+  time: '2023-08-23T21:49:25.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: 'The Syndicate EMAG now provides cyborgs with an updated lawset on use,
+      making typical laws only apply to the user and preventing your new "friend"
+      from outing your activities, in addition to stunning the cyborg for a short
+      time.', type: Tweak}
+  id: 4668
+  time: '2023-08-23T23:55:00.0000000+00:00'
+- author: lapatison
+  changes:
+  - {message: 'Gardening cyborg module has been splitted into harvesting (scythe,
+      hatchet, plant bag* (New!) ) and gardening modules (hoe, spade, clippers, bucket*
+      (New!)', type: Tweak}
+  - {message: Book bag has been added to cybord literacy module, type: Tweak}
+  - {message: Book bag content now can be dumped on, type: Tweak}
+  id: 4669
+  time: '2023-08-24T00:12:05.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Reduced both the damage and health of giant spiders., type: Tweak}
+  id: 4670
+  time: '2023-08-24T01:20:53.0000000+00:00'
+- author: Ilya246
+  changes:
+  - {message: Heaters and freezers now work faster. TEGs now have their power output
+      adjusted., type: Tweak}
+  id: 4671
+  time: '2023-08-24T02:18:48.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: Secret doors can be manually rotated again (at least until a dynamic
+      solution is found)., type: Fix}
+  id: 4672
+  time: '2023-08-24T16:23:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: All plates can now be made in the autolathe., type: Tweak}
+  id: 4673
+  time: '2023-08-24T18:01:14.0000000+00:00'

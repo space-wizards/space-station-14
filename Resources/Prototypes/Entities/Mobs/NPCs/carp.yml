@@ -39,7 +39,7 @@
     - type: MobThresholds
       thresholds:
         0: Alive
-        100: Dead
+        50: Dead
     - type: Stamina
       critThreshold: 100
     - type: MovementAlwaysTouching

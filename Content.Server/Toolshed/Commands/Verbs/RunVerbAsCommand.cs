@@ -6,7 +6,7 @@ using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 using Robust.Shared.Toolshed.TypeParsers;
 
-namespace Content.Server.NewCon.Commands.Verbs;
+namespace Content.Server.Toolshed.Commands.Verbs;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class RunVerbAsCommand : ToolshedCommand

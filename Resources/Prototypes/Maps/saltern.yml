@@ -53,3 +53,4 @@
             ServiceWorker: [ 2, 2 ]
             SecurityCadet: [ 4, 4 ]
             Warden: [ 1, 1 ]
+            Borg: [ 2, 2 ]
