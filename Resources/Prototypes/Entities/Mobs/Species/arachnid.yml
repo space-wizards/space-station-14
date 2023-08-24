@@ -121,8 +121,6 @@
   noSpawn: true
   description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
   components:
-  - type: Inventory
-    templateId: arachnid
   - type: HumanoidAppearance
     species: Arachnid
 
