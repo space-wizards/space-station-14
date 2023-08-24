@@ -4,7 +4,7 @@
 /// This is used for a rule that announces kills globally.
 /// </summary>
 [RegisterComponent]
-public sealed class KillCalloutRuleComponent : Component
+public sealed partial class KillCalloutRuleComponent : Component
 {
     /// <summary>
     /// Callouts used when one player kills another.

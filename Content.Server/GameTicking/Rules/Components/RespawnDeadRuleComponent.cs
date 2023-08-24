@@ -4,6 +4,6 @@
 /// This is used for gamemodes that automatically respawn players on death.
 /// </summary>
 [RegisterComponent]
-public sealed class RespawnDeadRuleComponent : Component
+public sealed partial class RespawnDeadRuleComponent : Component
 {
 }

@@ -2,7 +2,6 @@
 using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
-using Content.Shared.Mobs.Systems;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.KillTracking;
@@ -12,8 +11,6 @@ namespace Content.Server.KillTracking;
 /// </summary>
 public sealed class KillTrackingSystem : EntitySystem
 {
-    [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-
     /// <inheritdoc/>
     public override void Initialize()
     {
@@ -74,9 +71,8 @@ public sealed class KillTrackingSystem : EntitySystem
             // no assist is given to environmental kills
             if (largestSource is not KillEnvironmentSource)
             {
-                // you have to do at least 50% of the damage to get the assist.
-                if (_mobThreshold.TryGetIncapThreshold(uid, out var threshold) &&
-                    component.LifetimeDamage[largestSource] >= threshold / 2)
+                // you have to do at least 50% of largest source's damage to get the assist.
+                if (component.LifetimeDamage[largestSource] >= component.LifetimeDamage[killSource] / 2)
                 {
                     assistSource = largestSource;
                 }

@@ -6,11 +6,15 @@
   - type: GameRule
 
 - type: entity
-  id: DeathMatch
+  id: DeathMatch31
   parent: BaseGameRule
   noSpawn: true
   components:
   - type: DeathMatchRule
+    killCap: 3
+  - type: KillCalloutRule
+  - type: RespawnTracker
+    respawnDelay: 5
 
 - type: entity
   id: InactivityTimeRestart
@@ -90,13 +94,6 @@
   - type: RespawnDeadRule
   - type: RespawnTracker
     respawnDelay: 5
-
-- type: entity
-  id: KillCalloutRule
-  parent: BaseGameRule
-  noSpawn: true
-  components:
-  - type: KillCalloutRule
 
 # event schedulers
 - type: entity

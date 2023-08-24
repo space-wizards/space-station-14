@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 /// This is used for keeping track of players that need to respawn.
 /// </summary>
 [RegisterComponent]
-public sealed class RespawnTrackerComponent : Component
+public sealed partial class RespawnTrackerComponent : Component
 {
     /// <summary>
     /// A list of the people that should be respawned.

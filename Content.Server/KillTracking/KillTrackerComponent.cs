@@ -8,7 +8,7 @@ namespace Content.Server.KillTracking;
 /// This is used for entities that track player damage sources and killers.
 /// </summary>
 [RegisterComponent]
-public sealed class KillTrackerComponent : Component
+public sealed partial class KillTrackerComponent : Component
 {
     /// <summary>
     /// The mobstate that registers as a "kill"
@@ -26,18 +26,18 @@ public sealed class KillTrackerComponent : Component
 public abstract record KillSource;
 
 [DataDefinition, Serializable]
-public sealed record KillPlayerSource(NetUserId PlayerId) : KillSource
+public sealed partial record KillPlayerSource(NetUserId PlayerId) : KillSource
 {
     [DataField("playerId")]
-    public readonly NetUserId PlayerId = PlayerId;
+    public NetUserId PlayerId { get; } = PlayerId;
 }
 
 [DataDefinition, Serializable]
-public sealed record KillNpcSource(EntityUid NpcEnt) : KillSource
+public sealed partial record KillNpcSource(EntityUid NpcEnt) : KillSource
 {
     [DataField("npcEnt")]
-    public readonly EntityUid NpcEnt = NpcEnt;
+    public EntityUid NpcEnt { get; } = NpcEnt;
 }
 
 [DataDefinition, Serializable]
-public sealed record KillEnvironmentSource : KillSource;
+public sealed partial record KillEnvironmentSource : KillSource;

@@ -1,33 +1,30 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+﻿using Content.Shared.FixedPoint;
+using Robust.Shared.Network;
+
+namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-///     Simple GameRule that will do a free-for-all death match.
-///     Kill everybody else to win.
+/// Gamerule that ends when a player gets a
 /// </summary>
 [RegisterComponent, Access(typeof(DeathMatchRuleSystem))]
 public sealed partial class DeathMatchRuleComponent : Component
 {
     /// <summary>
+    /// The number of points a player has to get to win.
+    /// </summary>
+    [DataField("killCap"), ViewVariables(VVAccess.ReadWrite)]
+    public FixedPoint2 KillCap = 31;
+
+    /// <summary>
     /// How long until the round restarts
     /// </summary>
     [DataField("restartDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public float RestartDelay = 10f;
+    public TimeSpan RestartDelay = TimeSpan.FromSeconds(10f);
 
     /// <summary>
-    /// How long after a person dies will the restart be checked
+    /// The person who won.
+    /// We store this here in case of some assist shenanigans.
     /// </summary>
-    [DataField("deadCheckDelay"), ViewVariables(VVAccess.ReadWrite)]
-    public float DeadCheckDelay = 5f;
-
-    /// <summary>
-    /// A timer for checking after a death
-    /// </summary>
-    [DataField("deadCheckTimer"), ViewVariables(VVAccess.ReadWrite)]
-    public float? DeadCheckTimer;
-
-    /// <summary>
-    /// A timer for the restart.
-    /// </summary>
-    [DataField("restartTimer"), ViewVariables(VVAccess.ReadWrite)]
-    public float? RestartTimer;
+    [DataField("victor")]
+    public NetUserId? Victor;
 }
