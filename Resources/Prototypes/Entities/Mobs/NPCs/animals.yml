@@ -1601,7 +1601,7 @@
         - ReagentId: Toxin
           Quantity: 50
   - type: MeleeChemicalInjector
-    transferAmount: 1.5
+    transferAmount: 0.75
     solution: melee
   - type: ReplacementAccent
     accent: xeno
