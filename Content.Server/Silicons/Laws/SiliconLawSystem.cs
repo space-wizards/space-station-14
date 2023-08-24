@@ -21,6 +21,7 @@ using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Toolshed;
+using Content.Shared.Stunnable;
 
 namespace Content.Server.Silicons.Laws;
 
@@ -33,6 +34,7 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
+    [Dependency] private readonly SharedStunSystem _stunSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -120,11 +122,20 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         if (args.Handled || !HasComp<EmaggedComponent>(uid) || component.OwnerName == null)
             return;
 
+        // Add the first emag law
         args.Laws.Add(new SiliconLaw
         {
             LawString = Loc.GetString("law-emag-custom", ("name", component.OwnerName)),
             Order = 0
         });
+
+        // Add new emagged laws
+        foreach (var law in component.EmagLaws)
+        {
+            args.Laws.Add(_prototype.Index<SiliconLawPrototype>(law));
+        }
+
+        args.Handled = true;
     }
 
     private void OnExamined(EntityUid uid, EmagSiliconLawComponent component, ExaminedEvent args)
@@ -146,6 +157,8 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
         base.OnGotEmagged(uid, component, ref args);
         NotifyLawsChanged(uid);
         EnsureEmaggedRole(uid, component);
+
+        _stunSystem.TryParalyze(uid, component.StunTime, true);
     }
 
     private void OnEmagMindAdded(EntityUid uid, EmagSiliconLawComponent component, MindAddedMessage args)

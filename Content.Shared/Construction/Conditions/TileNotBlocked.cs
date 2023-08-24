@@ -6,7 +6,7 @@ namespace Content.Shared.Construction.Conditions;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class TileNotBlocked : IConstructionCondition
+public sealed partial class TileNotBlocked : IConstructionCondition
 {
     [DataField("filterMobs")] private bool _filterMobs = false;
     [DataField("failIfSpace")] private bool _failIfSpace = true;

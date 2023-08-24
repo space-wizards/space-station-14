@@ -5,7 +5,7 @@
 /// Used to both track the entity as well as store basic data
 /// </summary>
 [RegisterComponent]
-public sealed class GameRuleComponent : Component
+public sealed partial class GameRuleComponent : Component
 {
     /// <summary>
     /// Whether or not the rule is active.

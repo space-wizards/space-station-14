@@ -6,7 +6,7 @@
 /// <seealso cref="TegSystem"/>
 [RegisterComponent]
 [Access(typeof(TegSystem))]
-public sealed class TegGeneratorComponent : Component
+public sealed partial class TegGeneratorComponent : Component
 {
     /// <summary>
     /// When transferring energy from the hot to cold side,

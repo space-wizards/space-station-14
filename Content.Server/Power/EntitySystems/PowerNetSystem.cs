@@ -297,13 +297,14 @@ namespace Content.Server.Power.EntitySystems
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
                 var powered = apcReceiver.Powered;
-                if (powered == apcReceiver.PoweredLastUpdate)
+                if (apcReceiver.LastPowerReceived == apcReceiver.NetworkLoad.ReceivingPower)
                     continue;
 
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 apcReceiver.PoweredLastUpdate = powered;
+                apcReceiver.LastPowerReceived = apcReceiver.NetworkLoad.ReceivingPower;
                 var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
 
                 RaiseLocalEvent(apcReceiver.Owner, ref ev);

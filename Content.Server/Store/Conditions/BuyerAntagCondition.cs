@@ -11,7 +11,7 @@ namespace Content.Shared.Store.Conditions;
 /// Supports both blacklists and whitelists. This is copypaste because roles
 /// are absolute shitcode. Refactor this later. -emo
 /// </summary>
-public sealed class BuyerAntagCondition : ListingCondition
+public sealed partial class BuyerAntagCondition : ListingCondition
 {
     /// <summary>
     /// A whitelist of antag roles that can purchase this listing. Only one needs to be found.

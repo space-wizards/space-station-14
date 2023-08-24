@@ -20,6 +20,8 @@ using Content.Shared.Eye.Blinding.Components;
 using Robust.Client;
 using static Content.Shared.Interaction.SharedInteractionSystem;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Item;
 
 namespace Content.Client.Examine
 {
@@ -50,11 +52,26 @@ namespace Content.Client.Examine
 
             SubscribeNetworkEvent<ExamineSystemMessages.ExamineInfoResponseMessage>(OnExamineInfoResponse);
 
+            SubscribeLocalEvent<ItemComponent, DroppedEvent>(OnExaminedItemDropped);
+
             CommandBinds.Builder
                 .Bind(ContentKeyFunctions.ExamineEntity, new PointerInputCmdHandler(HandleExamine, outsidePrediction: true))
                 .Register<ExamineSystem>();
 
             _idCounter = 0;
+        }
+
+        private void OnExaminedItemDropped(EntityUid item, ItemComponent comp, DroppedEvent args)
+        {
+            if (!args.User.Valid)
+                return;
+            if (_playerManager.LocalPlayer == null)
+                return;
+            if (_examineTooltipOpen == null)
+                return;
+
+            if (item == _examinedEntity && args.User == _playerManager.LocalPlayer.ControlledEntity)
+                CloseTooltip();
         }
 
         public override void Update(float frameTime)

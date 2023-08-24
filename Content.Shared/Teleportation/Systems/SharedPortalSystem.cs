@@ -88,16 +88,16 @@ public abstract class SharedPortalSystem : EntitySystem
             component.EnteredPortal = state.EnteredPortal;
     }
 
-    private bool ShouldCollide(Fixture our, Fixture other)
+    private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)
     {
         // most non-hard fixtures shouldn't pass through portals, but projectiles are non-hard as well
         // and they should still pass through
-        return our.ID == PortalFixture && (other.Hard || other.ID == ProjectileFixture);
+        return ourId == PortalFixture && (other.Hard || otherId == ProjectileFixture);
     }
 
     private void OnCollide(EntityUid uid, PortalComponent component, ref StartCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId, args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;
@@ -163,7 +163,7 @@ public abstract class SharedPortalSystem : EntitySystem
 
     private void OnEndCollide(EntityUid uid, PortalComponent component, ref EndCollideEvent args)
     {
-        if (!ShouldCollide(args.OurFixture, args.OtherFixture))
+        if (!ShouldCollide(args.OurFixtureId, args.OtherFixtureId,args.OurFixture, args.OtherFixture))
             return;
 
         var subject = args.OtherEntity;
