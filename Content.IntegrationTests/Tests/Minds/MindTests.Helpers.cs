@@ -26,13 +26,12 @@ public sealed partial class MindTests
     /// </remarks>
     private static async Task<Pair.TestPair> SetupPair(bool dirty = false)
     {
-        var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
             Connected = true,
             Dirty = dirty
         });
-        var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -59,7 +58,7 @@ public sealed partial class MindTests
             Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
             Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
         });
-        return pairTracker;
+        return pair;
     }
 
     private static async Task<EntityUid> BecomeGhost(TestPair pair, bool visit = false)

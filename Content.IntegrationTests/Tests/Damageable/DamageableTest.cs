@@ -73,8 +73,8 @@ namespace Content.IntegrationTests.Tests.Damageable
         [Test]
         public async Task TestDamageableComponents()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var sEntityManager = server.ResolveDependency<IEntityManager>();
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -237,7 +237,7 @@ namespace Content.IntegrationTests.Tests.Damageable
                 sDamageableSystem.TryChangeDamage(uid, new DamageSpecifier(group3, -100));
                 Assert.That(sDamageableComponent.TotalDamage, Is.EqualTo(FixedPoint2.Zero));
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }
