@@ -6,7 +6,6 @@
   abstract: true
   description: Now that's a nice pasta!
   components:
-  - type: Food
   - type: Sprite
     sprite: Objects/Consumable/Food/noodles.rsi
   - type: SolutionContainerManager
