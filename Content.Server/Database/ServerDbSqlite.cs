@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Content.Server.Administration.Logs;
 using Content.Server.IP;
 using Content.Server.Preferences.Managers;
 using Content.Shared.CCVar;
@@ -476,6 +477,15 @@ namespace Content.Server.Database
             await db.DbContext.SaveChangesAsync();
 
             return round.Id;
+        }
+
+        protected override IQueryable<AdminLog> StartAdminLogsQuery(ServerDbContext db, LogFilter? filter = null)
+        {
+            IQueryable<AdminLog> query = db.AdminLog;
+            if (filter?.Search != null)
+                query = query.Where(log => EF.Functions.Like(log.Message, $"%{filter.Search}%"));
+
+            return query;
         }
 
         public override async Task<int> AddAdminNote(AdminNote note)

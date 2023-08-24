@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffects
     /// Default metabolism for drink reagents. Attempts to find a ThirstComponent on the target,
     /// and to update it's thirst values.
     /// </summary>
-    public sealed class SatiateThirst : ReagentEffect
+    public sealed partial class SatiateThirst : ReagentEffect
     {
         private const float DefaultHydrationFactor = 3.0f;
 

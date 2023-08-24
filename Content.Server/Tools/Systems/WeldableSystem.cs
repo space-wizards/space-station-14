@@ -1,5 +1,8 @@
 using Content.Server.Administration.Logs;
+using Content.Server.Construction;
 using Content.Server.Tools.Components;
+using Content.Server.Wires;
+using Content.Shared.Construction.Steps;
 using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
@@ -7,8 +10,10 @@ using Content.Shared.Interaction;
 using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
 using Content.Shared.Tools.Systems;
+using Content.Shared.Wires;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
+using System.Linq;
 
 namespace Content.Server.Tools.Systems;
 
@@ -18,6 +23,7 @@ public sealed class WeldableSystem : EntitySystem
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private readonly ConstructionSystem _construction = default!;
 
     public override void Initialize()
     {
@@ -36,6 +42,14 @@ public sealed class WeldableSystem : EntitySystem
 
     private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)
     {
+        // If any construction graph edges has its conditions meet and requires welding, then this construction takes priority
+        if (_construction.GetCurrentNode(uid)?.Edges.Any(x => _construction.CheckConditions(uid, x.Conditions)
+            && x.Steps.Any(y => (y as ToolConstructionGraphStep)?.Tool == "Welding")) == true)
+        {
+            args.Handled = false;
+            return;
+        }
+
         if (args.Handled)
             return;
 
@@ -100,16 +114,16 @@ public sealed class WeldableSystem : EntitySystem
         if (!TryComp<FixturesComponent>(uid, out var fixtures))
             return;
 
-        foreach (var fixture in fixtures.Fixtures.Values)
+        foreach (var (id, fixture) in fixtures.Fixtures)
         {
             switch (args.IsWelded)
             {
                 case true when fixture.CollisionLayer == (int) component.UnWeldedLayer:
-                    _physics.SetCollisionLayer(uid, fixture, (int) component.WeldedLayer);
+                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.WeldedLayer);
                     break;
 
                 case false when fixture.CollisionLayer == (int) component.WeldedLayer:
-                    _physics.SetCollisionLayer(uid, fixture, (int) component.UnWeldedLayer);
+                    _physics.SetCollisionLayer(uid, id, fixture, (int) component.UnWeldedLayer);
                     break;
             }
         }

@@ -38,6 +38,7 @@
           components:
           - FitsInDispenser
   - type: SolutionHeater
+  - type: ItemPlacer
     whitelist:
       components:
       - FitsInDispenser

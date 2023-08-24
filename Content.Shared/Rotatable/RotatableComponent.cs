@@ -1,7 +1,7 @@
 namespace Content.Shared.Rotatable
 {
     [RegisterComponent]
-    public sealed class RotatableComponent : Component
+    public sealed partial class RotatableComponent : Component
     {
         /// <summary>
         ///     If true, this entity can be rotated even while anchored.

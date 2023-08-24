@@ -3,7 +3,7 @@ using Robust.Client.Graphics;
 namespace Content.Client.Explosion;
 
 [RegisterComponent]
-public sealed class ExplosionVisualsTexturesComponent : Component
+public sealed partial class ExplosionVisualsTexturesComponent : Component
 {
     /// <summary>
     ///     Uid of the client-side point light entity for this explosion.

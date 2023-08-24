@@ -92,6 +92,14 @@
     Blunt: 5
 
 - type: damageModifierSet
+  id: Web # Very flammable, can be easily hacked and slashed, but shooting or hitting it is another story.
+  coefficients:
+    Blunt: 0.7
+    Slash: 2.0
+    Piercing: 0.7
+    Heat: 3.0
+
+- type: damageModifierSet
   id: Slime
   coefficients:
     Blunt: 0.6
@@ -131,13 +139,10 @@
     Shock: 1.2
 
 - type: damageModifierSet
-  id: Arachnid # Don't do too well with high temperatures, venomous (well some kinds anyways) and have an exo-skeleton (so probably harder to stab but easier to... break?)
+  id: Arachnid # Exo-skeleton, should have simillarities to skeleton resistances.
   coefficients:
-    Blunt: 1.15
-    Piercing: 1.15
-    Slash: 0.85
-    Heat: 1.25
-    Poison: 0.8 
+    Blunt: 1.1
+    Heat: 1.5
 
 - type: damageModifierSet
   id: Moth # Slightly worse at everything but cold

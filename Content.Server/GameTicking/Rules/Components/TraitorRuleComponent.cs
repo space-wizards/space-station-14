@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.GameTicking.Rules.Components;
 
 [RegisterComponent, Access(typeof(TraitorRuleSystem))]
-public sealed class TraitorRuleComponent : Component
+public sealed partial class TraitorRuleComponent : Component
 {
     public List<TraitorRole> Traitors = new();
 

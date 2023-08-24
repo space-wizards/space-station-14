@@ -8,7 +8,7 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class PlantCryoxadone : ReagentEffect
+    public sealed partial class PlantCryoxadone : ReagentEffect
     {
         public override void Effect(ReagentEffectArgs args)
         {

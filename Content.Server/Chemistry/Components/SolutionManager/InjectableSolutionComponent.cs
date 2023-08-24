@@ -4,7 +4,7 @@
     ///     Denotes a solution which can be added with syringes.
     /// </summary>
     [RegisterComponent]
-    public sealed class InjectableSolutionComponent : Component
+    public sealed partial class InjectableSolutionComponent : Component
     {
 
         /// <summary>

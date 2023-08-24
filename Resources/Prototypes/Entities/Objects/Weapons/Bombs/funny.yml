@@ -66,3 +66,41 @@
     tags:
       - HideContextMenu
   - type: AnimationPlayer
+
+- type: entity
+  name: banana peel
+  suffix: Explosive
+  parent: TrashBananaPeel
+  id: TrashBananaPeelExplosive
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    layers:
+    - state: peel
+    - state: primed
+      shader: unshaded
+  - type: TriggerOnSlip
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 2
+    totalIntensity: 10
+    canCreateVacuum: false
+  - type: DeleteOnTrigger
+  - type: AnimationPlayer
+
+- type: entity
+  parent: BaseItem
+  id: TrashBananaPeelExplosiveUnarmed
+  name: banana
+  suffix: Unarmed
+  description: There's something unusual about this banana.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: produce
+  - type: SpawnItemsOnUse
+    items:
+    - id: TrashBananaPeelExplosive
+    sound:
+      path: /Audio/Effects/unwrap.ogg

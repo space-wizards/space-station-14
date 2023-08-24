@@ -296,6 +296,12 @@ namespace Content.Server.GameTicking
 
             RunLevel = GameRunLevel.PostRound;
 
+            // The lobby song is set here instead of in RestartRound,
+            // because ShowRoundEndScoreboard triggers the start of the music playing
+            // at the end of a round, and this needs to be set before RestartRound
+            // in order for the lobby song status display to be accurate.
+            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
+
             ShowRoundEndScoreboard(text);
         }
 
@@ -349,6 +355,10 @@ namespace Content.Server.GameTicking
                 else if (mind.CurrentEntity != null && TryName(mind.CurrentEntity.Value, out var icName))
                     playerIcName = icName;
 
+                var entity = mind.OriginalOwnedEntity;
+                if (Exists(entity))
+                    _pvsOverride.AddGlobalOverride(entity.Value, recursive: true);
+
                 var playerEndRoundInfo = new RoundEndMessageEvent.RoundEndPlayerInfo()
                 {
                     // Note that contentPlayerData?.Name sticks around after the player is disconnected.
@@ -356,7 +366,7 @@ namespace Content.Server.GameTicking
                     PlayerOOCName = contentPlayerData?.Name ?? "(IMPOSSIBLE: REGISTERED MIND WITH NO OWNER)",
                     // Character name takes precedence over current entity name
                     PlayerICName = playerIcName,
-                    PlayerEntityUid = mind.OriginalOwnedEntity,
+                    PlayerEntityUid = entity,
                     Role = antag
                         ? mind.AllRoles.First(role => role.Antagonist).Name
                         : mind.AllRoles.FirstOrDefault()?.Name ?? Loc.GetString("game-ticker-unknown-role"),
@@ -366,6 +376,7 @@ namespace Content.Server.GameTicking
                 };
                 listOfPlayerInfo.Add(playerEndRoundInfo);
             }
+
             // This ordering mechanism isn't great (no ordering of minds) but functions
             var listOfPlayerInfoFinal = listOfPlayerInfo.OrderBy(pi => pi.PlayerOOCName).ToArray();
 
@@ -395,7 +406,6 @@ namespace Content.Server.GameTicking
             PlayersJoinedRoundNormally = 0;
 
             RunLevel = GameRunLevel.PreRoundLobby;
-            LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();

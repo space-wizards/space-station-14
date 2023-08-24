@@ -58,6 +58,10 @@ petting-failure-medibot = You reach out to pet {THE($target)}, but {POSS-ADJ($ta
 # Shown when knocking on a window
 comp-window-knock = *knock knock*
 
+## Rattling fences
+
+fence-rattle-success = *rattle*
+
 ## Hugging players
 
 hugging-success-generic = You hug {THE($target)}.
