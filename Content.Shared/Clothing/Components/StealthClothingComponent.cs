@@ -14,7 +14,7 @@ public sealed partial class StealthClothingComponent : Component
     /// <summary>
     /// Whether stealth effect is enabled.
     /// </summary>
-    [ViewVariables, AutoNetworkedField]
+    [DataField("enabled"), ViewVariables(VVAccess.ReadWrite), AutoNetworkedField]
     public bool Enabled;
 
     /// <summary>
