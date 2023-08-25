@@ -1,0 +1,30 @@
+- type: constructionGraph
+  id: TripwireGraph
+  start: start
+  graph:
+  - node: start
+    actions:
+    - !type:SpawnPrototype
+      prototype: SheetSteel1
+      amount: 2
+    - !type:SpawnPrototype
+      prototype: CableApcStack1
+      amount: 2
+    - !type:DeleteEntity {}
+    edges:
+    - to: tripwire
+      completed:
+      - !type:SnapToGrid {}
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+      - material: Cable
+        amount: 2
+  - node: tripwire
+    entity: BaseTripwire
+    edges:
+    - to: start
+      steps:
+      - tool: Cutting
+        doAfter: 6

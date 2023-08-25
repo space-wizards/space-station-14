@@ -150,3 +150,21 @@
   canBuildInImpassable: true
   conditions:
     - !type:WallmountCondition
+
+- type: construction
+  name: tripwire
+  id: TripwireRecipe
+  graph: TripwireGraph
+  startNode: start
+  targetNode: tripwire
+  category: construction-category-machines
+  description: Draw a line on the sand, or I guess the cold steel floor.
+  icon:
+    sprite: Structures/tripwire.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: true
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked

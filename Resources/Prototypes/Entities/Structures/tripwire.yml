@@ -25,6 +25,37 @@
     state: icon
   - type: SlipSignal
     port: TrippedWire
+  - type: DamageSignal
+    port: TrippedWire
   - type: DeviceLinkSource
     ports:
     - TrippedWire
+  - type: Construction
+    graph: TripwireGraph
+    node: tripwire
+  - type: DamageTriggerOnTrigger
+    damage:
+      types:
+        Structural: 35
+  - type: TriggerOnStepTrigger
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 35
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          CableApcStack:
+            min: 0
+            max: 1
+          SheetSteel:
+            min: 1
+            max: 2
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
