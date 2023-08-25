@@ -15,7 +15,7 @@ public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
 
     public Dictionary<string, FixedPoint2>? Chemicals;
 
-    public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, float bloodLevel, Dictionary<string, FixedPoint2>? chemicals= null)
+    public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, float bloodLevel, Dictionary<string, FixedPoint2>? chemicals = null)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;

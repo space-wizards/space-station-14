@@ -72,11 +72,36 @@ namespace Content.Client.HealthAnalyzer.UI
                     text.AppendLine();
                 }
 
-                //show chemicals in the bloodstream
-                text.Append("Chemicals:\n")
+                //a bit of spacing
+                text.AppendLine();
+
+                //check if chemical information is actually sent
+                if (msg.Chemicals != null)
+                {
+                    //get rid of blood (we don't care if it's in someone)
+                    msg.Chemicals.Remove("Blood"); //human, dward, moff and lizard
+                    msg.Chemicals.Remove("SpiderBlood"); //for the arachnid
+                    msg.Chemicals.Remove("Slime"); //for the slime
+                    msg.Chemicals.Remove("Water"); //for the diona
+
+                    //if they have chemicals then do something
+                    if (msg.Chemicals.Count > 0)
+                    {
+                        //show them the chems
+                        text.Append($"{Loc.GetString("health-analyzer-window-contains-chemicals")}\n");
+                        foreach (KeyValuePair<string, FixedPoint2> pair in msg.Chemicals)
+                        {
+                            text.Append($"{Loc.GetString("health-analyzer-window-chemical", ("name", pair.Key), ("quantity", pair.Value))}\n");
+                        }
+                    } else
+                    {
+                        //No Chems?
+                        text.Append($"{Loc.GetString("health-analyzer-window-contains-no-chemicals")}");
+                    }
+                }
 
                 Diagnostics.Text = text.ToString();
-                SetSize = new Vector2(250, 600);
+                SetSize = new Vector2(250, 800);
             }
             else
             {
