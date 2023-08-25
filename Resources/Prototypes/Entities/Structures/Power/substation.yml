@@ -130,6 +130,12 @@
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
+  - type: ContainerFill
+    containers:
+      board: [ WallmountSubstationElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: InteractionOutline
   - type: Physics
     bodyType: Static
