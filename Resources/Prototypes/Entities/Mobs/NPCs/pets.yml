@@ -481,7 +481,7 @@
 
 - type: entity
   name: Shiva
-  parent: MobGiantSpider
+  parent: MobBaseSpider
   id: MobSpiderShiva
   description: The first defender of the station.
   components:
@@ -533,7 +533,15 @@
     damage:
       types:
         Piercing: 8
-        Poison: 8
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    transferAmount: 1
+    solution: melee
   - type: ReplacementAccent
     accent: xeno
   - type: NoSlip

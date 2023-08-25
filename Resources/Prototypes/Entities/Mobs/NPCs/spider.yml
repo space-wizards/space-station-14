@@ -90,8 +90,8 @@
       0: Alive
       70: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4.5
-    baseSprintSpeed : 4.5
+    baseWalkSpeed : 4.2
+    baseSprintSpeed : 4.2
   - type: SlowOnDamage
     speedModifierThresholds:
       55: 0.7
@@ -141,7 +141,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 8
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -149,7 +149,7 @@
         - ReagentId: Toxin
           Quantity: 50
   - type: MeleeChemicalInjector
-    transferAmount: .6
+    transferAmount: .5
     solution: melee
 
 - type: entity
@@ -172,14 +172,14 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      55: Dead
+      50: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 5
     baseSprintSpeed : 5
   - type: SlowOnDamage
     speedModifierThresholds:
       35: 0.7
-      50: 0.5
+      45: 0.5
   - type: MeleeWeapon
     damage:
       types:
@@ -216,12 +216,12 @@
     baseSprintSpeed : 2.5
   - type: SlowOnDamage
     speedModifierThresholds:
-      220: 0.7
-      290: 0.5
+      200: 0.7
+      260: 0.5
   - type: MobThresholds
     thresholds:
       0: Alive
-      360: Dead
+      300: Dead
   - type: MeleeWeapon
     damage:
       types:
