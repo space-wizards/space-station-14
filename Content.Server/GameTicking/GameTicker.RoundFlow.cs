@@ -252,6 +252,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            SendRoundStartedDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -395,16 +396,21 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var content = "The round has ended.";
-                if (DiscordRoundEndRole != null)
-                    content += $"\n\n<@&{DiscordRoundEndRole}>, the server will reboot shortly!";
+                var duration = RoundDuration();
+                var content = Loc.GetString("discord-round-notifications-end",
+                    ("id", RoundId),
+                    ("hours", Math.Truncate(duration.TotalHours)),
+                    ("minutes", duration.Minutes),
+                    ("seconds", duration.Seconds));
+                var payload = new WebhookPayload { Content = content };
 
-                var payload = new WebhookPayload
-                {
-                    Content = content,
-                    Username = ServerName,
-                };
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
 
+                if (DiscordRoundEndRole == null)
+                    return;
+
+                content = Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
+                payload = new WebhookPayload { Content = content };
                 payload.AllowedMentions.AllowRoleMentions();
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
@@ -439,6 +445,7 @@ namespace Content.Server.GameTicking
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();
+            SendRoundStartingDiscordMessage();
 
             if (!LobbyEnabled)
             {
@@ -456,8 +463,6 @@ namespace Content.Server.GameTicking
 
                 ReqWindowAttentionAll();
             }
-
-            SendRoundStartingDiscordMessage();
         }
 
         private async void SendRoundStartingDiscordMessage()
@@ -467,13 +472,9 @@ namespace Content.Server.GameTicking
                 if (_webhookIdentifier == null)
                     return;
 
-                var content = "New round starting!";
+                var content = Loc.GetString("discord-round-notifications-new");
 
-                var payload = new WebhookPayload
-                {
-                    Content = content,
-                    Username = ServerName,
-                };
+                var payload = new WebhookPayload { Content = content };
 
                 await _discord.CreateMessage(_webhookIdentifier.Value, payload);
             }
@@ -608,6 +609,26 @@ namespace Content.Server.GameTicking
 
             if (proto.Sound != null)
                 SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+        }
+
+        private async void SendRoundStartedDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round start message:\n{e}");
+            }
         }
     }
 
