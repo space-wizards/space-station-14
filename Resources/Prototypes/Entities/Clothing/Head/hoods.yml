@@ -160,24 +160,7 @@
     
 #Winter Coat Hoods
 - type: entity
-  parent: ClothingHeadBase
-  id: ClothingHeadHatWinterHoodGeneral
-  noSpawn: true
-  name: base winter coat hood
-  description: A hood to keep your head warm.
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodbase.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodbase.rsi
-  - type: TemperatureProtection
-    coefficient: 0.7
-  - type: Tag
-    tags:
-    - HidesHair
- 
-- type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHeadHatHoodWinterBartender
   noSpawn: true
   name: bartender winter coat hood
@@ -188,7 +171,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodbartender.rsi
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHeadHatHoodWinterCaptain
   noSpawn: true
   name: captain's winter coat hood
@@ -200,7 +183,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcaptain.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHeadHatHoodWinterCargo
   noSpawn: true
   name: cargo winter coat hood
@@ -211,7 +194,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcargo.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterCE
   noSpawn: true
   name: chief engineer's winter coat hood
@@ -222,7 +205,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodce.rsi    
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterCentcom
   noSpawn: true
   name: Centcom winter coat hood
@@ -234,7 +217,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcentcom.rsi    
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterChem
   noSpawn: true
   name: chemist winter coat hood
@@ -245,7 +228,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodchemist.rsi    
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterCMO
   noSpawn: true
   name: chief medical officer's winter coat hood
@@ -256,7 +239,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodcmo.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterEngineer
   noSpawn: true
   name: engineer winter coat hood
@@ -267,7 +250,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodengi.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterHOP
   noSpawn: true
   name: head of personel's winter coat hood
@@ -278,7 +261,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhop.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterHOS
   noSpawn: true
   name: head of security's winter coat hood
@@ -289,7 +272,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhos.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterHydro
   noSpawn: true
   name: hydroponics coat hood
@@ -300,7 +283,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodhydro.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterJani
   noSpawn: true
   name: janitor coat hood
@@ -311,7 +294,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodjani.rsi
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterMed
   noSpawn: true
   name: medic coat hood
@@ -322,7 +305,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmed.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterMime
   noSpawn: true
   name: mime coat hood
@@ -333,7 +316,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodmime.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterMiner
   noSpawn: true
   name: miner coat hood
@@ -344,7 +327,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodminer.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterPara
   noSpawn: true
   name: paramedic coat hood
@@ -355,7 +338,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodpara.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterQM
   noSpawn: true
   name: quartermaster's coat hood
@@ -366,7 +349,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodqm.rsi
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterRD
   noSpawn: true
   name: research director's coat hood
@@ -377,7 +360,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrd.rsi
     
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterRobo
   noSpawn: true
   name: robotics coat hood
@@ -388,7 +371,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodrobo.rsi
    
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterSci
   noSpawn: true
   name: scientist coat hood
@@ -399,7 +382,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsci.rsi
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterSec
   noSpawn: true
   name: security coat hood
@@ -410,7 +393,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
         
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterSyndie
   noSpawn: true
   name: syndicate coat hood
@@ -421,7 +404,7 @@
     sprite: Clothing/Head/Hoods/Coat/hoodsyndicate.rsi
 
 - type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
+  parent: ClothingHeadHatWinterHoodBase
   id: ClothingHatHeadHoodWinterWarden
   noSpawn: true
   name: warden's coat hood
