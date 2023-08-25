@@ -28,6 +28,14 @@ namespace Content.Shared.Ghost
                 args.Cancel();
         }
 
+        public void SetTimeOfDeath(EntityUid uid, TimeSpan value, GhostComponent? component)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.TimeOfDeath = value;
+        }
+
         public void SetCanReturnToBody(EntityUid uid, bool value, GhostComponent? component = null)
         {
             if (!Resolve(uid, ref component))

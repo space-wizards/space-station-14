@@ -273,13 +273,13 @@ namespace Content.Server.GameTicking
 
             if (mind.TimeOfDeath.HasValue)
             {
-                ghostComponent.TimeOfDeath = mind.TimeOfDeath!.Value;
+                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
             }
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
+            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
                 _mind.Visit(mind, ghost);

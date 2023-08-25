@@ -69,9 +69,9 @@ namespace Content.Client.Ghost
             SubscribeNetworkEvent<GhostWarpsResponseEvent>(OnGhostWarpsResponse);
             SubscribeNetworkEvent<GhostUpdateGhostRoleCountEvent>(OnUpdateGhostRoleCount);
 
-            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleLightingActionEvent>(OnToggleLighting);
-            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleFoVActionEvent>(OnToggleFoV);
-            SubscribeLocalEvent<GhostComponent, GhostComponent.ToggleGhostsActionEvent>(OnToggleGhosts);
+            SubscribeLocalEvent<GhostComponent, ToggleLightingActionEvent>(OnToggleLighting);
+            SubscribeLocalEvent<GhostComponent, ToggleFoVActionEvent>(OnToggleFoV);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostsActionEvent>(OnToggleGhosts);
         }
 
         private void OnGhostInit(EntityUid uid, GhostComponent component, ComponentInit args)
@@ -86,7 +86,7 @@ namespace Content.Client.Ghost
             _actions.AddAction(uid, component.ToggleGhostsAction, null);
         }
 
-        private void OnToggleLighting(EntityUid uid, GhostComponent component, GhostComponent.ToggleLightingActionEvent args)
+        private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -96,7 +96,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
-        private void OnToggleFoV(EntityUid uid, GhostComponent component, GhostComponent.ToggleFoVActionEvent args)
+        private void OnToggleFoV(EntityUid uid, GhostComponent component, ToggleFoVActionEvent args)
         {
             if (args.Handled)
                 return;
@@ -106,7 +106,7 @@ namespace Content.Client.Ghost
             args.Handled = true;
         }
 
-        private void OnToggleGhosts(EntityUid uid, GhostComponent component, GhostComponent.ToggleGhostsActionEvent args)
+        private void OnToggleGhosts(EntityUid uid, GhostComponent component, ToggleGhostsActionEvent args)
         {
             if (args.Handled)
                 return;
