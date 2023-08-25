@@ -4,11 +4,9 @@ using Content.Shared.Administration.Managers;
 using Content.Shared.Ghost;
 using Content.Shared.Input;
 using Content.Shared.Movement.Components;
-using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Players;
 using Robust.Shared.Serialization;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Generic;
 
 namespace Content.Shared.Movement.Systems;
 
@@ -78,7 +76,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         eye.TargetZoom = ignoreLimits ? zoom : Clamp(zoom, eye);
-        Dirty(eye);
+        Dirty(uid, eye);
     }
 
     private void OnContentZoomRequest(RequestTargetZoomEvent msg, EntitySessionEventArgs args)
@@ -100,7 +98,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (TryComp<SharedEyeComponent>(player, out var eyeComp))
         {
             eyeComp.DrawFov = msg.Fov;
-            Dirty(eyeComp);
+            Dirty(player, eyeComp);
         }
     }
 
@@ -110,24 +108,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
             return;
 
         component.TargetZoom = eyeComp.Zoom;
-        Dirty(component);
-    }
-
-    protected void UpdateEye(EntityUid uid, ContentEyeComponent content, SharedEyeComponent eye, float frameTime)
-    {
-        var diff = content.TargetZoom - eye.Zoom;
-
-        if (diff.LengthSquared() < 0.00001f)
-        {
-            eye.Zoom = content.TargetZoom;
-            Dirty(eye);
-            return;
-        }
-
-        var change = diff * 8f * frameTime;
-
-        eye.Zoom += change;
-        Dirty(eye);
+        Dirty(uid, component);
     }
 
     public void ResetZoom(EntityUid uid, ContentEyeComponent? component = null)
@@ -142,7 +123,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
 
         component.MaxZoom = value;
         component.TargetZoom = Clamp(component.TargetZoom, component);
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     /// <summary>
