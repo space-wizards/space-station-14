@@ -487,6 +487,8 @@
     - type: Sprite
       sprite: Objects/Specific/Janitorial/rag.rsi
       state: rag
+    - type: Item
+      sprite: Objects/Specific/Janitorial/rag.rsi
     - type: Spillable
       solution: absorbed
     - type: MeleeWeapon
