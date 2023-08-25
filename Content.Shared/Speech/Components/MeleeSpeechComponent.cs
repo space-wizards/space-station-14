@@ -3,6 +3,7 @@ using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 namespace Content.Shared.Speech.Components;
+
 [RegisterComponent, NetworkedComponent]
 [AutoGenerateComponentState]
 
@@ -15,6 +16,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [DataField("Battlecry")]
     [AutoNetworkedField]
     public string? Battlecry;
+
     /// <summary>
     /// The maximum amount of characters allowed in a battlecry
     /// </summary>
@@ -22,6 +24,7 @@ public sealed partial class MeleeSpeechComponent : Component
     [DataField("MaxBattlecryLength")]
     [AutoNetworkedField]
     public int MaxBattlecryLength = 12;
+
     /// <summary>
     /// The action to open the battlecry UI
     /// </summary>
