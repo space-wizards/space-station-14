@@ -13,18 +13,18 @@ public sealed class WarDeclaratorComponent : Component
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("message")]
-    public string Message { get; set; } = "war-declarator-default-message";
+    public string Message = "war-declarator-default-message";
 
     /// <summary>
     /// Permission to customize message text
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("allowEditMessage")]
-    public bool AllowEditMessage { get; set; } = true;
+    public bool AllowEditMessage = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxMessageLength")]
-    public int MaxMessageLength { get; set; } = 512;
+    public int MaxMessageLength = 512;
 
     /// <summary>
     /// War declarement text color
