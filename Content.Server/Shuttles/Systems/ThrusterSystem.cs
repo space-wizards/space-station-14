@@ -283,7 +283,7 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLightComponent))
+        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
         {
             pointLightComponent.Enabled = true;
         }
@@ -371,7 +371,7 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLightComponent))
+        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
         {
             pointLightComponent.Enabled = false;
         }

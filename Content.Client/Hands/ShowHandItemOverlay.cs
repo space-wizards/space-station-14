@@ -7,7 +7,9 @@ using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Map;
+using Direction = Robust.Shared.Maths.Direction;
 
 namespace Content.Client.Hands
 {

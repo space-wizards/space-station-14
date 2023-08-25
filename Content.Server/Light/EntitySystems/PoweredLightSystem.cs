@@ -394,7 +394,7 @@ namespace Content.Server.Light.EntitySystems
             light.CurrentLit = value;
             _ambientSystem.SetAmbience(uid, value);
 
-            if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLight))
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
                 pointLight.Enabled = value;
 

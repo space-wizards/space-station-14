@@ -158,7 +158,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
-            EntityManager.EnsureComponent<SharedPointLightComponent>(uid);
+            EntityManager.EnsureComponent<PointLightComponent>(uid);
         }
 
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)

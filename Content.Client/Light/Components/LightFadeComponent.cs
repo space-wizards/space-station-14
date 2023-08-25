@@ -1,7 +1,7 @@
 namespace Content.Client.Light.Components;
 
 /// <summary>
-/// Fades out the <see cref="SharedPointLightComponent"/> attached to this entity.
+/// Fades out the <see cref="PointLightComponent"/> attached to this entity.
 /// </summary>
 [RegisterComponent]
 public sealed partial class LightFadeComponent : Component

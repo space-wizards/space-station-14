@@ -36,7 +36,7 @@ public sealed class ExpendableLightSystem : VisualizerSystem<ExpendableLightComp
             {
                 lightBehaviour.StartLightBehaviour(lightBehaviourID);
             }
-            else if (TryComp<SharedPointLightComponent>(uid, out var light))
+            else if (TryComp<PointLightComponent>(uid, out var light))
             {
                 _pointLightSystem.SetEnabled(uid, false, light);
             }

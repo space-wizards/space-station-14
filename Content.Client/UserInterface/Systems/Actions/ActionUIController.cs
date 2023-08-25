@@ -21,6 +21,7 @@ using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Client.UserInterface.Controls;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Input;
 using Robust.Shared.Input.Binding;
 using Robust.Shared.Timing;
@@ -727,7 +728,7 @@ public sealed class ActionUIController : UIController, IOnStateChanged<GameplayS
             if (action.EntityIcon != null)
             {
                 _dragShadow.Texture = EntityManager.GetComponent<SpriteComponent>(action.EntityIcon.Value).Icon?
-                    .GetFrame(RSI.State.Direction.South, 0);
+                    .GetFrame(RsiDirection.South, 0);
             }
             else if (action.Icon != null)
             {

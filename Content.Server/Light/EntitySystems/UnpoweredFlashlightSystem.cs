@@ -70,7 +70,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
         {
-            if (!TryComp<SharedPointLightComponent>(uid, out var light))
+            if (!TryComp<PointLightComponent>(uid, out var light))
                 return;
 
             if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmaggedColorsPrototype, out var possibleColors))
@@ -85,7 +85,7 @@ namespace Content.Server.Light.EntitySystems
 
         public void ToggleLight(EntityUid uid, UnpoweredFlashlightComponent flashlight)
         {
-            if (!TryComp<SharedPointLightComponent>(uid, out var light))
+            if (!TryComp<PointLightComponent>(uid, out var light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;

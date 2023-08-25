@@ -2,6 +2,7 @@ using Content.Shared.Explosion;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
+using Robust.Shared.Graphics.RSI;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Explosion;
@@ -63,7 +64,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         // spawn in a client-side light source at the epicenter
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = EnsureComp<SharedPointLightComponent>(lightEntity);
+        var light = EnsureComp<PointLightComponent>(lightEntity);
         light.Energy = light.Radius = component.Intensity.Count;
         light.Color = type.LightColor;
 
@@ -74,7 +75,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         var fireRsi = _resCache.GetResource<RSIResource>(type.TexturePath).RSI;
         foreach (var state in fireRsi)
         {
-            textures.FireFrames.Add(state.GetFrames(RSI.State.Direction.South));
+            textures.FireFrames.Add(state.GetFrames(RsiDirection.South));
             if (textures.FireFrames.Count == type.FireStates)
                 break;
         }

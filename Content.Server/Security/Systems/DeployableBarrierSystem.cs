@@ -41,7 +41,7 @@ namespace Content.Server.Security.Systems
             if (TryComp<SharedPullableComponent>(uid, out var pullable))
                 _pulling.TryStopPull(pullable);
 
-            if (TryComp(uid, out SharedPointLightComponent? light))
+            if (TryComp(uid, out PointLightComponent? light))
                 light.Enabled = isDeployed;
         }
     }

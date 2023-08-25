@@ -17,7 +17,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
     {
         base.Update(frameTime);
 
-        var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent, SharedPointLightComponent>();
+        var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent, PointLightComponent>();
 
         while (enumerator.MoveNext(out var comp, out var light))
         {
@@ -28,7 +28,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
     private void OnStartup(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentStartup args)
     {
-        var light = EnsureComp<SharedPointLightComponent>(uid);
+        var light = EnsureComp<PointLightComponent>(uid);
         component.OriginalEnergy = light.Energy;
         component.OriginalEnabled = light.Enabled;
 
@@ -38,12 +38,12 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
     private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentShutdown args)
     {
-        if (!TryComp<SharedPointLightComponent>(component.Owner, out var light))
+        if (!TryComp<PointLightComponent>(component.Owner, out var light))
             return;
 
         if (component.OriginalEnergy == null)
         {
-            RemComp<SharedPointLightComponent>(component.Owner);
+            RemComp<PointLightComponent>(component.Owner);
             return;
         }
 

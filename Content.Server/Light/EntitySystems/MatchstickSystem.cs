@@ -92,7 +92,7 @@ namespace Content.Server.Light.EntitySystems
         {
             component.CurrentState = value;
 
-            if (TryComp<SharedPointLightComponent>(component.Owner, out var pointLightComponent))
+            if (TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
             {
                 pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
             }

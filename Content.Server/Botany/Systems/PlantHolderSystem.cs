@@ -855,7 +855,7 @@ namespace Content.Server.Botany.Systems
 
             if (component.Seed != null && component.Seed.Bioluminescent)
             {
-                var light = EnsureComp<SharedPointLightComponent>(uid);
+                var light = EnsureComp<PointLightComponent>(uid);
                 light.Radius = component.Seed.BioluminescentRadius;
                 light.Color = component.Seed.BioluminescentColor;
                 light.CastShadows = false; // this is expensive, and botanists make lots of plants
@@ -863,7 +863,7 @@ namespace Content.Server.Botany.Systems
             }
             else
             {
-                RemComp<SharedPointLightComponent>(uid);
+                RemComp<PointLightComponent>(uid);
             }
 
             if (!TryComp<AppearanceComponent>(uid, out var app))

@@ -110,7 +110,7 @@ namespace Content.Server.Light.EntitySystems
             if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
                 return;
 
-            foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, SharedPointLightComponent, AppearanceComponent, TransformComponent>())
+            foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
             {
                 if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                     continue;
@@ -198,7 +198,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOff(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out SharedPointLightComponent? light))
+            if (TryComp(component.Owner, out PointLightComponent? light))
             {
                 light.Enabled = false;
             }
@@ -211,7 +211,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOn(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out SharedPointLightComponent? light))
+            if (TryComp(component.Owner, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }

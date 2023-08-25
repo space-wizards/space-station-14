@@ -6,6 +6,7 @@ using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Shared.Enums;
+using Robust.Shared.Graphics;
 using Robust.Shared.Utility;
 
 namespace Content.Client.CombatMode;

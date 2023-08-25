@@ -19,7 +19,7 @@ public sealed class LightFadeSystem : EntitySystem
 
     private void OnFadeStartup(EntityUid uid, LightFadeComponent component, ComponentStartup args)
     {
-        if (!TryComp<SharedPointLightComponent>(uid, out var light))
+        if (!TryComp<PointLightComponent>(uid, out var light))
             return;
 
         var animation = new Animation()
@@ -29,8 +29,8 @@ public sealed class LightFadeSystem : EntitySystem
             {
                 new AnimationTrackComponentProperty()
                 {
-                    Property = nameof(SharedPointLightComponent.Energy),
-                    ComponentType = typeof(SharedPointLightComponent),
+                    Property = nameof(PointLightComponent.Energy),
+                    ComponentType = typeof(PointLightComponent),
                     InterpolationMode = AnimationInterpolationMode.Cubic,
                     KeyFrames =
                     {

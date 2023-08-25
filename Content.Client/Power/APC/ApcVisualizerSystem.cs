@@ -43,7 +43,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
                 }
             }
 
-            if (TryComp<SharedPointLightComponent>(uid, out var light))
+            if (TryComp<PointLightComponent>(uid, out var light))
                 light.Color = comp.ScreenColors[(sbyte)chargeState];
         }
         else
@@ -61,7 +61,7 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
                 args.Sprite.LayerSetVisible(layer, false);
             }
 
-            if (TryComp<SharedPointLightComponent>(uid, out var light))
+            if (TryComp<PointLightComponent>(uid, out var light))
                 light.Color = comp.EmaggedScreenColor;
         }
     }

@@ -51,7 +51,7 @@ namespace Content.Client.Light.Components
             _entMan = entMan;
             _parent = parent;
 
-            if (Enabled && _entMan.TryGetComponent(_parent, out SharedPointLightComponent? light))
+            if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
@@ -61,7 +61,7 @@ namespace Content.Client.Light.Components
 
         public void UpdatePlaybackValues(Animation owner)
         {
-            if (_entMan.TryGetComponent(_parent, out SharedPointLightComponent? light))
+            if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 light.Enabled = true;
             }
@@ -92,7 +92,7 @@ namespace Content.Client.Light.Components
                 throw new InvalidOperationException("Property parameter is null! Check the prototype!");
             }
 
-            if (_entMan.TryGetComponent(_parent, out SharedPointLightComponent? light))
+            if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
             {
                 AnimationHelper.SetAnimatableProperty(light, Property, value);
             }
@@ -410,7 +410,7 @@ namespace Content.Client.Light.Components
         /// </summary>
         private void CopyLightSettings(string property)
         {
-            if (_entMan.TryGetComponent(Owner, out SharedPointLightComponent? light))
+            if (_entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 var propertyValue = AnimationHelper.GetAnimatableProperty(light, property);
                 if (propertyValue != null)
@@ -420,7 +420,7 @@ namespace Content.Client.Light.Components
             }
             else
             {
-                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(SharedPointLightComponent)}! Check the prototype!");
+                Logger.Warning($"{_entMan.GetComponent<MetaDataComponent>(Owner).EntityName} has a {nameof(LightBehaviourComponent)} but it has no {nameof(PointLightComponent)}! Check the prototype!");
             }
         }
 
@@ -488,7 +488,7 @@ namespace Content.Client.Light.Components
                 Animations.Remove(container);
             }
 
-            if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out SharedPointLightComponent? light))
+            if (resetToOriginalSettings && _entMan.TryGetComponent(Owner, out PointLightComponent? light))
             {
                 foreach (var (property, value) in _originalPropertyValues)
                 {

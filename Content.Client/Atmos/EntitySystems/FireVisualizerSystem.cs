@@ -81,7 +81,7 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
             sprite.LayerSetState(index, component.NormalState);
 
         component.LightEntity ??= Spawn(null, new EntityCoordinates(uid, default));
-        var light = EnsureComp<SharedPointLightComponent>(component.LightEntity.Value);
+        var light = EnsureComp<PointLightComponent>(component.LightEntity.Value);
 
         light.Color = component.LightColor;
 
