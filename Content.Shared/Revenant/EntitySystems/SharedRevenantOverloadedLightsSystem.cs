@@ -13,7 +13,7 @@ public abstract class SharedRevenantOverloadedLightsSystem : EntitySystem
 
         var enumerator = EntityQueryEnumerator<RevenantOverloadedLightsComponent>();
 
-        while (enumerator.MoveNext(out var comp))
+        while (enumerator.MoveNext(out var uid, out var comp))
         {
             comp.Accumulator += frameTime;
 
@@ -21,7 +21,7 @@ public abstract class SharedRevenantOverloadedLightsSystem : EntitySystem
                 continue;
 
             OnZap(comp);
-            RemComp(comp.Owner, comp);
+            RemCompDeferred(uid, comp);
         }
     }
 

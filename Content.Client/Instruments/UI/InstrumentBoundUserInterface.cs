@@ -1,5 +1,4 @@
 using Content.Shared.ActionBlocker;
-using Content.Shared.Instruments;
 using Content.Shared.Instruments.UI;
 using Content.Shared.Interaction;
 using Robust.Client.Audio.Midi;
@@ -25,7 +24,7 @@ namespace Content.Client.Instruments.UI
         [ViewVariables] private BandMenu? _bandMenu;
         [ViewVariables] private ChannelsMenu? _channelsMenu;
 
-        [ViewVariables] public SharedInstrumentComponent? Instrument { get; private set; }
+        [ViewVariables] public InstrumentComponent? Instrument { get; private set; }
 
         public InstrumentBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
@@ -50,7 +49,7 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
-            if (!EntMan.TryGetComponent(Owner, out SharedInstrumentComponent? instrument))
+            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
                 return;
 
             Instrument = instrument;

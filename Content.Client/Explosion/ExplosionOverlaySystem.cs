@@ -16,6 +16,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
     [Dependency] private readonly IResourceCache _resCache = default!;
     [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
     /// <summary>
     ///     For how many seconds should an explosion stay on-screen once it has finished expanding?
@@ -65,8 +66,9 @@ public sealed class ExplosionOverlaySystem : EntitySystem
         // spawn in a client-side light source at the epicenter
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
         var light = EnsureComp<PointLightComponent>(lightEntity);
-        light.Energy = light.Radius = component.Intensity.Count;
-        light.Color = type.LightColor;
+
+        _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
+        _lights.SetColor(lightEntity, type.LightColor, light);
 
         textures.LightEntity = lightEntity;
         textures.FireColor = type.FireColor;

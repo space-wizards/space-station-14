@@ -36,7 +36,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStartMidiEvent>(OnMidiStart);
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
 
-        SubscribeLocalEvent<SharedInstrumentComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
     }
 
     public override void Shutdown()
@@ -47,14 +47,14 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         _cfg.UnsubValueChanged(CCVars.MaxMidiEventsPerSecond, OnMaxMidiEventsPerSecondChanged);
     }
 
-    private void OnShutdown(EntityUid uid, SharedInstrumentComponent component, ComponentShutdown args)
+    private void OnShutdown(EntityUid uid, InstrumentComponent component, ComponentShutdown args)
     {
         EndRenderer(uid, false, component);
     }
 
     public void SetMaster(EntityUid uid, EntityUid? masterUid)
     {
-        if (!TryComp(uid, out SharedInstrumentComponent? instrument))
+        if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
         RaiseNetworkEvent(new InstrumentSetMasterEvent(uid, masterUid));
@@ -62,7 +62,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     public void SetFilteredChannel(EntityUid uid, int channel, bool value)
     {
-        if (!TryComp(uid, out SharedInstrumentComponent? instrument))
+        if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
         if(value)
@@ -76,7 +76,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref component))
             return;
 
-        if (component is not SharedInstrumentComponent instrument)
+        if (component is not InstrumentComponent instrument)
         {
             return;
         }
@@ -113,7 +113,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void UpdateRenderer(EntityUid uid, SharedInstrumentComponent? instrument = null)
+    public void UpdateRenderer(EntityUid uid, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument) || instrument.Renderer == null)
             return;
@@ -143,12 +143,12 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         instrument.Renderer.LoopMidi = instrument.LoopMidi;
     }
 
-    private void UpdateRendererMaster(SharedInstrumentComponent instrument)
+    private void UpdateRendererMaster(InstrumentComponent instrument)
     {
         if (instrument.Renderer == null || instrument.Master == null)
             return;
 
-        if (!TryComp(instrument.Master, out SharedInstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
+        if (!TryComp(instrument.Master, out InstrumentComponent? masterInstrument) || masterInstrument.Renderer == null)
             return;
 
         instrument.Renderer.Master = masterInstrument.Renderer;
@@ -159,7 +159,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         if (!Resolve(uid, ref component, false))
             return;
 
-        if (component is not SharedInstrumentComponent instrument)
+        if (component is not InstrumentComponent instrument)
             return;
 
         if (instrument.IsInputOpen)
@@ -193,7 +193,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         }
     }
 
-    public void SetPlayerTick(EntityUid uid, int playerTick, SharedInstrumentComponent? instrument = null)
+    public void SetPlayerTick(EntityUid uid, int playerTick, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return;
@@ -209,7 +209,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         instrument.Renderer.PlayerTick = playerTick;
     }
 
-    public bool OpenInput(EntityUid uid, SharedInstrumentComponent? instrument = null)
+    public bool OpenInput(EntityUid uid, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument, false))
             return false;
@@ -226,7 +226,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     }
 
-    public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, SharedInstrumentComponent? instrument = null)
+    public bool OpenMidi(EntityUid uid, ReadOnlySpan<byte> data, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -242,7 +242,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         return true;
     }
 
-    public bool CloseInput(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? instrument = null)
+    public bool CloseInput(EntityUid uid, bool fromStateChange, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -256,7 +256,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         return true;
     }
 
-    public bool CloseMidi(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? instrument = null)
+    public bool CloseMidi(EntityUid uid, bool fromStateChange, InstrumentComponent? instrument = null)
     {
         if (!Resolve(uid, ref instrument))
             return false;
@@ -284,7 +284,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
     {
         var uid = midiEv.Uid;
 
-        if (!TryComp(uid, out SharedInstrumentComponent? instrument))
+        if (!TryComp(uid, out InstrumentComponent? instrument))
             return;
 
         var renderer = instrument.Renderer;
@@ -322,7 +322,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SendMidiEvents(midiEv.MidiEvent, instrument);
     }
 
-    private void SendMidiEvents(IReadOnlyList<RobustMidiEvent> midiEvents, SharedInstrumentComponent instrument)
+    private void SendMidiEvents(IReadOnlyList<RobustMidiEvent> midiEvents, InstrumentComponent instrument)
     {
         if (instrument.Renderer == null)
         {
@@ -371,7 +371,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
             return;
         }
 
-        var query = EntityQueryEnumerator<SharedInstrumentComponent>();
+        var query = EntityQueryEnumerator<InstrumentComponent>();
         while (query.MoveNext(out var uid, out var instrument))
         {
             // For cases where the master renderer was not created yet.
