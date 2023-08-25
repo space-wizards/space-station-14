@@ -1,5 +1,6 @@
 using Content.Server.StationEvents.Events;
 using Content.Shared.Radio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
 namespace Content.Server.StationEvents.Components;
@@ -21,6 +22,24 @@ public sealed class SolarFlareRuleComponent : Component
     /// </summary>
     [DataField("affectedChannels", customTypeSerializer: typeof(PrototypeIdHashSetSerializer<RadioChannelPrototype>))]
     public readonly HashSet<string> AffectedChannels = new();
+
+    /// <summary>
+    ///     List of extra channels that can be random disabled on top of the starting channels.
+    /// </summary>
+    /// <remarks>
+    ///     Channels are not removed from this, so its possible to roll the same channel multiple times.
+    /// </remarks>
+    [DataField("extraChannels", customTypeSerializer: typeof(PrototypeIdListSerializer<RadioChannelPrototype>))]
+    public readonly List<String> ExtraChannels = new();
+
+    /// <summary>
+    ///     Number of times to roll a channel from ExtraChannels.
+    /// </summary>
+    /// <remarks>
+    ///     Channels are not removed from it, so its possible to roll the same channel multiple times.
+    /// </remarks>
+    [DataField("extraCount")]
+    public uint ExtraCount;
 
     /// <summary>
     ///     Chance light bulb breaks per second during event
