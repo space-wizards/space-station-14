@@ -1,5 +1,4 @@
 ﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
-using Component = System.ComponentModel.Component;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
