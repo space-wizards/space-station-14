@@ -170,6 +170,7 @@
     state: plasmasaw
   - type: Item
     heldPrefix: plasmasaw
+  - type: MeleeWeapon
     damage:
       types:
         Slash: 18
