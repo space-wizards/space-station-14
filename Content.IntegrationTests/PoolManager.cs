@@ -277,7 +277,7 @@ public static partial class PoolManager
         }
 
         pair.ValidateSettings(poolSettings);
-        
+
         var poolRetrieveTime = poolRetrieveTimeWatch.Elapsed;
         await testOut.WriteLineAsync(
             $"{nameof(GetServerClientPair)}: Retrieving pair {pair.Id} from pool took {poolRetrieveTime.TotalMilliseconds} ms");
@@ -298,7 +298,7 @@ public static partial class PoolManager
             {
                 if (Pairs[pair])
                     continue;
-                
+
                 if (!pair.Settings.CanFastRecycle(poolSettings))
                 {
                     fallback = pair;
@@ -320,15 +320,14 @@ public static partial class PoolManager
             {
                 var x = 2;
             }
-            
+
             return fallback;
         }
     }
 
     /// <summary>
-    /// Used by PairTracker after checking the server/client pair, Don't use this.
+    /// Used by TestPair after checking the server/client pair, Don't use this.
     /// </summary>
-    /// <param name="pair"></param>
     public static void NoCheckReturn(TestPair pair)
     {
         lock (PairLock)
@@ -381,32 +380,6 @@ we are just going to end this here to save a lot of time. This is the exception 
         }
     }
 
-    /// <summary>
-    /// Creates a map, a grid, and a tile, and gives back references to them.
-    /// </summary>
-    /// <param name="pairTracker">A pairTracker</param>
-    /// <returns>A TestMapData</returns>
-    [Obsolete("use TestPair.CreateMap")]
-    public static async Task<TestMapData> CreateTestMap(TestPair pairTracker)
-    {
-        return await pairTracker.CreateTestMap();
-    }
-
-    /// <summary>
-    /// Runs a server/client pair in sync
-    /// </summary>
-    /// <param name="pair">A server/client pair</param>
-    /// <param name="ticks">How many ticks to run them for</param>
-    [Obsolete("use TestPair.RunTicks")]
-    public static async Task RunTicksSync(TestPair pair, int ticks)
-    {
-        for (var i = 0; i < ticks; i++)
-        {
-            await pair.Server.WaitRunTicks(1);
-            await pair.Client.WaitRunTicks(1);
-        }
-    }
-    
     /// <summary>
     /// Runs a server, or a client until a condition is true
     /// </summary>
