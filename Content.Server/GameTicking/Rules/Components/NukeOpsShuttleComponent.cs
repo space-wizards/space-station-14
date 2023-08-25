@@ -4,6 +4,6 @@
 /// Tags grid as nuke ops shuttle
 /// </summary>
 [RegisterComponent]
-public sealed class NukeOpsShuttleComponent : Component
+public sealed partial class NukeOpsShuttleComponent : Component
 {
 }

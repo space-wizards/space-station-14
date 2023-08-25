@@ -6,7 +6,7 @@ namespace Content.Server.NukeOps;
 /// Used with NukeOps game rule to send war declaration announcement
 /// </summary>
 [RegisterComponent]
-public sealed class WarDeclaratorComponent : Component
+public sealed partial class WarDeclaratorComponent : Component
 {
     /// <summary>
     /// Current text in field. Will try use Fluent ID on component initialization
