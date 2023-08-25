@@ -998,7 +998,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
                 continue;
 
-            if (nukeops.NukieOutpost  == null || nukeops.WarDeclaredTime  == null)
+            if (nukeops.NukieOutpost == null ||
+                nukeops.WarDeclaredTime  == null ||
+                ev.Uid != nukeops.NukieShuttle)
                 continue;
 
             var mapOutpost = Transform(nukeops.NukieOutpost.Value).MapID;
@@ -1025,7 +1027,10 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
                 continue;
 
-            if (nukeops.NukieOutpost == null)
+            var gridUid = Transform(ev.Uid).GridUid;
+            if (nukeops.NukieOutpost == null ||
+                gridUid == null ||
+                gridUid.Value != nukeops.NukieShuttle)
                 continue;
 
             var mapOutpost = Transform(nukeops.NukieOutpost.Value).MapID;
@@ -1035,8 +1040,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             {
                 nukeops.LeftOutpost = true;
 
-                var gridUid = Transform(ev.Uid).GridUid;
-                if (gridUid != null && TryGetRuleFromGrid(gridUid.Value, out var comps))
+                if (TryGetRuleFromGrid(gridUid.Value, out var comps))
                     _warDeclaratorSystem.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
             }
         }
