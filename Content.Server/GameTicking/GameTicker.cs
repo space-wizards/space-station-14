@@ -42,7 +42,6 @@ namespace Content.Server.GameTicking
         [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogs = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;

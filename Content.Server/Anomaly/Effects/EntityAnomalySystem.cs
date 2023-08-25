@@ -16,8 +16,6 @@ public sealed class EntityAnomalySystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ITileDefinitionManager _tiledef = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

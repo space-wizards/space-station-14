@@ -15,10 +15,6 @@ namespace Content.IntegrationTests.Pair;
 /// </summary>
 public sealed partial class TestPair
 {
-    // TODO remove this.
-    [Obsolete("Field access is redundant")]
-    public TestPair Pair => this;
-
     public readonly int Id;
     private bool _initialized;
     private TextWriter _testOut = default!;
@@ -31,7 +27,7 @@ public sealed partial class TestPair
 
     public PoolTestLogHandler ServerLogHandler { get;  private set; } = default!;
     public PoolTestLogHandler ClientLogHandler { get;  private set; } = default!;
-    
+
     public TestPair(int id)
     {
         Id = id;
@@ -72,7 +68,7 @@ public sealed partial class TestPair
             await Client.WaitRunTicks(1);
         }
     }
-    
+
     public void Kill()
     {
         State = PairState.Dead;
@@ -100,7 +96,7 @@ public sealed partial class TestPair
             throw new InvalidOperationException($"Pair is not ready to use. State: {State}");
         State = PairState.InUse;
     }
-    
+
     public enum PairState : byte
     {
         Ready = 0,
