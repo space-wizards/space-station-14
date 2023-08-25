@@ -156,7 +156,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!nukieRule.CanEnableWarOps)
             return WarConditionStatus.NO_WAR_UNKNOWN;
 
-        if (nukieRule.WarDeclaredTime.HasValue)
+        if (nukieRule.WarDeclaredTime != null && nukieRule.WarNukieArriveDelay != null)
         {
             // Nukies must wait some time after declaration of war to get on the station
             var warTime = _gameTiming.CurTime.Subtract(nukieRule.WarDeclaredTime.Value);
@@ -999,7 +999,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 continue;
 
             if (nukeops.NukieOutpost == null ||
-                nukeops.WarDeclaredTime  == null ||
+                nukeops.WarDeclaredTime == null ||
+                nukeops.WarNukieArriveDelay == null ||
                 ev.Uid != nukeops.NukieShuttle)
                 continue;
 
@@ -1009,7 +1010,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (mapOutpost == mapShuttle)
             {
                 var timeAfterDeclaration = _gameTiming.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
-                var timeRemain = nukeops.WarNukieArriveDelay.Subtract(timeAfterDeclaration);
+                var timeRemain = nukeops.WarNukieArriveDelay.Value.Subtract(timeAfterDeclaration);
                 if (timeRemain > TimeSpan.Zero)
                 {
                     ev.Cancelled = true;

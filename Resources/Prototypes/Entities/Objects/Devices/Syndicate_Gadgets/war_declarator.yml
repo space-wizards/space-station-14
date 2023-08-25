@@ -11,6 +11,11 @@
     - type: Item
     - type: UseDelay
       delay: 0.5
+    - type: ActivatableUI
+      inHandsOnly: true
+      singleUser: true
+      closeOnHandDeselect: false
+      key: enum.WarDeclaratorUiKey.Key
     - type: UserInterface
       interfaces:
         - key: enum.WarDeclaratorUiKey.Key

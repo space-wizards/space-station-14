@@ -1,9 +1,7 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Popups;
 using Content.Shared.Database;
-using Content.Shared.Interaction;
 using Content.Shared.NukeOps;
 using Robust.Server.GameObjects;
 
@@ -14,31 +12,11 @@ public sealed class WarDeclaratorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<WarDeclaratorComponent, ActivateInWorldEvent>(OnActivate);
         SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
-    }
-
-    private void OnActivate(EntityUid uid, WarDeclaratorComponent component, ActivateInWorldEvent args)
-    {
-        if (!TryComp<ActorComponent>(args.User, out var actor))
-            return;
-
-        args.Handled = true;
-
-        if (!_nukeopsRuleSystem.TryGetRuleFromOperative(args.User, out var comps))
-        {
-            var msg = Loc.GetString("war-declarator-not-nukeops");
-            _popupSystem.PopupEntity(msg, uid);
-            return;
-        }
-
-        _userInterfaceSystem.TryOpen(uid, WarDeclaratorUiKey.Key, actor.PlayerSession);
-        UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
     }
 
     private void OnActivated(EntityUid uid, WarDeclaratorComponent component, WarDeclaratorActivateMessage args)
@@ -105,7 +83,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
                 break;
             case WarConditionStatus.WAR_DELAY:
                 startTime = nukeops.WarDeclaredTime!.Value;
-                delayTime = nukeops.WarNukieArriveDelay;
+                delayTime = nukeops.WarNukieArriveDelay!.Value;
                 break;
             default:
                 startTime = TimeSpan.Zero;
