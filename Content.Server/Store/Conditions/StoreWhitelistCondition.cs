@@ -6,7 +6,7 @@ namespace Content.Server.Store.Conditions;
 /// <summary>
 /// Filters out an entry based on the components or tags on the store itself.
 /// </summary>
-public sealed class StoreWhitelistCondition : ListingCondition
+public sealed partial class StoreWhitelistCondition : ListingCondition
 {
     /// <summary>
     /// A whitelist of tags or components.

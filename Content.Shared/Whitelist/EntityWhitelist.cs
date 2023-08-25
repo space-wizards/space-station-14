@@ -20,7 +20,7 @@ namespace Content.Shared.Whitelist
     /// </code>
     [DataDefinition]
     [Serializable, NetSerializable]
-    public sealed class EntityWhitelist
+    public sealed partial class EntityWhitelist
     {
         /// <summary>
         ///     Component names that are allowed in the whitelist.

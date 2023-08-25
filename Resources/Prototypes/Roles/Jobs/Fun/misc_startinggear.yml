@@ -140,7 +140,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitOperative
     back: ClothingBackpackDuffelSyndicateOperativeMedic
-    mask: ClothingMaskBreathMedicalSecurity
+    mask: ClothingMaskGasSyndicate
     eyes: ClothingEyesHudMedical
     ears: ClothingHeadsetAltSyndicate
     gloves: ClothingHandsGlovesCombat
@@ -283,7 +283,7 @@
   equipment:
     jumpsuit: ClothingUniformJumpsuitBrigmedic
     outerClothing: ClothingOuterCoatAMG
-    back: ClothingBackpackBrigmedicFilled
+    back: ClothingBackpackBrigmedic
     shoes: ClothingShoesColorRed
     gloves: ClothingHandsGlovesNitrile
     eyes: ClothingEyesHudMedical
