@@ -41,7 +41,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatatmos.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterAtmos
+    clothingPrototype: ClothingHatHeadHoodWinterEngineer
 
 - type: entity
   parent: ClothingOuterWinterCoat
@@ -53,7 +53,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatbar.rsi
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterBase
+    clothingPrototype: ClothingHeadHatHoodWinterBartender
 
 - type: entity
   parent: ClothingOuterWinterCoat

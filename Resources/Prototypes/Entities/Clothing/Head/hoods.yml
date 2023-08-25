@@ -167,27 +167,18 @@
   description: A hood to keep your head warm.
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
+    sprite: Clothing/Head/Hoods/Coat/hoodbase.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
+    sprite: Clothing/Head/Hoods/Coat/hoodbase.rsi
+  - type: TemperatureProtection
+    coefficient: 0.7
   - type: Tag
     tags:
     - HidesHair
-    
+ 
 - type: entity
   parent: ClothingHeadHatWinterHoodGeneral
-  id: ClothingHeadHatHoodWinterAtmos
-  noSpawn: true
-  name: atmos winter coat hood
-  components:
-  - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
-  - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodatmos.rsi
-
-- type: entity
-  parent: ClothingHeadHatWinterHoodGeneral
-  id: ClothingHeadHatHoodWinterBase
+  id: ClothingHeadHatHoodWinterBartender
   noSpawn: true
   name: bartender winter coat hood
   components:
@@ -436,7 +427,6 @@
   name: warden's coat hood
   components:
   - type: Sprite
-    sprite: Clothing/Head/Hoods/Coat/hoodwarden.rsi
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
   - type: Clothing
-    sprite: Clothing/Head/Hoods/Coat/hoodwarden.rsi
-
+    sprite: Clothing/Head/Hoods/Coat/hoodsec.rsi
