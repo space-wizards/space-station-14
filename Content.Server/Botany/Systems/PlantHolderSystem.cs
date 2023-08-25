@@ -29,17 +29,18 @@ namespace Content.Server.Botany.Systems
 {
     public sealed class PlantHolderSystem : EntitySystem
     {
-        [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly MutationSystem _mutation = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private readonly BotanySystem _botanySystem = default!;
+        [Dependency] private readonly MutationSystem _mutation = default!;
+        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedPointLightSystem _light = default!;
+        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
+        [Dependency] private readonly TagSystem _tagSystem = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 2f;
@@ -856,10 +857,10 @@ namespace Content.Server.Botany.Systems
             if (component.Seed != null && component.Seed.Bioluminescent)
             {
                 var light = EnsureComp<PointLightComponent>(uid);
-                light.Radius = component.Seed.BioluminescentRadius;
-                light.Color = component.Seed.BioluminescentColor;
-                light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                Dirty(light);
+                // TODO: Ayo why you copy-pasting code between here and seeds?
+                _light.SetRadius(uid, component.Seed.BioluminescentRadius, light);
+                _light.SetColor(uid, component.Seed.BioluminescentColor, light);
+                _light.SetCastShadows(uid, false, light); // this is expensive, and botanists make lots of plants
             }
             else
             {

@@ -13,12 +13,12 @@ using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems
 {
-    [UsedImplicitly]
     public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
     {
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
+        [Dependency] private readonly StationSystem _station = default!;
 
         public override void Initialize()
         {
@@ -110,13 +110,15 @@ namespace Content.Server.Light.EntitySystems
             if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
                 return;
 
-            foreach (var (light, pointLight, appearance, xform) in EntityQuery<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>())
+            var query = EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>();
+
+            while (query.MoveNext(out var uid, out var light, out var pointLight, out var appearance, out var xform))
             {
                 if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                     continue;
 
-                pointLight.Color = details.EmergencyLightColor;
-                _appearance.SetData(appearance.Owner, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
+                _lights.SetColor(uid, details.EmergencyLightColor, pointLight);
+                _appearance.SetData(uid, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
 
                 if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
                 {
@@ -200,7 +202,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (TryComp(component.Owner, out PointLightComponent? light))
             {
-                light.Enabled = false;
+                _lights.SetEnabled(component.Owner, false, light);
             }
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
@@ -213,7 +215,7 @@ namespace Content.Server.Light.EntitySystems
         {
             if (TryComp(component.Owner, out PointLightComponent? light))
             {
-                light.Enabled = true;
+                _lights.SetEnabled(component.Owner, true, light);
             }
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))

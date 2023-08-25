@@ -22,11 +22,12 @@ namespace Content.Server.Botany.Systems;
 
 public sealed partial class BotanySystem : EntitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private readonly AppearanceSystem _appearance = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
     public override void Initialize()
@@ -174,16 +175,16 @@ public sealed partial class BotanySystem : EntitySystem
             if (proto.Bioluminescent)
             {
                 var light = EnsureComp<PointLightComponent>(entity);
-                light.Radius = proto.BioluminescentRadius;
-                light.Color = proto.BioluminescentColor;
-                light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                Dirty(light);
+                _light.SetRadius(entity, proto.BioluminescentRadius, light);
+                _light.SetColor(entity, proto.BioluminescentColor, light);
+                // TODO: Ayo why you copy-pasting code between here and plantholder?
+                _light.SetCastShadows(entity, false, light); // this is expensive, and botanists make lots of plants
             }
 
             if (proto.Slip)
             {
                 var slippery = EnsureComp<SlipperyComponent>(entity);
-                EntityManager.Dirty(slippery);
+                Dirty(entity, slippery);
                 EnsureComp<StepTriggerComponent>(entity);
             }
         }

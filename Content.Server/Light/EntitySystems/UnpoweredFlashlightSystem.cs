@@ -15,11 +15,12 @@ namespace Content.Server.Light.EntitySystems
 {
     public sealed class UnpoweredFlashlightSystem : EntitySystem
     {
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPointLightSystem _light = default!;
 
         public override void Initialize()
         {
@@ -89,7 +90,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
-            light.Enabled = flashlight.LightOn;
+            _light.SetEnabled(uid, flashlight.LightOn, light);
 
             _appearance.SetData(uid, UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 

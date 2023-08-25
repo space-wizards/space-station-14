@@ -30,19 +30,20 @@ namespace Content.Server.Light.EntitySystems
     /// </summary>
     public sealed class PoweredLightSystem : EntitySystem
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly SharedPointLightSystem _light = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -399,13 +400,13 @@ namespace Content.Server.Light.EntitySystems
                 pointLight.Enabled = value;
 
                 if (color != null)
-                    pointLight.Color = color.Value;
+                    _light.SetColor(uid, color.Value, pointLight);
                 if (radius != null)
-                    pointLight.Radius = (float) radius;
+                    _light.SetRadius(uid, radius.Value, pointLight);
                 if (energy != null)
-                    pointLight.Energy = (float) energy;
+                    _light.SetEnergy(uid, energy.Value, pointLight);
                 if (softness != null)
-                    pointLight.Softness = (float) softness;
+                    _light.SetSoftness(uid, softness.Value, pointLight);
             }
         }
 

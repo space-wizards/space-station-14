@@ -1,4 +1,3 @@
-using System.Linq;
 using System.Numerics;
 using Content.Server.Audio;
 using Content.Server.Construction;
@@ -13,7 +12,6 @@ using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
 using Robust.Shared.Map;
-using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -31,6 +29,7 @@ public sealed class ThrusterSystem : EntitySystem
     [Dependency] private readonly AmbientSoundSystem _ambient = default!;
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
+    [Dependency] private readonly SharedPointLightSystem _light = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
@@ -285,7 +284,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
         {
-            pointLightComponent.Enabled = true;
+            _light.SetEnabled(uid, true, pointLightComponent);
         }
 
         _ambient.SetAmbience(uid, true);
@@ -373,7 +372,7 @@ public sealed class ThrusterSystem : EntitySystem
 
         if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
         {
-            pointLightComponent.Enabled = false;
+            _light.SetEnabled(uid, false, pointLightComponent);
         }
 
         _ambient.SetAmbience(uid, false);

@@ -8,8 +8,9 @@ namespace Content.Server.Security.Systems
 {
     public sealed class DeployableBarrierSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _light = default!;
 
         public override void Initialize()
         {
@@ -42,7 +43,9 @@ namespace Content.Server.Security.Systems
                 _pulling.TryStopPull(pullable);
 
             if (TryComp(uid, out PointLightComponent? light))
-                light.Enabled = isDeployed;
+            {
+                _light.SetEnabled(uid, isDeployed, light);
+            }
         }
     }
 }
