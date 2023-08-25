@@ -77,6 +77,11 @@
     preset: StorePresetUplink
     balance:
       Telecrystal: 0
+  - type: Prayable
+    sentMessage: prayer-popup-notify-synducate-sent
+    notifiactionPrefix: SYNDICATE
+    verb: prayer-verbs-call
+    verbImage: null
 
 - type: entity
   parent: BaseUplinkRadio
