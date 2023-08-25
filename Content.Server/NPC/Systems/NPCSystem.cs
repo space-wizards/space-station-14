@@ -32,11 +32,6 @@ namespace Content.Server.NPC.Systems
         {
             base.Initialize();
 
-            SubscribeLocalEvent<NPCComponent, MobStateChangedEvent>(OnMobStateChange);
-            SubscribeLocalEvent<NPCComponent, MapInitEvent>(OnNPCMapInit);
-            SubscribeLocalEvent<NPCComponent, ComponentShutdown>(OnNPCShutdown);
-            SubscribeLocalEvent<NPCComponent, PlayerAttachedEvent>(OnPlayerNPCAttach);
-            SubscribeLocalEvent<NPCComponent, PlayerDetachedEvent>(OnPlayerNPCDetach);
             _configurationManager.OnValueChanged(CCVars.NPCEnabled, SetEnabled, true);
             _configurationManager.OnValueChanged(CCVars.NPCMaxUpdates, SetMaxUpdates, true);
         }
