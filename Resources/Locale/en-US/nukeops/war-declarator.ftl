@@ -1,3 +1,4 @@
+war-declarator-not-nukeops = Device makes beeping noises but nothing happens...
 war-declarator-ui-header = Declaration of War
 war-declarator-ui-war-button = DECLARE WAR!
 war-declarator-conditions-small-crew = Less than { $min } operatives
