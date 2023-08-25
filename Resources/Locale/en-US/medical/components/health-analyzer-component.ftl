@@ -28,3 +28,7 @@ health-analyzer-window-damage-type-Radiation = Radiation
 
 health-analyzer-window-damage-group-Genetic = Genetic
 health-analyzer-window-damage-type-Cellular = Cellular
+
+health-analyzer-window-contains-chemicals = Chemicals:
+health-analyzer-window-contains-no-chemicals = No chemicals
+health-analyzer-window-chemical = -{$name}: {$quantity}u
