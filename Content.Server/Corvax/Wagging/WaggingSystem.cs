@@ -1,6 +1,5 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Humanoid;
-using Content.Shared.Corvax.Wagging;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
