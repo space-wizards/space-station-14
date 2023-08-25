@@ -4,6 +4,7 @@
   name: base spider
   parent: SimpleMobBase
   id: MobBaseSpider
+  abstract: true
   description: Widely recognized to be the literal worst thing in existence.
   components:
   - type: Sprite
@@ -12,6 +13,8 @@
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: hunter
       sprite: Mobs/Animals/spider.rsi
+    - type: InputMover
+    - type: MobMover
   - type: Physics
   - type: Fixtures
     fixtures:
@@ -74,7 +77,6 @@
   id: MobHunterSpider
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: hunter
@@ -116,7 +118,6 @@
   id: MobGuardSpider
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: guard
@@ -158,7 +159,6 @@
   id: MobViperSpider
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: viper
@@ -200,7 +200,6 @@
   id: MobTarantulaSpider
   components:
   - type: Sprite
-    drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: tarantula
@@ -236,8 +235,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: InputMover
-    - type: MobMover
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
@@ -256,8 +253,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: InputMover
-    - type: MobMover
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
@@ -276,8 +271,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: InputMover
-    - type: MobMover
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
@@ -296,8 +289,6 @@
     - type: NpcFactionMember
       factions:
         - Xeno
-    - type: InputMover
-    - type: MobMover
     - type: HTN
       rootTask:
         task: SimpleHostileCompound
