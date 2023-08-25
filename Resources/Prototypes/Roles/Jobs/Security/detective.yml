@@ -32,6 +32,6 @@
     pocket1: ForensicPad
     pocket2: ForensicScanner
     belt: ClothingBeltHolster
-  innerclothingskirt: ClothingUniformJumpskirtDetective
-  satchel: ClothingBackpackSatchelSecurityFilled
-  duffelbag: ClothingBackpackDuffelSecurityFilled
+    innerclothingskirt: ClothingUniformJumpskirtDetective
+    satchel: ClothingBackpackSatchelSecurityFilled
+    duffelbag: ClothingBackpackDuffelSecurityFilled
