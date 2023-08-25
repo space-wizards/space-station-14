@@ -33,7 +33,7 @@ public sealed class MaterialArbitrageTest
         await using var pair = await PoolManager.GetServerClient();
         var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         await server.WaitIdleAsync();
 
         var entManager = server.ResolveDependency<IEntityManager>();

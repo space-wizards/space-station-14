@@ -39,7 +39,7 @@ namespace Content.IntegrationTests.Tests.GameRules
             });
 
             var ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundMaxTime.TotalSeconds * 1.1f);
-            await PoolManager.RunTicksSync(pair, ticks);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {
@@ -47,7 +47,7 @@ namespace Content.IntegrationTests.Tests.GameRules
             });
 
             ticks = sGameTiming.TickRate * (int) Math.Ceiling(maxTime.RoundEndDelay.TotalSeconds * 1.1f);
-            await PoolManager.RunTicksSync(pair, ticks);
+            await pair.RunTicksSync(ticks);
 
             await server.WaitAssertion(() =>
             {

@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, container);
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {
@@ -95,7 +95,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, container);
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {
@@ -137,7 +137,7 @@ namespace Content.IntegrationTests.Tests
                 entStorage.Insert(dummy, containerB);
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await c.WaitAssertion(() =>
             {

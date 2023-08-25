@@ -135,7 +135,7 @@ public sealed partial class MindTests
             visiting = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             mindSys.Visit(mind, visiting);
         });
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await DisconnectReconnect(pair);
 

@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests.Materials
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {

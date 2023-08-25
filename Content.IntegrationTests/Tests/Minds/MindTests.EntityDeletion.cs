@@ -50,9 +50,9 @@ public sealed partial class MindTests
             });
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitPost(() => entMan.DeleteEntity(visitEnt));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
 #pragma warning disable NUnit2045 // Interdependent assertions.
         Assert.That(mind.VisitingEntity, Is.Null);
@@ -62,7 +62,7 @@ public sealed partial class MindTests
 
         // This used to throw so make sure it doesn't.
         await server.WaitPost(() => entMan.DeleteEntity(mind.OwnedEntity!.Value));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await pair.CleanReturnAsync();
     }
@@ -73,7 +73,7 @@ public sealed partial class MindTests
     {
         await using var pair = await SetupPair(dirty: true);
         var server = pair.Server;
-        var testMap = await PoolManager.CreateTestMap(pair);
+        var testMap = await pair.CreateTestMap();
         var coordinates = testMap.GridCoords;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
@@ -94,9 +94,9 @@ public sealed partial class MindTests
             Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitPost(() => mapManager.DeleteMap(testMap.MapId));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
@@ -130,7 +130,7 @@ public sealed partial class MindTests
 
         // Delete entity
         await server.WaitPost(() => entMan.DeleteEntity(player.AttachedEntity!.Value));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "Player did not become a ghost");
 
@@ -180,9 +180,9 @@ public sealed partial class MindTests
             Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         await server.WaitAssertion(() => entMan.DeleteEntity(originalEntity));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         Assert.That(entMan.Deleted(originalEntity));
 
         // Check that the player is still in control of the ghost
@@ -223,7 +223,7 @@ public sealed partial class MindTests
 
         // Try to become an admin ghost
         await server.WaitAssertion(() => serverConsole.ExecuteCommand(player, "aghost"));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.That(entMan.Deleted(ghost), "old ghost was not deleted");
         Assert.Multiple(() =>
@@ -267,7 +267,7 @@ public sealed partial class MindTests
             entMan.DeleteEntity(player.AttachedEntity!.Value);
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
@@ -277,14 +277,14 @@ public sealed partial class MindTests
             Assert.That(entMan.HasComponent<GhostComponent>(ghost));
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {
             serverConsole.ExecuteCommand(player, "aghost");
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         await server.WaitAssertion(() =>
         {

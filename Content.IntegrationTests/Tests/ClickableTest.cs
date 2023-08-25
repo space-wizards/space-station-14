@@ -55,7 +55,7 @@ namespace Content.IntegrationTests.Tests
             var xformQuery = clientEntManager.GetEntityQuery<TransformComponent>();
             var eye = client.ResolveDependency<IEyeManager>().CurrentEye;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             await server.WaitPost(() =>
             {
                 var ent = serverEntManager.SpawnEntity(prototype, testMap.GridCoords);
@@ -64,7 +64,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             // Let client sync up.
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             var hit = false;
 

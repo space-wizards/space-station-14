@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Commands
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTicker = entityManager.EntitySysManager.GetEntitySystem<GameTicker>();
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             GameTick tickBeforeRestart = default;
 
@@ -49,7 +49,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 }
             });
 
-            await PoolManager.RunTicksSync(pair, 15);
+            await pair.RunTicksSync(15);
 
             await server.WaitAssertion(() =>
             {
@@ -58,7 +58,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(tickBeforeRestart, Is.LessThan(tickAfterRestart));
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
             await pair.CleanReturnAsync();
         }
     }

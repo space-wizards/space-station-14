@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Lobby
 
 
             // Need to run them in sync to receive the messages.
-            await PoolManager.RunTicksSync(pair, 1);
+            await pair.RunTicksSync(1);
 
             await PoolManager.WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 

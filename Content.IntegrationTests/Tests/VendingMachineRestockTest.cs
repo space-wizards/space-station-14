@@ -193,7 +193,7 @@ namespace Content.IntegrationTests.Tests
             VendingMachineRestockComponent restockWrongComponent = default!;
             WiresPanelComponent machineWiresPanel = default!;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -273,7 +273,7 @@ namespace Content.IntegrationTests.Tests
 
             var damageableSystem = entitySystemManager.GetEntitySystem<DamageableSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid restock = default;
 
@@ -336,7 +336,7 @@ namespace Content.IntegrationTests.Tests
 
             var vendingMachineSystem = entitySystemManager.GetEntitySystem<SharedVendingMachineSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {

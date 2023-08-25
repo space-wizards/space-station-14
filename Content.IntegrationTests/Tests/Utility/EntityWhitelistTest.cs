@@ -61,7 +61,7 @@ namespace Content.IntegrationTests.Tests.Utility
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var mapCoordinates = testMap.MapCoords;
 
             var sEntities = server.ResolveDependency<IEntityManager>();

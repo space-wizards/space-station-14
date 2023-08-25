@@ -19,7 +19,7 @@ namespace Content.IntegrationTests.Tests.Networking
             await client.WaitPost(() => host.ExecuteCommand("disconnect"));
 
             // Run some ticks for the disconnect to complete and such.
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests.Networking
             await client.WaitPost(() => netManager.ClientConnect(null, 0, null));
 
             // Run some ticks for the handshake to complete and such.
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
 
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
             await pair.CleanReturnAsync();

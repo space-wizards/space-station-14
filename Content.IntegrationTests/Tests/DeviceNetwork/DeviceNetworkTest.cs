@@ -113,7 +113,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -198,7 +198,7 @@ namespace Content.IntegrationTests.Tests.DeviceNetwork
         {
             await using var pair = await PoolManager.GetServerClient();
             var server = pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
             var coordinates = testMap.GridCoords;
 
             var mapManager = server.ResolveDependency<IMapManager>();

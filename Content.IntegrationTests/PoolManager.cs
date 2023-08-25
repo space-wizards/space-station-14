@@ -381,32 +381,6 @@ we are just going to end this here to save a lot of time. This is the exception 
     }
 
     /// <summary>
-    /// Creates a map, a grid, and a tile, and gives back references to them.
-    /// </summary>
-    /// <param name="pair">A pair</param>
-    /// <returns>A TestMapData</returns>
-    [Obsolete("use TestPair.CreateMap")]
-    public static async Task<TestMapData> CreateTestMap(TestPair pair)
-    {
-        return await pair.CreateTestMap();
-    }
-
-    /// <summary>
-    /// Runs a server/client pair in sync
-    /// </summary>
-    /// <param name="pair">A server/client pair</param>
-    /// <param name="ticks">How many ticks to run them for</param>
-    [Obsolete("use TestPair.RunTicks")]
-    public static async Task RunTicksSync(TestPair pair, int ticks)
-    {
-        for (var i = 0; i < ticks; i++)
-        {
-            await pair.Server.WaitRunTicks(1);
-            await pair.Client.WaitRunTicks(1);
-        }
-    }
-
-    /// <summary>
     /// Runs a server, or a client until a condition is true
     /// </summary>
     /// <param name="instance">The server or client</param>

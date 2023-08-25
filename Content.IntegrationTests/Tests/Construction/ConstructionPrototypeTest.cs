@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Construction
             var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-            var map = await PoolManager.CreateTestMap(pair);
+            var map = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {

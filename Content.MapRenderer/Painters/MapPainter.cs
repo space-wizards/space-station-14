@@ -55,7 +55,7 @@ namespace Content.MapRenderer.Painters
             var sEntityManager = server.ResolveDependency<IServerEntityManager>();
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
 
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             var sMapManager = server.ResolveDependency<IMapManager>();
@@ -85,7 +85,7 @@ namespace Content.MapRenderer.Painters
                 }
             });
 
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
             await Task.WhenAll(client.WaitIdleAsync(), server.WaitIdleAsync());
 
             foreach (var (uid, grid) in grids)

@@ -25,8 +25,8 @@ public sealed class HandTests
         var mapMan = server.ResolveDependency<IMapManager>();
         var sys = entMan.System<SharedHandsSystem>();
 
-        var data = await PoolManager.CreateTestMap(pair);
-        await PoolManager.RunTicksSync(pair, 5);
+        var data = await pair.CreateTestMap();
+        await pair.RunTicksSync(5);
 
         EntityUid item = default;
         EntityUid player = default;
@@ -41,7 +41,7 @@ public sealed class HandTests
         });
 
         // run ticks here is important, as errors may happen within the container system's frame update methods.
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         Assert.That(hands.ActiveHandEntity, Is.EqualTo(item));
 
         await server.WaitPost(() =>
@@ -49,7 +49,7 @@ public sealed class HandTests
             sys.TryDrop(player, item, null!);
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         Assert.That(hands.ActiveHandEntity, Is.Null);
 
         await server.WaitPost(() => mapMan.DeleteMap(data.MapId));

@@ -80,7 +80,7 @@ namespace Content.IntegrationTests.Tests
             var settings = new PoolSettings { Dirty = true };
             await using var pair = await PoolManager.GetServerClient(settings);
             var server = pair.Server;
-            var map = await PoolManager.CreateTestMap(pair);
+            var map = await pair.CreateTestMap();
 
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
@@ -167,7 +167,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await PoolManager.RunTicksSync(pair, 15);
+            await pair.RunTicksSync(15);
 
             // Make sure the client actually received the entities
             // 500 is completely arbitrary. Note that the client & sever entity counts aren't expected to match.

@@ -41,7 +41,7 @@ namespace Content.IntegrationTests.Tests.Gravity
 
             EntityUid human = default;
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -51,7 +51,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
             var generatorUid = EntityUid.Invalid;
             await server.WaitAssertion(() =>
             {
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Gravity
             });
 
             // Let WeightlessSystem and GravitySystem tick
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
 
             await server.WaitAssertion(() =>
             {
@@ -72,14 +72,14 @@ namespace Content.IntegrationTests.Tests.Gravity
                 entityManager.DeleteEntity(generatorUid);
             });
 
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
 
             await server.WaitAssertion(() =>
             {
                 Assert.That(alertsSystem.IsShowingAlert(human, AlertType.Weightless));
             });
 
-            await PoolManager.RunTicksSync(pair, 10);
+            await pair.RunTicksSync(10);
 
             await pair.CleanReturnAsync();
         }

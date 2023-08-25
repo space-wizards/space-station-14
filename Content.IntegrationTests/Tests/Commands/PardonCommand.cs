@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
             });
 
-            await PoolManager.RunTicksSync(pair, 5);
+            await pair.RunTicksSync(5);
             Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(0));
             Assert.That(!netMan.IsConnected);
 

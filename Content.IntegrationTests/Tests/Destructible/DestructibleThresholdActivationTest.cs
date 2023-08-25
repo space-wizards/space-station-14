@@ -28,7 +28,7 @@ namespace Content.IntegrationTests.Tests.Destructible
             var sEntitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var audio = sEntitySystemManager.GetEntitySystem<SharedAudioSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pair);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid sDestructibleEntity = default;
             DamageableComponent sDamageableComponent = null;

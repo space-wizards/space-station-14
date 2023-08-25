@@ -39,7 +39,7 @@ public sealed class ServerReloginTest
             clientNetManager.ClientDisconnect("For testing");
         });
 
-        await PoolManager.RunTicksSync(pair, 20);
+        await pair.RunTicksSync(20);
 
         await server.WaitAssertion(() =>
         {
@@ -51,7 +51,7 @@ public sealed class ServerReloginTest
             clientNetManager.ClientConnect(null!, 0, username);
         });
 
-        await PoolManager.RunTicksSync(pair, 20);
+        await pair.RunTicksSync(20);
 
         await server.WaitAssertion(() =>
         {
