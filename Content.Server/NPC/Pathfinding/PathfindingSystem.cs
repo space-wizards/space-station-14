@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
 using Content.Shared.Administration;
 using Content.Shared.Climbing;
 using Content.Shared.Interaction;
@@ -421,7 +422,8 @@ namespace Content.Server.NPC.Pathfinding
 
         public PathFlags GetFlags(EntityUid uid)
         {
-            if (!TryComp<NPCComponent>(uid, out var npc))
+            // Изначально использовался NPCComponent но из-за него всё летело в пизду
+            if (!TryComp<HTNComponent>(uid, out var npc))
             {
                 return PathFlags.None;
             }

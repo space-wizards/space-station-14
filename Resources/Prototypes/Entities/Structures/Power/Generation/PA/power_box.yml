@@ -8,13 +8,13 @@
     sprite: Structures/Power/Generation/PA/power_box.rsi
   - type: ParticleAcceleratorPowerBox
   - type: PowerConsumer
-    voltage: High
+    voltage: Medium
   - type: NodeContainer
     examinable: true
     nodes:
       input:
         !type:CableDeviceNode
-        nodeGroupID: HVPower
+        nodeGroupID: MVPower
   - type: Construction
     graph: ParticleAcceleratorPowerBox
 

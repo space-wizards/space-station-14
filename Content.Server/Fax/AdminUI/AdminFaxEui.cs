@@ -5,6 +5,7 @@ using Content.Server.Paper;
 using Content.Shared.Eui;
 using Content.Shared.Fax;
 using Content.Shared.Follower;
+using Content.Shared.Ghost;
 using Content.Shared.Paper;
 using Content.Shared.SS220.Photocopier;
 

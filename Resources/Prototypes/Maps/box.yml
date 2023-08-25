@@ -46,7 +46,8 @@
             ResearchDirector: [ 1, 1 ]
             SeniorResearcher: [ 1, 1 ]
             Scientist: [ 4, 4 ]
-            ResearchAssistant: [ 8, 8 ]
+            ResearchAssistant: [ 4, 4 ]
+            #Borg: [ 2, 2 ] #SS220 legacy box
             #security
             HeadOfSecurity: [ 1, 1 ]
             Warden: [ 1, 1 ]

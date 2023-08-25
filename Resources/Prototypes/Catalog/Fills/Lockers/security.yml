@@ -134,9 +134,7 @@
       - id: FlashlightSeclite
       - id: ForensicScanner
       - id: BoxForensicPad
-      - id: WeaponRevolverInspector
       - id: DrinkDetFlask
-      - id: SpeedLoaderMagnum
       - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
 
