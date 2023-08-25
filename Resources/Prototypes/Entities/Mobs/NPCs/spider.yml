@@ -99,7 +99,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 6
+        Piercing: 4.8
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -141,7 +141,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 8
+        Piercing: 6.4
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -183,7 +183,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 4
+        Piercing: 2
   - type: SolutionContainerManager
     solutions:
       melee:
@@ -225,7 +225,7 @@
   - type: MeleeWeapon
     damage:
       types:
-        Piercing: 26
+        Piercing: 24
 
 - type: entity
   name: hunter
