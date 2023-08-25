@@ -50,6 +50,7 @@ public sealed class DrunkSystem : SharedDrunkSystem
     {
         if (!TryComp<DrunkComponent>(uid, out var drunkComp))
             return;
+
         if (_player.LocalPlayer?.ControlledEntity == uid)
         {
             drunkComp.CurrentBoozePower = 0f;

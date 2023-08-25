@@ -6,6 +6,10 @@ namespace Content.Server.Drunk;
 
 public sealed class DrunkSystem : SharedDrunkSystem
 {
+    public const float MaxTimeSleep = 15f;
+    //sometimes person metabolizes a drink more slowly than the status time is updated due to different network problems, so MinTimeSleep should be more 10f to deal with it
+    public const float MinTimeSleep = 10f;
+    public const float BoozePowerForSleepLimit = 200f;
     public override void Initialize()
     {
         base.Initialize();
@@ -20,14 +24,18 @@ public sealed class DrunkSystem : SharedDrunkSystem
 
         float timeLeft = (float) (time.Value.Item2 - time.Value.Item1).TotalSeconds;
         drunkComp.CurrentBoozePower = timeLeft;
-        if (drunkComp.CurrentBoozePower > 200f)
+        float timeForSleep = timeLeft - BoozePowerForSleepLimit;
+        if (timeForSleep > 0)
         {
-            if (StatusEffectsSystem.HasStatusEffect(uid, StatusEffectKey))
+            if (StatusEffectsSystem.HasStatusEffect(uid, SleepKey))
             {
-                StatusEffectsSystem.TrySetTime(uid, StatusEffectKey, TimeSpan.FromSeconds(timeLeft));
+                if (timeForSleep <= MaxTimeSleep)
+                {
+                    StatusEffectsSystem.TrySetTime(uid, SleepKey, TimeSpan.FromSeconds(timeForSleep));
+                }
+                return;
             }
-
-            StatusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, StatusEffectKey, TimeSpan.FromSeconds(10f), false);
+            StatusEffectsSystem.TryAddStatusEffect<ForcedSleepingComponent>(uid, SleepKey, TimeSpan.FromSeconds(MinTimeSleep), false);
         }
     }
 }

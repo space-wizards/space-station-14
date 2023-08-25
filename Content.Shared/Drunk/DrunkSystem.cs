@@ -2,6 +2,7 @@ using Content.Shared.Speech.EntitySystems;
 using Content.Shared.StatusEffect;
 using Content.Shared.Traits.Assorted;
 using Content.Shared.Bed.Sleep;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Drunk;
 
@@ -11,10 +12,11 @@ public abstract class SharedDrunkSystem : EntitySystem
     public const string DrunkKey = "Drunk";
 
     [ValidatePrototypeId<StatusEffectPrototype>]
-    public const string StatusEffectKey = "ForcedSleep";
-
+    public const string SleepKey = "ForcedSleep";
+    
     [Dependency] protected readonly StatusEffectsSystem StatusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
     public override void Initialize()
     {
         base.Initialize();
@@ -25,7 +27,16 @@ public abstract class SharedDrunkSystem : EntitySystem
     private void OnDrunkEnded(EntityUid uid, StatusEffectsComponent component, StatusEffectEndedEvent args)
     {
         if (args.Key == DrunkKey)
-            StatusEffectsSystem.TryRemoveStatusEffect(uid, StatusEffectKey, component);
+        {
+            StatusEffectsSystem.TryRemoveStatusEffect(uid, SleepKey, component);
+            return;
+        }
+
+        if (args.Key == SleepKey)
+        {
+            StatusEffectsSystem.TryRemoveStatusEffect(uid, DrunkKey, component);
+            return;
+        }
     }
 
     public void TryApplyDrunkenness(EntityUid uid, float boozePower, bool applySlur = true,
@@ -36,7 +47,6 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (TryComp<LightweightDrunkComponent>(uid, out var trait))
             boozePower *= trait.BoozeStrengthMultiplier;
-
         if (applySlur)
         {
             _slurredSystem.DoSlur(uid, TimeSpan.FromSeconds(boozePower), status);
@@ -44,7 +54,8 @@ public abstract class SharedDrunkSystem : EntitySystem
 
         if (!StatusEffectsSystem.HasStatusEffect(uid, DrunkKey, status))
         {
-            StatusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(boozePower), true, status);
+            //sometimes person metabolizes a drink more slowly than the status time is updated due to different network problems, so we add 15f to deal with it
+            StatusEffectsSystem.TryAddStatusEffect<DrunkComponent>(uid, DrunkKey, TimeSpan.FromSeconds(15f + boozePower), true, status);
         }
         else
         {
