@@ -181,6 +181,7 @@
         damage:
           groups:
             Brute: -4
+            Poison: 0.5
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
