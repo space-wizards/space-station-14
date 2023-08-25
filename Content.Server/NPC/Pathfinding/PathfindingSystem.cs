@@ -5,16 +5,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
-using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
 using Content.Shared.Administration;
-using Content.Shared.Climbing;
-using Content.Shared.Interaction;
 using Content.Shared.NPC;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Map;
 using Robust.Shared.Physics;
-using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Players;
 using Robust.Shared.Random;
@@ -421,7 +418,7 @@ namespace Content.Server.NPC.Pathfinding
 
         public PathFlags GetFlags(EntityUid uid)
         {
-            if (!TryComp<NPCComponent>(uid, out var npc))
+            if (!TryComp<HTNComponent>(uid, out var npc))
             {
                 return PathFlags.None;
             }
