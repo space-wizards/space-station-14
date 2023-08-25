@@ -17,7 +17,6 @@
     mode: NoSprite
   - type: SmoothEdge
   - type: Sprite
-    noRot: true
     sprite: Structures/Walls/rock.rsi
     layers:
       - state: rock_asteroid

@@ -12,8 +12,6 @@ namespace Content.Server.Disposal.Tube.Components
     [Access(typeof(DisposalTubeSystem))]
     public sealed partial class DisposalRouterComponent : DisposalJunctionComponent
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         [DataField("tags")]
         public HashSet<string> Tags = new();
 

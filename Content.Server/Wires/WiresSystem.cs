@@ -33,7 +33,6 @@ public sealed class WiresSystem : SharedWiresSystem
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly WiresSystem _wiresSystem = default!;
 
     // This is where all the wire layouts are stored.
     [ViewVariables] private readonly Dictionary<string, WireLayout> _layouts = new();

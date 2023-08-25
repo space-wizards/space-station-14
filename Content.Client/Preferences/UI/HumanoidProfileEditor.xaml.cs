@@ -485,26 +485,25 @@ namespace Content.Client.Preferences.UI
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
             _lastSpecies = species;
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             _previewSprite = new SpriteView
             {
-                Sprite = sprite,
                 Scale = new Vector2(6, 6),
                 OverrideDirection = Direction.South,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
+            _previewSprite.SetEntity(_previewDummy.Value);
             _previewSpriteControl.AddChild(_previewSprite);
 
             _previewSpriteSide = new SpriteView
             {
-                Sprite = sprite,
                 Scale = new Vector2(6, 6),
                 OverrideDirection = Direction.East,
                 VerticalAlignment = VAlignment.Center,
                 SizeFlagsStretchRatio = 1
             };
+            _previewSpriteSide.SetEntity(_previewDummy.Value);
             _previewSpriteSideControl.AddChild(_previewSpriteSide);
             #endregion Dummy
 
@@ -726,14 +725,12 @@ namespace Content.Client.Preferences.UI
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
             _lastSpecies = species;
-            var sprite = _entMan.GetComponent<SpriteComponent>(_previewDummy!.Value);
 
             if (_previewSprite == null)
             {
                 // Front
                 _previewSprite = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(6, 6),
                     OverrideDirection = Direction.South,
                     VerticalAlignment = VAlignment.Center,
@@ -741,16 +738,12 @@ namespace Content.Client.Preferences.UI
                 };
                 _previewSpriteControl.AddChild(_previewSprite);
             }
-            else
-            {
-                _previewSprite.SetEntity(_previewDummy.Value);
-            }
+            _previewSprite.SetEntity(_previewDummy.Value);
 
             if (_previewSpriteSide == null)
             {
                 _previewSpriteSide = new SpriteView
                 {
-                    Sprite = sprite,
                     Scale = new Vector2(6, 6),
                     OverrideDirection = Direction.East,
                     VerticalAlignment = VAlignment.Center,
@@ -758,10 +751,8 @@ namespace Content.Client.Preferences.UI
                 };
                 _previewSpriteSideControl.AddChild(_previewSpriteSide);
             }
-            else
-            {
-                _previewSpriteSide.SetEntity(_previewDummy.Value);
-            }
+            _previewSpriteSide.SetEntity(_previewDummy.Value);
+
             _needUpdatePreview = true;
         }
 
