@@ -7,6 +7,9 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.NukeOps;
 
+/// <summary>
+///     This handles nukeops special war mode declaration device and directly using nukeops game rule
+/// </summary>
 public sealed class WarDeclaratorSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
