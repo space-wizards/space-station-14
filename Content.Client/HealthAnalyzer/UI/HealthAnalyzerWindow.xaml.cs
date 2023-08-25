@@ -71,6 +71,10 @@ namespace Content.Client.HealthAnalyzer.UI
                     }
                     text.AppendLine();
                 }
+
+                //show chemicals in the bloodstream
+                text.Append("Chemicals:\n")
+
                 Diagnostics.Text = text.ToString();
                 SetSize = new Vector2(250, 600);
             }

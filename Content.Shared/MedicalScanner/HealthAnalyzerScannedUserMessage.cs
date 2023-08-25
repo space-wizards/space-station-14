@@ -1,4 +1,5 @@
 using Robust.Shared.Serialization;
+using Content.Shared.FixedPoint;
 
 namespace Content.Shared.MedicalScanner;
 
@@ -12,11 +13,14 @@ public sealed class HealthAnalyzerScannedUserMessage : BoundUserInterfaceMessage
     public float Temperature;
     public float BloodLevel;
 
-    public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, float bloodLevel)
+    public Dictionary<string, FixedPoint2>? Chemicals;
+
+    public HealthAnalyzerScannedUserMessage(EntityUid? targetEntity, float temperature, float bloodLevel, Dictionary<string, FixedPoint2>? chemicals= null)
     {
         TargetEntity = targetEntity;
         Temperature = temperature;
         BloodLevel = bloodLevel;
+        Chemicals = chemicals;
     }
 }
 

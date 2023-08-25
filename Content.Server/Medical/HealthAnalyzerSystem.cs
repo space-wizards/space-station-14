@@ -8,6 +8,7 @@ using Content.Shared.Mobs.Components;
 using Robust.Server.GameObjects;
 using Content.Server.Temperature.Components;
 using Content.Server.Body.Components;
+using Content.Server.Chemistry.Components;
 
 namespace Content.Server.Medical
 {
@@ -73,10 +74,21 @@ namespace Content.Server.Medical
             TryComp<TemperatureComponent>(target, out var temp);
             TryComp<BloodstreamComponent>(target, out var bloodstream);
 
+            var Dictionary<string, FixedPoint2> chemicals = new();
+
+            //get the chemicals in the target
+            if (TryComp<SolutionContainerManagerComponent>(target, out var solutionContainerManagerComponent) && solutionContainerManagerComponent != null) {
+                foreach (KeyValuePair<string, Solution> pair in solutionContainerManagerComponent.Solutions) {
+                    foreach (ReagentQuantity reagent in Solution.Contents) {
+                        reagent.
+                    }
+                }
+            }
+
             OpenUserInterface(user, healthAnalyzer);
 
             _uiSystem.SendUiMessage(healthAnalyzer.UserInterface, new HealthAnalyzerScannedUserMessage(target, temp != null ? temp.CurrentTemperature : float.NaN,
-                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN));
+                bloodstream != null ? bloodstream.BloodSolution.FillFraction : float.NaN, null));
         }
     }
 }
