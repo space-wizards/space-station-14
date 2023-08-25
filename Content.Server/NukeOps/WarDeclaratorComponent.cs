@@ -19,8 +19,8 @@ public sealed class WarDeclaratorComponent : Component
     /// Permission to customize message text
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("allowEditMessage")]
-    public bool AllowEditMessage = true;
+    [DataField("allowEditingMessage")]
+    public bool AllowEditingMessage = true;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("maxMessageLength")]

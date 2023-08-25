@@ -70,7 +70,7 @@ public sealed class WarDeclaratorSystem : EntitySystem
         }
 
         var message = new string(text);
-        if (component.AllowEditMessage && message != string.Empty)
+        if (component.AllowEditingMessage && message != string.Empty)
             component.Message = message;
 
         message = Loc.GetString(message);
