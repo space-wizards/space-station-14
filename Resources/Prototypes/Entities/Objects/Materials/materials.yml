@@ -323,13 +323,17 @@
   name: refined diamond
   suffix: Full
   components:
+  - type: Material
+  - type: PhysicalComposition
+    materialComposition:
+      Diamond: 100
   - type: Stack
     stackType: Diamond
   - type: Sprite
     state: diamond
   - type: Item
     heldPrefix: diamond
-    size: 60
+    size: 30
 
 - type: entity
   parent: MaterialDiamond
@@ -339,7 +343,7 @@
   - type: Stack
     count: 1
   - type: Item
-    size: 2
+    size: 1
 
 - type: entity
   parent: MaterialBase

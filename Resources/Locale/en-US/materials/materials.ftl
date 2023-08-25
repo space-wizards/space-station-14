@@ -20,6 +20,7 @@ materials-wood = wood
 materials-uranium = uranium
 materials-bananium = bananium
 materials-meat = meat
+materials-diamond = diamond
 
 # Material Reclaimer
 material-reclaimer-upgrade-process-rate = process rate
