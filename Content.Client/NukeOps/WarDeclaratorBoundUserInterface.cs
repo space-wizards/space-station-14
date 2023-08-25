@@ -11,8 +11,6 @@ public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
     [ViewVariables]
     private WarDeclaratorWindow? _window;
 
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-
     public WarDeclaratorBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey) {}
 
     protected override void Open()
