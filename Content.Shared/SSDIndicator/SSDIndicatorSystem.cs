@@ -1,14 +1,12 @@
 ﻿using Content.Shared.Mind.Components;
-using Content.Shared.SSDIndicator;
 
-namespace Content.Server.SSDIndicator;
+namespace Content.Shared.SSDIndicator;
 
 /// <summary>
 ///     Handle changing player SSD indicator status
 /// </summary>
 public sealed class SSDIndicatorSystem : EntitySystem
 {
-    /// <inheritdoc/>
     public override void Initialize()
     {
         SubscribeLocalEvent<SSDIndicatorComponent, MindAddedMessage>(OnMindAdded);
@@ -18,12 +16,12 @@ public sealed class SSDIndicatorSystem : EntitySystem
     private void OnMindAdded(EntityUid uid, SSDIndicatorComponent component, MindAddedMessage args)
     {
         component.IsSSD = false;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     private void OnMindRemoved(EntityUid uid, SSDIndicatorComponent component, MindRemovedMessage args)
     {
         component.IsSSD = true;
-        Dirty(component);
+        Dirty(uid, component);
     }
 }
