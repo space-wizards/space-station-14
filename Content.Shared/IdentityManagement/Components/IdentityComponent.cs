@@ -11,7 +11,7 @@ namespace Content.Shared.IdentityManagement.Components;
 ///     This is a <see cref="ContainerSlot"/> and not just a datum entity because we do sort of care that it gets deleted and sent with the user.
 /// </remarks>
 [RegisterComponent]
-public sealed class IdentityComponent : Component
+public sealed partial class IdentityComponent : Component
 {
     [ViewVariables]
     public ContainerSlot IdentityEntitySlot = default!;

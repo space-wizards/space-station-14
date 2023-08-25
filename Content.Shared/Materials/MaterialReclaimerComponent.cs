@@ -14,7 +14,7 @@ namespace Content.Shared.Materials;
 /// into the raw materials and chemicals that make them up.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedMaterialReclaimerSystem))]
-public sealed class MaterialReclaimerComponent : Component
+public sealed partial class MaterialReclaimerComponent : Component
 {
     /// <summary>
     /// Whether or not the machine has power. We put it here

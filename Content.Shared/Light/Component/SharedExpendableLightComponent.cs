@@ -21,7 +21,7 @@ namespace Content.Shared.Light.Component
     }
 
     [NetworkedComponent]
-    public abstract class SharedExpendableLightComponent: Robust.Shared.GameObjects.Component
+    public abstract partial class SharedExpendableLightComponent: Robust.Shared.GameObjects.Component
     {
         public static readonly AudioParams LoopedSoundParams = new(0, 1, "Master", 62.5f, 1, 1, true, 0.3f);
 

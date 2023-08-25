@@ -4,7 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class Electrocute : ReagentEffect
+public sealed partial class Electrocute : ReagentEffect
 {
     [DataField("electrocuteTime")] public int ElectrocuteTime = 2;
 

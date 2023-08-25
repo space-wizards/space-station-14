@@ -1,6 +1,5 @@
 using Content.Server.Administration.Logs;
 using Content.Server.EUI;
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;

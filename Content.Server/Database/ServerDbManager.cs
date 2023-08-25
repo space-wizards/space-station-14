@@ -292,7 +292,6 @@ namespace Content.Server.Database
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IResourceManager _res = default!;
         [Dependency] private readonly ILogManager _logMgr = default!;
-        [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private ServerDbBase _db = default!;
         private LoggingProvider _msLogProvider = default!;

@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
@@ -11,6 +10,7 @@ using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
@@ -212,7 +212,9 @@ public sealed class MindSystem : EntitySystem
         var dead = _mobStateSystem.IsDead(uid);
         var hasSession = mindContainer.Mind?.Session;
 
-        if (dead && hasSession == null)
+        if (dead && !mindContainer.HasMind)
+            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+        else if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
