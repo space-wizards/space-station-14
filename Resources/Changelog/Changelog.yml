@@ -1,10 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Mobs can no longer self-harm without a weapon., type: Fix}
-  - {message: Mobs can now wide-swing as their alt attack., type: Tweak}
-  id: 4186
-  time: '2023-07-07T08:45:37.0000000+00:00'
 - author: Errant
   changes:
   - {message: Made it more apparent to the player that starting to remove their handcuffs
@@ -3017,3 +3011,22 @@ Entries:
   - {message: Fix eye zoom not lerping properly so it looks like it's 30fps., type: Fix}
   id: 4685
   time: '2023-08-25T04:41:04.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: Portable generators have been reworked., type: Tweak}
+  - {message: Portable generators now use a better sprite from Baystation12., type: Tweak}
+  - {message: 'Portable generators have been renamed to P.A.C.M.A.N. & friends, to
+      match the classic SS13 names.', type: Tweak}
+  - {message: 'Added the J.R.P.A.C.M.A.N.: it runs off welding fuel, will be easy
+      to find in maintenance, and can directly power rooms (connecting to LV cables).',
+    type: Add}
+  - {message: Portable generators now need a bit of *effort* to start., type: Add}
+  - {message: You can now eject fuel from portable generators., type: Add}
+  - {message: The (S.U.P.E.R.)P.A.C.M.A.N. can now have its output switched between
+      HV and MV output., type: Tweak}
+  - {message: Rebalanced power values and efficiency curves for portable generators.,
+    type: Tweak}
+  - {message: The (J.R.)P.A.C.M.A.N. now exhausts hot CO2 gas. Use in a properly ventilated
+      room!, type: Tweak}
+  id: 4686
+  time: '2023-08-25T18:40:42.0000000+00:00'
