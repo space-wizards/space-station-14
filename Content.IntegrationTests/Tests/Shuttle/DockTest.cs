@@ -22,7 +22,7 @@ public sealed class DockTest : ContentUnitTest
     public async Task TestDockingConfig(Vector2 dock1Pos, Vector2 dock2Pos, Angle dock1Angle, Angle dock2Angle, bool result)
     {
         await using var pair = await PoolManager.GetServerClient();
-        var server = pair.Pair.Server;
+        var server = pair.Server;
 
         var map = await PoolManager.CreateTestMap(pair);
 

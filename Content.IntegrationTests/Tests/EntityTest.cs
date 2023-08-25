@@ -22,8 +22,8 @@ namespace Content.IntegrationTests.Tests
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
             // is minimal relative to the rest of the test.
             var settings = new PoolSettings { Dirty = true };
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient(settings);
+            var server = pair.Server;
 
             var entityMan = server.ResolveDependency<IEntityManager>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -34,7 +34,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p => !p.Abstract)
-                    .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                    .Where(p => !pair.IsTestPrototype(p))
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
@@ -69,7 +69,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
@@ -78,9 +78,9 @@ namespace Content.IntegrationTests.Tests
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
             // is minimal relative to the rest of the test.
             var settings = new PoolSettings { Dirty = true };
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
-            var server = pairTracker.Pair.Server;
-            var map = await PoolManager.CreateTestMap(pairTracker);
+            await using var pair = await PoolManager.GetServerClient(settings);
+            var server = pair.Server;
+            var map = await PoolManager.CreateTestMap(pair);
 
             var entityMan = server.ResolveDependency<IEntityManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
@@ -91,7 +91,7 @@ namespace Content.IntegrationTests.Tests
                 var protoIds = prototypeMan
                     .EnumeratePrototypes<EntityPrototype>()
                     .Where(p => !p.Abstract)
-                    .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                    .Where(p => !pair.IsTestPrototype(p))
                     .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                     .Select(p => p.ID)
                     .ToList();
@@ -121,7 +121,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(entityMan.EntityCount, Is.Zero);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -134,9 +134,9 @@ namespace Content.IntegrationTests.Tests
             // This test dirties the pair as it simply deletes ALL entities when done. Overhead of restarting the round
             // is minimal relative to the rest of the test.
             var settings = new PoolSettings { Connected = true, Dirty = true };
-            await using var pairTracker = await PoolManager.GetServerClient(settings);
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(settings);
+            var server = pair.Server;
+            var client = pair.Client;
 
             var cfg = server.ResolveDependency<IConfigurationManager>();
             var prototypeMan = server.ResolveDependency<IPrototypeManager>();
@@ -148,7 +148,7 @@ namespace Content.IntegrationTests.Tests
             var protoIds = prototypeMan
                 .EnumeratePrototypes<EntityPrototype>()
                 .Where(p => !p.Abstract)
-                .Where(p => !pairTracker.Pair.IsTestPrototype(p))
+                .Where(p => !pair.IsTestPrototype(p))
                 .Where(p => !p.Components.ContainsKey("MapGrid")) // This will smash stuff otherwise.
                 .Select(p => p.ID)
                 .ToList();
@@ -167,7 +167,7 @@ namespace Content.IntegrationTests.Tests
                 }
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 15);
+            await PoolManager.RunTicksSync(pair, 15);
 
             // Make sure the client actually received the entities
             // 500 is completely arbitrary. Note that the client & sever entity counts aren't expected to match.
@@ -193,7 +193,7 @@ namespace Content.IntegrationTests.Tests
                 Assert.That(sEntMan.EntityCount, Is.Zero);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
@@ -216,8 +216,8 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -290,7 +290,7 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
@@ -313,8 +313,8 @@ namespace Content.IntegrationTests.Tests
                 "BiomeSelection", // Whaddya know, requires config.
             };
 
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -420,7 +420,7 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

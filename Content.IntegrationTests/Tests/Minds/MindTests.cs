@@ -54,8 +54,8 @@ public sealed partial class MindTests
     [Test]
     public async Task TestCreateAndTransferMindToNewEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
@@ -74,14 +74,14 @@ public sealed partial class MindTests
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestReplaceMind()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
@@ -105,14 +105,14 @@ public sealed partial class MindTests
             });
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestEntityDeadWhenGibbed()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -138,7 +138,7 @@ public sealed partial class MindTests
             });
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         await server.WaitAssertion(() =>
         {
@@ -152,21 +152,21 @@ public sealed partial class MindTests
             Assert.That(mindSystem.GetMind(entity, mindContainerComp), Is.EqualTo(mind));
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         await server.WaitAssertion(() =>
         {
             Assert.That(mindSystem.IsCharacterDeadPhysically(mind));
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestMindTransfersToOtherEntity()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
@@ -193,24 +193,24 @@ public sealed partial class MindTests
             });
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestOwningPlayerCanBeChanged()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             Connected = true,
             DummyTicker = false
         });
-        var server = pairTracker.Pair.Server;
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-        var originalMind = GetMind(pairTracker.Pair);
+        var originalMind = GetMind(pair);
         var userId = originalMind.UserId;
 
         Mind mind = default!;
@@ -229,7 +229,7 @@ public sealed partial class MindTests
             });
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         await server.WaitAssertion(() =>
         {
@@ -248,16 +248,16 @@ public sealed partial class MindTests
             });
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestAddRemoveHasRoles()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
 
@@ -318,15 +318,15 @@ public sealed partial class MindTests
             });
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestPlayerCanGhost()
     {
         // Client is needed to spawn session
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
@@ -351,14 +351,14 @@ public sealed partial class MindTests
             Assert.That(mindSystem.GetMind(entity, mindComp), Is.EqualTo(mind));
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         await server.WaitAssertion(() =>
         {
             entMan.DeleteEntity(entity);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         EntityUid mob = default!;
         Mind mobMind = default!;
@@ -376,7 +376,7 @@ public sealed partial class MindTests
             mindSystem.TransferTo(mobMind, mob);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+        await PoolManager.RunTicksSync(pair, 5);
 
         await server.WaitAssertion(() =>
         {
@@ -389,7 +389,7 @@ public sealed partial class MindTests
             });
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     // TODO Implement
@@ -401,13 +401,13 @@ public sealed partial class MindTests
     [Test]
     public async Task TestGhostDoesNotInfiniteLoop()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
             Connected = true,
             Dirty = true
         });
-        var server = pairTracker.Pair.Server;
+        var server = pair.Server;
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
@@ -441,14 +441,14 @@ public sealed partial class MindTests
             ghostRole = entMan.SpawnEntity("GhostRoleTestEntity", MapCoordinates.Nullspace);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
+        await PoolManager.RunTicksSync(pair, 20);
 
         await server.WaitAssertion(() =>
         {
             serverConsole.ExecuteCommand(player, "aghost");
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
+        await PoolManager.RunTicksSync(pair, 20);
 
         await server.WaitAssertion(() =>
         {
@@ -456,7 +456,7 @@ public sealed partial class MindTests
             entMan.EntitySysManager.GetEntitySystem<GhostRoleSystem>().Takeover(player, id);
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
+        await PoolManager.RunTicksSync(pair, 20);
 
         await server.WaitAssertion(() =>
         {
@@ -468,7 +468,7 @@ public sealed partial class MindTests
             ghost = player.AttachedEntity!.Value;
         });
 
-        await PoolManager.RunTicksSync(pairTracker.Pair, 20);
+        await PoolManager.RunTicksSync(pair, 20);
 
         await server.WaitAssertion(() =>
         {
@@ -476,6 +476,6 @@ public sealed partial class MindTests
             Assert.That(player.AttachedEntity!.Value, Is.EqualTo(ghost));
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }
