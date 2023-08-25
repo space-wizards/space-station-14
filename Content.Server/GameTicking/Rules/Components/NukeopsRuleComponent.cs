@@ -6,6 +6,7 @@ using Robust.Server.Player;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Utility;
 
@@ -56,25 +57,25 @@ public sealed class NukeopsRuleComponent : Component
     /// <summary>
     ///     Indicates time when war has been declared, null if not declared
     /// </summary>
-    [DataField("warDeclaredTime")]
+    [DataField("warDeclaredTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan? WarDeclaredTime;
 
     /// <summary>
     ///     Delay between declaration of war and enabling FTL at outpost map
     /// </summary>
-    [DataField("warShuttleDelay")]
+    [DataField("preventShuttleInDelay")]
     public bool PreventShuttleInDelay = true;
 
     /// <summary>
     ///     This amount of TC will be given to each nukie
     /// </summary>
-    [DataField("warTCAmount")]
+    [DataField("warTCAmountPerNukie")]
     public int WarTCAmountPerNukie = 40;
 
     /// <summary>
     ///     Time allowed for declaration of war
     /// </summary>
-    [DataField("warDeclarationTimeWindow")]
+    [DataField("warDeclarationDelay")]
     public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
 
     /// <summary>
@@ -86,7 +87,7 @@ public sealed class NukeopsRuleComponent : Component
     /// <summary>
     ///     Minimal operatives count for war declaration
     /// </summary>
-    [DataField("warDeclarationMinOpsSize")]
+    [DataField("warDeclarationMinOps")]
     public int WarDeclarationMinOps = 4;
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
