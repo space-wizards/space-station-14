@@ -2,7 +2,7 @@
   id: LizardTailSmoothAnimated
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Reptilian]
+  speciesRestriction: []
   sprites:
   - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth_wagging
@@ -11,7 +11,7 @@
   id: LizardTailSpikesAnimated
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Reptilian]
+  speciesRestriction: []
   sprites:
   - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
     state: tail_spikes_wagging
@@ -20,7 +20,7 @@
   id: LizardTailLTigerAnimated
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Reptilian]
+  speciesRestriction: []
   sprites:
   - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
     state: tail_ltiger_wagging
@@ -29,7 +29,7 @@
   id: LizardTailDTigerAnimated
   bodyPart: Tail
   markingCategory: Tail
-  speciesRestriction: [Reptilian]
+  speciesRestriction: []
   sprites:
   - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
     state: tail_dtiger_wagging
