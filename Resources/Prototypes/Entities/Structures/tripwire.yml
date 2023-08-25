@@ -1,0 +1,30 @@
+- type: entity
+  parent: BaseStructure
+  id: BaseTripwire
+  name: tripwire
+  description: This is a line you don't want to cross.
+  components:
+  - type: Slippery
+    paralyzeTime: 1
+    launchForwardsMultiplier: 1.2
+  - type: StepTrigger
+    intersectRatio: 0.2
+  - type: Physics
+    bodyType: Dynamic
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.1,0.4,0.1"
+        layer:
+        - SlipLayer
+        hard: false
+  - type: Sprite
+    sprite: Structures/tripwire.rsi
+    state: icon
+  - type: SlipSignal
+    port: TrippedWire
+  - type: DeviceLinkSource
+    ports:
+    - TrippedWire

@@ -114,3 +114,8 @@
   name: signal-port-name-air-normal
   description: signal-port-description-air-normal
   defaultLinks: [ DoorBolt ]
+
+- type: sourcePort
+  id: TrippedWire
+  name: signal-port-name-tripped-wire
+  description: signal-port-description-tripped-wire
