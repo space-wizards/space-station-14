@@ -14,13 +14,12 @@
     canCollide: false
     bodyType: Static
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi #here
+    sprite: Clothing/Back/Satchels/smuggler.rsi 
     state: icon
   - type: StorageFill
-    contents:
-    #no group        
-
-      - id: SpaceCash10
+    contents:       
+  #number after each group is potential max weight. If combined PMW is too high, it could result in an over-filled bag/error.  
+      - id: SpaceCash100
         prob: 0.95  
         orGroup: Generic1 
       - id: DrinkSpaceGlue
@@ -39,8 +38,8 @@
         prob: 0.05
         orGroup: Generic1  #10    
 
-      - id: SpaceCash10
-        prob: 0.975  
+      - id: SpaceCash100
+        prob: 0.90  
         orGroup: Generic3
       - id: WhoopieCushion
         prob: 0.025   
@@ -61,7 +60,7 @@
         prob: 0.025
         orGroup: Generic3  #25     
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.85 
         orGroup: Clothing1
       #- id: ClothingHeadHatCatEars
@@ -83,7 +82,7 @@
         prob: 0.15
         orGroup: Clothing1  #10
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Cannabis
       - id: Joint
@@ -106,70 +105,69 @@
         prob: 0.25
         orGroup: Cannabis #15
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.98
         orGroup: GizmosTrigger
       - id: TimerTrigger
-        prob: 0.005
+        prob: 0.01
         maxAmount: 2
         orGroup: GizmosTrigger
       - id: SignalTrigger
-        prob: 0.005
+        prob: 0.01
         maxAmount: 2
         orGroup: GizmosTrigger
       - id: VoiceTrigger
-        prob: 0.005
+        prob: 0.01
         maxAmount: 2
       - id: ProximitySensor
-        prob: 0.005
+        prob: 0.01
         orGroup: GizmosTrigger
       - id: SpaceCash
-        prob: 0.005
+        prob: 0.01
         orGroup: GizmosTrigger #10
 
-      - id: SpaceCash10
-        prob: 0.98
+      - id: SpaceCash100
+        prob: 0.95
         orGroup: Chems
       - id: UnstableMutagenChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: Left4ZedChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: EZNutrientChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: RobustHarvestChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: EpinephrineChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: EphedrineChemistryBottle
-        prob: 0.01
+        prob: 0.05
         maxAmount: 5
         orGroup: Chems
       - id: OmnizineChemistryBottle
-        prob: 0.01
+        prob: 0.05
         orGroup: Chems
       - id: CognizineChemistryBottle
-        prob: 0.01
+        prob: 0.05
         orGroup: Chems
       - id: ToxinChemistryBottle
-        prob: 0.01
+        prob: 0.05
         orGroup: Chems
       - id: NocturineChemistryBottle
-        prob: 0.01
+        prob: 0.05
         orGroup: Chems
       - id: SpaceCash
-        prob: 0.01
+        prob: 0.05
         orGroup: Chems #15  
-
 
 - type: entity
   parent: ClothingBackpackSatchelSmuggler
@@ -178,13 +176,13 @@
   suffix: No Map, Use Spawner 
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi #here
+    sprite: Clothing/Back/Satchels/smuggler.rsi 
     state: icon 
   - type: StorageFill
     contents:     
 
-      - id: SpaceCash10
-        prob: 0.9  
+      - id: SpaceCash100
+        prob: 0.90  
         orGroup: Generic4
       - id: GlowstickBase
         prob: 0.1
@@ -210,7 +208,7 @@
         prob: 0.1
         orGroup: Generic4  #25
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.85 
         orGroup: Clothing2
       - id: ClothingEyesGlassesOutlawGlasses
@@ -229,8 +227,8 @@
         prob: 0.15
         orGroup: Clothing2  #5 
 
-      - id: SpaceCash10
-        prob: 0.95
+      - id: SpaceCash100
+        prob: 0.90
         orGroup: Tobacco
       - id: CigPackSyndicate
         prob: 0.015
@@ -259,49 +257,49 @@
         prob: 0.025
         orGroup: Tobacco #36
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Alchohol
       - id: DrinkCognacBottleFull
-        prob: 0.05
+        prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
       - id: DrinkGoldschlagerBottleFull
-        prob: 0.05
+        prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
       - id: DrinkPatronBottleFull
-        prob: 0.05
+        prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
       - id: DrinkRumBottleFull
-        prob: 0.05
+        prob: 0.10
         maxAmount: 4
         orGroup: Alchohol
       - id: SpaceCash
-        prob: 0.05
+        prob: 0.10
         orGroup: Alchohol #20
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.98
         orGroup: GizmosPayload
       - id: FlashPayload
-        prob: 0.005
+        prob: 0.02
         maxAmount: 2
         orGroup: GizmosPayload
       - id: ChemicalPayload
-        prob: 0.005
+        prob: 0.02
         maxAmount: 2
         orGroup: GizmosPayload
       - id: ExplosivePayload
-        prob: 0.005
+        prob: 0.02
         maxAmount: 2
         orGroup: GizmosPayload
       - id: SpaceCash
-        prob: 0.005
+        prob: 0.02
         orGroup: GizmosPayload #10
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.98
         orGroup: Circuitboards
       - id: ChemDispenserMachineCircuitboard
@@ -348,37 +346,38 @@
   suffix: No Map, Use Spawner 
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi #here
+    sprite: Clothing/Back/Satchels/smuggler.rsi 
     state: icon 
   - type: StorageFill
     contents:
 
-      - id: SpaceCash10 #come back
-        prob: 0.98
+      - id: SpaceCash100 
+        prob: 0.90
         orGroup: PresentsOrToys
       - id: PresentRandom
         prob: 0.05
+        maxAmount: 3
         orGroup: PresentsOrToys
       - id: ToyFigurineHamlet
-        prob: 0.005
+        prob: 0.01
         orGroup: PresentsOrToys
       - id: ToyFigurineSpaceDragon
-        prob: 0.005
+        prob: 0.01
         orGroup: PresentsOrToys
       - id: ToyFigurineQueen
-        prob: 0.005
+        prob: 0.01
         orGroup: PresentsOrToys
       - id: ToyFigurineRatKing
-        prob: 0.005
+        prob: 0.01
         orGroup: PresentsOrToys
       - id: PresentRandomUnsafe
         prob: 0.0015
         orGroup: PresentsOrToys
       - id: SpaceCash
-        prob: 0.05
-        orGroup: PresentsOrToys #30
+        prob: 0.01
+        orGroup: PresentsOrToys #15
 
-      - id: SpaceCash10 #come back
+      - id: SpaceCash100 
         prob: 0.95
         orGroup: Instrument
       - id: SeashellInstrument
@@ -406,23 +405,23 @@
         prob: 0.05
         orGroup: Instrument #24
 
-      - id: SpaceCash10 #come back
+      - id: SpaceCash100 
         prob: 0.10  
         orGroup: Cash
       - id: SpaceCash1000
-        prob: 0.01
+        prob: 0.10
         maxAmount: 4  
         orGroup: Cash 
       - id: SpaceCash2500
-        prob: 0.005 
+        prob: 0.05 
         maxAmount: 4  
         orGroup: Cash
       - id: SpaceCash5000
-        prob: 0.001 
+        prob: 0.01 
         maxAmount: 4  
         orGroup: Cash
       - id: SpaceCash10000
-        prob: 0.0005 
+        prob: 0.005 
         maxAmount: 4  
         orGroup: Cash
       - id: SpaceCash1000000
@@ -431,7 +430,7 @@
         prob: 0.01
         orGroup: Cash #5      
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.9875 
         orGroup: Weapon
       - id: Katana
@@ -445,7 +444,7 @@
         prob: 0.0125
         orGroup: Weapon  #25   
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Burger
       - id: FoodBurgerAppendix
@@ -468,29 +467,29 @@
         prob: 0.05
         orGroup: Burger #25            
 
-      - id: SpaceCash10
-        prob: 0.98  
+      - id: SpaceCash100
+        prob: 0.95  
         orGroup: Generic2
       - id: RemoteSignaller
-        prob: 0.02  
+        prob: 0.05  
         orGroup: Generic2     
       - id: PersonalAI
-        prob: 0.02  
+        prob: 0.05  
         orGroup: Generic2 
       - id: WeaponFlareGun
-        prob: 0.02  
+        prob: 0.05  
         orGroup: Generic2 
       - id: ModularReceiver
-        prob: 0.02  
+        prob: 0.05  
         orGroup: Generic2 
       - id: RifleStock
-        prob: 0.02  
+        prob: 0.05  
         orGroup: Generic2
       - id: SpaceCash
-        prob: 0.02
+        prob: 0.05
         orGroup: Generic2  #10 
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.99
         orGroup: Keys
       - id: EncryptionKeyCommon
@@ -537,12 +536,12 @@
   suffix: No Map, Use Spawner 
   components:
   - type: Sprite
-    sprite: Clothing/Back/Satchels/smuggler.rsi #here
+    sprite: Clothing/Back/Satchels/smuggler.rsi 
     state: icon 
   - type: StorageFill
     contents:
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.90
         orGroup: Materials
       - id: MaterialDiamond1
@@ -573,7 +572,7 @@
         prob: 0.15
         orGroup: Materials #20
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.98
         orGroup: Implanters
       - id: LightImplanter
@@ -592,23 +591,23 @@
         prob: 0.025
         orGroup: Implanters #5
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Cells
       - id: PowerCellHyper
-        prob: 0.33
+        prob: 0.05
         orGroup: Cells
       - id: PowerCellMicroreactor
-        prob: 0.33
+        prob: 0.05
         orGroup: Cells
       - id: PowerCellHigh
-        prob: 0.33
+        prob: 0.05
         orGroup: Cells
       - id: SpaceCash
-        prob: 0.33
+        prob: 0.05
         orGroup: Cells #5
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.95
         orGroup: Meds
       - id: SyringeAmbuzol
@@ -665,66 +664,66 @@
         maxAmount: 5
         orGroup: Meds
       - id: Stimpack
-        prob: 0.005
+        prob: 0.01
         orGroup: Meds
       - id: CombatMedipen
-        prob: 0.005
+        prob: 0.01
         orGroup: Meds
       - id: SpaceCash
         prob: 0.01
         orGroup: Meds #15
 
-      - id: SpaceCash10
+      - id: SpaceCash100
         prob: 0.99
         orGroup: Syndicate
       - id: Telecrystal1
-        prob: 0.01
+        prob: 0.05
         maxAmount: 10
         orGroup: Syndicate
       - id: Emag
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: DehydratedSpaceCarp
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: GatfruitSeeds
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: RevolverCapGunFake
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: ToySword
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: NukeDiskFake
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: RadioJammer
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: ClothingMaskGasVoiceChameleon
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: ClothingShoesChameleonNoSlips
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: ClothingHandsGlovesBoxingRigged
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: ThievingGloves
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: SoapSyndie
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
-      - id: LanternFlash 
-        prob: 0.01
+      - id: LanternFlash
+        prob: 0.05
         orGroup: Syndicate
       - id: SingularityToy
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate
       - id: SpaceCash
-        prob: 0.01
+        prob: 0.05
         orGroup: Syndicate #10
 
       - id: Crowbar
