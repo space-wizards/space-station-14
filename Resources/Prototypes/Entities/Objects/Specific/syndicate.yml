@@ -78,8 +78,8 @@
     balance:
       Telecrystal: 0
   - type: Prayable
-    sentMessage: You sent a message to the bosses
-    notifiactionPrefix: SYNDICATE
+    sentMessage: prayer-popup-notify-syndicate-sent
+    notifiactionPrefix: prayer-chat-notify-syndicate
     verb: prayer-verbs-call
     verbImage: null
 
