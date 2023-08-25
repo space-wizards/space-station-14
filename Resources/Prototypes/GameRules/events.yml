@@ -289,7 +289,7 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-    - id: MobGiantSpiderAngry
+    - id: MobHunterSpiderAngry
       prob: 0.05
 
 - type: entity

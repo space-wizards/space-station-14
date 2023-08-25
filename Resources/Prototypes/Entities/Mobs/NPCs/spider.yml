@@ -1,16 +1,16 @@
 # Code unique spider prototypes or combine them all into one spider and get a
 # random sprite state when you spawn it.
 - type: entity
-  name: tarantula
+  name: base spider
   parent: SimpleMobBase
-  id: MobGiantSpider
+  id: MobBaseSpider
   description: Widely recognized to be the literal worst thing in existence.
   components:
   - type: Sprite
     drawdepth: Mobs
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
-      state: tarantula
+      state: hunter
       sprite: Mobs/Animals/spider.rsi
   - type: Physics
   - type: Fixtures
@@ -27,9 +27,16 @@
   - type: DamageStateVisuals
     states:
       Alive:
-        Base: tarantula
+        Base: hunter
       Dead:
-        Base: tarantula_dead
+        Base: hunter_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 4.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      64: 0.7
+      72: 0.5
   - type: Butcherable
     spawned:
     - id: FoodMeatSpider
@@ -48,15 +55,6 @@
     damage:
       types:
         Piercing: 6
-  - type: SolutionContainerManager
-    solutions:
-      melee:
-        reagents:
-        - ReagentId: Toxin
-          Quantity: 50
-  - type: MeleeChemicalInjector
-    transferAmount: 0.75
-    solution: melee
   - type: ReplacementAccent
     accent: xeno
   - type: InteractionPopup
@@ -71,8 +69,92 @@
     bloodReagent: SpiderBlood
 
 - type: entity
+  name: hunter
+  parent: MobBaseSpider
+  id: MobHunterSpider
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: hunter
+      sprite: Mobs/Animals/spider.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: hunter
+      Dead:
+        Base: hunter_dead
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      70: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 4.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      55: 0.7
+      63: 0.5
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 6
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    transferAmount: 0.75
+    solution: melee
+
+- type: entity
+  name: guard
+  parent: MobBaseSpider
+  id: MobGuardSpider
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: guard
+      sprite: Mobs/Animals/spider.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: guard
+      Dead:
+        Base: guard_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 3.5
+    baseSprintSpeed : 3.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      85: 0.7
+      100: 0.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      120: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 4
+  - type: SolutionContainerManager
+    solutions:
+      melee:
+        reagents:
+        - ReagentId: Toxin
+          Quantity: 50
+  - type: MeleeChemicalInjector
+    transferAmount: .6
+    solution: melee
+
+- type: entity
   name: viper
-  parent: MobGiantSpider
+  parent: MobBaseSpider
   id: MobViperSpider
   components:
   - type: Sprite
@@ -90,7 +172,14 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      60: Dead
+      55: Dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 5
+    baseSprintSpeed : 5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      35: 0.7
+      50: 0.5
   - type: MeleeWeapon
     damage:
       types:
@@ -104,6 +193,79 @@
   - type: MeleeChemicalInjector
     transferAmount: 4
     solution: melee
+
+- type: entity
+  name: tarantula
+  parent: MobBaseSpider
+  id: MobTarantulaSpider
+  components:
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: tarantula
+      sprite: Mobs/Animals/spider.rsi
+  - type: DamageStateVisuals
+    states:
+      Alive:
+        Base: tarantula
+      Dead:
+        Base: tarantula_dead
+  - type: MovementSpeedModifier
+    baseWalkSpeed : 2.5
+    baseSprintSpeed : 2.5
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      220: 0.7
+      290: 0.5
+  - type: MobThresholds
+    thresholds:
+      0: Alive
+      360: Dead
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 26
+
+- type: entity
+  name: hunter
+  parent: MobHunterSpider
+  id: MobHunterSpiderAngry
+  suffix: Angry
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
+
+- type: entity
+  name: guard
+  parent: MobGuardSpider
+  id: MobGuardSpiderAngry
+  suffix: Angry
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
 
 - type: entity
   name: viper
@@ -127,8 +289,8 @@
 
 - type: entity
   name: tarantula
-  parent: MobGiantSpider
-  id: MobGiantSpiderAngry
+  parent: MobTarantulaSpider
+  id: MobTarantulaSpiderAngry
   suffix: Angry
   components:
     - type: NpcFactionMember
@@ -147,7 +309,7 @@
 
 - type: entity
   name: clown spider
-  parent: MobGiantSpiderAngry
+  parent: MobBaseSpider
   id: MobClownSpider
   description: Combines the two most terrifying things in existence, spiders and clowns.
   components:
@@ -186,6 +348,28 @@
       damage:
         types:
           Piercing: 8
+    - type: SolutionContainerManager
+      solutions:
+        melee:
+          reagents:
+          - ReagentId: Toxin
+            Quantity: 50
+    - type: MeleeChemicalInjector
+      transferAmount: 0.75
+      solution: melee
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClownFast
+    - type: NpcFactionMember
+      factions:
+        - Xeno
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+    - type: GhostRole
+      makeSentient: true
+      name: ghost-role-information-giant-spider-name
+      description: ghost-role-information-giant-spider-description
+    - type: GhostTakeoverAvailable
