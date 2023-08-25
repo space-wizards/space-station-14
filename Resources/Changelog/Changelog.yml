@@ -1,10 +1,4 @@
 Entries:
-- author: '0x6273'
-  changes:
-  - {message: Thermal conductivity between chemistry solutions and atmos gases has
-      been implemented., type: Add}
-  id: 4181
-  time: '2023-07-07T01:18:56.0000000+00:00'
 - author: Lomcastar
   changes:
   - {message: Added stamp sounds., type: Add}
@@ -3023,3 +3017,9 @@ Entries:
       gas mask, which offers flash immunity.', type: Tweak}
   id: 4680
   time: '2023-08-25T03:15:40.0000000+00:00'
+- author: crazybrain
+  changes:
+  - {message: CentCom official costume no longer has AA., type: Fix}
+  - {message: CentCom official costume items are more CentCom themed., type: Tweak}
+  id: 4681
+  time: '2023-08-25T03:20:57.0000000+00:00'
