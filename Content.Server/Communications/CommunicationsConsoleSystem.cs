@@ -37,7 +37,6 @@ namespace Content.Server.Communications
         [Dependency] private readonly StationSystem _stationSystem = default!;
         [Dependency] private readonly IConfigurationManager _cfg = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
 
         private const int MaxMessageLength = 256;
         private const int MaxMessageNewlines = 2;

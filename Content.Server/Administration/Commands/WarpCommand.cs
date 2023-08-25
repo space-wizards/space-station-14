@@ -1,9 +1,9 @@
 using System.Linq;
 using System.Numerics;
-using Content.Server.Ghost.Components;
 using Content.Server.Warps;
 using Content.Shared.Administration;
 using Content.Shared.Follower;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;

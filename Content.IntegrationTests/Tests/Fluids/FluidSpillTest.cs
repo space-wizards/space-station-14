@@ -30,8 +30,8 @@ public sealed class FluidSpill
     [Test]
     public async Task SpillCorner()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
         var mapManager = server.ResolveDependency<IMapManager>();
         var entityManager = server.ResolveDependency<IEntityManager>();
         var puddleSystem = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<PuddleSystem>();
@@ -106,6 +106,6 @@ public sealed class FluidSpill
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

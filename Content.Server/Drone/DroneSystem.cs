@@ -1,6 +1,5 @@
 using Content.Server.Body.Systems;
 using Content.Server.Drone.Components;
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Popups;
@@ -10,6 +9,7 @@ using Content.Shared.Body.Components;
 using Content.Shared.Drone;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;

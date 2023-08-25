@@ -49,7 +49,6 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly IConfigurationManager _configManager = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IParallelManager _parallel = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ClimbSystem _climb = default!;
     [Dependency] private readonly DoAfterSystem _doAfter = default!;
@@ -174,6 +173,11 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     /// </summary>
     public NPCSteeringComponent Register(EntityUid uid, EntityCoordinates coordinates, NPCSteeringComponent? component = null)
     {
+        if(uid == null)
+        {
+            Logger.DebugS("ASS","SHITFUCK!");
+        }
+
         if (Resolve(uid, ref component, false))
         {
             if (component.Coordinates.Equals(coordinates))

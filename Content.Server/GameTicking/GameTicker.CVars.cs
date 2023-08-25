@@ -1,3 +1,4 @@
+using Content.Server.Discord;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 
@@ -29,6 +30,14 @@ namespace Content.Server.GameTicking
         [ViewVariables]
         public bool AutoMapVote { get; private set; } = false;
 
+        [ViewVariables]
+        public string? ServerName { get; private set; }
+
+        [ViewVariables]
+        private string? DiscordRoundEndRole { get; set; }
+
+        private WebhookIdentifier? _webhookIdentifier;
+
 #if EXCEPTION_TOLERANCE
         [ViewVariables]
         public int RoundStartFailShutdownCount { get; private set; } = 0;
@@ -55,6 +64,27 @@ namespace Content.Server.GameTicking
             _configurationManager.OnValueChanged(CCVars.StationRotation, value => StationRotation = value, true);
             _configurationManager.OnValueChanged(CCVars.MaxStationOffset, value => MaxStationOffset = value, true);
             _configurationManager.OnValueChanged(CCVars.AutoMapVote, value => AutoMapVote = value, true);
+            _configurationManager.OnValueChanged(CCVars.AdminLogsServerName, value =>
+            {
+                // TODO why tf is the server name on admin logs
+                ServerName = value;
+            }, true);
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundUpdateWebhook, value =>
+            {
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    _discord.GetWebhook(value, data => _webhookIdentifier = data.ToIdentifier());
+                }
+            }, true);
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundEndRoleWebhook, value =>
+            {
+                DiscordRoundEndRole = value;
+
+                if (value == string.Empty)
+                {
+                    DiscordRoundEndRole = null;
+                }
+            }, true);
 #if EXCEPTION_TOLERANCE
             _configurationManager.OnValueChanged(CCVars.RoundStartFailShutdownCount, value => RoundStartFailShutdownCount = value, true);
 #endif

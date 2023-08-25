@@ -65,6 +65,7 @@ public sealed partial class TriggerSystem
             component.Shape,
             TriggerOnProximityComponent.FixtureID,
             hard: false,
+            body: body,
             collisionLayer: component.Layer);
     }
 
@@ -99,7 +100,7 @@ public sealed partial class TriggerSystem
 
     private void OnProximityStartCollide(EntityUid uid, TriggerOnProximityComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID)
+        if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
             return;
 
         if (!ShouldCollideThroughWall(uid, component, ref args))
@@ -110,7 +111,7 @@ public sealed partial class TriggerSystem
 
     private static void OnProximityEndCollide(EntityUid uid, TriggerOnProximityComponent component, ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != TriggerOnProximityComponent.FixtureID)
+        if (args.OurFixtureId != TriggerOnProximityComponent.FixtureID)
             return;
 
         component.Colliding.Remove(args.OtherEntity);

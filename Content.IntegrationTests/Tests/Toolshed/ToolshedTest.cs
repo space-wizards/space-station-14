@@ -15,22 +15,24 @@ namespace Content.IntegrationTests.Tests.Toolshed;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public abstract class ToolshedTest : IInvocationContext
 {
-    protected TestPair PairTracker = default!;
+    protected TestPair Pair = default!;
 
     protected virtual bool Connected => false;
     protected virtual bool AssertOnUnexpectedError => true;
 
     protected RobustIntegrationTest.ServerIntegrationInstance Server = default!;
     protected RobustIntegrationTest.ClientIntegrationInstance? Client = null;
-    protected ToolshedManager Toolshed = default!;
+    public ToolshedManager Toolshed { get; private set; } = default!;
+    public ToolshedEnvironment Environment => Toolshed.DefaultEnvironment;
+
     protected IAdminManager AdminManager = default!;
 
-    protected IInvocationContext? Context = null;
+    protected IInvocationContext? InvocationContext = null;
 
     [TearDown]
     public async Task TearDownInternal()
     {
-        await PairTracker.CleanReturnAsync();
+        await Pair.CleanReturnAsync();
         await TearDown();
     }
 
@@ -43,12 +45,12 @@ public abstract class ToolshedTest : IInvocationContext
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
-        Server = PairTracker.Pair.Server;
+        Pair = await PoolManager.GetServerClient(new PoolSettings {Connected = Connected});
+        Server = Pair.Server;
 
         if (Connected)
         {
-            Client = PairTracker.Pair.Client;
+            Client = Pair.Client;
             await Client.WaitIdleAsync();
         }
 
@@ -63,10 +65,17 @@ public abstract class ToolshedTest : IInvocationContext
         return Toolshed.InvokeCommand(this, command, null, out result);
     }
 
+    protected T InvokeCommand<T>(string command)
+    {
+        InvokeCommand(command, out var res);
+        Assert.That(res, Is.AssignableTo<T>());
+        return (T) res!;
+    }
+
     protected void ParseCommand(string command, Type? inputType = null, Type? expectedType = null, bool once = false)
     {
-        var parser = new ForwardParser(command, Toolshed);
-        var success = CommandRun.TryParse(false, false, parser, inputType, expectedType, once, out _, out _, out var error);
+        var parser = new ParserContext(command, Toolshed);
+        var success = CommandRun.TryParse(false, parser, inputType, expectedType, once, out _, out _, out var error);
 
         if (error is not null)
             ReportError(error);
@@ -77,9 +86,9 @@ public abstract class ToolshedTest : IInvocationContext
 
     public bool CheckInvokable(CommandSpec command, out IConError? error)
     {
-        if (Context is not null)
+        if (InvocationContext is not null)
         {
-            return Context.CheckInvokable(command, out error);
+            return InvocationContext.CheckInvokable(command, out error);
         }
 
         error = null;
@@ -92,9 +101,9 @@ public abstract class ToolshedTest : IInvocationContext
     {
         get
         {
-            if (Context is not null)
+            if (InvocationContext is not null)
             {
-                return Context.Session;
+                return InvocationContext.Session;
             }
 
             return InvocationSession;

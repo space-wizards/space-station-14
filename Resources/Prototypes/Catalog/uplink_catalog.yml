@@ -973,11 +973,9 @@
   categories:
   - UplinkJob
   conditions:
-    - !type:BuyerJobCondition
+    - !type:BuyerDepartmentCondition
       whitelist:
-        - Scientist
-        - SeniorResearcher
-        - ResearchDirector
+      - Science
 
 - type: listing
   id: uplinkProximityMine
@@ -1009,11 +1007,12 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerJobCondition # We can't use BuyerDepartmentCondition here since Zookeeper and Chef can also get this
     whitelist:
     - Zookeeper
     - Scientist
     - SeniorResearcher
+    - ResearchDirector
     - Chef
     - ResearchDirector
 

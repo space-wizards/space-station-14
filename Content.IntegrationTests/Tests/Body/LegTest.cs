@@ -29,8 +29,8 @@ namespace Content.IntegrationTests.Tests.Body
         [Test]
         public async Task RemoveLegsFallTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             EntityUid human = default!;
             AppearanceComponent appearance = null;
@@ -72,7 +72,7 @@ namespace Content.IntegrationTests.Tests.Body
                 Assert.That(state, Is.EqualTo(RotationState.Horizontal));
 #pragma warning restore NUnit2045
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

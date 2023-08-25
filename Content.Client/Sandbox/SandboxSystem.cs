@@ -1,6 +1,6 @@
 using Content.Client.Administration.Managers;
-using Content.Client.Ghost;
 using Content.Client.Movement.Systems;
+using Content.Shared.Ghost;
 using Content.Shared.Sandbox;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
@@ -33,9 +33,10 @@ namespace Content.Client.Sandbox
             _adminManager.AdminStatusUpdated += CheckStatus;
             SubscribeNetworkEvent<MsgSandboxStatus>(OnSandboxStatus);
 
-            SubscribeLocalEvent<ToggleLightingActionEvent>(OnToggleLighting);
-            SubscribeLocalEvent<ToggleFoVActionEvent>(OnToggleFoV);
-            SubscribeLocalEvent<PlayerAttachedEvent>(OnPlayerAttached);
+            //TODO FIXME Закомментил ибо пизда всё ломается
+            //SubscribeLocalEvent<GhostComponent, ToggleLightingActionEvent>(OnToggleLighting);
+            //SubscribeLocalEvent<GhostComponent, ToggleFoVActionEvent>(OnToggleFoV);
+            //SubscribeLocalEvent<GhostComponent, PlayerAttachedEvent>(OnPlayerAttached);
         }
 
         private void CheckStatus()
@@ -71,20 +72,22 @@ namespace Content.Client.Sandbox
             CheckStatus();
         }
 
-        private void OnPlayerAttached(PlayerAttachedEvent ev)
+        /*
+        private void OnPlayerAttached(EntityUid uid, GhostComponent comp, PlayerAttachedEvent ev)
         {
             PlayerAttached?.Invoke();
         }
 
-        private void OnToggleFoV(ToggleFoVActionEvent ev)
+        private void OnToggleFoV(EntityUid uid, GhostComponent comp, ToggleFoVActionEvent ev)
         {
             FovToggled?.Invoke();
         }
 
-        private void OnToggleLighting(ToggleLightingActionEvent ev)
+        private void OnToggleLighting(EntityUid uid, GhostComponent comp, ToggleLightingActionEvent ev)
         {
             LightingToggled?.Invoke();
         }
+        */
 
         public void Respawn()
         {

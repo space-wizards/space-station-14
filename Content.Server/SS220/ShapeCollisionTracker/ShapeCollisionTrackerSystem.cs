@@ -51,7 +51,7 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
         ShapeCollisionTrackerComponent component,
         ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != ShapeCollisionTrackerComponent.FixtureID)
+        if (args.OurFixtureId != ShapeCollisionTrackerComponent.FixtureID)
             return;
 
         component.Colliding.Add(args.OtherEntity);
@@ -63,7 +63,7 @@ public sealed class ShapeCollisionTrackerSystem : EntitySystem
         ShapeCollisionTrackerComponent component,
         ref EndCollideEvent args)
     {
-        if (args.OurFixture.ID != ShapeCollisionTrackerComponent.FixtureID)
+        if (args.OurFixtureId != ShapeCollisionTrackerComponent.FixtureID)
             return;
 
         component.Colliding.Remove(args.OtherEntity);

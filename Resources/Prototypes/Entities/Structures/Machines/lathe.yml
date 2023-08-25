@@ -108,6 +108,10 @@
       - LightTube
       - LightBulb
       - Bucket
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
       - MicroManipulatorStockPart
@@ -396,6 +400,7 @@
     - BorgModuleRadiationDetection
     - BorgModuleTool
     - BorgModuleAppraisal
+    - BorgModuleConstruction
     - CyborgEndoskeleton
     - LeftArmBorg
     - RightArmBorg
@@ -444,6 +449,7 @@
     - BorgModuleArtifact
     - BorgModuleAnomaly
     - BorgModuleGardening
+    - BorgModuleHarvesting
     - BorgModuleMusique
     - BorgModuleLiteracy
     - BorgModuleClowning
