@@ -19,7 +19,8 @@ chat-manager-whisper-headset-on-message = Вы не можете шептать 
 chat-manager-server-wrap-message = [bold]{ $message }[/bold]
 chat-manager-sender-announcement-wrap-message = [font size=14][bold]Объявление { $sender }:[/font][font size=12]
     { $message }[/bold][/font]
-chat-manager-entity-say-wrap-message = [bold]{ $entityName }[/bold] [italic]говорит,[/italic] "{ $message }"
+chat-manager-entity-say-wrap-message = [bold]{ $entityName }[/bold] { $verb }, [font={ $fontType } size={ $fontSize }]"{ $message }"[/font]
+chat-manager-entity-say-bold-wrap-message = [bold]{ $entityName }[/bold] { $verb }, [font={ $fontType } size={ $fontSize }][bold]"{ $message }"[/bold][/font]
 chat-manager-entity-whisper-wrap-message = [font size=11][italic]{ $entityName } шепчет, "{ $message }"[/italic][/font]
 chat-manager-entity-whisper-unknown-wrap-message = [font size=11][italic]Кто-то шепчет, "{$message}"[/italic][/font]
 chat-manager-entity-me-wrap-message = [italic]{ $entityName } { $message }[/italic]
@@ -33,3 +34,22 @@ chat-manager-send-admin-announcement-wrap-message = [bold]{ $adminChannelName }:
 chat-manager-send-hook-ooc-wrap-message = OOC: [bold](D){ $senderName }:[/bold] { $message }
 chat-manager-dead-channel-name = МЁРТВЫЕ
 chat-manager-admin-channel-name = АДМИН
+chat-speech-verb-suffix-exclamation = !
+chat-speech-verb-suffix-exclamation-strong = !!
+chat-speech-verb-suffix-question = ?
+chat-speech-verb-default = говорит
+chat-speech-verb-exclamation = восклицает
+chat-speech-verb-exclamation-strong = кричит
+chat-speech-verb-question = спрашивает
+chat-speech-verb-insect-1 = стрекочет
+chat-speech-verb-insect-2 = жужжит
+chat-speech-verb-slime = булькает
+chat-speech-verb-robotic = сообщает
+chat-speech-verb-reptilian = шипит
+chat-speech-verb-skeleton = грохочет
+chat-speech-verb-small-mob = пищит
+chat-speech-verb-large-mob = рычит
+chat-speech-verb-monkey = говорит
+chat-speech-verb-cluwne-1 = хихикает
+chat-speech-verb-cluwne-2 = хехекает
+chat-speech-verb-cluwne-3 = смеётся

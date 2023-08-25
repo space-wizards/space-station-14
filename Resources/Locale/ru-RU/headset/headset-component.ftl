@@ -1,5 +1,6 @@
 # Chat window radio wrap (prefix and postfix)
-chat-radio-message-wrap = [color={ $color }]{ $channel } [bold]{ $name }[/bold] [italic]говорит,[/italic] "{ $message }"[/color]
+chat-radio-message-wrap = [color={ $color }]{ $channel } [bold]{ $name }[/bold] { $verb }, [font={ $fontType } size={ $fontSize }]"{ $message }"[/font][/color]
+chat-radio-message-wrap-bold = [color={ $color }]{ $channel } [bold]{ $name }[/bold] { $verb }, [font={ $fontType } size={ $fontSize }][bold]"{ $message }"[/bold][/font][/color]
 examine-headset-default-channel = Отображается, что каналом по умолчанию этой гарнитуры является [color={ $color }]{ $channel }[/color].
 chat-radio-common = Общий
 chat-radio-centcom = Центком
