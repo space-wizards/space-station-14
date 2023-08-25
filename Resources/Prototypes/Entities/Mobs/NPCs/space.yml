@@ -34,7 +34,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      150: Dead
+      100: Dead
   - type: Stamina
     critThreshold: 150
   - type: MovementAlwaysTouching
@@ -218,7 +218,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      130: Dead
+      90: Dead
   - type: Stamina
     critThreshold: 150
   - type: DamageStateVisuals

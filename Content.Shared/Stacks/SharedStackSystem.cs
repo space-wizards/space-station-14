@@ -336,6 +336,10 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
+            // on client, lingering stacks that start at 0 need to be darkened
+            // on server this does nothing
+            SetCount(uid, component.Count, component);
+
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 

@@ -242,7 +242,7 @@ public sealed class AmeControllerSystem : EntitySystem
             return;
         }
 
-        if (!HasComp<AmeFuelContainerComponent?>(args.Used))
+        if (!HasComp<AmeFuelContainerComponent>(args.Used))
         {
             _popupSystem.PopupEntity(Loc.GetString("ame-controller-component-interact-using-fail"), uid, args.User);
             return;

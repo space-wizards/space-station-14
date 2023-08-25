@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Discord;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 using PlayerData = Content.Server.Players.PlayerData;
@@ -24,6 +25,7 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
@@ -250,6 +252,7 @@ namespace Content.Server.GameTicking
             UpdateLateJoinStatus();
             AnnounceRound();
             UpdateInfoText();
+            SendRoundStartedDiscordMessage();
 
 #if EXCEPTION_TOLERANCE
             }
@@ -303,6 +306,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
 
             ShowRoundEndScoreboard(text);
+            SendRoundEndDiscordMessage();
         }
 
         public void ShowRoundEndScoreboard(string text = "")
@@ -385,6 +389,38 @@ namespace Content.Server.GameTicking
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
         }
 
+        private async void SendRoundEndDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var duration = RoundDuration();
+                var content = Loc.GetString("discord-round-notifications-end",
+                    ("id", RoundId),
+                    ("hours", Math.Truncate(duration.TotalHours)),
+                    ("minutes", duration.Minutes),
+                    ("seconds", duration.Seconds));
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+
+                if (DiscordRoundEndRole == null)
+                    return;
+
+                content = Loc.GetString("discord-round-notifications-end-ping", ("roleId", DiscordRoundEndRole));
+                payload = new WebhookPayload { Content = content };
+                payload.AllowedMentions.AllowRoleMentions();
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round end message:\n{e}");
+            }
+        }
+
         public void RestartRound()
         {
             // If this game ticker is a dummy, do nothing!
@@ -409,6 +445,7 @@ namespace Content.Server.GameTicking
             RandomizeLobbyBackground();
             ResettingCleanup();
             IncrementRoundNumber();
+            SendRoundStartingDiscordMessage();
 
             if (!LobbyEnabled)
             {
@@ -425,6 +462,25 @@ namespace Content.Server.GameTicking
                 UpdateInfoText();
 
                 ReqWindowAttentionAll();
+            }
+        }
+
+        private async void SendRoundStartingDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var content = Loc.GetString("discord-round-notifications-new");
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round starting message:\n{e}");
             }
         }
 
@@ -553,6 +609,26 @@ namespace Content.Server.GameTicking
 
             if (proto.Sound != null)
                 SoundSystem.Play(proto.Sound.GetSound(), Filter.Broadcast());
+        }
+
+        private async void SendRoundStartedDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var mapName = _gameMapManager.GetSelectedMap()?.MapName ?? Loc.GetString("discord-round-notifications-unknown-map");
+                var content = Loc.GetString("discord-round-notifications-started", ("id", RoundId), ("map", mapName));
+
+                var payload = new WebhookPayload { Content = content };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round start message:\n{e}");
+            }
         }
     }
 
