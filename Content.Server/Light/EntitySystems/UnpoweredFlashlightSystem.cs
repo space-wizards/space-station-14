@@ -77,7 +77,7 @@ namespace Content.Server.Light.EntitySystems
             if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmaggedColorsPrototype, out var possibleColors))
             {
                 var pick = _random.Pick(possibleColors.Colors.Values);
-                light.Color = pick;
+                _light.SetColor(uid, pick, light);
             }
 
             args.Repeatable = true;

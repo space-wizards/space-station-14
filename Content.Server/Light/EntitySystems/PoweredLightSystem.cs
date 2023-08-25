@@ -397,7 +397,7 @@ namespace Content.Server.Light.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
-                pointLight.Enabled = value;
+                _light.SetEnabled(uid, value, pointLight);
 
                 if (color != null)
                     _light.SetColor(uid, color.Value, pointLight);

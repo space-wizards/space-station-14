@@ -6,6 +6,8 @@ namespace Content.Client.Power.APC;
 
 public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
 {
+    [Dependency] private readonly SharedPointLightSystem _lights = default!;
+
     protected override void OnAppearanceChange(EntityUid uid, ApcVisualsComponent comp, ref AppearanceChangeEvent args)
     {
         if (args.Sprite == null)
@@ -44,7 +46,9 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             }
 
             if (TryComp<PointLightComponent>(uid, out var light))
-                light.Color = comp.ScreenColors[(sbyte)chargeState];
+            {
+                _lights.SetColor(uid, comp.ScreenColors[(sbyte)chargeState], light);
+            }
         }
         else
         {
@@ -62,7 +66,9 @@ public sealed class ApcVisualizerSystem : VisualizerSystem<ApcVisualsComponent>
             }
 
             if (TryComp<PointLightComponent>(uid, out var light))
-                light.Color = comp.EmaggedScreenColor;
+            {
+                _lights.SetColor(uid, comp.EmaggedScreenColor, light);
+            }
         }
     }
 }
