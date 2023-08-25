@@ -42,17 +42,16 @@ public sealed class CharacterInfoSystem : EntitySystem
 
     private void OnCharacterInfoEvent(CharacterInfoEvent msg, EntitySessionEventArgs args)
     {
-        var sprite = CompOrNull<SpriteComponent>(msg.EntityUid);
-        var data = new CharacterData(msg.JobTitle, msg.Objectives, msg.Briefing, sprite, Name(msg.EntityUid));
+        var data = new CharacterData(msg.EntityUid, msg.JobTitle, msg.Objectives, msg.Briefing, Name(msg.EntityUid));
 
         OnCharacterUpdate?.Invoke(data);
     }
 
     public readonly record struct CharacterData(
+        EntityUid Entity,
         string Job,
         Dictionary<string, List<ConditionInfo>> Objectives,
         string Briefing,
-        SpriteComponent? Sprite,
         string EntityName
     );
 }

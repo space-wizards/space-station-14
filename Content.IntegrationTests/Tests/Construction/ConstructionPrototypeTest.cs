@@ -21,13 +21,13 @@ namespace Content.IntegrationTests.Tests.Construction
         [Test]
         public async Task TestStartNodeValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
-            var map = await PoolManager.CreateTestMap(pairTracker);
+            var map = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -47,14 +47,14 @@ namespace Content.IntegrationTests.Tests.Construction
                 }
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestStartIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -65,14 +65,14 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 Assert.That(graph.Nodes.ContainsKey(start), $"Found no startNode \"{start}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestTargetIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
@@ -83,14 +83,14 @@ namespace Content.IntegrationTests.Tests.Construction
 
                 Assert.That(graph.Nodes.ContainsKey(target), $"Found no targetNode \"{target}\" on graph \"{graph.ID}\" for construction prototype \"{proto.ID}\"!");
             }
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task DeconstructionIsValid()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var entMan = server.ResolveDependency<IEntityManager>();
             var protoMan = server.ResolveDependency<IPrototypeManager>();
@@ -101,7 +101,7 @@ namespace Content.IntegrationTests.Tests.Construction
             {
                 foreach (var proto in protoMan.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (proto.Abstract || pairTracker.Pair.IsTestPrototype(proto) || !proto.Components.TryGetValue(name, out var reg))
+                    if (proto.Abstract || pair.IsTestPrototype(proto) || !proto.Components.TryGetValue(name, out var reg))
                         continue;
 
                     var comp = (ConstructionComponent) reg.Component;
@@ -114,14 +114,14 @@ namespace Content.IntegrationTests.Tests.Construction
                 }
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestStartReachesValidTarget()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var protoMan = server.ResolveDependency<IPrototypeManager>();
             var entMan = server.ResolveDependency<IEntityManager>();
@@ -142,7 +142,7 @@ namespace Content.IntegrationTests.Tests.Construction
                 Assert.That(entity.Components.ContainsKey("Construction"), $"The next node ({next.Name}) in the path from the start node ({start}) to the target node ({target}) specified an entity prototype ({next.Entity}) without a ConstructionComponent.");
 #pragma warning restore NUnit2045
             }
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }
