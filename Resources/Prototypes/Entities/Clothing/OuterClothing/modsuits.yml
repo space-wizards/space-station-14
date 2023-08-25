@@ -1,0 +1,702 @@
+- type: entity #в комментах у характеристик будут оригинальные значения.
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterModsuitEngineering
+  name: engineering modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/engineering.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #0.9
+        Slash: 0.85 #0.9
+        Piercing: 0.85 #0.9
+        Shock: 0.75
+        Caustic: 0.45
+        Radiation: 0.3 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75 #0.7
+    sprintModifier: 0.75 #0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitEngineering
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: PointLight
+    enabled: false
+    radius: 3
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitEngineeringPlus
+  name: better engineering modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/engineering.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/engineering.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.4
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.85
+        Piercing: 0.8
+        Shock: 0.6
+        Caustic: 0.45
+        Radiation: 0.2
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCMO
+  name: better CMO modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/cmo.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.05
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Shock: 0.9 
+        Caustic: 0.1 #0.1
+        Radiation: 0.4 
+        Heat: 0.6
+  - type: PointLight
+    enabled: false
+    radius: 2
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCMO
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitAtmos
+  name: atmospherics modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/atmospherics.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/atmospherics.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.05
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85 #0.9
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.85
+        Caustic: 0.3 #0.5
+        Radiation: 0.4 #0.5
+        Heat: 0.15 #0.2
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75 #0.7
+    sprintModifier: 0.75 #0.7
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitAtmos
+
+- type: entity
+  parent: ClothingOuterModsuitEngineeringPlus
+  id: ClothingOuterModsuitAtmosPlus
+  name: atmospherics better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/atmospherics.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/atmospherics.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.01
+  - type: ExplosionResistance
+    damageCoefficient: 0.35
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8 #думаю, что падение кирпича на стройке относится к блант урону
+        Slash: 0.9
+        Piercing: 0.9
+        Shock: 0.8
+        Caustic: 0.1
+        Radiation: 0.3
+        Heat: 0.1
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitAtmos
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitMedical #я его выдумал
+  name: medical modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.9
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.9
+        Radiation: 0.9
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: PointLight
+    enabled: false
+    radius: 2
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitMedical
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitMedicalPlus
+  name: medical better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/medical.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/medical.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.35 
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.7
+        Radiation: 0.7
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: PointLight
+    enabled: false
+    radius: 2.5
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitMedical
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitSecurity
+  name: security modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/security.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.3
+  - type: ExplosionResistance
+    damageCoefficient: 0.95
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6 
+        Slash: 0.6
+        Piercing: 0.6
+        Shock: 0.2  #добавлено
+        Caustic: 0.3
+        Heat: 0.8 #добавлено
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: PointLight
+    enabled: false
+    radius: 2
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitSecurity
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitSecurityPlus
+  name: security better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/security.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.75
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.6 
+        Slash: 0.6
+        Piercing: 0.6
+        Shock: 0.2
+        Caustic: 0.3
+        Heat: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: PointLight
+    enabled: false
+    radius: 2.75
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitSecurity
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitHOS
+  name: HOS modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/security-red.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/security-red.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.45
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.5 #0.6
+        Slash: 0.4 #0.5
+        Piercing: 0.4 #0.5
+        Shock: 0.2
+        Radiation: 0.4 #0.5
+        Heat: 0.6 #добавлено
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8
+    sprintModifier: 0.8
+  - type: PointLight
+    enabled: false
+    radius: 3
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitHOS
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitBrigmedic
+  name: brigmedic modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/brigmedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.65
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.7
+        Heat: 0.8 #добавлено
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75 #0.65
+    sprintModifier: 0.75 #0.65
+  - type: PointLight
+    enabled: false
+    radius: 1.85
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitBrigmedic
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitBrigmedicPlus
+  name: better brigmedic modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/brigmedic.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/brigmedic.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.4
+  - type: ExplosionResistance
+    damageCoefficient: 0.55
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Piercing: 0.65
+        Heat: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9
+    sprintModifier: 0.9
+  - type: PointLight
+    enabled: false
+    radius: 2.5
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitBrigmedic
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCE
+  name: CE modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/engineering-white.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/engineering-white.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.001
+  - type: ExplosionResistance
+    damageCoefficient: 0.15
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.65 #0.8
+        Slash: 0.75 #0.8
+        Piercing: 0.7 #0.8
+        Shock: 0.6
+        Radiation: 0
+        Heat: 0.25
+        Caustic: 0.5 #0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.9 #0.8
+    sprintModifier: 0.9 #0.8
+  - type: PointLight
+    enabled: false
+    radius: 4.5
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCE
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCivillian
+  name: Civillian modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/civillian.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/civillian.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.8
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.85
+  - type: ClothingSpeedModifier
+    walkModifier: 0.75
+    sprintModifier: 0.75
+  - type: PointLight
+    enabled: false
+    radius: 1.5
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCivillian
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCivillianPlus
+  name: Civillian better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/civillian.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/civillian.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.5
+  - type: ExplosionResistance
+    damageCoefficient: 0.65
+  - type: Armor
+    modifiers:
+      coefficients:
+        Heat: 0.75
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.85
+  - type: PointLight
+    enabled: false
+    radius: 1.9
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCivillian
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitRND
+  name: RND modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/regularrnd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/regularrnd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.05
+  - type: ExplosionResistance
+    damageCoefficient: 0.25
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.85
+        Slash: 0.85
+        Shock: 0.85
+        Radiation: 0.8
+        Heat: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.4
+    sprintModifier: 0.4
+  - type: PointLight
+    enabled: false
+    radius: 1.85
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitRegularRND
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitRNDPlus
+  name: RND better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/regularrnd.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/regularrnd.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.025
+  - type: ExplosionResistance
+    damageCoefficient: 0.15
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.8
+        Slash: 0.8
+        Shock: 0.8
+        Radiation: 0.6
+        Heat: 0.65
+  - type: ClothingSpeedModifier
+    walkModifier: 0.55
+    sprintModifier: 0.55
+  - type: PointLight
+    enabled: false
+    radius: 2.66
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitRegularRND
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitCapSpace
+  name: captain modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/capspace.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/capspace.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.55 #0.8
+        Slash: 0.55 #0.8
+        Piercing: 0.55 #0.8
+        Shock: 0.55 #добавлено
+        Caustic: 0.4 #0.6
+        Radiation: 0.3 #0.5
+        Heat: 0.3 #0.5
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85 #оригинал - 0.8
+    sprintModifier: 0.85
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitCap
+  - type: PointLight
+    enabled: false
+    radius: 3
+    softness: 20
+    autoRot: true
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitSalvage
+  name: salvage modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2 #про лаваленд не забывать
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.7 #так же
+        Slash: 0.7 #так же
+        Piercing: 0.75 # оригинал - 0.5
+        Shock: 0.7 #отсутствует
+        Caustic: 0.7 #так же
+        Radiation: 0.3 # так же
+        Heat: 0.9 #про лаваленд не забывать, отсутствует
+  - type: ClothingSpeedModifier
+    walkModifier: 0.8 #оригинал - 0.75, меньше брони - скаф утиля нужно найти еще.
+    sprintModifier: 0.8
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitSalvage
+
+- type: entity
+  parent: ClothingOuterModsuitEngineering
+  id: ClothingOuterModsuitSalvagePlus
+  name: salvage better modsuit
+  description: A special suit that protects against hazardous, low pressure environments. Has radiation shielding.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Modsuits/salvage.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Modsuits/salvage.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.04
+    lowPressureMultiplier: 1000
+  - type: TemperatureProtection
+    coefficient: 0.2 #про лаваленд не забывать
+  - type: ExplosionResistance
+    damageCoefficient: 0.3
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.55
+        Slash: 0.55 
+        Piercing: 0.75 #зачем утилям защита от автоматов дробашей?
+        Shock: 0.7 
+        Caustic: 0.5
+        Radiation: 0.3 
+        Heat: 0.7 
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85 #оригинал - 0.75, меньше брони - скаф утиля нужно найти еще.
+    sprintModifier: 0.85
+  - type: PointLight
+    enabled: false
+    radius: 2.75
+    softness: 20
+    autoRot: true
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetModsuitSalvage

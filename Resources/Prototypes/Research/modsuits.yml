@@ -1,0 +1,72 @@
+- type: technology
+  id: BasicWorkModsuits
+  name: research-technology-basic-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/engineering.rsi
+    state: icon
+  discipline: Experimental
+  tier: 1
+  cost: 2500
+  recipeUnlocks:
+  - MedicalJacket
+  - RNDJacket
+  - WorkJacket
+  - MedicalModHelmet
+  - MedicalModChestplate
+  - MedicalModGauntlets
+  - MedicalModBoots
+  - RNDModHelmet
+  - RNDModChestplate
+  - RNDModGauntlets
+  - RNDModBoots
+  - EngineerModHelmet
+  - EngineerModChestplate
+  - EngineerModGauntlets
+  - EngineerModBoots
+
+- type: technology
+  id: Modsuits
+  name: research-technology-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/atmospherics.rsi
+    state: icon
+  discipline: Experimental
+  tier: 2
+  cost: 5000
+  recipeUnlocks:
+  - FullMetalJacket
+  - AtmosModHelmet
+  - AtmosModChestplate
+  - AtmosModGauntlets
+  - AtmosModBoots
+  - SecurityModHelmet
+  - BrigmedicModHelmet 
+  - SecurityModChestplate
+  - SecurityModGauntlets
+  - SecurityModBoots
+  - SalvageModHelmet
+  - SalvageModChestplate
+  - SalvageModGauntlets
+  - SalvageModBoots
+
+- type: technology
+  id: ModsuitsEPIC
+  name: research-technology-epic-modsuits
+  icon:
+    sprite: Clothing/Head/Modsuits/security-red.rsi
+    state: icon
+  discipline: Experimental
+  tier: 3
+  cost: 7500
+  recipeUnlocks:
+  - HOSModHelmet
+  - HOSModChestplate
+  - HOSModGauntlets
+  - HOSModBoots
+  - CMOModHelmet
+  - CMOModChestplate
+  - CMOModGauntlets
+  - CMOModBoots
+  - ModsuitEnhancedSomething
+  - ModsuitEnhancedCore
+  - ModsuitEnhancedBox

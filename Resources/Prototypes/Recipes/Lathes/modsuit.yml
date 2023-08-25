@@ -1,0 +1,329 @@
+- type: latheRecipe
+  id: EVAModBoots
+  result: EVAModBoots
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EVAModChestplate
+  result: EVAModChestplate
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plastic: 500
+
+- type: latheRecipe
+  id: EVAModGauntlets
+  result: EVAModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EVAModHelmet
+  result: EVAModHelmet
+  completetime: 4
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: AtmosModBoots
+  result: AtmosModBoots
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: AtmosModChestplate
+  result: AtmosModChestplate
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plasteel: 1000
+
+- type: latheRecipe
+  id: AtmosModGauntlets
+  result: AtmosModGauntlets
+  completetime: 4
+  materials:
+    Steel: 300
+    Plasteel: 300
+
+- type: latheRecipe
+  id: AtmosModHelmet
+  result: AtmosModHelmet
+  completetime: 4
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: EngineerModBoots
+  result: EngineerModBoots
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EngineerModChestplate
+  result: EngineerModChestplate
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plasteel: 500
+
+- type: latheRecipe
+  id: EngineerModGauntlets
+  result: EngineerModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: EngineerModHelmet
+  result: EngineerModHelmet
+  completetime: 4
+  materials:
+    Steel: 500
+    Glass: 500
+
+- type: latheRecipe
+  id: HOSModBoots
+  result: HOSModBoots
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: HOSModChestplate
+  result: HOSModChestplate
+  completetime: 4
+  materials:
+    Steel: 1000
+    Plasteel: 1500
+
+- type: latheRecipe
+  id: HOSModGauntlets
+  result: HOSModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+    Plasteel: 500
+
+- type: latheRecipe
+  id: HOSModHelmet
+  result: HOSModHelmet
+  completetime: 4
+  materials:
+    Steel: 1000
+    Glass: 500
+
+- type: latheRecipe
+  id: SecurityModBoots
+  result: SecurityModBoots
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: SecurityModChestplate
+  result: SecurityModChestplate
+  completetime: 4
+  materials:
+    Steel: 500
+    Plasteel: 1000
+
+- type: latheRecipe
+  id: SecurityModGauntlets
+  result: SecurityModGauntlets
+  completetime: 4
+  materials:
+    Plasteel: 500
+
+- type: latheRecipe
+  id: SecurityModHelmet
+  result: SecurityModHelmet
+  completetime: 4
+  materials:
+    Steel: 600
+    Glass: 500
+
+- type: latheRecipe
+  id: BrigmedicModHelmet
+  result: BrigmedicModHelmet
+  completetime: 4
+  materials:
+    Steel: 600
+    Glass: 500
+
+- type: latheRecipe
+  id: MedicalModBoots
+  result: MedicalModBoots
+  completetime: 4
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: MedicalModChestplate
+  result: MedicalModChestplate
+  completetime: 4
+  materials:
+    Steel: 700
+
+- type: latheRecipe
+  id: MedicalModGauntlets
+  result: MedicalModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: MedicalModHelmet
+  result: MedicalModHelmet
+  completetime: 4
+  materials:
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
+  id: RNDModBoots
+  result: RNDModBoots
+  completetime: 4
+  materials:
+    Steel: 700
+
+- type: latheRecipe
+  id: RNDModChestplate
+  result: RNDModChestplate
+  completetime: 4
+  materials:
+    Plasteel: 800
+    Steel: 1500
+
+- type: latheRecipe
+  id: RNDModGauntlets
+  result: RNDModGauntlets
+  completetime: 4
+  materials:
+    Steel: 700
+
+- type: latheRecipe
+  id: RNDModHelmet
+  result: RNDModHelmet
+  completetime: 4
+  materials:
+    Steel: 1000
+    Glass: 100
+
+- type: latheRecipe
+  id: CMOModBoots
+  result: CMOModBoots
+  completetime: 4
+  materials:
+    Steel: 300
+
+- type: latheRecipe
+  id: CMOModChestplate
+  result: CMOModChestplate
+  completetime: 4
+  materials:
+    Steel: 800
+
+- type: latheRecipe
+  id: CMOModGauntlets
+  result: CMOModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: CMOModHelmet
+  result: CMOModHelmet
+  completetime: 4
+  materials:
+    Steel: 400
+    Glass: 400
+
+- type: latheRecipe
+  id: SalvageModBoots
+  result: SalvageModBoots
+  completetime: 4
+  materials:
+    Steel: 600
+
+- type: latheRecipe
+  id: SalvageModChestplate
+  result: SalvageModChestplate
+  completetime: 4
+  materials:
+    Plasteel: 500
+    Steel: 1500
+
+- type: latheRecipe
+  id: SalvageModGauntlets
+  result: SalvageModGauntlets
+  completetime: 4
+  materials:
+    Steel: 500
+
+- type: latheRecipe
+  id: SalvageModHelmet
+  result: SalvageModHelmet
+  completetime: 4
+  materials:
+    Steel: 1000
+    Glass: 500
+
+- type: latheRecipe
+  id: MedicalJacket
+  result: MedicalJacket
+  completetime: 4
+  materials:
+    Steel: 200
+
+- type: latheRecipe
+  id: RNDJacket
+  result: RNDJacket
+  completetime: 4
+  materials:
+    Plasteel: 300
+
+- type: latheRecipe
+  id: WorkJacket
+  result: WorkJacket
+  completetime: 4
+  materials:
+    Steel: 400
+
+- type: latheRecipe
+  id: FullMetalJacket
+  result: FullMetalJacket
+  completetime: 4
+  materials:
+    Plasteel: 500
+    Steel: 200
+
+- type: latheRecipe
+  id: ModsuitEnhancedSomething
+  result: ModsuitEnhancedSomething
+  completetime: 4
+  materials:
+    Plastic: 300
+    Steel: 200
+
+- type: latheRecipe
+  id: ModsuitEnhancedCore
+  result: ModsuitEnhancedCore
+  completetime: 4
+  materials:
+    Steel: 1000
+
+- type: latheRecipe
+  id: ModsuitEnhancedBox
+  result: ModsuitEnhancedBox
+  completetime: 4
+  materials:
+    Plasteel: 500
+    Steel: 500
