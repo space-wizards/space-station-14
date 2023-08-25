@@ -50,8 +50,8 @@ public sealed class NukeopsRuleComponent : Component
     /// <summary>
     ///     Enables opportunity to get extra TC for war declaration
     /// </summary>
-    [DataField("enableWarOps")]
-    public bool EnableWarOps = true;
+    [DataField("canEnableWarOps")]
+    public bool CanEnableWarOps = true;
 
     /// <summary>
     ///     Indicates time when war has been declared, null if not declared

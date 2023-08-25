@@ -153,7 +153,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// </summary>
     public WarConditionStatus GetWarCondition(NukeopsRuleComponent nukieRule, GameRuleComponent gameRule)
     {
-        if (!nukieRule.EnableWarOps)
+        if (!nukieRule.CanEnableWarOps)
             return WarConditionStatus.NO_WAR_UNKNOWN;
 
         if (nukieRule.WarDeclaredTime.HasValue)
