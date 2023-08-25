@@ -1,4 +1,5 @@
 ﻿using Content.Server.Actions;
+using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
@@ -16,6 +17,7 @@ public sealed class WaggingSystem : EntitySystem
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly ChatSystem _chat = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -75,7 +77,9 @@ public sealed class WaggingSystem : EntitySystem
                 _humanoidAppearance.SetMarkingId(uid, MarkingCategories.Tail, idx, newMarkingId,
                     humanoid: humanoid);
             }
+
+            var emoteText = Loc.GetString(wagging.Wagging ? "wagging-emote-start" : "wagging-emote-stop");
+            _chat.TrySendInGameICMessage(uid, emoteText, InGameICChatType.Emote, ChatTransmitRange.Normal); // Ok while emotes dont have radial menu
         }
     }
 }
-
