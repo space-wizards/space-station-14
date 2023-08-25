@@ -9,7 +9,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EmptyAllContainers : IGraphAction
+    public sealed partial class EmptyAllContainers : IGraphAction
     {
         /// <summary>
         ///     Whether or not the user should attempt to pick up the removed entities.

@@ -8,7 +8,7 @@ namespace Content.Server.Power.Generator;
 /// This is used for chemical fuel input into generators.
 /// </summary>
 [RegisterComponent, Access(typeof(GeneratorSystem))]
-public sealed class ChemicalFuelGeneratorAdapterComponent : Component
+public sealed partial class ChemicalFuelGeneratorAdapterComponent : Component
 {
     /// <summary>
     /// The acceptable list of input entities.

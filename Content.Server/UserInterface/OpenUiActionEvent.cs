@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.UserInterface;
 
-public sealed class OpenUiActionEvent : InstantActionEvent, ISerializationHooks
+public sealed partial class OpenUiActionEvent : InstantActionEvent, ISerializationHooks
 {
     [ViewVariables]
     public Enum? Key { get; private set; }

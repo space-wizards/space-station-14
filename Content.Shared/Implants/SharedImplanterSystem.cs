@@ -178,12 +178,12 @@ public abstract class SharedImplanterSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class ImplantEvent : SimpleDoAfterEvent
+public sealed partial class ImplantEvent : SimpleDoAfterEvent
 {
 }
 
 [Serializable, NetSerializable]
-public sealed class DrawEvent : SimpleDoAfterEvent
+public sealed partial class DrawEvent : SimpleDoAfterEvent
 {
 }
 

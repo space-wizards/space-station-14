@@ -10,7 +10,7 @@ namespace Content.Shared.Access
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     The player-visible name of the access level, in the ID card console and such.

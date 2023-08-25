@@ -1,5 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -199,6 +200,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return false;
 
         if (storage.EntityWhitelist?.IsValid(toInsert) == false)
+            return false;
+
+        if (HasComp<UnremoveableComponent>(toInsert))
             return false;
 
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();

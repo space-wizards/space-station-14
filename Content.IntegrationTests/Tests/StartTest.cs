@@ -11,8 +11,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestClientStart()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient();
+            var client = pair.Client;
             Assert.That(client.IsAlive);
             await client.WaitRunTicks(5);
             Assert.That(client.IsAlive);
@@ -21,14 +21,14 @@ namespace Content.IntegrationTests.Tests
             await client.WaitIdleAsync();
             Assert.That(client.IsAlive);
 
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
             Assert.That(server.IsAlive);
             var sRuntimeLog = server.ResolveDependency<IRuntimeLog>();
             Assert.That(sRuntimeLog.ExceptionCount, Is.EqualTo(0), "No exceptions must be logged on server.");
             await server.WaitIdleAsync();
             Assert.That(server.IsAlive);
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

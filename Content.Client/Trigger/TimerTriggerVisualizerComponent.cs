@@ -5,7 +5,7 @@ namespace Content.Client.Trigger;
 
 [RegisterComponent]
 [Access(typeof(TimerTriggerVisualizerSystem))]
-public sealed class TimerTriggerVisualsComponent : Component
+public sealed partial class TimerTriggerVisualsComponent : Component
 {
     /// <summary>
     /// The key used to index the priming animation.
