@@ -1,5 +1,4 @@
 ﻿using Content.Server.GameTicking;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Administration;

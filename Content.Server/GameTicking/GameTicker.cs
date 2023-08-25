@@ -34,14 +34,38 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
+        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private readonly IBanManager _banManager = default!;
+        [Dependency] private readonly IBaseServer _baseServer = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+        [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+#if EXCEPTION_TOLERANCE
+        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+#endif
+        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private readonly IServerDbManager _db = default!;
         [Dependency] private readonly ArrivalsSystem _arrivals = default!;
+        [Dependency] private readonly ChatSystem _chatSystem = default!;
+        [Dependency] private readonly DamageableSystem _damageable = default!;
         [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
         [Dependency] private readonly GhostSystem _ghost = default!;
         [Dependency] private readonly MindSystem _mind = default!;
         [Dependency] private readonly MindTrackerSystem _mindTracker = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
         [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
+        [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
+        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
+        [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly UserDbDataManager _userDb = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;
@@ -106,31 +130,5 @@ namespace Content.Server.GameTicking
             base.Update(frameTime);
             UpdateRoundFlow(frameTime);
         }
-
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
-        [Dependency] private readonly IBaseServer _baseServer = default!;
-        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
-#if EXCEPTION_TOLERANCE
-        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
-#endif
-        [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
-        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly GhostSystem _ghosts = default!;
-        [Dependency] private readonly IBanManager _banManager = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
-        [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
-        [Dependency] private readonly UserDbDataManager _userDb = default!;
     }
 }
