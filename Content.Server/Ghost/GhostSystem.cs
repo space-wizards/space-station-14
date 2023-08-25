@@ -117,7 +117,7 @@ namespace Content.Server.Ghost
 
             if (EntityManager.TryGetComponent(uid, out EyeComponent? eye))
             {
-                _eye.SetVisibilityMask(uid, eye.VisibilityMask | (uint) VisibilityFlags.Ghost, eye);
+                _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) VisibilityFlags.Ghost, eye);
             }
 
             var time = _gameTiming.CurTime;
@@ -145,7 +145,7 @@ namespace Content.Server.Ghost
                 // Entity can't see ghosts anymore.
                 if (EntityManager.TryGetComponent(uid, out EyeComponent? eye))
                 {
-                    _eye.SetVisibilityMask(uid, eye.VisibilityMask & ~(uint) VisibilityFlags.Ghost, eye);
+                    _eye.SetVisibilityMask(uid, eye.VisibilityMask & ~(int) VisibilityFlags.Ghost, eye);
                 }
 
                 _actions.RemoveAction(uid, component.Action);
@@ -326,7 +326,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            entityManager.System<EyeSystem>().SetVisibilityMask(uid.Value, eyeComponent.VisibilityMask ^ (uint) VisibilityFlags.Ghost, eyeComponent);
+            entityManager.System<EyeSystem>().SetVisibilityMask(uid.Value, eyeComponent.VisibilityMask ^ (int) VisibilityFlags.Ghost, eyeComponent);
         }
     }
 }

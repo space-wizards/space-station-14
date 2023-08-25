@@ -83,7 +83,7 @@ public sealed partial class RevenantSystem : EntitySystem
         //ghost vision
         if (TryComp(uid, out EyeComponent? eye))
         {
-            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (uint) (VisibilityFlags.Ghost), eye);
+            _eye.SetVisibilityMask(uid, eye.VisibilityMask | (int) (VisibilityFlags.Ghost), eye);
         }
 
         var shopaction = new InstantAction(_proto.Index<InstantActionPrototype>("RevenantShop"));
