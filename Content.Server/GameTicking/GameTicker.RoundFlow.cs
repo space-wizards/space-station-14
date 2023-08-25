@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 using System.Linq;
+using Content.Server.Discord;
 using Content.Shared.Database;
 using Robust.Shared.Asynchronous;
 using PlayerData = Content.Server.Players.PlayerData;
@@ -24,6 +25,7 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
+        [Dependency] private readonly DiscordWebhook _discord = default!;
         [Dependency] private readonly ITaskManager _taskManager = default!;
 
         private static readonly Counter RoundNumberMetric = Metrics.CreateCounter(
@@ -303,6 +305,7 @@ namespace Content.Server.GameTicking
             LobbySong = _robustRandom.Pick(_lobbyMusicCollection.PickFiles).ToString();
 
             ShowRoundEndScoreboard(text);
+            SendRoundEndDiscordMessage();
         }
 
         public void ShowRoundEndScoreboard(string text = "")
@@ -385,6 +388,33 @@ namespace Content.Server.GameTicking
                 new SoundCollectionSpecifier("RoundEnd").GetSound()));
         }
 
+        private async void SendRoundEndDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var content = "The round has ended.";
+                if (DiscordRoundEndRole != null)
+                    content += $"\n\n<@&{DiscordRoundEndRole}>, the server will reboot shortly!";
+
+                var payload = new WebhookPayload
+                {
+                    Content = content,
+                    Username = ServerName,
+                };
+
+                payload.AllowedMentions.AllowRoleMentions();
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round end message:\n{e}");
+            }
+        }
+
         public void RestartRound()
         {
             // If this game ticker is a dummy, do nothing!
@@ -425,6 +455,31 @@ namespace Content.Server.GameTicking
                 UpdateInfoText();
 
                 ReqWindowAttentionAll();
+            }
+
+            SendRoundStartingDiscordMessage();
+        }
+
+        private async void SendRoundStartingDiscordMessage()
+        {
+            try
+            {
+                if (_webhookIdentifier == null)
+                    return;
+
+                var content = "New round starting!";
+
+                var payload = new WebhookPayload
+                {
+                    Content = content,
+                    Username = ServerName,
+                };
+
+                await _discord.CreateMessage(_webhookIdentifier.Value, payload);
+            }
+            catch (Exception e)
+            {
+                Log.Error($"Error while sending discord round starting message:\n{e}");
             }
         }
 
