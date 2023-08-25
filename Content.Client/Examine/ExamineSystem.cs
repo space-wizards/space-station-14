@@ -222,14 +222,16 @@ namespace Content.Client.Examine
 
             vBox.AddChild(hBox);
 
-            if (EntityManager.TryGetComponent(target, out SpriteComponent? sprite))
+            if (EntityManager.HasComponent<SpriteComponent>(target))
             {
-                hBox.AddChild(new SpriteView
+                var spriteView = new SpriteView
                 {
-                    Sprite = sprite, OverrideDirection = Direction.South,
+                    OverrideDirection = Direction.South,
                     SetSize = new Vector2(32, 32),
                     Margin = new Thickness(2, 0, 2, 0),
-                });
+                };
+                spriteView.SetEntity(target);
+                hBox.AddChild(spriteView);
             }
 
             if (knowTarget)
