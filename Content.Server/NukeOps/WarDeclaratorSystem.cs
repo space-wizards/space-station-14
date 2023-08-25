@@ -1,6 +1,8 @@
 ﻿using Content.Server.Administration.Logs;
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Popups;
+using Content.Server.UserInterface;
 using Content.Shared.Database;
 using Content.Shared.NukeOps;
 using Robust.Server.GameObjects;
@@ -15,11 +17,26 @@ public sealed class WarDeclaratorSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
+    [Dependency] private readonly PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<WarDeclaratorComponent, WarDeclaratorActivateMessage>(OnActivated);
+        SubscribeLocalEvent<WarDeclaratorComponent, ActivatableUIOpenAttemptEvent>(OnAttemptOpenUI);
+    }
+
+    private void OnAttemptOpenUI(EntityUid uid, WarDeclaratorComponent component, ActivatableUIOpenAttemptEvent args)
+    {
+        if (!_nukeopsRuleSystem.TryGetRuleFromOperative(args.User, out var comps))
+        {
+            var msg = Loc.GetString("war-declarator-not-nukeops");
+            _popupSystem.PopupEntity(msg, uid);
+            args.Cancel();
+            return;
+        }
+
+        UpdateUI(uid, comps.Value.Item1, comps.Value.Item2);
     }
 
     private void OnActivated(EntityUid uid, WarDeclaratorComponent component, WarDeclaratorActivateMessage args)
