@@ -350,6 +350,7 @@
     key: enum.MeleeSpeechUiKey.Key
     closeOnHandDeselect: false
     rightClickOnly: true
+  - type: Actions
   - type: UserInterface
     interfaces:
       - key: enum.MeleeSpeechUiKey.Key
