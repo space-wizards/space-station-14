@@ -20,6 +20,28 @@
             Poison: 4
 
 - type: reagent
+  id: Venom
+  name: reagent-name-venom
+  group: Toxins
+  desc: reagent-desc-venom
+  flavor: bitter
+  color: "#cf3600"
+  physicalDesc: reagent-physical-desc-opaque
+  plantMetabolism:
+  - !type:PlantAdjustToxins
+    amount: 10
+  - !type:PlantAdjustHealth
+    amount: -5
+  metabolisms:
+    Poison:
+      metabolismRate : 0.1
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.75
+
+- type: reagent
   id: CarpoToxin
   name: reagent-name-carpotoxin
   group: Toxins
@@ -140,6 +162,7 @@
       - !type:Emote
         emote: Scream
         probability: 0.3
+
 - type: reagent
   id: FluorosulfuricAcid
   name: reagent-name-fluorosulfuric-acid

@@ -1,6 +1,9 @@
 reagent-name-toxin = toxin
 reagent-desc-toxin = An unsurprisingly toxic chemical. Available at an emagged chem dispenser.
 
+reagent-name-venom = venom
+reagent-desc-venom = A slow acting poison often found in spiders.
+
 reagent-name-carpotoxin = carpotoxin
 reagent-desc-carpotoxin = A highly toxic reagent found in space carps. Causes a painful burning sensation.
 
