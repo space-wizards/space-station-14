@@ -6,9 +6,9 @@ namespace Content.Server.Drunk;
 
 public sealed class DrunkSystem : SharedDrunkSystem
 {
-    public const float MaxTimeSleep = 15f;
+    public const float MaxTimeSleep = 30f;
     //sometimes person metabolizes a drink more slowly than the status time is updated due to different network problems, so MinTimeSleep should be more 10f to deal with it
-    public const float MinTimeSleep = 10f;
+    public const float MinTimeSleep = 15f;
     public const float BoozePowerForSleepLimit = 200f;
     public override void Initialize()
     {
