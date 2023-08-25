@@ -13,8 +13,6 @@ namespace Content.Client.Singularity.EntitySystems;
 /// </summary>
 public sealed class SingularitySystem : SharedSingularitySystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-
     public override void Initialize()
     {
         base.Initialize();

@@ -21,8 +21,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task SaveLoadSave()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entManager.System<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -86,7 +86,7 @@ namespace Content.IntegrationTests.Tests
                     TestContext.Error.WriteLine(twoTmp);
                 }
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         private const string TestMap = "Maps/bagel.yml";
@@ -97,8 +97,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadSaveTicksSaveBagel()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
 
@@ -163,7 +163,7 @@ namespace Content.IntegrationTests.Tests
             });
 
             await server.WaitPost(() => mapManager.DeleteMap(mapId));
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -179,8 +179,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task LoadTickLoadBagel()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -235,7 +235,7 @@ namespace Content.IntegrationTests.Tests
             Assert.That(yamlA, Is.EqualTo(yamlB));
 
             await server.WaitPost(() => mapManager.DeleteMap(mapId));
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

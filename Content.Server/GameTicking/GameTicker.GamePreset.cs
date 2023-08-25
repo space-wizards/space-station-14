@@ -2,12 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
-using Content.Server.Ghost.Components;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -273,13 +273,13 @@ namespace Content.Server.GameTicking
 
             if (mind.TimeOfDeath.HasValue)
             {
-                ghostComponent.TimeOfDeath = mind.TimeOfDeath!.Value;
+                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
             }
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
+            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
                 _mind.Visit(mind, ghost);
