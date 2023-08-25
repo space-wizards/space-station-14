@@ -1,11 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: 'After an anomalous event swept through NT stations throughout the galaxy,
-      NT workers have gained the sudden ability to see the contents inside of the
-      custodial trolley reservoirs.', type: Add}
-  id: 4184
-  time: '2023-07-07T02:55:27.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'In accordance with SS13, romerol now causes the zombie infection instead
@@ -3024,3 +3017,9 @@ Entries:
   - {message: Removed asteroid coarse sand., type: Remove}
   id: 4683
   time: '2023-08-25T03:40:04.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: The particle accelerator now uses an MV power wire instead of HV. You
+      might need to manually connect it up before the maps get fixed., type: Tweak}
+  id: 4684
+  time: '2023-08-25T03:42:23.0000000+00:00'
