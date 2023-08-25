@@ -1,14 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Fix disposals units playing their flush animation whenever they come
-      into range., type: Fix}
-  - {message: Break joints upon entering disposals., type: Fix}
-  - {message: Break joints upon entering storage., type: Fix}
-  id: 4175
-  time: '2023-07-06T03:39:34.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Carps will now smash to get to their destination., type: Tweak}
   id: 4176
   time: '2023-07-06T04:41:53.0000000+00:00'
@@ -3025,3 +3017,9 @@ Entries:
   - {message: Added pinging a Discord role when the round ends., type: Add}
   id: 4674
   time: '2023-08-24T21:50:08.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Fixed the chemical guidebook sometimes missing one of the conditions,
+      effects, or damage types for a chemical.', type: Fix}
+  id: 4675
+  time: '2023-08-25T02:14:54.0000000+00:00'
