@@ -1,10 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: Made it more apparent to the player that starting to remove their handcuffs
-      damaged them., type: Tweak}
-  id: 4187
-  time: '2023-07-07T09:28:34.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: 'Added more syndicate clothes (5 coats, 3 uniforms, 3 hats, 1 mask,
@@ -3030,3 +3024,8 @@ Entries:
       room!, type: Tweak}
   id: 4686
   time: '2023-08-25T18:40:42.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed NPCs not working., type: Fix}
+  id: 4687
+  time: '2023-08-25T21:52:23.0000000+00:00'
