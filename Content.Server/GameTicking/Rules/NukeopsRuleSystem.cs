@@ -1050,7 +1050,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
                 continue;
 
-            if (!nukeops.PreventShuttleInDelay || nukeops.WarDeclaredTime == null)
+            if (nukeops.WarNukieArriveDelay != null  || nukeops.WarDeclaredTime == null)
                 continue;
 
             var warTime = _gameTiming.CurTime.Subtract(nukeops.WarDeclaredTime.Value);

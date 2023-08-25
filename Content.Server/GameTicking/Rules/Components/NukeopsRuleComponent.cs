@@ -61,12 +61,6 @@ public sealed class NukeopsRuleComponent : Component
     public TimeSpan? WarDeclaredTime;
 
     /// <summary>
-    ///     Delay between declaration of war and enabling FTL at outpost map
-    /// </summary>
-    [DataField("preventShuttleInDelay")]
-    public bool PreventShuttleInDelay = true;
-
-    /// <summary>
     ///     This amount of TC will be given to each nukie
     /// </summary>
     [DataField("warTCAmountPerNukie")]
@@ -82,7 +76,7 @@ public sealed class NukeopsRuleComponent : Component
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
 
     /// <summary>
     ///     Minimal operatives count for war declaration
