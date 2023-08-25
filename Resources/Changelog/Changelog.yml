@@ -1,15 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'In accordance with SS13, romerol now causes the zombie infection instead
-      of curing it.', type: Tweak}
-  - {message: Consuming romerol no longer causes damage., type: Tweak}
-  - {message: 'The zombie infection can now be halted with the use of ambuzol, made
-      with dylovene, ammonia, and blood.', type: Add}
-  - {message: Removed corpium., type: Remove}
-  - {message: Slightly adjusted the items inside the syndicate zombie bundle., type: Tweak}
-  id: 4185
-  time: '2023-07-07T04:45:59.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Mobs can no longer self-harm without a weapon., type: Fix}
@@ -3023,3 +3012,8 @@ Entries:
       might need to manually connect it up before the maps get fixed., type: Tweak}
   id: 4684
   time: '2023-08-25T03:42:23.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix eye zoom not lerping properly so it looks like it's 30fps., type: Fix}
+  id: 4685
+  time: '2023-08-25T04:41:04.0000000+00:00'
