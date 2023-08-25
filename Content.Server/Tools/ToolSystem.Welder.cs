@@ -26,6 +26,7 @@ namespace Content.Server.Tools
 
         [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         private readonly HashSet<EntityUid> _activeWelders = new();
 
@@ -125,7 +126,7 @@ namespace Content.Server.Tools
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, true);
 
             if (light != null)
-                light.Enabled = true;
+                _pointLight.SetEnabled(uid, true, light);
 
             _audioSystem.PlayPvs(welder.WelderOnSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 
@@ -172,7 +173,7 @@ namespace Content.Server.Tools
             _appearanceSystem.SetData(uid, ToggleableLightVisuals.Enabled, false);
 
             if (light != null)
-                light.Enabled = false;
+                _pointLight.SetEnabled(uid, false, light);
 
             _audioSystem.PlayPvs(welder.WelderOffSounds, uid, AudioParams.Default.WithVariation(0.125f).WithVolume(-5f));
 

@@ -21,6 +21,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         public override void Initialize()
         {
@@ -90,7 +91,7 @@ namespace Content.Server.Light.EntitySystems
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;
-            light.Enabled = flashlight.LightOn;
+            _pointLight.SetEnabled(uid, flashlight.LightOn, light);
 
             _appearance.SetData(uid, UnpoweredFlashlightVisuals.LightOn, flashlight.LightOn);
 

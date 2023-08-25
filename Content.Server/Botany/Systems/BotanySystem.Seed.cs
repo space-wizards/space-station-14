@@ -28,6 +28,7 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -174,7 +175,7 @@ public sealed partial class BotanySystem : EntitySystem
             if (proto.Bioluminescent)
             {
                 var light = EnsureComp<PointLightComponent>(entity);
-                light.Radius = proto.BioluminescentRadius;
+                _pointLight.SetRadius(entity, proto.BioluminescentRadius, light);
                 light.Color = proto.BioluminescentColor;
                 light.CastShadows = false; // this is expensive, and botanists make lots of plants
                 Dirty(light);

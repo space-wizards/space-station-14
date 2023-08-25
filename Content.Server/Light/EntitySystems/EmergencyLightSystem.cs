@@ -20,6 +20,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly AmbientSoundSystem _ambient = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         public override void Initialize()
         {
@@ -199,10 +200,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOff(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
-            {
-                light.Enabled = false;
-            }
+            if (TryComp<PointLightComponent>(component.Owner, out var light))
+                _pointLight.SetEnabled(component.Owner, false, light);
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
                 _appearance.SetData(appearance.Owner, EmergencyLightVisuals.On, false, appearance);
@@ -212,10 +211,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOn(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
-            {
-                light.Enabled = true;
-            }
+            if (TryComp<PointLightComponent>(component.Owner, out var light))
+                _pointLight.SetEnabled(component.Owner, true, light);
 
             if (TryComp(component.Owner, out AppearanceComponent? appearance))
             {

@@ -17,6 +17,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TransformSystem _transformSystem = default!;
         [Dependency] private readonly SharedItemSystem _item = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         private HashSet<MatchstickComponent> _litMatches = new();
 
@@ -92,10 +93,8 @@ namespace Content.Server.Light.EntitySystems
         {
             component.CurrentState = value;
 
-            if (TryComp<PointLightComponent>(component.Owner, out var pointLightComponent))
-            {
-                pointLightComponent.Enabled = component.CurrentState == SmokableState.Lit;
-            }
+            if (TryComp<PointLightComponent>(component.Owner, out var light))
+                _pointLight.SetEnabled(component.Owner, component.CurrentState == SmokableState.Lit, light);
 
             if (EntityManager.TryGetComponent(component.Owner, out ItemComponent? item))
             {

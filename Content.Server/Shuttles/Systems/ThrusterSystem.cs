@@ -33,6 +33,7 @@ public sealed class ThrusterSystem : EntitySystem
     [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
     [Dependency] private readonly DamageableSystem _damageable = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     // Essentially whenever thruster enables we update the shuttle's available impulses which are used for movement.
     // This is done for each direction available.
@@ -284,10 +285,8 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
-        {
-            pointLightComponent.Enabled = true;
-        }
+        if (TryComp<PointLightComponent>(uid, out var light))
+            _pointLight.SetEnabled(uid, true, light);
 
         _ambient.SetAmbience(uid, true);
         RefreshCenter(uid, shuttleComponent);
@@ -372,10 +371,8 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
-        {
-            pointLightComponent.Enabled = false;
-        }
+        if (TryComp<PointLightComponent>(uid, out var light))
+            _pointLight.SetEnabled(uid, false, light);
 
         _ambient.SetAmbience(uid, false);
 

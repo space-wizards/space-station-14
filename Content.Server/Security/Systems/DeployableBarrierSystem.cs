@@ -11,6 +11,7 @@ namespace Content.Server.Security.Systems
     {
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PullingSystem _pulling = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         public override void Initialize()
         {
@@ -42,8 +43,8 @@ namespace Content.Server.Security.Systems
             if (TryComp<SharedPullableComponent>(uid, out var pullable))
                 _pulling.TryStopPull(pullable);
 
-            if (TryComp(uid, out PointLightComponent? light))
-                light.Enabled = isDeployed;
+            if (TryComp<PointLightComponent>(uid, out var light))
+                _pointLight.SetEnabled(uid, isDeployed, light);
         }
     }
 }

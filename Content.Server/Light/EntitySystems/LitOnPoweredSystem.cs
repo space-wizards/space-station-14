@@ -7,6 +7,8 @@ namespace Content.Server.Light.EntitySystems
 {
     public sealed class LitOnPoweredSystem : EntitySystem
     {
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+
         public override void Initialize()
         {
             base.Initialize();
@@ -16,18 +18,14 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, ref PowerChangedEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
-            {
-                light.Enabled = args.Powered;
-            }
+            if (TryComp<PointLightComponent>(uid, out var light))
+                _pointLight.SetEnabled(uid, args.Powered, light);
         }
 
         private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
-            {
-                light.Enabled = args.Supply;
-            }
+            if (TryComp<PointLightComponent>(uid, out var light))
+                _pointLight.SetEnabled(uid, args.Supply, light);
         }
     }
 }

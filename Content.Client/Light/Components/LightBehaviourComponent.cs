@@ -51,20 +51,16 @@ namespace Content.Client.Light.Components
             _entMan = entMan;
             _parent = parent;
 
-            if (Enabled && _entMan.TryGetComponent(_parent, out PointLightComponent? light))
-            {
-                light.Enabled = true;
-            }
+            if (Enabled && _entMan.TryGetComponent<PointLightComponent>(_parent, out var light))
+                _entMan.EntitySysManager.GetEntitySystem<SharedPointLightSystem>().SetEnabled(_parent, true, light);
 
             OnInitialize();
         }
 
         public void UpdatePlaybackValues(Animation owner)
         {
-            if (_entMan.TryGetComponent(_parent, out PointLightComponent? light))
-            {
-                light.Enabled = true;
-            }
+            if (_entMan.TryGetComponent<PointLightComponent>(_parent, out var light))
+                _entMan.EntitySysManager.GetEntitySystem<SharedPointLightSystem>().SetEnabled(_parent, true, light);
 
             if (MinDuration > 0)
             {

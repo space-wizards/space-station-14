@@ -44,6 +44,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly PowerReceiverSystem _power = default!;
+        [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -397,12 +398,12 @@ namespace Content.Server.Light.EntitySystems
 
             if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
-                pointLight.Enabled = value;
+                _pointLight.SetEnabled(uid, value, pointLight);
 
                 if (color != null)
                     pointLight.Color = color.Value;
                 if (radius != null)
-                    pointLight.Radius = (float) radius;
+                    _pointLight.SetRadius(uid,  (float) radius, pointLight);
                 if (energy != null)
                     pointLight.Energy = (float) energy;
                 if (softness != null)

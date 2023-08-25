@@ -6,6 +6,8 @@ namespace Content.Client.Revenant;
 
 public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -33,7 +35,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
         component.OriginalEnergy = light.Energy;
         component.OriginalEnabled = light.Enabled;
 
-        light.Enabled = component.OriginalEnabled;
+        _pointLight.SetEnabled(uid, component.OriginalEnabled, light);
         Dirty(light);
     }
 
@@ -49,7 +51,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
         }
 
         light.Energy = component.OriginalEnergy.Value;
-        light.Enabled = component.OriginalEnabled;
+        _pointLight.SetEnabled(uid, component.OriginalEnabled, light);
         Dirty(light);
     }
 

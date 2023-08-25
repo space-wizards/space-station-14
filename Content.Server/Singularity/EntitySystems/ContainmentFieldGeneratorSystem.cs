@@ -22,6 +22,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly PhysicsSystem _physics = default!;
     [Dependency] private readonly AppearanceSystem _visualizer = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -325,10 +326,8 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
     {
-        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
-        {
-            pointLightComponent.Enabled = component.Connections.Count > 0;
-        }
+        if (TryComp<PointLightComponent>(component.Owner, out var light))
+            _pointLight.SetEnabled(component.Owner, component.Connections.Count > 0, light);
     }
 
     /// <summary>

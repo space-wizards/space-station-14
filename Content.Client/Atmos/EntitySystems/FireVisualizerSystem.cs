@@ -10,6 +10,8 @@ namespace Content.Client.Atmos.EntitySystems;
 /// </summary>
 public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent>
 {
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -86,7 +88,8 @@ public sealed class FireVisualizerSystem : VisualizerSystem<FireVisualsComponent
         light.Color = component.LightColor;
 
         // light needs a minimum radius to be visible at all, hence the + 1.5f
-        light.Radius = Math.Clamp(1.5f + component.LightRadiusPerStack * fireStacks, 0f, component.MaxLightRadius);
+        _pointLight.SetRadius(component.LightEntity.Value,
+            Math.Clamp(1.5f + component.LightRadiusPerStack * fireStacks, 0f, component.MaxLightRadius), light);
         light.Energy = Math.Clamp(1 + component.LightEnergyPerStack * fireStacks, 0f, component.MaxLightEnergy);
 
         // TODO flickering animation? Or just add a noise mask to the light? But that requires an engine PR.

@@ -13,6 +13,7 @@ namespace Content.Client.Toggleable;
 public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
 {
     [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
 
     public override void Initialize()
     {
@@ -40,7 +41,7 @@ public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLi
         if (TryComp(uid, out PointLightComponent? light))
         {
             DebugTools.Assert(!light.NetSyncEnabled, "light visualizers require point lights without net-sync");
-            light.Enabled = enabled;
+            _pointLight.SetEnabled(uid, enabled, light);
             if (enabled && modulate)
                 light.Color = color;
         }
