@@ -38,6 +38,6 @@ public sealed partial class StealthClothingComponent : Component
 /// When it is disabled, raises <see cref="AttemptStealthEvent"/> before enabling.
 /// Put any checks in a handler for that event to cancel it.
 /// </summary>
-public sealed class ToggleStealthEvent : InstantActionEvent
+public sealed partial class ToggleStealthEvent : InstantActionEvent
 {
 }
