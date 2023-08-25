@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Carps will now smash to get to their destination., type: Tweak}
-  id: 4176
-  time: '2023-07-06T04:41:53.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Stop NPCs indefinitely trying to break a wall if they don't have line
       of sight., type: Fix}
   id: 4177
@@ -3023,3 +3018,9 @@ Entries:
       effects, or damage types for a chemical.', type: Fix}
   id: 4675
   time: '2023-08-25T02:14:54.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix some minor quirks around reflection chances and also fixed reflect
+      vest reflecting every projectile., type: Fix}
+  id: 4676
+  time: '2023-08-25T02:48:27.0000000+00:00'
