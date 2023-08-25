@@ -181,11 +181,11 @@
         damage:
           groups:
             Brute: -4
-            Poison: 0.5
+            Poison: 1
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
-          min: 16
+          min: 11
         damage:
           types:
             Asphyxiation: 2
