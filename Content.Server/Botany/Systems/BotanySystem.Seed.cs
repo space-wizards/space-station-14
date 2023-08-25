@@ -173,7 +173,7 @@ public sealed partial class BotanySystem : EntitySystem
 
             if (proto.Bioluminescent)
             {
-                var light = EnsureComp<PointLightComponent>(entity);
+                var light = EnsureComp<SharedPointLightComponent>(entity);
                 light.Radius = proto.BioluminescentRadius;
                 light.Color = proto.BioluminescentColor;
                 light.CastShadows = false; // this is expensive, and botanists make lots of plants

@@ -270,7 +270,7 @@ public sealed class TegSystem : EntitySystem
         _appearance.SetData(uid, TegVisuals.CirculatorSpeed, speed);
         _appearance.SetData(uid, TegVisuals.CirculatorPower, powered);
 
-        if (TryComp(uid, out PointLightComponent? pointLight))
+        if (TryComp(uid, out SharedPointLightComponent? pointLight))
         {
             _pointLight.SetEnabled(uid, powered, pointLight);
             pointLight.Color = speed == TegCirculatorSpeed.SpeedFast ? circ.LightColorFast : circ.LightColorSlow;

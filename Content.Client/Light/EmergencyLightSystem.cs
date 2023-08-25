@@ -22,9 +22,9 @@ namespace Content.Client.Light
                 {
                     new AnimationTrackComponentProperty
                     {
-                        ComponentType = typeof(PointLightComponent),
+                        ComponentType = typeof(SharedPointLightComponent),
                         InterpolationMode = AnimationInterpolationMode.Linear,
-                        Property = nameof(PointLightComponent.Rotation),
+                        Property = nameof(SharedPointLightComponent.Rotation),
                         KeyFrames =
                         {
                             new AnimationTrackProperty.KeyFrame(Angle.Zero, 0),

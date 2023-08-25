@@ -14,7 +14,6 @@ using Content.Shared.Interaction;
 using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Content.Shared.Popups;
-using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -395,7 +394,7 @@ namespace Content.Server.Light.EntitySystems
             light.CurrentLit = value;
             _ambientSystem.SetAmbience(uid, value);
 
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+            if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLight))
             {
                 pointLight.Enabled = value;
 

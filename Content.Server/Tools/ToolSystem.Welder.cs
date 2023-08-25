@@ -65,7 +65,7 @@ namespace Content.Server.Tools
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
             ItemComponent? item = null,
-            PointLightComponent? light = null,
+            SharedPointLightComponent? light = null,
             AppearanceComponent? appearance = null)
         {
             // Right now, we only need the welder.
@@ -82,7 +82,7 @@ namespace Content.Server.Tools
             WelderComponent? welder = null,
             SolutionContainerManagerComponent? solutionContainer = null,
             ItemComponent? item = null,
-            PointLightComponent? light = null,
+            SharedPointLightComponent? light = null,
             AppearanceComponent? appearance = null,
             TransformComponent? transform = null)
         {
@@ -144,7 +144,7 @@ namespace Content.Server.Tools
         public bool TryTurnWelderOff(EntityUid uid, EntityUid? user,
             WelderComponent? welder = null,
             ItemComponent? item = null,
-            PointLightComponent? light = null,
+            SharedPointLightComponent? light = null,
             AppearanceComponent? appearance = null)
         {
             if (!Resolve(uid, ref welder))

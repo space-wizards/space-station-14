@@ -60,7 +60,7 @@ namespace Content.IntegrationTests.Tests
             await c.WaitAssertion(() =>
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
-                var light = cEntities.GetComponent<PointLightComponent>(dummy);
+                var light = cEntities.GetComponent<SharedPointLightComponent>(dummy);
                 Assert.Multiple(() =>
                 {
                     Assert.That(sprite.ContainerOccluded);
@@ -100,7 +100,7 @@ namespace Content.IntegrationTests.Tests
             await c.WaitAssertion(() =>
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
-                var light = cEntities.GetComponent<PointLightComponent>(dummy);
+                var light = cEntities.GetComponent<SharedPointLightComponent>(dummy);
                 Assert.Multiple(() =>
                 {
                     Assert.That(sprite.ContainerOccluded, Is.False);
@@ -142,7 +142,7 @@ namespace Content.IntegrationTests.Tests
             await c.WaitAssertion(() =>
             {
                 var sprite = cEntities.GetComponent<SpriteComponent>(dummy);
-                var light = cEntities.GetComponent<PointLightComponent>(dummy);
+                var light = cEntities.GetComponent<SharedPointLightComponent>(dummy);
                 Assert.Multiple(() =>
                 {
                     Assert.That(sprite.ContainerOccluded);

@@ -1,5 +1,4 @@
 using Content.Shared.Explosion;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.ResourceManagement;
 using Robust.Shared.GameStates;
@@ -64,7 +63,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         // spawn in a client-side light source at the epicenter
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = EnsureComp<PointLightComponent>(lightEntity);
+        var light = EnsureComp<SharedPointLightComponent>(lightEntity);
         light.Energy = light.Radius = component.Intensity.Count;
         light.Color = type.LightColor;
 

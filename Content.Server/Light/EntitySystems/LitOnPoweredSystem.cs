@@ -1,7 +1,6 @@
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -16,7 +15,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, ref PowerChangedEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            if (EntityManager.TryGetComponent<SharedPointLightComponent>(uid, out var light))
             {
                 light.Enabled = args.Powered;
             }
@@ -24,7 +23,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            if (EntityManager.TryGetComponent<SharedPointLightComponent>(uid, out var light))
             {
                 light.Enabled = args.Supply;
             }

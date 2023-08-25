@@ -233,7 +233,7 @@ namespace Content.Server.Gravity
             var appearance = EntityManager.GetComponentOrNull<AppearanceComponent>(uid);
             _appearance.SetData(uid, GravityGeneratorVisuals.Charge, grav.Charge, appearance);
 
-            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
+            if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLight))
             {
                 pointLight.Enabled = grav.Charge > 0;
                 pointLight.Radius = MathHelper.Lerp(grav.LightRadiusMin, grav.LightRadiusMax, grav.Charge);

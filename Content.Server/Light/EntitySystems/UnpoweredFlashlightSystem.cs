@@ -7,7 +7,6 @@ using Content.Shared.Light;
 using Content.Shared.Light.Component;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
-using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -71,7 +70,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)
         {
-            if (!TryComp<PointLightComponent>(uid, out var light))
+            if (!TryComp<SharedPointLightComponent>(uid, out var light))
                 return;
 
             if (_prototypeManager.TryIndex<ColorPalettePrototype>(component.EmaggedColorsPrototype, out var possibleColors))
@@ -86,7 +85,7 @@ namespace Content.Server.Light.EntitySystems
 
         public void ToggleLight(EntityUid uid, UnpoweredFlashlightComponent flashlight)
         {
-            if (!TryComp<PointLightComponent>(uid, out var light))
+            if (!TryComp<SharedPointLightComponent>(uid, out var light))
                 return;
 
             flashlight.LightOn = !flashlight.LightOn;

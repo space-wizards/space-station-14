@@ -21,7 +21,7 @@ public sealed class DragonSystem : EntitySystem
 
         component.State = state.State;
         TryComp<SpriteComponent>(uid, out var sprite);
-        TryComp<PointLightComponent>(uid, out var light);
+        TryComp<SharedPointLightComponent>(uid, out var light);
 
         if (sprite == null && light == null)
             return;

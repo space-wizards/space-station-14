@@ -107,7 +107,7 @@ public sealed class GuidebookSystem : EntitySystem
         {
             Act = () =>
             {
-                EnsureComp<PointLightComponent>(uid); // RGB demands this.
+                EnsureComp<SharedPointLightComponent>(uid); // RGB demands this.
                 _pointLightSystem.SetEnabled(uid, false);
                 var rgb = EnsureComp<RgbLightControllerComponent>(uid);
 

@@ -12,7 +12,6 @@ using Content.Shared.Maps;
 using Content.Shared.Physics;
 using Content.Shared.Shuttles.Components;
 using Content.Shared.Temperature;
-using Robust.Server.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Collision.Shapes;
@@ -284,7 +283,7 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, true, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+        if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLightComponent))
         {
             pointLightComponent.Enabled = true;
         }
@@ -372,7 +371,7 @@ public sealed class ThrusterSystem : EntitySystem
             _appearance.SetData(uid, ThrusterVisualState.State, false, appearance);
         }
 
-        if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLightComponent))
+        if (EntityManager.TryGetComponent(uid, out SharedPointLightComponent? pointLightComponent))
         {
             pointLightComponent.Enabled = false;
         }

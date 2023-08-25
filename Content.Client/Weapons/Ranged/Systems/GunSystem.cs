@@ -302,7 +302,7 @@ public sealed partial class GunSystem : SharedGunSystem
         };
 
         _animPlayer.Play(ent, anim, "muzzle-flash");
-        var light = EnsureComp<PointLightComponent>(uid);
+        var light = EnsureComp<SharedPointLightComponent>(uid);
         light.NetSyncEnabled = false;
         Lights.SetEnabled(uid, true, light);
         Lights.SetRadius(uid, 2f, light);
@@ -316,8 +316,8 @@ public sealed partial class GunSystem : SharedGunSystem
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(PointLightComponent),
-                    Property = nameof(PointLightComponent.Energy),
+                    ComponentType = typeof(SharedPointLightComponent),
+                    Property = nameof(SharedPointLightComponent.Energy),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {
@@ -327,8 +327,8 @@ public sealed partial class GunSystem : SharedGunSystem
                 },
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(PointLightComponent),
-                    Property = nameof(PointLightComponent.Enabled),
+                    ComponentType = typeof(SharedPointLightComponent),
+                    Property = nameof(SharedPointLightComponent.Enabled),
                     InterpolationMode = AnimationInterpolationMode.Linear,
                     KeyFrames =
                     {

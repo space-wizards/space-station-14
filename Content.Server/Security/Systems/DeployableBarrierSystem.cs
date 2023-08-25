@@ -3,7 +3,6 @@ using Content.Server.Security.Components;
 using Content.Shared.Lock;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Security;
-using Robust.Server.GameObjects;
 
 namespace Content.Server.Security.Systems
 {
@@ -42,7 +41,7 @@ namespace Content.Server.Security.Systems
             if (TryComp<SharedPullableComponent>(uid, out var pullable))
                 _pulling.TryStopPull(pullable);
 
-            if (TryComp(uid, out PointLightComponent? light))
+            if (TryComp(uid, out SharedPointLightComponent? light))
                 light.Enabled = isDeployed;
         }
     }

@@ -112,7 +112,7 @@ namespace Content.Client.Light
 
         }
 
-        private void GetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, PointLightComponent? light = null, SpriteComponent? sprite = null)
+        private void GetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, SharedPointLightComponent? light = null, SpriteComponent? sprite = null)
         {
             if (!Resolve(uid, ref rgb, ref sprite, ref light))
                 return;
@@ -151,7 +151,7 @@ namespace Content.Client.Light
             }
         }
 
-        private void ResetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, PointLightComponent? light = null, SpriteComponent? sprite = null)
+        private void ResetOriginalColors(EntityUid uid, RgbLightControllerComponent? rgb = null, SharedPointLightComponent? light = null, SpriteComponent? sprite = null)
         {
             if (!Resolve(uid, ref rgb, ref sprite, ref light, false))
                 return;
@@ -169,7 +169,7 @@ namespace Content.Client.Light
 
         public override void FrameUpdate(float frameTime)
         {
-            foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<RgbLightControllerComponent, PointLightComponent, SpriteComponent>())
+            foreach (var (rgb, light, sprite) in EntityManager.EntityQuery<RgbLightControllerComponent, SharedPointLightComponent, SpriteComponent>())
             {
                 var color = GetCurrentRgbColor(_gameTiming.RealTime, rgb.CreationTick.Value * _gameTiming.TickPeriod, rgb);
 

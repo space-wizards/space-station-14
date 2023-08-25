@@ -28,9 +28,9 @@ public sealed partial class TriggerSystem
             },
             new AnimationTrackComponentProperty()
             {
-                ComponentType = typeof(PointLightComponent),
+                ComponentType = typeof(SharedPointLightComponent),
                 InterpolationMode = AnimationInterpolationMode.Nearest,
-                Property = nameof(PointLightComponent.Radius),
+                Property = nameof(SharedPointLightComponent.Radius),
                 KeyFrames =
                 {
                     new AnimationTrackProperty.KeyFrame(0.1f, 0),

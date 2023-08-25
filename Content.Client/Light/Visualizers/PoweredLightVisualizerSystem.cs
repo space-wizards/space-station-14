@@ -87,9 +87,9 @@ public sealed class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLight
             {
                 new AnimationTrackComponentProperty
                 {
-                    ComponentType = typeof(PointLightComponent),
+                    ComponentType = typeof(SharedPointLightComponent),
                     InterpolationMode = AnimationInterpolationMode.Nearest,
-                    Property = nameof(PointLightComponent.Enabled),
+                    Property = nameof(SharedPointLightComponent.Enabled),
                     KeyFrames =
                     {
                         new AnimationTrackProperty.KeyFrame(false, 0),
