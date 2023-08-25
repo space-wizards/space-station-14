@@ -289,14 +289,14 @@
     duration: 60
   - type: VentCrittersRule
     entries:
-    - id: MobGuardSpiderAngry
-      prob: 0.05
     - id: MobHunterSpiderAngry
-      prob: 0.05
+      prob: 0.025
+    - id: MobGuardSpiderAngry
+      prob: 0.020
     - id: MobTarantulaSpiderAngry
-      prob: 0.05
+      prob: 0.0025
     - id: MobViperSpiderAngry
-      prob: 0.05
+      prob: 0.0025
 
 - type: entity
   id: SpiderClownSpawn
