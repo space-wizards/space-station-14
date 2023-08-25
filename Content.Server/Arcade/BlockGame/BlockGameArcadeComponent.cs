@@ -3,7 +3,7 @@ using Robust.Server.Player;
 namespace Content.Server.Arcade.BlockGame;
 
 [RegisterComponent]
-public sealed class BlockGameArcadeComponent : Component
+public sealed partial class BlockGameArcadeComponent : Component
 {
     /// <summary>
     /// The currently active session of NT-BG.

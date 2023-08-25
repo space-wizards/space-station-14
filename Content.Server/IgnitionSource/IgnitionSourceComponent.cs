@@ -5,7 +5,7 @@
 /// </summary>
 [RegisterComponent]
 [Access(typeof(IgnitionSourceSystem))]
-public sealed class IgnitionSourceComponent : Component
+public sealed partial class IgnitionSourceComponent : Component
 {
     [DataField("ignited")]
     public bool Ignited = false;

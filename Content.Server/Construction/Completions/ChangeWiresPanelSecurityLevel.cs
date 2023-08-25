@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Completions;
 
 [UsedImplicitly]
 [DataDefinition]
-public sealed class ChangeWiresPanelSecurityLevel : IGraphAction
+public sealed partial class ChangeWiresPanelSecurityLevel : IGraphAction
 {
     [DataField("level")]
     [ValidatePrototypeId<WiresPanelSecurityLevelPrototype>]

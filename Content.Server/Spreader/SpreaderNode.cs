@@ -9,7 +9,7 @@ namespace Content.Server.Spreader;
 /// Handles the node for <see cref="EdgeSpreaderComponent"/>.
 /// Functions as a generic tile-based entity spreader for systems such as puddles or smoke.
 /// </summary>
-public sealed class SpreaderNode : Node
+public sealed partial class SpreaderNode : Node
 {
     // [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
 

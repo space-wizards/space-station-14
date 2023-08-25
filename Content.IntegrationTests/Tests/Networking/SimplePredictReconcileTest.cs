@@ -31,9 +31,9 @@ namespace Content.IntegrationTests.Tests.Networking
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var sMapManager = server.ResolveDependency<IMapManager>();
             var sEntityManager = server.ResolveDependency<IEntityManager>();
@@ -60,8 +60,8 @@ namespace Content.IntegrationTests.Tests.Networking
             });
 
             // Run some ticks and ensure that the buffer has filled up.
-            await PoolManager.SyncTicks(pairTracker.Pair);
-            await PoolManager.RunTicksSync(pairTracker.Pair, 25);
+            await pair.SyncTicks();
+            await pair.RunTicksSync(25);
             Assert.That(cGameTiming.TickTimingAdjustment, Is.EqualTo(0));
             Assert.That(sGameTiming.TickTimingAdjustment, Is.EqualTo(0));
 
@@ -384,7 +384,7 @@ namespace Content.IntegrationTests.Tests.Networking
             }
 
             cfg.SetCVar(CVars.NetLogging, log);
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         public sealed class PredictionTestEntitySystem : EntitySystem

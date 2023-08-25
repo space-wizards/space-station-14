@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Content.IntegrationTests.Pair;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
 using Content.Server.Players;
@@ -23,15 +24,14 @@ public sealed partial class MindTests
     /// the player's mind's current entity, likely because some previous test directly changed the players attached
     /// entity.
     /// </remarks>
-    private static async Task<PairTracker> SetupPair(bool dirty = false)
+    private static async Task<Pair.TestPair> SetupPair(bool dirty = false)
     {
-        var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+        var pair = await PoolManager.GetServerClient(new PoolSettings
         {
             DummyTicker = false,
             Connected = true,
             Dirty = dirty
         });
-        var pair = pairTracker.Pair;
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -48,7 +48,7 @@ public sealed partial class MindTests
             mindSys.TransferTo(mind, entity);
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
@@ -58,10 +58,10 @@ public sealed partial class MindTests
             Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
             Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
         });
-        return pairTracker;
+        return pair;
     }
 
-    private static async Task<EntityUid> BecomeGhost(Pair pair, bool visit = false)
+    private static async Task<EntityUid> BecomeGhost(TestPair pair, bool visit = false)
     {
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -89,7 +89,7 @@ public sealed partial class MindTests
 
         });
 
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
         Assert.Multiple(() =>
         {
             Assert.That(entMan.HasComponent<GhostComponent>(ghostUid));
@@ -103,7 +103,7 @@ public sealed partial class MindTests
         return ghostUid;
     }
 
-    private static async Task<EntityUid> VisitGhost(Pair pair, bool _ = false)
+    private static async Task<EntityUid> VisitGhost(Pair.TestPair pair, bool _ = false)
     {
         return await BecomeGhost(pair, visit: true);
     }
@@ -111,7 +111,7 @@ public sealed partial class MindTests
     /// <summary>
     /// Get the player's current mind and check that the entities exists.
     /// </summary>
-    private static Mind GetMind(Pair pair)
+    private static Mind GetMind(Pair.TestPair pair)
     {
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
@@ -130,7 +130,7 @@ public sealed partial class MindTests
         return mind;
     }
 
-    private static async Task Disconnect(Pair pair)
+    private static async Task Disconnect(Pair.TestPair pair)
     {
         var netManager = pair.Client.ResolveDependency<IClientNetManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -141,7 +141,7 @@ public sealed partial class MindTests
         {
             netManager.ClientDisconnect("Disconnect command used.");
         });
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
@@ -151,7 +151,7 @@ public sealed partial class MindTests
         });
     }
 
-    private static async Task Connect(Pair pair, string username)
+    private static async Task Connect(Pair.TestPair pair, string username)
     {
         var netManager = pair.Client.ResolveDependency<IClientNetManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
@@ -160,13 +160,13 @@ public sealed partial class MindTests
         await Task.WhenAll(pair.Client.WaitIdleAsync(), pair.Client.WaitIdleAsync());
         pair.Client.SetConnectTarget(pair.Server);
         await pair.Client.WaitPost(() => netManager.ClientConnect(null!, 0, username));
-        await PoolManager.RunTicksSync(pair, 5);
+        await pair.RunTicksSync(5);
 
         var player = playerMan.ServerSessions.Single();
         Assert.That(player.Status, Is.EqualTo(SessionStatus.InGame));
     }
 
-    private static async Task<IPlayerSession> DisconnectReconnect(Pair pair)
+    private static async Task<IPlayerSession> DisconnectReconnect(Pair.TestPair pair)
     {
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
         var player = playerMan.ServerSessions.Single();

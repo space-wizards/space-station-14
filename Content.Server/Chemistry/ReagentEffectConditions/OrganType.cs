@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.ReagentEffectConditions
     /// <summary>
     ///     Requires that the metabolizing organ is or is not tagged with a certain MetabolizerType
     /// </summary>
-    public sealed class OrganType : ReagentEffectCondition
+    public sealed partial class OrganType : ReagentEffectCondition
     {
         [DataField("type", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<MetabolizerTypePrototype>))]
         public string Type = default!;
