@@ -229,8 +229,11 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         RaiseLocalEvent(uid, ref afterev);
     }
 
-    public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent component)
+    public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
     {
+        if (!Resolve(container, ref component))
+            return false;
+
         if (component.Open)
         {
             _transform.SetWorldPosition(toInsert, _transform.GetWorldPosition(container));
@@ -243,9 +246,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         return component.Contents.Insert(toInsert, EntityManager);
     }
 
-    public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent component, TransformComponent? xform = null)
+    public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
     {
-        if (!Resolve(container, ref xform, false))
+        if (!Resolve(container, ref component, ref xform, false))
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);

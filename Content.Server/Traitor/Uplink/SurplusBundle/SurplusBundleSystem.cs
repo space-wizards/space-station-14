@@ -50,12 +50,6 @@ public sealed class SurplusBundleSystem : EntitySystem
         var content = GetRandomContent(component.TotalPrice);
         TryComp<EntityStorageComponent>(uid, out var entStorage);
 
-        if (entStorage == null)
-        {
-            Log.Error($"Unable to fill surplus bundle for {ToPrettyString(uid)}");
-            return;
-        }
-
         foreach (var item in content)
         {
             var ent = EntityManager.SpawnEntity(item.ProductEntity, cords);

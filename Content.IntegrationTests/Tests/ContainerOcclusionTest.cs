@@ -1,5 +1,4 @@
 using System.Numerics;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
@@ -51,10 +50,9 @@ namespace Content.IntegrationTests.Tests
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionA", pos);
-                var containerStorage = ent.GetComponent<EntityStorageComponent>(container);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                entStorage.Insert(dummy, container, containerStorage);
+                entStorage.Insert(dummy, container);
             });
 
             await pair.RunTicksSync(5);
@@ -92,10 +90,9 @@ namespace Content.IntegrationTests.Tests
                 var pos = new MapCoordinates(Vector2.Zero, mapId);
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var container = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var containerStorage = ent.GetComponent<EntityStorageComponent>(container);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                entStorage.Insert(dummy, container, containerStorage);
+                entStorage.Insert(dummy, container);
             });
 
             await pair.RunTicksSync(5);
@@ -134,12 +131,10 @@ namespace Content.IntegrationTests.Tests
                 var entStorage = ent.EntitySysManager.GetEntitySystem<EntityStorageSystem>();
                 var containerA = ent.SpawnEntity("ContainerOcclusionA", pos);
                 var containerB = ent.SpawnEntity("ContainerOcclusionB", pos);
-                var containerAStorage = ent.GetComponent<EntityStorageComponent>(containerA);
-                var containerBStorage = ent.GetComponent<EntityStorageComponent>(containerB);
                 dummy = ent.SpawnEntity("ContainerOcclusionDummy", pos);
 
-                entStorage.Insert(containerB, containerA, containerAStorage);
-                entStorage.Insert(dummy, containerB, containerBStorage);
+                entStorage.Insert(containerB, containerA);
+                entStorage.Insert(dummy, containerB);
             });
 
             await pair.RunTicksSync(5);

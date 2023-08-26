@@ -155,21 +155,17 @@ public sealed class CrematoriumSystem : EntitySystem
             ("victim", Identity.Entity(victim, EntityManager))),
             victim, Filter.PvsExcept(victim), true, PopupType.LargeCaution);
 
-        TryComp<EntityStorageComponent>(uid, out var entStorage);
-
         if (_entityStorage.CanInsert(uid))
         {
             _standing.Down(victim, false);
-
-            if (entStorage != null)
-                _entityStorage.Insert(victim, uid, entStorage);
+            _entityStorage.Insert(victim, uid);
         }
         else
         {
             EntityManager.DeleteEntity(victim);
         }
 
-        if (entStorage != null)
+        if (TryComp<EntityStorageComponent>(uid, out var entStorage))
             _entityStorage.CloseStorage(uid, entStorage);
 
         Cremate(uid, component);
