@@ -68,3 +68,5 @@
     contents:
     - id: CigarGold
       amount: 8
+  - type: StaticPrice
+    price: 30

@@ -307,8 +307,8 @@
                 SheetGlass:
                   min: 5
                   max: 5
-      - type: StaticPrice
-        price: 300
+    - type: StaticPrice
+      price: 300
 
 - type: entity
   name: energy shield

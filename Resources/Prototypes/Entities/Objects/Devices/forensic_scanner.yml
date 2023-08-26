@@ -26,6 +26,8 @@
   - type: GuideHelp
     guides:
     - DNA
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: forensic scanner report

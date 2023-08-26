@@ -20,6 +20,8 @@
     equippedPrefix: unlit
   - type: Item
     size: 1
+  - type: StaticPrice
+    price: 7.5
 
 - type: entity
   id: CigarSpent
@@ -34,6 +36,8 @@
     solutions:
       smokable:
         maxVol: 20
+  - type: StaticPrice
+    price: 0
 
 - type: entity
   id: CigarGold
@@ -50,6 +54,8 @@
     equippedPrefix: unlit
   - type: Item
     size: 1
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: CigarGoldSpent
@@ -64,3 +70,5 @@
     solutions:
       smokable:
         maxVol: 20
+  - type: StaticPrice
+    price: 0

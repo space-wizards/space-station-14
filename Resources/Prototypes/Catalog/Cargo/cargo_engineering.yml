@@ -44,7 +44,7 @@
     sprite: Objects/Tools/Toolboxes/toolbox_yellow.rsi
     state: icon
   product: CrateEngineeringElectricalSupplies
-  cost: 4500
+  cost: 1500
   category: Engineering
   group: market
 
@@ -84,6 +84,6 @@
     sprite: Clothing/Head/Helmets/eva.rsi
     state: icon
   product: CrateEvaKit
-  cost: 5000
+  cost: 4000
   category: Engineering
   group: market

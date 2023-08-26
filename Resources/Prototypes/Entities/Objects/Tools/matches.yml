@@ -40,6 +40,8 @@
     unlitIcon: match_unlit
     litIcon: match_lit
     burntIcon: match_burnt
+  - type: StaticPrice
+    price: 2
 
 - type: entity
   parent: Matchstick

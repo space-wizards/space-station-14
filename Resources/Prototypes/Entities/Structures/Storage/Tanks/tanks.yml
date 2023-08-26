@@ -49,8 +49,6 @@
   id: WeldingFuelTankHighCapacity
   suffix: Full
   components:
-  - type: StaticPrice
-    price: 2500
   - type: Sprite
     sprite: Structures/Storage/tanks.rsi
     layers:
@@ -71,6 +69,8 @@
   - type: Explosive
     explosionType: Default
     totalIntensity: 140
+  - type: StaticPrice
+    price: 1500
 
 # Water
 
@@ -157,3 +157,5 @@
     solution: tank
   - type: ReagentTank
     transferAmount: 100
+  - type: StaticPrice
+    price: 1500

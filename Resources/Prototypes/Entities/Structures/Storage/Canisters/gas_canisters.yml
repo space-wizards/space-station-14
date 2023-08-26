@@ -141,6 +141,8 @@
         - !type:DoActsBehavior
           acts: [ "Destruction" ]
         - !type:DumpCanisterBehavior
+    - type: StaticPrice
+      price: 500
 
 # Filled canisters, contain 1871.71051 moles each
 

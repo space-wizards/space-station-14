@@ -17,6 +17,8 @@
   - type: Appearance
   - type: BurnStateVisuals
     unlitIcon: unlit-icon
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   id: SmokingPipeFilledTobacco

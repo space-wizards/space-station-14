@@ -19,6 +19,8 @@
     state: cigpapers
   - type: Item
     sprite: Objects/Consumable/Smokeables/Cigarettes/paper.rsi
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: PackPaperRolling
@@ -38,6 +40,8 @@
         amount: 2
       - id: CigaretteFilter
         amount: 2
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   id: PaperRolling
@@ -60,6 +64,8 @@
     - RollingPaper
     - Trash
   - type: SpaceGarbage
+  - type: StackPrice
+    price: 1
 
 - type: entity
   id: PaperRolling1
@@ -91,6 +97,8 @@
     tags:
     - CigFilter
     - Trash
+  - type: StockPrice
+    price: 1
 
 - type: entity
   id: CigaretteFilter1

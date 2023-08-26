@@ -231,8 +231,8 @@
               unshaded:
                 True: { visible: true }
                 False: { visible: false }
-      - type: StaticPrice
-        price: 40
+    - type: StaticPrice
+      price: 40
 
 - type: entity
   name: grappling gun

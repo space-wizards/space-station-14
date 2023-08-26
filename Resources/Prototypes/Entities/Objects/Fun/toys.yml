@@ -32,7 +32,7 @@
     materialComposition:
       Cloth: 100
   - type: StaticPrice
-    price: 5
+    price: 30
 
 - type: entity
   parent: BasePlushie
@@ -535,6 +535,8 @@
   - type: Sprite
   - type: Item
     size: 24
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: FoamWeaponBase
@@ -615,6 +617,8 @@
   - type: ContainerContainer
     containers:
       revolver-ammo: !type:Container
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: RevolverCapGun
@@ -653,6 +657,8 @@
     sprite: Objects/Fun/toys.rsi
     heldPrefix: foamblade
   - type: ItemCooldown
+  - type: StaticPrice
+    price: 30
 
 # MISC
 
@@ -674,6 +680,8 @@
     heldPrefix: bask
   - type: TileFrictionModifier
     modifier: 0.5
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -688,6 +696,8 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     heldPrefix: footb
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -707,6 +717,8 @@
     heldPrefix: beachb
   - type: TileFrictionModifier
     modifier: 0.05
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -726,6 +738,8 @@
   - type: Tag
     tags:
     - Balloon
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -745,6 +759,8 @@
   - type: Tag
     tags:
     - Balloon
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -765,6 +781,8 @@
     size: 12
     sprite: Objects/Fun/toys.rsi
     heldPrefix: singularitytoy
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: BaseItem
@@ -785,6 +803,8 @@
     heldPrefix: orb
   - type: TileFrictionModifier
     modifier: 0.001
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   id: ToySword
@@ -833,6 +853,8 @@
       damage:
         types:
           Blunt: 0
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: BasePlushie
@@ -850,6 +872,8 @@
     available:
       - enum.DamageStateVisualLayers.Base:
           base: Sixteen
+  - type: StaticPrice
+    price: 50.5 #sos
 
 - type: entity
   parent: BaseItem
@@ -871,6 +895,8 @@
   - type: Item
     size: 15
     sprite: Objects/Weapons/Melee/cutlass.rsi
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: BaseItem
@@ -892,6 +918,8 @@
   - type: Tag
     tags:
     - ClownRecorder
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   parent: BaseItem
@@ -930,6 +958,8 @@
       damage:
         types:
           Blunt: 0
+    - type: StaticPrice
+      price: 30
 
 - type: entity
   parent: BaseItem
@@ -988,6 +1018,8 @@
         density: 30
         mask:
         - ItemMask
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: banana
@@ -1008,6 +1040,8 @@
         reagents:
         - ReagentId: Nothing
           Quantity: 100
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   parent: DrinkBase
@@ -1034,3 +1068,5 @@
         reagents:
         - ReagentId: SpaceGlue
           Quantity: 100
+  - type: StaticPrice
+    price: 50

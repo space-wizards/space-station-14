@@ -14,7 +14,7 @@
     sprite: Objects/Power/light_bulb.rsi
     state: normal
   product: CrateServiceReplacementLights
-  cost: 600
+  cost: 300
   category: Service
   group: market
 
@@ -44,7 +44,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
   product: CrateServiceSmokeables
-  cost: 1500
+  cost: 1000
   category: Service
   group: market
 
@@ -54,7 +54,7 @@
     sprite: Objects/Consumable/Smokeables/Cigarettes/Cartons/green.rsi
     state: closed
   product: CrateServiceCustomSmokable
-  cost: 1000
+  cost: 500
   category: Service
   group: market
 
@@ -64,7 +64,7 @@
     sprite: Objects/Misc/bureaucracy.rsi
     state: pen
   product: CrateServiceBureaucracy
-  cost: 1000
+  cost: 300
   category: Service
   group: market
 
@@ -84,7 +84,7 @@
     sprite: Objects/Misc/books.rsi
     state: book0
   product: CrateServiceBooks
-  cost: 1000
+  cost: 500
   category: Service
   group: market
 
@@ -94,7 +94,7 @@
     sprite: Objects/Misc/books.rsi
     state: book_engineering2
   product: CrateServiceGuidebooks
-  cost: 1300
+  cost: 500
   category: Service
   group: market
 
@@ -116,7 +116,7 @@
   product: CrateJanitorBiosuit
   cost: 800
   category: Service
-  group: market  
+  group: market
 
 - type: cargoProduct
   id: ServiceFoodCartHot
@@ -126,7 +126,7 @@
   product: FoodCartHot
   cost: 2000
   category: Service
-  group: market  
+  group: market
 
 - type: cargoProduct
   id: ServiceFoodCartCold

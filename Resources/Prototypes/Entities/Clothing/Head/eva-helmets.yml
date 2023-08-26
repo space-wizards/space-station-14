@@ -13,6 +13,8 @@
     tags:
     - HelmetEVA
     - WhitelistChameleon
+  - type: StaticPrice
+    price: 500
 
 #Large EVA Helmet
 - type: entity
@@ -25,6 +27,9 @@
     sprite: Clothing/Head/Helmets/eva_large.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/eva_large.rsi
+  - type: StaticPrice
+    price: 50
+
 
 #Syndicate EVA Helmet
 - type: entity
