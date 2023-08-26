@@ -230,8 +230,9 @@
     
 - type: entity
   abstract: true
-  id: ClothingHeadHatWinterHoodBase
+  id: ClothingHeadHatHoodWinterBase
   name: base winter coat hood
+  description: A hood, made to keep your head warm.
   noSpawn: true
   components:
   - type: Sprite
