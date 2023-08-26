@@ -60,7 +60,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
         if (!TryComp<EntityStorageComponent>(uid, out var box) || box.Open || !box.Contents.Contains(args.User))
             return;
 
-        _storage.OpenStorage(uid);
+        _storage.OpenStorage(uid, box);
     }
 
     private void BeforeStorageOpen(EntityUid uid, CardboardBoxComponent component, ref StorageBeforeOpenEvent args)

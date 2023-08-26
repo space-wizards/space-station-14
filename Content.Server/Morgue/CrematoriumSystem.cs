@@ -157,7 +157,6 @@ public sealed class CrematoriumSystem : EntitySystem
 
         if (_entityStorage.CanInsert(uid))
         {
-            _entityStorage.CloseStorage(uid);
             _standing.Down(victim, false);
             _entityStorage.Insert(victim, uid);
         }
@@ -165,7 +164,10 @@ public sealed class CrematoriumSystem : EntitySystem
         {
             EntityManager.DeleteEntity(victim);
         }
-        _entityStorage.CloseStorage(uid);
+
+        if (TryComp<EntityStorageComponent>(uid, out var entStorage))
+            _entityStorage.CloseStorage(uid, entStorage);
+
         Cremate(uid, component);
     }
 
