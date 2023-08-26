@@ -6,7 +6,7 @@ namespace Content.Server.Discord;
 public struct WebhookUser
 {
     [JsonPropertyName("id")]
-    public ulong Id { get; set; }
+    public string Id { get; set; }
 
     [JsonPropertyName("username")]
     public string Username { get; set; }

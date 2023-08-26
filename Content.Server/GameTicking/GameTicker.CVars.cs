@@ -31,7 +31,7 @@ namespace Content.Server.GameTicking
         public string? ServerName { get; private set; }
 
         [ViewVariables]
-        private long? DiscordRoundEndRole { get; set; }
+        private string? DiscordRoundEndRole { get; set; }
 
         private WebhookIdentifier? _webhookIdentifier;
 
@@ -65,7 +65,7 @@ namespace Content.Server.GameTicking
                 // TODO why tf is the server name on admin logs
                 ServerName = value;
             }, true);
-            _configurationManager.OnValueChanged(CCVars.DiscordRoundRestartWebhook, value =>
+            _configurationManager.OnValueChanged(CCVars.DiscordRoundUpdateWebhook, value =>
             {
                 if (!string.IsNullOrWhiteSpace(value))
                 {
@@ -76,7 +76,7 @@ namespace Content.Server.GameTicking
             {
                 DiscordRoundEndRole = value;
 
-                if (value == 0)
+                if (value == string.Empty)
                 {
                     DiscordRoundEndRole = null;
                 }

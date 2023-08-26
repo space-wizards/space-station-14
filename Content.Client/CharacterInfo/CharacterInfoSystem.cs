@@ -1,11 +1,8 @@
 ﻿using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
-using Content.Shared.Zombies;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
-using Robust.Client.UserInterface.Controls;
-using Robust.Shared.Containers;
 
 namespace Content.Client.CharacterInfo;
 
@@ -23,26 +20,6 @@ public sealed class CharacterInfoSystem : EntitySystem
         SubscribeLocalEvent<PlayerAttachSysMessage>(OnPlayerAttached);
 
         SubscribeNetworkEvent<CharacterInfoEvent>(OnCharacterInfoEvent);
-
-        //debug tests
-        SubscribeLocalEvent<ZombieComponent, GetCharacterInfoControlsEvent>(ZombieTest);
-    }
-
-    private void ZombieTest(EntityUid uid, ZombieComponent component, ref GetCharacterInfoControlsEvent args)
-    {
-        var c = new BoxContainer()
-        {
-            Margin = new Thickness(5),
-            Children =
-            {
-                new Button()
-                {
-                    Text ="BITCH"
-                }
-            }
-        };
-
-        args.Controls.Add(c);
     }
 
     public void RequestCharacterInfo()

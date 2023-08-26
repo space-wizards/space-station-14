@@ -37,11 +37,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 
     public bool Interactive;
 
-    public SpriteComponent? Sprite
-    {
-        get => View.Sprite;
-        set => View.Sprite = value;
-    }
+    public SpriteComponent? Sprite => View.Sprite;
 
     public Vector2 Scale
     {
@@ -64,7 +60,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         Interactive = interactive;
 
         var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
-        Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
+        View.SetEntity(ent);
 
         if (caption)
             Caption.Text = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;
@@ -146,7 +142,7 @@ public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
         var ent = _entityManager.SpawnEntity(proto, MapCoordinates.Nullspace);
 
         _tagSystem.AddTag(ent, GuidebookSystem.GuideEmbedTag);
-        Sprite = _entityManager.GetComponent<SpriteComponent>(ent);
+        View.SetEntity(ent);
 
         if (!args.TryGetValue("Caption", out var caption))
             caption = _entityManager.GetComponent<MetaDataComponent>(ent).EntityName;

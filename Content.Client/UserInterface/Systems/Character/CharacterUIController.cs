@@ -107,7 +107,6 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
 
         _window.SpriteView.SetEntity(entity);
         _window.NameLabel.Text = entityName;
-
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();
 
