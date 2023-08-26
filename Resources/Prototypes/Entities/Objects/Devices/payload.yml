@@ -18,6 +18,8 @@
       behaviors:
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   name: explosive payload
@@ -83,8 +85,6 @@
     containers:
       BeakerSlotA: !type:ContainerSlot
       BeakerSlotB: !type:ContainerSlot
-  - type: StaticPrice
-    price: 60
 
 - type: entity
   name: flash payload

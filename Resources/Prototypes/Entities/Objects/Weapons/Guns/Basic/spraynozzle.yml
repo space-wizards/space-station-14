@@ -24,3 +24,5 @@
     providerWhitelist:
       tags:
       - NozzleBackTank
+  - type: StaticPrice
+    price: 75

@@ -24,6 +24,8 @@
   - type: Tag
     tags:
       - HolosignProjector
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   parent: Holoprojector

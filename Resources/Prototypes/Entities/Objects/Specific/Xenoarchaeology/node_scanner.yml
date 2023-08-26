@@ -15,3 +15,5 @@
     - type: GuideHelp
       guides:
       - ArtifactReports
+    - type: StaticPrice
+      price: 5
