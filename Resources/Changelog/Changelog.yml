@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Planets have significantly more rocks than before., type: Tweak}
-  id: 4189
-  time: '2023-07-08T03:30:29.0000000+00:00'
 - author: Equivocateur
   changes:
   - {message: Batons can now contain solutions., type: Tweak}
@@ -3028,3 +3023,8 @@ Entries:
   - {message: Ore bags can now pick up artifact fragments., type: Tweak}
   id: 4688
   time: '2023-08-26T11:33:55.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Made bananas peelable., type: Tweak}
+  id: 4689
+  time: '2023-08-26T16:31:14.0000000+00:00'
