@@ -1,6 +1,6 @@
 ﻿using System.Linq;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind;
+using Content.Shared.Ghost;
 using Robust.Server.Player;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;

@@ -9,6 +9,10 @@ namespace Content.Server.Power.NodeGroups
 
         void RemoveConsumer(PowerConsumerComponent consumer);
 
+        void AddSupplier(PowerSupplierComponent supplier);
+
+        void RemoveSupplier(PowerSupplierComponent supplier);
+
         PowerState.Network NetworkNode { get; }
     }
 }

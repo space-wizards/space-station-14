@@ -6,16 +6,16 @@ namespace Content.Server.Discord;
 public struct WebhookData
 {
     [JsonPropertyName("id")]
-    public ulong Id { get; set; }
+    public string Id { get; set; }
 
     [JsonPropertyName("type")]
     public int Type { get; set; }
 
     [JsonPropertyName("guild_id")]
-    public ulong? GuildId { get; set; }
+    public string? GuildId { get; set; }
 
     [JsonPropertyName("channel_id")]
-    public ulong? ChannelId { get; set; }
+    public string? ChannelId { get; set; }
 
     [JsonPropertyName("user")]
     public WebhookUser? User { get; set; }
@@ -30,7 +30,7 @@ public struct WebhookData
     public string Token { get; set; }
 
     [JsonPropertyName("application_id")]
-    public ulong? ApplicationId { get; set; }
+    public string? ApplicationId { get; set; }
 
     [JsonPropertyName("url")]
     public string? Url { get; set; }
