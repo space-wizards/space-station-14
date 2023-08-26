@@ -7,7 +7,7 @@ namespace Content.Shared.Decals
     public sealed class DecalPrototype : IPrototype
     {
         [IdDataField] public string ID { get; } = null!;
-        [DataField("sprite")] public SpriteSpecifier Sprite { get; } = SpriteSpecifier.Invalid;
+        [DataField("sprite")] public SpriteSpecifier Sprite { get; private set; } = SpriteSpecifier.Invalid;
         [DataField("tags")] public List<string> Tags = new();
         [DataField("showMenu")] public bool ShowMenu = true;
 

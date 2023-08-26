@@ -13,12 +13,12 @@ public sealed class EuiManagerTest
         // Even though we are using the server EUI here, we actually want to see if the client EUIManager crashes
         for (var i = 0; i < 2; i++)
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 Connected = true,
                 Dirty = true
             });
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var eui = server.ResolveDependency<EuiManager>();
@@ -29,7 +29,7 @@ public sealed class EuiManagerTest
                 var ui = new AdminAnnounceEui();
                 eui.OpenEui(ui, clientSession);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

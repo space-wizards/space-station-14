@@ -19,7 +19,6 @@ public sealed class DamageOverlayUiController : UIController
     [Dependency] private readonly IOverlayManager _overlayManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
 
-    [UISystemDependency] private readonly ClientAlertsSystem _alertsSystem = default!;
     [UISystemDependency] private readonly MobThresholdSystem _mobThresholdSystem = default!;
     private Overlays.DamageOverlay _overlay = default!;
 

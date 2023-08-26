@@ -7,7 +7,7 @@ namespace Content.Shared.Gravity;
 /// Indicates this entity is shaking due to gravity changes.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class GravityShakeComponent : Component
+public sealed partial class GravityShakeComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("shakeTimes")]
     public int ShakeTimes;

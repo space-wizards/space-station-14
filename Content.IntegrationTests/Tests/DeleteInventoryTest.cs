@@ -14,9 +14,9 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task Test()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var testMap = await pair.CreateTestMap();
             var entMgr = server.ResolveDependency<IEntityManager>();
             var sysManager = server.ResolveDependency<IEntitySystemManager>();
             var coordinates = testMap.GridCoords;
@@ -44,7 +44,7 @@ namespace Content.IntegrationTests.Tests
                 // Assert that child item was also deleted.
                 Assert.That(item.Deleted, Is.True);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

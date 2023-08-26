@@ -11,15 +11,15 @@ public sealed class StackTest
     [Test]
     public async Task StackCorrectItemSize()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var protoManager = server.ResolveDependency<IPrototypeManager>();
         var compFact = server.ResolveDependency<IComponentFactory>();
 
         Assert.Multiple(() =>
         {
-            foreach (var entity in PoolManager.GetEntityPrototypes<StackComponent>(server))
+            foreach (var entity in PoolManager.GetPrototypesWithComponent<StackComponent>(server))
             {
                 if (!entity.TryGetComponent<StackComponent>(out var stackComponent, compFact) ||
                     !entity.TryGetComponent<ItemComponent>(out var itemComponent, compFact))
@@ -34,6 +34,6 @@ public sealed class StackTest
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Client.Chemistry.Components
 {
     [RegisterComponent]
-    public sealed class HyposprayComponent : SharedHyposprayComponent
+    public sealed partial class HyposprayComponent : SharedHyposprayComponent
     {
         [ViewVariables]
         public FixedPoint2 CurrentVolume;
