@@ -1,3 +1,5 @@
+using System.Numerics;
+
 namespace Content.Client.Eye;
 
 /// <summary>
@@ -16,4 +18,10 @@ public sealed partial class LerpingEyeComponent : Component
 
     [ViewVariables]
     public Angle TargetRotation;
+
+    [ViewVariables]
+    public Vector2 LastZoom;
+
+    [ViewVariables]
+    public Vector2 TargetZoom;
 }

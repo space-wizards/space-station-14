@@ -19,7 +19,6 @@ namespace Content.Server.Mobs;
 /// </summary>
 public sealed class CritMobActionsSystem : EntitySystem
 {
-    [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly DeathgaspSystem _deathgasp = default!;
     [Dependency] private readonly IServerConsoleHost _host = default!;

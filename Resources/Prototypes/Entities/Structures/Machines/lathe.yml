@@ -106,6 +106,10 @@
       - LightTube
       - LightBulb
       - Bucket
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
       - MicroManipulatorStockPart
@@ -336,8 +340,9 @@
       - HonkerTargetingElectronics
       - HamtrCentralElectronics
       - HamtrPeripheralsElectronics
-      - GeneratorPlasmaMachineCircuitboard
-      - GeneratorUraniumMachineCircuitboard
+      - PortableGeneratorPacmanMachineCircuitboard
+      - PortableGeneratorSuperPacmanMachineCircuitboard
+      - PortableGeneratorJrPacmanMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
