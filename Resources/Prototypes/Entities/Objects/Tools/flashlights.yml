@@ -70,7 +70,7 @@
     netsync: false
   - type: Appearance
   - type: StaticPrice
-    price: 40
+    price: 15
 
 - type: entity
   name: seclite
@@ -113,6 +113,8 @@
   - type: PointLight
     enabled: false
     radius: 8
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: FlashlightLantern
@@ -123,3 +125,5 @@
     slots:
       cell_slot:
         name: power-cell-slot-component-slot-name-default
+  - type: StaticPrice
+    price: 50

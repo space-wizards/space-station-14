@@ -71,6 +71,8 @@
             - Multitool
     sprite: Clothing/Belt/belt_overlay.rsi
   - type: Appearance
+  - type: StaticPrice
+    price: 5
 
 - type: entity
   parent: ClothingBeltStorageBase

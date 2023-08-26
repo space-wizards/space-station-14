@@ -167,6 +167,9 @@
     fiberMaterial: fibers-insulative
     fiberColor: fibers-yellow
   - type: FingerprintMask
+  - type: StaticPrice
+    price: 100
+
 
 - type: entity
   parent: ClothingHandsGlovesColorYellow

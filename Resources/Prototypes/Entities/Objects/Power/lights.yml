@@ -63,6 +63,8 @@
     materialComposition:
       Glass: 25
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 3
 
 - type: entity
   parent: BaseLightbulb

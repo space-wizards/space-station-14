@@ -44,7 +44,7 @@
     stackType: Ointment
     count: 10
   - type: StackPrice
-    price: 10
+    price: 1
 
 - type: entity
   id: Ointment1
@@ -96,7 +96,7 @@
     stackType: RegenerativeMesh
     count: 10
   - type: StackPrice
-    price: 20
+    price: 10
 
 - type: entity
   id: OintmentAdvanced1
@@ -134,7 +134,7 @@
     stackType: Brutepack
     count: 10
   - type: StackPrice
-    price: 10
+    price: 1
 
 - type: entity
   id: Brutepack1
@@ -184,7 +184,7 @@
     stackType: MedicatedSuture
     count: 10
   - type: StackPrice
-    price: 20
+    price: 10
 
 - type: entity
   id: BrutepackAdvanced1
@@ -264,7 +264,7 @@
     stackType: Gauze
     count: 10
   - type: StackPrice
-    price: 10
+    price: 1
 
 - type: entity
   id: Gauze1
@@ -297,6 +297,8 @@
   - type: Stack
     stackType: AloeCream
     count: 10
+  - type: StackPrice
+    price: 5
 
 # Pills
 - type: entity

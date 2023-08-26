@@ -30,7 +30,7 @@
     tags:
       - DroneUsable
   - type: StaticPrice
-    price: 80
+    price: 50
   - type: PhysicalComposition
     materialComposition:
       Steel: 400

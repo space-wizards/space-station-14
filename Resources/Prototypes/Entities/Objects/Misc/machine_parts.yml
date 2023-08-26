@@ -30,6 +30,8 @@
     - type: Tag
       tags:
         - CapacitorStockPart
+    - type: StaticPrice
+      price: 5
 
 - type: entity
   id: MicroManipulatorStockPart
@@ -43,6 +45,8 @@
     - type: MachinePart
       part: Manipulator
       rating: 1
+    - type: StaticPrice
+      price: 5
 
 - type: entity
   id: MatterBinStockPart
@@ -56,6 +60,8 @@
     - type: MachinePart
       part: MatterBin
       rating: 1
+    - type: StaticPrice
+      price: 5
 
 # Rating 2
 
@@ -70,6 +76,8 @@
       state: adv_capacitor
     - type: MachinePart
       rating: 2
+    - type: StaticPrice
+      price: 15
 
 - type: entity
   id: NanoManipulatorStockPart
@@ -82,6 +90,8 @@
       state: nano_mani
     - type: MachinePart
       rating: 2
+    - type: StaticPrice
+      price: 15
 
 - type: entity
   id: AdvancedMatterBinStockPart
@@ -94,6 +104,8 @@
       state: advanced_matter_bin
     - type: MachinePart
       rating: 2
+    - type: StaticPrice
+      price: 15
 
 # Rating 3
 
@@ -108,6 +120,8 @@
       state: super_capacitor
     - type: MachinePart
       rating: 3
+    - type: StaticPrice
+      price: 35
 
 - type: entity
   id: PicoManipulatorStockPart
@@ -120,6 +134,8 @@
       state: pico_mani
     - type: MachinePart
       rating: 3
+    - type: StaticPrice
+      price: 35
 
 - type: entity
   id: SuperMatterBinStockPart
@@ -132,6 +148,8 @@
       state: super_matter_bin
     - type: MachinePart
       rating: 3
+    - type: StaticPrice
+      price: 35
 
 # Rating 4
 
@@ -146,6 +164,8 @@
       state: quadratic_capacitor
     - type: MachinePart
       rating: 4
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   id: FemtoManipulatorStockPart
@@ -158,6 +178,8 @@
       state: femto_mani
     - type: MachinePart
       rating: 4
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   id: BluespaceMatterBinStockPart
@@ -170,6 +192,8 @@
       state: bluespace_matter_bin
     - type: MachinePart
       rating: 4
+    - type: StaticPrice
+      price: 100
 
 # Subspace stock parts (REMOVE THESE)
 

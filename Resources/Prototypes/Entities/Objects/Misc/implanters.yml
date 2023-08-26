@@ -44,6 +44,8 @@
           implantOnly:
             True: {state: broken}
             False: {state: syringe_base0}
+    - type: StaticPrice
+      price: 50
 
 - type: entity
   id: Implanter

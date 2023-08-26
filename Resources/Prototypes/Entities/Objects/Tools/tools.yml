@@ -41,7 +41,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 30
+    price: 10
 
 - type: entity
   name: screwdriver
@@ -84,7 +84,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 30
+    price: 10
 
 - type: entity
   name: wrench
@@ -118,7 +118,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 22
+    price: 5
 
 - type: entity
   name: crowbar
@@ -154,7 +154,7 @@
     materialComposition:
       Steel: 100
   - type: StaticPrice
-    price: 22
+    price: 5
 
 - type: entity
   parent: Crowbar
@@ -216,7 +216,7 @@
       Steel: 100
       Plastic: 100
   - type: StaticPrice
-    price: 56
+    price: 20
 
 - type: entity
   name: network configurator
@@ -264,7 +264,7 @@
       tags:
         - DroneUsable
     - type: StaticPrice
-      price: 56
+      price: 20
     - type: GuideHelp
       guides:
         - NetworkConfigurator
@@ -315,7 +315,7 @@
       Steel: 300
       Plastic: 100
   - type: StaticPrice
-    price: 100
+    price: 30
   - type: MeleeWeapon
     attackRate: 1.5
     damage:
@@ -351,7 +351,7 @@
       Steel: 600
       Plastic: 100
   - type: StaticPrice
-    price: 100
+    price: 50
 
 - type: entity
   id: RCDEmpty
@@ -403,7 +403,7 @@
       Steel: 100
       Plastic: 100
   - type: StaticPrice
-    price: 60
+    price: 25
 
 - type: entity
   name: omnitool

@@ -18,6 +18,8 @@
     guides:
   # - Virology (when it's back)
     - Botany
+  - type: StaticPrice
+    price: 1
 
 - type: entity
   parent: BaseItem

@@ -28,7 +28,7 @@
     range: 500
   - type: StationLimitedNetwork
   - type: StaticPrice
-    price: 500
+    price: 200
 
 - type: entity
   id: HandheldCrewMonitorEmpty
@@ -38,4 +38,4 @@
   - type: ItemSlots
     slots:
       cell_slot:
-        name: power-cell-slot-component-slot-name-default 
+        name: power-cell-slot-component-slot-name-default

@@ -107,6 +107,8 @@
     fiberMaterial: fibers-durathread
     fiberColor: fibers-regal-blue
   - type: FingerprintMask
+  - type: StaticPrice
+    price: 100
 
 #### Medical
 - type: entity
@@ -202,6 +204,8 @@
   - type: Thieving
     stripTimeReduction: 1
     stealthy: true
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: ClothingHandsBase
@@ -220,6 +224,8 @@
     fiberMaterial: fibers-insulative
     fiberColor: fibers-black
   - type: FingerprintMask
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: ClothingHandsGlovesCombat
@@ -231,6 +237,8 @@
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/tacticalmaidgloves.rsi
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: ClothingHandsBase
@@ -249,6 +257,8 @@
     fiberMaterial: fibers-insulative
     fiberColor: fibers-olive
   - type: FingerprintMask
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: ClothingHandsBase
@@ -353,8 +363,6 @@
     interfaces:
       - key: enum.MeleeSpeechUiKey.Key
         type: MeleeSpeechBoundUserInterface
-  - type: StaticPrice
-    price: 0
 
 - type: entity
   parent: ClothingHandsBase

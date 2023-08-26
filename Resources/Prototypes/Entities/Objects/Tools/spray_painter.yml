@@ -27,4 +27,4 @@
         white: '#FFFFFFFF'
         black: '#333333FF'
     - type: StaticPrice
-      price: 40
+      price: 15

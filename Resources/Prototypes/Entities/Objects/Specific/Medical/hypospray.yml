@@ -1,3 +1,6 @@
+# problem with medipens is that even the trash costs the same as the full thing, so a used combat medipen costs 500 too
+# made them all the same price until that's fixed
+
 - type: entity
   name: hypospray
   parent: BaseItem
@@ -48,6 +51,8 @@
   - type: Hypospray
   - type: UseDelay
     delay: 0.5
+  - type: StaticPrice
+    price: 750
 
 - type: entity
   name: chemical medipen
@@ -85,7 +90,7 @@
       Plastic: 50
   - type: SpaceGarbage
   - type: StaticPrice
-    price: 75 # These are limited supply items.
+    price: 20
   - type: TrashOnEmpty
     solution: pen
 
@@ -238,8 +243,6 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
-  - type: StaticPrice
-    price: 500
   - type: Tag
     tags: []
 
@@ -264,8 +267,6 @@
         reagents:
         - ReagentId: Stimulants
           Quantity: 15
-  - type: StaticPrice
-    price: 100
   - type: Tag
     tags: []
 
@@ -295,8 +296,6 @@
   - type: Hypospray
     solutionName: pen
     transferAmount: 30
-  - type: StaticPrice
-    price: 500
   - type: Tag
     tags: []
 
@@ -319,7 +318,7 @@
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice # A new shitcurity meta
-    price: 75
+    price: 100
 
 - type: entity
   parent: BaseItem
