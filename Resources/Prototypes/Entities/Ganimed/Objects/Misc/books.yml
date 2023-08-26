@@ -1,0 +1,17 @@
+- type: entity
+  id: BookAlertCode
+  parent: BaseItem
+  name: Alert Code Manual
+  description: For that moments when everything is not under control.
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/books.rsi
+    layers:
+    - state: book0 #пусть Свайпер нарисует красивую книжечку))
+  - type: Tag
+    tags:
+    - Book
+  - type: GuideHelp
+    openOnActivation: true
+    guides:
+    - AlertCode
