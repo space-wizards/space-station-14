@@ -68,7 +68,7 @@
     qualities:
       - Prying
   - type: StaticPrice
-    price: 250
+    price: 50
 
 - type: entity
   name: crusher dagger
@@ -87,7 +87,7 @@
   - type: Item
     size: 10
   - type: StaticPrice
-    price: 150
+    price: 25
 
 # Like a crusher... but better
 - type: entity
@@ -117,4 +117,4 @@
   - type: Item
     size: 150
   - type: StaticPrice
-    price: 300
+    price: 250

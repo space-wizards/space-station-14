@@ -35,8 +35,6 @@
   - type: Tag
     tags:
     - MonkeyCube
-  - type: StaticPrice
-    price: 100
 
 - type: entity
   parent: BoxCardboard
@@ -76,5 +74,3 @@
   - type: Tag
     tags:
     - MonkeyCube
-  - type: StaticPrice
-    price: 100

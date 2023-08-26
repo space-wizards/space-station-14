@@ -74,7 +74,7 @@
   description: A large tower shield. Good for controlling crowds.
   components:
     - type: StaticPrice
-      price: 100
+      price: 25
 
 - type: entity
   name: riot laser shield
@@ -95,6 +95,8 @@
           Heat: 0.7
         flatReductions:
           Heat: 2
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   name: riot bullet shield
@@ -118,6 +120,8 @@
         flatReductions:
           Blunt: 1.5
           Piercing: 1.5
+    - type: StaticPrice
+      price: 100
 
 #Craftable shields
 
@@ -258,6 +262,8 @@
           Slash: 1
           Piercing: 1
       #Have it break into brass when clock cult is in
+    - type: StaticPrice
+      price: 300
 
 - type: entity
   name: Mirror Shield
@@ -301,6 +307,8 @@
                 SheetGlass:
                   min: 5
                   max: 5
+      - type: StaticPrice
+        price: 300
 
 - type: entity
   name: energy shield

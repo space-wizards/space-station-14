@@ -19,7 +19,7 @@
     tags:
       - DroneUsable
   - type: StaticPrice
-    price: 100
+    price: 25
   - type: ContainerContainer
     containers:
       light_replacer_storage: !type:Container

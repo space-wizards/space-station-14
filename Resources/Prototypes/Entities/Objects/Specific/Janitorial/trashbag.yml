@@ -35,7 +35,7 @@
   - type: Item
     size: 125
   - type: StaticPrice
-    price: 25
+    price: 5
 
 - type: entity
   name: trash bag

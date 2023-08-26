@@ -133,3 +133,5 @@
       - id: ToyFigurineHamlet
         prob: 0.20
         orGroup: SpacemenFig
+  - type: StaticPrice
+    price: 25

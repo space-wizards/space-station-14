@@ -86,8 +86,6 @@
     damage:
       types:
         Blunt: 5
-  - type: StaticPrice
-    price: 15
 
 - type: entity
   parent: BaseItem
@@ -145,8 +143,6 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
-  - type: StaticPrice
-    price: 30
 
 - type: entity
   name: beaker
@@ -157,7 +153,7 @@
   - type: Spillable
     solution: beaker
   - type: StaticPrice
-    price: 10
+    price: 5
 
 - type: entity
   name: cryoxadone beaker
@@ -201,7 +197,7 @@
     maxFillLevels: 6
     fillBaseName: beakerlarge
   - type: StaticPrice
-    price: 35
+    price: 10
 
 - type: entity
   name: cryostasis beaker
@@ -221,7 +217,7 @@
         maxVol: 60
         canReact: false
   - type: StaticPrice
-    price: 50
+    price: 12
 
 - type: entity
   name: bluespace beaker
@@ -241,7 +237,7 @@
         maxVol: 300
         canMix: true
   - type: StaticPrice
-    price: 100
+    price: 80
 
 - type: entity
   name: dropper
@@ -282,7 +278,7 @@
     maxFillLevels: 1
     fillBaseName: dropper
   - type: StaticPrice
-    price: 50
+    price: 15
 
 - type: entity
   name: syringe
@@ -326,7 +322,7 @@
     tags:
     - Syringe
   - type: StaticPrice
-    price: 15
+    price: 5
 
 - type: entity
   parent: BaseSyringe
@@ -371,7 +367,7 @@
     - Syringe
     - Trash
   - type: StaticPrice
-    price: 100
+    price: 50
 
 - type: entity
   name: pill
@@ -445,4 +441,4 @@
       - Pill
   - type: Dumpable
   - type: StaticPrice
-    price: 15
+    price: 5

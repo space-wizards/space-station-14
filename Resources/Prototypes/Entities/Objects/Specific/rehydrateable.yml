@@ -46,6 +46,8 @@
         hard: false
         layer:
         - LowImpassable
+  - type: StaticPrice
+    price: 80
 
 - type: entity
   parent: PlushieCarp
@@ -101,6 +103,8 @@
     handle: false
     sound:
       path: /Audio/Effects/bite.ogg
+  - type: StaticPrice
+    price: 80
 
 - type: entity
   parent: BaseItem
@@ -160,3 +164,5 @@
         hard: false
         layer:
         - LowImpassable
+  - type: StaticPrice
+    price: 80

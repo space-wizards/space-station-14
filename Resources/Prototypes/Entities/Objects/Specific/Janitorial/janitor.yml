@@ -37,7 +37,7 @@
     guides:
     - Janitorial
   - type: StaticPrice
-    price: 25
+    price: 5
 
 - type: entity
   parent: BaseItem
@@ -81,7 +81,7 @@
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
     - type: StaticPrice
-      price: 100
+      price: 35
 
 - type: entity
   name: mop bucket
@@ -141,8 +141,6 @@
   - type: GuideHelp
     guides:
     - Janitorial
-  - type: StaticPrice
-    price: 25
 
 - type: entity
   name: mop bucket

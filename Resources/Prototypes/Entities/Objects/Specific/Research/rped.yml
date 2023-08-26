@@ -22,4 +22,4 @@
       components:
       - MachinePart
   - type: StaticPrice
-    price: 200
+    price: 50

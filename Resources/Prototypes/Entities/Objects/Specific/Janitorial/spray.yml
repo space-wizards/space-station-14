@@ -33,7 +33,7 @@
   - type: TrashOnEmpty
     solution: spray
   - type: StaticPrice
-    price: 25
+    price: 5
 
 - type: entity
   name: mega spray bottle
@@ -57,7 +57,7 @@
     spraySound:
       path: /Audio/Effects/spray2.ogg
   - type: StaticPrice
-    price: 100
+    price: 15
 
 - type: entity
   name: spray bottle

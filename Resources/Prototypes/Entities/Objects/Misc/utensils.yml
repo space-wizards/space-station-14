@@ -34,6 +34,8 @@
     damage:
       types:
         Piercing: 5
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: UtensilBase
@@ -53,7 +55,7 @@
       - Plastic
       - Trash
   - type: StaticPrice
-    price: 0
+    price: 15
 
 - type: entity
   parent: UtensilBase
@@ -76,6 +78,8 @@
     damage:
       types:
         Blunt: 1
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: UtensilBase
@@ -95,6 +99,8 @@
     types:
     - Spoon
     breakChance: 0.20
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: UtensilBase
@@ -114,4 +120,4 @@
     - Knife
     breakChance: 0.20
   - type: StaticPrice
-    price: 0
+    price: 15
