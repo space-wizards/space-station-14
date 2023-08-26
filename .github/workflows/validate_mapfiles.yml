@@ -12,7 +12,7 @@ jobs:
     if: github.actor != 'IanComradeBot' && github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3.6.0
     - name: Setup Submodule
       run: git submodule update --init
     # Corvax-Secrets-Start
