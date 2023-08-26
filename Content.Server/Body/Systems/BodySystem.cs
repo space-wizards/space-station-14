@@ -31,6 +31,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -214,7 +215,7 @@ public sealed class BodySystem : SharedBodySystem
                     else
                     {
                         cont.Remove(ent, EntityManager, force: true);
-                        Transform(ent).Coordinates = coordinates;
+                        _transform.SetCoordinates(ent, coordinates);
                         ent.RandomOffset(0.25f);
                     }
                 }

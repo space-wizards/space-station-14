@@ -331,7 +331,7 @@ public partial class SharedBodySystem
             return false;
 
         if (TryComp(partId.Value, out TransformComponent? transform))
-            transform.Coordinates = dropAt;
+            _transform.SetCoordinates(partId.Value, transform, dropAt);
 
         return true;
     }

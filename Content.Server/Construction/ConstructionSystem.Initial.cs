@@ -31,6 +31,7 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -514,10 +515,11 @@ namespace Content.Server.Construction
             // ikr
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
-            xform.Anchored = false;
-            xform.Coordinates = ev.Location;
+            _transform.Unanchor(structure, xform);
+            _transform.SetCoordinates(structure, ev.Location);
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
-            xform.Anchored = wasAnchored;
+            if (wasAnchored)
+                _transform.AnchorEntity(structure, xform);
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, structure));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

@@ -270,8 +270,8 @@ namespace Content.Server.Polymorph.Systems
             var parentXform = Transform(parent);
 
             _transform.SetParent(parent, parentXform, uidXform.ParentUid);
-            parentXform.Coordinates = uidXform.Coordinates;
-            parentXform.LocalRotation = uidXform.LocalRotation;
+            _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates);
+            _transform.SetLocalRotation(parentXform, uidXform.LocalRotation);
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(parent, out var damageParent) &&
