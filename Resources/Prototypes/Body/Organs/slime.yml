@@ -6,7 +6,7 @@
   components:
     - type: Stomach
     - type: Metabolizer
-      maxReagents: 6
+      maxReagents: 3
       metabolizerTypes: [ Slime ]
       removeEmpty: true
       groups:

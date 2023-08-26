@@ -29,5 +29,5 @@
   - type: Stomach
   - type: Metabolizer
     # mm very yummy
-    maxReagents: 5
+    maxReagents: 3
     metabolizerTypes: [Dwarf]

@@ -12,7 +12,7 @@
       stomach:
         maxVol: 50
   - type: Metabolizer
-    maxReagents: 6
+    maxReagents: 3
     metabolizerTypes: [ Moth ]
     removeEmpty: true
     groups:

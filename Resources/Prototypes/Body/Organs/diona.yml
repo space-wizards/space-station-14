@@ -71,7 +71,7 @@
         maxVol: 50
   - type: Stomach
   - type: Metabolizer
-    maxReagents: 6
+    maxReagents: 3
     metabolizerTypes: [ Plant ]
     removeEmpty: true
     groups:
