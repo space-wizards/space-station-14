@@ -27,7 +27,19 @@ namespace Content.Shared.Chemistry.Components
         ///     The calculated total volume of all reagents in the solution (ex. Total volume of liquid in beaker).
         /// </summary>
         [ViewVariables]
-        public FixedPoint2 Volume { get; set; }
+        public FixedPoint2 Volume
+        {
+            get
+            {
+                var volume = FixedPoint2.Zero;
+                foreach (var reagent in Contents)
+                {
+                    volume += reagent.Quantity;
+                }
+
+                return volume;
+            }
+        }
 
         /// <summary>
         ///     Maximum volume this solution supports.
@@ -147,11 +159,6 @@ namespace Content.Shared.Chemistry.Components
         public Solution(IEnumerable<ReagentQuantity> reagents, bool setMaxVol = true)
         {
             Contents = new(reagents);
-            Volume = FixedPoint2.Zero;
-            foreach (var reagent in Contents)
-            {
-                Volume += reagent.Quantity;
-            }
 
             if (setMaxVol)
                 MaxVolume = Volume;
@@ -161,7 +168,6 @@ namespace Content.Shared.Chemistry.Components
 
         public Solution(Solution solution)
         {
-            Volume = solution.Volume;
             _heatCapacity = solution._heatCapacity;
             _heatCapacityDirty = solution._heatCapacityDirty;
             Contents = solution.Contents.ShallowClone();
@@ -201,12 +207,6 @@ namespace Content.Shared.Chemistry.Components
 
         void ISerializationHooks.AfterDeserialization()
         {
-            Volume = FixedPoint2.Zero;
-            foreach (var reagent in Contents)
-            {
-                Volume += reagent.Quantity;
-            }
-
             if (MaxVolume == FixedPoint2.Zero)
                 MaxVolume = Volume;
         }
@@ -268,7 +268,6 @@ namespace Content.Shared.Chemistry.Components
                 return;
             }
 
-            Volume += quantity;
             _heatCapacityDirty |= dirtyHeatCap;
             for (var i = 0; i < Contents.Count; i++)
             {
@@ -328,7 +327,6 @@ namespace Content.Shared.Chemistry.Components
             }
 
             _heatCapacity *= scale;
-            Volume *= scale;
 
             for (int i = 0; i < Contents.Count; i++)
             {
@@ -353,17 +351,17 @@ namespace Content.Shared.Chemistry.Components
                 return;
             }
 
-            Volume = FixedPoint2.Zero;
             for (int i = Contents.Count - 1; i >= 0; i--)
             {
                 var old = Contents[i];
                 var newQuantity = old.Quantity * scale;
                 if (newQuantity == FixedPoint2.Zero)
+                {
                     Contents.RemoveSwap(i);
+                }
                 else
                 {
                     Contents[i] = new ReagentQuantity(old.ReagentId, newQuantity);
-                    Volume += newQuantity;
                 }
             }
 
@@ -403,7 +401,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var reagent = Contents[i];
 
-                if(reagent.ReagentId != reagentId)
+                if (reagent.ReagentId != reagentId)
                     continue;
 
                 var curQuantity = reagent.Quantity;
@@ -413,13 +411,11 @@ namespace Content.Shared.Chemistry.Components
                 if (newQuantity <= 0)
                 {
                     Contents.RemoveSwap(i);
-                    Volume -= curQuantity;
                     ValidateSolution();
                     return curQuantity;
                 }
 
                 Contents[i] = new ReagentQuantity(reagentId, newQuantity);
-                Volume -= quantity;
                 ValidateSolution();
                 return quantity;
             }
@@ -431,7 +427,6 @@ namespace Content.Shared.Chemistry.Components
         public void RemoveAllSolution()
         {
             Contents.Clear();
-            Volume = FixedPoint2.Zero;
             _heatCapacityDirty = false;
             _heatCapacity = 0;
         }
@@ -500,12 +495,9 @@ namespace Content.Shared.Chemistry.Components
                     Contents.RemoveSwap(i);
 
                 newSolution.Contents.Add(new ReagentQuantity(reagent.ReagentId, splitQuantity));
-                Volume -= splitQuantity;
                 remaining -= split;
                 effVol -= reagent.Quantity.Value;
             }
-
-            newSolution.Volume = origVol - Volume;
 
             DebugTools.Assert(remaining >= 0);
             DebugTools.Assert(remaining == 0 || Volume == FixedPoint2.Zero);
@@ -535,7 +527,6 @@ namespace Content.Shared.Chemistry.Components
             }
 
             var effVol = Volume.Value;
-            Volume -= toTake;
             var remaining = (long) toTake.Value;
             for (var i = Contents.Count - 1; i >= 0; i--)// iterate backwards because of remove swap.
             {
@@ -574,8 +565,6 @@ namespace Content.Shared.Chemistry.Components
         {
             if (otherSolution.Volume <= FixedPoint2.Zero)
                 return;
-
-            Volume += otherSolution.Volume;
 
             var closeTemps = MathHelper.CloseTo(otherSolution.Temperature, Temperature);
             float totalThermalEnergy = 0;
@@ -674,11 +663,11 @@ namespace Content.Shared.Chemistry.Components
 
         [Serializable, NetSerializable]
         [DataDefinition]
-        public readonly partial struct ReagentQuantity: IComparable<ReagentQuantity>
+        public readonly partial struct ReagentQuantity : IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
+            [DataField("ReagentId", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
             public string ReagentId { get; init; }
-            [DataField("Quantity", required:true)]
+            [DataField("Quantity", required: true)]
             public FixedPoint2 Quantity { get; init; }
 
             public ReagentQuantity(string reagentId, FixedPoint2 quantity)
@@ -724,10 +713,6 @@ namespace Content.Shared.Chemistry.Components
             RemoveAllSolution();
             _heatCapacityDirty = true;
             Contents = new(reagents);
-            foreach (var reagent in Contents)
-            {
-                Volume += reagent.Quantity;
-            }
 
             if (setMaxVol)
                 MaxVolume = Volume;

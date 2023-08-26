@@ -144,7 +144,7 @@ namespace Content.Server.Administration.Systems
             _config.UnsubValueChanged(CVars.GameHostName, OnServerNameChanged);
         }
 
-        private void OnWebhookChanged(string url)
+        private async void OnWebhookChanged(string url)
         {
             _webhookUrl = url;
 
@@ -173,7 +173,7 @@ namespace Content.Server.Administration.Systems
             var webhookToken = match.Groups[2].Value;
 
             // Fire and forget
-            _ = SetWebhookData(webhookId, webhookToken);
+            await SetWebhookData(webhookId, webhookToken);
         }
 
         private async Task SetWebhookData(string id, string token)
