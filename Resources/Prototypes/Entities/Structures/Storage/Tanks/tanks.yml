@@ -157,3 +157,68 @@
     solution: tank
   - type: ReagentTank
     transferAmount: 100
+
+    # WeedKiller
+
+- type: entity
+  id: WeedKillerTank
+  parent: StorageTank
+  suffix: Empty
+  components:
+  - type: StaticPrice
+    price: 500
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    layers:
+      - state: watertank-2
+      - state: watertank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 5
+    fillBaseName: watertank-2-
+  - type: ExaminableSolution
+    solution: tank
+
+- type: entity
+  parent: WeedKillerTank
+  id: WeedKillerTankFull
+  suffix: Full
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeedKiller
+          Quantity: 1500
+
+- type: entity
+  parent: StorageTank
+  id: WeedKillerTankHighCapacity
+  suffix: Full
+  components:
+  - type: Sprite
+    sprite: Structures/Storage/tanks.rsi
+    layers:
+      - state: highwatertank-2
+      - state: highwatertank-2-1
+        map: ["enum.SolutionContainerLayers.Fill"]
+        visible: false
+  - type: Appearance
+  - type: SolutionContainerVisuals
+    maxFillLevels: 7
+    fillBaseName: highwatertank-2-
+  - type: SolutionContainerManager
+    solutions:
+      tank:
+        reagents:
+        - ReagentId: WeedKiller
+#         This is *100, 000* on /tg/
+          Quantity: 10000
+        maxVol: 10000
+#   It's pressurized...
+  - type: ExaminableSolution
+    solution: tank
+  - type: ReagentTank
+    transferAmount: 100

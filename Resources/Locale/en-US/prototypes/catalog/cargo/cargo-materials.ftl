@@ -24,3 +24,7 @@ ent-MaterialFuelTank = { ent-WeldingFuelTankFull }
 
 ent-MaterialWaterTank = { ent-WaterTankFull }
     .desc = { ent-WaterTankFull.desc }
+
+ent-MaterialWeedKillerTank = { ent-WeedKillerTankFull }
+    .desc = { ent-WeedKillerTankFull.desc }
+

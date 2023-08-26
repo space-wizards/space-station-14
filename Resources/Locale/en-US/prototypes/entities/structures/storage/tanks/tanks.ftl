@@ -18,3 +18,12 @@ ent-WaterCooler = water cooler
 
 ent-WaterTankHighCapacity = high-capacity water tank
     .desc = A highly pressurized water tank made to hold gargantuan amounts of water.
+
+ent-WeedKillerTank = weedkiller tank
+    .desc = Weedkiller. That is not water.
+
+ent-WeedKillerTankFull = { ent-WeedKillerTank }
+    .desc = { ent-WeedKillerTank.desc }
+
+ent-WeedKillerTankHighCapacity = high-capacity weedkiller tank
+    .desc = A highly pressurized weedkiller tank made to hold gargantuan amounts of weedkiller.
