@@ -67,7 +67,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             xform.MapID == _lastMousePosition.Value.MapId)
         {
             var tickTime = _gameTiming.TickPeriod;
-            var distance = _lastMousePosition.Value.Position - xform.WorldPosition;
+            var distance = _lastMousePosition.Value.Position - _transform.GetWorldPosition(xform);
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
                 Grid = _dragging.Value,

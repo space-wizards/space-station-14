@@ -8,6 +8,8 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+
     private void InitializeDrop()
     {
         SubscribeLocalEvent<HandsComponent, EntRemovedFromContainerMessage>(HandleEntityRemoved);
@@ -103,7 +105,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         }
 
         var target = targetDropLocation.Value.ToMap(EntityManager);
-        itemXform.WorldPosition = GetFinalDropCoordinates(uid, userXform.MapPosition, target);
+        _transform.SetWorldPosition(itemXform, GetFinalDropCoordinates(uid, userXform.MapPosition, target));
         return true;
     }
 

@@ -69,7 +69,7 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.TurningDelay > 0)
                 {
-                    var difference = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
+                    var difference = _transform.GetWorldPosition(chasing) - _transform.GetWorldPosition(transform);
                     var angle = difference.ToAngle();
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);

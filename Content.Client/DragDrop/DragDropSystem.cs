@@ -535,7 +535,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (Exists(_dragShadow))
         {
             var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
-            Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
+            _transform.SetWorldPosition(_dragShadow.Value, mousePos.Position);
         }
     }
 }
