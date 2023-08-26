@@ -20,6 +20,6 @@
     areaInsert: true
     whitelist:
       tags:
-        - Ore
         - ArtifactFragment
+        - Ore
   - type: Dumpable
