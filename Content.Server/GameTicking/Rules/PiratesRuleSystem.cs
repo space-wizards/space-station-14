@@ -44,6 +44,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly NamingSystem _namingSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -147,11 +148,10 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
             }
 
             var map = "/Maps/Shuttles/pirate.yml";
-            var xformQuery = GetEntityQuery<TransformComponent>();
 
             var aabbs = EntityQuery<StationDataComponent>().SelectMany(x =>
                     x.Grids.Select(x =>
-                        xformQuery.GetComponent(x).WorldMatrix.TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
+                        _transform.GetWorldMatrix(x).TransformBox(_mapManager.GetGridComp(x).LocalAABB)))
                 .ToArray();
 
             var aabb = aabbs[0];
