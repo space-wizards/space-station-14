@@ -23,7 +23,7 @@
   - type: Sprite
     sprite: Structures/tripwire.rsi
     state: icon
-  - type: SlipSignal
+  - type: StepTriggerSignal
     port: TrippedWire
   - type: DamageSignal
     port: TrippedWire
