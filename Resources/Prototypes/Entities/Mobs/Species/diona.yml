@@ -22,7 +22,6 @@
     requiredLegs: 2
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Diona
   - type: DamageVisuals
     damageOverlayGroups:
       Brute:
