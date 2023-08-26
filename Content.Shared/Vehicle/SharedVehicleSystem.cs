@@ -17,6 +17,7 @@ using Content.Shared.Light.Component;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Vehicle;
 
@@ -28,6 +29,7 @@ namespace Content.Shared.Vehicle;
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
     [Dependency] private readonly INetManager _netManager = default!;
+    [Dependency] protected readonly IGameTiming GameTiming = default!;
 
     [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
@@ -297,6 +299,14 @@ public abstract partial class SharedVehicleSystem : EntitySystem
     /// </summary>
     private void UpdateBuckleOffset(EntityUid uid, TransformComponent xform, VehicleComponent component)
     {
+        // So before this check this method tried to
+        // change offset of the rider whether the state
+        // was applying. This caused an issue with destroying
+        // the vehicle while someone was riding it. The rider
+        // was teleported to the local pos of offset on the client.
+        if (GameTiming.ApplyingState)
+            return;
+
         if (!TryComp<StrapComponent>(uid, out var strap))
             return;
 
