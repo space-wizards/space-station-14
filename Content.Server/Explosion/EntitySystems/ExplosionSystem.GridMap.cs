@@ -61,8 +61,8 @@ public sealed partial class ExplosionSystem : EntitySystem
         {
             var targetGrid = _mapManager.GetGrid(referenceGrid.Value);
             var xform = Transform(targetGrid.Owner);
-            targetAngle = xform.WorldRotation;
-            targetMatrix = xform.InvWorldMatrix;
+            targetAngle = _transformSystem.GetWorldRotation(xform);
+            targetMatrix = _transformSystem.GetInvWorldMatrix(xform);
             tileSize = targetGrid.TileSize;
         }
 

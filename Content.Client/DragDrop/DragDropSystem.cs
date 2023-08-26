@@ -44,6 +44,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -253,9 +254,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
             // keep it on top of everything
             dragSprite.DrawDepth = (int) DrawDepth.Overlays;
             if (!dragSprite.NoRotation)
-            {
-                Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
-            }
+                _transform.SetWorldRotation(_dragShadow.Value, _transform.GetWorldRotation(_draggedEntity.Value));
 
             // drag initiated
             return;
