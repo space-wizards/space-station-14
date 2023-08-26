@@ -19,7 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Changelog
 {
     [GenerateTypedNameReferences]
-    public sealed partial class ChangelogWindow : BaseWindow
+    public sealed partial class ChangelogWindow : DefaultWindow
     {
         [Dependency] private readonly ChangelogManager _changelog = default!;
         [Dependency] private readonly IResourceCache _resourceCache = default!;
@@ -72,7 +72,7 @@ namespace Content.Client.Changelog
                 ChangelogBody.AddChild(new Label
                 {
                     Text = dayNice,
-                    StyleClasses = {"LabelHeading"},
+                    StyleClasses = { "LabelHeading" },
                     Margin = new Thickness(4, 6, 0, 0)
                 });
 
@@ -84,7 +84,7 @@ namespace Content.Client.Changelog
 
                     if (!first)
                     {
-                        ChangelogBody.AddChild(new Control {Margin = new Thickness(4)});
+                        ChangelogBody.AddChild(new Control { Margin = new Thickness(4) });
                     }
 
                     if (read && !hasRead)
@@ -131,7 +131,7 @@ namespace Content.Client.Changelog
                         };
 
                         readDivider.AddChild(hBox);
-                        readDivider.AddChild(new PanelContainer {StyleClasses = {"LowDivider"}});
+                        readDivider.AddChild(new PanelContainer { StyleClasses = { "LowDivider" } });
                         ChangelogBody.AddChild(readDivider);
 
                         if (first)
@@ -193,7 +193,8 @@ namespace Content.Client.Changelog
 
         protected override DragMode GetDragModeFor(Vector2 relativeMousePos)
         {
-            return DragMode.Move;
+            var dragMode = base.GetDragModeFor(relativeMousePos);
+            return dragMode != DragMode.None ? dragMode : DragMode.Move;
         }
     }
 
