@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Storage.Components;
 using Content.Server.Store.Systems;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Store;
@@ -48,13 +47,10 @@ public sealed class SurplusBundleSystem : EntitySystem
         var cords = Transform(uid).Coordinates;
 
         var content = GetRandomContent(component.TotalPrice);
-        TryComp<EntityStorageComponent>(uid, out var entStorage);
-
         foreach (var item in content)
         {
             var ent = EntityManager.SpawnEntity(item.ProductEntity, cords);
-
-            _entityStorage.Insert(ent, uid, entStorage);
+            _entityStorage.Insert(ent, component.Owner);
         }
     }
 

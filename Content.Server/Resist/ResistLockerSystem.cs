@@ -77,7 +77,7 @@ public sealed class ResistLockerSystem : EntitySystem
             if (TryComp<LockComponent>(args.Args.Target.Value, out var lockComponent))
                 _lockSystem.Unlock(uid, args.Args.User, lockComponent);
 
-            _entityStorage.TryOpenStorage(args.Args.User, uid, storageComponent);
+            _entityStorage.TryOpenStorage(args.Args.User, uid);
         }
 
         args.Handled = true;

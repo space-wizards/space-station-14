@@ -14,7 +14,7 @@ public sealed partial class StorageSystem
 
         if (entityStorageComp == null && serverStorageComp == null)
         {
-            Log.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
+            Logger.Error($"StorageFillComponent couldn't find any StorageComponent ({uid})");
             return;
         }
 
@@ -26,13 +26,13 @@ public sealed partial class StorageSystem
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
-            if (entityStorageComp != null && _entityStorage.Insert(ent, uid, entityStorageComp))
+            if (entityStorageComp != null && _entityStorage.Insert(ent, uid))
                continue;
 
             if (serverStorageComp != null && Insert(uid, ent, serverStorageComp, false))
                 continue;
 
-            Log.Error($"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
+            Logger.ErrorS("storage", $"Tried to StorageFill {item} inside {ToPrettyString(uid)} but can't.");
             EntityManager.DeleteEntity(ent);
         }
     }
