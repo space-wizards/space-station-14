@@ -33,4 +33,5 @@
   - type: Pullable
   - type: GuideHelp
     guides: [ Singularity, Power ]
-
+  - type: StaticPrice
+    price: 1000

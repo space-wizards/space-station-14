@@ -11,6 +11,8 @@
     tags:
     - Trash
   - type: SpaceGarbage
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: UtensilBase

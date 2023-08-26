@@ -87,7 +87,7 @@
       types:
         Blunt: 5
   - type: StaticPrice
-    price: 30
+    price: 15
 
 - type: entity
   parent: BaseItem
@@ -201,7 +201,7 @@
     maxFillLevels: 6
     fillBaseName: beakerlarge
   - type: StaticPrice
-    price: 40
+    price: 35
 
 - type: entity
   name: cryostasis beaker
@@ -220,6 +220,8 @@
       beaker:
         maxVol: 60
         canReact: false
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: bluespace beaker
@@ -238,6 +240,8 @@
       beaker:
         maxVol: 300
         canMix: true
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: dropper
@@ -278,7 +282,7 @@
     maxFillLevels: 1
     fillBaseName: dropper
   - type: StaticPrice
-    price: 40
+    price: 50
 
 - type: entity
   name: syringe
@@ -321,6 +325,8 @@
   - type: Tag
     tags:
     - Syringe
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: BaseSyringe
@@ -364,6 +370,8 @@
     tags:
     - Syringe
     - Trash
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: pill
@@ -436,3 +444,5 @@
       components:
       - Pill
   - type: Dumpable
+  - type: StaticPrice
+    price: 15

@@ -24,6 +24,8 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   name: makeshift handcuffs
@@ -57,6 +59,8 @@
     sprite: Objects/Misc/cablecuffs.rsi
     state: cuff
     color: forestgreen
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   name: zipties
@@ -85,6 +89,8 @@
   - type: Sprite
     sprite: Objects/Misc/zipties.rsi
     state: cuff
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BaseHandcuffsBroken

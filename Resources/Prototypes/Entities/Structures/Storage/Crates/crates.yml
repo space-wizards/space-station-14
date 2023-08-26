@@ -12,6 +12,8 @@
     - Energy
     reflectProb: 0.2
     spread: 90
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: CrateBaseWeldable
@@ -28,7 +30,7 @@
     containers:
     - entity_storage
   - type: StaticPrice
-    price: 80
+    price: 50
 
 - type: entity
   parent: CratePlastic

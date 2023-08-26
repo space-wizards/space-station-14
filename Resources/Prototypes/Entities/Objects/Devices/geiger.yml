@@ -31,4 +31,6 @@
             Med: {state: geiger_on_med}
             High: {state: geiger_on_high}
             Extreme: {state: geiger_on_ext}
+    - type: StaticPrice
+      price: 50
 

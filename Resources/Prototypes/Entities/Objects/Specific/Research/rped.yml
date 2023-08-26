@@ -21,3 +21,5 @@
     whitelist:
       components:
       - MachinePart
+  - type: StaticPrice
+    price: 200

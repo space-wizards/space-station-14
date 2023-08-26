@@ -23,6 +23,8 @@
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
     heldPrefix: plantbgone
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: weed spray
@@ -53,6 +55,8 @@
     transferAmount: 1
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: pest spray
@@ -74,3 +78,5 @@
     solution: spray
   - type: Item
     sprite: Objects/Tools/Hydroponics/sprays.rsi
+  - type: StaticPrice
+    price: 15

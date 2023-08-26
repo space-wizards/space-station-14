@@ -99,3 +99,5 @@
       - On
       - Off
       - Toggle
+  - type: StaticPrice
+    price: 250

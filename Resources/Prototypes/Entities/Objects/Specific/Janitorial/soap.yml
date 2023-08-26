@@ -37,6 +37,8 @@
         density: 10
         mask:
         - ItemMask
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: soap

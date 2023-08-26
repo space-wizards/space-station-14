@@ -25,6 +25,8 @@
     backgroundImagePath: "/Textures/Interface/Paper/paper_background_book.svg.96dpi.png"
     backgroundPatchMargin: 23.0, 16.0, 14.0, 15.0
     contentMargin: 20.0, 20.0, 20.0, 20.0
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookSpaceEncyclopedia
@@ -43,6 +45,8 @@
     openOnActivation: true
     guides:
     - SS14
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookTheBookOfControl
@@ -61,6 +65,8 @@
     openOnActivation: true
     guides:
     - Controls
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookBartendersManual
@@ -79,12 +85,14 @@
     openOnActivation: true
     guides:
     - Bartender
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookChefGaming
   parent: BaseItem
   name: chef gaming
-  description: A book about cooking written by a gamer chef. 
+  description: A book about cooking written by a gamer chef.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -97,6 +105,8 @@
     openOnActivation: true
     guides:
     - Chef
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookLeafLoversSecret
@@ -115,6 +125,8 @@
     openOnActivation: true
     guides:
     - Botany
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookEngineersHandbook
@@ -133,6 +145,8 @@
     openOnActivation: true
     guides:
     - Engineering
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookScientistsGuidebook
@@ -151,12 +165,14 @@
     openOnActivation: true
     guides:
     - Science
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookSecurity
   parent: BaseItem
   name: security 101
-  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material. 
+  description: A book about security written by Nanotrasen. The book is stained with blood. It seems to have been used more as a weapon than reading material.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
@@ -173,6 +189,8 @@
     openOnActivation: true
     guides:
     - Security
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookHowToKeepStationClean
@@ -191,6 +209,8 @@
     openOnActivation: true
     guides:
     - Janitorial
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookHowToRockAndStone
@@ -209,6 +229,8 @@
     openOnActivation: true
     guides:
     - Salvage
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookMedicalReferenceBook
@@ -227,6 +249,8 @@
     openOnActivation: true
     guides:
     - Medical
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookHowToSurvive
@@ -245,6 +269,8 @@
     openOnActivation: true
     guides:
     - Survival
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   id: BookChemicalCompendium
@@ -263,6 +289,8 @@
     openOnActivation: true
     guides:
     - Chemicals
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   parent: BookBase

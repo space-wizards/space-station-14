@@ -10,6 +10,8 @@
       setup:
         !type:TabletopEmptySetup
         boardPrototype: Crowbar
+  - type: StaticPrice
+    price: 20
 
 - type: entity
   id: BaseTabletopPiece # Board piece

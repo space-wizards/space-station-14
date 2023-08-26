@@ -45,7 +45,7 @@
       maxFillLevels: 6
       fillBaseName: jug
     - type: StaticPrice
-      price: 80
+      price: 50
     - type: Label
       originalName: jug
 

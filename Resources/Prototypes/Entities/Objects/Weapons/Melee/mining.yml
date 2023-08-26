@@ -67,6 +67,8 @@
   - type: Tool
     qualities:
       - Prying
+  - type: StaticPrice
+    price: 250
 
 - type: entity
   name: crusher dagger
@@ -84,6 +86,8 @@
         Slash: 6.5
   - type: Item
     size: 10
+  - type: StaticPrice
+    price: 150
 
 # Like a crusher... but better
 - type: entity
@@ -112,3 +116,5 @@
     attackRate: 1.25
   - type: Item
     size: 150
+  - type: StaticPrice
+    price: 300

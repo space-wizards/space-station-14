@@ -94,6 +94,8 @@
     requirePower: true
     highVoltageNode: input
     mediumVoltageNode: ame
+  - type: StaticPrice
+    price: 500
 
 - type: entity
   noSpawn: true

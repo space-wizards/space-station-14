@@ -48,6 +48,8 @@
         enabled:
           True: { state: fire_extinguisher_closed }
           False: { state: fire_extinguisher_open }
+  - type: StaticPrice
+    price: 30
 
 - type: entity
   name: extinguisher spray

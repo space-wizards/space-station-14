@@ -27,6 +27,8 @@
   - type: Item
     size: 80
     sprite: Objects/Weapons/Melee/pickaxe.rsi
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: mining drill
@@ -48,3 +50,5 @@
         Blunt: 5
         Piercing: 5
         Structural: 10
+  - type: StaticPrice
+    price: 100

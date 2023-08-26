@@ -90,6 +90,8 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/rad.rsi
   - type: GroupExamine
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   parent: ClothingOuterBase

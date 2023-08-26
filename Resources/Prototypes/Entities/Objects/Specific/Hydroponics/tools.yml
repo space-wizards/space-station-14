@@ -18,6 +18,8 @@
         Slash: 10
   - type: Item
     sprite: Objects/Tools/Hydroponics/hoe.rsi
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: plant clippers
@@ -38,6 +40,8 @@
         Slash: 7
   - type: Item
     sprite: Objects/Tools/Hydroponics/clippers.rsi
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: scythe
@@ -61,7 +65,7 @@
     slots:
     - back
   - type: StaticPrice
-    price: 40
+    price: 50
 
 - type: entity
   name: hatchet
@@ -84,6 +88,8 @@
         Piercing: 5
   - type: Item
     sprite: Objects/Tools/Hydroponics/hatchet.rsi
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: spade
@@ -106,6 +112,8 @@
         Piercing: 5 # I guess you can stab it into them?
   - type: Item
     sprite: Objects/Tools/Hydroponics/spade.rsi
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: plant bag
@@ -130,3 +138,5 @@
         - Produce
         - Seed
   - type: Dumpable
+  - type: StaticPrice
+    price: 50

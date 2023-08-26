@@ -80,7 +80,7 @@
       entity_storage: !type:Container
       paper_label: !type:ContainerSlot
   - type: StaticPrice
-    price: 50
+    price: 20
 
 - type: entity
   id: BodyBag_Folded

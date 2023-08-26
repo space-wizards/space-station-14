@@ -44,6 +44,8 @@
   - type: GuideHelp
     guides:
     - Chef
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: butcher's cleaver
@@ -69,6 +71,8 @@
   - type: GuideHelp
     guides:
     - Chef
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   name: combat knife

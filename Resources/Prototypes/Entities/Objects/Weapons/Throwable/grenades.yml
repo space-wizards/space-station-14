@@ -75,6 +75,8 @@
   - type: GuideHelp
     guides:
     - Security
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   id: GrenadeFlashEffect

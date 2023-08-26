@@ -249,6 +249,8 @@
   - type: PhysicalComposition
     materialComposition:
       Steel: 25
+  - type: StaticPrice
+    price: 15
 
 - type: entity
   name: Cybersun pen
@@ -277,6 +279,8 @@
     sprite: Objects/Misc/bureaucracy.rsi
     heldPrefix: overpriced_pen
     size: 2
+  - type: StaticPrice
+    price: 200
 
 - type: entity
   name: captain's fountain pen

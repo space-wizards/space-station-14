@@ -12,6 +12,8 @@
     containers:
       ballistic-ammo: !type:Container
         ents: []
+  - type: StaticPrice
+    price: 25
 
 # Boxes
 - type: entity

@@ -23,6 +23,8 @@
     whitelist:
       tags:
         - Dice
+  - type: StaticPrice
+    price: 10
 
 - type: entity
   parent: DiceBag

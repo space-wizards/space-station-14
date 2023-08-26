@@ -32,6 +32,8 @@
       path: /Audio/Effects/spray2.ogg
   - type: TrashOnEmpty
     solution: spray
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   name: mega spray bottle
@@ -54,6 +56,8 @@
     sprayDistance: 4.5
     spraySound:
       path: /Audio/Effects/spray2.ogg
+  - type: StaticPrice
+    price: 100
 
 - type: entity
   name: spray bottle

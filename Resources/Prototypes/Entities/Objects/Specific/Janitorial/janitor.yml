@@ -36,6 +36,8 @@
   - type: GuideHelp
     guides:
     - Janitorial
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: BaseItem
@@ -78,6 +80,8 @@
       tags:
         - DroneUsable #No bucket because it holds chems, they can drag the cart or use a drain
         - Mop
+    - type: StaticPrice
+      price: 100
 
 - type: entity
   name: mop bucket
@@ -137,6 +141,8 @@
   - type: GuideHelp
     guides:
     - Janitorial
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   name: mop bucket
@@ -172,6 +178,8 @@
   - type: Tag
     tags:
       - WetFloorSign
+  - type: StaticPrice
+    price: 25
 
 
 - type: entity
@@ -477,6 +485,8 @@
         head:
           - state: equipped-HELMET
             offset: "0, 0.15625"
+    - type: StaticPrice
+      price: 25
 
 - type: entity
   parent: BaseItem
@@ -513,3 +523,5 @@
       tags:
         - DroneUsable
         - Mop
+    - type: StaticPrice
+      price: 15

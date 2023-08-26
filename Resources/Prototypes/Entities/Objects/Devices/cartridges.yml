@@ -15,6 +15,8 @@
       sprite:  Objects/Misc/books.rsi
       state: book6
   - type: NotekeeperCartridge
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: BaseItem
@@ -33,6 +35,8 @@
       sprite: Interface/Misc/program_icons.rsi
       state: news_read
   - type: NewsReadCartridge
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: BaseItem
@@ -51,6 +55,8 @@
         sprite: Interface/Misc/program_icons.rsi
         state: crew_manifest
     - type: CrewManifestCartridge
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   parent: BaseItem
@@ -69,5 +75,5 @@
         sprite: Structures/Machines/server.rsi
         state: server
     - type: NetProbeCartridge
-
-
+  - type: StaticPrice
+    price: 25

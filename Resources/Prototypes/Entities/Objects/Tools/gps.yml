@@ -12,3 +12,5 @@
   - type: Item
     sprite: Objects/Devices/gps.rsi
   - type: HandheldGPS
+  - type: StaticPrice
+    price: 25

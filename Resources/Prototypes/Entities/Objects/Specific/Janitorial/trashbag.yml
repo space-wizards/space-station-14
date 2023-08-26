@@ -34,6 +34,8 @@
     sprite: Objects/Specific/Janitorial/trashbag.rsi
   - type: Item
     size: 125
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   name: trash bag

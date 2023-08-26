@@ -22,6 +22,8 @@
     tags:
     - DroneUsable
     - Toolbox
+  - type: StaticPrice
+    price: 50
 
 - type: entity
   name: emergency toolbox

@@ -12,3 +12,5 @@
     tags:
       - SolarAssemblyPart
       - DroneUsable
+  - type: StaticPrice
+    price: 50

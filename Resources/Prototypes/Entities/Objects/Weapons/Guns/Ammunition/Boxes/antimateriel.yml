@@ -23,6 +23,8 @@
     steps: 2
     zeroVisible: false
   - type: Appearance
+  - type: StaticPrice
+    price: 50
 
 # Boxes
 - type: entity

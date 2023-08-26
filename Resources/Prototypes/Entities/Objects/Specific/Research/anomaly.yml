@@ -19,6 +19,8 @@
   - type: GuideHelp
     guides:
     - ScannersAndVessels
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   id: AnomalyLocatorUnpowered
@@ -52,6 +54,8 @@
       params:
         maxdistance: 1
         volume: -8
+  - type: StaticPrice
+    price: 35
 
 - type: entity
   id: AnomalyLocator
