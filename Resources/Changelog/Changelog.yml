@@ -1,10 +1,4 @@
 Entries:
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has started to selectively employ those with slightly more
-      fluent archaic accents, and as a result it sounds a bit better to most.', type: Tweak}
-  id: 4191
-  time: '2023-07-08T08:34:11.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: you can find space lube tube in lockers again, type: Fix}
@@ -3029,3 +3023,8 @@ Entries:
       fight., type: Add}
   id: 4690
   time: '2023-08-26T21:26:28.0000000+00:00'
+- author: qwerltaz
+  changes:
+  - {message: Fixed wallmount devices being unable to be deconstructed., type: Fix}
+  id: 4691
+  time: '2023-08-26T22:25:23.0000000+00:00'
