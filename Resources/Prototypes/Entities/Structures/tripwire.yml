@@ -7,6 +7,7 @@
   - type: Slippery
     paralyzeTime: 1
     launchForwardsMultiplier: 1.2
+    slipSound: /Audio/Effects/hit_kick.ogg
   - type: StepTrigger
     intersectRatio: 0.2
   - type: Physics
@@ -58,4 +59,4 @@
             max: 2
       - !type:PlaySoundBehavior
         sound:
-          path: /Audio/Effects/metalbreak.ogg
+          path: /Audio/Effects/snap.ogg
