@@ -110,7 +110,7 @@ namespace Content.Server.Light.EntitySystems
             if (alert.AlertLevels == null || !alert.AlertLevels.Levels.TryGetValue(ev.AlertLevel, out var details))
                 return;
 
-            var query = EntityQueryEnumerator<EmergencyLightComponent, PointLightComponent, AppearanceComponent, TransformComponent>();
+            var query = EntityQueryEnumerator<EmergencyLightComponent, SharedPointLightComponent, AppearanceComponent, TransformComponent>();
 
             while (query.MoveNext(out var uid, out var light, out var pointLight, out var appearance, out var xform))
             {
@@ -200,7 +200,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOff(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
+            if (_lights.TryGetLight(component.Owner, out var light))
             {
                 _lights.SetEnabled(component.Owner, false, light);
             }
@@ -213,7 +213,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void TurnOn(EmergencyLightComponent component)
         {
-            if (TryComp(component.Owner, out PointLightComponent? light))
+            if (_lights.TryGetLight(component.Owner, out var light))
             {
                 _lights.SetEnabled(component.Owner, true, light);
             }

@@ -856,7 +856,7 @@ namespace Content.Server.Botany.Systems
 
             if (component.Seed != null && component.Seed.Bioluminescent)
             {
-                var light = EnsureComp<PointLightComponent>(uid);
+                var light = _light.EnsureLight(uid);
                 // TODO: Ayo why you copy-pasting code between here and seeds?
                 _light.SetRadius(uid, component.Seed.BioluminescentRadius, light);
                 _light.SetColor(uid, component.Seed.BioluminescentColor, light);
@@ -864,7 +864,7 @@ namespace Content.Server.Botany.Systems
             }
             else
             {
-                RemComp<PointLightComponent>(uid);
+                _light.RemoveLightDeferred(uid);
             }
 
             if (!TryComp<AppearanceComponent>(uid, out var app))

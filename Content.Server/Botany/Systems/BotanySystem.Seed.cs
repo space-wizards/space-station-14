@@ -174,7 +174,7 @@ public sealed partial class BotanySystem : EntitySystem
 
             if (proto.Bioluminescent)
             {
-                var light = EnsureComp<PointLightComponent>(entity);
+                var light = _light.EnsureLight(entity);
                 _light.SetRadius(entity, proto.BioluminescentRadius, light);
                 _light.SetColor(entity, proto.BioluminescentColor, light);
                 // TODO: Ayo why you copy-pasting code between here and plantholder?

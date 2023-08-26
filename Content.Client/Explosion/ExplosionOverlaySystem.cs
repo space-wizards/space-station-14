@@ -65,7 +65,7 @@ public sealed class ExplosionOverlaySystem : EntitySystem
 
         // spawn in a client-side light source at the epicenter
         var lightEntity = Spawn("ExplosionLight", component.Epicenter);
-        var light = EnsureComp<PointLightComponent>(lightEntity);
+        var light = _lights.EnsureLight(lightEntity);
 
         _lights.SetEnergy(lightEntity, component.Intensity.Count, light);
         _lights.SetColor(lightEntity, type.LightColor, light);

@@ -17,7 +17,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, LitOnPoweredComponent component, ref PowerChangedEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            if (_lights.TryGetLight(uid, out var light))
             {
                 _lights.SetEnabled(uid, args.Powered, light);
             }
@@ -25,7 +25,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerSupply(EntityUid uid, LitOnPoweredComponent component, ref PowerNetBatterySupplyEvent args)
         {
-            if (EntityManager.TryGetComponent<PointLightComponent>(uid, out var light))
+            if (_lights.TryGetLight(uid, out var light))
             {
                 _lights.SetEnabled(uid, args.Supply, light);
             }

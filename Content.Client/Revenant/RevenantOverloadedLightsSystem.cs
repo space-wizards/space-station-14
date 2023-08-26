@@ -1,5 +1,6 @@
 ﻿using Content.Shared.Revenant.Components;
 using Content.Shared.Revenant.EntitySystems;
+using Robust.Client.GameObjects;
 
 namespace Content.Client.Revenant;
 
@@ -30,7 +31,7 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
     private void OnStartup(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentStartup args)
     {
-        var light = EnsureComp<PointLightComponent>(uid);
+        var light = _lights.EnsureLight(uid);
         component.OriginalEnergy = light.Energy;
         component.OriginalEnabled = light.Enabled;
 
@@ -40,12 +41,12 @@ public sealed class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLig
 
     private void OnShutdown(EntityUid uid, RevenantOverloadedLightsComponent component, ComponentShutdown args)
     {
-        if (!TryComp<PointLightComponent>(uid, out var light))
+        if (!TryComp<SharedPointLightComponent>(uid, out var light))
             return;
 
         if (component.OriginalEnergy == null)
         {
-            RemComp<PointLightComponent>(uid);
+            RemComp<SharedPointLightComponent>(uid);
             return;
         }
 

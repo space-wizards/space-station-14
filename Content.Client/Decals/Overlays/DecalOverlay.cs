@@ -14,7 +14,7 @@ namespace Content.Client.Decals.Overlays
 
         public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowEntities;
 
-        private readonly Dictionary<string, (Robust.Shared.Graphics.Texture Texture, bool SnapCardinals)> _cachedTextures = new(64);
+        private readonly Dictionary<string, (Texture Texture, bool SnapCardinals)> _cachedTextures = new(64);
 
         public DecalOverlay(
             SpriteSystem sprites,

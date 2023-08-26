@@ -214,7 +214,7 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOff(EntityUid uid, HandheldLightComponent component, bool makeNoise = true)
         {
-            if (!component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
+            if (!component.Activated || !_lights.TryGetLight(uid, out var pointLightComponent))
             {
                 return false;
             }
@@ -228,7 +228,7 @@ namespace Content.Server.Light.EntitySystems
 
         public bool TurnOn(EntityUid user, EntityUid uid, HandheldLightComponent component)
         {
-            if (component.Activated || !TryComp<PointLightComponent>(uid, out var pointLightComponent))
+            if (component.Activated || !_lights.TryGetLight(uid, out var pointLightComponent))
             {
                 return false;
             }

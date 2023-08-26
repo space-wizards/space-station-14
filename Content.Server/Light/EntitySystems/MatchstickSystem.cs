@@ -93,7 +93,7 @@ namespace Content.Server.Light.EntitySystems
         {
             component.CurrentState = value;
 
-            if (TryComp<PointLightComponent>(uid, out var pointLightComponent))
+            if (_lights.TryGetLight(uid, out var pointLightComponent))
             {
                 _lights.SetEnabled(uid, component.CurrentState == SmokableState.Lit, pointLightComponent);
             }

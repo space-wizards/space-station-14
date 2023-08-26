@@ -22,6 +22,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedPointLightSystem _lights = default!;
 
         public override void Initialize()
         {
@@ -158,7 +159,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
-            EntityManager.EnsureComponent<PointLightComponent>(uid);
+            _lights.EnsureLight(uid);
         }
 
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)

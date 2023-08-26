@@ -326,7 +326,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
     /// </summary>
     public void UpdateConnectionLights(ContainmentFieldGeneratorComponent component)
     {
-        if (EntityManager.TryGetComponent<PointLightComponent>(component.Owner, out var pointLightComponent))
+        if (_light.TryGetLight(component.Owner, out var pointLightComponent))
         {
             _light.SetEnabled(component.Owner, component.Connections.Count > 0, pointLightComponent);
         }
