@@ -34,10 +34,10 @@ namespace Content.Server.Administration.Commands
 
             var entityManager = IoCManager.Resolve<IEntityManager>();
 
-            if (entityManager.HasComponent<EntityStorageComponent>(storageUid) &&
+            if (entityManager.TryGetComponent<EntityStorageComponent>(storageUid, out var entStorage) &&
                 entityManager.EntitySysManager.TryGetEntitySystem<EntityStorageSystem>(out var storageSys))
             {
-                storageSys.Insert(entityUid, storageUid);
+                storageSys.Insert(entityUid, storageUid, entStorage);
             }
             else
             {
