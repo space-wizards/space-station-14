@@ -6,12 +6,12 @@ using JetBrains.Annotations;
 using Robust.Client.Audio.Midi;
 using Robust.Shared.Audio.Midi;
 using Robust.Shared.Configuration;
+using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Timing;
 
 namespace Content.Client.Instruments;
 
-[UsedImplicitly]
 public sealed class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private readonly IClientNetManager _netManager = default!;
@@ -37,6 +37,27 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         SubscribeNetworkEvent<InstrumentStopMidiEvent>(OnMidiStop);
 
         SubscribeLocalEvent<InstrumentComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<InstrumentComponent, ComponentHandleState>(OnHandleState);
+    }
+
+    private void OnHandleState(EntityUid uid, SharedInstrumentComponent component, ref ComponentHandleState args)
+    {
+        if (args.Current is not InstrumentComponentState state)
+            return;
+
+        component.Playing = state.Playing;
+        component.InstrumentProgram = state.InstrumentProgram;
+        component.InstrumentBank = state.InstrumentBank;
+        component.AllowPercussion = state.AllowPercussion;
+        component.AllowProgramChange = state.AllowProgramChange;
+        component.RespectMidiLimits = state.RespectMidiLimits;
+        component.Master = state.Master;
+        component.FilteredChannels = state.FilteredChannels;
+
+        if (component.Playing)
+            SetupRenderer(uid, true, component);
+        else
+            EndRenderer(uid, true, component);
     }
 
     public override void Shutdown()

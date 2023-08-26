@@ -15,6 +15,7 @@ using Robust.Shared.Audio.Midi;
 using Robust.Shared.Collections;
 using Robust.Shared.Configuration;
 using Robust.Shared.Console;
+using Robust.Shared.GameStates;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
@@ -55,7 +56,24 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         SubscribeLocalEvent<InstrumentComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
         SubscribeLocalEvent<InstrumentComponent, InstrumentBandRequestBuiMessage>(OnBoundUIRequestBands);
 
+        SubscribeLocalEvent<InstrumentComponent, ComponentGetState>(OnStrumentGetState);
+
         _conHost.RegisterCommand("addtoband", AddToBandCommand);
+    }
+
+    private void OnStrumentGetState(EntityUid uid, InstrumentComponent component, ref ComponentGetState args)
+    {
+        args.State = new InstrumentComponentState()
+        {
+            Playing = component.Playing,
+            InstrumentProgram = component.InstrumentProgram,
+            InstrumentBank = component.InstrumentBank,
+            AllowPercussion = component.AllowPercussion,
+            AllowProgramChange = component.AllowProgramChange,
+            RespectMidiLimits = component.RespectMidiLimits,
+            Master = component.Master,
+            FilteredChannels = component.FilteredChannels
+        };
     }
 
     [AdminCommand(AdminFlags.Fun)]
