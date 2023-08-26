@@ -34,6 +34,7 @@
 - type: entity
   parent: ClothingOuterWinterCoat
   id: ClothingOuterWinterCoatToggleable
+  name: winter coat with hood
   noSpawn: True
   components:
   - type: ToggleableClothing
