@@ -41,7 +41,6 @@ public sealed partial class Solution : IEnumerable<Solution.ReagentQuantity>, IS
         }
     }
 
-
     /// <summary>
     ///     Maximum volume this solution supports.
     /// </summary>
