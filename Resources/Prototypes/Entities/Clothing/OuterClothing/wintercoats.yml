@@ -38,7 +38,7 @@
   noSpawn: True
   components:
   - type: ToggleableClothing
-    clothingPrototype: ClothingHeadHatHoodWinterBase
+    clothingPrototype: ClothingHeadHatHoodWinterDefault
     actionId: ToggleCoatHood  
  
 - type: entity
