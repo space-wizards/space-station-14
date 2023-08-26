@@ -21,4 +21,5 @@
     whitelist:
       tags:
         - Ore
+        - ArtifactFragment
   - type: Dumpable
