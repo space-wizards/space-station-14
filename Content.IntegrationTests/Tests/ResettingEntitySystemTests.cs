@@ -30,12 +30,12 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task ResettingEntitySystemResetTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings
             {
                 DummyTicker = false,
                 Connected = true
             });
-            var server = pairTracker.Pair.Server;
+            var server = pair.Server;
 
             var entitySystemManager = server.ResolveDependency<IEntitySystemManager>();
             var gameTicker = entitySystemManager.GetEntitySystem<GameTicker>();
@@ -54,7 +54,7 @@ namespace Content.IntegrationTests.Tests
 
                 Assert.That(system.HasBeenReset);
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

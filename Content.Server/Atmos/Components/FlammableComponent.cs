@@ -4,7 +4,7 @@ using Robust.Shared.Physics.Collision.Shapes;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class FlammableComponent : Component
+    public sealed partial class FlammableComponent : Component
     {
         [ViewVariables]
         public bool Resisting = false;

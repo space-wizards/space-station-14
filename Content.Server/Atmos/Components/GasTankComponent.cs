@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 namespace Content.Server.Atmos.Components
 {
     [RegisterComponent]
-    public sealed class GasTankComponent : Component, IGasMixtureHolder
+    public sealed partial class GasTankComponent : Component, IGasMixtureHolder
     {
         public const float MaxExplosionRange = 80f;
         private const float DefaultLowPressure = 0f;

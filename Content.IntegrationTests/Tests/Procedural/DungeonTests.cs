@@ -12,10 +12,10 @@ public sealed class DungeonTests
     [Test]
     public async Task TestDungeonRoomPackBounds()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
+        await using var pair = await PoolManager.GetServerClient();
+        var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
-        await pairTracker.Pair.Server.WaitAssertion(() =>
+        await pair.Server.WaitAssertion(() =>
         {
             var sizes = new HashSet<Vector2i>();
 
@@ -56,16 +56,16 @@ public sealed class DungeonTests
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 
     [Test]
     public async Task TestDungeonPresets()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var protoManager = pairTracker.Pair.Server.ResolveDependency<IPrototypeManager>();
+        await using var pair = await PoolManager.GetServerClient();
+        var protoManager = pair.Server.ResolveDependency<IPrototypeManager>();
 
-        await pairTracker.Pair.Server.WaitAssertion(() =>
+        await pair.Server.WaitAssertion(() =>
         {
             var sizes = new HashSet<Vector2i>();
 
@@ -93,6 +93,6 @@ public sealed class DungeonTests
             }
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }
