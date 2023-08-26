@@ -3,6 +3,7 @@ using Content.Server.Chemistry.Components.SolutionManager;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.FixedPoint;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
@@ -32,6 +33,9 @@ public sealed class SolutionRegenerationSystem : EntitySystem
             regen.NextRegenTime = _timing.CurTime + regen.Duration;
             if (_solutionContainer.TryGetSolution(uid, regen.Solution, out var solution, manager))
             {
+                if (regen.Generated.Contents.Any() && regen.Generated.Volume == FixedPoint2.Zero)
+                    InitializeGeneratedVolume(regen.Generated);
+
                 var amount = FixedPoint2.Min(solution.AvailableVolume, regen.Generated.Volume);
                 if (amount <= FixedPoint2.Zero)
                     continue;
@@ -49,6 +53,16 @@ public sealed class SolutionRegenerationSystem : EntitySystem
 
                 _solutionContainer.TryAddSolution(uid, solution, generated);
             }
+        }
+    }
+
+    private void InitializeGeneratedVolume(Solution solution)
+    {
+        solution.Volume = FixedPoint2.Zero;
+
+        foreach (var reagent in solution.Contents)
+        {
+            solution.Volume += reagent.Quantity;
         }
     }
 
