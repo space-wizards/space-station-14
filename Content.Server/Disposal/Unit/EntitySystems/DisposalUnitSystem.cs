@@ -728,8 +728,13 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         if (!component.Engaged)
         {
             component.NextFlush = null;
-            Dirty(component);
+            Dirty(uid, component);
         }
+    }
+
+    public override bool HasDisposals(EntityUid? uid)
+    {
+        return HasComp<DisposalUnitComponent>(uid);
     }
 
     public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
