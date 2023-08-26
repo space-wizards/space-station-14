@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.NPC.Components;
 using Content.Server.NPC.HTN;
 using Content.Shared.CCVar;
@@ -75,6 +76,20 @@ namespace Content.Server.NPC.Systems
         public bool IsAwake(EntityUid uid, HTNComponent component, ActiveNPCComponent? active = null)
         {
             return Resolve(uid, ref active, false);
+        }
+
+        public bool TryGetNpc(EntityUid uid, [NotNullWhen(true)] out NPCComponent? component)
+        {
+            // If you add your own NPC components then add them here.
+
+            if (TryComp<HTNComponent>(uid, out var htn))
+            {
+                component = htn;
+                return true;
+            }
+
+            component = null;
+            return false;
         }
 
         /// <summary>
