@@ -1,0 +1,15 @@
+- type: entity
+  id: WardenGasLocker
+  parent: LockerWarden
+  suffix: Filled
+  name: шкаф с усыпляющим газом
+  description: Стандартное хранилище Nanotrasen.
+  components:
+  - type: StorageFill
+    contents:
+    - id: NitrousOxideTankFilled
+      amount: 3
+    - id: ClothingMaskBreath
+      amount: 3
+    - id: ClothingOuterStraightjacket
+      amount: 3
