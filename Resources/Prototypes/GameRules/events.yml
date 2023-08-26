@@ -292,11 +292,11 @@
     - id: MobHunterSpiderAngry
       prob: 0.025
     - id: MobGuardSpiderAngry
-      prob: 0.020
+      prob: 0.0225
     - id: MobTarantulaSpiderAngry
-      prob: 0.0025
+      prob: 0.00125
     - id: MobViperSpiderAngry
-      prob: 0.0025
+      prob: 0.00125
 
 - type: entity
   id: SpiderClownSpawn
