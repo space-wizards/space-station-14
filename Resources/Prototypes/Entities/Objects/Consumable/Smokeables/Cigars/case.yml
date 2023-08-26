@@ -68,3 +68,7 @@
     contents:
     - id: CigarGold
       amount: 8
+  - type: Item
+    sprite: Objects/Consumable/Smokeables/Cigars/premium-case.rsi #SS220 cigar resprite
+  - type: Sprite
+    sprite: Objects/Consumable/Smokeables/Cigars/premium-case.rsi #SS220 cigar resprite
