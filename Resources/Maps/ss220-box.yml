@@ -13912,7 +13912,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 21828
       type: Docking
-    - SecondsUntilStateChange: -426631.9
+    - SecondsUntilStateChange: -426733.78
       changeAirtight: False
       state: Opening
       type: Door
@@ -13930,7 +13930,7 @@ entities:
     - dockJointId: docking46345
       dockedWith: 562
       type: Docking
-    - SecondsUntilStateChange: -426631.9
+    - SecondsUntilStateChange: -426733.78
       changeAirtight: False
       state: Opening
       type: Door
@@ -170496,6 +170496,18 @@ entities:
     - pos: -5.5,-22.5
       parent: 8364
       type: Transform
+- proto: SpawnPointBorg
+  entities:
+  - uid: 29872
+    components:
+    - pos: 61.5,-20.5
+      parent: 8364
+      type: Transform
+  - uid: 29873
+    components:
+    - pos: 61.5,-22.5
+      parent: 8364
+      type: Transform
 - proto: SpawnPointBotanist
   entities:
   - uid: 5352
@@ -177137,17 +177149,17 @@ entities:
       type: Transform
     - linkedPorts:
         20194:
-        - Left: Open
-        - Right: Open
-        - Middle: Close
+        - Left: Toggle
+        - Right: Toggle
+        - Middle: Toggle
         20193:
-        - Left: Open
-        - Right: Open
-        - Middle: Close
+        - Left: Toggle
+        - Right: Toggle
+        - Middle: Toggle
         20192:
-        - Left: Open
-        - Right: Open
-        - Middle: Close
+        - Left: Toggle
+        - Right: Toggle
+        - Middle: Toggle
       type: DeviceLinkSource
 - proto: UniformPrinter
   entities:
