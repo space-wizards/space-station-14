@@ -92,7 +92,7 @@ public abstract class SharedContentEyeSystem : EntitySystem
         if (args.SenderSession.AttachedEntity is not { } player)
             return;
 
-        if (!HasComp<SharedGhostComponent>(player) && !_admin.IsAdmin(player))
+        if (!HasComp<GhostComponent>(player) && !_admin.IsAdmin(player))
             return;
 
         if (TryComp<SharedEyeComponent>(player, out var eyeComp))

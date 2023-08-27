@@ -81,3 +81,9 @@ SyringeSpaceacillin: null
 
 # 2023-08-13
 AirlockPainter: SprayPainter
+
+# 2023-08-19
+GeneratorPlasma: PortableGeneratorPacman
+GeneratorUranium: PortableGeneratorSuperPacman
+GeneratorPlasmaMachineCircuitboard: PortableGeneratorPacmanMachineCircuitboard
+GeneratorUraniumMachineCircuitboard: PortableGeneratorSuperPacmanMachineCircuitboard
