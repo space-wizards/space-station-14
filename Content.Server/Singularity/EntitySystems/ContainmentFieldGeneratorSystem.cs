@@ -229,7 +229,7 @@ public sealed class ContainmentFieldGeneratorSystem : EntitySystem
         if (!gen1XForm.Anchored)
             return false;
 
-        var genWorldPosRot = gen1XForm.GetWorldPositionRotation();
+        var genWorldPosRot = _transform.GetWorldPositionRotation(gen1XForm);
         var dirRad = dir.ToAngle() + genWorldPosRot.WorldRotation; //needs to be like this for the raycast to work properly
 
         var ray = new CollisionRay(genWorldPosRot.WorldPosition, dirRad.ToVec(), component.CollisionMask);
