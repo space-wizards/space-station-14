@@ -1,5 +1,4 @@
-﻿using Content.Server.KillTracking;
-using Robust.Shared.Network;
+﻿using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
