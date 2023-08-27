@@ -4,7 +4,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_smooth_wagging
 
 - type: marking
@@ -13,7 +13,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_spikes_wagging
 
 - type: marking
@@ -22,7 +22,7 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_ltiger_wagging
 
 - type: marking
@@ -31,5 +31,5 @@
   markingCategory: Tail
   speciesRestriction: []
   sprites:
-  - sprite: Corvax/Mobs/Customization/reptilian_parts.rsi
+  - sprite: Mobs/Customization/reptilian_parts.rsi
     state: tail_dtiger_wagging
