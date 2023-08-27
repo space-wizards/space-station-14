@@ -141,6 +141,9 @@ namespace Content.Shared.Cuffs
 
         private void OnCuffsRemovedFromContainer(EntityUid uid, CuffableComponent component, EntRemovedFromContainerMessage args)
         {
+            if (HasComp<CuffableComponent>(uid)) // Diona code runs an error if this isn't here
+                return;
+                
             if (args.Container.ID != component.Container.ID)
                 return;
 

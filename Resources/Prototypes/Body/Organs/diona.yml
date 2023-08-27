@@ -56,29 +56,86 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
-
+      
 - type: entity
-  id: OrganDionaStomach
-  parent: BaseDionaOrgan
-  name: stomach
-  description: "Gross. This is hard to stomach."
+  id: BaseDionaNymphOrgan
+  parent: MobDionaNymph
+  name: Diona Nymph
+  suffix:
+  description: An organ-containing Diona Nymph, in the wood.
   components:
-  - type: Sprite
-    state: stomach
+  - type: Organ
   - type: SolutionContainerManager
     solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+
+- type: entity
+  id: OrganDionaNymphBrain
+  parent: BaseDionaNymphOrgan
+  name: Diona Nymph
+  suffix: Brain
+  description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
+  components:
+    - type: Brain
+    - type: BlockMovement
+    - type: Tag
+      tags:
+      - VimPilot
+      - MindTransferTarget
+
+- type: entity
+  id: OrganDionaNymphStomach
+  parent: BaseDionaNymphOrgan
+  name: Diona Nymph
+  suffix: Stomach
+  description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
+  components:
+    - type: SolutionContainerManager
+      solutions:
       stomach:
         maxVol: 50
-  - type: Stomach
-  - type: Metabolizer
-    maxReagents: 3
-    metabolizerTypes: [ Plant ]
-    removeEmpty: true
-    groups:
-      - id: Food
-      - id: Drink
-      - id: Medicine
-      - id: Poison
-      - id: Narcotic
-      - id: Alcohol
-        rateModifier: 0.1
+    - type: Stomach
+    - type: Metabolizer
+      maxReagents: 3
+      metabolizerTypes: [ Plant ]
+      removeEmpty: true
+      groups:
+        - id: Food
+        - id: Drink
+        - id: Medicine
+        - id: Poison
+        - id: Narcotic
+        - id: Alcohol
+          rateModifier: 0.1
+
+
+- type: entity
+  id: OrganDionaNymphLungs
+  parent: BaseDionaNymphOrgan
+  name: Diona Nymph
+  suffix: Lungs
+  description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
+  components:
+    - type: SolutionContainerManager
+      solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100
+        canReact: False
+    - type: Lung
+    - type: Metabolizer
+      removeEmpty: true
+      solutionOnBody: false
+      solution: "Lung"
+      metabolizerTypes: [ Plant ]
+      groups:
+      - id: Gas
+        rateModifier: 100.0

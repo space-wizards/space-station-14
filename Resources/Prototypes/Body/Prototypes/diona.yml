@@ -8,8 +8,7 @@
       connections:
       - torso
       organs:
-        brain: OrganDionaBrain
-        eyes: OrganDionaEyes
+        brain: OrganDionaNymphBrain
     torso:
       part: TorsoDiona
       connections:
@@ -18,7 +17,7 @@
       - left leg
       - right leg
       organs:
-        stomach: OrganDionaStomach
+        lungs: OrganDionaNymphLungs
     right arm:
       part: RightArmDiona
       connections:

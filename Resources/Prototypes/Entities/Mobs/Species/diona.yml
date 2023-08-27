@@ -60,6 +60,7 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: Perishable
+  - type: TransferMindOnGib
 
 - type: entity
   save: false
