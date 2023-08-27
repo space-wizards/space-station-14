@@ -1,90 +1,143 @@
 - type: Tag
-  id: HardsuitEVA
+  id: EVAModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: EVAModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: EVAModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: EVAModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: EVAModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: FullMetalJacket
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDJacket
+
 - type: Tag
-  id: HardsuitEVA
+  id: WorkJacket
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalJacket
+
 - type: Tag
-  id: HardsuitEVA
+  id: EngineerModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: EngineerModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: EngineerModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: EngineerModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: EngineerModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: HOSModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: HOSModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: HOSModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: HOSModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: HOSModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: SecurityModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: BrigmedicModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: SecurityModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: SecurityModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: SecurityModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: SecurityModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: MedicalModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: RNDModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: CMOModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: CMOModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: CMOModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: CMOModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: CMOModHardsuitcore
+
 - type: Tag
-  id: HardsuitEVA
+  id: SalvageModHelmet
+
 - type: Tag
-  id: HardsuitEVA
+  id: SalvageModChestplate
+
 - type: Tag
-  id: HardsuitEVA
+  id: SalvageModGauntlets
+
 - type: Tag
-  id: HardsuitEVA
+  id: SalvageModBoots
+
 - type: Tag
-  id: HardsuitEVA
+  id: SalvageModHardsuitcore
+
+- type: Tag
+  id: ModsuitEnhancedBox
+
+- type: Tag
+  id: ModsuitEnhancedCore
+
+- type: Tag
+  id: ModsuitEnhancedSomething

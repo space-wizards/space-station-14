@@ -1,11 +1,23 @@
 - type: construction
   hide: false
-  name: proto-kinetic accelerator
+  name: Civillian Hardsuit
   id: ModsuitCivillian
   graph: ModsuitCivillian
   startNode: start
   targetNode: ModsuitCivillian
   category: construction-category-clothing
-  description: A proto-kinetic accelerator.
+  description: Civillian Modsuit.
+  icon: { sprite: Clothing/OuterClothing/Modsuits/civillian.rsi, state: icon }
+  objectType: Item
+
+- type: construction
+  hide: false
+  name: atmos Hardsuit
+  id: ModsuitAtmos
+  graph: ModsuitAtmos
+  startNode: start
+  targetNode: ModsuitAtmos
+  category: construction-category-clothing
+  description: Civillian Modsuit.
   icon: { sprite: Clothing/OuterClothing/Modsuits/civillian.rsi, state: icon }
   objectType: Item

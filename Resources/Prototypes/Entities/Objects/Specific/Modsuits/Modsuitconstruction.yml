@@ -79,6 +79,8 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: boots
+  - type: Tag
+    id: AtmosModBoots
 
 - type: entity
   parent: BaseItem
@@ -91,7 +93,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Chestplate
-
+  - type: Tag
+    id: AtmosModChestplate
+    
 - type: entity
   parent: BaseItem
   id: AtmosModGauntlets
@@ -103,6 +107,8 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Gauntlets
+  - type: Tag
+    id: AtmosModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -115,6 +121,8 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Hardsuit-core
+  - type: Tag
+    id: AtmosModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -127,6 +135,8 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Helmet
+  - type: Tag
+    id: AtmosModHelmet
 
 - type: entity
   parent: BaseItem

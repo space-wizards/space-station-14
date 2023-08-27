@@ -12,32 +12,469 @@
             - tag: EVAModBoots
               name: An EVA suit
               icon:
-                sprite: Clothing/OuterClothing/Suits/eva.rsi
-                state: icon
+                sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
+                state: boots
               doAfter: 1
             - tag: EVAModGauntlets
               name: An EVA helmet
               icon:
-                sprite: Clothing/Head/Helmets/eva.rsi
-                state: icon
+                sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
+                state: Gauntlets
               doAfter: 1
             - tag: EVAModChestplate
               name: purple crayon
               icon:
-                sprite: Objects/Fun/crayons.rsi
-                state: purple
+                sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
+                state: Chestplate
               doAfter: 1
             - tag: EVAModHelmet
               name: red crayon
               icon:
-                sprite: Objects/Fun/crayons.rsi
-                state: red
+                sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
+                state: Helmet
               doAfter: 1
-            - tag: CableLV
-              name: yellow crayon
+            - tag: EVAModHardsuitcore
+              name: Civillian Hardcore
               icon:
-                sprite: Objects/Fun/crayons.rsi
-                state: yellow
+                sprite: Objects/Specific/Modsuits/Construction/civillian.rsi
+                state: Hardsuite-core
               doAfter: 1
     - node: ModsuitCivillian
       entity: ClothingOuterModsuitCivillian
+
+- type: constructionGraph
+  id: ModsuitAtmos
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitAtmos
+          steps:
+            - tag: AtmosModBoots
+              name: An Atmos suit
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
+                state: boots
+              doAfter: 1
+            - tag: AtmosModGauntlets
+              name: Atmos Gauntlets
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: AtmosModChestplate
+              name: Atmos Chestplate
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: AtmosModHelmet
+              name: Atmos Helmet
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: AtmosModHardsuitcore
+              name: Atmos hardsuit core
+              icon:
+                sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitAtmos
+      entity: ClothingOuterModsuitAtmos
+
+- type: constructionGraph
+  id: ModsuitMedical
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitMedical
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: MedicalModBoots
+              name: A Medical suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                state: Boots
+              doAfter: 1
+            - tag: MedicalModGauntlets
+              name: Medical Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: MedicalModChestplate
+              name: Medical Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: MedicalModHelmet
+              name: Medical Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: MedicalModHardsuitcore
+              name: Medical hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitMedical
+      entity: ClothingOuterModsuitMedical
+
+- type: constructionGraph
+  id: ModsuitRND
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitRND
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: RNDModBoots
+              name: A RND suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Boots
+              doAfter: 1
+            - tag: RNDModGauntlets
+              name: RND Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: RNDModChestplate
+              name: RND Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: RNDModHelmet
+              name: RND Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: RNDModHardsuitcore
+              name: RND hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitRND
+      entity: ClothingOuterModsuitRND
+
+- type: constructionGraph
+  id: ModsuitEngineer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitEngineer
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: EngineerModBoots
+              name: An Engineer suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Boots
+              doAfter: 1
+            - tag: EngineerModGauntlets
+              name: Engineer Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: EngineerModChestplate
+              name: Engineer Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: EngineerModHelmet
+              name: Engineer Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: EngineerModHardsuitcore
+              name: Engineer hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitEngineer
+      entity: ClothingOuterModsuitEngineer
+
+- type: constructionGraph
+  id: ModsuitRND
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitRND
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: RNDModBoots
+              name: A RND suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Boots
+              doAfter: 1
+            - tag: RNDModGauntlets
+              name: RND Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: RNDModChestplate
+              name: RND Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: RNDModHelmet
+              name: RND Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: RNDModHardsuitcore
+              name: RND hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitRND
+      entity: ClothingOuterModsuitRND
+
+- type: constructionGraph
+  id: ModsuitEngineer
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitEngineer
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: EngineerModBoots
+              name: An Engineer suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Boots
+              doAfter: 1
+            - tag: EngineerModGauntlets
+              name: Engineer Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: EngineerModChestplate
+              name: Engineer Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: EngineerModHelmet
+              name: Engineer Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: EngineerModHardsuitcore
+              name: Engineer hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitEngineer
+      entity: ClothingOuterModsuitEngineer
+
+- type: constructionGraph
+  id: ModsuitHOS
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitHOS
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: HOSModBoots
+              name: A HOS suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                state: Boots
+              doAfter: 1
+            - tag: HOSModGauntlets
+              name: HOS Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: HOSModChestplate
+              name: HOS Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: HOSModHelmet
+              name: HOS Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: HOSModHardsuitcore
+              name: HOS hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/hos.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitHOS
+      entity: ClothingOuterModsuitHOS
+
+- type: constructionGraph
+  id: ModsuitSecurity
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitSecurity
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: SecurityModBoots
+              name: A Security suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                state: Boots
+              doAfter: 1
+            - tag: SecurityModGauntlets
+              name: Security Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: SecurityModChestplate
+              name: Security Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: SecurityModHelmet
+              name: Security Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: SecurityModHardsuitcore
+              name: Security hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/security.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitSecurity
+      entity: ClothingOuterModsuitSecurity
+
+- type: constructionGraph
+  id: ModsuitCMO
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitCMO
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: CMOModBoots
+              name: A CMO suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: Boots
+              doAfter: 1
+            - tag: CMOModGauntlets
+              name: CMO Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: CMOModChestplate
+              name: CMO Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: CMOModHelmet
+              name: CMO Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: CMOModHardsuitcore
+              name: CMO hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/cmo.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitCMO
+      entity: ClothingOuterModsuitCMO
+
+- type: constructionGraph
+  id: ModsuitSalvage
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: ModsuitSalvage
+          steps:
+            - material: Cloth
+              amount: 5
+              doAfter: 1
+            - tag: SalvageModBoots
+              name: A Salvage suit
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: Boots
+              doAfter: 1
+            - tag: SalvageModGauntlets
+              name: Salvage Gauntlets
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: Gauntlets
+              doAfter: 1
+            - tag: SalvageModChestplate
+              name: Salvage Chestplate
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: Chestplate
+              doAfter: 1
+            - tag: SalvageModHelmet
+              name: Salvage Helmet
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: Helmet
+              doAfter: 1
+            - tag: SalvageModHardsuitcore
+              name: Salvage hardsuit core
+              icon:
+                sprite: Clothing/Objects/Specific/Modsuits/Construction/salvage.rsi
+                state: Hardsuit-core
+              doAfter: 1
+    - node: ModsuitSalvage
+      entity: ClothingOuterModsuitSalvage
