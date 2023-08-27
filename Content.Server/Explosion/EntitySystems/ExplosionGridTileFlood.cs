@@ -74,8 +74,9 @@ public sealed class ExplosionGridTileFlood : ExplosionTileFlood
 
         _matrix.R0C2 = size / 2;
         _matrix.R1C2 = size / 2;
-        _matrix *= transform.GetWorldMatrix(Grid.Owner) * Matrix3.Invert(spaceMatrix);
-        var relativeAngle = transform.GetWorldRotation(Grid.Owner) - spaceAngle;
+        var (_, rot, mat) = transform.GetWorldPositionRotationMatrix(Grid.Owner);
+        _matrix *= mat * Matrix3.Invert(spaceMatrix);
+        var relativeAngle = rot - spaceAngle;
         _offset = relativeAngle.RotateVec(new Vector2(size / 4, size / 4));
     }
 
