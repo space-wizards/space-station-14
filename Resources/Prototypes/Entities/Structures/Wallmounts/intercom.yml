@@ -23,6 +23,12 @@
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: ContainerFill
+    containers:
+      board: [ IntercomElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Sprite
     noRot: false
     sprite: Structures/Wallmounts/intercom.rsi

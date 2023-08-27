@@ -29,7 +29,14 @@ namespace Content.Server.Shuttles.Components
         /// <summary>
         /// The thrusters contributing to each direction for impulse.
         /// </summary>
-        public readonly List<EntityUid>[] LinearThrusters = new List<EntityUid>[4];
+        // No touchy
+        public readonly List<EntityUid>[] LinearThrusters = new List<EntityUid>[]
+        {
+            new(),
+            new(),
+            new(),
+            new(),
+        };
 
         /// <summary>
         /// The thrusters contributing to the angular impulse of the shuttle.
