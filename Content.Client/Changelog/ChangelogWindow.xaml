@@ -7,7 +7,7 @@
     <PanelContainer StyleClasses="AngleRect" />
     <BoxContainer Orientation="Vertical">
 
-        <ScrollContainer Margin="6" VerticalExpand="True" HScrollEnabled="False">
+        <ScrollContainer Margin="5" VerticalExpand="True" HScrollEnabled="False">
             <BoxContainer Orientation="Vertical" Name="ChangelogBody" />
         </ScrollContainer>
 
