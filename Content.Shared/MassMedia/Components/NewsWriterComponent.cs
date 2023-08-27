@@ -12,22 +12,24 @@ public enum NewsWriterUiKey : byte
 [Serializable, NetSerializable]
 public sealed class NewsWriterBoundUserInterfaceState : BoundUserInterfaceState
 {
-    public NewsArticle[] Articles;
-    public bool ShareAvalible;
+    public readonly NewsArticle[] Articles;
+    public readonly bool PublishEnabled;
+    public readonly TimeSpan NextPublish;
 
-    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool shareAvalible)
+    public NewsWriterBoundUserInterfaceState(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish)
     {
         Articles = articles;
-        ShareAvalible = shareAvalible;
+        PublishEnabled = publishEnabled;
+        NextPublish = nextPublish;
     }
 }
 
 [Serializable, NetSerializable]
-public sealed class NewsWriterShareMessage : BoundUserInterfaceMessage
+public sealed class NewsWriterPublishMessage : BoundUserInterfaceMessage
 {
-    public NewsArticle Article;
+    public readonly NewsArticle Article;
 
-    public NewsWriterShareMessage(NewsArticle article)
+    public NewsWriterPublishMessage(NewsArticle article)
     {
         Article = article;
     }
@@ -36,7 +38,7 @@ public sealed class NewsWriterShareMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 {
-    public int ArticleNum;
+    public readonly int ArticleNum;
 
     public NewsWriterDeleteMessage(int num)
     {
@@ -47,7 +49,4 @@ public sealed class NewsWriterDeleteMessage : BoundUserInterfaceMessage
 [Serializable, NetSerializable]
 public sealed class NewsWriterArticlesRequestMessage : BoundUserInterfaceMessage
 {
-    public NewsWriterArticlesRequestMessage()
-    {
-    }
 }

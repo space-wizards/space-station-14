@@ -46,7 +46,7 @@
     </PanelContainer>
     <BoxContainer Orientation="Horizontal" HorizontalExpand="True" Margin="5,5,5,5">
         <Button
-            Name="NotificationSwith"
+            Name="NotificationSwitch"
             MinWidth="20"/>
         <RichTextLabel Margin="5,2,2,2" Name="ShareTime" VerticalAlignment="Top"/>
         <RichTextLabel Margin="5,2,2,2" Name="Author" VerticalAlignment="Top" HorizontalAlignment="Right"/>

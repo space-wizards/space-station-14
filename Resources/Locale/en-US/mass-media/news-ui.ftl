@@ -6,12 +6,21 @@ news-read-ui-time-prefix-text = Publication time:
 news-read-ui-notification-off =  ̶♫̶
 news-read-ui-notification-on = ♫
 news-read-ui-no-author = Anonymous
-news-read-ui-author-prefix = Author: 
+news-read-ui-author-prefix = Author:
 news-write-ui-default-title = Mass-media Management
 news-write-ui-articles-label = Articles:
 news-write-ui-delete-text = Delete
 news-write-ui-share-text = Publish
+news-write-ui-create-text = Create
 news-write-ui-article-name-label = Heading:
 news-write-ui-article-content-label = Content:
 news-write-no-access-popup = No access
+news-write-ui-richtext-tooltip = News articles support rich text
+    The following rich text tags are supported:
+    {"[color=Gray][bullet/]heading \\[size=1-5\\]"}
+    {"[bullet/]bold"}
+    {"[bullet/]italic"}
+    {"[bullet/]bolditalic"}
+    {"[bullet/]color"}
+    {"[bullet/]bullet[/color]"}
 

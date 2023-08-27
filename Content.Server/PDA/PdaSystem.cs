@@ -4,7 +4,6 @@ using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
-using Content.Server.MassMedia.Components;
 using Content.Server.MassMedia.Systems;
 using Content.Server.Mind;
 using Content.Server.PDA.Ringer;

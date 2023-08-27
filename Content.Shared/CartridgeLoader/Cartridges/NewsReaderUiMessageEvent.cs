@@ -18,5 +18,5 @@ public enum NewsReaderUiAction
 {
     Next,
     Prev,
-    NotificationSwith
+    NotificationSwitch
 }

@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using Content.Server.MassMedia.Components;
 using Content.Server.PDA.Ringer;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
@@ -14,6 +13,7 @@ using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
 using Content.Server.CartridgeLoader;
+using Content.Server.MassMedia.Components;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.Station.Systems;
@@ -34,22 +34,31 @@ public sealed class NewsSystem : EntitySystem
 
     [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
-    /*
-     *  if (_station.GetOwningStation(uid) is not { } station ||
-            !TryComp<StationCargoBountyDatabaseComponent>(station, out var bountyDb))
-            return;
-     */
-
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<NewsWriterComponent, NewsWriterShareMessage>(OnWriteUiShareMessage);
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
-        SubscribeLocalEvent<NewsWriterComponent, NewsWriterArticlesRequestMessage>(OnRequestWriteUiMessage);
+        SubscribeLocalEvent<NewsWriterComponent, NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
 
         SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeUiReadyEvent>(OnReaderUiReady);
         SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeMessageEvent>(OnReadUiMessage);
+        SubscribeLocalEvent<NewsWriterComponent, NewsWriterPublishMessage>(OnWriteUiPublishMessage);
+    }
+
+    public override void Update(float frameTime)
+    {
+        base.Update(frameTime);
+
+        var query = EntityQueryEnumerator<NewsWriterComponent>();
+        while (query.MoveNext(out var uid, out var comp))
+        {
+            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
+                continue;
+
+            comp.PublishEnabled = true;
+            UpdateWriterUi(uid, comp);
+        }
     }
 
     private bool TryGetArticles(EntityUid uid, [NotNullWhen(true)] out List<NewsArticle>? articles)
@@ -78,7 +87,7 @@ public sealed class NewsSystem : EntitySystem
         if (!TryGetArticles(uid, out var articles))
             return;
 
-        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), component.PublishEnabled);
+        var state = new NewsWriterBoundUserInterfaceState(articles.ToArray(), component.PublishEnabled, component.NextPublish);
         UserInterfaceSystem.SetUiState(ui, state);
     }
 
@@ -120,7 +129,7 @@ public sealed class NewsSystem : EntitySystem
             case NewsReaderUiAction.Prev:
                 NewsReaderLeafArticle(uid, component, -1);
                 break;
-            case NewsReaderUiAction.NotificationSwith:
+            case NewsReaderUiAction.NotificationSwitch:
                 component.NotificationOn = !component.NotificationOn;
                 break;
         }
@@ -128,13 +137,21 @@ public sealed class NewsSystem : EntitySystem
         UpdateReaderUi(uid, args.LoaderUid, component);
     }
 
-    private void OnWriteUiShareMessage(EntityUid uid, NewsWriterComponent component, NewsWriterShareMessage msg)
+    private void OnWriteUiPublishMessage(EntityUid uid, NewsWriterComponent component, NewsWriterPublishMessage msg)
     {
+        if (!component.PublishEnabled)
+            return;
+
+        component.PublishEnabled = false;
+        component.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(component.PublishCooldown);
+
         if (!TryGetArticles(uid, out var articles))
             return;
 
         var article = msg.Article;
         var author = msg.Session.AttachedEntity;
+
+        article.Name = article.Name.Length <= 28 ? article.Name : article.Name[..28];
 
         if (author.HasValue
             && _accessReader.FindAccessItemsInventory(author.Value, out var items)
@@ -167,9 +184,6 @@ public sealed class NewsSystem : EntitySystem
         else
             _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}");
         articles.Add(article);
-
-        component.PublishEnabled = false;
-        component.NextPublish = _timing.CurTime + TimeSpan.FromSeconds(component.PublishCooldown);
 
         UpdateReaderDevices();
         UpdateWriterDevices();
@@ -204,7 +218,7 @@ public sealed class NewsSystem : EntitySystem
         UpdateWriterDevices();
     }
 
-    public void OnRequestWriteUiMessage(EntityUid uid, NewsWriterComponent component, NewsWriterArticlesRequestMessage msg)
+    public void OnRequestArticlesUiMessage(EntityUid uid, NewsWriterComponent component, NewsWriterArticlesRequestMessage msg)
     {
         UpdateWriterUi(uid, component);
     }
@@ -283,22 +297,6 @@ public sealed class NewsSystem : EntitySystem
         }
 
         return false;
-    }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var query = EntityQueryEnumerator<NewsWriterComponent>();
-        while (query.MoveNext(out var comp))
-        {
-            if (comp.PublishEnabled || _timing.CurTime < comp.NextPublish)
-                continue;
-
-            comp.PublishEnabled = true;
-
-            UpdateWriterUi(comp.Owner, comp);
-        }
     }
 }
 

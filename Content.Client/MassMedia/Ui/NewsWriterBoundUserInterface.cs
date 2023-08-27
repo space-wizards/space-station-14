@@ -18,9 +18,6 @@ namespace Content.Client.MassMedia.Ui
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         private ClientGameTicker? _gameTicker;
 
-        [ViewVariables]
-        private string _windowName = Loc.GetString("news-read-ui-default-title");
-
         public NewsWriterBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
 
@@ -28,12 +25,12 @@ namespace Content.Client.MassMedia.Ui
 
         protected override void Open()
         {
-            _menu = new NewsWriterMenu(_windowName);
+            _menu = new NewsWriterMenu(_gameTiming);
 
             _menu.OpenCentered();
             _menu.OnClose += Close;
 
-            _menu.ShareButtonPressed += OnShareButtonPressed;
+            _menu.ArticleEditorPanel.PublishButtonPressed += OnPublishButtonPressed;
             _menu.DeleteButtonPressed += OnDeleteButtonPressed;
 
             _gameTicker = _entitySystem.GetEntitySystem<ClientGameTicker>();
@@ -54,33 +51,32 @@ namespace Content.Client.MassMedia.Ui
         protected override void UpdateState(BoundUserInterfaceState state)
         {
             base.UpdateState(state);
-            if (_menu == null || state is not NewsWriterBoundUserInterfaceState cast)
+            if (state is not NewsWriterBoundUserInterfaceState cast)
                 return;
 
-            _menu.UpdateUI(cast.Articles, cast.ShareAvalible);
+            _menu?.UpdateUI(cast.Articles, cast.PublishEnabled, cast.NextPublish);
         }
 
-        private void OnShareButtonPressed()
+        private void OnPublishButtonPressed()
         {
-            if (_menu == null || _menu.NameInput.Text.Length == 0)
+            var title = _menu?.ArticleEditorPanel.TitleField.Text ?? "";
+            if (_menu == null || title.Length == 0)
                 return;
 
-            var stringContent = Rope.Collapse(_menu.ContentInput.TextRope);
+            var stringContent = Rope.Collapse(_menu.ArticleEditorPanel.ContentField.TextRope);
 
-            if (stringContent == null || stringContent.Length == 0) return;
-            if (_gameTicker == null) return;
+            if (stringContent.Length == 0 || _gameTicker == null)
+                return;
 
-            NewsArticle article = new NewsArticle();
-            var stringName = _menu.NameInput.Text;
-            var name = (stringName.Length <= 25 ? stringName.Trim() : $"{stringName.Trim().Substring(0, 25)}...");
-            article.Name = name;
-            article.Content = stringContent;
-            article.ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan);
+            var name = title.Length <= 25 ? title.Trim() : $"{title.Trim()[..25]}...";
+            var article = new NewsArticle
+            {
+                Name = name,
+                Content = stringContent,
+                ShareTime = _gameTiming.CurTime.Subtract(_gameTicker.RoundStartTimeSpan)
+            };
 
-            _menu.ContentInput.TextRope = new Rope.Leaf(string.Empty);
-            _menu.NameInput.Text = string.Empty;
-
-            SendMessage(new NewsWriterShareMessage(article));
+            SendMessage(new NewsWriterPublishMessage(article));
         }
 
         private void OnDeleteButtonPressed(int articleNum)

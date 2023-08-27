@@ -23,7 +23,7 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 
         Next.OnPressed += _ => OnNextButtonPressed?.Invoke();
         Prev.OnPressed += _ => OnPrevButtonPressed?.Invoke();
-        NotificationSwith.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
+        NotificationSwitch.OnPressed += _ => OnNotificationSwithPressed?.Invoke();
     }
 
     public void UpdateState(NewsArticle article, int targetNum, int totalNum, bool notificationOn)
@@ -38,9 +38,9 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 
         PageNum.Text = $"{targetNum}/{totalNum}";
 
-        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
+        NotificationSwitch.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
 
-        string shareTime = article.ShareTime.ToString("hh\\:mm\\:ss");
+        string shareTime = article.ShareTime.ToString(@"hh\:mm\:ss");
         ShareTime.SetMarkup(Loc.GetString("news-read-ui-time-prefix-text") + " " + shareTime);
 
         Author.SetMarkup(Loc.GetString("news-read-ui-author-prefix") + " " + (article.Author != null ? article.Author : Loc.GetString("news-read-ui-no-author")));
@@ -55,6 +55,6 @@ public sealed partial class NewsReaderUiFragment : BoxContainer
 
         PageName.Text = Loc.GetString("news-read-ui-not-found-text");
 
-        NotificationSwith.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
+        NotificationSwitch.Text = Loc.GetString(notificationOn ? "news-read-ui-notification-on" : "news-read-ui-notification-off");
     }
 }

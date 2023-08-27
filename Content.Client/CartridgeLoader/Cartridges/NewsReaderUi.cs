@@ -29,7 +29,7 @@ public sealed class NewsReaderUi : UIFragment
         };
         _fragment.OnNotificationSwithPressed += () =>
         {
-            SendNewsReaderMessage(NewsReaderUiAction.NotificationSwith, userInterface);
+            SendNewsReaderMessage(NewsReaderUiAction.NotificationSwitch, userInterface);
         };
     }
 
