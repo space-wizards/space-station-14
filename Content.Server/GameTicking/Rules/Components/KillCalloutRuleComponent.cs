@@ -3,7 +3,7 @@
 /// <summary>
 /// This is used for a rule that announces kills globally.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(KillCalloutRuleSystem))]
 public sealed partial class KillCalloutRuleComponent : Component
 {
     /// <summary>

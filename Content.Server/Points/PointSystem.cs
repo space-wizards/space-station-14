@@ -35,6 +35,9 @@ public sealed class PointSystem : SharedPointSystem
         args.State = new PointManagerComponentState(component.Points, component.Scoreboard);
     }
 
+    /// <summary>
+    /// Adds the specified point value to a player.
+    /// </summary>
     [PublicAPI]
     public void AdjustPointValue(EntityUid user, FixedPoint2 value, EntityUid uid, PointManagerComponent? component, ActorComponent? actor = null)
     {
@@ -43,6 +46,9 @@ public sealed class PointSystem : SharedPointSystem
         AdjustPointValue(actor.PlayerSession.UserId, value, uid, component);
     }
 
+    /// <summary>
+    /// Sets the amount of points for a player
+    /// </summary>
     [PublicAPI]
     public void SetPointValue(EntityUid user, FixedPoint2 value, EntityUid uid, PointManagerComponent? component, ActorComponent? actor = null)
     {
@@ -51,6 +57,9 @@ public sealed class PointSystem : SharedPointSystem
         SetPointValue(actor.PlayerSession.UserId, value, uid, component);
     }
 
+    /// <summary>
+    /// Gets the amount of points for a given player
+    /// </summary>
     [PublicAPI]
     public FixedPoint2 GetPointValue(EntityUid user, EntityUid uid, PointManagerComponent? component, ActorComponent? actor = null)
     {
@@ -59,6 +68,7 @@ public sealed class PointSystem : SharedPointSystem
         return GetPointValue(actor.PlayerSession.UserId, uid, component);
     }
 
+    /// <inheritdoc/>
     public override FormattedMessage GetScoreboard(EntityUid uid, PointManagerComponent? component = null)
     {
         var msg = new FormattedMessage();

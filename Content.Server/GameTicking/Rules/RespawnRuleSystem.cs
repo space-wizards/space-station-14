@@ -42,6 +42,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         {
             respawn.Players.Remove(actor.PlayerSession.UserId);
         }
+        QueueDel(ev.Victim);
     }
 
     private void OnMobStateChanged(MobStateChangedEvent args)
@@ -89,6 +90,9 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         }
     }
 
+    /// <summary>
+    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
+    /// </summary>
     public void AddToTracker(EntityUid player, EntityUid tracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
     {
         if (!Resolve(tracker, ref component) || !Resolve(player, ref actor, false))
@@ -97,6 +101,9 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         AddToTracker(actor.PlayerSession.UserId, tracker, component);
     }
 
+    /// <summary>
+    /// Adds a given player to the respawn tracker, ensuring that they are respawned if they die.
+    /// </summary>
     public void AddToTracker(NetUserId id, EntityUid tracker, RespawnTrackerComponent? component = null)
     {
         if (!Resolve(tracker, ref component))
@@ -105,6 +112,9 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         component.Players.Add(id);
     }
 
+    /// <summary>
+    /// Attempts to directly respawn a player, skipping the lobby screen.
+    /// </summary>
     public bool RespawnPlayer(EntityUid player, EntityUid respawnTracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
     {
         if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))

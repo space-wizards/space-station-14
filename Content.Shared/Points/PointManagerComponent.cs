@@ -9,7 +9,7 @@ namespace Content.Shared.Points;
 /// <summary>
 /// This is a component that generically stores points for all players.
 /// </summary>
-[RegisterComponent, NetworkedComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedPointSystem))]
 public sealed partial class PointManagerComponent : Component
 {
     /// <summary>

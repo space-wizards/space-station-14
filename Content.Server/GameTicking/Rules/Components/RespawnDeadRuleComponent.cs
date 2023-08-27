@@ -1,9 +1,9 @@
 ﻿namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// This is used for gamemodes that automatically respawn players on death.
+/// This is used for gamemodes that automatically respawn players when they're no longer alive.
 /// </summary>
-[RegisterComponent]
+[RegisterComponent, Access(typeof(RespawnRuleSystem))]
 public sealed partial class RespawnDeadRuleComponent : Component
 {
 }
