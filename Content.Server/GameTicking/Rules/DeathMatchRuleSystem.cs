@@ -7,6 +7,7 @@ using Content.Server.RoundEnd;
 using Content.Server.Station.Systems;
 using Content.Shared.Points;
 using Content.Shared.Storage;
+using Robust.Server.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
@@ -16,6 +17,7 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
+    [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PointSystem _point = default!;
     [Dependency] private readonly RespawnRuleSystem _respawn = default!;
@@ -30,12 +32,13 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
         SubscribeLocalEvent<DeathMatchRuleComponent, PlayerPointChangedEvent>(OnPointChanged);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
     }
 
     private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
     {
-        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var dm, out var tracker, out var rule))
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var tracker, out var point, out var rule))
         {
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
@@ -49,7 +52,10 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
 
             _mind.TransferTo(newMind, mob);
             SetOutfitCommand.SetOutfit(mob, dm.Gear, EntityManager);
+            EnsureComp<KillTrackerComponent>(mob);
             _respawn.AddToTracker(ev.Player.UserId, uid, tracker);
+
+            _point.EnsurePlayer(ev.Player.UserId, uid, point);
 
             ev.Handled = true;
             break;
@@ -104,5 +110,23 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
 
         component.Victor = args.Player;
         _roundEnd.EndRound(component.RestartDelay);
+    }
+
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    {
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, rule))
+                continue;
+
+            if (dm.Victor != null && _player.TryGetPlayerData(dm.Victor.Value, out var data))
+            {
+                ev.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));
+                ev.AddLine("");
+            }
+            ev.AddLine(Loc.GetString("point-scoreboard-header"));
+            ev.AddLine(point.Scoreboard.ToMarkup());
+        }
     }
 }

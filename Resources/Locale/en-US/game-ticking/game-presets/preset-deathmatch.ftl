@@ -1,5 +1,5 @@
 death-match-title = DeathMatch
-death-match-description = Kill anything that moves!
+death-match-description = Kill anything that moves! Normal roleplay need not apply. The first to 31 points wins!
 
 death-match-name-player = [bold]{$name}[/bold] ([italic]{$username}[/italic])
 death-match-name-npc = [bold]{$name}[/bold]
@@ -21,7 +21,7 @@ death-match-kill-callout-13 = {CAPITALIZE($killer)} made {$victim} bite the dust
 death-match-kill-callout-14 = {CAPITALIZE($killer)} posted a cringe compilation of {$victim}!
 death-match-kill-callout-15 = {CAPITALIZE($killer)} saw {$victim} post their full-body OC!
 death-match-kill-callout-16 = {CAPITALIZE($killer)} Doom (1993)'ed {$victim}!
-death-match-kill-callout-17 = {CAPITALIZE($killer)} *Vine boom sound effect*'ed {$victim}!
+death-match-kill-callout-17 = {CAPITALIZE($killer)} humiliated {$victim}!
 death-match-kill-callout-18 = {CAPITALIZE($killer)} removed {$victim}'s flashdrive while it was being used!
 death-match-kill-callout-19 = {CAPITALIZE($killer)} deleted System32 from {$victim}'s PC!
 death-match-kill-callout-20 = {CAPITALIZE($killer)} bwoinked {$victim}!

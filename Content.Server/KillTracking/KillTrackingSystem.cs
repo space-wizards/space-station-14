@@ -1,7 +1,7 @@
-﻿using Content.Server.NPC.Components;
-using Content.Shared.Damage;
+﻿using Content.Shared.Damage;
 using Content.Shared.FixedPoint;
 using Content.Shared.Mobs;
+using Content.Shared.NPC;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.KillTracking;
@@ -97,7 +97,7 @@ public sealed class KillTrackingSystem : EntitySystem
     {
         if (TryComp<ActorComponent>(sourceEntity, out var actor))
             return new KillPlayerSource(actor.PlayerSession.UserId);
-        if (HasComp<NPCComponent>(sourceEntity))
+        if (HasComp<SharedNPCComponent>(sourceEntity))
             return new KillNpcSource(sourceEntity.Value);
         return new KillEnvironmentSource();
     }

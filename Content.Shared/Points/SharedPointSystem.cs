@@ -9,12 +9,6 @@ namespace Content.Shared.Points;
 /// </summary>
 public abstract class SharedPointSystem : EntitySystem
 {
-    /// <inheritdoc/>
-    public override void Initialize()
-    {
-
-    }
-
     public void AdjustPointValue(NetUserId userId, FixedPoint2 value, EntityUid uid, PointManagerComponent? component = null)
     {
         if (!Resolve(uid, ref component))
@@ -35,6 +29,8 @@ public abstract class SharedPointSystem : EntitySystem
             return;
 
         component.Points[userId] = value;
+        component.Scoreboard = GetScoreboard(uid, component);
+        Dirty(uid, component);
 
         var ev = new PlayerPointChangedEvent(userId, value);
         RaiseLocalEvent(uid, ref ev, true);
@@ -48,6 +44,16 @@ public abstract class SharedPointSystem : EntitySystem
         return component.Points.TryGetValue(userId, out var value)
             ? value
             : FixedPoint2.Zero;
+    }
+
+    public void EnsurePlayer(NetUserId userId, EntityUid uid, PointManagerComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return;
+
+        if (component.Points.ContainsKey(userId))
+            return;
+        SetPointValue(userId, FixedPoint2.Zero, uid, component);
     }
 
     public virtual FormattedMessage GetScoreboard(EntityUid uid, PointManagerComponent? component = null)

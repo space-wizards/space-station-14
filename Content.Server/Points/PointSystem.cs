@@ -32,8 +32,6 @@ public sealed class PointSystem : SharedPointSystem
 
     private void OnGetState(EntityUid uid, PointManagerComponent component, ref ComponentGetState args)
     {
-        component.Scoreboard = GetScoreboard(uid, component);
-
         args.State = new PointManagerComponentState(component.Points, component.Scoreboard);
     }
 
@@ -78,7 +76,8 @@ public sealed class PointSystem : SharedPointSystem
             msg.AddMarkup(Loc.GetString("point-scoreboard-list",
                 ("place", place),
                 ("name", data.UserName),
-                ("points", points)));
+                ("points", points.Int())));
+            msg.PushNewline();
             place++;
         }
 
