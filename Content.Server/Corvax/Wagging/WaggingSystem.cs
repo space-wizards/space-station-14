@@ -1,6 +1,7 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Chat.Systems;
 using Content.Server.Humanoid;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Mobs;
@@ -14,7 +15,7 @@ namespace Content.Server.Corvax.Wagging;
 /// </summary>
 public sealed class WaggingSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _action = default!;
+    [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
@@ -28,13 +29,25 @@ public sealed class WaggingSystem : EntitySystem
         _sawmill = Logger.GetSawmill("wag");
 
         SubscribeLocalEvent<WaggingComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<WaggingComponent, ComponentRemove>(OnRemove);
         SubscribeLocalEvent<WaggingComponent, ToggleActionEvent>(OnToggleAction);
         SubscribeLocalEvent<WaggingComponent, MobStateChangedEvent>(OnMobStateChanged);
     }
 
     private void OnStartup(EntityUid uid, WaggingComponent component, ComponentStartup args)
     {
-        _action.AddAction(uid, component.ToggleAction, null);
+        if (!_prototype.TryIndex<InstantActionPrototype>(component.Action, out var action))
+            return;
+
+        _actions.AddAction(uid, new InstantAction(action), uid);
+    }
+
+    private void OnRemove(EntityUid uid, WaggingComponent component, ComponentRemove args)
+    {
+        if (!_prototype.TryIndex<InstantActionPrototype>(component.Action, out var action))
+            return;
+
+        _actions.RemoveAction(uid, new InstantAction(action));
     }
 
     private void OnToggleAction(EntityUid uid, WaggingComponent component, ToggleActionEvent args)

@@ -61,12 +61,6 @@
     baseSprintSpeed : 4.5
   - type: Perishable
   - type: Wagging
-    toggleAction:
-      name: action-name-toggle-wagging
-      description: action-description-toggle-wagging
-      icon: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-      iconOn: { sprite: Mobs/Customization/reptilian_parts.rsi, state: tail_smooth_behind }
-      event: !type:ToggleActionEvent
 
 - type: entity
   save: false
