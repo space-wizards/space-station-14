@@ -515,11 +515,13 @@ namespace Content.Server.Construction
             // ikr
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
-            _transform.Unanchor(structure, xform);
-            _transform.SetCoordinates(structure, ev.Location);
+            // _transform.Unanchor(structure, xform);
+            // _transform.SetCoordinates(structure, ev.Location);
+            xform.Coordinates = ev.Location;
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
-            if (wasAnchored)
-                _transform.AnchorEntity(structure, xform);
+            // if (wasAnchored)
+            //     _transform.AnchorEntity(structure, xform);
+            xform.Coordinates = ev.Location;
 
             RaiseNetworkEvent(new AckStructureConstructionMessage(ev.Ack, structure));
             _adminLogger.Add(LogType.Construction, LogImpact.Low, $"{ToPrettyString(user):player} has turned a {ev.PrototypeName} construction ghost into {ToPrettyString(structure)} at {Transform(structure).Coordinates}");

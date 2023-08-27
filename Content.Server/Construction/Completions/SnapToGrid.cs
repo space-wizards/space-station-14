@@ -12,14 +12,15 @@ namespace Content.Server.Construction.Completions
 
         public void PerformAction(EntityUid uid, EntityUid? userUid, IEntityManager entityManager)
         {
-            var xform = entityManager.GetComponent<TransformComponent>(uid);
-            var transform = entityManager.System<SharedTransformSystem>();
+            var transform = entityManager.GetComponent<TransformComponent>(uid);
 
-            if (!xform.Anchored)
-                transform.SetCoordinates(uid, xform, xform.Coordinates.SnapToGrid(entityManager));
+            if (!transform.Anchored)
+                transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
 
             if (SouthRotation)
-                transform.SetLocalRotation(xform, Angle.Zero);
+            {
+                transform.LocalRotation = Angle.Zero;
+            }
         }
     }
 }

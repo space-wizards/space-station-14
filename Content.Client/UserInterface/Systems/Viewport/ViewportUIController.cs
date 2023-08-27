@@ -16,7 +16,6 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-    private SharedTransformSystem? _transform;
 
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;
@@ -30,8 +29,6 @@ public sealed class ViewportUIController : UIController
 
         var gameplayStateLoad = UIManager.GetUIController<GameplayStateLoadController>();
         gameplayStateLoad.OnScreenLoad += OnScreenLoad;
-
-        _transform = _entMan.System<SharedTransformSystem>();
     }
 
     private void OnScreenLoad()
@@ -91,7 +88,7 @@ public sealed class ViewportUIController : UIController
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
 
         if (eye?.Eye == _eyeManager.CurrentEye
-            && _transform?.GetWorldPosition(ent.Value) == default)
+            && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
         {
             return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
         }
