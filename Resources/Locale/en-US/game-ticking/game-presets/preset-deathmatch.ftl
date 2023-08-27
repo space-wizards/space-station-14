@@ -5,6 +5,7 @@ death-match-name-player = [bold]{$name}[/bold] ([italic]{$username}[/italic])
 death-match-name-npc = [bold]{$name}[/bold]
 death-match-assist = {$primary}, assisted by {$secondary},
 
+death-match-kill-callout-0 = {CAPITALIZE($killer)} murdered {$victim}!
 death-match-kill-callout-1 = {CAPITALIZE($killer)} killed {$victim}!
 death-match-kill-callout-2 = {CAPITALIZE($killer)} fragged {$victim}!
 death-match-kill-callout-3 = {CAPITALIZE($killer)} demolished {$victim}!
@@ -65,6 +66,7 @@ death-match-kill-callout-57 = {CAPITALIZE($killer)} styled on {$victim}!
 death-match-kill-callout-58 = {CAPITALIZE($killer)} said a rude word to {$victim}!
 death-match-kill-callout-59 = {CAPITALIZE($killer)} sent hate-mail to {$victim}!
 death-match-kill-callout-60 = {CAPITALIZE($killer)} tripped {$victim} down the stairs!
+death-match-kill-callout-env-1 = {CAPITALIZE($victim)} lost a point!
 death-match-kill-callout-env-1 = {CAPITALIZE($victim)} got humiliated!
 death-match-kill-callout-env-2 = {CAPITALIZE($victim)} just looked like an idiot!
 death-match-kill-callout-env-3 = {CAPITALIZE($victim)} suffered a skill issue!

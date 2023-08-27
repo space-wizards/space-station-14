@@ -45,7 +45,9 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
         // Do the humiliation callouts if you kill yourself or die from bleeding out or something lame.
         if (ev.Primary is KillEnvironmentSource || ev.Suicide)
         {
-            return Loc.GetString(_random.Pick(component.SelfKillCallouts),
+            var callout = $"{component.KillCalloutPrefix}{_random.Next(component.KillCalloutAmount)}";
+
+            return Loc.GetString(callout,
                 ("victim", GetCalloutName(ev.Entity)));
         }
 
@@ -58,7 +60,8 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
                 ("primary", primary), ("secondary", secondary));
         }
 
-        return Loc.GetString(_random.Pick(component.KillCallouts), ("killer", killerString),
+        var selfCallout = $"{component.SelfKillCalloutPrefix}{_random.Next(component.SelfKillCalloutAmount)}";
+        return Loc.GetString(selfCallout, ("killer", killerString),
             ("victim", GetCalloutName(ev.Entity)));
     }
 

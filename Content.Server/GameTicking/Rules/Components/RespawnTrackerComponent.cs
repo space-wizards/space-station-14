@@ -1,9 +1,11 @@
-﻿using Robust.Shared.Network;
+﻿using Content.Server.KillTracking;
+using Robust.Shared.Network;
 
 namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
-/// This is used for keeping track of players that need to respawn.
+/// This is used for globally tracking players that need to be respawned.
+/// Used on gamerule entities.
 /// </summary>
 [RegisterComponent, Access(typeof(RespawnRuleSystem))]
 public sealed partial class RespawnTrackerComponent : Component
