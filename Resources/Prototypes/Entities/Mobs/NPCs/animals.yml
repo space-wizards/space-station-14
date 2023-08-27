@@ -2476,9 +2476,6 @@
     spawned:
     - id: MaterialWoodPlank1
       amount: 2
-    - type: Speech
-      speechVerb: Default
-      speechSounds: Squeak
   - type: InteractionPopup
     successChance: 0.7
     interactSuccessString: petting-success-nymph
@@ -2495,6 +2492,7 @@
   - type: Grammar
     attributes:
       gender: epicene
+  - type: Speech
   - type: Tag
     tags:
     - VimPilot
