@@ -310,7 +310,7 @@ namespace Content.Server.Polymorph.Systems
                 _mindSystem.TransferTo(mind, parent);
 
             // if an item polymorph was picked up, put it back down after reverting
-            Transform(parent).AttachToGridOrMap();
+            _transform.AttachToGridOrMap(parent);
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),

@@ -249,7 +249,7 @@ public partial class SharedBodySystem
             container.Remove(partId.Value);
 
         if (TryComp(partId, out TransformComponent? transform))
-            transform.AttachToGridOrMap();
+            _transform.AttachToGridOrMap(partId.Value, transform);
 
         part.Owner.RandomOffset(0.25f);
 

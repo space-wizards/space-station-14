@@ -133,7 +133,7 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         // Don't microwave animals, kids
-        Transform(uid).AttachToGridOrMap();
+        _transform.AttachToGridOrMap(uid);
         GibBody(uid, false, component);
 
         args.Handled = true;

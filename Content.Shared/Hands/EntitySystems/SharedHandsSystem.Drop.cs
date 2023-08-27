@@ -100,7 +100,9 @@ public abstract partial class SharedHandsSystem : EntitySystem
             if (!isInContainer
                 || !_containerSystem.TryGetContainingContainer(userXform.ParentUid, uid, out var container, skipExistCheck: true)
                 || !container.Insert(entity, EntityManager, itemXform))
-                itemXform.AttachToGridOrMap();
+            {
+                _transform.AttachToGridOrMap(entity, itemXform);
+            }
             return true;
         }
 

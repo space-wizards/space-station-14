@@ -33,7 +33,7 @@ namespace Content.Server.Administration.Commands
                 shell.WriteLine("You can't ghost here!");
                 return;
             }
-            
+
             var mindSystem = _entities.System<MindSystem>();
 
             if (mind.VisitingEntity != default && _entities.TryGetComponent<GhostComponent>(mind.VisitingEntity, out var oldGhostComponent))
@@ -50,7 +50,7 @@ namespace Content.Server.Administration.Commands
                 ? _entities.GetComponent<TransformComponent>(player.AttachedEntity.Value).Coordinates
                 : EntitySystem.Get<GameTicker>().GetObserverSpawnPoint();
             var ghost = _entities.SpawnEntity("AdminObserver", coordinates);
-            _entities.GetComponent<TransformComponent>(ghost).AttachToGridOrMap();
+            _entities.System<SharedTransformSystem>().AttachToGridOrMap(ghost);
 
             if (canReturn)
             {
