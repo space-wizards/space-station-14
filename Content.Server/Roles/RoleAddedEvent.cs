@@ -1,7 +1,5 @@
-﻿namespace Content.Server.Roles
-{
-    public sealed class RoleAddedEvent : RoleEvent
-    {
-        public RoleAddedEvent(Mind.Mind mind, Role role) : base(mind, role) { }
-    }
-}
+﻿using Content.Server.Mind;
+
+namespace Content.Server.Roles;
+
+public sealed record RoleAddedEvent(EntityUid MindId, MindComponent Mind, bool Antagonist) : RoleEvent(MindId, Mind, Antagonist);

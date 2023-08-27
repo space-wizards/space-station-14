@@ -1,5 +1,5 @@
-﻿using Content.Server.Mind.Components;
-using Content.Server.Roles;
+﻿using Content.Server.Mind;
+using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
 
@@ -7,6 +7,9 @@ namespace Content.Server.CharacterInfo;
 
 public sealed class CharacterInfoSystem : EntitySystem
 {
+    [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -25,10 +28,8 @@ public sealed class CharacterInfoSystem : EntitySystem
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
         var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's an issue
-        if (TryComp<MindContainerComponent>(entity, out var mindContainerComponent) && mindContainerComponent.Mind != null)
+        if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
-            var mind = mindContainerComponent.Mind;
-
             // Get objectives
             foreach (var objective in mind.AllObjectives)
             {
@@ -41,14 +42,8 @@ public sealed class CharacterInfoSystem : EntitySystem
                 }
             }
 
-            // Get job title
-            foreach (var role in mind.AllRoles)
-            {
-                if (role.GetType() != typeof(Job)) continue;
-
-                jobTitle = role.Name;
-                break;
-            }
+            if (_jobs.MindTryGetJobName(mindId, out var jobName))
+                jobTitle = jobName;
 
             // Get briefing
             briefing = mind.Briefing;

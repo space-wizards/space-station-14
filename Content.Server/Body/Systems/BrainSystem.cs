@@ -5,7 +5,6 @@ using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
@@ -57,7 +56,7 @@ namespace Content.Server.Body.Systems
                 _movementSpeed.ChangeBaseSpeed(newEntity, 0, 0 , 0, move);
             }
 
-            if (!_mindSystem.TryGetMind(oldEntity, out var mind, oldMind))
+            if (!_mindSystem.TryGetMind(oldEntity, out var mind, out _))
                 return;
 
             _mindSystem.TransferTo(mind, newEntity);

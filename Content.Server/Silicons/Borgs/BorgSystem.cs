@@ -96,7 +96,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             brain != null &&
             component.BrainWhitelist?.IsValid(used) != false)
         {
-            if (_mind.TryGetMind(used, out var mind) && mind.Session != null)
+            if (_mind.TryGetMind(used, out _, out var mind) && mind.Session != null)
             {
                 if (!CanPlayerBeBorgged(mind.Session))
                 {
@@ -127,9 +127,9 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         base.OnInserted(uid, component, args);
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(args.Entity, out var mindId, out var mind))
         {
-            _mind.TransferTo(mind, uid);
+            _mind.TransferTo(mindId, uid, mind: mind);
         }
     }
 
@@ -137,9 +137,10 @@ public sealed partial class BorgSystem : SharedBorgSystem
     {
         base.OnRemoved(uid, component, args);
 
-        if (HasComp<BorgBrainComponent>(args.Entity) && _mind.TryGetMind(uid, out var mind))
+        if (HasComp<BorgBrainComponent>(args.Entity) &
+            _mind.TryGetMind(uid, out var mindId, out var mind))
         {
-            _mind.TransferTo(mind, args.Entity);
+            _mind.TransferTo(mindId, args.Entity, mind: mind);
         }
     }
 
@@ -171,7 +172,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
         if (_powerCell.HasDrawCharge(uid, draw))
         {
             // only reenable the powerdraw if a player has the role.
-            if (!draw.Drawing && _mind.TryGetMind(uid, out _))
+            if (!draw.Drawing && _mind.TryGetMind(uid, out _, out _))
                 _powerCell.SetPowerCellDrawEnabled(uid, true);
 
             EnableBorgAbilities(uid, component);
@@ -209,7 +210,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             container.ID != chassisComponent.BrainContainerId)
             return;
 
-        if (!_mind.TryGetMind(uid, out var mind) || mind.Session == null)
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind) || mind.Session == null)
             return;
 
         if (!CanPlayerBeBorgged(mind.Session))
@@ -220,7 +221,7 @@ public sealed partial class BorgSystem : SharedBorgSystem
             return;
         }
 
-        _mind.TransferTo(mind, containerEnt);
+        _mind.TransferTo(mindId, containerEnt, mind: mind);
     }
 
     private void UpdateBatteryAlert(EntityUid uid, PowerCellSlotComponent? slotComponent = null)

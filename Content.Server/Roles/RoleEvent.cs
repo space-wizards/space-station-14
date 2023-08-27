@@ -1,14 +1,5 @@
-﻿namespace Content.Server.Roles
-{
-    public abstract class RoleEvent : EntityEventArgs
-    {
-        public readonly Mind.Mind Mind;
-        public readonly Role Role;
+﻿using Content.Server.Mind;
 
-        public RoleEvent(Mind.Mind mind, Role role)
-        {
-            Mind = mind;
-            Role = role;
-        }
-    }
-}
+namespace Content.Server.Roles;
+
+public abstract record RoleEvent(EntityUid MindId, MindComponent Mind, bool Antagonist);

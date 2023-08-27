@@ -3,8 +3,8 @@ using Content.Server.EUI;
 using Content.Server.Ghost.Roles.Components;
 using Content.Server.Ghost.Roles.Events;
 using Content.Server.Ghost.Roles.UI;
-using Content.Server.Mind.Commands;
 using Content.Server.Mind;
+using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
 using Content.Server.Players;
 using Content.Shared.Administration;
@@ -219,7 +219,7 @@ namespace Content.Server.Ghost.Roles
 
             var newMind = _mindSystem.CreateMind(player.UserId,
                 EntityManager.GetComponent<MetaDataComponent>(mob).EntityName);
-            _mindSystem.AddRole(newMind, new GhostRoleMarkerRole(newMind, role.RoleName));
+            _mindSystem.AddRole(newMind, new GhostRoleMarkerRoleComponent { Name = role.RoleName });
 
             _mindSystem.SetUserId(newMind, player.UserId);
             _mindSystem.TransferTo(newMind, mob);
