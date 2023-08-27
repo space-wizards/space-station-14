@@ -191,7 +191,7 @@ namespace Content.Client.NPC
                     if (found || !_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     var localAABB = invWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
 
                     foreach (var chunk in crumbs)

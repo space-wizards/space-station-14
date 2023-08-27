@@ -203,7 +203,7 @@ namespace Content.Server.Hands.Systems
             }
 
             // var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
-            var direction = coords.ToMapPos(EntityManager) - Transform(player).WorldPosition;
+            var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
             if (direction == Vector2.Zero)
                 return true;
 
