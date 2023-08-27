@@ -56,7 +56,8 @@ public sealed partial class ReplaySpectatorSystem
             return data;
 
         data.Local = (xform.Coordinates, xform.LocalRotation);
-        data.World = (new(xform.MapUid.Value, _transform.GetWorldPosition(xform)), _transform.GetWorldRotation(xform));
+        var (pos, rot) = _transform.GetWorldPositionRotation(xform);
+        data.World = (new(xform.MapUid.Value, pos), rot);
 
         if (TryComp(player, out InputMoverComponent? mover))
             data.Eye = (mover.RelativeEntity, mover.TargetRelativeRotation);

@@ -202,7 +202,6 @@ namespace Content.Server.Hands.Systems
                 throwEnt = splitStack.Value;
             }
 
-            // var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
             var direction = coords.ToMapPos(EntityManager) - _transform.GetWorldPosition(player);
             if (direction == Vector2.Zero)
                 return true;

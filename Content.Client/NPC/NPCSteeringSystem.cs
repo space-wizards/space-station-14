@@ -95,7 +95,7 @@ public sealed class NPCSteeringOverlay : Overlay
                 continue;
             }
 
-            var (worldPos, _) = _transform.GetWorldPositionRotation(xform);
+            var worldPos = _transform.GetWorldPosition(xform);
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;
