@@ -516,7 +516,7 @@ namespace Content.Server.Construction
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
             xform.Anchored = false;
-            xform.Coordinates = ev.Location;
+            _transform.SetCoordinates(structure, xform, ev.Location);
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 
