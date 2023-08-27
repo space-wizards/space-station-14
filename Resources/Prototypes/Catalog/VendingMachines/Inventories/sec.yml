@@ -12,6 +12,7 @@
     RiotShield: 2
     RiotLaserShield: 2
     RiotBulletShield: 2
+    ClothingMaskBalaclava: 2
   # security officers need to follow a diet regimen!
   contrabandInventory:
     FoodDonutHomer: 12
