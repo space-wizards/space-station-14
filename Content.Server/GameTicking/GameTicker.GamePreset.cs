@@ -263,11 +263,10 @@ namespace Content.Server.GameTicking
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
-            var meta = MetaData(ghost);
-            if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                meta.EntityName = mind.CharacterName;
+            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
+                _metaData.SetEntityName(ghost, mind.CharacterName);
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                meta.EntityName = mind.Session.Name;
+                _metaData.SetEntityName(ghost, mind.Session.Name);
 
             var ghostComponent = Comp<GhostComponent>(ghost);
 
