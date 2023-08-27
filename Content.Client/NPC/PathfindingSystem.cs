@@ -21,6 +21,7 @@ namespace Content.Client.NPC
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _cache = default!;
         [Dependency] private readonly NPCSteeringSystem _steering = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -341,7 +342,7 @@ namespace Content.Client.NPC
                         continue;
                     }
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -396,7 +397,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -430,7 +431,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invMatrix.TransformBox(aabb);
 
@@ -484,7 +485,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
+                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(args.WorldBounds);
 
