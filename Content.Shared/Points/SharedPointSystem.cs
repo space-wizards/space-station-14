@@ -1,5 +1,6 @@
 ﻿using Content.Shared.FixedPoint;
 using Robust.Shared.Network;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Points;
 
@@ -47,6 +48,11 @@ public abstract class SharedPointSystem : EntitySystem
         return component.Points.TryGetValue(userId, out var value)
             ? value
             : FixedPoint2.Zero;
+    }
+
+    public virtual FormattedMessage GetScoreboard(EntityUid uid, PointManagerComponent? component = null)
+    {
+        return new FormattedMessage();
     }
 }
 

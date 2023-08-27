@@ -86,7 +86,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
 
             _point.AdjustPointValue(player.PlayerId, 1, uid, point);
 
-            if (ev.Assist is KillPlayerSource assist)
+            if (ev.Assist is KillPlayerSource assist && dm.Victor == null)
                 _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
 
             var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns);

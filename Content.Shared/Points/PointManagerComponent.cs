@@ -2,6 +2,7 @@ using Content.Shared.FixedPoint;
 using Robust.Shared.GameStates;
 using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.Points;
 
@@ -16,6 +17,12 @@ public sealed partial class PointManagerComponent : Component
     /// </summary>
     [DataField("points")]
     public Dictionary<NetUserId, FixedPoint2> Points = new();
+
+    /// <summary>
+    /// A text-only version of the scoreboard used by the client.
+    /// </summary>
+    [DataField("scoreboard")]
+    public FormattedMessage Scoreboard = new();
 }
 
 [Serializable, NetSerializable]
@@ -23,8 +30,11 @@ public sealed class PointManagerComponentState : ComponentState
 {
     public Dictionary<NetUserId, FixedPoint2> Points;
 
-    public PointManagerComponentState(Dictionary<NetUserId, FixedPoint2> points)
+    public FormattedMessage Scoreboard;
+
+    public PointManagerComponentState(Dictionary<NetUserId, FixedPoint2> points, FormattedMessage scoreboard)
     {
         Points = points;
+        Scoreboard = scoreboard;
     }
 }
