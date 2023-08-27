@@ -80,14 +80,11 @@
       "name": "snow12"
     },
     {
-      "name": "snowplating"
-    },
-    {
       "name": "permafrost"
     },
     {
       "name": "edge0",
-      "directions": 4
+      "directions": 4 
     },
     {
       "name": "edge1",

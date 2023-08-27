@@ -15,9 +15,9 @@ namespace Content.IntegrationTests.Tests.Lobby
         [Test]
         public async Task CreateDeleteCreateTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { InLobby = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var clientNetManager = client.ResolveDependency<IClientNetManager>();
             var clientStateManager = client.ResolveDependency<IStateManager>();
@@ -27,7 +27,7 @@ namespace Content.IntegrationTests.Tests.Lobby
 
 
             // Need to run them in sync to receive the messages.
-            await PoolManager.RunTicksSync(pairTracker.Pair, 1);
+            await pair.RunTicksSync(1);
 
             await PoolManager.WaitUntil(client, () => clientStateManager.CurrentState is LobbyState, 600);
 
@@ -109,7 +109,7 @@ namespace Content.IntegrationTests.Tests.Lobby
                 Assert.That(serverCharacters, Has.Count.EqualTo(2));
                 Assert.That(serverCharacters[1].MemberwiseEquals(profile));
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }
