@@ -8,7 +8,7 @@ using Content.Shared.Mobs;
 using Content.Shared.Toggleable;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Corvax.Wagging;
+namespace Content.Server.Wagging;
 
 /// <summary>
 /// Adds an action to toggle wagging animation for tails markings that supporting this

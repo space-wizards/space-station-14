@@ -2,7 +2,7 @@
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Corvax.Wagging;
+namespace Content.Server.Wagging;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(WaggingSystem))]
