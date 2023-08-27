@@ -1,4 +1,5 @@
 ﻿using Content.Server.Mind;
+using Content.Server.Roles;
 using Content.Server.Roles.Jobs;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
@@ -9,6 +10,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 {
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
 
     public override void Initialize()
     {
@@ -46,7 +48,7 @@ public sealed class CharacterInfoSystem : EntitySystem
                 jobTitle = jobName;
 
             // Get briefing
-            briefing = mind.Briefing;
+            briefing = _roles.MindGetBriefing(mindId) ?? string.Empty;
         }
 
         RaiseNetworkEvent(new CharacterInfoEvent(entity, jobTitle, conditions, briefing), args.SenderSession);

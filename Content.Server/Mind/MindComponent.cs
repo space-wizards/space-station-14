@@ -7,7 +7,8 @@ using Robust.Shared.Network;
 namespace Content.Server.Mind
 {
     /// <summary>
-    ///     A mind represents the IC "mind" of a player. Stores roles currently.
+    ///     A mind represents the IC "mind" of a player.
+    ///     Roles are attached as components to its owning entity.
     /// </summary>
     /// <remarks>
     ///     Think of it like this: if a player is supposed to have their memories,
@@ -20,8 +21,6 @@ namespace Content.Server.Mind
     public sealed partial class MindComponent : Component
     {
         internal readonly List<Objective> Objectives = new();
-
-        public string Briefing = string.Empty;
 
         /// <summary>
         ///     The session ID of the player owning this mind.

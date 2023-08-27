@@ -70,6 +70,12 @@ public sealed class RoleSystem : EntitySystem
         return ev.IsAntagonist;
     }
 
+    public string? MindGetBriefing(EntityUid? mindId)
+    {
+        // TODO this should be an event
+        return CompOrNull<TraitorRoleComponent>(mindId)?.Briefing;
+    }
+
     public bool IsAntagonistRole<T>()
     {
         return _antagTypes.Contains(typeof(T));
