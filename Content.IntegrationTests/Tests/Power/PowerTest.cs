@@ -162,8 +162,8 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestSimpleSurplus()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             const float loadPower = 200;
@@ -213,7 +213,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
 
@@ -223,8 +223,8 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestSimpleDeficit()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             const float loadPower = 200;
@@ -274,14 +274,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestSupplyRamp()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -361,14 +361,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestBatteryRamp()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -460,7 +460,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
@@ -468,8 +468,8 @@ namespace Content.IntegrationTests.Tests.Power
         {
             // checks that batteries and supplies properly ramp down if the load is disconnected/disabled.
 
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -558,14 +558,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestSimpleBatteryChargeDeficit()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
             var entityManager = server.ResolveDependency<IEntityManager>();
@@ -614,14 +614,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestFullBattery()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -691,14 +691,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestFullBatteryEfficiencyPassThrough()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -768,14 +768,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestFullBatteryEfficiencyDemandPassThrough()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -860,7 +860,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -870,8 +870,8 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestSupplyPrioritized()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var gameTiming = server.ResolveDependency<IGameTiming>();
@@ -959,7 +959,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -968,8 +968,8 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestBatteriesProportional()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -1049,14 +1049,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestBatteryEngineCut()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -1130,7 +1130,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         /// <summary>
@@ -1139,8 +1139,8 @@ namespace Content.IntegrationTests.Tests.Power
         [Test]
         public async Task TestTerminalNodeGroups()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var nodeContainer = entityManager.System<NodeContainerSystem>();
@@ -1198,14 +1198,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task ApcChargingTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -1253,14 +1253,14 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task ApcNetTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var mapManager = server.ResolveDependency<IMapManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
             var batterySys = entityManager.System<BatterySystem>();
@@ -1317,7 +1317,7 @@ namespace Content.IntegrationTests.Tests.Power
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
     }

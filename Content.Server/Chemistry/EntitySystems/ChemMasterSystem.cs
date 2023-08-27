@@ -35,7 +35,6 @@ namespace Content.Server.Chemistry.EntitySystems
         [Dependency] private readonly StorageSystem _storageSystem = default!;
         [Dependency] private readonly LabelSystem _labelSystem = default!;
         [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string PillPrototypeId = "Pill";
