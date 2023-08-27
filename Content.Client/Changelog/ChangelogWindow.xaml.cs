@@ -27,6 +27,7 @@ namespace Content.Client.Changelog
         public ChangelogWindow()
         {
             RobustXamlLoader.Load(this);
+            WindowTitle.AddStyleClass(StyleBase.StyleClassLabelHeading);
             Stylesheet = IoCManager.Resolve<IStylesheetManager>().SheetSpace;
         }
 
@@ -69,7 +70,7 @@ namespace Content.Client.Changelog
                 ChangelogBody.AddChild(new Label
                 {
                     Text = dayNice,
-                    StyleClasses = { "LabelHeading" },
+                    StyleClasses = { StyleBase.StyleClassLabelHeading },
                     Margin = new Thickness(4, 6, 0, 0)
                 });
 
@@ -128,7 +129,7 @@ namespace Content.Client.Changelog
                         };
 
                         readDivider.AddChild(hBox);
-                        readDivider.AddChild(new PanelContainer { StyleClasses = { "LowDivider" } });
+                        readDivider.AddChild(new PanelContainer { StyleClasses = { StyleBase.ClassLowDivider } });
                         ChangelogBody.AddChild(readDivider);
 
                         if (first)
