@@ -56,12 +56,38 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
+
+- type: entity
+  id: OrganDionaStomach
+  parent: BaseDionaOrgan
+  name: stomach
+  description: "Gross. This is hard to stomach."
+  components:
+  - type: Sprite
+    state: stomach
+  - type: SolutionContainerManager
+    solutions:
+      stomach:
+        maxVol: 50
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Plant ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+      - id: Medicine
+      - id: Poison
+      - id: Narcotic
+      - id: Alcohol
+        rateModifier: 0.1
       
 - type: entity
   id: BaseDionaNymphOrgan
   parent: MobDionaNymph
   name: Diona Nymph
-  suffix:
+  suffix: Organ
   description: An organ-containing Diona Nymph, in the wood.
   components:
   - type: Organ
@@ -80,12 +106,14 @@
   suffix: Brain
   description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
   components:
-    - type: Brain
-    - type: BlockMovement
-    - type: Tag
-      tags:
-      - VimPilot
-      - MindTransferTarget
+  - type: Brain
+  - type: Butcherable
+    spawned:
+    - id: OrganDionaBrain # TODO: Make the mind transfer to this (help me)
+  - type: Tag
+    tags:
+    - VimPilot
+    - MindTransferTarget
 
 - type: entity
   id: OrganDionaNymphStomach
@@ -94,24 +122,26 @@
   suffix: Stomach
   description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
   components:
-    - type: SolutionContainerManager
-      solutions:
+  - type: SolutionContainerManager
+    solutions:
       stomach:
         maxVol: 50
-    - type: Stomach
-    - type: Metabolizer
-      maxReagents: 3
-      metabolizerTypes: [ Plant ]
-      removeEmpty: true
-      groups:
-        - id: Food
-        - id: Drink
-        - id: Medicine
-        - id: Poison
-        - id: Narcotic
-        - id: Alcohol
-          rateModifier: 0.1
-
+  - type: Stomach
+  - type: Metabolizer
+    maxReagents: 6
+    metabolizerTypes: [ Plant ]
+    removeEmpty: true
+    groups:
+      - id: Food
+      - id: Drink
+      - id: Medicine
+      - id: Poison
+      - id: Narcotic
+      - id: Alcohol
+        rateModifier: 0.1
+  - type: Butcherable
+    spawned:
+    - id: OrganDionaStomach
 
 - type: entity
   id: OrganDionaNymphLungs
@@ -120,8 +150,8 @@
   suffix: Lungs
   description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
   components:
-    - type: SolutionContainerManager
-      solutions:
+  - type: SolutionContainerManager
+    solutions:
       organ:
         maxVol: 10
         reagents:
@@ -130,12 +160,15 @@
       Lung:
         maxVol: 100
         canReact: False
-    - type: Lung
-    - type: Metabolizer
-      removeEmpty: true
-      solutionOnBody: false
-      solution: "Lung"
-      metabolizerTypes: [ Plant ]
-      groups:
-      - id: Gas
-        rateModifier: 100.0
+  - type: Lung 
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Plant ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: Butcherable
+    spawned:
+    - id: OrganDionaBrain # TODO: Make this diona lungs.

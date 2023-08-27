@@ -18,6 +18,7 @@
       - right leg
       organs:
         lungs: OrganDionaNymphLungs
+        stomach: OrganDionaNymphStomach
     right arm:
       part: RightArmDiona
       connections:
