@@ -36,7 +36,7 @@ public sealed class LagCompensationSystem : EntitySystem
 
         // Cull any old ones from active updates
         // Probably fine to include ignored.
-        var query = EntityQueryEnumerator<LagCompensationComponent>();
+        var query = AllEntityQuery<LagCompensationComponent>();
 
         while (query.MoveNext(out var comp))
         {
