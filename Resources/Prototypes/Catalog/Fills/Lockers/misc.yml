@@ -11,6 +11,7 @@
       - id: ClothingUniformJumpsuitOperative
       - id: ClothingUniformJumpskirtOperative
       - id: ClothingHeadsetAltSyndicate
+      - id: ClothingMaskBalaclava
 
 - type: entity
   id: ClosetEmergencyFilledRandom
@@ -135,6 +136,8 @@
           prob: 0.20
         - id: DrinkSpaceLube
           prob: 0.20
+        - id: ClothingMaskBalaclava
+          prob: 0.20
         # Syndicate loot
         - id: null
           prob: 0.95
@@ -218,6 +221,8 @@
           prob: 0.20
         - id: ModularReceiver
           prob: 0.1
+        - id: ClothingMaskBalaclava
+          prob: 0.2
         # Syndicate loot
         - id: null
           prob: 0.95
