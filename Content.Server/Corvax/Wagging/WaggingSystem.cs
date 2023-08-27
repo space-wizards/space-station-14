@@ -91,7 +91,7 @@ public sealed class WaggingSystem : EntitySystem
                     humanoid: humanoid);
             }
 
-            var emoteText = Loc.GetString(wagging.Wagging ? "wagging-emote-start" : "wagging-emote-stop");
+            var emoteText = Loc.GetString(wagging.Wagging ? "wagging-emote-start" : "wagging-emote-stop", ("ent", uid));
             _chat.TrySendInGameICMessage(uid, emoteText, InGameICChatType.Emote, ChatTransmitRange.Normal); // Ok while emotes dont have radial menu
         }
     }
