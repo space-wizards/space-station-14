@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: you can find space lube tube in lockers again, type: Fix}
-  id: 4192
-  time: '2023-07-08T19:42:43.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Remove dummy crit states for mobs that don't implement it., type: Fix}
@@ -3028,3 +3023,9 @@ Entries:
   - {message: Fixed wallmount devices being unable to be deconstructed., type: Fix}
   id: 4691
   time: '2023-08-26T22:25:23.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Objects with interfaces now correctly respect interaction range, so
+      green outline really means you can open them.', type: Fix}
+  id: 4692
+  time: '2023-08-27T08:27:43.0000000+00:00'
