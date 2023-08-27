@@ -11,7 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Corvax.Wagging;
 
 /// <summary>
-/// Adds action to toggle wagging animation for tail markings that support that
+/// Adds an action to toggle wagging animation for tails markings that supporting this
 /// </summary>
 public sealed class WaggingSystem : EntitySystem
 {
