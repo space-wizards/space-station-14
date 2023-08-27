@@ -126,7 +126,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
                 ev.AddLine("");
             }
             ev.AddLine(Loc.GetString("point-scoreboard-header"));
-            ev.AddLine(point.Scoreboard.ToMarkup());
+            ev.AddLine(new FormattedMessage(point.Scoreboard).ToMarkup());
         }
     }
 }
