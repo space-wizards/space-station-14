@@ -28,18 +28,8 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
     {
         base.Initialize();
 
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnPlayerSpawned);
         SubscribeLocalEvent<SuicideEvent>(OnSuicide);
         SubscribeLocalEvent<MobStateChangedEvent>(OnMobStateChanged);
-    }
-
-    private void OnPlayerSpawned(PlayerSpawnCompleteEvent ev)
-    {
-        var query = EntityQueryEnumerator<RespawnTrackerComponent>();
-        while (query.MoveNext(out _, out var respawn))
-        {
-            respawn.Players.Add(ev.Player.UserId);
-        }
     }
 
     private void OnSuicide(SuicideEvent ev)
@@ -68,7 +58,8 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            RespawnPlayer(args.Target, uid, actor: actor);
+            if (RespawnPlayer(args.Target, uid, actor: actor))
+                break;
         }
     }
 
@@ -103,30 +94,39 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         if (!Resolve(tracker, ref component) || !Resolve(player, ref actor, false))
             return;
 
-        component.Players.Add(actor.PlayerSession.UserId);
+        AddToTracker(actor.PlayerSession.UserId, tracker, component);
     }
 
-    public void RespawnPlayer(EntityUid player, EntityUid respawnTracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
+    public void AddToTracker(NetUserId id, EntityUid tracker, RespawnTrackerComponent? component = null)
     {
-        if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))
+        if (!Resolve(tracker, ref component))
             return;
 
-        if (!component.Players.Contains(actor.PlayerSession.UserId))
-            return;
+        component.Players.Add(id);
+    }
+
+    public bool RespawnPlayer(EntityUid player, EntityUid respawnTracker, RespawnTrackerComponent? component = null, ActorComponent? actor = null)
+    {
+        if (!Resolve(respawnTracker, ref component) || !Resolve(player, ref actor, false))
+            return false;
+
+        if (!component.Players.Contains(actor.PlayerSession.UserId) || component.RespawnQueue.ContainsKey(actor.PlayerSession.UserId))
+            return false;
 
         if (component.RespawnDelay == TimeSpan.Zero)
         {
             if (_station.GetStations().FirstOrNull() is not { } station)
-                return;
+                return false;
 
             QueueDel(player);
             GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true);
-            return;
+            return false;
         }
 
         var msg = Loc.GetString("rule-respawn-in-seconds", ("second", component.RespawnDelay.TotalSeconds));
         var wrappedMsg = Loc.GetString("chat-manager-server-wrap-message", ("message", msg));
         _chatManager.ChatMessageToOne(ChatChannel.Server, msg, wrappedMsg, respawnTracker, false, actor.PlayerSession.ConnectedClient, Color.LimeGreen);
         component.RespawnQueue[actor.PlayerSession.UserId] = _timing.CurTime + component.RespawnDelay;
+        return true;
     }
 }

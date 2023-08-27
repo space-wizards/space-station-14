@@ -1,9 +1,13 @@
+using Content.Server.Administration.Commands;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.KillTracking;
+using Content.Server.Mind;
 using Content.Server.Points;
 using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
 using Content.Shared.Points;
 using Content.Shared.Storage;
+using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -12,17 +16,44 @@ namespace Content.Server.GameTicking.Rules;
 /// </summary>
 public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
+    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PointSystem _point = default!;
     [Dependency] private readonly RespawnRuleSystem _respawn = default!;
     [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
         SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
         SubscribeLocalEvent<DeathMatchRuleComponent, PlayerPointChangedEvent>(OnPointChanged);
+    }
+
+    private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
+    {
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var tracker, out var rule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, rule))
+                continue;
+
+            var newMind = _mind.CreateMind(ev.Player.UserId, ev.Profile.Name);
+            _mind.SetUserId(newMind, ev.Player.UserId);
+
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(ev.Station, null, ev.Profile);
+            DebugTools.AssertNotNull(mobMaybe);
+            var mob = mobMaybe!.Value;
+
+            _mind.TransferTo(newMind, mob);
+            SetOutfitCommand.SetOutfit(mob, dm.Gear, EntityManager);
+            _respawn.AddToTracker(ev.Player.UserId, uid, tracker);
+
+            ev.Handled = true;
+            break;
+        }
     }
 
     private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)

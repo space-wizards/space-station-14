@@ -285,7 +285,7 @@
     gloves: ClothingHandsGlovesFingerless
   innerclothingskirt: ClothingUniformJumpskirtColorWhite
   inhand:
-    right hand: WeaponMeleeToolboxRobust
+    left hand: WeaponMeleeToolboxRobust
 
 #Brigmedic
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Content.Server.GameTicking;
 using Content.Server.Maps;
 using Content.Server.Shuttles.Components;
@@ -60,7 +59,8 @@ namespace Content.IntegrationTests.Tests
             "Saltern",
             "Core",
             "Marathon",
-            "Kettle"
+            "Kettle",
+            "MeteorArena"
         };
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Content.IntegrationTests.Tests
         public async Task GridsLoadableTest(string mapFile)
         {
             await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            var server = pairTracker.Server;
 
             var entManager = server.ResolveDependency<IEntityManager>();
             var mapLoader = entManager.System<MapLoaderSystem>();
@@ -111,7 +111,7 @@ namespace Content.IntegrationTests.Tests
         public async Task NoSavedPostMapInitTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            var server = pairTracker.Server;
 
             var resourceManager = server.ResolveDependency<IResourceManager>();
             var mapFolder = new ResPath("/Maps");
@@ -153,7 +153,7 @@ namespace Content.IntegrationTests.Tests
         public async Task GameMapsLoadableTest(string mapProto)
         {
             await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            var server = pairTracker.Server;
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var entManager = server.ResolveDependency<IEntityManager>();
@@ -285,11 +285,11 @@ namespace Content.IntegrationTests.Tests
         public async Task AllMapsTested()
         {
             await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            var server = pairTracker.Server;
             var protoMan = server.ResolveDependency<IPrototypeManager>();
 
             var gameMaps = protoMan.EnumeratePrototypes<GameMapPrototype>()
-                .Where(x => !pairTracker.Pair.IsTestPrototype(x))
+                .Where(x => !pairTracker.IsTestPrototype(x))
                 .Select(x => x.ID)
                 .ToHashSet();
 
@@ -304,7 +304,7 @@ namespace Content.IntegrationTests.Tests
         public async Task NonGameMapsLoadableTest()
         {
             await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            var server = pairTracker.Server;
 
             var mapLoader = server.ResolveDependency<IEntitySystemManager>().GetEntitySystem<MapLoaderSystem>();
             var mapManager = server.ResolveDependency<IMapManager>();

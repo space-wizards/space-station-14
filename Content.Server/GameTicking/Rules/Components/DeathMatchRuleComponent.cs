@@ -1,4 +1,5 @@
 ﻿using Content.Shared.FixedPoint;
+using Content.Shared.Roles;
 using Content.Shared.Storage;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
@@ -36,4 +37,10 @@ public sealed partial class DeathMatchRuleComponent : Component
     /// </summary>
     [DataField("rewardSpawns")]
     public List<EntitySpawnEntry> RewardSpawns = new();
+
+    /// <summary>
+    /// The gear all players spawn with.
+    /// </summary>
+    [DataField("gear", customTypeSerializer: typeof(PrototypeIdSerializer<StartingGearPrototype>)), ViewVariables(VVAccess.ReadWrite)]
+    public string Gear = "DeathMatchGear";
 }

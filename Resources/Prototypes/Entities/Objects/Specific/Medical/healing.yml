@@ -312,10 +312,10 @@
     damageContainers:
     - Biological
     damage:
-      groups:
-        Brute: -50
-        Burn: -50
-        Toxin: -50
+      groups: # these are all split across multiple types
+        Brute: -150
+        Burn: -150
+        Toxin: -150
     bloodlossModifier: -20
     delay: 1
     selfHealPenaltyMultiplier: 0
