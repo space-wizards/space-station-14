@@ -11,7 +11,7 @@
         <Control Margin="0 0 1 0">
             <PanelContainer StyleClasses="WindowHeadingBackground" />
             <BoxContainer Margin="4 2 8 0" Orientation="Horizontal">
-                <Label Name="Title" Text="New Article"
+                <Label Name="Title" Text="{Loc news-write-ui-new-article}"
                        HorizontalExpand="True" VAlign="Center" StyleClasses="FancyWindowTitle" />
             </BoxContainer>
         </Control>
@@ -43,13 +43,13 @@
         <BoxContainer Orientation="Horizontal" Margin="12 5 12 8">
             <Control>
                 <Button Name="ButtonCancel" SetHeight="32" SetWidth="85"
-                        StyleClasses="ButtonColorRed" Text="Cancel"/>
+                        StyleClasses="ButtonColorRed" Text="{Loc news-write-ui-cancel-text}"/>
             </Control>
             <Control HorizontalExpand="True"/>
             <BoxContainer Orientation="Horizontal">
                 <Button Name="ButtonPreview" SetHeight="32" SetWidth="85"
-                        StyleClasses="OpenRight" Text="Preview"/>
-                <Button Name="ButtonPublish" SetHeight="32" SetWidth="85" Text="Publish" Access="Public"/>
+                        StyleClasses="OpenRight" Text="{Loc news-write-ui-preview-text}"/>
+                <Button Name="ButtonPublish" SetHeight="32" SetWidth="85" Text="{Loc news-write-ui-publish-text}" Access="Public"/>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>

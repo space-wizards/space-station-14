@@ -33,7 +33,7 @@ public sealed partial class NewsWriterMenu : FancyWindow
     public void UpdateUI(NewsArticle[] articles, bool publishEnabled, TimeSpan nextPublish)
     {
         ArticlesContainer.Children.Clear();
-        ArticleCount.Text = $"{articles.Length} Articles";
+        ArticleCount.Text = Loc.GetString("news-write-ui-article-count-text", ("count", articles.Length));
 
         //Iterate backwards to have the newest article at the top
         for (var i = articles.Length - 1; i >= 0 ; i--)
