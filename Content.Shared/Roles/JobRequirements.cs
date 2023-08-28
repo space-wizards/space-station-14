@@ -78,7 +78,7 @@ namespace Content.Shared.Roles
 
             foreach (var requirement in job.Requirements)
             {
-                if (!TryRequirementMet(job, requirement, playTimes, out reason, entManager, prototypes))
+                if (!TryRequirementMet(requirement, playTimes, out reason, entManager, prototypes))
                     return false;
             }
 
@@ -89,7 +89,6 @@ namespace Content.Shared.Roles
         /// Returns a string with the reason why a particular requirement may not be met.
         /// </summary>
         public static bool TryRequirementMet(
-            JobPrototype jobProto,
             JobRequirement requirement,
             Dictionary<string, TimeSpan> playTimes,
             [NotNullWhen(false)] out FormattedMessage? reason,
@@ -177,10 +176,12 @@ namespace Content.Shared.Roles
                     var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
                     var departmentColor = Color.Yellow;
 
-                    if (entManager.EntitySysManager.TryGetEntitySystem(out JobSystem? jobSystem) &&
-                        jobSystem.TryGetDepartment(jobProto.ID, out var departmentProto))
+                    if (entManager.EntitySysManager.TryGetEntitySystem(out JobSystem? jobSystem))
                     {
-                        departmentColor = departmentProto.Color;
+                        var jobProto = jobSystem.GetJobPrototype(proto);
+
+                        if (jobSystem.TryGetDepartment(jobProto, out var departmentProto))
+                            departmentColor = departmentProto.Color;
                     }
 
                     if (!roleRequirement.Inverted)

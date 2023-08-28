@@ -105,7 +105,7 @@ public sealed class JobRequirementsManager
 
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(job, requirement, _roles, out var jobReason, _entManager, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, out var jobReason, _entManager, _prototypes))
                 continue;
 
             reasonBuilder.AppendLine(jobReason.ToMarkup());
