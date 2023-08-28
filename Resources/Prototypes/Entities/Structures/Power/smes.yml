@@ -63,7 +63,7 @@
       castShadows: false
     - type: WiresPanel
     - type: Wires
-      BoardName: "SMES"
+      BoardName: wires-board-name-smes
       LayoutId: SMES
     - type: Machine
       board: SMESMachineCircuitboard

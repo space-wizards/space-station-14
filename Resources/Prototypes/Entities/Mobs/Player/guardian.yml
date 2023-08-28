@@ -89,6 +89,11 @@
       damage:
         types:
           Blunt: 20
+    - type: MeleeSpeech
+    - type: UserInterface
+      interfaces:
+      - key: enum.MeleeSpeechUiKey.Key
+        type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
