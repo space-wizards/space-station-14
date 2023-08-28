@@ -312,7 +312,7 @@ namespace Content.Server.GameTicking
 
             var name = GetPlayerProfile(player).Name;
             var ghost = SpawnObserverMob();
-            MetaData(ghost).EntityName = name;
+            _metaData.SetEntityName(ghost, name);
             _ghost.SetCanReturnToBody(ghost, false);
             _mind.TransferTo(mind, ghost);
         }

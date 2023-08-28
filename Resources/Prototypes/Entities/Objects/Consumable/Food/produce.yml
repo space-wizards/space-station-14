@@ -147,8 +147,6 @@
   - type: FlavorProfile
     flavors:
       - banana
-  - type: Food
-    trash: TrashBananaPeel
   - type: SolutionContainerManager
     solutions:
       food:
@@ -167,6 +165,26 @@
       reagents:
       - ReagentId: JuiceBanana
         Quantity: 10
+  - type: SpawnItemsOnUse
+    items:
+    - id: FoodBananaPeeled
+    sound:
+      path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: banana
+  parent: FoodBanana
+  suffix: Peeled
+  id: FoodBananaPeeled
+  description: Rich in potassium.
+  components:
+  - type: Food
+    trash: TrashBananaPeel
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/banana.rsi
+    state: peeled
+  - type: SpawnItemsOnUse
+    uses: 0
 
 - type: entity
   name: banana peel
