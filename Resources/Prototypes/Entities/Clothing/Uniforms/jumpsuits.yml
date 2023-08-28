@@ -161,14 +161,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitChemistryCasual
-  name: casual chemistry jumpsuit
+  id: ClothingUniformJumpsuitChemistryFormal
+  name: formal chemistry jumpsuit
   description: There's some odd stains on this jumpsuit. Hm.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/chemistry_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/chemistry_formal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/chemistry_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/chemistry_formal.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -183,14 +183,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitVirologyCasual
-  name: casual virology jumpsuit
+  id: ClothingUniformJumpsuitVirologyFormal
+  name: formal virology jumpsuit
   description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/virology_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/virology_formal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/virology_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/virology_formal.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -205,14 +205,14 @@
 
 - type: entity
   parent: ClothingUniformBase
-  id: ClothingUniformJumpsuitGeneticsCasual
-  name: casual genetics jumpsuit
+  id: ClothingUniformJumpsuitGeneticsFormal
+  name: formal genetics jumpsuit
   description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
   components:
   - type: Sprite
-    sprite: Clothing/Uniforms/Jumpsuit/genetics_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/genetics_formal.rsi
   - type: Clothing
-    sprite: Clothing/Uniforms/Jumpsuit/genetics_casual.rsi
+    sprite: Clothing/Uniforms/Jumpsuit/genetics_formal.rsi
 
 - type: entity
   parent: ClothingUniformBase
