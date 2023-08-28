@@ -4,6 +4,7 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
 using Content.Server.Players;
+using Content.Server.Roles.Jobs;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -18,13 +19,13 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Job = Content.Server.Roles.Job;
 
 namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string ObserverPrototypeName = "MobObserver";
@@ -186,11 +187,11 @@ namespace Content.Server.GameTicking
             _mind.SetUserId(newMind, data.UserId);
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
-            var job = new Job(newMind, jobPrototype);
-            _mind.AddRole(newMind, job);
+            var job = new JobComponent { PrototypeId = jobId };
+            _roles.MindAddRole(newMind, job);
+            var jobName = _jobs.MindTryGetJobName(newMind);
 
             _playTimeTrackings.PlayerRolesChanged(player);
-
 
             var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
             DebugTools.AssertNotNull(mobMaybe);
@@ -204,7 +205,7 @@ namespace Content.Server.GameTicking
                     Loc.GetString(
                         "latejoin-arrival-announcement",
                     ("character", MetaData(mob).EntityName),
-                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(job.Name))
+                    ("job", CultureInfo.CurrentCulture.TextInfo.ToTitleCase(jobName))
                     ), Loc.GetString("latejoin-arrival-sender"),
                     playDefaultSound: false);
             }
@@ -217,9 +218,9 @@ namespace Content.Server.GameTicking
             _stationJobs.TryAssignJob(station, jobPrototype);
 
             if (lateJoin)
-                _adminLogger.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.LateJoin, LogImpact.Medium, $"Player {player.Name} late joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
             else
-                _adminLogger.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {job.Name:jobName}.");
+                _adminLogger.Add(LogType.RoundStartJoin, LogImpact.Medium, $"Player {player.Name} joined as {character.Name:characterName} on station {Name(station):stationName} with {ToPrettyString(mob):entity} as a {jobName:jobName}.");
 
             // Make sure they're aware of extended access.
             if (Comp<StationJobsComponent>(station).ExtendedAccess
@@ -305,15 +306,15 @@ namespace Content.Server.GameTicking
             if (mind == null)
             {
                 mind = _mind.CreateMind(player.UserId);
-                _mind.SetUserId(mind, player.UserId);
-                _mind.AddRole(mind, new ObserverRole(mind));
+                _mind.SetUserId(mind.Value, player.UserId);
+                _roles.MindAddRole(mind.Value, new ObserverRoleComponent());
             }
 
             var name = GetPlayerProfile(player).Name;
             var ghost = SpawnObserverMob();
             _metaData.SetEntityName(ghost, name);
             _ghost.SetCanReturnToBody(ghost, false);
-            _mind.TransferTo(mind, ghost);
+            _mind.TransferTo(mind.Value, ghost);
         }
 
         #region Mob Spawning Helpers
