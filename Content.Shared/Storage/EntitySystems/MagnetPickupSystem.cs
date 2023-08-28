@@ -1,9 +1,12 @@
 using Content.Server.Storage.Components;
+using Content.Shared.Hands;
 using Content.Shared.Inventory;
+using Robust.Shared.Map;
 using Robust.Shared.Physics.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
-namespace Content.Server.Storage.EntitySystems;
+namespace Content.Shared.Storage.EntitySystems;
 
 /// <summary>
 /// <see cref="MagnetPickupComponent"/>
@@ -13,7 +16,8 @@ public sealed class MagnetPickupSystem : EntitySystem
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly SharedStorageSystem _storage = default!;
 
     private static readonly TimeSpan ScanDelay = TimeSpan.FromSeconds(1);
 
@@ -62,6 +66,8 @@ public sealed class MagnetPickupSystem : EntitySystem
 
             var parentUid = xform.ParentUid;
             var playedSound = false;
+            var finalPos = xform.LocalPosition;
+            var moverCoords = _transform.GetMoverCoordinates(uid, xform);
 
             foreach (var near in _lookup.GetEntitiesInRange(uid, comp.Range, LookupFlags.Dynamic | LookupFlags.Sundries))
             {
@@ -73,6 +79,19 @@ public sealed class MagnetPickupSystem : EntitySystem
 
                 if (near == parentUid)
                     continue;
+
+                // TODO: Probably move this to storage somewhere when it gets cleaned up
+                // TODO: This sucks but you need to fix a lot of stuff to make it better
+                // the problem is that stack pickups delete the original entity, which is fine, but due to
+                // game state handling we can't show a lerp animation for it.
+                var nearXform = Transform(near);
+                var nearMap = nearXform.MapPosition;
+                var nearCoords = EntityCoordinates.FromMap(moverCoords.EntityId, nearMap, _transform, EntityManager);
+
+                var msg = new PickupAnimationEvent(near, nearCoords, finalPos, nearXform.LocalRotation);
+
+
+                RaiseNetworkEvent(msg, Filter.Pvs(uid));
 
                 if (!_storage.Insert(uid, near, storage, playSound: !playedSound))
                     continue;
