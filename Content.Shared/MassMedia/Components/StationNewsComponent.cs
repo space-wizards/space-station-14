@@ -3,7 +3,7 @@
 namespace Content.Shared.MassMedia.Components;
 
 [RegisterComponent]
-public sealed class StationNewsComponent : Component
+public sealed partial class StationNewsComponent : Component
 {
     [DataField("articles")]
     public List<NewsArticle> Articles = new();

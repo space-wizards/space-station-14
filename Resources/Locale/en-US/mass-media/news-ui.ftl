@@ -23,7 +23,7 @@ news-write-ui-article-content-label = Content:
 news-write-no-access-popup = No access
 news-write-ui-richtext-tooltip = News articles support rich text
     The following rich text tags are supported:
-    {"[color=Gray][bullet/]heading \\[size=1-5\\]"}
+    {"[color=Gray][bullet/]heading \\[size=1-3\\]"}
     {"[bullet/]bold"}
     {"[bullet/]italic"}
     {"[bullet/]bolditalic"}
