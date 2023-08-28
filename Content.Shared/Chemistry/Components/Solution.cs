@@ -403,7 +403,7 @@ namespace Content.Shared.Chemistry.Components
             {
                 var reagent = Contents[i];
 
-                if (reagent.ReagentId != reagentId)
+                if(reagent.ReagentId != reagentId)
                     continue;
 
                 var curQuantity = reagent.Quantity;
@@ -674,11 +674,11 @@ namespace Content.Shared.Chemistry.Components
 
         [Serializable, NetSerializable]
         [DataDefinition]
-        public readonly partial struct ReagentQuantity : IComparable<ReagentQuantity>
+        public readonly partial struct ReagentQuantity: IComparable<ReagentQuantity>
         {
-            [DataField("ReagentId", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
+            [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
             public string ReagentId { get; init; }
-            [DataField("Quantity", required: true)]
+            [DataField("Quantity", required:true)]
             public FixedPoint2 Quantity { get; init; }
 
             public ReagentQuantity(string reagentId, FixedPoint2 quantity)
