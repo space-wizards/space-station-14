@@ -38,6 +38,15 @@
         !type:CableDeviceNode
         nodeGroupID: HVPower
   - type: RadiationCollector
+    chargeModifier: 5000
+    radiationReactiveGases:
+      - reactantPrototype: Plasma
+        powerGenerationEfficiency: 1
+        reactantBreakdownRate: 0.0006667
+        byproductPrototype: Tritium
+      - reactantPrototype: Tritium
+        powerGenerationEfficiency: 0.1      
+        reactantBreakdownRate: 0
     # Note that this doesn't matter too much (see next comment)
     # However it does act as a cap on power receivable via the collector.
   - type: Battery
@@ -55,3 +64,12 @@
     supplyRampTolerance: 1000000000
   - type: GuideHelp
     guides: [ Singularity, Power ]
+  - type: ContainerContainer
+    containers:
+      GasTank: !type:ContainerSlot {}
+  - type: ItemSlots
+    slots:
+      GasTank:
+        whitelist:
+          components:
+          - GasTank
