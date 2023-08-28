@@ -51,8 +51,6 @@ namespace Content.Server.Entry
         private IEntitySystemManager? _sysMan;
         private IServerDbManager? _dbManager;
 
-        private ServerControlController? _controlController;
-
         /// <inheritdoc />
         public override void Init()
         {
@@ -120,8 +118,7 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<ServerInfoManager>().Initialize();
                 IoCManager.Resolve<Primelist>().Initialize();
                 IoCManager.Resolve<DiscordPlayerManager>().Initialize();
-                _controlController = IoCManager.Resolve<ServerControlController>();
-                _controlController.Initialize();
+                IoCManager.Resolve<ServerControlController>().Initialize();
 
                 _voteManager.Initialize();
                 _updateManager.Initialize();
@@ -161,8 +158,6 @@ namespace Content.Server.Entry
                 IoCManager.Resolve<IEntitySystemManager>().GetEntitySystem<GameTicker>().PostInitialize();
                 IoCManager.Resolve<IBanManager>().Initialize();
             }
-
-            _controlController?.PostInitialize();
         }
 
         public override void Update(ModUpdateLevel level, FrameEventArgs frameEventArgs)
