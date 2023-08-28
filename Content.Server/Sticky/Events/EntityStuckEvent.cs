@@ -13,9 +13,9 @@ public sealed class EntityStuckEvent : EntityEventArgs
     /// <summary>
     ///     Entity that stuck sticky object on target.
     /// </summary>
-    public readonly EntityUid User;
+    public readonly EntityUid? User;
 
-    public EntityStuckEvent(EntityUid target, EntityUid user)
+    public EntityStuckEvent(EntityUid target, EntityUid? user)
     {
         Target = target;
         User = user;
@@ -35,9 +35,9 @@ public sealed class EntityUnstuckEvent : EntityEventArgs
     /// <summary>
     ///     Entity that unstuck sticky object on target.
     /// </summary>
-    public readonly EntityUid User;
+    public readonly EntityUid? User;
 
-    public EntityUnstuckEvent(EntityUid target, EntityUid user)
+    public EntityUnstuckEvent(EntityUid target, EntityUid? user)
     {
         Target = target;
         User = user;

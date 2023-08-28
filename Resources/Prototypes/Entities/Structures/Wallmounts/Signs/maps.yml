@@ -1,0 +1,110 @@
+#maps
+- type: entity
+  parent: BaseSign
+  id: PosterMapBagel
+  name: "Bagel Map"
+  description: "A map of Bagel Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: bagelmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapDelta
+  name: "Delta Map"
+  description: "A map of Delta Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: deltamap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapMarathon
+  name: "Marathon Map"
+  description: "A map of Marathon Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: marathonmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapMoose
+  name: "Moose Map"
+  description: "A map of Moose Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: moosemap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapPacked
+  name: "Packed Map"
+  description: "A map of Packed Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: packedmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapPillar
+  name: "Pillar Map"
+  description: "A map of NSS Pillar."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: pillarmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapSaltern
+  name: "Saltern Map"
+  description: "A map of Saltern Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: salternmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapSplit
+  name: "Split Station Map"
+  description: "A map of Split Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: splitmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapLighthouse
+  name: "Lighthouse Map"
+  description: "A map of Lighthouse."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: lighthousemap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapWaystation
+  name: "Waystation Map"
+  description: "A map of Waystation... wait isn't this packed upside down?"
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: waystationmap
+
+- type: entity
+  parent: BaseSign
+  id: PosterMapOrigin
+  name: "origin map"
+  description: "A map of Origin Station."
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: originmap

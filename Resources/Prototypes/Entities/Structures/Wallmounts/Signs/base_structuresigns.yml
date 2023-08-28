@@ -35,3 +35,51 @@
     snapCardinals: true
   - type: StaticPrice
     price: 20
+
+- type: entity
+  parent: BaseItem
+  id: BaseSignStickable
+  name: base sign
+  abstract: true
+  placement:
+    mode: PlaceFree
+  components:
+  - type: Item
+    size: 10
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Rotatable
+  - type: StickyVisualizer
+  - type: Sticky
+    stickDelay: 5
+    unstickDelay: 5
+    stickPopupStart: comp-sticky-start-stick-stick
+    stickPopupSuccess: comp-sticky-success-stick-stick
+    unstickPopupStart: comp-sticky-start-unstick-stick
+    unstickPopupSuccess: comp-sticky-success-unstick-stick
+    whitelist:
+      tags:
+        - Wall
+        - Window
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    drawdepth: Items
+    sprite: Structures/Wallmounts/signs.rsi
+    snapCardinals: true
+  - type: StaticPrice
+    price: 20

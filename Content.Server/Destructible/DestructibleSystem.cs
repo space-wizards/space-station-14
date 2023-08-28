@@ -9,6 +9,7 @@ using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
+using Content.Server.Sticky.Systems;
 using Content.Server.Stack;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -36,6 +37,7 @@ namespace Content.Server.Destructible
         [Dependency] public readonly TriggerSystem TriggerSystem = default!;
         [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
         [Dependency] public readonly PuddleSystem PuddleSystem = default!;
+        [Dependency] public readonly StickySystem StickySystem = default!;
         [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
         [Dependency] public readonly IComponentFactory ComponentFactory = default!;
         [Dependency] public readonly IAdminLogManager _adminLogger = default!;

@@ -1,0 +1,155 @@
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterAnyUnsticked
+  name: random poster spawner
+  suffix: Unsticked
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_rolled_anything
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - RandomPosterContrabandUnsticked
+      - RandomPosterLegitUnsticked
+    chance: 0.95
+    rarePrototypes:
+      - PosterBrokenUnsticked
+    rareChance: 0.05
+
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterContrabandUnsticked
+  name: random contraband poster spawner
+  suffix: Unsticked
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_rolled_contraband
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PosterContrabandFreeTontoUnsticked
+      - PosterContrabandAtmosiaDeclarationIndependenceUnsticked
+      - PosterContrabandFunPoliceUnsticked
+      - PosterContrabandLustyExomorphUnsticked
+      - PosterContrabandSyndicateRecruitmentUnsticked
+      - PosterContrabandClownUnsticked
+      - PosterContrabandSmokeUnsticked
+      - PosterContrabandGreyTideUnsticked
+      - PosterContrabandMissingGlovesUnsticked
+      - PosterContrabandHackingGuideUnsticked
+      - PosterContrabandRIPBadgerUnsticked
+      - PosterContrabandAmbrosiaVulgarisUnsticked
+      - PosterContrabandDonutCorpUnsticked
+      - PosterContrabandEATUnsticked
+      - PosterContrabandToolsUnsticked
+      - PosterContrabandPowerUnsticked
+      - PosterContrabandSpaceCubeUnsticked
+      - PosterContrabandCommunistStateUnsticked
+      - PosterContrabandLamarrUnsticked
+      - PosterContrabandBorgFancyUnsticked
+      - PosterContrabandBorgFancyv2Unsticked
+      - PosterContrabandKosmicheskayaStantsiyaUnsticked
+      - PosterContrabandRebelsUniteUnsticked
+      - PosterContrabandC20rUnsticked
+      - PosterContrabandHaveaPuffUnsticked
+      - PosterContrabandRevolverUnsticked
+      - PosterContrabandDDayPromoUnsticked
+      - PosterContrabandSyndicatePistolUnsticked
+      - PosterContrabandEnergySwordsUnsticked
+      - PosterContrabandRedRumUnsticked
+      - PosterContrabandCC64KAdUnsticked
+      - PosterContrabandPunchShitUnsticked
+      - PosterContrabandTheGriffinUnsticked
+      - PosterContrabandFreeDroneUnsticked
+      - PosterContrabandBustyBackdoorExoBabes6Unsticked
+      - PosterContrabandRobustSoftdrinksUnsticked
+      - PosterContrabandShamblersJuiceUnsticked
+      - PosterContrabandPwrGameUnsticked
+      - PosterContrabandSunkistUnsticked
+      - PosterContrabandSpaceColaUnsticked
+      - PosterContrabandSpaceUpUnsticked
+      - PosterContrabandKudzuUnsticked
+      - PosterContrabandMaskedMenUnsticked
+      - PosterContrabandUnreadableAnnouncementUnsticked
+      - PosterContrabandFreeSyndicateEncryptionKeyUnsticked
+      - PosterContrabandBountyHuntersUnsticked
+      - PosterContrabandTheBigGasTruthUnsticked
+      - PosterContrabandWehWatchesUnsticked
+      - PosterContrabandVoteWehUnsticked
+      - PosterContrabandBeachStarYamamotoUnsticked
+      - PosterContrabandHighEffectEngineeringUnsticked
+      - PosterContrabandNuclearDeviceInformationalUnsticked
+      - PosterContrabandRevoltUnsticked
+      - PosterContrabandRiseUnsticked
+      - PosterContrabandMothUnsticked
+      - PosterContrabandCybersun600Unsticked
+      - PosterContrabandDonkUnsticked
+      - PosterContrabandEnlistGorlexUnsticked
+      - PosterContrabandInterdyneUnsticked
+      - PosterContrabandWaffleCorpUnsticked
+    chance: 1
+
+- type: entity
+  parent: MarkerBase
+  id: RandomPosterLegitUnsticked
+  name: random legit poster spawner
+  suffix: Unsticked
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Wallmounts/posters.rsi
+        state: random_rolled_legit
+  - type: RandomSpawner
+    offset: 0
+    prototypes:
+      - PosterLegitHereForYourSafetyUnsticked
+      - PosterLegitNanotrasenLogoUnsticked
+      - PosterLegitCleanlinessUnsticked
+      - PosterLegitHelpOthersUnsticked
+      - PosterLegitBuildUnsticked
+      - PosterLegitBlessThisSpessUnsticked
+      - PosterLegitScienceUnsticked
+      - PosterLegitIanUnsticked
+      - PosterLegitObeyUnsticked
+      - PosterLegitWalkUnsticked
+      - PosterLegitStateLawsUnsticked
+      - PosterLegitLoveIanUnsticked
+      - PosterLegitSpaceCopsUnsticked
+      - PosterLegitUeNoUnsticked
+      - PosterLegitGetYourLEGSUnsticked
+      - PosterLegitDoNotQuestionUnsticked
+      - PosterLegitWorkForAFutureUnsticked
+      - PosterLegitSoftCapPopArtUnsticked
+      - PosterLegitSafetyInternalsUnsticked
+      - PosterLegitSafetyEyeProtectionUnsticked
+      - PosterLegitSafetyReportUnsticked
+      - PosterLegitReportCrimesUnsticked
+      - PosterLegitIonRifleUnsticked
+      - PosterLegitFoamForceAdUnsticked
+      - PosterLegitCohibaRobustoAdUnsticked
+      - PosterLegit50thAnniversaryVintageReprintUnsticked
+      - PosterLegitFruitBowlUnsticked
+      - PosterLegitPDAAdUnsticked
+      - PosterLegitEnlistUnsticked
+      - PosterLegitNanomichiAdUnsticked
+      - PosterLegit12GaugeUnsticked
+      - PosterLegitHighClassMartiniUnsticked
+      - PosterLegitTheOwlUnsticked
+      - PosterLegitNoERPUnsticked
+      - PosterLegitCarbonDioxideUnsticked
+      - PosterLegitDickGumshueUnsticked
+      - PosterLegitThereIsNoGasGiantUnsticked
+      - PosterLegitJustAWeekAwayUnsticked
+      - PosterLegitSecWatchUnsticked
+      - PosterLegitVacationUnsticked
+      - PosterLegitPeriodicTableUnsticked
+      - PosterLegitRenaultUnsticked
+      - PosterLegitNTTGCUnsticked
+    chance: 1
