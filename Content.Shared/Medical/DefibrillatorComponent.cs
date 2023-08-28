@@ -12,7 +12,7 @@ namespace Content.Shared.Medical;
 /// person back into the world of the living.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class DefibrillatorComponent : Component
+public sealed partial class DefibrillatorComponent : Component
 {
     /// <summary>
     /// Whether or not it's turned on and able to be used.
@@ -94,7 +94,7 @@ public enum DefibrillatorVisuals : byte
 }
 
 [Serializable, NetSerializable]
-public sealed class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DefibrillatorZapDoAfterEvent : SimpleDoAfterEvent
 {
 
 }

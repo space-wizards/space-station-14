@@ -5,7 +5,7 @@ namespace Content.Client.Atmos.Visualizers;
 /// the ready / full pair controls the color of the light.
 /// </summary>
 [RegisterComponent]
-public sealed class PortableScrubberVisualsComponent : Component
+public sealed partial class PortableScrubberVisualsComponent : Component
 {
     [DataField("idleState", required: true)]
     public string IdleState = default!;

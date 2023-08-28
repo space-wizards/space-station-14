@@ -11,7 +11,7 @@ namespace Content.Shared.Implants.Components;
 /// They're added and removed with implanters
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SubdermalImplantComponent : Component
+public sealed partial class SubdermalImplantComponent : Component
 {
     /// <summary>
     /// Used where you want the implant to grant the owner an instant action.
@@ -37,12 +37,12 @@ public sealed class SubdermalImplantComponent : Component
 /// <summary>
 /// Used for opening the storage implant via action.
 /// </summary>
-public sealed class OpenStorageImplantEvent : InstantActionEvent
+public sealed partial class OpenStorageImplantEvent : InstantActionEvent
 {
 
 }
 
-public sealed class UseFreedomImplantEvent : InstantActionEvent
+public sealed partial class UseFreedomImplantEvent : InstantActionEvent
 {
 
 }
@@ -50,7 +50,7 @@ public sealed class UseFreedomImplantEvent : InstantActionEvent
 /// <summary>
 /// Used for triggering trigger events on the implant via action
 /// </summary>
-public sealed class ActivateImplantEvent : InstantActionEvent
+public sealed partial class ActivateImplantEvent : InstantActionEvent
 {
 
 }
@@ -58,12 +58,12 @@ public sealed class ActivateImplantEvent : InstantActionEvent
 /// <summary>
 /// Used for opening the uplink implant via action.
 /// </summary>
-public sealed class OpenUplinkImplantEvent : InstantActionEvent
+public sealed partial class OpenUplinkImplantEvent : InstantActionEvent
 {
 
 }
 
-public sealed class UseDnaScramblerImplantEvent : InstantActionEvent
+public sealed partial class UseDnaScramblerImplantEvent : InstantActionEvent
 {
 
 }

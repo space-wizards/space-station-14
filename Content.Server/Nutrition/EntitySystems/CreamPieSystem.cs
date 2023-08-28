@@ -39,7 +39,7 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent<FoodComponent?>(uid, out var foodComp))
+            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
                 {

@@ -206,21 +206,33 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is equipped into hands.
+    /// </summary>
     public sealed class GotEquippedHandEvent : EquippedHandEvent
     {
         public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is unequipped from hands.
+    /// </summary>
     public sealed class GotUnequippedHandEvent : UnequippedHandEvent
     {
         public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when it picks something up.
+    /// </summary>
     public sealed class DidEquipHandEvent : EquippedHandEvent
     {
         public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when something leaves its hands.
+    /// </summary>
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }

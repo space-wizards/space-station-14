@@ -5,7 +5,7 @@ using Robust.Shared.ViewVariables;
 namespace Content.Client.Crayon
 {
     [RegisterComponent]
-    public sealed class CrayonComponent : SharedCrayonComponent
+    public sealed partial class CrayonComponent : SharedCrayonComponent
     {
         [ViewVariables(VVAccess.ReadWrite)] public bool UIUpdateNeeded;
         [ViewVariables] public int Charges { get; set; }

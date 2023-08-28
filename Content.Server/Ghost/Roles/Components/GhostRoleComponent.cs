@@ -4,7 +4,7 @@ namespace Content.Server.Ghost.Roles.Components
 {
     [RegisterComponent]
     [Access(typeof(GhostRoleSystem))]
-    public sealed class GhostRoleComponent : Component
+    public sealed partial class GhostRoleComponent : Component
     {
         [DataField("name")] private string _roleName = "Unknown";
 

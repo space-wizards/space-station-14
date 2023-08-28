@@ -13,7 +13,7 @@ namespace Content.Shared.Slippery
     /// </remarks>
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class SlipperyComponent : Component
+    public sealed partial class SlipperyComponent : Component
     {
         /// <summary>
         /// Path to the sound to be played when a mob slips.

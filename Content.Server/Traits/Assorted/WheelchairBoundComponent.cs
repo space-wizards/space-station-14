@@ -7,7 +7,7 @@ namespace Content.Server.Traits.Assorted;
 /// On adding spawns wheelchair prototype and tries buckle player to it, then self removing
 /// </summary>
 [RegisterComponent, Access(typeof(WheelchairBoundSystem))]
-public sealed class WheelchairBoundComponent : Component
+public sealed partial class WheelchairBoundComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("wheelchairPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
