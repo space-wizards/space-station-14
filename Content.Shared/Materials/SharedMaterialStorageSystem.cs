@@ -1,5 +1,6 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Interaction;
+using Content.Shared.Interaction.Components;
 using Content.Shared.Stacks;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -183,6 +184,29 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
     }
 
     /// <summary>
+    /// Tries to set the amount of material in the storage to a specific value.
+    /// Still respects the filters in place.
+    /// </summary>
+    /// <param name="uid">The entity to change the material storage on.</param>
+    /// <param name="materialId">The ID of the material to change.</param>
+    /// <param name="volume">The stored material volume to set the storage to.</param>
+    /// <param name="component">The storage component on <paramref name="uid"/>. Resolved automatically if not given.</param>
+    /// <returns>True if it was successful (enough space etc).</returns>
+    public bool TrySetMaterialAmount(
+        EntityUid uid,
+        string materialId,
+        int volume,
+        MaterialStorageComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        var curAmount = GetMaterialAmount(uid, materialId, component);
+        var delta = volume - curAmount;
+        return TryChangeMaterialAmount(uid, materialId, delta, component);
+    }
+
+    /// <summary>
     /// Tries to insert an entity into the material storage.
     /// </summary>
     public virtual bool TryInsertMaterialEntity(EntityUid user,
@@ -199,6 +223,9 @@ public abstract class SharedMaterialStorageSystem : EntitySystem
             return false;
 
         if (storage.EntityWhitelist?.IsValid(toInsert) == false)
+            return false;
+
+        if (HasComp<UnremoveableComponent>(toInsert))
             return false;
 
         // Material Whitelist checked implicitly by CanChangeMaterialAmount();

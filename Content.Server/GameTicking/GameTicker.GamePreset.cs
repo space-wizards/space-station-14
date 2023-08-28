@@ -2,12 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
-using Content.Server.Ghost.Components;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -263,23 +263,22 @@ namespace Content.Server.GameTicking
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
-            var meta = MetaData(ghost);
-            if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                meta.EntityName = mind.CharacterName;
+            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
+                _metaData.SetEntityName(ghost, mind.CharacterName);
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                meta.EntityName = mind.Session.Name;
+                _metaData.SetEntityName(ghost, mind.Session.Name);
 
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (mind.TimeOfDeath.HasValue)
             {
-                ghostComponent.TimeOfDeath = mind.TimeOfDeath!.Value;
+                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
             }
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
+            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
                 _mind.Visit(mind, ghost);

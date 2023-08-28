@@ -175,3 +175,47 @@
         - Left
         - Right
         - Middle
+
+#directional
+
+- type: entity
+  id: SignalSwitchDirectional
+  name: signal switch
+  suffix: directional
+  parent: SignalSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalSwitchDirectionalGraph
+    node: SignalSwitchDirectionalNode
+
+- type: entity
+  id: SignalButtonDirectional
+  name: signal button
+  suffix: directional
+  parent: SignalButton
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: SignalButtonDirectionalGraph
+    node: SignalButtonDirectionalNode
+
+- type: entity
+  id: ApcNetSwitchDirectional
+  name: apc net switch
+  suffix: directional
+  parent: ApcNetSwitch
+  components:
+  - type: WallMount
+    arc: 180
+  - type: Sprite
+    offset: 0,-0.25
+  - type: Construction
+    graph: LightSwitchDirectionalGraph
+    node: LightSwitchDirectionalNode

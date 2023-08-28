@@ -52,3 +52,13 @@
   license: "CC-BY-SA-3.0"
   copyright: "Taken from /tg/station, edited by Flareguy for Space Station 14"
   source: "https://github.com/tgstation/tgstation/blob/6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae/sound/weapons/armbomb.ogg"
+
+- files: ["bottle_clunk.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  source: "https://freesound.org/people/volivieri/sounds/37190/"
+
+- files: ["bottle_clunk_2.ogg"]
+  license: "CC-BY-4.0"
+  copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
+  source: "https://freesound.org/people/volivieri/sounds/37190/"

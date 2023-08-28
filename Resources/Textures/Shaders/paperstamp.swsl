@@ -45,7 +45,7 @@ void fragment() {
 
     // Add a bit of noise to mimic imperfect contact with the paper
     {
-        float stampNoise = noise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
+        highp float stampNoise = noise((FRAGCOORD.xy - objCoord) * vec2(0.03, 0.03)) *
                            noise((FRAGCOORD.xy - objCoord) * vec2(0.08, 0.08));
         COLOR.a *= min(0.9, 0.4 + smoothstep(0.05, 0.3, stampNoise));
     }

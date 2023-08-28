@@ -99,6 +99,17 @@
     count: 1
 
 - type: entity
+  parent: SheetSteel
+  id: SheetSteelLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   parent: SheetMetalBase
   id: SheetPlasteel
   name: plasteel

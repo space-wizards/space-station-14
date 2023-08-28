@@ -204,7 +204,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Engineering"], ["Research"], ["Chemistry"]]
 
 - type: entity
   parent: CrateBaseSecure
@@ -338,7 +338,7 @@
   - type: Physics
     bodyType: Dynamic
   - type: EntityStorage
-    capacity: 500
+    capacity: 1
     airtight: false
   - type: Fixtures
     fixtures:

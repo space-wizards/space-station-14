@@ -9,7 +9,7 @@ namespace Content.Shared.Access.Components;
 
 [RegisterComponent, NetworkedComponent]
 [Access(typeof(SharedAccessOverriderSystem))]
-public sealed class AccessOverriderComponent : Component
+public sealed partial class AccessOverriderComponent : Component
 {
     public static string PrivilegedIdCardSlotId = "AccessOverrider-privilegedId";
 

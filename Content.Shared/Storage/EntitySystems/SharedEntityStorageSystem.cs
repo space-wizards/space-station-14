@@ -395,7 +395,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
         var targetIsMob = HasComp<BodyComponent>(toInsert);
         var storageIsItem = HasComp<ItemComponent>(container);
-        var allowedToEat = HasComp<ItemComponent>(toInsert);
+        var allowedToEat = whitelist?.IsValid(toInsert) ?? HasComp<ItemComponent>(toInsert);
 
         // BEFORE REPLACING THIS WITH, I.E. A PROPERTY:
         // Make absolutely 100% sure you have worked out how to stop people ending up in backpacks.
@@ -414,9 +414,6 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             }
         }
 
-        if (allowedToEat && whitelist != null)
-            allowedToEat = whitelist.IsValid(toInsert);
-
         return allowedToEat;
     }
 
@@ -432,17 +429,17 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the
             // fixture IDs probably cant be automatically generated without causing issues, unless there is some
             // guarantee that they will get deserialized with the same auto-generated ID when saving+loading the map.
-            var fixture = fixtures.Fixtures.Values.First();
+            var fixture = fixtures.Fixtures.First();
 
             if (component.Open)
             {
-                component.RemovedMasks = fixture.CollisionLayer & component.MasksToRemove;
-                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer & ~component.MasksToRemove,
+                component.RemovedMasks = fixture.Value.CollisionLayer & component.MasksToRemove;
+                _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer & ~component.MasksToRemove,
                     manager: fixtures);
             }
             else
             {
-                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer | component.RemovedMasks,
+                _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer | component.RemovedMasks,
                     manager: fixtures);
                 component.RemovedMasks = 0;
             }

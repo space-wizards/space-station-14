@@ -43,6 +43,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -220,12 +221,8 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (proto.TransferName &&
-                TryComp<MetaDataComponent>(uid, out var targetMeta) &&
-                TryComp<MetaDataComponent>(child, out var childMeta))
-            {
-                childMeta.EntityName = targetMeta.EntityName;
-            }
+            if (proto.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+                _metaData.SetEntityName(child, targetMeta.EntityName);
 
             if (proto.TransferHumanoidAppearance)
             {
@@ -248,22 +245,22 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="uid">The entityuid of the entity being reverted</param>
         /// <param name="component"></param>
-        public void Revert(EntityUid uid, PolymorphedEntityComponent? component = null)
+        public EntityUid? Revert(EntityUid uid, PolymorphedEntityComponent? component = null)
         {
             if (Deleted(uid))
-                return;
+                return null;
 
             if (!Resolve(uid, ref component))
-                return;
+                return null;
 
             var parent = component.Parent;
             if (Deleted(parent))
-                return;
+                return null;
 
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 _sawmill.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
-                return;
+                return null;
             }
 
             var uidXform = Transform(uid);
@@ -317,6 +314,8 @@ namespace Content.Server.Polymorph.Systems
                 ("child", Identity.Entity(parent, EntityManager))),
                 parent);
             QueueDel(uid);
+
+            return parent;
         }
 
         /// <summary>
@@ -402,7 +401,7 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    public sealed class PolymorphActionEvent : InstantActionEvent
+    public sealed partial class PolymorphActionEvent : InstantActionEvent
     {
         /// <summary>
         /// The polymorph prototype containing all the information about
@@ -411,7 +410,7 @@ namespace Content.Server.Polymorph.Systems
         public PolymorphPrototype Prototype = default!;
     }
 
-    public sealed class RevertPolymorphActionEvent : InstantActionEvent
+    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent
     {
 
     }

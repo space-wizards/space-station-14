@@ -2,15 +2,15 @@ using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Hands.Systems;
+using Content.Server.Popups;
 using Content.Shared.Alert;
 using Content.Shared.Atmos;
-using Content.Shared.Inventory;
-using Robust.Shared.Containers;
-using Robust.Shared.Prototypes;
-using Content.Shared.Verbs;
-using Content.Server.Popups;
 using Content.Shared.DoAfter;
 using Content.Shared.Internals;
+using Content.Shared.Inventory;
+using Content.Shared.Verbs;
+using Robust.Shared.Containers;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
@@ -64,7 +64,13 @@ public sealed class InternalsSystem : EntitySystem
         // Toggle off if they're on
         if (AreInternalsWorking(internals))
         {
-            DisconnectTank(internals);
+            if (force || user == uid)
+            {
+                DisconnectTank(internals);
+                return;
+            }
+
+            StartToggleInternalsDoAfter(user, uid, internals);
             return;
         }
 
@@ -83,26 +89,29 @@ public sealed class InternalsSystem : EntitySystem
             return;
         }
 
-        var isUser = uid == user;
-
         if (!force)
         {
-            // Is the target not you? If yes, use a do-after to give them time to respond.
-            //If no, do a short delay. There's no reason it should be beyond 1 second.
-            var delay = !isUser ? internals.Delay : 1.0f;
-
-            _doAfter.TryStartDoAfter(new DoAfterArgs(user, delay, new InternalsDoAfterEvent(), uid, target: uid)
-            {
-                BreakOnUserMove = true,
-                BreakOnDamage = true,
-                BreakOnTargetMove = true,
-                MovementThreshold = 0.1f,
-            });
-
+            StartToggleInternalsDoAfter(user, uid, internals);
             return;
         }
 
         _gasTank.ConnectToInternals(tank);
+    }
+
+    private void StartToggleInternalsDoAfter(EntityUid user, EntityUid target, InternalsComponent internals)
+    {
+        // Is the target not you? If yes, use a do-after to give them time to respond.
+        // If not, do a short delay. There's no reason it should be beyond 1 second.
+        var isUser = user == target;
+        var delay = !isUser ? internals.Delay : 1.0f;
+
+        _doAfter.TryStartDoAfter(new DoAfterArgs(user, delay, new InternalsDoAfterEvent(), target, target: target)
+        {
+            BreakOnUserMove = true,
+            BreakOnDamage = true,
+            BreakOnTargetMove = true,
+            MovementThreshold = 0.1f,
+        });
     }
 
     private void OnDoAfter(EntityUid uid, InternalsComponent component, InternalsDoAfterEvent args)

@@ -18,10 +18,17 @@
     toggleOnInteract: false
   - type: Intercom
   - type: Speech
+    speechVerb: Robotic
   - type: ExtensionCableReceiver
   - type: Clickable
   - type: InteractionOutline
   - type: Appearance
+  - type: ContainerFill
+    containers:
+      board: [ IntercomElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Sprite
     noRot: false
     sprite: Structures/Wallmounts/intercom.rsi
@@ -43,7 +50,7 @@
     anchored: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Intercom"
+    BoardName: wires-board-name-intercom
     LayoutId: Intercom
   - type: ActivatableUIRequiresPower
   - type: ActivatableUI

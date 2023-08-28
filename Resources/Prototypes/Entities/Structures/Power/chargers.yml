@@ -200,6 +200,9 @@
   - type: Charger
     baseChargeRate: 30
     slotId: entity_storage
+    whitelist:
+      components:
+      - BorgChassis
   - type: Construction
     containers:
     - machine_parts

@@ -90984,8 +90984,7 @@ entities:
       type: Transform
   - uid: 17113
     components:
-    - rot: -1.5707963267948966 rad
-      pos: 63.5,30.5
+    - pos: 63.5,30.5
       parent: 2
       type: Transform
 - proto: OreProcessor
@@ -101385,7 +101384,7 @@ entities:
     - pos: 9.598311,-40.325493
       parent: 2
       type: Transform
-- proto: RevolverCapGunFake
+- proto: RevolverCapGun
   entities:
   - uid: 17116
     components:
