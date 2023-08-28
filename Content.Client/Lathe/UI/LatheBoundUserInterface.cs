@@ -12,9 +12,6 @@ namespace Content.Client.Lathe.UI
         private LatheMenu? _menu;
 
         [ViewVariables]
-        private LatheQueueMenu? _queueMenu;
-
-        [ViewVariables]
         private LatheMaterialsEjectionMenu? _materialsEjectionMenu;
 
         public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
@@ -26,18 +23,9 @@ namespace Content.Client.Lathe.UI
             base.Open();
 
             _menu = new LatheMenu(this);
-            _queueMenu = new LatheQueueMenu();
             _materialsEjectionMenu = new LatheMaterialsEjectionMenu();
 
             _menu.OnClose += Close;
-
-            _menu.OnQueueButtonPressed += _ =>
-            {
-                if (_queueMenu.IsOpen)
-                    _queueMenu.Close();
-                else
-                    _queueMenu.OpenCenteredLeft();
-            };
 
             _menu.OnMaterialsEjectionButtonPressed += _ =>
             {
@@ -76,8 +64,8 @@ namespace Content.Client.Lathe.UI
                         _menu.Recipes = msg.Recipes;
                     _menu?.PopulateRecipes(Owner);
                     _menu?.PopulateMaterials(Owner);
-                    _queueMenu?.PopulateList(msg.Queue);
-                    _queueMenu?.SetInfo(msg.CurrentlyProducing);
+                    _menu?.PopulateQueueList(msg.Queue);
+                    _menu?.SetQueueInfo(msg.CurrentlyProducing);
                     _materialsEjectionMenu?.PopulateMaterials(Owner);
                     break;
             }

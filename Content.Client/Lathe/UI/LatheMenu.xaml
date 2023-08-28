@@ -2,8 +2,8 @@
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
-    MinSize="500 450"
-    SetSize="550 475">
+    MinSize="600 450"
+    SetSize="650 475">
     <BoxContainer
         Orientation="Horizontal"
         VerticalExpand="True"
@@ -22,13 +22,6 @@
                     Orientation="Horizontal"
                     Align="End"
                     HorizontalExpand="True">
-                    <Button
-                        Name="QueueButton"
-                        Text="{Loc 'lathe-menu-queue'}"
-                        TextAlign="Center"
-                        Mode="Press"
-                        StyleClasses="OpenRight">
-                    </Button>
                     <Button
                         Name="ServerListButton"
                         Text="{Loc 'lathe-menu-server-list'}"
@@ -84,6 +77,51 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
+
+        <!-- Mid Col-->
+        <BoxContainer
+            Orientation="Vertical"
+            VerticalExpand="True"
+            HorizontalExpand="True"
+            SeparationOverride="5"
+        >
+            <Label Text="{Loc 'lathe-menu-queue'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+            <BoxContainer Orientation="Vertical">
+                <BoxContainer
+                    Orientation="Horizontal"
+                    HorizontalExpand="True"
+                    SizeFlagsStretchRatio="2">
+                    <TextureRect
+                        Name="Icon"
+                        HorizontalExpand="True"
+                        SizeFlagsStretchRatio="2">
+                    </TextureRect>
+                    <BoxContainer
+                        Orientation="Vertical"
+                        VerticalExpand="True"
+                        SizeFlagsStretchRatio="3">
+                        <Label
+                            Name="NameLabel"
+                            RectClipContent="True"
+                            Margin="36 0 0 0">
+                        </Label>
+                        <Label
+                            Name="Description"
+                            RectClipContent="True"
+                            VerticalAlignment="Stretch"
+                            VerticalExpand="True">
+                        </Label>
+                    </BoxContainer>
+                </BoxContainer>
+                <ItemList
+                    Name="QueueList"
+                    VerticalExpand="True"
+                    SizeFlagsStretchRatio="3"
+                    SelectMode="None">
+                </ItemList>
+            </BoxContainer>
+        </BoxContainer>
+
         <!-- Right Col-->
         <BoxContainer
             VerticalExpand="True"
