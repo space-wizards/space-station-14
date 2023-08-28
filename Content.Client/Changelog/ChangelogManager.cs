@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Changelog
 {
-    public sealed class ChangelogManager
+    public sealed partial class ChangelogManager
     {
         [Dependency] private readonly IResourceManager _resource = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -86,20 +86,20 @@ namespace Content.Client.Changelog
         }
 
         [DataDefinition]
-        public sealed class ChangelogEntry : ISerializationHooks
+        public sealed partial class ChangelogEntry : ISerializationHooks
         {
             [DataField("id")]
             public int Id { get; private set; }
 
             [DataField("author")]
-            public string Author { get; } = "";
+            public string Author { get; private set; } = "";
 
             [DataField("time")] private string _time = default!;
 
             public DateTime Time { get; private set; }
 
             [DataField("changes")]
-            public List<ChangelogChange> Changes { get; } = default!;
+            public List<ChangelogChange> Changes { get; private set; } = default!;
 
             void ISerializationHooks.AfterDeserialization()
             {
@@ -108,7 +108,7 @@ namespace Content.Client.Changelog
         }
 
         [DataDefinition]
-        public sealed class ChangelogChange : ISerializationHooks
+        public sealed partial class ChangelogChange : ISerializationHooks
         {
             [DataField("type")]
             public ChangelogLineType Type { get; private set; }

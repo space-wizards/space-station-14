@@ -6,7 +6,7 @@ namespace Content.Shared.Sprite;
 /// If your client entity is behind this then the sprite's alpha will be lowered so your entity remains visible.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SpriteFadeComponent : Component
+public sealed partial class SpriteFadeComponent : Component
 {
 
 }

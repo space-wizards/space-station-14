@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
@@ -11,6 +10,7 @@ using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
@@ -27,11 +27,13 @@ public sealed class MindSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
+    [Dependency] private readonly ActorSystem _actor = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly GhostSystem _ghostSystem = default!;
+    [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly ActorSystem _actor = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, Mind> _userMinds = new();
@@ -125,11 +127,12 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     private void InternalEjectMind(EntityUid uid, MindContainerComponent? mind = null)
     {
-        if (!Resolve(uid, ref mind, false))
+        if (!Resolve(uid, ref mind, false) || mind.Mind == null)
             return;
 
-        RaiseLocalEvent(uid, new MindRemovedMessage(), true);
+        var oldMind = mind.Mind;
         mind.Mind = null;
+        RaiseLocalEvent(uid, new MindRemovedMessage(oldMind), true);
     }
 
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
@@ -141,7 +144,7 @@ public sealed class MindSystem : EntitySystem
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
     {
         // Let's not create ghosts if not in the middle of the round.
-        if (_gameTicker.RunLevel != GameRunLevel.InRound)
+        if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             return;
 
         if (component.Mind is not { } mind)
@@ -159,7 +162,7 @@ public sealed class MindSystem : EntitySystem
             return;
         }
 
-        TransferTo(mind, null);
+        TransferTo(mind, null, createGhost: false);
 
         if (component.GhostOnShutdown && mind.Session != null)
         {
@@ -171,7 +174,7 @@ public sealed class MindSystem : EntitySystem
             Timer.Spawn(0, () =>
             {
                 // Make extra sure the round didn't end between spawning the timer and it being executed.
-                if (_gameTicker.RunLevel != GameRunLevel.InRound)
+                if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
                     return;
 
                 // Async this so that we don't throw if the grid we're on is being deleted.
@@ -184,7 +187,7 @@ public sealed class MindSystem : EntitySystem
                 {
                     // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                     Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-                    TransferTo(mind, null);
+                    TransferTo(mind, null, createGhost: false);
                     return;
                 }
 
@@ -196,7 +199,7 @@ public sealed class MindSystem : EntitySystem
                 Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
                 var val = mind.CharacterName ?? string.Empty;
-                MetaData(ghost).EntityName = val;
+                _metaData.SetEntityName(ghost, val);
                 TransferTo(mind, ghost);
             });
         }
@@ -210,7 +213,9 @@ public sealed class MindSystem : EntitySystem
         var dead = _mobStateSystem.IsDead(uid);
         var hasSession = mindContainer.Mind?.Session;
 
-        if (dead && hasSession == null)
+        if (dead && !mindContainer.HasMind)
+            args.PushMarkup($"[color=mediumpurple]{Loc.GetString("comp-mind-examined-dead-and-irrecoverable", ("ent", uid))}[/color]");
+        else if (dead && hasSession == null)
             args.PushMarkup($"[color=yellow]{Loc.GetString("comp-mind-examined-dead-and-ssd", ("ent", uid))}[/color]");
         else if (dead)
             args.PushMarkup($"[color=red]{Loc.GetString("comp-mind-examined-dead", ("ent", uid))}[/color]");
@@ -381,7 +386,7 @@ public sealed class MindSystem : EntitySystem
     /// <exception cref="ArgumentException">
     ///     Thrown if <paramref name="entity"/> is already owned by another mind.
     /// </exception>
-    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false)
+    public void TransferTo(Mind mind, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true)
     {
         if (entity == mind.OwnedEntity)
             return;
@@ -407,6 +412,16 @@ public sealed class MindSystem : EntitySystem
                 alreadyAttached = true;
             }
         }
+        else if (createGhost)
+        {
+            var position = Deleted(mind.OwnedEntity)
+                ? _gameTicker.GetObserverSpawnPoint().ToMap(EntityManager, _transform)
+                : Transform(mind.OwnedEntity.Value).MapPosition;
+
+            entity = Spawn("MobObserver", position);
+            var ghostComponent = Comp<GhostComponent>(entity.Value);
+            _ghostSystem.SetCanReturnToBody(ghostComponent, false);
+        }
 
         var oldComp = mind.OwnedComponent;
         var oldEntity = mind.OwnedEntity;
@@ -414,10 +429,6 @@ public sealed class MindSystem : EntitySystem
             InternalEjectMind(oldEntity.Value, oldComp);
 
         SetOwnedEntity(mind, entity, component);
-        if (mind.OwnedComponent != null){
-            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
-            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
-        }
 
         // Don't do the full deletion cleanup if we're transferring to our VisitingEntity
         if (alreadyAttached)
@@ -438,8 +449,14 @@ public sealed class MindSystem : EntitySystem
         // Player is CURRENTLY connected.
         if (mind.Session != null && !alreadyAttached && mind.VisitingEntity == null)
         {
-            mind.Session.AttachToEntity(entity);
+            _actor.Attach(entity, mind.Session, true);
             Log.Info($"Session {mind.Session.Name} transferred to entity {entity}.");
+        }
+
+        if (mind.OwnedComponent != null)
+        {
+            InternalAssignMind(mind.OwnedEntity!.Value, mind, mind.OwnedComponent);
+            mind.OriginalOwnedEntity ??= mind.OwnedEntity;
         }
     }
 
@@ -559,7 +576,7 @@ public sealed class MindSystem : EntitySystem
     public bool TryGetMind(EntityUid uid, [NotNullWhen(true)] out Mind? mind, MindContainerComponent? mindContainerComponent = null)
     {
         mind = null;
-        if (!Resolve(uid, ref mindContainerComponent))
+        if (!Resolve(uid, ref mindContainerComponent, false))
             return false;
 
         if (!mindContainerComponent.HasMind)
@@ -648,6 +665,15 @@ public sealed class MindSystem : EntitySystem
     /// </summary>
     public bool IsCharacterDeadIc(Mind mind)
     {
+        if (mind.OwnedEntity is { } owned)
+        {
+            var ev = new GetCharactedDeadIcEvent(null);
+            RaiseLocalEvent(owned, ref ev);
+
+            if (ev.Dead != null)
+                return ev.Dead.Value;
+        }
+
         return IsCharacterDeadPhysically(mind);
     }
 
@@ -663,3 +689,11 @@ public sealed class MindSystem : EntitySystem
         return "(originally " + mind.OriginalOwnerUserId + ")";
     }
 }
+
+/// <summary>
+/// Raised on an entity to determine whether or not they are "dead" in IC-logic.
+/// If not handled, then it will simply check if they are dead physically.
+/// </summary>
+/// <param name="Dead"></param>
+[ByRefEvent]
+public record struct GetCharactedDeadIcEvent(bool? Dead);

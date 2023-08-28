@@ -1,4 +1,3 @@
-using Content.Shared.Actions.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -29,7 +28,7 @@ public sealed class WieldableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand);
+        SubscribeLocalEvent<WieldableComponent, UseInHandEvent>(OnUseInHand, before: new [] { typeof(SharedGunSystem) });
         SubscribeLocalEvent<WieldableComponent, WieldableDoAfterEvent>(OnDoAfter);
         SubscribeLocalEvent<WieldableComponent, ItemUnwieldedEvent>(OnItemUnwielded);
         SubscribeLocalEvent<WieldableComponent, GotUnequippedHandEvent>(OnItemLeaveHand);
@@ -100,8 +99,8 @@ public sealed class WieldableSystem : EntitySystem
         {
             Text = component.Wielded ? Loc.GetString("wieldable-verb-text-unwield") : Loc.GetString("wieldable-verb-text-wield"),
             Act = component.Wielded
-                ? () => AttemptUnwield(uid, component, args.User)
-                : () => AttemptWield(uid, component, args.User)
+                ? () => TryUnwield(uid, component, args.User)
+                : () => TryWield(uid, component, args.User)
         };
 
         args.Verbs.Add(verb);
@@ -111,10 +110,11 @@ public sealed class WieldableSystem : EntitySystem
     {
         if (args.Handled)
             return;
+
         if(!component.Wielded)
-            AttemptWield(uid, component, args.User);
+            args.Handled = TryWield(uid, component, args.User);
         else
-            AttemptUnwield(uid, component, args.User);
+            args.Handled = TryUnwield(uid, component, args.User);
     }
 
     public bool CanWield(EntityUid uid, WieldableComponent component, EntityUid user, bool quiet=false)
@@ -153,15 +153,17 @@ public sealed class WieldableSystem : EntitySystem
     /// <summary>
     ///     Attempts to wield an item, creating a DoAfter..
     /// </summary>
-    public void AttemptWield(EntityUid used, WieldableComponent component, EntityUid user)
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryWield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         if (!CanWield(used, component, user))
-            return;
+            return false;
+
         var ev = new BeforeWieldEvent();
         RaiseLocalEvent(used, ev);
 
         if (ev.Cancelled)
-            return;
+            return false;
 
         var doargs = new DoAfterArgs(user, component.WieldTime, new WieldableDoAfterEvent(), used, used: used)
         {
@@ -170,22 +172,25 @@ public sealed class WieldableSystem : EntitySystem
         };
 
         _doAfter.TryStartDoAfter(doargs);
+        return true;
     }
 
     /// <summary>
     ///     Attempts to unwield an item, with no DoAfter.
     /// </summary>
-    public void AttemptUnwield(EntityUid used, WieldableComponent component, EntityUid user)
+    /// <returns>True if the attempt wasn't blocked.</returns>
+    public bool TryUnwield(EntityUid used, WieldableComponent component, EntityUid user)
     {
         var ev = new BeforeUnwieldEvent();
         RaiseLocalEvent(used, ev);
 
         if (ev.Cancelled)
-            return;
+            return false;
 
         var targEv = new ItemUnwieldedEvent(user);
 
         RaiseLocalEvent(used, targEv);
+        return true;
     }
 
     private void OnDoAfter(EntityUid uid, WieldableComponent component, DoAfterEvent args)
@@ -258,7 +263,7 @@ public sealed class WieldableSystem : EntitySystem
     private void OnVirtualItemDeleted(EntityUid uid, WieldableComponent component, VirtualItemDeletedEvent args)
     {
         if (args.BlockingEntity == uid && component.Wielded)
-            AttemptUnwield(args.BlockingEntity, component, args.User);
+            TryUnwield(args.BlockingEntity, component, args.User);
     }
 
     private void OnGetMeleeDamage(EntityUid uid, IncreaseDamageOnWieldComponent component, ref GetMeleeDamageEvent args)

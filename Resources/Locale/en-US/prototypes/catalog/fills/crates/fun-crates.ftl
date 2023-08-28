@@ -48,3 +48,6 @@ ent-CrateFunBoxing = Boxing Crate
 
 ent-CrateFunBikeHornImplants = Bike Horn Implants
     .desc = A thousand honks a day keeps security officers away!
+
+ent-CrateFunMysteryFigurines = Mystery Figure Crate
+    .desc = A collection of 10 Mystery Figurine boxes. Duplicates non refundable.

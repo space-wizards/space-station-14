@@ -12,7 +12,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     Using it with both portals active deactivates both.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class HandTeleporterComponent : Component
+public sealed partial class HandTeleporterComponent : Component
 {
     [ViewVariables, DataField("firstPortal")]
     public EntityUid? FirstPortal = null;
@@ -38,10 +38,11 @@ public sealed class HandTeleporterComponent : Component
     /// <summary>
     ///     Delay for creating the portals in seconds.
     /// </summary>
-    [DataField("portalCreationDelay")] public float PortalCreationDelay = 2.5f;
+    [DataField("portalCreationDelay")]
+    public float PortalCreationDelay = 1.0f;
 }
 
 [Serializable, NetSerializable]
-public sealed class TeleporterDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class TeleporterDoAfterEvent : SimpleDoAfterEvent
 {
 }

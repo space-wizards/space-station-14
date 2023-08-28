@@ -15,9 +15,9 @@ namespace Content.IntegrationTests.Tests.Commands
         [Test]
         public async Task PardonTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-            var server = pairTracker.Pair.Server;
-            var client = pairTracker.Pair.Client;
+            await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+            var server = pair.Server;
+            var client = pair.Client;
 
             var sPlayerManager = server.ResolveDependency<IPlayerManager>();
             var sConsole = server.ResolveDependency<IServerConsoleHost>();
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Commands
                 Assert.That(await sDatabase.GetServerBansAsync(null, clientId, null), Has.Count.EqualTo(1));
             });
 
-            await PoolManager.RunTicksSync(pairTracker.Pair, 5);
+            await pair.RunTicksSync(5);
             Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(0));
             Assert.That(!netMan.IsConnected);
 
@@ -146,10 +146,10 @@ namespace Content.IntegrationTests.Tests.Commands
             Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(0));
             client.SetConnectTarget(server);
             await client.WaitPost(() => netMan.ClientConnect(null!, 0, null!));
-            await PoolManager.ReallyBeIdle(pairTracker.Pair);
+            await pair.RunTicksSync(5);
             Assert.That(sPlayerManager.Sessions.Count(), Is.EqualTo(1));
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

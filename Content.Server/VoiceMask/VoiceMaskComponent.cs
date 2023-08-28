@@ -1,7 +1,7 @@
 namespace Content.Server.VoiceMask;
 
 [RegisterComponent]
-public sealed class VoiceMaskComponent : Component
+public sealed partial class VoiceMaskComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)] public bool Enabled = true;
 

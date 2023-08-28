@@ -3,7 +3,7 @@ using Robust.Shared.Audio;
 namespace Content.Shared.Bed.Sleep;
 
 [RegisterComponent]
-public sealed class SleepEmitSoundComponent : Component
+public sealed partial class SleepEmitSoundComponent : Component
 {
     /// <summary>
     /// Sound to play when sleeping

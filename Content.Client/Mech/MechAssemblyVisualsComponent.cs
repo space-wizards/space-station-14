@@ -4,7 +4,7 @@
 /// This is used for visualizing mech constructions
 /// </summary>
 [RegisterComponent]
-public sealed class MechAssemblyVisualsComponent : Component
+public sealed partial class MechAssemblyVisualsComponent : Component
 {
     /// <summary>
     /// The prefix that is followed by the number which
