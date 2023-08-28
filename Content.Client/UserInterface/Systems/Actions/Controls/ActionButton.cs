@@ -153,7 +153,6 @@ public sealed class ActionButton : Control
             OnUnpressed(args);
         };
 
-        TooltipDelay = 0.5f;
         TooltipSupplier = SupplyTooltip;
     }
 
