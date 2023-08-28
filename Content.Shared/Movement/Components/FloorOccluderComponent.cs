@@ -6,7 +6,7 @@ namespace Content.Shared.Movement.Components;
 /// Applies floor occlusion to any <see cref="FloorOcclusionComponent"/> that intersect us.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class FloorOccluderComponent : Component
+public sealed partial class FloorOccluderComponent : Component
 {
 
 }

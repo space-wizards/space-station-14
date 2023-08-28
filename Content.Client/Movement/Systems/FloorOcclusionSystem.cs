@@ -10,16 +10,40 @@ public sealed class FloorOcclusionSystem : SharedFloorOcclusionSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
-    protected override void SetEnabled(FloorOcclusionComponent component, bool enabled)
+    public override void Initialize()
+    {
+        base.Initialize();
+        SubscribeLocalEvent<FloorOcclusionComponent, ComponentStartup>(OnOcclusionStartup);
+        SubscribeLocalEvent<FloorOcclusionComponent, AfterAutoHandleStateEvent>(OnOcclusionAuto);
+    }
+
+    private void OnOcclusionAuto(EntityUid uid, FloorOcclusionComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        if (component.Enabled && TryComp<SpriteComponent>(uid, out var sprite))
+            SetShader(sprite, true);
+    }
+
+    private void OnOcclusionStartup(EntityUid uid, FloorOcclusionComponent component, ComponentStartup args)
+    {
+        if (component.Enabled && TryComp<SpriteComponent>(uid, out var sprite))
+            SetShader(sprite, true);
+    }
+
+    protected override void SetEnabled(EntityUid uid, FloorOcclusionComponent component, bool enabled)
     {
         if (component.Enabled == enabled)
             return;
 
-        base.SetEnabled(component, enabled);
+        base.SetEnabled(uid, component, enabled);
 
-        if (!TryComp<SpriteComponent>(component.Owner, out var sprite))
+        if (!TryComp<SpriteComponent>(uid, out var sprite))
             return;
 
+        SetShader(sprite, enabled);
+    }
+
+    private void SetShader(SpriteComponent sprite, bool enabled)
+    {
         if (enabled)
         {
             sprite.PostShader = _proto.Index<ShaderPrototype>("HorizontalCut").Instance();

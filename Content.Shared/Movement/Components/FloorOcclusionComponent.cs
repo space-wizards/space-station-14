@@ -2,12 +2,18 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Movement.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class FloorOcclusionComponent : Component
+/// <summary>
+/// Applies an occlusion shader to this entity if it's colliding with a <see cref="FloorOccluderComponent"/>
+/// </summary>
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+public sealed partial class FloorOcclusionComponent : Component
 {
-    [ViewVariables(VVAccess.ReadWrite), DataField("enabled")]
+    /// <summary>
+    /// Is the shader currently enabled.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("enabled"), AutoNetworkedField]
     public bool Enabled;
 
-    [ViewVariables, DataField("colliding")]
-    public readonly List<EntityUid> Colliding = new();
+    [DataField("colliding")]
+    public List<EntityUid> Colliding = new();
 }
