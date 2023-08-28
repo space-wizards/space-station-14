@@ -42,6 +42,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -219,12 +220,8 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (proto.TransferName &&
-                TryComp<MetaDataComponent>(uid, out var targetMeta) &&
-                TryComp<MetaDataComponent>(child, out var childMeta))
-            {
-                childMeta.EntityName = targetMeta.EntityName;
-            }
+            if (proto.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+                _metaData.SetEntityName(child, targetMeta.EntityName);
 
             if (proto.TransferHumanoidAppearance)
             {

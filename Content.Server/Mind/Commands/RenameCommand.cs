@@ -43,7 +43,7 @@ public sealed class RenameCommand : IConsoleCommand
         // Metadata
         var metadata = entMan.GetComponent<MetaDataComponent>(entityUid);
         var oldName = metadata.EntityName;
-        metadata.EntityName = name;
+        entMan.System<MetaDataSystem>().SetEntityName(entityUid, name, metadata);
 
         var minds = entMan.System<MindSystem>();
 

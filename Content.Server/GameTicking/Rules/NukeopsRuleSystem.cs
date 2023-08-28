@@ -56,6 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [ValidatePrototypeId<AntagPrototype>]
     public const string NukeopsId = "Nukeops";
@@ -717,7 +718,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// </summary>
     private void SetupOperativeEntity(EntityUid mob, string name, string gear, HumanoidCharacterProfile? profile, NukeopsRuleComponent component)
     {
-        MetaData(mob).EntityName = name;
+        _metaData.SetEntityName(mob, name);
         EnsureComp<NukeOperativeComponent>(mob);
 
         if (profile != null)
