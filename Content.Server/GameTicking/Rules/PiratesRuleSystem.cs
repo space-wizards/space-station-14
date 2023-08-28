@@ -44,6 +44,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly NamingSystem _namingSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -215,7 +216,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
                 _mindSystem.SetUserId(newMind, session.UserId);
 
                 var mob = Spawn("MobHuman", _random.Pick(spawns));
-                MetaData(mob).EntityName = name;
+                _metaData.SetEntityName(mob, name);
 
                 _mindSystem.TransferTo(newMind, mob);
                 var profile = _prefs.GetPreferences(session.UserId).SelectedCharacter as HumanoidCharacterProfile;
