@@ -239,7 +239,7 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
+      BoardName: wires-board-name-thermomachine
       LayoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer

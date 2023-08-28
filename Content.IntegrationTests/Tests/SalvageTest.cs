@@ -19,8 +19,8 @@ public sealed class SalvageTest
     [Test]
     public async Task AllSalvageMapsLoadableTest()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
         var entManager = server.ResolveDependency<IEntityManager>();
         var mapLoader = entManager.System<MapLoaderSystem>();
@@ -58,6 +58,6 @@ public sealed class SalvageTest
         });
         await server.WaitRunTicks(1);
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

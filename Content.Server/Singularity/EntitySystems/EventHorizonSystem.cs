@@ -1,5 +1,4 @@
 using Content.Server.Administration.Logs;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Station.Components;
 using Content.Server.Singularity.Events;
@@ -13,6 +12,7 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Events;
 using System.Numerics;
+using Content.Shared.Ghost;
 
 
 namespace Content.Server.Singularity.EntitySystems;
