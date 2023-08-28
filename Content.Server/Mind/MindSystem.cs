@@ -83,7 +83,7 @@ public sealed class MindSystem : EntitySystem
         return mind;
     }
 
-    public bool TryGetMind(NetUserId user, out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
+    public bool TryGetMind(NetUserId user, [NotNullWhen(true)] out EntityUid? mindId, [NotNullWhen(true)] out MindComponent? mind)
     {
         if (_userMinds.TryGetValue(user, out var mindIdValue) &&
             TryComp(mindIdValue, out mind))
