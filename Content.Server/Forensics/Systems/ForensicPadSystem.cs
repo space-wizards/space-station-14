@@ -16,6 +16,7 @@ namespace Content.Server.Forensics
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly InventorySystem _inventory = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
@@ -99,10 +100,10 @@ namespace Content.Server.Forensics
 
             if (args.Args.Target != null)
             {
-                if (HasComp<FingerprintComponent>(args.Args.Target))
-                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-fingerprint-name", ("entity", args.Args.Target));
-                else
-                    MetaData(uid).EntityName = Loc.GetString("forensic-pad-gloves-name", ("entity", args.Args.Target));
+                var name = HasComp<FingerprintComponent>(args.Args.Target)
+                    ? "forensic-pad-fingerprint-name"
+                    : "forensic-pad-gloves-name";
+                _metaData.SetEntityName(uid, Loc.GetString(name, ("entity", args.Args.Target)));
             }
 
             padComponent.Sample = args.Sample;

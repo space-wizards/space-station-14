@@ -336,6 +336,7 @@
   components:
   - type: Unremoveable
 
+
 - type: entity
   parent: ClothingHandsBase
   id: ClothingHandsGlovesNorthStar
@@ -350,7 +351,7 @@
     attackRate: 4
     damage:
       types:
-       Blunt: 8
+       Blunt: 7
     soundHit:
       collection: Punch
     animation: WeaponArcFist
@@ -363,6 +364,7 @@
     key: enum.MeleeSpeechUiKey.Key
     closeOnHandDeselect: false
     rightClickOnly: true
+  - type: Actions
   - type: UserInterface
     interfaces:
       - key: enum.MeleeSpeechUiKey.Key

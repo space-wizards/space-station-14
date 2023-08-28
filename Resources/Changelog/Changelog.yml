@@ -1,47 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: 'Added more syndicate clothes (5 coats, 3 uniforms, 3 hats, 1 mask,
-      1 glove) + syndicate banner.', type: Add}
-  id: 4188
-  time: '2023-07-07T18:40:24.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Planets have significantly more rocks than before., type: Tweak}
-  id: 4189
-  time: '2023-07-08T03:30:29.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: Batons can now contain solutions., type: Tweak}
-  id: 4190
-  time: '2023-07-08T03:32:31.0000000+00:00'
-- author: Ubaser
-  changes:
-  - {message: 'Nanotrasen has started to selectively employ those with slightly more
-      fluent archaic accents, and as a result it sounds a bit better to most.', type: Tweak}
-  id: 4191
-  time: '2023-07-08T08:34:11.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: you can find space lube tube in lockers again, type: Fix}
-  id: 4192
-  time: '2023-07-08T19:42:43.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Remove dummy crit states for mobs that don't implement it., type: Fix}
-  id: 4193
-  time: '2023-07-08T19:44:01.0000000+00:00'
-- author: kseandi
-  changes:
-  - {message: NanoTrasen has created more compact singularity field generators that
-      will no longer get stuck in airlocks., type: Fix}
-  id: 4194
-  time: '2023-07-08T19:47:28.0000000+00:00'
-- author: ElectroJr
-  changes:
-  - {message: The mass scanner UI shows distances again., type: Fix}
-  id: 4195
-  time: '2023-07-08T19:47:53.0000000+00:00'
 - author: ElectroJr
   changes:
   - {message: Fixed chat scrollbar not working properly., type: Fix}
@@ -3029,3 +2986,45 @@ Entries:
   - {message: Fixed NPCs not working., type: Fix}
   id: 4687
   time: '2023-08-25T21:52:23.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Ore bags can now pick up artifact fragments., type: Tweak}
+  id: 4688
+  time: '2023-08-26T11:33:55.0000000+00:00'
+- author: Potato1234_x
+  changes:
+  - {message: Made bananas peelable., type: Tweak}
+  id: 4689
+  time: '2023-08-26T16:31:14.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: The Syndicate's Holoparasite have taken to yelling catchphrases as they
+      fight., type: Add}
+  id: 4690
+  time: '2023-08-26T21:26:28.0000000+00:00'
+- author: qwerltaz
+  changes:
+  - {message: Fixed wallmount devices being unable to be deconstructed., type: Fix}
+  id: 4691
+  time: '2023-08-26T22:25:23.0000000+00:00'
+- author: PJB3005
+  changes:
+  - {message: 'Objects with interfaces now correctly respect interaction range, so
+      green outline really means you can open them.', type: Fix}
+  id: 4692
+  time: '2023-08-27T08:27:43.0000000+00:00'
+- author: HerCoyote23
+  changes:
+  - {message: Northstar gloves have been tuned down a bit., type: Tweak}
+  id: 4693
+  time: '2023-08-27T14:01:44.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: The recycler now recycles items off conveyor belts properly., type: Fix}
+  id: 4694
+  time: '2023-08-27T23:01:54.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Fixed Sec HUD icons overlapping with speech indicators., type: Fix}
+  id: 4695
+  time: '2023-08-28T06:19:59.0000000+00:00'

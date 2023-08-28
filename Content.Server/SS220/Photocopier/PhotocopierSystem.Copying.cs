@@ -123,13 +123,14 @@ public sealed partial class PhotocopierSystem
             entityToSpawn = "Paper";
 
         EntityUid printed;
+
         try
         {
             printed = EntityManager.SpawnEntity(entityToSpawn, at);
         }
-        catch (UnknownPrototypeException e)
+        catch (UnknownPrototypeException)
         {
-            _sawmill.Error("Tried to spawn a copy of a document, but got an unknown prototype ID: \""+entityToSpawn+"\"");
+            _sawmill.Error("Tried to spawn a copy of a document, but got an unknown prototype ID: \"" + entityToSpawn + "\"");
             return null;
         }
 
@@ -137,10 +138,10 @@ public sealed partial class PhotocopierSystem
         if (metaDataToCopy is not null && TryComp<MetaDataComponent>(printed, out var metaData))
         {
             if (!string.IsNullOrEmpty(metaDataToCopy.EntityName))
-                metaData.EntityName = metaDataToCopy.EntityName;
+                _metaData.SetEntityName(printed, metaDataToCopy.EntityName, metaData);
 
             if (!string.IsNullOrEmpty(metaDataToCopy.EntityDescription))
-                metaData.EntityDescription = metaDataToCopy.EntityDescription;
+                _metaData.SetEntityDescription(printed, metaDataToCopy.EntityDescription, metaData);
         }
 
         if (dataToCopy is not null)

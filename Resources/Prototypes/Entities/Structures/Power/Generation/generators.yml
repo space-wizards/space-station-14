@@ -187,6 +187,12 @@
     node: generator
   - type: StaticPrice
     price: 14
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 - type: entity
   parent: BaseGeneratorWallmount
@@ -202,6 +208,12 @@
     node: APU
   - type: StaticPrice
     price: 38
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorAPUElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
 
 # RTG - no fuel requirement
 
