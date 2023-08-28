@@ -1,7 +1,7 @@
 namespace Content.Server.Sticky.Components;
 
 /// <summary>
-///     Attempts to stick entity on spawn to other valid entity nearby
+///     Attempts to stick entity on spawn to other valid entities nearby
 /// </summary>
 [RegisterComponent]
 public sealed partial class TryStickOnSpawnComponent : Component

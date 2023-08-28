@@ -91,7 +91,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                 system.EntityManager.TryGetComponent<StickyComponent>(spawned, out var spawnedStickyComp) &&
                 ownerStickyComp.StuckTo != null)
             {
-                system.StickySystem.StickToEntity(spawned, (EntityUid) ownerStickyComp.StuckTo, null, spawnedStickyComp);
+                system.StickySystem.StickToEntity(spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);
             }
         }
     }

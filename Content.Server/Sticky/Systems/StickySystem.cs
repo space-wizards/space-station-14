@@ -21,6 +21,7 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private readonly ILogManager _log = default!;
     private ISawmill _sawmill = default!;
 
     private const string StickerSlotId = "stickers_container";
@@ -34,7 +35,7 @@ public sealed class StickySystem : EntitySystem
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
 
-        _sawmill = Logger.GetSawmill("sticky");
+        _sawmill = _log.GetSawmill("sticky");
     }
 
     private void OnAutoStickMapInit(EntityUid uid, TryStickOnSpawnComponent component, MapInitEvent args)
@@ -43,7 +44,7 @@ public sealed class StickySystem : EntitySystem
         if (!Resolve(uid, ref sticky))
             return;
 
-        var sticked = false;
+        var stuck = false;
         foreach (var entity in _lookup.GetEntitiesInRange(Transform(uid).MapPosition, component.Range))
         {
             // check whitelist and blacklist
@@ -53,10 +54,11 @@ public sealed class StickySystem : EntitySystem
                 continue;
 
             StickToEntity(uid, entity, null, sticky);
-            sticked = true;
+            stuck = true;
+            break;
         }
 
-        if (sticked == false)
+        if (!stuck)
         {
             // entity was unable to stick on anything; draw it as unsticked
             if (TryComp(uid, out AppearanceComponent? appearance))
@@ -198,7 +200,7 @@ public sealed class StickySystem : EntitySystem
         if (component.StickPopupSuccess != null && user != null)
         {
             var msg = Loc.GetString(component.StickPopupSuccess, ("item", Name(uid)));
-            _popupSystem.PopupEntity(msg, (EntityUid) user, (EntityUid) user);
+            _popupSystem.PopupEntity(msg, user.Value, user.Value);
         }
 
         // send information to appearance that entity is stuck
@@ -239,7 +241,7 @@ public sealed class StickySystem : EntitySystem
         if (component.UnstickPopupSuccess != null && user != null)
         {
             var msg = Loc.GetString(component.UnstickPopupSuccess, ("item", Name(uid)));
-            _popupSystem.PopupEntity(msg, (EntityUid) user, (EntityUid) user);
+            _popupSystem.PopupEntity(msg, user.Value, user.Value);
         }
 
         component.StuckTo = null;
