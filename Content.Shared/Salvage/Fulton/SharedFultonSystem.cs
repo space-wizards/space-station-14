@@ -14,6 +14,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Salvage.Fulton;
 
+/// <summary>
+/// Provides extraction devices that teleports the attached entity after <see cref="FultonDuration"/> elapses to the linked beacon.
+/// </summary>
 public abstract partial class SharedFultonSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
@@ -25,7 +28,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
-    public static readonly TimeSpan FultonDuration = TimeSpan.FromSeconds(5);
+    public static readonly TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
     [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
 
