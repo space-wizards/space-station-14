@@ -143,10 +143,8 @@ public sealed class MindSystem : EntitySystem
         if (_gameTicker.RunLevel == GameRunLevel.PreRoundLobby)
             return;
 
-        if (!TryComp(component.Mind, out MindComponent? mind))
+        if (!TryGetMind(uid, out var mindId, out var mind, component))
             return;
-
-        var mindId = component.Mind.Value;
 
         // If the player is currently visiting some other entity, simply attach to that entity.
         if (mind.VisitingEntity is {Valid: true} visiting
@@ -154,13 +152,13 @@ public sealed class MindSystem : EntitySystem
             && !Deleted(visiting)
             && !Terminating(visiting))
         {
-            TransferTo(mindId, visiting);
+            TransferTo(mindId, visiting, mind: mind);
             if (TryComp(visiting, out GhostComponent? ghost))
                 _ghostSystem.SetCanReturnToBody(ghost, false);
             return;
         }
 
-        TransferTo(mindId, null, createGhost: false);
+        TransferTo(mindId, null, createGhost: false, mind: mind);
 
         if (component.GhostOnShutdown && mind.Session != null)
         {
@@ -185,7 +183,7 @@ public sealed class MindSystem : EntitySystem
                 {
                     // This should be an error, if it didn't cause tests to start erroring when they delete a player.
                     Log.Warning($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, and no applicable spawn location is available.");
-                    TransferTo(mindId, null, createGhost: false);
+                    TransferTo(mindId, null, createGhost: false, mind: mind);
                     return;
                 }
 
@@ -198,7 +196,7 @@ public sealed class MindSystem : EntitySystem
 
                 var val = mind.CharacterName ?? string.Empty;
                 MetaData(ghost).EntityName = val;
-                TransferTo(mindId, ghost);
+                TransferTo(mindId, ghost, mind: mind);
             });
         }
     }

@@ -95,11 +95,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             {
                 var meta = MetaData(survivor);
                 var username = string.Empty;
-                if (TryComp<MindContainerComponent>(survivor, out var container) &&
-                    TryComp(container.Mind, out MindComponent? mind))
+                if (_mindSystem.TryGetMind(survivor, out _, out var mind) && mind.Session != null)
                 {
-                    if (container.Mind != null && mind.Session != null)
-                        username = mind.Session.Name;
+                    username = mind.Session.Name;
                 }
 
                 ev.AddLine(Loc.GetString("zombie-round-end-user-was-survivor",
