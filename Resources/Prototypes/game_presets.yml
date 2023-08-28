@@ -106,3 +106,11 @@
   name: peace-and-tranquility-title
   description: peace-and-tranquility-desc
   showInVote: true
+
+- type: gamePreset
+  id: PeaceAndTranquility
+  alias:
+    - events
+  name: event-mode-title
+  description: event-mode-desc
+  showInVote: false
