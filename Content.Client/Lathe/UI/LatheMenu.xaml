@@ -2,8 +2,8 @@
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
-    MinSize="650 450"
-    SetSize="850 500">
+    MinSize="550 450"
+    SetSize="750 500">
     <BoxContainer
         Orientation="Horizontal"
         VerticalExpand="True"
@@ -78,15 +78,15 @@
             </BoxContainer>
         </BoxContainer>
 
-        <!-- Mid Col-->
+        <!-- Right Col-->
         <BoxContainer
             Orientation="Vertical"
             VerticalExpand="True"
             HorizontalExpand="True"
             SeparationOverride="5"
         >
-            <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
-            <BoxContainer Orientation="Vertical">
+            <BoxContainer Orientation="Vertical"  MinHeight="225">
+                <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
                 <BoxContainer
                     Orientation="Horizontal"
                     HorizontalExpand="True"
@@ -121,13 +121,11 @@
                     SelectMode="None">
                 </ItemList>
             </BoxContainer>
-        </BoxContainer>
-
-        <!-- Right Col-->
-        <BoxContainer
+            <BoxContainer
             VerticalExpand="True"
             HorizontalExpand="True"
             Orientation="Vertical"
+            MinHeight="225"
             >
             <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
             <BoxContainer
@@ -144,6 +142,8 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
+        </BoxContainer>
+
     </BoxContainer>
 
 </DefaultWindow>
