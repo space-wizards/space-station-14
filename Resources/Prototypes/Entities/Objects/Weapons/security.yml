@@ -60,6 +60,9 @@
     explosionType: Default
     intensitySlope: 1.5
     maxIntensity: 200
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   name: truncheon
@@ -87,6 +90,9 @@
   - type: Appearance
   - type: StaticPrice
     price: 100
+  - type: GuideHelp
+    guides:
+    - Security
 
 - type: entity
   name: flash
@@ -128,6 +134,9 @@
           enum.FlashVisuals.LightLayer:
             True: {visible: true}
             False: {visible: false}
+    - type: GuideHelp
+      guides:
+      - Security
 
 - type: entity
   name: portable flasher
@@ -173,3 +182,6 @@
       radius: 0
       softness: 0
       enabled: true
+    - type: GuideHelp
+      guides:
+      - Security

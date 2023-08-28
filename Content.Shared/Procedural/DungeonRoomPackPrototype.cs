@@ -6,7 +6,7 @@ namespace Content.Shared.Procedural;
 public sealed class DungeonRoomPackPrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = string.Empty;
+    public string ID { get; private set; } = string.Empty;
 
     /// <summary>
     /// Used to associate the room pack with other room packs with the same dimensions.

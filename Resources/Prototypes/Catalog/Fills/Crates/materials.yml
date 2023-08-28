@@ -54,7 +54,7 @@
 
 - type: entity
   id: CrateMaterialPlasma
-  parent: CrateGenericSteel
+  parent: CratePlasma
   components:
   - type: StorageFill
     contents:

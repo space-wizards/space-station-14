@@ -12,7 +12,7 @@ namespace Content.Server.Temperature.Components
     /// and taking fire damage from high temperature.
     /// </summary>
     [RegisterComponent]
-    public sealed class TemperatureComponent : Component
+    public sealed partial class TemperatureComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("currentTemperature")]

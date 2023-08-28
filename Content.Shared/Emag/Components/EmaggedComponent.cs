@@ -6,6 +6,6 @@ namespace Content.Shared.Emag.Components;
 /// Marker component for emagged entities
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EmaggedComponent : Component
+public sealed partial class EmaggedComponent : Component
 {
 }
