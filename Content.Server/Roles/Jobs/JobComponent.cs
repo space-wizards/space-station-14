@@ -3,6 +3,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Roles.Jobs;
 
+/// <summary>
+///     Added to mind entities to hold the data for the player's current job.
+/// </summary>
 [RegisterComponent]
 public sealed partial class JobComponent : Component
 {

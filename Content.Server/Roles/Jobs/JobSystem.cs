@@ -9,6 +9,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles.Jobs;
 
+/// <summary>
+///     Handles the job data on mind entities.
+/// </summary>
 public sealed class JobSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
@@ -39,12 +42,12 @@ public sealed class JobSystem : EntitySystem
             ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
-    public void MindAddJob(EntityUid mind, string jobPrototypeId)
+    public void MindAddJob(EntityUid mindId, string jobPrototypeId)
     {
-        if (MindHasJobWithId(mind, jobPrototypeId))
+        if (MindHasJobWithId(mindId, jobPrototypeId))
             return;
 
-        _mind.AddRole(mind, new JobComponent { PrototypeId = jobPrototypeId });
+        _mind.AddRole(mindId, new JobComponent { PrototypeId = jobPrototypeId });
     }
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
@@ -89,14 +92,6 @@ public sealed class JobSystem : EntitySystem
     {
         MindTryGetJobName(mindId, out var name);
         return name;
-    }
-
-    public string MindGetStartingJob(EntityUid mindId)
-    {
-        if (!MindTryGetJob(mindId, out _, out var prototype))
-            return string.Empty;
-
-        return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(prototype.Name);
     }
 
     public bool CanBeAntag(IPlayerSession player)
