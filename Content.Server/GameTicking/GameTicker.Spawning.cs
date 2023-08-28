@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new JobComponent { PrototypeId = jobId };
-            _mind.AddRole(newMind, job);
+            _roles.MindAddRole(newMind, job);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
             _playTimeTrackings.PlayerRolesChanged(player);
@@ -307,7 +307,7 @@ namespace Content.Server.GameTicking
             {
                 mind = _mind.CreateMind(player.UserId);
                 _mind.SetUserId(mind.Value, player.UserId);
-                _mind.AddRole(mind.Value, new ObserverRoleComponent());
+                _roles.MindAddRole(mind.Value, new ObserverRoleComponent());
             }
 
             var name = GetPlayerProfile(player).Name;

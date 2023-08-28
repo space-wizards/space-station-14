@@ -56,6 +56,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [ValidatePrototypeId<AntagPrototype>]
@@ -601,7 +602,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || !nukeops.EndsRound)
             {
                 role ??= nukeops.OperativeRoleProto;
-                _mindSystem.AddRole(mindId, new NukeopsRoleComponent { PrototypeId = role });
+                _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = role });
                 nukeops.OperativeMindPendingData.Remove(uid);
             }
 
@@ -778,7 +779,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 SetupOperativeEntity(mob, spawnDetails.Name, spawnDetails.Gear, profile, component);
                 var newMind = _mindSystem.CreateMind(session.UserId, spawnDetails.Name);
                 _mindSystem.SetUserId(newMind, session.UserId);
-                _mindSystem.AddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
+                _roles.MindAddRole(newMind, new NukeopsRoleComponent { PrototypeId = spawnDetails.Role });
 
                 _mindSystem.TransferTo(newMind, mob);
             }
@@ -826,7 +827,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             return;
 
         //ok hardcoded value bad but so is everything else here
-        _mindSystem.AddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
+        _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = NukeopsId }, mind);
         SetOutfitCommand.SetOutfit(mind.OwnedEntity.Value, "SyndicateOperativeGearFull", EntityManager);
     }
 

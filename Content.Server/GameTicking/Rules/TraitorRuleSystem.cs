@@ -36,6 +36,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly RoleSystem _roleSystem = default!;
     [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
@@ -256,7 +257,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         };
 
         // Assign traitor roles
-        _mindSystem.AddRole(mindId, traitorRole);
+        _roleSystem.MindAddRole(mindId, traitorRole);
         SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
 

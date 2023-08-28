@@ -11,8 +11,8 @@ namespace Content.Server.Objectives.Requirements
     {
         public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
-            var mindSystem = IoCManager.Resolve<IEntityManager>().System<MindSystem>();
-            return mindSystem.HasRole<TraitorRoleComponent>(mindId);
+            var roleSystem = IoCManager.Resolve<IEntityManager>().System<RoleSystem>();
+            return roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
         }
     }
 }

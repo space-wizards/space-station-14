@@ -5,7 +5,6 @@ using Content.Server.Ghost;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
-using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
@@ -33,7 +32,6 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly RoleSystem _roles = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, EntityUid> _userMinds = new();
@@ -473,7 +471,6 @@ public sealed class MindSystem : EntitySystem
             _adminLogger.Add(LogType.Mind, LogImpact.Low, $"'{condition.Title}' added to mind of {MindOwnerLoggingString(mind)}");
         }
 
-
         mind.Objectives.Add(objective);
         return true;
     }
@@ -496,82 +493,6 @@ public sealed class MindSystem : EntitySystem
 
         mind.Objectives.Remove(objective);
         return true;
-    }
-
-    /// <summary>
-    ///     Gives this mind a new role.
-    /// </summary>
-    /// <param name="mindId">The mind to add the role to.</param>
-    /// <param name="component">The role instance to add.</param>
-    /// <typeparam name="T">The role type to add.</typeparam>
-    /// <returns>The instance of the role.</returns>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we already have a role with this type.
-    /// </exception>
-    public void AddRole<T>(EntityUid mindId, T component, MindComponent? mind = null) where T : Component, new()
-    {
-        if (!Resolve(mindId, ref mind))
-            return;
-
-        if (HasComp<T>(mindId))
-        {
-            throw new ArgumentException($"We already have this role: {typeof(T)}");
-        }
-
-        AddComp(mindId, component);
-        var antagonist = _roles.IsAntagonistRole<T>();
-
-        var message = new RoleAddedEvent(mindId, mind, antagonist);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' added to mind of {MindOwnerLoggingString(mind)}");
-
-        return;
-    }
-
-    /// <summary>
-    ///     Removes a role from this mind.
-    /// </summary>
-    /// <param name="mindId">The mind to remove the role from.</param>
-    /// <typeparam name="T">The type of the role to remove.</typeparam>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we do not have this role.
-    /// </exception>
-    public void RemoveRole<T>(EntityUid mindId) where T : Component
-    {
-        if (!RemComp<T>(mindId))
-        {
-            throw new ArgumentException($"We do not have this role: {typeof(T)}");
-        }
-
-        var mind = Comp<MindComponent>(mindId);
-        var antagonist = _roles.IsAntagonistRole<T>();
-        var message = new RoleRemovedEvent(mindId, mind, antagonist);
-
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' removed from mind of {MindOwnerLoggingString(mind)}");
-    }
-
-    public bool TryRemoveRole<T>(EntityUid mindId) where T : Component
-    {
-        if (!HasRole<T>(mindId))
-            return false;
-
-        RemoveRole<T>(mindId);
-        return true;
-    }
-
-    public bool HasRole<T>(EntityUid mindId) where T : Component
-    {
-        return HasComp<T>(mindId);
     }
 
     public bool TryGetSession(EntityUid? mindId, [NotNullWhen(true)] out IPlayerSession? session)
@@ -726,7 +647,7 @@ public sealed class MindSystem : EntitySystem
     /// <summary>
     ///     A string to represent the mind for logging
     /// </summary>
-    private string MindOwnerLoggingString(MindComponent mind)
+    public string MindOwnerLoggingString(MindComponent mind)
     {
         if (mind.OwnedEntity != null)
             return ToPrettyString(mind.OwnedEntity.Value);

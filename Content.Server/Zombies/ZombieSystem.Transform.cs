@@ -52,6 +52,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly RoleSystem _roles = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -219,7 +220,7 @@ namespace Content.Server.Zombies
             if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
                 //Zombie role for player manifest
-                _mind.AddRole(mindId, new ZombieRoleComponent { PrototypeId = zombiecomp.ZombieRoleId });
+                _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombiecomp.ZombieRoleId });
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));

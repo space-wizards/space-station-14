@@ -1,5 +1,4 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Roles.Jobs;
 using Content.Shared.Administration;
@@ -44,10 +43,10 @@ namespace Content.Server.Roles
                 return;
             }
 
-            var minds = _entityManager.System<MindSystem>();
+            var roles = _entityManager.System<RoleSystem>();
             var jobs = _entityManager.System<JobSystem>();
             if (jobs.MindHasJobWithId(mind, args[1]))
-                minds.RemoveRole<JobComponent>(mind.Value);
+                roles.MindRemoveRole<JobComponent>(mind.Value);
         }
     }
 }

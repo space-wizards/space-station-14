@@ -270,6 +270,7 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+            var roleSystem = entMan.EntitySysManager.GetEntitySystem<RoleSystem>();
 
             var entity = entMan.SpawnEntity(null, new MapCoordinates());
             var mindComp = entMan.EnsureComponent<MindContainerComponent>(entity);
@@ -284,44 +285,44 @@ public sealed partial class MindTests
 
             Assert.Multiple(() =>
             {
-                Assert.That(mindSystem.HasRole<TraitorRoleComponent>(mindId), Is.False);
-                Assert.That(mindSystem.HasRole<JobComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<TraitorRoleComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<JobComponent>(mindId), Is.False);
             });
 
             var traitorRole = new TraitorRoleComponent();
 
-            mindSystem.AddRole(mindId, traitorRole);
+            roleSystem.MindAddRole(mindId, traitorRole);
 
             Assert.Multiple(() =>
             {
-                Assert.That(mindSystem.HasRole<TraitorRoleComponent>(mindId));
-                Assert.That(mindSystem.HasRole<JobComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<TraitorRoleComponent>(mindId));
+                Assert.That(roleSystem.MindHasRole<JobComponent>(mindId), Is.False);
             });
 
             var jobRole = new JobComponent();
 
-            mindSystem.AddRole(mindId, jobRole);
+            roleSystem.MindAddRole(mindId, jobRole);
 
             Assert.Multiple(() =>
             {
-                Assert.That(mindSystem.HasRole<TraitorRoleComponent>(mindId));
-                Assert.That(mindSystem.HasRole<JobComponent>(mindId));
+                Assert.That(roleSystem.MindHasRole<TraitorRoleComponent>(mindId));
+                Assert.That(roleSystem.MindHasRole<JobComponent>(mindId));
             });
 
-            mindSystem.RemoveRole<TraitorRoleComponent>(mindId);
+            roleSystem.MindRemoveRole<TraitorRoleComponent>(mindId);
 
             Assert.Multiple(() =>
             {
-                Assert.That(mindSystem.HasRole<TraitorRoleComponent>(mindId), Is.False);
-                Assert.That(mindSystem.HasRole<JobComponent>(mindId));
+                Assert.That(roleSystem.MindHasRole<TraitorRoleComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<JobComponent>(mindId));
             });
 
-            mindSystem.RemoveRole<JobComponent>(mindId);
+            roleSystem.MindRemoveRole<JobComponent>(mindId);
 
             Assert.Multiple(() =>
             {
-                Assert.That(mindSystem.HasRole<TraitorRoleComponent>(mindId), Is.False);
-                Assert.That(mindSystem.HasRole<JobComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<TraitorRoleComponent>(mindId), Is.False);
+                Assert.That(roleSystem.MindHasRole<JobComponent>(mindId), Is.False);
             });
         });
 

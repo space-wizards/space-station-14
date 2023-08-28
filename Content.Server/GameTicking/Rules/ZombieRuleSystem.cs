@@ -5,7 +5,6 @@ using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
@@ -46,6 +45,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -317,7 +317,7 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             totalInfected++;
 
-            _mindSystem.AddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
+            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
 
             var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);

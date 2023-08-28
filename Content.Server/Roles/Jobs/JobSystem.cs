@@ -16,6 +16,7 @@ public sealed class JobSystem : EntitySystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly RoleSystem _roles = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
@@ -47,7 +48,7 @@ public sealed class JobSystem : EntitySystem
         if (MindHasJobWithId(mindId, jobPrototypeId))
             return;
 
-        _mind.AddRole(mindId, new JobComponent { PrototypeId = jobPrototypeId });
+        _roles.MindAddRole(mindId, new JobComponent { PrototypeId = jobPrototypeId });
     }
 
     public bool MindHasJobWithId(EntityUid? mindId, string prototypeId)
