@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
+using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -42,7 +43,14 @@ namespace Content.Shared.Throwing
 
         private void OnThrownItemHit(EntityUid uid, ThrownItemComponent component, ThrowDoHitEvent args)
         {
-            StopThrow(uid, component);
+            if (HasComp<StaminaDamageOnCollideComponent>(uid) &&
+                TryComp<StaminaComponent>(args.Target, out var staminaComp))
+            {
+                if (!staminaComp.Critical)
+                {
+                    StopThrow(uid, component);
+                }
+            }
         }
 
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
