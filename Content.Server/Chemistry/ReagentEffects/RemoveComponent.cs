@@ -10,7 +10,7 @@ namespace Content.Server.Chemistry.ReagentEffects;
 /// Removes designated component or components.
 /// </summary>
 [UsedImplicitly]
-public sealed class RemoveComponent : ReagentEffect
+public sealed partial class RemoveComponent : ReagentEffect
 {
     /// <summary>
     /// ID of component to remove, as a string
