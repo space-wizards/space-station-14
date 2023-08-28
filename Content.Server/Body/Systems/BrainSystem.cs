@@ -56,10 +56,10 @@ namespace Content.Server.Body.Systems
                 _movementSpeed.ChangeBaseSpeed(newEntity, 0, 0 , 0, move);
             }
 
-            if (!_mindSystem.TryGetMind(oldEntity, out var mind, out _))
+            if (!_mindSystem.TryGetMind(oldEntity, out var mind, out mind))
                 return;
 
-            _mindSystem.TransferTo(mind, newEntity);
+            _mindSystem.TransferTo(mind, newEntity, mind: mind);
         }
     }
 }
