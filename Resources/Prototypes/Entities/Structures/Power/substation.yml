@@ -87,7 +87,7 @@
     totalIntensity: 200
   - type: WiresPanel
   - type: Wires
-    BoardName: "Substation"
+    BoardName: wires-board-name-substation
     LayoutId: Substation
   - type: Machine
     board: SubstationMachineCircuitboard
@@ -130,6 +130,12 @@
   - type: Clickable
   - type: AccessReader
     access: [["Engineering"]]
+  - type: ContainerFill
+    containers:
+      board: [ WallmountSubstationElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: InteractionOutline
   - type: Physics
     bodyType: Static

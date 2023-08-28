@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.GameTicking;
 using Content.Server.Ghost;
-using Content.Server.Ghost.Components;
 using Content.Server.Mind.Components;
 using Content.Server.Objectives;
 using Content.Server.Players;
@@ -11,6 +10,7 @@ using Content.Server.Roles;
 using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.GameTicking;
+using Content.Shared.Ghost;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mobs.Components;
@@ -33,6 +33,7 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, Mind> _userMinds = new();
@@ -198,7 +199,7 @@ public sealed class MindSystem : EntitySystem
                 Log.Debug($"Entity \"{ToPrettyString(uid)}\" for {mind.CharacterName} was deleted, spawned \"{ToPrettyString(ghost)}\".");
 
                 var val = mind.CharacterName ?? string.Empty;
-                MetaData(ghost).EntityName = val;
+                _metaData.SetEntityName(ghost, val);
                 TransferTo(mind, ghost);
             });
         }
