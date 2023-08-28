@@ -24,7 +24,6 @@ namespace Content.Shared.Throwing
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly ISharedPlayerManager _playerManager = default!; 
 
         private const string ThrowingFixture = "throw-fixture";
 
@@ -38,21 +37,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, ComponentGetState>(OnGetState);
             SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
-            SubscribeLocalEvent<ThrownItemComponent, ThrowDoHitEvent>(OnThrownItemHit);
         }
-
-        private void OnThrownItemHit(EntityUid uid, ThrownItemComponent component, ThrowDoHitEvent args)
-        {
-            if (HasComp<StaminaDamageOnCollideComponent>(uid) &&
-                TryComp<StaminaComponent>(args.Target, out var staminaComp))
-            {
-                if (!staminaComp.Critical)
-                {
-                    StopThrow(uid, component);
-                }
-            }
-        }
-
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
         {
             args.State = new ThrownItemComponentState(component.Thrower);

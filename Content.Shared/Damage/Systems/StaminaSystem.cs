@@ -7,6 +7,8 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
@@ -37,6 +39,7 @@ public sealed partial class StaminaSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly ThrownItemSystem _thrownItemSystem = default!;
 
     /// <summary>
     /// How much of a buffer is there between the stun duration and when stuns can be re-applied.
@@ -219,17 +222,27 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
-        OnCollide(uid, component, args.Target);
+        if (TryComp<ThrownItemComponent>(uid, out var thrownComp) &&
+            HasComp<StaminaComponent>(args.Target))
+        {
+            if (OnCollide(uid, component, args.Target))
+            {
+                _thrownItemSystem.StopThrow(uid, thrownComp);
+            }
+        }
     }
 
-    private void OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
+    private bool OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
     {
+        if (!TryComp<StaminaComponent>(target, out var staminaComp))
+            return false;
+
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
-            return;
+            return false;
 
-        TakeStaminaDamage(target, component.Damage, source: uid, sound: component.Sound);
+        return TakeStaminaDamage(target, component.Damage, staminaComp, uid, sound: component.Sound);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
@@ -262,20 +275,26 @@ public sealed partial class StaminaSystem : EntitySystem
         return true;
     }
 
-    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
+    public bool TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
         EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
     {
         if (!Resolve(uid, ref component, false))
-            return;
+            return false;
+
+        if (!TryComp<MobStateComponent>(uid, out var mobComp))
+            return false;
+
+        if (mobComp.CurrentState != MobState.Alive)
+            return false;
 
         var ev = new BeforeStaminaDamageEvent(value);
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
-            return;
+            return false;
 
         // Have we already reached the point of max stamina damage?
         if (component.Critical)
-            return;
+            return false;
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
@@ -319,7 +338,7 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(component);
 
         if (value <= 0)
-            return;
+            return false;
         if (source != null)
         {
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(source.Value):user} caused {value} stamina damage to {ToPrettyString(uid):target}{(with != null ? $" using {ToPrettyString(with.Value):using}" : "")}");
@@ -338,6 +357,7 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             _audio.PlayPvs(sound, uid);
         }
+        return true;
     }
 
     public override void Update(float frameTime)
