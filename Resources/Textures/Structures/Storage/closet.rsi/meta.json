@@ -4,7 +4,7 @@
     "x": 32,
     "y": 32
   },
-  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), blueshield locker is taken from tauceti at commit ac6dbf6bc0559f119c07bf9a6e5e8dd5e62aea75, clown and mime lockers are resprites of tgstation lockers by TheArturZh based on how they look in Paradise Station",
+  "copyright": "Taken from tgstation, brigmedic locker is a resprited CMO locker by PuroSlavKing (Github), blueshield locker is taken from tauceti at commit ac6dbf6bc0559f119c07bf9a6e5e8dd5e62aea75, clown and mime lockers are resprites of tgstation lockers by TheArturZh based on how they look in Paradise Station, ussp locker is made by MIXnikita for SS220",
   "license": "CC-BY-SA-3.0",
   "states": [
     {
@@ -546,6 +546,15 @@
     },
     {
       "name": "yellow_door"
+    },
+	{
+      "name": "ussp"
+    },
+    {
+      "name": "ussp_door"
+    },
+    {
+      "name": "ussp_open"
     }
   ]
 }

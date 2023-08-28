@@ -1,0 +1,49 @@
+- type: entity
+  parent: BasePDA
+  id: UsspPDA
+  name: ПДА СССП
+  description: Стандартный ПДА СССП.
+  suffix: СССП
+  components:
+  - type: Pda
+    id: UsspIDCard
+    state: pda-ussp
+  - type: PdaBorderColor
+    borderColor: "#A91417"
+  - type: Icon
+    state: pda-ussp
+  - type: CartridgeLoader
+    uiKey: enum.PdaUiKey.Key
+    preinstalled:
+      - NotekeeperCartridge
+    cartridgeSlot:
+      priority: -1
+      name: Cartridge
+      ejectSound: /Audio/Machines/id_swipe.ogg
+      insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+      whitelist:
+        components:
+          - Cartridge
+
+- type: entity
+  parent: MedicalPDA
+  id: UsspMedicalPDA
+  name: ПДА врача СССП
+  description: Стандартный ПДА врача СССП. Имеет встроенный анализатор здоровья.
+  suffix: СССП
+  components:
+  - type: Pda
+    id: UsspIDCard
+    state: pda-ussp-medical
+  - type: PdaBorderColor
+    borderColor: "#A91417"
+    accentVColor: "#447987"
+  - type: Icon
+    state: pda-ussp-medical
+  - type: HealthAnalyzer
+    scanDelay: 1.2
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: GuideHelp
+    guides:
+    - Medical Doctor

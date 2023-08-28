@@ -1,0 +1,31 @@
+- type: entity
+  parent: ComputerComms
+  id: UsspComputerComms
+  name: консоль связи СССП
+  description: Для трансляции коммунизма во все уголки звёздной системы.
+  suffix: СССП
+  components:
+  - type: Sprite
+    layers:
+    - map: ["computerLayerBody"]
+      state: ussp_computer
+    - map: ["computerLayerKeyboard"]
+      state: ussp_generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: comm_syndie
+    - map: ["computerLayerKeys"]
+      state: syndie_key
+  - type: AccessReader
+    access: []
+  - type: CommunicationsConsole
+    title: comms-console-announcement-title-ussp
+    color: "#ff0000"
+    canShuttle: false
+    global: true #announce to everyone they're about to fuck shit up
+    sound: /Audio/Announcements/war.ogg
+  - type: Computer
+    board: SyndicateCommsComputerCircuitboard
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#f71713"

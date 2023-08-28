@@ -433,6 +433,10 @@
             "name": "computer",
             "directions": 4
         },
+	    {
+            "name": "ussp_computer",
+            "directions": 4
+        },
         {
             "name": "screen_broken",
             "directions": 4
@@ -1015,6 +1019,10 @@
         },
         {
             "name": "generic_keyboard",
+            "directions": 4
+        },
+		{
+            "name": "ussp_generic_keyboard",
             "directions": 4
         },
         {

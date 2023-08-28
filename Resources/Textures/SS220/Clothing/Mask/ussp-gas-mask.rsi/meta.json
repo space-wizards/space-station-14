@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Inhand sprites are modified by TheArturZh, originals are taken from tgstation at commit https://github.com/RemieRichards/-tg-station/blob/f8c05e21694cd3cb703e40edc5cfc375017944b1/icons/obj/clothing/masks.dmi, icon and equipped-MASK are made by MIXnikita for SS220 and are destributed under SS220 CLA (full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt)",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-MASK",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

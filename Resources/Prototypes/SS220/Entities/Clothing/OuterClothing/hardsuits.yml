@@ -10,20 +10,24 @@
     sprite: SS220/Clothing/OuterClothing/Hardsuits/sssp.rsi
   - type: Clothing
     sprite: SS220/Clothing/OuterClothing/Hardsuits/sssp.rsi
+  - type: TemperatureProtection
+    coefficient: 0.001
   - type: PressureProtection
-    highPressureMultiplier: 0.45
-    lowPressureMultiplier: 10000
+    highPressureMultiplier: 0.02
+    lowPressureMultiplier: 1000
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 1
   - type: Armor
     modifiers:
       coefficients:
-        Blunt: 0.7
-        Slash: 0.7
-        Piercing: 0.25
-        Heat: 0.7
+        Blunt: 0.5
+        Slash: 0.5
+        Piercing: 0.4
+        Heat: 0.2
+        Radiation: 0.25
+        Caustic: 0.5
   - type: ExplosionResistance
-    damageCoefficient: 0.5
+    damageCoefficient: 0.3
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitUSSP
