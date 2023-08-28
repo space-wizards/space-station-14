@@ -6,12 +6,15 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Server.Mind;
 
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
     public sealed class AddRoleCommand : IConsoleCommand
     {
+        [Dependency] private readonly EntityManager _entityManager = default!;
+        
         public string Command => "addrole";
 
         public string Description => "Adds a role to a player's mind.";
@@ -54,7 +57,8 @@ namespace Content.Server.Roles
             }
 
             var role = new Job(mind, jobPrototype);
-            mind.AddRole(role);
+            var mindSystem = _entityManager.System<MindSystem>();
+            mindSystem.AddRole(mind, role);
         }
     }
 }

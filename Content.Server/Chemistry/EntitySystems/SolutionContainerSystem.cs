@@ -1,13 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 using Content.Server.Chemistry.Components.SolutionManager;
+using Content.Server.Examine;
 using Content.Shared.Chemistry;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.Examine;
 using Content.Shared.FixedPoint;
+using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 
@@ -33,12 +37,13 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]
-    private readonly SharedChemicalReactionSystem _chemistrySystem = default!;
+    private readonly ChemicalReactionSystem _chemistrySystem = default!;
 
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     [Dependency]
     private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private readonly ExamineSystem _examine = default!;
 
     public override void Initialize()
     {
@@ -46,6 +51,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         SubscribeLocalEvent<SolutionContainerManagerComponent, ComponentInit>(InitSolution);
         SubscribeLocalEvent<ExaminableSolutionComponent, ExaminedEvent>(OnExamineSolution);
+        SubscribeLocalEvent<ExaminableSolutionComponent, GetVerbsEvent<ExamineVerb>>(OnSolutionExaminableVerb);
     }
 
     private void InitSolution(EntityUid uid, SolutionContainerManagerComponent component, ComponentInit args)
@@ -58,13 +64,78 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         }
     }
 
+    private void OnSolutionExaminableVerb(EntityUid uid, ExaminableSolutionComponent component, GetVerbsEvent<ExamineVerb> args)
+    {
+        if (!args.CanInteract || !args.CanAccess)
+            return;
+
+        var scanEvent = new SolutionScanEvent();
+        RaiseLocalEvent(args.User, scanEvent);
+        if (!scanEvent.CanScan)
+        {
+            return;
+        }
+
+        SolutionContainerManagerComponent? solutionsManager = null;
+        if (!Resolve(args.Target, ref solutionsManager)
+            || !solutionsManager.Solutions.TryGetValue(component.Solution, out var solutionHolder))
+        {
+            return;
+        }
+
+        var verb = new ExamineVerb()
+        {
+            Act = () =>
+            {
+                var markup = GetSolutionExamine(solutionHolder);
+                _examine.SendExamineTooltip(args.User, uid, markup, false, false);
+            },
+            Text = Loc.GetString("scannable-solution-verb-text"),
+            Message = Loc.GetString("scannable-solution-verb-message"),
+            Category = VerbCategory.Examine,
+            Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/VerbIcons/drink.svg.192dpi.png")),
+        };
+
+        args.Verbs.Add(verb);
+    }
+
+    private FormattedMessage GetSolutionExamine(Solution solution)
+    {
+        var msg = new FormattedMessage();
+
+        if (solution.Contents.Count == 0) //TODO: better way to see if empty?
+        {
+            msg.AddMarkup(Loc.GetString("scannable-solution-empty-container"));
+            return msg;
+        }
+
+        msg.AddMarkup(Loc.GetString("scannable-solution-main-text"));
+
+        foreach (var reagent in solution)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(reagent.ReagentId, out var proto))
+            {
+                continue;
+            }
+            msg.PushNewline();
+            msg.AddMarkup(Loc.GetString("scannable-solution-chemical"
+                , ("type", proto.LocalizedName)
+                , ("color", proto.SubstanceColor.ToHexNoAlpha())
+                , ("amount", reagent.Quantity)));
+        }
+
+        return msg;
+    }
+
     private void OnExamineSolution(EntityUid uid, ExaminableSolutionComponent examinableComponent,
         ExaminedEvent args)
     {
         SolutionContainerManagerComponent? solutionsManager = null;
         if (!Resolve(args.Examined, ref solutionsManager)
             || !solutionsManager.Solutions.TryGetValue(examinableComponent.Solution, out var solutionHolder))
+        {
             return;
+        }
 
         var primaryReagent = solutionHolder.GetPrimaryReagentId();
 
@@ -74,7 +145,7 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             return;
         }
 
-        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? proto))
+        if (!_prototypeManager.TryIndex(primaryReagent, out ReagentPrototype? primary))
         {
             Logger.Error(
                 $"{nameof(Solution)} could not find the prototype associated with {primaryReagent}.");
@@ -90,7 +161,53 @@ public sealed partial class SolutionContainerSystem : EntitySystem
             ("wordedAmount", Loc.GetString(solutionHolder.Contents.Count == 1
                 ? "shared-solution-container-component-on-examine-worded-amount-one-reagent"
                 : "shared-solution-container-component-on-examine-worded-amount-multiple-reagents")),
-            ("desc", proto.LocalizedPhysicalDescription)));
+            ("desc", primary.LocalizedPhysicalDescription)));
+
+        // Add descriptions of immediately recognizable reagents, like water or beer
+        var recognized = new List<ReagentPrototype>();
+        foreach (var (id, _) in solutionHolder)
+        {
+            if (!_prototypeManager.TryIndex<ReagentPrototype>(id, out var proto))
+            {
+                continue;
+            }
+
+            if (!proto.Recognizable)
+            {
+                continue;
+            }
+
+            recognized.Add(proto);
+        }
+
+        // Skip if there's nothing recognizable
+        if (recognized.Count == 0)
+            return;
+
+        var msg = new StringBuilder();
+        foreach (var reagent in recognized)
+        {
+            string part;
+            if (reagent == recognized[0])
+            {
+                part = "examinable-solution-recognized-first";
+            }
+            else if (reagent == recognized[^1])
+            {
+                // this loc specifically  requires space to be appended, fluent doesnt support whitespace
+                msg.Append(' ');
+                part = "examinable-solution-recognized-last";
+            }
+            else
+            {
+                part = "examinable-solution-recognized-next";
+            }
+
+            msg.Append(Loc.GetString(part, ("color", reagent.SubstanceColor.ToHexNoAlpha()),
+                ("chemical", reagent.LocalizedName)));
+        }
+
+        args.PushMarkup(Loc.GetString("examinable-solution-has-recognizable-chemicals", ("recognizedString", msg.ToString())));
     }
 
     public void UpdateAppearance(EntityUid uid, Solution solution,
@@ -102,6 +219,10 @@ public sealed partial class SolutionContainerSystem : EntitySystem
 
         _appearance.SetData(uid, SolutionContainerVisuals.FillFraction, solution.FillFraction, appearanceComponent);
         _appearance.SetData(uid, SolutionContainerVisuals.Color, solution.GetColor(_prototypeManager), appearanceComponent);
+        if (solution.Name != null)
+        {
+            _appearance.SetData(uid, SolutionContainerVisuals.SolutionName, solution.Name, appearanceComponent);
+        }
 
         if (solution.GetPrimaryReagentId() is { } reagent)
         {
@@ -123,6 +244,25 @@ public sealed partial class SolutionContainerSystem : EntitySystem
     public Solution SplitSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity)
     {
         var splitSol = solutionHolder.SplitSolution(quantity);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    public Solution SplitStackSolution(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity, int stackCount)
+    {
+        var splitSol = solutionHolder.SplitSolution(quantity / stackCount);
+        solutionHolder.SplitSolution(quantity - splitSol.Volume);
+        UpdateChemicals(targetUid, solutionHolder);
+        return splitSol;
+    }
+
+    /// <summary>
+    /// Splits a solution without the specified reagent(s).
+    /// </summary>
+    public Solution SplitSolutionWithout(EntityUid targetUid, Solution solutionHolder, FixedPoint2 quantity,
+        params string[] reagents)
+    {
+        var splitSol = solutionHolder.SplitSolutionWithout(quantity, reagents);
         UpdateChemicals(targetUid, solutionHolder);
         return splitSol;
     }
@@ -317,11 +457,11 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return true;
     }
 
-    public bool TryGetSolution(EntityUid uid, string name,
+    public bool TryGetSolution([NotNullWhen(true)] EntityUid? uid, string name,
         [NotNullWhen(true)] out Solution? solution,
         SolutionContainerManagerComponent? solutionsMgr = null)
     {
-        if (!Resolve(uid, ref solutionsMgr, false))
+        if (uid == null || !Resolve(uid.Value, ref solutionsMgr, false))
         {
             solution = null;
             return false;
@@ -491,6 +631,37 @@ public sealed partial class SolutionContainerSystem : EntitySystem
         return false;
     }
 
+    /// <summary>
+    /// Gets the most common reagent across all solutions by volume.
+    /// </summary>
+    /// <param name="component"></param>
+    public ReagentPrototype? GetMaxReagent(SolutionContainerManagerComponent component)
+    {
+        if (component.Solutions.Count == 0)
+            return null;
+
+        var reagentCounts = new Dictionary<string, FixedPoint2>();
+
+        foreach (var solution in component.Solutions.Values)
+        {
+            foreach (var reagent in solution.Contents)
+            {
+                reagentCounts.TryGetValue(reagent.ReagentId, out var existing);
+                existing += reagent.Quantity;
+                reagentCounts[reagent.ReagentId] = existing;
+            }
+        }
+
+        var max = reagentCounts.Max();
+
+        return _prototypeManager.Index<ReagentPrototype>(max.Key);
+    }
+
+    public SoundSpecifier? GetSound(SolutionContainerManagerComponent component)
+    {
+        var max = GetMaxReagent(component);
+        return max?.FootstepSound;
+    }
 
     // Thermal energy and temperature management.
 

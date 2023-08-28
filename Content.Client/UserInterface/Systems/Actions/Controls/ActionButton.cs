@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Actions.UI;
 using Content.Client.Cooldown;
 using Content.Client.Stylesheets;
@@ -65,7 +66,7 @@ public sealed class ActionButton : Control
         HighlightRect = new PanelContainer
         {
             StyleClasses = {StyleNano.StyleClassHandSlotHighlight},
-            MinSize = (32, 32),
+            MinSize = new Vector2(32, 32),
             Visible = false
         };
         _bigActionIcon = new TextureRect
@@ -94,7 +95,8 @@ public sealed class ActionButton : Control
             Name = "Big Sprite",
             HorizontalExpand = true,
             VerticalExpand = true,
-            Scale = (2, 2),
+            Scale = new Vector2(2, 2),
+            SetSize = new Vector2(64, 64),
             Visible = false,
             OverrideDirection = Direction.South,
         };
@@ -112,11 +114,11 @@ public sealed class ActionButton : Control
             Orientation = LayoutOrientation.Horizontal,
             HorizontalExpand = true,
             VerticalExpand = true,
-            MinSize = (64, 64)
+            MinSize = new Vector2(64, 64)
         };
         paddingBoxItemIcon.AddChild(new Control()
         {
-            MinSize = (32, 32),
+            MinSize = new Vector2(32, 32),
         });
         paddingBoxItemIcon.AddChild(new Control
         {
@@ -157,6 +159,7 @@ public sealed class ActionButton : Control
 
     protected override void OnThemeUpdated()
     {
+        base.OnThemeUpdated();
         Button.Texture = Theme.ResolveTexture("SlotBackground");
         Label.FontColorOverride = Theme.ResolveColorOrSpecified("whiteText");
     }
@@ -200,13 +203,12 @@ public sealed class ActionButton : Control
             return;
         }
 
-        if (Action?.EntityIcon == null ||
-            !entityManager.TryGetComponent(Action.EntityIcon.Value, out SpriteComponent? sprite))
+        if (Action?.EntityIcon is not { } entity || !entityManager.HasComponent<SpriteComponent>(entity))
         {
             _bigItemSpriteView.Visible = false;
-            _bigItemSpriteView.Sprite = null;
+            _bigItemSpriteView.SetEntity(null);
             _smallItemSpriteView.Visible = false;
-            _smallItemSpriteView.Sprite = null;
+            _smallItemSpriteView.SetEntity(null);
         }
         else
         {
@@ -214,24 +216,21 @@ public sealed class ActionButton : Control
             {
                 case ItemActionIconStyle.BigItem:
                     _bigItemSpriteView.Visible = true;
-                    _bigItemSpriteView.Sprite = sprite;
+                    _bigItemSpriteView.SetEntity(entity);
                     _smallItemSpriteView.Visible = false;
-                    _smallItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.SetEntity(null);
                     break;
                 case ItemActionIconStyle.BigAction:
-
                     _bigItemSpriteView.Visible = false;
-                    _bigItemSpriteView.Sprite = null;
+                    _bigItemSpriteView.SetEntity(null);
                     _smallItemSpriteView.Visible = true;
-                    _smallItemSpriteView.Sprite = sprite;
+                    _smallItemSpriteView.SetEntity(entity);
                     break;
-
                 case ItemActionIconStyle.NoItem:
-
                     _bigItemSpriteView.Visible = false;
-                    _bigItemSpriteView.Sprite = null;
+                    _bigItemSpriteView.SetEntity(null);
                     _smallItemSpriteView.Visible = false;
-                    _smallItemSpriteView.Sprite = null;
+                    _smallItemSpriteView.SetEntity(null);
                     break;
             }
         }

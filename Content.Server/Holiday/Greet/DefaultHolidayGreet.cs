@@ -2,7 +2,8 @@ using Content.Server.Holiday.Interfaces;
 
 namespace Content.Server.Holiday.Greet
 {
-    public sealed class DefaultHolidayGreet : IHolidayGreet
+    [DataDefinition]
+    public sealed partial class DefaultHolidayGreet : IHolidayGreet
     {
         public string Greet(HolidayPrototype holiday)
         {

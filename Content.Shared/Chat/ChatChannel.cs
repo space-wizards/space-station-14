@@ -65,18 +65,25 @@ namespace Content.Shared.Chat
         Admin = 1 << 10,
 
         /// <summary>
+        ///     Admin alerts, messages likely of elevated importance to admins
+        /// </summary>
+        AdminAlert = 1 << 11,
+
+        /// <summary>
         ///     Admin chat
         /// </summary>
-        AdminChat = 1 << 11,
+        AdminChat = 1 << 12,
 
         /// <summary>
         ///     Unspecified.
         /// </summary>
-        Unspecified = 1 << 12,
+        Unspecified = 1 << 13,
 
         /// <summary>
         ///     Channels considered to be IC.
         /// </summary>
         IC = Local | Whisper | Radio | Dead | Emotes | Damage | Visual,
+
+        AdminRelated = Admin | AdminAlert | AdminChat,
     }
 }

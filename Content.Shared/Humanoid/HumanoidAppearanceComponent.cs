@@ -11,7 +11,7 @@ using static Content.Shared.Humanoid.HumanoidAppearanceState;
 namespace Content.Shared.Humanoid;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class HumanoidAppearanceComponent : Component
+public sealed partial class HumanoidAppearanceComponent : Component
 {
     [DataField("markingSet")]
     public MarkingSet MarkingSet = new();
@@ -43,14 +43,14 @@ public sealed class HumanoidAppearanceComponent : Component
     ///     Current species. Dictates things like base body sprites,
     ///     base humanoid to spawn, etc.
     /// </summary>
-    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>))]
-    public string Species { get; set; } = string.Empty;
+    [DataField("species", customTypeSerializer: typeof(PrototypeIdSerializer<SpeciesPrototype>), required: true)]
+    public string Species { get; set; } = default!;
 
     /// <summary>
     ///     The initial profile and base layers to apply to this humanoid.
     /// </summary>
     [DataField("initial", customTypeSerializer: typeof(PrototypeIdSerializer<HumanoidProfilePrototype>))]
-    public string? Initial { get; }
+    public string? Initial { get; private set; }
 
     /// <summary>
     ///     Skin color of this humanoid.
@@ -85,7 +85,7 @@ public sealed class HumanoidAppearanceComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class HumanoidAppearanceState : ComponentState
+public sealed partial class HumanoidAppearanceState : ComponentState
 {
     public readonly MarkingSet Markings;
     public readonly HashSet<HumanoidVisualLayers> PermanentlyHidden;
@@ -124,7 +124,7 @@ public sealed class HumanoidAppearanceState : ComponentState
 
     [DataDefinition]
     [Serializable, NetSerializable]
-    public readonly struct CustomBaseLayerInfo
+    public readonly partial struct CustomBaseLayerInfo
     {
         public CustomBaseLayerInfo(string? id, Color? color = null)
         {

@@ -31,8 +31,8 @@ namespace Content.Server.DetailExaminable
                 Text = Loc.GetString("detail-examinable-verb-text"),
                 Category = VerbCategory.Examine,
                 Disabled = !detailsRange,
-                Message = Loc.GetString("detail-examinable-verb-disabled"),
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"))
+                Message = detailsRange ? null : Loc.GetString("detail-examinable-verb-disabled"),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/examine.svg.192dpi.png"))
             };
 
             args.Verbs.Add(verb);

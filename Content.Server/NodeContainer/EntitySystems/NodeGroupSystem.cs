@@ -345,7 +345,7 @@ namespace Content.Server.NodeContainer.EntitySystems
             _mapManager.TryGetGrid(xform.GridUid, out var grid);
 
             if (!node.Connectable(EntityManager, xform))
-                    yield break;
+                yield break;
 
             foreach (var reachable in node.GetReachableNodes(xform, nodeQuery, xformQuery, grid, EntityManager))
             {
@@ -438,6 +438,7 @@ namespace Content.Server.NodeContainer.EntitySystems
                 NodeGroupID.AMEngine => Color.Purple,
                 NodeGroupID.Pipe => Color.Blue,
                 NodeGroupID.WireNet => Color.DarkMagenta,
+                NodeGroupID.Teg => Color.Red,
                 _ => Color.White
             };
         }

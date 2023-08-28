@@ -7,12 +7,13 @@
   save: false
   components:
     - type: LagCompensation
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Guardian
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-guardian-name
+      description: ghost-role-information-guardian-description
+    - type: GhostTakeoverAvailable
     - type: Input
       context: "human"
     - type: MobMover
@@ -43,7 +44,6 @@
     - type: Sprite
       drawdepth: Mobs
       sprite: Mobs/Aliens/Guardians/guardians.rsi
-      netsync: false
       layers:
         - state: tech_base
           map: [ "enum.DamageStateVisualLayers.Base" ]
@@ -58,7 +58,8 @@
       bodyType: KinematicController
     - type: Fixtures
       fixtures:
-        - shape:
+        fix1:
+          shape:
             !type:PhysShapeCircle
             radius: 0.35
           density: 25
@@ -76,6 +77,7 @@
     - type: Internals
     - type: Examiner
     - type: Speech
+      speechVerb: Robotic
     - type: TypingIndicator
       proto: guardian
     - type: Pullable
@@ -87,6 +89,11 @@
       damage:
         types:
           Blunt: 20
+    - type: MeleeSpeech
+    - type: UserInterface
+      interfaces:
+      - key: enum.MeleeSpeechUiKey.Key
+        type: MeleeSpeechBoundUserInterface
     - type: Actions
     - type: Guardian
     - type: InteractionPopup
@@ -104,12 +111,13 @@
   parent: MobGuardianBase
   description: A mesmerising whirl of hard-light patterns weaves a marvelous, yet oddly familiar visage. It stands proud, tuning into its owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Holoparasite
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-holoparasite-name
+      description: ghost-role-information-holoparasite-description
+    - type: GhostTakeoverAvailable
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
@@ -130,12 +138,13 @@
   id: MobIfritGuardian
   description: A corrupted jinn, ripped from fitra to serve the wizard's petty needs. It stands wicked, tuning into it's owner's life to sustain itself.
   components:
-    - type: GhostTakeoverAvailable
+    - type: GhostRole
       allowMovement: true
       allowSpeech: true
       makeSentient: true
-      name: Ifrit
-      description: Listen to your owner. Don't tank damage. Punch people hard.
+      name: ghost-role-information-ifrit-name
+      description: ghost-role-information-ifrit-description
+    - type: GhostTakeoverAvailable
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.BaseUnshaded:
@@ -148,3 +157,76 @@
           map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
           color: "#40a7d7"
           shader: unshaded
+
+- type: entity
+  name: HoloClown
+  id: MobHoloClownGuardian
+  parent: MobGuardianBase
+  description: A mesmerising whirl of hard-light patterns weaves a blue colored clown of dubious origin.
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-holoclown-name
+      description: ghost-role-information-holoclown-description
+    - type: GhostTakeoverAvailable
+    - type: NameIdentifier
+      group: Holoparasite
+    - type: FootstepModifier
+      footstepSoundCollection:
+        collection: FootstepClown
+    - type: TypingIndicator
+      proto: holo
+    - type: RandomSprite
+      available:
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+        - enum.DamageStateVisualLayers.Base:
+            holoclown_base: ""
+          enum.DamageStateVisualLayers.BaseUnshaded:
+            holoclown_flare: Sixteen
+    - type: Sprite
+      layers:
+        - state: holoclown_base
+          map: [ "enum.DamageStateVisualLayers.Base" ]
+        - state: holoclown_flare
+          map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+          color: "#8adaff"
+          shader: unshaded
+    - type: Body
+      prototype: Primate
+    - type: Tag
+      tags:
+        - CannotSuicide
+        - FootstepSound
+    - type: Inventory
+      templateId: holoclown
+    - type: Hands
+    - type: Clumsy
+      clumsyDamage:
+        types:
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
+    - type: InventorySlots
+    - type: MeleeWeapon
+      hidden: true
+      angle: 30
+      animation: WeaponArcFist
+      attackRate: 1.8
+      damage:
+        types:
+          Blunt: 5
+    - type: Loadout
+      prototypes: [ HoloClownGear ]
+    - type: RandomMetadata
+      nameSegments:
+      - names_clown

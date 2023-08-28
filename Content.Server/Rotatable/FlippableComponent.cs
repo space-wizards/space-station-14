@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Rotatable
 {
     [RegisterComponent]
-    public sealed class FlippableComponent : Component
+    public sealed partial class FlippableComponent : Component
     {
         /// <summary>
         ///     Entity to replace this entity with when the current one is 'flipped'.

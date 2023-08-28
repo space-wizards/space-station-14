@@ -12,6 +12,12 @@ namespace Content.Client.Administration.UI.SetOutfit
         public SetOutfitEui()
         {
             _window = new SetOutfitMenu();
+            _window.OnClose += OnClosed;
+        }
+
+        private void OnClosed()
+        {
+            SendMessage(new CloseEuiMessage());
         }
 
         public override void Opened()

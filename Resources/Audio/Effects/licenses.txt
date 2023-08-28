@@ -50,4 +50,9 @@ box_deploy.ogg and chime.ogg taken from Citadel Station at commit: https://githu
    license: "Royalty free"
    copyright: "Sonniss.com - GDC 2016 - Game Audio Bundle - Levan Nadashvili - Soldier Footsteps - FS Concrete Soldier Crouch N02, mixed from stereo to mono"
 
+- files:
+      - "wall_bonk.ogg"
+  license: "Royalty free"
+  copyright: "Sonniss.com - GDC 2023 - Game Audio Bundle - 344 Audio - Nuts and Bolts"
+
 # Do not add to this list, I only did the above because yaml scheme validator doesn't like custom licenses.

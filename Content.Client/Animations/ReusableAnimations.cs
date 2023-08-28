@@ -1,22 +1,24 @@
-using System;
+using System.Numerics;
+using Content.Shared.Spawners.Components;
 using Robust.Client.Animations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Animations;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
-using Robust.Shared.Log;
 using Robust.Shared.Map;
-using Robust.Shared.Maths;
 
 namespace Content.Client.Animations
 {
     public static class ReusableAnimations
     {
-        public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialPosition, Vector2 finalPosition, IEntityManager? entMan = null)
+        public static void AnimateEntityPickup(EntityUid entity, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle, IEntityManager? entMan = null)
         {
             IoCManager.Resolve(ref entMan);
 
             if (entMan.Deleted(entity) || !initialPosition.IsValid(entMan))
+                return;
+
+            var metadata = entMan.GetComponent<MetaDataComponent>(entity);
+
+            if (entMan.IsPaused(entity, metadata))
                 return;
 
             var animatableClone = entMan.SpawnEntity("clientsideclone", initialPosition);
@@ -37,6 +39,10 @@ namespace Content.Client.Animations
                 entMan.DeleteEntity(animatableClone);
             };
 
+            var despawn = entMan.EnsureComponent<TimedDespawnComponent>(animatableClone);
+            despawn.Lifetime = 0.25f;
+            entMan.System<SharedTransformSystem>().SetLocalRotationNoLerp(animatableClone, initialAngle);
+
             animations.Play(new Animation
             {
                 Length = TimeSpan.FromMilliseconds(125),
@@ -52,7 +58,7 @@ namespace Content.Client.Animations
                             new AnimationTrackProperty.KeyFrame(initialPosition.Position, 0),
                             new AnimationTrackProperty.KeyFrame(finalPosition, 0.125f)
                         }
-                    }
+                    },
                 }
             }, "fancy_pickup_anim");
         }

@@ -1,80 +1,89 @@
-- type: gameRule
-  id: DeathMatch
-  config:
-    !type:GenericGameRuleConfiguration
-    id: DeathMatch
+- type: entity
+  id: BaseGameRule
+  abstract: true
+  noSpawn: true
+  components:
+  - type: GameRule
 
-- type: gameRule
+- type: entity
+  id: DeathMatch
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: DeathMatchRule
+
+- type: entity
   id: InactivityTimeRestart
-  config:
-    !type:InactivityGameRuleConfiguration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: InactivityRule
     inactivityMaxTime: 600
     roundEndDelay: 10
 
-- type: gameRule
+- type: entity
   id: MaxTimeRestart
-  config:
-    !type:MaxTimeRestartRuleConfiguration
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: MaxTimeRestartRule
     roundMaxTime: 300
     roundEndDelay: 10
 
-- type: gameRule
+- type: entity
   id: Nukeops
-  config:
-    !type:NukeopsRuleConfiguration
-    id: Nukeops
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: NukeopsRule
+    faction: Syndicate
 
-- type: gameRule
+- type: entity
   id: Pirates
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Pirates
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: PiratesRule
 
-- type: gameRule
-  id: Suspicion
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Suspicion
-
-- type: gameRule
+- type: entity
   id: Traitor
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Traitor
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: TraitorRule
 
-- type: gameRule
-  id: TraitorDeathMatch
-  config:
-    !type:GenericGameRuleConfiguration
-    id: TraitorDeathMatch
-
-- type: gameRule
+- type: entity
   id: Sandbox
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Sandbox
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SandboxRule
 
-- type: gameRule
+- type: entity
   id: Secret
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Secret
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SecretRule
 
-- type: gameRule
+- type: entity
   id: Zombie
-  config:
-    !type:GenericGameRuleConfiguration
-    id: Zombie
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ZombieRule
 
 # event schedulers
-- type: gameRule
+- type: entity
   id: BasicStationEventScheduler
-  config:
-    !type:GenericGameRuleConfiguration
-    id: BasicStationEventScheduler
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: BasicStationEventScheduler
 
-- type: gameRule
+- type: entity
   id: RampingStationEventScheduler
-  config:
-    !type:GenericGameRuleConfiguration
-    id: RampingStationEventScheduler
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RampingStationEventScheduler

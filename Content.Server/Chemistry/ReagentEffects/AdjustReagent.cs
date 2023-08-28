@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class AdjustReagent : ReagentEffect
+    public sealed partial class AdjustReagent : ReagentEffect
     {
         /// <summary>
         ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.
@@ -59,6 +59,28 @@ namespace Content.Server.Chemistry.ReagentEffects
                     }
                 }
             }
+        }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+        {
+            if (Reagent is not null && prototype.TryIndex(Reagent, out ReagentPrototype? reagentProto))
+            {
+                return Loc.GetString("reagent-effect-guidebook-adjust-reagent-reagent",
+                    ("chance", Probability),
+                    ("deltasign", MathF.Sign(Amount.Float())),
+                    ("reagent", reagentProto.LocalizedName),
+                    ("amount", MathF.Abs(Amount.Float())));
+            }
+            else if (Group is not null && prototype.TryIndex(Group, out MetabolismGroupPrototype? groupProto))
+            {
+                return Loc.GetString("reagent-effect-guidebook-adjust-reagent-group",
+                    ("chance", Probability),
+                    ("deltasign", MathF.Sign(Amount.Float())),
+                    ("group", groupProto.ID),
+                    ("amount", MathF.Abs(Amount.Float())));
+            }
+
+            throw new NotImplementedException();
         }
     }
 }

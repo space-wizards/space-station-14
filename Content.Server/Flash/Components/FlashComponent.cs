@@ -3,15 +3,11 @@ using Robust.Shared.Audio;
 namespace Content.Server.Flash.Components
 {
     [RegisterComponent, Access(typeof(FlashSystem))]
-    public sealed class FlashComponent : Component
+    public sealed partial class FlashComponent : Component
     {
         [DataField("duration")]
         [ViewVariables(VVAccess.ReadWrite)]
         public int FlashDuration { get; set; } = 5000;
-
-        [DataField("uses")]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public int Uses { get; set; } = 5;
 
         [DataField("range")]
         [ViewVariables(VVAccess.ReadWrite)]
@@ -30,7 +26,5 @@ namespace Content.Server.Flash.Components
         public SoundSpecifier Sound { get; set; } = new SoundPathSpecifier("/Audio/Weapons/flash.ogg");
 
         public bool Flashing;
-
-        public bool HasUses => Uses > 0;
     }
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Client.Examine;
 using Content.Shared.CCVar;
 using Content.Shared.Examine;
@@ -88,7 +89,7 @@ public sealed class PopupOverlay : Overlay
             if (mapPos.MapId != args.MapId)
                 continue;
 
-            var distance = (mapPos.Position - args.WorldBounds.Center).Length;
+            var distance = (mapPos.Position - args.WorldBounds.Center).Length();
 
             // Should handle fade here too wyci.
             if (!args.WorldAABB.Contains(mapPos.Position) || !ExamineSystemShared.InRangeUnOccluded(viewPos, mapPos, distance,
@@ -114,10 +115,12 @@ public sealed class PopupOverlay : Overlay
 
     private void DrawPopup(PopupSystem.PopupLabel popup, DrawingHandleScreen handle, Vector2 position, float scale)
     {
-        const float alphaMinimum = 0.5f;
+        var lifetime = PopupSystem.GetPopupLifetime(popup);
 
-        var alpha = MathF.Min(1f, 1f - (popup.TotalTime - alphaMinimum) / (PopupSystem.PopupLifetime - alphaMinimum));
-        var updatedPosition = position - new Vector2(0f, 20f * (popup.TotalTime * popup.TotalTime + popup.TotalTime));
+        // Keep alpha at 1 until TotalTime passes half its lifetime, then gradually decrease to 0.
+        var alpha = MathF.Min(1f, 1f - MathF.Max(0f, popup.TotalTime - lifetime / 2) * 2 / lifetime);
+
+        var updatedPosition = position - new Vector2(0f, MathF.Min(8f, 12f * (popup.TotalTime * popup.TotalTime + popup.TotalTime)));
         var font = _smallFont;
         var color = Color.White.WithAlpha(alpha);
 

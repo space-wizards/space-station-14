@@ -2,7 +2,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany;
 
-public class MutationSystem : EntitySystem
+public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
 
@@ -18,6 +18,12 @@ public class MutationSystem : EntitySystem
     /// </summary>
     public void MutateSeed(SeedData seed, float severity)
     {
+        if (!seed.Unique)
+        {
+            Log.Error($"Attempted to mutate a shared seed");
+            return;
+        }
+
         // Add up everything in the bits column and put the number here.
         const int totalbits = 245;
 
@@ -62,7 +68,7 @@ public class MutationSystem : EntitySystem
     {
         SeedData result = b.Clone();
 
-        result.Chemicals = random(0.5f) ? a.Chemicals : result.Chemicals;
+        result.Chemicals = Random(0.5f) ? a.Chemicals : result.Chemicals;
 
         CrossFloat(ref result.NutrientConsumption, a.NutrientConsumption);
         CrossFloat(ref result.WaterConsumption, a.WaterConsumption);
@@ -91,11 +97,11 @@ public class MutationSystem : EntitySystem
         CrossBool(ref result.Bioluminescent, a.Bioluminescent);
         CrossBool(ref result.TurnIntoKudzu, a.TurnIntoKudzu);
         CrossBool(ref result.CanScream, a.CanScream);
-        result.BioluminescentColor = random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
+        result.BioluminescentColor = Random(0.5f) ? a.BioluminescentColor : result.BioluminescentColor;
 
         // Hybrids have a high chance of being seedless. Balances very
         // effective hybrid crossings.
-        if (a.Name == result.Name && random(0.7f))
+        if (a.Name == result.Name && Random(0.7f))
         {
             result.Seedless = true;
         }
@@ -113,7 +119,8 @@ public class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -126,7 +133,7 @@ public class MutationSystem : EntitySystem
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;
         int np;
-        if (random(p_increase))
+        if (Random(p_increase))
         {
             np = n + 1;
         }
@@ -144,7 +151,8 @@ public class MutationSystem : EntitySystem
     {
         // Probability that a bit flip happens for this value.
         float p = mult*bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -152,7 +160,7 @@ public class MutationSystem : EntitySystem
         // Probability that the bit flip increases n.
         float p_increase = 1-(float)n/bits;
         int np;
-        if (random(p_increase))
+        if (Random(p_increase))
         {
             np = n + 1;
         }
@@ -168,8 +176,9 @@ public class MutationSystem : EntitySystem
     private void MutateBool(ref bool val, bool polarity, int bits, int totalbits, float mult)
     {
         // Probability that a bit flip happens for this value.
-        float p = mult*bits/totalbits;
-        if (!random(p))
+        float p = mult * bits / totalbits;
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
         {
             return;
         }
@@ -180,7 +189,8 @@ public class MutationSystem : EntitySystem
     private void MutateHarvestType(ref HarvestType val, int bits, int totalbits, float mult)
     {
         float p = mult * bits/totalbits;
-        if (!random(p))
+        p = Math.Clamp(p, 0, 1);
+        if (!Random(p))
             return;
 
         if (val == HarvestType.NoRepeat)
@@ -193,7 +203,7 @@ public class MutationSystem : EntitySystem
     private Color RandomColor(Color color, int bits, int totalbits, float mult)
     {
         float p = mult*bits/totalbits;
-        if (random(p))
+        if (Random(p))
         {
             var colors = new List<Color>{
                 Color.White,
@@ -212,20 +222,20 @@ public class MutationSystem : EntitySystem
 
     private void CrossFloat(ref float val, float other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
     private void CrossInt(ref int val, int other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
     private void CrossBool(ref bool val, bool other)
     {
-        val = random(0.5f) ? val : other;
+        val = Random(0.5f) ? val : other;
     }
 
-    private bool random(float p)
+    private bool Random(float p)
     {
         return _robustRandom.Prob(p);
     }

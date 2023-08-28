@@ -21,6 +21,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/atmospherics.rsi
+  - type: Construction
+    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
@@ -69,6 +71,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/command.rsi
+  - type: Construction
+    node: airlockMaxSecurity
 
 - type: entity
   parent: Airlock
@@ -77,6 +81,8 @@
   components:
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Standard/security.rsi
+  - type: Construction
+    node: airlockMedSecurity
 
 - type: entity
   parent: Airlock
@@ -104,21 +110,26 @@
     enabled: false
   - type: Sprite
     sprite: Structures/Doors/Airlocks/Glass/glass.rsi
+  - type: AnimationPlayer
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
-      density: 100
-      mask:
-      - FullTileMask
-      layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
-      - GlassAirlockLayer
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.49,0.49,0.49" # don't want this colliding with walls or they won't close
+        density: 100
+        mask:
+        - FullTileMask
+        layer:     #removed opaque from the layer, allowing lasers to pass through glass airlocks
+        - GlassAirlockLayer
+  - type: LayerChangeOnWeld
+    unWeldedLayer: GlassAirlockLayer
+    weldedLayer: GlassLayer
   - type: Construction
     graph: Airlock
     node: glassAirlock
   - type: PaintableAirlock
-    group: Windoor
+    group: Glass
   - type: RadiationBlocker
     resistance: 2
 
@@ -151,6 +162,8 @@
     sprite: Structures/Doors/Airlocks/Glass/atmospherics.rsi
   - type: PaintableAirlock
     group: Glass
+  - type: Construction
+    node: glassAirlockMedSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -201,6 +214,8 @@
     sprite: Structures/Doors/Airlocks/Glass/command.rsi
   - type: PaintableAirlock
     group: Glass
+  - type: Construction
+    node: glassAirlockMaxSecurity
 
 - type: entity
   parent: AirlockGlass
@@ -211,3 +226,5 @@
     sprite: Structures/Doors/Airlocks/Glass/security.rsi
   - type: PaintableAirlock
     group: Glass
+  - type: Construction
+    node: glassAirlockMedSecurity

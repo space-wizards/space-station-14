@@ -1,7 +1,7 @@
 namespace Content.Server.Research.Disk
 {
     [RegisterComponent]
-    public sealed class ResearchDiskComponent : Component
+    public sealed partial class ResearchDiskComponent : Component
     {
         [DataField("points"), ViewVariables(VVAccess.ReadWrite)]
         public int Points = 1000;

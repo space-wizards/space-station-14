@@ -1,12 +1,10 @@
 using Content.Server.Administration.Logs;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Systems;
-using Content.Server.DoAfter;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
-using Content.Server.MachineLinking.Events;
-using Content.Server.MachineLinking.System;
 using Content.Server.Power.Components;
+using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -23,6 +21,8 @@ using Robust.Shared.Player;
 using Robust.Shared.Timing;
 using Content.Shared.DoAfter;
 using Content.Server.Emp;
+using Content.Server.DeviceLinking.Events;
+using Content.Server.DeviceLinking.Systems;
 
 namespace Content.Server.Light.EntitySystems
 {
@@ -38,11 +38,12 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
         [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SignalLinkerSystem _signalSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly PowerReceiverSystem _power = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -63,15 +64,14 @@ namespace Content.Server.Light.EntitySystems
 
             SubscribeLocalEvent<PoweredLightComponent, PowerChangedEvent>(OnPowerChanged);
 
-            SubscribeLocalEvent<PoweredLightComponent, DoAfterEvent>(OnDoAfter);
-
+            SubscribeLocalEvent<PoweredLightComponent, PoweredLightDoAfterEvent>(OnDoAfter);
             SubscribeLocalEvent<PoweredLightComponent, EmpPulseEvent>(OnEmpPulse);
         }
 
         private void OnInit(EntityUid uid, PoweredLightComponent light, ComponentInit args)
         {
             light.LightBulbContainer = _containerSystem.EnsureContainer<ContainerSlot>(uid, LightBulbContainer);
-            _signalSystem.EnsureReceiverPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
+            _signalSystem.EnsureSinkPorts(uid, light.OnPort, light.OffPort, light.TogglePort);
         }
 
         private void OnMapInit(EntityUid uid, PoweredLightComponent light, MapInitEvent args)
@@ -140,11 +140,10 @@ namespace Content.Server.Light.EntitySystems
             }
 
             // removing a working bulb, so require a delay
-            _doAfterSystem.DoAfter(new DoAfterEventArgs(userUid, light.EjectBulbDelay, target:uid)
+            _doAfterSystem.TryStartDoAfter(new DoAfterArgs(userUid, light.EjectBulbDelay, new PoweredLightDoAfterEvent(), uid, target: uid)
             {
                 BreakOnUserMove = true,
                 BreakOnDamage = true,
-                BreakOnStun = true
             });
 
             args.Handled = true;
@@ -227,21 +226,30 @@ namespace Content.Server.Light.EntitySystems
         /// <summary>
         ///     Try to break bulb inside light fixture
         /// </summary>
-        public void TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
+        public bool TryDestroyBulb(EntityUid uid, PoweredLightComponent? light = null)
         {
             // check bulb state
             var bulbUid = GetBulb(uid, light);
             if (bulbUid == null || !EntityManager.TryGetComponent(bulbUid.Value, out LightBulbComponent? lightBulb))
-                return;
+                return false;
             if (lightBulb.State == LightBulbState.Broken)
-                return;
+                return false;
 
             // break it
             _bulbSystem.SetState(bulbUid.Value, LightBulbState.Broken, lightBulb);
             _bulbSystem.PlayBreakSound(bulbUid.Value, lightBulb);
             UpdateLight(uid, light);
+            return true;
         }
         #endregion
+
+        /// <summary>
+        /// Supply factor (0-1) as input x, returns linear light scale (0-1).
+        /// </summary>
+        private float LightCurve(float x)
+        {
+            return (float)(1/0.8*(x-0.2));
+        }
 
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
@@ -267,9 +275,10 @@ namespace Content.Server.Light.EntitySystems
             switch (lightBulb.State)
             {
                 case LightBulbState.Normal:
-                    if (powerReceiver.Powered && light.On)
+                    float factor = LightCurve(_power.SupplyFactor(uid, powerReceiver));
+                    if (factor > 0 && light.On)
                     {
-                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
+                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius*factor, lightBulb.LightEnergy*factor, lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)
@@ -336,6 +345,10 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnPowerChanged(EntityUid uid, PoweredLightComponent component, ref PowerChangedEvent args)
         {
+            // TODO: Power moment
+            if (MetaData(uid).EntityPaused)
+                return;
+
             UpdateLight(uid, component);
         }
 
@@ -352,7 +365,7 @@ namespace Content.Server.Light.EntitySystems
             _appearance.SetData(uid, PoweredLightVisuals.Blinking, isNowBlinking, appearance);
         }
 
-        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, SignalReceivedEvent args)
+        private void OnSignalReceived(EntityUid uid, PoweredLightComponent component, ref SignalReceivedEvent args)
         {
             if (args.Port == component.OffPort)
                 SetState(uid, false, component);
@@ -427,8 +440,8 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnEmpPulse(EntityUid uid, PoweredLightComponent component, ref EmpPulseEvent args)
         {
-            args.Affected = true;
-            TryDestroyBulb(uid, component);  
+            if (TryDestroyBulb(uid, component))
+                args.Affected = true;
         }
     }
 }

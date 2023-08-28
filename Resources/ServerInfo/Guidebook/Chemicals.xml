@@ -1,0 +1,34 @@
+﻿<Document>
+# Chemicals
+
+Chemicals are a powerful tool that can cause a variety of effects when consumed. Some can be found in plants, purchased from cargo, or be synthesized through combination with other chemicals.
+
+Knowing different types of chemicals and their effects is important for being able to manage injury and danger.
+
+## Elements
+<GuideReagentGroupEmbed Group="Elements"/>
+
+## Medicine
+<GuideReagentGroupEmbed Group="Medicine"/>
+
+## Narcotics
+<GuideReagentGroupEmbed Group="Narcotics"/>
+
+## Pyrotechnics
+<GuideReagentGroupEmbed Group="Pyrotechnic"/>
+
+## Toxins
+<GuideReagentGroupEmbed Group="Toxins"/>
+
+## Foods
+<GuideReagentGroupEmbed Group="Foods"/>
+
+## Botanical
+<GuideReagentGroupEmbed Group="Botanical"/>
+
+## Biological
+<GuideReagentGroupEmbed Group="Biological"/>
+
+## Other
+<GuideReagentGroupEmbed Group="Unknown"/>
+</Document>

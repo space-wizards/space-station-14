@@ -1,16 +1,16 @@
-﻿using JetBrains.Annotations;
+﻿using Content.Shared.MedicalScanner;
+using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-
-using static Content.Shared.MedicalScanner.SharedHealthAnalyzerComponent;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
     public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
     {
+        [ViewVariables]
         private HealthAnalyzerWindow? _window;
 
-        public HealthAnalyzerBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        public HealthAnalyzerBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
 
@@ -19,7 +19,7 @@ namespace Content.Client.HealthAnalyzer.UI
             base.Open();
             _window = new HealthAnalyzerWindow
             {
-                Title = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(Owner.Owner).EntityName,
+                Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName,
             };
             _window.OnClose += Close;
             _window.OpenCentered();

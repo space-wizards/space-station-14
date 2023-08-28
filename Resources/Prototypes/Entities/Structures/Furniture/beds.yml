@@ -6,25 +6,23 @@
   components:
   - type: HealOnBuckle
     damage:
-      groups:
-        Brute: -0.2 ## 0.1 per
-        Burn: -0.2
       types:
         Poison: -0.1
+        Blunt: -0.1
   - type: Physics
     bodyType: Static
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeAabb
-        bounds: "-0.45,-0.45,0.45,0.05"
-      density: 190
-      mask:
-      - TableMask
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.05"
+        density: 190
+        mask:
+        - TableMask
   - type: Sprite
     sprite: Structures/Furniture/furniture.rsi
     state: bed
-    netsync: false
     noRot: true
   - type: Strap
     position: Down
@@ -70,14 +68,16 @@
     state: bed-MED
   - type: HealOnBuckle
     damage:
-      groups:
-        Brute: -0.4 ## 0.2 per
-        Burn: -0.4
       types:
         Poison: -0.2
+        Cold: -0.4
+        Blunt: -0.2
   - type: Construction
     graph: bed
     node: medicalbed
+  - type: GuideHelp
+    guides:
+    - Medical Doctor
 
 - type: entity
   parent: Bed
@@ -111,3 +111,42 @@
           MaterialWoodPlank:
             min: 1
             max: 5
+
+- type: entity
+  parent: Bed
+  id: Mattress
+  name: mattress
+  description: Better sleep in that then on the floor i guess.
+  components:
+  - type: Sprite
+    state: mattress
+  - type: Damageable
+    damageModifierSet: Inflatable
+
+- type: entity
+  parent: Bed
+  id: WebBed
+  name: web bed
+  description: You got webbed.
+  components:
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Sprite
+    sprite: Structures/Furniture/Web/bed.rsi
+    state: icon
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 1
+            max: 1

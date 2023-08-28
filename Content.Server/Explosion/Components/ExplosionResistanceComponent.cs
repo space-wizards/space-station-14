@@ -13,7 +13,7 @@ namespace Content.Server.Explosion.Components;
 /// </remarks>
 [RegisterComponent]
 [Access(typeof(ExplosionSystem))]
-public sealed class ExplosionResistanceComponent : Component
+public sealed partial class ExplosionResistanceComponent : Component
 {
     /// <summary>
     ///     The explosive resistance coefficient, This fraction is multiplied into the total resistance.
@@ -22,9 +22,9 @@ public sealed class ExplosionResistanceComponent : Component
     public float DamageCoefficient = 1;
 
     /// <summary>
-    ///     Like <see cref="GlobalResistance"/>, but specified specific to each explosion type for more customizability.
+    ///     Modifiers specific to each explosion type for more customizability.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("resistances", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, ExplosionPrototype>))]
-    public Dictionary<string, float> Resistances = new();
+    [DataField("modifiers", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<float, ExplosionPrototype>))]
+    public Dictionary<string, float> Modifiers = new();
 }

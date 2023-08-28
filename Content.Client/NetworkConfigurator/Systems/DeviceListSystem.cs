@@ -1,8 +1,7 @@
-using System.Linq;
 using Content.Shared.DeviceNetwork;
-using Robust.Client.Graphics;
+using Content.Shared.DeviceNetwork.Systems;
 
-namespace Content.Client.NetworkConfigurator;
+namespace Content.Client.NetworkConfigurator.Systems;
 
 public sealed class DeviceListSystem : SharedDeviceListSystem
 {

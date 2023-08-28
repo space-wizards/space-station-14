@@ -17,6 +17,7 @@ namespace Content.Server.Power.EntitySystems
     public sealed class PowerNetSystem : EntitySystem
     {
         [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly PowerNetConnectorSystem _powerNetConnector = default!;
         [Dependency] private readonly IParallelManager _parMan = default!;
 
         private readonly PowerState _powerState = new();
@@ -101,6 +102,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerConsumerInit(EntityUid uid, PowerConsumerComponent component, ComponentInit args)
         {
+            _powerNetConnector.BaseNetConnectorInit(component);
             AllocLoad(component.NetworkLoad);
         }
 
@@ -121,6 +123,7 @@ namespace Content.Server.Power.EntitySystems
 
         private void PowerSupplierInit(EntityUid uid, PowerSupplierComponent component, ComponentInit args)
         {
+            _powerNetConnector.BaseNetConnectorInit(component);
             AllocSupply(component.NetworkSupply);
         }
 
@@ -289,36 +292,45 @@ namespace Content.Server.Power.EntitySystems
         private void UpdateApcPowerReceiver()
         {
             var appearanceQuery = GetEntityQuery<AppearanceComponent>();
-            var enumerator = EntityQueryEnumerator<ApcPowerReceiverComponent>();
-            while (enumerator.MoveNext(out var apcReceiver))
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var enumerator = AllEntityQuery<ApcPowerReceiverComponent>();
+            while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
                 var powered = apcReceiver.Powered;
-                if (powered == apcReceiver.PoweredLastUpdate)
+                if (apcReceiver.LastPowerReceived == apcReceiver.NetworkLoad.ReceivingPower)
+                    continue;
+
+                if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 apcReceiver.PoweredLastUpdate = powered;
+                apcReceiver.LastPowerReceived = apcReceiver.NetworkLoad.ReceivingPower;
                 var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
 
                 RaiseLocalEvent(apcReceiver.Owner, ref ev);
 
-                if (appearanceQuery.TryGetComponent(apcReceiver.Owner, out var appearance))
-                    _appearance.SetData(appearance.Owner, PowerDeviceVisuals.Powered, powered, appearance);
+                if (appearanceQuery.TryGetComponent(uid, out var appearance))
+                    _appearance.SetData(uid, PowerDeviceVisuals.Powered, powered, appearance);
             }
         }
 
         private void UpdatePowerConsumer()
         {
-            var enumerator = EntityQueryEnumerator<PowerConsumerComponent>();
-            while (enumerator.MoveNext(out var consumer))
+            var metaQuery = GetEntityQuery<MetaDataComponent>();
+            var enumerator = AllEntityQuery<PowerConsumerComponent>();
+            while (enumerator.MoveNext(out var uid, out var consumer))
             {
                 var newRecv = consumer.NetworkLoad.ReceivingPower;
                 ref var lastRecv = ref consumer.LastReceived;
                 if (MathHelper.CloseToPercent(lastRecv, newRecv))
                     continue;
 
+                if (metaQuery.GetComponent(uid).EntityPaused)
+                    continue;
+
                 lastRecv = newRecv;
                 var msg = new PowerConsumerReceivedChanged(newRecv, consumer.DrawRate);
-                RaiseLocalEvent(consumer.Owner, ref msg);
+                RaiseLocalEvent(uid, ref msg);
             }
         }
 
@@ -383,11 +395,7 @@ namespace Content.Server.Power.EntitySystems
                 }
             }
 
-            foreach (var consumer in net.Consumers)
-            {
-                netNode.Loads.Add(consumer.NetworkLoad.Id);
-                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
-            }
+            DoReconnectBasePowerNet(net, netNode);
 
             var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
 
@@ -408,17 +416,7 @@ namespace Content.Server.Power.EntitySystems
             netNode.BatteryLoads.Clear();
             netNode.BatterySupplies.Clear();
 
-            foreach (var consumer in net.Consumers)
-            {
-                netNode.Loads.Add(consumer.NetworkLoad.Id);
-                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
-            }
-
-            foreach (var supplier in net.Suppliers)
-            {
-                netNode.Supplies.Add(supplier.NetworkSupply.Id);
-                supplier.NetworkSupply.LinkedNetwork = netNode.Id;
-            }
+            DoReconnectBasePowerNet(net, netNode);
 
             var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
 
@@ -434,6 +432,22 @@ namespace Content.Server.Power.EntitySystems
                 var battery = batteryQuery.GetComponent(discharger.Owner);
                 netNode.BatterySupplies.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
+            }
+        }
+
+        private void DoReconnectBasePowerNet<TNetType>(BasePowerNet<TNetType> net, PowerState.Network netNode)
+            where TNetType : IBasePowerNet
+        {
+            foreach (var consumer in net.Consumers)
+            {
+                netNode.Loads.Add(consumer.NetworkLoad.Id);
+                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
+            }
+
+            foreach (var supplier in net.Suppliers)
+            {
+                netNode.Supplies.Add(supplier.NetworkSupply.Id);
+                supplier.NetworkSupply.LinkedNetwork = netNode.Id;
             }
         }
     }

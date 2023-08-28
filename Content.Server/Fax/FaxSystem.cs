@@ -7,7 +7,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Paper;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Tools;
 using Content.Server.UserInterface;
 using Content.Shared.Administration.Logs;
@@ -17,7 +16,9 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
+using Content.Shared.Paper;
 using Robust.Server.GameObjects;
+using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 
@@ -38,7 +39,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
 
-    public const string PaperSlotId = "Paper";
+    private const string PaperSlotId = "Paper";
 
     public override void Initialize()
     {
@@ -69,29 +70,30 @@ public sealed class FaxSystem : EntitySystem
     {
         base.Update(frameTime);
 
-        foreach (var (comp, receiver) in EntityQuery<FaxMachineComponent, ApcPowerReceiverComponent>())
+        var query = EntityQueryEnumerator<FaxMachineComponent, ApcPowerReceiverComponent>();
+        while (query.MoveNext(out var uid, out var fax, out var receiver))
         {
             if (!receiver.Powered)
                 continue;
 
-            ProcessPrintingAnimation(frameTime, comp);
-            ProcessInsertingAnimation(frameTime, comp);
-            ProcessSendingTimeout(frameTime, comp);
+            ProcessPrintingAnimation(uid, frameTime, fax);
+            ProcessInsertingAnimation(uid, frameTime, fax);
+            ProcessSendingTimeout(uid, frameTime, fax);
         }
     }
 
-    private void ProcessPrintingAnimation(float frameTime, FaxMachineComponent comp)
+    private void ProcessPrintingAnimation(EntityUid uid, float frameTime, FaxMachineComponent comp)
     {
         if (comp.PrintingTimeRemaining > 0)
         {
             comp.PrintingTimeRemaining -= frameTime;
-            UpdateAppearance(comp.Owner, comp);
+            UpdateAppearance(uid, comp);
 
             var isAnimationEnd = comp.PrintingTimeRemaining <= 0;
             if (isAnimationEnd)
             {
-                SpawnPaperFromQueue(comp.Owner, comp);
-                UpdateUserInterface(comp.Owner, comp);
+                SpawnPaperFromQueue(uid, comp);
+                UpdateUserInterface(uid, comp);
             }
 
             return;
@@ -100,40 +102,40 @@ public sealed class FaxSystem : EntitySystem
         if (comp.PrintingQueue.Count > 0)
         {
             comp.PrintingTimeRemaining = comp.PrintingTime;
-            _audioSystem.PlayPvs(comp.PrintSound, comp.Owner);
+            _audioSystem.PlayPvs(comp.PrintSound, uid);
         }
     }
 
-    private void ProcessInsertingAnimation(float frameTime, FaxMachineComponent comp)
+    private void ProcessInsertingAnimation(EntityUid uid, float frameTime, FaxMachineComponent comp)
     {
         if (comp.InsertingTimeRemaining <= 0)
             return;
 
         comp.InsertingTimeRemaining -= frameTime;
-        UpdateAppearance(comp.Owner, comp);
+        UpdateAppearance(uid, comp);
 
         var isAnimationEnd = comp.InsertingTimeRemaining <= 0;
         if (isAnimationEnd)
         {
-            _itemSlotsSystem.SetLock(comp.Owner, comp.PaperSlot, false);
-            UpdateUserInterface(comp.Owner, comp);
+            _itemSlotsSystem.SetLock(uid, comp.PaperSlot, false);
+            UpdateUserInterface(uid, comp);
         }
     }
 
-    private void ProcessSendingTimeout(float frameTime, FaxMachineComponent comp)
+    private void ProcessSendingTimeout(EntityUid uid, float frameTime, FaxMachineComponent comp)
     {
         if (comp.SendTimeoutRemaining > 0)
         {
             comp.SendTimeoutRemaining -= frameTime;
 
             if (comp.SendTimeoutRemaining <= 0)
-                UpdateUserInterface(comp.Owner, comp);
+                UpdateUserInterface(uid, comp);
         }
     }
 
     private void OnComponentInit(EntityUid uid, FaxMachineComponent component, ComponentInit args)
     {
-        _itemSlotsSystem.AddItemSlot(uid, FaxSystem.PaperSlotId, component.PaperSlot);
+        _itemSlotsSystem.AddItemSlot(uid, PaperSlotId, component.PaperSlot);
         UpdateAppearance(uid, component);
     }
 
@@ -185,7 +187,7 @@ public sealed class FaxSystem : EntitySystem
         }
 
         if (isInsertInterrupted || isPrintInterrupted)
-            UpdateAppearance(component.Owner, component);
+            UpdateAppearance(uid, component);
 
         _itemSlotsSystem.SetLock(uid, component.PaperSlot, !args.Powered); // Lock slot when power is off
     }
@@ -271,7 +273,7 @@ public sealed class FaxSystem : EntitySystem
                         return;
 
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<string>? stampedBy);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
                     var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
@@ -425,14 +427,14 @@ public sealed class FaxSystem : EntitySystem
     ///     Accepts a new message and adds it to the queue to print
     ///     If has parameter "notifyAdmins" also output a special message to admin chat.
     /// </summary>
-    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress, FaxMachineComponent? component = null)
+    public void Receive(EntityUid uid, FaxPrintout printout, string? fromAddress = null, FaxMachineComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
         var faxName = Loc.GetString("fax-machine-popup-source-unknown");
-        if (fromAddress != null && component.KnownFaxes.ContainsKey(fromAddress)) // If message received from unknown for fax address
-            faxName = component.KnownFaxes[fromAddress];
+        if (fromAddress != null && component.KnownFaxes.TryGetValue(fromAddress, out var fax)) // If message received from unknown fax address
+            faxName = fax;
 
         _popupSystem.PopupEntity(Loc.GetString("fax-machine-popup-received", ("from", faxName)), uid);
         _appearanceSystem.SetData(uid, FaxMachineVisuals.VisualState, FaxMachineVisualState.Printing);
@@ -460,9 +462,9 @@ public sealed class FaxSystem : EntitySystem
             // Apply stamps
             if (printout.StampState != null)
             {
-                foreach (var stampedBy in printout.StampedBy)
+                foreach (var stamp in printout.StampedBy)
                 {
-                    _paperSystem.TryStamp(printed, stampedBy, printout.StampState);
+                    _paperSystem.TryStamp(printed, stamp, printout.StampState);
                 }
             }
         }
@@ -476,6 +478,6 @@ public sealed class FaxSystem : EntitySystem
     private void NotifyAdmins(string faxName)
     {
         _chat.SendAdminAnnouncement(Loc.GetString("fax-machine-chat-notify", ("fax", faxName)));
-        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false);
+        _audioSystem.PlayGlobal("/Audio/Machines/high_tech_confirm.ogg", Filter.Empty().AddPlayers(_adminManager.ActiveAdmins), false, AudioParams.Default.WithVolume(-8f));
     }
 }

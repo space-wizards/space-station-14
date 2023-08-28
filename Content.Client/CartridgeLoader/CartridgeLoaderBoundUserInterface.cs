@@ -8,15 +8,17 @@ namespace Content.Client.CartridgeLoader;
 
 public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 {
-    [Dependency] private readonly IEntityManager? _entityManager = default!;
-
+    [ViewVariables]
     private EntityUid? _activeProgram;
+
+    [ViewVariables]
     private UIFragment? _activeCartridgeUI;
+
+    [ViewVariables]
     private Control? _activeUiFragment;
 
-    protected CartridgeLoaderBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+    protected CartridgeLoaderBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-        IoCManager.InjectDependencies(this);
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -119,7 +121,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 
     protected CartridgeComponent? RetrieveCartridgeComponent(EntityUid? cartridgeUid)
     {
-        return _entityManager?.GetComponentOrNull<CartridgeComponent>(cartridgeUid);
+        return EntMan.GetComponentOrNull<CartridgeComponent>(cartridgeUid);
     }
 
     private void SendCartridgeUiReadyEvent(EntityUid cartridgeUid)
@@ -130,7 +132,7 @@ public abstract class CartridgeLoaderBoundUserInterface : BoundUserInterface
 
     private UIFragment? RetrieveCartridgeUI(EntityUid? cartridgeUid)
     {
-        var component = _entityManager?.GetComponentOrNull<UIFragmentComponent>(cartridgeUid);
+        var component = EntMan.GetComponentOrNull<UIFragmentComponent>(cartridgeUid);
         component?.Ui?.Setup(this, cartridgeUid);
         return component?.Ui;
     }

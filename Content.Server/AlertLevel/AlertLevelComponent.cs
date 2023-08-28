@@ -1,3 +1,5 @@
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+
 namespace Content.Server.AlertLevel;
 
 /// <summary>
@@ -5,7 +7,7 @@ namespace Content.Server.AlertLevel;
 /// signify its alert level state.
 /// </summary>
 [RegisterComponent]
-public sealed class AlertLevelComponent : Component
+public sealed partial class AlertLevelComponent : Component
 {
     /// <summary>
     /// The current set of alert levels on the station.
@@ -14,7 +16,7 @@ public sealed class AlertLevelComponent : Component
     public AlertLevelPrototype? AlertLevels;
 
     // Once stations are a prototype, this should be used.
-    [DataField("alertLevelPrototype")]
+    [DataField("alertLevelPrototype", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<AlertLevelPrototype>))]
     public string AlertLevelPrototype = default!;
 
     /// <summary>
@@ -26,8 +28,6 @@ public sealed class AlertLevelComponent : Component
     /// Is current station level can be changed by crew.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)] public bool IsLevelLocked = false;
-
-    [ViewVariables] public const float Delay = 30;
 
     [ViewVariables] public float CurrentDelay = 0;
     [ViewVariables] public bool ActiveDelay;

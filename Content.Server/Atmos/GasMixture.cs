@@ -12,7 +12,7 @@ namespace Content.Server.Atmos
     /// </summary>
     [Serializable]
     [DataDefinition]
-    public sealed class GasMixture : IEquatable<GasMixture>, ISerializationHooks
+    public sealed partial class GasMixture : IEquatable<GasMixture>, ISerializationHooks
     {
         public static GasMixture SpaceGas => new() {Volume = Atmospherics.CellVolume, Temperature = Atmospherics.TCMB, Immutable = true};
 
@@ -205,6 +205,20 @@ namespace Content.Server.Atmos
         {
             // The arrays MUST have a specific length.
             Array.Resize(ref Moles, Atmospherics.AdjustedNumberOfGases);
+        }
+
+        public GasMixtureStringRepresentation ToPrettyString()
+        {
+            var molesPerGas = new Dictionary<string, float>();
+            for (int i = 0; i < Moles.Length; i++)
+            {
+                if (Moles[i] == 0)
+                    continue;
+
+                molesPerGas.Add(((Gas) i).ToString(), Moles[i]);
+            }
+
+            return new GasMixtureStringRepresentation(TotalMoles, Temperature, Pressure, molesPerGas);
         }
 
         public override bool Equals(object? obj)

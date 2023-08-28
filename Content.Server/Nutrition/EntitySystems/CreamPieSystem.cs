@@ -21,7 +21,7 @@ namespace Content.Server.Nutrition.EntitySystems
     public sealed class CreamPieSystem : SharedCreamPieSystem
     {
         [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-        [Dependency] private readonly SpillableSystem _spillable = default!;
+        [Dependency] private readonly PuddleSystem _puddle = default!;
         [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
         [Dependency] private readonly TriggerSystem _trigger = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -39,11 +39,11 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             _audio.Play(_audio.GetSound(creamPie.Sound), Filter.Pvs(uid), uid, false, new AudioParams().WithVariation(0.125f));
 
-            if (EntityManager.TryGetComponent<FoodComponent?>(uid, out var foodComp))
+            if (EntityManager.TryGetComponent(uid, out FoodComponent? foodComp))
             {
                 if (_solutions.TryGetSolution(uid, foodComp.SolutionName, out var solution))
                 {
-                    _spillable.SpillAt(uid, solution, "PuddleSmear", false);
+                    _puddle.TrySpillAt(uid, solution, out _, false);
                 }
                 if (!string.IsNullOrEmpty(foodComp.TrashPrototype))
                 {
@@ -62,9 +62,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
         private void ActivatePayload(EntityUid uid)
         {
-            if (_itemSlots.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot)) 
+            if (_itemSlots.TryGetSlot(uid, CreamPieComponent.PayloadSlotName, out var itemSlot))
             {
-                if (_itemSlots.TryEject(uid, itemSlot, user: null, out var item)) 
+                if (_itemSlots.TryEject(uid, itemSlot, user: null, out var item))
                 {
                     if (TryComp<OnUseTimerTriggerComponent>(item.Value, out var timerTrigger))
                     {
@@ -74,8 +74,7 @@ namespace Content.Server.Nutrition.EntitySystems
                             timerTrigger.Delay,
                             timerTrigger.BeepInterval,
                             timerTrigger.InitialBeepDelay,
-                            timerTrigger.BeepSound,
-                            timerTrigger.BeepParams);
+                            timerTrigger.BeepSound);
                     }
                 }
             }
@@ -83,9 +82,9 @@ namespace Content.Server.Nutrition.EntitySystems
 
         protected override void CreamedEntity(EntityUid uid, CreamPiedComponent creamPied, ThrowHitByEvent args)
         {
-            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message",("thrower", args.Thrown)), uid, args.Target);
+            _popup.PopupEntity(Loc.GetString("cream-pied-component-on-hit-by-message", ("thrower", args.Thrown)), uid, args.Target);
             var otherPlayers = Filter.Empty().AddPlayersByPvs(uid);
-            if (TryComp<ActorComponent>(args.Target, out var actor)) 
+            if (TryComp<ActorComponent>(args.Target, out var actor))
             {
                 otherPlayers.RemovePlayer(actor.PlayerSession);
             }

@@ -5,7 +5,6 @@
   description: A refined bag to carry your own library
   components:
     - type: Sprite
-      netsync: false
       sprite: Objects/Specific/Library/Equipment/books_bag.rsi
       state: icon
     - type: Clothing
@@ -22,3 +21,5 @@
       whitelist:
         tags:
           - Book
+          - Document
+    - type: Dumpable

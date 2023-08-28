@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Animals.Components
 {
     [RegisterComponent, Access(typeof(UdderSystem))]
-    internal sealed class UdderComponent : Component
+    internal sealed partial class UdderComponent : Component
     {
         /// <summary>
         ///     The reagent to produce.
@@ -37,7 +37,5 @@ namespace Content.Server.Animals.Components
         public float UpdateRate = 5;
 
         public float AccumulatedFrameTime;
-
-        public bool BeingMilked;
     }
 }

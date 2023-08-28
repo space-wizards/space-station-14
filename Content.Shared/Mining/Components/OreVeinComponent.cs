@@ -1,4 +1,4 @@
-﻿using Content.Shared.Mining;
+using Content.Shared.Mining;
 using Content.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
@@ -8,7 +8,7 @@ namespace Content.Server.Mining.Components;
 /// Defines an entity that will drop a random ore after being destroyed.
 /// </summary>
 [RegisterComponent]
-public sealed class OreVeinComponent : Component
+public sealed partial class OreVeinComponent : Component
 {
     /// <summary>
     /// How often an entity will be seeded with ore. Note: the amount of ore
@@ -20,7 +20,7 @@ public sealed class OreVeinComponent : Component
     /// <summary>
     /// The weighted random prototype used for determining what ore will be dropped.
     /// </summary>
-    [DataField("oreRarityPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomPrototype>))]
+    [DataField("oreRarityPrototypeId", customTypeSerializer: typeof(PrototypeIdSerializer<WeightedRandomOrePrototype>))]
     public string? OreRarityPrototypeId;
 
     /// <summary>

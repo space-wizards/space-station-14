@@ -6,5 +6,6 @@ namespace Content.Shared.AlertLevel;
 public enum AlertLevelDisplay
 {
     CurrentLevel,
-    Layer
+    Layer,
+    Powered
 }

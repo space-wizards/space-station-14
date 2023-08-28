@@ -4,6 +4,7 @@ using Content.Server.Nutrition.Components;
 using Content.Shared.CCVar;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reagent;
+using Content.Shared.Nutrition;
 using Microsoft.VisualBasic;
 using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
@@ -25,13 +26,12 @@ public sealed class FlavorProfileSystem : EntitySystem
     public string GetLocalizedFlavorsMessage(EntityUid uid, EntityUid user, Solution solution,
         FlavorProfileComponent? flavorProfile = null)
     {
-        var flavors = new HashSet<string>();
         if (!Resolve(uid, ref flavorProfile, false))
         {
             return Loc.GetString(BackupFlavorMessage);
         }
 
-        flavors.UnionWith(flavorProfile.Flavors);
+        var flavors = new HashSet<string>(flavorProfile.Flavors);
         flavors.UnionWith(GetFlavorsFromReagents(solution, FlavorLimit - flavors.Count, flavorProfile.IgnoreReagents));
 
         var ev = new FlavorProfileModificationEvent(user, flavors);
@@ -96,9 +96,15 @@ public sealed class FlavorProfileSystem : EntitySystem
                 break;
             }
 
-            var flavor = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId).Flavor;
+            var proto = _prototypeManager.Index<ReagentPrototype>(reagent.ReagentId);
+            // don't care if the quantity is negligible
+            if (reagent.Quantity < proto.FlavorMinimum)
+            {
+                continue;
+            }
 
-            flavors.Add(flavor);
+            if (proto.Flavor != null)
+                flavors.Add(proto.Flavor);
         }
 
         return flavors;

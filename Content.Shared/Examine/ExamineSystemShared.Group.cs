@@ -149,7 +149,7 @@ namespace Content.Shared.Examine
                 Text = verbText,
                 Message = hoverMessage,
                 Category = VerbCategory.Examine,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath(iconTexture)),
+                Icon = new SpriteSpecifier.Texture(new(iconTexture)),
             };
 
             verbsEvent.Verbs.Add(examineVerb);

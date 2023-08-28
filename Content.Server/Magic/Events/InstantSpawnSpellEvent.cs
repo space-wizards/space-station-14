@@ -4,7 +4,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Magic.Events;
 
-public sealed class InstantSpawnSpellEvent : InstantActionEvent
+public sealed partial class InstantSpawnSpellEvent : InstantActionEvent, ISpeakSpell
 {
     /// <summary>
     /// What entity should be spawned.
@@ -15,6 +15,9 @@ public sealed class InstantSpawnSpellEvent : InstantActionEvent
     [DataField("preventCollide")]
     public bool PreventCollideWithCaster = true;
 
+    [DataField("speech")]
+    public string? Speech { get; private set; }
+
     /// <summary>
     /// Gets the targeted spawn positons; may lead to multiple entities being spawned.
     /// </summary>
@@ -22,7 +25,7 @@ public sealed class InstantSpawnSpellEvent : InstantActionEvent
 }
 
 [ImplicitDataDefinitionForInheritors]
-public abstract class MagicSpawnData
+public abstract partial class MagicSpawnData
 {
 
 }
@@ -30,12 +33,12 @@ public abstract class MagicSpawnData
 /// <summary>
 /// Spawns 1 at the caster's feet.
 /// </summary>
-public sealed class TargetCasterPos : MagicSpawnData {}
+public sealed partial class TargetCasterPos : MagicSpawnData {}
 
 /// <summary>
 /// Targets the 3 tiles in front of the caster.
 /// </summary>
-public sealed class TargetInFront : MagicSpawnData
+public sealed partial class TargetInFront : MagicSpawnData
 {
     [DataField("width")]
     public int Width = 3;

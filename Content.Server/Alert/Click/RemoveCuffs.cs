@@ -1,4 +1,4 @@
-using Content.Server.Cuffs.Components;
+using Content.Server.Cuffs;
 using Content.Shared.Alert;
 using JetBrains.Annotations;
 
@@ -9,14 +9,13 @@ namespace Content.Server.Alert.Click
     /// </summary>
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class RemoveCuffs : IAlertClick
+    public sealed partial class RemoveCuffs : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {
-            if (IoCManager.Resolve<IEntityManager>().TryGetComponent(player, out CuffableComponent? cuffableComponent))
-            {
-                cuffableComponent.TryUncuff(player);
-            }
+            var entityManager = IoCManager.Resolve<IEntityManager>();
+            var cuffableSys = entityManager.System<CuffableSystem>();
+            cuffableSys.TryUncuff(player, player);
         }
     }
 }

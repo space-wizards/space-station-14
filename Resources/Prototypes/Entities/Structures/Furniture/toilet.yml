@@ -14,7 +14,6 @@
   - type: Sprite
     sprite: Structures/Furniture/toilet.rsi
     state: closed_toilet_seat_up
-    netsync: false
   - type: Toilet
   - type: SecretStash
     secretPartName: secret-stash-part-toilet
@@ -23,14 +22,26 @@
       stash: !type:ContainerSlot {}
   - type: SolutionContainerManager
     solutions:
+      drainBuffer:
+        maxVol: 500
       toilet:
         maxVol: 250
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Construction
     graph: Toilet
     node: toilet
   - type: Appearance
+  - type: Drain
+    autoDrain: false
+  - type: SolutionContainerVisuals
+    maxFillLevels: 1
+    fillBaseName: fill-
+    solutionName: drainBuffer
+  - type: StaticPrice
+    price: 25
 
 - type: entity
   id: ToiletDirtyWater

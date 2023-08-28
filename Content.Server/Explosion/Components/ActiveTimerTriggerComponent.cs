@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.Components;
 ///     Component for tracking active trigger timers. A timers can activated by some other component, e.g. <see cref="OnUseTimerTriggerComponent"/>.
 /// </summary>
 [RegisterComponent]
-public sealed class ActiveTimerTriggerComponent : Component
+public sealed partial class ActiveTimerTriggerComponent : Component
 {
     [DataField("timeRemaining")]
     public float TimeRemaining;
@@ -22,7 +22,4 @@ public sealed class ActiveTimerTriggerComponent : Component
 
     [DataField("beepSound")]
     public SoundSpecifier? BeepSound;
-
-    [DataField("beepParams")]
-    public AudioParams BeepParams = AudioParams.Default;
 }

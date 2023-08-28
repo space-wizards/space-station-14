@@ -1,4 +1,4 @@
-﻿<Control
+<Control
     xmlns="https://spacestation14.io"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
@@ -8,13 +8,14 @@
     <BoxContainer Orientation="Vertical">
         <GridContainer Columns="3">
             <cc:UICommandButton Command="kick" Text="{Loc admin-player-actions-window-title}" WindowType="{x:Type at:PlayerActionsWindow}" />
-            <cc:UICommandButton Command="ban" Text="{Loc admin-player-actions-window-ban}" WindowType="{x:Type at:BanWindow}" />
+            <cc:CommandButton Command="banpanel" Text="{Loc admin-player-actions-window-ban}" />
             <cc:CommandButton Command="aghost" Text="{Loc admin-player-actions-window-admin-ghost}" />
             <cc:UICommandButton Command="tpto" Text="{Loc admin-player-actions-window-teleport}" WindowType="{x:Type at:TeleportWindow}" />
             <cc:CommandButton Command="permissions" Text="{Loc admin-player-actions-window-permissions}" />
             <cc:CommandButton Command="announceui" Text="{Loc admin-player-actions-window-announce}"/>
             <cc:UICommandButton Command="callshuttle" Text="{Loc admin-player-actions-window-shuttle}" WindowType="{x:Type at:AdminShuttleWindow}"/>
             <cc:CommandButton Command="adminlogs" Text="{Loc admin-player-actions-window-admin-logs}"/>
+            <cc:CommandButton Command="faxui" Text="{Loc admin-player-actions-window-admin-fax}"/>
         </GridContainer>
     </BoxContainer>
 </Control>

@@ -7,7 +7,7 @@ namespace Content.Shared.Damage.Components;
 /// Add to an entity to paralyze it whenever it reaches critical amounts of Stamina DamageType.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class StaminaComponent : Component
+public sealed partial class StaminaComponent : Component
 {
     /// <summary>
     /// Have we reached peak stamina damage and been paralyzed?
@@ -25,7 +25,7 @@ public sealed class StaminaComponent : Component
     /// How much time after receiving damage until stamina starts decreasing.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cooldown")]
-    public float DecayCooldown = 5f;
+    public float DecayCooldown = 3f;
 
     /// <summary>
     /// How much stamina damage this entity has taken.
@@ -36,12 +36,18 @@ public sealed class StaminaComponent : Component
     /// <summary>
     /// How much stamina damage is required to entire stam crit.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("excess")]
+    [ViewVariables(VVAccess.ReadWrite), DataField("critThreshold")]
     public float CritThreshold = 100f;
+
+    /// <summary>
+    /// How long will this mob be stunned for?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("stunTime")]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(6);
 
     /// <summary>
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
-    [DataField("lastUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextUpdate = TimeSpan.Zero;
 }

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Database;
 using Content.Shared.Hands.Components;
 using Content.Shared.Item;
@@ -10,6 +11,25 @@ namespace Content.Shared.Hands.EntitySystems;
 
 public abstract partial class SharedHandsSystem : EntitySystem
 {
+    private void InitializePickup()
+    {
+        SubscribeLocalEvent<HandsComponent, EntInsertedIntoContainerMessage>(HandleEntityInserted);
+    }
+
+    protected virtual void HandleEntityInserted(EntityUid uid, HandsComponent hands, EntInsertedIntoContainerMessage args)
+    {
+        if (!TryGetHand(uid, args.Container.ID, out var hand))
+        {
+            return;
+        }
+
+        var didEquip = new DidEquipHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(uid, didEquip, false);
+
+        var gotEquipped = new GotEquippedHandEvent(uid, args.Entity, hand);
+        RaiseLocalEvent(args.Entity, gotEquipped, false);
+    }
+
     /// <summary>
     ///     Maximum pickup distance for which the pickup animation plays.
     /// </summary>
@@ -25,7 +45,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -54,7 +74,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -73,7 +93,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
@@ -89,14 +109,15 @@ public abstract partial class SharedHandsSystem : EntitySystem
         {
             var xform = Transform(uid);
             var coordinateEntity = xform.ParentUid.IsValid() ? xform.ParentUid : uid;
-            var itemPos = Transform(entity).MapPosition;
+            var itemXform = Transform(entity);
+            var itemPos = itemXform.MapPosition;
 
             if (itemPos.MapId == xform.MapID
-                && (itemPos.Position - xform.MapPosition.Position).Length <= MaxAnimationRange
+                && (itemPos.Position - xform.MapPosition.Position).Length() <= MaxAnimationRange
                 && MetaData(entity).VisibilityMask == MetaData(uid).VisibilityMask) // Don't animate aghost pickups.
             {
                 var initialPosition = EntityCoordinates.FromMap(coordinateEntity, itemPos, EntityManager);
-                PickupAnimation(entity, initialPosition, xform.LocalPosition, animateUser ? null : uid);
+                PickupAnimation(entity, initialPosition, xform.LocalPosition, itemXform.LocalRotation, animateUser ? null : uid);
             }
         }
         DoPickup(uid, hand, entity, handsComp);
@@ -104,7 +125,30 @@ public abstract partial class SharedHandsSystem : EntitySystem
         return true;
     }
 
-    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, ItemComponent? item = null)
+    /// <summary>
+    ///     Tries to pick up an entity into any hand, forcing to drop an item if there are no free hands
+    ///     By default it does check if it's possible to drop items
+    /// </summary>
+    public bool TryForcePickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
+    {
+        if (!Resolve(uid, ref handsComp, false))
+            return false;
+
+        if (TryPickupAnyHand(uid, entity, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            return true;
+
+        foreach (var hand in handsComp.Hands.Values)
+        {
+            if (TryDrop(uid, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp) &&
+                TryPickup(uid, entity, hand, checkActionBlocker: checkActionBlocker, handsComp: handsComp))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool CanPickupAnyHand(EntityUid uid, EntityUid entity, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -118,7 +162,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Checks whether a given item will fit into a specific user's hand. Unless otherwise specified, this will also check the general CanPickup action blocker.
     /// </summary>
-    public bool CanPickupToHand(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, SharedHandsComponent? handsComp = null, ItemComponent? item = null)
+    public bool CanPickupToHand(EntityUid uid, EntityUid entity, Hand hand, bool checkActionBlocker = true, HandsComponent? handsComp = null, ItemComponent? item = null)
     {
         if (!Resolve(uid, ref handsComp, false))
             return false;
@@ -149,7 +193,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         bool checkActionBlocker = true,
         bool animateUser = false,
         bool animate = true,
-        SharedHandsComponent? handsComp = null,
+        HandsComponent? handsComp = null,
         ItemComponent? item = null)
     {
         if (uid == null
@@ -166,7 +210,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// <summary>
     ///     Puts an entity into the player's hand, assumes that the insertion is allowed. In general, you should not be calling this function directly.
     /// </summary>
-    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, SharedHandsComponent? hands = null)
+    public virtual void DoPickup(EntityUid uid, Hand hand, EntityUid entity, HandsComponent? hands = null)
     {
         if (!Resolve(uid, ref hands))
             return;
@@ -177,7 +221,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         if (!handContainer.Insert(entity, EntityManager))
         {
-            Logger.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
+            Log.Error($"Failed to insert {ToPrettyString(entity)} into users hand container when picking up. User: {ToPrettyString(uid)}. Hand: {hand.Name}.");
             return;
         }
 
@@ -185,21 +229,10 @@ public abstract partial class SharedHandsSystem : EntitySystem
 
         Dirty(hands);
 
-        var didEquip = new DidEquipHandEvent(uid, entity, hand);
-        RaiseLocalEvent(uid, didEquip, false);
-
-        var gotEquipped = new GotEquippedHandEvent(uid, entity, hand);
-        RaiseLocalEvent(entity, gotEquipped, true);
-
-        // TODO this should REALLY be a cancellable thing, not a handled event.
-        // If one of the interactions resulted in the item being dropped, return early.
-        if (gotEquipped.Handled)
-            return;
-
         if (hand == hands.ActiveHand)
             RaiseLocalEvent(entity, new HandSelectedEvent(uid), false);
     }
 
-    public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition,
+    public abstract void PickupAnimation(EntityUid item, EntityCoordinates initialPosition, Vector2 finalPosition, Angle initialAngle,
         EntityUid? exclude);
 }

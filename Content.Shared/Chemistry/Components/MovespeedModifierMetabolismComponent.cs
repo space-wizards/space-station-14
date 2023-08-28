@@ -6,7 +6,7 @@ namespace Content.Shared.Chemistry.Components
     //TODO: refactor movement modifier component because this is a pretty poor solution
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class MovespeedModifierMetabolismComponent : Component
+    public sealed partial class MovespeedModifierMetabolismComponent : Component
     {
         [ViewVariables]
         public float WalkSpeedModifier { get; set; }
@@ -19,11 +19,6 @@ namespace Content.Shared.Chemistry.Components
         /// </summary>
         [ViewVariables]
         public TimeSpan ModifierTimer { get; set; } = TimeSpan.Zero;
-
-        public override ComponentState GetComponentState()
-        {
-            return new MovespeedModifierMetabolismComponentState(WalkSpeedModifier, SprintSpeedModifier, ModifierTimer);
-        }
 
         [Serializable, NetSerializable]
         public sealed class MovespeedModifierMetabolismComponentState : ComponentState

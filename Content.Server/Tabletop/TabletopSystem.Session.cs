@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Tabletop.Components;
 using Content.Shared.Tabletop.Events;
 using Robust.Server.GameObjects;
@@ -77,7 +78,7 @@ namespace Content.Server.Tabletop
             if (session.Players.ContainsKey(player))
                 return;
 
-            if(EntityManager.TryGetComponent<TabletopGamerComponent?>(attachedEntity, out var gamer))
+            if(EntityManager.TryGetComponent(attachedEntity, out TabletopGamerComponent? gamer))
                 CloseSessionFor(player, gamer.Tabletop, false);
 
             // Set the entity as an absolute GAMER.

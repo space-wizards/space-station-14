@@ -4,34 +4,42 @@ using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Shared.Projectiles
+namespace Content.Shared.Projectiles;
+
+[RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+public sealed partial class ProjectileComponent : Component
 {
-    [RegisterComponent, NetworkedComponent]
-    public sealed class ProjectileComponent : Component
-    {
-        [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? ImpactEffect;
+    [ViewVariables(VVAccess.ReadWrite), DataField("impactEffect", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ImpactEffect;
 
-        public EntityUid Shooter { get; set; }
+    /// <summary>
+    /// User that shot this projectile.
+    /// </summary>
+    [DataField("shooter"), AutoNetworkedField] public EntityUid Shooter;
 
-        public bool IgnoreShooter = true;
+    /// <summary>
+    /// Weapon used to shoot.
+    /// </summary>
+    [DataField("weapon"), AutoNetworkedField]
+    public EntityUid Weapon;
 
-        [DataField("damage", required: true)]
-        [ViewVariables(VVAccess.ReadWrite)]
-        public DamageSpecifier Damage = default!;
+    [DataField("ignoreShooter"), AutoNetworkedField]
+    public bool IgnoreShooter = true;
 
-        [DataField("deleteOnCollide")]
-        public bool DeleteOnCollide { get; } = true;
+    [DataField("damage", required: true)] [ViewVariables(VVAccess.ReadWrite)]
+    public DamageSpecifier Damage = new();
 
-        [DataField("ignoreResistances")]
-        public bool IgnoreResistances { get; } = false;
+    [DataField("deleteOnCollide")]
+    public bool DeleteOnCollide = true;
 
-        // Get that juicy FPS hit sound
-        [DataField("soundHit")] public SoundSpecifier? SoundHit;
+    [DataField("ignoreResistances")]
+    public bool IgnoreResistances = false;
 
-        [DataField("soundForce")]
-        public bool ForceSound = false;
+    // Get that juicy FPS hit sound
+    [DataField("soundHit")] public SoundSpecifier? SoundHit;
 
-        public bool DamagedEntity;
-    }
+    [DataField("soundForce")]
+    public bool ForceSound = false;
+
+    public bool DamagedEntity;
 }

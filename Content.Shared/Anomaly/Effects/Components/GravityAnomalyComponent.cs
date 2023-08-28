@@ -2,8 +2,8 @@
 
 namespace Content.Shared.Anomaly.Effects.Components;
 
-[RegisterComponent, NetworkedComponent]
-public sealed class GravityAnomalyComponent : Component
+[RegisterComponent, NetworkedComponent, Access(typeof(SharedGravityAnomalySystem))]
+public sealed partial class GravityAnomalyComponent : Component
 {
     /// <summary>
     /// The maximumum size the GravityWellComponent MaxRange can be.

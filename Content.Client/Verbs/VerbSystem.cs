@@ -214,7 +214,7 @@ namespace Content.Client.Verbs
                 return;
             }
 
-            if (verb.ClientExclusive)
+            if (verb.ClientExclusive || target.IsClientSide())
                 // is this a client exclusive (gui) verb?
                 ExecuteVerb(verb, user.Value, target);
             else

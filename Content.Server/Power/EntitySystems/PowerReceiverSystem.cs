@@ -1,14 +1,14 @@
-using Content.Server.Power.Components;
-using Content.Server.Hands.Components;
 using Content.Server.Administration.Logs;
+using Content.Server.Administration.Managers;
+using Content.Server.Power.Components;
+using Content.Shared.Administration;
+using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.Hands.Components;
 using Content.Shared.Power;
 using Content.Shared.Verbs;
-using Content.Shared.Database;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
-using Content.Server.Administration.Managers;
-using Content.Shared.Administration;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
@@ -46,7 +46,7 @@ namespace Content.Server.Power.EntitySystems
             {
                 Text = Loc.GetString("verb-debug-toggle-need-power"),
                 Category = VerbCategory.Debug,
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/smite.svg.192dpi.png")), // "smite" is a lightning bolt
                 Act = () => component.NeedsPower = !component.NeedsPower
             });
         }
@@ -127,7 +127,7 @@ namespace Content.Server.Power.EntitySystems
                 {
                     TogglePower(uid, user: args.User);
                 },
-                Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
+                Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/Spare/poweronoff.svg.192dpi.png")),
                 Text = Loc.GetString("power-switch-component-toggle-verb"),
                 Priority = -3
             };
@@ -154,6 +154,25 @@ namespace Content.Server.Power.EntitySystems
                 return true;
 
             return receiver.Powered;
+        }
+
+        /// <summary>
+        /// Return the fraction of the load power that is actually supplied to this receiver, e.g. 1
+        /// if full power and 0 if no power. Better at handling brownouts compared to IsPowered().
+        /// Handles always-powered devices correctly.
+        /// </summary>
+        public float SupplyFactor(EntityUid uid, ApcPowerReceiverComponent? receiver = null)
+        {
+            if (!Resolve(uid, ref receiver, false))
+                return 1f;
+
+            if (receiver.PowerDisabled)
+                return 0f;
+
+            if (!receiver.NeedsPower)
+                return 1f;
+
+            return receiver.NetworkLoad.ReceivingPower / receiver.Load;
         }
 
         /// <summary>

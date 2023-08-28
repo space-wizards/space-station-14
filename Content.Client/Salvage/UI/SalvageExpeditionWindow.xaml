@@ -1,11 +1,11 @@
 <controls:FancyWindow xmlns="https://spacestation14.io"
                       xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
-                      Title="{Loc 'Salvage expeditions'}"
+                      Title="{Loc 'salvage-expedition-window-title'}"
                       MinSize="800 360">
     <BoxContainer Orientation="Vertical">
         <BoxContainer Orientation="Horizontal">
             <Label Name="NextOfferLabel"
-                   Text="Next offer:"
+                   Text="{Loc 'salvage-expedition-window-next'}"
                    Margin="5"></Label>
             <ProgressBar Name="NextOfferBar"
                          HorizontalExpand="True"

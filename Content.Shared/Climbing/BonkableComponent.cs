@@ -9,7 +9,7 @@ namespace Content.Shared.Climbing;
 ///     upon DragDrop or Climb interactions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(BonkSystem))]
-public sealed class BonkableComponent : Component
+public sealed partial class BonkableComponent : Component
 {
     /// <summary>
     /// Chance of bonk triggering if the user is clumsy.
@@ -37,4 +37,10 @@ public sealed class BonkableComponent : Component
     /// <seealso cref="Bonk"/>
     [DataField("bonkDamage")]
     public DamageSpecifier? BonkDamage;
+
+    /// <summary>
+    /// How long it takes to bonk.
+    /// </summary>
+    [DataField("bonkDelay")]
+    public float BonkDelay = 0.8f;
 }

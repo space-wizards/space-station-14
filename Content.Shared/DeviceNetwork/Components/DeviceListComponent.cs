@@ -1,12 +1,13 @@
-﻿using Robust.Shared.GameStates;
+﻿using Content.Shared.DeviceNetwork.Systems;
+using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.DeviceNetwork;
+namespace Content.Shared.DeviceNetwork.Components;
 
 [RegisterComponent]
 [NetworkedComponent]
 [Access(typeof(SharedDeviceListSystem))]
-public sealed class DeviceListComponent : Component
+public sealed partial class DeviceListComponent : Component
 {
     /// <summary>
     /// The list of devices can or can't connect to, depending on the <see cref="IsAllowList"/> field.

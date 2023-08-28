@@ -18,7 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Changelog
 {
-    public sealed class ChangelogManager
+    public sealed partial class ChangelogManager
     {
         [Dependency] private readonly IResourceManager _resource = default!;
         [Dependency] private readonly ISerializationManager _serialization = default!;
@@ -43,7 +43,7 @@ namespace Content.Client.Changelog
             NewChangelogEntries = false;
             NewChangelogEntriesChanged?.Invoke();
 
-            using var sw = _resource.UserData.OpenWriteText(new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
+            using var sw = _resource.UserData.OpenWriteText(new ($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}"));
 
             sw.Write(MaxId.ToString());
         }
@@ -60,7 +60,7 @@ namespace Content.Client.Changelog
 
             MaxId = changelog.Max(c => c.Id);
 
-            var path = new ResourcePath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
+            var path = new ResPath($"/changelog_last_seen_{_configManager.GetCVar(CCVars.ServerId)}");
             if(_resource.UserData.TryReadAllText(path, out var lastReadIdText))
             {
                 LastReadId = int.Parse(lastReadIdText);
@@ -75,7 +75,7 @@ namespace Content.Client.Changelog
         {
             return Task.Run(() =>
             {
-                var yamlData = _resource.ContentFileReadYaml(new ResourcePath("/Changelog/Changelog.yml"));
+                var yamlData = _resource.ContentFileReadYaml(new ("/Changelog/Changelog.yml"));
 
                 if (yamlData.Documents.Count == 0)
                     return new List<ChangelogEntry>();
@@ -86,20 +86,20 @@ namespace Content.Client.Changelog
         }
 
         [DataDefinition]
-        public sealed class ChangelogEntry : ISerializationHooks
+        public sealed partial class ChangelogEntry : ISerializationHooks
         {
             [DataField("id")]
             public int Id { get; private set; }
 
             [DataField("author")]
-            public string Author { get; } = "";
+            public string Author { get; private set; } = "";
 
             [DataField("time")] private string _time = default!;
 
             public DateTime Time { get; private set; }
 
             [DataField("changes")]
-            public List<ChangelogChange> Changes { get; } = default!;
+            public List<ChangelogChange> Changes { get; private set; } = default!;
 
             void ISerializationHooks.AfterDeserialization()
             {
@@ -108,7 +108,7 @@ namespace Content.Client.Changelog
         }
 
         [DataDefinition]
-        public sealed class ChangelogChange : ISerializationHooks
+        public sealed partial class ChangelogChange : ISerializationHooks
         {
             [DataField("type")]
             public ChangelogLineType Type { get; private set; }

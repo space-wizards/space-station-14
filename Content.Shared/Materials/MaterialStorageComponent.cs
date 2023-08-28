@@ -10,10 +10,16 @@ namespace Content.Shared.Materials;
 
 [Access(typeof(SharedMaterialStorageSystem))]
 [RegisterComponent, NetworkedComponent]
-public sealed class MaterialStorageComponent : Component
+public sealed partial class MaterialStorageComponent : Component
 {
     [DataField("storage", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MaterialPrototype>))]
     public Dictionary<string, int> Storage { get; set; } = new();
+
+    /// <summary>
+    /// Whether or not interacting with the materialstorage inserts the material in hand.
+    /// </summary>
+    [DataField("insertOnInteract")]
+    public bool InsertOnInteract = true;
 
     /// <summary>
     ///     How much material the storage can store in total.
@@ -55,7 +61,7 @@ public sealed class MaterialStorageComponent : Component
     /// <summary>
     /// How long the inserting animation will play
     /// </summary>
-    [DataField("insertionTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    [DataField("insertionTime")]
     public TimeSpan InsertionTime = TimeSpan.FromSeconds(0.79f); // 0.01 off for animation timing
 }
 

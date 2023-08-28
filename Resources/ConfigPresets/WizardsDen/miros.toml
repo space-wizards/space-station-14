@@ -2,3 +2,6 @@
 
 [game]
 hostname = "[EN] Wizard's Den Miros [EU West 2]"
+
+[hub]
+tags = "lang:en,region:eu_w,rp:low"

@@ -6,10 +6,12 @@ using Content.Server.NPC.Pathfinding;
 using Content.Shared.Damage;
 using Content.Shared.Interaction;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Silicons.Bots;
+using Content.Shared.Emag.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
-public sealed class PickNearbyInjectableOperator : HTNOperator
+public sealed partial class PickNearbyInjectableOperator : HTNOperator
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
     private EntityLookupSystem _lookup = default!;
@@ -54,21 +56,27 @@ public sealed class PickNearbyInjectableOperator : HTNOperator
             if (mobState.HasComponent(entity) &&
                 injectQuery.HasComponent(entity) &&
                 damageQuery.TryGetComponent(entity, out var damage) &&
-                damage.TotalDamage > 0 &&
                 !recentlyInjected.HasComponent(entity))
-            {
-                var path = await _pathfinding.GetPath(owner, entity, SharedInteractionSystem.InteractionRange, cancelToken);
-
-                if (path.Result == PathResult.NoPath)
-                    continue;
-
-                return (true, new Dictionary<string, object>()
+                //Only go towards a target if the bot can actually help them or if the medibot is emagged
+                if (damage.TotalDamage > MedibotComponent.StandardMedDamageThreshold &&
+                    damage.TotalDamage <= MedibotComponent.StandardMedDamageThresholdStop ||
+                    damage.TotalDamage > MedibotComponent.EmergencyMedDamageThreshold ||
+                    _entManager.HasComponent<EmaggedComponent>(owner))
                 {
-                    {TargetKey, entity},
-                    {TargetMoveKey, _entManager.GetComponent<TransformComponent>(entity).Coordinates},
-                    {NPCBlackboard.PathfindKey, path},
-                });
-            }
+                    //Needed to make sure it doesn't sometimes stop right outside it's interaction range
+                    var pathRange = SharedInteractionSystem.InteractionRange - 1f;
+                    var path = await _pathfinding.GetPath(owner, entity, pathRange, cancelToken);
+
+                    if (path.Result == PathResult.NoPath)
+                        continue;
+
+                    return (true, new Dictionary<string, object>()
+                    {
+                        {TargetKey, entity},
+                        {TargetMoveKey, _entManager.GetComponent<TransformComponent>(entity).Coordinates},
+                        {NPCBlackboard.PathfindKey, path},
+                    });
+                }
         }
 
         return (false, null);

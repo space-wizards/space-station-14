@@ -19,30 +19,36 @@
     bloodlossHealDamage:
       types:
         Bloodloss:
-          -0.25
+          -1
   - type: InteractionOutline
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 50
-      mask:
-      - MobMask
-      layer:
-      - MobLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 50
+        mask:
+        - MobMask
+        layer:
+        - MobLayer
   - type: MovementSpeedModifier
     baseWalkSpeed : 3
     baseSprintSpeed : 4
   - type: Sprite
     noRot: true
     drawdepth: Mobs
-    netsync: false
-  - type: Recyclable
-    safe: false
-  - type: Faction
+  - type: NpcFactionMember
     factions:
     - SimpleNeutral
+  - type: IntrinsicRadioReceiver
+  - type: IntrinsicRadioTransmitter
+    channels:
+    - Binary
+  - type: ActiveRadio
+    channels:
+    - Binary
+    - Common
   - type: HealthExaminable
     examinableTypes:
     - Blunt
@@ -81,9 +87,14 @@
       0: Alive
       120: Dead
   - type: Stamina
-    excess: 120
+    critThreshold: 120
   - type: Destructible
     thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:TriggerBehavior
     - trigger:
         !type:DamageTrigger
         damage: 120
@@ -96,6 +107,66 @@
   - type: MobMover
   - type: Body
     prototype: Bot
+  - type: GuideHelp
+    guides:
+    - Robotics
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobTaxiBot
+  name: taxibot
+  description: Give a ride?
+  components:
+  - type: NoSlip
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/taxibot.rsi
+    layers:
+    - state: taxibot
+      map: ["enum.VehicleVisualLayers.AutoAnimate"]
+    noRot: true
+  - type: IntrinsicRadioReceiver
+  - type: ActiveRadio
+    channels:
+    - Common
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-taxibot-name
+    description: ghost-role-information-taxibot-description
+  - type: GhostTakeoverAvailable
+  - type: MovementSpeedModifier
+    weightlessModifier: 0
+    acceleration: 2
+    friction: 2
+    frictionNoInput: 6
+    baseWalkSpeed: 3
+    baseSprintSpeed: 6
+  - type: Strap
+    buckleOffset: "0, 0"
+    maxBuckleDistance: 1
+  - type: AmbientSound
+    sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
+    range: 10
+    volume: -10
+    enabled: true
+  - type: Construction
+    graph: TaxiBot
+    node: bot
+  - type: UnpoweredFlashlight
+    toggleAction:
+      name: action-name-toggle-light
+      description: action-description-toggle-light
+      icon: { sprite: Objects/Tools/flashlight.rsi, state: flashlight }
+      iconOn: Objects/Tools/flashlight.rsi/flashlight-on.png
+      event: !type:ToggleActionEvent
+  - type: PointLight
+    enabled: false
+    radius: 3.5
+    softness: 2
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+  - type: TypingIndicator
+    proto: robot
 
 - type: entity
   parent: MobSiliconBase
@@ -111,38 +182,74 @@
     sprite: Mobs/Silicon/Bots/honkbot.rsi
     state: honkbot
   - type: Slippery
-    launchForwardsMultiplier: 6.0
+    launchForwardsMultiplier: 2
   - type: StepTrigger
     intersectRatio: 0.2
-  - type: Physics
-    bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      id: "slips"
-      hard: false
-      layer:
-        - SlipLayer
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.35
-      density: 20
-      mask:
-      - MobMask
+      slips:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        hard: false
+        layer:
+          - SlipLayer
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.35
+        density: 20
+        mask:
+        - MobMask
   - type: Construction
     graph: HonkBot
     node: bot
-  - type: GhostTakeoverAvailable
+  - type: GhostRole
     makeSentient: true
-    name: honkbot
-    description: An artificial being of pure evil.
+    name: ghost-role-information-honkbot-name
+    description: ghost-role-information-honkbot-description
+  - type: GhostTakeoverAvailable
   - type: InteractionPopup
     interactSuccessString: petting-success-honkbot
     interactFailureString: petting-failure-honkbot
     interactSuccessSound:
       path: /Audio/Items/bikehorn.ogg
+
+- type: entity
+  parent: MobHonkBot
+  id: MobJonkBot
+  name: jonkbot
+  description: Horrifying.
+  components:
+  - type: SpamEmitSound
+    sound:
+      collection: CluwneHorn
+  - type: Sprite
+    drawdepth: Mobs
+    sprite: Mobs/Silicon/Bots/honkbot.rsi
+    state: jonkbot
+  - type: Slippery
+    launchForwardsMultiplier: 2
+  - type: Construction
+    graph: JonkBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-jonkbot-name
+    description: ghost-role-information-jonkbot-description
+  - type: InteractionPopup
+    interactSuccessSound:
+      path: /Audio/Items/brokenbikehorn.ogg
+  - type: Vocal
+    sounds:
+      Unsexed: Cluwne
+  - type: ExplodeOnTrigger
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 20
+    totalIntensity: 10
+    intensitySlope: 5
+    canCreateVacuum: false
 
 - type: entity
   parent: MobSiliconBase
@@ -154,24 +261,37 @@
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/cleanbot.rsi
     state: cleanbot
-  - type: Drain
-    range: 1
-    unitsDestroyedPerSecond: 6
   - type: Construction
     graph: CleanBot
     node: bot
   - type: SentienceTarget
     flavorKind: station-event-random-sentience-flavor-mechanical
+  - type: Absorbent
+    pickupAmount: 10
+  - type: UseDelay
+    delay: 2
+  - type: SolutionRegeneration
+    solution: absorbed
+    generated:
+      reagents:
+        - ReagentId: Water
+          Quantity: 10
+  - type: SolutionPurge
+    solution: absorbed
+    preserve:
+      - Water
+    quantity: 10
   - type: SolutionContainerManager
     solutions:
-      drainBuffer:
-        maxVol: 30
+      absorbed:
+        maxVol: 50
   - type: MovementSpeedModifier
     baseWalkSpeed: 2
     baseSprintSpeed: 3
   - type: NoSlip
   - type: HTN
-    rootTask: CleanbotCompound
+    rootTask:
+      task: CleanbotCompound
   - type: DrainableSolution
     solution: drainBuffer
   - type: InteractionPopup
@@ -187,18 +307,62 @@
   description: No substitute for a doctor, but better than nothing.
   components:
   - type: Medibot
+  - type: EmaggableMedibot
+    # when you are fine, medibot will help you go sleep
+    standardMed: ChloralHydrate
+    standardMedAmount: 15
+    # when you are crit, medibot will help you have fun
+    emergencyMed: SpaceDrugs
+    emergencyMedAmount: 25
   - type: Sprite
     drawdepth: Mobs
     sprite: Mobs/Silicon/Bots/medibot.rsi
     state: medibot
   - type: Speech
+    speechVerb: Robotic
   - type: HTN
-    rootTask: MedibotCompound
+    rootTask:
+      task: MedibotCompound
   - type: Construction
     graph: MediBot
     node: bot
+  - type: NoSlip
+  - type: Anchorable
   - type: InteractionPopup
     interactSuccessString: petting-success-medibot
     interactFailureString: petting-failure-medibot
     interactSuccessSound:
       path: /Audio/Ambience/Objects/periodic_beep.ogg
+
+- type: entity
+  parent: MobSiliconBase
+  id: MobMimeBot
+  name: mimebot
+  description: Why not give mimebot a friendly wave.
+  components:
+  - type: InventorySlots
+  - type: Strippable
+  - type: UserInterface
+    interfaces:
+    - key: enum.StrippingUiKey.Key
+      type: StrippableBoundUserInterface
+  - type: Sprite
+    drawdepth: Mobs
+    layers:
+    - map: ["enum.DamageStateVisualLayers.Base"]
+      state: mimebot
+      sprite: Mobs/Silicon/Bots/mimebot.rsi
+  - type: MimePowers
+  - type: Construction
+    graph: MimeBot
+    node: bot
+  - type: GhostRole
+    makeSentient: true
+    name: ghost-role-information-mimebot-name
+    description: ghost-role-information-mimebot-description
+  - type: GhostTakeoverAvailable
+  - type: InteractionPopup
+    interactSuccessString: petting-success-mimebot
+    interactFailureString: petting-failure-mimebot
+  - type: Inventory
+    templateId: head

@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.Maps;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
@@ -69,7 +70,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
                 Grid = _dragging.Value,
-                LinearVelocity = distance.LengthSquared > 0f ? (distance / (float) tickTime.TotalSeconds) * 0.25f : Vector2.Zero,
+                LinearVelocity = distance.LengthSquared() > 0f ? (distance / (float) tickTime.TotalSeconds) * 0.25f : Vector2.Zero,
             });
         }
 
@@ -93,14 +94,14 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
         }
 
         var mouseScreenPos = _inputManager.MouseScreenPosition;
-        var mousePos = _eyeManager.ScreenToMap(mouseScreenPos);
+        var mousePos = _eyeManager.PixelToMap(mouseScreenPos);
 
         if (_dragging == null)
         {
-            if (!_mapManager.TryFindGridAt(mousePos, out var grid))
+            if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid))
                 return;
 
-            StartDragging(grid.Owner, Transform(grid.Owner).InvWorldMatrix.Transform(mousePos.Position));
+            StartDragging(gridUid, Transform(gridUid).InvWorldMatrix.Transform(mousePos.Position));
         }
 
         if (!TryComp<TransformComponent>(_dragging, out var xform))

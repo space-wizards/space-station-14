@@ -1,4 +1,4 @@
-﻿using Robust.Shared.Serialization;
+using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
 namespace Content.Shared.Anomaly;
@@ -32,7 +32,8 @@ public enum AnomalousParticleType : byte
 {
     Delta,
     Epsilon,
-    Zeta
+    Zeta,
+    Default
 }
 
 [Serializable, NetSerializable]

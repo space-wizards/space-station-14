@@ -1,9 +1,8 @@
+using System.Numerics;
 using Content.Shared.Hands.Components;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
-using static Robust.Shared.GameObjects.SharedSpriteComponent;
-
 
 namespace Content.Shared.Hands
 {
@@ -121,13 +120,15 @@ namespace Content.Shared.Hands
         public EntityUid ItemUid { get; }
         public EntityCoordinates InitialPosition { get; }
         public Vector2 FinalPosition { get; }
+        public Angle InitialAngle { get; }
 
         public PickupAnimationEvent(EntityUid itemUid, EntityCoordinates initialPosition,
-            Vector2 finalPosition)
+            Vector2 finalPosition, Angle initialAngle)
         {
             ItemUid = itemUid;
             FinalPosition = finalPosition;
             InitialPosition = initialPosition;
+            InitialAngle = initialAngle;
         }
     }
 
@@ -205,21 +206,33 @@ namespace Content.Shared.Hands
         }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is equipped into hands.
+    /// </summary>
     public sealed class GotEquippedHandEvent : EquippedHandEvent
     {
         public GotEquippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on an entity when it is unequipped from hands.
+    /// </summary>
     public sealed class GotUnequippedHandEvent : UnequippedHandEvent
     {
         public GotUnequippedHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when it picks something up.
+    /// </summary>
     public sealed class DidEquipHandEvent : EquippedHandEvent
     {
         public DidEquipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }
     }
 
+    /// <summary>
+    /// Raised directed on a user when something leaves its hands.
+    /// </summary>
     public sealed class DidUnequipHandEvent : UnequippedHandEvent
     {
         public DidUnequipHandEvent(EntityUid user, EntityUid unequipped, Hand hand) : base(user, unequipped, hand) { }

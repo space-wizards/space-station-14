@@ -1,7 +1,6 @@
 using Content.Shared.IdentityManagement;
 using Robust.Client.GameObjects;
 using System.Linq;
-using Robust.Client.UserInterface.Controllers;
 
 namespace Content.Client.ContextMenu.UI
 {
@@ -36,8 +35,8 @@ namespace Content.Client.ContextMenu.UI
                 (a, b, entMan) => entMan.GetComponent<MetaDataComponent>(a).EntityPrototype!.ID == entMan.GetComponent<MetaDataComponent>(b).EntityPrototype!.ID,
                 (a, b, entMan) =>
                 {
-                    entMan.TryGetComponent<SpriteComponent?>(a, out var spriteA);
-                    entMan.TryGetComponent<SpriteComponent?>(b, out var spriteB);
+                    entMan.TryGetComponent(a, out SpriteComponent? spriteA);
+                    entMan.TryGetComponent(b, out SpriteComponent? spriteB);
 
                     if (spriteA == null || spriteB == null)
                         return spriteA == spriteB;

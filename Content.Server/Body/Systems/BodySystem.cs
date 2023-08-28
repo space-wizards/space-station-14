@@ -4,8 +4,9 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
-using Content.Server.Mind.Components;
+using Content.Server.Mind;
 using Content.Shared.Body.Components;
+using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
@@ -18,6 +19,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
@@ -28,28 +30,90 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<BodyPartComponent, ComponentStartup>(OnPartStartup);
+        SubscribeLocalEvent<BodyComponent, ComponentStartup>(OnBodyStartup);
         SubscribeLocalEvent<BodyComponent, MoveInputEvent>(OnRelayMoveInput);
         SubscribeLocalEvent<BodyComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         SubscribeLocalEvent<BodyComponent, BeingMicrowavedEvent>(OnBeingMicrowaved);
     }
 
-    private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
+    private void OnPartStartup(EntityUid uid, BodyPartComponent component, ComponentStartup args)
     {
-        if (_mobState.IsDead(uid) &&
-            EntityManager.TryGetComponent<MindComponent>(uid, out var mind) &&
-            mind.HasMind)
+        // This inter-entity relationship makes be deeply uncomfortable because its probably going to re-encounter
+        // all of the networking & startup ordering issues that containers and joints have.
+        // TODO just use containers. Please.
+
+        foreach (var slot in component.Children.Values)
         {
-            if (!mind.Mind!.TimeOfDeath.HasValue)
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out BodyPartComponent? child))
             {
-                mind.Mind.TimeOfDeath = _gameTiming.RealTime;
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value, child);
+                continue;
             }
 
-            _ticker.OnGhostAttempt(mind.Mind!, true);
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+
+        foreach (var slot in component.Organs.Values)
+        {
+            DebugTools.Assert(slot.Parent == uid);
+            if (slot.Child == null)
+                continue;
+
+            if (TryComp(slot.Child, out OrganComponent? child))
+            {
+                child.ParentSlot = slot;
+                Dirty(slot.Child.Value, child);
+                continue;
+            }
+
+            Log.Error($"Body part encountered missing organ: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+        }
+    }
+
+    private void OnBodyStartup(EntityUid uid, BodyComponent component, ComponentStartup args)
+    {
+        if (component.Root is not { } slot)
+            return;
+
+        DebugTools.Assert(slot.Parent == uid);
+        if (slot.Child == null)
+            return;
+
+        if (!TryComp(slot.Child, out BodyPartComponent? child))
+        {
+            Log.Error($"Body part encountered missing limbs: {ToPrettyString(uid)}. Slot: {slot.Id}");
+            slot.Child = null;
+            return;
+        }
+
+        child.ParentSlot = slot;
+        Dirty(slot.Child.Value, child);
+    }
+
+    private void OnRelayMoveInput(EntityUid uid, BodyComponent component, ref MoveInputEvent args)
+    {
+        if (_mobState.IsDead(uid) && _mindSystem.TryGetMind(uid, out var mind))
+        {
+            if (!mind.TimeOfDeath.HasValue)
+            {
+                mind.TimeOfDeath = _gameTiming.RealTime;
+            }
+
+            _ticker.OnGhostAttempt(mind, true);
         }
     }
 
@@ -98,11 +162,13 @@ public sealed class BodySystem : SharedBodySystem
 
     public override bool DropPart(EntityUid? partId, BodyPartComponent? part = null)
     {
-        var oldBody = CompOrNull<BodyPartComponent>(partId)?.Body;
+        if (partId == null || !Resolve(partId.Value, ref part))
+            return false;
 
         if (!base.DropPart(partId, part))
             return false;
 
+        var oldBody = part.Body;
         if (oldBody == null || !TryComp<HumanoidAppearanceComponent>(oldBody, out var humanoid))
             return true;
 
@@ -115,30 +181,20 @@ public sealed class BodySystem : SharedBodySystem
         return true;
     }
 
-    protected override void InitBody(BodyComponent body, BodyPrototype prototype)
-    {
-        var root = prototype.Slots[prototype.Root];
-        Containers.EnsureContainer<Container>(body.Owner, BodyContainerId);
-        if (root.Part == null)
-            return;
-        var bodyId = Spawn(root.Part, body.Owner.ToCoordinates());
-        var partComponent = Comp<BodyPartComponent>(bodyId);
-        var slot = new BodyPartSlot(root.Part, body.Owner, partComponent.PartType);
-        body.Root = slot;
-        partComponent.Body = bodyId;
-
-        AttachPart(bodyId, slot, partComponent);
-        InitPart(partComponent, prototype, prototype.Root);
-    }
-
     public override HashSet<EntityUid> GibBody(EntityUid? bodyId, bool gibOrgans = false, BodyComponent? body = null, bool deleteItems = false)
     {
         if (bodyId == null || !Resolve(bodyId.Value, ref body, false))
             return new HashSet<EntityUid>();
 
-        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
+        if (LifeStage(bodyId.Value) >= EntityLifeStage.Terminating || EntityManager.IsQueuedForDeletion(bodyId.Value))
+            return new HashSet<EntityUid>();
 
         var xform = Transform(bodyId.Value);
+        if (xform.MapUid == null)
+            return new HashSet<EntityUid>();
+
+        var gibs = base.GibBody(bodyId, gibOrgans, body, deleteItems);
+
         var coordinates = xform.Coordinates;
         var filter = Filter.Pvs(bodyId.Value, entityManager: EntityManager);
         var audio = AudioParams.Default.WithVariation(0.025f);

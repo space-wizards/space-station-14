@@ -1,13 +1,15 @@
 using Content.Server.Store.Components;
+using Content.Server.UserInterface;
 using Content.Shared.FixedPoint;
+using Content.Shared.Implants.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Stacks;
 using Content.Shared.Store;
+using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Prototypes;
 using System.Linq;
-using Content.Server.UserInterface;
-using Content.Shared.Stacks;
-using JetBrains.Annotations;
 
 namespace Content.Server.Store.Systems;
 
@@ -30,8 +32,10 @@ public sealed partial class StoreSystem : EntitySystem
         SubscribeLocalEvent<StoreComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StoreComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<StoreComponent, ComponentShutdown>(OnShutdown);
+        SubscribeLocalEvent<StoreComponent, OpenUplinkImplantEvent>(OnImplantActivate);
 
         InitializeUi();
+        InitializeCommand();
     }
 
     private void OnMapInit(EntityUid uid, StoreComponent component, MapInitEvent args)
@@ -64,7 +68,12 @@ public sealed partial class StoreSystem : EntitySystem
         if (args.Handled || !args.CanReach)
             return;
 
-        if (args.Target == null || !TryComp<StoreComponent>(args.Target, out var store))
+        if (!TryComp<StoreComponent>(args.Target, out var store))
+            return;
+
+        var ev = new CurrencyInsertAttemptEvent(args.User, args.Target.Value, args.Used, store);
+        RaiseLocalEvent(args.Target.Value, ev);
+        if (ev.Cancelled)
             return;
 
         args.Handled = TryAddCurrency(GetCurrencyValue(uid, component), args.Target.Value, store);
@@ -75,6 +84,11 @@ public sealed partial class StoreSystem : EntitySystem
             _popup.PopupEntity(msg, args.Target.Value);
             QueueDel(args.Used);
         }
+    }
+
+    private void OnImplantActivate(EntityUid uid, StoreComponent component, OpenUplinkImplantEvent args)
+    {
+        ToggleUi(args.Performer, uid, component);
     }
 
     /// <summary>
@@ -168,6 +182,24 @@ public sealed partial class StoreSystem : EntitySystem
 
         var ui = _ui.GetUiOrNull(uid, StoreUiKey.Key);
         if (ui != null)
-            _ui.SetUiState(ui, new StoreInitializeState(preset.StoreName));
+        {
+            UserInterfaceSystem.SetUiState(ui, new StoreInitializeState(preset.StoreName));
+        }
+    }
+}
+
+public sealed class CurrencyInsertAttemptEvent : CancellableEntityEventArgs
+{
+    public readonly EntityUid User;
+    public readonly EntityUid Target;
+    public readonly EntityUid Used;
+    public readonly StoreComponent Store;
+
+    public CurrencyInsertAttemptEvent(EntityUid user, EntityUid target, EntityUid used, StoreComponent store)
+    {
+        User = user;
+        Target = target;
+        Used = used;
+        Store = store;
     }
 }

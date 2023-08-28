@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using Content.Client.Clickable;
 using Content.Client.ContextMenu.UI;
 using Robust.Client.ComponentTrees;
@@ -50,7 +51,7 @@ namespace Content.Client.Gameplay
 
             EntityUid? uid = null;
             if (UserInterfaceManager.CurrentlyHovered is IViewportControl vp && _inputManager.MouseScreenPosition.IsValid)
-                uid = GetClickedEntity(vp.ScreenToMap(_inputManager.MouseScreenPosition.Position));
+                uid = GetClickedEntity(vp.PixelToMap(_inputManager.MouseScreenPosition.Position));
             else if (UserInterfaceManager.CurrentlyHovered is EntityMenuElement element)
                 uid = element.Entity;
 
@@ -90,7 +91,7 @@ namespace Content.Client.Gameplay
         {
             // Find all the entities intersecting our click
             var spriteTree = _entityManager.EntitySysManager.GetEntitySystem<SpriteTreeSystem>();
-            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, (1, 1)), true);
+            var entities = spriteTree.QueryAabb(coordinates.MapId, Box2.CenteredAround(coordinates.Position, new Vector2(1, 1)));
 
             // Check the entities against whether or not we can click them
             var foundEntities = new List<(EntityUid, int, uint, float)>(entities.Count);
@@ -136,7 +137,7 @@ namespace Content.Client.Gameplay
                     return cmp;
                 }
 
-                cmp = y.bottom.CompareTo(x.bottom);
+                cmp = -y.bottom.CompareTo(x.bottom);
 
                 if (cmp != 0)
                 {
@@ -165,10 +166,11 @@ namespace Content.Client.Gameplay
             EntityUid? entityToClick = null;
             if (args.Viewport is IViewportControl vp)
             {
-                var mousePosWorld = vp.ScreenToMap(kArgs.PointerLocation.Position);
+                var mousePosWorld = vp.PixelToMap(kArgs.PointerLocation.Position);
                 entityToClick = GetClickedEntity(mousePosWorld);
 
-                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out var grid) ? grid.MapToGrid(mousePosWorld) :
+                coordinates = _mapManager.TryFindGridAt(mousePosWorld, out _, out var grid) ?
+                    grid.MapToGrid(mousePosWorld) :
                     EntityCoordinates.FromMap(_mapManager, mousePosWorld);
             }
 

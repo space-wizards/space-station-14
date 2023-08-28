@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class ToiletLidClosed : IGraphCondition
+    public sealed partial class ToiletLidClosed : IGraphCondition
     {
         public bool Condition(EntityUid uid, IEntityManager entityManager)
         {

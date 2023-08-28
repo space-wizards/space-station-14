@@ -23,3 +23,87 @@
       amount: 1
   products:
     BuzzochloricBees: 3
+
+- type: reaction
+  id: CreateSoap
+  impact: Low
+  quantized: true
+  reactants:
+    Fat:
+      amount: 15
+    TableSalt:
+      amount: 10
+    Water:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: Soap
+
+- type: reaction
+  id: CreateSoapHomemade
+  impact: Low
+  quantized: true
+  reactants:
+    Fat:
+      amount: 15
+    TableSalt:
+      amount: 10
+    Blood:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SoapHomemade
+
+- type: reaction
+  id: Meatification
+  impact: Low
+  quantized: true
+  reactants:
+    Fat:
+      amount: 25
+    Nutriment:
+      amount: 5
+    Blood:
+      amount: 10
+    Carbon:
+      amount: 10
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: FoodMeat
+
+- type: reaction
+  id: SpaceGlue
+  minTemp: 370
+  reactants:
+    SpaceLube:
+      amount: 1
+    Slime:
+      amount: 1
+  products:
+    SpaceGlue: 2
+
+- type: reaction
+  id: Licoxide
+  reactants:
+    Lead:
+      amount: 1
+    Zinc:
+      amount: 1
+  products:
+    Licoxide: 1
+
+- type: reaction
+  id: PlasticSheet # It's here because "haha look you can get smooth beautiful sheets of plastic from small cylindric beaker" (jokes aside: i dont know where should i put it)
+  impact: Low
+  quantized: true
+  minTemp: 374
+  reactants:
+    Oil:
+      amount: 5
+    Ash:
+      amount: 3
+    SulfuricAcid:
+      amount: 2
+  effects:
+    - !type:CreateEntityReactionEffect
+      entity: SheetPlastic1

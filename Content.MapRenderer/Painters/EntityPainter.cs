@@ -38,23 +38,24 @@ public sealed class EntityPainter
 
         // TODO cache this shit what are we insane
         entities.Sort(Comparer<EntityData>.Create((x, y) => x.Sprite.DrawDepth.CompareTo(y.Sprite.DrawDepth)));
+        var xformSystem = _sEntityManager.System<SharedTransformSystem>();
 
         foreach (var entity in entities)
         {
-            Run(canvas, entity);
+            Run(canvas, entity, xformSystem);
         }
 
         Console.WriteLine($"{nameof(EntityPainter)} painted {entities.Count} entities in {(int) stopwatch.Elapsed.TotalMilliseconds} ms");
     }
 
-    public void Run(Image canvas, EntityData entity)
+    public void Run(Image canvas, EntityData entity, SharedTransformSystem xformSystem)
     {
         if (!entity.Sprite.Visible || entity.Sprite.ContainerOccluded)
         {
             return;
         }
 
-        var worldRotation = _sEntityManager.GetComponent<TransformComponent>(entity.Sprite.Owner).WorldRotation;
+        var worldRotation = xformSystem.GetWorldRotation(entity.Owner);
         foreach (var layer in entity.Sprite.AllLayers)
         {
             if (!layer.Visible)
@@ -70,7 +71,7 @@ public sealed class EntityPainter
             var rsi = layer.ActualRsi;
             Image image;
 
-            if (rsi == null || rsi.Path == null || !rsi.TryGetState(layer.RsiState, out var state))
+            if (rsi == null || !rsi.TryGetState(layer.RsiState, out var state))
             {
                 image = _errorImage;
             }
@@ -89,7 +90,7 @@ public sealed class EntityPainter
 
             image = image.CloneAs<Rgba32>();
 
-            (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
+            static (int, int, int, int) GetRsiFrame(RSI? rsi, Image image, EntityData entity, ISpriteLayer layer, int direction)
             {
                 if (rsi is null)
                     return (0, 0, EyeManager.PixelsPerMeter, EyeManager.PixelsPerMeter);
@@ -104,10 +105,10 @@ public sealed class EntityPainter
                 return (targetX * rsi.Size.X, targetY * rsi.Size.Y, rsi.Size.X, rsi.Size.Y);
             }
 
-            var dir =  entity.Sprite.GetLayerDirectionCount(layer) switch
+            var dir = entity.Sprite.GetLayerDirectionCount(layer) switch
             {
                 0 => 0,
-                _ => (int)layer.EffectiveDirection(worldRotation)
+                _ => (int) layer.EffectiveDirection(worldRotation)
             };
 
             var (x, y, width, height) = GetRsiFrame(rsi, image, entity, layer, dir);
@@ -115,7 +116,7 @@ public sealed class EntityPainter
             var rect = new Rectangle(x, y, width, height);
             if (!new Rectangle(Point.Empty, image.Size()).Contains(rect))
             {
-                Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Sprite.Owner)} at ({entity.X}, {entity.Y})");
+                Console.WriteLine($"Invalid layer {rsi!.Path}/{layer.RsiState.Name}.png for entity {_sEntityManager.ToPrettyString(entity.Owner)} at ({entity.X}, {entity.Y})");
                 return;
             }
 
@@ -132,8 +133,8 @@ public sealed class EntityPainter
                 .Resize(imgX, imgY)
                 .Flip(FlipMode.Vertical));
 
-            var pointX = (int) entity.X - (imgX / 2) + EyeManager.PixelsPerMeter / 2;
-            var pointY = (int) entity.Y - (imgY / 2) + EyeManager.PixelsPerMeter / 2;
+            var pointX = (int) entity.X - imgX / 2 + EyeManager.PixelsPerMeter / 2;
+            var pointY = (int) entity.Y - imgY / 2 + EyeManager.PixelsPerMeter / 2;
             canvas.Mutate(o => o.DrawImage(image, new Point(pointX, pointY), 1));
         }
     }

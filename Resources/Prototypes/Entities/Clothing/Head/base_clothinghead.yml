@@ -8,9 +8,33 @@
     - HEAD
   - type: Sprite
     state: icon
+  - type: Food
+    requiresSpecialDigestion: true
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 10
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 10
   - type: Tag
     tags:
+      - ClothMade
       - DroneUsable
+      - WhitelistChameleon
+
+- type: entity
+  abstract: true
+  parent: ClothingHeadBase
+  id: ClothingHeadBaseButcherable
+  components:
+  - type: Butcherable
+    butcheringType: Knife
+    spawned:
+    - id: MaterialCloth1
+      amount: 1
+  - type: Tag
+    tags:
       - WhitelistChameleon
 
 - type: entity
@@ -35,7 +59,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: icon
     - state: icon-flash
@@ -47,12 +70,12 @@
     heldPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 3
     energy: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+    netsync: false
   - type: Appearance
   - type: HandheldLight
     addPrefix: true
@@ -108,8 +131,7 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-  - type: DiseaseProtection
-    protection: 0.05
+    - HelmetEVA
   - type: IdentityBlocker
 
 - type: entity
@@ -148,8 +170,6 @@
     tags:
     - HidesHair
     - WhitelistChameleon
-  - type: DiseaseProtection
-    protection: 0.05
   - type: IdentityBlocker
 
 - type: entity
@@ -160,7 +180,6 @@
   noSpawn: true
   components:
   - type: Sprite
-    netsync: false
     layers:
     - state: icon
     - state: icon-flash
@@ -170,12 +189,12 @@
     equippedPrefix: off
   - type: ToggleableLightVisuals
   - type: PointLight
-    netsync: false
     enabled: false
     radius: 3
     energy: 2
     mask: /Textures/Effects/LightMasks/cone.png
     autoRot: true
+    netsync: false
   - type: Appearance
   - type: HandheldLight
     addPrefix: true

@@ -1,4 +1,4 @@
-using Content.Server.Coordinates.Helpers;
+using Content.Shared.Coordinates.Helpers;
 using Content.Shared.Construction;
 using JetBrains.Annotations;
 
@@ -6,7 +6,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SnapToGrid : IGraphAction
+    public sealed partial class SnapToGrid : IGraphAction
     {
         [DataField("southRotation")] public bool SouthRotation { get; private set; }
 

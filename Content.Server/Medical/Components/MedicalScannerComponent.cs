@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Medical.Components
 {
     [RegisterComponent]
-    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
+    public sealed partial class MedicalScannerComponent : SharedMedicalScannerComponent
     {
         public const string ScannerPort = "MedicalScannerReceiver";
         public ContainerSlot BodyContainer = default!;
@@ -17,7 +17,7 @@ namespace Content.Server.Medical.Components
         public float CloningFailChanceMultiplier = 1f;
 
         [DataField("machinePartCloningFailChance", customTypeSerializer: typeof(PrototypeIdSerializer<MachinePartPrototype>))]
-        public string MachinePartCloningFailChance = "ScanningModule";
+        public string MachinePartCloningFailChance = "Capacitor";
 
         [DataField("partRatingCloningFailChanceMultiplier")]
         public float PartRatingFailMultiplier = 0.75f;

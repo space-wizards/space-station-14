@@ -1,5 +1,4 @@
 using Content.Client.Gameplay;
-using Content.Client.Hands;
 using Content.Client.Hands.Systems;
 using Content.Client.UserInterface.Controls;
 using Content.Client.UserInterface.Systems.Hands.Controls;
@@ -8,6 +7,7 @@ using Content.Shared.Cooldown;
 using Content.Shared.Hands.Components;
 using Content.Shared.Input;
 using Robust.Client.GameObjects;
+using Robust.Client.Player;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Input;
@@ -19,6 +19,7 @@ namespace Content.Client.UserInterface.Systems.Hands;
 public sealed class HandsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private readonly IEntityManager _entities = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
 
     [UISystemDependency] private readonly HandsSystem _handsSystem = default!;
 
@@ -119,12 +120,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
             if (_entities.TryGetComponent(hand.HeldEntity, out HandVirtualItemComponent? virt))
             {
-                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+                handButton.SpriteView.SetEntity(virt.BlockingEntity);
                 handButton.Blocked = true;
             }
             else
             {
-                handButton.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(hand.HeldEntity);
+                handButton.SpriteView.SetEntity(hand.HeldEntity);
                 handButton.Blocked = false;
             }
         }
@@ -170,12 +171,12 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (_entities.TryGetComponent(entity, out HandVirtualItemComponent? virt))
         {
-            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(virt.BlockingEntity);
+            hand.SpriteView.SetEntity(virt.BlockingEntity);
             hand.Blocked = true;
         }
         else
         {
-            hand.SpriteView.Sprite = _entities.GetComponentOrNull<SpriteComponent>(entity);
+            hand.SpriteView.SetEntity(entity);
             hand.Blocked = false;
         }
 
@@ -189,7 +190,7 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
         if (hand == null)
             return;
 
-        hand.SpriteView.Sprite = null;
+        hand.SpriteView.SetEntity(null);
         if (_playerHandsComponent?.ActiveHand?.Name == name)
             HandsGui?.UpdatePanelEntity(null);
     }
@@ -246,7 +247,8 @@ public sealed class HandsUIController : UIController, IOnStateEntered<GameplaySt
 
         if (HandsGui != null &&
             _playerHandsComponent != null &&
-            _playerHandsComponent.Hands.TryGetValue(handName, out var hand))
+            _player.LocalPlayer?.ControlledEntity is { } playerEntity &&
+            _handsSystem.TryGetHand(playerEntity, handName, out var hand, _playerHandsComponent))
         {
             HandsGui.UpdatePanelEntity(hand.HeldEntity);
         }

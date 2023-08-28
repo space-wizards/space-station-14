@@ -43,6 +43,7 @@
   physicalDesc: reagent-physical-desc-gaseous
   flavor: bitter
   color: "#7e009e"
+  recognizable: true
   boilingPoint: -127.3 # Random values picked between the actual values for CO2 and O2
   meltingPoint: -186.4
   tileReactions:
@@ -116,8 +117,15 @@
   metabolisms:
     Gas:
       effects:
+      - !type:Oxygenate
+        conditions:
+        - !type:OrganType
+          type: Plant
       - !type:HealthChange
         conditions:
+        - !type:OrganType
+          type: Plant
+          shouldHave: false
         # Don't want people to get toxin damage from the gas they just
         # exhaled, right?
         - !type:ReagentThreshold
@@ -142,6 +150,12 @@
   boilingPoint: -195.8
   meltingPoint: -210.0
   metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Cold: 1 # liquid nitrogen is cold
     Gas:
       effects:
       - !type:Oxygenate
@@ -180,14 +194,6 @@
   metabolisms:
     Gas:
       effects:
-      - !type:ChemMiasmaPoolSource
-        conditions:
-        - !type:OrganType
-          type: Rat
-          shouldHave: false
-        - !type:ReagentThreshold
-          reagent: Miasma
-          min: 1
       - !type:HealthChange
         conditions:
         - !type:OrganType
@@ -245,6 +251,22 @@
   metabolisms:
     Gas:
       effects:
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.2
+        emote: Laugh
+        showInChat: true
+        probability: 0.1
+      - !type:Emote
+        conditions:
+        - !type:ReagentThreshold
+          reagent: NitrousOxide
+          min: 0.2
+        emote: Scream
+        showInChat: true
+        probability: 0.01
       - !type:PopupMessage
         conditions:
         - !type:ReagentThreshold

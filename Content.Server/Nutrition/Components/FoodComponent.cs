@@ -1,3 +1,4 @@
+using Content.Server.Body.Components;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.FixedPoint;
@@ -8,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Nutrition.Components
 {
     [RegisterComponent, Access(typeof(FoodSystem))]
-    public sealed class FoodComponent : Component
+    public sealed partial class FoodComponent : Component
     {
         [DataField("solution")]
         public string SolutionName { get; set; } = "food";
@@ -35,22 +36,26 @@ namespace Content.Server.Nutrition.Components
         public bool UtensilRequired = false;
 
         /// <summary>
+        ///     If this is set to true, food can only be eaten if you have a stomach with a
+        ///     <see cref="StomachComponent.SpecialDigestible"/> that includes this entity in its whitelist,
+        ///     rather than just being digestible by anything that can eat food.
+        ///     Whitelist the food component to allow eating of normal food.
+        /// </summary>
+        [DataField("requiresSpecialDigestion")]
+        public bool RequiresSpecialDigestion = false;
+
+        /// <summary>
+        ///     Stomachs required to digest this entity.
+        ///     Used to simulate 'ruminant' digestive systems (which can digest grass)
+        /// </summary>
+        [DataField("requiredStomachs")]
+        public int RequiredStomachs = 1;
+
+        /// <summary>
         /// The localization identifier for the eat message. Needs a "food" entity argument passed to it.
         /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
-
-        /// <summary>
-        /// Is this entity being forcefed?
-        /// </summary>
-        [DataField("forceFeed")]
-        public bool ForceFeed;
-
-        /// <summary>
-        /// Is this entity eating or being fed?
-        /// </summary>
-        [DataField(("eating"))]
-        public bool Eating;
 
         /// <summary>
         /// How long it takes to eat the food personally.

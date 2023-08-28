@@ -12,12 +12,13 @@
     bodyType: Dynamic
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.1
-      density: 190
-      mask:
-      - Impassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.1
+        density: 190
+        mask:
+        - Impassable
   - type: Sprite
     drawdepth: Overdoors
     offset: "0.0,0.3"

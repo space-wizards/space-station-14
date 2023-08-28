@@ -2,8 +2,10 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Content.Server.Administration.Logs.Converters;
+using Content.Server.Database;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
+using Robust.Shared.Map;
 
 namespace Content.Server.Administration.Logs;
 
@@ -32,10 +34,10 @@ public sealed partial class AdminLogManager
         _sawmill.Debug($"Admin log converters found: {string.Join(" ", converterNames)}");
     }
 
-    private (JsonDocument json, HashSet<Guid> players, Dictionary<int, string?> entities) ToJson(
+    private (JsonDocument Json, HashSet<Guid> Players, List<AdminLogEntity> Entities) ToJson(
         Dictionary<string, object?> properties)
     {
-        var entities = new Dictionary<int, string?>();
+        var entities = new Dictionary<EntityUid, AdminLogEntity>();
         var players = new HashSet<Guid>();
         var parsed = new Dictionary<string, object?>();
 
@@ -45,6 +47,7 @@ public sealed partial class AdminLogManager
             value = value switch
             {
                 IPlayerSession player => new SerializablePlayer(player),
+                EntityCoordinates entityCoordinates => new SerializableEntityCoordinates(_entityManager, entityCoordinates),
                 _ => value
             };
 
@@ -69,7 +72,8 @@ public sealed partial class AdminLogManager
                 ? metadata.EntityName
                 : null;
 
-            entities.TryAdd((int) uid, entityName);
+            // TODO set the id too whenever we feel like running a migration for 10 hours
+            entities.TryAdd(uid, new AdminLogEntity { Name = entityName });
 
             if (_entityManager.TryGetComponent(uid, out ActorComponent? actor))
             {
@@ -77,6 +81,6 @@ public sealed partial class AdminLogManager
             }
         }
 
-        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities);
+        return (JsonSerializer.SerializeToDocument(parsed, _jsonOptions), players, entities.Values.ToList());
     }
 }

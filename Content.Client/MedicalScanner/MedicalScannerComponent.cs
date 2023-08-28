@@ -1,9 +1,8 @@
 ﻿using Content.Shared.MedicalScanner;
 
-namespace Content.Client.MedicalScanner
+namespace Content.Client.MedicalScanner;
+
+[RegisterComponent]
+public sealed partial class MedicalScannerComponent : SharedMedicalScannerComponent
 {
-    [RegisterComponent]
-    public sealed class MedicalScannerComponent : SharedMedicalScannerComponent
-    {
-    }
 }

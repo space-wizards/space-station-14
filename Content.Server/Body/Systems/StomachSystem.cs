@@ -9,14 +9,12 @@ namespace Content.Server.Body.Systems
 {
     public sealed class StomachSystem : EntitySystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 
         public override void Initialize()
         {
-            SubscribeLocalEvent<StomachComponent, ComponentInit>(OnComponentInit);
             SubscribeLocalEvent<StomachComponent, ApplyMetabolicMultiplierEvent>(OnApplyMetabolicMultiplier);
         }
 
@@ -85,11 +83,6 @@ namespace Content.Server.Body.Systems
             // Reset the accumulator properly
             if (component.AccumulatedFrameTime >= component.UpdateInterval)
                 component.AccumulatedFrameTime = component.UpdateInterval;
-        }
-
-        private void OnComponentInit(EntityUid uid, StomachComponent component, ComponentInit args)
-        {
-            _solutionContainerSystem.EnsureSolution(uid, DefaultSolutionName, component.InitialMaxVolume, out _);
         }
 
         public bool CanTransferSolution(EntityUid uid, Solution solution,

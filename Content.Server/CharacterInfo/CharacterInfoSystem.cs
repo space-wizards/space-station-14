@@ -2,7 +2,6 @@
 using Content.Server.Roles;
 using Content.Shared.CharacterInfo;
 using Content.Shared.Objectives;
-using Robust.Shared.Player;
 
 namespace Content.Server.CharacterInfo;
 
@@ -25,10 +24,10 @@ public sealed class CharacterInfoSystem : EntitySystem
 
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
-        var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's a bug
-        if (EntityManager.TryGetComponent(entity, out MindComponent? mindComponent) && mindComponent.Mind != null)
+        var briefing = "!!ERROR: No Briefing!!"; //should never show on the UI unless there's an issue
+        if (TryComp<MindContainerComponent>(entity, out var mindContainerComponent) && mindContainerComponent.Mind != null)
         {
-            var mind = mindComponent.Mind;
+            var mind = mindContainerComponent.Mind;
 
             // Get objectives
             foreach (var objective in mind.AllObjectives)

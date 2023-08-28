@@ -1,3 +1,4 @@
+using System.Numerics;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
@@ -5,7 +6,7 @@ namespace Content.Shared.Placeable
 {
     [RegisterComponent, NetworkedComponent]
     [Access(typeof(PlaceableSurfaceSystem))]
-    public sealed class PlaceableSurfaceComponent : Component
+    public sealed partial class PlaceableSurfaceComponent : Component
     {
         [DataField("isPlaceable")]
         public bool IsPlaceable { get; set; } = true;

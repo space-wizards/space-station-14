@@ -8,23 +8,23 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner
-    netsync: false
     noRot: true
   - type: Transform
     noRot: true
   - type: Fixtures
     fixtures:
-    - shape:
-        !type:PhysShapeCircle
-        radius: 0.2
-      density: 190
-      mask:
-      - MachineMask
-      layer:
-      - Opaque
-      - MidImpassable
-      - HighImpassable
-      - BulletImpassable
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.2
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+        - MidImpassable
+        - HighImpassable
+        - BulletImpassable
   - type: InteractionOutline
 
 - type: entity
@@ -76,6 +76,16 @@
   - type: Sprite
     sprite: Structures/Decoration/banner.rsi
     state: banner_revolution
+
+- type: entity
+  id: BannerSyndicate
+  parent: BannerBase
+  name: syndicate banner
+  description: A banner from which, according to the syndicate, you should feel hatred for NT.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/banner.rsi
+    state: banner_syndicate
 
 - type: entity
   id: BannerScience

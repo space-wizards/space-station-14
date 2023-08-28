@@ -9,12 +9,16 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Sets the temperature of the solution involved with the reaction to a new value.
     /// </summary>
     [DataDefinition]
-    public sealed class SetSolutionTemperatureEffect : ReagentEffect
+    public sealed partial class SetSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The temperature to set the solution to.
         /// </summary>
         [DataField("temperature", required: true)] private float _temperature;
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-set-solution-temperature-effect",
+                ("chance", Probability), ("temperature", _temperature));
 
         public override void Effect(ReagentEffectArgs args)
         {
@@ -30,7 +34,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     ///     Adjusts the temperature of the solution involved in the reaction.
     /// </summary>
     [DataDefinition]
-    public sealed class AdjustSolutionTemperatureEffect : ReagentEffect
+    public sealed partial class AdjustSolutionTemperatureEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in temperature.
@@ -52,6 +56,10 @@ namespace Content.Server.Chemistry.ReactionEffects
         /// </summary>
         [DataField("scaled")] private bool _scaled;
 
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-adjust-solution-temperature-effect",
+                ("chance", Probability), ("deltasign", MathF.Sign(_delta)), ("mintemp", _minTemp), ("maxtemp", _maxTemp));
+
         public override void Effect(ReagentEffectArgs args)
         {
             var solution = args.Source;
@@ -66,7 +74,7 @@ namespace Content.Server.Chemistry.ReactionEffects
     /// <summary>
     ///     Adjusts the thermal energy of the solution involved in the reaction.
     /// </summary>
-    public sealed class AdjustSolutionThermalEnergyEffect : ReagentEffect
+    public sealed partial class AdjustSolutionThermalEnergyEffect : ReagentEffect
     {
         /// <summary>
         ///     The change in energy.
@@ -101,11 +109,15 @@ namespace Content.Server.Chemistry.ReactionEffects
 
             var heatCap = solution.GetHeatCapacity(null);
             var deltaT = _scaled
-                ? _delta / heatCap * (float) args.Quantity 
+                ? _delta / heatCap * (float) args.Quantity
                 : _delta / heatCap;
 
             solution.Temperature = Math.Clamp(solution.Temperature + deltaT, _minTemp, _maxTemp);
         }
+
+        protected override string? ReagentEffectGuidebookText(IPrototypeManager prototype, IEntitySystemManager entSys)
+            => Loc.GetString("reagent-effect-guidebook-adjust-solution-temperature-effect",
+                ("chance", Probability), ("deltasign", MathF.Sign(_delta)), ("mintemp", _minTemp), ("maxtemp", _maxTemp));
     }
 
 }

@@ -49,6 +49,7 @@
       60: 0.9
       80: 0.7
   - type: Speech
+    speechVerb: Skeleton
   - type: Vocal
     sounds:
       Male: Skeleton
@@ -57,7 +58,8 @@
   - type: SkeletonAccent
   - type: Fixtures
     fixtures:
-      - shape:
+      fix1:
+        shape:
           !type:PhysShapeCircle
           radius: 0.35
         density: 130

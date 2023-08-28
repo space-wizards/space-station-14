@@ -10,7 +10,6 @@
       size: 25
     - type: Sprite
       sprite: Structures/Furniture/rollerbeds.rsi
-      netsync: false
       noRot: true
       layers:
       - state: rollerbed
@@ -28,12 +27,13 @@
     - type: Physics
     - type: Fixtures
       fixtures:
-      - shape:
-          !type:PhysShapeCircle
-          radius: 0.35
-        density: 80
-        mask:
-        - MobMask
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.35
+          density: 80
+          mask:
+          - MobMask
     - type: Damageable
     - type: Destructible
       thresholds:

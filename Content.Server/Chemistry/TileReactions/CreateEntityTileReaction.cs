@@ -1,4 +1,5 @@
-﻿using Content.Shared.Chemistry.Reaction;
+﻿using System.Numerics;
+using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
 using Content.Shared.FixedPoint;
 using Content.Shared.Maps;
@@ -11,7 +12,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.TileReactions;
 
 [DataDefinition]
-public sealed class CreateEntityTileReaction : ITileReaction
+public sealed partial class CreateEntityTileReaction : ITileReaction
 {
     [DataField("entity", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Entity = default!;
@@ -58,7 +59,8 @@ public sealed class CreateEntityTileReaction : ITileReaction
             var xoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
             var yoffs = random.NextFloat(-RandomOffsetMax, RandomOffsetMax);
 
-            var pos = tile.GridPosition().Offset(new Vector2(0.5f + xoffs, 0.5f + yoffs));
+            var center = entMan.System<TurfSystem>().GetTileCenter(tile);
+            var pos = center.Offset(new Vector2(xoffs, yoffs));
             entMan.SpawnEntity(Entity, pos);
 
             return Usage;

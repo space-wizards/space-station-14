@@ -54,6 +54,7 @@ public sealed partial class AdminLogsControl : Control
     public string Search => LogSearch.Text;
     private int ShownLogs { get; set; }
     private int TotalLogs { get; set; }
+    private int RoundLogs { get; set; }
     public bool IncludeNonPlayerLogs { get; set; }
 
     public HashSet<LogType> SelectedTypes { get; } = new();
@@ -419,14 +420,18 @@ public sealed partial class AdminLogsControl : Control
     public void SetPlayers(Dictionary<Guid, string> players)
     {
         var buttons = new SortedSet<AdminLogPlayerButton>(_adminLogPlayerButtonComparer);
+        var allSelected = true;
 
         foreach (var control in PlayersContainer.Children.ToArray())
         {
-            if (control is not AdminLogPlayerButton player ||
-                !players.Remove(player.Id))
-            {
+            if (control is not AdminLogPlayerButton player)
                 continue;
-            }
+
+            if (!SelectedPlayers.Contains(player.Id))
+                allSelected = false;
+
+            if (!players.Remove(player.Id))
+                continue;
 
             buttons.Add(player);
         }
@@ -436,10 +441,12 @@ public sealed partial class AdminLogsControl : Control
             var button = new AdminLogPlayerButton(id)
             {
                 Text = name,
-                Pressed = true
+                Pressed = allSelected
             };
 
-            SelectedPlayers.Add(id);
+            if (allSelected)
+                SelectedPlayers.Add(id);
+
             button.OnPressed += PlayerButtonPressed;
 
             buttons.Add(button);
@@ -485,7 +492,7 @@ public sealed partial class AdminLogsControl : Control
         AddLogs(logs);
     }
 
-    private void UpdateCount(int? shown = null, int? total = null)
+    public void UpdateCount(int? shown = null, int? total = null, int? round = null)
     {
         if (shown != null)
         {
@@ -497,7 +504,15 @@ public sealed partial class AdminLogsControl : Control
             TotalLogs = total.Value;
         }
 
-        Count.Text = Loc.GetString("admin-logs-count", ("showing", ShownLogs), ("total", TotalLogs));
+        if (round != null)
+        {
+            RoundLogs = round.Value;
+        }
+
+        Count.Text = Loc.GetString(
+            "admin-logs-count",
+            ("showing", ShownLogs), ("total", TotalLogs), ("round", RoundLogs)
+        );
     }
 
     protected override void Dispose(bool disposing)

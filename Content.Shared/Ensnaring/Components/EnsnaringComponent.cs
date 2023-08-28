@@ -6,7 +6,7 @@ namespace Content.Shared.Ensnaring.Components;
 /// Use this on something you want to use to ensnare an entity with
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class EnsnaringComponent : Component
+public sealed partial class EnsnaringComponent : Component
 {
     /// <summary>
     /// How long it should take to free someone else.
@@ -51,7 +51,7 @@ public sealed class EnsnaringComponent : Component
     public EntityUid? Ensnared;
 
     /// <summary>
-    /// Should movement cancel breaking out?
+    /// Should breaking out be possible when moving?
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("canMoveBreakout")]
@@ -79,7 +79,14 @@ public sealed class EnsnareEvent : EntityEventArgs
 /// </summary>
 public sealed class EnsnareRemoveEvent : CancellableEntityEventArgs
 {
+    public readonly float WalkSpeed;
+    public readonly float SprintSpeed;
 
+    public EnsnareRemoveEvent(float walkSpeed, float sprintSpeed)
+    {
+        WalkSpeed = walkSpeed;
+        SprintSpeed = sprintSpeed;
+    }
 }
 
 /// <summary>

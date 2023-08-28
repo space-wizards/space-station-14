@@ -1,7 +1,6 @@
 namespace Content.Shared.Procedural.Loot;
 
 [ImplicitDataDefinitionForInheritors]
-public interface IDungeonLoot
+public partial interface IDungeonLoot
 {
-    string Prototype { get; }
 }

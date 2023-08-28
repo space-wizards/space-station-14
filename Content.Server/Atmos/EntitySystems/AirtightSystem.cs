@@ -4,6 +4,7 @@ using Content.Shared.Atmos;
 using JetBrains.Annotations;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
+using Content.Shared.Destructible;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -52,7 +53,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnAirtightPositionChanged(EntityUid uid, AirtightComponent airtight, ref AnchorStateChangedEvent args)
         {
-            var xform = Transform(uid);
+            var xform = args.Transform;
 
             if (!TryComp(xform.GridUid, out MapGridComponent? grid))
                 return;
@@ -90,7 +91,7 @@ namespace Content.Server.Atmos.EntitySystems
             airtight.CurrentAirBlockedDirection = (int) Rotate((AtmosDirection)airtight.InitialAirBlockedDirection, ev.NewRotation);
             UpdatePosition(airtight, ev.Component);
             var airtightEv = new AirtightChanged(uid, airtight);
-            RaiseLocalEvent(uid, ref airtightEv);
+            RaiseLocalEvent(uid, ref airtightEv, true);
             return true;
         }
 
@@ -104,7 +105,7 @@ namespace Content.Server.Atmos.EntitySystems
             airtight.AirBlocked = airblocked;
             UpdatePosition(airtight, xform);
             var airtightEv = new AirtightChanged(uid, airtight);
-            RaiseLocalEvent(uid, ref airtightEv);
+            RaiseLocalEvent(uid, ref airtightEv, true);
         }
 
         public void UpdatePosition(AirtightComponent airtight, TransformComponent? xform = null)

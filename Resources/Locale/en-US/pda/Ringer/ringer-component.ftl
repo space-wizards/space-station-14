@@ -3,6 +3,8 @@
 
 # For the PDA Ringer screen
 
+comp-ringer-vibration-popup = PDA vibrates
+
 comp-ringer-ui-menu-title = Ringtone
 
 comp-ringer-ui-test-ringtone-button = Test

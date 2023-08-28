@@ -12,7 +12,8 @@ namespace Content.Server.Power.Components
         public string? NodeId { get; }
     }
 
-    public abstract class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
+    public abstract partial class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
+        where TNetType : class
     {
         [Dependency] private readonly IEntityManager _entMan = default!;
 
@@ -25,20 +26,9 @@ namespace Content.Server.Power.Components
         public TNetType? Net { get => _net; set => SetNet(value); }
         private TNetType? _net;
 
-        [ViewVariables]
-        private bool _needsNet => _net != null;
+        [ViewVariables] public bool NeedsNet => _net != null;
 
         [DataField("node")] public string? NodeId { get; set; }
-
-        protected override void Initialize()
-        {
-            base.Initialize();
-
-            if (_needsNet)
-            {
-                TryFindAndSetNet();
-            }
-        }
 
         protected override void OnRemove()
         {
@@ -57,7 +47,10 @@ namespace Content.Server.Power.Components
         public void ClearNet()
         {
             if (_net != null)
+            {
                 RemoveSelfFromNet(_net);
+                _net = null;
+            }
         }
 
         protected abstract void AddSelfToNet(TNetType net);
@@ -66,7 +59,7 @@ namespace Content.Server.Power.Components
 
         private bool TryFindNet([NotNullWhen(true)] out TNetType? foundNet)
         {
-            if (_entMan.TryGetComponent<NodeContainerComponent?>(Owner, out var container))
+            if (_entMan.TryGetComponent(Owner, out NodeContainerComponent? container))
             {
                 var compatibleNet = container.Nodes.Values
                     .Where(node => (NodeId == null || NodeId == node.Name) && node.NodeGroupID == (NodeGroupID) Voltage)

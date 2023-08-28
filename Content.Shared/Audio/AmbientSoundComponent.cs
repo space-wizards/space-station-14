@@ -1,51 +1,54 @@
+using System.Numerics;
 using Robust.Shared.Audio;
 using Robust.Shared.ComponentTrees;
 using Robust.Shared.GameStates;
 using Robust.Shared.Physics;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Audio
+namespace Content.Shared.Audio;
+
+[RegisterComponent]
+[NetworkedComponent]
+[Access(typeof(SharedAmbientSoundSystem))]
+public sealed partial class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
 {
-    [RegisterComponent]
-    [NetworkedComponent]
-    [Access(typeof(SharedAmbientSoundSystem))]
-    public sealed class AmbientSoundComponent : Component, IComponentTreeEntry<AmbientSoundComponent>
-    {
-        [DataField("enabled")]
-        [ViewVariables(VVAccess.ReadWrite)] // only for map editing
-        public bool Enabled { get; set; } = true;
+    [DataField("enabled")]
+    [ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    public bool Enabled { get; set; } = true;
 
-        [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)] // only for map editing
-        public SoundSpecifier Sound = default!;
+    [DataField("sound", required: true), ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    public SoundSpecifier Sound = default!;
 
-        /// <summary>
-        /// How far away this ambient sound can potentially be heard.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] // only for map editing
-        [DataField("range")]
-        public float Range = 2f;
+    /// <summary>
+    /// How far away this ambient sound can potentially be heard.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    [DataField("range")]
+    public float Range = 2f;
 
-        /// <summary>
-        /// Applies this volume to the sound being played.
-        /// </summary>
-        [ViewVariables(VVAccess.ReadWrite)] // only for map editing
-        [DataField("volume")]
-        public float Volume = -10f;
+    public Vector2 RangeVector => new Vector2(Range, Range);
 
-        public EntityUid? TreeUid { get; set; }
+    /// <summary>
+    /// Applies this volume to the sound being played.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite)] // only for map editing
+    [DataField("volume")]
+    public float Volume = -10f;
 
-        public DynamicTree<ComponentTreeEntry<AmbientSoundComponent>>? Tree { get; set; }
+    public EntityUid? TreeUid { get; set; }
 
-        public bool AddToTree => Enabled;
+    public DynamicTree<ComponentTreeEntry<AmbientSoundComponent>>? Tree { get; set; }
 
-        public bool TreeUpdateQueued { get; set; }
-    }
+    public bool AddToTree => Enabled;
 
-    [Serializable, NetSerializable]
-    public sealed class AmbientSoundComponentState : ComponentState
-    {
-        public bool Enabled { get; init; }
-        public float Range { get; init; }
-        public float Volume { get; init; }
-    }
+    public bool TreeUpdateQueued { get; set; }
+}
+
+[Serializable, NetSerializable]
+public sealed class AmbientSoundComponentState : ComponentState
+{
+    public bool Enabled { get; init; }
+    public float Range { get; init; }
+    public float Volume { get; init; }
+    public SoundSpecifier Sound { get; init; } = default!;
 }

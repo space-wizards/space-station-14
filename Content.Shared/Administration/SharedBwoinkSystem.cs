@@ -29,7 +29,9 @@ namespace Content.Shared.Administration
         public sealed class BwoinkTextMessage : EntityEventArgs
         {
             public DateTime SentAt { get; }
+
             public NetUserId UserId { get; }
+
             // This is ignored from the client.
             // It's checked by the client when receiving a message from the server for bwoink noises.
             // This could be a boolean "Incoming", but that would require making a second instance.
@@ -43,6 +45,55 @@ namespace Content.Shared.Administration
                 TrueSender = trueSender;
                 Text = text;
             }
+        }
+    }
+
+    /// <summary>
+    ///     Sent by the server to notify all clients when the webhook url is sent.
+    ///     The webhook url itself is not and should not be sent.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkDiscordRelayUpdated : EntityEventArgs
+    {
+        public bool DiscordRelayEnabled { get; }
+
+        public BwoinkDiscordRelayUpdated(bool enabled)
+        {
+            DiscordRelayEnabled = enabled;
+        }
+    }
+
+    /// <summary>
+    ///     Sent by the client to notify the server when it begins or stops typing.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkClientTypingUpdated : EntityEventArgs
+    {
+        public NetUserId Channel { get; }
+        public bool Typing { get; }
+
+        public BwoinkClientTypingUpdated(NetUserId channel, bool typing)
+        {
+            Channel = channel;
+            Typing = typing;
+        }
+    }
+
+    /// <summary>
+    ///     Sent by server to notify admins when a player begins or stops typing.
+    /// </summary>
+    [Serializable, NetSerializable]
+    public sealed class BwoinkPlayerTypingUpdated : EntityEventArgs
+    {
+        public NetUserId Channel { get; }
+        public string PlayerName { get; }
+        public bool Typing { get; }
+
+        public BwoinkPlayerTypingUpdated(NetUserId channel, string playerName, bool typing)
+        {
+            Channel = channel;
+            PlayerName = playerName;
+            Typing = typing;
         }
     }
 }

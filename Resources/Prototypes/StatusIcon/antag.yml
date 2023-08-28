@@ -1,0 +1,6 @@
+﻿- type: statusIcon
+  id: ZombieFaction
+  priority: 11
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: Zombie

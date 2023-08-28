@@ -5,9 +5,13 @@
   name: admin observer
   noSpawn: true
   components:
+  - type: ContentEye
+    maxZoom: 8.916104, 8.916104
   - type: Tag
     tags:
+    - InstantDoAfters
     - CanPilot
+    - BypassInteractionRangeChecks
   - type: Input
     context: "aghost"
   - type: Ghost
@@ -18,9 +22,6 @@
   - type: CombatMode
   - type: Actions
   - type: InputMover
-  - type: MovementSpeedModifier
-    baseSprintSpeed: 12
-    baseWalkSpeed: 8
   - type: Physics
     ignorePaused: true
     bodyType: Kinematic
@@ -41,6 +42,9 @@
         type: CargoOrderConsoleBoundUserInterface
       - key: enum.CrewMonitoringUIKey.Key
         type: CrewMonitoringBoundUserInterface
+      - key: enum.GeneralStationRecordConsoleKey.Key
+        # who the fuck named this bruh
+        type: GeneralStationRecordConsoleBoundUserInterface
   - type: IntrinsicUI
     uis:
       - key: enum.SolarControlConsoleUiKey.Key
@@ -88,6 +92,15 @@
           keywords: [ "AI", "console", "interface" ]
           priority: -10
           event: !type:ToggleIntrinsicUIEvent
+      - key: enum.GeneralStationRecordConsoleKey.Key
+        toggleAction:
+          name: action-name-show-station-records-console
+          description: action-description-station-records-console
+          icon: { sprite: Structures/Machines/parts.rsi, state: box_0 }
+          iconOn: Structures/Machines/parts.rsi/box_2.png
+          keywords: [ "AI", "console", "interface" ]
+          priority: -10
+          event: !type:ToggleIntrinsicUIEvent
   - type: SolarControlConsole # look ma i AM the computer!
   - type: CommunicationsConsole
     title: communicationsconsole-announcement-title-centcom
@@ -97,6 +110,7 @@
   - type: CrewMonitoringConsole
     snap: false
     precision: 3
+  - type: GeneralStationRecordConsole
   - type: DeviceNetwork
     deviceNetId: Wireless
     receiveFrequencyId: CrewMonitor
@@ -107,3 +121,5 @@
     stripTimeReduction: 9999
     stealthy: true
   - type: Stripping
+  - type: SolutionScanner
+  - type: IgnoreUIRange

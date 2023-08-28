@@ -12,14 +12,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 /// random chemicals upon being triggered.
 /// </summary>
 [RegisterComponent, Access(typeof(ChemicalPuddleArtifactSystem))]
-public sealed class ChemicalPuddleArtifactComponent : Component
+public sealed partial class ChemicalPuddleArtifactComponent : Component
 {
-    /// <summary>
-    /// The prototype id of the puddle
-    /// </summary>
-    [DataField("puddlePrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>)), ViewVariables(VVAccess.ReadWrite)]
-    public string PuddlePrototype = "PuddleSmear";
-
     /// <summary>
     /// The solution where all the chemicals are stored
     /// </summary>

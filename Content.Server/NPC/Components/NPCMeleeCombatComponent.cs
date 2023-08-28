@@ -4,13 +4,8 @@ namespace Content.Server.NPC.Components;
 /// Added to NPCs whenever they're in melee combat so they can be handled by the dedicated system.
 /// </summary>
 [RegisterComponent]
-public sealed class NPCMeleeCombatComponent : Component
+public sealed partial class NPCMeleeCombatComponent : Component
 {
-    /// <summary>
-    /// Weapon we're using to attack the target. Can also be ourselves.
-    /// </summary>
-    [ViewVariables] public EntityUid Weapon;
-
     /// <summary>
     /// If the target is moving what is the chance for this NPC to miss.
     /// </summary>

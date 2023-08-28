@@ -1,25 +1,20 @@
-using System.Threading;
 using Content.Server.Destructible;
-using Content.Server.DoAfter;
 using Content.Server.Gatherable.Components;
-using Content.Shared.Damage;
-using Content.Shared.DoAfter;
-using Content.Shared.Destructible;
 using Content.Shared.EntityList;
 using Content.Shared.Interaction;
 using Content.Shared.Tag;
+using Content.Shared.Weapons.Melee.Events;
+using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 
 namespace Content.Server.Gatherable;
 
-public sealed class GatherableSystem : EntitySystem
+public sealed partial class GatherableSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly DestructibleSystem _destructible = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly TagSystem _tagSystem = default!;
 
@@ -27,70 +22,58 @@ public sealed class GatherableSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GatherableComponent, InteractUsingEvent>(OnInteractUsing);
-        SubscribeLocalEvent<GatherableComponent, DoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<GatherableComponent, ActivateInWorldEvent>(OnActivate);
+        SubscribeLocalEvent<GatherableComponent, AttackedEvent>(OnAttacked);
+        InitializeProjectile();
     }
 
-    private void OnInteractUsing(EntityUid uid, GatherableComponent component, InteractUsingEvent args)
+    private void OnAttacked(EntityUid uid, GatherableComponent component, AttackedEvent args)
     {
-        if (!TryComp<GatheringToolComponent>(args.Used, out var tool) || component.ToolWhitelist?.IsValid(args.Used) == false)
+        if (component.ToolWhitelist?.IsValid(args.Used, EntityManager) != true)
             return;
 
-        // Can't gather too many entities at once.
-        if (tool.MaxGatheringEntities < tool.GatheringEntities.Count + 1)
-            return;
-
-        var damageRequired = _destructible.DestroyedAt(uid);
-        var damageTime = (damageRequired / tool.Damage.Total).Float();
-        damageTime = Math.Max(1f, damageTime);
-
-        var doAfter = new DoAfterEventArgs(args.User, damageTime, target: uid, used: args.Used)
-        {
-            BreakOnDamage = true,
-            BreakOnStun = true,
-            BreakOnTargetMove = true,
-            BreakOnUserMove = true,
-            MovementThreshold = 0.25f,
-        };
-
-        _doAfterSystem.DoAfter(doAfter);
+        Gather(uid, args.User, component);
     }
 
-    private void OnDoAfter(EntityUid uid, GatherableComponent component, DoAfterEvent args)
+    private void OnActivate(EntityUid uid, GatherableComponent component, ActivateInWorldEvent args)
     {
-        if(!TryComp<GatheringToolComponent>(args.Args.Used, out var tool) || args.Args.Target == null)
+        if (component.ToolWhitelist?.IsValid(args.User, EntityManager) != true)
             return;
 
-        if (args.Handled || args.Cancelled)
-        {
-            tool.GatheringEntities.Remove(args.Args.Target.Value);
+        Gather(uid, args.User, component);
+    }
+
+    public void Gather(EntityUid gatheredUid, EntityUid? gatherer = null, GatherableComponent? component = null)
+    {
+        if (!Resolve(gatheredUid, ref component))
             return;
+
+        if (TryComp<SoundOnGatherComponent>(gatheredUid, out var soundComp))
+        {
+            _audio.PlayPvs(soundComp.Sound, Transform(gatheredUid).Coordinates);
         }
 
         // Complete the gathering process
-        _destructible.DestroyEntity(args.Args.Target.Value);
-        _audio.PlayPvs(tool.GatheringSound, args.Args.Target.Value);
-        tool.GatheringEntities.Remove(args.Args.Target.Value);
+        _destructible.DestroyEntity(gatheredUid);
 
         // Spawn the loot!
         if (component.MappedLoot == null)
             return;
 
-        var playerPos = Transform(args.Args.User).MapPosition;
+        var pos = Transform(gatheredUid).MapPosition;
 
         foreach (var (tag, table) in component.MappedLoot)
         {
             if (tag != "All")
             {
-                if (!_tagSystem.HasTag(tool.Owner, tag))
+                if (gatherer != null && !_tagSystem.HasTag(gatherer.Value, tag))
                     continue;
             }
             var getLoot = _prototypeManager.Index<EntityLootTablePrototype>(table);
             var spawnLoot = getLoot.GetSpawns();
-            var spawnPos = playerPos.Offset(_random.NextVector2(0.3f));
+            var spawnPos = pos.Offset(_random.NextVector2(0.3f));
             Spawn(spawnLoot[0], spawnPos);
         }
-        args.Handled = true;
     }
 }
 

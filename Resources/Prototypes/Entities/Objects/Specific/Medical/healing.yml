@@ -6,6 +6,7 @@
   - type: Sprite
     sprite: Objects/Specific/Medical/medical.rsi
   - type: Item
+    size: 10
     sprite: Objects/Specific/Medical/medical.rsi
     heldPrefix: ointment
   # Inherited
@@ -14,9 +15,10 @@
 
 - type: entity
   name: ointment
-  description: Used to treat those nasty burns.
+  description: Used to treat those nasty burns. Less effective on caustic burns.
   parent: BaseHealingItem
   id: Ointment
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -26,10 +28,14 @@
   - type: Item
     heldPrefix: ointment
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
-      groups:
-        Burn: -15 # 5 for each type in the group
+      types:
+        Heat: -5
+        Cold: -5
+        Shock: -5
+        Caustic: -1.5
     healingBeginSound:
       path: "/Audio/Items/Medical/ointment_begin.ogg"
     healingEndSound:
@@ -41,10 +47,73 @@
     price: 10
 
 - type: entity
+  id: Ointment1
+  parent: Ointment
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Ointment
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  id: Ointment10Lingering
+  parent: Ointment
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
+  name: regenerative mesh
+  description: Used to treat even the nastiest burns. Also effective against caustic burns.
+  parent: BaseHealingItem
+  id: RegenerativeMesh
+  components:
+  - type: Tag
+    tags:
+    - Ointment
+  - type: Sprite
+    state: regenerative-mesh
+  - type: Item
+    heldPrefix: regenerative-mesh
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Heat: -10
+        Cold: -10
+        Shock: -10
+        Caustic: -10
+    healingBeginSound:
+      path: "/Audio/Items/Medical/ointment_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/ointment_end.ogg"
+  - type: Stack
+    stackType: RegenerativeMesh
+    count: 10
+  - type: StackPrice
+    price: 20
+
+- type: entity
+  id: OintmentAdvanced1
+  parent: RegenerativeMesh
+  components:
+  - type: Stack
+    stackType: RegenerativeMesh
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
   name: bruise pack
   description: A therapeutic gel pack and bandages designed to treat blunt-force trauma.
   parent: BaseHealingItem
   id: Brutepack
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -52,11 +121,11 @@
   - type: Sprite
     state: brutepack
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       groups:
         Brute: -15 # 5 for each type in the group
-    bloodlossModifier: -3 # a little bit of bloodloss healing.
     healingBeginSound:
       path: "/Audio/Items/Medical/brutepack_begin.ogg"
     healingEndSound:
@@ -68,10 +137,108 @@
     price: 10
 
 - type: entity
+  id: Brutepack1
+  parent: Brutepack
+  suffix: Single
+  components:
+  - type: Stack
+    stackType: Brutepack
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  id: Brutepack10Lingering
+  parent: Brutepack
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
+
+- type: entity
+  name: medicated suture
+  description: A suture soaked in medicine, treats blunt-force trauma effectively and closes wounds.
+  parent: BaseHealingItem
+  id: MedicatedSuture
+  components:
+  - type: Tag
+    tags:
+    - Brutepack
+  - type: Sprite
+    state: medicated-suture
+  - type: Item
+    heldPrefix: medicated-suture
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      groups:
+        Brute: -30 # 10 for each type in the group
+    bloodlossModifier: -10 # a suture should stop ongoing bleeding
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: MedicatedSuture
+    count: 10
+  - type: StackPrice
+    price: 20
+
+- type: entity
+  id: BrutepackAdvanced1
+  parent: MedicatedSuture
+  components:
+  - type: Stack
+    stackType: MedicatedSuture
+    count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  name: blood pack
+  description: Contains a groundbreaking universal blood replacement created by Nanotrasen's advanced medical science.
+  parent: BaseHealingItem
+  id: Bloodpack
+  suffix: Full
+  components:
+  - type: Tag
+    tags:
+    - Bloodpack
+  - type: Sprite
+    state: bloodpack
+  - type: Healing
+    damageContainers:
+      - Biological
+    damage:
+      types:
+        Bloodloss: -0.5 #lowers bloodloss damage
+    ModifyBloodLevel: 15 #restores about 5% blood per use on standard humanoids.
+    healingBeginSound:
+      path: "/Audio/Items/Medical/brutepack_begin.ogg"
+    healingEndSound:
+      path: "/Audio/Items/Medical/brutepack_end.ogg"
+  - type: Stack
+    stackType: Bloodpack
+    count: 10
+  - type: StackPrice
+    price: 10
+
+- type: entity
+  parent: Bloodpack
+  id: Bloodpack10Lingering
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+
+- type: entity
   name: roll of gauze
   description: Some sterile gauze to wrap around bloody stumps.
   parent: BaseHealingItem
   id: Gauze
+  suffix: Full
   components:
   - type: Tag
     tags:
@@ -82,7 +249,8 @@
     graph: Gauze
     node: gauze
   - type: Healing
-    damageContainer: Biological
+    damageContainers:
+      - Biological
     damage:
       types:
         Slash: -2.5
@@ -101,9 +269,21 @@
 - type: entity
   id: Gauze1
   parent: Gauze
+  suffix: Single
   components:
   - type: Stack
     count: 1
+  - type: Item
+    size: 1
+
+- type: entity
+  id: Gauze10Lingering
+  parent: Gauze
+  suffix: 10, Lingering
+  components:
+  - type: Stack
+    lingering: true
+    count: 10
 
 - type: entity
   name: aloe cream
@@ -112,7 +292,6 @@
   id: AloeCream
   components:
   - type: Sprite
-    netsync: false
     sprite: Objects/Specific/Hydroponics/aloe.rsi
     state: cream
   - type: Stack
@@ -121,69 +300,82 @@
 
 # Pills
 - type: entity
-  name: dexalin pill
+  name: dexalin pill (10u)
   parent: Pill
   id: PillDexalin
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dexalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
-  name: dylovene pill
+  name: dylovene pill (10u)
   parent: Pill
   id: PillDylovene
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Dylovene
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
-  name: hyronalin pill
+  name: hyronalin pill (10u)
   parent: Pill
   id: PillHyronalin
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Hyronalin
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
-  name: iron pill
+  name: iron pill (10u)
   parent: Pill
   id: PillIron
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Iron
-          Quantity: 15
+          Quantity: 10
 
 - type: entity
-  name: kelotane pill
+  name: kelotane pill (10u)
   parent: Pill
   id: PillKelotane
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Kelotane
-          Quantity: 15
+          Quantity: 10
+
+- type: entity
+  name: dermaline pill (10u)
+  parent: Pill
+  id: PillDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 10
 
 - type: entity
   name: space drugs
@@ -193,23 +385,36 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: SpaceDrugs
           Quantity: 15
 
 - type: entity
-  name: tricordrazine pill
+  name: tricordrazine pill (10u)
   parent: Pill
   id: PillTricordrazine
   components:
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Tricordrazine
-          Quantity: 15
+          Quantity: 10
+
+- type: entity
+  name: bicaridine pill (10u)
+  parent: Pill
+  id: PillBicaridine
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Bicaridine
+          Quantity: 10
 
 - type: entity
   name: romerol pill
@@ -219,10 +424,36 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 50
+        maxVol: 20
         reagents:
         - ReagentId: Romerol
           Quantity: 10
+
+- type: entity
+  name: ambuzol pill
+  parent: Pill
+  id: PillAmbuzol
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: Ambuzol
+              Quantity: 10
+
+- type: entity
+  name: ambuzol plus pill
+  parent: Pill
+  id: PillAmbuzolPlus
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        food:
+          maxVol: 20
+          reagents:
+            - ReagentId: AmbuzolPlus
+              Quantity: 5
 
 # Syringes
 - type: entity
@@ -265,16 +496,42 @@
           Quantity: 15
 
 - type: entity
-  name: spaceacillin syringe
+  name: bicaridine syringe
   parent: BaseSyringe
-  id: SyringeSpaceacillin
+  id: SyringeBicaridine
   components:
   - type: SolutionContainerManager
     solutions:
       injector:
         maxVol: 15
         reagents:
-        - ReagentId: Spaceacillin
+        - ReagentId: Bicaridine
+          Quantity: 15
+
+- type: entity
+  name: dermaline syringe
+  parent: BaseSyringe
+  id: SyringeDermaline
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Dermaline
+          Quantity: 15
+
+- type: entity
+  name: hyronalin syringe
+  parent: BaseSyringe
+  id: SyringeHyronalin
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      injector:
+        maxVol: 15
+        reagents:
+        - ReagentId: Hyronalin
           Quantity: 15
 
 - type: entity
@@ -290,16 +547,29 @@
         - ReagentId: Ipecac
           Quantity: 15
 
+- type: entity
+  name: ambuzol syringe
+  parent: BaseSyringe
+  id: SyringeAmbuzol
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        injector:
+          maxVol: 15
+          reagents:
+            - ReagentId: Ambuzol
+              Quantity: 15
+
 #this is where all the syringes are so i didn't know where to put it
 - type: entity
-  name: corpium syringe
+  name: romerol syringe
   parent: BaseSyringe
-  id: SyringeCorpium
+  id: SyringeRomerol
   components:
   - type: SolutionContainerManager
     solutions:
       injector:
         maxVol: 15
         reagents:
-        - ReagentId: Corpium
-          Quantity: 10
+        - ReagentId: Romerol
+          Quantity: 15

@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Numerics;
 using Content.Client.Humanoid;
 using Content.Client.Info;
 using Content.Client.Lobby.UI;
@@ -185,10 +186,10 @@ namespace Content.Client.Preferences.UI
 
                 var view = new SpriteView
                 {
-                    Sprite = entityManager.GetComponent<SpriteComponent>(_previewDummy),
-                    Scale = (2, 2),
+                    Scale = new Vector2(2, 2),
                     OverrideDirection = Direction.South
                 };
+                view.SetEntity(_previewDummy);
 
                 var description = profile.Name;
 

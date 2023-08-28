@@ -8,14 +8,17 @@ namespace Content.Client.Lathe.UI
     [UsedImplicitly]
     public sealed class LatheBoundUserInterface : BoundUserInterface
     {
-        [ViewVariables] private LatheMenu? _menu;
-        [ViewVariables] private LatheQueueMenu? _queueMenu;
+        [ViewVariables]
+        private LatheMenu? _menu;
 
-        public EntityUid Lathe;
+        [ViewVariables]
+        private LatheQueueMenu? _queueMenu;
 
-        public LatheBoundUserInterface(ClientUserInterfaceComponent owner, Enum uiKey) : base(owner, uiKey)
+        [ViewVariables]
+        private LatheMaterialsEjectionMenu? _materialsEjectionMenu;
+
+        public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
-            Lathe = owner.Owner;
         }
 
         protected override void Open()
@@ -24,24 +27,39 @@ namespace Content.Client.Lathe.UI
 
             _menu = new LatheMenu(this);
             _queueMenu = new LatheQueueMenu();
+            _materialsEjectionMenu = new LatheMaterialsEjectionMenu();
 
             _menu.OnClose += Close;
 
             _menu.OnQueueButtonPressed += _ =>
             {
-                _queueMenu.OpenCenteredLeft();
+                if (_queueMenu.IsOpen)
+                    _queueMenu.Close();
+                else
+                    _queueMenu.OpenCenteredLeft();
             };
+
+            _menu.OnMaterialsEjectionButtonPressed += _ =>
+            {
+                if (_materialsEjectionMenu.IsOpen)
+                    _materialsEjectionMenu.Close();
+                else
+                    _materialsEjectionMenu.OpenCenteredRight();
+            };
+
             _menu.OnServerListButtonPressed += _ =>
             {
                 SendMessage(new ConsoleServerSelectionMessage());
             };
-            _menu.OnServerSyncButtonPressed += _ =>
-            {
-                SendMessage(new ConsoleServerSyncMessage());
-            };
+
             _menu.RecipeQueueAction += (recipe, amount) =>
             {
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
+            };
+
+            _materialsEjectionMenu.OnEjectPressed += (material, sheetsToExtract) =>
+            {
+                SendMessage(new LatheEjectMaterialMessage(material, sheetsToExtract));
             };
 
             _menu.OpenCentered();
@@ -56,10 +74,11 @@ namespace Content.Client.Lathe.UI
                 case LatheUpdateState msg:
                     if (_menu != null)
                         _menu.Recipes = msg.Recipes;
-                    _menu?.PopulateRecipes(Owner.Owner);
-                    _menu?.PopulateMaterials(Lathe);
+                    _menu?.PopulateRecipes(Owner);
+                    _menu?.PopulateMaterials(Owner);
                     _queueMenu?.PopulateList(msg.Queue);
                     _queueMenu?.SetInfo(msg.CurrentlyProducing);
+                    _materialsEjectionMenu?.PopulateMaterials(Owner);
                     break;
             }
         }
@@ -71,6 +90,7 @@ namespace Content.Client.Lathe.UI
                 return;
             _menu?.Dispose();
             _queueMenu?.Dispose();
+            _materialsEjectionMenu?.Dispose();
         }
     }
 }

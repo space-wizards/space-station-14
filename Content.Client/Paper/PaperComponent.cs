@@ -4,6 +4,6 @@ using Robust.Shared.GameStates;
 namespace Content.Client.Paper;
 
 [NetworkedComponent, RegisterComponent]
-public sealed class PaperComponent : SharedPaperComponent
+public sealed partial class PaperComponent : SharedPaperComponent
 {
 }

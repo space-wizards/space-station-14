@@ -201,7 +201,12 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             return;
 
         var player = _playerManager.GetSessionByUserId(userId);
-        var playTimes = _tracking.GetTrackerTimes(player);
+        if (!_tracking.TryGetTrackerTimes(player, out var playTimes))
+        {
+            // Sorry mate but your playtimes haven't loaded.
+            Logger.ErrorS("playtime", $"Playtimes weren't ready yet for {player} on roundstart!");
+            playTimes ??= new Dictionary<string, TimeSpan>();
+        }
 
         for (var i = 0; i < jobs.Count; i++)
         {

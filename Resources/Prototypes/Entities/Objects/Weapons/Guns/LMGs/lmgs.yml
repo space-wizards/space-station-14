@@ -6,7 +6,6 @@
   abstract: true
   components:
   - type: Sprite
-    netsync: false
   - type: Item
     size: 60
   - type: Clothing
@@ -14,12 +13,16 @@
     quickEquip: false
     slots:
     - Back
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -20
   - type: Gun
-    minAngle: 4
-    maxAngle: 20
+    minAngle: 24
+    maxAngle: 45
     angleIncrease: 4
     angleDecay: 16
-    fireRate: 5
+    fireRate: 8
     selectedMode: FullAuto
     availableModes:
       - FullAuto
@@ -28,6 +31,8 @@
     soundEmpty:
       path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
   - type: ChamberMagazineAmmoProvider
+    soundRack:
+      path: /Audio/Weapons/Guns/Cock/lmg_cock.ogg
   - type: AmmoCounter
   - type: ItemSlots
     slots:

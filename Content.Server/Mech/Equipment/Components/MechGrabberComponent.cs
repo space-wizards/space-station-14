@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System.Numerics;
+using System.Threading;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 
@@ -9,7 +10,7 @@ namespace Content.Server.Mech.Equipment.Components;
 /// inside of a container so large objects can be moved.
 /// </summary>
 [RegisterComponent]
-public sealed class MechGrabberComponent : Component
+public sealed partial class MechGrabberComponent : Component
 {
     /// <summary>
     /// The change in energy after each grab.

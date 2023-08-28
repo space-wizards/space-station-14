@@ -13,7 +13,6 @@ chatsan-annoyed = looks annoyed
 chatsan-sighs = sighs
 chatsan-stick-out-tongue = sticks { POSS-ADJ($ent) } tongue out
 chatsan-wide-eyed = looks shocked
-chatsan-surprised = looks surpised
 chatsan-confused = looks confused
 chatsan-unimpressed = seems unimpressed
 chatsan-waves = waves

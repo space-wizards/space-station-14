@@ -21,13 +21,13 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<ChameleonClothingComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<ChameleonClothingComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<ChameleonClothingComponent, ComponentGetState>(GetState);
         SubscribeLocalEvent<ChameleonClothingComponent, GetVerbsEvent<InteractionVerb>>(OnVerb);
         SubscribeLocalEvent<ChameleonClothingComponent, ChameleonPrototypeSelectedMessage>(OnSelected);
     }
 
-    private void OnInit(EntityUid uid, ChameleonClothingComponent component, ComponentInit args)
+    private void OnMapInit(EntityUid uid, ChameleonClothingComponent component, MapInitEvent args)
     {
         SetSelectedPrototype(uid, component.SelectedId, true, component);
     }
@@ -48,7 +48,7 @@ public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
         args.Verbs.Add(new InteractionVerb()
         {
             Text = Loc.GetString("chameleon-component-verb-text"),
-            Icon = new SpriteSpecifier.Texture(new ResourcePath("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
+            Icon = new SpriteSpecifier.Texture(new ("/Textures/Interface/VerbIcons/settings.svg.192dpi.png")),
             Act = () => TryOpenUi(uid, args.User, component)
         });
     }

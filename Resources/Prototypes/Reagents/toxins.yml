@@ -1,4 +1,4 @@
-﻿- type: reagent
+- type: reagent
   id: Toxin
   name: reagent-name-toxin
   group: Toxins
@@ -17,7 +17,7 @@
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Poison: 4
 
 - type: reagent
   id: CarpoToxin
@@ -44,7 +44,6 @@
         visualType: MediumCaution
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
 
 - type: reagent
   id: ChloralHydrate
@@ -85,6 +84,7 @@
   desc: reagent-desc-mold
   flavor: bitter
   color: "#8a9a5b"
+  recognizable: true
   physicalDesc: reagent-physical-desc-fuzzy
   metabolisms:
     Poison:
@@ -93,19 +93,6 @@
         damage:
           types:
             Poison: 1
-      - !type:ChemCauseRandomDisease
-        conditions:
-        - !type:ReagentThreshold
-          reagent: Mold
-          min: 1
-        diseases:
-          - VentCough
-          - SpaceCold
-          - SpaceFlu
-          - BirdFlew
-          - Plague
-          - TongueTwister
-          - MemeticAmirmir
 
 - type: reagent
   id: PolytrinicAcid
@@ -113,7 +100,7 @@
   group: Toxins
   desc: reagent-desc-polytrinic-acid
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: acidic
+  flavor: acid
   color: "#a1000b"
   boilingPoint: 78.2 # This isn't a real chemical...
   meltingPoint: -19.4
@@ -132,31 +119,34 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.5
       - !type:Emote
         emote: Scream
         probability: 0.3
   metabolisms:
     Poison:
+      metabolismRate : 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Caustic: 11.0
       - !type:PopupMessage
         type: Local
         visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
+      - !type:Emote
+        emote: Scream
+        probability: 0.3
 - type: reagent
   id: FluorosulfuricAcid
   name: reagent-name-fluorosulfuric-acid
   group: Toxins
   desc: reagent-desc-fluorosulfuric-acid
   physicalDesc: reagent-physical-desc-strong-smelling
-  flavor: acidic
+  flavor: acid
   color: "#5050ff"
   boilingPoint: 165
   meltingPoint: -87
@@ -168,32 +158,36 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.3
       - !type:Emote
         emote: Scream
         probability: 0.2
   metabolisms:
     Poison:
+      metabolismRate: 3.00 # High damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
-          groups:
-            Caustic: 2
+          types:
+            Caustic: 8
       - !type:PopupMessage
         type: Local
         visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
-
+      - !type:Emote
+        emote: Scream
+        probability: 0.25
 - type: reagent
   id: SulfuricAcid
   name: reagent-name-sulfuric-acid
   group: Toxins
   desc: reagent-desc-sulfuric-acid
   physicalDesc: reagent-physical-desc-oily
-  flavor: acidic
+  flavor: acid
   color: "#BF8C00"
+  recognizable: true
   boilingPoint: 337.0
   meltingPoint: 10.31
   plantMetabolism:
@@ -211,23 +205,27 @@
         scaleByQuantity: true
         ignoreResistances: false
         damage:
-          groups:
+          types:
             Caustic: 0.1
       - !type:Emote
         emote: Scream
         probability: 0.1
   metabolisms:
     Poison:
+      metabolismRate: 3.00 # Okay damage, high metabolism rate. You need a lot of units to crit. Simulates acid burning through you fast.
       effects:
       - !type:HealthChange
         damage:
           types:
-            Poison: 2
+            Caustic: 5
       - !type:PopupMessage
         type: Local
         visualType: Large
         messages: [ "generic-reagent-effect-burning-insides" ]
         probability: 0.33
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
 
 - type: reagent
   id: UnstableMutagen
@@ -382,6 +380,7 @@
 - type: reagent
   id: VentCrud
   name: reagent-name-vent-crud
+  group: Toxins
   desc: reagent-desc-vent-crud
   physicalDesc: reagent-physical-desc-sticky
   flavor: bitter
@@ -393,31 +392,27 @@
           damage:
             types:
               Poison: 2
-        - !type:ChemCauseDisease ##Since this mostly just comes from the event you won't ingest that much
-          causeChance: 0.6
-          disease: VentCough
 
 - type: reagent
-  id: Corpium
-  name: reagent-name-corpium
-  desc: reagent-desc-corpium
+  id: Romerol
+  name: reagent-name-romerol
+  group: Toxins
+  desc: reagent-desc-romerol
   physicalDesc: reagent-physical-desc-necrotic
   flavor: bitter
-  color: "#7668a1"
+  color: "#7e916e"
   metabolisms:
-    Poison:
+    Medicine:
       effects:
-        - !type:HealthChange
-          damage:
-            types:
-              Cellular: 1
-        - !type:ChemCauseDisease
-          causeChance: 1
-          disease: ActiveZombieVirus
+        - !type:CauseZombieInfection
+          conditions:
+            - !type:ReagentThreshold
+              min: 5
 
 - type: reagent
   id: UncookedAnimalProteins
   name: reagent-name-uncooked-animal-proteins
+  group: Foods
   desc: reagent-desc-uncooked-animal-proteins
   physicalDesc: reagent-physical-desc-clumpy
   flavor: bitter
@@ -442,6 +437,7 @@
 - type: reagent
   id: Allicin
   name: reagent-name-allicin
+  group: Foods
   desc: reagent-desc-allicin
   physicalDesc: reagent-physical-desc-pungent
   flavor: bitter
@@ -463,6 +459,7 @@
 - type: reagent
   id: Pax
   name: reagent-name-pax
+  group: Narcotics
   desc: reagent-desc-pax
   physicalDesc: reagent-physical-desc-soothing
   color: "#AAAAAA"
@@ -474,3 +471,41 @@
         component: Pacified
         refresh: false
         type: Add
+
+- type: reagent
+  id: Honk
+  name: reagent-name-honk
+  group: Toxins
+  desc: reagent-desc-honk
+  physicalDesc: reagent-physical-desc-pungent
+  flavor: bitter
+  color: "#F2E9D2"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.05
+      effects:
+      - !type:HealthChange
+        conditions:
+        - !type:ReagentThreshold
+          min: 1
+        - !type:OrganType
+          type: Animal
+        damage:
+          types:
+            Poison: 0.06
+
+- type: reagent
+  id: Lead
+  name: reagent-name-lead
+  group: Toxins
+  desc: reagent-desc-lead
+  physicalDesc: reagent-physical-desc-metallic
+  color: "#5C6274"
+  metabolisms:
+    Poison:
+      metabolismRate: 0.03 # Effectively once every 30 seconds.
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 0.6 # Makes it 20 damage per unit.
