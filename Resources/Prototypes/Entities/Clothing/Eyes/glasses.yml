@@ -66,6 +66,18 @@
 
 - type: entity
   parent: ClothingEyesBase
+  id: ClothingEyesGlassesTrayson
+  name: t-ray goggles #less confusion
+  description: Dark-tinted goggles using t-ray technology to see subfloor objects.
+  components:
+  - type: Sprite
+    sprite: Clothing/Eyes/Glasses/trayson.rsi
+  - type: Clothing
+    sprite: Clothing/Eyes/Glasses/trayson.rsi
+  - type: TrayScanner
+
+- type: entity
+  parent: ClothingEyesBase
   id: ClothingEyesGlasses
   name: glasses
   description: A pair of spectacular spectacles with prescription lenses.
