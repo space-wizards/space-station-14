@@ -211,7 +211,7 @@ namespace Content.Shared.Roles
                     }
                 case SpeciesRequirement speciesRequirement:
                     var allowed = speciesRequirement.Species.Contains(profile.Species);
-                    var specieNames = string.Join(", ", speciesRequirement.Species.Select(Loc.GetString).ToArray());
+                    var specieNames = string.Join(", ", speciesRequirement.Species.Select(s => Loc.GetString($"species-name-{s.ToLower()}")).ToArray());
 
                     if (speciesRequirement.Inverted)
                     {
