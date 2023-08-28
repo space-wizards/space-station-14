@@ -7,7 +7,7 @@ namespace Content.Server.Power.Generator;
 /// This is used for providing gas power to machinery.
 /// </summary>
 [RegisterComponent, Access(typeof(GasPowerReceiverSystem))]
-public sealed class GasPowerReceiverComponent : Component
+public sealed partial class GasPowerReceiverComponent : Component
 {
     /// <summary>
     /// Past this temperature we assume we're in reaction mass mode and not magic mode.

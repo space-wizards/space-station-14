@@ -2,6 +2,10 @@
   id: AirAlarm
   name: air alarm
   description: An air alarm. Alarms... air?
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: WallMount
   - type: ApcPowerReceiver
@@ -16,14 +20,22 @@
     prefix: device-address-prefix-air-alarm
     sendBroadcastAttemptEvent: true
   - type: WiredNetworkConnection
+  # for output status ports
+  - type: WirelessNetworkConnection
+    range: 200
   - type: DeviceList
   - type: DeviceNetworkRequiresPower
+  - type: DeviceLinkSource
+    ports:
+    - AirDanger
+    - AirWarning
+    - AirNormal
   - type: AtmosAlarmable
     syncWith:
-      - AirAlarm
-      - AirSensor
-      - GasVent
-      - GasScrubber
+    - AirAlarm
+    - AirSensor
+    - GasVent
+    - GasScrubber
   - type: AtmosAlarmableVisuals
     layerMap: "airAlarmBase"
     alarmStates:
@@ -47,10 +59,16 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Air Alarm"
+    BoardName: wires-board-name-airalarm
     LayoutId: AirAlarm
   - type: AccessReader
     access: [["Atmospherics"]]
+  - type: ContainerFill
+    containers:
+      board: [ AirAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Appearance
   - type: WiresVisuals
   - type: Sprite
@@ -85,15 +103,15 @@
           - !type:PlaySoundBehavior
             sound:
               path: /Audio/Effects/metalbreak.ogg
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount
 
 - type: entity
   id: AirAlarmAssembly
   name: air alarm assembly
   description: An air alarm. Doesn't look like it'll be alarming air any time soon.
+  placement:
+    mode: SnapgridCenter
+    snap:
+    - Wallmount
   components:
   - type: WallMount
   - type: Clickable
@@ -115,7 +133,3 @@
     node: assembly
   - type: Transform
     anchored: true
-  placement:
-    mode: SnapgridCenter
-    snap:
-    - Wallmount

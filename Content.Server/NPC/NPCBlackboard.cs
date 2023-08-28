@@ -12,7 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.NPC;
 
 [DataDefinition]
-public sealed class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
+public sealed partial class NPCBlackboard : IEnumerable<KeyValuePair<string, object>>
 {
     /// <summary>
     /// Global defaults for NPCs
