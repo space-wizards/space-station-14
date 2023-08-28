@@ -161,6 +161,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChemistryCasual
+  name: casual chemistry jumpsuit
+  description: There's some odd stains on this jumpsuit. Hm.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/chemistry_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/chemistry_casual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitVirology
   name: virology jumpsuit
   description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
@@ -172,6 +183,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitVirologyCasual
+  name: casual virology jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a virologist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/virology_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/virology_casual.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitGenetics
   name: genetics jumpsuit
   description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
@@ -180,6 +202,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/genetics.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitGeneticsCasual
+  name: casual genetics jumpsuit
+  description: It's made of a special fiber that gives special protection against biohazards. It has a geneticist rank stripe on it.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/genetics_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/genetics_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -256,6 +289,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/engineering.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitEngineeringCasual
+  name: casual engineering jumpsuit
+  description: If this suit was non-conductive, maybe engineers would actually do their damn job.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/engineering_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase
@@ -344,6 +388,17 @@
     sprite: Clothing/Uniforms/Jumpsuit/hydro.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/hydro.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitHydroponicsCasual
+  name: casual hydroponics jumpsuit
+  description: Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/hydro_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/hydro_casual.rsi
 
 - type: entity
   parent: ClothingUniformBase
