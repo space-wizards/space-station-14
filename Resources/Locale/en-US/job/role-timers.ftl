@@ -7,4 +7,7 @@ role-timer-role-too-high = You require {TOSTRING($time, "0")} fewer minutes with
 
 role-timer-locked = Locked (hover for details)
 
+role-species-allowed = Role allowed only for {$species} species
+role-species-restricted = Role restricted for {$species} species
+
 role-ban = You have been banned from this role.

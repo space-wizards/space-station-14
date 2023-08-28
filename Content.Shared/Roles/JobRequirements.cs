@@ -1,8 +1,12 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
 
 namespace Content.Shared.Roles
 {
@@ -62,11 +66,20 @@ namespace Content.Shared.Roles
         [DataField("inverted")] public bool Inverted;
     }
 
+    public sealed partial class SpeciesRequirement : JobRequirement
+    {
+        [DataField("species", customTypeSerializer: typeof(PrototypeIdListSerializer<SpeciesPrototype>))]
+        public List<string> Species = new();
+
+        [DataField("inverted")] public bool Inverted;
+    }
+
     public static class JobRequirements
     {
         public static bool TryRequirementsMet(
             JobPrototype job,
             Dictionary<string, TimeSpan> playTimes,
+            HumanoidCharacterProfile profile,
             [NotNullWhen(false)] out string? reason,
             IPrototypeManager prototypes)
         {
@@ -76,7 +89,7 @@ namespace Content.Shared.Roles
 
             foreach (var requirement in job.Requirements)
             {
-                if (!TryRequirementMet(requirement, playTimes, out reason, prototypes))
+                if (!TryRequirementMet(requirement, playTimes, profile, out reason, prototypes))
                     return false;
             }
 
@@ -89,6 +102,7 @@ namespace Content.Shared.Roles
         public static bool TryRequirementMet(
             JobRequirement requirement,
             Dictionary<string, TimeSpan> playTimes,
+            HumanoidCharacterProfile profile,
             [NotNullWhen(false)] out string? reason,
             IPrototypeManager prototypes)
 
@@ -195,6 +209,18 @@ namespace Content.Shared.Roles
 
                         return true;
                     }
+                case SpeciesRequirement speciesRequirement:
+                    var allowed = speciesRequirement.Species.Contains(profile.Species);
+                    var specieNames = string.Join(", ", speciesRequirement.Species.Select(Loc.GetString).ToArray());
+
+                    if (speciesRequirement.Inverted)
+                    {
+                        reason = Loc.GetString("role-species-restricted", ("species", specieNames));
+                        return !allowed;
+                    }
+
+                    reason = Loc.GetString("role-species-allowed", ("species", specieNames));
+                    return allowed;
                 default:
                     throw new NotImplementedException();
             }

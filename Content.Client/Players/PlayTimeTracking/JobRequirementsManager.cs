@@ -1,9 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Text;
+using Content.Client.Preferences;
 using Content.Shared.CCVar;
 using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
+using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Client;
 using Robust.Client.Player;
@@ -20,6 +21,7 @@ public sealed class JobRequirementsManager
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
+    [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
 
     private readonly Dictionary<string, TimeSpan> _roles = new();
     private readonly List<string> _roleBans = new();
@@ -101,10 +103,12 @@ public sealed class JobRequirementsManager
 
         var reasonBuilder = new StringBuilder();
 
+        var profile = (HumanoidCharacterProfile) _preferencesManager.Preferences!.SelectedCharacter;
+
         var first = true;
         foreach (var requirement in job.Requirements)
         {
-            if (JobRequirements.TryRequirementMet(requirement, _roles, out reason, _prototypes))
+            if (JobRequirements.TryRequirementMet(requirement, _roles, profile, out reason, _prototypes))
                 continue;
 
             if (!first)
