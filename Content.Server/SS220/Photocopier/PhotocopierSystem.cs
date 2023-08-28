@@ -34,6 +34,7 @@ public sealed partial class PhotocopierSystem : EntitySystem
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private FormManager? _specificFormManager;
     private readonly ISawmill _sawmill = Logger.GetSawmill("photocopier");
