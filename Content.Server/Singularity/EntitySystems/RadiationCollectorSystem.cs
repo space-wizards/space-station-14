@@ -67,8 +67,10 @@ namespace Content.Server.Singularity.EntitySystems
             foreach (var gas in component.RadiationReactiveGases)
             {
                 float reactantMol = gasTankComponent.Air.GetMoles(gas.Reactant);
-                charge += args.TotalRads * reactantMol * component.ChargeModifier * gas.PowerGenerationEfficiency;
                 float delta = args.TotalRads * reactantMol * gas.ReactantBreakdownRate;
+
+                float temperatureMod = 1.5f * gasTankComponent.Air.Temperature / (150f + gasTankComponent.Air.Temperature);
+                charge += args.TotalRads * reactantMol * component.ChargeModifier * gas.PowerGenerationEfficiency * temperatureMod;
 
                 if (delta > 0)
                 {
