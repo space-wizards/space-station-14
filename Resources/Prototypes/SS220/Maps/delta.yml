@@ -53,8 +53,9 @@
             ResearchDirector: [ 1, 1 ]
             Scientist: [ 7, 7 ]
             ResearchAssistant: [ 3, 3 ]
+            Borg: [ 2, 2 ]
             #Service
-            Bartender: [ 1, 1 ]
+            Bartender: [ 2, 2 ]
             Botanist: [ 3, 4 ]
             Chef: [ 1, 2 ]
             Clown: [ 1, 1 ]
@@ -66,3 +67,4 @@
             Reporter: [ 2, 2 ]
             ServiceWorker: [ 3, 3 ]
             Zookeeper: [1, 1]
+            Lawyer: [ 2, 2 ]

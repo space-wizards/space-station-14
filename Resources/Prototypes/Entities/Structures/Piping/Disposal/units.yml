@@ -88,6 +88,33 @@
       type: DisposalUnitBoundUserInterface
 
 - type: entity
+  id: DisposalUnitRnd
+  parent: DisposalUnitBase
+  name: утилизационный блок РнД
+  components:
+  - type: Sprite
+    layers:
+    - state: condisposal-rnd
+      map: [ "enum.DisposalUnitVisualLayers.Unanchored" ]
+    - state: disposal-rnd
+      map: [ "enum.DisposalUnitVisualLayers.Base" ]
+    - state: disposal-flush-rnd
+      map: [ "enum.DisposalUnitVisualLayers.BaseFlush" ]
+    - state: dispover-charge
+      map: [ "enum.DisposalUnitVisualLayers.OverlayCharging" ]
+    - state: dispover-ready
+      map: [ "enum.DisposalUnitVisualLayers.OverlayReady" ]
+    - state: dispover-full
+      map: [ "enum.DisposalUnitVisualLayers.OverlayFull" ]
+    - state: dispover-handle
+      map: [ "enum.DisposalUnitVisualLayers.OverlayEngaged" ]
+  - type: DisposalUnit
+  - type: UserInterface
+    interfaces:
+    - key: enum.DisposalUnitUiKey.Key
+      type: DisposalUnitBoundUserInterface
+
+- type: entity
   id: MailingUnit
   parent: DisposalUnitBase
   name: mailing unit

@@ -25,6 +25,15 @@
                 ]
             ]
         },
+		{
+            "name": "condisposal-rnd",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
         {
             "name": "conpipe-c",
             "directions": 4,
@@ -196,6 +205,15 @@
                 ]
             ]
         },
+		{
+            "name": "disposal-rnd",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
         {
             "name": "mailing",
             "directions": 1,
@@ -214,6 +232,15 @@
                 ]
             ]
         },
+		{
+            "name": "disposal-charging-rnd",
+            "directions": 1,
+            "delays": [
+                [
+                    1.0
+                ]
+            ]
+        },
         {
             "name": "mailing-charging",
             "directions": 1,
@@ -225,6 +252,23 @@
         },
         {
             "name": "disposal-flush",
+            "directions": 1,
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.5,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
+        },
+		{
+            "name": "disposal-flush-rnd",
             "directions": 1,
             "delays": [
                 [

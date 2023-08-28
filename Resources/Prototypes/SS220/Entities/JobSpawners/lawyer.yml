@@ -1,0 +1,11 @@
+- type: entity
+  id: SpawnPointActualFuckingLawyer
+  parent: SpawnPointJobBase
+  name: lawyer
+  components:
+  - type: SpawnPoint
+    job_id: Lawyer
+  - type: Sprite
+    layers:
+      - state: green
+      - state: lawyer
