@@ -92,8 +92,8 @@
       0: Alive
       70: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 4.2
-    baseSprintSpeed : 4.2
+    baseWalkSpeed : 4.3
+    baseSprintSpeed : 4.3
   - type: SlowOnDamage
     speedModifierThresholds:
       55: 0.7
@@ -174,8 +174,8 @@
       0: Alive
       50: Dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 5
-    baseSprintSpeed : 5
+    baseWalkSpeed : 4.5
+    baseSprintSpeed : 4.5
   - type: SlowOnDamage
     speedModifierThresholds:
       35: 0.7
