@@ -23,3 +23,29 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
     state: icon
   objectType: Item
+
+- type: construction
+  name: web jumpsuit
+  id: ClothingUniformJumpsuitWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: jumpsuit
+  category: construction-category-clothing
+  description: "At least it's something."
+  icon:
+    sprite: Clothing/Uniforms/Jumpsuit/web.rsi
+    state: icon
+  objectType: Item
+
+- type: construction
+  name: web jumpskirt
+  id: ClothingUniformJumpskirtWeb
+  graph: WebObjects
+  startNode: start
+  targetNode: jumpskirt
+  category: construction-category-clothing
+  description: "At least it's something."
+  icon:
+    sprite:  Clothing/Uniforms/Jumpskirt/web.rsi
+    state: icon
+  objectType: Item

@@ -477,6 +477,8 @@
   - type: FlavorProfile
     flavors:
       - cobwebs
+    ignoreReagents:
+      - Fiber
   - type: SolutionContainerManager
     solutions:
       food:
