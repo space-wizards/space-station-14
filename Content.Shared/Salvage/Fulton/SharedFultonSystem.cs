@@ -28,7 +28,6 @@ public abstract partial class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
-    public static readonly TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
     [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
     protected static readonly Vector2 EffectOffset = Vector2.Zero;
 
@@ -73,7 +72,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void Unfulton(EntityUid uid, FultonedComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!Resolve(uid, ref component, false) || !component.Removeable)
             return;
 
         RemCompDeferred<FultonedComponent>(uid);
@@ -91,7 +90,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
         var fultoned = AddComp<FultonedComponent>(args.Target.Value);
         fultoned.Beacon = fulton.Beacon;
-        fultoned.NextFulton = Timing.CurTime + FultonDuration;
+        fultoned.NextFulton = Timing.CurTime + fulton.FultonDuration;
         UpdateAppearance(args.Target.Value, fultoned);
         Dirty(args.Target.Value, fultoned);
         Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);
@@ -121,6 +120,12 @@ public abstract partial class SharedFultonSystem : EntitySystem
                 _popup.PopupClient(Loc.GetString("fulton-folded"), uid, args.User);
             }
 
+            return;
+        }
+
+        if (Deleted(component.Beacon))
+        {
+            _popup.PopupClient(Loc.GetString("fulton-not-found"), uid, args.User);
             return;
         }
 

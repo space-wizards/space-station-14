@@ -27,4 +27,11 @@ public sealed partial class FultonedComponent : Component
 
     [ViewVariables(VVAccess.ReadWrite), DataField("sound"), AutoNetworkedField]
     public SoundSpecifier? Sound = new SoundPathSpecifier("/Audio/Items/Mining/fultext_launch.ogg");
+
+    // Mainly for admemes.
+    /// <summary>
+    /// Can the fulton be removed.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("removeable")]
+    public bool Removeable = true;
 }

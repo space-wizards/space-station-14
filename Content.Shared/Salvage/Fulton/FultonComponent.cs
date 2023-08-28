@@ -10,11 +10,23 @@ namespace Content.Shared.Salvage.Fulton;
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
 public sealed partial class FultonComponent : Component
 {
+    /// <summary>
+    /// How long it takes to apply the fulton to an entity.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("applyDuration"), AutoNetworkedField]
     public TimeSpan ApplyFultonDuration = TimeSpan.FromSeconds(3);
 
+    /// <summary>
+    /// Linked fulton beacon.
+    /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("beacon")]
     public EntityUid Beacon;
+
+    /// <summary>
+    /// How long the fulton will remain before teleporting to the beacon.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("duration")]
+    public TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
 
     [ViewVariables(VVAccess.ReadWrite), DataField("whitelist"), AutoNetworkedField]
     public EntityWhitelist? Whitelist = new()
