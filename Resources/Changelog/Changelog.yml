@@ -1,11 +1,6 @@
 Entries:
 - author: ElectroJr
   changes:
-  - {message: The mass scanner UI shows distances again., type: Fix}
-  id: 4195
-  time: '2023-07-08T19:47:53.0000000+00:00'
-- author: ElectroJr
-  changes:
   - {message: Fixed chat scrollbar not working properly., type: Fix}
   id: 4196
   time: '2023-07-09T02:25:39.0000000+00:00'
@@ -3028,3 +3023,8 @@ Entries:
   - {message: The recycler now recycles items off conveyor belts properly., type: Fix}
   id: 4694
   time: '2023-08-27T23:01:54.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: Fixed Sec HUD icons overlapping with speech indicators., type: Fix}
+  id: 4695
+  time: '2023-08-28T06:19:59.0000000+00:00'
