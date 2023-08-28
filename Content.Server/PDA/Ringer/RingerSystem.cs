@@ -56,8 +56,11 @@ namespace Content.Server.PDA.Ringer
             UpdateRingerUserInterface(uid, ringer);
         }
 
-        public void RingerPlayRingtone(EntityUid uid, RingerComponent ringer)
+        public void RingerPlayRingtone(EntityUid uid, RingerComponent? ringer = default!)
         {
+            if (!Resolve(uid, ref ringer))
+                return;
+
             EnsureComp<ActiveRingerComponent>(uid);
 
             _popupSystem.PopupEntity(Loc.GetString("comp-ringer-vibration-popup"), uid, Filter.Pvs(uid, 0.05f), false, PopupType.Small);

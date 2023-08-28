@@ -21,3 +21,9 @@ public struct NewsArticle
     [ViewVariables]
     public TimeSpan ShareTime;
 }
+
+[ByRefEvent]
+public record struct NewsArticlePublishedEvent(NewsArticle Article);
+
+[ByRefEvent]
+public record struct NewsArticleDeletedEvent;

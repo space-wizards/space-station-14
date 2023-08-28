@@ -30,3 +30,4 @@ news-write-ui-richtext-tooltip = News articles support rich text
     {"[bullet/]color"}
     {"[bullet/]bullet[/color]"}
 
+news-pda-notification-header = New news article

@@ -35,10 +35,15 @@ public sealed class NewsReaderUi : UIFragment
 
     public override void UpdateState(BoundUserInterfaceState state)
     {
-        if (state is NewsReaderBoundUserInterfaceState cast)
-            _fragment?.UpdateState(cast.Article, cast.TargetNum, cast.TotalNum, cast.NotificationOn);
-        else if (state is NewsReaderEmptyBoundUserInterfaceState empty)
-            _fragment?.UpdateEmptyState(empty.NotificationOn);
+        switch (state)
+        {
+            case NewsReaderBoundUserInterfaceState cast:
+                _fragment?.UpdateState(cast.Article, cast.TargetNum, cast.TotalNum, cast.NotificationOn);
+                break;
+            case NewsReaderEmptyBoundUserInterfaceState empty:
+                _fragment?.UpdateEmptyState(empty.NotificationOn);
+                break;
+        }
     }
 
     private void SendNewsReaderMessage(NewsReaderUiAction action, BoundUserInterface userInterface)

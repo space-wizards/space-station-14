@@ -1,21 +1,24 @@
 using Content.Server.AlertLevel;
 using Content.Server.CartridgeLoader;
+using Content.Server.Chat.Managers;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.Instruments;
 using Content.Server.Light.EntitySystems;
 using Content.Server.Light.Events;
-using Content.Server.MassMedia.Systems;
-using Content.Server.Mind;
 using Content.Server.PDA.Ringer;
 using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
+using Content.Shared.CartridgeLoader;
+using Content.Shared.Chat;
 using Content.Shared.Light.Component;
 using Content.Shared.PDA;
+using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Containers;
+using Robust.Shared.Utility;
 
 namespace Content.Server.PDA
 {
@@ -26,9 +29,10 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
-        [Dependency] private readonly NewsSystem _news = default!;
+        [Dependency] private readonly IChatManager _chatManager = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
+        [Dependency] private readonly ContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {
@@ -43,6 +47,8 @@ namespace Content.Server.PDA
             SubscribeLocalEvent<PdaComponent, PdaShowMusicMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaShowUplinkMessage>(OnUiMessage);
             SubscribeLocalEvent<PdaComponent, PdaLockUplinkMessage>(OnUiMessage);
+
+            SubscribeLocalEvent<PdaComponent, CartridgeLoaderNotificationSentEvent>(OnNotification);
 
             SubscribeLocalEvent<StationRenamedEvent>(OnStationRenamed);
             SubscribeLocalEvent<AlertLevelChangedEvent>(OnAlertLevelChanged);
@@ -100,6 +106,27 @@ namespace Content.Server.PDA
             {
                 UpdatePdaUi(ent, comp);
             }
+        }
+
+        private void OnNotification(EntityUid uid, PdaComponent component, ref CartridgeLoaderNotificationSentEvent args)
+        {
+            _ringer.RingerPlayRingtone(uid);
+
+            if (!_containerSystem.TryGetContainingContainer(uid, out var container)
+                || !TryComp<ActorComponent>(container.Owner, out var actor))
+                return;
+
+            var message = FormattedMessage.EscapeText(args.Message);
+            var wrappedMessage = $"[font size=12][bold]PDA[/bold] {args.Header}: [/font]\n\"{message}\"";
+
+            _chatManager.ChatMessageToOne(
+                ChatChannel.Local,
+                message,
+                wrappedMessage,
+                EntityUid.Invalid,
+                false,
+                actor.PlayerSession.ConnectedClient,
+                Color.LightGray);
         }
 
         /// <summary>

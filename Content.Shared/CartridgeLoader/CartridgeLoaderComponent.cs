@@ -42,6 +42,13 @@ public sealed class CartridgeLoaderComponent : Component
     [DataField("diskSpace")]
     public int DiskSpace = 5;
 
+    /// <summary>
+    /// Controls whether the cartridge loader will play notifications if it supports it at all
+    /// TODO: Add an option for this to the PDA
+    /// </summary>
+    [DataField("notificationsEnabled")]
+    public bool NotificationsEnabled = true;
+
     [DataField("uiKey", required: true, customTypeSerializer: typeof(EnumSerializer))]
     public Enum UiKey = default!;
 }

@@ -8,7 +8,6 @@ using Content.Shared.MassMedia.Systems;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Content.Server.Administration.Logs;
-using Content.Server.Cargo.Components;
 using Content.Server.CartridgeLoader.Cartridges;
 using Content.Shared.CartridgeLoader;
 using Content.Shared.CartridgeLoader.Cartridges;
@@ -25,8 +24,7 @@ public sealed class NewsSystem : EntitySystem
 {
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
-    [Dependency] private readonly RingerSystem _ringer = default!;
-    [Dependency] private readonly CartridgeLoaderSystem? _cartridgeLoaderSystem = default!;
+    [Dependency] private readonly CartridgeLoaderSystem _cartridgeLoaderSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly StationSystem _station = default!;
@@ -38,12 +36,52 @@ public sealed class NewsSystem : EntitySystem
     {
         base.Initialize();
 
+        // News writer
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterDeleteMessage>(OnWriteUiDeleteMessage);
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterArticlesRequestMessage>(OnRequestArticlesUiMessage);
-
-        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeUiReadyEvent>(OnReaderUiReady);
-        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeMessageEvent>(OnReadUiMessage);
         SubscribeLocalEvent<NewsWriterComponent, NewsWriterPublishMessage>(OnWriteUiPublishMessage);
+
+        // News reader
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeAddedEvent>(OnAdded);
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeRemovedEvent>(OnRemoved);
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, NewsArticlePublishedEvent>(OnArticlePublished);
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, NewsArticleDeletedEvent>(OnArticleDeleted);
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeMessageEvent>(OnReaderUiMessage);
+        SubscribeLocalEvent<NewsReaderCartridgeComponent, CartridgeUiReadyEvent>(OnReaderUiReady);
+    }
+
+    private void OnAdded(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeAddedEvent args)
+    {
+        component.CartridgeLoader = args.Loader;
+    }
+
+    private void OnRemoved(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeRemovedEvent args)
+    {
+        component.CartridgeLoader = default;
+    }
+
+    private void OnArticlePublished(EntityUid uid, NewsReaderCartridgeComponent component, ref NewsArticlePublishedEvent args)
+    {
+        if (!component.CartridgeLoader.HasValue)
+            return;
+
+        UpdateReaderUi(uid, component.CartridgeLoader.Value, component);
+
+        if (!component.NotificationOn )
+            return;
+
+        _cartridgeLoaderSystem.SendNotification(
+            component.CartridgeLoader.Value,
+            Loc.GetString("news-pda-notification-header"),
+            args.Article.Name);
+    }
+
+    private void OnArticleDeleted(EntityUid uid, NewsReaderCartridgeComponent component, ref NewsArticleDeletedEvent args)
+    {
+        if (!component.CartridgeLoader.HasValue)
+            return;
+
+        UpdateReaderUi(uid, component.CartridgeLoader.Value, component);
     }
 
     public override void Update(float frameTime)
@@ -103,7 +141,7 @@ public sealed class NewsSystem : EntitySystem
 
         if (!articles.Any())
         {
-            _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, new NewsReaderEmptyBoundUserInterfaceState(component.NotificationOn));
+            _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, new NewsReaderEmptyBoundUserInterfaceState(component.NotificationOn));
             return;
         }
 
@@ -113,10 +151,10 @@ public sealed class NewsSystem : EntitySystem
             articles.Count,
             component.NotificationOn);
 
-        _cartridgeLoaderSystem?.UpdateCartridgeUiState(loaderUid, state);
+        _cartridgeLoaderSystem.UpdateCartridgeUiState(loaderUid, state);
     }
 
-    private void OnReadUiMessage(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeMessageEvent args)
+    private void OnReaderUiMessage(EntityUid uid, NewsReaderCartridgeComponent component, CartridgeMessageEvent args)
     {
         if (args is not NewsReaderUiMessageEvent message)
             return;
@@ -151,7 +189,7 @@ public sealed class NewsSystem : EntitySystem
         var article = msg.Article;
         var author = msg.Session.AttachedEntity;
 
-        article.Name = article.Name.Length <= 28 ? article.Name : article.Name[..28];
+        article.Name = article.Name.Length <= 108 ? article.Name : article.Name[..108];
 
         if (author.HasValue
             && _accessReader.FindAccessItemsInventory(author.Value, out var items)
@@ -161,7 +199,7 @@ public sealed class NewsSystem : EntitySystem
 
             foreach (var item in items)
             {
-                // ID Card
+                // ID
                 if (TryComp(item, out IdCardComponent? id))
                 {
                     article.Author = id.FullName;
@@ -169,7 +207,9 @@ public sealed class NewsSystem : EntitySystem
                 }
 
                 // PDA
-                if (TryComp(item, out PdaComponent? pda) && pda.ContainedId != null && TryComp(pda.ContainedId, out id))
+                if (TryComp(item, out PdaComponent? pda)
+                    && pda.ContainedId != null
+                    && TryComp(pda.ContainedId, out id))
                 {
                     article.Author = id.FullName;
                     break;
@@ -180,17 +220,37 @@ public sealed class NewsSystem : EntitySystem
         _audio.PlayPvs(component.ConfirmSound, uid);
 
         if (author != null)
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(author.Value):actor} created news article {article.Name} by {article.Author}: {article.Content}");
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{ToPrettyString(author.Value):actor} created news article {article.Name} by {article.Author}: {article.Content}"
+                );
+        }
         else
-            _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}");
+        {
+            _adminLogger.Add(
+                LogType.Chat,
+                LogImpact.Medium,
+                $"{msg.Session.Name:actor} created news article {article.Name}: {article.Content}"
+                );
+        }
+
         articles.Add(article);
 
-        UpdateReaderDevices();
+        // Eventually replace with device networking to only notify pdas on the same station
+        var args = new NewsArticlePublishedEvent(article);
+
+        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
         UpdateWriterDevices();
-        TryNotify();
     }
 
-    public void OnWriteUiDeleteMessage(EntityUid uid, NewsWriterComponent component, NewsWriterDeleteMessage msg)
+    private void OnWriteUiDeleteMessage(EntityUid uid, NewsWriterComponent component, NewsWriterDeleteMessage msg)
     {
         if (!TryGetArticles(uid, out var articles))
             return;
@@ -198,13 +258,26 @@ public sealed class NewsSystem : EntitySystem
         if (msg.ArticleNum > articles.Count)
             return;
 
-        var articleDeleter = msg.Session.AttachedEntity;
-        if (CheckDeleteAccess(articles[msg.ArticleNum], uid, articleDeleter))
+        var article = articles[msg.ArticleNum];
+        var actor = msg.Session.AttachedEntity;
+
+        if (CheckDeleteAccess(article, uid, actor))
         {
-            if (articleDeleter != null)
-                _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{ToPrettyString(articleDeleter.Value):actor} deleted news article {articles[msg.ArticleNum].Name} by {articles[msg.ArticleNum].Author}: {articles[msg.ArticleNum].Content}");
+            if (actor != null)
+            {
+                _adminLogger.Add(
+                    LogType.Chat,
+                    LogImpact.Medium,
+                    $"{ToPrettyString(actor.Value):actor} deleted news article {article.Name} by {article.Author}: {article.Content}"
+                    );
+            }
             else
-                _adminLogger.Add(LogType.Chat, LogImpact.Medium, $"{msg.Session.Name:actor} created news article {articles[msg.ArticleNum].Name}: {articles[msg.ArticleNum].Content}");
+            {
+                _adminLogger.Add(
+                    LogType.Chat, LogImpact.Medium,
+                    $"{msg.Session.Name:actor} deleted news article {article.Name}: {article.Content}");
+            }
+
             articles.RemoveAt(msg.ArticleNum);
             _audio.PlayPvs(component.ConfirmSound, uid);
         }
@@ -214,11 +287,18 @@ public sealed class NewsSystem : EntitySystem
             _audio.PlayPvs(component.NoAccessSound, uid);
         }
 
-        UpdateReaderDevices();
+        var args = new NewsArticleDeletedEvent();
+
+        var query = EntityQueryEnumerator<NewsReaderCartridgeComponent>();
+        while (query.MoveNext(out var readerUid, out _))
+        {
+            RaiseLocalEvent(readerUid, ref args);
+        }
+
         UpdateWriterDevices();
     }
 
-    public void OnRequestArticlesUiMessage(EntityUid uid, NewsWriterComponent component, NewsWriterArticlesRequestMessage msg)
+    private void OnRequestArticlesUiMessage(EntityUid uid, NewsWriterComponent component, NewsWriterArticlesRequestMessage msg)
     {
         UpdateWriterUi(uid, component);
     }
@@ -235,34 +315,6 @@ public sealed class NewsSystem : EntitySystem
 
         if (component.ArticleNumber < 0)
             component.ArticleNumber = articles.Count - 1;
-    }
-
-    private void TryNotify()
-    {
-        var query = EntityQueryEnumerator<CartridgeLoaderComponent, RingerComponent>();
-
-        while (query.MoveNext(out var owner, out var comp, out var ringer))
-        {
-            foreach (var app in comp.InstalledPrograms)
-            {
-                if (EntityManager.TryGetComponent<NewsReaderCartridgeComponent>(app, out var cartridge) && cartridge.NotificationOn)
-                {
-                    _ringer.RingerPlayRingtone(owner, ringer);
-                    break;
-                }
-            }
-        }
-    }
-
-    private void UpdateReaderDevices()
-    {
-        var query = EntityQueryEnumerator<CartridgeLoaderComponent>();
-
-        while (query.MoveNext(out var owner, out var comp))
-        {
-            if (EntityManager.TryGetComponent<NewsReaderCartridgeComponent>(comp.ActiveProgram, out var cartridge))
-                UpdateReaderUi(cartridge.Owner, comp.Owner, cartridge);
-        }
     }
 
     private void UpdateWriterDevices()
@@ -289,14 +341,9 @@ public sealed class NewsSystem : EntitySystem
             return true;
         }
 
-        if (user.HasValue
-            && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
-            && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any())
-        {
-            return true;
-        }
-
-        return false;
+        return user.HasValue
+               && _accessReader.FindStationRecordKeys(user.Value, out var recordKeys)
+               && recordKeys.Intersect(articleToDelete.AuthorStationRecordKeyIds).Any();
     }
 }
 

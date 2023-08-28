@@ -68,7 +68,7 @@ namespace Content.Client.MassMedia.Ui
             if (stringContent.Length == 0 || _gameTicker == null)
                 return;
 
-            var name = title.Length <= 25 ? title.Trim() : $"{title.Trim()[..25]}...";
+            var name = title.Length <= 100 ? title.Trim() : $"{title.Trim()[..100]}...";
             var article = new NewsArticle
             {
                 Name = name,

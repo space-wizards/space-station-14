@@ -262,6 +262,18 @@ public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
         loader.BackgroundPrograms.Remove(cartridgeUid);
     }
 
+    public void SendNotification(EntityUid loaderUid, string header, string message, CartridgeLoaderComponent? loader = default!)
+    {
+        if (!Resolve(loaderUid, ref loader))
+            return;
+
+        if (!loader.NotificationsEnabled)
+            return;
+
+        var args = new CartridgeLoaderNotificationSentEvent(header, message);
+        RaiseLocalEvent(loaderUid, ref args);
+    }
+
     protected override void OnItemInserted(EntityUid uid, CartridgeLoaderComponent loader, EntInsertedIntoContainerMessage args)
     {
         RaiseLocalEvent(args.Entity, new CartridgeAddedEvent(uid));
