@@ -36,6 +36,7 @@ namespace Content.Shared.Throwing
             SubscribeLocalEvent<ThrownItemComponent, ComponentHandleState>(OnHandleState);
             SubscribeLocalEvent<PullStartedMessage>(HandlePullStarted);
         }
+
         private void OnGetState(EntityUid uid, ThrownItemComponent component, ref ComponentGetState args)
         {
             args.State = new ThrownItemComponentState(component.Thrower);
