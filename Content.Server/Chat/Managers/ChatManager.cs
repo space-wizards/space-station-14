@@ -116,8 +116,8 @@ namespace Content.Server.Chat.Managers
 
         public void SendAdminAlert(EntityUid player, string message)
         {
-            var minds = _entityManager.System<MindSystem>();
-            if (!minds.TryGetMind(player, out var mindId, out var mind))
+            var mindSystem = _entityManager.System<MindSystem>();
+            if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 SendAdminAlert(message);
                 return;
