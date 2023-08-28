@@ -404,7 +404,7 @@ public sealed class MindSystem : EntitySystem
     ///     If true, skips ghost check for Visiting Entity
     /// </param>
     /// <exception cref="ArgumentException">
-    ///     Thrown if <paramref name="entity"/> is already owned by another mind.
+    ///     Thrown if <paramref name="entity"/> is already controlled by another player.
     /// </exception>
     public void TransferTo(EntityUid mindId, EntityUid? entity, bool ghostCheckOverride = false, bool createGhost = true, MindComponent? mind = null)
     {
@@ -586,10 +586,13 @@ public sealed class MindSystem : EntitySystem
             $"'Role {typeof(T).Name}' removed from mind of {MindOwnerLoggingString(mind)}");
     }
 
-    public void TryRemoveRole<T>(EntityUid mindId) where T : Component
+    public bool TryRemoveRole<T>(EntityUid mindId) where T : Component
     {
-        if (HasRole<T>(mindId))
-            RemoveRole<T>(mindId);
+        if (!HasRole<T>(mindId))
+            return false;
+
+        RemoveRole<T>(mindId);
+        return true;
     }
 
     public bool HasRole<T>(EntityUid mindId) where T : Component

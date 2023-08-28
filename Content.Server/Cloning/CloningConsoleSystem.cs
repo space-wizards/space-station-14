@@ -31,7 +31,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -164,7 +164,7 @@ namespace Content.Server.Cloning
             if (body is null)
                 return;
 
-            if (!_minds.TryGetMind(body.Value, out var mindId, out var mind))
+            if (!_mindSystem.TryGetMind(body.Value, out var mindId, out var mind))
                 return;
 
             if (mind.UserId.HasValue == false || mind.Session == null)
@@ -218,7 +218,7 @@ namespace Content.Server.Cloning
                     }
                     else
                     {
-                        if (!_minds.TryGetMind(scanBody.Value, out _, out var mind) ||
+                        if (!_mindSystem.TryGetMind(scanBody.Value, out _, out var mind) ||
                             mind.UserId == null ||
                             !_playerManager.TryGetSessionById(mind.UserId.Value, out _))
                         {
