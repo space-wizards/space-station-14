@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.Administration.Logs;
-using Content.Shared.Damage.Components;
 using Content.Shared.Database;
 using Content.Shared.Physics;
 using Content.Shared.Physics.Pull;
@@ -10,7 +9,6 @@ using Robust.Shared.Physics;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
-using Robust.Shared.Players;
 
 namespace Content.Shared.Throwing
 {
