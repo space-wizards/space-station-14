@@ -15,24 +15,13 @@ namespace Content.Client.MassMedia.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class ArticleEditorPanel : Control
 {
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-
     public event Action? PublishButtonPressed;
 
     private bool _preview = false;
 
-    [Animatable]
-    [ViewVariables(VVAccess.ReadWrite)]
-    public float AnimatableMarginLeft
-    {
-        get => Margin.Left;
-        set => Margin = new Thickness(value, Margin.Top, Margin.Right, Margin.Bottom);
-    }
-
     public ArticleEditorPanel()
     {
         RobustXamlLoader.Load(this);
-        IoCManager.InjectDependencies(this);
 
         ButtonPublish.StyleClasses.Add(StyleBase.ButtonOpenLeft);
         ButtonPublish.StyleClasses.Add(StyleNano.StyleClassButtonColorGreen);
