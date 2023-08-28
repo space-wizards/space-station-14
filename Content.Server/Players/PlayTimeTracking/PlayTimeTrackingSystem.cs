@@ -164,7 +164,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
         var playTimes = _tracking.GetTrackerTimes(player);
 
-        return JobRequirements.TryRequirementsMet(job, playTimes, out _, _prototypes);
+        return JobRequirements.TryRequirementsMet(job, playTimes, out _, EntityManager, _prototypes);
     }
 
     public HashSet<string> GetDisallowedJobs(IPlayerSession player)
@@ -181,7 +181,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
             {
                 foreach (var requirement in job.Requirements)
                 {
-                    if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                    if (JobRequirements.TryRequirementMet(job, requirement, playTimes, out _, EntityManager, _prototypes))
                         continue;
 
                     goto NoRole;
@@ -219,7 +219,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
             foreach (var requirement in jobber.Requirements)
             {
-                if (JobRequirements.TryRequirementMet(requirement, playTimes, out _, _prototypes))
+                if (JobRequirements.TryRequirementMet(jobber, requirement, playTimes, out _, EntityManager, _prototypes))
                     continue;
 
                 jobs.RemoveSwap(i);
