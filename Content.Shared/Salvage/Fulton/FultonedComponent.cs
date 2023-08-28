@@ -4,6 +4,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 
 namespace Content.Shared.Salvage.Fulton;
 
+/// <summary>
+/// Marks an entity as pending being fultoned.
+/// </summary>
 [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
 public sealed partial class FultonedComponent : Component
 {

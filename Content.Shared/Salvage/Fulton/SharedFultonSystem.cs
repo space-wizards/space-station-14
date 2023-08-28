@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Foldable;
@@ -6,12 +7,14 @@ using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
+using Robust.Shared.Map;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.Salvage.Fulton;
 
-public abstract class SharedFultonSystem : EntitySystem
+public abstract partial class SharedFultonSystem : EntitySystem
 {
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private   readonly MetaDataSystem _metadata = default!;
@@ -22,7 +25,9 @@ public abstract class SharedFultonSystem : EntitySystem
     [Dependency] private   readonly SharedStackSystem _stack = default!;
     [Dependency] protected readonly SharedTransformSystem TransformSystem = default!;
 
-    public static readonly TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
+    public static readonly TimeSpan FultonDuration = TimeSpan.FromSeconds(5);
+    [ValidatePrototypeId<EntityPrototype>] public const string EffectProto = "FultonEffect";
+    protected static readonly Vector2 EffectOffset = Vector2.Zero;
 
     public override void Initialize()
     {
@@ -162,7 +167,18 @@ public abstract class SharedFultonSystem : EntitySystem
     }
 
     [Serializable, NetSerializable]
-    private sealed class FultonedDoAfterEvent : SimpleDoAfterEvent
+    private sealed partial class FultonedDoAfterEvent : SimpleDoAfterEvent
     {
+    }
+
+    // Animations aren't really good for networking hence this.
+    /// <summary>
+    /// Tells clients to play the fulton animation.
+    /// </summary>
+    [Serializable, NetSerializable]
+    protected sealed class FultonAnimationMessage : EntityEventArgs
+    {
+        public EntityUid Entity;
+        public EntityCoordinates Coordinates;
     }
 }

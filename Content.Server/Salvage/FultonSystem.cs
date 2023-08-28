@@ -10,8 +10,6 @@ public sealed class FultonSystem : SharedFultonSystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
 
-    [ValidatePrototypeId<EntityPrototype>] private const string EffectProto = "FultonEffect";
-
     public override void Initialize()
     {
         base.Initialize();
@@ -30,7 +28,7 @@ public sealed class FultonSystem : SharedFultonSystem
         if (Exists(component.Effect))
             return;
 
-        component.Effect = Spawn(EffectProto, new EntityCoordinates(uid, Vector2.Zero));
+        component.Effect = Spawn(EffectProto, new EntityCoordinates(uid, EffectOffset));
         Dirty(uid, component);
     }
 
@@ -54,8 +52,16 @@ public sealed class FultonSystem : SharedFultonSystem
     {
         if (!Deleted(component.Beacon))
         {
+            var xform = Transform(uid);
+            var oldCoords = xform.Coordinates;
             var offset = _random.NextVector2(1.5f);
             TransformSystem.SetCoordinates(uid, new EntityCoordinates(component.Beacon, offset));
+
+            RaiseNetworkEvent(new FultonAnimationMessage()
+            {
+                Entity = uid,
+                Coordinates = oldCoords,
+            });
         }
 
         Audio.PlayPvs(component.Sound, uid);
