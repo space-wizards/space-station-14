@@ -221,7 +221,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         if (HasComp<TraitorRoleComponent>(mindId))
         {
-            Log.Error("Player traitor.Name is already a traitor.");
+            Log.Error($"Player {traitor.Name} is already a traitor.");
             return false;
         }
 

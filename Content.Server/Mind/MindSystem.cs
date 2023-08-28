@@ -102,35 +102,6 @@ public sealed class MindSystem : EntitySystem
         return false;
     }
 
-    /// <summary>
-    ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="MindSystem.TransferTo(MindComponent,System.Nullable{Robust.Shared.GameObjects.EntityUid},bool)"/> instead.
-    ///     If that doesn't cover it, make something to cover it.
-    /// </summary>
-    private void InternalAssignMind(EntityUid uid, EntityUid mindId, MindContainerComponent? container = null)
-    {
-        if (!Resolve(uid, ref container))
-            return;
-
-        container.Mind = mindId;
-        RaiseLocalEvent(uid, new MindAddedMessage(), true);
-    }
-
-    /// <summary>
-    ///     Don't call this unless you know what the hell you're doing.
-    ///     Use <see cref="MindSystem.TransferTo"/> instead.
-    ///     If that doesn't cover it, make something to cover it.
-    /// </summary>
-    private void InternalEjectMind(EntityUid uid, MindContainerComponent? container = null)
-    {
-        if (!Resolve(uid, ref container, false) || !TryComp(container.Mind, out MindComponent? mind))
-            return;
-
-        var oldId = container.Mind.Value;
-        container.Mind = null;
-        RaiseLocalEvent(uid, new MindRemovedMessage(oldId, mind), true);
-    }
-
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
     {
         if (component.MindId != null)
@@ -446,8 +417,11 @@ public sealed class MindSystem : EntitySystem
 
         var oldComp = mind.OwnedComponent;
         var oldEntity = mind.OwnedEntity;
-        if(oldComp != null && oldEntity != null)
-            InternalEjectMind(oldEntity.Value, oldComp);
+        if (oldComp != null && oldEntity != null)
+        {
+            oldComp.Mind = null;
+            RaiseLocalEvent(oldEntity.Value, new MindRemovedMessage(oldEntity.Value, mind), true);
+        }
 
         SetOwnedEntity(mind, entity, component);
 
@@ -476,7 +450,8 @@ public sealed class MindSystem : EntitySystem
 
         if (mind.OwnedComponent != null)
         {
-            InternalAssignMind(mind.OwnedEntity!.Value, mindId, mind.OwnedComponent);
+            mind.OwnedComponent.Mind = mindId;
+            RaiseLocalEvent(mind.OwnedEntity!.Value, new MindAddedMessage(), true);
             mind.OriginalOwnedEntity ??= mind.OwnedEntity;
         }
     }

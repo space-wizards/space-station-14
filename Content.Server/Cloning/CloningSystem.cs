@@ -258,8 +258,7 @@ namespace Content.Server.Cloning
 
             AddComp<ActiveCloningPodComponent>(uid);
 
-            // TODO: Ideally, components like this should be on a mind entity so this isn't neccesary.
-            // Remove this when 'mind entities' are added.
+            // TODO: Ideally, components like this should be components on the mind entity so this isn't necessary.
             // Add on special job components to the mob.
             if (_jobs.MindTryGetJob(mindId, out _, out var prototype))
             {
