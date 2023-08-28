@@ -22,10 +22,10 @@ public sealed partial class LatheMenu : DefaultWindow
     private readonly SpriteSystem _spriteSystem;
     private readonly LatheSystem _lathe;
 
-    public event Action<BaseButton.ButtonEventArgs>? OnMaterialsEjectionButtonPressed;
+    // public event Action<BaseButton.ButtonEventArgs>? OnMaterialsEjectionButtonPressed;
     public event Action<BaseButton.ButtonEventArgs>? OnServerListButtonPressed;
     public event Action<string, int>? RecipeQueueAction;
-
+    public event Action<string, int>? OnEjectPressed;
     public List<string> Recipes = new();
 
     public LatheMenu(LatheBoundUserInterface owner)
@@ -47,7 +47,7 @@ public sealed partial class LatheMenu : DefaultWindow
             PopulateRecipes(owner.Owner);
         };
 
-        MaterialsEjectionButton.OnPressed += a => OnMaterialsEjectionButtonPressed?.Invoke(a);
+        //MaterialsEjectionButton.OnPressed += a => OnMaterialsEjectionButtonPressed?.Invoke(a);
         ServerListButton.OnPressed += a => OnServerListButtonPressed?.Invoke(a);
 
         if (_entityManager.TryGetComponent<LatheComponent>(owner.Owner, out var latheComponent))
@@ -55,11 +55,6 @@ public sealed partial class LatheMenu : DefaultWindow
             if (!latheComponent.DynamicRecipes.Any())
             {
                 ServerListButton.Visible = false;
-            }
-
-            if (MaterialsEjectionButton != null && !latheComponent.CanEjectStoredMaterials)
-            {
-                MaterialsEjectionButton.Dispose();
             }
         }
     }
@@ -69,37 +64,52 @@ public sealed partial class LatheMenu : DefaultWindow
         if (!_entityManager.TryGetComponent<MaterialStorageComponent>(lathe, out var materials))
             return;
 
-        Materials.Clear();
+        MaterialsList.DisposeAllChildren();
 
-        foreach (var (id, amount) in materials.Storage)
+        foreach (var (materialId, volume) in materials.Storage)
         {
-            if (amount <= 0)
+            if (volume <= 0)
                 continue;
 
-            if (!_prototypeManager.TryIndex(id, out MaterialPrototype? material))
+            if (!_prototypeManager.TryIndex(materialId, out MaterialPrototype? material))
                 continue;
 
             var name = Loc.GetString(material.Name);
             var mat = Loc.GetString("lathe-menu-material-display",
-                ("material", name), ("amount", amount));
+                ("material", name), ("amount", volume));
+            int volumePerSheet = 0;
+            int maxEjectableSheets = 0;
 
-            Materials.AddItem(mat, _spriteSystem.Frame0(material.Icon), false);
+            if (material.StackEntity != null)
+            {
+                var proto = _prototypeManager.Index<EntityPrototype>(material.StackEntity);
+                name = proto.Name;
+
+                if (proto.TryGetComponent<PhysicalCompositionComponent>(out var composition))
+                {
+                    volumePerSheet = composition.MaterialComposition.FirstOrDefault(kvp => kvp.Key == materialId).Value;
+                    maxEjectableSheets = (int) MathF.Floor(volume / volumePerSheet);
+                }
+            }
+
+            var row = new LatheMaterialEjector(materialId, OnEjectPressed, volumePerSheet, maxEjectableSheets)
+            {
+                Icon = { Texture = _spriteSystem.Frame0(material.Icon) },
+                ProductName = { Text = mat }
+            };
+
+            MaterialsList.AddChild(row);
         }
 
-        if (MaterialsEjectionButton != null)
-        {
-            MaterialsEjectionButton.Disabled = Materials.Count == 0;
-        }
-
-        if (Materials.Count == 0)
+        if (MaterialsList.ChildCount == 0)
         {
             var noMaterialsMsg = Loc.GetString("lathe-menu-no-materials-message");
-            Materials.AddItem(noMaterialsMsg, null, false);
+            var noItemRow = new Label();
+            noItemRow.Text = noMaterialsMsg;
+            noItemRow.Align = Label.AlignMode.Center;
+            MaterialsList.AddChild(noItemRow);
         }
-
-        PopulateRecipes(lathe);
     }
-
     /// <summary>
     /// Populates the list of all the recipes
     /// </summary>
@@ -171,7 +181,7 @@ public sealed partial class LatheMenu : DefaultWindow
     /// <param name="queue"></param>
     public void PopulateQueueList(List<LatheRecipePrototype> queue)
     {
-        QueueList.Clear();
+        //QueueList.Clear();
         var idx = 1;
         foreach (var recipe in queue)
         {
@@ -196,8 +206,8 @@ public sealed partial class LatheMenu : DefaultWindow
         else
         {
             Icon.Texture = Texture.Transparent;
-            NameLabel.Text = string.Empty;
-            Description.Text = Loc.GetString("lathe-queue-menu-not-producing-text");
+            NameLabel.Text = Loc.GetString("lathe-menu-queue-not-producing-text");
+            Description.Text = String.Empty;
         }
     }
 }

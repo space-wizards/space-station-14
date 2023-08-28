@@ -10,10 +10,6 @@ namespace Content.Client.Lathe.UI
     {
         [ViewVariables]
         private LatheMenu? _menu;
-
-        [ViewVariables]
-        private LatheMaterialsEjectionMenu? _materialsEjectionMenu;
-
         public LatheBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {
         }
@@ -23,17 +19,8 @@ namespace Content.Client.Lathe.UI
             base.Open();
 
             _menu = new LatheMenu(this);
-            _materialsEjectionMenu = new LatheMaterialsEjectionMenu();
-
             _menu.OnClose += Close;
 
-            _menu.OnMaterialsEjectionButtonPressed += _ =>
-            {
-                if (_materialsEjectionMenu.IsOpen)
-                    _materialsEjectionMenu.Close();
-                else
-                    _materialsEjectionMenu.OpenCenteredRight();
-            };
 
             _menu.OnServerListButtonPressed += _ =>
             {
@@ -45,7 +32,7 @@ namespace Content.Client.Lathe.UI
                 SendMessage(new LatheQueueRecipeMessage(recipe, amount));
             };
 
-            _materialsEjectionMenu.OnEjectPressed += (material, sheetsToExtract) =>
+            _menu.OnEjectPressed += (material, sheetsToExtract) =>
             {
                 SendMessage(new LatheEjectMaterialMessage(material, sheetsToExtract));
             };
@@ -66,7 +53,6 @@ namespace Content.Client.Lathe.UI
                     _menu?.PopulateMaterials(Owner);
                     _menu?.PopulateQueueList(msg.Queue);
                     _menu?.SetQueueInfo(msg.CurrentlyProducing);
-                    _materialsEjectionMenu?.PopulateMaterials(Owner);
                     break;
             }
         }
@@ -77,8 +63,7 @@ namespace Content.Client.Lathe.UI
             if (!disposing)
                 return;
             _menu?.Dispose();
-            _queueMenu?.Dispose();
-            _materialsEjectionMenu?.Dispose();
+            //thom _materialsEjectionMenu?.Dispose();
         }
     }
 }

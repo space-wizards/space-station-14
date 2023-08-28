@@ -2,8 +2,8 @@
     xmlns="https://spacestation14.io"
     xmlns:gfx="clr-namespace:Robust.Client.Graphics;assembly=Robust.Client"
     Title="{Loc 'lathe-menu-title'}"
-    MinSize="600 450"
-    SetSize="650 475">
+    MinSize="650 450"
+    SetSize="850 500">
     <BoxContainer
         Orientation="Horizontal"
         VerticalExpand="True"
@@ -85,7 +85,7 @@
             HorizontalExpand="True"
             SeparationOverride="5"
         >
-            <Label Text="{Loc 'lathe-menu-queue'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+            <Label Text="{Loc 'lathe-menu-queue-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
             <BoxContainer Orientation="Vertical">
                 <BoxContainer
                     Orientation="Horizontal"
@@ -103,7 +103,8 @@
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"
-                            Margin="36 0 0 0">
+                            HorizontalAlignment="Left"
+                            Margin="24 0 0 0">
                         </Label>
                         <Label
                             Name="Description"
@@ -125,19 +126,22 @@
         <!-- Right Col-->
         <BoxContainer
             VerticalExpand="True"
-            HorizontalExpand="True">
-            <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-                <ItemList
-                    Name="Materials"
-                    VerticalExpand="True">
-                </ItemList>
-                <Button
-                    Name="MaterialsEjectionButton"
-                    Text="{Loc 'lathe-menu-materials-ejection'}"
-                    TextAlign="Center"
-                    Mode="Press"
-                    StyleClasses="OpenRight">
-                </Button>
+            HorizontalExpand="True"
+            Orientation="Vertical"
+            >
+            <Label Text="{Loc 'lathe-menu-materials-title'}" Margin="5 5 5 5" HorizontalAlignment="Center"/>
+            <BoxContainer
+                Orientation="Vertical"
+                VerticalExpand="True"
+                HorizontalExpand="True">
+                <BoxContainer
+                Name="MaterialsList"
+                Orientation="Vertical"
+                SizeFlagsStretchRatio="8"
+                HorizontalExpand="True"
+                VerticalExpand="True">
+                <!-- Materials populated in C# file -->
+                </BoxContainer>
             </BoxContainer>
         </BoxContainer>
     </BoxContainer>
