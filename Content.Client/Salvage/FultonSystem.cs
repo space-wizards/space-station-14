@@ -97,7 +97,7 @@ public sealed class FultonSystem : SharedFultonSystem
         if (!component.Effect.IsValid())
             return;
 
-        var startTime = component.NextFulton - FultonDuration;
+        var startTime = component.NextFulton - component.FultonDuration;
         var elapsed = Timing.CurTime - startTime;
 
         if (elapsed >= AnimationDuration)

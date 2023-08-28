@@ -23,6 +23,12 @@ public sealed partial class FultonComponent : Component
     public EntityUid Beacon;
 
     /// <summary>
+    /// Applies Removeable to the <see cref="FultonedComponent"/>.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("removeable"), AutoNetworkedField]
+    public bool Removeable = true;
+
+    /// <summary>
     /// How long the fulton will remain before teleporting to the beacon.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("duration")]

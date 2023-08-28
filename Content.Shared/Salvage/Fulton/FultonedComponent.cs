@@ -19,6 +19,9 @@ public sealed partial class FultonedComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("beacon")]
     public EntityUid Beacon;
 
+    [ViewVariables(VVAccess.ReadWrite), DataField("fultonDuration"), AutoNetworkedField]
+    public TimeSpan FultonDuration = TimeSpan.FromSeconds(45);
+
     /// <summary>
     /// When the fulton is travelling to the beacon.
     /// </summary>

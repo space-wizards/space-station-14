@@ -91,6 +91,8 @@ public abstract partial class SharedFultonSystem : EntitySystem
         var fultoned = AddComp<FultonedComponent>(args.Target.Value);
         fultoned.Beacon = fulton.Beacon;
         fultoned.NextFulton = Timing.CurTime + fulton.FultonDuration;
+        fultoned.FultonDuration = fulton.FultonDuration;
+        fultoned.Removeable = fulton.Removeable;
         UpdateAppearance(args.Target.Value, fultoned);
         Dirty(args.Target.Value, fultoned);
         Audio.PlayPredicted(fulton.FultonSound, args.Target.Value, args.User);
