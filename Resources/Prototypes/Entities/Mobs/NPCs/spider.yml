@@ -129,8 +129,8 @@
       Dead:
         Base: guard_dead
   - type: MovementSpeedModifier
-    baseWalkSpeed : 3.5
-    baseSprintSpeed : 3.5
+    baseWalkSpeed : 4
+    baseSprintSpeed : 4
   - type: SlowOnDamage
     speedModifierThresholds:
       85: 0.7
@@ -150,7 +150,7 @@
         - ReagentId: Toxin
           Quantity: 50
   - type: MeleeChemicalInjector
-    transferAmount: .5
+    transferAmount: .25
     solution: melee
 
 - type: entity
