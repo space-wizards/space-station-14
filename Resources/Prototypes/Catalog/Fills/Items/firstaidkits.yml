@@ -1,0 +1,129 @@
+#Entities found at entities/objects/specific/medical
+- type: entity
+  id: MedkitFilled
+  suffix: Filled
+  parent: Medkit
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+      - id: Brutepack
+        amount: 2
+      - id: Ointment
+        amount: 2
+      - id: Gauze
+      - id: PillTricordrazine
+        amount: 5
+      # see https://github.com/tgstation/blob/master/code/game/objects/items/storage/firstaid.dm for example contents
+
+- type: entity
+  id: MedkitBurnFilled
+  suffix: Filled
+  parent: MedkitBurn
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyringeInaprovaline
+      - id: Ointment
+        amount: 4
+      - id: PillDermaline
+        amount: 5
+
+- type: entity
+  id: MedkitBruteFilled
+  suffix: Filled
+  parent: MedkitBrute
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedicatedSuture
+        amount: 2
+      - id: Gauze
+      - id: Bloodpack
+      - id: SyringeTranexamicAcid
+      - id: PillIron
+        amount: 5
+      - id: PillBicaridine
+        amount: 5
+
+- type: entity
+  id: MedkitToxinFilled
+  suffix: Filled
+  parent: MedkitToxin
+  components:
+  - type: StorageFill
+    contents:
+      - id: SyringeIpecac
+        amount: 2
+      - id: AntiPoisonMedipen
+      - id: PillDylovene
+        amount: 7
+
+- type: entity
+  id: MedkitOxygenFilled
+  suffix: Filled
+  parent: MedkitO2
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingMaskBreathMedical
+      - id: EmergencyOxygenTankFilled
+      - id: EmergencyMedipen
+      - id: SyringeInaprovaline
+      - id: PillDexalin
+        amount: 7
+
+- type: entity
+  id: MedkitRadiationFilled
+  suffix: Filled
+  parent: MedkitRadiation
+  components:
+  - type: StorageFill
+    contents:
+      - id: Ointment
+        amount: 3
+      - id: EmergencyMedipen
+        amount: 2
+      - id: PillHyronalin
+        amount: 9
+
+- type: entity
+  id: MedkitAdvancedFilled
+  suffix: Filled
+  parent: MedkitAdvanced
+  components:
+  - type: StorageFill
+    contents:
+      - id: MedicatedSuture
+        amount: 2
+      - id: RegenerativeMesh
+      - id: Gauze
+      - id: Bloodpack
+        amount: 2
+
+- type: entity
+  id: MedkitCombatFilled
+  suffix: Filled
+  parent: MedkitCombat
+  components:
+  - type: StorageFill
+    contents:
+      - id: HandheldHealthAnalyzer
+      - id: MedicatedSuture
+      - id: RegenerativeMesh
+      - id: BruteAutoInjector
+      - id: BurnAutoInjector
+      - id: SyringeEphedrine
+      - id: SyringeTranexamicAcid
+      - id: AntiPoisonMedipen
+      - id: Bloodpack
+
+- type: entity
+  id: StimkitFilled
+  suffix: Stimkit, Filled
+  parent: Medkit
+  components:
+  - type: StorageFill
+    contents:
+      - id: StimpackMini
+        amount: 6

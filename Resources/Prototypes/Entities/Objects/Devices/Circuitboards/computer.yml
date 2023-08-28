@@ -1,0 +1,390 @@
+- type: entity
+  parent: BaseItem
+  id: BaseComputerCircuitboard
+  name: computer board
+  abstract: true
+  components:
+    - type: ComputerBoard
+    - type: Sprite
+      sprite: Objects/Misc/module.rsi
+      state: cpuboard
+    - type: Tag
+      tags:
+        - DroneUsable
+    - type: StaticPrice
+      price: 100
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 400
+      chemicalComposition:
+        Silicon: 20
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: AlertsComputerCircuitboard
+  name: alerts computer board
+  description: A computer printed circuit board for an alerts computer.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerAlert
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: PowerComputerCircuitboard
+  name: power monitoring computer board
+  description: A computer printed circuit board for a power monitoring computer.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ComputerPowerMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: MedicalRecordsComputerCircuitboard
+  name: medical records computer board
+  description: A computer printed circuit board for a medical records computer.
+  components:
+    - type: Sprite
+      state: cpu_medical
+    - type: ComputerBoard
+      prototype: ComputerMedicalRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CriminalRecordsComputerCircuitboard
+  name: criminal records computer board
+  description: A computer printed circuit board for a criminal records computer.
+  components:
+    - type: Sprite
+      state: cpu_security
+    - type: ComputerBoard
+      prototype: ComputerCriminalRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: StationRecordsComputerCircuitboard
+  name: station records computer board
+  description: A computer printed circuit board for a station records computer.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerStationRecords
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoRequestComputerCircuitboard
+  name: cargo request computer board
+  description: A computer printed circuit board for a cargo request computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerCargoOrders
+    - type: StaticPrice
+      price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+
+- type: entity
+  id: CargoBountyComputerCircuitboard
+  parent: BaseComputerCircuitboard
+  name: cargo bounty computer board
+  description: A computer printed circuit board for a cargo bounty computer.
+  components:
+  - type: Sprite
+    state: cpu_supply
+  - type: ComputerBoard
+    prototype: ComputerCargoBounty
+  - type: StaticPrice
+  - type: Tag
+    tags:
+    - DroneUsable
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoShuttleComputerCircuitboard
+  name: cargo shuttle computer board
+  description: A computer printed circuit board for a cargo shuttle computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerCargoShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageExpeditionsComputerCircuitboard
+  name: salvage expeditions computer board
+  description: A computer printed circuit board for a salvage expeditions computer.
+  components:
+    - type: Sprite
+      state: cpu_supply
+    - type: ComputerBoard
+      prototype: ComputerSalvageExpedition
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CargoShuttleConsoleCircuitboard
+  name: cargo shuttle console board
+  description: A computer printed circuit board for a cargo shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleCargo
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SalvageShuttleConsoleCircuitboard
+  name: salvage shuttle console board
+  description: A computer printed circuit board for a salvage shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSalvage
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SurveillanceCameraMonitorCircuitboard
+  name: surveillance camera monitor board
+  description: A computer printed circuit board for a surveillance camera monitor.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceCameraMonitor
+    - type: Tag
+      tags:
+        - DroneUsable
+        - SurveillanceCameraMonitorCircuitboard
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SurveillanceWirelessCameraMonitorCircuitboard
+  name: surveillance wireless camera monitor board
+  description: A computer printed circuit board for a surveillance wireless camera monitor.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerSurveillanceWirelessCameraMonitor
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerTelevisionCircuitboard
+  name: television board
+  description: A computer printed circuit board for a television.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerTelevision
+    - type: Tag
+      tags:
+        - DroneUsable
+        - ComputerTelevisionCircuitboard
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ResearchComputerCircuitboard
+  name: R&D computer board
+  description: A computer printed circuit board for a R&D console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerResearchAndDevelopment
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: AnalysisComputerCircuitboard
+  name: analysis computer board
+  description: A computer printed circuit board for an analysis console.
+  components:
+    - type: Sprite
+      state: cpu_science
+    - type: ComputerBoard
+      prototype: ComputerAnalysisConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: TechDiskComputerCircuitboard
+  name: tech disk terminal board
+  description: A computer printed circuit board for a technology disk terminal.
+  components:
+  - type: Sprite
+    state: cpu_science
+  - type: ComputerBoard
+    prototype: ComputerTechnologyDiskTerminal
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CrewMonitoringComputerCircuitboard
+  name: crew monitoring computer board
+  description: A computer printed circuit board for a crew monitoring console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerCrewMonitoring
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: IDComputerCircuitboard
+  name: ID card computer board
+  description: A computer printed circuit board for an ID card console.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerId
+    - type: StaticPrice
+      price: 750
+    - type: Tag
+      tags:
+      - DroneUsable
+      - HighRiskItem
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: BodyScannerComputerCircuitboard
+  name: body scanner computer board
+  description: A computer printed circuit board for a body scanner console.
+  components:
+    - type: Sprite
+      state: cpu_medical
+    - type: ComputerBoard
+      prototype: computerBodyScanner
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CommsComputerCircuitboard
+  name: communications computer board
+  description: A computer printed circuit board for a communications console.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateCommsComputerCircuitboard
+  name: syndicate communications computer board
+  description: A computer printed circuit board for a syndicate communications console.
+  components:
+    - type: ComputerBoard
+      prototype: SyndicateComputerComms
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: RadarConsoleCircuitboard
+  name: radar console computer board
+  components:
+  - type: ComputerBoard
+    prototype: ComputerRadar
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SolarControlComputerCircuitboard
+  name: solar control computer board
+  description: A computer printed circuit board for a solar control console.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ComputerSolarControl
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SpaceVillainArcadeComputerCircuitboard
+  name: space villain arcade board
+  description: A computer printed circuit board for a space villain arcade cabinet.
+  components:
+    - type: ComputerBoard
+      prototype: SpaceVillainArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: BlockGameArcadeComputerCircuitboard
+  name: block game arcade board
+  description: A computer printed circuit board for a block game arcade cabinet.
+  components:
+    - type: ComputerBoard
+      prototype: BlockGameArcade
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ParticleAcceleratorComputerCircuitboard
+  name: PA control box computer board
+  description: A computer printed circuit board for a particle accelerator control box.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ParticleAcceleratorControlBoxUnfinished
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ShuttleConsoleCircuitboard
+  name: shuttle console board
+  description: A computer printed circuit board for a shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttle
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SyndicateShuttleConsoleCircuitboard
+  name: syndicate shuttle console board
+  description: A computer printed circuit board for a syndicate shuttle console.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerShuttleSyndie
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: CloningConsoleComputerCircuitboard
+  name: cloning console computer board
+  description: A computer printed circuit board for a cloning console.
+  components:
+    - type: Sprite
+      state: cpu_medical
+    - type: ComputerBoard
+      prototype: ComputerCloningConsole
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFCircuitboard
+  name: IFF console board
+  description: Allows you to control the IFF characteristics of this vessel.
+  components:
+    - type: Sprite
+      state: cpu_command
+    - type: ComputerBoard
+      prototype: ComputerIFF
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerIFFSyndicateCircuitboard
+  name: syndicate IFF console board
+  description: Allows you to control the IFF and stealth characteristics of this vessel.
+  components:
+    - type: ComputerBoard
+      prototype: ComputerIFFSyndicate
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: ComputerMassMediaCircuitboard
+  name: mass-media console board
+  description: Write your message to the world!
+  components:
+    - type: Sprite
+      state: cpu_service
+    - type: StaticPrice
+      price: 150
+    - type: ComputerBoard
+      prototype: ComputerMassMedia
+
+- type: entity
+  parent: BaseComputerCircuitboard
+  id: SensorConsoleCircuitboard
+  name: sensor monitoring console board
+  description: A computer printed circuit board for a sensor monitoring console.
+  components:
+    - type: Sprite
+      state: cpu_engineering
+    - type: ComputerBoard
+      prototype: ComputerSensorMonitoring
