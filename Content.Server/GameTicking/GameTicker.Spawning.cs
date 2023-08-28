@@ -239,7 +239,16 @@ namespace Content.Server.GameTicking
             // We also want this message last.
             if (lateJoin && _arrivals.Enabled)
             {
-                _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction"));
+                var arrival = _arrivals.NextShuttleArrival();
+                if (arrival == null)
+                {
+                    _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction"));
+                }
+                else
+                {
+                    _chatManager.DispatchServerMessage(player, Loc.GetString("latejoin-arrivals-direction-time",
+                        ("time", $"{arrival:mm\\:ss}")));
+                }
             }
 
             // We raise this event directed to the mob, but also broadcast it so game rules can do something now.
@@ -302,7 +311,7 @@ namespace Content.Server.GameTicking
 
             var name = GetPlayerProfile(player).Name;
             var ghost = SpawnObserverMob();
-            MetaData(ghost).EntityName = name;
+            _metaData.SetEntityName(ghost, name);
             _ghost.SetCanReturnToBody(ghost, false);
             _mind.TransferTo(mind, ghost);
         }

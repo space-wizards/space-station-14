@@ -49,7 +49,7 @@
     board: TelecomServerCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: "TelecomServer"
+    BoardName: wires-board-name-telecomserver
     LayoutId: TelecomServer
   - type: Transform
     anchored: true

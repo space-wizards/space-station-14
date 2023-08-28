@@ -9,7 +9,7 @@ namespace Content.Server.Medical.Components
     /// Applies a damage change to the target when used in an interaction.
     /// </summary>
     [RegisterComponent]
-    public sealed class HealingComponent : Component
+    public sealed partial class HealingComponent : Component
     {
         [DataField("damage", required: true)]
         [ViewVariables(VVAccess.ReadWrite)]

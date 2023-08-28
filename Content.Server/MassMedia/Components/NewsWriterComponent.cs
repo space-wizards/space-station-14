@@ -7,7 +7,7 @@ namespace Content.Server.MassMedia.Components;
 
 [RegisterComponent]
 [Access(typeof(NewsSystem))]
-public sealed class NewsWriterComponent : Component
+public sealed partial class NewsWriterComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite), DataField("publishEnabled")]
     public bool PublishEnabled;

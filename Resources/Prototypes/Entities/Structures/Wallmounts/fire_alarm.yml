@@ -44,6 +44,12 @@
   - type: FireAlarm
   - type: AccessReader
     access: [ [ "Atmospherics" ] ]
+  - type: ContainerFill
+    containers:
+      board: [ FireAlarmElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
   - type: Appearance
   - type: WiresVisuals
   - type: AlertLevelDisplay
@@ -60,7 +66,7 @@
       type: WiresBoundUserInterface
   - type: WiresPanel
   - type: Wires
-    BoardName: "Fire Alarm"
+    BoardName: wires-board-name-firealarm
     LayoutId: FireAlarm
   - type: Sprite
     sprite: Structures/Wallmounts/air_monitors.rsi

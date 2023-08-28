@@ -6,7 +6,7 @@ using Robust.Shared.Utility;
 namespace Content.Shared.Atmos.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class GasTileOverlayComponent : Component
+public sealed partial class GasTileOverlayComponent : Component
 {
     /// <summary>
     ///     The tiles that have had their atmos data updated since last tick

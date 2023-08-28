@@ -1,14 +1,18 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Made by PixelTheKermit (github) for SS14",
+  "copyright": "Downwards made by PixelTheKermit (github) for SS14. Inwards made by Nairodian (github) for SS14",
   "size": {
     "x": 32,
     "y": 32
   },
   "states": [
     {
-      "name": "basic",
+      "name": "downwards",
+      "directions": 4
+    },
+    {
+      "name": "inwards",
       "directions": 4
     }
   ]

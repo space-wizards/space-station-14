@@ -52,7 +52,6 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly ReactiveSystem _reaction = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly TagSystem _tags = default!;
 
         public const float MaxFeedDistance = 1.0f;
 

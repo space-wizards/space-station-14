@@ -1,7 +1,7 @@
 namespace Content.Server.CartridgeLoader.Cartridges;
 
 [RegisterComponent]
-public sealed class NewsReaderCartridgeComponent : Component
+public sealed partial class NewsReaderCartridgeComponent : Component
 {
     /// <summary>
     /// The cartridge loader the news reader cartridge is contained/installed in
