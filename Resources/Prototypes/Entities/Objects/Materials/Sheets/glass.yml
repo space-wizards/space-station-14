@@ -101,6 +101,17 @@
     size: 1
 
 - type: entity
+  parent: SheetGlass
+  id: SheetGlassLingering0
+  suffix: Lingering, 0
+  components:
+  - type: Item
+    size: 0
+  - type: Stack
+    lingering: true
+    count: 0
+
+- type: entity
   parent: SheetGlassBase
   id: SheetRGlass
   name: reinforced glass

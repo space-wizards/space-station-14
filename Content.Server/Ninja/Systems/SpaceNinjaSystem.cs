@@ -31,7 +31,6 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Player;
-using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -54,7 +53,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
     [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -108,7 +106,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     private int Download(EntityUid uid, List<string> ids)
     {
-        if (!_mind.TryGetRole<NinjaRole>(uid, out var role))
+        if (!_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
             return 0;
 
         var oldCount = role.DownloadedNodes.Count;
@@ -216,10 +214,13 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <remarks>
     /// Currently this adds the ninja to traitors, this should be removed when objectives are separated from traitors.
     /// </remarks>
-    private void GreetNinja(Mind.Mind mind)
+    private void GreetNinja(EntityUid mindUid, MindComponent? mind = null)
     {
-        if (!_mind.TryGetSession(mind, out var session) || mind.OwnedEntity == null)
+        if (!Resolve(mindUid, ref mind) || mind.OwnedEntity == null || mind.Session == null)
             return;
+
+        var uid = mind.OwnedEntity;
+        var session = mind.Session;
 
         // make sure to enable the traitor rule for the sweet greentext
         var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
@@ -231,16 +232,19 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         }
 
         var config = RuleConfig();
-        var role = new NinjaRole(mind, _proto.Index<AntagPrototype>("SpaceNinja"));
-        _mind.AddRole(mind, role);
+        var role = new NinjaRoleComponent
+        {
+            Prototype = "SpaceNinja"
+        };
+        _role.MindAddRole(mind, role);
         // TODO: when objectives are not tied to traitor roles, remove this
-        _traitorRule.AddToTraitors(traitorRule, role);
+        _traitorRule.AddToTraitors(traitorRule, mind);
 
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
         var warps = new List<EntityUid>();
         var query = EntityQueryEnumerator<WarpPointComponent, TransformComponent>();
-        var map = Transform(mind.OwnedEntity.Value).MapID;
+        var map = Transform(uid).MapID;
         while (query.MoveNext(out var warpUid, out var warp, out var xform))
         {
             // won't be asked to detonate the nuke disk or singularity or centcomm
@@ -295,8 +299,8 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // this popup is serverside since door emag logic is serverside (power funnies)
         _popup.PopupEntity(Loc.GetString("ninja-doorjack-success", ("target", Identity.Entity(args.Target, EntityManager))), uid, uid, PopupType.Medium);
 
-        // make sure it's a ninja doorjacking it
-        if (_mind.TryGetRole<NinjaRole>(uid, out var role))
+        // handle greentext
+        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
             role.DoorsJacked++;
     }
 
@@ -315,7 +319,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
     private void OnThreatCalledIn(EntityUid uid, SpaceNinjaComponent comp, ref ThreatCalledInEvent args)
     {
-        if (_mind.TryGetRole<NinjaRole>(uid, out var role))
+        if (_mind.TryGetRole<NinjaRoleComponent>(uid, out var role))
         {
             role.CalledInThreat = true;
         }

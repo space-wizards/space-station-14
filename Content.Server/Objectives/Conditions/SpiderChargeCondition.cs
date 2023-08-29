@@ -11,14 +11,14 @@ namespace Content.Server.Objectives.Conditions;
 /// Objective condition that requires the player to be a ninja and have detonated their spider charge.
 /// </summary>
 [DataDefinition]
-public sealed class SpiderChargeCondition : IObjectiveCondition
+public sealed partial class SpiderChargeCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
         return new SpiderChargeCondition {
-            _mind = mind
+            _mind = uid
         };
     }
 
@@ -27,8 +27,7 @@ public sealed class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entMan.System<MindSystem>();
-            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role)
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role)
                 || role.SpiderChargeTarget == null
                 || !entMan.TryGetComponent<WarpPointComponent>(role.SpiderChargeTarget, out var warp)
                 || warp.Location == null)

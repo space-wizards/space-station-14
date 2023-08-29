@@ -11,11 +11,11 @@ namespace Content.Server.Objectives.Conditions;
 [DataDefinition]
 public sealed class TerrorCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
-        return new TerrorCondition {_mind = mind};
+        return new TerrorCondition {_mind = uid};
     }
 
     public string Title => Loc.GetString("objective-condition-terror-title");
@@ -29,8 +29,7 @@ public sealed class TerrorCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<EntityManager>();
-            var mindSystem = entMan.System<MindSystem>();
-            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
 
             return role.CalledInThreat ? 1f : 0f;

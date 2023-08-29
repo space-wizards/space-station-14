@@ -9,13 +9,15 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class EscapeShuttleCondition : IObjectiveCondition
+    public sealed partial class EscapeShuttleCondition : IObjectiveCondition
     {
-        private Mind.Mind? _mind;
+        // TODO refactor all of this to be ecs
+        private MindComponent? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
-            return new EscapeShuttleCondition {
+            return new EscapeShuttleCondition
+            {
                 _mind = mind,
             };
         }

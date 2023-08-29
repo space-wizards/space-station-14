@@ -1,7 +1,7 @@
 namespace Content.Server.Revenant.Components;
 
 [RegisterComponent]
-public sealed class EssenceComponent : Component
+public sealed partial class EssenceComponent : Component
 {
     /// <summary>
     /// Whether or not the entity has been harvested yet.

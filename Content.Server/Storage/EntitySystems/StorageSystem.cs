@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stack;
@@ -11,6 +10,7 @@ using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
+using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;

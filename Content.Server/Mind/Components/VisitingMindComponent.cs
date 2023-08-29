@@ -1,10 +1,13 @@
 namespace Content.Server.Mind.Components
 {
     [RegisterComponent]
-    public sealed class VisitingMindComponent : Component
+    public sealed partial class VisitingMindComponent : Component
     {
         [ViewVariables]
-        public Mind? Mind;
+        public EntityUid? MindId;
+
+        [ViewVariables]
+        public MindComponent? Mind;
     }
 
     public sealed class MindUnvisitedMessage : EntityEventArgs

@@ -90,7 +90,7 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         EnsureComp<ResearchStealerComponent>(user);
         // prevent calling in multiple threats by toggling gloves after
-        if (_mind.TryGetRole<NinjaRole>(user, out var role) && !role.CalledInThreat)
+        if (_mind.TryGetRole<NinjaRoleComponent>(user, out var role) && !role.CalledInThreat)
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
             _commsHacker.SetThreats(user, _ninja.RuleConfig().Threats, hacker);

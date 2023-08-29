@@ -34,7 +34,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     {
         var user = args.User;
 
-        if (!_mind.TryGetRole<NinjaRole>(user, out var role))
+        if (!_mind.TryGetRole<NinjaRoleComponent>(user, out var role))
         {
             _popup.PopupEntity(Loc.GetString("spider-charge-not-ninja"), user, user);
             args.Handled = true;
@@ -69,7 +69,7 @@ public sealed class SpiderChargeSystem : EntitySystem
     /// </summary>
     private void OnExplode(EntityUid uid, SpiderChargeComponent comp, TriggerEvent args)
     {
-        if (comp.Planter == null || !_mind.TryGetRole<NinjaRole>(comp.Planter.Value, out var role))
+        if (comp.Planter == null || !_mind.TryGetRole<NinjaRoleComponent>(comp.Planter.Value, out var role))
             return;
 
         // assumes the target was destroyed, that the charge wasn't moved somehow

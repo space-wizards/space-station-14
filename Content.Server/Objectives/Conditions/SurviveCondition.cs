@@ -10,11 +10,11 @@ namespace Content.Server.Objectives.Conditions;
 [DataDefinition]
 public sealed class SurviveCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
-        return new SurviveCondition {_mind = mind};
+        return new SurviveCondition {_mind = uid};
     }
 
     public string Title => Loc.GetString("objective-condition-survive-title");

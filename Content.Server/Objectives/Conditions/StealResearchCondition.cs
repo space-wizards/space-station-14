@@ -12,14 +12,14 @@ namespace Content.Server.Objectives.Conditions;
 [DataDefinition]
 public sealed class StealResearchCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
     private int _target;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
         // TODO: clamp to number of research nodes in a single discipline maybe so easily maintainable
         return new StealResearchCondition {
-            _mind = mind,
+            _mind = uid,
             _target = IoCManager.Resolve<IRobustRandom>().Next(5, 10)
         };
     }
@@ -39,8 +39,7 @@ public sealed class StealResearchCondition : IObjectiveCondition
                 return 1f;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entMan.System<MindSystem>();
-            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
 
             if (role.DownloadedNodes.Count >= _target)

@@ -12,14 +12,14 @@ namespace Content.Server.Objectives.Conditions;
 [DataDefinition]
 public sealed class DoorjackCondition : IObjectiveCondition
 {
-    private Mind.Mind? _mind;
+    private EntityUid? _mind;
     private int _target;
 
-    public IObjectiveCondition GetAssigned(Mind.Mind mind)
+    public IObjectiveCondition GetAssigned(EntityUid uid, MindComponent mind)
     {
         // TODO: clamp to number of doors on station incase its somehow a shittle or something
         return new DoorjackCondition {
-            _mind = mind,
+            _mind = uid,
             _target = IoCManager.Resolve<IRobustRandom>().Next(15, 40)
         };
     }
@@ -39,8 +39,7 @@ public sealed class DoorjackCondition : IObjectiveCondition
                 return 1f;
 
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entMan.System<MindSystem>();
-            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
 
             if (role.DoorsJacked >= _target)

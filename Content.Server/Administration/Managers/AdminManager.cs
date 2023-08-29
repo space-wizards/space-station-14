@@ -203,7 +203,7 @@ namespace Content.Server.Administration.Managers
                 }
             }
 
-            foreach (var spec in _toolshed.AllCommands())
+            foreach (var spec in _toolshed.DefaultEnvironment.AllCommands())
             {
                 var (isAvail, flagsReq) = GetRequiredFlag(spec.Cmd);
 

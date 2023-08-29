@@ -8,7 +8,7 @@ namespace Content.Shared.Procedural.DungeonGenerators;
 /// <summary>
 /// Places rooms in pre-selected pack layouts. Chooses rooms from the specified whitelist.
 /// </summary>
-public sealed class PrefabDunGen : IDunGen
+public sealed partial class PrefabDunGen : IDunGen
 {
     /// <summary>
     /// Rooms need to match any of these tags
