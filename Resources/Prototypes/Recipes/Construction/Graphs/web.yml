@@ -51,14 +51,6 @@
         amount: 10
         doAfter: 6
 
-    - to: closet
-      completed:
-      - !type:SnapToGrid
-        southRotation: true
-      steps:
-      - material: WebSilk
-        amount: 10
-        doAfter: 6
 
   # Deconstruction is down here
   - node: wall
