@@ -188,7 +188,7 @@ namespace Content.Server.GameTicking
 
             var jobPrototype = _prototypeManager.Index<JobPrototype>(jobId);
             var job = new JobComponent { PrototypeId = jobId };
-            _roles.MindAddRole(newMind, job, silent);
+            _roles.MindAddRole(newMind, job, silent: silent);
             var jobName = _jobs.MindTryGetJobName(newMind);
 
             _playTimeTrackings.PlayerRolesChanged(player);
