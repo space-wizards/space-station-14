@@ -27,6 +27,12 @@ namespace Content.Server.Chemistry.EntitySystems
             SubscribeLocalEvent<HyposprayComponent, SolutionChangedEvent>(OnSolutionChange);
             SubscribeLocalEvent<HyposprayComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<HyposprayComponent, ComponentGetState>(OnHypoGetState);
+            SubscribeLocalEvent<HyposprayComponent, ComponentStartup>(OnHypoStartup);
+        }
+
+        private void OnHypoStartup(EntityUid uid, HyposprayComponent component, ComponentStartup args)
+        {
+            Dirty(component);
         }
 
         private void OnHypoGetState(EntityUid uid, HyposprayComponent component, ref ComponentGetState args)
