@@ -171,6 +171,8 @@
     - type: FootstepModifier
       footstepSoundCollection:
         collection: FootstepClown
+    - type: Speech
+      speechVerb: Cluwne
     - type: TypingIndicator
       proto: holo
     - type: RandomSprite

@@ -292,6 +292,7 @@
       - id: FoodMeat
         amount: 5
   - type: Speech
+    speechVerb: Basic
     speechSounds: Alto
   - type: Vocal
     sounds:
