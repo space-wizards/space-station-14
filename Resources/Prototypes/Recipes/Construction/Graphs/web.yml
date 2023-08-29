@@ -120,15 +120,3 @@
       steps:
       - tool: Cutting
         doAfter: 3
-
-  - node: closet
-    entity: ClosetWeb
-    edges:
-    - to: start
-      completed:
-      - !type:SpawnPrototype
-        prototype: MaterialWebSilk1
-        amount: 7
-      steps:
-      - tool: Cutting
-        doAfter: 3

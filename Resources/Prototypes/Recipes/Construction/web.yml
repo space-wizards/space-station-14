@@ -83,19 +83,3 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
-
-- type: construction
-  name: web closet
-  id: ClosetWeb
-  graph: WebStructures
-  startNode: start
-  targetNode: closet
-  category: construction-category-storage
-  description: A simple closet made of web. Not very durable and can't be welded shut.
-  icon:
-    sprite: Structures/Web/closet.rsi
-    state: generic
-  objectType: Structure
-  placementMode: SnapgridCenter
-  canRotate: false
-  canBuildInImpassable: false
