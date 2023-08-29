@@ -3,7 +3,6 @@ using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
@@ -229,8 +228,8 @@ namespace Content.Server.Polymorph.Systems
                 _humanoid.CloneAppearance(uid, child);
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, child);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, child, mind: mind);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
@@ -303,8 +302,8 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, parent);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, parent, mind: mind);
 
             // if an item polymorph was picked up, put it back down after reverting
             Transform(parent).AttachToGridOrMap();
