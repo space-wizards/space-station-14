@@ -199,11 +199,11 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
         {
             if (_mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
-                if (_jobSystem.MindTryGetJob(mindId, out var jobComp, out var jobProto) && jobs.Roles.Contains(jobProto.ID) && mind.OwnedEntity != null)
+                if (_jobSystem.MindTryGetJob(mindId, out var jobComp, out var jobProto) && jobs.Roles.Contains(jobProto.ID) && mind.OriginalOwnedEntity != null)
                 {
-                    if (!HasComp<HeadRevolutionaryComponent>(mind.OwnedEntity))
+                    if (!HasComp<HeadRevolutionaryComponent>(mind.OriginalOwnedEntity))
                     {
-                        EnsureComp<CommandStaffComponent>(mind.OwnedEntity.Value);
+                        EnsureComp<CommandStaffComponent>(mind.OriginalOwnedEntity.Value);
                         currentCommandStaff++;
                     }
                 }
@@ -297,22 +297,28 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
         }
 
-        if (_antagSelectionSystem.IsGroupDead(commandList, true) && commandLost == false)
+        if (_antagSelectionSystem.IsGroupDead(commandList, true))
         {
-            while (heads.MoveNext(out var id, out var command, out var state))
+            if (commandLost == false)
             {
-                command.HeadsDied = true;
-            }
-            foreach (var station in _stationSystem.GetStations())
-            {
-                var jobs = _stationJobs.GetJobs(station).Keys.ToList();
-                _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
-                foreach (var job in jobs)
+                foreach (var command in commandList)
                 {
-                    var currentJob = job.Replace(" ", "");
-                    if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
+                    if (TryComp<CommandStaffComponent>(command, out var comp))
                     {
-                        _stationJobs.TrySetJobSlot(station, job, 0);
+                        comp.HeadsDied = true;
+                    }
+                }
+                foreach (var station in _stationSystem.GetStations())
+                {
+                    var jobs = _stationJobs.GetJobs(station).Keys.ToList();
+                    _chat.DispatchStationAnnouncement(station, Loc.GetString("rev-all-heads-dead"), "Revolutionary", colorOverride: Color.FromHex("#5e9cff"));
+                    foreach (var job in jobs)
+                    {
+                        var currentJob = job.Replace(" ", "");
+                        if (headJobs.Roles.Contains(currentJob) || secJobs.Roles.Contains(currentJob))
+                        {
+                            _stationJobs.TrySetJobSlot(station, job, 0);
+                        }
                     }
                 }
             }
