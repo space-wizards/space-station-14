@@ -15,7 +15,7 @@ public sealed class SalvageLightMod : IPrototype, IBiomeSpecificMod
     public float Cost { get; private set; } = 0f;
 
     /// <inheritdoc/>
-    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeMod>))]
+    [DataField("biomes", customTypeSerializer: typeof(PrototypeIdListSerializer<SalvageBiomeModPrototype>))]
     public List<string>? Biomes { get; private set; } = null;
 
     [DataField("color", required: true)] public Color? Color;

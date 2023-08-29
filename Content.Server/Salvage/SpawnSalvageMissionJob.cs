@@ -78,7 +78,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     protected override async Task<bool> Process()
     {
         Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
-        var config = _missionParams.MissionType;
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.AddUninitializedMap(mapId);
@@ -88,16 +87,17 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // Setup mission configs
         // As we go through the config the rating will deplete so we'll go for most important to least important.
+        var difficultyId = "Moderate";
+        var difficultyProto = _prototypeManager.Index<SalvageDifficultyPrototype>(difficultyId);
 
         var mission = _entManager.System<SharedSalvageSystem>()
-            .GetMission(_missionParams.MissionType, _missionParams.Difficulty, _missionParams.Seed);
+            .GetMission(difficultyProto, _missionParams.Seed);
 
-        var missionBiome = _prototypeManager.Index<SalvageBiomeMod>(mission.Biome);
-        BiomeComponent? biome = null;
+        var missionBiome = _prototypeManager.Index<SalvageBiomeModPrototype>(mission.Biome);
 
         if (missionBiome.BiomePrototype != null)
         {
-            biome = _entManager.AddComponent<BiomeComponent>(mapUid);
+            var biome = _entManager.AddComponent<BiomeComponent>(mapUid);
             var biomeSystem = _entManager.System<BiomeSystem>();
             biomeSystem.SetTemplate(biome, _prototypeManager.Index<BiomeTemplatePrototype>(missionBiome.BiomePrototype));
             biomeSystem.SetSeed(biome, mission.Seed);
@@ -125,7 +125,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             {
                 var lighting = _entManager.EnsureComponent<MapLightComponent>(mapUid);
                 lighting.AmbientLightColor = mission.Color.Value;
-                _entManager.Dirty(lighting);
+                _entManager.Dirty(mapUid, lighting);
             }
         }
 
@@ -137,8 +137,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         expedition.Station = Station;
         expedition.EndTime = _timing.CurTime + mission.Duration;
         expedition.MissionParams = _missionParams;
-        expedition.Difficulty = _missionParams.Difficulty;
-        expedition.Rewards = mission.Rewards;
 
         // Don't want consoles to have the incorrect name until refreshed.
         var ftlUid = _entManager.CreateEntityUninitialized("FTLPoint", new EntityCoordinates(mapUid, grid.TileSizeHalfVector));
@@ -153,26 +151,23 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         Dungeon dungeon = default!;
 
-        if (config != SalvageMissionType.Mining)
+        var maxDungeonOffset = minDungeonOffset + 12;
+        var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
+        var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
+        dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
+        var dungeonMod = _prototypeManager.Index<SalvageDungeonModPrototype>(mission.Dungeon);
+        var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
+        dungeon =
+            await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
+                _missionParams.Seed));
+
+        // Aborty
+        if (dungeon.Rooms.Count == 0)
         {
-            var maxDungeonOffset = minDungeonOffset + 12;
-            var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
-            var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
-            dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
-            var dungeonMod = _prototypeManager.Index<SalvageDungeonMod>(mission.Dungeon);
-            var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
-            dungeon =
-                await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
-                    _missionParams.Seed));
-
-            // Aborty
-            if (dungeon.Rooms.Count == 0)
-            {
-                return false;
-            }
-
-            expedition.DungeonLocation = dungeonOffset;
+            return false;
         }
+
+        expedition.DungeonLocation = dungeonOffset;
 
         List<Vector2i> reservedTiles = new();
 
@@ -182,22 +177,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 continue;
 
             reservedTiles.Add(tile.GridIndices);
-        }
-
-        // Mission setup
-        switch (config)
-        {
-            case SalvageMissionType.Mining:
-                await SetupMining(mission, mapUid);
-                break;
-            case SalvageMissionType.Destruction:
-                await SetupStructure(mission, dungeon, mapUid, grid, random);
-                break;
-            case SalvageMissionType.Elimination:
-                await SetupElimination(mission, dungeon, mapUid, grid, random);
-                break;
-            default:
-                throw new NotImplementedException();
         }
 
         // Handle loot
@@ -210,10 +189,39 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
+        /*
+         * LOOT
+         */
+
+        var lootBudget = difficultyProto.LootBudget;
+
+        // Handle boss loot (when relevant).
+
+        // Handle mob loot.
+
+        // Handle remaining loot
+        var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
+
+        foreach (var rule in allLoot.LootRules)
+        {
+            switch (rule)
+            {
+                case RandomSpawnsLoot randomLoot:
+                    while (lootBudget > 0f)
+                    {
+                        // TODO: Pick item
+
+                    }
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+        }
+
         return true;
     }
 
-    private async Task SpawnDungeonLoot(Dungeon? dungeon, SalvageBiomeMod biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
+    private async Task SpawnDungeonLoot(Dungeon dungeon, SalvageBiomeModPrototype biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
     {
         for (var i = 0; i < loot.LootRules.Count; i++)
         {
@@ -243,22 +251,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     }
 
     #region Mission Specific
-
-    private async Task SetupMining(
-        SalvageMission mission,
-        EntityUid gridUid)
-    {
-        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-
-        if (_entManager.TryGetComponent<BiomeComponent>(gridUid, out var biome))
-        {
-            // TODO: Better
-            for (var i = 0; i < _salvage.GetDifficulty(mission.Difficulty); i++)
-            {
-                _biome.AddMarkerLayer(biome, faction.Configs["Mining"]);
-            }
-        }
-    }
 
     private async Task SetupStructure(
         SalvageMission mission,
