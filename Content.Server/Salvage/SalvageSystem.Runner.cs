@@ -109,7 +109,7 @@ public sealed partial class SalvageSystem
             Announce(args.MapUid, Loc.GetString("salvage-expedition-announcement-dungeon", ("direction", component.DungeonLocation.GetDir())));
 
         component.Stage = ExpeditionStage.Running;
-        Dirty(component);
+        Dirty(args.MapUid, component);
     }
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
@@ -210,8 +210,6 @@ public sealed partial class SalvageSystem
                 QueueDel(uid);
             }
         }
-
-        // Mining missions: NOOP since it's handled after ftling
 
         // Structure missions
         var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();

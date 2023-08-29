@@ -179,8 +179,12 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             reservedTiles.Add(tile.GridIndices);
         }
 
-        // Handle loot
+        /*
+         * LOOT
+         */
+
         // We'll always add this loot if possible
+        // mainly used for ore layers.
         foreach (var lootProto in _prototypeManager.EnumeratePrototypes<SalvageLootPrototype>())
         {
             if (!lootProto.Guaranteed)
@@ -189,10 +193,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
-        /*
-         * LOOT
-         */
-
         var lootBudget = difficultyProto.LootBudget;
 
         // Handle boss loot (when relevant).
@@ -200,7 +200,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // Handle mob loot.
 
         // Handle remaining loot
+
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
+
+        /*
+         * TODO: Fix all these, test it works
+         * Add difficulty selector
+         * Maybe try it with 2 difficulties
+         */
 
         foreach (var rule in allLoot.LootRules)
         {
