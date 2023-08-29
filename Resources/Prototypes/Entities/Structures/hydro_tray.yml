@@ -93,6 +93,7 @@
 - type: entity
   parent: hydroponicsTray
   id: HydroponicsTrayEmpty
+  suffix: Empty
   components:
   - type: PlantHolder
     waterLevel: 0
