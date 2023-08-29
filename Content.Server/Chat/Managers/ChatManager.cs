@@ -2,18 +2,16 @@ using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Administration.Managers;
 using Content.Server.Administration.Systems;
-using Content.Server.Mind.Components;
+using Content.Server.Mind;
 using Content.Server.Corvax.Sponsors;
 using Content.Server.MoMMI;
 using Content.Server.Preferences.Managers;
-using Content.Server.Station.Systems;
 using Content.Shared.Administration;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
-using Robust.Shared.Map;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
 using Robust.Shared.Replays;
@@ -118,19 +116,19 @@ namespace Content.Server.Chat.Managers
             ChatMessageToMany(ChatChannel.AdminAlert, message, wrappedMessage, default, false, true, clients);
         }
 
-        public void SendAdminAlert(EntityUid player, string message, MindContainerComponent? mindContainerComponent = null)
+        public void SendAdminAlert(EntityUid player, string message)
         {
-            if ((mindContainerComponent == null && !_entityManager.TryGetComponent(player, out mindContainerComponent)) || !mindContainerComponent.HasMind)
+            var mindSystem = _entityManager.System<MindSystem>();
+            if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 SendAdminAlert(message);
                 return;
             }
 
             var adminSystem = _entityManager.System<AdminSystem>();
-            var antag = mindContainerComponent.Mind!.UserId != null
-                        && (adminSystem.GetCachedPlayerInfo(mindContainerComponent.Mind!.UserId.Value)?.Antag ?? false);
+            var antag = mind.UserId != null && (adminSystem.GetCachedPlayerInfo(mind.UserId.Value)?.Antag ?? false);
 
-            SendAdminAlert($"{mindContainerComponent.Mind!.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
+            SendAdminAlert($"{mind.Session?.Name}{(antag ? " (ANTAG)" : "")} {message}");
         }
 
         public void SendHookOOC(string sender, string message)

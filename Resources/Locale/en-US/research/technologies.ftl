@@ -5,6 +5,7 @@ research-discipline-arsenal = Arsenal
 research-discipline-experimental = Experimental
 research-discipline-civilian-services = Civilian Services
 
+research-technology-fulton = Fultons
 research-technology-salvage-equipment = Salvage Equipment
 research-technology-advanced-powercells = Advanced Powercells
 research-technology-compact-power = Compact Power

@@ -9,7 +9,6 @@ using Robust.Shared.Enums;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Map;
 using Robust.Shared.Network;
-using IPlayerManager = Robust.Server.Player.IPlayerManager;
 
 namespace Content.IntegrationTests.Tests.Minds;
 
@@ -40,19 +39,21 @@ public sealed partial class MindTests
         var player = playerMan.ServerSessions.Single();
 
         EntityUid entity = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
         await pair.Server.WaitPost(() =>
         {
             entity = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
-            mind = mindSys.CreateMind(player.UserId);
-            mindSys.TransferTo(mind, entity);
+            mindId = mindSys.CreateMind(player.UserId);
+            mind = entMan.GetComponent<MindComponent>(mindId);
+            mindSys.TransferTo(mindId, entity);
         });
 
         await pair.RunTicksSync(5);
 
         Assert.Multiple(() =>
         {
-            Assert.That(player.ContentData()?.Mind, Is.EqualTo(mind));
+            Assert.That(player.ContentData()?.Mind, Is.EqualTo(mindId));
             Assert.That(player.AttachedEntity, Is.EqualTo(entity));
             Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
             Assert.That(entMan.EntityExists(mind.OwnedEntity), "The mind's current entity does not exist");
@@ -67,23 +68,25 @@ public sealed partial class MindTests
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
         var mindSys = entMan.System<MindSystem>();
         EntityUid ghostUid = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
 
         var player = playerMan.ServerSessions.Single();
         await pair.Server.WaitAssertion(() =>
         {
             var oldUid = player.AttachedEntity;
             ghostUid = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
-            mind = mindSys.GetMind(player.UserId);
-            Assert.That(mind, Is.Not.Null);
+            mindId = mindSys.GetMind(player.UserId)!.Value;
+            Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
+            mind = entMan.GetComponent<MindComponent>(mindId);
 
             if (visit)
             {
-                mindSys.Visit(mind, ghostUid);
+                mindSys.Visit(mindId, ghostUid);
                 return;
             }
 
-            mindSys.TransferTo(mind, ghostUid);
+            mindSys.TransferTo(mindId, ghostUid);
             if (oldUid != null)
                 entMan.DeleteEntity(oldUid.Value);
 
@@ -111,15 +114,16 @@ public sealed partial class MindTests
     /// <summary>
     /// Get the player's current mind and check that the entities exists.
     /// </summary>
-    private static Mind GetMind(Pair.TestPair pair)
+    private static (EntityUid Id, MindComponent Comp) GetMind(Pair.TestPair pair)
     {
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
         var entMan = pair.Server.ResolveDependency<IEntityManager>();
         var player = playerMan.ServerSessions.SingleOrDefault();
         Assert.That(player, Is.Not.Null);
 
-        var mind = player.ContentData()!.Mind;
-        Assert.That(mind, Is.Not.Null);
+        var mindId = player.ContentData()!.Mind!.Value;
+        Assert.That(mindId, Is.Not.EqualTo(default(EntityUid)));
+        var mind = entMan.GetComponent<MindComponent>(mindId);
         Assert.Multiple(() =>
         {
             Assert.That(player.AttachedEntity, Is.EqualTo(mind.CurrentEntity), "Player is not attached to the mind's current entity.");
@@ -127,15 +131,17 @@ public sealed partial class MindTests
             Assert.That(mind.VisitingEntity == null || entMan.EntityExists(mind.VisitingEntity), "The minds visited entity does not exist.");
         });
 
-        return mind;
+        return (mindId, mind);
     }
 
     private static async Task Disconnect(Pair.TestPair pair)
     {
         var netManager = pair.Client.ResolveDependency<IClientNetManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
+        var entMan = pair.Server.ResolveDependency<IEntityManager>();
         var player = playerMan.ServerSessions.Single();
-        var mind = player.ContentData()!.Mind;
+        var mindId = player.ContentData()!.Mind!.Value;
+        var mind = entMan.GetComponent<MindComponent>(mindId);
 
         await pair.Client.WaitAssertion(() =>
         {

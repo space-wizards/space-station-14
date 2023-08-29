@@ -1,5 +1,5 @@
-using Content.Server.Mind.Components;
-using Content.Server.Roles;
+using Content.Server.Mind;
+using Content.Server.Roles.Jobs;
 using Content.Shared.Roles;
 using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -27,35 +27,26 @@ public sealed partial class BuyerJobCondition : ListingCondition
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
+        var minds = ent.System<MindSystem>();
 
-        if (!ent.TryGetComponent<MindContainerComponent>(args.Buyer, out var mind) || mind.Mind == null)
-            return true; //this is for things like surplus crate
+        // this is for things like surplus crate
+        if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
+            return true;
 
-        if (Blacklist != null)
+        var jobs = ent.System<JobSystem>();
+        if (jobs.MindTryGetJob(mindId, out var job, out _))
         {
-            foreach (var role in mind.Mind.AllRoles)
+            if (Blacklist != null)
             {
-                if (role is not Job job)
-                    continue;
-
-                if (Blacklist.Contains(job.Prototype.ID))
+                if (job.PrototypeId != null && Blacklist.Contains(job.PrototypeId))
                     return false;
             }
-        }
 
-        if (Whitelist != null)
-        {
-            var found = false;
-            foreach (var role in mind.Mind.AllRoles)
+            if (Whitelist != null)
             {
-                if (role is not Job job)
-                    continue;
-
-                if (Whitelist.Contains(job.Prototype.ID))
-                    found = true;
+                if (job.PrototypeId == null || !Whitelist.Contains(job.PrototypeId))
+                    return false;
             }
-            if (!found)
-                return false;
         }
 
         return true;
