@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix spawning expeditions mobs on blocked tiles., type: Fix}
-  id: 4202
-  time: '2023-07-09T19:20:55.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
@@ -3030,3 +3025,9 @@ Entries:
   - {message: Fixed not tracking job playtime., type: Fix}
   id: 4701
   time: '2023-08-29T20:39:18.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed players not getting their round start message telling them their
+      supervisors., type: Add}
+  id: 4702
+  time: '2023-08-29T22:50:23.0000000+00:00'
