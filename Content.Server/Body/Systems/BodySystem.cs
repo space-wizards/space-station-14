@@ -12,6 +12,7 @@ using Content.Shared.Body.Prototypes;
 using Content.Shared.Body.Systems;
 using Content.Shared.Coordinates;
 using Content.Shared.Humanoid;
+using Content.Shared.Kitchen.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
@@ -31,6 +32,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -133,6 +135,7 @@ public sealed class BodySystem : SharedBodySystem
 
         // Don't microwave animals, kids
         Transform(uid).AttachToGridOrMap();
+        _appearance.SetData(args.Microwave, MicrowaveVisualState.Bloody, true);
         GibBody(uid, false, component);
 
         args.Handled = true;
