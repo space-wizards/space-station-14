@@ -1,5 +1,6 @@
 using Content.Server.GameTicking.Rules;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Roles.Jobs;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
@@ -19,6 +20,10 @@ using Robust.Server.GameObjects;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
 using Robust.Shared.Containers;
+using Content.Shared.Mobs.Components;
+using Content.Server.Station.Systems;
+using Content.Server.Shuttles.Systems;
+using Content.Shared.Mobs;
 
 namespace Content.Server.Antag;
 
@@ -31,9 +36,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly EntityManager _entityManager = default!;
     [Dependency] private readonly AudioSystem _audioSystem = default!;
+    [Dependency] private readonly JobSystem _jobs = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly InventorySystem _inventory = default!;
+    [Dependency] private readonly RoleSystem _roleSystem = default!;
     [Dependency] private readonly StorageSystem _storageSystem = default!;
+    [Dependency] private readonly StationSystem _stationSystem = default!;
+    [Dependency] private readonly EmergencyShuttleSystem _emergencyShuttle = default!;
+
     /// <summary>
     /// Attempts to start the game rule by checking if there are enough players in lobby and readied.
     /// </summary>
@@ -85,7 +95,7 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             var mind = player.GetMind();
             if (includeHeads == false)
             {
-                if (!player.Data.ContentData()?.Mind?.AllRoles.All(role => role is not Job { CanBeAntag: false }) ?? false)
+                if (!_jobs.CanBeAntag(player))
                     continue;
             }
 
@@ -118,7 +128,11 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 chosenPlayer = _random.PickAndTake(prefList);
                 playerList.Remove(chosenPlayer);
             }
-            var mind = chosenPlayer.Data.ContentData()?.Mind;
+            if (!_mindSystem.TryGetMind(chosenPlayer, out var mindId, out var mind) ||
+               mind.OwnedEntity is not { } ownedEntity)
+            {
+                continue;
+            }
             if (mind != null && mind.OwnedEntity != null)
             {
                 chosen.Add((EntityUid) mind.OwnedEntity);
@@ -132,6 +146,32 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
             }
         }
     }
+
+    public bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
+    {
+        var dead = 0;
+        var inRound = 0;
+        foreach (var entity in list)
+        {
+            if (TryComp<MobStateComponent>(entity, out var state))
+            {
+                if (state.CurrentState == MobState.Dead || state.CurrentState == MobState.Invalid)
+                {
+                    dead++;
+                }
+                else if (checkOffStation = true && _stationSystem.GetOwningStation(entity) == null && !_emergencyShuttle.EmergencyShuttleArrived)
+                {
+                    dead++;
+                }
+                inRound++;
+            }
+        }
+        if (dead == inRound)
+            return true;
+
+        else return false;
+    }
+
     /// <summary>
     /// Will attempt to spawn an item inside of a persons bag and then pockets. 
     /// </summary>

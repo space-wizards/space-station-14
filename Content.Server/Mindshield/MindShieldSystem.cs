@@ -8,6 +8,7 @@ using Content.Server.Mind;
 using Robust.Shared.Prototypes;
 using Content.Shared.Implants;
 using Content.Shared.Tag;
+using Content.Server.Roles;
 using Content.Shared.Implants.Components;
 
 namespace Content.Server.Mindshield;
@@ -19,6 +20,7 @@ public sealed class MindShieldSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly RoleSystem _roleSystem = default!;
     [Dependency] private readonly SharedStunSystem _sharedStun = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly TagSystem _tag = default!;
@@ -46,15 +48,9 @@ public sealed class MindShieldSystem : EntitySystem
     {
         if (HasComp<RevolutionaryComponent>(uid) && !HasComp<HeadRevolutionaryComponent>(uid))
         {
-            var mind = _mindSystem.GetMind(uid);
+            _mindSystem.TryGetMind(uid, out var mindId, out var mind);
             _adminLogManager.Add(LogType.Mind, LogImpact.Medium, $"{ToPrettyString(uid)} was deconverted due to being implanted with a Mindshield.");
-            //Can't remove role because it says they don't have it but can't run without having it (and they do have it) so need help.
-            //if (mind != null && _mindSystem.HasRole<RevolutionaryRole>(mind))
-            //{
-            //    var role = new RevolutionaryRole(mind, _prototypeManager.Index<AntagPrototype>("Rev"));
-            //    _mindSystem.RemoveRole(mind, role);
-            //}
-
+            _roleSystem.MindTryRemoveRole<RevolutionaryRoleComponent>(mindId);
         }
     }
 }

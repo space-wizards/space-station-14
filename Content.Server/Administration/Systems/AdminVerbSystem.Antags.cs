@@ -107,10 +107,10 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Texture(new("/Textures/Interface/Misc/job_icons.rsi/HeadRevolutionary.png")),
             Act = () =>
             {
-                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
 
-                _revolutionaryRule.OnHeadRevAdmin(targetMindComp.Mind, targetMindComp.Mind.Session);
+                _revolutionaryRule.OnHeadRevAdmin(mindId, mind);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-head-rev"),

@@ -1,5 +1,6 @@
 using Content.Shared.Roles;
 using Robust.Shared.Audio;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -10,6 +11,18 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
 public sealed partial class RevolutionaryRuleComponent : Component
 {
+    /// <summary>
+    /// When the round will if all the command are dead (Incase they are in space)
+    /// </summary>
+    [DataField("commandCheck", customTypeSerializer: typeof(TimeOffsetSerializer))]
+    public TimeSpan CommandCheck;
+
+    /// <summary>
+    /// The amount of time between each check for command check.
+    /// </summary>
+    [DataField("timerWait")]
+    public TimeSpan TimerWait = TimeSpan.FromSeconds(20);
+
     /// <summary>
     /// Stores player username and their ingame name for endscreen.
     /// </summary>

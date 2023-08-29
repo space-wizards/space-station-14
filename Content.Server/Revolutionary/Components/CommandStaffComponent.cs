@@ -7,4 +7,9 @@ namespace Content.Server.Revolutionary.Components;
 [RegisterComponent, Access(typeof(RevolutionaryRuleSystem))]
 public sealed partial class CommandStaffComponent : Component
 {
+    /// <summary>
+    /// Bool for making sure CheckCommandLose doesn't repeat over and over.
+    /// </summary>
+    [DataField("headsDied")]
+    public bool HeadsDied = false;
 }
