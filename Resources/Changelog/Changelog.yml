@@ -1,10 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
-    type: Fix}
-  id: 4203
-  time: '2023-07-09T19:21:24.0000000+00:00'
 - author: ksenadi
   changes:
   - {message: Added the ability to lock the air alarm mode., type: Add}
@@ -3031,3 +3025,8 @@ Entries:
       supervisors., type: Add}
   id: 4702
   time: '2023-08-29T22:50:23.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
+  id: 4703
+  time: '2023-08-29T23:32:32.0000000+00:00'
