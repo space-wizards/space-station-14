@@ -83,6 +83,9 @@ public sealed class RoleSystem : EntitySystem
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
 
+        var mindEv = new MindRoleAddedEvent();
+        RaiseLocalEvent(mindId, ref mindEv);
+
         var message = new RoleAddedEvent(mindId, mind, antagonist);
         if (mind.OwnedEntity != null)
         {

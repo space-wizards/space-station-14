@@ -3,7 +3,8 @@
 namespace Content.Server.Roles;
 
 /// <summary>
-///     Event raised on player entities to indicate that a role was added to their mind.
+///     Raised on player entities when a role is added to them.
+///     <see cref="RoleAddedEvent"/> for the one raised on mind entities.
 /// </summary>
 /// <param name="MindId">The mind id associated with the player.</param>
 /// <param name="Mind">The mind component associated with the mind id.</param>
