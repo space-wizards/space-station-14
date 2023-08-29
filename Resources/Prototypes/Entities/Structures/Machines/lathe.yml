@@ -31,7 +31,7 @@
         acts: ["Destruction"]
   - type: WiresPanel
   - type: Wires
-    BoardName: "Autolathe"
+    BoardName: wires-board-name-autolathe
     LayoutId: Autolathe
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
@@ -185,7 +185,7 @@
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: Wires
-    BoardName: "Protolathe"
+    BoardName: wires-board-name-protolathe
     LayoutId: Protolathe
   - type: MaterialStorage
     whitelist:

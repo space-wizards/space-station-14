@@ -19,6 +19,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -52,7 +53,7 @@ namespace Content.Server.Labels
             {
                 // Remove label
                 label.CurrentLabel = null;
-
+                
                 return;
             }
 

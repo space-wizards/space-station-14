@@ -6,7 +6,7 @@ namespace Content.Server.GameTicking.Rules.Components;
 public sealed partial class PiratesRuleComponent : Component
 {
     [ViewVariables]
-    public List<Mind.Mind> Pirates = new();
+    public List<EntityUid> Pirates = new();
     [ViewVariables]
     public EntityUid PirateShip = EntityUid.Invalid;
     [ViewVariables]
