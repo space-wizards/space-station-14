@@ -157,7 +157,7 @@
   - type: StorageFill
     contents:
       - id: ShellShotgun
-        amount: 60
+        amount: 30
 
 - type: entity
   id: ClothingBeltBandolierFilledIncendiary
@@ -168,7 +168,7 @@
   - type: StorageFill
     contents:
       - id: ShellShotgunIncendiary
-        amount: 60
+        amount: 30
 
 - type: entity
   parent: ClothingBeltWand
