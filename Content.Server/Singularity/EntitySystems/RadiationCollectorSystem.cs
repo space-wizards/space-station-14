@@ -96,13 +96,18 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
         {
-            if (!TryGetLoadedGasTank(uid, out var _))
+            if (!TryGetLoadedGasTank(uid, out var gasTankComponent) || gasTankComponent == null)
             {
                 args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
                 return;
             }
 
             args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-present"));
+
+            if (gasTankComponent.IsLowPressure)
+            {
+                args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-low-pressure"));
+            }
         }
 
         private void OnAnalyzed(EntityUid uid, RadiationCollectorComponent component, GasAnalyzerScanEvent args)
