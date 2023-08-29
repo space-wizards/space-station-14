@@ -78,7 +78,7 @@
   category: Materials
   group: market
   
- - type: cargoProduct
+- type: cargoProduct
   id: MaterialWaterTank
   icon:
     sprite: Structures/Storage/tanks.rsi
