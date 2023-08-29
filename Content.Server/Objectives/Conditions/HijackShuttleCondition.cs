@@ -3,6 +3,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Mobs.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -34,6 +35,7 @@ namespace Content.Server.Objectives.Conditions
             var entMan = IoCManager.Resolve<IEntityManager>();
             var mindSystem = entMan.System<MindSystem>();
             var roleSystem = entMan.System<RoleSystem>();
+            var mobStateSystem = entMan.System<MobStateSystem>();
 
             var agentOnShuttle = false;
             var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
@@ -53,8 +55,8 @@ namespace Content.Server.Objectives.Conditions
                 if (isPersonTraitor) // Allow traitors
                     continue;
 
-                var isPersonDead = mindSystem.IsCharacterDeadIc(mind);
-                if (isPersonDead) // Allow dead
+                var isPersonIncapacitated = mobStateSystem.IsIncapacitated(player.AttachedEntity.Value);
+                if (isPersonIncapacitated) // Allow dead and crit
                     continue;
 
                 var isPersonCuffed =
