@@ -32,8 +32,8 @@ namespace Content.Server.Objectives.Conditions
         private bool IsShuttleHijacked(EntityUid shuttleGridId)
         {
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
-            var roleSystem = entMan.EntitySysManager.GetEntitySystem<RoleSystem>();
+            var mindSystem = entMan.System<MindSystem>();
+            var roleSystem = entMan.System<RoleSystem>();
 
             var agentOnShuttle = false;
             var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
