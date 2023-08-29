@@ -3,6 +3,8 @@
   abstract: true
   name: bluespace portal
   description: Transports you to a linked destination!
+  placement:
+    mode: SnapgridCenter
   components:
   - type: Transform
     anchored: True
