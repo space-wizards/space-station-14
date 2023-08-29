@@ -39,17 +39,15 @@ public sealed class InfectOnMeleeSystem : EntitySystem
 
     private void OnMeleeHit(EntityUid uid, InfectOnMeleeComponent component, MeleeHitEvent args)
     {
-        if (component.InfectOnMelee == true)
+        if (component.Cluwinification == true)
         {
-
             foreach (var entity in args.HitEntities)
             {
                 if (HasComp<HumanoidAppearanceComponent>(entity)
-                    && !_mobStateSystem.IsDead(entity)
-                    && _robustRandom.Prob(component.Cluwinification)
-                    && !HasComp<ClumsyComponent>(entity)
-                    && !HasComp<ZombieComponent>(entity)
-                    && !HasComp<MimePowersComponent>(entity))
+                && !_mobStateSystem.IsDead(entity)
+                && _robustRandom.Prob(component.InfectionChance)
+                && !HasComp<ClumsyComponent>(entity)
+                && !HasComp<ZombieComponent>(entity))
                 {
                     _audio.PlayPvs(component.InfectionSound, uid);
                     EnsureComp<CluwneComponent>(entity);

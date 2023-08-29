@@ -8,18 +8,26 @@ namespace Content.Shared.Weapons.Melee;
 
 [RegisterComponent]
 [NetworkedComponent]
-public sealed class InfectOnMeleeComponent : Component
+public sealed partial class InfectOnMeleeComponent : Component
 {
+    /// <summary>
+    /// infection chance determines the % chance that target will be infected.
+    /// </summary>
 
     [ViewVariables(VVAccess.ReadWrite)]
-    public float Cluwinification = 0.15f;
+    public float InfectionChance = 0.15f;
 
     /// <summary>
-    /// If this is true then has a % chance to transform target into a cluwne when hit with melee.
+    /// If this is true then target will be cluwned.
     /// </summary>
-    [DataField("infectOnMelee")]
-    public bool InfectOnMelee = true;
 
+    [DataField("cluwnification")]
+    public bool Cluwinification = false;
+
+    /// <summary>
+    /// Sound played on infection.
+    /// </summary>
+ 
     [DataField("infectionSound")]
     public SoundSpecifier InfectionSound = new SoundPathSpecifier("/Audio/Weapons/Guns/Gunshots/Magic/staff_animation.ogg");
 }

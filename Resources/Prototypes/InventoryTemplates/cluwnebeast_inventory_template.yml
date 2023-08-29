@@ -49,3 +49,9 @@
       uiWindowPos: 2,0
       strippingWindowPos: 2,0
       displayName: Ears
+    - name: head
+      slotTexture: head
+      slotFlags: HEAD
+      uiWindowPos: 1,0
+      strippingWindowPos: 1,0
+      displayName: Head

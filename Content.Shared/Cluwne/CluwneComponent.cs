@@ -38,7 +38,7 @@ public sealed partial class CluwneComponent : Component
     /// The autoemote sound to play.
     /// </summary>
     [DataField("autoEmoteSound")]
-    public readonly string AutoEmoteSound = "CluwneGiggle";
+    public string AutoEmoteSound = "CluwneGiggle";
 
     /// <summary>
     /// If this is true then has a % chance to transform target into a cluwne when hit with melee.

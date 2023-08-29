@@ -33,6 +33,8 @@
     damageContainer: Biological
     damageModifierSet: CluwneBeast
   - type: Hands
+  - type: InfectOnMelee
+    cluwnification: true
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -46,9 +48,8 @@
     animation: WeaponArcClaw
     damage:
       types:
-        Slash: 10
-        Piercing: 2
-        Structural: 8
+        Blunt: 10
+        Structural: 5
   - type: Strippable
   - type: InventorySlots
   - type: Inventory
@@ -89,10 +90,8 @@
     requiredLegs: 2
   - type: Cluwne
     isCluwne: false
-    cluwneOnMelee: true
     autoEmoteSound: CluwneBeastGiggle
     emoteId: CluwneBeast
-    isBeast: true
   - type: FootstepModifier
     footstepSoundCollection:
       collection: FootstepClown

@@ -14,11 +14,6 @@ using Content.Server.Emoting.Systems;
 using Content.Server.Speech.EntitySystems;
 using Content.Shared.Cluwne;
 using Content.Shared.Interaction.Components;
-using Content.Server.Abilities.Mime;
-using Content.Shared.Humanoid;
-using Content.Shared.Mobs.Systems;
-using Content.Shared.Weapons.Melee.Events;
-using Content.Shared.Zombies;
 using Content.Server.NPC.Systems;
 
 namespace Content.Server.Cluwne;
@@ -34,7 +29,6 @@ public sealed class CluwneSystem : EntitySystem
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly AutoEmoteSystem _autoEmote = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
 
@@ -44,7 +38,6 @@ public sealed class CluwneSystem : EntitySystem
 
         SubscribeLocalEvent<CluwneComponent, ComponentStartup>(OnComponentStartup);
         SubscribeLocalEvent<CluwneComponent, MobStateChangedEvent>(OnMobState);
-        SubscribeLocalEvent<CluwneComponent, MeleeHitEvent>(OnMeleeHit);
         SubscribeLocalEvent<CluwneComponent, EmoteEvent>(OnEmote, before:
         new[] { typeof(VocalSystem), typeof(BodyEmotesSystem) });
     }
@@ -55,7 +48,7 @@ public sealed class CluwneSystem : EntitySystem
     private void OnMobState(EntityUid uid, CluwneComponent component, MobStateChangedEvent args)
     {
 
-        if (args.NewMobState == MobState.Dead && component.IsBeast == true)
+        if (args.NewMobState == MobState.Dead && component.IsCluwne == false)
         {
             RemComp<AutoEmoteComponent>(uid);
         }
@@ -96,10 +89,8 @@ public sealed class CluwneSystem : EntitySystem
             SetOutfitCommand.SetOutfit(uid, "CluwneGear", EntityManager);
             _npcFaction.RemoveFaction(uid, "NanoTrasen", false);
             _npcFaction.AddFaction(uid, "HonkNeutral");
-        }
 
-        _popupSystem.PopupEntity(Loc.GetString("cluwne-transform", ("target", uid)), uid, PopupType.LargeCaution);
-        _audio.PlayPvs(component.SpawnSound, uid);
+        }
 
         else
         {
@@ -129,27 +120,6 @@ public sealed class CluwneSystem : EntitySystem
             _audio.PlayPvs(component.KnockSound, uid);
             _stunSystem.TryParalyze(uid, TimeSpan.FromSeconds(component.ParalyzeTime), true);
             _chat.TrySendInGameICMessage(uid, "spasms", InGameICChatType.Emote, ChatTransmitRange.Normal);
-        }
-    }
-
-    private void OnMeleeHit(EntityUid uid, CluwneComponent component, MeleeHitEvent args)
-    {
-        if (component.CluwneOnMelee == true)
-        {
-
-            foreach (var entity in args.HitEntities)
-            {
-                if (HasComp<HumanoidAppearanceComponent>(entity)
-                    && !_mobStateSystem.IsDead(entity)
-                    && _robustRandom.Prob(component.Cluwinification)
-                    && !HasComp<ClumsyComponent>(entity)
-                    && !HasComp<ZombieComponent>(entity)
-                    && !HasComp<MimePowersComponent>(entity))
-                {
-                    _audio.PlayPvs(component.CluwneSound, uid);
-                    EnsureComp<CluwneComponent>(entity);
-                }
-            }
         }
     }
 }
