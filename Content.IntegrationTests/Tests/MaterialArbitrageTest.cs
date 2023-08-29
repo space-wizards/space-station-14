@@ -30,10 +30,10 @@ public sealed class MaterialArbitrageTest
     [Test]
     public async Task NoMaterialArbitrage()
     {
-        await using var pairTracker = await PoolManager.GetServerClient();
-        var server = pairTracker.Pair.Server;
+        await using var pair = await PoolManager.GetServerClient();
+        var server = pair.Server;
 
-        var testMap = await PoolManager.CreateTestMap(pairTracker);
+        var testMap = await pair.CreateTestMap();
         await server.WaitIdleAsync();
 
         var entManager = server.ResolveDependency<IEntityManager>();
@@ -65,7 +65,7 @@ public sealed class MaterialArbitrageTest
         Dictionary<string, ConstructionComponent> constructionRecipes = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
+            if (proto.NoSpawn || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(constructionName, out var destructible))
@@ -125,7 +125,7 @@ public sealed class MaterialArbitrageTest
         // Here we get the set of entities/materials spawned when destroying an entity.
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
+            if (proto.NoSpawn || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(destructibleName, out var destructible))
@@ -290,7 +290,7 @@ public sealed class MaterialArbitrageTest
         Dictionary<string, PhysicalCompositionComponent> physicalCompositions = new();
         foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
         {
-            if (proto.NoSpawn || proto.Abstract || pairTracker.Pair.IsTestPrototype(proto))
+            if (proto.NoSpawn || proto.Abstract || pair.IsTestPrototype(proto))
                 continue;
 
             if (!proto.Components.TryGetValue(compositionName, out var composition))
@@ -338,7 +338,7 @@ public sealed class MaterialArbitrageTest
         });
 
         await server.WaitPost(() => mapManager.DeleteMap(testMap.MapId));
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
 
         async Task<double> GetSpawnedPrice(Dictionary<string, int> ents)
         {

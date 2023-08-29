@@ -60,13 +60,14 @@
   name: research-technology-power-generation
   icon:
     sprite: Structures/Power/Generation/portable_generator.rsi
-    state: portgen0_1
+    state: portgen0
   discipline: Industrial
   tier: 1
   cost: 7500
   recipeUnlocks:
-  - GeneratorPlasmaMachineCircuitboard
-  - GeneratorUraniumMachineCircuitboard
+  - PortableGeneratorPacmanMachineCircuitboard
+  - PortableGeneratorSuperPacmanMachineCircuitboard
+  - PortableGeneratorJrPacmanMachineCircuitboard
   - PowerComputerCircuitboard #the actual solar panel itself should be in here
   - SolarControlComputerCircuitboard
   - SolarTrackerElectronics

@@ -3,7 +3,7 @@ using Content.Server.NPC.Components;
 
 namespace Content.Server.NPC.HTN;
 
-[RegisterComponent, ComponentReference(typeof(NPCComponent))]
+[RegisterComponent]
 public sealed partial class HTNComponent : NPCComponent
 {
     /// <summary>

@@ -9,7 +9,6 @@
   - type: Item
     sprite: Objects/Materials/ore.rsi
     size: 60
-  - type: ItemStatus
   - type: Tag
     tags:
     - Ore
