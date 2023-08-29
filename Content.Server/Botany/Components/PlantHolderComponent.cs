@@ -17,7 +17,7 @@ public sealed partial class PlantHolderComponent : Component
     public int MissingGas;
 
     [DataField("cycleDelay")]
-    public readonly TimeSpan CycleDelay = TimeSpan.FromSeconds(15f);
+    public TimeSpan CycleDelay = TimeSpan.FromSeconds(15f);
 
     [DataField("lastCycle", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastCycle = TimeSpan.Zero;
