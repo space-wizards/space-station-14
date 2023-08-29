@@ -21,10 +21,10 @@ public sealed class JobSystem : EntitySystem
 
     public override void Initialize()
     {
-        SubscribeLocalEvent<JobComponent, RoleAddedEvent>(MindOnDoGreeting);
+        SubscribeLocalEvent<MindComponent, MindRoleAddedEvent>(MindOnDoGreeting);
     }
 
-    private void MindOnDoGreeting(EntityUid mindId, JobComponent component, RoleAddedEvent args)
+    private void MindOnDoGreeting(EntityUid mindId, MindComponent component, ref MindRoleAddedEvent args)
     {
         if (!_mind.TryGetSession(mindId, out var session))
             return;
@@ -38,9 +38,7 @@ public sealed class JobSystem : EntitySystem
         if (prototype.RequireAdminNotify)
             _chat.DispatchServerMessage(session, Loc.GetString("job-greet-important-disconnect-admin-notify"));
 
-        _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning",
-            ("jobName", Name),
-            ("supervisors", Loc.GetString(prototype.Supervisors))));
+        _chat.DispatchServerMessage(session, Loc.GetString("job-greet-supervisors-warning", ("jobName", prototype.LocalizedName), ("supervisors", Loc.GetString(prototype.Supervisors))));
     }
 
     public void MindAddJob(EntityUid mindId, string jobPrototypeId)

@@ -5,9 +5,6 @@ namespace Content.Server.Mind.Components
     {
         [ViewVariables]
         public EntityUid? MindId;
-
-        [ViewVariables]
-        public MindComponent? Mind;
     }
 
     public sealed class MindUnvisitedMessage : EntityEventArgs
