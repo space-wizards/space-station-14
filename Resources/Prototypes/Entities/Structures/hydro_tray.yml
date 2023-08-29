@@ -97,4 +97,4 @@
   components:
   - type: PlantHolder
     waterLevel: 0
-    nutrientLevel: 0
+    nutritionLevel: 0
