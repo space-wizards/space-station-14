@@ -77,23 +77,3 @@
   cost: 1500
   category: Materials
   group: market
-
-- type: cargoProduct
-  id: MaterialWaterTank
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: WaterTankFull
-  cost: 1000
-  category: Materials
-  group: market
-  
-- type: cargoProduct
-  id: MaterialWeedKillerTank
-  icon:
-    sprite: Structures/Storage/tanks.rsi
-    state: watertank
-  product: WeedKillerTankFull
-  cost: 1500
-  category: Materials
-  group: market
