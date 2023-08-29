@@ -3,8 +3,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Cuffs.Components;
-using Robust.Server.GameObjects;
-using Robust.Shared.Map.Components;
+using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Conditions
@@ -13,12 +12,14 @@ namespace Content.Server.Objectives.Conditions
     public sealed partial class HijackShuttleCondition : IObjectiveCondition
     {
         private MindComponent _mind;
+        private EntityUid _mindId;
 
         public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
             return new HijackShuttleCondition
             {
                 _mind = mind,
+                _mindId = mindId,
             };
         }
 
@@ -28,30 +29,25 @@ namespace Content.Server.Objectives.Conditions
 
         public SpriteSpecifier Icon => new SpriteSpecifier.Rsi(new ResPath("Objects/Tools/emag.rsi"), "icon");
 
-        private bool IsShuttleHijacked(TransformComponent agentXform, EntityUid? shuttle)
+        private bool IsShuttleHijacked(EntityUid shuttleGridId)
         {
-            if (shuttle == null)
-                return false;
-
             var entMan = IoCManager.Resolve<IEntityManager>();
-            var transformSys = entMan.EntitySysManager.GetEntitySystem<TransformSystem>();
-            var lookupSys = entMan.EntitySysManager.GetEntitySystem<EntityLookupSystem>();
             var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
             var roleSystem = entMan.EntitySysManager.GetEntitySystem<RoleSystem>();
 
-            if (!entMan.TryGetComponent<MapGridComponent>(shuttle, out var shuttleGrid) ||
-                !entMan.TryGetComponent<TransformComponent>(shuttle, out var shuttleXform))
+            var agentOnShuttle = false;
+            var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
+            foreach (var player in gridPlayers)
             {
-                return false;
-            }
-
-            var shuttleAabb = transformSys.GetWorldMatrix(shuttleXform).TransformBox(shuttleGrid.LocalAABB);
-            var agentOnShuttle = shuttleAabb.Contains(transformSys.GetWorldPosition(agentXform));
-            var entities = lookupSys.GetEntitiesIntersecting(shuttleXform.MapID, shuttleAabb);
-            foreach (var entity in entities)
-            {
-                if (!mindSystem.TryGetMind(entity, out var mindId, out var mind))
+                if (!player.AttachedEntity.HasValue ||
+                    !mindSystem.TryGetMind(player.AttachedEntity.Value, out var mindId, out var mind))
                     continue;
+
+                if (mindId == _mindId)
+                {
+                    agentOnShuttle = true;
+                    continue;
+                }
 
                 var isPersonTraitor = roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
                 if (isPersonTraitor) // Allow traitors
@@ -62,8 +58,8 @@ namespace Content.Server.Objectives.Conditions
                     continue;
 
                 var isPersonCuffed =
-                    entMan.TryGetComponent<CuffableComponent>(mindId, out var cuffed)
-                    && cuffed.CuffedHandCount == 0;
+                    entMan.TryGetComponent<CuffableComponent>(player.AttachedEntity.Value, out var cuffed)
+                    && cuffed.CuffedHandCount > 0;
                 if (isPersonCuffed) // Allow handcuffed
                     continue;
 
@@ -93,7 +89,10 @@ namespace Content.Server.Objectives.Conditions
                 var query = entMan.AllEntityQueryEnumerator<StationEmergencyShuttleComponent>();
                 while (query.MoveNext(out var comp))
                 {
-                    if (IsShuttleHijacked(xform, comp.EmergencyShuttle))
+                    if (comp.EmergencyShuttle == null)
+                        continue;
+
+                    if (IsShuttleHijacked(comp.EmergencyShuttle.Value))
                     {
                         shuttleHijacked = true;
                         break;
