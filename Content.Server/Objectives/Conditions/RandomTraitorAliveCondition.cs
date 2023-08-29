@@ -56,8 +56,7 @@ namespace Content.Server.Objectives.Conditions
             {
                 var entityManager = IoCManager.Resolve<EntityManager>();
                 var mindSystem = entityManager.System<MindSystem>();
-                return _targetMind == null ||
-                       !mindSystem.TryGetMind(_targetMind.Value, out _, out var mind) ||
+                return !entityManager.TryGetComponent(_targetMind, out MindComponent? mind) ||
                        !mindSystem.IsCharacterDeadIc(mind)
                     ? 1f
                     : 0f;
