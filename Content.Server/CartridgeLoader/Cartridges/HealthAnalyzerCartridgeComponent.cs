@@ -10,7 +10,7 @@ namespace Content.Server.CartridgeLoader.Cartridges;
 ///    Attaches the <see cref="HealthAnalyzerComponent" /> to the PDA when cartridge with this component is installed
 /// </summary>
 [RegisterComponent]
-public sealed class HealthAnalyzerCartridgeComponent : Component
+public sealed partial class HealthAnalyzerCartridgeComponent : Component
 {
     /// <summary>
     /// How long it takes to scan someone.

@@ -6,7 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 
-public sealed class HealthAnalyzerUi : UIFragment
+public sealed partial class HealthAnalyzerUi : UIFragment
 {
     private HealthAnalyzerUiFragment? _fragment;
 
