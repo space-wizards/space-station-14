@@ -12,8 +12,8 @@ namespace Content.IntegrationTests.Tests.Atmos
         [Test]
         public async Task TotalGasesTest()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
 
             await server.WaitPost(() =>
@@ -26,7 +26,7 @@ namespace Content.IntegrationTests.Tests.Atmos
                     Assert.That(Enum.GetValues(typeof(Gas)), Has.Length.EqualTo(Atmospherics.TotalNumberOfGases));
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

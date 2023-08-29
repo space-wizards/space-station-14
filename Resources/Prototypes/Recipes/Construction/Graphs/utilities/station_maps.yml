@@ -67,8 +67,6 @@
     edges:
     - to: wired
       conditions:
-      - !type:AllWiresCut {}
-      - !type:WirePanel {}
       - !type:ContainerNotEmpty
         container: board
       completed:

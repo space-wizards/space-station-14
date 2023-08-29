@@ -34,3 +34,31 @@
   completetime: 0.8
   materials:
     Glass: 50
+
+- type: latheRecipe
+  id: FoodPlate
+  result: FoodPlate
+  completetime: 0.8
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: FoodPlateSmall
+  result: FoodPlateSmall
+  completetime: 0.4
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: FoodPlatePlastic
+  result: FoodPlatePlastic
+  completetime: 0.8
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FoodPlateSmallPlastic
+  result: FoodPlateSmallPlastic
+  completetime: 0.4
+  materials:
+    Plastic: 50

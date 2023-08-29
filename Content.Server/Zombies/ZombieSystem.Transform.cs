@@ -6,8 +6,12 @@ using Content.Server.Ghost.Roles.Components;
 using Content.Server.Humanoid;
 using Content.Server.IdentityManagement;
 using Content.Server.Inventory;
+using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
+using Content.Server.NPC;
+using Content.Server.NPC.Components;
+using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Server.Nutrition.Components;
 using Content.Server.Roles;
 using Content.Server.Speech.Components;
@@ -16,11 +20,6 @@ using Content.Shared.CombatMode;
 using Content.Shared.Damage;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
-using Content.Server.Mind;
-using Content.Server.NPC;
-using Content.Server.NPC.Components;
-using Content.Server.NPC.HTN;
-using Content.Server.NPC.Systems;
 using Content.Shared.Humanoid;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -28,12 +27,10 @@ using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Content.Shared.Roles;
 using Content.Shared.Tools.Components;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
-using System.Linq;
 
 namespace Content.Server.Zombies
 {
@@ -55,6 +52,7 @@ namespace Content.Server.Zombies
         [Dependency] private readonly SharedCombatModeSystem _combat = default!;
         [Dependency] private readonly IChatManager _chatMan = default!;
         [Dependency] private readonly MindSystem _mind = default!;
+        [Dependency] private readonly RoleSystem _roles = default!;
         [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -218,11 +216,11 @@ namespace Content.Server.Zombies
             _identity.QueueIdentityUpdate(target);
 
             //He's gotta have a mind
-            var mindComp = EnsureComp<MindContainerComponent>(target);
-            if (_mind.TryGetMind(target, out var mind, mindComp) && _mind.TryGetSession(mind, out var session))
+            var hasMind = _mind.TryGetMind(target, out var mindId, out _);
+            if (hasMind && _mind.TryGetSession(mindId, out var session))
             {
                 //Zombie role for player manifest
-                _mind.AddRole(mind, new ZombieRole(mind, _protoManager.Index<AntagPrototype>(zombiecomp.ZombieRoleId)));
+                _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = zombiecomp.ZombieRoleId });
 
                 //Greeting message for new bebe zombers
                 _chatMan.DispatchServerMessage(session, Loc.GetString("zombie-infection-greeting"));
@@ -238,7 +236,7 @@ namespace Content.Server.Zombies
                 _npc.WakeNPC(target, htn);
             }
 
-            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !mindComp.HasMind) //this specific component gives build test trouble so pop off, ig
+            if (!HasComp<GhostRoleMobSpawnerComponent>(target) && !hasMind) //this specific component gives build test trouble so pop off, ig
             {
                 //yet more hardcoding. Visit zombie.ftl for more information.
                 var ghostRole = EnsureComp<GhostRoleComponent>(target);
