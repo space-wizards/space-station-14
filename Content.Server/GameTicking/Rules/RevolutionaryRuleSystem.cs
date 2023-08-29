@@ -132,7 +132,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 continue;
 
             _antagSelectionSystem.AttemptStartGameRule(ev, uid, comp.MinPlayers, gameRule);
-            continue;
         }
     }
 
@@ -152,7 +151,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             _antagSelectionSystem.EligiblePlayers(comp.RevPrototypeId, comp.MaxHeadRevs, comp.PlayersPerHeadRev, comp.HeadRevStartSound,
                 "head-rev-role-greeting", "#5e9cff", out var chosen, false);
             GiveHeadRev(chosen, comp.RevPrototypeId, comp);
-            continue;
         }
     }
 
@@ -362,8 +360,6 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
                 inRound++;
             }
 
-            //In the rare instances that no heads are on station at start, I put a timer before this can activate. Might lower it
-            //Also now should set all command and sec jobs to zero.
             if (dead == inRound && _headsDied)
             {
                 _headsDied = true;
