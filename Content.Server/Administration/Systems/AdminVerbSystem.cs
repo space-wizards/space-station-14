@@ -11,7 +11,6 @@ using Content.Server.Ghost.Roles;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Prayer;
 using Content.Server.Xenoarchaeology.XenoArtifacts;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
@@ -79,7 +78,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddAdminVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -215,7 +214,7 @@ namespace Content.Server.Administration.Systems
 
         private void AddDebugVerbs(GetVerbsEvent<Verb> args)
         {
-            if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+            if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
                 return;
 
             var player = actor.PlayerSession;
@@ -262,11 +261,10 @@ namespace Content.Server.Administration.Systems
                     {
                         MakeSentientCommand.MakeSentient(args.Target, EntityManager);
 
-                        var mind = player.ContentData()?.Mind;
-                        if (mind == null)
+                        if (!_minds.TryGetMind(player, out var mindId, out var mind))
                             return;
 
-                        _mindSystem.TransferTo(mind, args.Target, ghostCheckOverride: true);
+                        _mindSystem.TransferTo(mindId, args.Target, ghostCheckOverride: true, mind: mind);
                     },
                     Impact = LogImpact.High,
                     ConfirmationPopup = true
@@ -349,7 +347,7 @@ namespace Content.Server.Administration.Systems
 
             // Get Disposal tube direction verb
             if (_groupController.CanCommand(player, "tubeconnections") &&
-                EntityManager.TryGetComponent<DisposalTubeComponent?>(args.Target, out var tube))
+                EntityManager.TryGetComponent(args.Target, out DisposalTubeComponent? tube))
             {
                 Verb verb = new()
                 {
@@ -376,7 +374,7 @@ namespace Content.Server.Administration.Systems
             }
 
             if (_groupController.CanAdminMenu(player) &&
-                EntityManager.TryGetComponent<ConfigurationComponent?>(args.Target, out var config))
+                EntityManager.TryGetComponent(args.Target, out ConfigurationComponent? config))
             {
                 Verb verb = new()
                 {

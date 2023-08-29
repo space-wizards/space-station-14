@@ -31,7 +31,7 @@
         acts: ["Destruction"]
   - type: WiresPanel
   - type: Wires
-    BoardName: "Autolathe"
+    BoardName: wires-board-name-autolathe
     LayoutId: Autolathe
   - type: ActivatableUI
     key: enum.LatheUiKey.Key
@@ -106,6 +106,10 @@
       - LightTube
       - LightBulb
       - Bucket
+      - FoodPlate
+      - FoodPlateSmall
+      - FoodPlatePlastic
+      - FoodPlateSmallPlastic
       - SprayBottle
       - PowerCellSmall
       - MicroManipulatorStockPart
@@ -181,7 +185,7 @@
   - type: Machine
     board: ProtolatheMachineCircuitboard
   - type: Wires
-    BoardName: "Protolathe"
+    BoardName: wires-board-name-protolathe
     LayoutId: Protolathe
   - type: MaterialStorage
     whitelist:
@@ -336,8 +340,9 @@
       - HonkerTargetingElectronics
       - HamtrCentralElectronics
       - HamtrPeripheralsElectronics
-      - GeneratorPlasmaMachineCircuitboard
-      - GeneratorUraniumMachineCircuitboard
+      - PortableGeneratorPacmanMachineCircuitboard
+      - PortableGeneratorSuperPacmanMachineCircuitboard
+      - PortableGeneratorJrPacmanMachineCircuitboard
       - WallmountGeneratorElectronics
       - WallmountGeneratorAPUElectronics
       - WallmountSubstationElectronics
