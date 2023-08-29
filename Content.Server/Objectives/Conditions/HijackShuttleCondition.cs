@@ -74,7 +74,7 @@ namespace Content.Server.Objectives.Conditions
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
-                var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+                var mindSystem = entMan.System<MindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
