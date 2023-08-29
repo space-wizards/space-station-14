@@ -761,7 +761,6 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
-    
 - type: entity
   parent: ClothingHeadBase
   id: ClothingHeadHatCentcap
@@ -777,4 +776,3 @@
     - ClothMade
     - WhitelistChameleon
     - HamsterWearable
-    
