@@ -76,10 +76,6 @@ namespace Content.Server.Objectives.Conditions
                 var entMan = IoCManager.Resolve<IEntityManager>();
                 var mindSystem = entMan.System<MindSystem>();
 
-                if (_mind?.OwnedEntity == null
-                    || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))
-                    return 0f;
-
                 var shuttleHijacked = false;
                 var agentIsAlive = !mindSystem.IsCharacterDeadIc(_mind);
                 var agentIsFree = !(entMan.TryGetComponent<CuffableComponent>(_mind.OwnedEntity, out var cuffed)
