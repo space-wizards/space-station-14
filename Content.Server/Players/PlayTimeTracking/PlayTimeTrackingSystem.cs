@@ -80,7 +80,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     public IEnumerable<string> GetTimedRoles(EntityUid mindId)
     {
         var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
-        RaiseLocalEvent(ref ev);
+        RaiseLocalEvent(mindId, ref ev);
 
         foreach (var role in ev.Roles)
         {
