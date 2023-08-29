@@ -29,12 +29,12 @@ namespace Content.Server.Botany.Systems
 {
     public sealed class PlantHolderSystem : EntitySystem
     {
-        [Dependency] private readonly BotanySystem _botanySystem = default!;
+        [Dependency] private readonly BotanySystem _botany = default!;
         [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly MutationSystem _mutation = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
@@ -133,12 +133,12 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed == null)
                 {
-                    if (!_botanySystem.TryGetSeed(seeds, out var seed))
+                    if (!_botany.TryGetSeed(seeds, out var seed))
                         return;
 
                     var name = Loc.GetString(seed.Name);
                     var noun = Loc.GetString(seed.Noun);
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-plant-success-message",
                         ("seedName", name),
                         ("seedNoun", noun)), args.User, PopupType.Medium);
 
@@ -148,7 +148,7 @@ namespace Content.Server.Botany.Systems
                     component.Health = component.Seed.Endurance;
                     component.LastCycle = _gameTiming.CurTime;
 
-                    EntityManager.QueueDeleteEntity(args.Used);
+                    QueueDel(args.Used);
 
                     CheckLevelSanity(uid, component);
                     UpdateSprite(uid, component);
@@ -156,7 +156,7 @@ namespace Content.Server.Botany.Systems
                     return;
                 }
 
-                _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-already-seeded-message",
                     ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
                 return;
             }
@@ -165,16 +165,16 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.WeedLevel > 0)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-weeds-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
-                    _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
+                    _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-weeds-others-message",
                         ("otherName", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     component.WeedLevel = 0;
                     UpdateSprite(uid, component);
                 }
                 else
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-weeds-message"), args.User);
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-no-weeds-message"), args.User);
                 }
 
                 return;
@@ -184,15 +184,15 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed != null)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-remove-plant-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User, PopupType.Medium);
-                    _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
+                    _popup.PopupEntity(Loc.GetString("plant-holder-component-remove-plant-others-message",
                         ("name", Comp<MetaDataComponent>(args.User).EntityName)), uid, Filter.PvsExcept(args.User), true);
                     RemovePlant(uid, component);
                 }
                 else
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
                         ("name", Comp<MetaDataComponent>(uid).EntityName)), args.User);
                 }
 
@@ -214,12 +214,12 @@ namespace Content.Server.Botany.Systems
 
                 if (split.Volume == 0)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-no-plant-message",
                         ("owner", args.Used)), args.User);
                     return;
                 }
 
-                _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-spray-message",
                     ("owner", uid),
                     ("amount", split.Volume)), args.User, PopupType.Medium);
 
@@ -234,27 +234,27 @@ namespace Content.Server.Botany.Systems
             {
                 if (component.Seed == null)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-nothing-to-sample-message"), args.User);
                     return;
                 }
 
                 if (component.Sampled)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-already-sampled-message"), args.User);
                     return;
                 }
 
                 if (component.Dead)
                 {
-                    _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
+                    _popup.PopupCursor(Loc.GetString("plant-holder-component-dead-plant-message"), args.User);
                     return;
                 }
 
                 component.Seed.Unique = false;
-                var seed = _botanySystem.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
+                var seed = _botany.SpawnSeedPacket(component.Seed, Transform(args.User).Coordinates, args.User);
                 seed.RandomOffset(0.25f);
                 var displayName = Loc.GetString(component.Seed.DisplayName);
-                _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-take-sample-message",
                     ("seedName", displayName)), args.User);
                 component.Health -= (_random.Next(3, 5) * 10);
 
@@ -278,10 +278,10 @@ namespace Content.Server.Botany.Systems
 
             if (TryComp<ProduceComponent?>(args.Used, out var produce))
             {
-                _popupSystem.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
+                _popup.PopupCursor(Loc.GetString("plant-holder-component-compost-message",
                     ("owner", uid),
                     ("usingItem", args.Used)), args.User, PopupType.Medium);
-                _popupSystem.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
+                _popup.PopupEntity(Loc.GetString("plant-holder-component-compost-others-message",
                     ("user", Identity.Entity(args.User, EntityManager)),
                     ("usingItem", args.Used),
                     ("owner", uid)), uid, Filter.PvsExcept(args.User), true);
@@ -306,7 +306,7 @@ namespace Content.Server.Botany.Systems
                     var nutrientBonus = seed.Potency / 2.5f;
                     AdjustNutrient(uid, nutrientBonus, component);
                 }
-                EntityManager.QueueDeleteEntity(args.Used);
+                QueueDel(args.Used);
             }
         }
 
@@ -584,7 +584,7 @@ namespace Content.Server.Botany.Systems
             else if (component.Age < 0) // Revert back to seed packet!
             {
                 // will put it in the trays hands if it has any, please do not try doing this
-                _botanySystem.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
+                _botany.SpawnSeedPacket(component.Seed, Transform(uid).Coordinates, uid);
                 RemovePlant(uid, component);
                 component.ForceUpdate = true;
                 Update(uid, component);
@@ -667,15 +667,15 @@ namespace Content.Server.Botany.Systems
             {
                 if (TryComp<HandsComponent>(user, out var hands))
                 {
-                    if (!_botanySystem.CanHarvest(component.Seed, hands.ActiveHandEntity))
+                    if (!_botany.CanHarvest(component.Seed, hands.ActiveHandEntity))
                         return false;
                 }
-                else if (!_botanySystem.CanHarvest(component.Seed))
+                else if (!_botany.CanHarvest(component.Seed))
                 {
                     return false;
                 }
 
-                _botanySystem.Harvest(component.Seed, user, component.YieldMod);
+                _botany.Harvest(component.Seed, user, component.YieldMod);
                 AfterHarvest(plantholder, component);
                 return true;
             }
@@ -696,7 +696,7 @@ namespace Content.Server.Botany.Systems
             if (component.Seed == null || !component.Harvest)
                 return;
 
-            _botanySystem.AutoHarvest(component.Seed, Transform(uid).Coordinates);
+            _botany.AutoHarvest(component.Seed, Transform(uid).Coordinates);
             AfterHarvest(uid, component);
         }
 
@@ -859,7 +859,7 @@ namespace Content.Server.Botany.Systems
                 light.Radius = component.Seed.BioluminescentRadius;
                 light.Color = component.Seed.BioluminescentColor;
                 light.CastShadows = false; // this is expensive, and botanists make lots of plants
-                Dirty(light);
+                Dirty(uid, light);
             }
             else
             {
