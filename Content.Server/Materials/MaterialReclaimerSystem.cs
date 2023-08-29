@@ -4,8 +4,8 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
+using Content.Server.Mind;
 using Content.Server.Nutrition.Components;
-using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
 using Content.Server.Stack;
@@ -34,6 +34,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -105,9 +106,9 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
         args.SetHandled(SuicideKind.Bloodloss);
         var victim = args.Victim;
         if (TryComp(victim, out ActorComponent? actor) &&
-            actor.PlayerSession.ContentData()?.Mind is { } mind)
+            _mind.TryGetMind(actor.PlayerSession, out var mindId, out var mind))
         {
-            _ticker.OnGhostAttempt(mind, false);
+            _ticker.OnGhostAttempt(mindId, false, mind: mind);
             if (mind.OwnedEntity is { Valid: true } entity)
             {
                 _popup.PopupEntity(Loc.GetString("recycler-component-suicide-message"), entity);
