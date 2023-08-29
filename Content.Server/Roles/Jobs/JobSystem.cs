@@ -26,6 +26,9 @@ public sealed class JobSystem : EntitySystem
 
     private void MindOnDoGreeting(EntityUid mindId, JobComponent component, RoleAddedEvent args)
     {
+        if (args.Silent)
+            return;
+
         if (!_mind.TryGetSession(mindId, out var session))
             return;
 

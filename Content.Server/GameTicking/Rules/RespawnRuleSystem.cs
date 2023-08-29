@@ -1,5 +1,8 @@
 ﻿using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
+using Content.Server.Mind;
+using Content.Server.Mind.Components;
+using Content.Server.Mind.Toolshed;
 using Content.Server.Players;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
@@ -82,8 +85,8 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
                 if (!_playerManager.TryGetSessionById(player, out var session))
                     continue;
 
-                if (session.GetMind()?.OwnedEntity is { } entity)
-                    QueueDel(entity);
+                if (session.GetMind() is { } mind && TryComp<MindComponent>(mind, out var mindComp) && mindComp.OwnedEntity.HasValue)
+                    QueueDel(mindComp.OwnedEntity.Value);
                 GameTicker.MakeJoinGame(session, station, silent: true);
                 tracker.RespawnQueue.Remove(player);
             }
