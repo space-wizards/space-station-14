@@ -1,11 +1,6 @@
 Entries:
 - author: metalgearsloth
   changes:
-  - {message: Tweak NPC steering slightly to make them slightly less twitchy., type: Tweak}
-  id: 4200
-  time: '2023-07-09T19:20:20.0000000+00:00'
-- author: metalgearsloth
-  changes:
   - {message: Added xeno turrets to salvage dungeons., type: Add}
   id: 4201
   time: '2023-07-09T19:20:30.0000000+00:00'
@@ -3030,3 +3025,8 @@ Entries:
       alive., type: Fix}
   id: 4699
   time: '2023-08-29T06:23:20.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Added fultons for salvagers., type: Add}
+  id: 4700
+  time: '2023-08-29T06:34:06.0000000+00:00'
