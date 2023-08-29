@@ -56,6 +56,8 @@
   description: Used to extract containers, items, or forcibly recruit people into your base of operations.
   components:
   - type: Fulton
+  - type: Item
+    size: 20
   - type: Stack
     stackType: Fulton
     count: 10
@@ -80,6 +82,8 @@
   name: fulton
   suffix: One
   components:
+  - type: Item
+    size: 2
   - type: Stack
     count: 1
 

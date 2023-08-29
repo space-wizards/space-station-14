@@ -55,7 +55,7 @@ public sealed class FultonSystem : SharedFultonSystem
             var xform = Transform(uid);
             var oldCoords = xform.Coordinates;
             var offset = _random.NextVector2(1.5f);
-            TransformSystem.SetCoordinates(uid, new EntityCoordinates(component.Beacon, offset));
+            TransformSystem.SetCoordinates(uid, new EntityCoordinates(component.Beacon.Value, offset));
 
             RaiseNetworkEvent(new FultonAnimationMessage()
             {
