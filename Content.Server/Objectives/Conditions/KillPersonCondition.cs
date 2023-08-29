@@ -1,5 +1,7 @@
 using Content.Server.Mind;
+using Content.Server.Mind.Components;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Mobs.Systems;
@@ -10,10 +12,14 @@ namespace Content.Server.Objectives.Conditions
 {
     public abstract class KillPersonCondition : IObjectiveCondition
     {
+        // TODO refactor all of this to be ecs
         protected IEntityManager EntityManager => IoCManager.Resolve<IEntityManager>();
-        protected MobStateSystem MobStateSystem => EntityManager.EntitySysManager.GetEntitySystem<MobStateSystem>();
-        protected Mind.Mind? Target;
-        public abstract IObjectiveCondition GetAssigned(Mind.Mind mind);
+        protected MindSystem Minds => EntityManager.System<MindSystem>();
+        protected JobSystem Jobs => EntityManager.System<JobSystem>();
+        protected MobStateSystem MobStateSystem => EntityManager.System<MobStateSystem>();
+        protected EntityUid? TargetMindId;
+        protected MindComponent? TargetMind => EntityManager.GetComponentOrNull<MindComponent>(TargetMindId);
+        public abstract IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind);
 
         /// <summary>
         /// Whether the target must be truly dead, ignores missing evac.
@@ -24,10 +30,11 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                var targetName = Target?.CharacterName ?? "Unknown";
-                var jobName = Target?.CurrentJob?.Name ?? "Unknown";
+                var mind = TargetMind;
+                var targetName = mind?.CharacterName ?? "Unknown";
+                var jobName = Jobs.MindTryGetJobName(TargetMindId);
 
-                if (Target == null)
+                if (TargetMind == null)
                     return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
 
                 return Loc.GetString("objective-condition-kill-person-title", ("targetName", targetName), ("job", jobName));
@@ -42,12 +49,12 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                if (Target == null || Target.OwnedEntity == null)
+                if (TargetMindId == null || TargetMind?.OwnedEntity == null)
                     return 1f;
 
                 var entMan = IoCManager.Resolve<EntityManager>();
                 var mindSystem = entMan.System<MindSystem>();
-                if (mindSystem.IsCharacterDeadIc(Target))
+                if (mindSystem.IsCharacterDeadIc(TargetMind))
                     return 1f;
 
                 if (RequireDead)
@@ -60,7 +67,7 @@ namespace Content.Server.Objectives.Conditions
 
                 // target is escaping so you fail
                 var emergencyShuttle = entMan.System<EmergencyShuttleSystem>();
-                if (emergencyShuttle.IsTargetEscaping(Target.OwnedEntity.Value))
+                if (emergencyShuttle.IsTargetEscaping(TargetMind.OwnedEntity.Value))
                     return 0f;
 
                 // evac has left without the target, greentext since the target is afk in space with a full oxygen tank and coordinates off.
@@ -76,7 +83,7 @@ namespace Content.Server.Objectives.Conditions
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is KillPersonCondition kpc && Equals(Target, kpc.Target);
+            return other is KillPersonCondition kpc && Equals(TargetMindId, kpc.TargetMindId);
         }
 
         public override bool Equals(object? obj)
@@ -89,10 +96,21 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return Target?.GetHashCode() ?? 0;
+            return TargetMindId?.GetHashCode() ?? 0;
         }
 
         public bool IsTarget(EntityUid uid)
-            => Target is not null && Target.OwnedEntity == uid;
+        {
+            if (TargetMindId is null)
+                return false;
+
+            if (EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mindContainer))
+            {
+                if (mindContainer.Mind == TargetMindId)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

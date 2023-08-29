@@ -8,7 +8,6 @@ using Robust.Server.Player;
 using Robust.Shared.Enums;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
-using PlayerData = Content.Server.Players.PlayerData;
 
 namespace Content.Server.GameTicking
 {
@@ -27,7 +26,7 @@ namespace Content.Server.GameTicking
         {
             var session = args.Session;
 
-            if (_mind.TryGetMind(session.UserId, out var mind))
+            if (_mind.TryGetMind(session.UserId, out var mindId, out var mind))
             {
                 if (args.OldStatus == SessionStatus.Connecting && args.NewStatus == SessionStatus.Connected)
                     mind.Session = session;
@@ -35,7 +34,7 @@ namespace Content.Server.GameTicking
                 DebugTools.Assert(mind.Session == session);
             }
 
-            DebugTools.Assert(session.GetMind() == mind);
+            DebugTools.Assert(session.GetMind() == mindId);
 
             switch (args.NewStatus)
             {
@@ -47,7 +46,7 @@ namespace Content.Server.GameTicking
                     if (session.Data.ContentDataUncast == null)
                     {
                         var data = new PlayerData(session.UserId, args.Session.Name);
-                        data.Mind = mind;
+                        data.Mind = mindId;
                         session.Data.ContentDataUncast = data;
                     }
 

@@ -39,21 +39,21 @@
   result: CableApcStack1
   completetime: 2
   materials:
-    Steel: 100
+    Steel: 30
 
 - type: latheRecipe
   id: CableMVStack
   result: CableMVStack1
   completetime: 2
   materials:
-    Steel: 150
+    Steel: 30
 
 - type: latheRecipe
   id: CableHVStack
   result: CableHVStack1
   completetime: 2
   materials:
-    Steel: 200
+    Steel: 30
 
 - type: latheRecipe
   id: Crowbar
