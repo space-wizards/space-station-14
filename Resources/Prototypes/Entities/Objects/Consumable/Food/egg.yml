@@ -9,6 +9,7 @@
   - type: Tag
     tags:
       - Egg
+      - Meat
   - type: Food
     trash: Eggshells
   - type: Sprite

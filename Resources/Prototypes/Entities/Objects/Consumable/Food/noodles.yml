@@ -49,6 +49,9 @@
     layers:
     - state: plate
     - state: tomato
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pasta, tomato.
 
 - type: entity
@@ -96,6 +99,9 @@
           Quantity: 8
         - ReagentId: Vitamin
           Quantity: 4
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like pasta, meat.
 
 - type: entity

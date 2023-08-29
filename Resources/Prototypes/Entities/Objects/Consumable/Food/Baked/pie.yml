@@ -68,7 +68,10 @@
     - state: apple
   - type: SliceableFood
     slice: FoodPieAppleSlice
-
+  - type: Tag
+    tags:
+    - Fruit 
+  
 - type: entity
   name: slice of apple pie
   parent: FoodPieSliceBase
@@ -85,6 +88,9 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: orange
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pie, apple.
 
 - type: entity
@@ -149,6 +155,9 @@
           path: /Audio/Weapons/Guns/Empty/empty.ogg
         ejectSound:
           path: /Audio/Weapons/Guns/Empty/empty.ogg
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pie, cream, banana.
 
 - type: entity
@@ -169,6 +178,9 @@
     - state: berryclafoutis
   - type: SliceableFood
     slice: FoodPieClafoutisSlice
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of berry clafoutis
@@ -185,6 +197,9 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: pink
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pie, blackberries.
 
 - type: entity
@@ -202,6 +217,9 @@
     - state: cherry
   - type: SliceableFood
     slice: FoodPieCherrySlice
+  - type: Tag
+    tags:
+    - Fruit
 
 - type: entity
   name: slice of cherry pie
@@ -218,6 +236,9 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: red
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like pie, cherries.
 
 - type: entity
@@ -235,6 +256,9 @@
     - state: meat
   - type: SliceableFood
     slice: FoodPieMeatSlice
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: slice of meat pie
@@ -251,6 +275,9 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: brown
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like pie, meat.
 
 - type: entity
@@ -268,6 +295,9 @@
     - state: xeno
   - type: SliceableFood
     slice: FoodPieXenoSlice
+  - type: Tag
+    tags:
+    - Meat
 
 - type: entity
   name: slice of xeno pie
@@ -285,6 +315,9 @@
     - state: plain-slice
     - state: alpha-slice-filling
       color: green
+  - type: Tag
+    tags:
+    - Meat
 # Tastes like pie, meat, acid.
 
 - type: entity
@@ -380,6 +413,9 @@
     layers:
     - state: plate-tart
     - state: grape
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like tart, grape.
 
 - type: entity
@@ -414,6 +450,9 @@
     layers:
     - state: plate-tart
     - state: gapple
+  - type: Tag
+    tags:
+    - Fruit
 # Tastes like tart, apple, expensive metal.
 
 - type: entity
