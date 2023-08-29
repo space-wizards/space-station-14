@@ -5,10 +5,10 @@
     "y": 32
   },
   "license": "CC-BY-SA-3.0",
-  "copyright": "mulebot drawn by ItsMeThom",
+  "copyright": "supplybot drawn by ItsMeThom & newty",
   "states": [
     {
-      "name": "mulebot",
+      "name": "supplybot",
       "directions": 4,
       "delays": [
         [

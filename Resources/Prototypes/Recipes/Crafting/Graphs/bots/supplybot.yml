@@ -1,5 +1,5 @@
 - type: constructionGraph
-  id: MuleBot
+  id: SupplyBot
   start: start
   graph:
   - node: start
@@ -20,4 +20,4 @@
       - material: Steel
         amount: 10
   - node: bot
-    entity: MobMuleBot
+    entity: MobSupplyBot

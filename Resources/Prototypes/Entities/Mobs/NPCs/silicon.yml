@@ -170,16 +170,16 @@
 
 - type: entity
   parent: MobSiliconBase
-  id: MobMuleBot
-  name: mulebot
+  id: MobSupplyBot
+  name: supplybot
   description: Delivers cargo!
   components:
   - type: NoSlip
   - type: Sprite
     drawdepth: Mobs
-    sprite: Mobs/Silicon/Bots/mulebot.rsi
+    sprite: Mobs/Silicon/Bots/supplybot.rsi
     layers:
-    - state: mulebot
+    - state: supplybot
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
     noRot: true
   - type: IntrinsicRadioReceiver
@@ -188,8 +188,8 @@
     - Common
   - type: GhostRole
     makeSentient: true
-    name: ghost-role-information-mulebot-name
-    description: ghost-role-information-mulebot-description
+    name: ghost-role-information-supplybot-name
+    description: ghost-role-information-supplybot-description
   - type: GhostTakeoverAvailable
   - type: MovementSpeedModifier
     weightlessModifier: 0
