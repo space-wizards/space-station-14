@@ -94,6 +94,42 @@
       # Corvax-Resprite-End
 
 - type: entity
+  id: LockerCaptainFilledNoLaser
+  suffix: Filled
+  parent: LockerCaptain
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorCaptainCarapace
+      - id: NukeDisk
+      - id: PinpointerNuclear
+      - id: ClothingHeadHatCaptain
+      - id: ClothingNeckCloakCap
+      - id: ClothingHandsGlovesCaptain
+      - id: WeaponDisabler
+      - id: CommsComputerCircuitboard
+      - id: ClothingHeadsetAltCommand
+      - id: SpaceCash1000
+      - id: PlushieNuke
+        prob: 0.1
+      - id: CigarGoldCase
+        prob: 0.25
+      - id: ClothingBeltSheathFilled
+      - id: DoorRemoteCommand
+      - id: ClothingNeckCloakCapFormal
+      - id: ClothingUniformJumpsuitCapFormal
+      - id: ClothingUniformJumpskirtCapFormalDress
+      - id: RubberStampCaptain
+      - id: JetpackCaptainFilled
+      - id: MedalCase
+      #- id: ClothingHeadHatCapcap # SS220 - removed duplicate cap from locker
+      # Corvax-Resprite-Start
+      - id: ClothingHeadCaptainHat
+      - id: ClothingHeadCaptainCap
+      - id: ClothingOuterCoatCaptain
+      # Corvax-Resprite-End
+
+- type: entity
   id: LockerHeadOfPersonnelFilled
   suffix: Filled
   parent: LockerHeadOfPersonnel
