@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Content.Shared.Buckle.Components;
 using Content.Shared.Destructible;
 using Content.Shared.DragDrop;
@@ -50,18 +50,19 @@ public abstract partial class SharedBuckleSystem
 
     private void OnStrapGetState(EntityUid uid, StrapComponent component, ref ComponentGetState args)
     {
-        args.State = new StrapComponentState(component.Position, component.BuckleOffset, component.BuckledEntities, component.MaxBuckleDistance, component.OccupiedSize);
+        args.State = new StrapComponentState(component.Position, component.BuckleOffset, component.BuckledEntities, component.HasSeatbelt, component.MaxBuckleDistance, component.OccupiedSize);
     }
 
     private void OnStrapHandleState(EntityUid uid, StrapComponent component, ref ComponentHandleState args)
     {
         if (args.Current is not StrapComponentState state)
             return;
-
+        
         component.Position = state.Position;
         component.BuckleOffsetUnclamped = state.BuckleOffsetClamped;
         component.BuckledEntities.Clear();
         component.BuckledEntities.UnionWith(state.BuckledEntities);
+        component.HasSeatbelt = state.HasSeatbelt;
         component.MaxBuckleDistance = state.MaxBuckleDistance;
         component.OccupiedSize = state.OccupiedSize;
     }

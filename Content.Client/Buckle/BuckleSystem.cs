@@ -25,6 +25,7 @@ internal sealed class BuckleSystem : SharedBuckleSystem
             return;
 
         component.Buckled = state.Buckled;
+        component.FastenedSeatbelt = state.FastenedSeatbelt;
         component.BuckledTo = state.BuckledTo;
         component.LastEntityBuckledTo = state.LastEntityBuckledTo;
         component.DontCollide = state.DontCollide;

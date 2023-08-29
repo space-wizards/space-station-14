@@ -153,6 +153,8 @@
   - type: Rotatable
   - type: Sprite
     state: shuttle
+  - type: Strap
+    hasSeatbelt: true
   - type: Construction
     graph: Seat
     node: chairPilotSeat

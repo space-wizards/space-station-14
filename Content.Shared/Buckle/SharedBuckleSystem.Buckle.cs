@@ -59,7 +59,7 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleComponentGetState(EntityUid uid, BuckleComponent component, ref ComponentGetState args)
     {
-        args.State = new BuckleComponentState(component.Buckled, component.BuckledTo, component.LastEntityBuckledTo, component.DontCollide);
+        args.State = new BuckleComponentState(component.Buckled, component.FastenedSeatbelt, component.BuckledTo, component.LastEntityBuckledTo, component.DontCollide);
     }
 
     private void OnBuckleMove(EntityUid uid, BuckleComponent component, ref MoveEvent ev)
@@ -172,6 +172,11 @@ public abstract partial class SharedBuckleSystem
         return Resolve(uid, ref component, false) && component.Buckled;
     }
 
+    public bool IsFastenedSeatbelt(EntityUid uid, BuckleComponent? component = null)
+    {
+        return Resolve(uid, ref component, false) && component.FastenedSeatbelt;
+    }
+
     /// <summary>
     /// Shows or hides the buckled status effect depending on if the
     /// entity is buckled or not.
@@ -203,16 +208,19 @@ public abstract partial class SharedBuckleSystem
     private void SetBuckledTo(EntityUid buckleUid, EntityUid? strapUid, StrapComponent? strapComp, BuckleComponent buckleComp)
     {
         buckleComp.BuckledTo = strapUid;
+        var strapHasSeatbelt = strapComp?.HasSeatbelt;
 
         if (strapUid == null)
         {
             buckleComp.Buckled = false;
+            buckleComp.FastenedSeatbelt = false;
         }
         else
         {
             buckleComp.LastEntityBuckledTo = strapUid;
             buckleComp.DontCollide = true;
             buckleComp.Buckled = true;
+            buckleComp.FastenedSeatbelt = strapHasSeatbelt ?? false;
             buckleComp.BuckleTime = _gameTiming.CurTime;
         }
 

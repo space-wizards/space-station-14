@@ -79,6 +79,14 @@ public sealed partial class StrapComponent : Component
     public int Size = 100;
 
     /// <summary>
+    /// Whether or not the object has an actual strap.
+    /// This will prevent buckled entities from being pulled by gravity (i.e. by grav. anomaly).
+    /// </summary>
+    [DataField("hasSeatbelt")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool HasSeatbelt = false;
+
+    /// <summary>
     /// If disabled, nothing can be buckled on this object, and it will unbuckle anything that's already buckled
     /// </summary>
     [ViewVariables]
@@ -126,14 +134,16 @@ public sealed class StrapComponentState : ComponentState
     public readonly float MaxBuckleDistance;
     public readonly Vector2 BuckleOffsetClamped;
     public readonly HashSet<EntityUid> BuckledEntities;
+    public readonly bool HasSeatbelt;
     public readonly int OccupiedSize;
 
     public StrapComponentState(StrapPosition position, Vector2 offset, HashSet<EntityUid> buckled,
-        float maxBuckleDistance, int occupiedSize)
+        bool hasSeatbelt ,float maxBuckleDistance, int occupiedSize)
     {
         Position = position;
         BuckleOffsetClamped = offset;
         BuckledEntities = buckled;
+        HasSeatbelt = hasSeatbelt;
         MaxBuckleDistance = maxBuckleDistance;
         OccupiedSize = occupiedSize;
     }
