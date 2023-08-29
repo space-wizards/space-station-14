@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Added SyndieDrobe!, type: Add}
-  id: 4199
-  time: '2023-07-09T19:19:35.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Tweak NPC steering slightly to make them slightly less twitchy., type: Tweak}
@@ -3029,3 +3024,9 @@ Entries:
       company, so they now contain real blood.', type: Tweak}
   id: 4698
   time: '2023-08-29T04:30:10.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed not showing the name of the fellow traitor that you have to keep
+      alive., type: Fix}
+  id: 4699
+  time: '2023-08-29T06:23:20.0000000+00:00'
