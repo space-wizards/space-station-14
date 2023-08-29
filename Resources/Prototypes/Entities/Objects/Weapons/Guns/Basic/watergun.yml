@@ -28,9 +28,9 @@
     solutionId: chamber
     proto: BulletWaterShot
   - type: SolutionTransfer
-    transferAmount: 10
+    transferAmount: 5
     maxTransferAmount: 50
-    minTransferAmount: 10
+    minTransferAmount: 5
     canChangeTransferAmount: true
   - type: UserInterface
     interfaces:
