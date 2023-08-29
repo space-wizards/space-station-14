@@ -435,7 +435,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: hydroponicsTray
+      prototype: HydroponicsTrayEmpty
       materialRequirements:
         # replacing the console screen
         Glass: 5

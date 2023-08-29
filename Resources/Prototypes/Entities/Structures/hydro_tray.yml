@@ -89,3 +89,11 @@
   - type: GuideHelp
     guides:
     - Botany
+
+- type: entity
+  parent: hydroponicsTray
+  id: HydroponicsTrayEmpty
+  components:
+  - type: PlantHolder
+    waterLevel: 0
+    nutrientLevel: 0
