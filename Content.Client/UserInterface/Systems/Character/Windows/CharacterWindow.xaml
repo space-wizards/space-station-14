@@ -16,7 +16,7 @@
             </BoxContainer>
             <Label Text="{Loc 'character-info-objectives-label'}" HorizontalAlignment="Center"/>
             <BoxContainer Orientation="Vertical" Name="Objectives" Access="Public"/>
-            <cc:Placeholder PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
+            <cc:Placeholder Name="RolePlaceholder" Access="Public" PlaceholderText="{Loc 'character-info-roles-antagonist-text'}"/>
         </BoxContainer>
     </ScrollContainer>
 </windows:CharacterWindow>

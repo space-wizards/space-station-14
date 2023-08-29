@@ -16,7 +16,7 @@ namespace Content.IntegrationTests.Tests.Access
         public async Task TestProtoTags()
         {
             await using var pair = await PoolManager.GetServerClient();
-            var server = pair.Pair.Server;
+            var server = pair.Server;
 
             var protoManager = server.ResolveDependency<IPrototypeManager>();
             var accessName = server.ResolveDependency<IComponentFactory>().GetComponentName(typeof(AccessReaderComponent));
@@ -44,8 +44,8 @@ namespace Content.IntegrationTests.Tests.Access
         [Test]
         public async Task TestTags()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             var entityManager = server.ResolveDependency<IEntityManager>();
 
 
@@ -121,7 +121,7 @@ namespace Content.IntegrationTests.Tests.Access
                     Assert.That(system.AreAccessTagsAllowed(Array.Empty<string>(), reader), Is.False);
                 });
             });
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
     }

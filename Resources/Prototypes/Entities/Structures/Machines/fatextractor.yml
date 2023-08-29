@@ -96,10 +96,11 @@
     board: FatExtractorMachineCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: FatExtractor
+    BoardName: wires-board-name-fatextractor
     LayoutId: FatExtractor
   - type: Appearance
   - type: Speech
+    speechVerb: Robotic
   - type: Advertise
     pack: FatExtractorFacts
   - type: StaticPrice

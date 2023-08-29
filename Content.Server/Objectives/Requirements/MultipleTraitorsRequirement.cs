@@ -1,17 +1,18 @@
-using Content.Server.Objectives.Interfaces;
 using Content.Server.GameTicking.Rules;
+using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public sealed class MultipleTraitorsRequirement : IObjectiveRequirement
+    public sealed partial class MultipleTraitorsRequirement : IObjectiveRequirement
     {
         [DataField("traitors")]
-        private readonly int _requiredTraitors = 2;
+        private int _requiredTraitors = 2;
 
-        public bool CanBeAssigned(Mind.Mind mind)
+        public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
-            return EntitySystem.Get<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).Count >= _requiredTraitors;
+            return EntitySystem.Get<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind).Count >= _requiredTraitors;
         }
     }
 }

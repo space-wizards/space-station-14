@@ -8,19 +8,19 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Lathe
 {
     [RegisterComponent, NetworkedComponent]
-    public sealed class LatheComponent : Component
+    public sealed partial class LatheComponent : Component
     {
         /// <summary>
         /// All of the recipes that the lathe has by default
         /// </summary>
         [DataField("staticRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> StaticRecipes = new();
+        public List<string> StaticRecipes = new();
 
         /// <summary>
         /// All of the recipes that the lathe is capable of researching
         /// </summary>
         [DataField("dynamicRecipes", customTypeSerializer: typeof(PrototypeIdListSerializer<LatheRecipePrototype>))]
-        public readonly List<string> DynamicRecipes = new();
+        public List<string> DynamicRecipes = new();
 
         /// <summary>
         /// The lathe's construction queue
@@ -46,6 +46,12 @@ namespace Content.Shared.Lathe
         /// </summary>
         [ViewVariables]
         public LatheRecipePrototype? CurrentRecipe;
+
+        /// <summary>
+        /// Whether the lathe can eject the materials stored within it
+        /// </summary>
+        [DataField("canEjectStoredMaterials")]
+        public bool CanEjectStoredMaterials = true;
 
         #region MachineUpgrading
         /// <summary>

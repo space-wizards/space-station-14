@@ -26,5 +26,6 @@
         - ReagentId: Fiber
           Quantity: 10
   - type: Tag
-    tags: 
-      - ClothMade
+    tags:
+    - ClothMade
+    - WhitelistChameleon

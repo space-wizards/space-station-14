@@ -273,6 +273,7 @@ public sealed partial class SalvageSystem
             _anchorable,
             _biome,
             _dungeon,
+            _metaData,
             this,
             station,
             missionParams,

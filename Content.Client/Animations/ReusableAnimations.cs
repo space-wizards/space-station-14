@@ -16,9 +16,14 @@ namespace Content.Client.Animations
             if (entMan.Deleted(entity) || !initialPosition.IsValid(entMan))
                 return;
 
+            var metadata = entMan.GetComponent<MetaDataComponent>(entity);
+
+            if (entMan.IsPaused(entity, metadata))
+                return;
+
             var animatableClone = entMan.SpawnEntity("clientsideclone", initialPosition);
             string val = entMan.GetComponent<MetaDataComponent>(entity).EntityName;
-            entMan.GetComponent<MetaDataComponent>(animatableClone).EntityName = val;
+            entMan.System<MetaDataSystem>().SetEntityName(animatableClone, val);
 
             if (!entMan.TryGetComponent(entity, out SpriteComponent? sprite0))
             {

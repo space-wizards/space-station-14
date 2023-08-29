@@ -157,8 +157,8 @@
 # H.O.N.K.
 
 - type: entity
-  id: BaseHonkerPart
   parent: BaseMechPart
+  id: BaseHonkerPart
   abstract: true
   components:
   - type: Sprite
@@ -409,3 +409,77 @@
     graph: Hamtr
     node: start
     defaultTarget: hamtr
+
+# Vim!!!!!!
+
+- type: entity
+  parent: BaseMechPart
+  id: BaseVimPart
+  abstract: true
+  components:
+  - type: Sprite
+    drawdepth: Items
+    noRot: false
+    sprite: Objects/Specific/Mech/vim_construction.rsi
+
+- type: entity
+  parent: BaseVimPart
+  id: BaseVimPartItem
+  abstract: true
+  components:
+  - type: Item
+    size: 10
+
+- type: entity
+  parent: BaseVimPartItem
+  id: VimHarness
+  name: vim harness
+  description: A small mounting bracket for vim parts.
+  components:
+  - type: Appearance
+  - type: ItemMapper
+    mapLayers:
+      helmet:
+        whitelist:
+          tags:
+          - HelmetEVA
+      left_leg:
+        whitelist:
+          tags:
+          - BorgLeg
+      right_leg:
+        whitelist:
+          tags:
+          - BorgLeg
+    sprite: Objects/Specific/Mech/vim_construction.rsi
+  - type: ContainerContainer
+    containers:
+      mech-assembly-container: !type:Container
+  - type: MechAssembly
+    finishedPrototype: VimChassis
+    requiredParts:
+      HelmetEVA: false
+      BorgLeg: false
+  - type: Sprite
+    state: harness
+    noRot: true
+
+- type: entity
+  id: VimChassis
+  parent: BaseVimPart
+  name: vim chassis
+  description: An in-progress construction of the Vim exosuit.
+  components:
+  - type: Appearance
+  - type: ContainerContainer
+    containers:
+      battery-container: !type:Container
+  - type: MechAssemblyVisuals
+    statePrefix: vim
+  - type: Sprite
+    noRot: true
+    state: vim0
+  - type: Construction
+    graph: Vim
+    node: start
+    defaultTarget: vim

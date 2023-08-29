@@ -429,17 +429,17 @@ public abstract class SharedEntityStorageSystem : EntitySystem
             // RemovedMasks needs to be tracked separately for each fixture, using a fixture Id Dictionary. Also the
             // fixture IDs probably cant be automatically generated without causing issues, unless there is some
             // guarantee that they will get deserialized with the same auto-generated ID when saving+loading the map.
-            var fixture = fixtures.Fixtures.Values.First();
+            var fixture = fixtures.Fixtures.First();
 
             if (component.Open)
             {
-                component.RemovedMasks = fixture.CollisionLayer & component.MasksToRemove;
-                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer & ~component.MasksToRemove,
+                component.RemovedMasks = fixture.Value.CollisionLayer & component.MasksToRemove;
+                _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer & ~component.MasksToRemove,
                     manager: fixtures);
             }
             else
             {
-                _physics.SetCollisionLayer(uid, fixture, fixture.CollisionLayer | component.RemovedMasks,
+                _physics.SetCollisionLayer(uid, fixture.Key, fixture.Value, fixture.Value.CollisionLayer | component.RemovedMasks,
                     manager: fixtures);
                 component.RemovedMasks = 0;
             }

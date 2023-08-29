@@ -1,5 +1,4 @@
 using Content.Shared.Atmos;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -27,17 +26,17 @@ namespace Content.Shared.Maps
 
         [DataField("name")]
         public string Name { get; private set; } = "";
-        [DataField("sprite")] public ResPath? Sprite { get; }
+        [DataField("sprite")] public ResPath? Sprite { get; private set; }
 
-        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; } = new();
+        [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurf")]
-        public string BaseTurf { get; } = string.Empty;
+        public string BaseTurf { get; private set; } = string.Empty;
 
         [DataField("canCrowbar")] public bool CanCrowbar { get; private set; }
-		
+
         /// <summary>
         /// Whether this tile can be pried by an advanced prying tool if not pryable otherwise.
         /// </summary>
@@ -48,12 +47,12 @@ namespace Content.Shared.Maps
         /// <summary>
         /// These play when the mob has shoes on.
         /// </summary>
-        [DataField("footstepSounds")] public SoundSpecifier? FootstepSounds { get; }
+        [DataField("footstepSounds")] public SoundSpecifier? FootstepSounds { get; private set; }
 
         /// <summary>
         /// These play when the mob has no shoes on.
         /// </summary>
-        [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; } = new SoundCollectionSpecifier("BarestepHard");
+        [DataField("barestepSounds")] public SoundSpecifier? BarestepSounds { get; private set; } = new SoundCollectionSpecifier("BarestepHard");
 
         [DataField("friction")] public float Friction { get; set; } = 0.2f;
 
@@ -62,7 +61,7 @@ namespace Content.Shared.Maps
         /// <summary>
         /// This controls what variants the `variantize` command is allowed to use.
         /// </summary>
-        [DataField("placementVariants")] public byte[] PlacementVariants { get; set; } = new byte[1] { 0 };
+        [DataField("placementVariants")] public float[] PlacementVariants { get; set; } = new [] { 1f };
 
         [DataField("thermalConductivity")] public float ThermalConductivity = 0.04f;
 
@@ -70,7 +69,7 @@ namespace Content.Shared.Maps
         [DataField("heatCapacity")] public float HeatCapacity = Atmospherics.MinimumHeatCapacity;
 
         [DataField("itemDrop", customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string ItemDropPrototypeName { get; } = "FloorTileItemSteel";
+        public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;

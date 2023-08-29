@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.Damage.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedGodmodeSystem))]
-public sealed class GodmodeComponent : Component
+public sealed partial class GodmodeComponent : Component
 {
     [DataField("wasMovedByPressure")]
     public bool WasMovedByPressure;

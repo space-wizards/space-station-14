@@ -8,7 +8,7 @@ namespace Content.Server.Construction.Components
     /// For example, glass shard can be refined to glass sheet.
     /// </summary>
     [RegisterComponent]
-    public sealed class WelderRefinableComponent : Component
+    public sealed partial class WelderRefinableComponent : Component
     {
         [DataField("refineResult")]
         public HashSet<string>? RefineResult = new();
