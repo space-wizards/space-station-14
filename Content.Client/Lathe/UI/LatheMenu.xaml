@@ -91,28 +91,32 @@
                     Orientation="Horizontal"
                     HorizontalExpand="True"
                     SizeFlagsStretchRatio="2">
-                    <TextureRect
+                    <PanelContainer
+                        VerticalExpand="True"
+                        HorizontalExpand="True"
+                        SizeFlagsStretchRatio="3">
+                        <PanelContainer.PanelOverride>
+                            <gfx:StyleBoxFlat BackgroundColor="#408040" />
+                        </PanelContainer.PanelOverride>
+                        <Label
+                        Name="FabricatingActiveLabel"
+                        RectClipContent="False"
+                        HorizontalAlignment="Left"
+                        Margin="5 0 0 0">
+                        </Label>
+                        <TextureRect
                         Name="Icon"
                         HorizontalExpand="True"
-                        SizeFlagsStretchRatio="2">
-                    </TextureRect>
-                    <BoxContainer
-                        Orientation="Vertical"
-                        VerticalExpand="True"
-                        SizeFlagsStretchRatio="3">
+                        SizeFlagsStretchRatio="2"
+                        Margin="100 0 0 0">
+                        </TextureRect>
                         <Label
                             Name="NameLabel"
                             RectClipContent="True"
                             HorizontalAlignment="Left"
-                            Margin="24 0 0 0">
+                            Margin="130 0 0 0">
                         </Label>
-                        <Label
-                            Name="Description"
-                            RectClipContent="True"
-                            VerticalAlignment="Stretch"
-                            VerticalExpand="True">
-                        </Label>
-                    </BoxContainer>
+                    </PanelContainer>
                 </BoxContainer>
                 <ItemList
                     Name="QueueList"

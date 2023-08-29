@@ -10,4 +10,3 @@ lathe-menu-tooltip-display = {$amount} cm³ of {$material}
 lathe-menu-no-materials-message = No materials loaded.
 lathe-menu-materials-title = Materials
 lathe-menu-queue-title = Build Queue
-lathe-menu-queue-not-producing-text = No items in queue.

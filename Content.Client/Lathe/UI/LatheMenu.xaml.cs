@@ -200,14 +200,14 @@ public sealed partial class LatheMenu : DefaultWindow
             Icon.Texture = recipe.Icon == null
                 ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
                 : _spriteSystem.Frame0(recipe.Icon);
-            NameLabel.Text = recipe.Name;
-            Description.Text = recipe.Description;
+            FabricatingActiveLabel.Text = "Fabricating...";
+            NameLabel.Text = $"{recipe.Name}";
         }
         else
         {
             Icon.Texture = Texture.Transparent;
-            NameLabel.Text = Loc.GetString("lathe-menu-queue-not-producing-text");
-            Description.Text = String.Empty;
+            FabricatingActiveLabel.Text = String.Empty;
+            NameLabel.Text = String.Empty;
         }
     }
 }
