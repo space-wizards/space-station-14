@@ -46,6 +46,19 @@
   category: construction-category-clothing
   description: "At least it's something."
   icon:
-    sprite:  Clothing/Uniforms/Jumpskirt/web.rsi
+    sprite: Clothing/Uniforms/Jumpskirt/web.rsi
     state: icon
+  objectType: Item
+
+- type: construction
+  name: silk woven cloth
+  id: SilkWovenCloth
+  graph: WebObjects
+  startNode: start
+  targetNode: cloth
+  category: construction-category-materials
+  description: "Feels just like cloth, strangely enough."
+  icon:
+    sprite: Objects/Materials/materials.rsi
+    state: cloth_3
   objectType: Item

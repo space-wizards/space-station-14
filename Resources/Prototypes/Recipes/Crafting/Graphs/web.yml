@@ -30,6 +30,12 @@
         amount: 8
         doAfter: 6
 
+    - to: cloth
+      steps:
+      - material: WebSilk
+        amount: 4
+        doAfter: 6
+
   # Deconstruction
   - node: tile
     entity: FloorTileItemWeb
@@ -42,3 +48,6 @@
 
   - node: jumpskirt
     entity: ClothingUniformJumpskirtWeb
+
+  - node: cloth
+    entity: MaterialCloth1
