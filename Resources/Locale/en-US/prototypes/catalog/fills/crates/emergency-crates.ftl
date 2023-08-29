@@ -1,8 +1,8 @@
 ent-CrateBlindSupport = Blind support crate
-    .desc = Don't leave them in the dark! Contains three spare canes to guide our blind friends.
+    .desc = Don't leave them in the dark! Contains three spare canes to let our blind friends see the world again.
 
 ent-CrateWheelchair = Wheelchair crate
-    .desc = Leave no one behind! Contains a wheelchair to let the crippled see the world again.
+    .desc = It's not fun being dragged around all day. Leave no one behind with this spare wheelchair.
 
 ent-CrateEmergencyExplosive = Bomb suit crate
     .desc = Science gone bonkers? Beeping behind the airlock? Buy now and be the hero the station des... I mean needs! (time not included)
