@@ -106,6 +106,7 @@
     - DoorBumpOpener
   - type: Input
     context: "human"
+  - type: DoAfter
 
 - type: entity
   parent: BasePDA

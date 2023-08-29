@@ -33,7 +33,7 @@ namespace Content.Client.HealthAnalyzer.UI
             if (message is not HealthAnalyzerScannedUserMessage cast)
                 return;
 
-            _window.Populate(cast);
+            _window.UpdateState(new HealthAnalyzerUiState(cast));
         }
 
         protected override void Dispose(bool disposing)

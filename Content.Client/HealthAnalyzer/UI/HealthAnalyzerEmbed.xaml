@@ -1,0 +1,6 @@
+﻿<ui:HealthAnalyzerEmbed xmlns:ui="clr-namespace:Content.Client.HealthAnalyzer.UI"
+                             xmlns="https://spacestation14.io">
+    <Label
+            Name="Diagnostics"
+            Text="{Loc health-analyzer-window-no-patient-data-text}"/>
+</ui:HealthAnalyzerEmbed>

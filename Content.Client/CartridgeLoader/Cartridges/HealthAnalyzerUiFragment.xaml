@@ -1,0 +1,8 @@
+﻿<cartridges:HealthAnalyzerUiFragment xmlns:cartridges="clr-namespace:Content.Client.CartridgeLoader.Cartridges"
+                               xmlns="https://spacestation14.io"
+                               xmlns:ui="clr-namespace:Content.Client.HealthAnalyzer.UI"
+                               Margin="1 0 2 0">
+    <ScrollContainer VerticalExpand="True">
+        <ui:HealthAnalyzerEmbed Name="Embed" />
+    </ScrollContainer>
+</cartridges:HealthAnalyzerUiFragment>

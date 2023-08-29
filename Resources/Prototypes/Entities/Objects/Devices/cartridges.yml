@@ -84,6 +84,8 @@
       icon:
         sprite: Objects/Specific/Medical/healthanalyzer.rsi
         state: icon
+    - type: UIFragment
+      ui: !type:HealthAnalyzerUi
     - type: HealthAnalyzerCartridge
       scanDelay: 1.4
       scanningEndSound:
