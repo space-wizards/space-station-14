@@ -1,20 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix spawning expeditions mobs on blocked tiles., type: Fix}
-  id: 4202
-  time: '2023-07-09T19:20:55.0000000+00:00'
-- author: crazybrain
-  changes:
-  - {message: '"Ensure fellow traitor stays alive" objective now works correctly.',
-    type: Fix}
-  id: 4203
-  time: '2023-07-09T19:21:24.0000000+00:00'
-- author: ksenadi
-  changes:
-  - {message: Added the ability to lock the air alarm mode., type: Add}
-  id: 4204
-  time: '2023-07-09T19:22:41.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'The Syndicate reverse engineered Drymate''s monkey cube technology
@@ -3030,3 +3014,19 @@ Entries:
   - {message: Fixed not tracking job playtime., type: Fix}
   id: 4701
   time: '2023-08-29T20:39:18.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed players not getting their round start message telling them their
+      supervisors., type: Add}
+  id: 4702
+  time: '2023-08-29T22:50:23.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
+  id: 4703
+  time: '2023-08-29T23:32:32.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Flavor text now disabled if identity hidden, type: Tweak}
+  id: 4704
+  time: '2023-08-29T23:38:16.0000000+00:00'
