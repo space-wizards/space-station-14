@@ -1,9 +1,4 @@
 Entries:
-- author: ksenadi
-  changes:
-  - {message: Added the ability to lock the air alarm mode., type: Add}
-  id: 4204
-  time: '2023-07-09T19:22:41.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'The Syndicate reverse engineered Drymate''s monkey cube technology
@@ -3030,3 +3025,8 @@ Entries:
   - {message: Ported steel chair sprites from Paradise Station & Shiptest., type: Tweak}
   id: 4703
   time: '2023-08-29T23:32:32.0000000+00:00'
+- author: Morb0
+  changes:
+  - {message: Flavor text now disabled if identity hidden, type: Tweak}
+  id: 4704
+  time: '2023-08-29T23:38:16.0000000+00:00'
