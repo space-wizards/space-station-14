@@ -172,6 +172,216 @@
         - id: WeaponSniperMosin
           prob: 0.0010
           orGroup: syndiemaintloot
+        # poster (25%)
+        - id: null
+          prob: 309
+          orGroup: poster
+        - id:  PosterLegitHereForYourSafetyUnstuck
+          orGroup: poster
+        - id:  PosterLegitNanotrasenLogoUnstuck
+          orGroup: poster
+        - id:  PosterLegitCleanlinessUnstuck
+          orGroup: poster
+        - id:  PosterLegitHelpOthersUnstuck
+          orGroup: poster
+        - id:  PosterLegitBuildUnstuck
+          orGroup: poster
+        - id:  PosterLegitBlessThisSpessUnstuck
+          orGroup: poster
+        - id:  PosterLegitScienceUnstuck
+          orGroup: poster
+        - id:  PosterLegitIanUnstuck
+          orGroup: poster
+        - id:  PosterLegitObeyUnstuck
+          orGroup: poster
+        - id:  PosterLegitWalkUnstuck
+          orGroup: poster
+        - id:  PosterLegitStateLawsUnstuck
+          orGroup: poster
+        - id:  PosterLegitLoveIanUnstuck
+          orGroup: poster
+        - id:  PosterLegitSpaceCopsUnstuck
+          orGroup: poster
+        - id:  PosterLegitUeNoUnstuck
+          orGroup: poster
+        - id:  PosterLegitGetYourLEGSUnstuck
+          orGroup: poster
+        - id:  PosterLegitDoNotQuestionUnstuck
+          orGroup: poster
+        - id:  PosterLegitWorkForAFutureUnstuck
+          orGroup: poster
+        - id:  PosterLegitSoftCapPopArtUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyInternalsUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyEyeProtectionUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyReportUnstuck
+          orGroup: poster
+        - id:  PosterLegitReportCrimesUnstuck
+          orGroup: poster
+        - id:  PosterLegitIonRifleUnstuck
+          orGroup: poster
+        - id:  PosterLegitFoamForceAdUnstuck
+          orGroup: poster
+        - id:  PosterLegitCohibaRobustoAdUnstuck
+          orGroup: poster
+        - id:  PosterLegit50thAnniversaryVintageReprintUnstuck
+          orGroup: poster
+        - id:  PosterLegitFruitBowlUnstuck
+          orGroup: poster
+        - id:  PosterLegitPDAAdUnstuck
+          orGroup: poster
+        - id:  PosterLegitEnlistUnstuck
+          orGroup: poster
+        - id:  PosterLegitNanomichiAdUnstuck
+          orGroup: poster
+        - id:  PosterLegit12GaugeUnstuck
+          orGroup: poster
+        - id:  PosterLegitHighClassMartiniUnstuck
+          orGroup: poster
+        - id:  PosterLegitTheOwlUnstuck
+          orGroup: poster
+        - id:  PosterLegitNoERPUnstuck
+          orGroup: poster
+        - id:  PosterLegitCarbonDioxideUnstuck
+          orGroup: poster
+        - id:  PosterLegitDickGumshueUnstuck
+          orGroup: poster
+        - id:  PosterLegitThereIsNoGasGiantUnstuck
+          orGroup: poster
+        - id:  PosterLegitJustAWeekAwayUnstuck
+          orGroup: poster
+        - id:  PosterLegitSecWatchUnstuck
+          orGroup: poster
+        - id:  PosterLegitVacationUnstuck
+          orGroup: poster
+        - id:  PosterLegitPeriodicTableUnstuck
+          orGroup: poster
+        - id:  PosterLegitRenaultUnstuck
+          orGroup: poster
+        - id:  PosterLegitNTTGCUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeTontoUnstuck
+          orGroup: poster
+        - id: PosterContrabandAtmosiaDeclarationIndependenceUnstuck
+          orGroup: poster
+        - id: PosterContrabandFunPoliceUnstuck
+          orGroup: poster
+        - id: PosterContrabandLustyExomorphUnstuck
+          orGroup: poster
+        - id: PosterContrabandSyndicateRecruitmentUnstuck
+          orGroup: poster
+        - id: PosterContrabandClownUnstuck
+          orGroup: poster
+        - id: PosterContrabandSmokeUnstuck
+          orGroup: poster
+        - id: PosterContrabandGreyTideUnstuck
+          orGroup: poster
+        - id: PosterContrabandMissingGlovesUnstuck
+          orGroup: poster
+        - id: PosterContrabandHackingGuideUnstuck
+          orGroup: poster
+        - id: PosterContrabandRIPBadgerUnstuck
+          orGroup: poster
+        - id: PosterContrabandAmbrosiaVulgarisUnstuck
+          orGroup: poster
+        - id: PosterContrabandDonutCorpUnstuck
+          orGroup: poster
+        - id: PosterContrabandEATUnstuck
+          orGroup: poster
+        - id: PosterContrabandToolsUnstuck
+          orGroup: poster
+        - id: PosterContrabandPowerUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceCubeUnstuck
+          orGroup: poster
+        - id: PosterContrabandCommunistStateUnstuck
+          orGroup: poster
+        - id: PosterContrabandLamarrUnstuck
+          orGroup: poster
+        - id: PosterContrabandBorgFancyUnstuck
+          orGroup: poster
+        - id: PosterContrabandBorgFancyv2Unstuck
+          orGroup: poster
+        - id: PosterContrabandKosmicheskayaStantsiyaUnstuck
+          orGroup: poster
+        - id: PosterContrabandRebelsUniteUnstuck
+          orGroup: poster
+        - id: PosterContrabandC20rUnstuck
+          orGroup: poster
+        - id: PosterContrabandHaveaPuffUnstuck
+          orGroup: poster
+        - id: PosterContrabandRevolverUnstuck
+          orGroup: poster
+        - id: PosterContrabandDDayPromoUnstuck
+          orGroup: poster
+        - id: PosterContrabandSyndicatePistolUnstuck
+          orGroup: poster
+        - id: PosterContrabandEnergySwordsUnstuck
+          orGroup: poster
+        - id: PosterContrabandRedRumUnstuck
+          orGroup: poster
+        - id: PosterContrabandCC64KAdUnstuck
+          orGroup: poster
+        - id: PosterContrabandPunchShitUnstuck
+          orGroup: poster
+        - id: PosterContrabandTheGriffinUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeDroneUnstuck
+          orGroup: poster
+        - id: PosterContrabandBustyBackdoorExoBabes6Unstuck
+          orGroup: poster
+        - id: PosterContrabandRobustSoftdrinksUnstuck
+          orGroup: poster
+        - id: PosterContrabandShamblersJuiceUnstuck
+          orGroup: poster
+        - id: PosterContrabandPwrGameUnstuck
+          orGroup: poster
+        - id: PosterContrabandSunkistUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceColaUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceUpUnstuck
+          orGroup: poster
+        - id: PosterContrabandKudzuUnstuck
+          orGroup: poster
+        - id: PosterContrabandMaskedMenUnstuck
+          orGroup: poster
+        - id: PosterContrabandUnreadableAnnouncementUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeSyndicateEncryptionKeyUnstuck
+          orGroup: poster
+        - id: PosterContrabandBountyHuntersUnstuck
+          orGroup: poster
+        - id: PosterContrabandTheBigGasTruthUnstuck
+          orGroup: poster
+        - id: PosterContrabandWehWatchesUnstuck
+          orGroup: poster
+        - id: PosterContrabandVoteWehUnstuck
+          orGroup: poster
+        - id: PosterContrabandBeachStarYamamotoUnstuck
+          orGroup: poster
+        - id: PosterContrabandHighEffectEngineeringUnstuck
+          orGroup: poster
+        - id: PosterContrabandNuclearDeviceInformationalUnstuck
+          orGroup: poster
+        - id: PosterContrabandRevoltUnstuck
+          orGroup: poster
+        - id: PosterContrabandRiseUnstuck
+          orGroup: poster
+        - id: PosterContrabandMothUnstuck
+          orGroup: poster
+        - id: PosterContrabandCybersun600Unstuck
+          orGroup: poster
+        - id: PosterContrabandDonkUnstuck
+          orGroup: poster
+        - id: PosterContrabandEnlistGorlexUnstuck
+          orGroup: poster
+        - id: PosterContrabandInterdyneUnstuck
+          orGroup: poster
+        - id: PosterContrabandWaffleCorpUnstuck
+          orGroup: poster
 
 - type: entity
   id: ClosetWallMaintenanceFilledRandom
@@ -261,3 +471,213 @@
         - id: WeaponSniperMosin
           prob: 0.0010
           orGroup: syndiemaintloot
+        # poster (25%)
+        - id: null
+          prob: 309
+          orGroup: poster
+        - id:  PosterLegitHereForYourSafetyUnstuck
+          orGroup: poster
+        - id:  PosterLegitNanotrasenLogoUnstuck
+          orGroup: poster
+        - id:  PosterLegitCleanlinessUnstuck
+          orGroup: poster
+        - id:  PosterLegitHelpOthersUnstuck
+          orGroup: poster
+        - id:  PosterLegitBuildUnstuck
+          orGroup: poster
+        - id:  PosterLegitBlessThisSpessUnstuck
+          orGroup: poster
+        - id:  PosterLegitScienceUnstuck
+          orGroup: poster
+        - id:  PosterLegitIanUnstuck
+          orGroup: poster
+        - id:  PosterLegitObeyUnstuck
+          orGroup: poster
+        - id:  PosterLegitWalkUnstuck
+          orGroup: poster
+        - id:  PosterLegitStateLawsUnstuck
+          orGroup: poster
+        - id:  PosterLegitLoveIanUnstuck
+          orGroup: poster
+        - id:  PosterLegitSpaceCopsUnstuck
+          orGroup: poster
+        - id:  PosterLegitUeNoUnstuck
+          orGroup: poster
+        - id:  PosterLegitGetYourLEGSUnstuck
+          orGroup: poster
+        - id:  PosterLegitDoNotQuestionUnstuck
+          orGroup: poster
+        - id:  PosterLegitWorkForAFutureUnstuck
+          orGroup: poster
+        - id:  PosterLegitSoftCapPopArtUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyInternalsUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyEyeProtectionUnstuck
+          orGroup: poster
+        - id:  PosterLegitSafetyReportUnstuck
+          orGroup: poster
+        - id:  PosterLegitReportCrimesUnstuck
+          orGroup: poster
+        - id:  PosterLegitIonRifleUnstuck
+          orGroup: poster
+        - id:  PosterLegitFoamForceAdUnstuck
+          orGroup: poster
+        - id:  PosterLegitCohibaRobustoAdUnstuck
+          orGroup: poster
+        - id:  PosterLegit50thAnniversaryVintageReprintUnstuck
+          orGroup: poster
+        - id:  PosterLegitFruitBowlUnstuck
+          orGroup: poster
+        - id:  PosterLegitPDAAdUnstuck
+          orGroup: poster
+        - id:  PosterLegitEnlistUnstuck
+          orGroup: poster
+        - id:  PosterLegitNanomichiAdUnstuck
+          orGroup: poster
+        - id:  PosterLegit12GaugeUnstuck
+          orGroup: poster
+        - id:  PosterLegitHighClassMartiniUnstuck
+          orGroup: poster
+        - id:  PosterLegitTheOwlUnstuck
+          orGroup: poster
+        - id:  PosterLegitNoERPUnstuck
+          orGroup: poster
+        - id:  PosterLegitCarbonDioxideUnstuck
+          orGroup: poster
+        - id:  PosterLegitDickGumshueUnstuck
+          orGroup: poster
+        - id:  PosterLegitThereIsNoGasGiantUnstuck
+          orGroup: poster
+        - id:  PosterLegitJustAWeekAwayUnstuck
+          orGroup: poster
+        - id:  PosterLegitSecWatchUnstuck
+          orGroup: poster
+        - id:  PosterLegitVacationUnstuck
+          orGroup: poster
+        - id:  PosterLegitPeriodicTableUnstuck
+          orGroup: poster
+        - id:  PosterLegitRenaultUnstuck
+          orGroup: poster
+        - id:  PosterLegitNTTGCUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeTontoUnstuck
+          orGroup: poster
+        - id: PosterContrabandAtmosiaDeclarationIndependenceUnstuck
+          orGroup: poster
+        - id: PosterContrabandFunPoliceUnstuck
+          orGroup: poster
+        - id: PosterContrabandLustyExomorphUnstuck
+          orGroup: poster
+        - id: PosterContrabandSyndicateRecruitmentUnstuck
+          orGroup: poster
+        - id: PosterContrabandClownUnstuck
+          orGroup: poster
+        - id: PosterContrabandSmokeUnstuck
+          orGroup: poster
+        - id: PosterContrabandGreyTideUnstuck
+          orGroup: poster
+        - id: PosterContrabandMissingGlovesUnstuck
+          orGroup: poster
+        - id: PosterContrabandHackingGuideUnstuck
+          orGroup: poster
+        - id: PosterContrabandRIPBadgerUnstuck
+          orGroup: poster
+        - id: PosterContrabandAmbrosiaVulgarisUnstuck
+          orGroup: poster
+        - id: PosterContrabandDonutCorpUnstuck
+          orGroup: poster
+        - id: PosterContrabandEATUnstuck
+          orGroup: poster
+        - id: PosterContrabandToolsUnstuck
+          orGroup: poster
+        - id: PosterContrabandPowerUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceCubeUnstuck
+          orGroup: poster
+        - id: PosterContrabandCommunistStateUnstuck
+          orGroup: poster
+        - id: PosterContrabandLamarrUnstuck
+          orGroup: poster
+        - id: PosterContrabandBorgFancyUnstuck
+          orGroup: poster
+        - id: PosterContrabandBorgFancyv2Unstuck
+          orGroup: poster
+        - id: PosterContrabandKosmicheskayaStantsiyaUnstuck
+          orGroup: poster
+        - id: PosterContrabandRebelsUniteUnstuck
+          orGroup: poster
+        - id: PosterContrabandC20rUnstuck
+          orGroup: poster
+        - id: PosterContrabandHaveaPuffUnstuck
+          orGroup: poster
+        - id: PosterContrabandRevolverUnstuck
+          orGroup: poster
+        - id: PosterContrabandDDayPromoUnstuck
+          orGroup: poster
+        - id: PosterContrabandSyndicatePistolUnstuck
+          orGroup: poster
+        - id: PosterContrabandEnergySwordsUnstuck
+          orGroup: poster
+        - id: PosterContrabandRedRumUnstuck
+          orGroup: poster
+        - id: PosterContrabandCC64KAdUnstuck
+          orGroup: poster
+        - id: PosterContrabandPunchShitUnstuck
+          orGroup: poster
+        - id: PosterContrabandTheGriffinUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeDroneUnstuck
+          orGroup: poster
+        - id: PosterContrabandBustyBackdoorExoBabes6Unstuck
+          orGroup: poster
+        - id: PosterContrabandRobustSoftdrinksUnstuck
+          orGroup: poster
+        - id: PosterContrabandShamblersJuiceUnstuck
+          orGroup: poster
+        - id: PosterContrabandPwrGameUnstuck
+          orGroup: poster
+        - id: PosterContrabandSunkistUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceColaUnstuck
+          orGroup: poster
+        - id: PosterContrabandSpaceUpUnstuck
+          orGroup: poster
+        - id: PosterContrabandKudzuUnstuck
+          orGroup: poster
+        - id: PosterContrabandMaskedMenUnstuck
+          orGroup: poster
+        - id: PosterContrabandUnreadableAnnouncementUnstuck
+          orGroup: poster
+        - id: PosterContrabandFreeSyndicateEncryptionKeyUnstuck
+          orGroup: poster
+        - id: PosterContrabandBountyHuntersUnstuck
+          orGroup: poster
+        - id: PosterContrabandTheBigGasTruthUnstuck
+          orGroup: poster
+        - id: PosterContrabandWehWatchesUnstuck
+          orGroup: poster
+        - id: PosterContrabandVoteWehUnstuck
+          orGroup: poster
+        - id: PosterContrabandBeachStarYamamotoUnstuck
+          orGroup: poster
+        - id: PosterContrabandHighEffectEngineeringUnstuck
+          orGroup: poster
+        - id: PosterContrabandNuclearDeviceInformationalUnstuck
+          orGroup: poster
+        - id: PosterContrabandRevoltUnstuck
+          orGroup: poster
+        - id: PosterContrabandRiseUnstuck
+          orGroup: poster
+        - id: PosterContrabandMothUnstuck
+          orGroup: poster
+        - id: PosterContrabandCybersun600Unstuck
+          orGroup: poster
+        - id: PosterContrabandDonkUnstuck
+          orGroup: poster
+        - id: PosterContrabandEnlistGorlexUnstuck
+          orGroup: poster
+        - id: PosterContrabandInterdyneUnstuck
+          orGroup: poster
+        - id: PosterContrabandWaffleCorpUnstuck
+          orGroup: poster

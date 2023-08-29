@@ -48,7 +48,6 @@
     size: 10
   - type: Clickable
   - type: InteractionOutline
-  - type: Rotatable
   - type: StickyVisualizer
   - type: Sticky
     stickDelay: 5
@@ -61,11 +60,6 @@
       tags:
         - Wall
         - Window
-  - type: Fixtures
-    fixtures:
-      fix1:
-        shape:
-          !type:PhysShapeAabb {}
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
