@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/tgstation/tgstation/blob/a7a67c81afc99d77483c84878173822ee8cbeecd/icons/obj/fulton.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "folded_extraction"
+    },
+    {
+      "name": "extraction_point",
+      "delays": [
+        [
+          1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "extraction_point_light",
+      "delays": [
+        [
+          1,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "extraction_pack"
+    }
+  ]
+}
