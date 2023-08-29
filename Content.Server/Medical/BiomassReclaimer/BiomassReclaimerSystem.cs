@@ -1,32 +1,32 @@
 using System.Numerics;
-using Content.Shared.Interaction;
-using Content.Shared.Audio;
-using Content.Shared.Jittering;
-using Content.Shared.Chemistry.Components;
-using Content.Shared.Throwing;
-using Content.Shared.Construction.Components;
-using Content.Shared.Nutrition.Components;
-using Content.Shared.Administration.Logs;
-using Content.Shared.CCVar;
-using Content.Shared.Database;
-using Content.Server.Power.Components;
-using Content.Server.Fluids.EntitySystems;
 using Content.Server.Body.Components;
 using Content.Server.Climbing;
 using Content.Server.Construction;
+using Content.Server.Fluids.EntitySystems;
 using Content.Server.Materials;
-using Content.Server.Mind.Components;
+using Content.Server.Mind;
+using Content.Server.Power.Components;
+using Content.Shared.Administration.Logs;
+using Content.Shared.Audio;
+using Content.Shared.CCVar;
+using Content.Shared.Chemistry.Components;
+using Content.Shared.Construction.Components;
+using Content.Shared.Database;
 using Content.Shared.DoAfter;
 using Content.Shared.Humanoid;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Jittering;
+using Content.Shared.Medical;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
-using Robust.Shared.Random;
-using Robust.Shared.Configuration;
+using Content.Shared.Throwing;
 using Robust.Server.Player;
+using Robust.Shared.Configuration;
 using Robust.Shared.Physics.Components;
-using Content.Shared.Medical;
+using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
@@ -45,6 +45,7 @@ namespace Content.Server.Medical.BiomassReclaimer
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly MaterialStorageSystem _material = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
 
         public override void Update(float frameTime)
         {
@@ -244,9 +245,9 @@ namespace Content.Server.Medical.BiomassReclaimer
             // Reject souled bodies in easy mode.
             if (_configManager.GetCVar(CCVars.BiomassEasyMode) &&
                 HasComp<HumanoidAppearanceComponent>(dragged) &&
-                TryComp<MindContainerComponent>(dragged, out var mindComp))
+                _minds.TryGetMind(dragged, out _, out var mind))
             {
-                if (mindComp.Mind?.UserId != null && _playerManager.TryGetSessionById(mindComp.Mind.UserId.Value, out _))
+                if (mind.UserId != null && _playerManager.TryGetSessionById(mind.UserId.Value, out _))
                     return false;
             }
 
