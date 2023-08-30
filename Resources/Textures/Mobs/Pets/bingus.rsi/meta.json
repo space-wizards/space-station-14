@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "size":
+  {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by Emisse in aseprite for SS14",
+  "states":
+  [
+    {
+      "name": "bingus",
+      "directions": 4
+    },
+
+    {
+      "name": "bingus_dead",
+      "directions": 1
+    }
+  ]
+}

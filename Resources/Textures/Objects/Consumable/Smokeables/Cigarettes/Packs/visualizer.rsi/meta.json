@@ -1,0 +1,29 @@
+﻿{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from cev-eris at commit https://github.com/discordia-space/CEV-Eris/commit/f18aa05685f13c8b424867e4219a1e727019c026",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "cig1"
+    },
+    {
+      "name": "cig2"
+    },
+    {
+      "name": "cig3"
+    },
+    {
+      "name": "cig4"
+    },
+    {
+      "name": "cig5"
+    },
+    {
+      "name": "cig6"
+    }
+  ]
+}

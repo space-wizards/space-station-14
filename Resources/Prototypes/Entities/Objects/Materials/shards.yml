@@ -1,0 +1,167 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: ShardBase
+  description: It's a shard of some unknown material.
+  components:
+  - type: Sharp
+  - type: Sprite
+    layers:
+      - sprite: Objects/Materials/Shards/shard.rsi
+        state: shard1
+        map: [ "enum.DamageStateVisualLayers.Base" ]
+  - type: RandomSprite
+    available:
+      - enum.DamageStateVisualLayers.Base:
+          shard1: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard2: ""
+      - enum.DamageStateVisualLayers.Base:
+          shard3: ""
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 3.5
+  - type: Item
+    sprite: Objects/Materials/Shards/shard.rsi
+    size: 4
+  - type: CollisionWake
+    enabled: false
+  - type: Fixtures
+    fixtures:
+      slips:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        hard: false
+        layer:
+        - LowImpassable
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.2,-0.2,0.2,0.2"
+        density: 30
+        mask:
+        - ItemMask
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Slash: 2
+  - type: Tag
+    tags:
+    - Trash
+  - type: SpaceGarbage
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Glass
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: StepTrigger
+    intersectRatio: 0.2
+    requiredTriggeredSpeed: 0
+  - type: ShoesRequiredStepTrigger
+  - type: Slippery
+    slipSound:
+      path: /Audio/Effects/glass_step.ogg
+    launchForwardsMultiplier: 0
+  - type: TriggerOnStepTrigger
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
+  - type: DeleteOnTrigger
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlass
+  name: glass shard
+  description: A small piece of glass.
+  components:
+  - type: Sprite
+    color: "#bbeeff"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+      - GlassShard
+      - Trash
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassReinforced
+  name: reinforced glass shard
+  description: A small piece of reinforced glass.
+  components:
+  - type: Sprite
+    color: "#96cdef"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - PartRodMetal1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+      - ReinforcedGlassShard
+      - Trash
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassPlasma
+  name: plasma glass shard
+  description: A small piece of plasma glass.
+  components:
+  - type: Sprite
+    color: "#FF72E7"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetPlasma1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 5
+  - type: Tag
+    tags:
+      - PlasmaGlassShard
+      - Trash
+
+- type: entity
+  parent: ShardBase
+  id: ShardGlassUranium
+  name: uranium glass shard
+  description: A small piece of uranium glass.
+  components:
+  - type: Sprite
+    color: "#8eff7a"
+  - type: WelderRefinable
+    refineResult:
+    - SheetGlass1
+    - SheetUranium1
+  - type: DamageUserOnTrigger
+    damage:
+      types:
+        Piercing: 3
+        Radiation: 2
+  - type: Tag
+    tags:
+      - UraniumGlassShard
+      - Trash
+

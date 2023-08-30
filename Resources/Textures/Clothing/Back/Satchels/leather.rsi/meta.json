@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation. icon from https://github.com/tgstation/tgstation/commit/c4ce2e965d33f3491173964fcbee3e43c0839bae , inhand-left and inhand-right from https://github.com/tgstation/tgstation/commit/a340fbac628722955b98c7d082bb8a3bb3ef664b , equipped-BACKPACK from https://github.com/tgstation/tgstation/commit/f13f1fba5350c90d1f09476471bb1cc296f0ad3b",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "equipped-BACKPACK",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

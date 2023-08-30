@@ -1,0 +1,73 @@
+﻿- type: entity
+  parent: BaseItem
+  id: NotekeeperCartridge
+  name: notekeeper cartridge
+  description: A program for keeping notes
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:NotekeeperUi
+  - type: Cartridge
+    programName: notekeeper-program-name
+    icon:
+      sprite:  Objects/Misc/books.rsi
+      state: book6
+  - type: NotekeeperCartridge
+
+- type: entity
+  parent: BaseItem
+  id: NewsReadCartridge
+  name: News Cartridge
+  description: A program for reading news
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/cartridge.rsi
+    state: cart-y
+  - type: UIFragment
+    ui: !type:NewsReadUi
+  - type: Cartridge
+    programName: news-read-program-name
+    icon:
+      sprite: Interface/Misc/program_icons.rsi
+      state: news_read
+  - type: NewsReadCartridge
+
+- type: entity
+  parent: BaseItem
+  id: CrewManifestCartridge
+  name: Crew Manifest Cartridge
+  description: A program for listing your fellow crewmembers
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:CrewManifestUi
+    - type: Cartridge
+      programName: crew-manifest-program-name
+      icon:
+        sprite: Interface/Misc/program_icons.rsi
+        state: crew_manifest
+    - type: CrewManifestCartridge
+
+- type: entity
+  parent: BaseItem
+  id: NetProbeCartridge
+  name: NetProbe cartridge
+  description: A program for getting the address and frequency of network devices
+  components:
+    - type: Sprite
+      sprite: Objects/Devices/cartridge.rsi
+      state: cart-y
+    - type: UIFragment
+      ui: !type:NetProbeUi
+    - type: Cartridge
+      programName: net-probe-program-name
+      icon:
+        sprite: Structures/Machines/server.rsi
+        state: server
+    - type: NetProbeCartridge
+
+

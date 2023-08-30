@@ -1,0 +1,344 @@
+﻿- type: constructionGraph
+  id: ParticleAcceleratorControlBox
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorControlBoxUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorControlBoxUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorControlBox
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+
+- type: constructionGraph
+  id: ParticleAcceleratorPowerBox
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorPowerBoxUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorPowerBoxUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorPowerBox
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+
+- type: constructionGraph
+  id: ParticleAcceleratorFuelChamber
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorFuelChamberUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorFuelChamberUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorFuelChamber
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: ParticleAcceleratorEndCap
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEndCapUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEndCapUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEndCap
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: ParticleAcceleratorEmitterPort
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterPortUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterPortUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterPort
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: ParticleAcceleratorEmitterFore
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterForeUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterForeUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterFore
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+
+- type: constructionGraph
+  id: ParticleAcceleratorEmitterStarboard
+  start: start
+  graph:
+    - node: start
+      entity: ParticleAcceleratorEmitterStarboardUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - material: Cable
+              doAfter: 0.5
+
+    - node: wired
+      entity: ParticleAcceleratorEmitterStarboardUnfinished
+      actions:
+      - !type:AppearanceChange
+      edges:
+        - to: completed
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SnapToGrid {}
+          steps:
+            - tool: Screwing
+              doAfter: 0.5
+        - to: start
+          conditions:
+            - !type:EntityAnchored {}
+          completed:
+            - !type:SpawnPrototype
+              prototype: CableApcStack1
+          steps:
+            - tool: Cutting
+              doAfter: 0.5
+
+    - node: completed
+      entity: ParticleAcceleratorEmitterStarboard
+      edges:
+        - to: wired
+          conditions:
+            - !type:EntityAnchored { }
+          steps:
+            - tool: Screwing
+              doAfter: 0.5

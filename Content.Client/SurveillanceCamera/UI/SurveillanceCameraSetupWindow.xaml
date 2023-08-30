@@ -1,0 +1,14 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+               Title="{Loc 'surveillance-camera-setup'}"
+               MinWidth="400">
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Name="NamingSection">
+            <LineEdit HorizontalExpand="True" Name="DeviceName" />
+            <Button Name="NameConfirm" Text="{Loc 'surveillance-camera-setup-ui-set'}"/>
+        </BoxContainer>
+        <BoxContainer Name="NetworkSection">
+            <OptionButton HorizontalExpand="True" Name="NetworkSelector" />
+            <Button Name="NetworkConfirm" Text="{Loc 'surveillance-camera-setup-ui-set'}" />
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

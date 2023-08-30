@@ -1,0 +1,37 @@
+﻿- type: entity
+  id: ChemDispenser
+  name: chemical dispenser
+  parent: ReagentDispenserBase
+  description: An industrial grade chemical dispenser with a sizeable chemical supply.
+  components:
+  - type: Sprite
+    sprite: Structures/dispensers.rsi
+    state: industrial-working
+    snapCardinals: true
+  - type: ReagentDispenser
+    pack: ChemDispenserStandardInventory
+    emagPack: ChemDispenserEmaggedInventory
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:ChangeConstructionNodeBehavior
+        node: machineFrame
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Machine
+    board: ChemDispenserMachineCircuitboard
+  - type: Wires
+    BoardName: wires-board-name-chemdispenser
+    LayoutId: ChemDispenser
+  - type: UpgradePowerDraw
+    powerDrawMultiplier: 0.75
+    scaling: Exponential
+  - type: GuideHelp
+    guides:
+    - Chemicals
+    - Chemist

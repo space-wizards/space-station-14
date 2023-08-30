@@ -1,0 +1,990 @@
+- type: seed
+  id: wheat
+  name: seeds-wheat-name
+  noun: seeds-noun-seeds
+  displayName: seeds-wheat-display-name
+  plantRsi: Objects/Specific/Hydroponics/wheat.rsi
+  packetPrototype: WheatSeeds
+  productPrototypes:
+    - WheatBushel
+  lifespan: 25
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Flour:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: oat
+  name: seeds-oat-name
+  noun: seeds-noun-seeds
+  displayName: seeds-oat-display-name
+  plantRsi: Objects/Specific/Hydroponics/oat.rsi
+  packetPrototype: OatSeeds
+  productPrototypes:
+    - OatBushel
+  lifespan: 25
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 5
+  idealLight: 8
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Oats:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: banana
+  name: seeds-banana-name
+  noun: seeds-noun-seeds
+  displayName: seeds-banana-display-name
+  plantRsi: Objects/Specific/Hydroponics/banana.rsi
+  packetPrototype: BananaSeeds
+  productPrototypes:
+    - FoodBanana
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 2
+  idealLight: 9
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: carrots
+  name: seeds-carrots-name
+  noun: seeds-noun-seeds
+  displayName: seeds-carrots-display-name
+  plantRsi: Objects/Specific/Hydroponics/carrot.rsi
+  packetPrototype: CarrotSeeds
+  productPrototypes:
+    - FoodCarrot
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    JuiceCarrot:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: lemon
+  name: seeds-lemon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lemon-display-name
+  plantRsi: Objects/Specific/Hydroponics/lemon.rsi
+  packetPrototype: LemonSeeds
+  productPrototypes:
+    - FoodLemon
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: lime
+  name: seeds-lime-name
+  noun: seeds-noun-seeds
+  displayName: seeds-lime-display-name
+  plantRsi: Objects/Specific/Hydroponics/lime.rsi
+  packetPrototype: LimeSeeds
+  productPrototypes:
+    - FoodLime
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: orange
+  name: seeds-orange-name
+  noun: seeds-noun-seeds
+  displayName: seeds-orange-display-name
+  plantRsi: Objects/Specific/Hydroponics/orange.rsi
+  packetPrototype: OrangeSeeds
+  productPrototypes:
+    - FoodOrange
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: pineapple
+  name: seeds-pineapple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-pineapple-display-name
+  plantRsi: Objects/Specific/Hydroponics/pineapple.rsi
+  packetPrototype: PineappleSeeds
+  productPrototypes:
+    - FoodPineapple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 8
+  growthStages: 3
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Water:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50
+
+- type: seed
+  id: potato
+  name: seeds-potato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-potato-display-name
+  plantRsi: Objects/Specific/Hydroponics/potato.rsi
+  packetPrototype: PotatoSeeds
+  productPrototypes:
+    - FoodPotato
+  lifespan: 30
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 4
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: sugarcane
+  name: seeds-sugarcane-name
+  noun: seeds-noun-seeds
+  displayName: seeds-sugarcane-display-name
+  plantRsi: Objects/Specific/Hydroponics/sugarcane.rsi
+  packetPrototype: SugarcaneSeeds
+  productPrototypes:
+    - Sugarcane
+  harvestRepeat: Repeat
+  lifespan: 60
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  growthStages: 3
+  idealHeat: 298
+  chemicals:
+    Sugar:
+      Min: 4
+      Max: 5
+      PotencyDivisor: 5
+
+- type: seed
+  id: towercap
+  name: seeds-towercap-name
+  noun: seeds-noun-spores
+  displayName: seeds-towercap-display-name
+  plantRsi: Objects/Specific/Hydroponics/towercap.rsi
+  packetPrototype: TowercapSeeds
+  productPrototypes:
+    - Log
+  lifespan: 80
+  maturation: 15
+  ligneous: true
+  production: 3
+  yield: 5
+  potency: 1
+  growthStages: 3
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  lightTolerance: 6
+  idealHeat: 288
+
+- type: seed
+  id: tomato
+  name: seeds-tomato-name
+  noun: seeds-noun-seeds
+  displayName: seeds-tomato-display-name
+  plantRsi: Objects/Specific/Hydroponics/tomato.rsi
+  packetPrototype: TomatoSeeds
+  productPrototypes:
+    - FoodTomato
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 10
+  waterConsumption: 0.60
+  nutrientConsumption: 0.40
+  idealLight: 8
+  idealHeat: 298
+  juicy: true
+  splatPrototype: PuddleSplatter
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: eggplant
+  name: seeds-eggplant-name
+  noun: seeds-noun-seeds
+  displayName: seeds-eggplant-display-name
+  plantRsi: Objects/Specific/Hydroponics/eggplant.rsi
+  packetPrototype: EggplantSeeds
+  productPrototypes:
+    - FoodEggplant
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: cabbage
+  name: seeds-cabbage-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cabbage-display-name
+  plantRsi: Objects/Specific/Hydroponics/cabbage.rsi
+  packetPrototype: CabbageSeeds
+  productPrototypes:
+    - FoodCabbage
+  lifespan: 50
+  maturation: 7
+  production: 5
+  yield: 3
+  potency: 10
+  growthStages: 1
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: garlic
+  name: seeds-garlic-name
+  noun: seeds-noun-seeds
+  displayName: seeds-garlic-display-name
+  plantRsi: Objects/Specific/Hydroponics/garlic.rsi
+  packetPrototype: GarlicSeeds
+  productPrototypes:
+    - FoodGarlic
+  lifespan: 25
+  maturation: 8
+  production: 5
+  yield: 3
+  potency: 25
+  growthStages: 3
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 8
+      PotencyDivisor: 25
+
+- type: seed
+  id: apple
+  name: seeds-apple-name
+  noun: seeds-noun-seeds
+  displayName: seeds-apple-display-name
+  plantRsi: Objects/Specific/Hydroponics/apple.rsi
+  packetPrototype: AppleSeeds
+  productPrototypes:
+    - FoodApple
+  harvestRepeat: Repeat
+  lifespan: 55
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 10
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: corn
+  name: seeds-corn-name
+  noun: seeds-noun-seeds
+  displayName: seeds-corn-display-name
+  plantRsi: Objects/Specific/Hydroponics/corn.rsi
+  packetPrototype: CornSeeds
+  productPrototypes:
+    - FoodCorn
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: onion
+  name: seeds-onion-name
+  noun: seeds-noun-seeds
+  displayName: seeds-onion-display-name
+  plantRsi: Objects/Specific/Hydroponics/onion.rsi
+  packetPrototype: OnionSeeds
+  productPrototypes:
+    - FoodOnion
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: onionred
+  name: seeds-onionred-name
+  noun: seeds-noun-seeds
+  displayName: seeds-onionred-display-name
+  plantRsi: Objects/Specific/Hydroponics/onion_red.rsi
+  packetPrototype: OnionRedSeeds
+  productPrototypes:
+    - FoodOnionRed
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 20
+  growthStages: 3
+  idealLight: 8
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Allicin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: chanterelle
+  name: seeds-chanterelle-name
+  noun: seeds-noun-spores
+  displayName: seeds-chanterelle-display-name
+  plantRsi: Objects/Specific/Hydroponics/chanterelle.rsi
+  packetPrototype: ChanterelleSeeds
+  productPrototypes:
+    - FoodMushroom
+  lifespan: 35
+  maturation: 10
+  production: 7
+  yield: 5
+  potency: 1
+  growthStages: 3
+  lightTolerance: 6
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  idealHeat: 288
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 25
+
+- type: seed
+  id: eggy
+  name: seeds-eggy-name
+  noun: seeds-noun-seeds
+  displayName: seeds-eggy-display-name
+  plantRsi: Objects/Specific/Hydroponics/eggy.rsi
+  packetPrototype: EggySeeds
+  productPrototypes:
+    - FoodEgg
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 6
+  production: 12
+  yield: 2
+  potency: 20
+  nutrientConsumption: 0.50
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Egg:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: cannabis
+  name: seeds-cannabis-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cannabis-display-name
+  plantRsi: Objects/Specific/Hydroponics/cannabis.rsi
+  packetPrototype: CannabisSeeds
+  productPrototypes:
+    - LeavesCannabis
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 8
+  production: 12
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    THC:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: tobacco
+  name: seeds-tobacco-name
+  noun: seeds-noun-seeds
+  displayName: seeds-tobacco-display-name
+  plantRsi: Objects/Specific/Hydroponics/tobacco.rsi
+  packetPrototype: TobaccoSeeds
+  productPrototypes:
+    - LeavesTobacco
+  harvestRepeat: Repeat
+  lifespan: 75
+  maturation: 5
+  production: 5
+  yield: 2
+  potency: 20
+  growthStages: 3
+  waterConsumption: 0.40
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    Nicotine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: nettle
+  name: seeds-nettle-name
+  noun: seeds-noun-seeds
+  displayName: seeds-nettle-display-name
+  plantRsi: Objects/Specific/Hydroponics/nettle.rsi
+  packetPrototype: NettleSeeds
+  productPrototypes:
+    - Nettle
+  lifespan: 25
+  maturation: 8
+  production: 6
+  yield: 2
+  potency: 20
+  growthStages: 5
+  idealLight: 8
+  waterConsumption: 0.60
+  idealHeat: 298
+  chemicals:
+    Histamine:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: chili
+  name: seeds-chili-name
+  noun: seeds-noun-seeds
+  displayName: seeds-chili-display-name
+  plantRsi: Objects/Specific/Hydroponics/chili.rsi
+  packetPrototype: ChiliSeeds
+  productPrototypes:
+    - FoodChili
+  harvestRepeat: Repeat
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 2
+  potency: 20
+  idealLight: 9
+  idealHeat: 298
+  chemicals:
+    CapsaicinOil:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Nutriment:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: poppy
+  name: seeds-poppy-name
+  noun: seeds-noun-seeds
+  displayName: seeds-poppy-display-name
+  plantRsi: Objects/Specific/Hydroponics/poppy.rsi
+  packetPrototype: PoppySeeds
+  productPrototypes:
+    - FoodPoppy
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
+    Bicaridine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
+  id: aloe
+  name: seeds-aloe-name
+  noun: seeds-noun-seeds
+  displayName: seeds-aloe-display-name
+  plantRsi: Objects/Specific/Hydroponics/aloe.rsi
+  packetPrototype: AloeSeeds
+  productPrototypes:
+    - FoodAloe
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 5
+  waterConsumption: 0.60
+  chemicals:
+    Aloe:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Dermaline:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+
+- type: seed
+  id: lingzhi
+  name: seeds-lingzhi-name
+  noun: seeds-noun-spores
+  displayName: seeds-lingzhi-display-name
+  plantRsi: Objects/Specific/Hydroponics/lingzhi.rsi
+  packetPrototype: LingzhiSeeds
+  productPrototypes:
+    - FoodLingzhi
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    Ultravasculine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+    Epinephrine:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 5
+
+- type: seed
+  id: ambrosiaVulgaris
+  name: seeds-ambrosiavulgaris-name
+  noun: seeds-noun-seeds
+  displayName: seeds-ambrosiavulgaris-display-name
+  plantRsi: Objects/Specific/Hydroponics/ambrosia_vulgaris.rsi
+  packetPrototype: AmbrosiaVulgarisSeeds
+  productPrototypes:
+    - FoodAmbrosiaVulgaris
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 6
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 10
+    Bicaridine:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Kelotane:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Desoxyephedrine:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 2
+      Potencydivisor: 50
+
+- type: seed
+  id: galaxythistle
+  name: seeds-galaxythistle-name
+  noun: seeds-noun-seeds
+  displayName: seeds-galaxythistle-display-name
+  plantRsi: Objects/Specific/Hydroponics/galaxythistle.rsi
+  packetPrototype: GalaxythistleSeeds
+  productPrototypes:
+    - FoodGalaxythistle
+  lifespan: 25
+  maturation: 10
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 3
+  waterConsumption: 0.60
+  chemicals:
+    Stellibinin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+
+- type: seed
+  id: flyAmanita
+  name: seeds-flyamanita-name
+  noun: seeds-noun-spores
+  displayName: seeds-flyamanita-display-name
+  plantRsi: Objects/Specific/Hydroponics/fly_amanita.rsi
+  packetPrototype: FlyAmanitaSeeds
+  productPrototypes:
+    - FoodFlyAmanita
+  lifespan: 25
+  maturation: 12
+  production: 3
+  yield: 3
+  potency: 10
+  growthStages: 2
+  waterConsumption: 0.60
+  nutrientConsumption: 0.50
+  chemicals:
+    Amatoxin:
+      Min: 1
+      Max: 25
+      PotencyDivisor: 4
+    Nutriment: ## yumby :)
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: gatfruit
+  name: seeds-gatfruit-name
+  noun: seeds-noun-seeds
+  displayName: seeds-gatfruit-display-name
+  plantRsi: Objects/Specific/Hydroponics/gatfruit.rsi
+  packetPrototype: GatfruitSeeds
+  productPrototypes:
+    - FoodGatfruit
+  lifespan: 65
+  maturation: 25
+  production: 25
+  yield: 1
+  potency: 10
+  growthStages: 2
+  idealLight: 6
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Sulfur:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: rice
+  name: seeds-rice-name
+  noun: seeds-noun-seeds
+  displayName: seeds-rice-display-name
+  plantRsi: Objects/Specific/Hydroponics/rice.rsi
+  packetPrototype: RiceSeeds
+  productPrototypes:
+    - RiceBushel
+  lifespan: 25
+  maturation: 6
+  production: 3
+  yield: 3
+  potency: 5
+  growthStages: 4
+  idealLight: 5
+  nutrientConsumption: 0.40
+  waterConsumption: 0.60
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 20
+      PotencyDivisor: 20
+    Rice:
+      Min: 5
+      Max: 20
+      PotencyDivisor: 20
+
+- type: seed
+  id: soybeans
+  name: seeds-soybeans-name
+  noun: seeds-noun-seeds
+  displayName: seeds-soybeans-display-name
+  plantRsi: Objects/Specific/Hydroponics/soybeans.rsi
+  packetPrototype: SoybeanSeeds
+  productPrototypes:
+    - FoodSoybeans
+  growthStages: 4
+  lifespan: 25
+  maturation: 6
+  production: 6
+  yield: 3
+  potency: 5
+  idealLight: 7
+  nutrientConsumption: 0.40
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: grape
+  name: seeds-grape-name
+  noun: seeds-noun-seeds
+  displayName: seeds-grape-display-name
+  plantRsi: Objects/Specific/Hydroponics/grape.rsi
+  packetPrototype: GrapeSeeds
+  productPrototypes:
+    - FoodGrape
+  lifespan: 50
+  maturation: 6
+  production: 5
+  yield: 3
+  potency: 10
+  growthStages: 2
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+
+- type: seed
+  id: watermelon
+  name: seeds-watermelon-name
+  noun: seeds-noun-seeds
+  displayName: seeds-watermelon-display-name
+  plantRsi: Objects/Specific/Hydroponics/watermelon.rsi
+  packetPrototype: WatermelonSeeds
+  productPrototypes:
+    - FoodWatermelon
+  lifespan: 55
+  maturation: 12
+  production: 3
+  yield: 1
+  potency: 1
+  idealLight: 8
+  chemicals:
+    Nutriment:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Water:
+      Min: 1
+      Max: 10
+      PotencyDivisor: 10
+    Vitamin:
+      Min: 1
+      Max: 5
+      PotencyDivisor: 20
+
+- type: seed
+  id: cocoa
+  name: seeds-cocoa-name
+  noun: seeds-noun-seeds
+  displayName: seeds-cocoa-display-name
+  plantRsi: Objects/Specific/Hydroponics/cocoa.rsi
+  packetPrototype: CocoaSeeds
+  productPrototypes:
+    - FoodCocoaPod
+  harvestRepeat: Repeat
+  lifespan: 50
+  maturation: 6
+  production: 6
+  yield: 6
+  idealLight: 7
+  waterConsumption: 6
+  idealHeat: 298
+  chemicals:
+    Vitamin:
+      Min: 1
+      Max: 4
+      PotencyDivisor: 25
+    Nutriment:
+      Min: 1
+      Max: 2
+      PotencyDivisor: 50

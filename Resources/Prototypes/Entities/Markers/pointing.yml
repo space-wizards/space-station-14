@@ -1,0 +1,18 @@
+﻿- type: entity
+  name: pointing arrow
+  id: PointingArrow
+  save: false
+  components:
+  - type: Tag
+    tags:
+    - HideContextMenu
+  - type: Sprite
+    sprite: Interface/Misc/pointing.rsi
+    state: pointing
+    drawDepth: Overlays
+    noRot: true
+  - type: PointingArrow
+    duration: 4
+    step: 0.5
+    speed: 1
+  - type: Appearance

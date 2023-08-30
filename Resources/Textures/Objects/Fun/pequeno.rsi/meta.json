@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from shiptest at https://github.com/shiptest-ss13/Shiptest/commit/6e13b1f051512b16a2d7b75694b6cd36c7f5efbd, Among Us IP used with respect to policy at https://www.innersloth.com/fan-creation-policy/",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+    "states": [
+        {
+            "name": "base"
+        },
+        {
+            "name": "visor"
+        }
+    ]
+}

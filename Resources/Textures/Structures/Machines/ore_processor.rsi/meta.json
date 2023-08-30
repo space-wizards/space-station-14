@@ -1,0 +1,50 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/2b7f2c42f1bd57497052e8ef593d5e05ea45208e and edited by HoofedEar",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "inserting",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          5
+        ]
+      ]
+    },
+	{
+      "name": "building",
+      "delays": [
+        [
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1,
+          0.1
+        ]
+      ]
+    },
+	{
+	  "name": "icon"
+	},
+	{
+      "name": "panel"
+    },
+	{
+	  "name": "unlit"
+	}
+  ]
+}

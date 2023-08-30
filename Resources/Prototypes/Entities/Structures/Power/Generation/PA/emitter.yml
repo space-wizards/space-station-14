@@ -1,0 +1,76 @@
+- type: entity
+  parent: ParticleAcceleratorFinishedPart
+  id: ParticleAcceleratorEmitterPort
+  name: PA port containment emitter
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Port
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
+
+- type: entity
+  parent: ParticleAcceleratorFinishedPart
+  id: ParticleAcceleratorEmitterFore
+  name: PA fore containment emitter
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Fore
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
+
+- type: entity
+  parent: ParticleAcceleratorFinishedPart
+  id: ParticleAcceleratorEmitterStarboard
+  name: PA starboard containment emitter
+  description: This launchs the Alpha particles, might not want to stand near this end.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: ParticleAcceleratorEmitter
+    emitterType: Starboard
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard
+
+# Unfinished
+
+- type: entity
+  parent: ParticleAcceleratorUnfinishedBase
+  id: ParticleAcceleratorEmitterPortUnfinished
+  name: PA port containment emitter
+  suffix: Unfinished, Port
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_port.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterPort
+
+- type: entity
+  parent: ParticleAcceleratorUnfinishedBase
+  id: ParticleAcceleratorEmitterForeUnfinished
+  name: PA fore containment emitter
+  suffix: Unfinished, Fore
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_fore.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterFore
+
+- type: entity
+  parent: ParticleAcceleratorUnfinishedBase
+  id: ParticleAcceleratorEmitterStarboardUnfinished
+  name: PA starboard containment emitter
+  suffix: Unfinished, Starboard
+  description: This launchs the Alpha particles, might not want to stand near this end. It looks unfinished.
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/PA/emitter_starboard.rsi
+  - type: Construction
+    graph: ParticleAcceleratorEmitterStarboard

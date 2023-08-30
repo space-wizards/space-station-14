@@ -1,0 +1,198 @@
+- type: entity
+  id: AmeController
+  name: AME controller
+  description: It's a controller for the antimatter engine.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    snapCardinals: true
+    sprite: Structures/Power/Generation/ame.rsi
+    state: control
+    layers:
+    - state: control
+    - state: control_on
+      map: ["display"]
+      visible: false
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.45"
+        density: 190
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Anchorable
+  - type: Pullable
+  - type: AmeController
+  - type: Explosive
+    explosionType: Default
+    intensitySlope: 5
+    maxIntensity: 60
+  - type: ActivatableUI
+    key: enum.AmeControllerUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.AmeControllerUiKey.Key
+      type: AmeControllerBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeControllerVisuals.DisplayState:
+        display:
+          Off: { visible: false }
+          On: { state: control_on, visible: true }
+          Critical: { state: control_critical, visible: true }
+          Fuck: { state: control_fuck, visible: true }
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      ame:
+        !type:AdjacentNode
+        nodeGroupID: AMEngine
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+#  - type: ApcPowerReceiver
+#  - type: ExtensionCableReceiver
+  - type: PowerSupplier
+    supplyRate: 0
+  - type: ContainerContainer
+    containers:
+      AmeFuel: !type:ContainerSlot {}
+  - type: GuideHelp
+    guides: [ AME, Power ]
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: input
+    mediumVoltageNode: ame
+
+- type: entity
+  noSpawn: true
+  parent: AmeController
+  id: AmeControllerUnanchored
+  suffix: Unanchored
+  components:
+  - type: Transform
+    anchored: false
+  - type: Physics
+    bodyType: Dynamic
+
+- type: entity
+  id: AmeShielding
+  name: AME shielding
+  description: Keeps the antimatter in and the matter out.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Walls
+    sprite: Structures/Power/Generation/ame.rsi
+    state: shield_0
+    layers:
+    - state: shield_0
+    - state: core
+      map: ["core"]
+      visible: false
+    - state: core_weak
+      map: ["core_glow"]
+      shader: unshaded
+      visible: false
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        density: 190
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Transform
+    anchored: true
+  - type: IconSmooth
+    mode: CardinalFlags
+    base: shield_
+    key: ame_shield
+  - type: AmeShield
+  - type: NodeContainer
+    nodes:
+      ame:
+        !type:AdjacentNode
+        nodeGroupID: AMEngine
+  - type: PointLight
+    enabled: false
+    radius: 5
+    energy: 0.5
+    color: "#00AAFF"
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.AmeShieldVisuals.Core:
+        core:
+          True: { visible: true }
+          False: { visible: false }
+      enum.AmeShieldVisuals.CoreState:
+        core_glow:
+          Off: { visible: false }
+          Weak: { state: core_weak, visible: true }
+          Strong: { state: core_strong, visible: true }
+  - type: Construction
+    graph: AmeShielding
+    node: ameShielding
+  - type: GuideHelp
+    guides: [ AME, Power ]
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: ame

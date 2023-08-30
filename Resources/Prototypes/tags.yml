@@ -1,0 +1,1037 @@
+- type: Tag
+  id: AirAlarm
+
+- type: Tag
+  id: AirAlarmElectronics
+
+- type: Tag
+  id: AirSensor
+
+- type: Tag
+  id: Ambrosia
+
+- type: Tag
+  id: AppraisalTool
+
+- type: Tag
+  id: ArtifactFragment
+
+- type: Tag
+  id: ATVKeys
+
+- type: Tag
+  id: Baguette
+
+- type: Tag
+  id: Balloon
+
+- type: Tag
+  id: BaseballBat 
+
+- type: Tag
+  id: BBQsauce
+
+- type: Tag
+  id: Bee
+
+- type: Tag
+  id: BikeHorn
+
+- type: Tag
+  id: Bloodpack
+
+- type: Tag
+  id: BodyBag
+
+- type: Tag
+  id: Book
+
+- type: Tag
+  id: BorgArm
+
+- type: Tag
+  id: BorgEngineerHead
+
+- type: Tag
+  id: BorgEngineerLArm
+
+- type: Tag
+  id: BorgEngineerLLeg
+
+- type: Tag
+  id: BorgEngineerRArm
+
+- type: Tag
+  id: BorgEngineerRLeg
+
+- type: Tag
+  id: BorgEngineerTorso
+
+- type: Tag
+  id: BorgGenericHead
+
+- type: Tag
+  id: BorgGenericLArm
+
+- type: Tag
+  id: BorgGenericLLeg
+
+- type: Tag
+  id: BorgGenericRArm
+
+- type: Tag
+  id: BorgGenericRLeg
+
+- type: Tag
+  id: BorgGenericTorso
+
+- type: Tag
+  id: BorgHead
+
+- type: Tag
+  id: BorgJanitorHead
+
+- type: Tag
+  id: BorgJanitorLLeg
+
+- type: Tag
+  id: BorgJanitorRLeg
+
+- type: Tag
+  id: BorgJanitorTorso
+
+- type: Tag
+  id: BorgLeg
+
+- type: Tag
+  id: BorgMedicalHead
+
+- type: Tag
+  id: BorgMedicalLArm
+
+- type: Tag
+  id: BorgMedicalLLeg
+
+- type: Tag
+  id: BorgMedicalRArm
+
+- type: Tag
+  id: BorgMedicalRLeg
+
+- type: Tag
+  id: BorgMedicalTorso
+
+- type: Tag
+  id: BorgMiningHead
+
+- type: Tag
+  id: BorgMiningLArm
+
+- type: Tag
+  id: BorgMiningLLeg
+
+- type: Tag
+  id: BorgMiningRArm
+
+- type: Tag
+  id: BorgMiningRLeg
+
+- type: Tag
+  id: BorgMiningTorso
+
+- type: Tag
+  id: BorgModuleCargo
+
+- type: Tag
+  id: BorgModuleEngineering
+
+- type: Tag
+  id: BorgModuleGeneric
+
+- type: Tag
+  id: BorgModuleJanitor
+
+- type: Tag
+  id: BorgModuleMedical
+
+- type: Tag
+  id: BorgModuleService
+
+- type: Tag
+  id: BorgServiceHead
+
+- type: Tag
+  id: BorgServiceLArm
+
+- type: Tag
+  id: BorgServiceLLeg
+
+- type: Tag
+  id: BorgServiceRArm
+
+- type: Tag
+  id: BorgServiceRLeg
+
+- type: Tag
+  id: BorgServiceTorso
+
+- type: Tag
+  id: BotanyHatchet
+
+- type: Tag
+  id: BotanyHoe
+
+- type: Tag
+  id: BotanyShovel
+
+- type: Tag
+  id: Bottle
+
+- type: Tag
+  id: BoxHug
+
+- type: Tag
+  id: BrassInstrument
+
+- type: Tag
+  id: Bread
+
+- type: Tag
+  id: Briefcase
+
+- type: Tag
+  id: Brutepack
+
+- type: Tag
+  id: Bucket
+
+- type: Tag
+  id: BulletFoam
+
+- type: Tag
+  id: BypassInteractionRangeChecks
+
+- type: Tag
+  id: CableCoil
+
+- type: Tag
+  id: CapacitorStockPart
+
+- type: Tag
+  id: Carrot
+
+- type: Tag
+  id: CarrotFries
+
+- type: Tag
+  id: Carpet
+
+- type: Tag
+  id: CanPilot
+
+- type: Tag
+  id: CannotSuicide
+
+- type: Tag
+  id: CaptainSabre
+
+- type: Tag
+  id: Carp
+
+- type: Tag
+  id: Cartridge
+
+- type: Tag
+  id: CartridgeAntiMateriel
+
+- type: Tag
+  id: CartridgeCap
+
+- type: Tag
+  id: CartridgeCaselessRifle
+
+- type: Tag
+  id: CartridgeCHIMP
+
+- type: Tag
+  id: CartridgeHeavyRifle
+
+- type: Tag
+  id: CartridgeLightRifle
+
+- type: Tag
+  id: CartridgeMagnum
+
+- type: Tag
+  id: CartridgePistol
+
+- type: Tag
+  id: CartridgeRifle
+
+- type: Tag
+  id: CartridgeRocket
+
+# Allows you to walk over tile entities such as lava without steptrigger
+- type: Tag
+  id: Catwalk
+
+- type: Tag
+  id: Chicken
+
+- type: Tag
+  id: Cigarette
+
+- type: Tag
+  id: CigFilter
+
+- type: Tag
+  id: CigPack
+
+- type: Tag
+  id: ClothMade
+
+- type: Tag
+  id: ClownMask
+
+- type: Tag
+  id: ClownRecorder
+
+- type: Tag
+  id: ClownRubberStamp
+
+- type: Tag
+  id: ClownShoes
+
+- type: Tag
+  id: CluwneHorn
+
+- type: Tag #Ohioans die happy
+  id: Corn 
+
+- type: Tag
+  id: Coldsauce
+
+- type: Tag
+  id: Cow
+
+- type: Tag
+  id: Crayon
+
+- type: Tag
+  id: CrayonBlack
+
+- type: Tag
+  id: CrayonBlue
+
+- type: Tag
+  id: CrayonGreen
+
+- type: Tag
+  id: CrayonOrange
+
+- type: Tag
+  id: CrayonPurple
+
+- type: Tag
+  id: CrayonRed
+
+- type: Tag
+  id: CrayonWhite
+
+- type: Tag
+  id: CrayonYellow
+
+- type: Tag
+  id: Crowbar
+
+- type: Tag
+  id: CrowbarRed
+
+- type: Tag
+  id: Cryobeaker
+
+- type: Tag
+  id: ConveyorAssembly
+
+- type: Tag
+  id: Cola
+
+- type: Tag
+  id: CombatKnife
+
+- type: Tag
+  id: ComputerTelevisionCircuitboard
+
+- type: Tag
+  id: CubanCarp
+
+- type: Tag
+  id: Debug
+
+- type: Tag
+  id: Dice
+
+- type: Tag
+  id: DiscreteHealthAnalyzer #So construction recipes don't eat medical PDAs
+
+- type: Tag
+  id: DockArrivals
+
+- type: Tag
+  id: DockCargo
+
+- type: Tag
+  id: DockEmergency
+
+- type: Tag
+  id: Document
+
+- type: Tag
+  id: DoorBumpOpener
+
+- type: Tag
+  id: DoorElectronics
+
+- type: Tag
+  id: DonkPocket
+
+- type: Tag
+  id: Donut
+
+- type: Tag
+  id: DrinkSpaceGlue
+
+- type: Tag
+  id: DroneUsable
+
+- type: Tag
+  id: Duck
+
+- type: Tag
+  id: Ectoplasm
+
+- type: Tag
+  id: Egg
+
+- type: Tag
+  id: EmagImmune
+
+- type: Tag
+  id: EmitterBolt
+
+- type: Tag
+  id: ExplosivePassable
+
+- type: Tag
+  id: Figurine
+
+- type: Tag
+  id: FireAlarm
+
+- type: Tag
+  id: FireAlarmElectronics
+
+- type: Tag
+  id: FireAxe
+
+- type: Tag
+  id: Flesh
+
+- type: Tag
+  id: WhitelistChameleon
+
+- type: Tag
+  id: FirelockElectronics
+
+- type: Tag
+  id: Flare
+
+- type: Tag
+  id: Flashlight
+
+- type: Tag
+  id: Flower
+
+- type: Tag
+  id: Folder
+
+- type: Tag
+  id: FoodSnack
+
+- type: Tag
+  id: FootstepSound
+
+- type: Tag
+  id: ForceableFollow
+
+- type: Tag
+  id: ForceFixRotations # fixrotations command WILL target this
+
+- type: Tag
+  id: ForceNoFixRotations # fixrotations command WON'T target this
+
+- type: Tag
+  id: Galaxythistle
+
+- type: Tag
+  id: GasScrubber
+
+- type: Tag
+  id: GasVent
+
+- type: Tag
+  id: Gauze
+
+- type: Tag
+  id: GeigerCounter
+
+- type: Tag
+  id: GlassBeaker
+
+- type: Tag
+  id: GlassShard
+
+- type: Tag
+  id: Goat
+
+- type: Tag
+  id: Grenade
+
+- type: Tag
+  id: GuideEmbeded
+
+
+- type: Tag
+  id: Hamster
+
+- type: Tag
+  id: HamsterWearable
+
+- type: Tag
+  id: HamtrCentralControlModule
+
+- type: Tag
+  id: HamtrPeripheralsControlModule
+
+- type: Tag
+  id: HamtrLArm
+
+- type: Tag
+  id: HamtrLLeg
+
+- type: Tag
+  id: HamtrRLeg
+
+- type: Tag
+  id: HamtrRArm
+
+- type: Tag
+  id: Handcuffs
+
+- type: Tag
+  id: HappyHonk
+
+
+- type: Tag
+  id: Hardsuit # Prevent melee injectors that can't penetrate hardsuits from injecting the wearer (nettles)
+
+- type: Tag
+  id: Head
+
+- type: Tag
+  id: HelmetEVA
+
+- type: Tag
+  id: HideContextMenu
+
+- type: Tag
+  id: HidesHair # for headwear.
+
+- type: Tag
+  id: HighRiskItem
+
+- type: Tag
+  id: Hoe
+
+- type: Tag
+  id: HolofanProjector
+
+- type: Tag
+  id: HolosignProjector
+
+- type: Tag
+  id: HonkerCentralControlModule
+
+- type: Tag
+  id: HonkerPeripheralsControlModule
+
+- type: Tag
+  id: HonkerTargetingControlModule
+
+- type: Tag
+  id: HonkerLArm
+
+- type: Tag
+  id: HonkerLLeg
+
+- type: Tag
+  id: HonkerRLeg
+
+- type: Tag
+  id: HonkerRArm
+
+- type: Tag
+  id: Hotsauce
+
+- type: Tag #Drop this innate tool instead of deleting it.
+  id: InnateDontDelete
+
+- type: Tag
+  id: Ingot
+
+- type: Tag
+  id: InstantDoAfters
+
+- type: Tag
+  id: IntercomElectronics
+
+- type: Tag
+  id: JanicartKeys
+
+- type: Tag
+  id: JawsOfLife
+
+- type: Tag
+  id: Katana
+
+- type: Tag
+  id: Kangaroo
+
+- type: Tag
+  id: Ketchup
+
+- type: Tag
+  id: KeyedInstrument
+
+- type: Tag
+  id: Knife
+
+- type: Tag
+  id: LavaBrig
+
+- type: Tag
+  id: Lemon
+
+- type: Tag
+  id: Lime
+
+- type: Tag
+  id: Machete
+
+- type: Tag
+  id: MacroBomb
+
+- type: Tag
+  id: MicroBomb
+
+- type: Tag
+  id: MimeBelt
+
+- type: Tag
+  id: MimeHappyHonk
+
+# Magazines ordered by slot then caliber
+
+- type: Tag
+  id: MagazineCalico
+
+- type: Tag
+  id: MagazineCaselessRifle
+
+- type: Tag
+  id: MagazineHeavyRifle
+
+- type: Tag
+  id: MagazineHeavyRifleBox
+
+- type: Tag
+  id: MagazineLightRifle
+
+- type: Tag
+  id: MagazineLightRifleBox
+
+- type: Tag
+  id: MagazineLightRiflePan
+
+- type: Tag
+  id: MagazineMagnum
+
+- type: Tag
+  id: MagazinePistol
+
+- type: Tag
+  id: MagazinePistolCaselessRifle
+
+- type: Tag
+  id: MagazinePistolHighCapacity
+
+- type: Tag
+  id: MagazinePistolSubMachineGunTopMounted
+
+- type: Tag
+  id: MagazineRifle
+
+- type: Tag
+  id: MagazineShotgun
+
+- type: Tag
+  id: MagazineMagnumSubMachineGun
+
+- type: Tag
+  id: MagazinePistolSubMachineGun
+
+- type: Tag
+  id: MailingUnitElectronics
+
+- type: Tag
+  id: Matchstick
+
+- type: Tag
+  id: Medkit
+
+- type: Tag
+  id: Metal
+
+- type: Tag
+  id: MicrowaveMachineUnsafe
+
+- type: Tag
+  id: MicrowaveSelfUnsafe
+
+- type: Tag
+  id: MindTransferTarget
+
+- type: Tag
+  id: MonkeyCube
+
+- type: Tag
+  id: Mop
+
+- type: Tag
+  id: Mouse
+
+- type: Tag
+  id: Multitool
+
+
+- type: Tag
+  id: NoBlockAnchoring
+
+- type: Tag
+  id: NozzleBackTank
+
+- type: Tag
+  id: NukeOpsUplink
+
+- type: Tag
+  id: Ointment
+
+- type: Tag
+  id: Ore
+
+- type: Tag
+  id: Payload # for grenade/bomb crafting
+
+- type: Tag
+  id: PaintableAirlock
+
+- type: Tag
+  id: Pancake
+
+- type: Tag
+  id: PercussionInstrument
+
+- type: Tag
+  id: PetWearable
+
+- type: Tag
+  id: Pickaxe
+
+- type: Tag
+  id: Pie
+
+- type: Tag
+  id: Pig
+
+- type: Tag
+  id: PillCanister
+
+- type: Tag
+  id: Pipe
+
+- type: Tag
+  id: Pizza
+
+- type: Tag
+  id: PlantAnalyzer
+
+- type: Tag
+  id: PlantBGone
+
+- type: Tag
+  id: PlantSampleTaker
+
+- type: Tag
+  id: PlasmaGlassShard
+
+- type: Tag
+  id: Plastic
+
+- type: Tag
+  id: Plunger
+
+- type: Tag
+  id: PlushieGhost
+
+
+- type: Tag
+  id: PowerCellSmall
+
+- type: Tag
+  id: Powerdrill
+
+- type: Tag
+  id: PrisonUniform
+
+- type: Tag
+  id: ProximitySensor
+
+- type: Tag
+  id: Radio
+
+- type: Tag
+  id: RawMaterial
+
+- type: Tag
+  id: RCDDeconstructWhitelist
+
+# Give this to something that doesn't need any special recycler behavior and just needs deleting.
+- type: Tag
+  id: Recyclable
+
+- type: Tag
+  id: ReinforcedGlassShard
+
+- type: Tag
+  id: RipleyCentralControlModule
+
+- type: Tag
+  id: RipleyPeripheralsControlModule
+
+- type: Tag
+  id: RipleyLArm
+
+- type: Tag
+  id: RipleyLLeg
+
+- type: Tag
+  id: RipleyRLeg
+
+- type: Tag
+  id: RipleyRArm
+
+- type: Tag
+  id: RodMetal1
+
+- type: Tag
+  id: RollingPaper
+
+- type: Tag
+  id: SalvageExperiment
+
+- type: Tag
+  id: Screwdriver
+
+- type: Tag
+  id: SecBeltEquip
+
+- type: Tag
+  id: SecwayKeys
+
+- type: Tag
+  id: Sheet
+
+- type: Tag
+  id: ShellShotgun
+
+- type: Tag
+  id: Shiv
+
+- type: Tag
+  id: ShoesRequiredStepTriggerImmune
+
+- type: Tag
+  id: Shovel
+
+- type: Tag
+  id: SkeletonMotorcycleKeys
+
+- type: Tag
+  id: SmallMech
+
+- type: Tag
+  id: Smokable
+
+- type: Tag
+  id: Soap
+
+- type: Tag
+  id: SolarAssemblyPart
+
+- type: Tag
+  id: SolarTrackerElectronics
+
+- type: Tag
+  id: Soup
+
+- type: Tag
+  id: Spray
+
+- type: Tag
+  id: Spear
+
+- type: Tag
+  id: SpeedLoaderCap
+
+- type: Tag
+  id: SpeedLoaderMagnum
+
+- type: Tag
+  id: SpeedLoaderPistol
+
+- type: Tag
+  id: SpeedLoaderRifle
+
+- type: Tag
+  id: SpreaderIgnore
+
+- type: Tag
+  id: StringInstrument
+
+- type: Tag
+  id: StationMapElectronics
+
+- type: Tag
+  id: SubdermalImplant
+
+- type: Tag
+  id: SuitEVA
+
+- type: Tag
+  id: SurveillanceCameraMonitorCircuitboard
+
+- type: Tag
+  id: Syndicate
+
+- type: Tag
+  id: SyndicateSegwayKeys
+
+- type: Tag
+  id: Syringe
+
+- type: Tag
+  id: Spellbook
+
+- type: Tag
+  id: Taser
+
+- type: Tag
+  id: TabletopBoard
+
+- type: Tag
+  id: TabletopPiece
+
+- type: Tag
+  id: TimerBrigElectronics
+
+- type: Tag
+  id: TimerScreenElectronics
+
+- type: Tag
+  id: TimerSignalElectronics
+
+- type: Tag
+  id: Toolbox
+
+- type: Tag
+  id: Trash
+
+- type: Tag
+  id: TrashBag
+
+- type: Tag
+  id: Unstackable # To prevent things like atmos devices (filters etc) being stacked on one tile. See NoUnstackableInTile
+
+- type: Tag
+  id: UraniumGlassShard
+
+- type: Tag
+  id: VehicleKey
+
+- type: Tag
+  id: VimPilot
+
+- type: Tag
+  id: VoiceTrigger
+
+- type: Tag
+  id: Wall
+
+- type: Tag
+  id: WetFloorSign
+
+- type: Tag
+  id: WallmountGeneratorAPUElectronics
+
+- type: Tag
+  id: WallmountGeneratorElectronics
+
+- type: Tag
+  id: WallmountSubstationElectronics
+  
+- type: Tag
+  id: WeaponPistolCHIMPUpgradeKit
+
+- type: Tag
+  id: Window
+
+- type: Tag
+  id: WizardWand # that evil vvizard vvand
+
+- type: Tag
+  id: WizardStaff
+
+- type: Tag
+  id: Wirecutter
+
+- type: Tag
+  id: Wooden # just like our atmos
+
+- type: Tag
+  id: WoodwindInstrument # even more like our atmos
+
+- type: Tag
+  id: Wrench
+
+- type: Tag
+  id: Wringer
+
+- type: Tag
+  id: Write
+
+- type: Tag
+  id: RifleStock
+
+- type: Tag
+  id: ModularReceiver
+

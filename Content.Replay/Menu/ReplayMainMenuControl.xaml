@@ -1,0 +1,52 @@
+<Control xmlns="https://spacestation14.io"
+         xmlns:pllax="clr-namespace:Content.Client.Parallax;assembly=Content.Client"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls;assembly=Content.Client"
+         xmlns:style="clr-namespace:Content.Client.Stylesheets;assembly=Content.Client"
+         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <pllax:ParallaxControl />
+    <LayoutContainer>
+        <BoxContainer Name="VBox" Orientation="Vertical" StyleIdentifier="mainMenuVBox">
+            <TextureRect Name="Logo" Stretch="KeepCentered" />
+            <Label Name="Subtext" Access="Public" Text="{Loc 'replay-menu-subtext'}"/>
+            <Button Name="LoadButton"
+                    Access="Public"
+                    Text="{Loc 'replay-menu-load'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu"
+                    Disabled="True"/>
+            <Button Name="SelectButton"
+                    Access="Public"
+                    Text="{Loc 'replay-menu-select'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu"/>
+            <Button Name="FolderButton"
+                    Access="Public"
+                    Text="{Loc 'replay-menu-open'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Control MinSize="0 2" />
+            <Button Name="OptionsButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-options-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Button Name="QuitButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-quit-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+        </BoxContainer>
+        <PanelContainer Name="InfoContainer"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Access="Public"
+                        Margin="16"
+                        MinSize="300 150">
+            <BoxContainer Orientation="Vertical" Align="Begin" Margin="8">
+                <Label Text="{Loc 'replay-info-title'}" Margin="4" HorizontalAlignment="Center"/>
+                <controls:HLine Color="{x:Static style:StyleNano.NanoGold}" Thickness="4"/>
+                <RichTextLabel Access="Public" Name="Info"/>
+            </BoxContainer>
+        </PanelContainer>
+    </LayoutContainer>
+</Control>

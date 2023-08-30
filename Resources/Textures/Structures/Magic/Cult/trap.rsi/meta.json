@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Citadel-Station-13/Citadel-Station-13/commit/95db5084abc411e77b5d994b473f4456ac72139a",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "trap"
+    }
+  ]
+}

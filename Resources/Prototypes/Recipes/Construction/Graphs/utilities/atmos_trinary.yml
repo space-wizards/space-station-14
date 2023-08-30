@@ -1,0 +1,119 @@
+- type: constructionGraph
+  id: GasTrinary
+  start: start
+  graph:
+  - node: start
+    edges:
+    # Filter
+    - to: filter
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: filterflipped
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    # Mixer
+    - to: mixer
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: mixerflipped
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+    - to: pneumaticvalve
+      steps:
+      - material: Steel
+        amount: 2
+        doAfter: 1
+
+  # Filter
+  - node: filter
+    entity: GasFilter
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: filterflipped
+    entity: GasFilterFlipped
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  # Mixer
+  - node: mixer
+    entity: GasMixer
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: mixerflipped
+    entity: GasMixerFlipped
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1
+
+  - node: pneumaticvalve
+    entity: PressureControlledValve
+    edges:
+    - to: start
+      conditions:
+      - !type:EntityAnchored
+        anchored: false
+      completed:
+      - !type:SpawnPrototype
+        prototype: SheetSteel1
+        amount: 2
+      - !type:DeleteEntity
+      steps:
+      - tool: Welding
+        doAfter: 1

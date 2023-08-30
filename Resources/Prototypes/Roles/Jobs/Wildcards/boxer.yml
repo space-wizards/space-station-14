@@ -1,0 +1,25 @@
+- type: job
+  id: Boxer
+  name: job-name-boxer
+  description: job-description-boxer
+  playTimeTracker: JobBoxer
+  startingGear: BoxerGear
+  icon: "JobIconBoxer"
+  supervisors: job-supervisors-hop
+  access:
+  - Service
+  - Maintenance
+
+- type: startingGear
+  id: BoxerGear
+  equipment:
+    jumpsuit: UniformShortsRed
+    back: ClothingBackpackFilled
+    id: BoxerPDA
+    ears: ClothingHeadsetService
+    gloves: ClothingHandsGlovesBoxingRed
+    shoes: ClothingShoesColorRed
+    belt: ClothingBeltChampion
+  innerclothingskirt: UniformShortsRedWithTop
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

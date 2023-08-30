@@ -1,0 +1,26 @@
+name: RSI Validator
+
+on:
+  push:
+    branches: [ staging, trying ]
+  merge_group:
+  pull_request:
+    paths:
+      - '**.rsi/**'
+
+jobs:
+  validate_rsis:
+    name: Validate RSIs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3.6.0
+      - name: Setup Submodule
+        run: git submodule update --init
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+      - name: Install Python dependencies
+        run: |
+          pip3 install --ignore-installed --user pillow jsonschema
+      - name: Validate RSIs
+        run: |
+          python3 RobustToolbox/Schemas/validate_rsis.py Resources/

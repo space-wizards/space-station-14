@@ -1,0 +1,78 @@
+- type: entity
+  name: Civilian
+  parent: BaseMobHuman
+  id: MobCivilian
+  description: A miserable pile of secrets.
+  components:
+  - type: InputMover
+  - type: MobMover
+  - type: Loadout
+    prototypes: [PassengerGear]
+  - type: NpcFactionMember
+    factions:
+    - NanoTrasen
+
+- type: entity
+  name: Salvager
+  parent: BaseMobHuman
+  id: MobSalvager
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Loadout
+      prototypes:
+        - SalvageSpecialistGear
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHumanoidHostileCompound
+
+- type: entity
+  name: Spirate
+  parent: BaseMobHuman
+  id: MobSpirate
+  description: Yarr!
+  components:
+  - type: NpcFactionMember
+    factions:
+      - Syndicate
+  - type: Loadout
+    prototypes:
+      - PirateGear
+  - type: InputMover
+  - type: MobMover
+  - type: HTN
+    rootTask:
+      task: SimpleHumanoidHostileCompound
+
+- type: entity
+  parent: BaseMobHuman
+  suffix: Dead
+  save: false # mobs are currently not saveable.
+  id: SalvageHumanCorpse
+  name: unidentified corpse
+  description: I think he's dead.
+  components:
+  - type: RandomHumanoidAppearance
+    randomizeName: false
+  - type: Damageable
+    damage:
+      types:
+        Bloodloss: 49
+        Asphyxiation: 76
+        Slash: 56
+        Blunt: 19
+  - type: Inventory
+    templateId: corpse
+
+- type: entity
+  parent: MobHuman
+  id: MobCluwne
+  name: person
+  description: A polymorphed unfortunate.
+  components:
+  - type: Cluwne
+  - type: Speech
+    speechVerb: Cluwne

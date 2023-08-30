@@ -1,0 +1,43 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/bfc9c6ba8126ee8c41564d68c4bfb9ce37faa8f8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "geiger_base"
+    },
+    {
+      "name": "geiger_on_idle"
+    },
+    {
+      "name": "geiger_on_low"
+    },
+    {
+      "name": "geiger_on_med"
+    },
+    {
+      "name": "geiger_on_high"
+    },
+    {
+      "name": "geiger_on_ext",
+      "delays": [
+        [
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    }
+  ]
+}

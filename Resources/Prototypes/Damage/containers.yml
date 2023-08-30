@@ -1,0 +1,33 @@
+- type: damageContainer
+  id: Biological
+  supportedGroups:
+    - Brute
+    - Burn
+    - Toxin
+    - Airloss
+    - Genetic
+
+- type: damageContainer
+  id: Inorganic
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+    - Shock
+    - Structural # this probably should be in separate container
+
+- type: damageContainer
+  id: Shield
+  supportedGroups:
+    - Brute
+  supportedTypes:
+    - Heat
+
+- type: damageContainer
+  id: Box
+  supportedGroups:
+    - Brute
+    - Burn
+    - Toxin
+  supportedTypes:
+    - Shock

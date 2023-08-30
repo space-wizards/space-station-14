@@ -1,0 +1,14 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Fishfish458",
+    "size": {
+        "x": 550,
+        "y": 410
+    },
+    "states": [
+        {
+            "name": "backgammonBoard"
+        }
+    ]
+}

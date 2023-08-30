@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from vgstation at commit https://github.com/vgstation-coders/vgstation13/commit/a0fc71b279ceb41c8c5387b08e60d2cc4f15bef8",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "unwired",
+      "directions": 4
+    },
+    {
+      "name": "completed",
+      "directions": 4
+    },
+    {
+      "name": "wired",
+      "directions": 4
+    }
+  ]
+}

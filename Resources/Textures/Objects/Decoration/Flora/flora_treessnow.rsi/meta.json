@@ -1,0 +1,32 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/8aeb2678e0150dcb308f02304ec200cef235e62c",
+    "size": {
+        "x": 64,
+        "y": 64
+    },
+    "states": [
+        {
+            "name": "treesnow01"
+        },
+        {
+            "name": "treesnow02"
+        },
+        {
+            "name": "treesnow03"
+        },
+        {
+            "name": "treestump"
+        },
+        {
+            "name": "treesnow04"
+        },
+        {
+            "name": "treesnow05"
+        },
+        {
+            "name": "treesnow06"
+        }
+    ]
+}

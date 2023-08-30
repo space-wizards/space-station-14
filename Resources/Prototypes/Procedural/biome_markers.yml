@@ -1,0 +1,33 @@
+- type: biomeMarkerLayer
+  id: Lizards
+  proto: MobLizard
+  groupCount: 5
+
+- type: biomeMarkerLayer
+  id: WatchersLavaland
+  proto: MobWatcherLavaland
+  groupCount: 3
+
+- type: biomeMarkerLayer
+  id: WatchersIcewing
+  proto: MobWatcherIcewing
+  groupCount: 3
+
+- type: biomeMarkerLayer
+  id: WatchersMagmawing
+  proto: MobWatcherMagmawing
+  groupCount: 3
+
+# TODO: Needs to be more robust
+- type: biomeMarkerLayer
+  id: Xenos
+  proto: MobXeno
+
+- type: biomeMarkerLayer
+  id: Carps
+  proto: MobCarpDungeon
+
+
+#- type: biomeMarkerLayer
+#  id: Experiment
+#  proto: DungeonMarkerExperiment

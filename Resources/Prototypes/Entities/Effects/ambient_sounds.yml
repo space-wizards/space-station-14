@@ -1,0 +1,12 @@
+- type: entity
+  id: AmbientSoundSourceFlies
+  noSpawn: true
+  components:
+  - type: AmbientSound
+    volume: -5
+    range: 3
+    sound:
+      path: /Audio/Ambience/Temporary/flies.ogg
+  - type: Tag
+    tags:
+    - HideContextMenu

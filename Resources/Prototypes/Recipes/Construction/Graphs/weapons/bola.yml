@@ -1,0 +1,17 @@
+- type: constructionGraph
+  id: Bola
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bola
+          steps:
+            - material: Cable
+              amount: 5
+              doAfter: 2
+            - material: Steel
+              amount: 6
+              doAfter: 2
+
+    - node: bola
+      entity: Bola

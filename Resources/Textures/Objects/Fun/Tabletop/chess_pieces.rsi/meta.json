@@ -1,0 +1,47 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/3edffc96061f135b836bc353ee29ad9ab220fa54",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "w_pawn"
+        },
+        {
+            "name": "w_rook"
+        },
+        {
+            "name": "w_knight"
+        },
+        {
+            "name": "w_bishop"
+        },
+        {
+            "name": "w_king"
+        },
+        {
+            "name": "w_queen"
+        },
+        {
+            "name": "b_pawn"
+        },
+        {
+            "name": "b_rook"
+        },
+        {
+            "name": "b_knight"
+        },
+        {
+            "name": "b_bishop"
+        },
+        {
+            "name": "b_king"
+        },
+        {
+            "name": "b_queen"
+        }
+    ]
+}

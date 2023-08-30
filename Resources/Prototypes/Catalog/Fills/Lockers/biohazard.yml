@@ -1,0 +1,49 @@
+ - type: entity
+   id: ClosetL3Filled
+   suffix: Filled, Generic
+   parent: ClosetL3
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingOuterBioGeneral
+       - id: ClothingHeadHatHoodBioGeneral
+
+ - type: entity
+   id: ClosetL3VirologyFilled
+   suffix: Filled, Virology
+   parent: ClosetL3Virology
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingOuterBioVirology
+       - id: ClothingHeadHatHoodBioVirology
+
+ - type: entity
+   id: ClosetL3SecurityFilled
+   suffix: Filled, Security
+   parent: ClosetL3Security
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingOuterBioSecurity
+       - id: ClothingHeadHatHoodBioSecurity
+
+ - type: entity
+   id: ClosetL3JanitorFilled
+   suffix: Filled, Janitor
+   parent: ClosetL3Janitor
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingOuterBioJanitor
+       - id: ClothingHeadHatHoodBioJanitor
+
+ - type: entity
+   id: ClosetL3ScienceFilled
+   suffix: Filled, Science
+   parent: ClosetL3Virology
+   components:
+   - type: StorageFill
+     contents:
+       - id: ClothingOuterBioScientist
+       - id: ClothingHeadHatHoodBioScientist

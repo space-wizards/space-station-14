@@ -1,0 +1,32 @@
+﻿- type: entity
+  id: RandomArtifactSpawner
+  name: random artifact spawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: red
+        - sprite: Objects/Specific/Xenoarchaeology/xeno_artifacts.rsi
+          state: ano01
+    - type: RandomSpawner
+      prototypes:
+        - SimpleXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - MediumXenoArtifact
+        - ComplexXenoArtifact
+        - ComplexXenoArtifact
+        - ComplexXenoArtifact
+        - SimpleXenoArtifactItem
+        - MediumXenoArtifactItem
+        - ComplexXenoArtifactItem
+      chance: 1
+
+- type: entity
+  id: RandomArtifactSpawner20
+  name: random artifact spawner [20]
+  parent: RandomArtifactSpawner
+  components:
+    - type: RandomSpawner
+      chance: 0.2

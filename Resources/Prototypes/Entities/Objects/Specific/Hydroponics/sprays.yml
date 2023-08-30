@@ -1,0 +1,76 @@
+- type: entity
+  name: Plant-B-Gone
+  id: PlantBGoneSpray
+  parent: SprayBottle
+  description: Kills those pesky weeds!
+  suffix: "Filled"
+  components:
+  - type: Tag
+    tags:
+    - PlantBGone
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    state: plantbgone
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 100
+        reagents:
+        - ReagentId: PlantBGone
+          Quantity: 100
+  - type: DrainableSolution
+    solution: spray
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    heldPrefix: plantbgone
+
+- type: entity
+  name: weed spray
+  id: WeedSpray
+  parent: SprayBottle
+  description: It's a toxic mixture, in spray form, to kill small weeds.
+  suffix: "Filled"
+  components:
+  - type: Sprite
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+    state: weedspray
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
+        - ReagentId: WeedKiller
+          Quantity: 50
+  - type: DrainableSolution
+    solution: spray
+  - type: Spillable
+    solution: spray
+  - type: ItemCooldown
+  - type: Tag
+    tags:
+    - Spray
+  - type: Spray
+    transferAmount: 1
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi
+
+- type: entity
+  name: pest spray
+  id: PestSpray
+  parent: WeedSpray
+  description: It's some pest eliminator spray! Do not inhale!
+  suffix: "Filled"
+  components:
+  - type: Sprite
+    state: pestspray
+  - type: SolutionContainerManager
+    solutions:
+      spray:
+        maxVol: 50
+        reagents:
+        - ReagentId: PestKiller
+          Quantity: 50
+  - type: DrainableSolution
+    solution: spray
+  - type: Item
+    sprite: Objects/Tools/Hydroponics/sprays.rsi

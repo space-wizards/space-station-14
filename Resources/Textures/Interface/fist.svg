@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="19"
+   height="33"
+   viewBox="0 0 19 33"
+   fill="none"
+   version="1.1"
+   id="svg876"
+   sodipodi:docname="fist.svg"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\ss14\space-station-14\Resources\Textures\Interface\fist.svg.96dpi.png"
+   inkscape:export-xdpi="95.962189"
+   inkscape:export-ydpi="95.962189">
+  <metadata
+     id="metadata882">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs880" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     id="namedview878"
+     showgrid="false"
+     inkscape:zoom="26.969697"
+     inkscape:cx="5.3842697"
+     inkscape:cy="16.5"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg876"
+     inkscape:pagecheckerboard="true" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M11.25 14.125V16.9375H9.375V14.125C9.375 11.5376 7.2749 9.4375 4.6875 9.4375V7.5625H6.5625C8.11865 7.5625 9.375 6.3064 9.375 4.75V3.8125H0V9.86865C0 13.3188 1.36865 16.675 3.75 19.1499C3.75 19.1499 3.75 23.9961 3.75 26.0236C3.75 28.2794 3.69224 28.3018 5.52217 30.287C7.3521 32.2722 10.727 32 10.727 32C10.727 32 13.6666 31.6559 15.0396 30.287C16.4126 28.918 16.875 26.0236 16.875 26.0236V19.0376L17.3438 18.1001C18.2625 16.2625 18.75 14.2 18.75 12.1375V9.4375H9.26245C10.4812 10.6187 11.25 12.2876 11.25 14.125Z"
+     fill="#789B8C"
+     id="path866"
+     style="fill:#feffff;fill-opacity:1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M15.9375 1.9375H18.75V7.5625H15.9375V1.9375Z"
+     fill="#789B8C"
+     id="path868"
+     style="fill:#feffff;fill-opacity:1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M11.25 0H14.0625V7.5625H11.25V0Z"
+     fill="#789B8C"
+     id="path870"
+     style="fill:#feffff;fill-opacity:1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M6.5625 0H9.375V1.9375H6.5625V0Z"
+     fill="#789B8C"
+     id="path872"
+     style="fill:#feffff;fill-opacity:1" />
+  <path
+     fill-rule="evenodd"
+     clip-rule="evenodd"
+     d="M1.875 0H4.6875V1.9375H1.875V0Z"
+     fill="#789B8C"
+     id="path874"
+     style="fill:#feffff;fill-opacity:1" />
+</svg>

@@ -1,0 +1,15 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'ghost-target-window-title'}"
+            MinSize="450 450"
+            SetSize="450 450">
+    <ScrollContainer VerticalExpand="True"
+                     HorizontalExpand="True"
+					 HScrollEnabled="False">
+        <BoxContainer Name="ButtonContainer"
+                      Orientation="Vertical"
+                      VerticalExpand="True"
+                      SeparationOverride="5">
+            <!-- Target buttons get added here by code -->
+        </BoxContainer>
+    </ScrollContainer>
+</DefaultWindow>

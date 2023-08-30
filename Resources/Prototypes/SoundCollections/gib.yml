@@ -1,0 +1,12 @@
+- type: soundCollection
+  id: gib
+  files:
+  - /Audio/Effects/gib1.ogg
+  - /Audio/Effects/gib2.ogg
+  - /Audio/Effects/gib3.ogg
+
+- type: soundCollection
+  id: blood
+  files:
+  - /Audio/Effects/Fluids/blood1.ogg
+  - /Audio/Effects/Fluids/blood2.ogg

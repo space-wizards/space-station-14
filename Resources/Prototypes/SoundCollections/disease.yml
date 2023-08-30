@@ -1,0 +1,64 @@
+- type: soundCollection
+  id: MaleSneezes
+  files:
+    - /Audio/Voice/Human/male_sneeze_1.ogg
+
+- type: soundCollection
+  id: FemaleSneezes
+  files:
+    - /Audio/Voice/Human/female_sneeze_1.ogg
+
+- type: soundCollection
+  id: MaleCoughs
+  files:
+  - /Audio/Voice/Human/male_cough_1.ogg
+  - /Audio/Voice/Human/male_cough_2.ogg
+
+- type: soundCollection
+  id: FemaleCoughs
+  files:
+  - /Audio/Voice/Human/female_cough_1.ogg
+  - /Audio/Voice/Human/female_cough_2.ogg
+
+- type: soundCollection
+  id: CatMeows
+  files:
+  - /Audio/Animals/cat_meow.ogg
+
+- type: soundCollection
+  id: CatHisses
+  files:
+  - /Audio/Animals/cat_hiss.ogg
+
+- type: soundCollection
+  id: MonkeyScreeches
+  files:
+  - /Audio/Effects/Diseases/monkey1.ogg
+  - /Audio/Effects/Diseases/monkey2.ogg
+
+- type: soundCollection
+  id: RobotBeeps
+  files:
+  - /Audio/Effects/Diseases/beepboop.ogg
+
+- type: soundCollection
+  id: MaleYawn
+  files:
+  - /Audio/Voice/Human/male_yawn_1.ogg
+
+- type: soundCollection
+  id: FemaleYawn
+  files:
+  - /Audio/Voice/Human/female_yawn_1.ogg
+
+- type: soundCollection
+  id: Snores
+  files:
+  - /Audio/Voice/Human/snore1.ogg
+  - /Audio/Voice/Human/snore2.ogg
+  - /Audio/Voice/Human/snore3.ogg
+
+- type: soundCollection
+  id: Honks
+  files:
+  - /Audio/Items/bikehorn.ogg

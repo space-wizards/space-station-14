@@ -1,0 +1,13 @@
+<controls:FancyWindow xmlns="https://spacestation14.io"
+                xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls"
+                xmlns:networkConfigurator="clr-namespace:Content.Client.NetworkConfigurator"
+                Title="{Loc 'network-configurator-title-saved-devices'}" MinSize="220 400">
+    <BoxContainer Orientation="Vertical" VerticalExpand="True">
+        <networkConfigurator:NetworkConfiguratorDeviceList Name="DeviceList" />
+        <BoxContainer Orientation="Horizontal" Margin="8 8 8 8">
+            <Label Name="DeviceCountLabel" Margin="16 0 0 0" MaxWidth="64" />
+            <Control HorizontalExpand="True" />
+            <Button Name="ClearButton" Access="Public" Text="{Loc 'network-configurator-ui-clear-button'}" />
+        </BoxContainer>
+    </BoxContainer>
+</controls:FancyWindow>

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/a5de76df72587ae5f367d72523777530d9b1a028",
+  "states": [
+    {
+      "name": "full"
+    },
+    {
+      "name": "blood"
+    }
+  ]
+}

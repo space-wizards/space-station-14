@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="svg4593"
+   version="1.1"
+   viewBox="0 0 7.9563375 7.1438789"
+   height="7.1438789mm"
+   width="7.9563375mm"
+   sodipodi:docname="hamburger.svg"
+   inkscape:export-filename="C:\ss14\space-station-14\Resources\Textures\Interface\hamburger.svg.96dpi.png"
+   inkscape:export-xdpi="115.20007"
+   inkscape:export-ydpi="115.20007"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="2560"
+     inkscape:window-height="1377"
+     id="namedview9"
+     showgrid="false"
+     inkscape:pagecheckerboard="true"
+     inkscape:zoom="32"
+     inkscape:cx="14.541508"
+     inkscape:cy="18.798475"
+     inkscape:window-x="1912"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4593" />
+  <defs
+     id="defs4587" />
+  <metadata
+     id="metadata4590">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="translate(-97.319452,-120.31497)"
+     id="layer1">
+    <path
+       id="path4"
+       d="m 97.990331,120.97649 h 6.614579"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1" />
+    <path
+       id="path6"
+       d="m 97.990331,123.8869 h 6.614579"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1" />
+    <path
+       id="path8"
+       d="m 97.990331,126.79732 h 6.614579"
+       style="stroke:#ffffff;stroke-width:1.32291663;stroke-linecap:round;stroke-opacity:1" />
+  </g>
+</svg>

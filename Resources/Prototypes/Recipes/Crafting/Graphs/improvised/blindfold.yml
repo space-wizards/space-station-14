@@ -1,0 +1,13 @@
+- type: constructionGraph
+  id: Blindfold
+  start: start
+  graph:
+    - node: start
+      edges:
+      - to: blindfold
+        steps:
+        - material: Cloth
+          amount: 3
+          doAfter: 10
+    - node: blindfold
+      entity: ClothingEyesBlindfold

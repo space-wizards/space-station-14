@@ -1,0 +1,46 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:pllax="clr-namespace:Content.Client.Parallax"
+         xmlns:clog="clr-namespace:Content.Client.Changelog">
+    <pllax:ParallaxControl />
+    <LayoutContainer>
+        <BoxContainer Name="VBox"
+                      Orientation="Vertical"
+                      StyleIdentifier="mainMenuVBox">
+            <TextureRect Name="Logo"
+                         Stretch="KeepCentered" />
+            <BoxContainer Orientation="Horizontal"
+                          SeparationOverride="4">
+                <Label Text="{Loc 'main-menu-username-label'}" />
+                <LineEdit Name="UsernameBox"
+                          Access="Public"
+                          PlaceHolder="{Loc 'main-menu-username-text'}"
+                          HorizontalExpand="True" />
+            </BoxContainer>
+            <LineEdit Name="AddressBox"
+                      Access="Public"
+                      Text="localhost"
+                      PlaceHolder="server address:port"
+                      HorizontalExpand="True" />
+            <Button Name="DirectConnectButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-direct-connect-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Control MinSize="0 2" />
+            <Button Name="OptionsButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-options-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <Button Name="QuitButton"
+                    Access="Public"
+                    Text="{Loc 'main-menu-quit-button'}"
+                    TextAlign="Center"
+                    StyleIdentifier="mainMenu" />
+            <clog:ChangelogButton
+                Name="ChangelogButton"
+                Access="Public"/>
+        </BoxContainer>
+        <Label Name="VersionLabel" Text="v0.1" />
+    </LayoutContainer>
+</Control>

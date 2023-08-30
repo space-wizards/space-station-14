@@ -1,0 +1,56 @@
+{
+    "version": 1,
+    "size": { "x": 32, "y": 32 },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Discord PJB#3005",
+    "states": [
+        {
+            "name": "female_full",
+            "directions": 4
+        },
+        {
+            "name": "female_none",
+            "directions": 1
+        },
+        {
+            "name": "female_top",
+            "directions": 4
+        },
+        {
+            "name": "male_full",
+            "directions": 4
+        },
+        {
+            "name": "male_none",
+            "directions": 1
+        },
+        {
+            "name": "male_top",
+            "directions": 4
+        },
+        {
+            "name": "unisex_full",
+            "directions": 4
+        },
+        {
+            "name": "unisex_none",
+            "directions": 1
+        },
+        {
+            "name": "unisex_top",
+            "directions": 4
+        },
+        {
+            "name": "full",
+            "directions": 4
+        },
+        {
+            "name": "none",
+            "directions": 1
+        },
+        {
+            "name": "top",
+            "directions": 4
+        }
+    ]
+}

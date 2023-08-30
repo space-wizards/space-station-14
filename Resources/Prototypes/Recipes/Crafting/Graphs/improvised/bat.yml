@@ -1,0 +1,13 @@
+﻿- type: constructionGraph
+  id: WoodenBat
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: bat
+          steps:
+            - material: WoodPlank
+              amount: 5
+              doAfter: 4
+    - node: bat
+      entity: BaseBallBat

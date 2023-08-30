@@ -1,0 +1,7 @@
+- type: soundCollection
+  id: Punch
+  files:
+    - /Audio/Weapons/punch1.ogg
+    - /Audio/Weapons/punch2.ogg
+    - /Audio/Weapons/punch3.ogg
+    - /Audio/Weapons/punch4.ogg

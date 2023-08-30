@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/53d1f1477d22a11a99c6c6924977cd431075761b",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "armor",
+      "directions": 4
+    },
+    {
+      "name": "cardborg",
+      "directions": 4
+    },
+    {
+      "name": "deathsquad",
+      "directions": 4
+    },
+    {
+      "name": "fire_extinguisher0",
+      "directions": 4
+    },
+    {
+      "name": "fire_extinguisher1",
+      "directions": 4
+    },
+    {
+      "name": "ian",
+      "directions": 4
+    },
+    {
+      "name": "oxygen",
+      "directions": 4
+    },
+    {
+      "name": "petcollar",
+      "directions": 4
+    },
+      {
+          "name": "walkietalkie",
+          "directions": 4
+      }
+  ]
+}

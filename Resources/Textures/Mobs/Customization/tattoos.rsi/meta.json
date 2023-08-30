@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "https://github.com/Skyrat-SS13/Skyrat-tg/tree/40e3cdbb15b8bc0d5ef2fb46133adf805bda5297/modular_skyrat/master_files/icons/mob/body_markings/tattoo_markings.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "tattoo_hive_chest",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_nightling",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_campbell_r_arm",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_campbell_l_arm",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_campbell_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_campbell_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_silverburgh_r_leg",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_silverburgh_l_leg",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_eye_r",
+      "directions": 4
+    },
+    {
+      "name": "tattoo_eye_l",
+      "directions": 4
+    }
+  ]
+}

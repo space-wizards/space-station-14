@@ -1,0 +1,7 @@
+- type: advertisementsPack
+  id: SecDrobeAds
+  advertisements:
+    - advertisement-secdrobe-1
+    - advertisement-secdrobe-2
+    - advertisement-secdrobe-3
+    - advertisement-secdrobe-4

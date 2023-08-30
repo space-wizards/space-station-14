@@ -1,0 +1,86 @@
+﻿# Entities specifically for testing click detection with ClickableComponent.
+#
+# Each entity has a bounding box AND texture equivalent.
+# Note that bounding box versions still have dots on the outside or center to make it possible to... see them.
+# These dots' texture detection should not interfere with the actual bounding box being tested.
+
+- type: entity
+  noSpawn: true
+  id: ClickTestBase
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    noRot: false
+    sprite: Effects/clicktest.rsi
+
+
+- type: entity
+  id: ClickTestRotatingCornerVisible
+  name: ClickTestRotatingCornerVisible
+  parent: ClickTestBase
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    state: rotating_corner
+
+- type: entity
+  id: ClickTestRotatingCornerVisibleNoRot
+  name: ClickTestRotatingCornerVisibleNoRot
+  parent: ClickTestRotatingCornerVisible
+  components:
+  - type: Sprite
+    noRot: true
+
+- type: entity
+  id: ClickTestRotatingCornerInvisible
+  name: ClickTestRotatingCornerInvisible
+  parent: ClickTestBase
+  components:
+  - type: Clickable
+    bounds:
+      south: "0.125,0.125,0.375,0.375"
+      north: "-0.375,-0.375,-0.125,-0.125"
+      east: "-0.375,0.125,-0.125,0.375"
+      west: "0.125,-0.375,0.375,-0.125"
+
+  - type: InteractionOutline
+  - type: Sprite
+    state: invis_base
+
+- type: entity
+  id: ClickTestRotatingCornerInvisibleNoRot
+  name: ClickTestRotatingCornerInvisibleNoRot
+  parent: ClickTestRotatingCornerInvisible
+  components:
+    - type: Sprite
+      noRot: true
+
+
+- type: entity
+  id: ClickTestFixedCornerVisible
+  name: ClickTestFixedCornerVisible
+  parent: ClickTestBase
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    state: fixed_corner
+
+- type: entity
+  id: ClickTestFixedCornerInvisible
+  name: ClickTestFixedCornerInvisible
+  parent: ClickTestBase
+  components:
+  - type: Clickable
+    bounds:
+      all: "0.125,0.125,0.375,0.375"
+
+  - type: InteractionOutline
+  - type: Sprite
+    state: invis_base

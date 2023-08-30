@@ -1,0 +1,39 @@
+- type: constructionGraph
+  id: AirSensor
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: assembly
+          steps:
+           - material: Steel
+             amount: 2
+             doAfter: 1
+    - node: assembly
+      entity: AirSensorAssembly
+      edges:
+        - to: start
+          conditions:
+            - !type:EntityAnchored
+              anchored: false
+          completed:
+            - !type:SpawnPrototype
+              prototype: SheetSteel1
+              amount: 2
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+        - to: sensor
+          conditions:
+            - !type:EntityAnchored {}
+          steps:
+            - tool: Welding
+              doAfter: 5
+    - node: sensor
+      entity: AirSensor
+      edges:
+        - to: assembly
+          steps:
+            - tool: Welding
+              doAfter: 5

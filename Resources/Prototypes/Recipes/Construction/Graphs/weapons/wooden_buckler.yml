@@ -1,0 +1,24 @@
+﻿- type: constructionGraph
+  id: WoodenBuckler
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: woodenBuckler
+          steps:
+            - tag: Handcuffs
+              icon:
+                sprite: Objects/Misc/cablecuffs.rsi
+                state: cuff
+                color: red
+              name: cuffs
+              doAfter: 2
+            - material: WoodPlank
+              amount: 20
+              doAfter: 2
+            - material: Steel
+              amount: 10
+              doAfter: 2
+
+    - node: woodenBuckler
+      entity: WoodenBuckler

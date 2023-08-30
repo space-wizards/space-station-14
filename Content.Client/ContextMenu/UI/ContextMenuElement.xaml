@@ -1,0 +1,35 @@
+<ContainerButton
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="clr-namespace:Content.Client.ContextMenu.UI"
+    MinHeight="{x:Static ui:ContextMenuElement.ElementHeight}">
+    <BoxContainer Orientation="Horizontal">
+        <SpriteView
+            Name="Icon"
+            SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
+            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"
+            OverrideDirection="South">
+            <Label
+                Name="IconLabel"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                StyleClasses="contextMenuIconLabel"
+                Visible="false"/>
+        </SpriteView>
+        <RichTextLabel
+            Name="Label"
+            MaxWidth="300"
+            HorizontalExpand="True"
+            VerticalAlignment="Center"
+            Margin ="4 0 4 0"/>
+        <TextureRect
+            Name="ExpansionIndicator"
+            HorizontalAlignment="Right"
+            Stretch="KeepCentered"
+            StyleClasses="contextMenuExpansionTexture"
+            TextureScale="0.5 0.5"
+            SetWidth="{x:Static ui:ContextMenuElement.ElementHeight}"
+            SetHeight="{x:Static ui:ContextMenuElement.ElementHeight}"
+            Visible ="false"/>
+    </BoxContainer>
+</ContainerButton>

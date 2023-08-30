@@ -1,0 +1,197 @@
+- type: entity
+  id: SolarPanelBasePhysSprite
+  noSpawn: true
+  name: solar panel
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.1,0.45,0.1"
+        density: 550
+        mask:
+        - MachineMask
+        layer:
+        - MidImpassable, LowImpassable, BulletImpassable
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: normal
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Anchorable
+  - type: Pullable
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
+
+- type: entity
+  id: SolarPanel
+  parent: SolarPanelBasePhysSprite
+  name: solar panel
+  description: A solar panel that generates power.
+  components:
+  - type: PowerSupplier
+    supplyRampTolerance: 500
+    supplyRampRate: 500
+  - type: SolarPanel
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:ChangeConstructionNodeBehavior
+        node: solarpanel_broken
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanel
+
+- type: entity
+  id: SolarPanelBroken
+  parent: SolarPanelBasePhysSprite
+  name: solar panel
+  description: A broken solar panel.
+  suffix: Broken
+  components:
+  - type: Sprite
+    state: broken
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          ShardGlass:
+            min: 1
+            max: 2
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: SolarPanel
+    node: solarpanel_broken
+
+- type: entity
+  id: SolarAssembly
+  name: solar assembly
+  description: A solar assembly. Anchor to a wire to start building a solar panel.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeCircle
+          radius: 0.25
+        density: 375
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_assembly
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Anchorable
+  - type: Pullable
+  - type: Construction
+    graph: SolarPanel
+    node: solarassembly
+
+- type: entity
+  id: SolarTracker
+  name: solar tracker
+  description: A solar tracker. Tracks the nearest star.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        density: 100
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Sprite
+    sprite: Structures/Power/Generation/solar_panel.rsi
+    state: solar_tracker
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Anchorable
+  - type: Pullable
+  - type: Construction
+    graph: SolarPanel
+    node: solartracker

@@ -1,0 +1,15 @@
+- type: stack
+  id: Steel
+  name: steel
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: steel }
+  spawn: SheetSteel1
+  maxCount: 30
+  itemSize: 1
+
+- type: stack
+  id: Plasteel
+  name: plasteel
+  icon: { sprite: /Textures/Objects/Materials/Sheets/metal.rsi, state: plasteel }
+  spawn: SheetPlasteel1
+  maxCount: 30
+  itemSize: 1

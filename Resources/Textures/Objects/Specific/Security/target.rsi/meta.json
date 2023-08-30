@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/blob/a0f470046f01c2e8643d27e8dac8b9cb08b9a68d/icons/obj/objects.dmi",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "target_stake"
+    },
+    {
+      "name": "target_h"
+    },
+    {
+      "name": "target_s"
+    },
+    {
+      "name": "target_c"
+    },
+    {
+      "name": "target_f"
+    }
+  ]
+}

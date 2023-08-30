@@ -1,0 +1,9 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'research-client-server-selection-menu-title'}"
+            MinSize="300 300"
+            SetSize="300 300">
+    <ItemList Name="Servers"
+              SelectMode="Single">
+        <!-- Servers are added here by code -->
+    </ItemList>
+</DefaultWindow>

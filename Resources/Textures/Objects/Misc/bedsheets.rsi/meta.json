@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/0ec86b44b11f5e2f45137d9f6c851b8942a26aa3, sheetbrigmedic sprited by RudeyCoolLeet#3875",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "random_bedsheet"
+    },
+    {
+      "name": "sheetNT"
+    },
+    {
+      "name": "sheetUSA"
+    },
+    {
+      "name": "sheetblack"
+    },
+    {
+      "name": "sheetblue"
+    },
+    {
+      "name": "sheetbrown"
+    },
+    {
+      "name": "sheetcaptain"
+    },
+    {
+      "name": "sheetce"
+    },
+    {
+      "name": "sheetcentcom"
+    },
+    {
+      "name": "sheetclown"
+    },
+    {
+      "name": "sheetcmo"
+    },
+    {
+      "name": "sheetcosmos",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "sheetcult"
+    },
+    {
+      "name": "sheetgreen"
+    },
+    {
+      "name": "sheetgrey"
+    },
+    {
+      "name": "sheethop"
+    },
+    {
+      "name": "sheethos"
+    },
+    {
+      "name": "sheetian"
+    },
+    {
+      "name": "sheetmedical"
+    },
+    {
+      "name": "sheetmime"
+    },
+    {
+      "name": "sheetorange"
+    },
+    {
+      "name": "sheetpurple"
+    },
+    {
+      "name": "sheetqm"
+    },
+    {
+      "name": "sheetrainbow"
+    },
+    {
+      "name": "sheetrd"
+    },
+    {
+      "name": "sheetbrigmedic"
+    },
+    {
+      "name": "sheetred"
+    },
+    {
+      "name": "sheetsyndie"
+    },
+    {
+      "name": "sheetwhite"
+    },
+    {
+      "name": "sheetwiz"
+    },
+    {
+      "name": "sheetyellow"
+    }
+  ]
+}

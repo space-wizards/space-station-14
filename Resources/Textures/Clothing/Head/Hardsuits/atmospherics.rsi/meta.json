@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/4f6190e2895e09116663ef282d3ce1d8b35c032e",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "icon"
+    },
+    {
+      "name": "icon-unshaded"
+    },
+    {
+      "name": "icon-flash"
+    },
+    {
+      "name": "light-overlay"
+    },
+    {
+      "name": "equipped-head",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-light",
+      "directions": 4
+    },
+    {
+      "name": "equipped-head-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left-light",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-unshaded",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right-light",
+      "directions": 4
+    }
+  ]
+}

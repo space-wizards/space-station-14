@@ -1,0 +1,33 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'cargo-console-order-menu-title'}">
+    <BoxContainer Orientation="Vertical">
+        <GridContainer Columns="2">
+            <Label Text="{Loc 'cargo-console-order-menu-product-label'}" />
+            <Label Name="ProductName"
+                      Access="Public" />
+            <Label Text="{Loc 'cargo-console-order-menu-description-label'}" />
+            <RichTextLabel Name="Description"
+                        Access="Public"
+                        VerticalExpand="True"
+                        SetWidth="350"/>
+            <Label Text="{Loc 'cargo-console-order-menu-cost-label'}" />
+            <Label Name="PointCost"
+                      Access="Public" />
+            <Label Text="{Loc 'cargo-console-order-menu-requester-label'}" />
+            <LineEdit Name="Requester"
+                      Access="Public" />
+            <Label Text="{Loc 'cargo-console-order-menu-reason-label'}" />
+            <LineEdit Name="Reason"
+                      Access="Public" />
+            <Label Text="{Loc 'cargo-console-order-menu-amount-label'}" />
+            <SpinBox Name="Amount"
+                     Access="Public"
+                     HorizontalExpand="True"
+                     Value="1" />
+        </GridContainer>
+        <Button Name="SubmitButton"
+                Access="Public"
+                Text="{Loc 'cargo-console-order-menu-submit-button'}"
+                TextAlign="Center" />
+    </BoxContainer>
+</DefaultWindow>

@@ -1,0 +1,26 @@
+- type: entity
+  parent: BaseItem
+  id: ClusterBang
+  name: clusterbang
+  description: Can be used only with flashbangs. Explodes several times.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Grenades/clusterbang.rsi
+    state: base-0
+  - type: Appearance
+  - type: ClusterGrenadeVisuals
+    state: base
+  - type: ClusterGrenade
+  - type: ContainerContainer
+    containers:
+      cluster-flash: !type:Container
+
+- type: entity
+  parent: ClusterBang
+  id: ClusterBangFull
+  suffix: Full
+  components:
+  - type: Sprite
+    state: base-3
+  - type: ClusterGrenade
+    fillPrototype: GrenadeFlashBang

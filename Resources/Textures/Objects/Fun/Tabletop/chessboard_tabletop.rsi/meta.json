@@ -1,0 +1,14 @@
+﻿{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Stanbery Trask#5343, Visne",
+    "size": {
+        "x": 274,
+        "y": 274
+    },
+    "states": [
+        {
+            "name": "chessboard_tabletop"
+        }
+    ]
+}

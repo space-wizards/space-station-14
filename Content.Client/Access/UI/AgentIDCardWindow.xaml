@@ -1,0 +1,17 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Title="{Loc agent-id-menu-title}">
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinWidth="150">
+        <Label Name="CurrentName" Text="{Loc 'agent-id-card-current-name'}" />
+        <LineEdit Name="NameLineEdit" />
+        <Label Name="CurrentJob" Text="{Loc 'agent-id-card-current-job'}" />
+        <LineEdit Name="JobLineEdit" />
+        <BoxContainer Orientation="Horizontal">
+            <Label Text="{Loc 'agent-id-card-job-icon-label'}"/>
+            <Control HorizontalExpand="True" MinSize="50 0"/>
+            <GridContainer Name="IconGrid" Columns="10">
+                <!-- Job icon buttons are generated in the code -->
+            </GridContainer>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

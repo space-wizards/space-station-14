@@ -1,0 +1,41 @@
+- type: job
+  id: Clown
+  name: job-name-clown
+  description: job-description-clown
+  playTimeTracker: JobClown
+  startingGear: ClownGear
+  icon: "JobIconClown"
+  supervisors: job-supervisors-hop
+  access:
+  - Theatre
+  - Maintenance
+  special:
+  - !type:AddComponentSpecial
+    components:
+    - type: Clumsy
+      clumsyDamage:
+        types: #literally just picked semi random valus. i tested this once and tweaked it.
+          Blunt: 5
+          Piercing: 4
+        groups:
+          Burn: 3
+    - type: SleepEmitSound
+      snore: /Audio/Voice/Misc/silly_snore.ogg
+      interval: 10
+      chance: 1.0
+  - !type:AddImplantSpecial
+    implants: [ SadTromboneImplant ]
+
+- type: startingGear
+  id: ClownGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitClown
+    back: ClothingBackpackClownFilled
+    shoes: ClothingShoesClown
+    mask: ClothingMaskClown
+    pocket1: BikeHorn
+    pocket2: ClownRecorder
+    id: ClownPDA
+    ears: ClothingHeadsetService
+  satchel: ClothingBackpackSatchelClownFilled
+  duffelbag: ClothingBackpackDuffelClownFilled

@@ -1,0 +1,5 @@
+INSTALLED_HOOKS_VERSION
+DISABLE_SUBMODULE_AUTOUPDATE
+*.nuget*
+project.assets.json
+project.packagespec.json

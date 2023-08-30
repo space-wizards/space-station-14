@@ -1,0 +1,15 @@
+{
+   "copyright" : "Taken from https://github.com/tgstation/tgstation",
+   "license" : "CC-BY-SA-3.0",
+   "size" : {
+      "x" : 32,
+      "y" : 32
+   },
+   "states" : [
+      {
+         "directions" : 1,
+         "name" : "medibot"
+      }
+   ],
+   "version" : 1
+}

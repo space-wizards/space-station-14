@@ -1,0 +1,57 @@
+- type: entity
+  name: soil
+  id: hydroponicsSoil
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.45,-0.45,0.45,0.1"
+        density: 190
+        hard: false
+        mask:
+        - FullTileMask
+        layer:
+        - FullTileMask
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+  - type: Sprite
+    sprite: Structures/Hydroponics/misc.rsi
+    state: soil
+    noRot: true
+  - type: PlantHolder
+    drawWarnings: false
+  - type: SolutionContainerManager
+    solutions:
+      soil:
+        maxVol: 200
+  - type: RefillableSolution
+    solution: soil
+    maxRefill: 50
+  - type: Transform
+    anchored: true
+  - type: Reactive
+    reactions:
+    - reagents: [Water]
+      methods: [Touch, Ingestion, Injection]
+      effects:
+      - !type:AddToSolutionReaction
+        solution: soil
+  - type: Appearance
+  - type: PlantHolderVisuals

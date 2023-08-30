@@ -1,0 +1,179 @@
+﻿- type: reagent
+  id: BasePyrotechnic
+  group: Pyrotechnic
+  abstract: true
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+        - !type:FlammableReaction
+  plantMetabolism:
+    - !type:PlantAdjustWeeds
+      amount: -2
+    - !type:PlantAdjustHealth
+      amount: -2
+
+- type: reagent
+  id: Thermite
+  name: reagent-name-thermite
+  parent: BasePyrotechnic
+  desc: reagent-desc-thermite
+  physicalDesc: reagent-physical-desc-grainy
+  flavor: bitter
+  color: "#757245"
+  boilingPoint: 2977.0 # Aluminum oxide
+  meltingPoint: 2030.0
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 2
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
+
+- type: reagent
+  id: Napalm
+  name: reagent-name-napalm
+  parent: BasePyrotechnic
+  desc: reagent-desc-napalm
+  physicalDesc: reagent-physical-desc-soapy
+  flavor: bitter
+  color: "#FA00AF"
+  tileReactions:
+  - !type:FlammableTileReaction
+    temperatureMultiplier: 5
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.4
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5 # based off napalm being an irritant
+      - !type:FlammableReaction
+        multiplier: 0.4
+
+- type: reagent
+  id: Phlogiston
+  name: reagent-name-phlogiston
+  parent: BasePyrotechnic
+  desc: reagent-desc-phlogiston
+  physicalDesc: reagent-physical-desc-burning
+  flavor: bitter
+  color: "#D4872A"
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 3
+            Poison: 1
+      - !type:FlammableReaction
+        multiplier: 0.1
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:Ignite
+
+- type: reagent
+  id: ChlorineTrifluoride
+  name: reagent-name-chlorine-trifluoride
+  parent: BasePyrotechnic
+  desc: reagent-desc-chlorine-trifluoride
+  physicalDesc: reagent-physical-desc-blazing
+  flavor: bitter
+  color: "#FFC8C8"
+  tileReactions:
+  - !type:PryTileReaction
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Heat: 2
+            Poison: 1
+            Caustic: 0.5 # CLF3 is corrosive
+      - !type:FlammableReaction
+        multiplier: 0.2
+      - !type:AdjustTemperature
+        amount: 6000
+  reactiveEffects:
+    Flammable:
+      methods: [ Touch ]
+      effects:
+      - !type:FlammableReaction
+        multiplier: 0.3
+      - !type:Ignite
+      - !type:Emote
+        emote: Scream
+        probability: 0.2
+      - !type:PopupMessage
+        messages: [ "clf3-it-burns", "clf3-get-away" ]
+        visualType: MediumCaution
+        probability: 0.3
+        type: Local
+
+- type: reagent
+  id: FoamingAgent
+  name: reagent-name-foaming-agent
+  parent: BasePyrotechnic
+  desc: reagent-desc-foaming-agent
+  physicalDesc: reagent-physical-desc-foamy
+  flavor: bitter
+  color: "#215263"
+  boilingPoint: 418.0 # I went with ammonium lauryl sulfate as the basis for this
+  meltingPoint: 7.4 # I made this up
+
+- type: reagent
+  id: WeldingFuel
+  name: reagent-name-welding-fuel
+  parent: BasePyrotechnic
+  desc: reagent-desc-welding-fuel
+  physicalDesc: reagent-physical-desc-oily
+  slippery: true
+  flavor: bitter
+  flavorMinimum: 0.01
+  color: "#a76b1c"
+  recognizable: true
+  boilingPoint: -84.7 # Acetylene. Close enough.
+  meltingPoint: -80.7
+  tileReactions:
+  - !type:FlammableTileReaction {}
+  metabolisms:
+    Poison:
+      effects:
+      - !type:HealthChange
+        damage:
+          types:
+            Poison: 1
+      - !type:FlammableReaction
+        multiplier: 0.4
+
+- type: reagent
+  id: Fluorosurfactant
+  name: reagent-name-fluorosurfactant
+  parent: BasePyrotechnic
+  desc: reagent-desc-fluorosurfactant
+  physicalDesc: reagent-physical-desc-opaque
+  flavor: bitter
+  color: "#9e6b38"
+  boilingPoint: 190.0 # Perfluorooctanoic Acid.
+  meltingPoint: 45.0

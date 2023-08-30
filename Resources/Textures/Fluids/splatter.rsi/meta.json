@@ -1,0 +1,29 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-SA-3.0",
+    "copyright": "https://github.com/discordia-space/CEV-Eris/raw/aff0d780742ca3902d8b05f854c212c8cda32c4f/icons/effects/blood.dmi",
+    "states": [
+        {
+            "name": "splatter-0"
+        },
+        {
+            "name": "splatter-1"
+        },
+        {
+            "name": "splatter-2"
+        },
+        {
+            "name": "splatter-3"
+        },
+        {
+            "name": "splatter-4"
+        },
+        {
+            "name": "splatter-5"
+        }
+    ]
+}

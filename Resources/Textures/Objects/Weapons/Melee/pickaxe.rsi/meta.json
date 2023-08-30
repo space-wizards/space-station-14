@@ -1,0 +1,30 @@
+{
+    "version": 1,
+    "license": "CC-BY-SA-3.0",
+    "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/pull/29929/commits/8c0509a4725602d0be2e9a7b29b556a39fb5cca2, inhands created by EmoGarbage404 (github)",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "inhand-right",
+            "directions": 4
+        },
+        {
+            "name": "pickaxe"
+        },
+        {
+            "name": "wielded-inhand-left",
+            "directions": 4
+        },
+        {
+            "name": "wielded-inhand-right",
+            "directions": 4
+        }
+    ]
+}

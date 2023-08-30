@@ -1,0 +1,34 @@
+- type: soundCollection
+  id: BikeHorn
+  files:
+  - /Audio/Items/bikehorn.ogg
+
+- type: soundCollection
+  id: CluwneHorn
+  files:
+  - /Audio/Items/brokenbikehorn.ogg
+
+- type: soundCollection
+  id: BananiumHorn
+  files:
+  - /Audio/Items/airhorn.ogg
+
+- type: soundCollection
+  id: DeskBell
+  files:
+  - /Audio/Items/desk_bell_ring.ogg
+
+- type: soundCollection
+  id: BoxingBell
+  files:
+  - /Audio/Weapons/boxingbell.ogg
+
+- type: soundCollection
+  id: RubberHammer
+  files:
+  - /Audio/Weapons/rubberhammer.ogg
+
+- type: soundCollection
+  id: Parp
+  files:
+  - /Audio/Effects/Emotes/parp1.ogg

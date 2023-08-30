@@ -1,0 +1,39 @@
+<DefaultWindow xmlns="https://spacestation14.io"
+            MinSize="650 290">
+    <BoxContainer Orientation="Vertical">
+        <GridContainer Columns="2">
+            <GridContainer Columns="3" HorizontalExpand="True">
+                <Label Text="{Loc 'id-card-console-window-privileged-id'}" />
+                <Button Name="PrivilegedIdButton" Access="Public"/>
+                <Label Name="PrivilegedIdLabel" />
+
+                <Label Text="{Loc 'id-card-console-window-target-id'}" />
+                <Button Name="TargetIdButton" Access="Public"/>
+                <Label Name="TargetIdLabel" />
+            </GridContainer>
+            <BoxContainer Orientation="Vertical">
+                <Button Name="CrewManifestButton" Access="Public" Text="{Loc 'crew-manifest-button-label'}" />
+            </BoxContainer>
+        </GridContainer>
+        <Control MinSize="0 8" />
+        <GridContainer Columns="3" HSeparationOverride="4">
+            <Label Name="FullNameLabel" Text="{Loc 'id-card-console-window-full-name-label'}" />
+            <LineEdit Name="FullNameLineEdit" HorizontalExpand="True" />
+            <Button Name="FullNameSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+
+            <Label Name="JobTitleLabel" Text="{Loc 'id-card-console-window-job-title-label'}" />
+            <LineEdit Name="JobTitleLineEdit" HorizontalExpand="True" />
+            <Button Name="JobTitleSaveButton" Text="{Loc 'id-card-console-window-save-button'}" Disabled="True" />
+        </GridContainer>
+        <Control MinSize="0 8" />
+        <GridContainer Columns="2">
+            <Label Text="{Loc 'id-card-console-window-job-selection-label'}" />
+            <OptionButton Name="JobPresetOptionButton" />
+        </GridContainer>
+        <GridContainer Name="AccessLevelGrid" Columns="5" HorizontalAlignment="Center">
+
+            <!-- Access level buttons are added here by the C# code -->
+
+        </GridContainer>
+    </BoxContainer>
+</DefaultWindow>

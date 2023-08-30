@@ -1,0 +1,34 @@
+- type: entity
+  id: Fireplace
+  parent: BaseStructure
+  name: fireplace
+  description: A place that has fire. Cozy!
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/fireplace.rsi
+    layers:
+      - state: fireplace
+      - state: fireplace_fire4
+        shader: unshaded
+      - state: fireplace_glow
+        shader: unshaded
+  - type: AmbientSound
+    volume: -6
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/fireplace.ogg
+  - type: PointLight
+    radius: 3
+    energy: 3
+    color: "#FF6F00"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 200
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]

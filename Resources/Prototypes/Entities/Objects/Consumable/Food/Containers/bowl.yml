@@ -1,0 +1,84 @@
+# Bowls
+
+- type: entity
+  name: bowl
+  parent: ReagentContainerBase
+  id: FoodBowlBig
+  description: A simple bowl, used for soups and salads.
+  components:
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 50 # enough to make cheese in.
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl
+  - type: DamageOnLand
+    damage:
+      types:
+        Blunt: 5
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 5
+  - type: Drink
+    solution: food
+    isOpen: true
+  - type: DrawableSolution
+    solution: food
+  - type: Damageable
+    damageContainer: Inorganic
+  - type: SolutionTransfer
+    canChangeTransferAmount: true
+  - type: UserInterface
+    interfaces:
+      - key: enum.TransferAmountUiKey.Key
+        type: TransferAmountBoundUserInterface
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 5
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          collection: GlassBreak
+      - !type:SpillBehavior { }
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          FoodBowlBigTrash:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Tag
+    tags:
+    - Trash
+
+- type: entity
+  name: broken bowl
+  parent: BaseItem
+  id: FoodBowlBigTrash
+  description: A simple bowl, broken and useless.
+  components:
+  - type: Sprite
+    sprite: Objects/Consumable/Food/bowl.rsi
+    state: bowl-trash
+  - type: Tag
+    tags:
+    - Trash
+  - type: PhysicalComposition
+    materialComposition:
+      Glass: 50
+  - type: SpaceGarbage
+  - type: StaticPrice
+    price: 0
+
+- type: entity
+  name: bowl
+  parent: FoodBowlBig
+  id: FoodBowlFancy
+  description: A fancy bowl, used for SPECIAL soups and salads.
+  components:
+  - type: Sprite
+    state: bowl2

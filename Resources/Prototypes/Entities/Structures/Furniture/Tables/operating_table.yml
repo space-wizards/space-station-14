@@ -1,0 +1,13 @@
+- type: entity
+  id: OperatingTable
+  parent: Bed
+  name: operating table
+  description: Special medical table for surgery. This one just seems to be a useless prop, though.
+  components:
+  - type: Sprite
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: operating_table
+    noRot: true
+  - type: Icon
+    sprite: Structures/Furniture/Tables/optable.rsi
+    state: operating_table

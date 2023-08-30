@@ -1,0 +1,58 @@
+- type: AirlockGroup
+  id: Standard
+  iconPriority: 100
+  stylePaths:
+    basic:       Structures/Doors/Airlocks/Standard/basic.rsi
+    cargo:       Structures/Doors/Airlocks/Standard/cargo.rsi
+    command:     Structures/Doors/Airlocks/Standard/command.rsi
+    engineering: Structures/Doors/Airlocks/Standard/engineering.rsi
+    freezer:     Structures/Doors/Airlocks/Standard/freezer.rsi
+    maintenance: Structures/Doors/Airlocks/Standard/maint.rsi
+    medical:     Structures/Doors/Airlocks/Standard/medical.rsi
+    science:     Structures/Doors/Airlocks/Standard/science.rsi
+    security:    Structures/Doors/Airlocks/Standard/security.rsi
+    virology:    Structures/Doors/Airlocks/Standard/virology.rsi
+
+- type: AirlockGroup
+  id: Glass
+  iconPriority: 90
+  stylePaths:
+    basic:       Structures/Doors/Airlocks/Glass/basic.rsi
+    command:     Structures/Doors/Airlocks/Glass/command.rsi
+    science:     Structures/Doors/Airlocks/Glass/science.rsi
+    cargo:       Structures/Doors/Airlocks/Glass/cargo.rsi
+    engineering: Structures/Doors/Airlocks/Glass/engineering.rsi
+    maintenance: Structures/Doors/Airlocks/Glass/maint.rsi
+    medical:     Structures/Doors/Airlocks/Glass/medical.rsi
+    security:    Structures/Doors/Airlocks/Glass/security.rsi
+    virology:    Structures/Doors/Airlocks/Glass/virology.rsi
+
+- type: AirlockGroup
+  id: Windoor
+  iconPriority: 80
+  stylePaths:
+    basic:       Structures/Doors/Airlocks/Glass/glass.rsi
+
+- type: AirlockGroup
+  id: External
+  iconPriority: 70
+  stylePaths:
+    external:    Structures/Doors/Airlocks/Standard/external.rsi
+
+- type: AirlockGroup
+  id: ExternalGlass
+  iconPriority: 60
+  stylePaths:
+    external:    Structures/Doors/Airlocks/Glass/external.rsi
+
+- type: AirlockGroup
+  id: Shuttle
+  iconPriority: 50
+  stylePaths:
+    shuttle:     Structures/Doors/Airlocks/Standard/shuttle.rsi
+
+- type: AirlockGroup
+  id: ShuttleGlass
+  iconPriority: 40
+  stylePaths:
+    shuttle:     Structures/Doors/Airlocks/Glass/shuttle.rsi

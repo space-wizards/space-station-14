@@ -1,0 +1,21 @@
+//Creates a border on the edges of the screen of the specified color and of the specified size (no uniforms yet cause I'm lazy)
+
+const highp vec4 borderColor = vec4(230.0, 0.0, 0.0, 1.0);
+const highp float borderSize = 30.0; //Pixel size of border
+
+void fragment() {
+	highp vec2 pixelSize = vec2(1.0/SCREEN_PIXEL_SIZE.x, 1.0/SCREEN_PIXEL_SIZE.y);
+	highp float smallestLength = FRAGCOORD.x;
+	if(smallestLength > FRAGCOORD.y){
+		smallestLength = FRAGCOORD.y;
+	}
+	if(smallestLength > pixelSize.x-FRAGCOORD.x){
+		smallestLength = pixelSize.x-FRAGCOORD.x;
+	}
+	if(smallestLength > pixelSize.y-FRAGCOORD.y){
+		smallestLength = pixelSize.y-FRAGCOORD.y;
+	}
+	if(smallestLength <= borderSize){
+		COLOR = vec4(borderColor.r, borderColor.g, borderColor.b, abs((1.0-(smallestLength/borderSize))*(abs(sin(TIME))*0.8+0.2)));
+	}
+}

@@ -1,0 +1,56 @@
+- type: entity
+  id: RandomSnacks
+  name: random snack spawner
+  #suffix: ""
+  parent: MarkerBase
+  placement:
+    mode: AlignTileAny
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Objects/Consumable/Food/snacks.rsi
+        state: cheesiehonkers
+  - type: RandomSpawner
+  #small item
+    prototypes:
+      - DrinkColaBottleFull
+      - DrinkSpaceMountainWindBottleFull
+      - DrinkSpaceUpBottleFull
+      - DrinkWaterBottleFull
+      - DrinkColaCan
+      - DrinkIcedTeaCan
+      - DrinkLemonLimeCan
+      - DrinkGrapeCan
+      - DrinkRootBeerCan
+      - DrinkSodaWaterCan
+      - DrinkSpaceMountainWindCan
+      - DrinkSpaceUpCan
+      - DrinkStarkistCan
+      - DrinkTonicWaterCan
+      - DrinkFourteenLokoCan
+      - DrinkChangelingStingCan
+      - DrinkDrGibbCan
+      - DrinkEnergyDrinkCan
+      - DrinkHotCoco
+      - DrinkHotCoffee
+      - DrinkTeacup
+      - DrinkLean
+      - DrinkWaterCup
+      - FoodSnackBoritos
+      - FoodSnackCheesie
+      - FoodSnackChips
+      - FoodSnackChocolate
+      - FoodSnackEnergy
+      - FoodSnackChocolateBar
+      - FoodSnackPopcorn
+      - FoodSnackRaisins
+      - FoodSnackSus
+      - FoodSnackSyndi
+      - FoodSnackChowMein
+      - FoodSnackDanDanNoodles
+      - FoodSnackCookieFortune
+      - FoodSnackNutribrick
+      - FoodSnackMREBrownie
+    chance: 0.8
+    offset: 0.0

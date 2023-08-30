@@ -1,0 +1,90 @@
+﻿- type: entity
+  id: MachineParticleAcceleratorEndCapCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA end cap board
+  description: A machine board for a particle accelerator end cap
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEndCapUnfinished
+      materialRequirements:
+        Glass: 15
+        Steel: 15
+
+- type: entity
+  id: MachineParticleAcceleratorFuelChamberCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA fuel chamber board
+  description: A machine board for a particle accelerator fuel chamber
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorFuelChamberUnfinished
+      componentRequirements:
+        AmeFuelContainer:
+          Amount: 1
+          DefaultPrototype: AmeJar
+          ExamineName: AME Fuel Jar
+      materialRequirements:
+        Glass: 10
+        Steel: 10
+
+- type: entity
+  id: MachineParticleAcceleratorPowerBoxCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA power box board
+  description: A machine board for a particle accelerator power box
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorPowerBoxUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+# Emitter
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterStarboardCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA starboard emitter board
+  description: A machine board for a particle accelerator left emitter
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterStarboardUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterForeCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA fore emitter board
+  description: A machine board for a particle accelerator center emitter
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterForeUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5
+
+- type: entity
+  id: MachineParticleAcceleratorEmitterPortCircuitboard
+  parent: BaseMachineCircuitboard
+  name: PA port emitter board
+  description: A machine board for a particle accelerator right emitter
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: ParticleAcceleratorEmitterPortUnfinished
+      materialRequirements:
+        Glass: 5
+        Steel: 5

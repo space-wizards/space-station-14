@@ -1,0 +1,80 @@
+- type: entity
+  name: ritual dagger
+  parent: BaseItem
+  id: RitualDagger
+  description: A strange dagger used by sinister groups for rituals and sacrifices.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cult_dagger.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Slash: 12
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cult_dagger.rsi
+    slots:
+    - back
+  - type: DisarmMalus
+
+- type: entity
+  name: eldritch blade
+  parent: BaseItem
+  id: EldritchBlade
+  description: A sword humming with unholy energy.
+  components:
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cult_blade.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Slash: 33
+  - type: Item
+    size: 20
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cult_blade.rsi
+    slots:
+    - back
+  - type: DisarmMalus
+
+- type: entity
+  name: unholy halberd
+  parent: BaseItem
+  id: UnholyHalberd
+  description: A poleaxe that seems to be linked to its wielder.
+  components:
+  - type: Tag
+    tags:
+    - FireAxe
+  - type: Sharp
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/cult_halberd.rsi
+    state: icon
+  - type: MeleeWeapon
+    attackRate: 0.75
+    damage:
+      types:
+        Blunt: 10
+        Slash: 20
+        Structural: 3
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 4
+        Slash: 12
+        Structural: 30
+  - type: Item
+    size: 150
+  - type: Clothing
+    sprite: Objects/Weapons/Melee/cult_halberd.rsi
+    quickEquip: false
+    slots:
+    - back

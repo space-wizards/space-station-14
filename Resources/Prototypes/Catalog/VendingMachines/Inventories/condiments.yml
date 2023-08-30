@@ -1,0 +1,20 @@
+- type: vendingMachineInventory
+  id: CondimentInventory
+  startingInventory:
+    FoodCondimentPacketAstrotame: 5
+    FoodCondimentPacketBbq: 5
+    FoodCondimentPacketFrostoil: 5
+    FoodCondimentPacketHorseradish: 5
+    FoodCondimentPacketHotsauce: 5
+    FoodCondimentPacketKetchup: 5
+    FoodCondimentPacketMustard: 5
+    FoodCondimentPacketPepper: 5
+    FoodCondimentPacketSalt: 5
+    FoodCondimentPacketSoy: 5
+    FoodCondimentPacketSugar: 5
+    FoodCondimentPacketCornoil: 5
+    ForkPlastic: 10
+    SpoonPlastic: 10
+    KnifePlastic: 10
+    FoodPlatePlastic: 10
+    FoodPlateSmallPlastic: 10

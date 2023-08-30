@@ -1,0 +1,31 @@
+- type: instantAction
+  id: MechCycleEquipment
+  name: action-name-mech-cycle
+  description: action-description-mech-cycle
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_cycle_equip_on
+  event: !type:MechToggleEquipmentEvent
+  useDelay: 0.5
+
+- type: instantAction
+  id: MechOpenUI
+  name: action-name-mech-control-panel
+  description: action-description-mech-control-panel
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_view_stats
+  event: !type:MechOpenUiEvent
+  useDelay: 1
+
+- type: instantAction
+  id: MechEject
+  name: action-name-mech-eject
+  description: action-description-mech-eject
+  itemIconStyle: NoItem
+  icon: 
+    sprite: Interface/Actions/actions_mecha.rsi
+    state: mech_eject
+  event: !type:MechEjectPilotEvent

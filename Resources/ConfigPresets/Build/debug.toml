@@ -1,0 +1,6 @@
+﻿[events]
+# Annoying
+enabled = false
+
+[shuttle]
+auto_call_time = 0

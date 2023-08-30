@@ -1,0 +1,6 @@
+- type: vendingMachineInventory
+  id: BodaInventory
+  startingInventory:
+    DrinkSodaWaterCan: 10 #typically hacked product. Default product is "soda"
+  emaggedInventory:
+    DrinkColaCan: 10

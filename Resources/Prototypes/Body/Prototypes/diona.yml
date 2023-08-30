@@ -1,0 +1,45 @@
+﻿- type: body
+  id: Diona
+  name: diona
+  root: torso
+  slots:
+    head:
+      part: HeadDiona
+      connections:
+      - torso
+      organs:
+        brain: OrganDionaBrain
+        eyes: OrganDionaEyes
+    torso:
+      part: TorsoDiona
+      connections:
+      - left arm
+      - right arm
+      - left leg
+      - right leg
+      organs:
+        stomach: OrganDionaStomach
+    right arm:
+      part: RightArmDiona
+      connections:
+      - right hand
+    left arm:
+      part: LeftArmDiona
+      connections:
+      - left hand
+    right hand:
+      part: RightHandDiona
+    left hand:
+      part: LeftHandDiona
+    right leg:
+      part: RightLegDiona
+      connections:
+      - right foot
+    left leg:
+      part: LeftLegDiona
+      connections:
+      - left foot
+    right foot:
+      part: RightFootDiona
+    left foot:
+      part: LeftFootDiona

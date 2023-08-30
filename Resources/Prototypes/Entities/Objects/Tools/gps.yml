@@ -1,0 +1,14 @@
+- type: entity
+  name: global positioning system
+  parent: BaseItem
+  id: HandheldGPSBasic
+  description: Helping lost spacemen find their way through the planets since 2016.
+  components:
+  - type: Sprite
+    sprite: Objects/Devices/gps.rsi
+    layers:
+    - state: icon
+    - state: active
+  - type: Item
+    sprite: Objects/Devices/gps.rsi
+  - type: HandheldGPS

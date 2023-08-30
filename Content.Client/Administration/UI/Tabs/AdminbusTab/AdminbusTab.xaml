@@ -1,0 +1,16 @@
+﻿<Control
+    xmlns="https://spacestation14.io"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls"
+    xmlns:abt="clr-namespace:Content.Client.Administration.UI.Tabs.AdminbusTab"
+    Margin="4"
+    MinSize="50 50">
+    <GridContainer Columns="3">
+        <Button Name="SpawnEntitiesButton" Text="{Loc 'sandbox-window-spawn-entities-button'}" />
+        <Button Name="SpawnTilesButton" Text="{Loc 'sandbox-window-spawn-tiles-button'}" />
+        <Button Name="SpawnDecalsButton" Text="{Loc 'sandbox-window-spawn-decals-button'}" />
+        <Button Name="LoadGamePrototypeButton" Text="{Loc 'load-game-prototype'}"/>
+        <cc:UICommandButton Name="LoadBlueprintsButton" Command="loadbp" Text="{Loc 'load-blueprints'}" WindowType="{x:Type abt:LoadBlueprintsWindow}"/>
+        <cc:CommandButton Command="deleteewc Singularity" Name="DeleteSingulos" Text="{Loc 'delete-singularities'}"/>
+    </GridContainer>
+</Control>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="examine.svg"
+   width="32"
+   height="32"
+   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   inkscape:export-filename="C:\Users\Pieter-Jan Briers\Projects\space-station-14\Resources\Textures\Interface\VerbIcons\examine.svg.96dpi.png"
+   inkscape:export-xdpi="96"
+   inkscape:export-ydpi="96">
+  <metadata
+     id="metadata10">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     pagecolor="#2e2e2e"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1051"
+     id="namedview6"
+     showgrid="true"
+     inkscape:zoom="19.445437"
+     inkscape:cx="22.213239"
+     inkscape:cy="19.801013"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4">
+    <inkscape:grid
+       type="xygrid"
+       id="grid835"
+       empspacing="4" />
+  </sodipodi:namedview>
+  <path
+     d="M 5.0000002,24.068685 10.89944,18.167521 a 8.6771045,8.675592 0 1 1 7.416281,4.183661 8.6165405,8.615039 0 0 1 -4.487208,-1.25785 L 7.9235679,27 Z M 23.683854,13.681095 a 5.379144,5.3782064 0 0 0 -5.368133,-5.3671975 5.3763911,5.375454 0 0 0 -5.368132,5.3671975 5.3681327,5.367197 0 0 0 10.736265,0 z"
+     id="path2"
+     style="stroke-width:2.75265;fill:#ffffff;fill-opacity:1" />
+</svg>

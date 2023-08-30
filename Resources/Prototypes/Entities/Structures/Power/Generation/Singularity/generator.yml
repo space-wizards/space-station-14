@@ -1,0 +1,36 @@
+- type: entity
+  id: SingularityGenerator
+  name: gravitational singularity generator
+  description: An Odd Device which produces a Gravitational Singularity when set up.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Sprite
+    sprite: Structures/Power/Generation/Singularity/generator.rsi
+    state: icon
+  - type: SingularityGenerator
+  - type: InteractionOutline
+  - type: Clickable
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          # Using a circle here makes it a lot easier to pull it all the way from Cargo
+          !type:PhysShapeCircle
+            radius: 0.45
+        density: 190
+        # Keep an eye on ParticlesProjectile when adjusting these
+        mask:
+        - MachineMask
+        layer:
+        - Opaque
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Anchorable
+  - type: Pullable
+  - type: GuideHelp
+    guides: [ Singularity, Power ]
+

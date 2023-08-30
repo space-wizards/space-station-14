@@ -1,0 +1,160 @@
+# Ripley
+- type: latheRecipe
+  id: RipleyHarness
+  result: RipleyHarness
+  completetime: 10
+  materials:
+    Steel: 1500
+    Glass: 1200
+
+- type: latheRecipe
+  id: RipleyLArm
+  result: RipleyLArm
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  id: RipleyLLeg
+  result: RipleyLLeg
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  id: RipleyRLeg
+  result: RipleyRLeg
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  id: RipleyRArm
+  result: RipleyRArm
+  completetime: 10
+  materials:
+    Steel: 1000
+    Glass: 750
+
+- type: latheRecipe
+  id: MechEquipmentGrabber
+  result: MechEquipmentGrabber
+  completetime: 10
+  materials:
+    Steel: 500
+    Plastic: 200
+
+# H.O.N.K.
+- type: latheRecipe
+  id: HonkerHarness
+  result: HonkerHarness
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLArm
+  result: HonkerLArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerLLeg
+  result: HonkerLLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRLeg
+  result: HonkerRLeg
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: HonkerRArm
+  result: HonkerRArm
+  completetime: 10
+  materials:
+    Steel: 3000
+    Glass: 1200
+    Bananium: 500
+
+- type: latheRecipe
+  id: MechEquipmentHorn
+  result: MechEquipmentHorn
+  completetime: 10
+  materials:
+    Steel: 500
+    Bananium: 200
+
+# HAMTR
+- type: latheRecipe
+  id: HamtrHarness
+  result: HamtrHarness
+  completetime: 10
+  materials:
+    Steel: 1200
+    Glass: 1000
+
+- type: latheRecipe
+  id: HamtrLArm
+  result: HamtrLArm
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrLLeg
+  result: HamtrLLeg
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrRLeg
+  result: HamtrRLeg
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: HamtrRArm
+  result: HamtrRArm
+  completetime: 10
+  materials:
+    Steel: 800
+    Glass: 600
+
+- type: latheRecipe
+  id: MechEquipmentGrabberSmall
+  result: MechEquipmentGrabberSmall
+  completetime: 10
+  materials:
+    Steel: 400
+    Plastic: 100
+
+# Vim
+- type: latheRecipe
+  id: VimHarness
+  result: VimHarness
+  completetime: 5
+  materials:
+    Steel: 500
+    Glass: 200

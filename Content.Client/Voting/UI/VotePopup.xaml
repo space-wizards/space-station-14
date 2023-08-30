@@ -1,0 +1,13 @@
+﻿<Control xmlns="https://spacestation14.io" MinWidth="300">
+    <PanelContainer StyleClasses="AngleRect" />
+    <BoxContainer Margin="4" Orientation="Vertical">
+        <Label Name="VoteCaller" />
+        <Label Name="VoteTitle" />
+
+        <GridContainer Columns="3" Name="VoteOptionsContainer" />
+        <BoxContainer Orientation="Horizontal">
+            <ProgressBar Margin="4" HorizontalExpand="True" Name="TimeLeftBar" MinValue="0" MaxValue="1" />
+            <Label Name="TimeLeftText" />
+        </BoxContainer>
+    </BoxContainer>
+</Control>

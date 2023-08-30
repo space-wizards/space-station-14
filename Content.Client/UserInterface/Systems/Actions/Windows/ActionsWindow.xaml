@@ -1,0 +1,23 @@
+﻿<windows:ActionsWindow
+    xmlns="https://spacestation14.io"
+    xmlns:windows="clr-namespace:Content.Client.UserInterface.Systems.Actions.Windows"
+    Name="ActionsList"
+    HorizontalExpand="True"
+    Title="Actions"
+    VerticalExpand="True"
+    Resizable="True"
+    MinHeight="300"
+    MinWidth="300"
+>
+    <BoxContainer Orientation="Vertical">
+        <BoxContainer Name="SearchContainer" Orientation="Horizontal">
+            <LineEdit Name="SearchBar" Access="Public" StyleClasses="actionSearchBox" HorizontalExpand="True"
+                      PlaceHolder="{Loc ui-actionmenu-search-bar-placeholder-text}"/>
+        </BoxContainer>
+        <Button Name="ClearButton" Access="Public" Text="{Loc ui-actionmenu-clear-button}"/>
+        <Label Name="FilterLabel" Access="Public"/>
+        <ScrollContainer VerticalExpand="True" HorizontalExpand="True">
+            <GridContainer Name="ResultsGrid" Access="Public" MaxGridWidth="300"/>
+        </ScrollContainer>
+    </BoxContainer>
+</windows:ActionsWindow>

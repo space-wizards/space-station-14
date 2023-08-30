@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "license": "CC-BY-NC-SA-3.0",
+  "copyright": "mirrorcult",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+	{
+      "name": "fulltile_overlay"
+    },
+    {
+      "name": "halftile_overlay"
+    },
+    {
+      "name": "halftile_overlay_90"
+    },
+    {
+      "name": "halftile_overlay_180"
+    },
+    {
+      "name": "halftile_overlay_270"
+    },
+    {
+      "name": "quartertile_overlay"
+    },
+    {
+      "name": "quartertile_overlay_90"
+    },
+    {
+      "name": "quartertile_overlay_180"
+    },
+    {
+      "name": "quartertile_overlay_270"
+    },
+    {
+      "name": "threequartertile_overlay"
+    },
+    {
+      "name": "threequartertile_overlay_90"
+    },
+    {
+      "name": "threequartertile_overlay_180"
+    },
+    {
+      "name": "threequartertile_overlay_270"
+    },
+    {
+      "name": "checkerNESW"
+    },
+    {
+      "name": "checkerNWSE"
+    },
+    {
+      "name": "diagonal"
+    },
+    {
+      "name": "diagonal_checker_a"
+    },
+    {
+      "name": "diagonal_checker_b"
+    },
+    {
+      "name": "herringbone"
+    },
+    {
+      "name": "minitile"
+    },
+    {
+      "name": "minitile_checker_a"
+    },
+    {
+      "name": "minitile_checker_b"
+    },
+    {
+      "name": "minitile_diagonal"
+    },
+    {
+      "name": "minitile_diagonal_a"
+    },
+    {
+      "name": "minitile_diagonal_b"
+    },
+    {
+      "name": "mono"
+    },
+    {
+      "name": "offset"
+    },
+    {
+      "name": "offset_checker_a"
+    },
+    {
+      "name": "offset_checker_b"
+    },
+    {
+      "name": "pavement"
+    },
+    {
+      "name": "pavement_checker_a"
+    },
+    {
+      "name": "pavement_checker_b"
+    },
+    {
+      "name": "pavement_vertical"
+    },
+    {
+      "name": "pavement_vertical_checker_a"
+    },
+    {
+      "name": "pavement_vertical_checker_b"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+- type: soundCollection
+  id: MeatBulletImpact
+  files:
+  - "/Audio/Weapons/Guns/Hits/bullet_meat1.ogg"
+  - "/Audio/Weapons/Guns/Hits/bullet_meat2.ogg"
+  - "/Audio/Weapons/Guns/Hits/bullet_meat3.ogg"
+  - "/Audio/Weapons/Guns/Hits/bullet_meat4.ogg"
+
+- type: soundCollection
+  id: MeatLaserImpact
+  files:
+  - "/Audio/Weapons/Guns/Hits/energy_meat1.ogg"
+  - "/Audio/Weapons/Guns/Hits/energy_meat2.ogg"
+
+- type: soundCollection
+  id: MetalBulletImpact
+  files:
+  - "/Audio/Weapons/Guns/Hits/ric1.ogg"
+  - "/Audio/Weapons/Guns/Hits/ric2.ogg"
+  - "/Audio/Weapons/Guns/Hits/ric3.ogg"
+  - "/Audio/Weapons/Guns/Hits/ric4.ogg"
+  - "/Audio/Weapons/Guns/Hits/ric5.ogg"
+
+- type: soundCollection
+  id: MetalLaserImpact
+  files:
+  - "/Audio/Weapons/Guns/Hits/energy_metal1.ogg"
+  - "/Audio/Weapons/Guns/Hits/energy_metal2.ogg"
+

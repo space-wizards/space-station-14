@@ -1,0 +1,68 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "license": "CC-BY-NC-SA-3.0",
+    "copyright": "Heavily derived from https://github.com/goonstation/goonstation at commit e77d85d9c1d93aa32da7702737ceeac2b56738ac.",
+    "states": [
+        {
+            "name": "back",
+        },
+        {
+            "name": "belt"
+        },
+        {
+            "name": "block"
+        },
+        {
+            "name": "ears"
+        },
+        {
+            "name": "glasses"
+        },
+        {
+            "name": "gloves"
+        },
+        {
+            "name": "hand_l"
+        },
+        {
+            "name": "hand_l_active"
+        },
+        {
+            "name": "hand_r"
+        },
+        {
+            "name": "hand_r_active"
+        },
+        {
+            "name": "head"
+        },
+        {
+            "name": "id"
+        },
+        {
+            "name": "invtoggle"
+        },
+        {
+            "name": "mask"
+        },
+		{
+            "name": "neck"
+        },
+        {
+            "name": "pocket"
+        },
+        {
+            "name": "shoes"
+        },
+        {
+            "name": "suit"
+        },
+        {
+            "name": "uniform"
+        }
+    ]
+}

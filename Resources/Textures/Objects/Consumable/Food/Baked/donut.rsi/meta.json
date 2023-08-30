@@ -1,0 +1,166 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "beige"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "box"
+    },
+    {
+      "name": "box-open"
+    },
+    {
+      "name": "box1"
+    },
+    {
+      "name": "box2"
+    },
+    {
+      "name": "box3"
+    },
+    {
+      "name": "box4"
+    },
+    {
+      "name": "box5"
+    },
+    {
+      "name": "box6"
+    },
+    {
+      "name": "chaos"
+    },
+    {
+      "name": "choc"
+    },
+    {
+      "name": "green"
+    },
+    {
+      "name": "homer"
+    },
+    {
+      "name": "laugh"
+    },
+    {
+      "name": "meat"
+    },
+    {
+      "name": "olive"
+    },
+    {
+      "name": "pink"
+    },
+    {
+      "name": "plain"
+    },
+    {
+      "name": "purple"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "pink-box1"
+    },
+    {
+      "name": "pink-box2"
+    },
+    {
+      "name": "pink-box3"
+    },
+    {
+      "name": "pink-box4"
+    },
+    {
+      "name": "pink-box5"
+    },
+    {
+      "name": "pink-box6"
+    },
+    {
+      "name": "alpha-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "alpha-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "box-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "box-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "pink-inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "pink-inhand-right",
+      "directions": 4
+    },
+    {
+      "name": "jelly-beige"
+    },
+    {
+      "name": "jelly-blue"
+    },
+    {
+      "name": "jelly-choc"
+    },
+    {
+      "name": "jelly-green"
+    },
+    {
+      "name": "jelly-homer"
+    },
+    {
+      "name": "jelly-laugh"
+    },
+    {
+      "name": "jelly-olive"
+    },
+    {
+      "name": "jelly-pink"
+    },
+    {
+      "name": "jelly-plain"
+    },
+    {
+      "name": "jelly-purple"
+    },
+    {
+      "name": "jelly-yellow"
+    },
+    {
+      "name": "jelly-slug"
+    },
+    {
+      "name": "sprinkles-overlay"
+    },
+    {
+      "name": "jelly-sprinkles-overlay"
+    }
+  ]
+}

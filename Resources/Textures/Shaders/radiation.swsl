@@ -1,0 +1,99 @@
+// From https://godotshaders.com/snippet/2d-noise/
+
+uniform sampler2D SCREEN_TEXTURE;
+uniform highp vec2 positionInput;
+uniform highp vec2 renderScale;
+uniform highp float life;
+uniform highp float range;
+
+highp vec2 random(highp vec2 uv){
+    uv = vec2( dot(uv, vec2(127.1,311.7) ),
+               dot(uv, vec2(269.5,183.3) ) );
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+highp float noise(highp vec2 uv) {
+    highp vec2 uv_index = floor(uv);
+    highp vec2 uv_fract = fract(uv);
+
+    highp vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix( mix( dot( random(uv_index + vec2(0.0,0.0) ), uv_fract - vec2(0.0,0.0) ),
+                     dot( random(uv_index + vec2(1.0,0.0) ), uv_fract - vec2(1.0,0.0) ), blur.x),
+                mix( dot( random(uv_index + vec2(0.0,1.0) ), uv_fract - vec2(0.0,1.0) ),
+                     dot( random(uv_index + vec2(1.0,1.0) ), uv_fract - vec2(1.0,1.0) ), blur.x), blur.y) * 0.5 + 0.5;
+}
+
+highp float fbm(highp vec2 uv) {
+    const int octaves = 6;
+    highp float amplitude = 0.5;
+    highp float frequency = 3.0;
+    highp float value = 0.0;
+
+    for(int i = 0; i < octaves; i++) {
+        value += amplitude * noise(frequency * uv);
+        amplitude *= 0.5;
+        frequency *= 2.0;
+    }
+    return value;
+}
+
+void fragment() {
+	highp vec2 finalCoords = (FRAGCOORD.xy - positionInput) / (renderScale * 32.0);
+	highp float distanceToCenter = length(finalCoords);
+	highp float nlife = pow(sin(clamp(life, 0.0, 1.0) * 3.141592), 0.5);
+	highp float on = ((range - distanceToCenter) / range);
+	highp float n = on;
+	highp vec2 fcOffset = vec2(fbm(finalCoords.xy + life / 2.0),fbm(finalCoords.yx + life / 2.0));
+	n *= fbm((finalCoords + fcOffset) / (nlife / (n * 1.5))) * 1.1;
+	n *= clamp(nlife, 0.0, 1.0);
+	highp float a = 0.0; // Alpha
+	highp float p = 0.0; // Position between L and R stops
+	lowp vec3 lCol = vec3(0.0); // Left stop color
+	lowp vec3 rCol = vec3(0.0); // Right stop color
+
+	if (n <= 0.05) {
+		p = 0.0;
+		a = 0.0;
+		lCol = vec3(0.0);
+		rCol = vec3(0.0);
+	} else if (n < 0.132) {
+		p = (n - 0.05) / (0.132 - 0.05);
+		a = p;
+		lCol = vec3(0.0);
+		rCol = vec3(0.098, 0.406, 0.112);
+	} else if (n < 0.186) {
+		p = (n - 0.132) / (0.186 - 0.132);
+		a = 1.0;
+		lCol = vec3(0.098, 0.406, 0.112);
+		rCol = vec3(0.168, 1.000, 0.288);
+	} else if (n < 0.388) {
+		p = (n - 0.186) / (0.388 - 0.186);
+		a = 1.0;
+		lCol = vec3(0.168, 1.000, 0.288);
+		rCol = vec3(0.583, 1.000, 0.640);
+	} else if (n >= 0.388) {
+		p = (n - 0.388) / 0.5;
+		a = 1.0;
+		lCol = vec3(0.583, 1.000, 0.640);
+		rCol = vec3(1.000, 1.000, 1.000);
+	}
+
+	p = clamp(p, 0.0, 1.0);
+
+	highp vec4 warped = zTextureSpec(SCREEN_TEXTURE, (FRAGCOORD.xy*SCREEN_PIXEL_SIZE)+clamp(on*nlife*(fcOffset/8.0), 0.0, 1.0));
+
+	// Extremely hacky way to detect FoV cones
+	highp float osum = warped.r + warped.g + warped.b;
+	highp float osr = osum > 0.1 ? 1.0 : 10.0 * osum;
+
+	// Apply overlay
+	// FYI: If you want a smoother mix, swap lCol and rCol.
+	warped += mix(
+		vec4(0.0),
+		vec4(mix(rCol, lCol, vec3(p)), a),
+		osr
+	);
+
+	COLOR = warped;
+}

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/discordia-space/CEV-Eris/blob/2b969adc2dfd3e9621bf3597c5cbffeb3ac8c9f0/icons/obj/chemical.dmi",
+  "states": [
+    {
+      "name": "mixer_empty",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mixer_broken",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mixer_loaded",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    },
+    {
+      "name": "mixer_screens",
+      "delays": [
+        [
+          0.1,
+          0.2,
+          0.1,
+          0.1,
+          0.2,
+          0.1,
+          0.2,
+          0.1
+        ]
+      ]
+    },
+    {
+      "name": "mixer_screen_broken",
+      "delays": [
+        [
+          1
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+- type: entity
+  id: KitchenReagentGrinder
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: reagent grinder
+  description: From BlenderTech. Will It Blend? Let's find out!
+  suffix: grinder/juicer
+  components:
+  - type: Transform
+    anchored: true
+  - type: ReagentGrinder
+  - type: ActivatableUI
+    key: enum.ReagentGrinderUiKey.Key
+  - type: UserInterface
+    interfaces:
+    - key: enum.ReagentGrinderUiKey.Key
+      type: ReagentGrinderBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ReagentGrinderVisualState.BeakerAttached:
+        grinder:
+          True: {state: "juicer1"}
+          False: {state: "juicer0"}
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.17,0,0.20,0.4"
+        mask:
+        - TabletopMachineMask
+        layer:
+        - TabletopMachineLayer
+  - type: Sprite
+    sprite: Structures/Machines/juicer.rsi
+    drawdepth: SmallObjects
+    snapCardinals: true
+    offset: "0.0,0.4"
+    layers:
+    - map: [ "grinder" ]
+      state: "juicer0"
+  - type: ApcPowerReceiver
+    powerLoad: 300
+  - type: ItemSlots
+    slots:
+      beakerSlot:
+        whitelist:
+          components:
+          - FitsInDispenser
+  - type: Machine
+    board: ReagentGrinderMachineCircuitboard
+  - type: ContainerContainer
+    containers:
+      beakerSlot: !type:ContainerSlot
+      inputContainer: !type:Container
+      machine_board: !type:Container
+      machine_parts: !type:Container

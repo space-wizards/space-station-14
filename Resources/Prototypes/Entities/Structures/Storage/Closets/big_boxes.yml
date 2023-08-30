@@ -1,0 +1,131 @@
+﻿- type: entity
+  id: BaseBigBox
+  name: cardboard box #it's still just a box
+  description: Huh? Just a box...
+  abstract: true
+  components:
+    - type: Transform
+      noRot: true
+    - type: Clickable
+    - type: Physics
+      bodyType: KinematicController
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          density: 100
+          mask:
+            - MobMask
+          layer:
+            - MobLayer
+          hard: true
+    - type: Pullable
+    - type: CardboardBox
+      effectSound: /Audio/Effects/chime.ogg
+    - type: InputMover
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+      airtight: false
+      capacity: 4 #4 Entities seems like a nice comfy fit for a cardboard box.
+    - type: ContainerContainer
+      containers:
+        entity_storage: !type:Container
+    - type: Damageable
+      damageContainer: Box
+    - type: Sprite
+      noRot: true
+      sprite: Structures/Storage/closet.rsi
+      layers:
+      - state: cardboard
+        map: ["enum.StorageVisualLayers.Base"]
+      - state: cardboard_open
+        map: ["enum.StorageVisualLayers.Door"]
+    - type: Appearance
+    - type: EntityStorageVisuals
+      stateBaseClosed: cardboard
+      stateDoorOpen: cardboard_open
+    - type: Tag
+      tags:
+        - DoorBumpOpener
+    - type: Construction
+      graph: BaseBigBox
+      node: basebigbox
+      containers:
+        - entity_storage
+
+- type: entity
+  id: StealthBox
+  suffix: stealth
+  parent: BaseBigBox
+  description: Kept ya waiting, huh?
+  components:
+    - type: Damageable
+      damageModifierSet: FlimsyMetallic #Syndicate boxes should have a bit of protection
+    - type: Stealth
+      hadOutline: true
+    - type: StealthOnMove
+      passiveVisibilityRate: -0.37
+      movementVisibilityRate: 0.20
+
+- type: entity
+  id: BigBox
+  parent: BaseBigBox
+  components:
+  - type: InteractionOutline
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 15
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+
+
+#For admin spawning only
+- type: entity
+  id: GhostBox
+  parent: StealthBox
+  suffix: ""
+  name: ghost box
+  description: Beware!
+  components:
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.4,-0.4,0.4,0.4"
+          mask:
+            - MobMask
+          layer:
+            - SlipLayer
+          hard: false #It's a ghostly box, it can go through walls
+    - type: EntityStorage
+      isCollidableWhenOpen: false
+      openOnMove: false
+      airtight: false
+
+#Exclamation effect for box opening
+- type: entity
+  id: Exclamation
+  name: exclamation
+  noSpawn: true
+  save: false
+  components:
+    - type: Transform
+      noRot: true
+    - type: Sprite
+      sprite: Structures/Storage/closet.rsi
+      drawdepth: Effects
+      noRot: true
+      layers:
+      - state: "cardboard_special"
+    - type: TimedDespawn
+      lifetime: 1
+    - type: Tag
+      tags:
+        - HideContextMenu

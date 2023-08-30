@@ -1,0 +1,17 @@
+- type: entity
+  id: MarkerBase
+  abstract: true
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Transform
+    anchored: true
+  - type: Marker
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Sprite
+    drawdepth: Overdoors
+    sprite: Markers/cross.rsi
+# If serialization was cool this would work.
+#    layers:
+#      - state: blue

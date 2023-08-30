@@ -1,0 +1,75 @@
+- type: entity
+  parent: ClothingOuterBaseLarge
+  id: ClothingOuterBioGeneral
+  name: bio suit
+  suffix: Generic
+  description: A suit that protects against biological contamination.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/general.rsi
+  - type: Armor
+    modifiers:
+      coefficients:
+        Caustic: 0.5
+
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioCmo
+  name: bio suit
+  suffix: CMO
+  description: An advanced suit that protects against biological contamination, in CMO colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/cmo.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/cmo.rsi
+
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioJanitor
+  name: bio suit
+  suffix: Janitor
+  description: A suit that protects against biological contamination, in Janitor colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/janitor.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/janitor.rsi
+
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioScientist
+  name: bio suit
+  suffix: Science
+  description: A suit that protects against biological contamination, in Scientist colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/scientist.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/scientist.rsi
+
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioSecurity
+  name: bio suit
+  suffix: Security
+  description: A suit that protects against biological contamination, in Security colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/security.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/security.rsi
+
+- type: entity
+  parent: ClothingOuterBioGeneral
+  id: ClothingOuterBioVirology
+  name: bio suit
+  suffix: Virology
+  description: A suit that protects against biological contamination, in Virology colors.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Bio/virology.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Bio/virology.rsi

@@ -1,0 +1,122 @@
+﻿- type: entity
+  id: ResearchAndDevelopmentServer
+  parent: [ BaseMachinePowered, ConstructibleMachine ]
+  name: R&D server
+  description: Contains the collective knowledge of the station's scientists. Destroying it would send them back to the stone age. You don't want that do you?
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/server.rsi
+    layers:
+      - state: server
+      - state: server_o
+        map: ["enum.WiresVisualLayers.MaintenancePanel"]
+  - type: ResearchServer
+  - type: TechnologyDatabase
+    supportedDisciplines:
+    - Industrial
+    - Biochemical
+    - Arsenal
+    - Experimental
+    - CivilianServices
+  - type: ApcPowerReceiver
+    powerLoad: 200
+    priority: Low
+  - type: ExtensionCableReceiver
+  - type: WiresPanel
+  - type: Wires
+    LayoutId: rndserver
+  - type: WiresVisuals
+  - type: Machine
+    board: ResearchAndDevelopmentServerMachineCircuitboard
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 600
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 300
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 2
+  - type: Appearance
+  - type: AmbientSound
+    volume: -9
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/server_fans.ogg
+  - type: GuideHelp
+    guides:
+    - Science
+
+- type: entity
+  id: BaseResearchAndDevelopmentPointSource
+  parent: BaseMachinePowered
+  name: "base R&D point source"
+  # We should make this abstract once there are actual point sources.
+  components:
+  - type: Sprite
+    sprite: Structures/Machines/rndpointsource.rsi
+    layers:
+    - state: rndpointsource-off
+    - state: rndpointsource
+      shader: unshaded
+      map: ["enum.PowerDeviceVisualLayers.Powered"]
+  - type: ResearchClient
+  - type: ResearchPointSource
+    pointspersecond: 25
+    active: true
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+  - type: ActivatableUI
+    key: enum.ResearchClientUiKey.Key
+  - type: ActivatableUIRequiresPower
+  - type: UserInterface
+    interfaces:
+    - key: enum.ResearchClientUiKey.Key
+      type: ResearchClientBoundUserInterface
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerDeviceVisuals.Powered:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: {visible: true}
+          False: {visible: false}
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 400
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 1
+  - type: GuideHelp
+    guides:
+    - Science

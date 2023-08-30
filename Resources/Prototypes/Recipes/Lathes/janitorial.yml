@@ -1,0 +1,106 @@
+- type: latheRecipe
+  id: MopItem
+  result: MopItem
+  completetime: 2
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: MopBucket
+  result: MopBucket
+  completetime: 2
+  materials:
+    Steel: 100
+    Plastic: 100
+
+- type: latheRecipe
+  id: Bucket
+  result: Bucket
+  completetime: 2
+  materials:
+    Steel: 100
+
+- type: latheRecipe
+  id: WetFloorSign
+  result: WetFloorSign
+  completetime: 2
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: MegaSprayBottle
+  result: MegaSprayBottle
+  completetime: 3
+  materials:
+    Plastic: 250
+
+- type: latheRecipe
+  id: SprayBottle
+  result: SprayBottle
+  completetime: 2
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: TrashBag
+  result: TrashBag
+  completetime: 1.2
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: LightReplacer
+  result: LightReplacerEmpty
+  completetime: 2.4
+  materials:
+    Steel: 100
+    Glass: 500
+
+- type: latheRecipe
+  id: Mousetrap
+  result: Mousetrap
+  completetime: 1
+  materials:
+    Wood: 100
+    Steel: 50
+
+- type: latheRecipe
+  id: Holoprojector
+  result: Holoprojector
+  completetime: 3
+  materials:
+    Plastic: 250
+    Glass: 150
+
+- type: latheRecipe
+  id: AdvMopItem
+  result: AdvMopItem
+  completetime: 2
+  materials:
+    Plastic: 400
+    Steel: 100
+    Glass: 100
+
+- type: latheRecipe
+  id: Plunger
+  result: Plunger
+  completetime: 2
+  materials:
+    Plastic: 50
+    Wood: 200
+
+- type: latheRecipe
+  id: WeaponSprayNozzle
+  result: WeaponSprayNozzle
+  completetime: 5
+  materials:
+    Steel: 1500
+    Glass: 500
+
+- type: latheRecipe
+  id: ClothingBackpackWaterTank
+  result: ClothingBackpackWaterTank
+  completetime: 4
+  materials:
+    Steel: 250
+    Glass: 1000

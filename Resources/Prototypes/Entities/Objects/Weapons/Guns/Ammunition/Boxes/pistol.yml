@@ -1,0 +1,85 @@
+- type: entity
+  abstract: true
+  parent: BaseItem
+  id: BaseMagazineBoxPistol
+  name: ammunition box (.35 auto)
+  components:
+  - type: BallisticAmmoProvider
+    mayTransfer: true
+    whitelist:
+      tags:
+        - CartridgePistol
+    proto: CartridgePistol
+    capacity: 60
+  - type: Item
+    size: 5
+  - type: ContainerContainer
+    containers:
+      ballistic-ammo: !type:Container
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Ammunition/Boxes/pistol.rsi
+  - type: MagazineVisuals
+    magState: mag
+    steps: 2
+    zeroVisible: false
+  - type: Appearance
+
+# Boxes
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistol
+  name: ammunition box (.35 auto)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistol
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolPractice
+  name: ammunition box (.35 auto practice)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolPractice
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: practice
+
+- type: entity
+  parent: BaseMagazineBoxPistol
+  id: MagazineBoxPistolRubber
+  name: ammunition box (.35 auto rubber)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolRubber
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: rubber
+
+- type: entity
+  id: MagazineBoxPistolIncendiary
+  parent: BaseMagazineBoxPistol
+  name: ammunition box (.35 auto incendiary)
+  components:
+  - type: BallisticAmmoProvider
+    proto: CartridgePistolIncendiary
+  - type: Sprite
+    layers:
+    - state: base
+      map: ["enum.GunVisualLayers.Base"]
+    - state: mag-1
+      map: ["enum.GunVisualLayers.Mag"]
+    - state: incendiary

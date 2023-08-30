@@ -1,0 +1,13 @@
+<DefaultWindow
+    xmlns="https://spacestation14.io"
+    xmlns:cc="clr-namespace:Content.Client.Administration.UI.CustomControls">
+    <BoxContainer Orientation="Vertical">
+        <Label Text="{Loc 'observe-warning-1'}"/>
+        <Label Text="{Loc 'observe-warning-2'}"/>
+        <BoxContainer Orientation="Horizontal" >
+            <Button Name="NevermindButton" Text="{Loc 'observe-nevermind'}" SizeFlagsStretchRatio="1"/>
+            <Control HorizontalExpand="True" SizeFlagsStretchRatio="2" />
+            <cc:CommandButton  Command="observe" Name="ObserveButton" StyleClasses="Caution" Text="{Loc 'observe-confirm'}" SizeFlagsStretchRatio="1"/>
+        </BoxContainer>
+    </BoxContainer>
+</DefaultWindow>

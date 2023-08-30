@@ -1,0 +1,75 @@
+{
+    "version": 1,
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+	"license": "CC-BY-SA-3.0",
+	"copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/fcf375d7d9ce6ceed5c7face899725e5655ab640",
+    "states": [
+        {
+            "name": "mvcable_0"
+
+        },
+        {
+            "name": "mvcable_1"
+
+        },
+        {
+            "name": "mvcable_2"
+
+        },
+        {
+            "name": "mvcable_3"
+
+        },
+        {
+            "name": "mvcable_4"
+
+        },
+        {
+            "name": "mvcable_5"
+
+        },
+        {
+            "name": "mvcable_6"
+
+        },
+        {
+            "name": "mvcable_7"
+
+        },
+        {
+            "name": "mvcable_8"
+
+        },
+        {
+            "name": "mvcable_9"
+
+        },
+        {
+            "name": "mvcable_10"
+
+        },
+        {
+            "name": "mvcable_11"
+
+        },
+        {
+            "name": "mvcable_12"
+
+        },
+        {
+            "name": "mvcable_13"
+
+        },
+        {
+            "name": "mvcable_14"
+
+        },
+        {
+            "name": "mvcable_15"
+
+        }
+    ]
+}

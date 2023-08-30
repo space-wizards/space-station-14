@@ -1,0 +1,101 @@
+- type: department
+  id: Cargo
+  description: department-Cargo-description
+  color: "#A46106"
+  roles:
+  - CargoTechnician
+  - Quartermaster
+  - SalvageSpecialist
+
+- type: department
+  id: Civilian
+  description: department-Civilian-description
+  color: "#9FED58"
+  roles:
+  - Bartender
+  - Borg
+  - Botanist
+  - Boxer
+  - Chaplain
+  - Chef
+  - Clown
+  - HeadOfPersonnel
+  - Janitor
+  - Lawyer
+  - Librarian
+  - Mime
+  - Musician
+  - Passenger
+  - Reporter
+  - Zookeeper
+  - ServiceWorker
+
+- type: department
+  id: Command
+  description: department-Command-description
+  color: "#334E6D"
+  roles:
+  - Captain
+  - CentralCommandOfficial
+  - ChiefEngineer
+  - ChiefMedicalOfficer
+  - HeadOfPersonnel
+  - HeadOfSecurity
+  - ResearchDirector
+  - Quartermaster
+
+- type: department
+  id: Engineering
+  description: department-Engineering-description
+  color: "#EFB341"
+  roles:
+  - AtmosphericTechnician
+  - ChiefEngineer
+  - SeniorEngineer
+  - StationEngineer
+  - TechnicalAssistant
+
+- type: department
+  id: Medical
+  description: department-Medical-description
+  color: "#52B4E9"
+  roles:
+  - Chemist
+  - ChiefMedicalOfficer
+  - MedicalDoctor
+  - MedicalIntern
+  - Psychologist
+  - Paramedic
+  - SeniorPhysician
+
+- type: department
+  id: Security
+  description: department-Security-description
+  color: "#DE3A3A"
+  roles:
+  - HeadOfSecurity
+  - SecurityCadet
+  - SecurityOfficer
+  - SeniorOfficer
+  - Detective
+  - Warden
+
+- type: department
+  id: Science
+  description: department-Science-description
+  color: "#D381C9"
+  roles:
+  - ResearchDirector
+  - SeniorResearcher
+  - Scientist
+  - ResearchAssistant
+
+- type: department
+  id: Specific
+  description: department-Specific-description
+  color: "#9FED58"
+  roles:
+  - Boxer
+  - Reporter
+  - Zookeeper
+  - Psychologist

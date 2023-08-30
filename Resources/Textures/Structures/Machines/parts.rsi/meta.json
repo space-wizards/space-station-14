@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at https://github.com/tgstation/tgstation/commit/0d9c9a8233dfc3fc55edc538955a761a6328bee0, computer frames modified by Jesse, Machine frames sprites remade by Ubaser",
+  "states": [
+    {
+      "name": "0",
+      "directions": 4
+    },
+    {
+      "name": "1",
+      "directions": 4
+    },
+    {
+      "name": "2",
+      "directions": 4
+    },
+    {
+      "name": "3",
+      "directions": 4
+    },
+    {
+      "name": "4",
+      "directions": 4
+    },
+    {
+      "name": "box_0"
+    },
+    {
+      "name": "box_1"
+    },
+    {
+      "name": "box_2"
+    },
+    {
+      "name": "vbox_0"
+    },
+    {
+      "name": "vbox_1"
+    },
+    {
+      "name": "vbox_2"
+    },
+    {
+      "name": "vbox_3"
+    },
+    {
+      "name": "destroyed"
+    }
+  ]
+}

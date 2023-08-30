@@ -1,0 +1,8 @@
+- type: vendingMachineInventory
+  id: NanoMedInventory
+  startingInventory:
+    Brutepack: 3
+    Ointment: 3
+    Bloodpack: 3
+    EpinephrineChemistryBottle: 3
+    Syringe: 3

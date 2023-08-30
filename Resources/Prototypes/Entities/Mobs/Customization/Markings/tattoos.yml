@@ -1,0 +1,139 @@
+- type: marking
+  id: TattooHiveChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_hive_chest
+
+- type: marking
+  id: TattooNightlingChest
+  bodyPart: Chest
+  markingCategory: Chest
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_nightling
+
+- type: marking
+  id: TattooSilverburghLeftLeg
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_silverburgh_l_leg
+
+- type: marking
+  id: TattooSilverburghRightLeg
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_silverburgh_r_leg
+
+- type: marking
+  id: TattooCampbellLeftArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_l_arm
+
+- type: marking
+  id: TattooCampbellRightArm
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_r_arm
+
+- type: marking
+  id: TattooCampbellLeftLeg
+  bodyPart: LLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_l_leg
+
+- type: marking
+  id: TattooCampbellRightLeg
+  bodyPart: RLeg
+  markingCategory: Legs
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#666666"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_campbell_r_leg
+
+- type: marking
+  id: TattooEyeRight
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_r
+
+- type: marking
+  id: TattooEyeLeft
+  bodyPart: Eyes
+  markingCategory: Head
+  speciesRestriction: [Human, SlimePerson, Reptilian, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:EyeColoring
+          negative: true
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: tattoo_eye_l

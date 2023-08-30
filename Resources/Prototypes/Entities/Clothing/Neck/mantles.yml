@@ -1,0 +1,65 @@
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCap
+  name: captain's mantle
+  description: A comfortable and chique mantle befitting of only the most experienced captain.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/capmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/capmantle.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCE
+  name: chief engineer's mantle
+  description: High visibility, check. RIG system, check. High capacity cell, check. Everything a chief engineer could need in a stylish mantle.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/cemantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/cemantle.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleCMO
+  name: chief medical officer's mantle
+  description: For a CMO that has been in enough medbays to know that more PPE means less central command dry cleaning visits when the shift is over.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/cmomantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/cmomantle.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleHOP
+  name: head of personnel's mantle
+  description: A good HOP knows that paper pushing is only half the job... petting your dog and looking fashionable is the other half.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/hopmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/hopmantle.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleHOS
+  name: head of security's mantle
+  description: Shootouts with nukies are just another Tuesday for this HoS. This mantle is a symbol of commitment to the station.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/hosmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/hosmantle.rsi
+    
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckMantleRD
+  name: research director's mantle
+  description: For when long days in the office consist of explosives, poisonous gas, murder robots, and a fresh pizza from cargo; this mantle will keep you comfy.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/mantles/rdmantle.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/mantles/rdmantle.rsi    

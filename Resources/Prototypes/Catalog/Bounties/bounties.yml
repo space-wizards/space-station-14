@@ -1,0 +1,469 @@
+﻿- type: cargoBounty
+  id: BountyArtifact
+  reward: 2500
+  description: bounty-description-artifact
+  entries:
+  - name: bounty-item-artifact
+    amount: 1
+    whitelist:
+      components:
+      - Artifact
+
+- type: cargoBounty
+  id: BountyBaseballBat
+  reward: 8000
+  description: bounty-description-baseball-bat
+  entries:
+  - name: bounty-item-baseball-bat
+    amount: 5
+    whitelist:
+      tags:
+      - BaseballBat
+
+- type: cargoBounty
+  id: BountyBoxHug
+  reward: 6000
+  description: bounty-description-box-hugs
+  entries:
+  - name: bounty-item-box-hugs
+    amount: 1
+    whitelist:
+      tags:
+      - BoxHug
+
+- type: cargoBounty
+  id: BountyBrain
+  reward: 25000
+  description: bounty-description-brain
+  entries:
+  - name: bounty-item-brain
+    amount: 1
+    whitelist:
+      components:
+      - Brain
+
+- type: cargoBounty
+  id: BountyBread
+  reward: 4000
+  description: bounty-description-bread
+  entries:
+  - name: bounty-item-bread
+    amount: 1
+    whitelist:
+      tags:
+      - Bread
+
+- type: cargoBounty
+  id: BountyBriefcase
+  reward: 15000
+  description: bounty-description-briefcase
+  entries:
+  - name: bounty-item-briefcase
+    amount: 5
+    whitelist:
+      tags:
+      - Briefcase
+
+- type: cargoBounty
+  id: BountyCarrot
+  reward: 15000
+  description: bounty-description-carrot
+  entries:
+  - name: bounty-item-carrot
+    amount: 10
+    whitelist:
+      tags:
+      - Carrot
+
+- type: cargoBounty
+  id: BountyCarrotFries
+  reward: 14000
+  description: bounty-description-carrot-fries
+  entries:
+  - name: bounty-item-carrot-fries
+    amount: 3
+    whitelist:
+      tags:
+      - CarrotFries
+
+- type: cargoBounty
+  id: BountyCarp
+  reward: 25000
+  description: bounty-description-carp
+  entries:
+  - name: bounty-item-carp
+    amount: 1
+    whitelist:
+      tags:
+      - Carp
+
+- type: cargoBounty
+  id: BountyClownCostume
+  reward: 1700
+  description: bounty-description-clown-costume
+  entries:
+  - name: bounty-item-clown-mask
+    amount: 1
+    whitelist:
+      tags:
+      - ClownMask
+  - name: bounty-item-clown-shoes
+    amount: 1
+    whitelist:
+      tags:
+      - ClownShoes
+
+- type: cargoBounty
+  id: BountyCorn
+  reward: 20000
+  description: bounty-description-corn
+  entries:
+  - name: bounty-item-corn
+    amount: 10
+    whitelist:
+      tags:
+      - Corn
+
+- type: cargoBounty
+  id: BountyCrayon
+  reward: 8000
+  description: bounty-description-crayon
+  entries:
+  - name: bounty-item-crayon
+    amount: 24
+    whitelist:
+      tags:
+      - Crayon
+
+- type: cargoBounty
+  id: BountyCubanCarp
+  reward: 32000
+  description: bounty-description-cuban-carp
+  entries:
+  - name: bounty-item-cuban-carp
+    amount: 1
+    whitelist:
+      tags:
+      - CubanCarp
+
+- type: cargoBounty
+  id: BountyDonkPocket
+  reward: 12000
+  description: bounty-description-donk-pocket
+  entries:
+  - name: bounty-item-donk-pocket
+    amount: 12
+    whitelist:
+      tags:
+      - DonkPocket
+
+- type: cargoBounty
+  id: BountyDonut
+  reward: 12000
+  description: bounty-description-donut
+  entries:
+  - name: bounty-item-donut
+    amount: 10
+    whitelist:
+      tags:
+      - Donut
+
+- type: cargoBounty
+  id: BountyFigurine
+  reward: 16000
+  description: bounty-description-figurine
+  entries:
+  - name: bounty-item-figurine
+    amount: 5
+    whitelist:
+      tags:
+      - Figurine
+
+- type: cargoBounty
+  id: BountyFleshMonster
+  reward: 30000
+  description: bounty-description-flesh-monster
+  entries:
+  - name: bounty-item-flesh-monster
+    amount: 3
+    whitelist:
+      tags:
+      - Flesh
+
+- type: cargoBounty
+  id: BountyFlower
+  reward: 4000
+  description: bounty-description-flower
+  entries:
+  - name: bounty-item-flower
+    amount: 3
+    whitelist:
+      tags:
+      - Flower
+
+- type: cargoBounty
+  id: BountyGalaxyThistle
+  reward: 24000
+  description: bounty-description-galaxythistle
+  entries:
+  - name: bounty-item-galaxythistle
+    amount: 10
+    whitelist:
+      tags:
+      - Galaxythistle
+
+- type: cargoBounty
+  id: BountyHandcuffs
+  reward: 4000
+  description: bounty-description-handcuffs
+  entries:
+  - name: bounty-item-handcuffs
+    amount: 5
+    whitelist:
+      components:
+      - Handcuff
+
+- type: cargoBounty
+  id: BountyInstrument
+  reward: 1900
+  description: bounty-description-instrument
+  entries:
+  - name: bounty-item-instrument
+    amount: 5
+    whitelist:
+      components:
+      - Instrument
+
+- type: cargoBounty
+  id: BountyKnife
+  reward: 12000
+  description: bounty-description-knife
+  entries:
+  - name: bounty-item-knife
+    amount: 5
+    whitelist:
+      components:
+        - Sharp
+
+- type: cargoBounty
+  id: BountyLemon
+  reward: 20000
+  description: bounty-description-lemon
+  entries:
+  - name: bounty-item-lemon
+    amount: 7
+    whitelist:
+      tags:
+      - Lemon
+
+- type: cargoBounty
+  id: BountyLime
+  reward: 20000
+  description: bounty-description-lime
+  entries:
+  - name: bounty-item-lime
+    amount: 7
+    whitelist:
+      tags:
+      - Lime
+
+- type: cargoBounty
+  id: BountyLung
+  reward: 35000
+  description: bounty-description-lung
+  entries:
+  - name: bounty-item-lung
+    amount: 3
+    whitelist:
+      components:
+      - Lung
+
+- type: cargoBounty
+  id: BountyMonkeyCube
+  reward: 8000
+  description: bounty-description-monkey-cube
+  entries:
+  - name: bounty-item-monkey-cube
+    amount: 3
+    whitelist:
+      tags:
+      - MonkeyCube
+
+- type: cargoBounty
+  id: BountyMouse
+  reward: 2400
+  description: bounty-description-mouse
+  entries:
+  - name: bounty-item-mouse
+    amount: 5
+    whitelist:
+      tags:
+      - Mouse
+
+- type: cargoBounty
+  id: BountyPancake
+  reward: 20000
+  description: bounty-description-pancake
+  entries:
+  - name: bounty-item-pancake
+    amount: 13
+    whitelist:
+      tags:
+      - Pancake
+
+- type: cargoBounty
+  id: BountyPen
+  reward: 8000
+  description: bounty-description-pen
+  entries:
+  - name: bounty-item-pen
+    amount: 10
+    whitelist:
+      tags:
+      - Write
+
+- type: cargoBounty
+  id: BountyPercussion
+  reward: 25000
+  description: bounty-description-percussion
+  entries:
+  - name: bounty-item-percussion
+    amount: 3
+    whitelist:
+      tags:
+      - PercussionInstrument
+
+- type: cargoBounty
+  id: BountyPie
+  reward: 31415
+  description: bounty-description-pie
+  entries:
+  - name: bounty-item-pie
+    amount: 1
+    whitelist:
+      tags:
+      - Pie
+
+- type: cargoBounty
+  id: BountyPrisonUniform
+  reward: 8000
+  description: bounty-description-prison-uniform
+  entries:
+  - name: bounty-item-prison-uniform
+    amount: 4
+    whitelist:
+      tags:
+      - PrisonUniform
+
+- type: cargoBounty
+  id: BountyRadio
+  reward: 10000
+  description: bounty-description-radio
+  entries:
+  - name: bounty-item-radio
+    amount: 12
+    whitelist:
+      components:
+      - Headset
+      - RadioMicrophone
+      tags:
+      - Radio
+
+- type: cargoBounty
+  id: BountyResearchDisk
+  reward: 12000
+  description: bounty-description-research-disk
+  entries:
+  - name: bounty-item-research-disk
+    amount: 1
+    whitelist:
+      components:
+      - ResearchDisk
+
+- type: cargoBounty
+  id: BountyShiv
+  reward: 8000
+  description: bounty-description-shiv
+  entries:
+  - name: bounty-item-shiv
+    amount: 5
+    whitelist:
+      tags:
+      - Shiv
+
+- type: cargoBounty
+  id: BountySoap
+  reward: 8000
+  description: bounty-description-soap
+  entries:
+  - name: bounty-item-soap
+    amount: 3
+    whitelist:
+      tags:
+      - Soap
+
+- type: cargoBounty
+  id: BountySoup
+  reward: 12000
+  description: bounty-description-soup
+  entries:
+  - name: bounty-item-soup
+    amount: 3
+    whitelist:
+      tags:
+      - Soup
+
+- type: cargoBounty
+  id: BountySpear
+  reward: 8000
+  description: bounty-description-spear
+  entries:
+  - name: bounty-item-spear
+    amount: 5
+    whitelist:
+      tags:
+      - Spear
+
+- type: cargoBounty
+  id: BountySyringe
+  reward: 10000
+  description: bounty-description-syringe
+  entries:
+  - name: bounty-item-syringe
+    amount: 10
+    whitelist:
+      tags:
+      - Syringe
+
+- type: cargoBounty
+  id: BountyTechDisk
+  reward: 25000
+  description: bounty-description-tech-disk
+  entries:
+  - name: bounty-item-tech-disk
+    amount: 5
+    whitelist:
+      components:
+      - TechnologyDisk
+
+- type: cargoBounty
+  id: BountyToolbox
+  reward: 8000
+  description: bounty-description-toolbox
+  entries:
+  - name: bounty-item-toolbox
+    amount: 6
+    whitelist:
+      tags:
+      - Toolbox
+
+- type: cargoBounty
+  id: BountyTrash
+  reward: 700
+  description: bounty-description-trash
+  entries:
+  - name: bounty-item-trash
+    amount: 10
+    whitelist:
+      tags:
+      - Trash

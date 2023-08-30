@@ -1,0 +1,109 @@
+﻿- type: constructionGraph
+  id: SolarPanel
+  start: start
+  graph:
+    - node: start
+      edges:
+        - to: solarassembly
+          steps:
+            - tag: SolarAssemblyPart
+              name: Solar Assembly Parts
+              icon:
+                sprite: Objects/Power/solar_parts.rsi
+                state: solar_assembly_parts
+              doAfter: 1
+
+    - node: solarassembly
+      entity: SolarAssembly
+      edges:
+        - to: start
+          completed:
+            - !type:SpawnPrototype
+              prototype: SolarAssemblyPart
+              amount: 1
+            - !type:DeleteEntity {}
+          steps:
+            - tool: Screwing
+              doAfter: 2
+        - to: solarpanel
+          conditions:
+            - !type:EntityAnchored
+              value: true
+          steps:
+            - material: Glass
+              amount: 2
+              doAfter: 0.5
+          completed:
+            - !type:SnapToGrid
+              offset: Center
+        - to: solartracker
+          conditions:
+            - !type:EntityAnchored
+              value: true
+          steps:
+            - tag: SolarTrackerElectronics
+              name: Solar Tracker Electronics
+              icon:
+                sprite: Objects/Misc/module.rsi
+                state: id_mod
+              doAfter: 1
+            - material: Glass
+              amount: 2
+              doAfter: 2
+          completed:
+            - !type:SnapToGrid
+              offset: Center
+
+    - node: solarpanel
+      entity: SolarPanel
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+    - node: solarpanel_broken
+      entity: SolarPanelBroken
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: ShardGlass
+              amount: 2
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 0.5
+
+    - node: solartracker
+      entity: SolarTracker
+      edges:
+        - to: solarassembly
+          completed:
+            - !type:SnapToGrid
+              southRotation: true
+            - !type:SpawnPrototype
+              prototype: SheetGlass1
+              amount: 2
+            - !type:SpawnPrototype
+              prototype: SolarTrackerElectronics
+              amount: 1
+          conditions:
+            - !type:EntityAnchored
+              anchored: true
+          steps:
+            - tool: Prying
+              doAfter: 1

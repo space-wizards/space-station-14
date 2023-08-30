@@ -1,0 +1,301 @@
+# Base Generator
+
+- type: entity
+  abstract: true
+  id: BaseGenerator
+  description: A high efficiency thermoelectric generator.
+  name: generator
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/engine_hum.ogg
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    bodyType: Static
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.4,-0.5,0.4,0.3"
+        density: 190
+        mask:
+        - MachineMask
+        layer:
+        - MachineLayer
+  - type: Transform
+    anchored: true
+    noRot: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: generator
+    snapCardinals: true
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerSupplier
+    supplyRate: 3000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+  - type: Anchorable
+  - type: Pullable
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:ExplodeBehavior
+  - type: Explosive
+    explosionType: Default
+    # Same as AME, but numbers still picked from a hat.
+    maxIntensity: 100
+    intensitySlope: 2
+    totalIntensity: 200
+  - type: StaticPrice
+    price: 500
+  - type: Electrified
+    onHandInteract: false
+    onInteractUsing: false
+    onBump: false
+    requirePower: true
+    highVoltageNode: output
+
+# Base Wallmount Generator
+
+- type: entity
+  abstract: true
+  id: BaseGeneratorWallmount
+  parent: BaseGenerator
+  name: wallmount generator
+  description: A high efficiency thermoelectric generator stuffed in a wall cabinet.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: AmbientOnPowered
+  - type: AmbientSound
+    volume: -15
+    range: 2
+    sound:
+      path: /Audio/Ambience/Objects/hdd_buzz.ogg
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    color: "#3db83b"
+    castShadows: false
+    netsync: false
+  - type: Fixtures
+  - type: Transform
+    anchored: true
+  - type: Physics
+    bodyType: Static
+    canCollide: false
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    layers:
+    - state: panel
+    - state: on
+      shader: unshaded
+  - type: NodeContainer
+    examinable: true
+    nodes:
+      output:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerSupplier
+    supplyRate: 3000
+    supplyRampRate: 500
+    supplyRampTolerance: 500
+  - type: WallMount
+
+# Construction Frames
+
+- type: entity
+  noSpawn: true
+  id: BaseGeneratorWallmountFrame
+  name: wallmount generator frame
+  description: A construction frame for a wallmount generator.
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    drawdepth: WallMountedItems
+    sprite: Structures/Power/Generation/wallmount_generator.rsi
+    layers:
+    - state: panel
+  - type: Construction
+    graph: WallmountGenerator
+    node: frame
+  - type: WallMount
+
+# Generators in use
+
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorBasic
+  suffix: Basic, 3kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 3000
+
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorBasic15kW
+  suffix: Basic, 15kW
+  components:
+    - type: PowerSupplier
+      supplyRate: 15000
+
+- type: entity
+  parent: BaseGeneratorWallmount
+  id: GeneratorWallmountBasic
+  suffix: Basic, 3kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 3000
+  - type: Construction
+    graph: WallmountGenerator
+    node: generator
+  - type: StaticPrice
+    price: 14
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+
+- type: entity
+  parent: BaseGeneratorWallmount
+  id: GeneratorWallmountAPU
+  name: shuttle APU
+  description: An auxiliary power unit for a shuttle - 6kW.
+  suffix: APU, 6kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 6000
+  - type: Construction
+    graph: WallmountGenerator
+    node: APU
+  - type: StaticPrice
+    price: 38
+  - type: ContainerFill
+    containers:
+      board: [ WallmountGeneratorAPUElectronics ]
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+
+# RTG - no fuel requirement
+
+- type: entity
+  parent: BaseGenerator
+  id: GeneratorRTG
+  name: RTG
+  description: A Radioisotope Thermoelectric Generator for long term power.
+  suffix: 10kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 10000 # supposed to be low power at no fuel cost to power derelicts
+  - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    state: rtg
+  - type: AmbientSound
+    range: 5
+    sound:
+      path: /Audio/Ambience/Objects/buzzing.ogg
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 600
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 300
+        behaviors:
+          - !type:PlaySoundBehavior
+            sound:
+              path: /Audio/Effects/metalbreak.ogg
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              GeneratorRTGDamaged:
+                min: 1
+                max: 1
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+
+# TODO: need radioactive fallout when destroyed
+
+- type: entity
+  parent: GeneratorRTG
+  id: GeneratorRTGDamaged
+  name: damaged RTG
+  description: A Radioisotope Thermoelectric Generator for long term power. This one has damaged shielding.
+  suffix: 10kW
+  components:
+  - type: PowerSupplier
+    supplyRate: 10000
+  - type: Sprite
+    sprite: Structures/Power/Generation/rtg.rsi
+    layers:
+      - state: rtg_damaged
+      - state: rtg_glow
+  - type: RadiationSource # ideally only when opened.
+    intensity: 2
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+        - !type:DoActsBehavior
+          acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          SheetSteel1:
+            min: 1
+            max: 5
+          SheetUranium1:
+            min: 1
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]

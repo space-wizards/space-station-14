@@ -1,0 +1,118 @@
+﻿- type: decal
+  id: WoodTrimThinBox
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_box
+
+- type: decal
+  id: WoodTrimThinCornerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_corner_ne
+
+- type: decal
+  id: WoodTrimThinCornerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_corner_se
+
+- type: decal
+  id: WoodTrimThinCornerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_corner_nw
+
+- type: decal
+  id: WoodTrimThinCornerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_corner_sw
+
+- type: decal
+  id: WoodTrimThinInnerNe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_inner_ne
+
+- type: decal
+  id: WoodTrimThinInnerSe
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_inner_se
+
+- type: decal
+  id: WoodTrimThinInnerNw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_inner_nw
+
+- type: decal
+  id: WoodTrimThinInnerSw
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_inner_sw
+
+- type: decal
+  id: WoodTrimThinEndN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_end_n
+
+- type: decal
+  id: WoodTrimThinEndE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_end_e
+
+- type: decal
+  id: WoodTrimThinEndS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_end_s
+
+- type: decal
+  id: WoodTrimThinEndW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_end_w
+
+- type: decal
+  id: WoodTrimThinLineN
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_line_n
+
+- type: decal
+  id: WoodTrimThinLineE
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_line_e
+
+- type: decal
+  id: WoodTrimThinLineS
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_line_s
+
+- type: decal
+  id: WoodTrimThinLineW
+  tags: ["station", "markings"]
+  sprite:
+    sprite: Decals/wood_trim.rsi
+    state: thin_line_w

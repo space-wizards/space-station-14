@@ -1,0 +1,87 @@
+﻿- type: guideEntry
+  id: Engineering
+  name: guide-entry-engineering
+  text: "/ServerInfo/Guidebook/Engineering/Engineering.xml"
+  children:
+  - Atmospherics
+  - Construction
+  - Power
+  - ShuttleCraft
+  - Networking
+
+- type: guideEntry
+  id: Construction
+  name: guide-entry-construction
+  text: "/ServerInfo/Guidebook/Engineering/Construction.xml"
+  children: 
+  - AirlockSecurity
+  
+- type: guideEntry
+  id: AirlockSecurity
+  name: guide-entry-airlock-security
+  text: "/ServerInfo/Guidebook/Engineering/AirlockSecurity.xml"
+
+- type: guideEntry
+  id: Atmospherics
+  name: guide-entry-atmospherics
+  text: "/ServerInfo/Guidebook/Engineering/Atmospherics.xml"
+  children:
+  - Fires
+
+- type: guideEntry
+  id: Fires
+  name: guide-entry-fires
+  text: "/ServerInfo/Guidebook/Engineering/Fires.xml"
+
+- type: guideEntry
+  id: ShuttleCraft
+  name: guide-entry-shuttle-craft
+  text: "/ServerInfo/Guidebook/Engineering/Shuttlecraft.xml"
+
+- type: guideEntry
+  id: Networking
+  name: guide-entry-networking
+  text: "/ServerInfo/Guidebook/Engineering/Networking.xml"
+  children:
+  - NetworkConfigurator
+  - AccessConfigurator
+
+- type: guideEntry
+  id: NetworkConfigurator
+  name: guide-entry-network-configurator
+  text: "/ServerInfo/Guidebook/Engineering/NetworkConfigurator.xml"
+
+- type: guideEntry
+  id: AccessConfigurator
+  name: guide-entry-access-configurator
+  text: "/ServerInfo/Guidebook/Engineering/AccessConfigurator.xml"
+
+- type: guideEntry
+  id: Power
+  name: guide-entry-power
+  text: "/ServerInfo/Guidebook/Engineering/Power.xml"
+  children:
+  - PortableGenerator
+  - AME
+  - Singularity
+  - TEG
+
+- type: guideEntry
+  id: AME
+  name: guide-entry-ame
+  text: "/ServerInfo/Guidebook/Engineering/AME.xml"
+
+- type: guideEntry
+  id: Singularity
+  name: guide-entry-singularity
+  text: "/ServerInfo/Guidebook/Engineering/Singularity.xml"
+
+- type: guideEntry
+  id: TEG
+  name: guide-entry-teg
+  text: "/ServerInfo/Guidebook/Engineering/TEG.xml"
+
+- type: guideEntry
+  id: PortableGenerator
+  name: guide-entry-portable-generator
+  text: "/ServerInfo/Guidebook/Engineering/PortableGenerator.xml"

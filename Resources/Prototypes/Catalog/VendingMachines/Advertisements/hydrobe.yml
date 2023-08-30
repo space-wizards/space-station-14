@@ -1,0 +1,5 @@
+- type: advertisementsPack
+  id: HyDrobeAds
+  advertisements:
+    - advertisement-hydrobe-1
+    - advertisement-hydrobe-2

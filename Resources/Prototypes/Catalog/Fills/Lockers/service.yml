@@ -1,0 +1,126 @@
+- type: entity
+  id: LockerBoozeFilled
+  suffix: Filled
+  parent: LockerBooze
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingOuterArmorBasicSlim
+      - id: WeaponShotgunDoubleBarreledRubber
+      - id: DrinkShaker
+      - id: ClothingEyesHudBeer
+      - id: DrinkBottleBeer
+        prob: 0.5
+      - id: DrinkBottleBeer
+        prob: 0.5
+      - id: DrinkBottleBeer
+        prob: 0.5
+      - id: BoxBeanbag
+        amount: 2
+      - id: RagItem
+        amound: 2
+
+#- type: entity
+#  id: LockerFormalFilled
+#  suffix: Filled
+#  parent: LockerFormal
+
+- type: entity
+  id: ClosetChefFilled
+  suffix: Filled
+  parent: ClosetChef
+  components:
+  - type: StorageFill
+    contents:
+      - id: CrowbarRed
+      - id: MonkeyCubeBox
+      - id: BoxMousetrap
+        amount: 2
+      - id: SprayBottleWater
+      - id: ReagentContainerFlour
+        amount: 2
+      - id: ReagentContainerSugar
+      - id: FoodCondimentPacketSalt
+        amount: 3
+      - id: FoodCondimentBottleEnzyme
+      # really, milk should go in the fridge. Unfortunately saltern only has freezers.
+      # yes, I'm using this as an excuse to not have to do extra work.
+      - id: ReagentContainerMilk
+        amount: 2
+      - id: ReagentContainerMilkSoy
+
+- type: entity
+  id: ClosetJanitorFilled
+  suffix: Filled
+  parent: ClosetJanitor
+  components:
+  - type: StorageFill
+    contents:
+      - id: MopItem
+        amount: 2
+      - id: BoxMousetrap
+        amount: 2
+      - id: WetFloorSign
+        amount: 3
+      - id: TrashBag
+        amount: 2
+      - id: LightReplacer
+      - id: BoxLightMixed
+      - id: Holoprojector
+      - id: SoapNT
+        amount: 2
+      - id: FlashlightLantern
+        amount: 2
+      - id: Plunger
+        amount: 2
+
+- type: entity
+  id: ClosetLegalFilled
+  suffix: Filled
+  parent: ClosetLegal
+  components:
+  - type: StorageFill
+    contents:
+      - id: BriefcaseBrownFilled
+        prob: 0.80
+      - id: ClothingOuterRobesJudge
+
+- type: entity
+  id: LockerBotanistFilled
+  suffix: Filled
+  parent: LockerBotanist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingHandsGlovesLeather
+      - id: ClothingOuterApronBotanist
+      - id: ClothingHeadBandBotany
+      - id: HydroponicsToolClippers
+      - id: HydroponicsToolSpade
+      - id: HydroponicsToolMiniHoe
+      - id: RobustHarvestChemistryBottle
+        prob: 0.3
+      - id: ClothingBeltPlant
+      - id: PlantBag ##Some maps don't have nutrivend
+      - id: BoxMouthSwab
+      - id: HandLabeler
+      - id: ClothingUniformOveralls
+      - id: ClothingHeadHatTrucker
+        prob: 0.1
+
+- type: entity
+  id: LockerBotanistLoot
+  suffix: Loot
+  parent: LockerBotanist
+  components:
+  - type: StorageFill
+    contents:
+      - id: ClothingUniformOveralls
+      - id: ClothingHeadHatTrucker
+        prob: 0.3
+      - id: GatfruitSeeds
+        prob: 0.1
+      - id: FlyAmanitaSeeds
+        prob: 0.5
+      - id: NettleSeeds
+        prob: 0.7

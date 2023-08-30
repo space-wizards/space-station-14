@@ -1,0 +1,6 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              Name="InfoContainer"
+              Orientation="Vertical"
+              Margin="2 2 0 0"
+              SeparationOverride="10"
+              Access="Public"/>

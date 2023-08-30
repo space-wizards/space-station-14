@@ -1,0 +1,8 @@
+﻿- type: entity
+  id: BufferingIcon
+  noSpawn: true
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/buffering.rsi
+    state: icon
+    drawdepth: Overlays

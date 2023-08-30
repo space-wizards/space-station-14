@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/austation/austation/tree/30f0ba9c2dab3ec8e55ab6fae03bde1566a154ca, space kangaroo made by and kangaroo modified by brainfood1183 (github)",
+  "states": [
+    {
+      "name": "kangaroo",
+      "directions": 4
+    },
+    {
+      "name": "kangaroo-dead"
+    },
+    {
+      "name": "kangaroo-crit"
+    },
+    {
+      "name": "kangaroo-space-crit"
+    },
+    {
+      "name": "kangaroo-space",
+      "directions": 4
+    },
+    {
+      "name": "glow",
+      "directions": 4,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "kangaroo-space-dead"
+    }
+  ]
+}

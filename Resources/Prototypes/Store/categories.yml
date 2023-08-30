@@ -1,0 +1,70 @@
+#debug
+- type: storeCategory
+  id: Debug
+  name: store-category-debug
+
+- type: storeCategory
+  id: Debug2
+  name: store-category-debug2
+
+#uplink categoires
+- type: storeCategory
+  id: UplinkWeapons
+  name: store-category-weapons
+  priority: 0
+
+- type: storeCategory
+  id: UplinkAmmo
+  name: store-category-ammo
+  priority: 1
+
+- type: storeCategory
+  id: UplinkExplosives
+  name: store-category-explosives
+  priority: 2
+
+- type: storeCategory
+  id: UplinkMisc
+  name: store-category-misc
+  priority: 3
+
+- type: storeCategory
+  id: UplinkBundles
+  name: store-category-bundles
+  priority: 4
+
+- type: storeCategory
+  id: UplinkTools
+  name: store-category-tools
+  priority: 5
+
+- type: storeCategory
+  id: UplinkUtility
+  name: store-category-utility
+  priority: 6
+
+- type: storeCategory
+  id: UplinkImplants
+  name: store-category-implants
+  priority: 6
+
+- type: storeCategory
+  id: UplinkJob
+  name: store-category-job
+  priority: 7
+
+- type: storeCategory
+  id: UplinkArmor
+  name: store-category-armor
+  priority: 8
+
+- type: storeCategory
+  id: UplinkPointless
+  name: store-category-pointless
+  priority: 9
+
+#revenant
+- type: storeCategory
+  id: RevenantAbilities
+  name: store-category-abilities
+

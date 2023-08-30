@@ -1,0 +1,89 @@
+- type: entity
+  id: BaseGameRule
+  abstract: true
+  noSpawn: true
+  components:
+  - type: GameRule
+
+- type: entity
+  id: DeathMatch
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: DeathMatchRule
+
+- type: entity
+  id: InactivityTimeRestart
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: InactivityRule
+    inactivityMaxTime: 600
+    roundEndDelay: 10
+
+- type: entity
+  id: MaxTimeRestart
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: MaxTimeRestartRule
+    roundMaxTime: 300
+    roundEndDelay: 10
+
+- type: entity
+  id: Nukeops
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: NukeopsRule
+    faction: Syndicate
+
+- type: entity
+  id: Pirates
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: PiratesRule
+
+- type: entity
+  id: Traitor
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: TraitorRule
+
+- type: entity
+  id: Sandbox
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SandboxRule
+
+- type: entity
+  id: Secret
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: SecretRule
+
+- type: entity
+  id: Zombie
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: ZombieRule
+
+# event schedulers
+- type: entity
+  id: BasicStationEventScheduler
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: BasicStationEventScheduler
+
+- type: entity
+  id: RampingStationEventScheduler
+  parent: BaseGameRule
+  noSpawn: true
+  components:
+  - type: RampingStationEventScheduler

@@ -1,0 +1,44 @@
+- type: parallax
+  id: Sky
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/land.png"
+      slowness: 0.98
+      scale: 1,1
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Parallaxes/noise.png"
+      slowness: 0.95
+      scale: "2, 2"
+      scrolling: "0.1, -0.05"
+
+- type: parallax
+  id: Dirt
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/Planet/Grass/grass.png"
+      slowness: 0
+      scale: "1, 1"
+      shader: ""
+
+- type: parallax
+  id: Grass
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: /Textures/Tiles/Planet/Grass/grass.png
+      slowness: 0
+      scale: "1, 1"
+      shader: ""
+
+- type: parallax
+  id: Snow
+  layers:
+    - texture:
+        !type:ImageParallaxTextureSource
+        path: "/Textures/Tiles/snow.png"
+      slowness: 0
+      scale: "1, 1"
+      shader: ""

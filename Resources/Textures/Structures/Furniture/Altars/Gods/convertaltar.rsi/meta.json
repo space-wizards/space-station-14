@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from https://github.com/tgstation/tgstation/commit/8cd8d259eeb8d6af23a08a0de8c085e2a7b4b809",
+  "states": [
+    {
+      "name": "convertaltar"
+    },
+    {
+      "name": "lightning",
+      "delays": [
+        [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+      ]
+    },
+    {
+      "name": "red"
+    },
+    {
+      "name": "blue"
+    },
+    {
+      "name": "orange"
+    },
+    {
+      "name": "festival"
+    },
+    {
+      "name": "burden"
+    },
+    {
+      "name": "maint"
+    },
+    {
+      "name": "yellow"
+    },
+    {
+      "name": "white"
+    }
+  ]
+}

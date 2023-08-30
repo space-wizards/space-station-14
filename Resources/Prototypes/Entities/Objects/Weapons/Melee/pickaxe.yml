@@ -1,0 +1,50 @@
+- type: entity
+  name: pickaxe
+  parent: BaseItem
+  id: Pickaxe
+  description: Notched to perfection, for jamming it into rocks
+  components:
+  - type: Tag
+    tags:
+    - Pickaxe
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+    state: pickaxe
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 2.5
+        Piercing: 2.5
+        Structural: 10
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: 5
+        Piercing: 5
+        Structural: 10
+  - type: Item
+    size: 80
+    sprite: Objects/Weapons/Melee/pickaxe.rsi
+
+- type: entity
+  name: mining drill
+  parent: BaseItem
+  id: MiningDrill
+  description: Powerful tool used to quickly drill through rocks
+  components:
+  - type: Tag
+    tags:
+      - Pickaxe
+  - type: Sprite
+    sprite: Objects/Tools/handdrill.rsi
+    state: handdrill
+  - type: ItemCooldown
+  - type: MeleeWeapon
+    attackRate: 1.5
+    damage:
+      types:
+        Blunt: 5
+        Piercing: 5
+        Structural: 10

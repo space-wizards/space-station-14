@@ -1,0 +1,42 @@
+- type: job
+  id: Janitor
+  name: job-name-janitor
+  description: job-description-janitor
+  playTimeTracker: JobJanitor
+  startingGear: JanitorGear
+  icon: "JobIconJanitor"
+  supervisors: job-supervisors-hop
+  access:
+  - Janitor
+  - Maintenance
+  special:
+  - !type:GiveItemOnHolidaySpecial
+    holiday: GarbageDay
+    prototype: WeaponRevolverInspector
+
+- type: startingGear
+  id: JanitorGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitJanitor
+    back: ClothingBackpackFilled
+    shoes: ClothingShoesGaloshes
+    head: ClothingHeadHatPurplesoft
+    id: JanitorPDA
+    ears: ClothingHeadsetService
+    belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanitor
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled
+
+- type: startingGear
+  id: JanitorMaidGear
+  equipment:
+    jumpsuit: ClothingUniformJumpskirtJanimaid
+    back: ClothingBackpackFilled
+    id: JanitorPDA
+    head: ClothingHeadHatCatEars
+    ears: ClothingHeadsetService
+    belt: ClothingBeltJanitorFilled
+  innerclothingskirt: ClothingUniformJumpskirtJanimaid
+  satchel: ClothingBackpackSatchelFilled
+  duffelbag: ClothingBackpackDuffelFilled

@@ -1,0 +1,9 @@
+- type: entity
+  parent: PosterBase
+  id: PosterMapMetaRight
+  name: "Meta Station Map"
+  description: "A map of Meta Station. This looks really old."
+  components:
+  - type: Sprite
+    state: metamap64x
+    sprite: Structures/Wallmounts/metamap.rsi

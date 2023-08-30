@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from tgstation at commit https://github.com/tgstation/tgstation/commit/d5cb4288ec5f7cb9fb5b6f6e798f4c64cd82cd09",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "bed"
+    },
+    {
+      "name": "bed-MED"
+    },
+    {
+      "name": "dogbed"
+    },
+    {
+      "name": "mattress"
+    },
+    {
+      "name": "rack"
+    },
+    {
+      "name": "dresser"
+    }
+  ]
+}

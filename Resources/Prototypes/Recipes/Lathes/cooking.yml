@@ -1,0 +1,64 @@
+- type: latheRecipe
+  id: ButchCleaver
+  result: ButchCleaver
+  completetime: 2
+  materials:
+    Steel: 300
+    Plastic: 50
+
+- type: latheRecipe
+  id: KitchenKnife
+  result: KitchenKnife
+  completetime: 2
+  materials:
+    Steel: 200
+    Plastic: 50
+
+- type: latheRecipe
+  id: DrinkMug
+  result: DrinkMug
+  completetime: 0.8
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: DrinkMugMetal
+  result: DrinkMugMetal
+  completetime: 0.8
+  materials:
+    Steel: 50
+
+- type: latheRecipe
+  id: DrinkGlass
+  result: DrinkGlass
+  completetime: 0.8
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: FoodPlate
+  result: FoodPlate
+  completetime: 0.8
+  materials:
+    Glass: 100
+
+- type: latheRecipe
+  id: FoodPlateSmall
+  result: FoodPlateSmall
+  completetime: 0.4
+  materials:
+    Glass: 50
+
+- type: latheRecipe
+  id: FoodPlatePlastic
+  result: FoodPlatePlastic
+  completetime: 0.8
+  materials:
+    Plastic: 100
+
+- type: latheRecipe
+  id: FoodPlateSmallPlastic
+  result: FoodPlateSmallPlastic
+  completetime: 0.4
+  materials:
+    Plastic: 50

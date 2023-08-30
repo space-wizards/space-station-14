@@ -1,0 +1,170 @@
+- type: entity
+  name: space carp
+  id: BaseMobCarp
+  parent: SimpleSpaceMobBase
+  description: It's a space carp.
+  abstract: true
+  components:
+    - type: InputMover
+    - type: MobMover
+    - type: HTN
+      rootTask:
+        task: SimpleHostileCompound
+      blackboard:
+        NavSmash: !type:Bool
+          true
+    - type: NpcFactionMember
+      factions:
+        - SimpleHostile
+    - type: Sprite
+      drawdepth: Mobs
+      sprite: Mobs/Aliens/Carps/space.rsi
+      layers:
+      - map: [ "enum.DamageStateVisualLayers.Base" ]
+        state: alive
+    - type: CombatMode
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 80
+          mask:
+            - FlyingMobMask
+          layer:
+            - FlyingMobLayer
+    - type: MobState
+    - type: MobThresholds
+      thresholds:
+        0: Alive
+        50: Dead
+    - type: Stamina
+      critThreshold: 100
+    - type: MovementAlwaysTouching
+    - type: DamageStateVisuals
+      states:
+        Alive:
+          Base: alive
+          BaseUnshaded: mouth
+        Dead:
+          Base: dead
+          BaseUnshaded: dead_mouth
+    - type: Butcherable
+      spawned:
+        - id: FoodMeatFish
+          amount: 2
+    - type: MeleeWeapon
+      altDisarm: false
+      hidden: true
+      angle: 0
+      animation: WeaponArcBite
+      soundHit:
+        path: /Audio/Effects/bite.ogg
+      damage:
+        types:
+          Piercing: 5
+          Slash: 10
+    - type: TypingIndicator
+      proto: alien
+    - type: NoSlip
+    - type: Tag
+      tags:
+        - Carp
+        - DoorBumpOpener
+    - type: ReplacementAccent
+      accent: genericAggressive
+
+- type: entity
+  parent: BaseMobCarp
+  id: MobCarp
+  components:
+  - type: Sprite
+    layers:
+    - map: [ "enum.DamageStateVisualLayers.Base" ]
+      state: alive
+    - map: [ "enum.DamageStateVisualLayers.BaseUnshaded" ]
+      state: mouth
+      shader: unshaded
+  - type: RandomSprite
+    available:
+    - enum.DamageStateVisualLayers.Base:
+        alive: Rainbow
+      enum.DamageStateVisualLayers.BaseUnshaded:
+        mouth: ""
+
+- type: entity
+  name: magicarp
+  parent: BaseMobCarp
+  id: MobCarpMagic
+  description: Looks like some kind of fish. Might be magical.
+  components:
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/magic.rsi
+    - type: TypingIndicator
+      proto: guardian
+
+- type: entity
+  name: holocarp
+  parent: BaseMobCarp
+  id: MobCarpHolo
+  description: Carp made out of holographic energies. Sadly for you, it is very much real.
+  components:
+    - type: Sprite
+      sprite: Mobs/Aliens/Carps/holo.rsi
+    - type: Physics
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeCircle
+            radius: 0.40
+          density: 10
+          mask:
+            - MobMask
+          layer:
+            - Opaque
+    - type: TypingIndicator
+      proto: robot
+
+- type: entity
+  id: MobCarpSalvage
+  parent: MobCarp
+  suffix: "Salvage Ruleset"
+  components:
+    - type: GhostRole
+      prob: 0.33
+      name: ghost-role-information-salvage-carp-name
+      allowMovement: true
+      allowSpeech: true
+      description: ghost-role-information-salvage-carp-description
+    - type: GhostTakeoverAvailable
+    - type: SalvageMobRestrictions
+
+- type: entity
+  name: space carp
+  id: MobCarpDragon
+  suffix: DragonBrood
+  parent: MobCarp
+  components:
+    - type: GhostRole
+      allowMovement: true
+      allowSpeech: true
+      makeSentient: true
+      name: ghost-role-information-sentient-carp-name
+      description: ghost-role-information-sentient-carp-description
+    - type: GhostTakeoverAvailable
+    - type: HTN
+      rootTask:
+        task: DragonCarpCompound
+
+- type: entity
+  id: MobCarpDungeon
+  parent: MobCarp
+  suffix: Dungeon
+  components:
+  - type: MeleeWeapon
+    damage:
+      types:
+        Slash: 5

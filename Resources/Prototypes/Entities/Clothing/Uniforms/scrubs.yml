@@ -1,0 +1,32 @@
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorPurple
+  name: purple scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/purple.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/purple.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorGreen
+  name: green scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/green.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/green.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: UniformScrubsColorBlue
+  name: blue scrubs
+  description: A combination of comfort and utility intended to make removing every last organ someone has and selling them to a space robot much more official looking.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Scrubs/blue.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Scrubs/blue.rsi

@@ -1,0 +1,15 @@
+# Just copypasta of some animal basic body parts for interaction,
+# It's basically as animals except a different torso with different organs
+- type: entity
+  id: TorsoRat
+  name: "animal torso"
+  parent: PartAnimal
+  noSpawn: true
+  components:
+  - type: BodyPart
+    partType: Torso
+  - type: Damageable
+    damageContainer: Biological
+  - type: Tag
+    tags:
+      - Trash

@@ -1,0 +1,73 @@
+# Damage due to being unable to breathe.
+# Represents not enough oxygen (or equivalent) getting to the blood.
+# Usually healed automatically if entity can breathe
+- type: damageType
+  id: Asphyxiation
+  armorCoefficientPrice: 5
+  armorFlatPrice: 50
+
+
+# Damage representing not having enough blood.
+# Represents there not enough blood to supply oxygen (or equivalent).
+- type: damageType
+  id: Bloodloss
+  armorCoefficientPrice: 5
+  armorFlatPrice: 50
+
+- type: damageType
+  id: Blunt
+  armorCoefficientPrice: 2
+  armorFlatPrice: 10
+  
+- type: damageType
+  id: Cellular
+  armorCoefficientPrice: 5
+  armorFlatPrice: 30
+  
+- type: damageType
+  id: Caustic
+  armorCoefficientPrice: 5
+  armorFlatPrice: 30
+  
+- type: damageType
+  id: Cold
+  armorCoefficientPrice: 2.5
+  armorFlatPrice: 20
+
+- type: damageType
+  id: Heat
+  armorCoefficientPrice: 2.5
+  armorFlatPrice: 20
+
+- type: damageType
+  id: Piercing
+  armorCoefficientPrice: 2
+  armorFlatPrice: 10
+
+# Poison damage. Generally caused by various reagents being metabolised.
+- type: damageType
+  id: Poison
+  armorCoefficientPrice: 10
+  armorFlatPrice: 60
+
+- type: damageType
+  id: Radiation
+  armorCoefficientPrice: 2.5
+  armorFlatPrice: 16
+
+- type: damageType
+  id: Shock
+  armorCoefficientPrice: 2.5
+  armorFlatPrice: 20
+
+- type: damageType
+  id: Slash
+  armorCoefficientPrice: 2
+  armorFlatPrice: 10
+
+# Damage represent structures internal integrity.
+# Exclusive for structures such as walls, airlocks and others.
+- type: damageType
+  id: Structural
+  armorCoefficientPrice: 1
+  armorFlatPrice: 1

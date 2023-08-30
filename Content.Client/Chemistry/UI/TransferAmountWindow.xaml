@@ -1,0 +1,11 @@
+﻿<DefaultWindow xmlns="https://spacestation14.io"
+            Title="{Loc 'ui-transfer-amount-title'}"
+            Resizable="False">
+
+    <BoxContainer Orientation="Vertical" SeparationOverride="4" MinSize="240 80">
+        <BoxContainer Orientation="Horizontal">
+            <LineEdit Name="AmountLineEdit" Access="Public" HorizontalExpand="True" PlaceHolder="{Loc 'ui-transfer-amount-line-edit-placeholder'}"/>
+        </BoxContainer>
+        <Button Name="ApplyButton" Access="Public" Text="{Loc 'ui-transfer-amount-apply'}"/>
+    </BoxContainer>
+</DefaultWindow>

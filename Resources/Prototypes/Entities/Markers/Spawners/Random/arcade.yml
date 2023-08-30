@@ -1,0 +1,15 @@
+- type: entity
+  id: RandomArcade
+  name: random arcade spawner
+  parent: MarkerBase
+  components:
+  - type: Sprite
+    layers:
+      - state: red
+      - sprite: Structures/Machines/arcade.rsi
+        state: icon
+  - type: RandomSpawner
+    prototypes:
+      - BlockGameArcade
+      - SpaceVillainArcadeFilled
+    chance: 1

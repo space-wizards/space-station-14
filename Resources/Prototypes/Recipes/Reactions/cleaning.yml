@@ -1,0 +1,34 @@
+- type: reaction
+  id: Bleach
+  reactants:
+    TableSalt:
+      amount: 2
+    SpaceCleaner:
+      amount: 2
+    Oxygen:
+      amount: 1
+  products:
+    Bleach: 5
+
+- type: reaction
+  id: SpaceCleaner
+  reactants:
+    Ammonia:
+      amount: 1
+    Water:
+      amount: 1
+  products:
+    SpaceCleaner: 2
+
+- type: reaction
+  id: SpaceLube
+  impact: Medium
+  reactants:
+    Water:
+      amount: 1
+    Silicon:
+      amount: 1
+    Oxygen:
+      amount: 1
+  products:
+    SpaceLube: 3

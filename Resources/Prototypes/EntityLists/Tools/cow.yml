@@ -1,0 +1,10 @@
+﻿- type: entityList
+  id: cowtools
+  entities:
+  - Haycutters
+  - Moodriver
+  - Wronch
+  - Cowbar
+  - Mooltitool
+  - Cowelder
+  - Milkalyzer

@@ -1,0 +1,58 @@
+- type: entity
+  id: HandheldHealthAnalyzerUnpowered
+  parent: BaseItem
+  name: health analyzer
+  description: A hand-held body scanner capable of distinguishing vital signs of the subject.
+  components:
+  - type: Sprite
+    sprite: Objects/Specific/Medical/healthanalyzer.rsi
+    state: icon
+    layers:
+      - state: icon
+      - state: analyzer
+        shader: unshaded
+        visible: true
+        map: [ "enum.PowerDeviceVisualLayers.Powered" ]
+  - type: ActivatableUI
+    key: enum.HealthAnalyzerUiKey.Key
+    closeOnHandDeselect: false
+  - type: UserInterface
+    interfaces:
+      - key: enum.HealthAnalyzerUiKey.Key
+        type: HealthAnalyzerBoundUserInterface
+  - type: HealthAnalyzer
+    scanningEndSound:
+      path: "/Audio/Items/Medical/healthscanner.ogg"
+  - type: Tag
+    tags:
+      - DiscreteHealthAnalyzer
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.PowerCellSlotVisuals.Enabled:
+        enum.PowerDeviceVisualLayers.Powered:
+          True: { visible: true }
+          False: { visible: false }
+  - type: GuideHelp
+    guides:
+      - Medical Doctor
+
+- type: entity
+  id: HandheldHealthAnalyzer
+  parent: [ HandheldHealthAnalyzerUnpowered, PowerCellSlotSmallItem]
+  suffix: Powered
+  components:
+  - type: PowerCellDraw
+    drawRate: 0
+    useRate: 20
+  - type: ActivatableUIRequiresPowerCell
+
+- type: entity
+  id: HandheldHealthAnalyzerEmpty
+  parent: HandheldHealthAnalyzer
+  suffix: Empty
+  components:
+  - type: ItemSlots
+    slots:
+      cell_slot:
+        name: power-cell-slot-component-slot-name-default

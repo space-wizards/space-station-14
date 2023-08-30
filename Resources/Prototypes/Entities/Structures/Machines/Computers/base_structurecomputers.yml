@@ -1,0 +1,59 @@
+- type: entity
+  parent: BaseStructureComputer
+  id: BaseComputer
+  name: computer
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Effects/glass_hit.ogg"
+  - type: Construction
+    graph: Computer
+    node: computer
+    containers:
+      - board
+  - type: Computer
+  - type: ApcPowerReceiver
+    powerLoad: 200
+  - type: ExtensionCableReceiver
+  - type: ActivatableUIRequiresPower
+  - type: Sprite
+    sprite: Structures/Machines/computers.rsi
+    layers:
+    - map: ["computerLayerBody"]
+      state: computer
+    - map: ["computerLayerKeyboard"]
+      state: generic_keyboard
+    - map: ["computerLayerScreen"]
+      state: generic
+    - map: ["computerLayerKeys"]
+      state: generic_keys
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ComputerVisuals.Powered:
+        computerLayerScreen:
+          True: { visible: true, shader: unshaded }
+          False: { visible: false }
+        computerLayerKeys:
+          True: { visible: true, shader: unshaded }
+          False: { visible: true, shader: shaded }
+  - type: LitOnPowered
+  - type: PointLight
+    radius: 1.5
+    energy: 1.6
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.4" # shine from the top, not bottom of the computer
+    castShadows: false
+  - type: EmitSoundOnUIOpen
+    sound:
+      collection: Keyboard
+  - type: ContainerContainer
+    containers:
+      board: !type:Container
+        ents: []

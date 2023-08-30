@@ -1,0 +1,112 @@
+{
+  "copyright" : "Taken from https://github.com/tgstation/tgstation at at https://github.com/tgstation/tgstation/commit/40d89d11ea4a5cb81d61dc1018b46f4e7d32c62a",
+  "license" : "CC-BY-SA-3.0",
+  "version": 1,
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "mech_lights_off"
+    },
+    {
+      "name": "mech_lights_on"
+    },
+    {
+      "name": "mech_view_stats"
+    },
+    {
+      "name": "mech_eject"
+    },
+    {
+      "name": "mech_seat_swap"
+    },
+    {
+      "name": "mech_internals_off"
+    },
+    {
+      "name": "mech_internals_on"
+    },
+    {
+      "name": "mech_cycle_equip_off"
+    },
+    {
+      "name": "mech_cycle_equip_on"
+    },
+    {
+      "name": "mech_defense_mode_off"
+    },
+    {
+      "name": "mech_defense_mode_on"
+    },
+    {
+      "name": "mech_thrusters_off"
+    },
+    {
+      "name": "mech_thrusters_on"
+    },
+    {
+      "name": "mech_smoke"
+    },
+    {
+      "name": "mech_zoom_off"
+    },
+    {
+      "name": "mech_zoom_on"
+    },
+    {
+      "name": "mech_phasing_off"
+    },
+    {
+      "name": "mech_phasing_on"
+    },
+    {
+      "name": "mech_damtype_brute"
+    },
+    {
+      "name": "mech_damtype_burn"
+    },
+    {
+      "name": "mech_damtype_toxin"
+    },
+    {
+      "name": "mech_overload_off"
+    },
+    {
+      "name": "mech_overload_on"
+    },
+    {
+      "name": "strafe"
+    },
+    {
+      "name": "meson"
+    },
+    {
+      "name": "mech_ivanov"
+    },
+    {
+      "name": "mech_ivanov_cooldown",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    },
+    {
+      "name": "mech_savannah"
+    },
+    {
+      "name": "mech_savannah_cooldown",
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2
+        ]
+      ]
+    }
+  ]
+}

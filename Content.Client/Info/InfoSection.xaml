@@ -1,0 +1,5 @@
+﻿<BoxContainer xmlns="https://spacestation14.io"
+              Orientation="Vertical">
+    <Label Name="TitleLabel" StyleClasses="LabelHeading"/>
+    <RichTextLabel Name="Content"/>
+</BoxContainer>

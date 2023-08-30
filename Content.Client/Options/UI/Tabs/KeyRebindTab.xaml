@@ -1,0 +1,22 @@
+﻿<Control xmlns="https://spacestation14.io"
+         xmlns:controls="clr-namespace:Content.Client.UserInterface.Controls">
+    <BoxContainer Orientation="Vertical">
+        <ScrollContainer VerticalExpand="True">
+            <BoxContainer Name="KeybindsContainer" Orientation="Vertical" Margin="8 8 8 8">
+
+                <!-- Keybind buttons are added here in the C# code -->
+
+            </BoxContainer>
+        </ScrollContainer>
+        <controls:StripeBack HasBottomEdge="False" HasMargins="False">
+            <BoxContainer Orientation="Horizontal" Margin="8 8">
+                <Control MinSize="8 0" />
+                <Label Text="{Loc 'ui-options-binds-explanation'}" StyleClasses="LabelSubText" />
+                <Button Name="ResetAllButton"
+                        Text="{Loc 'ui-options-binds-reset-all'}"
+                        HorizontalExpand="True"
+                        HorizontalAlignment="Right" />
+            </BoxContainer>
+        </controls:StripeBack>
+    </BoxContainer>
+</Control>

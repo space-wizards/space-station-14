@@ -1,0 +1,181 @@
+﻿- type: entity
+  id: DebugGenerator
+  parent: BaseGenerator
+  suffix: DEBUG
+  components:
+  - type: PowerSupplier
+    supplyRate: 300000
+    supplyRampRate: 50000
+    supplyRampTolerance: 500
+  - type: Tag
+    tags:
+      - Debug
+
+- type: entity
+  id: DebugConsumer
+  name: consumer
+  suffix: DEBUG
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: wiredmachine
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: PowerConsumer
+    drawRate: 50
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Metallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Breakage"]
+  - type: Anchorable
+
+- type: entity
+  id: DebugBatteryStorage
+  name: battery storage
+  suffix: DEBUG
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: provider
+  - type: Battery
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: Anchorable
+
+- type: entity
+  id: DebugBatteryDischarger
+  name: battery discharger
+  suffix: DEBUG
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: PowerNetworkBattery
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: provider
+  - type: Battery
+  - type: NodeContainer
+    nodes:
+      input:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+  - type: BatteryDischarger
+  - type: Anchorable
+
+- type: entity
+  id: DebugSMES
+  parent: BaseSMES
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
+
+- type: entity
+  id: DebugSubstation
+  parent: BaseSubstation
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
+
+- type: entity
+  id: DebugAPC
+  parent: BaseAPC
+  suffix: DEBUG
+  components:
+  - type: Tag
+    tags:
+      - Debug
+
+- type: entity
+  id: DebugPowerReceiver
+  name: power receiver
+  suffix: DEBUG
+  placement:
+    mode: SnapgridCenter
+  components:
+  - type: Tag
+    tags:
+      - Debug
+  - type: Clickable
+  - type: InteractionOutline
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.5,0.5,0.5"
+        layer: [MobMask, Opaque]
+  - type: Transform
+    anchored: true
+  - type: Sprite
+    sprite: Structures/Power/power.rsi
+    state: wirelessmachine
+  - type: ApcPowerReceiver
+  - type: ExtensionCableReceiver
+  - type: Anchorable

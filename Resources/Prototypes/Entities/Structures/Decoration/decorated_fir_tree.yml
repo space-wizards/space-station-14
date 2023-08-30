@@ -1,0 +1,42 @@
+- type: entity
+  id: DecoratedFirTree
+  parent: BaseStructure
+  name: Decorated Fir Tree
+  description: A very festive tree for a very festive holiday.
+  components:
+  - type: Sprite
+    sprite: Structures/Decoration/decorated_fir_tree.rsi
+    layers:
+      - state: base
+      - state: balls
+      - state: lights
+        shader: unshaded
+  - type: PointLight
+    radius: 1.6
+    energy: 1.2
+    enabled: false
+    mask: /Textures/Effects/LightMasks/cone.png
+    autoRot: true
+    offset: "0, 0.6"
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: Wood
+  - type: Destructible
+    thresholds:
+      - trigger:
+          !type:DamageTrigger
+          damage: 400
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+      - trigger:
+          !type:DamageTrigger
+          damage: 75
+        behaviors:
+          - !type:DoActsBehavior
+            acts: [ "Destruction" ]
+          - !type:SpawnEntitiesBehavior
+            spawn:
+              Log:
+                min: 2
+                max: 8
