@@ -380,6 +380,12 @@ namespace Content.Shared.Interaction
 
         public void InteractHand(EntityUid user, EntityUid target)
         {
+            // allow for special logic before main interaction
+            var ev = new BeforeInteractHandEvent(target);
+            RaiseLocalEvent(user, ev);
+            if (ev.Handled)
+                return;
+
             // all interactions should only happen when in range / unobstructed, so no range check is needed
             var message = new InteractHandEvent(user, target);
             RaiseLocalEvent(target, message, true);
