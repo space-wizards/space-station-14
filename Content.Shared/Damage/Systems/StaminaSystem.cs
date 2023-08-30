@@ -228,7 +228,7 @@ public sealed partial class StaminaSystem : EntitySystem
         if (TryComp<ThrownItemComponent>(uid, out var thrownComp) &&
             TryComp<StaminaComponent>(args.Target, out var staminaComp))
         {
-            if (TryCollide(uid, component, args.Target, staminaComp))
+            if (TryCollide(uid, component, args.Target, staminaComp) && args.LandAfterFirstHit)
             {
                 _thrownItemSystem.StopThrow(uid, thrownComp);
             }
