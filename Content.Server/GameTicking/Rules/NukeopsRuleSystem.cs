@@ -735,7 +735,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return;
 
-        foreach (var nukeops in EntityQuery<NukeopsRuleComponent>())
+        foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
         {
             if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || !nukeops.EndsRound)
             {
@@ -753,6 +753,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             var name = MetaData(uid).EntityName;
 
             nukeops.OperativePlayers.Add(name, playerSession);
+            _warDeclaratorSystem.RefreshAllUI(nukeops, gameRule);
 
             if (GameTicker.RunLevel != GameRunLevel.InRound)
                 return;
