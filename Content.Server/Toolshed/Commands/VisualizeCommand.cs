@@ -8,7 +8,7 @@ using Robust.Server.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 
-namespace Content.Server.NewCon.Commands;
+namespace Content.Server.Toolshed.Commands;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
 public sealed class VisualizeCommand : ToolshedCommand

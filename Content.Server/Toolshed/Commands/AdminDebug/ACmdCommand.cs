@@ -5,7 +5,7 @@ using Robust.Server.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Syntax;
 
-namespace Content.Server.NewCon.Commands.AdminDebug;
+namespace Content.Server.Toolshed.Commands.AdminDebug;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Debug)]
 public sealed class ACmdCommand : ToolshedCommand
