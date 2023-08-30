@@ -1,8 +1,6 @@
 using Content.Server.Advertisements;
-using Content.Server.Chat;
 using Content.Server.Chat.Systems;
 using Content.Server.Power.Components;
-using Content.Server.VendingMachines;
 using Content.Shared.VendingMachines;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -17,9 +15,7 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
 
-        private const float UpdateTimer = 5f;
-
-        private float _timer = 0f;
+        private TimeSpan _nextCheckTime = TimeSpan.MinValue;
 
         public override void Initialize()
         {
@@ -32,7 +28,7 @@ namespace Content.Server.Advertise
 
         private void OnComponentInit(EntityUid uid, AdvertiseComponent advertise, ComponentInit args)
         {
-            RefreshTimer(uid, true, advertise);
+            RefreshTimer(uid, advertise);
         }
 
         private void OnPowerChanged(EntityUid uid, AdvertiseComponent advertise, ref PowerChangedEvent args)
@@ -40,72 +36,71 @@ namespace Content.Server.Advertise
             SetEnabled(uid, args.Powered, advertise);
         }
 
-        public void RefreshTimer(EntityUid uid, bool minimumBound = true, AdvertiseComponent? advertise = null)
+        public void RefreshTimer(EntityUid uid, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
-
+            if (!advertise.Enabled)
+                return;
             var minWait = Math.Max(1, advertise.MinimumWait);
             var maxWait = Math.Max(minWait, advertise.MaximumWait);
-
-            var waitSeconds = minimumBound ? _random.Next(minWait, maxWait) : _random.Next(maxWait);
-            advertise.NextAdvertisementTime = _gameTiming.CurTime.Add(TimeSpan.FromSeconds(waitSeconds));
+            var secondsToWait = _random.Next(minWait, maxWait);
+            var nextTime = _gameTiming.CurTime +
+                           TimeSpan.FromSeconds(secondsToWait);
+            advertise.NextAdvertisementTime = nextTime;
+            if (nextTime < _nextCheckTime)
+            {
+                _nextCheckTime = nextTime;
+            }
         }
 
-        public void SayAdvertisement(EntityUid uid, bool refresh = true, AdvertiseComponent? advertise = null)
+        public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
 
             if (_prototypeManager.TryIndex(advertise.PackPrototypeId, out AdvertisementsPackPrototype? advertisements))
-                _chat.TrySendInGameICMessage(advertise.Owner, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
-
-            if(refresh)
-                RefreshTimer(uid, true, advertise);
+                _chat.TrySendInGameICMessage(uid, Loc.GetString(_random.Pick(advertisements.Advertisements)), InGameICChatType.Speak, true);
         }
 
-        public void SetEnabled(EntityUid uid, bool enabled, AdvertiseComponent? advertise = null)
+        public void SetEnabled(EntityUid uid, bool enable, AdvertiseComponent? advertise = null)
         {
             if (!Resolve(uid, ref advertise))
                 return;
 
-            var attemptEvent = new AdvertiseEnableChangeAttemptEvent(enabled, advertise.Enabled);
-            RaiseLocalEvent(uid, attemptEvent, false);
+            if (advertise.Enabled == enable)
+                return;
+
+            var attemptEvent = new AdvertiseEnableChangeAttemptEvent(enable);
+            RaiseLocalEvent(uid, attemptEvent);
 
             if (attemptEvent.Cancelled)
                 return;
 
-            if(enabled)
-                RefreshTimer(uid, !advertise.Enabled, advertise);
-
-            advertise.Enabled = enabled;
+            advertise.Enabled = enable;
+            RefreshTimer(uid, advertise);
         }
 
-        private void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
+        private static void OnPowerReceiverEnableChangeAttempt(EntityUid uid, ApcPowerReceiverComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
-            if(args.NewState && !component.Powered)
+            if(args.Enabling && !component.Powered)
                 args.Cancel();
         }
 
-        private void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
+        private static void OnVendingEnableChangeAttempt(EntityUid uid, VendingMachineComponent component, AdvertiseEnableChangeAttemptEvent args)
         {
-            // TODO: Improve this...
-            if(args.NewState && component.Broken)
+            if(args.Enabling && component.Broken)
                 args.Cancel();
         }
 
         public override void Update(float frameTime)
         {
-            _timer += frameTime;
-
-            if (_timer < UpdateTimer)
+            var curTime = _gameTiming.CurTime;
+            if (_nextCheckTime > curTime)
                 return;
 
-            _timer -= UpdateTimer;
-
-            var curTime = _gameTiming.CurTime;
-
-            foreach (var advertise in EntityManager.EntityQuery<AdvertiseComponent>())
+            _nextCheckTime = TimeSpan.MaxValue;
+            foreach (var (transform, advertise) in EntityManager.EntityQuery<TransformComponent, AdvertiseComponent>())
             {
                 if (!advertise.Enabled)
                     continue;
@@ -114,20 +109,19 @@ namespace Content.Server.Advertise
                 if (advertise.NextAdvertisementTime > curTime)
                     continue;
 
-                SayAdvertisement(advertise.Owner, true, advertise);
+                SayAdvertisement(transform.ParentUid, advertise);
+                RefreshTimer(transform.ParentUid, advertise);
             }
         }
     }
 
     public sealed class AdvertiseEnableChangeAttemptEvent : CancellableEntityEventArgs
     {
-        public bool NewState { get; }
-        public bool OldState { get; }
+        public bool Enabling { get; }
 
-        public AdvertiseEnableChangeAttemptEvent(bool newState, bool oldEnabledState)
+        public AdvertiseEnableChangeAttemptEvent(bool enabling)
         {
-            NewState = newState;
-            OldState = oldEnabledState;
+            Enabling = enabling;
         }
     }
 }
