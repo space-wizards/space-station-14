@@ -207,8 +207,10 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
                 continue;
             }
 
-            IEnumerable<Objective> objectiveToReplace = mind.AllObjectives.Where(objective =>
-                objective.Conditions.Any(condition => (condition as KillPersonCondition)?.IsTarget(uid) ?? false));
+            IEnumerable<Objective> objectiveToReplace = mind.AllObjectives
+                .Where(objective =>
+                    objective.Conditions.Any(condition => (condition as KillPersonCondition)?.IsTarget(uid) ?? false))
+                .ToArray();
 
             foreach (var objective in objectiveToReplace)
             {
