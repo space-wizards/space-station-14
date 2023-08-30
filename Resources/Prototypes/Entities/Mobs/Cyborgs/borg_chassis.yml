@@ -130,6 +130,7 @@
     noMindState: medical_e_r
   - type: Construction
     node: medical
+  - type: SolutionScanner
 
 - type: entity
   id: BorgChassisService
