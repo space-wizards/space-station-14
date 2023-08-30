@@ -19,8 +19,7 @@ public sealed class FloorOcclusionSystem : SharedFloorOcclusionSystem
 
     private void OnOcclusionAuto(EntityUid uid, FloorOcclusionComponent component, ref AfterAutoHandleStateEvent args)
     {
-        if (component.Enabled && TryComp<SpriteComponent>(uid, out var sprite))
-            SetShader(sprite, true);
+        SetEnabled(uid, component, component.Enabled);
     }
 
     private void OnOcclusionStartup(EntityUid uid, FloorOcclusionComponent component, ComponentStartup args)

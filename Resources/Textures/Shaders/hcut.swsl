@@ -5,20 +5,9 @@ const highp float alphaModifier = 0.2;
 uniform bool below = true;
 
 void fragment()
-{  
+{
     highp vec4 tex = zTexture(UV);
+    highp float modifier = (UV.y > c ^^ !below) ? 1 : alphaModifier;
 
-    if (UV.y > c) {
-        if (below) {
-            COLOR = vec4(tex);
-        } else {
-            COLOR = vec4(tex.x, tex.y, tex.z, tex.w * alphaModifier);
-        }
-    } else {
-        if (below) {
-            COLOR = vec4(tex.x, tex.y, tex.z, tex.w * alphaModifier);
-        } else {
-            COLOR = vec4(tex);
-        }
-    }
+    COLOR = vec4(tex.x, tex.y, tex.z, tex.w * modifier);
 }
