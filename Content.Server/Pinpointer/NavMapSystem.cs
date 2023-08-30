@@ -1,5 +1,6 @@
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
+using Content.Server.Warps;
 using Content.Shared.Pinpointer;
 using Content.Shared.Tag;
 using Robust.Shared.GameStates;
@@ -132,7 +133,22 @@ public sealed class NavMapSystem : SharedNavMapSystem
             if (xform.GridUid != uid || !CanBeacon(beaconUid, xform))
                 continue;
 
-            beacons.Add(new NavMapBeacon(beacon.Color, beacon.Text ?? MetaData(beaconUid).EntityName, xform.LocalPosition));
+            // TODO: Make warp points use metadata name instead.
+            string? name = beacon.Text;
+
+            if (name == null)
+            {
+                if (TryComp<WarpPointComponent>(beaconUid, out var warpPoint) && warpPoint.Location != null)
+                {
+                    name = warpPoint.Location;
+                }
+                else
+                {
+                    name = MetaData(beaconUid).EntityName;
+                }
+            }
+
+            beacons.Add(new NavMapBeacon(beacon.Color, name, xform.LocalPosition));
         }
 
         // TODO: Diffs

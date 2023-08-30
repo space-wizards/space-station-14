@@ -33,6 +33,7 @@ public sealed class NavMapControl : MapGridControl
     private readonly float _recenterMinimum = 0.05f;
     private readonly Font _font;
     private static readonly Color TileColor = new(30, 67, 30);
+    private static readonly Color BeaconColor = Color.FromSrgb(TileColor.WithAlpha(0.8f));
 
     // TODO: https://github.com/space-wizards/RobustToolbox/issues/3818
     private readonly Label _zoom = new()
@@ -319,20 +320,6 @@ public sealed class NavMapControl : MapGridControl
             }
         }
 
-        // Beacons
-        foreach (var beacon in navMap.Beacons)
-        {
-            var position = beacon.Position - offset;
-            position = Scale(position with { Y = -position.Y });
-
-            handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
-            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
-            var buffer = new Vector2(8f, 0f);
-            handle.DrawRect(new UIBox2(position - buffer, position + textDimensions + buffer), TileColor);
-
-            handle.DrawString(_font, position, beacon.Text, beacon.Color);
-        }
-
         var curTime = Timing.RealTime;
         var blinkFrequency = 1f / 1f;
         var lit = curTime.TotalSeconds % blinkFrequency > blinkFrequency / 2f;
@@ -351,6 +338,24 @@ public sealed class NavMapControl : MapGridControl
                     handle.DrawCircle(position, MinimapScale / 2f, value.Color);
                 }
             }
+        }
+
+        // Beacons
+        var labelOffset = new Vector2(0.5f, 0.5f) * MinimapScale;
+        var rectBuffer = new Vector2(5f, 3f);
+
+        foreach (var beacon in navMap.Beacons)
+        {
+            var position = beacon.Position - offset;
+
+            position = Scale(position with { Y = -position.Y });
+
+            handle.DrawCircle(position, MinimapScale / 2f, beacon.Color);
+            var textDimensions = handle.GetDimensions(_font, beacon.Text, 1f);
+
+            var labelPosition = position + labelOffset;
+            handle.DrawRect(new UIBox2(labelPosition, labelPosition + textDimensions + rectBuffer * 2), BeaconColor);
+            handle.DrawString(_font, labelPosition + rectBuffer, beacon.Text, beacon.Color);
         }
     }
 
