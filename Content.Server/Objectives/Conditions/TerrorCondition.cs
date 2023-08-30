@@ -9,7 +9,7 @@ namespace Content.Server.Objectives.Conditions;
 /// Objective condition that requires the player to be a ninja and have called in a threat.
 /// </summary>
 [DataDefinition]
-public sealed class TerrorCondition : IObjectiveCondition
+public sealed partial class TerrorCondition : IObjectiveCondition
 {
     private EntityUid? _mind;
 

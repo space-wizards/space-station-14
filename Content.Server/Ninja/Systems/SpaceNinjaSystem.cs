@@ -56,6 +56,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
+    [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
@@ -86,7 +87,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Turns the player into a space ninja
     /// </summary>
-    public void MakeNinja(Mind.Mind mind)
+    public void MakeNinja(EntityUid mindId, MindComponent mind)
     {
         if (mind.OwnedEntity == null)
             return;
@@ -98,7 +99,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
 
         AddComp<SpaceNinjaComponent>(user);
         SetOutfitCommand.SetOutfit(user, "SpaceNinjaGear", EntityManager);
-        GreetNinja(mind);
+        GreetNinja(mindId, mind);
     }
 
     /// <summary>
@@ -205,7 +206,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     private void OnNinjaMindAdded(EntityUid uid, SpaceNinjaComponent comp, MindAddedMessage args)
     {
         if (TryComp<MindContainerComponent>(uid, out var mind) && mind.Mind != null)
-            GreetNinja(mind.Mind);
+            GreetNinja(mind.Mind.Value);
     }
 
     /// <summary>
@@ -214,12 +215,12 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <remarks>
     /// Currently this adds the ninja to traitors, this should be removed when objectives are separated from traitors.
     /// </remarks>
-    private void GreetNinja(EntityUid mindUid, MindComponent? mind = null)
+    private void GreetNinja(EntityUid mindId, MindComponent? mind = null)
     {
-        if (!Resolve(mindUid, ref mind) || mind.OwnedEntity == null || mind.Session == null)
+        if (!Resolve(mindId, ref mind) || mind.OwnedEntity == null || mind.Session == null)
             return;
 
-        var uid = mind.OwnedEntity;
+        var uid = mind.OwnedEntity.Value;
         var session = mind.Session;
 
         // make sure to enable the traitor rule for the sweet greentext
@@ -234,11 +235,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         var config = RuleConfig();
         var role = new NinjaRoleComponent
         {
-            Prototype = "SpaceNinja"
+            PrototypeId = "SpaceNinja"
         };
-        _role.MindAddRole(mind, role);
+        _role.MindAddRole(mindId, role, mind);
         // TODO: when objectives are not tied to traitor roles, remove this
-        _traitorRule.AddToTraitors(traitorRule, mind);
+        _traitorRule.AddToTraitors(traitorRule, mindId);
 
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
@@ -258,7 +259,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         // assign objectives - must happen after spider charge target so that the obj requirement works
         foreach (var objective in config.Objectives)
         {
-            if (!_mind.TryAddObjective(mind, objective))
+            if (!_mind.TryAddObjective(mindId, objective, mind))
             {
                 Log.Error($"Failed to add {objective} to ninja {mind.OwnedEntity.Value}");
             }

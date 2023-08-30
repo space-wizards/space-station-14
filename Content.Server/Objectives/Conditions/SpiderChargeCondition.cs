@@ -47,8 +47,7 @@ public sealed partial class SpiderChargeCondition : IObjectiveCondition
         get
         {
             var entMan = IoCManager.Resolve<EntityManager>();
-            var mindSystem = entMan.System<MindSystem>();
-            if (!mindSystem.TryGetRole<NinjaRole>(_mind, out var role))
+            if (!entMan.TryGetComponent<NinjaRoleComponent>(_mind, out var role))
                 return 0f;
 
             return role.SpiderChargeDetonated ? 1f : 0f;

@@ -10,7 +10,7 @@ namespace Content.Server.Objectives.Conditions;
 /// Objective condition that requires the player to be a ninja and have stolen at least a random number of technologies.
 /// </summary>
 [DataDefinition]
-public sealed class StealResearchCondition : IObjectiveCondition
+public sealed partial class StealResearchCondition : IObjectiveCondition
 {
     private EntityUid? _mind;
     private int _target;

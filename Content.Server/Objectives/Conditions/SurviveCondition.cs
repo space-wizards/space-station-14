@@ -8,7 +8,7 @@ namespace Content.Server.Objectives.Conditions;
 /// Just requires that the player is not dead, ignores evac and what not.
 /// </summary>
 [DataDefinition]
-public sealed class SurviveCondition : IObjectiveCondition
+public sealed partial class SurviveCondition : IObjectiveCondition
 {
     private EntityUid? _mind;
 
@@ -29,12 +29,12 @@ public sealed class SurviveCondition : IObjectiveCondition
     {
         get
         {
-            if (_mind == null)
+            var entMan = IoCManager.Resolve<IEntityManager>();
+            if (!entMan.TryGetComponent<MindComponent>(_mind, out var mind))
                 return 0f;
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
             var mindSystem = entMan.System<MindSystem>();
-            return mindSystem.IsCharacterDeadIc(_mind) ? 0f : 1f;
+            return mindSystem.IsCharacterDeadIc(mind) ? 0f : 1f;
         }
     }
 

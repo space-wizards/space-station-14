@@ -108,10 +108,10 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Objects/Weapons/Melee/energykatana.rsi"), "icon"),
             Act = () =>
             {
-                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
 
-                _ninja.MakeNinja(targetMindComp.Mind);
+                _ninja.MakeNinja(mindId, mind);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-space-ninja"),

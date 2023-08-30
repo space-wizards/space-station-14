@@ -479,15 +479,18 @@ public sealed class MindSystem : EntitySystem
     /// <summary>
     /// Adds an objective, by id, to this mind.
     /// </summary>
-    public bool TryAddObjective(Mind mind, string name)
+    public bool TryAddObjective(EntityUid mindId, string name, MindComponent? mind = null)
     {
+        if (!Resolve(mindId, ref mind))
+            return false;
+
         if (!_proto.TryIndex<ObjectivePrototype>(name, out var objective))
         {
             Log.Error($"Tried to add unknown objective prototype: {name}");
             return false;
         }
 
-        return TryAddObjective(mind, objective);
+        return TryAddObjective(mindId, mind, objective);
     }
 
     /// <summary>
@@ -566,13 +569,13 @@ public sealed class MindSystem : EntitySystem
     /// Gets a role component from a player's mind.
     /// </summary>
     /// <returns>Whether a role was found</returns>
-    public bool TryGetRole<T>(NetUserId user, [NotNullWhen(true)] out T? role) where T : Component
+    public bool TryGetRole<T>(EntityUid user, [NotNullWhen(true)] out T? role) where T : Component
     {
         role = null;
-        if (!TryGetMind(user, out var mindUid, out _))
+        if (!TryComp<MindContainerComponent>(user, out var mindContainer) || mindContainer.Mind == null)
             return false;
 
-        return TryComp(mindUid, out role);
+        return TryComp(mindContainer.Mind, out role);
     }
 
     /// <summary>

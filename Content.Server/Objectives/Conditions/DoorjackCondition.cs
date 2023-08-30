@@ -10,7 +10,7 @@ namespace Content.Server.Objectives.Conditions;
 /// Objective condition that requires the player to be a ninja and have doorjacked at least a random number of airlocks.
 /// </summary>
 [DataDefinition]
-public sealed class DoorjackCondition : IObjectiveCondition
+public sealed partial class DoorjackCondition : IObjectiveCondition
 {
     private EntityUid? _mind;
     private int _target;

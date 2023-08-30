@@ -6,7 +6,7 @@ namespace Content.Server.StationEvents.Components;
 /// Configuration component for the Space Ninja antag.
 /// </summary>
 [RegisterComponent, Access(typeof(NinjaSpawnRule))]
-public sealed class NinjaSpawnRuleComponent : Component
+public sealed partial class NinjaSpawnRuleComponent : Component
 {
     /// <summary>
     /// Distance that the ninja spawns from the station's half AABB radius
