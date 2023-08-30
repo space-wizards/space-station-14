@@ -6,7 +6,7 @@ namespace Content.Server.Traitor.Components;
 /// Makes the entity a traitor either instantly if it has a mind or when a mind is added.
 /// </summary>
 [RegisterComponent, Access(typeof(AutoTraitorSystem))]
-public sealed class AutoTraitorComponent : Component
+public sealed partial class AutoTraitorComponent : Component
 {
     /// <summary>
     /// Whether to give the traitor an uplink or not.
