@@ -140,11 +140,14 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
                 objectiveControl.AddChild(conditionControl);
             }
 
+            _window.Objectives.AddChild(objectiveControl);
+        }
+
+        if (briefing != null)
+        {
             var briefingControl = new ObjectiveBriefingControl();
             briefingControl.Label.Text = briefing;
-
-            objectiveControl.AddChild(briefingControl);
-            _window.Objectives.AddChild(objectiveControl);
+            _window.Objectives.AddChild(briefingControl);
         }
 
         var controls = _characterInfo.GetCharacterInfoControls(entity);
@@ -153,7 +156,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _window.Objectives.AddChild(control);
         }
 
-        _window.RolePlaceholder.Visible = !controls.Any() && !objectives.Any();
+        _window.RolePlaceholder.Visible = breifing == null && !controls.Any() && !objectives.Any();
     }
 
     private void CharacterDetached()
