@@ -1,19 +1,23 @@
 using System.Numerics;
 using Content.Server.Radiation.Components;
 using Content.Server.Radiation.Events;
+using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Radiation.Components;
 using Content.Shared.Radiation.Systems;
 using Robust.Shared.Collections;
-using Robust.Shared.Map;
+using Robust.Shared.Containers;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Server.Radiation.Systems;
 
 // main algorithm that fire radiation rays to target
 public partial class RadiationSystem
 {
+    [Dependency] protected readonly SharedContainerSystem _container = default!;
+
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -64,6 +68,15 @@ public partial class RadiationSystem
                     rads += ray.Rads;
             }
 
+            // Consider if the destination entity is hidden within a radiation blocking container
+            if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(dest.Owner, out var comps))
+            {
+                rads -= comps.Sum(x => x.RadResistance);
+
+                if (rads <= 0)
+                    rads = 0;
+            }
+
             receiversTotalRads.Add((dest, rads));
         }
 
@@ -107,10 +120,20 @@ public partial class RadiationSystem
         // check if receiver is too far away
         if (dist > GridcastMaxDistance)
             return null;
+
         // will it even reach destination considering distance penalty
         var rads = incomingRads - slope * dist;
         if (rads <= MinIntensity)
             return null;
+
+        // consider if the source is enclosed within a radiation blocking container
+        if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(sourceUid, out var comps))
+        {
+            rads -= comps.Sum(x => x.RadResistance);
+
+            if (rads <= 0)
+                return null;
+        }
 
         // create a new radiation ray from source to destination
         // at first we assume that it doesn't hit any radiation blockers
