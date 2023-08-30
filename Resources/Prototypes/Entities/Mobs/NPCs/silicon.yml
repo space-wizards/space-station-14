@@ -194,8 +194,8 @@
   - type: MovementSpeedModifier
     weightlessModifier: 0
     acceleration: 2
-    friction: 2
-    frictionNoInput: 6
+    friction: 2.2
+    frictionNoInput: 6.5
     baseWalkSpeed: 3
     baseSprintSpeed: 6
   - type: AmbientSound
