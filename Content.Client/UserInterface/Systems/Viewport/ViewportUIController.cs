@@ -4,6 +4,7 @@ using Content.Shared.CCVar;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
+using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controllers;
 using Robust.Shared.Configuration;
 using Robust.Shared.Timing;
@@ -16,6 +17,7 @@ public sealed class ViewportUIController : UIController
     [Dependency] private readonly IPlayerManager _playerMan = default!;
     [Dependency] private readonly IEntityManager _entMan = default!;
     [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [UISystemDependency] private readonly TransformSystem _transform = default!;
 
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;
@@ -87,9 +89,10 @@ public sealed class ViewportUIController : UIController
 
         _entMan.TryGetComponent(ent, out EyeComponent? eye);
 
-        if (eye?.Eye == _eyeManager.CurrentEye
-            && _entMan.GetComponent<TransformComponent>(ent.Value).WorldPosition == default)
+        if (eye?.Eye == _eyeManager.CurrentEye && _transform.GetWorldPosition(ent.Value) == default)
+        {
             return; // nothing to worry about, the player is just in null space... actually that is probably a problem?
+        }
 
         // Currently, this shouldn't happen. This likely happened because the main eye was set to null. When this
         // does happen it can create hard to troubleshoot bugs, so lets print some helpful warnings:

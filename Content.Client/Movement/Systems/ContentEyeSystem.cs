@@ -41,19 +41,4 @@ public sealed class ContentEyeSystem : SharedContentEyeSystem
             Fov = value,
         });
     }
-
-    public override void Update(float frameTime)
-    {
-        base.Update(frameTime);
-
-        var localPlayer = _player.LocalPlayer?.ControlledEntity;
-
-        if (!TryComp<ContentEyeComponent>(localPlayer, out var content) ||
-            !TryComp<EyeComponent>(localPlayer, out var eye))
-        {
-            return;
-        }
-
-        UpdateEye(localPlayer.Value, content, eye, frameTime);
-    }
 }

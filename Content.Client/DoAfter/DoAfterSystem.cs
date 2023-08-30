@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Robust.Client.Graphics;
@@ -50,5 +51,59 @@ public sealed class DoAfterSystem : SharedDoAfterSystem
         var xformQuery = GetEntityQuery<TransformComponent>();
         var handsQuery = GetEntityQuery<HandsComponent>();
         Update(playerEntity.Value, active, comp, time, xformQuery, handsQuery);
+    }
+
+    /// <summary>
+    /// Try to find an active do-after being executed by the local player.
+    /// </summary>
+    /// <param name="entity">The entity the do after must be targeting (<see cref="DoAfterArgs.Target"/>)</param>
+    /// <param name="doAfter">The found do-after.</param>
+    /// <param name="event">The event to be raised on the found do-after when it completes.</param>
+    /// <param name="progress">The progress of the found do-after, from 0 to 1.</param>
+    /// <typeparam name="T">The type of event that must be raised by the found do-after.</typeparam>
+    /// <returns>True if a do-after was found.</returns>
+    public bool TryFindActiveDoAfter<T>(
+        EntityUid entity,
+        [NotNullWhen(true)] out Shared.DoAfter.DoAfter? doAfter,
+        [NotNullWhen(true)] out T? @event,
+        out float progress)
+        where T : DoAfterEvent
+    {
+        var playerEntity = _player.LocalPlayer?.ControlledEntity;
+
+        doAfter = null;
+        @event = null;
+        progress = default;
+
+        if (!TryComp(playerEntity, out ActiveDoAfterComponent? active))
+            return false;
+
+        if (_metadata.EntityPaused(playerEntity.Value))
+            return false;
+
+        var comp = Comp<DoAfterComponent>(playerEntity.Value);
+
+        var time = GameTiming.CurTime;
+
+        foreach (var candidate in comp.DoAfters.Values)
+        {
+            if (candidate.Cancelled)
+                continue;
+
+            if (candidate.Args.Target != entity)
+                continue;
+
+            if (candidate.Args.Event is not T candidateEvent)
+                continue;
+
+            @event = candidateEvent;
+            doAfter = candidate;
+            var elapsed = time - doAfter.StartTime;
+            progress = (float) Math.Min(1, elapsed.TotalSeconds / doAfter.Args.Delay.TotalSeconds);
+
+            return true;
+        }
+
+        return false;
     }
 }

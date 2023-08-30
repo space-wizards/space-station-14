@@ -68,13 +68,9 @@ namespace Content.Server.Administration.Commands
             }
 
             var mindSystem = entityManager.System<MindSystem>();
+            var metadata = entityManager.GetComponent<MetaDataComponent>(eUid);
 
-            var mind = playerCData.Mind;
-            if (mind == null)
-            {
-                mind = mindSystem.CreateMind(session.UserId);
-                mind.CharacterName = entityManager.GetComponent<MetaDataComponent>(eUid).EntityName;
-            }
+            var mind = playerCData.Mind ?? mindSystem.CreateMind(session.UserId, metadata.EntityName);
 
             mindSystem.TransferTo(mind, eUid, ghostOverride);
         }
