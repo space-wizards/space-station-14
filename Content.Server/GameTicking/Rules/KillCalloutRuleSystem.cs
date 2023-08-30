@@ -33,8 +33,6 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            Log.Debug($"any assist? {ev.Assist != null}");
-
             var callout = GetCallout(kill, ev);
             _chatManager.ChatMessageToAll(ChatChannel.Server, callout, callout, uid, false, true, Color.OrangeRed);
         }
@@ -45,9 +43,8 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
         // Do the humiliation callouts if you kill yourself or die from bleeding out or something lame.
         if (ev.Primary is KillEnvironmentSource || ev.Suicide)
         {
-            var callout = $"{component.KillCalloutPrefix}{_random.Next(component.KillCalloutAmount)}";
-
-            return Loc.GetString(callout,
+            var selfCallout = $"{component.SelfKillCalloutPrefix}{_random.Next(component.SelfKillCalloutAmount)}";
+            return Loc.GetString(selfCallout,
                 ("victim", GetCalloutName(ev.Entity)));
         }
 
@@ -60,8 +57,8 @@ public sealed class KillCalloutRuleSystem : GameRuleSystem<KillCalloutRuleCompon
                 ("primary", primary), ("secondary", secondary));
         }
 
-        var selfCallout = $"{component.SelfKillCalloutPrefix}{_random.Next(component.SelfKillCalloutAmount)}";
-        return Loc.GetString(selfCallout, ("killer", killerString),
+        var callout = $"{component.KillCalloutPrefix}{_random.Next(component.KillCalloutAmount)}";
+        return Loc.GetString(callout, ("killer", killerString),
             ("victim", GetCalloutName(ev.Entity)));
     }
 
