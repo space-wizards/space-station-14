@@ -368,7 +368,7 @@ namespace Content.Server.GameTicking
                     var gridXform = Transform(gridUid);
 
                     return new EntityCoordinates(gridUid,
-                        gridXform.InvWorldMatrix.Transform(toMap.Position));
+                        _transform.GetInvWorldMatrix(gridXform).Transform(toMap.Position));
                 }
 
                 return spawn;
