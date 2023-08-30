@@ -35,6 +35,7 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleComponent, FTLTagEvent>(OnCargoFTLTag);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
+        SubscribeLocalEvent<CargoShuttleComponent, ComponentInit>(OnCargoShuttleInit);
 
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
@@ -47,6 +48,12 @@ public sealed partial class CargoSystem
     private void ShutdownShuttle()
     {
         _cfgManager.UnsubValueChanged(CCVars.GridFill, SetGridFill);
+    }
+
+    private void OnCargoShuttleInit(EntityUid uid, CargoShuttleComponent cargo, ComponentInit args)
+    {
+        if (_cfgManager.GetCVar(CCVars.GridFill))
+            SetupCargoShuttle();
     }
 
     private void SetGridFill(bool obj)
@@ -372,8 +379,12 @@ public sealed partial class CargoSystem
         Reset();
         CleanupCargoShuttle();
 
+        /*
         if (_cfgManager.GetCVar(CCVars.GridFill))
+        {
             SetupCargoShuttle();
+        }
+        */
     }
 
     private void CleanupCargoShuttle()
@@ -404,15 +415,20 @@ public sealed partial class CargoSystem
 
     private void SetupCargoShuttle()
     {
-        if (CargoMap != null && _mapManager.MapExists(CargoMap.Value))
+        EntityUid mapUid;
+        if (CargoMap == null || !_mapManager.MapExists(CargoMap.Value))
         {
-            return;
+            // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
+            CargoMap = _mapManager.CreateMap();
+            mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
+            _metaSystem.SetEntityName(mapUid, $"Trading post {_random.Next(1000):000}");
+        }
+        else
+        {
+            mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
         }
 
-        // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
-        CargoMap = _mapManager.CreateMap();
-        var mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
-        var ftl = EnsureComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(CargoMap.Value));
+        var ftl = EnsureComp<FTLDestinationComponent>(mapUid);
         ftl.Whitelist = new EntityWhitelist()
         {
             Components = new[]
@@ -420,8 +436,6 @@ public sealed partial class CargoSystem
                 _factory.GetComponentName(typeof(CargoShuttleComponent))
             }
         };
-
-        _metaSystem.SetEntityName(mapUid, $"Trading post {_random.Next(1000):000}");
 
         _console.RefreshShuttleConsoles();
     }
