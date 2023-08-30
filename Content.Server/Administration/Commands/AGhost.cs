@@ -1,6 +1,5 @@
 ﻿using Content.Server.GameTicking;
 using Content.Server.Mind;
-using Content.Server.Players;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Robust.Server.Player;
@@ -26,20 +25,18 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mind = player.ContentData()?.Mind;
-
-            if (mind == null)
+            var mindSystem = _entities.System<MindSystem>();
+            if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteLine("You can't ghost here!");
                 return;
             }
 
-            var mindSystem = _entities.System<MindSystem>();
             var metaDataSystem = _entities.System<MetaDataSystem>();
 
             if (mind.VisitingEntity != default && _entities.TryGetComponent<GhostComponent>(mind.VisitingEntity, out var oldGhostComponent))
             {
-                mindSystem.UnVisit(mind);
+                mindSystem.UnVisit(mindId, mind);
                 // If already an admin ghost, then return to body.
                 if (oldGhostComponent.CanGhostInteract)
                     return;
@@ -61,12 +58,12 @@ namespace Content.Server.Administration.Commands
                 else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
                     metaDataSystem.SetEntityName(ghost, mind.Session.Name);
 
-                mindSystem.Visit(mind, ghost);
+                mindSystem.Visit(mindId, ghost, mind);
             }
             else
             {
                 metaDataSystem.SetEntityName(ghost, player.Name);
-                mindSystem.TransferTo(mind, ghost);
+                mindSystem.TransferTo(mindId, ghost, mind: mind);
             }
 
             var comp = _entities.GetComponent<GhostComponent>(ghost);
