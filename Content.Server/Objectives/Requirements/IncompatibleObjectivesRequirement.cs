@@ -1,14 +1,15 @@
-﻿using Content.Server.Objectives.Interfaces;
+﻿using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives.Requirements
 {
     [DataDefinition]
-    public sealed class IncompatibleObjectivesRequirement : IObjectiveRequirement
+    public sealed partial class IncompatibleObjectivesRequirement : IObjectiveRequirement
     {
         [DataField("objectives")]
-        private readonly List<string> _incompatibleObjectives = new();
+        private List<string> _incompatibleObjectives = new();
 
-        public bool CanBeAssigned(Mind.Mind mind)
+        public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
             foreach (var objective in mind.AllObjectives)
             {

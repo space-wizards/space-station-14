@@ -30,18 +30,15 @@ namespace Content.Server.Dragon;
 public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISerializationManager _serManager = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
     [Dependency] private readonly ChatSystem _chat = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
     [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.
@@ -255,7 +252,7 @@ public sealed partial class DragonSystem : EntitySystem
             }
         }
 
-        foreach (var tile in grid.GetTilesIntersecting(new Circle(xform.WorldPosition, RiftTileRadius), false))
+        foreach (var tile in grid.GetTilesIntersecting(new Circle(_transform.GetWorldPosition(xform), RiftTileRadius), false))
         {
             if (!tile.IsSpace(_tileDef))
                 continue;

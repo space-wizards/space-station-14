@@ -1,24 +1,26 @@
 using System.Linq;
+using Content.Server.GameTicking.Rules;
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
+using Content.Server.Roles.Jobs;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Content.Server.GameTicking.Rules;
-using Content.Server.Roles;
 
 namespace Content.Server.Objectives.Conditions
 {
     [DataDefinition]
-    public sealed class RandomTraitorProgressCondition : IObjectiveCondition
+    public sealed partial class RandomTraitorProgressCondition : IObjectiveCondition
     {
-        private Mind.Mind? _target;
+        // TODO ecs all of this
+        private EntityUid? _targetMind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
             //todo shit of a fuck
             var entityMgr = IoCManager.Resolve<IEntityManager>();
 
-            var traitors = entityMgr.EntitySysManager.GetEntitySystem<TraitorRuleSystem>().GetOtherTraitorsAliveAndConnected(mind).ToList();
-            List<TraitorRole> removeList = new();
+            var traitors = entityMgr.System<TraitorRuleSystem>().GetOtherTraitorMindsAliveAndConnected(mind).ToList();
+            List<EntityUid> removeList = new();
 
             foreach (var traitor in traitors)
             {
@@ -28,7 +30,7 @@ namespace Content.Server.Objectives.Conditions
                     {
                         if (condition is RandomTraitorProgressCondition)
                         {
-                            removeList.Add(traitor);
+                            removeList.Add(traitor.Id);
                         }
                     }
                 }
@@ -36,11 +38,11 @@ namespace Content.Server.Objectives.Conditions
 
             foreach (var traitor in removeList)
             {
-                traitors.Remove(traitor);
+                traitors.RemoveAll(t => t.Id == traitor);
             }
 
             if (traitors.Count == 0) return new EscapeShuttleCondition{}; //You were made a traitor by admins, and are the first/only.
-            return new RandomTraitorProgressCondition { _target = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Mind };
+            return new RandomTraitorProgressCondition { _targetMind = IoCManager.Resolve<IRobustRandom>().Pick(traitors).Id };
         }
 
         public string Title
@@ -48,13 +50,18 @@ namespace Content.Server.Objectives.Conditions
             get
             {
                 var targetName = string.Empty;
-                var jobName = _target?.CurrentJob?.Name ?? "Unknown";
+                var entities = IoCManager.Resolve<IEntityManager>();
+                var jobs = entities.System<JobSystem>();
+                var jobName = jobs.MindTryGetJobName(_targetMind);
 
-                if (_target == null)
+                if (_targetMind == null)
                     return Loc.GetString("objective-condition-other-traitor-progress-title", ("targetName", targetName), ("job", jobName));
 
-                if (_target.OwnedEntity is {Valid: true} owned)
-                    targetName = IoCManager.Resolve<IEntityManager>().GetComponent<MetaDataComponent>(owned).EntityName;
+                if (entities.TryGetComponent(_targetMind, out MindComponent? mind) &&
+                    mind.OwnedEntity is {Valid: true} owned)
+                {
+                    targetName = entities.GetComponent<MetaDataComponent>(owned).EntityName;
+                }
 
                 return Loc.GetString("objective-condition-other-traitor-progress-title", ("targetName", targetName), ("job", jobName));
             }
@@ -66,24 +73,27 @@ namespace Content.Server.Objectives.Conditions
 
         public float Progress
         {
-            get {
-                var entMan = IoCManager.Resolve<IEntityManager>();
-
+            get
+            {
                 float total = 0f; // how much progress they have
                 float max = 0f; // how much progress is needed for 100%
 
-                if (_target == null)
+                if (_targetMind == null)
                 {
                     Logger.Error("Null target on RandomTraitorProgressCondition.");
                     return 1f;
                 }
 
-                foreach (var objective in _target.AllObjectives)
+                var entities = IoCManager.Resolve<IEntityManager>();
+                if (entities.TryGetComponent(_targetMind, out MindComponent? mind))
                 {
-                    foreach (var condition in objective.Conditions)
+                    foreach (var objective in mind.AllObjectives)
                     {
-                        max++; // things can only be up to 100% complete yeah
-                        total += condition.Progress;
+                        foreach (var condition in objective.Conditions)
+                        {
+                            max++; // things can only be up to 100% complete yeah
+                            total += condition.Progress;
+                        }
                     }
                 }
 
@@ -106,7 +116,7 @@ namespace Content.Server.Objectives.Conditions
 
         public bool Equals(IObjectiveCondition? other)
         {
-            return other is RandomTraitorProgressCondition kpc && Equals(_target, kpc._target);
+            return other is RandomTraitorProgressCondition kpc && Equals(_targetMind, kpc._targetMind);
         }
 
         public override bool Equals(object? obj)
@@ -118,7 +128,7 @@ namespace Content.Server.Objectives.Conditions
 
         public override int GetHashCode()
         {
-            return _target?.GetHashCode() ?? 0;
+            return _targetMind?.GetHashCode() ?? 0;
         }
     }
 }

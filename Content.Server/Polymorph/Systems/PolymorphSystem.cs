@@ -3,7 +3,6 @@ using Content.Server.Humanoid;
 using Content.Server.Inventory;
 using Content.Server.Mind;
 using Content.Server.Mind.Commands;
-using Content.Server.Mind.Components;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
 using Content.Shared.Actions;
@@ -43,6 +42,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
         [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
 
@@ -220,20 +220,16 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (proto.TransferName &&
-                TryComp<MetaDataComponent>(uid, out var targetMeta) &&
-                TryComp<MetaDataComponent>(child, out var childMeta))
-            {
-                childMeta.EntityName = targetMeta.EntityName;
-            }
+            if (proto.TransferName && TryComp<MetaDataComponent>(uid, out var targetMeta))
+                _metaData.SetEntityName(child, targetMeta.EntityName);
 
             if (proto.TransferHumanoidAppearance)
             {
                 _humanoid.CloneAppearance(uid, child);
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, child);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, child, mind: mind);
 
             //Ensures a map to banish the entity to
             EnsurePausesdMap();
@@ -248,30 +244,30 @@ namespace Content.Server.Polymorph.Systems
         /// </summary>
         /// <param name="uid">The entityuid of the entity being reverted</param>
         /// <param name="component"></param>
-        public void Revert(EntityUid uid, PolymorphedEntityComponent? component = null)
+        public EntityUid? Revert(EntityUid uid, PolymorphedEntityComponent? component = null)
         {
             if (Deleted(uid))
-                return;
+                return null;
 
             if (!Resolve(uid, ref component))
-                return;
+                return null;
 
             var parent = component.Parent;
             if (Deleted(parent))
-                return;
+                return null;
 
             if (!_proto.TryIndex(component.Prototype, out PolymorphPrototype? proto))
             {
                 _sawmill.Error($"{nameof(PolymorphSystem)} encountered an improperly initialized polymorph component while reverting. Entity {ToPrettyString(uid)}. Prototype: {component.Prototype}");
-                return;
+                return null;
             }
 
             var uidXform = Transform(uid);
             var parentXform = Transform(parent);
 
             _transform.SetParent(parent, parentXform, uidXform.ParentUid);
-            parentXform.Coordinates = uidXform.Coordinates;
-            parentXform.LocalRotation = uidXform.LocalRotation;
+            _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates);
+            _transform.SetLocalRotation(parentXform, uidXform.LocalRotation);
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(parent, out var damageParent) &&
@@ -306,17 +302,19 @@ namespace Content.Server.Polymorph.Systems
                 }
             }
 
-            if (_mindSystem.TryGetMind(uid, out var mind))
-                _mindSystem.TransferTo(mind, parent);
+            if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
+                _mindSystem.TransferTo(mindId, parent, mind: mind);
 
             // if an item polymorph was picked up, put it back down after reverting
-            Transform(parent).AttachToGridOrMap();
+            _transform.AttachToGridOrMap(parent);
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),
                 ("child", Identity.Entity(parent, EntityManager))),
                 parent);
             QueueDel(uid);
+
+            return parent;
         }
 
         /// <summary>
@@ -402,7 +400,7 @@ namespace Content.Server.Polymorph.Systems
         }
     }
 
-    public sealed class PolymorphActionEvent : InstantActionEvent
+    public sealed partial class PolymorphActionEvent : InstantActionEvent
     {
         /// <summary>
         /// The polymorph prototype containing all the information about
@@ -411,7 +409,7 @@ namespace Content.Server.Polymorph.Systems
         public PolymorphPrototype Prototype = default!;
     }
 
-    public sealed class RevertPolymorphActionEvent : InstantActionEvent
+    public sealed partial class RevertPolymorphActionEvent : InstantActionEvent
     {
 
     }

@@ -20,15 +20,15 @@ namespace Content.IntegrationTests.Tests.Materials
         [Test]
         public async Task MaterialPrototypeSpawnsStackMaterial()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
             var entityManager = server.ResolveDependency<IEntityManager>();
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -62,7 +62,7 @@ namespace Content.IntegrationTests.Tests.Materials
                 mapManager.DeleteMap(testMap.MapId);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

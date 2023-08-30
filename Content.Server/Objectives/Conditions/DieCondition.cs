@@ -7,13 +7,13 @@ namespace Content.Server.Objectives.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class DieCondition : IObjectiveCondition
+    public sealed partial class DieCondition : IObjectiveCondition
     {
-        private Mind.Mind? _mind;
+        private MindComponent? _mind;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
-            return new DieCondition {_mind = mind};
+            return new DieCondition { _mind = mind };
         }
 
         public string Title => Loc.GetString("objective-condition-die-title");

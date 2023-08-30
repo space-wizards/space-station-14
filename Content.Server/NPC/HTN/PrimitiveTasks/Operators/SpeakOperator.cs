@@ -2,7 +2,7 @@ using Content.Server.Chat.Systems;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
-public sealed class SpeakOperator : HTNOperator
+public sealed partial class SpeakOperator : HTNOperator
 {
     private ChatSystem _chat = default!;
 

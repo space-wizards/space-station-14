@@ -1,9 +1,10 @@
 using System.Linq;
 using System.Numerics;
-using Content.Server.Ghost.Components;
 using Content.Server.Warps;
 using Content.Shared.Administration;
 using Content.Shared.Follower;
+using Content.Shared.Ghost;
+using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Enums;
@@ -121,9 +122,9 @@ namespace Content.Server.Administration.Commands
                     return;
                 }
 
-                var xform = _entManager.GetComponent<TransformComponent>(playerEntity);
-                xform.Coordinates = coords;
-                xform.AttachToGridOrMap();
+                var transform = _entManager.System<SharedTransformSystem>();
+                transform.SetCoordinates(playerEntity, coords);
+                transform.AttachToGridOrMap(playerEntity);
                 if (_entManager.TryGetComponent(playerEntity, out PhysicsComponent? physics))
                 {
                     _entManager.System<SharedPhysicsSystem>().SetLinearVelocity(playerEntity, Vector2.Zero, body: physics);

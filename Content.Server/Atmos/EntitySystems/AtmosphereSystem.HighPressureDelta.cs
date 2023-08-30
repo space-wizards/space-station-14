@@ -15,6 +15,8 @@ namespace Content.Server.Atmos.EntitySystems
 {
     public sealed partial class AtmosphereSystem
     {
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
+
         private const int SpaceWindSoundCooldownCycles = 75;
 
         private int _spaceWindSoundCooldown = 0;
@@ -57,9 +59,9 @@ namespace Content.Server.Atmos.EntitySystems
 
                 if (TryComp<FixturesComponent>(uid, out var fixtures))
                 {
-                    foreach (var fixture in fixtures.Fixtures.Values)
+                    foreach (var (id, fixture) in fixtures.Fixtures)
                     {
-                        _physics.AddCollisionMask(uid, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                        _physics.AddCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
                     }
                 }
             }
@@ -70,15 +72,16 @@ namespace Content.Server.Atmos.EntitySystems
             }
         }
 
-        private void AddMobMovedByPressure(MovedByPressureComponent component, PhysicsComponent body)
+        private void AddMobMovedByPressure(EntityUid uid, MovedByPressureComponent component, PhysicsComponent body)
         {
-            if (!TryComp<FixturesComponent>(component.Owner, out var fixtures)) return;
+            if (!TryComp<FixturesComponent>(uid, out var fixtures))
+                return;
 
             _physics.SetBodyStatus(body, BodyStatus.InAir);
 
-            foreach (var fixture in fixtures.Fixtures.Values)
+            foreach (var (id, fixture) in fixtures.Fixtures)
             {
-                _physics.RemoveCollisionMask(body.Owner, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
+                _physics.RemoveCollisionMask(uid, id, fixture, (int) CollisionGroup.TableLayer, manager: fixtures);
             }
 
             // TODO: Make them dynamic type? Ehh but they still want movement so uhh make it non-predicted like weightless?
@@ -117,7 +120,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
 
             // Used by ExperiencePressureDifference to correct push/throw directions from tile-relative to physics world.
-            var gridWorldRotation = xforms.GetComponent(gridAtmosphere.Owner).WorldRotation;
+            var gridWorldRotation = _transform.GetWorldRotation(gridAtmosphere.Owner);
 
             // If we're using monstermos, smooth out the yeet direction to follow the flow
             if (MonstermosEqualization)
@@ -214,7 +217,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (HasComp<MobStateComponent>(uid))
                 {
-                    AddMobMovedByPressure(component, physics);
+                    AddMobMovedByPressure(uid, component, physics);
                 }
 
                 if (maxForce > MovedByPressureComponent.ThrowForce)
@@ -233,7 +236,7 @@ namespace Content.Server.Atmos.EntitySystems
                     // TODO: Technically these directions won't be correct but uhh I'm just here for optimisations buddy not to fix my old bugs.
                     if (throwTarget != EntityCoordinates.Invalid)
                     {
-                        var pos = ((throwTarget.ToMap(EntityManager).Position - xform.WorldPosition).Normalized() + dirVec).Normalized();
+                        var pos = ((throwTarget.ToMap(EntityManager).Position - _transform.GetWorldPosition(xform)).Normalized() + dirVec).Normalized();
                         _physics.ApplyLinearImpulse(uid, pos * moveForce, body: physics);
                     }
                     else

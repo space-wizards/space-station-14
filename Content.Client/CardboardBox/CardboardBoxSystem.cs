@@ -10,6 +10,7 @@ namespace Content.Client.CardboardBox;
 public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -55,7 +56,7 @@ public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
                 continue;
 
             sprite.Offset = new Vector2(0, 1);
-            entTransform.AttachParent(mob);
+            _transform.SetParent(ent, entTransform, mob);
         }
     }
 }

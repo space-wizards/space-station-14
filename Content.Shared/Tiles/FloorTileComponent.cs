@@ -10,7 +10,7 @@ namespace Content.Shared.Tiles
     /// A lot of materials use this too. Note that the AfterInteract will fail without a stack component on the item.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class FloorTileComponent : Component
+    public sealed partial class FloorTileComponent : Component
     {
         [DataField("outputs", customTypeSerializer: typeof(PrototypeIdListSerializer<ContentTileDefinition>))]
         public List<string>? OutputTiles;

@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReactionEffects;
 
 [DataDefinition]
-public sealed class CreateEntityReactionEffect : ReagentEffect
+public sealed partial class CreateEntityReactionEffect : ReagentEffect
 {
     /// <summary>
     ///     What entity to create.

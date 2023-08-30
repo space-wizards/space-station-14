@@ -12,20 +12,21 @@ namespace Content.Shared.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class WallmountCondition : IConstructionCondition
+    public sealed partial class WallmountCondition : IConstructionCondition
     {
         public bool Condition(EntityUid user, EntityCoordinates location, Direction direction)
         {
             var entManager = IoCManager.Resolve<IEntityManager>();
+            var transform = entManager.System<SharedTransformSystem>();
 
             // get blueprint and user position
-            var userWorldPosition = entManager.GetComponent<TransformComponent>(user).WorldPosition;
+            var userWorldPosition = transform.GetWorldPosition(user);
             var objWorldPosition = location.ToMap(entManager).Position;
 
             // find direction from user to blueprint
             var userToObject = (objWorldPosition - userWorldPosition);
             // get direction of the grid being placed on as an offset.
-            var gridRotation = entManager.GetComponent<TransformComponent>(location.EntityId).WorldRotation;
+            var gridRotation = transform.GetWorldRotation(location.EntityId);
             var directionWithOffset = gridRotation.RotateVec(direction.ToVec());
 
             // dot product will be positive if user direction and blueprint are co-directed

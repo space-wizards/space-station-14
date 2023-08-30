@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Conveyor;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ConveyorComponent : Component
+public sealed partial class ConveyorComponent : Component
 {
     /// <summary>
     ///     The angle to move entities by in relation to the owner's rotation.

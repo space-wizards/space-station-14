@@ -83,7 +83,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
 
     private void OnCollide(EntityUid uid, CollideMaterialReclaimerComponent component, ref StartCollideEvent args)
     {
-        if (args.OurFixture.ID != component.FixtureId)
+        if (args.OurFixtureId != component.FixtureId)
             return;
         if (!TryComp<MaterialReclaimerComponent>(uid, out var reclaimer))
             return;
@@ -120,7 +120,7 @@ public abstract class SharedMaterialReclaimerSystem : EntitySystem
         if (component.Blacklist is {} blacklist && blacklist.IsValid(item))
             return false;
 
-        if (!_container.TryRemoveFromContainer(item))
+        if (_container.TryGetContainingContainer(item, out _) && !_container.TryRemoveFromContainer(item))
             return false;
 
         if (user != null)
