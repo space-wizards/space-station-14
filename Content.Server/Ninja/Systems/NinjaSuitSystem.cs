@@ -29,6 +29,7 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         base.Initialize();
 
         SubscribeLocalEvent<NinjaSuitComponent, ContainerIsInsertingAttemptEvent>(OnSuitInsertAttempt);
+        SubscribeLocalEvent<NinjaSuitComponent, EmpAttemptEvent>(OnEmpAttempt);
         SubscribeLocalEvent<NinjaSuitComponent, AttemptStealthEvent>(OnAttemptStealth);
         SubscribeLocalEvent<NinjaSuitComponent, CreateThrowingStarEvent>(OnCreateThrowingStar);
         SubscribeLocalEvent<NinjaSuitComponent, RecallKatanaEvent>(OnRecallKatana);
@@ -55,6 +56,15 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         {
             args.Cancel();
         }
+
+        // TODO: raise event on ninja telling it to update battery
+    }
+
+    private void OnEmpAttempt(EntityUid uid, NinjaSuitComponent comp, EmpAttemptEvent args)
+    {
+        // ninja suit (battery) is immune to emp
+        // powercell relays the event to suit
+        args.Cancel();
     }
 
     protected override void UserUnequippedSuit(EntityUid uid, NinjaSuitComponent comp, EntityUid user)
