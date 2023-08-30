@@ -77,14 +77,17 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         return state.CurrentState is MobState.Alive or MobState.Critical;
     }
 
-    public IEnumerable<string> GetTimedRoles(Mind.Mind mind)
+    public IEnumerable<string> GetTimedRoles(EntityUid mindId)
     {
-        foreach (var role in mind.AllRoles)
+        var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
+        RaiseLocalEvent(mindId, ref ev);
+
+        foreach (var role in ev.Roles)
         {
-            if (role is not IRoleTimer timer)
+            if (string.IsNullOrWhiteSpace(role.PlayTimeTrackerId))
                 continue;
 
-            yield return _prototypes.Index<PlayTimeTrackerPrototype>(timer.Timer).ID;
+            yield return _prototypes.Index<PlayTimeTrackerPrototype>(role.PlayTimeTrackerId).ID;
         }
     }
 
@@ -95,7 +98,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
         if (contentData?.Mind == null)
             return Enumerable.Empty<string>();
 
-        return GetTimedRoles(contentData.Mind);
+        return GetTimedRoles(contentData.Mind.Value);
     }
 
     private void OnRoleRemove(RoleRemovedEvent ev)
