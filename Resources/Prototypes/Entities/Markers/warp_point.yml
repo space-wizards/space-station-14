@@ -1,8 +1,0 @@
-- type: entity
-  id: WarpPoint
-  parent: MarkerBase
-  name: warp point
-  components:
-  - type: WarpPoint
-  - type: Sprite
-    state: pink

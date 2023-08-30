@@ -1,7 +1,0 @@
-- type: entity
-  save: false
-  name: Urisst' Mzhand
-  parent: [BaseMobReptilian, BaseMob]
-  id: MobReptilian
-
-#Weh

@@ -1,6 +1,0 @@
-﻿<DefaultWindow xmlns="https://spacestation14.io">
-    <ItemList Name="VendingContents"
-              SizeFlagsStretchRatio="8"
-              VerticalExpand="True">
-    </ItemList>
-</DefaultWindow>

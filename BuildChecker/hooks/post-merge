@@ -1,5 +1,0 @@
-#!/bin/bash
-
-# Just call post-checkout since it does the same thing.
-gitroot=`git rev-parse --show-toplevel`
-bash "$gitroot/.git/hooks/post-checkout"

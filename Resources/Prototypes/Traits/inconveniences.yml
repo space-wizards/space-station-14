@@ -1,7 +1,0 @@
-﻿- type: trait
-  id: LightweightDrunk
-  name: trait-lightweight-name
-  description: trait-lightweight-desc
-  components:
-    - type: LightweightDrunk
-      boozeStrengthMultiplier: 2
