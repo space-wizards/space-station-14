@@ -139,6 +139,9 @@
   components:
   - type: Sprite
     sprite: Clothing/Neck/Cloaks/honk.rsi
+  - type: Tag
+    tags:
+    - CluwneBeastWearable
 
 - type: entity
   parent: ClothingNeckBase

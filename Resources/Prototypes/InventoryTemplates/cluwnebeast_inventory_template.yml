@@ -25,6 +25,9 @@
       uiWindowPos: 0,1
       strippingWindowPos: 0,1
       displayName: Neck
+      whitelist:
+        tags:
+          - CluwneBeastWearable
     - name: mask
       slotTexture: mask
       slotFlags: MASK
