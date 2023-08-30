@@ -28754,6 +28754,21 @@ entities:
       type: Transform
     - canCollide: False
       type: Physics
+  - uid: 11264
+    components:
+    - pos: -9.178577,-18.39677
+      parent: 31
+      type: Transform
+  - uid: 11265
+    components:
+    - pos: -9.162952,-18.61552
+      parent: 31
+      type: Transform
+  - uid: 11266
+    components:
+    - pos: -9.162952,-18.20927
+      parent: 31
+      type: Transform
 - proto: ClothingEyesGlassesMeson
   entities:
   - uid: 4538
