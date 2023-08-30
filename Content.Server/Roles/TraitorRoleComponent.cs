@@ -3,5 +3,4 @@
 [RegisterComponent]
 public sealed partial class TraitorRoleComponent : AntagonistRoleComponent
 {
-    public string? Briefing;
 }

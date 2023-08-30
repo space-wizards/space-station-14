@@ -156,8 +156,12 @@ public sealed class RoleSystem : EntitySystem
 
     public string? MindGetBriefing(EntityUid? mindId)
     {
-        // TODO this should be an event
-        return CompOrNull<TraitorRoleComponent>(mindId)?.Briefing;
+        if (mindId == null)
+            return null;
+
+        var ev = new GetBriefingEvent();
+        RaiseLocalEvent(mindId, ref ev);
+        return ev.Briefing;
     }
 
     public bool IsAntagonistRole<T>()
@@ -165,3 +169,10 @@ public sealed class RoleSystem : EntitySystem
         return _antagTypes.Contains(typeof(T));
     }
 }
+
+/// <summary>
+/// Event raised on the mind to get its briefing.
+/// Handlers can either replace or append to the briefing, whichever is more appropriate.
+/// </summary>
+[ByRefEvent]
+public record struct GetBriefingEvent(string? Briefing = null);
