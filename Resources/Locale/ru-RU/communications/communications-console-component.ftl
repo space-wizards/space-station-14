@@ -6,6 +6,7 @@ comms-console-menu-call-shuttle = Вызвать
 comms-console-menu-recall-shuttle = Отозвать
 # Popup
 comms-console-permission-denied = В доступе отказано
+comms-console-shuttle-unavailable = Shuttle is currently unavailable
 # Placeholder values
 comms-console-announcement-sent-by = Отправитель
 comms-console-announcement-unknown-sender = Неизвестный
