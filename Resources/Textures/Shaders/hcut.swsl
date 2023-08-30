@@ -1,7 +1,7 @@
 light_mode unshaded;
 
-uniform highp float c = 0.3;
-uniform highp float alphaModifier = 0.2;
+const highp float c = 0.3;
+const highp float alphaModifier = 0.2;
 uniform bool below = true;
 
 void fragment()
