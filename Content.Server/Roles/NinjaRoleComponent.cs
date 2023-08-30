@@ -11,30 +11,30 @@ public sealed partial class NinjaRoleComponent : AntagonistRoleComponent
     /// <summary>
     /// Number of doors that have been doorjacked, used for objective
     /// </summary>
-    [ViewVariables]
-    public int DoorsJacked = 0;
+    [DataField("doorsJacked")]
+    public int DoorsJacked;
 
     /// <summary>
     /// Research nodes that have been downloaded, used for objective
     /// </summary>
-    [ViewVariables]
+    [DataField("downloadedNodes")]
     public HashSet<string> DownloadedNodes = new();
 
     /// <summary>
     /// Warp point that the spider charge has to target
     /// </summary>
-    [ViewVariables]
-    public EntityUid? SpiderChargeTarget = null;
+    [DataField("spiderChargeTarget")]
+    public EntityUid? SpiderChargeTarget;
 
     /// <summary>
     /// Whether the spider charge has been detonated on the target, used for objective
     /// </summary>
-    [ViewVariables]
+    [DataField("spiderChargeDetonated")]
     public bool SpiderChargeDetonated;
 
     /// <summary>
     /// Whether the comms console has been hacked, used for objective
     /// </summary>
-    [ViewVariables]
+    [DataField("calledInThreat")]
     public bool CalledInThreat;
 }
