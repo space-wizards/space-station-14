@@ -67,12 +67,18 @@ public sealed class WarDeclaratorSystem : EntitySystem
             newlines++;
         }
 
-        var message = new string(text);
+        string message = new string(text);
         if (component.AllowEditingMessage && message != string.Empty)
+        {
             component.Message = message;
+        }
+        else
+        {
+            message = Loc.GetString("war-declarator-default-message");
+        }
         var title = Loc.GetString(component.DeclarementTitle);
 
-        _nukeopsRuleSystem.DeclareWar(args.Session.AttachedEntity.Value, component.Message, title, component.DeclarementSound, component.DeclarementColor);
+        _nukeopsRuleSystem.DeclareWar(args.Session.AttachedEntity.Value, message, title, component.DeclarementSound, component.DeclarementColor);
 
         if (args.Session.AttachedEntity != null)
             _adminLogger.Add(LogType.Chat, LogImpact.Low, $"{ToPrettyString(args.Session.AttachedEntity.Value):player} has declared war with this text: {message}");

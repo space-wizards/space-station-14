@@ -9,11 +9,11 @@ namespace Content.Server.NukeOps;
 public sealed partial class WarDeclaratorComponent : Component
 {
     /// <summary>
-    /// Current text in field. Will try use Fluent ID on component initialization
+    /// Custom war declaration message. If empty, use default.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("message")]
-    public string Message = "war-declarator-default-message";
+    public string Message;
 
     /// <summary>
     /// Permission to customize message text
