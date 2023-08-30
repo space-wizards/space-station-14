@@ -133,9 +133,6 @@ public sealed partial class WarDeclaratorWindow : DefaultWindow
     private void ActivateWarDeclarator(BaseButton.ButtonEventArgs obj)
     {
         var message = Rope.Collapse(MessageEdit.TextRope);
-        if (string.IsNullOrEmpty(message))
-            return;
-
         OnActivated?.Invoke(message);
     }
 }
