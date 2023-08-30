@@ -1,12 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'The Syndicate reverse engineered Drymate''s monkey cube technology
-      and has started capturing wildlife to turn into dried cubes. Syndicate agents
-      can now buy Syndicate sponges from the uplink, these turn into random hostile
-      wildlife upon getting wet.', type: Add}
-  id: 4205
-  time: '2023-07-09T19:24:31.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Prevent selling dead mobs again., type: Tweak}
@@ -3030,3 +3022,8 @@ Entries:
   - {message: Flavor text now disabled if identity hidden, type: Tweak}
   id: 4704
   time: '2023-08-29T23:38:16.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Water and lava will now partially occlude your sprite., type: Add}
+  id: 4705
+  time: '2023-08-30T02:32:36.0000000+00:00'
