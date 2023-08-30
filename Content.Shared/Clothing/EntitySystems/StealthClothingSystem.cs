@@ -33,6 +33,7 @@ public sealed class StealthClothingSystem : EntitySystem
         if (!Resolve(uid, ref comp) || comp.Enabled == enabled)
             return false;
 
+        // TODO remove this when clothing unequip on delete is less sus
         // prevent debug assert when ending round and its disabled
         if (MetaData(user).EntityLifeStage >= EntityLifeStage.Terminating)
             return false;
