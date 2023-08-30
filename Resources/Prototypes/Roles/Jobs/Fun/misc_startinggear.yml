@@ -271,6 +271,7 @@
   id: MobMonkeyGear
   equipment:
     head: ClothingHeadHatTophat
+    ears: ClothingHeadsetService
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: BartenderIDCard
 
