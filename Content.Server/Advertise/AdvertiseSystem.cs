@@ -15,6 +15,13 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
 
+
+        // The maximum amount of time between checking advertisements
+        private readonly TimeSpan _maximumNextCheckDuration = TimeSpan.FromSeconds(15);
+        // The minimum amount of time between checking advertisements
+        private readonly TimeSpan _minimumNextCheckDuration = TimeSpan.FromSeconds(1);
+
+        // The next game time the system will check advertisements
         private TimeSpan _nextCheckTime = TimeSpan.MinValue;
 
         public override void Initialize()
@@ -99,18 +106,29 @@ namespace Content.Server.Advertise
             if (_nextCheckTime > curTime)
                 return;
 
-            _nextCheckTime = TimeSpan.MaxValue;
+            _nextCheckTime = curTime + _maximumNextCheckDuration;
             foreach (var (transform, advertise) in EntityManager.EntityQuery<TransformComponent, AdvertiseComponent>())
             {
                 if (!advertise.Enabled)
                     continue;
 
-                // If it's still not time for the advertisement, do nothing.
                 if (advertise.NextAdvertisementTime > curTime)
+                {
+                    if (advertise.NextAdvertisementTime < _nextCheckTime)
+                    {
+                        _nextCheckTime = advertise.NextAdvertisementTime;
+                    }
                     continue;
+                }
 
                 SayAdvertisement(transform.ParentUid, advertise);
                 RefreshTimer(transform.ParentUid, advertise);
+            }
+
+            var minimumTime = curTime + _minimumNextCheckDuration;
+            if (_nextCheckTime < minimumTime)
+            {
+                _nextCheckTime = minimumTime;
             }
         }
     }
