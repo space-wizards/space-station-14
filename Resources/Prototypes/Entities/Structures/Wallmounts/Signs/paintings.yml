@@ -188,3 +188,13 @@
   components:
   - type: Sprite
     state: painting19  
+
+- type: entity
+  parent: BaseSign
+  id: TrophyWallmountCarp
+  name: "Wall-mounted Carp"
+  description: "Carpe diem!"
+  components:
+  - type: Sprite
+    sprite: Structures/Wallmounts/posters.rsi
+    state: poster42_legit

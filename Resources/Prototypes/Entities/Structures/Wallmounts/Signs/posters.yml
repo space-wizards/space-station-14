@@ -3524,40 +3524,6 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitCarpMountUnstuck
-  suffix: Unstuck
-  name: "Wall-mounted Carp"
-  description: "Carpe diem!"
-  components:
-  - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
-    layers:
-    - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
-    - state: poster42_legit
-      map: ["stuck"]
-      visible: false
-
-- type: entity
-  parent: PosterLegitCarpMountUnstuck
-  id: PosterLegitCarpMountStuck
-  suffix: Stuck
-  placement:
-    mode: SnapgridCenter
-  components:
-  - type: TryStickOnSpawn
-  - type: Sprite
-    layers:
-    - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
-      visible: false
-    - state: poster42_legit
-      map: ["stuck"]
-
-- type: entity
-  parent: PosterBase
   id: PosterLegitSafetyMothDelamUnstuck
   suffix: Unstuck
   name: "Safety Moth - Delamination Safety Precautions"
