@@ -7,7 +7,7 @@ namespace Content.Shared.Light.Components;
 /// All logic is serverside, animation is handled by <see cref="RotatingLightComponent"/>.
 /// </summary>
 [Access(typeof(SharedEmergencyLightSystem))]
-public abstract class SharedEmergencyLightComponent : Component
+public abstract partial class SharedEmergencyLightComponent : Component
 {
 }
 
