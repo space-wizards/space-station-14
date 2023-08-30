@@ -30,13 +30,10 @@ public sealed class MindSystem : EntitySystem
     [Dependency] private readonly IAdminLogManager _adminLogger = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
-<<<<<<< HEAD
     [Dependency] private readonly IPrototypeManager _proto = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
-=======
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
->>>>>>> 7dd3d01a67aec81d51feb2f72504f2e106c718b7
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, EntityUid> _userMinds = new();
