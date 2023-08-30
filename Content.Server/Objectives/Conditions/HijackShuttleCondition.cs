@@ -3,6 +3,7 @@ using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 using Content.Server.Shuttles.Components;
 using Content.Shared.Cuffs.Components;
+using Content.Shared.Humanoid;
 using Content.Shared.Mobs.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -42,7 +43,7 @@ namespace Content.Server.Objectives.Conditions
             foreach (var player in gridPlayers)
             {
                 if (!player.AttachedEntity.HasValue ||
-                    !mindSystem.TryGetMind(player.AttachedEntity.Value, out var mindId, out var mind))
+                    !mindSystem.TryGetMind(player.AttachedEntity.Value, out var mindId, out _))
                     continue;
 
                 if (mindId == _mindId)
@@ -50,6 +51,10 @@ namespace Content.Server.Objectives.Conditions
                     agentOnShuttle = true;
                     continue;
                 }
+
+                var isHumanoid = entMan.HasComponent<HumanoidAppearanceComponent>(player.AttachedEntity.Value);
+                if (!isHumanoid) // Only humanoids count as enemies
+                    continue;
 
                 var isPersonTraitor = roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
                 if (isPersonTraitor) // Allow traitors
