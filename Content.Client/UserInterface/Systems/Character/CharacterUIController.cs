@@ -156,7 +156,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
             _window.Objectives.AddChild(control);
         }
 
-        _window.RolePlaceholder.Visible = breifing == null && !controls.Any() && !objectives.Any();
+        _window.RolePlaceholder.Visible = briefing == null && !controls.Any() && !objectives.Any();
     }
 
     private void CharacterDetached()
