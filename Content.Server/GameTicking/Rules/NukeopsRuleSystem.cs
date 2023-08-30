@@ -1061,14 +1061,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(ruleUid, gameRule))
                 continue;
 
-            if (nukeops.WarNukieArriveDelay == null  || nukeops.WarDeclaredTime == null)
-                continue;
-
-            var warTime = _gameTiming.CurTime.Subtract(nukeops.WarDeclaredTime.Value);
-            if (warTime <= nukeops.WarNukieArriveDelay)
+            // Can't call while nukies are preparing to arrive
+            if (GetWarCondition(nukeops, gameRule) == WarConditionStatus.WAR_DELAY)
             {
                 ev.Cancelled = true;
                 ev.Reason = Loc.GetString("war-ops-shuttle-call-unavailable");
+                return;
             }
         }
     }
