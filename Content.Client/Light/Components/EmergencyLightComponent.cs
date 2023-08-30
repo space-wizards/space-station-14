@@ -3,6 +3,6 @@ using Content.Shared.Light.Components;
 namespace Content.Client.Light.Components;
 
 [RegisterComponent]
-public sealed class EmergencyLightComponent : SharedEmergencyLightComponent
+public sealed partial class EmergencyLightComponent : SharedEmergencyLightComponent
 {
 }

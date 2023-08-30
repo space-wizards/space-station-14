@@ -19,7 +19,7 @@ namespace Content.Shared.Chemistry.Dispenser
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         public List<string> Inventory => _inventory;
     }

@@ -8,7 +8,7 @@ namespace Content.Shared.Movement.Components
 {
     [RegisterComponent]
     [NetworkedComponent]
-    public sealed class InputMoverComponent : Component
+    public sealed partial class InputMoverComponent : Component
     {
         // This class has to be able to handle server TPS being lower than client FPS.
         // While still having perfectly responsive movement client side.

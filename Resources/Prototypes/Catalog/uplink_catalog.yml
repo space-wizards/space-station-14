@@ -912,7 +912,8 @@
   id: uplinkBananaPeelExplosive
   name: uplink-banana-peel-explosive-name
   description: uplink-banana-peel-explosive-desc
-  productEntity: TrashBananaPeelExplosive
+  icon: { sprite: Objects/Specific/Hydroponics/banana.rsi, state: peel }
+  productEntity: TrashBananaPeelExplosiveUnarmed
   cost:
     Telecrystal: 2
   categories:
@@ -955,19 +956,18 @@
     - Mime
 
 - type: listing
-  id: UplinkChimpAmmo
-  name: uplink-chimp-ammo-name
-  description: uplink-chimp-ammo-desc
-  productEntity: BoxMagazineChimpOmega
+  id: UplinkChimpUpgradeKit
+  name: uplink-chimp-upgrade-kit-name
+  description: uplink-chimp-upgrade-kit-desc
+  productEntity: WeaponPistolCHIMPUpgradeKit
   cost:
     Telecrystal: 4
   categories:
   - UplinkJob
   conditions:
-    - !type:BuyerJobCondition
+    - !type:BuyerDepartmentCondition
       whitelist:
-        - Scientist
-        - SeniorResearcher
+      - Science
 
 - type: listing
   id: uplinkProximityMine
@@ -998,11 +998,12 @@
   categories:
   - UplinkJob
   conditions:
-  - !type:BuyerJobCondition
+  - !type:BuyerJobCondition # We can't use BuyerDepartmentCondition here since Zookeeper and Chef can also get this
     whitelist:
     - Zookeeper
     - Scientist
     - SeniorResearcher
+    - ResearchDirector
     - Chef
 
 # Armor
@@ -1189,7 +1190,7 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   cost:
-    Telecrystal: 8
+    Telecrystal: 4
   categories:
   - UplinkMisc
 

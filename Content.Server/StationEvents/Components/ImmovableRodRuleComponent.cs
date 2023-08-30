@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.StationEvents.Components;
 
 [RegisterComponent, Access(typeof(ImmovableRodRule))]
-public sealed class ImmovableRodRuleComponent : Component
+public sealed partial class ImmovableRodRuleComponent : Component
 {
     [DataField("rodPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string RodPrototype = "ImmovableRodKeepTilesStill";

@@ -11,7 +11,7 @@ namespace Content.Shared.Light.Components;
 ///     Networked ~~solely for admemes~~ for completely legitimate reasons, like hacked energy swords.
 /// </remarks>
 [NetworkedComponent, RegisterComponent, Access(typeof(SharedRgbLightControllerSystem))]
-public sealed class RgbLightControllerComponent : Component
+public sealed partial class RgbLightControllerComponent : Component
 {
     [DataField("cycleRate")]
     public float CycleRate { get; set; } = 0.1f;

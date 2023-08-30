@@ -32,7 +32,7 @@ namespace Content.Shared.Roles
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = string.Empty;
+        public string ID { get; private set; } = string.Empty;
 
         public string GetGear(string slot, HumanoidCharacterProfile? profile)
         {

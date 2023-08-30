@@ -1,4 +1,5 @@
 using Content.Server.Shuttles.Components;
+using Content.Shared.Audio;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Physics.Dynamics;
@@ -37,8 +38,8 @@ public sealed partial class ShuttleSystem
 
         var otherXform = Transform(args.OtherEntity);
 
-        var ourPoint = ourXform.InvWorldMatrix.Transform(args.WorldPoint);
-        var otherPoint = otherXform.InvWorldMatrix.Transform(args.WorldPoint);
+        var ourPoint = _transform.GetInvWorldMatrix(ourXform).Transform(args.WorldPoint);
+        var otherPoint = _transform.GetInvWorldMatrix(otherXform).Transform(args.WorldPoint);
 
         var ourVelocity = _physics.GetLinearVelocity(uid, ourPoint, ourBody, ourXform);
         var otherVelocity = _physics.GetLinearVelocity(args.OtherEntity, otherPoint, otherBody, otherXform);
@@ -51,7 +52,7 @@ public sealed partial class ShuttleSystem
 
         var coordinates = new EntityCoordinates(ourXform.MapUid.Value, args.WorldPoint);
         var volume = MathF.Min(10f, 1f * MathF.Pow(jungleDiff, 0.5f) - 5f);
-        var audioParams = AudioParams.Default.WithVariation(0.05f).WithVolume(volume);
+        var audioParams = AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(volume);
 
         _audio.Play(_shuttleImpactSound, Filter.Pvs(coordinates, rangeMultiplier: 4f, entityMan: EntityManager), coordinates, true, audioParams);
     }

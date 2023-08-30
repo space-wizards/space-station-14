@@ -49,7 +49,7 @@ namespace Content.Client.Instruments.UI
 
         protected override void Open()
         {
-            if (!EntMan.TryGetComponent<InstrumentComponent?>(Owner, out var instrument))
+            if (!EntMan.TryGetComponent(Owner, out InstrumentComponent? instrument))
                 return;
 
             Instrument = instrument;

@@ -1,15 +1,18 @@
-﻿using Robust.Shared.Utility;
+﻿using Content.Server.Mind;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Objectives.Interfaces
 {
+    // TODO refactor all of this to be ecs
     public interface IObjectiveCondition : IEquatable<IObjectiveCondition>
     {
         /// <summary>
         /// Returns a copy of the IObjectiveCondition which is assigned to the mind.
         /// </summary>
+        /// <param name="mindId">Mind id to assign to.</param>
         /// <param name="mind">Mind to assign to.</param>
         /// <returns>The new IObjectiveCondition.</returns>
-        IObjectiveCondition GetAssigned(Mind.Mind mind);
+        IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind);
 
         /// <summary>
         /// Returns the title of the condition.

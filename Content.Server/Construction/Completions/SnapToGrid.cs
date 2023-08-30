@@ -6,7 +6,7 @@ namespace Content.Server.Construction.Completions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class SnapToGrid : IGraphAction
+    public sealed partial class SnapToGrid : IGraphAction
     {
         [DataField("southRotation")] public bool SouthRotation { get; private set; }
 
@@ -15,7 +15,7 @@ namespace Content.Server.Construction.Completions
             var transform = entityManager.GetComponent<TransformComponent>(uid);
 
             if (!transform.Anchored)
-                transform.Coordinates = transform.Coordinates.SnapToGrid(entityManager);
+                entityManager.System<SharedTransformSystem>().SetCoordinates(uid, transform, transform.Coordinates.SnapToGrid(entityManager));
 
             if (SouthRotation)
             {

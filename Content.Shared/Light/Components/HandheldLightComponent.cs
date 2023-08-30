@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Light.Components;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedHandheldLightSystem))]
-public sealed class HandheldLightComponent : Component
+public sealed partial class HandheldLightComponent : Component
 {
     public byte? Level;
     public bool Activated;

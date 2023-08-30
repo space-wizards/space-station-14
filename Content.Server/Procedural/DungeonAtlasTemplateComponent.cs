@@ -6,7 +6,7 @@ namespace Content.Server.Procedural;
 /// Added to pre-loaded maps for dungeon templates.
 /// </summary>
 [RegisterComponent]
-public sealed class DungeonAtlasTemplateComponent : Component
+public sealed partial class DungeonAtlasTemplateComponent : Component
 {
     [DataField("path", required: true)]
     public ResPath Path;

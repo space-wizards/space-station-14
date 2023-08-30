@@ -9,7 +9,7 @@ namespace Content.Shared.Light.Components;
 /// TODO: Breaking and burning should probably be moved to another component eventually.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class LightBulbComponent : Component
+public sealed partial class LightBulbComponent : Component
 {
     /// <summary>
     /// The color of the lightbulb and the light it produces.

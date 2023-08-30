@@ -1,3 +1,4 @@
+using Content.Server.Mind;
 using Content.Server.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Containers;
@@ -10,9 +11,9 @@ namespace Content.Server.Objectives.Conditions
     // Oh god my eyes
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class StealCondition : IObjectiveCondition, ISerializationHooks
+    public sealed partial class StealCondition : IObjectiveCondition, ISerializationHooks
     {
-        private Mind.Mind? _mind;
+        private EntityUid? _mind;
         [DataField("prototype")] private string _prototypeId = string.Empty;
 
         /// <summary>
@@ -21,11 +22,11 @@ namespace Content.Server.Objectives.Conditions
         /// </summary>
         [DataField("owner")] private string? _owner = null;
 
-        public IObjectiveCondition GetAssigned(Mind.Mind mind)
+        public IObjectiveCondition GetAssigned(EntityUid mindId, MindComponent mind)
         {
             return new StealCondition
             {
-                _mind = mind,
+                _mind = mindId,
                 _prototypeId = _prototypeId,
                 _owner = _owner
             };
@@ -49,7 +50,6 @@ namespace Content.Server.Objectives.Conditions
         {
             get
             {
-                var uid = _mind?.OwnedEntity;
                 var entMan = IoCManager.Resolve<IEntityManager>();
 
                 // TODO make this a container system function
@@ -59,13 +59,16 @@ namespace Content.Server.Objectives.Conditions
                 var managerQuery = entMan.GetEntityQuery<ContainerManagerComponent>();
                 var stack = new Stack<ContainerManagerComponent>();
 
-                if (!metaQuery.TryGetComponent(_mind?.OwnedEntity, out var meta))
+                if (!entMan.TryGetComponent(_mind, out MindComponent? mind))
+                    return 0;
+
+                if (!metaQuery.TryGetComponent(mind.OwnedEntity, out var meta))
                     return 0;
 
                 if (meta.EntityPrototype?.ID == _prototypeId)
                     return 1;
 
-                if (!managerQuery.TryGetComponent(uid, out var currentManager))
+                if (!managerQuery.TryGetComponent(mind.OwnedEntity, out var currentManager))
                     return 0;
 
                 do
