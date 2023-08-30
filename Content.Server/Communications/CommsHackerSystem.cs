@@ -78,6 +78,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
 /// <summary>
 /// DoAfter event for comms console terror ability.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class TerrorDoAfterEvent : SimpleDoAfterEvent { }
 
 /// <summary>

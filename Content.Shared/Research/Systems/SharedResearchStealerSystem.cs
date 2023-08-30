@@ -3,6 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Research.Systems;
 
@@ -56,6 +57,7 @@ public abstract class SharedResearchStealerSystem : EntitySystem
 /// <summary>
 /// Raised on the research stealer when the doafter completes.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class ResearchStealDoAfterEvent : SimpleDoAfterEvent
 {
 }
