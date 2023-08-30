@@ -217,32 +217,32 @@ public sealed partial class StaminaSystem : EntitySystem
 
     private void OnProjectileHit(EntityUid uid, StaminaDamageOnCollideComponent component, ref ProjectileHitEvent args)
     {
-        OnCollide(uid, component, args.Target);
+        if (!TryComp<StaminaComponent>(args.Target, out var staminaComp))
+            return;
+
+        TryCollide(uid, component, args.Target, staminaComp);
     }
 
     private void OnThrowHit(EntityUid uid, StaminaDamageOnCollideComponent component, ThrowDoHitEvent args)
     {
         if (TryComp<ThrownItemComponent>(uid, out var thrownComp) &&
-            HasComp<StaminaComponent>(args.Target))
+            TryComp<StaminaComponent>(args.Target, out var staminaComp))
         {
-            if (OnCollide(uid, component, args.Target))
+            if (TryCollide(uid, component, args.Target, staminaComp))
             {
                 _thrownItemSystem.StopThrow(uid, thrownComp);
             }
         }
     }
 
-    private bool OnCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target)
+    private bool TryCollide(EntityUid uid, StaminaDamageOnCollideComponent component, EntityUid target, StaminaComponent staminaComp)
     {
-        if (!TryComp<StaminaComponent>(target, out var staminaComp))
-            return false;
-
         var ev = new StaminaDamageOnHitAttemptEvent();
         RaiseLocalEvent(uid, ref ev);
         if (ev.Cancelled)
             return false;
 
-        return TakeStaminaDamage(target, component.Damage, staminaComp, uid, sound: component.Sound);
+        return TryTakeStamina(target, component.Damage, staminaComp, uid, sound: component.Sound);
     }
 
     private void SetStaminaAlert(EntityUid uid, StaminaComponent? component = null)
@@ -260,7 +260,7 @@ public sealed partial class StaminaSystem : EntitySystem
     /// <summary>
     /// Tries to take stamina damage without raising the entity over the crit threshold.
     /// </summary>
-    public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null)
+    public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, SoundSpecifier? sound = null)
     {
         // Something that has no Stamina component automatically passes stamina checks
         if (!Resolve(uid, ref component, false))
@@ -268,17 +268,8 @@ public sealed partial class StaminaSystem : EntitySystem
 
         var oldStam = component.StaminaDamage;
 
+        // Have we already reached the point of max stamina damage?
         if (oldStam + value > component.CritThreshold || component.Critical)
-            return false;
-
-        TakeStaminaDamage(uid, value, component, source, with, visual: false);
-        return true;
-    }
-
-    public bool TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
-        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
-    {
-        if (!Resolve(uid, ref component, false))
             return false;
 
         if (!TryComp<MobStateComponent>(uid, out var mobComp))
@@ -292,9 +283,15 @@ public sealed partial class StaminaSystem : EntitySystem
         if (ev.Cancelled)
             return false;
 
-        // Have we already reached the point of max stamina damage?
-        if (component.Critical)
-            return false;
+        TakeStaminaDamage(uid, value, component, source, with, visual: false, sound);
+        return true;
+    }
+
+    public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
+        EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return;
 
         var oldDamage = component.StaminaDamage;
         component.StaminaDamage = MathF.Max(0f, component.StaminaDamage + value);
@@ -338,7 +335,7 @@ public sealed partial class StaminaSystem : EntitySystem
         Dirty(component);
 
         if (value <= 0)
-            return false;
+            return;
         if (source != null)
         {
             _adminLogger.Add(LogType.Stamina, $"{ToPrettyString(source.Value):user} caused {value} stamina damage to {ToPrettyString(uid):target}{(with != null ? $" using {ToPrettyString(with.Value):using}" : "")}");
@@ -357,7 +354,6 @@ public sealed partial class StaminaSystem : EntitySystem
         {
             _audio.PlayPvs(sound, uid);
         }
-        return true;
     }
 
     public override void Update(float frameTime)

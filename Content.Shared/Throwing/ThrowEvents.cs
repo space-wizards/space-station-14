@@ -32,8 +32,10 @@ namespace Content.Shared.Throwing
     /// </summary>
     public sealed class ThrowDoHitEvent : ThrowEvent
     {
-        public ThrowDoHitEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component) : base(thrown, target, component)
+        public readonly bool LandAfterFirstHit = true;
+        public ThrowDoHitEvent(EntityUid thrown, EntityUid target, ThrownItemComponent component, bool landAfterHit) : base(thrown, target, component)
         {
+            LandAfterFirstHit = landAfterHit;
         }
     }
 }
