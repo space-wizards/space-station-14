@@ -15,6 +15,7 @@
     slots:
     - suitStorage
     - Belt
+  - type: AmmoCounter
   - type: Gun
     selectedMode: SemiAuto
     fireRate: 1.5
@@ -119,7 +120,7 @@
       params:
         volume: 2.25
 
-- type: entity 
+- type: entity
   name: Python
   parent: WeaponRevolverPython
   id: WeaponRevolverPythonAP # For the uplink.
