@@ -109,7 +109,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     }
 
     /// <summary>
-    ///     Search rule components by operative uid
+    ///     Returns true when the player with UID opUid is a nuclear operative. Prevents random
+    ///     people from using the war declarator outside of the game mode.
     /// </summary>
     public bool TryGetRuleFromOperative(EntityUid opUid, [NotNullWhen(true)] out (NukeopsRuleComponent, GameRuleComponent)? comps)
     {
