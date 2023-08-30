@@ -113,11 +113,10 @@ public sealed class NinjaSuitSystem : SharedNinjaSuitSystem
         if (!TryComp<SpaceNinjaComponent>(user, out var ninja) || ninja.Katana == null)
             return;
 
-        // 1% charge per tile
         var katana = ninja.Katana.Value;
         var coords = _transform.GetWorldPosition(katana);
         var distance = (_transform.GetWorldPosition(user) - coords).Length();
-        var chargeNeeded = (float) distance * 3.6f;
+        var chargeNeeded = (float) distance * comp.RecallCharge;
         if (!_ninja.TryUseCharge(user, chargeNeeded) || UseDelay.ActiveDelay(user))
         {
             _popup.PopupEntity(Loc.GetString("ninja-no-power"), user, user);

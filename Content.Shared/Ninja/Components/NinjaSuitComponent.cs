@@ -86,6 +86,7 @@ public sealed partial class NinjaSuitComponent : Component
 
     /// <summary>
     /// Battery charge used per tile the katana teleported.
+    /// Uses 1% of a default battery per tile.
     /// </summary>
     [DataField("recallCharge")]
     public float RecallCharge = 3.6f;
