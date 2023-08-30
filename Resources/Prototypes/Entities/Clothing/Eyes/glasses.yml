@@ -72,9 +72,21 @@
   components:
   - type: Sprite
     sprite: Clothing/Eyes/Glasses/trayson.rsi
+    layers:
+    - state: tray-off
+      map: ["base"]
+  - type: Item
+    sprite: Objects/Tools/t-ray.rsi
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.TrayScannerVisual.Visual:
+        base:
+          On: { state: tray-on }
+          Off: { state: tray-off }
   - type: Clothing
     sprite: Clothing/Eyes/Glasses/trayson.rsi
-  - type: TrayScanner
+  - type: TrayGoggles
 
 - type: entity
   parent: ClothingEyesBase
