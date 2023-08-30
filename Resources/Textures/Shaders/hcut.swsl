@@ -2,7 +2,7 @@ light_mode unshaded;
 
 const highp float c = 0.3;
 const highp float alphaModifier = 0.2;
-uniform bool below = true;
+const bool below = true;
 
 void fragment()
 {
