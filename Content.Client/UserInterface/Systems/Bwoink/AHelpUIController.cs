@@ -138,7 +138,7 @@ public sealed class AHelpUIController: UIController, IOnSystemChanged<BwoinkSyst
              || (UIHelper!.IsAdmin && !message.IsSenderAdmin) // SS220
              || (!UIHelper!.IsAdmin))) // SS220
         {
-            SoundSystem.Play("/Audio/Effects/adminhelp.ogg", Filter.Local(), _AHelpParams);
+            SoundSystem.Play("/Audio/SS220/Admin_sounds/ahelp_sound.ogg", Filter.Local(), _AHelpParams);
             _clyde.RequestWindowAttention();
         }
 
