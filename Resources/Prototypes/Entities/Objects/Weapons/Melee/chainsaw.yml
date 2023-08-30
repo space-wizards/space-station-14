@@ -34,7 +34,6 @@
     size: 50
     sprite: Objects/Weapons/Melee/chainsaw.rsi
   - type: DisarmMalus
-  - type: ItemStatus
   - type: RefillableSolution
     solution: Welder
   - type: SolutionContainerManager

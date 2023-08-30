@@ -101,19 +101,19 @@
   sprite: /Textures/Tiles/Planet/Snow/snow.png
   variants: 13
   placementVariants:
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
-  - 1.0
+  - 0.8
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0166
+  - 0.0116
+  - 0.0116
   #cornerSprites:
   #  - /Textures/Tiles/Planet/Snow/single_edge.png
   #cardinalSprites:

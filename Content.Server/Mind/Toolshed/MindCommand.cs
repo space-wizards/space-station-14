@@ -1,7 +1,4 @@
-﻿using Content.Server.Mind.Components;
-using Content.Server.Players;
-using Robust.Server.Player;
-using Robust.Shared.Players;
+﻿using Robust.Server.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.Syntax;
@@ -17,20 +14,17 @@ public sealed class MindCommand : ToolshedCommand
     private MindSystem? _mind;
 
     [CommandImplementation("get")]
-    public Mind? Get([PipedArgument] IPlayerSession session)
+    public MindComponent? Get([PipedArgument] IPlayerSession session)
     {
-        return session.ContentData()?.Mind;
+        _mind ??= GetSys<MindSystem>();
+        return _mind.TryGetMind(session, out _, out var mind) ? mind : null;
     }
 
     [CommandImplementation("get")]
-    public Mind? Get([PipedArgument] EntityUid ent)
+    public MindComponent? Get([PipedArgument] EntityUid ent)
     {
-        if (!TryComp<MindContainerComponent>(ent, out var container))
-        {
-            return null;
-        }
-
-        return container.Mind;
+        _mind ??= GetSys<MindSystem>();
+        return _mind.TryGetMind(ent, out _, out var mind) ? mind : null;
     }
 
     [CommandImplementation("control")]
@@ -48,15 +42,13 @@ public sealed class MindCommand : ToolshedCommand
             return target;
         }
 
-        var mind = player.ContentData()?.Mind;
-
-        if (mind is null)
+        if (!_mind.TryGetMind(player, out var mindId, out var mind))
         {
             ctx.ReportError(new SessionHasNoEntityError(player));
             return target;
         }
 
-        _mind.TransferTo(mind, target);
+        _mind.TransferTo(mindId, target, mind: mind);
         return target;
     }
 }

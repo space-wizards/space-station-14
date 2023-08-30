@@ -60,6 +60,17 @@ public abstract class SharedFoldableSystem : EntitySystem
     }
 
     /// <summary>
+    /// Returns false if the entity isn't foldable.
+    /// </summary>
+    public bool IsFolded(EntityUid uid, FoldableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        return component.IsFolded;
+    }
+
+    /// <summary>
     /// Set the folded state of the given <see cref="FoldableComponent"/>
     /// </summary>
     public virtual void SetFolded(EntityUid uid, FoldableComponent component, bool folded)

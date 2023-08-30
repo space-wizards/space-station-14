@@ -1,4 +1,5 @@
 using Content.Server.GameTicking.Rules;
+using Content.Server.Mind;
 using Content.Server.Mind.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
@@ -16,6 +17,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
@@ -38,12 +40,12 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new ResPath("/Textures/Structures/Wallmounts/posters.rsi"), "poster5_contraband"),
             Act = () =>
             {
-                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (!_minds.TryGetSession(targetMindComp.Mind, out var session))
                     return;
 
                 // if its a monkey or mouse or something dont give uplink or objectives
                 var isHuman = HasComp<HumanoidAppearanceComponent>(args.Target);
-                _traitorRule.MakeTraitor(targetMindComp.Mind.Session, giveUplink: isHuman, giveObjectives: isHuman);
+                _traitorRule.MakeTraitor(session, giveUplink: isHuman, giveObjectives: isHuman);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-traitor"),
@@ -72,10 +74,10 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Structures/Wallmounts/signs.rsi"), "radiation"),
             Act = () =>
             {
-                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
 
-                _nukeopsRule.MakeLoneNukie(targetMindComp.Mind);
+                _nukeopsRule.MakeLoneNukie(mindId, mind);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-nuclear-operative"),
@@ -89,10 +91,10 @@ public sealed partial class AdminVerbSystem
             Icon = new SpriteSpecifier.Rsi(new("/Textures/Clothing/Head/Hats/pirate.rsi"), "icon"),
             Act = () =>
             {
-                if (targetMindComp.Mind == null || targetMindComp.Mind.Session == null)
+                if (!_minds.TryGetMind(args.Target, out var mindId, out var mind))
                     return;
 
-                _piratesRule.MakePirate(targetMindComp.Mind);
+                _piratesRule.MakePirate(mindId, mind);
             },
             Impact = LogImpact.High,
             Message = Loc.GetString("admin-verb-make-pirate"),

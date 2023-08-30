@@ -1,24 +1,28 @@
-﻿using Content.Server.Objectives.Interfaces;
+﻿using Content.Server.Mind;
+using Content.Server.Objectives.Interfaces;
 
 namespace Content.Server.Objectives
 {
     public sealed class Objective : IEquatable<Objective>
     {
         [ViewVariables]
-        public readonly Mind.Mind Mind;
+        public readonly EntityUid MindId;
+        [ViewVariables]
+        public readonly MindComponent Mind;
         [ViewVariables]
         public readonly ObjectivePrototype Prototype;
         private readonly List<IObjectiveCondition> _conditions = new();
         [ViewVariables]
         public IReadOnlyList<IObjectiveCondition> Conditions => _conditions;
 
-        public Objective(ObjectivePrototype prototype, Mind.Mind mind)
+        public Objective(ObjectivePrototype prototype, EntityUid mindId, MindComponent mind)
         {
             Prototype = prototype;
+            MindId = mindId;
             Mind = mind;
             foreach (var condition in prototype.Conditions)
             {
-                _conditions.Add(condition.GetAssigned(mind));
+                _conditions.Add(condition.GetAssigned(mindId, mind));
             }
         }
 

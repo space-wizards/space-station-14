@@ -175,7 +175,7 @@ namespace Content.Shared.Maps
 
             if (map.TryGetGrid(turf.GridUid, out var tileGrid))
             {
-                var gridRot = entManager.GetComponent<TransformComponent>(tileGrid.Owner).WorldRotation;
+                var gridRot = entManager.System<SharedTransformSystem>().GetWorldRotation(tileGrid.Owner);
 
                 // This is scaled to 90 % so it doesn't encompass walls on other tiles.
                 var tileBox = Box2.UnitCentered.Scale(0.9f);

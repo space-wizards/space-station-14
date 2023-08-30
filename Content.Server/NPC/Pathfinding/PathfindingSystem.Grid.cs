@@ -410,8 +410,7 @@ public sealed partial class PathfindingSystem
 
     private Vector2i GetOrigin(EntityCoordinates coordinates, EntityUid gridUid)
     {
-        var gridXform = Transform(gridUid);
-        var localPos = gridXform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+        var localPos = _transform.GetInvWorldMatrix(gridUid).Transform(coordinates.ToMapPos(EntityManager));
         return new Vector2i((int) Math.Floor(localPos.X / ChunkSize), (int) Math.Floor(localPos.Y / ChunkSize));
     }
 
@@ -641,7 +640,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built breadcrumbs in {sw.Elapsed.TotalMilliseconds}ms");
         SendBreadcrumbs(chunk, grid.Owner);
     }
 
@@ -827,7 +826,7 @@ public sealed partial class PathfindingSystem
             }
         }
 
-        // _sawmill.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
+        // Log.Debug($"Built navmesh in {sw.Elapsed.TotalMilliseconds}ms");
         SendPolys(chunk, component.Owner, chunkPolys);
     }
 

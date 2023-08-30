@@ -159,3 +159,14 @@
     - id: WeaponWandFireball
     - id: WeaponWandDeath
     - id: WeaponWandPolymorphDoor
+
+- type: entity
+  id: ClothingBeltHolsterFilled
+  parent: ClothingBeltHolster
+  suffix: Filled
+  components:
+  - type: StorageFill
+    contents:
+        - id: WeaponRevolverInspector
+        - id: SpeedLoaderMagnum
+        - id: SpeedLoaderMagnumRubber
