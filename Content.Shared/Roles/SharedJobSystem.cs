@@ -6,10 +6,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Roles;
 
-public sealed class JobSystem : EntitySystem
+public abstract class SharedJobSystem : EntitySystem
 {
     [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    private Dictionary<string, string> _inverseTrackerLookup = new();
+    private readonly Dictionary<string, string> _inverseTrackerLookup = new();
 
     public override void Initialize()
     {

@@ -12,12 +12,12 @@ namespace Content.Server.Roles.Jobs;
 /// <summary>
 ///     Handles the job data on mind entities.
 /// </summary>
-public sealed class JobSystem : EntitySystem
+public sealed class JobSystem : SharedJobSystem
 {
     [Dependency] private readonly IChatManager _chat = default!;
+    [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
 
     public override void Initialize()
     {

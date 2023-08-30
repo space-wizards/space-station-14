@@ -176,7 +176,7 @@ namespace Content.Shared.Roles
                     var roleDiff = roleRequirement.Time.TotalMinutes - roleTime.TotalMinutes;
                     var departmentColor = Color.Yellow;
 
-                    if (entManager.EntitySysManager.TryGetEntitySystem(out JobSystem? jobSystem))
+                    if (entManager.EntitySysManager.TryGetEntitySystem(out SharedJobSystem? jobSystem))
                     {
                         var jobProto = jobSystem.GetJobPrototype(proto);
 
