@@ -68,7 +68,10 @@ public partial class RadiationSystem
             }
 
             // Consider if the destination entity is hidden within a radiation blocking container
-            if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(dest.Owner, out var comps))
+            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
+            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+
+            if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(dest.Owner, out var comps, metas, xforms))
             {
                 rads -= comps.Sum(x => x.RadResistance);
 
@@ -126,7 +129,10 @@ public partial class RadiationSystem
             return null;
 
         // consider if the source is enclosed within a radiation blocking container
-        if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(sourceUid, out var comps))
+        var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
+        var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+
+        if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(sourceUid, out var comps, metas, xforms))
         {
             rads -= comps.Sum(x => x.RadResistance);
 
