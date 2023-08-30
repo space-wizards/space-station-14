@@ -20,6 +20,7 @@
         unstuck:
           True: { visible: false }
           False: { visible: true }
+  - type: TransferStickySurfaceOnSpawnBehavior
   - type: Destructible
     thresholds:
     - trigger:
@@ -32,7 +33,6 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
       - !type:SpawnEntitiesBehavior
-        transferStickSurface: true
         spawn:
           PosterBrokenUnstuck:
             min: 1

@@ -45,6 +45,7 @@
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass
+  - type: TransferForensicsOnSpawnBehavior
   - type: Destructible
     thresholds:
     - trigger:
@@ -60,7 +61,6 @@
           ShardGlass:
             min: 1
             max: 1
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: DamageOnLand

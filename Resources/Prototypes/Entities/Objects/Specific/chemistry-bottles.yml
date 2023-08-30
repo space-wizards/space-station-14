@@ -71,6 +71,7 @@
         Blunt: 4
   - type: Damageable
     damageContainer: Inorganic
+  - type: TransferForensicsOnSpawnBehavior
   - type: Destructible
     thresholds:
     - trigger:
@@ -86,7 +87,6 @@
           ShardGlass:
             min: 0
             max: 1
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
 

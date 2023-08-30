@@ -1,6 +1,7 @@
 using Content.Server.Popups;
 using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Events;
+using Content.Server.Destructible.Events;
 using Content.Shared.DoAfter;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
@@ -30,6 +31,7 @@ public sealed class StickySystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<TryStickOnSpawnComponent, MapInitEvent>(OnAutoStickMapInit);
+        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(TransferStickySurfaceFromDestroyedEntity);
 
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
@@ -246,5 +248,15 @@ public sealed class StickySystem : EntitySystem
 
         component.StuckTo = null;
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
+    }
+
+    public void TransferStickySurfaceFromDestroyedEntity(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+    {
+        if (EntityManager.TryGetComponent<StickyComponent>(uid, out var ownerStickyComp) &&
+            EntityManager.TryGetComponent<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&
+            ownerStickyComp.StuckTo != null)
+        {
+            StickToEntity(ev.Spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);
+        }
     }
 }

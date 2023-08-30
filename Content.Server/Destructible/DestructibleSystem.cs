@@ -4,12 +4,15 @@ using Content.Server.Atmos.EntitySystems;
 using Content.Server.Body.Systems;
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
+using Content.Server.Forensics;
+using Content.Server.Destructible.Events;
 using Content.Server.Destructible.Thresholds;
 using Content.Server.Destructible.Thresholds.Behaviors;
 using Content.Server.Destructible.Thresholds.Triggers;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.Sticky.Systems;
+using Content.Server.Sticky.Components;
 using Content.Server.Stack;
 using Content.Shared.Damage;
 using Content.Shared.Database;
@@ -121,6 +124,11 @@ namespace Content.Server.Destructible
                 }
             }
             return damageNeeded;
+        }
+
+        public void RaiseSpawnAfterDestructionEvent(EntityUid spawned, EntityUid owner)
+        {
+            RaiseLocalEvent(owner, new OnSpawnFromSpawnEntitiesBehaviourEvent(spawned));
         }
     }
 

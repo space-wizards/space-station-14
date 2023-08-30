@@ -1,5 +1,6 @@
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
+using Content.Server.Destructible.Events;
 using Robust.Shared.Random;
 
 namespace Content.Server.Forensics
@@ -10,9 +11,13 @@ namespace Content.Server.Forensics
         [Dependency] private readonly InventorySystem _inventory = default!;
         public override void Initialize()
         {
+            base.Initialize();
+
             SubscribeLocalEvent<FingerprintComponent, ContactInteractionEvent>(OnInteract);
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
+
+            SubscribeLocalEvent<TransferForensicsOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(TransferForensicsFromDestroyedEntity);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -63,6 +68,20 @@ namespace Content.Server.Forensics
             }
             if (TryComp<FingerprintComponent>(user, out var fingerprint))
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
+        }
+
+        public void TransferForensicsFromDestroyedEntity(EntityUid uid, TransferForensicsOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+        {
+            if (!EntityManager.TryGetComponent<ForensicsComponent>(uid, out var ownerForensics))
+                return;
+
+            var spawnedForensics = EntityManager.EnsureComponent<ForensicsComponent>(ev.Spawned);
+            spawnedForensics.DNAs = ownerForensics.DNAs;
+
+            if (!_random.Prob(component.FingersAndFibersTransferChance))
+                return;
+            spawnedForensics.Fingerprints = ownerForensics.Fingerprints;
+            spawnedForensics.Fibers = ownerForensics.Fibers;
         }
     }
 }

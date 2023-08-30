@@ -561,6 +561,7 @@
     canChangeTransferAmount: true
     minTransferAmount: 5
     maxTransferAmount: 20
+  - type: TransferForensicsOnSpawnBehavior
   - type: Destructible
     thresholds:
     - trigger:
@@ -576,7 +577,6 @@
           ShardGlass:
             min: 1
             max: 1
-        transferForensics: true
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sprite

@@ -5,6 +5,7 @@ using Content.Server.Sticky.Components;
 using Content.Server.Sticky.Systems;
 using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
+using Content.Server.Destructible.Events;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
@@ -23,12 +24,6 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 
         [DataField("offset")]
         public float Offset { get; set; } = 0.5f;
-
-        [DataField("transferForensics")]
-        public bool DoTransferForensics = false;
-
-        [DataField("transferStickSurface")]
-        public bool DoTransferStickSurface = false;
 
         public void Execute(EntityUid owner, DestructibleSystem system, EntityUid? cause = null)
         {
@@ -49,7 +44,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     system.StackSystem.SetCount(spawned, count);
 
-                    TransferStates(spawned, system, owner);
+                    system.RaiseSpawnAfterDestructionEvent(spawned, owner);
                 }
                 else
                 {
@@ -57,41 +52,9 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
-                        TransferStates(spawned, system, owner);
+                        system.RaiseSpawnAfterDestructionEvent(spawned, owner);
                     }
                 }
-            }
-        }
-
-        public void TransferStates(EntityUid spawned, DestructibleSystem system, EntityUid owner)
-        {
-            TransferForensics(spawned, system, owner);
-            TransferStickSurface(spawned, system, owner);
-        }
-
-        public void TransferForensics(EntityUid spawned, DestructibleSystem system, EntityUid owner)
-        {
-            if (!DoTransferForensics ||
-                !system.EntityManager.TryGetComponent<ForensicsComponent>(owner, out var forensicsComponent))
-                return;
-
-            var comp = system.EntityManager.EnsureComponent<ForensicsComponent>(spawned);
-            comp.DNAs = forensicsComponent.DNAs;
-
-            if (!system.Random.Prob(0.4f))
-                return;
-            comp.Fingerprints = forensicsComponent.Fingerprints;
-            comp.Fibers = forensicsComponent.Fibers;
-        }
-
-        public void TransferStickSurface(EntityUid spawned, DestructibleSystem system, EntityUid owner)
-        {
-            if (DoTransferStickSurface &&
-                system.EntityManager.TryGetComponent<StickyComponent>(owner, out var ownerStickyComp) &&
-                system.EntityManager.TryGetComponent<StickyComponent>(spawned, out var spawnedStickyComp) &&
-                ownerStickyComp.StuckTo != null)
-            {
-                system.StickySystem.StickToEntity(spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);
             }
         }
     }
