@@ -6,5 +6,6 @@
 [RegisterComponent]
 public sealed partial class RoleBriefingComponent : Component
 {
+    [DataField("briefing"), ViewVariables(VVAccess.ReadWrite)]
     public string Briefing;
 }

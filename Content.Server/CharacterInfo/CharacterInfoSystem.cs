@@ -29,7 +29,7 @@ public sealed class CharacterInfoSystem : EntitySystem
 
         var conditions = new Dictionary<string, List<ConditionInfo>>();
         var jobTitle = "No Profession";
-        var briefing = null;
+        string? briefing = null;
         if (_minds.TryGetMind(entity, out var mindId, out var mind))
         {
             // Get objectives

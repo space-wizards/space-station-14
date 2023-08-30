@@ -160,7 +160,7 @@ public sealed class RoleSystem : EntitySystem
             return null;
 
         var ev = new GetBriefingEvent();
-        RaiseLocalEvent(mindId, ref ev);
+        RaiseLocalEvent(mindId.Value, ref ev);
         return ev.Briefing;
     }
 
