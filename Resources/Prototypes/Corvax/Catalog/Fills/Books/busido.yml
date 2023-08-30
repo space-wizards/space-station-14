@@ -1,0 +1,14 @@
+#Taken from http://lib.ru/JAPAN/samuraj.txt
+
+- type: entity
+  parent: BookBase
+  id: BookBusido
+  name: Busido. Selected chapters
+  description: Handbook for samurai, weaboos, and armchair generals.
+  components:
+    - type: Sprite
+      sprite: Corvax/Objects/Misc/books.rsi
+      layers:
+        - state: book_busido
+    - type: Paper
+      content: book-text-busido

@@ -69,3 +69,5 @@
         prob: 0.1
       - id: BookInspiration
         prob: 0.1
+      - id: BookBusido # Corvax-Books
+        prob: 0.1
