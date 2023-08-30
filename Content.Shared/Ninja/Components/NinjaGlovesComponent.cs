@@ -46,15 +46,3 @@ public sealed partial class NinjaGlovesComponent : Component
         Components = new[] {"Airlock"}
     };
 }
-
-/// <summary>
-/// DoAfter event for drain ability.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class DrainDoAfterEvent : SimpleDoAfterEvent { }
-
-/// <summary>
-/// DoAfter event for research stealing ability.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed class ResearchStealDoAfterEvent : SimpleDoAfterEvent { }

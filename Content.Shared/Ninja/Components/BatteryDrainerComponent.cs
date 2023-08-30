@@ -8,7 +8,7 @@ namespace Content.Shared.Ninja.Components;
 /// Does not rely on relay, simply being on the user and having BatteryUid set is enough.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedBatteryDrainerSystem))]
-public sealed class BatteryDrainerComponent : Component
+public sealed partial class BatteryDrainerComponent : Component
 {
     /// <summary>
     /// The powercell entity to drain power into.

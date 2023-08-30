@@ -129,8 +129,14 @@ public sealed partial class NinjaSuitComponent : Component
     public float EmpDuration = 60f;
 }
 
-public sealed class CreateThrowingStarEvent : InstantActionEvent { }
+public sealed partial class CreateThrowingStarEvent : InstantActionEvent
+{
+}
 
-public sealed class RecallKatanaEvent : InstantActionEvent { }
+public sealed partial class RecallKatanaEvent : InstantActionEvent
+{
+}
 
-public sealed class NinjaEmpEvent : InstantActionEvent { }
+public sealed partial class NinjaEmpEvent : InstantActionEvent
+{
+}

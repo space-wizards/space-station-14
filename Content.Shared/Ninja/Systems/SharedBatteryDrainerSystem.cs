@@ -57,3 +57,9 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
         comp.BatteryUid = battery;
     }
 }
+
+/// <summary>
+/// DoAfter event for <see cref="BatteryDrainerComponent"/>.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class DrainDoAfterEvent : SimpleDoAfterEvent { }

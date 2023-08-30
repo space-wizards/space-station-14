@@ -5,7 +5,7 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(DashAbilitySystem))]
-public sealed class DashAbilityComponent : Component
+public sealed partial class DashAbilityComponent : Component
 {
     /// <summary>
     /// The action for dashing.
@@ -23,4 +23,4 @@ public sealed class DashAbilityComponent : Component
     };
 }
 
-public sealed class DashEvent : WorldTargetActionEvent { }
+public sealed partial class DashEvent : WorldTargetActionEvent { }

@@ -56,6 +56,6 @@ public abstract class SharedResearchStealerSystem : EntitySystem
 /// <summary>
 /// Raised on the research stealer when the doafter completes.
 /// </summary>
-public sealed class ResearchStealDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class ResearchStealDoAfterEvent : SimpleDoAfterEvent
 {
 }

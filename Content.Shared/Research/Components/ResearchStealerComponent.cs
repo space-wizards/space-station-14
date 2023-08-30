@@ -7,7 +7,7 @@ namespace Content.Shared.Research.Components;
 /// Component for stealing technologies from a R&D server, when gloves are enabled.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedResearchStealerSystem))]
-public sealed class ResearchStealerComponent : Component
+public sealed partial class ResearchStealerComponent : Component
 {
     /// <summary>
     /// Time taken to steal research from a server

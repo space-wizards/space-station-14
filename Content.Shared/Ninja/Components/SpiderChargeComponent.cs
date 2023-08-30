@@ -7,7 +7,7 @@ namespace Content.Shared.Ninja.Components;
 /// Only this component detonating can trigger the ninja's objective.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class SpiderChargeComponent : Component
+public sealed partial class SpiderChargeComponent : Component
 {
     /// Range for planting within the target area
     [DataField("range")]

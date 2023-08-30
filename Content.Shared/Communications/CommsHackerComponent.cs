@@ -10,7 +10,7 @@ namespace Content.Shared.Communications;
 /// Can only be done once, the component is remove afterwards.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedCommsHackerSystem))]
-public sealed class CommsHackerComponent : Component
+public sealed partial class CommsHackerComponent : Component
 {
     /// <summary>
     /// Time taken to hack the console
@@ -31,7 +31,7 @@ public sealed class CommsHackerComponent : Component
 /// You wouldn't do that, right?
 /// </summary>
 [DataDefinition]
-public sealed class Threat
+public sealed partial class Threat
 {
     /// <summary>
     /// Locale id for the announcement to be made from CentCom.
