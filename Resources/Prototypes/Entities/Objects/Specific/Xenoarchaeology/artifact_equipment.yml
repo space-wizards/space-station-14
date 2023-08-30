@@ -44,6 +44,8 @@
         - Artifact
     - type: Weldable
     - type: SuppressArtifactContainer
+    - type: RadiationBlockingContainer
+      resistance: 5
     - type: PlaceableSurface
       isPlaceable: false
     - type: Damageable
