@@ -3,7 +3,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Research.Components;
-using Robust.Shared.GameStates;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Research.Systems;
 

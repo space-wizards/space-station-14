@@ -5,6 +5,7 @@ using Content.Shared.Communications;
 using Content.Shared.DoAfter;
 using Content.Shared.Interaction.Events;
 using Robust.Shared.Random;
+using Robust.Shared.Serialization;
 
 namespace Content.Server.Communications;
 
