@@ -1,7 +1,7 @@
 namespace Content.Server.Forensics
 {
     /// <summary>
-    ///     Transfers forensics from destroyed object to spawned objects after destruction
+    ///     Transfers forensics from this entity to spawned objects after it's destruction
     /// </summary>
     [RegisterComponent]
     public sealed partial class TransferForensicsOnSpawnBehaviorComponent : Component

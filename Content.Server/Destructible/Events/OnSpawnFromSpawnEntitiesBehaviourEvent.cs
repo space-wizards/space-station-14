@@ -1,7 +1,7 @@
 namespace Content.Server.Destructible.Events;
 
 /// <summary>
-///     Raised on objects that were spawned because of <see cref="EntitySpawnBehavior"/> from <see cref="DestructibleSystem"/>
+///     Raised on objects that were destroyed and also have <see cref="EntitySpawnBehavior"/> from <see cref="DestructibleSystem"/>
 /// </summary>
 public sealed class OnSpawnFromSpawnEntitiesBehaviourEvent : EntityEventArgs
 {
