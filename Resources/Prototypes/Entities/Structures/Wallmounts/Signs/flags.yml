@@ -31,7 +31,7 @@
   parent: BaseFlag
   id: SyndieFlag
   name: Syndicate flag
-  description: "Smells bloody. Fuck NT!"
+  description: "Smells bloody. Death to NT!"
   components:
   - type: Sprite
     state: syndie_flag
