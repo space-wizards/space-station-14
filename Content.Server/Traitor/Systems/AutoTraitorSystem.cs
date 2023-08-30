@@ -72,10 +72,14 @@ public sealed class AutoTraitorSystem : EntitySystem
         if (!Resolve(uid, ref comp))
             return false;
 
-        if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || mindContainer.Mind?.Session == null)
+        if (!TryComp<MindContainerComponent>(uid, out var mindContainer) || mindContainer.Mind == null)
             return false;
 
-        var session = mindContainer.Mind.Session;
+        var mindId = mindContainer.Mind.Value;
+        if (!TryComp<MindComponent>(mindId, out var mind) || mind.Session == null)
+            return false;
+
+        var session = mind.Session;
         _traitorRule.MakeTraitor(session, giveUplink: comp.GiveUplink, giveObjectives: comp.GiveObjectives);
         // prevent spamming anything if it fails
         RemComp<AutoTraitorComponent>(uid);
