@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
+using Content.Server.Mind;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
@@ -192,8 +193,11 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal, bool viaCommand = false)
+        public bool OnGhostAttempt(EntityUid mindId, bool canReturnGlobal, bool viaCommand = false, MindComponent? mind = null)
         {
+            if (!Resolve(mindId, ref mind))
+                return false;
+
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)
@@ -222,7 +226,7 @@ namespace Content.Server.GameTicking
 
             if (mind.VisitingEntity != default)
             {
-                _mind.UnVisit(mind);
+                _mind.UnVisit(mindId, mind: mind);
             }
 
             var position = Exists(playerEntity)
@@ -281,9 +285,9 @@ namespace Content.Server.GameTicking
             _ghost.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
-                _mind.Visit(mind, ghost);
+                _mind.Visit(mindId, ghost, mind);
             else
-                _mind.TransferTo(mind, ghost);
+                _mind.TransferTo(mindId, ghost, mind: mind);
             return true;
         }
 
@@ -308,11 +312,11 @@ namespace Content.Server.GameTicking
 
     public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
-        public Mind.Mind Mind { get; }
+        public MindComponent Mind { get; }
         public bool CanReturnGlobal { get; }
         public bool Result { get; set; }
 
-        public GhostAttemptHandleEvent(Mind.Mind mind, bool canReturnGlobal)
+        public GhostAttemptHandleEvent(MindComponent mind, bool canReturnGlobal)
         {
             Mind = mind;
             CanReturnGlobal = canReturnGlobal;
