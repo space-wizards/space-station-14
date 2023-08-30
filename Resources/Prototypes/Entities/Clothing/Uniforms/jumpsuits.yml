@@ -1248,3 +1248,14 @@
     sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
   - type: Clothing
     sprite: Clothing/Uniforms/Jumpsuit/senior_officer.rsi
+
+- type: entity
+  parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChefCasual
+  name: chef loungewear
+  description: For when chefs just want to flip burgers and grill cheese with comfort of clothing... or to just take the day off.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/chef_casual.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/chef_casual.rsi
