@@ -6,7 +6,7 @@
     - type: StorageFill
       contents:
         - id: BoxSurvival
-        - id: BriefcaseIAAFilled
+        - id: Telescopichka
 
 - type: entity
   noSpawn: true

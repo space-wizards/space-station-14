@@ -5,9 +5,8 @@
   components:
     - type: StorageFill
       contents:
-        - id: Telescopichka
         - id: BoxSurvival
-        - id: BriefcaseIAAFilled
+        - id: Telescopichka
 
 - type: entity
   noSpawn: true
