@@ -15,7 +15,6 @@ using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Physics.Components;
 using Content.Shared.Tag;
-using Robust.Shared.Player;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
 
@@ -31,8 +30,10 @@ public sealed partial class AnchorableSystem : EntitySystem
     [Dependency] private readonly SharedTransformSystem _transformSystem = default!;
     [Dependency] private   readonly TagSystem _tagSystem = default!;
 
+    private EntityQuery<AnchorUniqueDirectionComponent> _anchoredUniqueQuery;
     private EntityQuery<PhysicsComponent> _physicsQuery;
     private EntityQuery<TagComponent> _tagQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
 
     public const string Unstackable = "Unstackable";
 
@@ -40,8 +41,12 @@ public sealed partial class AnchorableSystem : EntitySystem
     {
         base.Initialize();
 
+        _anchoredUniqueQuery = GetEntityQuery<AnchorUniqueDirectionComponent>();
         _physicsQuery = GetEntityQuery<PhysicsComponent>();
         _tagQuery = GetEntityQuery<TagComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
+        InitializeUniqueDirection();
 
         SubscribeLocalEvent<AnchorableComponent, InteractUsingEvent>(OnInteractUsing,
             before: new[] { typeof(ItemSlotsSystem) }, after: new[] { typeof(SharedConstructionSystem) });
@@ -59,13 +64,18 @@ public sealed partial class AnchorableSystem : EntitySystem
         TransformComponent? transform = null,
         ToolComponent? usingTool = null)
     {
-        if (!Resolve(uid, ref anchorable, ref transform))
+        if (!Resolve(uid, ref anchorable, ref transform) ||
+            !TryComp<MapGridComponent>(transform.GridUid, out var grid))
+        {
             return;
+        }
 
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, false))
+        var tileIndex = grid.LocalToTile(transform.Coordinates);
+
+        if (!Valid(uid, userUid, usingUid, false, transform.GridUid.Value, tileIndex))
             return;
 
         _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryUnanchorCompletedEvent());
@@ -117,8 +127,12 @@ public sealed partial class AnchorableSystem : EntitySystem
             return;
 
         var xform = Transform(uid);
+
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
-            !TileFree(xform.Coordinates, anchorBody))
+            (!TryComp<MapGridComponent>(xform.GridUid, out var grid) ||
+            !grid.TryGetTileRef(xform.Coordinates, out var tileRef) ||
+            !TileFree(grid, tileRef.GridIndices, anchorBody) ||
+            !Valid(uid, args.User, args.Used, true, finalRotation, xform.GridUid.Value, tileRef.GridIndices)))
         {
             _popup.PopupClient(Loc.GetString("anchorable-occupied"), uid, args.User);
             return;
@@ -126,7 +140,14 @@ public sealed partial class AnchorableSystem : EntitySystem
 
         // Snap rotation to cardinal (multiple of 90)
         var rot = xform.LocalRotation;
-        xform.LocalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+        var finalRotation = Math.Round(rot / (Math.PI / 2)) * (Math.PI / 2);
+
+        if ()
+        {
+            return;
+        }
+
+            xform.LocalRotation = finalRotation;
 
         if (TryComp<SharedPullableComponent>(uid, out var pullable) && pullable.Puller != null)
         {
@@ -212,11 +233,19 @@ public sealed partial class AnchorableSystem : EntitySystem
         if (!Resolve(usingUid, ref usingTool))
             return;
 
-        if (!Valid(uid, userUid, usingUid, true, anchorable, usingTool))
+        var coordinates = transform.Coordinates;
+        var gridUid = coordinates.GetGridUid(EntityManager);
+
+        if (!_mapManager.TryGetGrid(gridUid, out var grid))
+            return;
+
+        var tileIndices = grid.TileIndicesFor(coordinates);
+
+        if (!Valid(uid, userUid, usingUid, true, gridUid.Value, tileIndices, anchorable, usingTool))
             return;
 
         if (TryComp<PhysicsComponent>(uid, out var anchorBody) &&
-            !TileFree(transform.Coordinates, anchorBody))
+            !TileFree(grid, tileIndices, anchorBody))
         {
             _popup.PopupClient(Loc.GetString("anchorable-occupied"), uid, userUid);
             return;
@@ -231,11 +260,24 @@ public sealed partial class AnchorableSystem : EntitySystem
         _tool.UseTool(usingUid, userUid, uid, anchorable.Delay, usingTool.Qualities, new TryAnchorCompletedEvent());
     }
 
+    private bool IsAnchorValid()
+    {
+
+    }
+
+    private bool IsUnanchorValid()
+    {
+        
+    }
+
     private bool Valid(
         EntityUid uid,
         EntityUid userUid,
         EntityUid usingUid,
         bool anchoring,
+        Angle localRotation,
+        EntityUid gridUid,
+        Vector2i indices,
         AnchorableComponent? anchorable = null,
         ToolComponent? usingTool = null)
     {
@@ -246,7 +288,7 @@ public sealed partial class AnchorableSystem : EntitySystem
             return false;
 
         BaseAnchoredAttemptEvent attempt =
-            anchoring ? new AnchorAttemptEvent(userUid, usingUid) : new UnanchorAttemptEvent(userUid, usingUid);
+            anchoring ? new AnchorAttemptEvent(userUid, usingUid, localRotation, gridUid, indices) : new UnanchorAttemptEvent(userUid, usingUid, gridUid, indices);
 
         // Need to cast the event or it will be raised as BaseAnchoredAttemptEvent.
         if (anchoring)
@@ -259,24 +301,19 @@ public sealed partial class AnchorableSystem : EntitySystem
         return !attempt.Cancelled;
     }
 
-    private bool TileFree(EntityCoordinates coordinates, PhysicsComponent anchorBody)
+    private bool TileFree(MapGridComponent grid, Vector2i tileIndices, PhysicsComponent anchorBody)
     {
         // Probably ignore CanCollide on the anchoring body?
-        var gridUid = coordinates.GetGridUid(EntityManager);
-
-        if (!_mapManager.TryGetGrid(gridUid, out var grid))
-            return false;
-
-        var tileIndices = grid.TileIndicesFor(coordinates);
         return TileFree(grid, tileIndices, anchorBody.CollisionLayer, anchorBody.CollisionMask);
     }
 
     /// <summary>
     /// Returns true if no hard anchored entities match the collision layer or mask specified.
     /// </summary>
-    /// <param name="grid"></param>
     public bool TileFree(MapGridComponent grid, Vector2i gridIndices, int collisionLayer = 0, int collisionMask = 0)
     {
+        DebugTools.Assert(collisionLayer != 0 && collisionMask != 0x0);
+
         var enumerator = grid.GetAnchoredEntitiesEnumerator(gridIndices);
 
         while (enumerator.MoveNext(out var ent))
@@ -296,38 +333,6 @@ public sealed partial class AnchorableSystem : EntitySystem
         }
 
         return true;
-    }
-
-    /// <summary>
-    /// Returns true if any unstackables are also on the corresponding tile.
-    /// </summary>
-    public bool AnyUnstackable(EntityUid uid, EntityCoordinates location)
-    {
-        DebugTools.Assert(!Transform(uid).Anchored);
-
-        // If we are unstackable, iterate through any other entities anchored on the current square
-        return _tagSystem.HasTag(uid, Unstackable, _tagQuery) && AnyUnstackablesAnchoredAt(location);
-    }
-
-    public bool AnyUnstackablesAnchoredAt(EntityCoordinates location)
-    {
-        var gridUid = location.GetGridUid(EntityManager);
-
-        if (!TryComp<MapGridComponent>(gridUid, out var grid))
-            return false;
-
-        var enumerator = grid.GetAnchoredEntitiesEnumerator(grid.LocalToTile(location));
-
-        while (enumerator.MoveNext(out var entity))
-        {
-            // If we find another unstackable here, return true.
-            if (_tagSystem.HasTag(entity.Value, Unstackable, _tagQuery))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     [Serializable, NetSerializable]

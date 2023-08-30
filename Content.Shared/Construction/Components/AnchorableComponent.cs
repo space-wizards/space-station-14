@@ -1,5 +1,6 @@
 using Content.Shared.Construction.EntitySystems;
 using Content.Shared.Tools;
+using Robust.Shared.Map;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Construction.Components
@@ -24,31 +25,44 @@ namespace Content.Shared.Construction.Components
 
     public abstract class BaseAnchoredAttemptEvent : CancellableEntityEventArgs
     {
-        public EntityUid User { get; }
-        public EntityUid Tool { get; }
+        public readonly EntityUid User;
+        public readonly EntityUid Tool;
+
+        public readonly EntityUid GridUid;
+        public readonly Vector2i GridIndex;
 
         /// <summary>
         ///     Extra delay to add to the do_after.
         ///     Add to this, don't replace it.
         ///     Output parameter.
         /// </summary>
-        public float Delay { get; set; } = 0f;
+        public float Delay = 0f;
 
-        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool)
+        protected BaseAnchoredAttemptEvent(EntityUid user, EntityUid tool, EntityUid gridUid, Vector2i gridIndex)
         {
             User = user;
             Tool = tool;
+            GridIndex = gridIndex;
         }
     }
 
     public sealed class AnchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public AnchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        /// <summary>
+        /// Final rotation of the desired anchoring.
+        /// </summary>
+        public readonly Angle LocalRotation;
+
+        public AnchorAttemptEvent(EntityUid user, EntityUid tool, Angle localRotation, EntityUid gridUid,
+            Vector2i gridIndex) : base(user, tool, gridUid, gridIndex)
+        {
+            LocalRotation = localRotation;
+        }
     }
 
     public sealed class UnanchorAttemptEvent : BaseAnchoredAttemptEvent
     {
-        public UnanchorAttemptEvent(EntityUid user, EntityUid tool) : base(user, tool) { }
+        public UnanchorAttemptEvent(EntityUid user, EntityUid tool, EntityUid gridUid, Vector2i tileRef) : base(user, tool, gridUid, tileRef) { }
     }
 
     public abstract class BaseAnchoredEvent : EntityEventArgs
