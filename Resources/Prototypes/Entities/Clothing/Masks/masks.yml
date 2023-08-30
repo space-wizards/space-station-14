@@ -445,6 +445,7 @@
   - type: Clothing
     sprite: Clothing/Mask/balaclava.rsi
   - type: IdentityBlocker
+  - type: IngestionBlocker
   - type: Tag
     tags:
     - WhitelistChameleon
