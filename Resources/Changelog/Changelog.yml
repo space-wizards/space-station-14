@@ -1,72 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Fixed filled gas tanks being 70 liters instead of the intended 15 liters.,
-    type: Fix}
-  id: 4208
-  time: '2023-07-09T20:20:27.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed some jumpskirts parents, type: Fix}
-  id: 4209
-  time: '2023-07-09T21:57:20.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Going afk and missing evac now counts as being killed for the kill objective.,
-    type: Tweak}
-  id: 4210
-  time: '2023-07-09T22:00:08.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Ambuzol Plus can now be made as an vaccine against the zombie infection.
-      It requires zombie blood to create., type: Add}
-  - {message: 'Zombies now have unique blood. While it cannot transfer the infection,
-      consumption or injection is still ill-advised.', type: Add}
-  - {message: CBURN now get one Ambuzol Plus pill. Operatives are advised to use it
-      on themselves., type: Tweak}
-  - {message: The syndicate zombie bundle now has one Ambuzol Plus pill. Operatives
-      are advised not to fight over its use., type: Tweak}
-  id: 4211
-  time: '2023-07-09T22:01:36.0000000+00:00'
-- author: FoxHorn
-  changes:
-  - {message: 'Added prototype interrogator lamp for admin entity spawn panel. Perhaps
-      the mapmakers will replace the lamps in the interrogation rooms with this? I
-      said where''s the detonator?!?!', type: Add}
-  id: 4212
-  time: '2023-07-09T22:35:21.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
-      ability to produce offspring so long as they are properly tended to.', type: Add}
-  id: 4213
-  time: '2023-07-09T22:36:37.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'After a long cooperative research project botanists and chemists have
-      finally discovered how to improve bruise packs and ointment. Medicated suture
-      and regenerating mesh are now made in the microwave using a combination of bruise
-      packs/ointment, plants, cloth and chemicals.', type: Add}
-  id: 4214
-  time: '2023-07-10T02:22:11.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Syndicate High Command can now explicitly order for the assassination
-      of heads of staff., type: Add}
-  id: 4215
-  time: '2023-07-10T02:26:18.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'Clown R&D got inspired by incidents of accidentally swallowed honking
-      devices and made a minor breakthrough in clown science, bike horn implanters
-      are now available for purchase at cargo.', type: Add}
-  id: 4216
-  time: '2023-07-10T02:44:19.0000000+00:00'
-- author: dribblydrone
-  changes:
-  - {message: Added nukie guidebook, type: Add}
-  id: 4217
-  time: '2023-07-10T02:54:43.0000000+00:00'
 - author: Myakot
   changes:
   - {message: Removed a part of bicaridine's description that talked about non-existent
@@ -3026,3 +2958,56 @@ Entries:
   - {message: Fix trading post not spawning., type: Fix}
   id: 4707
   time: '2023-08-30T11:02:58.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Slightly improved the steel monotile sprites., type: Tweak}
+  id: 4708
+  time: '2023-08-31T01:02:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Deathmatch game mode! Brawl it out with other players and
+      try and be the first to 31 kills., type: Add}
+  id: 4709
+  time: '2023-08-31T01:06:16.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Updated traitor guidebook section., type: Tweak}
+  id: 4710
+  time: '2023-08-31T01:07:18.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed revenant siphon damage from poison to cold, type: Tweak}
+  id: 4711
+  time: '2023-08-31T01:07:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Foldable items are now predicted., type: Add}
+  id: 4712
+  time: '2023-08-31T01:56:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Overdosing on Robust might have unintended effects on plant-based sentient
+      lifeforms., type: Tweak}
+  id: 4713
+  time: '2023-08-31T02:01:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
+  id: 4714
+  time: '2023-08-31T02:14:54.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
+  id: 4715
+  time: '2023-08-31T02:33:40.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Dehydrated space carp's price has been lowered back to 2 telecrystals.,
+    type: Tweak}
+  id: 4716
+  time: '2023-08-31T12:41:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix horizontal cut shader not compiling on some systems., type: Fix}
+  id: 4717
+  time: '2023-08-31T13:26:40.0000000+00:00'

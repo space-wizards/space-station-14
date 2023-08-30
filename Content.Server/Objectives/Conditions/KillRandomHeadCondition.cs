@@ -1,8 +1,8 @@
 using System.Linq;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Random;
 
 namespace Content.Server.Objectives.Conditions;
@@ -17,7 +17,7 @@ public sealed partial class KillRandomHeadCondition : KillPersonCondition
 
         var allHumans = EntityManager.EntityQuery<MindContainerComponent>(true).Where(mc =>
         {
-            var entity = EntityManager.GetComponentOrNull<MindComponent>(mc.Mind)?.OwnedEntity;
+            var entity = EntityManagerExt.GetComponentOrNull<MindComponent>(EntityManager, (EntityUid?) mc.Mind)?.OwnedEntity;
 
             if (entity == default)
                 return false;
