@@ -77,12 +77,6 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
 }
 
 /// <summary>
-/// DoAfter event for comms console terror ability.
-/// </summary>
-[Serializable, NetSerializable]
-public sealed partial class TerrorDoAfterEvent : SimpleDoAfterEvent { }
-
-/// <summary>
 /// Raised on the user when a threat is called in on the communications console.
 /// </summary>
 /// <remarks>

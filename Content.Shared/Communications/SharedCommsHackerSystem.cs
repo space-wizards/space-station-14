@@ -17,3 +17,9 @@ public abstract class SharedCommsHackerSystem : EntitySystem
         comp.Threats = threats;
     }
 }
+
+/// <summary>
+/// DoAfter event for comms console terror ability.
+/// </summary>
+[Serializable, NetSerializable]
+public sealed partial class TerrorDoAfterEvent : SimpleDoAfterEvent { }
