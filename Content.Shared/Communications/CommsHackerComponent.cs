@@ -37,11 +37,11 @@ public sealed partial class Threat
     /// Locale id for the announcement to be made from CentCom.
     /// </summary>
     [DataField("announcement")]
-    public readonly string Announcement = default!;
+    public string Announcement = default!;
 
     /// <summary>
     /// The game rule for the threat to be added, it should be able to work when added mid-round otherwise this will do nothing.
     /// </summary>
     [DataField("rule", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-    public readonly string Rule = default!;
+    public string Rule = default!;
 }
