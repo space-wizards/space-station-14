@@ -144,7 +144,7 @@ namespace Content.Shared.Throwing
                     $"{ToPrettyString(thrown):thrown} thrown by {ToPrettyString(component.Thrower.Value):thrower} hit {ToPrettyString(target):target}.");
 
             RaiseLocalEvent(target, new ThrowHitByEvent(thrown, target, component), true);
-            RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component), true);
+            RaiseLocalEvent(thrown, new ThrowDoHitEvent(thrown, target, component, true), true);
         }
     }
 }

@@ -257,21 +257,8 @@ public sealed partial class StaminaSystem : EntitySystem
         _alerts.ShowAlert(uid, AlertType.Stamina, (short) severity);
     }
 
-    /// <summary>
-    /// Tries to take stamina damage without raising the entity over the crit threshold.
-    /// </summary>
-    public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, SoundSpecifier? sound = null)
+    public bool TryTakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, SoundSpecifier? sound = null)
     {
-        // Something that has no Stamina component automatically passes stamina checks
-        if (!Resolve(uid, ref component, false))
-            return true;
-
-        var oldStam = component.StaminaDamage;
-
-        // Have we already reached the point of max stamina damage?
-        if (oldStam + value > component.CritThreshold || component.Critical)
-            return false;
-
         if (!TryComp<MobStateComponent>(uid, out var mobComp))
             return false;
 
@@ -284,6 +271,27 @@ public sealed partial class StaminaSystem : EntitySystem
             return false;
 
         TakeStaminaDamage(uid, value, component, source, with, visual: false, sound);
+        return true;
+    }
+
+    /// <summary>
+    /// Tries to take stamina damage without raising the entity over the crit threshold.
+    /// </summary>
+    ///
+
+    public bool TryTakeStamina(EntityUid uid, float value, StaminaComponent? component = null, EntityUid? source = null, EntityUid? with = null, SoundSpecifier? sound = null)
+    {
+        // Something that has no Stamina component automatically passes stamina checks
+        if (!Resolve(uid, ref component, false))
+            return true;
+
+        var oldStam = component.StaminaDamage;
+
+        // Have we already reached the point of max stamina damage?
+        if (oldStam + value > component.CritThreshold || component.Critical)
+            return false;
+
+       TakeStaminaDamage(uid, value, component, source, with, visual: false, sound);
         return true;
     }
 
