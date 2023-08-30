@@ -109,7 +109,7 @@ public sealed class MindSystem : EntitySystem
     private void OnVisitingTerminating(EntityUid uid, VisitingMindComponent component, ref EntityTerminatingEvent args)
     {
         if (component.MindId != null)
-            UnVisit(component.MindId.Value, component.Mind);
+            UnVisit(component.MindId.Value);
     }
 
     private void OnMindContainerTerminating(EntityUid uid, MindContainerComponent component, ref EntityTerminatingEvent args)
@@ -283,7 +283,6 @@ public sealed class MindSystem : EntitySystem
         // EnsureComp instead of AddComp to deal with deferred deletions.
         var comp = EnsureComp<VisitingMindComponent>(entity);
         comp.MindId = mindId;
-        comp.Mind = mind;
         Log.Info($"Session {mind.Session?.Name} visiting entity {entity}.");
     }
 
@@ -339,7 +338,7 @@ public sealed class MindSystem : EntitySystem
 
         if (TryComp(oldVisitingEnt, out VisitingMindComponent? visitComp))
         {
-            visitComp.Mind = null;
+            visitComp.MindId = null;
             RemCompDeferred(oldVisitingEnt, visitComp);
         }
 

@@ -31,14 +31,16 @@ public sealed class RoleSystem : EntitySystem
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
     {
         var name = "game-ticker-unknown-role";
+        string? playTimeTracker = null;
         if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out JobPrototype? job))
         {
             name = job.Name;
+            playTimeTracker = job.PlayTimeTracker;
         }
 
         name = Loc.GetString(name);
 
-        args.Roles.Add(new RoleInfo(component, name, false));
+        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker));
     }
 
     private void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
@@ -52,7 +54,7 @@ public sealed class RoleSystem : EntitySystem
             }
             name = Loc.GetString(name);
 
-            args.Roles.Add(new RoleInfo(component, name, true));
+            args.Roles.Add(new RoleInfo(component, name, true, null));
         });
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);
@@ -81,6 +83,9 @@ public sealed class RoleSystem : EntitySystem
 
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
+
+        var mindEv = new MindRoleAddedEvent();
+        RaiseLocalEvent(mindId, ref mindEv);
 
         var message = new RoleAddedEvent(mindId, mind, antagonist);
         if (mind.OwnedEntity != null)
