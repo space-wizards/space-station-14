@@ -107,12 +107,12 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
                 Text = Loc.GetString(component.WipeVerbText),
                 Act = () =>
                 {
-                    if (!TryComp<MindContainerComponent>(uid, out var mindComp) || mindComp.Mind == null)
+                    if (!_mind.TryGetMind(uid, out var mindId, out var mind))
                         return;
                     // Wiping device :(
                     // The shutdown of the Mind should cause automatic reset of the pAI during OnMindRemoved
                     // EDIT: But it doesn't!!!! Wtf? Do stuff manually
-                    _mind.TransferTo(mindComp.Mind, null);
+                    _mind.TransferTo(mindId, null, mind: mind);
                     _popup.PopupEntity(Loc.GetString(component.WipeVerbPopup), uid, args.User, PopupType.Large);
                     UpdateAppearance(uid, ToggleableGhostRoleStatus.Off);
                     _pai.PAITurningOff(uid);

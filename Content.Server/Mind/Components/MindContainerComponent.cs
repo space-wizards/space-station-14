@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 namespace Content.Server.Mind.Components
 {
     /// <summary>
-    ///     Stores a <see cref="Server.Mind.Mind"/> on a mob.
+    ///     Stores a <see cref="MindComponent"/> on a mob.
     /// </summary>
     [RegisterComponent, Access(typeof(MindSystem))]
     public sealed partial class MindContainerComponent : Component
@@ -13,7 +13,7 @@ namespace Content.Server.Mind.Components
         /// </summary>
         [ViewVariables]
         [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
-        public Mind? Mind { get; set; }
+        public EntityUid? Mind { get; set; }
 
         /// <summary>
         ///     True if we have a mind, false otherwise.
@@ -40,10 +40,12 @@ namespace Content.Server.Mind.Components
 
     public sealed class MindRemovedMessage : EntityEventArgs
     {
-        public Mind OldMind;
+        public EntityUid OldMindId;
+        public MindComponent OldMind;
 
-        public MindRemovedMessage(Mind oldMind)
+        public MindRemovedMessage(EntityUid oldMindId, MindComponent oldMind)
         {
+            OldMindId = oldMindId;
             OldMind = oldMind;
         }
     }

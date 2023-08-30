@@ -1,0 +1,164 @@
+{
+    "version": 1,
+    "license": "CC0-1.0",
+    "copyright": "Created by EmoGarbage404 (github) for Space Station 14.",
+    "size": {
+        "x": 32,
+        "y": 32
+    },
+    "states": [
+        {
+            "name": "concrete_box"
+        },
+        {
+            "name": "concrete_corner_ne"
+        },
+        {
+            "name": "concrete_corner_se"
+        },
+        {
+            "name": "concrete_corner_nw"
+        },
+        {
+            "name": "concrete_corner_sw"
+        },
+        {
+            "name": "concrete_end_n"
+        },
+        {
+            "name": "concrete_end_e"
+        },
+        {
+            "name": "concrete_end_s"
+        },
+        {
+            "name": "concrete_end_w"
+        },
+        {
+            "name": "concrete_line_n"
+        },
+        {
+            "name": "concrete_line_e"
+        },
+        {
+            "name": "concrete_line_s"
+        },
+        {
+            "name": "concrete_line_w"
+        },
+        {
+            "name": "concrete_inner_ne"
+        },
+        {
+            "name": "concrete_inner_se"
+        },
+        {
+            "name": "concrete_inner_nw"
+        },
+        {
+            "name": "concrete_inner_sw"
+        },
+        {
+            "name": "oldconcrete_box"
+        },
+        {
+            "name": "oldconcrete_corner_ne"
+        },
+        {
+            "name": "oldconcrete_corner_se"
+        },
+        {
+            "name": "oldconcrete_corner_nw"
+        },
+        {
+            "name": "oldconcrete_corner_sw"
+        },
+        {
+            "name": "oldconcrete_end_n"
+        },
+        {
+            "name": "oldconcrete_end_e"
+        },
+        {
+            "name": "oldconcrete_end_s"
+        },
+        {
+            "name": "oldconcrete_end_w"
+        },
+        {
+            "name": "oldconcrete_line_n"
+        },
+        {
+            "name": "oldconcrete_line_e"
+        },
+        {
+            "name": "oldconcrete_line_s"
+        },
+        {
+            "name": "oldconcrete_line_w"
+        },
+        {
+            "name": "oldconcrete_inner_ne"
+        },
+        {
+            "name": "oldconcrete_inner_se"
+        },
+        {
+            "name": "oldconcrete_inner_nw"
+        },
+        {
+            "name": "oldconcrete_inner_sw"
+        },
+        {
+            "name": "grayconcrete_box"
+        },
+        {
+            "name": "grayconcrete_corner_ne"
+        },
+        {
+            "name": "grayconcrete_corner_se"
+        },
+        {
+            "name": "grayconcrete_corner_nw"
+        },
+        {
+            "name": "grayconcrete_corner_sw"
+        },
+        {
+            "name": "grayconcrete_end_n"
+        },
+        {
+            "name": "grayconcrete_end_e"
+        },
+        {
+            "name": "grayconcrete_end_s"
+        },
+        {
+            "name": "grayconcrete_end_w"
+        },
+        {
+            "name": "grayconcrete_line_n"
+        },
+        {
+            "name": "grayconcrete_line_e"
+        },
+        {
+            "name": "grayconcrete_line_s"
+        },
+        {
+            "name": "grayconcrete_line_w"
+        },
+        {
+            "name": "grayconcrete_inner_ne"
+        },
+        {
+            "name": "grayconcrete_inner_se"
+        },
+        {
+            "name": "grayconcrete_inner_nw"
+        },
+        {
+            "name": "grayconcrete_inner_sw"
+        }
+    ]
+}
