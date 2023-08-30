@@ -1,5 +1,5 @@
 - type: entity
-  parent: Clothing
+  parent: ClothingBackpack
   id: ClothingBackpackSatchel
   name: satchel
   description: A trendy looking satchel.
