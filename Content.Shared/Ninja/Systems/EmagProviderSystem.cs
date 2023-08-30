@@ -1,7 +1,7 @@
 using Content.Shared.Administration.Logs;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Database;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Tag;
 using Content.Shared.Whitelist;
@@ -22,24 +22,24 @@ public sealed class EmagProviderSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<EmagProviderComponent, InteractionAttemptEvent>(OnInteract);
+        SubscribeLocalEvent<EmagProviderComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
     }
 
     /// <summary>
     /// Emag clicked entities that are on the whitelist.
     /// </summary>
-    private void OnInteract(EntityUid uid, EmagProviderComponent comp, InteractionAttemptEvent args)
+    private void OnBeforeInteractHand(EntityUid uid, EmagProviderComponent comp, BeforeInteractHandEvent args)
     {
         // TODO: change this into a generic check event thing
-        if (!_gloves.AbilityCheck(uid, args, out var target))
-            return;
-
-        // only allowed to emag non-immune entities
-        if (_tags.HasTag(target, comp.EmagImmuneTag))
+        if (args.Handled || !_gloves.AbilityCheck(uid, args, out var target))
             return;
 
         // only allowed to emag entities on the whitelist
         if (comp.Whitelist != null && !comp.Whitelist.IsValid(target, EntityManager))
+            return;
+
+        // only allowed to emag non-immune entities
+        if (_tags.HasTag(target, comp.EmagImmuneTag))
             return;
 
         var handled = _emag.DoEmagEffect(uid, target);
@@ -49,6 +49,7 @@ public sealed class EmagProviderSystem : EntitySystem
         _adminLogger.Add(LogType.Emag, LogImpact.High, $"{ToPrettyString(uid):player} emagged {ToPrettyString(target):target}");
         var ev = new EmaggedSomethingEvent(target);
         RaiseLocalEvent(uid, ref ev);
+        args.Handled = true;
     }
 
     /// <summary>

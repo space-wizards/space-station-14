@@ -79,10 +79,11 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
 
         var drainer = EnsureComp<BatteryDrainerComponent>(user);
         var stun = EnsureComp<StunProviderComponent>(user);
+        _stunProvider.SetNoPowerPopup(user, "ninja-no-power", stun);
         if (_ninja.GetNinjaBattery(user, out var battery, out var _))
         {
-            _drainer.SetBattery(drainer, battery);
-            _stunProvider.SetBattery(stun, battery);
+            _drainer.SetBattery(user, battery, drainer);
+            _stunProvider.SetBattery(user, battery, stun);
         }
 
         var emag = EnsureComp<EmagProviderComponent>(user);

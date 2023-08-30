@@ -3,7 +3,7 @@ using Content.Server.GameTicking;
 using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
 using Content.Shared.DoAfter;
-using Content.Shared.Interaction.Events;
+using Content.Shared.Interaction;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 
@@ -22,18 +22,20 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<CommsHackerComponent, InteractionAttemptEvent>(OnInteractionAttempt);
+        SubscribeLocalEvent<CommsHackerComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
         SubscribeLocalEvent<CommsHackerComponent, TerrorDoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
-    private void OnInteractionAttempt(EntityUid uid, CommsHackerComponent comp, InteractionAttemptEvent args)
+    /// Start the doafter to hack a comms console
+    /// </summary>
+    private void OnBeforeInteractHand(EntityUid uid, CommsHackerComponent comp, BeforeInteractHandEvent args)
     {
-        // TODO: generic check event
-        if (!_gloves.AbilityCheck(uid, args, out var target))
+        if (args.Handled || !HasComp<CommunicationsConsoleComponent>(args.Target))
             return;
 
-        if (!HasComp<CommunicationsConsoleComponent>(target))
+        // TODO: generic check event
+        if (!_gloves.AbilityCheck(uid, args, out var target))
             return;
 
         var doAfterArgs = new DoAfterArgs(uid, comp.Delay, new TerrorDoAfterEvent(), target: target, used: uid, eventTarget: uid)
@@ -45,7 +47,7 @@ public sealed class CommsHackerSystem : SharedCommsHackerSystem
         };
 
         _doAfter.TryStartDoAfter(doAfterArgs);
-        args.Cancel();
+        args.Handled = true;
     }
 
     /// <summary>

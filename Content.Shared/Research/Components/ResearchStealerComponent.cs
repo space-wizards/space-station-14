@@ -12,6 +12,6 @@ public sealed partial class ResearchStealerComponent : Component
     /// <summary>
     /// Time taken to steal research from a server
     /// </summary>
-    [DataField("delay")]
+    [DataField("delay"), ViewVariables(VVAccess.ReadWrite)]
     public TimeSpan Delay = TimeSpan.FromSeconds(20);
 }

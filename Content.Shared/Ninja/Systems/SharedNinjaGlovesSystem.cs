@@ -7,8 +7,6 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
-using Content.Shared.Interaction.Components;
-using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Popups;
@@ -105,22 +103,14 @@ public abstract class SharedNinjaGlovesSystem : EntitySystem
     /// GloveCheck but for abilities stored on the player, skips some checks.
     /// Intended to be more generic, doesn't require the user to be a ninja or have any ninja equipment.
     /// </summary>
-    public bool AbilityCheck(EntityUid uid, InteractionAttemptEvent args, out EntityUid target)
+    public bool AbilityCheck(EntityUid uid, BeforeInteractHandEvent args, out EntityUid target)
     {
-        if (args.Target != null
-            && _timing.IsFirstTimePredicted
+        target = args.Target;
+        return _timing.IsFirstTimePredicted
             && !_combatMode.IsInCombatMode(uid)
             && !_useDelay.ActiveDelay(uid)
             && TryComp<HandsComponent>(uid, out var hands)
-            && hands.ActiveHandEntity == null)
-        {
-            target = args.Target.Value;
-
-            if (Interaction.InRangeUnobstructed(uid, target))
-                return true;
-        }
-
-        target = EntityUid.Invalid;
-        return false;
+            && hands.ActiveHandEntity == null
+            && Interaction.InRangeUnobstructed(uid, target);
     }
 }

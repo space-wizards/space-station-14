@@ -44,6 +44,12 @@ public sealed partial class StunProviderComponent : Component
     public TimeSpan Cooldown = TimeSpan.FromSeconds(1);
 
     /// <summary>
+    /// Locale string to popup when there is no power
+    /// </summary>
+    [DataField("noPowerPopup", required: true), ViewVariables(VVAccess.ReadWrite)]
+    public string NoPowerPopup = string.Empty;
+
+    /// <summary>
     /// Whitelist for what counts as a mob.
     /// </summary>
     [DataField("whitelist")]

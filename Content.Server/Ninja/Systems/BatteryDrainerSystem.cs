@@ -23,21 +23,21 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<BatteryDrainerComponent, BeforeRangedInteractEvent>(OnInteract);
+        SubscribeLocalEvent<BatteryDrainerComponent, BeforeInteractHandEvent>(OnBeforeInteractHand);
     }
 
     /// <summary>
     /// Start do after for draining a power source.
     /// Can't predict PNBC existing so only done on server.
     /// </summary>
-    private void OnInteract(EntityUid uid, BatteryDrainerComponent comp, BeforeRangedInteractEvent args)
+    private void OnBeforeInteractHand(EntityUid uid, BatteryDrainerComponent comp, BeforeInteractHandEvent args)
     {
         var target = args.Target;
-        if (comp.BatteryUid == null || !HasComp<PowerNetworkBatteryComponent>(target))
+        if (args.Handled || comp.BatteryUid == null || !HasComp<PowerNetworkBatteryComponent>(target))
             return;
 
-        // nicer for spam-clicking to not open apc ui, and when draining starts, so cancel the ui action
-        //args.Cancel();
+        // handles even if battery is full so you can actually see the poup
+        args.Handled = true;
 
         if (_battery.IsFull(comp.BatteryUid.Value))
         {
@@ -81,27 +81,20 @@ public sealed class BatteryDrainerSystem : SharedBatteryDrainerSystem
         }
 
         var available = targetBattery.CurrentCharge;
-        var required = targetBattery.MaxCharge - targetBattery.CurrentCharge;
+        var required = battery.MaxCharge - battery.CurrentCharge;
         // higher tier storages can charge more
         var maxDrained = pnb.MaxSupply * comp.DrainTime;
         var input = Math.Min(Math.Min(available, required / comp.DrainEfficiency), maxDrained);
-        if (_battery.TryUseCharge(target, input, targetBattery))
-        {
-            var output = input * comp.DrainEfficiency;
-            _battery.SetCharge(comp.BatteryUid.Value, battery.CurrentCharge + output, battery);
-            Spawn("EffectSparks", Transform(target).Coordinates);
-            _audio.PlayPvs(comp.SparkSound, target);
+        if (!_battery.TryUseCharge(target, input, targetBattery))
+            return false;
 
-            if (battery.IsFullyCharged)
-            {
-                _popup.PopupEntity(Loc.GetString("battery-drainer-full"), uid, uid, PopupType.Medium);
-                return false;
-            }
+        var output = input * comp.DrainEfficiency;
+        _battery.SetCharge(comp.BatteryUid.Value, battery.CurrentCharge + output, battery);
+        Spawn("EffectSparks", Transform(target).Coordinates);
+        _audio.PlayPvs(comp.SparkSound, target);
+        _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
 
-            _popup.PopupEntity(Loc.GetString("battery-drainer-success", ("battery", target)), uid, uid);
-            return true;
-        }
-
-        return false;
+        // repeat the doafter until battery is full
+        return !battery.IsFullyCharged;
     }
 }

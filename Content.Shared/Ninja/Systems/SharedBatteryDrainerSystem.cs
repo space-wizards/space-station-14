@@ -1,5 +1,6 @@
 using Content.Shared.Ninja.Components;
 using Content.Shared.DoAfter;
+using Robust.Shared.Serialization;
 
 namespace Content.Shared.Ninja.Systems;
 
@@ -52,8 +53,11 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
     /// <summary>
     /// Sets the battery field on the drainer.
     /// </summary>
-    public void SetBattery(BatteryDrainerComponent comp, EntityUid? battery)
+    public void SetBattery(EntityUid uid, EntityUid? battery, BatteryDrainerComponent? comp = null)
     {
+        if (!Resolve(uid, ref comp))
+            return;
+
         comp.BatteryUid = battery;
     }
 }
@@ -61,4 +65,5 @@ public abstract class SharedBatteryDrainerSystem : EntitySystem
 /// <summary>
 /// DoAfter event for <see cref="BatteryDrainerComponent"/>.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class DrainDoAfterEvent : SimpleDoAfterEvent { }
