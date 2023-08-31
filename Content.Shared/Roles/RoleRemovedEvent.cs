@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
 
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Event raised on player entities to indicate that a role was removed from their mind.

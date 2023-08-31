@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Server.Administration.Managers;
 using Content.Server.Ghost;
 using Content.Server.Players;
-using Content.Server.Roles.Jobs;
 using Content.Server.Spawners.Components;
 using Content.Server.Speech.Components;
 using Content.Server.Station.Components;
@@ -12,6 +11,7 @@ using Content.Shared.CCVar;
 using Content.Shared.Database;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using JetBrains.Annotations;
 using Robust.Server.Player;
 using Robust.Shared.Map;
@@ -25,7 +25,7 @@ namespace Content.Server.GameTicking
     public sealed partial class GameTicker
     {
         [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly SharedJobSystem _jobs = default!;
 
         [ValidatePrototypeId<EntityPrototype>]
         private const string ObserverPrototypeName = "MobObserver";

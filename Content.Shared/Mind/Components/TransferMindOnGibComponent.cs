@@ -1,7 +1,7 @@
 ﻿using Content.Shared.Tag;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Mind.Components;
+namespace Content.Shared.Mind.Components;
 
 [RegisterComponent]
 public sealed partial class TransferMindOnGibComponent : Component

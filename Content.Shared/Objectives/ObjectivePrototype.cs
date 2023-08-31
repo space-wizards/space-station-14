@@ -1,9 +1,9 @@
 ﻿using System.Linq;
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Prototypes;
 
-namespace Content.Server.Objectives
+namespace Content.Shared.Objectives
 {
     /// <summary>
     ///     Prototype for objectives. Remember that to be assigned, it should be added to one or more objective groups in prototype. E.g. crew, traitor, wizard
@@ -20,7 +20,7 @@ namespace Content.Server.Objectives
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
-        [DataField("conditions")]
+        [DataField("conditions", serverOnly: true)]
         private List<IObjectiveCondition> _conditions = new();
         [DataField("requirements")]
         private List<IObjectiveRequirement> _requirements = new();

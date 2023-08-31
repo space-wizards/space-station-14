@@ -1,4 +1,4 @@
-namespace Content.Server.Mind.Components
+namespace Content.Shared.Mind.Components
 {
     [RegisterComponent]
     public sealed partial class VisitingMindComponent : Component

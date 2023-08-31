@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Roles;
+﻿namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Event raised on a mind entity id to get whether or not the player is considered an antagonist,

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using Content.IntegrationTests.Pair;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Enums;
@@ -34,7 +34,7 @@ public sealed partial class MindTests
 
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
-        var mindSys = entMan.System<MindSystem>();
+        var mindSys = entMan.System<SharedMindSystem>();
 
         var player = playerMan.ServerSessions.Single();
 
@@ -66,7 +66,7 @@ public sealed partial class MindTests
     {
         var entMan = pair.Server.ResolveDependency<IServerEntityManager>();
         var playerMan = pair.Server.ResolveDependency<IPlayerManager>();
-        var mindSys = entMan.System<MindSystem>();
+        var mindSys = entMan.System<SharedMindSystem>();
         EntityUid ghostUid = default;
         EntityUid mindId = default!;
         MindComponent mind = default!;

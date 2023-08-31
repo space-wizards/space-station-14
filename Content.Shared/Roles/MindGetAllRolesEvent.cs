@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Players.PlayTimeTracking;
 
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Event raised on a mind entity to get all roles that a player has.
