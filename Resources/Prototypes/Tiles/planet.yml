@@ -143,6 +143,10 @@
   friction: 0
   heatCapacity: 10000
   weather: true
+  weightlessMovement: true
+  weightlessFriction: 0.5
+  weightlessFrictionNoInput: 0.05
+  weightlessAcceleration: 3
   indestructible: true
 
 # Dug snow
