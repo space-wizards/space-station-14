@@ -33,7 +33,7 @@ public sealed partial class SurviveCondition : IObjectiveCondition
             if (!entMan.TryGetComponent<MindComponent>(_mind, out var mind))
                 return 0f;
 
-            var mindSystem = entMan.System<MindSystem>();
+            var mindSystem = entMan.System<SharedMindSystem>();
             return mindSystem.IsCharacterDeadIc(mind) ? 0f : 1f;
         }
     }
