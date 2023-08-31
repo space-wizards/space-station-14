@@ -34,7 +34,7 @@ public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsCo
         var result = new List<StatusIconPrototype>();
 
         if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-            metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
+            (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
         {
             return result;
         }
