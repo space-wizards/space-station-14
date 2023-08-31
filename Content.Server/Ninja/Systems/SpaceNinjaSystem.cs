@@ -19,7 +19,6 @@ using Content.Shared.Alert;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Doors.Components;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Implants;
 using Content.Shared.Ninja.Components;
 using Content.Shared.Ninja.Systems;
 using Content.Shared.Popups;
@@ -57,7 +56,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly RoleSystem _role = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
 
@@ -65,7 +63,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<SpaceNinjaComponent, ComponentInit>(OnNinjaInit);
         SubscribeLocalEvent<SpaceNinjaComponent, MindAddedMessage>(OnNinjaMindAdded);
         SubscribeLocalEvent<SpaceNinjaComponent, EmaggedSomethingEvent>(OnDoorjack);
         SubscribeLocalEvent<SpaceNinjaComponent, ResearchStolenEvent>(OnResearchStolen);
@@ -175,29 +172,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     public override bool TryUseCharge(EntityUid user, float charge)
     {
         return GetNinjaBattery(user, out var uid, out var battery) && _battery.TryUseCharge(uid.Value, charge, battery);
-    }
-
-    /// <summary>
-    /// Set up ninja when created.
-    /// Runs before Implanted's ComponentStartup so it will work
-    /// </summary>
-    private void OnNinjaInit(EntityUid uid, SpaceNinjaComponent comp, ComponentInit args)
-    {
-        // inject starting implants if made ninja in antag ctrl
-        AddImplants(uid);
-    }
-
-    /// <summary>
-    /// Add configured implants to the ninja.
-    /// </summary>
-    /// <remarks>
-    /// Could be replaced with job specials ImplantSpecial if ninja became a job somehow.
-    /// </remarks>
-    private void AddImplants(EntityUid uid, SpaceNinjaComponent? comp = null)
-    {
-        var rule = NinjaRule(uid, comp);
-        if (rule != null)
-            _implants.AddImplants(uid, rule.Implants);
     }
 
     /// <summary>
