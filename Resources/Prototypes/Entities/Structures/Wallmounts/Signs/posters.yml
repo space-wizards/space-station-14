@@ -46,6 +46,9 @@
   name: broken poster
   description: "You can't make out anything from the poster's original print. It's ruined."
   components:
+  - type: Tag
+    tags:
+    - Trash
   - type: Destructible
     thresholds:
     - trigger:
