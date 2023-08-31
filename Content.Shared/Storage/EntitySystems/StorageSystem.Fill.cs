@@ -1,7 +1,6 @@
-using Content.Server.Storage.Components;
-using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 
-namespace Content.Server.Storage.EntitySystems;
+namespace Content.Shared.Storage.EntitySystems;
 
 public sealed partial class StorageSystem
 {
@@ -10,7 +9,7 @@ public sealed partial class StorageSystem
         if (component.Contents.Count == 0) return;
 
         TryComp<StorageComponent>(uid, out var serverStorageComp);
-        TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
+        _entityStorage.(uid, out var entityStorageComp);
 
         if (entityStorageComp == null && serverStorageComp == null)
         {
@@ -27,7 +26,7 @@ public sealed partial class StorageSystem
 
             // handle depending on storage component, again this should be unified after ECS
             if (entityStorageComp != null && _entityStorage.Insert(ent, uid))
-               continue;
+                continue;
 
             if (serverStorageComp != null && Insert(uid, ent, serverStorageComp, false))
                 continue;
