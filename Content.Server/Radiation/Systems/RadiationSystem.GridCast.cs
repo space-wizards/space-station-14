@@ -17,17 +17,6 @@ public partial class RadiationSystem
 {
     [Dependency] protected readonly SharedContainerSystem _container = default!;
 
-    private EntityQuery<MetaDataComponent> _testQuery;
-
-    private EntityQuery<TransformComponent> _test2Query;
-
-    public override void Initialize()
-    {
-        _testQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
-        _test2Query = EntityManager.GetEntityQuery<TransformComponent>();
-    }
-
-
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
