@@ -109,6 +109,7 @@ public sealed class CharacterUIController : UIController, IOnStateEntered<Gamepl
         _window.NameLabel.Text = entityName;
         _window.SubText.Text = job;
         _window.Objectives.RemoveAllChildren();
+        _window.ObjectivesLabel.Visible = objectives.Any();
 
         foreach (var (groupId, conditions) in objectives)
         {

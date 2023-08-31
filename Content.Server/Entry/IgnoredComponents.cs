@@ -7,7 +7,6 @@ namespace Content.Server.Entry
             "ConstructionGhost",
             "IconSmooth",
             "InteractionOutline",
-            "ItemStatus",
             "Marker",
             "GuidebookControlsTest",
             "GuideHelp",
