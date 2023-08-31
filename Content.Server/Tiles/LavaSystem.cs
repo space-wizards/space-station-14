@@ -1,7 +1,6 @@
 using Content.Server.Atmos.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Shared.StepTrigger.Systems;
-using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Tiles;
 
@@ -18,8 +17,7 @@ public sealed class LavaSystem : EntitySystem
 
     private void OnLavaStepTriggerAttempt(EntityUid uid, LavaComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (!HasComp<FlammableComponent>(args.Tripper)
-            || TryComp<PhysicsComponent>(args.Tripper, out var physics) && physics.BodyStatus == BodyStatus.InAir)
+        if (!HasComp<FlammableComponent>(args.Tripper))
             return;
 
         args.Continue = true;

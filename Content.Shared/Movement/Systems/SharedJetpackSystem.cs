@@ -6,6 +6,8 @@ using Content.Shared.Movement.Events;
 using Content.Shared.Popups;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
@@ -17,6 +19,7 @@ public abstract class SharedJetpackSystem : EntitySystem
     [Dependency] protected readonly SharedContainerSystem Container = default!;
     [Dependency] private   readonly SharedMoverController _mover = default!;
     [Dependency] private   readonly SharedPopupSystem _popup = default!;
+    [Dependency] private   readonly SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {
@@ -98,6 +101,10 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         var userComp = EnsureComp<JetpackUserComponent>(user);
         _mover.SetRelay(user, jetpackUid);
+
+        if (TryComp<PhysicsComponent>(user, out var physics))
+            _physics.SetBodyStatus(physics, BodyStatus.InAir);
+
         userComp.Jetpack = jetpackUid;
     }
 
@@ -105,6 +112,9 @@ public abstract class SharedJetpackSystem : EntitySystem
     {
         if (!RemComp<JetpackUserComponent>(uid))
             return;
+
+        if (TryComp<PhysicsComponent>(uid, out var physics))
+            _physics.SetBodyStatus(physics, BodyStatus.OnGround);
 
         RemComp<RelayInputMoverComponent>(uid);
     }

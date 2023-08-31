@@ -168,9 +168,6 @@ namespace Content.Shared.Movement.Systems
 
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-
-            // We differentiate between grav/other sources of weightless for tiles which want to use weightless accel (like ice)
-            // but don't care about requiring touching etc
             var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
