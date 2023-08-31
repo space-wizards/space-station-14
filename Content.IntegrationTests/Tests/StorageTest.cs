@@ -4,6 +4,7 @@ using System.Linq;
 using Content.Server.Storage.Components;
 using Content.Shared.Item;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Robust.Shared.GameObjects;
 using Robust.Shared.Prototypes;
 using Robust.UnitTesting;

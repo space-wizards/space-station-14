@@ -211,16 +211,16 @@ public sealed class LightReplacerSystem : EntitySystem
         if (!Resolve(storageUid, ref storage))
             return false;
 
-        if (storage.StoredEntities == null)
-            return false;
-
         var insertedBulbs = 0;
-        var storagedEnts = storage.StoredEntities.ToArray();
+        var storagedEnts = storage.Container.ContainedEntities.ToArray();
+
         foreach (var ent in storagedEnts)
         {
             if (TryComp<LightBulbComponent>(ent, out var bulb) &&
                 TryInsertBulb(replacerUid, ent, userUid, false, replacer, bulb))
+            {
                 insertedBulbs++;
+            }
         }
 
         // show some message if success

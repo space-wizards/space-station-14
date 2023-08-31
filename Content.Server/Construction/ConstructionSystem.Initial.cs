@@ -53,7 +53,7 @@ namespace Content.Server.Construction
             {
                 if (TryComp(item, out StorageComponent? storage))
                 {
-                    foreach (var storedEntity in storage.StoredEntities!)
+                    foreach (var storedEntity in storage.Container.ContainedEntities!)
                     {
                         yield return storedEntity;
                     }
@@ -66,10 +66,12 @@ namespace Content.Server.Construction
             {
                 while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
-                    if(!containerSlot.ContainedEntity.HasValue) continue;
+                    if(!containerSlot.ContainedEntity.HasValue)
+                        continue;
+
                     if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
                     {
-                        foreach (var storedEntity in storage.StoredEntities!)
+                        foreach (var storedEntity in storage.Container.ContainedEntities)
                         {
                             yield return storedEntity;
                         }
@@ -207,9 +209,9 @@ namespace Content.Server.Construction
                                 continue;
 
                             // Dump out any stored entities in used entity
-                            if (TryComp<StorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            if (TryComp<StorageComponent>(entity, out var storage))
                             {
-                                foreach (var storedEntity in storage.StoredEntities.ToList())
+                                foreach (var storedEntity in storage.Container.ContainedEntities.ToArray())
                                 {
                                     _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
                                 }

@@ -1,10 +1,11 @@
 ﻿using Content.Client.Animations;
 using Content.Shared.Storage;
+using Content.Shared.Storage.EntitySystems;
 
 namespace Content.Client.Storage.Systems;
 
 // TODO kill this is all horrid.
-public sealed class StorageSystem : EntitySystem
+public sealed class StorageSystem : SharedStorageSystem
 {
     public override void Initialize()
     {

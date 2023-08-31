@@ -1,12 +1,10 @@
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration;
 using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
-using Content.Shared.Ghost;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Implants.Components;
@@ -14,6 +12,7 @@ using Content.Shared.Interaction;
 using Content.Shared.Item;
 using Content.Shared.Lock;
 using Content.Shared.Placeable;
+using Content.Shared.Popups;
 using Content.Shared.Stacks;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
@@ -23,30 +22,27 @@ using Robust.Shared.Containers;
 using Robust.Shared.Map;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
-using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.EntitySystems;
 
-public sealed partial class StorageSystem : EntitySystem
+public abstract partial class SharedStorageSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ISharedAdminManager _admin = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
     [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
     [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] protected readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private readonly SharedStackSystem _stack = default!;
+    [Dependency] protected readonly UseDelaySystem _useDelay = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -54,7 +50,6 @@ public sealed partial class StorageSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<StorageComponent, ComponentInit>(OnComponentInit);
-        SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<UtilityVerb>>(AddTransferVerbs);
         SubscribeLocalEvent<StorageComponent, InteractUsingEvent>(OnInteractUsing, after: new[] { typeof(ItemSlotsSystem) });
         SubscribeLocalEvent<StorageComponent, ActivateInWorldEvent>(OnActivate);
@@ -64,7 +59,6 @@ public sealed partial class StorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInsertItemMessage>(OnInsertItemMessage);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
-        SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
         SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
@@ -83,45 +77,9 @@ public sealed partial class StorageSystem : EntitySystem
         UpdateStorageUI(uid, storageComp);
     }
 
-    private void AddOpenUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
-    {
-        var silent = false;
-        if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
-        {
-            // we allow admins to open the storage anyways
-            if (!_admin.HasAdminFlag(args.User, AdminFlags.Admin))
-                return;
+    protected virtual void UpdateStorageUI(EntityUid uid, StorageComponent storageComp) {}
 
-            silent = true;
-        }
-
-        silent |= HasComp<GhostComponent>(args.User);
-
-        // Get the session for the user
-        if (!TryComp<ActorComponent>(args.User, out var actor))
-            return;
-
-        // Does this player currently have the storage UI open?
-        var uiOpen = _uiSystem.SessionHasOpenUi(uid, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
-
-        ActivationVerb verb = new()
-        {
-            Act = () => OpenStorageUI(uid, args.User, component, silent)
-        };
-        if (uiOpen)
-        {
-            verb.Text = Loc.GetString("verb-common-close-ui");
-            verb.Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/close.svg.192dpi.png"));
-        }
-        else
-        {
-            verb.Text = Loc.GetString("verb-common-open-ui");
-            verb.Icon = new SpriteSpecifier.Texture(
-                new("/Textures/Interface/VerbIcons/open.svg.192dpi.png"));
-        }
-        args.Verbs.Add(verb);
-    }
+    protected virtual void OpenStorageUI(EntityUid uid, EntityUid argsUser, StorageComponent storageComp) { }
 
     private void AddTransferVerbs(EntityUid uid, StorageComponent component, GetVerbsEvent<UtilityVerb> args)
     {
@@ -387,29 +345,13 @@ public sealed partial class StorageSystem : EntitySystem
         }
     }
 
-    private void OnBoundUIClosed(EntityUid uid, StorageComponent storageComp, BoundUIClosedEvent args)
-    {
-        if (TryComp<ActorComponent>(args.Session.AttachedEntity, out var actor) && actor?.PlayerSession != null)
-            CloseNestedInterfaces(uid, actor.PlayerSession, storageComp);
-
-        // If UI is closed for everyone
-        if (!_uiSystem.IsUiOpen(uid, args.UiKey))
-        {
-            storageComp.IsUiOpen = false;
-            UpdateStorageVisualization(uid, storageComp);
-
-            if (storageComp.StorageCloseSound is not null)
-                _audio.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
-        }
-    }
-
     private void OnStorageItemRemoved(EntityUid uid, StorageComponent storageComp, EntRemovedFromContainerMessage args)
     {
         RecalculateStorageUsed(storageComp);
         UpdateStorageUI(uid, storageComp);
     }
 
-    private void UpdateStorageVisualization(EntityUid uid, StorageComponent storageComp)
+    protected void UpdateStorageVisualization(EntityUid uid, StorageComponent storageComp)
     {
         if (!TryComp<AppearanceComponent>(uid, out var appearance))
             return;
@@ -630,7 +572,7 @@ public sealed partial class StorageSystem : EntitySystem
 
         if (!_sharedHandsSystem.TryDrop(player, toInsert.Value, handsComp: hands))
         {
-            PopupEnt(uid, player, "comp-storage-cant-drop", toInsert.Value, storageComp);
+            _popupSystem.PopupClient(Loc.GetString("comp-storage-cant-drop"), uid, player);
             return false;
         }
 
@@ -656,73 +598,8 @@ public sealed partial class StorageSystem : EntitySystem
         return true;
     }
 
-    /// <summary>
-    ///     Opens the storage UI for an entity
-    /// </summary>
-    /// <param name="entity">The entity to open the UI for</param>
-    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
-    {
-        if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
-            return;
-
-        // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay);
-        if (!silent)
-        {
-            _audio.PlayPvs(storageComp.StorageOpenSound, uid);
-            if (useDelay != null)
-                _useDelay.BeginDelay(uid, useDelay);
-        }
-
-        Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
-
-        var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
-        if (bui != null)
-            _uiSystem.OpenUi(bui, player.PlayerSession);
-    }
-
-    /// <summary>
-    ///     If the user has nested-UIs open (e.g., PDA UI open when pda is in a backpack), close them.
-    /// </summary>
-    /// <param name="session"></param>
-    public void CloseNestedInterfaces(EntityUid uid, IPlayerSession session, StorageComponent? storageComp = null)
-    {
-        if (!Resolve(uid, ref storageComp))
-            return;
-
-        // for each containing thing
-        // if it has a storage comp
-        // ensure unsubscribe from session
-        // if it has a ui component
-        // close ui
-        foreach (var entity in storageComp.Container.ContainedEntities)
-        {
-            if (!TryComp(entity, out SharedUserInterfaceComponent? ui))
-                continue;
-
-            foreach (var bui in ui.Interfaces.Values)
-            {
-                _uiSystem.TryClose(entity, bui.UiKey, session, ui);
-            }
-        }
-    }
-
-    public void UpdateStorageUI(EntityUid uid, StorageComponent storageComp)
-    {
-        var state = new StorageComponent.StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Container.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
-        var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
-
-        if (bui != null)
-            UserInterfaceSystem.SetUiState(bui, state);
-    }
-
     private void Popup(EntityUid _, EntityUid player, string message, StorageComponent storageComp)
     {
         _popupSystem.PopupEntity(Loc.GetString(message), player, player);
-    }
-
-    private void PopupEnt(EntityUid _, EntityUid player, string message, EntityUid entityUid, StorageComponent storageComp)
-    {
-        _popupSystem.PopupEntity(Loc.GetString(message, ("entity", entityUid)), player, player);
     }
 }
