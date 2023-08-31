@@ -1,4 +1,5 @@
 ﻿using Content.Shared.ActionBlocker;
+using Content.Shared.Buckle.Components;
 using Content.Shared.Movement.Events;
 using Content.Shared.StepTrigger.Systems;
 using Robust.Shared.Network;
@@ -51,18 +52,33 @@ public sealed class ChasmSystem : EntitySystem
         if (HasComp<ChasmFallingComponent>(args.Tripper))
             return;
 
-        var falling = AddComp<ChasmFallingComponent>(args.Tripper);
+        StartFalling(uid, component, args.Tripper);
+
+        // checking for strap is necessary so that buckled entities actually have the visuals and can't just
+        // unbuckle to prevent death
+        if (!TryComp<StrapComponent>(uid, out var strap))
+            return;
+
+        foreach (var ent in strap.BuckledEntities)
+        {
+            // don't play sound for any buckled ents since we'll have already played it once
+            StartFalling(uid, component, ent, playSound: false);
+        }
+    }
+
+    public void StartFalling(EntityUid chasm, ChasmComponent component, EntityUid tripper, bool playSound = true)
+    {
+        var falling = AddComp<ChasmFallingComponent>(tripper);
 
         falling.NextDeletionTime = _timing.CurTime + falling.DeletionTime;
-        _blocker.UpdateCanMove(args.Tripper);
-        _audio.PlayPredicted(component.FallingSound, uid, args.Tripper);
+        _blocker.UpdateCanMove(tripper);
+
+        if (playSound)
+            _audio.PlayPredicted(component.FallingSound, chasm, tripper);
     }
 
     private void OnStepTriggerAttempt(EntityUid uid, ChasmComponent component, ref StepTriggerAttemptEvent args)
     {
-        if (TryComp<PhysicsComponent>(args.Tripper, out var physics) && physics.BodyStatus == BodyStatus.InAir)
-            return;
-
         args.Continue = true;
     }
 
