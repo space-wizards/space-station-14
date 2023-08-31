@@ -9,36 +9,25 @@
       "name": "snow"
     },
     {
-      "name": "snow_corner",
-      "directions": 8
+      "name": "snow_single_edge",
     },
     {
-      "name": "snow_surround",
-      "directions": 4
+      "name": "snow_double_edge",
     },
     {
-      "name": "gravsnow"
+      "name": "snow_dug"
     },
     {
-      "name": "gravsnow_corner",
-      "directions": 8
+      "name": "snow_dug_single_edge",
     },
     {
-      "name": "gravsnow_surround",
-      "directions": 4
+      "name": "snow_dug_double_edge",
     },
     {
       "name": "plating"
     },
     {
-      "name": "platingdrift",
-      "directions": 4
-    },
-    {
       "name": "ice"
-    },
-    {
-      "name": "snowwhite"
     },
     {
       "name": "snow0"
