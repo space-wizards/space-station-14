@@ -2,7 +2,6 @@ using System.Numerics;
 using Content.Server.Popups;
 using Content.Server.Pulling;
 using Content.Server.Stack;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Server.Stunnable;
 using Content.Shared.ActionBlocker;
@@ -16,6 +15,7 @@ using Content.Shared.Inventory;
 using Content.Shared.Physics.Pull;
 using Content.Shared.Pulling.Components;
 using Content.Shared.Stacks;
+using Content.Shared.Storage;
 using Content.Shared.Throwing;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -253,7 +253,7 @@ namespace Content.Server.Hands.Systems
                 return;
 
             if (!_inventorySystem.TryGetSlotEntity(plyEnt, equipmentSlot, out var slotEntity) ||
-                !TryComp(slotEntity, out ServerStorageComponent? storageComponent))
+                !TryComp(slotEntity, out StorageComponent? storageComponent))
             {
                 if (_inventorySystem.HasSlot(plyEnt, equipmentSlot))
                 {

@@ -19,9 +19,6 @@ public sealed class StorageSystem : EntitySystem
     /// <param name="msg"></param>
     public void HandleAnimatingInsertingEntities(AnimateInsertingEntitiesEvent msg)
     {
-        if (!TryComp(msg.Storage, out ClientStorageComponent? storage))
-            return;
-
         TryComp(msg.Storage, out TransformComponent? transformComp);
 
         for (var i = 0; msg.StoredEntities.Count > i; i++)

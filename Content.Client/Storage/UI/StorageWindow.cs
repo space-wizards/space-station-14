@@ -10,7 +10,7 @@ using Content.Shared.Item;
 using Content.Shared.Stacks;
 using Robust.Client.UserInterface;
 using static Robust.Client.UserInterface.Controls.BoxContainer;
-using static Content.Shared.Storage.SharedStorageComponent;
+using static Content.Shared.Storage.StorageComponent;
 
 namespace Content.Client.Storage.UI
 {

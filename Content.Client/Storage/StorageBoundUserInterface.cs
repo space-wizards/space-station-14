@@ -9,7 +9,7 @@ using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
-using static Content.Shared.Storage.SharedStorageComponent;
+using static Content.Shared.Storage.StorageComponent;
 
 namespace Content.Client.Storage
 {

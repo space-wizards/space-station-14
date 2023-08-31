@@ -49,7 +49,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
             return;
 
         AlternativeVerb verb = new()
@@ -69,7 +69,7 @@ public sealed class DumpableSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract)
             return;
 
-        if (!TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.StoredEntities == null || storage.StoredEntities.Count == 0)
             return;
 
         if (_disposalUnitSystem.HasDisposals(args.Target))
@@ -103,7 +103,7 @@ public sealed class DumpableSystem : EntitySystem
 
     public void StartDoAfter(EntityUid storageUid, EntityUid? targetUid, EntityUid userUid, DumpableComponent dumpable)
     {
-        if (!TryComp<SharedStorageComponent>(storageUid, out var storage) || storage.StoredEntities == null)
+        if (!TryComp<StorageComponent>(storageUid, out var storage) || storage.StoredEntities == null)
             return;
 
         float delay = storage.StoredEntities.Count * (float) dumpable.DelayPerItem.TotalSeconds * dumpable.Multiplier;
@@ -118,7 +118,7 @@ public sealed class DumpableSystem : EntitySystem
 
     private void OnDoAfter(EntityUid uid, DumpableComponent component, DoAfterEvent args)
     {
-        if (args.Handled || args.Cancelled || !TryComp<SharedStorageComponent>(uid, out var storage) || storage.StoredEntities == null)
+        if (args.Handled || args.Cancelled || !TryComp<StorageComponent>(uid, out var storage) || storage.StoredEntities == null)
             return;
 
         Queue<EntityUid> dumpQueue = new();

@@ -1,12 +1,59 @@
+using Content.Shared.Whitelist;
+using Robust.Shared.Audio;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map;
 using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
-    [NetworkedComponent()]
-    public abstract partial class SharedStorageComponent : Component
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    public sealed partial class StorageComponent : Component
     {
+        // TODO: This fucking sucks
+        [ViewVariables(VVAccess.ReadWrite), DataField("isOpen"), AutoNetworkedField]
+        public bool IsUiOpen;
+
+        [ViewVariables]
+        public Container Storage = default!;
+
+        public readonly Dictionary<EntityUid, int> SizeCache = new();
+
+        private bool _occludesLight = true;
+
+        [DataField("quickInsert")]
+        public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
+
+        [DataField("clickInsert")]
+        public bool ClickInsert = true; // Can insert stuff by clicking the storage entity with it
+
+        [DataField("areaInsert")]
+        public bool AreaInsert;  // "Attacking" with the storage entity causes it to insert all nearby storables after a delay
+
+        [DataField("areaInsertRadius")]
+        public int AreaInsertRadius = 1;
+
+        [DataField("whitelist")]
+        public EntityWhitelist? Whitelist;
+
+        [DataField("blacklist")]
+        public EntityWhitelist? Blacklist;
+
+        public int StorageUsed;
+
+        [DataField("capacity")]
+        public int StorageCapacityMax = 10000;
+
+        [DataField("storageOpenSound")]
+        public SoundSpecifier? StorageOpenSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
+
+        [DataField("storageInsertSound")]
+        public SoundSpecifier? StorageInsertSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
+
+        [DataField("storageRemoveSound")] public SoundSpecifier? StorageRemoveSound;
+
+        [DataField("storageCloseSound")] public SoundSpecifier? StorageCloseSound;
+
         [Serializable, NetSerializable]
         public sealed class StorageBoundUserInterfaceState : BoundUserInterfaceState
         {
@@ -42,15 +89,6 @@ namespace Content.Shared.Storage
         {
             Key,
         }
-
-        public abstract IReadOnlyList<EntityUid>? StoredEntities { get; }
-
-        /// <summary>
-        ///     Removes from the storage container and updates the stored value
-        /// </summary>
-        /// <param name="entity">The entity to remove</param>
-        /// <returns>True if no longer in storage, false otherwise</returns>
-        public abstract bool Remove(EntityUid entity);
     }
 
     /// <summary>

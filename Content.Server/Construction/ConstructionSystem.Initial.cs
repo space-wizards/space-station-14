@@ -2,7 +2,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.ActionBlocker;
 using Content.Shared.Construction;
@@ -52,7 +51,7 @@ namespace Content.Server.Construction
         {
             foreach (var item in _handsSystem.EnumerateHeld(user))
             {
-                if (TryComp(item, out ServerStorageComponent? storage))
+                if (TryComp(item, out StorageComponent? storage))
                 {
                     foreach (var storedEntity in storage.StoredEntities!)
                     {
@@ -68,7 +67,7 @@ namespace Content.Server.Construction
                 while (containerSlotEnumerator.MoveNext(out var containerSlot))
                 {
                     if(!containerSlot.ContainedEntity.HasValue) continue;
-                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out ServerStorageComponent? storage))
+                    if (EntityManager.TryGetComponent(containerSlot.ContainedEntity.Value, out StorageComponent? storage))
                     {
                         foreach (var storedEntity in storage.StoredEntities!)
                         {
@@ -208,7 +207,7 @@ namespace Content.Server.Construction
                                 continue;
 
                             // Dump out any stored entities in used entity
-                            if (TryComp<ServerStorageComponent>(entity, out var storage) && storage.StoredEntities != null)
+                            if (TryComp<StorageComponent>(entity, out var storage) && storage.StoredEntities != null)
                             {
                                 foreach (var storedEntity in storage.StoredEntities.ToList())
                                 {

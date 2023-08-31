@@ -29,7 +29,7 @@ namespace Content.IntegrationTests.Tests
             {
                 foreach (var proto in protoManager.EnumeratePrototypes<EntityPrototype>())
                 {
-                    if (!proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage) ||
+                    if (!proto.TryGetComponent<StorageComponent>("Storage", out var storage) ||
                         storage.Whitelist != null ||
                         !proto.TryGetComponent<ItemComponent>("Item", out var item)) continue;
 
@@ -84,7 +84,7 @@ namespace Content.IntegrationTests.Tests
                     int capacity;
                     var isEntStorage = false;
 
-                    if (proto.TryGetComponent<ServerStorageComponent>("Storage", out var storage))
+                    if (proto.TryGetComponent<StorageComponent>("Storage", out var storage))
                     {
                         capacity = storage.StorageCapacityMax;
                     }

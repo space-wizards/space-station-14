@@ -1,12 +1,12 @@
 using System.Linq;
 using Content.Server.Construction.Components;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.DoAfter;
 using Content.Shared.Construction.Components;
 using Content.Shared.Exchanger;
 using Content.Shared.Interaction;
 using Content.Shared.Popups;
+using Content.Shared.Storage;
 using Robust.Shared.Containers;
 using Robust.Shared.Utility;
 using Content.Shared.Wires;
@@ -41,7 +41,7 @@ public sealed class PartExchangerSystem : EntitySystem
         if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<ServerStorageComponent>(uid, out var storage) || storage.Storage == null)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Storage == null)
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();

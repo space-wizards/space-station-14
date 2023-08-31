@@ -1,9 +1,9 @@
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
+using Content.Shared.Storage;
 
 namespace Content.Server.Inventory
 {
@@ -33,7 +33,7 @@ namespace Content.Server.Inventory
             if (args.SenderSession.AttachedEntity is not { Valid: true } uid)
                     return;
 
-            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<ServerStorageComponent>(entityUid, out var storageComponent))
+            if (TryGetSlotEntity(uid, ev.Slot, out var entityUid) && TryComp<StorageComponent>(entityUid, out var storageComponent))
             {
                 _storageSystem.OpenStorageUI(entityUid.Value, uid, storageComponent);
             }

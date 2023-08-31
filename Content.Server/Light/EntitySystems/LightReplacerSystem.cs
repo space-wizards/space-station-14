@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Server.Light.Components;
-using Content.Server.Storage.Components;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
 using Content.Shared.Light.Component;
@@ -101,7 +100,7 @@ public sealed class LightReplacerSystem : EntitySystem
         if (TryComp<LightBulbComponent>(usedUid, out var bulb))
             eventArgs.Handled = TryInsertBulb(uid, usedUid, eventArgs.User, true, component, bulb);
         // add bulbs from storage?
-        else if (TryComp<ServerStorageComponent>(usedUid, out var storage))
+        else if (TryComp<StorageComponent>(usedUid, out var storage))
             eventArgs.Handled = TryInsertBulbsFromStorage(uid, usedUid, eventArgs.User, component, storage);
     }
 
@@ -205,7 +204,7 @@ public sealed class LightReplacerSystem : EntitySystem
     ///     which was successfully inserted inside light replacer
     /// </returns>
     public bool TryInsertBulbsFromStorage(EntityUid replacerUid, EntityUid storageUid, EntityUid? userUid = null,
-        LightReplacerComponent? replacer = null, ServerStorageComponent? storage = null)
+        LightReplacerComponent? replacer = null, StorageComponent? storage = null)
     {
         if (!Resolve(replacerUid, ref replacer))
             return false;

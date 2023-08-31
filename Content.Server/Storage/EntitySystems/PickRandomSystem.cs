@@ -5,6 +5,7 @@ using Content.Shared.Verbs;
 using Robust.Shared.Containers;
 using Robust.Shared.Random;
 using System.Linq;
+using Content.Shared.Storage;
 
 namespace Content.Server.Storage.EntitySystems;
 
@@ -24,7 +25,7 @@ public sealed class PickRandomSystem : EntitySystem
 
     private void OnGetAlternativeVerbs(EntityUid uid, PickRandomComponent comp, GetVerbsEvent<AlternativeVerb> args)
     {
-        if (!args.CanAccess || !args.CanInteract || !TryComp<ServerStorageComponent>(uid, out var storage))
+        if (!args.CanAccess || !args.CanInteract || !TryComp<StorageComponent>(uid, out var storage))
             return;
 
         var user = args.User;
@@ -46,7 +47,7 @@ public sealed class PickRandomSystem : EntitySystem
         });
     }
 
-    private void TryPick(EntityUid uid, PickRandomComponent comp, ServerStorageComponent storage, EntityUid user)
+    private void TryPick(EntityUid uid, PickRandomComponent comp, StorageComponent storage, EntityUid user)
     {
         if (storage.StoredEntities == null)
             return;

@@ -9,7 +9,7 @@ public sealed partial class StorageSystem
     {
         if (component.Contents.Count == 0) return;
 
-        TryComp<ServerStorageComponent>(uid, out var serverStorageComp);
+        TryComp<StorageComponent>(uid, out var serverStorageComp);
         TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
 
         if (entityStorageComp == null && serverStorageComp == null)

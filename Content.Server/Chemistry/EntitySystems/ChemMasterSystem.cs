@@ -3,7 +3,6 @@ using System.Linq;
 using Content.Server.Chemistry.Components;
 using Content.Server.Labels;
 using Content.Server.Popups;
-using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Chemistry;
@@ -11,6 +10,7 @@ using Content.Shared.Chemistry.Components;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Database;
 using Content.Shared.FixedPoint;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
@@ -173,7 +173,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var user = message.Session.AttachedEntity;
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
-                || !TryComp(container, out ServerStorageComponent? storage)
+                || !TryComp(container, out StorageComponent? storage)
                 || storage.Storage is null)
             {
                 return; // output can't fit pills
@@ -339,7 +339,7 @@ namespace Content.Server.Chemistry.EntitySystems
                 }
             }
 
-            if (!TryComp(container, out ServerStorageComponent? storage))
+            if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
             var pills = storage.Storage?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
