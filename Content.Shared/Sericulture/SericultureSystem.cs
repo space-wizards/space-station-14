@@ -38,7 +38,9 @@ public abstract partial class SharedSericultureSystem : EntitySystem
         if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
             return;
 
-        _actionsSystem.AddAction(uid, new InstantAction(actionProto), uid);
+        comp.StoredInstantAction = new InstantAction(actionProto);
+
+        _actionsSystem.AddAction(uid, comp.StoredInstantAction, uid);
     }
 
     /// <summary>
@@ -46,18 +48,17 @@ public abstract partial class SharedSericultureSystem : EntitySystem
     /// </summary>
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
-        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
+        if (comp.StoredInstantAction == null)
             return;
 
-        _actionsSystem.RemoveAction(uid, new InstantAction(actionProto));
+        _actionsSystem.RemoveAction(uid, comp.StoredInstantAction);
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
     {
         if (_hungerSystem.IsHungerBelowState(uid, comp.MinHungerThreshold))
         {
-            if (!_netManager.IsClient) /// It's gonna repeat the popup like 50 times otherwise, fun! Yes this does mean a noticable delay when doing it on the client but there's not much I can do here apart from cry.
-                _popupSystem.PopupEntity(Loc.GetString(comp.PopupText), uid, uid);
+            _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
             return;
         }
 

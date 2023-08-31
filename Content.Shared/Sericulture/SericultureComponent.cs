@@ -31,6 +31,8 @@ public sealed partial class SericultureComponent : Component
     [DataField("actionProto", required: true, customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>)), ViewVariables(VVAccess.ReadWrite)]
     public string ActionProto = string.Empty;
 
+    public InstantAction? StoredInstantAction;
+
     /// <summary>
     /// How long will it take to make.
     /// </summary>
