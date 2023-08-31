@@ -6,7 +6,6 @@ using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
-
 public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
