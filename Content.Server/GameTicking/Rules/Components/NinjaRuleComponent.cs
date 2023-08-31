@@ -17,12 +17,6 @@ public sealed partial class NinjaRuleComponent : Component
     public List<string> Objectives = new();
 
     /// <summary>
-    /// List of implants to inject on spawn.
-    /// </summary>
-    [DataField("implants", required: true, customTypeSerializer: typeof(PrototypeIdListSerializer<EntityPrototype>))]
-    public List<string> Implants = new();
-
-    /// <summary>
     /// List of threats that can be called in. Copied onto <see cref="CommsHackerComponent"/> when gloves are enabled.
     /// </summary>
     [DataField("threats", required: true)]

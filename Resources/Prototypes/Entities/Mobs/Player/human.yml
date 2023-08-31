@@ -67,6 +67,9 @@
     factions:
     - Syndicate
   - type: SpaceNinja
+  - type: AutoImplant
+    implants:
+    - MicroBombImplant
   - type: RandomMetadata
     nameSegments:
     - names_ninja_title

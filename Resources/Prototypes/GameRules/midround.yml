@@ -12,8 +12,6 @@
     - SpiderChargeObjective
     - TerrorObjective
     - SurviveObjective
-    # TODO: implement and add security records hack objective
-    implants: [ MicroBombImplant ]
     threats:
     - announcement: terror-dragon
       rule: Dragon
