@@ -80,7 +80,15 @@
             "name": "Clown"
         },
         {
-            "name": "Captain"
+            "name": "Captain",
+            "delays": [
+                [
+                    0.1,
+                    0.1,
+                    0.1,
+                    0.1
+                ]
+            ]
         },
         {
             "name": "HeadOfPersonnel"
