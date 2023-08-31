@@ -568,7 +568,6 @@
     Flour: 15
     Egg: 6
   solids:
-    FoodPlate: 1
     FoodButter: 1
 
 - type: microwaveMealRecipe

@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Construction.Components;
@@ -47,6 +48,11 @@ public sealed class EntityStorageSystem : SharedEntityStorageSystem
 
         if (TryComp<ConstructionComponent>(uid, out var construction))
             _construction.AddContainer(uid, ContainerName, construction);
+    }
+
+    public override bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component)
+    {
+        return Resolve(uid, ref component);
     }
 
     private void OnWeldableAttempt(EntityUid uid, EntityStorageComponent component, WeldableAttemptEvent args)
