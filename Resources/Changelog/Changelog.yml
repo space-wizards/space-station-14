@@ -1,24 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
-      ability to produce offspring so long as they are properly tended to.', type: Add}
-  id: 4213
-  time: '2023-07-09T22:36:37.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: 'After a long cooperative research project botanists and chemists have
-      finally discovered how to improve bruise packs and ointment. Medicated suture
-      and regenerating mesh are now made in the microwave using a combination of bruise
-      packs/ointment, plants, cloth and chemicals.', type: Add}
-  id: 4214
-  time: '2023-07-10T02:22:11.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Syndicate High Command can now explicitly order for the assassination
-      of heads of staff., type: Add}
-  id: 4215
-  time: '2023-07-10T02:26:18.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'Clown R&D got inspired by incidents of accidentally swallowed honking
@@ -3016,3 +2996,19 @@ Entries:
   - {message: Foldable items are now predicted., type: Add}
   id: 4712
   time: '2023-08-31T01:56:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Overdosing on Robust might have unintended effects on plant-based sentient
+      lifeforms., type: Tweak}
+  id: 4713
+  time: '2023-08-31T02:01:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
+  id: 4714
+  time: '2023-08-31T02:14:54.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
+  id: 4715
+  time: '2023-08-31T02:33:40.0000000+00:00'
