@@ -1,10 +1,15 @@
+using System.Linq;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using System.Numerics;
+using Robust.Client.ResourceManagement;
+using Robust.Client.Utility;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.StatusIcon;
 
@@ -12,6 +17,8 @@ public sealed class StatusIconOverlay : Overlay
 {
     [Dependency] private readonly IEntityManager _entity = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     private readonly SpriteSystem _sprite;
     private readonly TransformSystem _transform;
@@ -72,9 +79,40 @@ public sealed class StatusIconOverlay : Overlay
             var accOffsetR = 0;
             icons.Sort();
 
+            Texture? texture = null;
             foreach (var proto in icons)
             {
-                var texture = _sprite.Frame0(proto.Icon);
+                switch (proto.Icon)
+                {
+                    case SpriteSpecifier.Rsi rsi:
+                        var rsiActual = _resourceCache.GetResource<RSIResource>(rsi.RsiPath).RSI;
+                        rsiActual.TryGetState(rsi.RsiState, out var state);
+                        var frames = state!.GetFrames(RSI.State.Direction.South);
+                        var delays = state.GetDelays();
+                        var totalDelay = delays.Sum();
+                        var time = _timing.RealTime.TotalSeconds % totalDelay;
+                        var delaySum = 0f;
+
+                        for (var i = 0; i < delays.Length; i++)
+                        {
+                            var delay = delays[i];
+                            delaySum += delay;
+
+                            if (time > delaySum)
+                                continue;
+
+                            texture = frames[i];
+                            break;
+                        }
+
+                        texture ??= _sprite.Frame0(proto.Icon);
+                        break;
+                    case SpriteSpecifier.Texture spriteTexture:
+                        texture = spriteTexture.GetTexture(_resourceCache);
+                        break;
+                    default:
+                        throw new NotImplementedException();
+                }
 
                 float yOffset;
                 float xOffset;
