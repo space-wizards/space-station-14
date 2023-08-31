@@ -1,11 +1,4 @@
 Entries:
-- author: FoxHorn
-  changes:
-  - {message: 'Added prototype interrogator lamp for admin entity spawn panel. Perhaps
-      the mapmakers will replace the lamps in the interrogation rooms with this? I
-      said where''s the detonator?!?!', type: Add}
-  id: 4212
-  time: '2023-07-09T22:35:21.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
@@ -3018,3 +3011,8 @@ Entries:
   - {message: Changed revenant siphon damage from poison to cold, type: Tweak}
   id: 4711
   time: '2023-08-31T01:07:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Foldable items are now predicted., type: Add}
+  id: 4712
+  time: '2023-08-31T01:56:13.0000000+00:00'
