@@ -1,4 +1,5 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
+using Content.Shared.Objectives;
 using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Robust.Shared.Prototypes;

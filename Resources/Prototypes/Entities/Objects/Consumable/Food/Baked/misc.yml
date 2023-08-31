@@ -207,8 +207,6 @@
   id: FoodBakedPancake
   description: A fluffy pancake. The softer, superior relative of the waffle.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1
@@ -264,8 +262,6 @@
   id: FoodBakedPancakeBb
   description: A fluffy and delicious blueberry pancake.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1
@@ -298,8 +294,6 @@
   id: FoodBakedPancakeCc
   description: A fluffy and delicious chocolate chip pancake.
   components:
-  # - type: Food
-  #   trash: FoodPlateSmall
   - type: Stack
     stackType: Pancake
     count: 1

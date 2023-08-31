@@ -2,10 +2,10 @@
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Client;
 using Robust.Server.Player;
 using Robust.Shared.Exceptions;

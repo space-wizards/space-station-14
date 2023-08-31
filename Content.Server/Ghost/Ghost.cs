@@ -1,6 +1,6 @@
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -24,7 +24,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            var minds = _entities.System<MindSystem>();
+            var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteLine("You have no Mind, you can't ghost.");
