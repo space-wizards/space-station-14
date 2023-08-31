@@ -1,27 +1,27 @@
 - type: typingIndicator
   id: Default
-  typingIcon: TypingIconDefaultTyping
+  typingIcon: TypingIconDefault
 
 - type: typingIndicator
   id: Robot
-  typingIcon: TypingIconRobotTyping
+  typingIcon: TypingIconRobot
 
 - type: typingIndicator
   id: Alien
-  typingIcon: TypingIconAlienTyping
+  typingIcon: TypingIconAlien
 
 - type: typingIndicator
   id: Guardian
-  typingIcon: TypingIconGuardianTyping
+  typingIcon: TypingIconGuardian
 
 - type: typingIndicator
   id: Holo
-  typingIcon: TypingIconHoloTyping
+  typingIcon: TypingIconHolo
 
 - type: typingIndicator
   id: Lawyer
-  typingIcon: TypingIconLawyerTyping
+  typingIcon: TypingIconLawyer
 
 - type: typingIndicator
   id: Moth
-  typingIcon: TypingIconMothTyping
+  typingIcon: TypingIconMoth

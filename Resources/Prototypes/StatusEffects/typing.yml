@@ -6,49 +6,49 @@
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconDefaultTyping
+  id: TypingIconDefault
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: default0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconRobotTyping
+  id: TypingIconRobot
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: robot0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconAlienTyping
+  id: TypingIconAlien
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: alien0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconGuardianTyping
+  id: TypingIconGuardian
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: guardian0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconHoloTyping
+  id: TypingIconHolo
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: holo0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconLawyerTyping
+  id: TypingIconLawyer
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: lawyer0
 
 - type: statusIcon
   parent: TypingIcon
-  id: TypingIconMothTyping
+  id: TypingIconMoth
   icon:
     sprite: /Textures/Effects/speech.rsi
     state: moth0
