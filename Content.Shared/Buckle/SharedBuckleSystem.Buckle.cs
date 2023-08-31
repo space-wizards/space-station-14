@@ -465,7 +465,7 @@ public abstract partial class SharedBuckleSystem
             _transformSystem.SetWorldRotation(buckleXform, oldBuckledToWorldRot);
 
             if (strapComp.UnbuckleOffset != Vector2.Zero)
-                buckleXform.Coordinates = oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset);
+                _transformSystem.SetCoordinates(buckleUid, buckleXform, oldBuckledXform.Coordinates.Offset(strapComp.UnbuckleOffset));
         }
 
         if (TryComp(buckleUid, out AppearanceComponent? appearance))
@@ -493,6 +493,7 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
+        _joints.RefreshRelay(buckleUid);
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
         var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
         _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);

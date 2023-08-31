@@ -31,7 +31,8 @@ public sealed partial class MindTests
 
         EntityUid playerEnt = default;
         EntityUid visitEnt = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
             var player = playerMan.ServerSessions.Single();
@@ -39,9 +40,10 @@ public sealed partial class MindTests
             playerEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
             visitEnt = entMan.SpawnEntity(null, MapCoordinates.Nullspace);
 
-            mind = mindSystem.CreateMind(player.UserId);
-            mindSystem.TransferTo(mind, playerEnt);
-            mindSystem.Visit(mind, visitEnt);
+            mindId = mindSystem.CreateMind(player.UserId);
+            mind = entMan.GetComponent<MindComponent>(mindId);
+            mindSystem.TransferTo(mindId, playerEnt);
+            mindSystem.Visit(mindId, visitEnt);
 
             Assert.Multiple(() =>
             {
@@ -84,12 +86,14 @@ public sealed partial class MindTests
         var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
 
         EntityUid playerEnt = default;
-        Mind mind = default!;
+        EntityUid mindId = default!;
+        MindComponent mind = default!;
         await server.WaitAssertion(() =>
         {
             playerEnt = entMan.SpawnEntity(null, coordinates);
-            mind = player.ContentData()!.Mind!;
-            mindSystem.TransferTo(mind, playerEnt);
+            mindId = player.ContentData()!.Mind!.Value;
+            mind = entMan.GetComponent<MindComponent>(mindId);
+            mindSystem.TransferTo(mindId, playerEnt);
 
             Assert.That(mind.CurrentEntity, Is.EqualTo(playerEnt));
         });
@@ -169,15 +173,15 @@ public sealed partial class MindTests
         await server.WaitAssertion(() =>
         {
             ghost = entMan.SpawnEntity("MobObserver", MapCoordinates.Nullspace);
-            mindSystem.Visit(mind, ghost);
+            mindSystem.Visit(mind.Id, ghost);
         });
 
         Assert.Multiple(() =>
         {
             Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity), "player is not a ghost");
-            Assert.That(mind.VisitingEntity, Is.EqualTo(player.AttachedEntity));
-            Assert.That(mind.OwnedEntity, Is.EqualTo(originalEntity));
+            Assert.That(mind.Comp.VisitingEntity, Is.EqualTo(player.AttachedEntity));
+            Assert.That(mind.Comp.OwnedEntity, Is.EqualTo(originalEntity));
         });
 
         await pair.RunTicksSync(5);
@@ -192,8 +196,8 @@ public sealed partial class MindTests
         {
             Assert.That(player.AttachedEntity, Is.EqualTo(ghost));
             Assert.That(entMan.HasComponent<GhostComponent>(player.AttachedEntity));
-            Assert.That(mind.VisitingEntity, Is.Null);
-            Assert.That(mind.OwnedEntity, Is.EqualTo(ghost));
+            Assert.That(mind.Comp.VisitingEntity, Is.Null);
+            Assert.That(mind.Comp.OwnedEntity, Is.EqualTo(ghost));
         });
 
         await pair.CleanReturnAsync();
@@ -233,8 +237,10 @@ public sealed partial class MindTests
             Assert.That(entMan.GetComponent<MetaDataComponent>(player.AttachedEntity!.Value).EntityPrototype?.ID, Is.EqualTo("AdminObserver"));
         });
 
-        var mind = player.ContentData()?.Mind;
-        Assert.That(mind, Is.Not.Null);
+        var mindId = player.ContentData()?.Mind;
+        Assert.That(mindId, Is.Not.Null);
+
+        var mind = entMan.GetComponent<MindComponent>(mindId.Value);
         Assert.That(mind.VisitingEntity, Is.Null);
 
         await pair.CleanReturnAsync();

@@ -13,6 +13,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
     [Dependency] private readonly IGameTiming _timing = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<IPlayerSession> _playerObservers = new();
 
@@ -55,7 +56,7 @@ public sealed class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySyst
 
             var transform = EntityManager.GetComponent<TransformComponent>(entity);
 
-            var worldBounds = Box2.CenteredAround(transform.WorldPosition,
+            var worldBounds = Box2.CenteredAround(_transform.GetWorldPosition(transform),
                 new Vector2(LocalViewRange, LocalViewRange));
 
 

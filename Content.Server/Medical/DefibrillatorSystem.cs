@@ -5,7 +5,6 @@ using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Damage;
@@ -224,16 +223,16 @@ public sealed class DefibrillatorSystem : EntitySystem
             _mobState.ChangeMobState(target, MobState.Critical, mob, uid);
             _mobThreshold.SetAllowRevives(target, false, thresholds);
 
-            if (TryComp<MindContainerComponent>(target, out var mindComp) &&
-                mindComp.Mind?.Session is { } playerSession)
+            if (_mind.TryGetMind(target, out var mindId, out var mind) &&
+                mind.Session is { } playerSession)
             {
                 session = playerSession;
                 // notify them they're being revived.
-                if (mindComp.Mind.CurrentEntity != target)
+                if (mind.CurrentEntity != target)
                 {
                     _chatManager.TrySendInGameICMessage(uid, Loc.GetString("defibrillator-ghosted"),
                         InGameICChatType.Speak, true);
-                    _euiManager.OpenEui(new ReturnToBodyEui(mindComp.Mind, _mind), session);
+                    _euiManager.OpenEui(new ReturnToBodyEui(mind, _mind), session);
                 }
             }
             else
