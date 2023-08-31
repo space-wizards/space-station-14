@@ -30,6 +30,8 @@ namespace Content.Shared.Maps
 
         [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
 
+        [DataField("edgeSpritePriority")] public int EdgeSpritePriority { get; private set; } = 0;
+
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
         [DataField("baseTurf")]
