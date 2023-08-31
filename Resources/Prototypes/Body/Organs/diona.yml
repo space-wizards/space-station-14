@@ -25,26 +25,7 @@
   components:
   - type: Sprite
     state: brain
-  - type: SolutionContainerManager
-    solutions:
-      organ:
-        maxVol: 10
-        reagents:
-        - ReagentId: Nutriment
-          Quantity: 10
-      Lung:
-        maxVol: 100
-        canReact: False
   - type: Brain
-  - type: Lung #lungs in they head. why they there tho?
-  - type: Metabolizer
-    removeEmpty: true
-    solutionOnBody: false
-    solution: "Lung"
-    metabolizerTypes: [ Plant ]
-    groups:
-    - id: Gas
-      rateModifier: 100.0
 
 - type: entity
   id: OrganDionaEyes
@@ -56,6 +37,34 @@
     layers:
       - state: eyeball-l
       - state: eyeball-r
+
+- type: entity
+  id: OrganDionaLungs
+  parent: BaseDionaOrgan
+  name: lungs
+  description: "Filters oxygen from an atmosphere, which is then sent into the bloodstream to be used as an electron carrier."
+  components:
+  - type: Sprite
+    state: lungs
+  - type: Lung 
+  - type: Metabolizer
+    removeEmpty: true
+    solutionOnBody: false
+    solution: "Lung"
+    metabolizerTypes: [ Plant ]
+    groups:
+    - id: Gas
+      rateModifier: 100.0
+  - type: SolutionContainerManager
+    solutions:
+      organ:
+        maxVol: 10
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 10
+      Lung:
+        maxVol: 100
+        canReact: False
 
 - type: entity
   id: OrganDionaStomach
@@ -106,6 +115,8 @@
   suffix: Brain
   description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
   components:
+  - type: Body
+    prototype: AnimalNymphBrain
   - type: Brain
   - type: Butcherable
     spawned:
@@ -122,6 +133,8 @@
   suffix: Stomach
   description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
   components:
+  - type: Body
+    prototype: AnimalNymphStomach
   - type: SolutionContainerManager
     solutions:
       stomach:
@@ -150,6 +163,8 @@
   suffix: Lungs
   description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 
   components:
+  - type: Body
+    prototype: AnimalNymphLungs
   - type: SolutionContainerManager
     solutions:
       organ:

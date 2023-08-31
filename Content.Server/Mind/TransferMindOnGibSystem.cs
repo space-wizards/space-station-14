@@ -37,12 +37,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
 
         var ent = _random.Pick(validParts);
         
-        if (TryComp<HumanoidAppearanceComponent>(uid, out var comp))
-        {
-            var copy = (Component) _serializationManager.CreateCopy(comp, notNullableOverride: true);
-            EntityManager.AddComponent(ent, copy);
-        } 
-        
         _mindSystem.TransferTo(mindId, ent, mind: mind);
     }
 }
