@@ -4,12 +4,11 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Kitchen.UI
 {
     [UsedImplicitly]
-    public sealed class MicrowaveBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class MicrowaveBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private MicrowaveMenu? _menu;

@@ -23,12 +23,11 @@ using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using static Content.Client.Inventory.ClientInventorySystem;
 using static Robust.Client.UserInterface.Control;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class StrippableBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class StrippableBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _protoMan = default!;
         [Dependency] private readonly IUserInterfaceManager _ui = default!;

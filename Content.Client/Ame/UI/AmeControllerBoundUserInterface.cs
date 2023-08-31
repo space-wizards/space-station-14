@@ -1,12 +1,11 @@
 ﻿using Content.Shared.Ame;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Ame.UI
 {
     [UsedImplicitly]
-    public sealed class AmeControllerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class AmeControllerBoundUserInterface : BoundUserInterface
     {
         private AmeWindow? _window;
 

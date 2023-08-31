@@ -1,12 +1,11 @@
 using Content.Shared.Xenoarchaeology.Equipment;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Xenoarchaeology.Ui;
 
 [UsedImplicitly]
-public sealed class AnalysisConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class AnalysisConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private AnalysisConsoleMenu? _consoleMenu;

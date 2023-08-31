@@ -1,12 +1,11 @@
 using Content.Shared.Anomaly;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Anomaly.Ui;
 
 [UsedImplicitly]
-public sealed class AnomalyScannerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class AnomalyScannerBoundUserInterface : BoundUserInterface
 {
     private AnomalyScannerMenu? _menu;
 

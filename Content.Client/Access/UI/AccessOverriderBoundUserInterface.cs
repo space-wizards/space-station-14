@@ -4,11 +4,10 @@ using Content.Shared.Containers.ItemSlots;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.AccessOverriderComponent;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Access.UI
 {
-    public sealed class AccessOverriderBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class AccessOverriderBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SharedAccessOverriderSystem _accessOverriderSystem = default!;

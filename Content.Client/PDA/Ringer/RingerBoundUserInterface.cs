@@ -2,12 +2,11 @@ using Content.Shared.PDA;
 using Content.Shared.PDA.Ringer;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.PDA.Ringer
 {
     [UsedImplicitly]
-    public sealed class RingerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class RingerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private RingtoneMenu? _menu;

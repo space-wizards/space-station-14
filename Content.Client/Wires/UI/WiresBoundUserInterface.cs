@@ -1,10 +1,9 @@
 using Content.Shared.Wires;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Wires.UI
 {
-    public sealed class WiresBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class WiresBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private WiresMenu? _menu;

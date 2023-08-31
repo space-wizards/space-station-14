@@ -11,12 +11,11 @@ using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using static Content.Shared.Storage.StorageComponent;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Storage
 {
     [UsedImplicitly]
-    public sealed class StorageBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class StorageBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private StorageWindow? _window;

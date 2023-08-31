@@ -1,6 +1,5 @@
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.CustomControls;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Computer
 {
@@ -64,7 +63,7 @@ namespace Content.Client.Computer
     /// We could instead qualify a lot of generics even further, but that is a waste of time.
     /// </summary>
     [Virtual]
-    public class ComputerBoundUserInterfaceBase : Robust.Shared.GameObjects.BoundUserInterface
+    public class ComputerBoundUserInterfaceBase : BoundUserInterface
     {
         public ComputerBoundUserInterfaceBase(EntityUid owner, Enum uiKey) : base(owner, uiKey)
         {

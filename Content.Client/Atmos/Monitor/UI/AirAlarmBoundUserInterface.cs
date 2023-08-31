@@ -5,11 +5,10 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.Monitor.UI;
 
-public sealed class AirAlarmBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class AirAlarmBoundUserInterface : BoundUserInterface
 {
     private AirAlarmWindow? _window;
 
@@ -49,7 +48,7 @@ public sealed class AirAlarmBoundUserInterface : Robust.Shared.GameObjects.Bound
     {
         SendMessage(new AirAlarmUpdateDeviceDataMessage(address, data));
     }
-	
+
 	private void OnDeviceDataCopied(IAtmosDeviceData data)
     {
         SendMessage(new AirAlarmCopyDeviceDataMessage(data));

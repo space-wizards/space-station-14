@@ -2,11 +2,10 @@
 using Content.Shared.DeviceNetwork;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed class NetworkConfiguratorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class NetworkConfiguratorBoundUserInterface : BoundUserInterface
 {
     private readonly NetworkConfiguratorSystem _netConfig;
 

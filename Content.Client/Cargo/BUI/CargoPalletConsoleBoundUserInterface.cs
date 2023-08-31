@@ -2,11 +2,10 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.BUI;
 using Content.Shared.Cargo.Events;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
-public sealed class CargoPalletConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class CargoPalletConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private CargoPalletMenu? _menu;

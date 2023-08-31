@@ -2,12 +2,11 @@
 using Content.Shared.APC;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Power.APC
 {
     [UsedImplicitly]
-    public sealed class ApcBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class ApcBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ApcMenu? _menu;

@@ -3,12 +3,11 @@ using Content.Shared.Cargo.BUI;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
 [UsedImplicitly]
-public sealed class CargoShuttleConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class CargoShuttleConsoleBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private CargoShuttleMenu? _menu;

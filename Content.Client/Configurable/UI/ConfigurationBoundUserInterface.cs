@@ -1,11 +1,10 @@
 ﻿using System.Text.RegularExpressions;
 using Robust.Client.GameObjects;
 using static Content.Shared.Configurable.ConfigurationComponent;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Configurable.UI
 {
-    public sealed class ConfigurationBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class ConfigurationBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ConfigurationMenu? _menu;

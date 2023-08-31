@@ -1,11 +1,10 @@
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
 using Content.Shared.Forensics;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Forensics
 {
-    public sealed class ForensicScannerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

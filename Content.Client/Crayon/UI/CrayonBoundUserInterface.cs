@@ -3,11 +3,10 @@ using Content.Shared.Crayon;
 using Content.Shared.Decals;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Crayon.UI
 {
-    public sealed class CrayonBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class CrayonBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private CrayonWindow? _menu;

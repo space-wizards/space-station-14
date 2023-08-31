@@ -2,12 +2,11 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.NukeOps;
 
 [UsedImplicitly]
-public sealed class WarDeclaratorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class WarDeclaratorBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private WarDeclaratorWindow? _window;

@@ -1,11 +1,10 @@
 using Content.Client.Eye;
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraMonitorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class SurveillanceCameraMonitorBoundUserInterface : BoundUserInterface
 {
     private readonly EyeLerpingSystem _eyeLerpingSystem;
     private readonly SurveillanceCameraMonitorSystem _surveillanceCameraMonitorSystem;

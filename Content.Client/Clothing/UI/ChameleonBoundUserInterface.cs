@@ -2,12 +2,11 @@
 using Content.Shared.Clothing.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Clothing.UI;
 
 [UsedImplicitly]
-public sealed class ChameleonBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+public sealed class ChameleonBoundUserInterface : BoundUserInterface
 {
     private readonly ChameleonClothingSystem _chameleon;
 

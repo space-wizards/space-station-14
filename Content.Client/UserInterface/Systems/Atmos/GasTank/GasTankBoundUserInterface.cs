@@ -1,12 +1,11 @@
 using Content.Shared.Atmos.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.UserInterface.Systems.Atmos.GasTank
 {
     [UsedImplicitly]
-    public sealed class GasTankBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class GasTankBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private GasTankWindow? _window;

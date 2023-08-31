@@ -1,11 +1,10 @@
 ﻿using Content.Shared.Communications;
 using Robust.Client.GameObjects;
 using Robust.Shared.Timing;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Communications.UI
 {
-    public sealed class CommunicationsConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
 

@@ -1,10 +1,9 @@
 ﻿using Robust.Client.GameObjects;
 using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
-    public sealed class GasAnalyzerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class GasAnalyzerBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private GasAnalyzerWindow? _window;

@@ -3,7 +3,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -11,7 +10,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasFilterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasFilterBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class GasFilterBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private const float MaxTransferRate = Atmospherics.MaxTransferRate;

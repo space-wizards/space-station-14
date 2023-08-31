@@ -1,10 +1,9 @@
 ﻿using Content.Shared.Singularity.Components;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.ParticleAccelerator.UI
 {
-    public sealed class ParticleAcceleratorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class ParticleAcceleratorBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private ParticleAcceleratorControlMenu? _menu;

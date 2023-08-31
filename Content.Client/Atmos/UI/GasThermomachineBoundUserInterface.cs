@@ -2,7 +2,6 @@
 using Content.Shared.Atmos.Piping.Unary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -10,7 +9,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasThermomachineWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasThermomachineBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class GasThermomachineBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private GasThermomachineWindow? _window;
@@ -20,7 +19,7 @@ namespace Content.Client.Atmos.UI
 
         [ViewVariables]
         private float _maxTemp = 0.0f;
-        
+
         [ViewVariables]
         private bool _isHeater = true;
 

@@ -2,7 +2,6 @@
 using Content.Shared.Atmos.Piping.Binary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
-using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -10,7 +9,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasVolumePumpWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasVolumePumpBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
+    public sealed class GasVolumePumpBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private const float MaxTransferRate = Atmospherics.MaxTransferRate;
