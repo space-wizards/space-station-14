@@ -1,0 +1,6 @@
+- type: statusIcon
+  id: JobIcon
+  icon:
+    sprite: Interface/Misc/job_icons.rsi
+    state: SeniorResearcher
+  locationPreference: Left
