@@ -17,6 +17,7 @@ public abstract class SharedDrunkSystem : EntitySystem
     [Dependency] protected readonly StatusEffectsSystem StatusEffectsSystem = default!;
     [Dependency] private readonly SharedSlurredSystem _slurredSystem = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
+
     public override void Initialize()
     {
         base.Initialize();
