@@ -37,7 +37,6 @@ public sealed class StatusIconOverlay : Overlay
         _statusIcon = _entity.System<StatusIconSystem>();
 
         _shader = _prototype.Index<ShaderPrototype>("unshaded").Instance();
-
     }
 
     protected override void Draw(in OverlayDrawArgs args)
@@ -108,8 +107,8 @@ public sealed class StatusIconOverlay : Overlay
 
                         texture ??= _sprite.Frame0(proto.Icon);
                         break;
-                    case SpriteSpecifier.Texture rsiTexture:
-                        texture = rsiTexture.GetTexture(_resourceCache);
+                    case SpriteSpecifier.Texture spriteTexture:
+                        texture = spriteTexture.GetTexture(_resourceCache);
                         break;
                     default:
                         throw new NotImplementedException();
