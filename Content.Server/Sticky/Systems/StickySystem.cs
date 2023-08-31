@@ -56,6 +56,7 @@ public sealed class StickySystem : EntitySystem
                 continue;
 
             StickToEntity(uid, entity, null, sticky);
+            component.Shot = true;
             stuck = true;
             break;
         }

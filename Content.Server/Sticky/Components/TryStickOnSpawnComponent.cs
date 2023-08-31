@@ -7,8 +7,14 @@ namespace Content.Server.Sticky.Components;
 public sealed partial class TryStickOnSpawnComponent : Component
 {
     /// <summary>
-    ///     Range where it will search object to stick onto
+    ///     Range where it will search entity to stick on
     /// </summary>
     [DataField("range")]
     public float Range = 0.25f;
+
+    /// <summary>
+    ///     Has it already stuck entity once
+    /// </summary>
+    [DataField("shot")]
+    public bool Shot = false;
 }
