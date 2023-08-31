@@ -232,6 +232,40 @@ namespace Content.Server.Physics.Controllers
             component.CurTickBraking += brake * fraction;
         }
 
+        /// <summary>
+        /// Helper function to extrapolate max velocity for a given Vector2 (really, its angle) and shuttle.
+        /// </summary>
+        private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle)
+        {
+            if (vel.Length() == 0f)
+                return Vector2.Zero;
+
+            // this math could PROBABLY be simplified for performance
+            // probably
+            var ang = Angle.FromWorldVec(vel).FlipPositive();
+            var result = Vector2.Zero;
+            switch ((int)(ang / (Math.PI / 2f)))
+            {
+                case 0: // south and east
+                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[1] / shuttle.BaseLinearThrust[1],
+                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[0] / shuttle.BaseLinearThrust[0]);
+                    break;
+                case 1: // east and north
+                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[1] / shuttle.BaseLinearThrust[1],
+                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[2] / shuttle.BaseLinearThrust[2]);
+                    break;
+                case 2: // north and west
+                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[3] / shuttle.BaseLinearThrust[3],
+                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[2] / shuttle.BaseLinearThrust[2]);
+                    break;
+                case 3: // west and south
+                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[3] / shuttle.BaseLinearThrust[3],
+                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[0] / shuttle.BaseLinearThrust[0]);
+                    break;
+            }
+            return result * shuttle.BaseMaxLinearVelocity;
+        }
+
         private void HandleShuttleMovement(float frameTime)
         {
             var newPilots = new Dictionary<EntityUid, (ShuttleComponent Shuttle, List<(EntityUid PilotUid, PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>)>();
@@ -478,19 +512,27 @@ namespace Content.Server.Physics.Controllers
                         totalForce += impulse;
                     }
 
-                    totalForce = shuttleNorthAngle.RotateVec(totalForce);
-
                     var forceMul = frameTime * body.InvMass;
-                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length()) / forceMul;
 
-                    if (maxVelocity != 0f)
-                    {
-                        // Don't overshoot
-                        if (totalForce.Length() > maxVelocity)
-                            totalForce = totalForce.Normalized() * maxVelocity;
+                    var localVel = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
+                    var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
+                    var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
+                    var properAccel = (maxWishVelocity - localVel) / forceMul;
 
-                        PhysicsSystem.ApplyForce(shuttleUid, totalForce, body: body);
-                    }
+                    var finalForce = Vector2.Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
+
+                    if (localVel.Length() >= maxVelocity.Length() && Vector2.Dot(totalForce, localVel) > 0f)
+                        finalForce = Vector2.Zero; // burn would be faster if used as such
+
+                    if (finalForce.Length() > properAccel.Length())
+                        finalForce = properAccel; // don't overshoot
+
+                    //Logger.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
+
+                    finalForce = shuttleNorthAngle.RotateVec(finalForce);
+
+                    if (finalForce.Length() > 0f)
+                        PhysicsSystem.ApplyForce(shuttleUid, finalForce, body: body);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))
