@@ -1,4 +1,3 @@
-using Content.Server.GameTicking.Rules;
 using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
 using Content.Shared.Objectives;
