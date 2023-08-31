@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa",
+  "copyright": "Taken from tgstation and modified by Swept at https://github.com/tgstation/tgstation/commit/40d75cc340c63582fb66ce15bf75a36115f6bdaa, box, box-open, box1 through box6, and pink-box1 through pink-box6 taken from Beestation at commit https://github.com/BeeStation/BeeStation-Hornet/commit/c23174f3e045617a7615ba36c27f593c89b1bf0b and edited by Flareguy",
   "size": {
     "x": 32,
     "y": 32
