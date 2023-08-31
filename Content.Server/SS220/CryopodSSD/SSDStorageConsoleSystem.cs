@@ -9,7 +9,6 @@ using Content.Server.Hands.Systems;
 using Content.Server.Mind;
 using Content.Server.Objectives;
 using Content.Server.Objectives.Conditions;
-using Content.Server.Objectives.Interfaces;
 using Content.Server.Station.Systems;
 using Content.Server.StationRecords.Systems;
 using Content.Server.Storage.Components;
@@ -27,6 +26,8 @@ using Robust.Shared.Containers;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 using static Content.Shared.Storage.SharedStorageComponent;
+using Content.Shared.Mind;
+using Content.Shared.Objectives;
 
 namespace Content.Server.SS220.CryopodSSD;
 
@@ -347,7 +348,6 @@ public sealed class SSDStorageConsoleSystem : EntitySystem
 
     private void OnStorageItemRemoved(EntityUid uid, SSDStorageConsoleComponent storageComp, EntRemovedFromContainerMessage args)
     {
-
         UpdateUserInterface(uid, storageComp, args.Entity, true);
     }
 

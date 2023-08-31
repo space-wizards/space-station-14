@@ -1,6 +1,6 @@
-using Content.Server.Mind;
-using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -30,13 +30,13 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
         var ent = args.EntityManager;
-        var minds = ent.System<MindSystem>();
+        var minds = ent.System<SharedMindSystem>();
 
         // this is for things like surplus crate
         if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
             return true;
 
-        var jobs = ent.System<JobSystem>();
+        var jobs = ent.System<SharedJobSystem>();
         if (jobs.MindTryGetJob(mindId, out var job, out _))
         {
             if (Blacklist != null)

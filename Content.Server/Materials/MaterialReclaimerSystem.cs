@@ -4,7 +4,6 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Construction;
 using Content.Server.Fluids.EntitySystems;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
 using Content.Server.Power.Components;
@@ -17,6 +16,7 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Materials;
+using Content.Shared.Mind;
 using Robust.Server.GameObjects;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -34,7 +34,7 @@ public sealed class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
     [Dependency] private readonly SharedBodySystem _body = default!; //bobby
     [Dependency] private readonly PuddleSystem _puddle = default!;
     [Dependency] private readonly StackSystem _stack = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

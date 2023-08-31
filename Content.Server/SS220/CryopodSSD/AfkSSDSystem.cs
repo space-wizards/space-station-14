@@ -1,12 +1,10 @@
 ﻿// © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
 using System.Linq;
-using Content.Server.Afk;
-using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
 using Content.Server.Preferences.Managers;
 using Content.Shared.Body.Components;
 using Content.Shared.CCVar;
+using Content.Shared.Mind.Components;
 using Content.Shared.Preferences;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
@@ -60,7 +58,7 @@ public sealed class AfkSSDSystem : EntitySystem
             }
         }
     }
-    
+
     private bool IsTeleportAfkToCryoTime(TimeSpan time)
     {
         var timeOut = TimeSpan.FromSeconds(_afkTeleportTocryo);
@@ -79,7 +77,7 @@ public sealed class AfkSSDSystem : EntitySystem
                 {
                     break;
                 }
-                
+
                 if (!_preferencesManager.TryGetCachedPreferences(e.Session.UserId, out var preferences)
                     || preferences.SelectedCharacter is not HumanoidCharacterProfile humanoidPreferences)
                 {

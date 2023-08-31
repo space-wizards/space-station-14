@@ -250,8 +250,8 @@ public sealed partial class ShuttleSystem
                     var fromRotation = _transform.GetWorldRotation(xform);
 
                     var width = Comp<MapGridComponent>(uid).LocalAABB.Width;
-                    xform.Coordinates = new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f));
-                    xform.LocalRotation = Angle.Zero;
+                    _transform.SetCoordinates(uid, xform, new EntityCoordinates(_mapManager.GetMapEntityId(_hyperSpaceMap!.Value), new Vector2(_index + width / 2f, 0f)));
+                    _transform.SetLocalRotation(xform, Angle.Zero);
                     _index += width + Buffer;
                     comp.Accumulator += comp.TravelTime - DefaultArrivalTime;
 
@@ -336,7 +336,7 @@ public sealed partial class ShuttleSystem
                     }
                     else
                     {
-                        xform.Coordinates = comp.TargetCoordinates;
+                        _transform.SetCoordinates(uid, xform, comp.TargetCoordinates);
                         mapId = comp.TargetCoordinates.GetMapId(EntityManager);
                     }
 
@@ -506,7 +506,7 @@ public sealed partial class ShuttleSystem
 
         if (config != null)
         {
-            FTLDock(config, shuttleXform);
+            FTLDock(config, shuttleUid, shuttleXform);
             return true;
         }
 
@@ -517,10 +517,13 @@ public sealed partial class ShuttleSystem
     /// <summary>
     /// Forces an FTL dock.
     /// </summary>
-    public void FTLDock(DockingConfig config, TransformComponent shuttleXform)
+    public void FTLDock(DockingConfig config, EntityUid uid, TransformComponent? shuttleXform = null)
     {
+        if (!Resolve(uid, ref shuttleXform))
+            return;
+
         // Set position
-        shuttleXform.Coordinates = config.Coordinates;
+        _transform.SetCoordinates(uid, shuttleXform, config.Coordinates);
         _transform.SetWorldRotation(shuttleXform, config.Angle);
 
         // Connect everything
@@ -629,7 +632,7 @@ public sealed partial class ShuttleSystem
             spawnPos = _transform.GetWorldPosition(targetXform, xformQuery);
         }
 
-        xform.Coordinates = new EntityCoordinates(targetXform.MapUid.Value, spawnPos);
+        _transform.SetCoordinates(shuttleUid, xform, new EntityCoordinates(targetXform.MapUid.Value, spawnPos));
 
         if (!HasComp<MapComponent>(targetXform.GridUid))
         {

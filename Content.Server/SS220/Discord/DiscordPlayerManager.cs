@@ -3,8 +3,8 @@
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Content.Server.Database;
-using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Player;
 
 namespace Content.Server.SS220.Discord;
 
