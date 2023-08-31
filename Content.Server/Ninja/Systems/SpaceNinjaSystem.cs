@@ -119,13 +119,24 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         if (!Resolve(uid, ref comp))
             return null;
 
-        if (comp.Rule == null)
+        // already exists so just check it
+        if (comp.Rule != null)
+            return CompOrNull<NinjaRuleComponent>(comp.Rule);
+
+        // start it
+        _gameTicker.StartGameRule("Ninja", out var rule);
+        comp.Rule = rule;
+
+        if (!TryComp<NinjaRuleComponent>(rule, out var ninjaRule))
+            return null;
+
+        // add ninja mind to the rule's list for objective showing
+        if (TryComp<MindContainerComponent>(uid, out var mindContainer) && mindContainer.Mind != null)
         {
-            _gameTicker.StartGameRule("Ninja", out var rule);
-            comp.Rule = rule;
+            ninjaRule.Minds.Add(mindContainer.Mind.Value);
         }
 
-        return CompOrNull<NinjaRuleComponent>(comp.Rule);
+        return ninjaRule;
     }
 
     // TODO: can probably copy paste borg code here

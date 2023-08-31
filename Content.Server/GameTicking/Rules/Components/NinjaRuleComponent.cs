@@ -1,3 +1,4 @@
+using Content.Server.GameTicking.Rules;
 using Content.Server.Ninja.Systems;
 using Content.Shared.Communications;
 using Content.Shared.Objectives;
@@ -10,6 +11,13 @@ namespace Content.Server.GameTicking.Rules.Components;
 [RegisterComponent, Access(typeof(SpaceNinjaSystem))]
 public sealed partial class NinjaRuleComponent : Component
 {
+    /// <summary>
+    /// All ninja minds that are using this rule.
+    /// Their SpaceNinjaComponent Rule field should point back to this rule.
+    /// </summary>
+    [DataField("minds")]
+    public List<EntityUid> Minds = new();
+
     /// <summary>
     /// List of objective prototype ids to add
     /// </summary>
