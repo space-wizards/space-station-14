@@ -119,8 +119,7 @@
     sprite: Clothing/Hands/Gloves/latex.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/latex.rsi
-  - type: Fiber
-    fiberMaterial: fibers-latex
+  # No fiber types or leftover proof, hence the entire purpose of latex glove use in modern medicine
   - type: FingerprintMask
 
 - type: entity
@@ -133,8 +132,7 @@
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
   - type: Clothing
     sprite: Clothing/Hands/Gloves/Color/blue.rsi
-  - type: Fiber
-    fiberMaterial: fibers-nitrile
+  # No fiber types or leftover proof, hence the entire purpose of nitrile glove use in modern medicine
   - type: FingerprintMask
 ####
 - type: entity
