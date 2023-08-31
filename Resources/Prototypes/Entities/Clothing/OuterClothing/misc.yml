@@ -76,8 +76,8 @@
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/cardborg.rsi
-#  - type: TypingIndicatorClothing
-#    proto: robot
+  - type: TypingIndicatorClothing
+    prototype: Robot
 
 - type: entity
   parent: ClothingOuterBase
