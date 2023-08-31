@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
 using Content.Server.Maps;
-using Content.Server.Mind;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -214,7 +214,7 @@ namespace Content.Server.GameTicking
             {
                 if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
-                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
+                    _chatManager.DispatchServerMessage((IPlayerSession) mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
                         true);
                 }
 

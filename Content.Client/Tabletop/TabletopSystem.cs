@@ -28,6 +28,7 @@ namespace Content.Client.Tabletop
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly AppearanceSystem _appearance = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // Time in seconds to wait until sending the location of a dragged entity to the server again
         private const float Delay = 1f / 10; // 10 Hz
@@ -76,7 +77,8 @@ namespace Content.Client.Tabletop
             }
 
             // If no entity is being dragged or no viewport is clicked, return
-            if (_draggedEntity == null || _viewport == null) return;
+            if (_draggedEntity == null || _viewport == null)
+                return;
 
             if (!CanDrag(playerEntity, _draggedEntity.Value, out var draggableComponent))
             {
@@ -98,10 +100,11 @@ namespace Content.Client.Tabletop
 
             // Clamp coordinates to viewport
             var clampedCoords = ClampPositionToViewport(coords, _viewport);
-            if (clampedCoords.Equals(MapCoordinates.Nullspace)) return;
+            if (clampedCoords.Equals(MapCoordinates.Nullspace))
+                return;
 
             // Move the entity locally every update
-            EntityManager.GetComponent<TransformComponent>(_draggedEntity.Value).WorldPosition = clampedCoords.Position;
+            _transform.SetWorldPosition(_draggedEntity.Value, clampedCoords.Position);
 
             // Increment total time passed
             _timePassed += frameTime;
@@ -182,10 +185,11 @@ namespace Content.Client.Tabletop
         {
             if (_draggedEntity != null && _table != null)
             {
-                var ev = new TabletopRequestTakeOut();
-                ev.Entity = _draggedEntity.Value;
-                ev.TableUid = _table.Value;
-                RaiseNetworkEvent(ev);
+                RaiseNetworkEvent(new TabletopRequestTakeOut
+                {
+                    Entity = _draggedEntity.Value,
+                    TableUid = _table.Value,
+                });
             }
             return false;
         }
@@ -278,10 +282,12 @@ namespace Content.Client.Tabletop
         /// <returns>Coordinates clamped to the viewport.</returns>
         private static MapCoordinates ClampPositionToViewport(MapCoordinates coordinates, ScalingViewport viewport)
         {
-            if (coordinates == MapCoordinates.Nullspace) return MapCoordinates.Nullspace;
+            if (coordinates == MapCoordinates.Nullspace)
+                return MapCoordinates.Nullspace;
 
             var eye = viewport.Eye;
-            if (eye == null) return MapCoordinates.Nullspace;
+            if (eye == null)
+                return MapCoordinates.Nullspace;
 
             var size = (Vector2) viewport.ViewportSize / EyeManager.PixelsPerMeter; // Convert to tiles instead of pixels
             var eyePosition = eye.Position.Position;

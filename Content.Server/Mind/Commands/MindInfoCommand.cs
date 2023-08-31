@@ -1,7 +1,8 @@
 ﻿using System.Text;
 using Content.Server.Administration;
-using Content.Server.Roles;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
+using Content.Shared.Roles;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -31,7 +32,7 @@ namespace Content.Server.Mind.Commands
                 return;
             }
 
-            var minds = _entities.System<MindSystem>();
+            var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(session, out var mindId, out var mind))
             {
                 shell.WriteLine("Can't find that mind");
@@ -41,7 +42,7 @@ namespace Content.Server.Mind.Commands
             var builder = new StringBuilder();
             builder.AppendFormat("player: {0}, mob: {1}\nroles: ", mind.UserId, mind.OwnedEntity);
 
-            var roles = _entities.System<RoleSystem>();
+            var roles = _entities.System<SharedRoleSystem>();
             foreach (var role in roles.MindGetAllRoles(mindId))
             {
                 builder.AppendFormat("{0} ", role.Name);
