@@ -1,4 +1,5 @@
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 
 namespace Content.Client.Roles;
 
