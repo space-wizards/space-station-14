@@ -9,7 +9,6 @@ using Robust.Shared.Prototypes;
 public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
 
     public override void Initialize()
     {
@@ -32,7 +31,7 @@ public sealed class ShowThirstIconsSystem : EquipmentHudSystem<ShowThirstIconsCo
     {
         var result = new List<StatusIconPrototype>();
 
-        if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
+        if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
             (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
         {
             return result;
