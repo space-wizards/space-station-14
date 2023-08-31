@@ -336,3 +336,15 @@
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
   - type: Clothing
     sprite: Clothing/Head/Helmets/ert_janitor.rsi
+
+#Station daredevil's
+- type: entity
+  parent: ClothingHeadHelmetBasic
+  id: ClothingHeadHelmetRisk
+  name: station daredevil's helmet
+  description: a strong helmet with a cool red line in the middle,.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Helmets/riskhelmet.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Helmets/riskhelmet.rsi
