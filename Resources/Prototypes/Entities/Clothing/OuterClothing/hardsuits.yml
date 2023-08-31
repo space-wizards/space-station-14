@@ -26,7 +26,6 @@
     sprintModifier: 0.80
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBasic
-    slot: head
 
 #Atmospherics Hardsuit
 - type: entity
@@ -60,7 +59,6 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitAtmos
-    slot: head
 
 #Engineering Hardsuit
 - type: entity
@@ -94,7 +92,6 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineering
-    slot: head
 
 #Spationaut Hardsuit
 - type: entity
@@ -123,7 +120,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSpatio
-    slot: head
 
 #Salvage Hardsuit
 - type: entity
@@ -154,7 +150,6 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSalvage
-    slot: head
 
 #Security Hardsuit
 - type: entity
@@ -184,7 +179,6 @@
     sprintModifier: 0.75
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurity
-    slot: head
 
 #Brigmedic Hardsuit
 - type: entity
@@ -211,7 +205,6 @@
     sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitBrigmedic
-    slot: head
 
 #Warden's Hardsuit
 - type: entity
@@ -241,7 +234,6 @@
     sprintModifier: 0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWarden
-    slot: head
 
 #Captain's Hardsuit
 - type: entity
@@ -273,7 +265,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCap
-    slot: head
 
 #Chief Engineer's Hardsuit
 - type: entity
@@ -305,7 +296,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitEngineeringWhite
-    slot: head
 
 #Chief Medical Officer's Hardsuit
 - type: entity
@@ -330,7 +320,6 @@
     sprintModifier: 0.95
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitMedical
-    slot: head
 
 #Research Director's Hardsuit
 - type: entity
@@ -368,7 +357,6 @@
     - HighRiskItem
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitRd
-    slot: head
   - type: StaticPrice
     price: 750
 
@@ -401,7 +389,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
-    slot: head
 
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
@@ -434,7 +421,6 @@
     sprintModifier: 0.9
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
-    slot: head
 
 #Cybersun Juggernaut Hardsuit
 - type: entity
@@ -466,7 +452,6 @@
     sprintModifier: 0.65
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
-    slot: head
 
 #Syndicate Elite Hardsuit
 - type: entity
@@ -500,7 +485,6 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieElite
-    slot: head
 
 #Syndicate Commander Hardsuit
 - type: entity
@@ -532,7 +516,6 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSyndieCommander
-    slot: head
 
 #Wizard Hardsuit
 - type: entity
@@ -564,7 +547,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitWizard
-    slot: head
 
 #Ling Space Suit
 - type: entity
@@ -594,7 +576,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitLing
-    slot: head
 
 #Pirate EVA Suit (Deep Space EVA Suit)
 #Despite visually appearing like a softsuit, it functions exactly like a hardsuit would (parents off of base hardsuit, has resistances and toggleable clothing, etc.) so it goes here.
@@ -624,7 +605,6 @@
     sprintModifier: 0.6
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateEVA
-    slot: head
 
 #Pirate Captain Hardsuit
 - type: entity
@@ -655,7 +635,6 @@
     sprintModifier: 0.8
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitPirateCap
-    slot: head
 
 
 #CENTCOMM / ERT HARDSUITS
@@ -672,7 +651,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertleader.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTLeader
-    slot: head
 
 #ERT Engineer Hardsuit
 - type: entity
@@ -686,7 +664,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertengineer.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTEngineer
-    slot: head
 
 #ERT Medic Hardsuit
 - type: entity
@@ -700,7 +677,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertmedical.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTMedical
-    slot: head
 
 #ERT Security Hardsuit
 - type: entity
@@ -714,7 +690,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertsecurity.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTSecurity
-    slot: head
 
 #ERT Janitor Hardsuit
 - type: entity
@@ -728,7 +703,6 @@
     sprite: Clothing/OuterClothing/Hardsuits/ERTSuits/ertjanitor.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitERTJanitor
-    slot: head
 
 #Deathsquad
 - type: entity
@@ -762,7 +736,6 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitDeathsquad
-    slot: head
 
 #CBURN Hardsuit
 - type: entity
@@ -798,7 +771,6 @@
     sprintModifier: 1.0
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetCBURN
-    slot: head
 
 #MISC. HARDSUITS
 #Clown Hardsuit
@@ -832,4 +804,3 @@
     node: clownHardsuit
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitClown
-    slot: head
