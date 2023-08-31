@@ -2,7 +2,7 @@
   id: BookAlertCode
   parent: BaseItem
   name: Alert Code Manual
-  description: For that moments when everything is not under control.
+  description: For those moments when everything is not under control.
   components:
   - type: Sprite
     sprite: Objects/Misc/books.rsi
