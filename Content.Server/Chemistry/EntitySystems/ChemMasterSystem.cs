@@ -174,7 +174,7 @@ namespace Content.Server.Chemistry.EntitySystems
             var maybeContainer = _itemSlotsSystem.GetItemOrNull(chemMaster.Owner, SharedChemMaster.OutputSlotName);
             if (maybeContainer is not { Valid: true } container
                 || !TryComp(container, out StorageComponent? storage)
-                || storage.Storage is null)
+                || storage.Container is null)
             {
                 return; // output can't fit pills
             }
@@ -342,7 +342,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!TryComp(container, out StorageComponent? storage))
                 return null;
 
-            var pills = storage.Storage?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
+            var pills = storage.Container?.ContainedEntities.Select((Func<EntityUid, (string, FixedPoint2 quantity)>) (pill =>
             {
                 _solutionContainerSystem.TryGetSolution(pill, SharedChemMaster.PillSolutionName, out var solution);
                 var quantity = solution?.Volume ?? FixedPoint2.Zero;

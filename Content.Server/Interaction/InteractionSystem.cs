@@ -48,7 +48,7 @@ namespace Content.Server.Interaction
             if (!TryComp(container.Owner, out StorageComponent? storage))
                 return false;
 
-            if (storage.Storage?.ID != container.ID)
+            if (storage.Container?.ID != container.ID)
                 return false;
 
             if (!TryComp(user, out ActorComponent? actor))

@@ -41,13 +41,13 @@ public sealed class PartExchangerSystem : EntitySystem
         if (args.Handled || args.Args.Target == null)
             return;
 
-        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Storage == null)
+        if (!TryComp<StorageComponent>(uid, out var storage) || storage.Container == null)
             return; //the parts are stored in here
 
         var machinePartQuery = GetEntityQuery<MachinePartComponent>();
         var machineParts = new List<(EntityUid, MachinePartComponent)>();
 
-        foreach (var item in storage.Storage.ContainedEntities) //get parts in RPED
+        foreach (var item in storage.Container.ContainedEntities) //get parts in RPED
         {
             if (machinePartQuery.TryGetComponent(item, out var part))
                 machineParts.Add((item, part));

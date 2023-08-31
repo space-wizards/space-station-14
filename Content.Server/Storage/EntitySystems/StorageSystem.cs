@@ -1,5 +1,4 @@
 using System.Linq;
-using Content.Server.Administration.Managers;
 using Content.Server.Interaction;
 using Content.Server.Popups;
 using Content.Server.Stack;
@@ -24,13 +23,11 @@ using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
-using Robust.Server.Containers;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
-using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
@@ -88,7 +85,7 @@ namespace Content.Server.Storage.EntitySystems
             base.Initialize();
 
             // ReSharper disable once StringLiteralTypo
-            storageComp.Storage = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
+            storageComp.Container = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
             UpdateStorageVisualization(uid, storageComp);
             RecalculateStorageUsed(storageComp);
             UpdateStorageUI(uid, storageComp);
@@ -139,7 +136,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!args.CanAccess || !args.CanInteract)
                 return;
 
-            var entities = component.Storage?.ContainedEntities;
+            var entities = component.Container?.ContainedEntities;
             if (entities == null || entities.Count == 0 || TryComp(uid, out LockComponent? lockComponent) && lockComponent.Locked)
                 return;
 
@@ -335,7 +332,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnDestroy(EntityUid uid, StorageComponent storageComp, DestructionEventArgs args)
         {
-            var contained = storageComp.Storage.ContainedEntities.ToArray();
+            var contained = storageComp.Container.ContainedEntities.ToArray();
 
             foreach (var entity in contained)
             {
@@ -360,7 +357,7 @@ namespace Content.Server.Storage.EntitySystems
                 return;
             }
 
-            if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || storageComp.Storage == null || !storageComp.Storage.Contains(args.InteractedItemUID))
+            if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || storageComp.Container == null || !storageComp.Container.Contains(args.InteractedItemUID))
                 return;
 
             // Does the player have hands?
@@ -437,12 +434,12 @@ namespace Content.Server.Storage.EntitySystems
             storageComp.StorageUsed = 0;
             storageComp.SizeCache.Clear();
 
-            if (storageComp.Storage == null)
+            if (storageComp.Container == null)
                 return;
 
             var itemQuery = GetEntityQuery<ItemComponent>();
 
-            foreach (var entity in storageComp.Storage.ContainedEntities)
+            foreach (var entity in storageComp.Container.ContainedEntities)
             {
                 if (!itemQuery.TryGetComponent(entity, out var itemComp))
                     continue;
@@ -471,7 +468,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(source, ref sourceComp) || !Resolve(target, ref targetComp))
                 return;
 
-            var entities = sourceComp.Storage?.ContainedEntities;
+            var entities = sourceComp.Container?.ContainedEntities;
             if (entities == null || entities.Count == 0)
                 return;
 
@@ -543,7 +540,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if the entity was inserted, false otherwise</returns>
         public bool Insert(EntityUid uid, EntityUid insertEnt, StorageComponent? storageComp = null, bool playSound = true)
         {
-            if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Storage == null)
+            if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Container == null)
                 return false;
 
             /*
@@ -562,7 +559,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 var toInsertCount = insertStack.Count;
 
-                foreach (var ent in storageComp.Storage.ContainedEntities)
+                foreach (var ent in storageComp.Container.ContainedEntities)
                 {
                     if (!stackQuery.TryGetComponent(ent, out var containedStack) || !insertStack.StackTypeId.Equals(containedStack.StackTypeId))
                         continue;
@@ -585,7 +582,7 @@ namespace Content.Server.Storage.EntitySystems
                     // Try to insert it as a new stack.
                     if (TryComp(insertEnt, out ItemComponent? itemComp) &&
                         itemComp.Size > storageComp.StorageCapacityMax - storageComp.StorageUsed ||
-                        !storageComp.Storage.Insert(insertEnt))
+                        !storageComp.Container.Insert(insertEnt))
                     {
                         // If we also didn't do any stack fills above then just end
                         // otherwise play sound and update UI anyway.
@@ -595,7 +592,7 @@ namespace Content.Server.Storage.EntitySystems
                 }
             }
             // Non-stackable but no insertion for reasons.
-            else if (!storageComp.Storage.Insert(insertEnt))
+            else if (!storageComp.Container.Insert(insertEnt))
             {
                 return false;
             }
@@ -614,7 +611,7 @@ namespace Content.Server.Storage.EntitySystems
             if (!Resolve(uid, ref storageComp))
                 return false;
 
-            var itemRemoved = storageComp.Storage?.Remove(removeEnt) == true;
+            var itemRemoved = storageComp.Container?.Remove(removeEnt) == true;
             if (itemRemoved)
                 RecalculateStorageUsed(storageComp);
 
@@ -656,7 +653,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <returns>true if inserted, false otherwise</returns>
         public bool PlayerInsertEntityInWorld(EntityUid uid, EntityUid player, EntityUid toInsert, StorageComponent? storageComp = null)
         {
-            if (!Resolve(uid, ref storageComp) || !_sharedInteractionSystem.InRangeUnobstructed(player, uid, popup: storageComp.ShowPopup))
+            if (!Resolve(uid, ref storageComp) || !_sharedInteractionSystem.InRangeUnobstructed(player, uid))
                 return false;
 
             if (!Insert(uid, toInsert, storageComp))
@@ -698,7 +695,7 @@ namespace Content.Server.Storage.EntitySystems
         /// <param name="session"></param>
         public void CloseNestedInterfaces(EntityUid uid, IPlayerSession session, StorageComponent? storageComp = null)
         {
-            if (!Resolve(uid, ref storageComp) || storageComp.StoredEntities == null)
+            if (!Resolve(uid, ref storageComp))
                 return;
 
             // for each containing thing
@@ -706,11 +703,8 @@ namespace Content.Server.Storage.EntitySystems
             // ensure unsubscribe from session
             // if it has a ui component
             // close ui
-            foreach (var entity in storageComp.StoredEntities)
+            foreach (var entity in storageComp.Container.ContainedEntities)
             {
-                if (TryComp(entity, out StorageComponent? storedStorageComp))
-                    DebugTools.Assert(storedStorageComp != storageComp, $"Storage component contains itself!? Entity: {uid}");
-
                 if (!TryComp(entity, out SharedUserInterfaceComponent? ui))
                     continue;
 
@@ -723,11 +717,7 @@ namespace Content.Server.Storage.EntitySystems
 
         public void UpdateStorageUI(EntityUid uid, StorageComponent storageComp)
         {
-            if (storageComp.Storage == null)
-                return;
-
-            var state = new StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Storage.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
-
+            var state = new StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Container.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
             var bui = _uiSystem.GetUiOrNull(uid, StorageUiKey.Key);
 
             if (bui != null)

@@ -15,7 +15,7 @@ namespace Content.Shared.Storage
         public bool IsUiOpen;
 
         [ViewVariables]
-        public Container Storage = default!;
+        public Container Container = default!;
 
         public readonly Dictionary<EntityUid, int> SizeCache = new();
 
