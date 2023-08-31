@@ -61,7 +61,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
-        SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
+        SubscribeLocalEvent<StorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
@@ -295,15 +295,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
     ///     item in the user's hand if it is currently empty, or interact with the item using the user's currently
     ///     held item.
     /// </summary>
-    private void OnInteractWithItem(StorageInteractWithItemEvent args)
+    private void OnInteractWithItem(EntityUid uid, StorageComponent storageComp, StorageInteractWithItemEvent args)
     {
-        // TODO: Validate
-        var uid = args.Entity;
-
-        if (!TryComp<StorageComponent>(uid, out var storageComp))
-            return;
-
-        // TODO move this to shared for prediction.
         if (args.Session.AttachedEntity is not EntityUid player)
             return;
 
