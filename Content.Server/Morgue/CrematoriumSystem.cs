@@ -1,5 +1,4 @@
 using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Server.Morgue.Components;
 using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
@@ -7,6 +6,7 @@ using Content.Shared.Database;
 using Content.Shared.Examine;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mind;
 using Content.Shared.Morgue;
 using Content.Shared.Popups;
 using Content.Shared.Standing;
@@ -26,7 +26,7 @@ public sealed class CrematoriumSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     public override void Initialize()
     {

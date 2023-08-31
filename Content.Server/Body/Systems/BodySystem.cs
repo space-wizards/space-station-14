@@ -4,12 +4,12 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
-using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
 using Content.Shared.Body.Systems;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
 using Content.Shared.Random.Helpers;
@@ -28,7 +28,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
