@@ -9,7 +9,6 @@ using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Revolutionary.Components;
 using Content.Shared.Roles;
-using Robust.Server.Player;
 using Robust.Shared.Prototypes;
 using System.Linq;
 using Content.Shared.Stunnable;
@@ -18,18 +17,17 @@ using Content.Server.Shuttles.Components;
 using Robust.Shared.Timing;
 using Content.Server.Popups;
 using Content.Server.Revolutionary.Components;
-using Content.Server.Shuttles.Systems;
 using Content.Shared.IdentityManagement;
 using Content.Server.Flash;
 using Content.Shared.Mindshield.Components;
-using Content.Shared.Charges.Systems;
 using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Server.Antag;
 using Robust.Server.GameObjects;
 using Content.Server.Speech.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -106,7 +104,7 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
             else if (commandLost && revsLost)
             {
-                ev.AddLine(Loc.GetString("rev-reversestalemate"));
+                ev.AddLine(Loc.GetString("rev-reverse-stalemate"));
             }
             ev.AddLine(Loc.GetString("head-rev-initial-count", ("initialCount", headrev.HeadRevs.Count)));
             foreach (var player in headrev.HeadRevs)
@@ -157,7 +155,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             var inCharacterName = MetaData(headRev).EntityName;
             if (_mindSystem.TryGetMind(headRev, out var mindId, out var mind))
             {
-                _roleSystem.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = "Rev" });
+                if (!_roleSystem.MindHasRole<RevolutionaryRoleComponent>(mindId))
+                {
+                    _roleSystem.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = "Rev" });
+                }
                 if (_mindSystem.TryGetSession(mindId, out var session) && comp != null)
                 {
                     comp.HeadRevs.Add(inCharacterName, session.Name);
@@ -240,7 +241,10 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             }
             if (_mindSystem.TryGetMind(ev.Target, out var mindId, out var mind))
             {
-                _roleSystem.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = "Rev" });
+                if (!_roleSystem.MindHasRole<RevolutionaryRoleComponent>(mindId))
+                {
+                    _roleSystem.MindAddRole(mindId, new RevolutionaryRoleComponent { PrototypeId = "Rev" });
+                }
                 if (mind.Session != null)
                 {
                     var message = Loc.GetString("rev-role-greeting");

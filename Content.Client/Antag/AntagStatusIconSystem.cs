@@ -18,7 +18,6 @@ public abstract class AntagStatusIconSystem : SharedStatusIconSystem
     /// <summary>
     /// Can be called to give status icons to antags and any antag leaders.
     /// </summary>
-    /// <param name="uid"></param>
     /// <param name="antagStatusIcon">The status icon that your antag uses</param>
     /// <param name="antagLeaderStatusIcon">The status icon of your antag leader (set to null if no leader)</param>
     /// <param name="args">The GetStatusIcon event.</param>

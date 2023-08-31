@@ -1,3 +1,5 @@
+using Content.Shared.Roles;
+
 namespace Content.Server.Roles;
 
 /// <summary>
