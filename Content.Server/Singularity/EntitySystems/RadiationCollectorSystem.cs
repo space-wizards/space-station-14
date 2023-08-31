@@ -9,6 +9,7 @@ using Robust.Shared.Containers;
 using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Server.Atmos;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.Singularity.EntitySystems
 {
@@ -18,7 +19,6 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
 
         public override void Initialize()
         {
@@ -29,7 +29,7 @@ namespace Content.Server.Singularity.EntitySystems
             SubscribeLocalEvent<RadiationCollectorComponent, GasAnalyzerScanEvent>(OnAnalyzed);
         }
 
-        private bool TryGetLoadedGasTank(EntityUid uid, out GasTankComponent? gasTankComponent)
+        private bool TryGetLoadedGasTank(EntityUid uid, [NotNullWhen(true)] out GasTankComponent? gasTankComponent)
         {
             gasTankComponent = null;
             var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, "GasTank");
@@ -37,7 +37,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (container.ContainedEntity == null)
                 return false;
 
-            if (!_entityManager.TryGetComponent(container.ContainedEntity, out gasTankComponent))
+            if (!EntityManager.TryGetComponent(container.ContainedEntity, out gasTankComponent))
                 return false;
 
             return true;
@@ -59,7 +59,7 @@ namespace Content.Server.Singularity.EntitySystems
             if (!component.Enabled || component.RadiationReactiveGases == null)
                 return;
 
-            if (!TryGetLoadedGasTank(uid, out var gasTankComponent) || gasTankComponent == null)
+            if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
                 return;
 
             var charge = 0f;
@@ -69,6 +69,11 @@ namespace Content.Server.Singularity.EntitySystems
                 float reactantMol = gasTankComponent.Air.GetMoles(gas.Reactant);
                 float delta = args.TotalRads * reactantMol * gas.ReactantBreakdownRate;
 
+                // We need to offset the huge power gains possible when using very cold gases
+                // (they allow you to have a much higher molar concentrations of gas in the tank).
+                // Hence power output is modified using the Michaelis-Menten equation,
+                // it will heavily penalise the power output of low temperature reactions:
+                // 300K = 100% power output, 73K = 49% power output, 1K = 1% power output
                 float temperatureMod = 1.5f * gasTankComponent.Air.Temperature / (150f + gasTankComponent.Air.Temperature);
                 charge += args.TotalRads * reactantMol * component.ChargeModifier * gas.PowerGenerationEfficiency * temperatureMod;
 
@@ -96,7 +101,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnExamined(EntityUid uid, RadiationCollectorComponent component, ExaminedEvent args)
         {
-            if (!TryGetLoadedGasTank(uid, out var gasTankComponent) || gasTankComponent == null)
+            if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
             {
                 args.PushMarkup(Loc.GetString("power-radiation-collector-gas-tank-missing"));
                 return;
@@ -112,7 +117,7 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnAnalyzed(EntityUid uid, RadiationCollectorComponent component, GasAnalyzerScanEvent args)
         {
-            if (!TryGetLoadedGasTank(uid, out var gasTankComponent) || gasTankComponent == null)
+            if (!TryGetLoadedGasTank(uid, out var gasTankComponent))
                 return;
 
             args.GasMixtures = new Dictionary<string, GasMixture?> { { Name(uid), gasTankComponent.Air } };

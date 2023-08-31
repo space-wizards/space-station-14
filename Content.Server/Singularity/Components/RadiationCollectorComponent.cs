@@ -42,7 +42,7 @@ namespace Content.Server.Singularity.Components
         /// </summary>
         [DataField("radiationReactiveGases")]
         [ViewVariables(VVAccess.ReadWrite)]
-        public List<RadiationReactiveGas>? RadiationReactiveGases = default!;
+        public List<RadiationReactiveGas>? RadiationReactiveGases;
     }
 
     /// <summary>
@@ -58,13 +58,13 @@ namespace Content.Server.Singularity.Components
         public Gas Reactant = Gas.Plasma;
 
         /// <summary>
-        ///     How efficiently the gas converts collected radiation into power
+        ///     Multipier for the amount of power produced by the radiation collector when using this gas
         /// </summary>
         [DataField("powerGenerationEfficiency")]
         public float PowerGenerationEfficiency = 1f;
 
         /// <summary>
-        ///     Controls the rate at which the reactant breaks down when exposed to radiation
+        ///     Controls the rate (molar percentage per rad) at which the reactant breaks down when exposed to radiation
         /// </summary>
         /// /// <remarks>
         ///     Set to zero if the reactant does not deplete
