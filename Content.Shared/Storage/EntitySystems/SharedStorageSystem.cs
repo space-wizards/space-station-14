@@ -1,6 +1,5 @@
 using System.Linq;
 using Content.Shared.ActionBlocker;
-using Content.Shared.Administration.Managers;
 using Content.Shared.CombatMode;
 using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Destructible;
@@ -27,22 +26,22 @@ namespace Content.Shared.Storage.EntitySystems;
 
 public abstract partial class SharedStorageSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
-    [Dependency] private readonly SharedEntityStorageSystem _entityStorage = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-    [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
-    [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SharedStackSystem _stack = default!;
-    [Dependency] protected readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private   readonly IRobustRandom _random = default!;
+    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
+    [Dependency] private   readonly SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
+    [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private   readonly SharedInteractionSystem _sharedInteractionSystem = default!;
+    [Dependency] private   readonly ActionBlockerSystem _actionBlockerSystem = default!;
+    [Dependency] private   readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] protected readonly SharedAudioSystem Audio = default!;
+    [Dependency] private   readonly SharedCombatModeSystem _combatMode = default!;
+    [Dependency] private   readonly SharedTransformSystem _transform = default!;
+    [Dependency] private   readonly SharedStackSystem _stack = default!;
+    [Dependency] protected readonly UseDelaySystem UseDelay = default!;
 
     /// <inheritdoc />
     public override void Initialize()
@@ -56,12 +55,13 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, OpenStorageImplantEvent>(OnImplantActivate);
         SubscribeLocalEvent<StorageComponent, AfterInteractEvent>(AfterInteract);
         SubscribeLocalEvent<StorageComponent, DestructionEventArgs>(OnDestroy);
-        SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInteractWithItemEvent>(OnInteractWithItem);
         SubscribeLocalEvent<StorageComponent, StorageComponent.StorageInsertItemMessage>(OnInsertItemMessage);
         SubscribeLocalEvent<StorageComponent, BoundUIOpenedEvent>(OnBoundUIOpen);
         SubscribeLocalEvent<StorageComponent, EntRemovedFromContainerMessage>(OnStorageItemRemoved);
 
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
+
+        SubscribeAllEvent<StorageInteractWithItemEvent>(OnInteractWithItem);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
@@ -77,9 +77,9 @@ public abstract partial class SharedStorageSystem : EntitySystem
         UpdateStorageUI(uid, storageComp);
     }
 
-    protected virtual void UpdateStorageUI(EntityUid uid, StorageComponent storageComp) {}
+    public virtual void UpdateStorageUI(EntityUid uid, StorageComponent storageComp) {}
 
-    protected virtual void OpenStorageUI(EntityUid uid, EntityUid argsUser, StorageComponent storageComp) { }
+    public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
 
     private void AddTransferVerbs(EntityUid uid, StorageComponent component, GetVerbsEvent<UtilityVerb> args)
     {
@@ -273,7 +273,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         // If we picked up atleast one thing, play a sound and do a cool animation!
         if (successfullyInserted.Count > 0)
         {
-            _audio.PlayPvs(component.StorageInsertSound, uid);
+            Audio.PlayPvs(component.StorageInsertSound, uid);
             RaiseNetworkEvent(new AnimateInsertingEntitiesEvent(uid, successfullyInserted, successfullyInsertedPositions, successfullyInsertedAngles));
         }
 
@@ -295,8 +295,14 @@ public abstract partial class SharedStorageSystem : EntitySystem
     ///     item in the user's hand if it is currently empty, or interact with the item using the user's currently
     ///     held item.
     /// </summary>
-    private void OnInteractWithItem(EntityUid uid, StorageComponent storageComp, StorageComponent.StorageInteractWithItemEvent args)
+    private void OnInteractWithItem(StorageInteractWithItemEvent args)
     {
+        // TODO: Validate
+        var uid = args.Entity;
+
+        if (!TryComp<StorageComponent>(uid, out var storageComp))
+            return;
+
         // TODO move this to shared for prediction.
         if (args.Session.AttachedEntity is not EntityUid player)
             return;
@@ -307,7 +313,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
             return;
         }
 
-        if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || storageComp.Container == null || !storageComp.Container.Contains(args.InteractedItemUID))
+        if (!_actionBlockerSystem.CanInteract(player, args.InteractedItemUID) || !storageComp.Container.Contains(args.InteractedItemUID))
             return;
 
         // Does the player have hands?
@@ -319,8 +325,10 @@ public abstract partial class SharedStorageSystem : EntitySystem
         {
             if (_sharedHandsSystem.TryPickupAnyHand(player, args.InteractedItemUID, handsComp: hands)
                 && storageComp.StorageRemoveSound != null)
-                _audio.Play(storageComp.StorageRemoveSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, AudioParams.Default);
-            return;
+                Audio.Play(storageComp.StorageRemoveSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true);
+            {
+                return;
+            }
         }
 
         // Else, interact using the held item
@@ -368,9 +376,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         storageComp.StorageUsed = 0;
         storageComp.SizeCache.Clear();
 
-        if (storageComp.Container == null)
-            return;
-
         var itemQuery = GetEntityQuery<ItemComponent>();
 
         foreach (var entity in storageComp.Container.ContainedEntities)
@@ -402,8 +407,8 @@ public abstract partial class SharedStorageSystem : EntitySystem
         if (!Resolve(source, ref sourceComp) || !Resolve(target, ref targetComp))
             return;
 
-        var entities = sourceComp.Container?.ContainedEntities;
-        if (entities == null || entities.Count == 0)
+        var entities = sourceComp.Container.ContainedEntities;
+        if (entities.Count == 0)
             return;
 
         if (Resolve(source, ref sourceLock, false) && sourceLock.Locked
@@ -474,7 +479,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
     /// <returns>true if the entity was inserted, false otherwise</returns>
     public bool Insert(EntityUid uid, EntityUid insertEnt, StorageComponent? storageComp = null, bool playSound = true)
     {
-        if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp) || storageComp.Container == null)
+        if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp))
             return false;
 
         /*
@@ -532,7 +537,7 @@ public abstract partial class SharedStorageSystem : EntitySystem
         }
 
         if (playSound && storageComp.StorageInsertSound is not null)
-            _audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            Audio.PlayPvs(storageComp.StorageInsertSound, uid);
 
         RecalculateStorageUsed(storageComp);
         UpdateStorageUI(uid, storageComp);

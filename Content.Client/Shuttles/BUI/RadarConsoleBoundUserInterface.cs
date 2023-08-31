@@ -2,11 +2,12 @@ using Content.Client.Shuttles.UI;
 using Content.Shared.Shuttles.BUIStates;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
-public sealed class RadarConsoleBoundUserInterface : BoundUserInterface
+public sealed class RadarConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private RadarConsoleWindow? _window;

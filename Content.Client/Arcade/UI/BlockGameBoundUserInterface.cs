@@ -1,9 +1,10 @@
 ﻿using Content.Shared.Arcade;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Arcade.UI;
 
-public sealed class BlockGameBoundUserInterface : BoundUserInterface
+public sealed class BlockGameBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     private BlockGameMenu? _menu;
 

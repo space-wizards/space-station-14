@@ -5,6 +5,7 @@ using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Disposal.UI
 {
@@ -12,7 +13,7 @@ namespace Content.Client.Disposal.UI
     /// Initializes a <see cref="MailingUnitWindow"/> or a <see cref="DisposalUnitWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DisposalUnitBoundUserInterface : BoundUserInterface
+    public sealed class DisposalUnitBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         // What are you doing here
         [ViewVariables]

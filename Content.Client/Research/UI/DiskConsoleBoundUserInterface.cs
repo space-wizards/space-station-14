@@ -1,10 +1,11 @@
 using Content.Shared.Research;
 using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Research.UI
 {
-    public sealed class DiskConsoleBoundUserInterface : BoundUserInterface
+    public sealed class DiskConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private DiskConsoleMenu? _menu;

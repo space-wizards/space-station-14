@@ -1,11 +1,12 @@
 ﻿using Content.Shared.Power.Generator;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Power.Generator;
 
 [UsedImplicitly]
-public sealed class PortableGeneratorBoundUserInterface : BoundUserInterface
+public sealed class PortableGeneratorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     private GeneratorWindow? _window;
 

@@ -2,10 +2,11 @@
 using Robust.Shared.GameObjects;
 using Robust.Shared.ViewVariables;
 using static Content.Shared.Arcade.SharedSpaceVillainArcadeComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Arcade.UI;
 
-public sealed class SpaceVillainArcadeBoundUserInterface : BoundUserInterface
+public sealed class SpaceVillainArcadeBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables] private SpaceVillainArcadeMenu? _menu;
 

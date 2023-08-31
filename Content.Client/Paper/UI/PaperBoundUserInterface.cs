@@ -4,11 +4,12 @@ using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using Robust.Shared.Utility;
 using static Content.Shared.Paper.SharedPaperComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Paper.UI;
 
 [UsedImplicitly]
-public sealed class PaperBoundUserInterface : BoundUserInterface
+public sealed class PaperBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private PaperWindow? _window;

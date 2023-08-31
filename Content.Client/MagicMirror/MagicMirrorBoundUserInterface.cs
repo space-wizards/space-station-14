@@ -1,10 +1,11 @@
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.MagicMirror;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.MagicMirror;
 
-public sealed class MagicMirrorBoundUserInterface : BoundUserInterface
+public sealed class MagicMirrorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private MagicMirrorWindow? _window;

@@ -75,19 +75,19 @@ namespace Content.Shared.Storage
         }
 
         [Serializable, NetSerializable]
-        public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
-        {
-            public readonly EntityUid InteractedItemUID;
-            public StorageInteractWithItemEvent(EntityUid interactedItemUID)
-            {
-                InteractedItemUID = interactedItemUID;
-            }
-        }
-
-        [Serializable, NetSerializable]
         public enum StorageUiKey
         {
             Key,
+        }
+    }
+
+    [Serializable, NetSerializable]
+    public sealed class StorageInteractWithItemEvent : BoundUserInterfaceMessage
+    {
+        public readonly EntityUid InteractedItemUID;
+        public StorageInteractWithItemEvent(EntityUid interactedItemUID)
+        {
+            InteractedItemUID = interactedItemUID;
         }
     }
 

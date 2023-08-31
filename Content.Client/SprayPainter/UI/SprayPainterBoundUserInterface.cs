@@ -1,10 +1,11 @@
 using Content.Shared.SprayPainter;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.SprayPainter.UI;
 
-public sealed class SprayPainterBoundUserInterface : BoundUserInterface
+public sealed class SprayPainterBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private SprayPainterWindow? _window;

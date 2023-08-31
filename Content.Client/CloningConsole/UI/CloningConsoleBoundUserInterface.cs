@@ -1,11 +1,12 @@
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Content.Shared.Cloning.CloningConsole;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.CloningConsole.UI
 {
     [UsedImplicitly]
-    public sealed class CloningConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CloningConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private CloningConsoleWindow? _window;

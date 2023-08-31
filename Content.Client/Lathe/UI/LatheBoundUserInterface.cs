@@ -2,11 +2,12 @@ using Content.Shared.Lathe;
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Lathe.UI
 {
     [UsedImplicitly]
-    public sealed class LatheBoundUserInterface : BoundUserInterface
+    public sealed class LatheBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private LatheMenu? _menu;

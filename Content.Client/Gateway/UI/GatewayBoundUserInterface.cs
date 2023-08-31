@@ -1,11 +1,12 @@
 using Content.Shared.Gateway;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Gateway.UI;
 
 [UsedImplicitly]
-public sealed class GatewayBoundUserInterface : BoundUserInterface
+public sealed class GatewayBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     private GatewayWindow? _window;
 

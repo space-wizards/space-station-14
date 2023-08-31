@@ -2,6 +2,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Trinary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -9,7 +10,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasMixerWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasMixerBoundUserInterface : BoundUserInterface
+    public sealed class GasMixerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private const float MaxPressure = Atmospherics.MaxOutputPressure;

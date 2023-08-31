@@ -5,10 +5,11 @@ using Robust.Client.Audio.Midi;
 using Robust.Client.GameObjects;
 using Robust.Client.Player;
 using Robust.Client.UserInterface;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Instruments.UI
 {
-    public sealed class InstrumentBoundUserInterface : BoundUserInterface
+    public sealed class InstrumentBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [Dependency] public readonly IEntityManager Entities = default!;
         [Dependency] public readonly IMidiManager MidiManager = default!;

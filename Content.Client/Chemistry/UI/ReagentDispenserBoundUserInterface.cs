@@ -2,6 +2,7 @@ using Content.Shared.Chemistry;
 using Content.Shared.Containers.ItemSlots;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
@@ -9,7 +10,7 @@ namespace Content.Client.Chemistry.UI
     /// Initializes a <see cref="ReagentDispenserWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class ReagentDispenserBoundUserInterface : BoundUserInterface
+    public sealed class ReagentDispenserBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private ReagentDispenserWindow? _window;

@@ -2,6 +2,7 @@
 using Content.Shared.CartridgeLoader.Cartridges;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.CartridgeLoader.Cartridges;
 

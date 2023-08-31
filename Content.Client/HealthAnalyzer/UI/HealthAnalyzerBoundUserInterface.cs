@@ -1,11 +1,12 @@
 ﻿using Content.Shared.MedicalScanner;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.HealthAnalyzer.UI
 {
     [UsedImplicitly]
-    public sealed class HealthAnalyzerBoundUserInterface : BoundUserInterface
+    public sealed class HealthAnalyzerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private HealthAnalyzerWindow? _window;

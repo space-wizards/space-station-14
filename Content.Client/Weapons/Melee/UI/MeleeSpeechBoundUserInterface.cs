@@ -1,12 +1,13 @@
 using Robust.Client.GameObjects;
 using Content.Shared.Speech.Components;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Weapons.Melee.UI;
 
 /// <summary>
 /// Initializes a <see cref="MeleeSpeechWindow"/> and updates it when new server messages are received.
 /// </summary>
-public sealed class MeleeSpeechBoundUserInterface : BoundUserInterface
+public sealed class MeleeSpeechBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private MeleeSpeechWindow? _window;

@@ -143,7 +143,7 @@ namespace Content.Server.Power.EntitySystems
         public void UpdateUIState(EntityUid uid,
             ApcComponent? apc = null,
             PowerNetworkBatteryComponent? netBat = null,
-            ServerUserInterfaceComponent? ui = null)
+            UserInterfaceComponent? ui = null)
         {
             if (!Resolve(uid, ref apc, ref netBat, ref ui))
                 return;

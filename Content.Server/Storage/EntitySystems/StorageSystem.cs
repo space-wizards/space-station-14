@@ -78,7 +78,7 @@ public sealed class StorageSystem : SharedStorageSystem
             UpdateStorageVisualization(uid, storageComp);
 
             if (storageComp.StorageCloseSound is not null)
-                _audio.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
+                Audio.Play(storageComp.StorageCloseSound, Filter.Pvs(uid, entityManager: EntityManager), uid, true, storageComp.StorageCloseSound.Params);
         }
     }
 
@@ -86,18 +86,18 @@ public sealed class StorageSystem : SharedStorageSystem
     ///     Opens the storage UI for an entity
     /// </summary>
     /// <param name="entity">The entity to open the UI for</param>
-    public void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
+    public override void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false)
     {
         if (!Resolve(uid, ref storageComp) || !TryComp(entity, out ActorComponent? player))
             return;
 
         // prevent spamming bag open / honkerton honk sound
-        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay);
+        silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && UseDelay.ActiveDelay(uid, useDelay);
         if (!silent)
         {
-            _audio.PlayPvs(storageComp.StorageOpenSound, uid);
+            Audio.PlayPvs(storageComp.StorageOpenSound, uid);
             if (useDelay != null)
-                _useDelay.BeginDelay(uid, useDelay);
+                UseDelay.BeginDelay(uid, useDelay);
         }
 
         Log.Debug($"Storage (UID {uid}) \"used\" by player session (UID {player.PlayerSession.AttachedEntity}).");
@@ -123,7 +123,7 @@ public sealed class StorageSystem : SharedStorageSystem
         // close ui
         foreach (var entity in storageComp.Container.ContainedEntities)
         {
-            if (!TryComp(entity, out ServerUserInterfaceComponent? ui))
+            if (!TryComp(entity, out UserInterfaceComponent? ui))
                 continue;
 
             foreach (var bui in ui.Interfaces.Values)
@@ -133,7 +133,7 @@ public sealed class StorageSystem : SharedStorageSystem
         }
     }
 
-    public void UpdateStorageUI(EntityUid uid, StorageComponent storageComp)
+    public override void UpdateStorageUI(EntityUid uid, StorageComponent storageComp)
     {
         var state = new StorageComponent.StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Container.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
         var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);

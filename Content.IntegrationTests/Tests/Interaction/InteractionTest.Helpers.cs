@@ -16,7 +16,6 @@ using Content.Shared.Atmos;
 using Content.Shared.Construction.Prototypes;
 using Content.Shared.Gravity;
 using Content.Shared.Item;
-using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.CustomControls;
 using Robust.Shared.GameObjects;
@@ -24,6 +23,7 @@ using Robust.Shared.Input;
 using Robust.Shared.Map;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Maths;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.IntegrationTests.Tests.Interaction;
 
@@ -753,7 +753,7 @@ public abstract partial class InteractionTest
             return false;
         }
 
-        if (!CEntMan.TryGetComponent<ClientUserInterfaceComponent>(target, out var ui))
+        if (!CEntMan.TryGetComponent<UserInterfaceComponent>(target, out var ui))
         {
             if (shouldSucceed)
                 Assert.Fail($"Entity {SEntMan.ToPrettyString(target.Value)} does not have a bui component");

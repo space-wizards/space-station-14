@@ -3,10 +3,11 @@ using Content.Shared.VendingMachines;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using System.Linq;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.VendingMachines
 {
-    public sealed class VendingMachineBoundUserInterface : BoundUserInterface
+    public sealed class VendingMachineBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private VendingMachineMenu? _menu;

@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using static Content.Shared.Disposal.Components.SharedDisposalRouterComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Disposal.UI
 {
@@ -8,7 +9,7 @@ namespace Content.Client.Disposal.UI
     /// Initializes a <see cref="DisposalRouterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class DisposalRouterBoundUserInterface : BoundUserInterface
+    public sealed class DisposalRouterBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private DisposalRouterWindow? _window;

@@ -2,11 +2,12 @@ using Content.Client.Cargo.UI;
 using Content.Shared.Cargo.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Cargo.BUI;
 
 [UsedImplicitly]
-public sealed class CargoBountyConsoleBoundUserInterface : BoundUserInterface
+public sealed class CargoBountyConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private CargoBountyMenu? _menu;

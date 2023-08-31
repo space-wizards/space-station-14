@@ -2,6 +2,7 @@ using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Robust.Client.GameObjects;
 using static Content.Shared.Humanoid.HumanoidAppearanceState;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Humanoid;
 
@@ -9,7 +10,7 @@ namespace Content.Client.Humanoid;
 // Do not use this in any non-privileged instance. This just replaces an entire marking set
 // with the set sent over.
 
-public sealed class HumanoidMarkingModifierBoundUserInterface : BoundUserInterface
+public sealed class HumanoidMarkingModifierBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private HumanoidMarkingModifierWindow? _window;

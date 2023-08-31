@@ -21,7 +21,7 @@ public sealed partial class InstrumentComponent : SharedInstrumentComponent
         _entMan.GetComponentOrNull<ActivatableUIComponent>(Owner)?.CurrentSingleUser
         ?? _entMan.GetComponentOrNull<ActorComponent>(Owner)?.PlayerSession;
 
-    [ViewVariables] public BoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
+    [ViewVariables] public PlayerBoundUserInterface? UserInterface => Owner.GetUIOrNull(InstrumentUiKey.Key);
 }
 
 [RegisterComponent]

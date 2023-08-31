@@ -1,12 +1,13 @@
 using Content.Shared.Labels;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Labels.UI
 {
     /// <summary>
     /// Initializes a <see cref="HandLabelerWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed class HandLabelerBoundUserInterface : BoundUserInterface
+    public sealed class HandLabelerBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private HandLabelerWindow? _window;

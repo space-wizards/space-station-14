@@ -1,11 +1,12 @@
 using Content.Shared.Fax;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Fax.UI;
 
 [UsedImplicitly]
-public sealed class FaxBoundUi : BoundUserInterface
+public sealed class FaxBoundUi : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private FaxWindow? _window;

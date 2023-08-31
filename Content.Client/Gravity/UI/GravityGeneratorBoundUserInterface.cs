@@ -1,11 +1,12 @@
 using Content.Shared.Gravity;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Gravity.UI
 {
     [UsedImplicitly]
-    public sealed class GravityGeneratorBoundUserInterface : BoundUserInterface
+    public sealed class GravityGeneratorBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private GravityGeneratorWindow? _window;

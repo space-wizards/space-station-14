@@ -1,11 +1,12 @@
 using Content.Shared.Silicons.Borgs;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Silicons.Borgs;
 
 [UsedImplicitly]
-public sealed class BorgBoundUserInterface : BoundUserInterface
+public sealed class BorgBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private BorgMenu? _menu;

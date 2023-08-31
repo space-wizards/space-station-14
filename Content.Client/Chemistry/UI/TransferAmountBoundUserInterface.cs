@@ -2,11 +2,12 @@ using Content.Shared.Chemistry;
 using Content.Shared.FixedPoint;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Chemistry.UI
 {
     [UsedImplicitly]
-    public sealed class TransferAmountBoundUserInterface : BoundUserInterface
+    public sealed class TransferAmountBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private TransferAmountWindow? _window;

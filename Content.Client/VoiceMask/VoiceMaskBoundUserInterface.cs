@@ -1,9 +1,10 @@
 using Content.Shared.VoiceMask;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.VoiceMask;
 
-public sealed class VoiceMaskBoundUserInterface : BoundUserInterface
+public sealed class VoiceMaskBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private VoiceMaskNameChangeWindow? _window;

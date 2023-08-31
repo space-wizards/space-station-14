@@ -1,11 +1,12 @@
 using Content.Shared.Research.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Research.UI;
 
 [UsedImplicitly]
-public sealed class ResearchConsoleBoundUserInterface : BoundUserInterface
+public sealed class ResearchConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private ResearchConsoleMenu? _consoleMenu;

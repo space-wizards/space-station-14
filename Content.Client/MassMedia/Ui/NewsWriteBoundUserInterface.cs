@@ -5,11 +5,12 @@ using Content.Shared.MassMedia.Systems;
 using Content.Shared.MassMedia.Components;
 using Content.Client.GameTicking.Managers;
 using Robust.Shared.Utility;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.MassMedia.Ui
 {
     [UsedImplicitly]
-    public sealed class NewsWriteBoundUserInterface : BoundUserInterface
+    public sealed class NewsWriteBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private NewsWriteMenu? _menu;

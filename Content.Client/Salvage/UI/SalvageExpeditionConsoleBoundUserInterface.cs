@@ -1,11 +1,12 @@
 using Content.Shared.Salvage.Expeditions;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Salvage.UI;
 
 [UsedImplicitly]
-public sealed class SalvageExpeditionConsoleBoundUserInterface : BoundUserInterface
+public sealed class SalvageExpeditionConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private SalvageExpeditionWindow? _window;

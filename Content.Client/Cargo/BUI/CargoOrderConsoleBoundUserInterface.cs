@@ -9,10 +9,11 @@ using Robust.Client.Player;
 using Robust.Shared.Utility;
 using Robust.Shared.Prototypes;
 using static Robust.Client.UserInterface.Controls.BaseButton;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Cargo.BUI
 {
-    public sealed class CargoOrderConsoleBoundUserInterface : BoundUserInterface
+    public sealed class CargoOrderConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private CargoConsoleMenu? _menu;

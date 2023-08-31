@@ -1,6 +1,7 @@
 ﻿using Content.Shared.Atmos.Piping.Binary.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.UI
 {
@@ -8,7 +9,7 @@ namespace Content.Client.Atmos.UI
     /// Initializes a <see cref="GasCanisterWindow"/> and updates it when new server messages are received.
     /// </summary>
     [UsedImplicitly]
-    public sealed class GasCanisterBoundUserInterface : BoundUserInterface
+    public sealed class GasCanisterBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private GasCanisterWindow? _window;

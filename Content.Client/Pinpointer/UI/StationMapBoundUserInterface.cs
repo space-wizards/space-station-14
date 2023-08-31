@@ -1,8 +1,9 @@
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Pinpointer.UI;
 
-public sealed class StationMapBoundUserInterface : BoundUserInterface
+public sealed class StationMapBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private StationMapWindow? _window;

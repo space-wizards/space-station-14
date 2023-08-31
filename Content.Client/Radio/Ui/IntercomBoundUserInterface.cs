@@ -1,11 +1,12 @@
 using Content.Shared.Radio;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Radio.Ui;
 
 [UsedImplicitly]
-public sealed class IntercomBoundUserInterface : BoundUserInterface
+public sealed class IntercomBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private IntercomMenu? _menu;

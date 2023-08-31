@@ -3,10 +3,11 @@ using Content.Shared.Kitchen;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Prototypes;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Kitchen.UI
 {
-    public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
+    public sealed class ReagentGrinderBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
 

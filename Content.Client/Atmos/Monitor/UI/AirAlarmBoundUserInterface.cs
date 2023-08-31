@@ -5,10 +5,11 @@ using Robust.Client.GameObjects;
 using Robust.Shared.GameObjects;
 using Robust.Shared.IoC;
 using Robust.Shared.Log;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Atmos.Monitor.UI;
 
-public sealed class AirAlarmBoundUserInterface : BoundUserInterface
+public sealed class AirAlarmBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     private AirAlarmWindow? _window;
 

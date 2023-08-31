@@ -3,11 +3,12 @@ using Content.Shared.Shuttles.BUIStates;
 using Content.Shared.Shuttles.Events;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Shuttles.BUI;
 
 [UsedImplicitly]
-public sealed class ShuttleConsoleBoundUserInterface : BoundUserInterface
+public sealed class ShuttleConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private ShuttleConsoleWindow? _window;

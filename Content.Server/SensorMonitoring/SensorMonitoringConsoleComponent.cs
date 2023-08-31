@@ -1,6 +1,7 @@
 ﻿using Content.Shared.SensorMonitoring;
 using Robust.Server.Player;
 using Robust.Shared.Collections;
+using Robust.Shared.Players;
 
 namespace Content.Server.SensorMonitoring;
 
@@ -26,7 +27,7 @@ public sealed partial class SensorMonitoringConsoleComponent : Component
     public TimeSpan RetentionTime = TimeSpan.FromMinutes(1);
 
     // UI update tracking stuff.
-    public HashSet<IPlayerSession> InitialUIStateSent = new();
+    public HashSet<ICommonSession> InitialUIStateSent = new();
     public TimeSpan LastUIUpdate;
     public ValueList<int> RemovedSensors;
 

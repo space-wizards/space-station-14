@@ -1,9 +1,10 @@
 using Content.Shared.Research.Components;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Research.UI
 {
-    public sealed class ResearchClientBoundUserInterface : BoundUserInterface
+    public sealed class ResearchClientBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private ResearchClientServerSelectionMenu? _menu;

@@ -2,11 +2,12 @@ using Content.Shared.Containers.ItemSlots;
 using Content.Shared.Nuke;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Nuke
 {
     [UsedImplicitly]
-    public sealed class NukeBoundUserInterface : BoundUserInterface
+    public sealed class NukeBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private NukeMenu? _menu;

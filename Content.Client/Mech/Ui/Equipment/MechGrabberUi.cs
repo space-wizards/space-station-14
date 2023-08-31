@@ -2,6 +2,7 @@
 using Content.Shared.Mech;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Mech.Ui.Equipment;
 

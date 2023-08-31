@@ -4,17 +4,19 @@ using Content.Client.UserInterface.Controls;
 using Content.Client.Verbs.UI;
 using Content.Shared.Input;
 using Content.Shared.Interaction;
+using Content.Shared.Storage;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using Robust.Client.UserInterface;
 using Robust.Client.UserInterface.Controls;
 using Robust.Shared.Input;
 using static Content.Shared.Storage.StorageComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Storage
 {
     [UsedImplicitly]
-    public sealed class StorageBoundUserInterface : BoundUserInterface
+    public sealed class StorageBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private StorageWindow? _window;
@@ -54,7 +56,7 @@ namespace Content.Client.Storage
 
             if (args.Event.Function == EngineKeyFunctions.UIClick)
             {
-                SendMessage(new StorageInteractWithItemEvent(entity));
+                SendPredictedMessage(new StorageInteractWithItemEvent(entity));
             }
             else if (EntMan.EntityExists(entity))
             {

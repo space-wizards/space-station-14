@@ -2,11 +2,12 @@ using Content.Shared.Store;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
 using System.Linq;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Store.Ui;
 
 [UsedImplicitly]
-public sealed class StoreBoundUserInterface : BoundUserInterface
+public sealed class StoreBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private StoreMenu? _menu;

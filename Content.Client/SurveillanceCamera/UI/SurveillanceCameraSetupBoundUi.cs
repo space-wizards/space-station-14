@@ -1,9 +1,10 @@
 using Content.Shared.SurveillanceCamera;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.SurveillanceCamera.UI;
 
-public sealed class SurveillanceCameraSetupBoundUi : BoundUserInterface
+public sealed class SurveillanceCameraSetupBoundUi : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private readonly SurveillanceCameraSetupUiKey _type;

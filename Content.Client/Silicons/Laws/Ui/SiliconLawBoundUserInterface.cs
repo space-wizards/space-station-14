@@ -1,11 +1,12 @@
 using Content.Shared.Silicons.Laws.Components;
 using JetBrains.Annotations;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Silicons.Laws.Ui;
 
 [UsedImplicitly]
-public sealed class SiliconLawBoundUserInterface : BoundUserInterface
+public sealed class SiliconLawBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private SiliconLawMenu? _menu;

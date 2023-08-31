@@ -5,9 +5,11 @@ using Content.Shared.CrewManifest;
 using Robust.Client.GameObjects;
 using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
+
 namespace Content.Client.Access.UI
 {
-    public sealed class IdCardConsoleBoundUserInterface : BoundUserInterface
+    public sealed class IdCardConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         private readonly SharedIdCardConsoleSystem _idCardConsoleSystem = default!;

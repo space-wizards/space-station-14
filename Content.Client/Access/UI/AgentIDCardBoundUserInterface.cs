@@ -1,12 +1,13 @@
 using Content.Shared.Access.Systems;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Access.UI
 {
     /// <summary>
     /// Initializes a <see cref="AgentIDCardWindow"/> and updates it when new server messages are received.
     /// </summary>
-    public sealed class AgentIDCardBoundUserInterface : BoundUserInterface
+    public sealed class AgentIDCardBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         private AgentIDCardWindow? _window;
 

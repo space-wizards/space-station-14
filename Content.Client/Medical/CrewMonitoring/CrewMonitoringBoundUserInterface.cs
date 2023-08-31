@@ -1,9 +1,10 @@
 using Content.Shared.Medical.CrewMonitoring;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.Medical.CrewMonitoring
 {
-    public sealed class CrewMonitoringBoundUserInterface : BoundUserInterface
+    public sealed class CrewMonitoringBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
     {
         [ViewVariables]
         private CrewMonitoringWindow? _menu;

@@ -1,9 +1,10 @@
 using Content.Shared.StationRecords;
 using Robust.Client.GameObjects;
+using BoundUserInterface = Robust.Shared.GameObjects.BoundUserInterface;
 
 namespace Content.Client.StationRecords;
 
-public sealed class GeneralStationRecordConsoleBoundUserInterface : BoundUserInterface
+public sealed class GeneralStationRecordConsoleBoundUserInterface : Robust.Shared.GameObjects.BoundUserInterface
 {
     [ViewVariables]
     private GeneralStationRecordConsoleWindow? _window = default!;
