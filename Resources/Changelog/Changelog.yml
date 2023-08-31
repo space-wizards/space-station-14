@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fixed some jumpskirts parents, type: Fix}
-  id: 4209
-  time: '2023-07-09T21:57:20.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Going afk and missing evac now counts as being killed for the kill objective.,
@@ -3025,3 +3020,9 @@ Entries:
   - {message: Slightly improved the steel monotile sprites., type: Tweak}
   id: 4708
   time: '2023-08-31T01:02:35.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Added the Deathmatch game mode! Brawl it out with other players and
+      try and be the first to 31 kills., type: Add}
+  id: 4709
+  time: '2023-08-31T01:06:16.0000000+00:00'
