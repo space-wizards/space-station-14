@@ -23,6 +23,8 @@
         mask:
         - GhostImpassable
   - type: InputMover
+  - type: Physics
+    bodyStatus: InAir
   - type: Appearance
   - type: Eye
     drawFov: false
