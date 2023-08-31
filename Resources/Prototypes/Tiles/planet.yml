@@ -140,7 +140,7 @@
   sprite: /Textures/Tiles/Planet/Snow/ice.png
   isSubfloor: true
   canCrowbar: false
-  friction: 0
+  friction: 0.05
   heatCapacity: 10000
   weather: true
   weightlessMovement: true
