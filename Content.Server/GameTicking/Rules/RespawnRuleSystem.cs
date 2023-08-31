@@ -1,12 +1,10 @@
 ﻿using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Mind.Toolshed;
 using Content.Server.Players;
 using Content.Server.Station.Systems;
 using Content.Shared.Chat;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

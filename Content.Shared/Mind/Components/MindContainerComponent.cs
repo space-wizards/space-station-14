@@ -1,18 +1,18 @@
 using System.Diagnostics.CodeAnalysis;
 
-namespace Content.Server.Mind.Components
+namespace Content.Shared.Mind.Components
 {
     /// <summary>
     ///     Stores a <see cref="MindComponent"/> on a mob.
     /// </summary>
-    [RegisterComponent, Access(typeof(MindSystem))]
+    [RegisterComponent, Access(typeof(SharedMindSystem))]
     public sealed partial class MindContainerComponent : Component
     {
         /// <summary>
         ///     The mind controlling this mob. Can be null.
         /// </summary>
         [ViewVariables]
-        [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public EntityUid? Mind { get; set; }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Content.Server.Mind.Components
         /// </summary>
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("ghostOnShutdown")]
-        [Access(typeof(MindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
+        [Access(typeof(SharedMindSystem), Other = AccessPermissions.ReadWriteExecute)] // FIXME Friends
         public bool GhostOnShutdown { get; set; } = true;
     }
 

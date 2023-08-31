@@ -1,10 +1,10 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
 using Robust.Shared.Utility;
 
-namespace Content.Server.Objectives.Interfaces
+namespace Content.Shared.Objectives.Interfaces
 {
     // TODO refactor all of this to be ecs
-    public interface IObjectiveCondition : IEquatable<IObjectiveCondition>
+    public interface IObjectiveCondition
     {
         /// <summary>
         /// Returns a copy of the IObjectiveCondition which is assigned to the mind.

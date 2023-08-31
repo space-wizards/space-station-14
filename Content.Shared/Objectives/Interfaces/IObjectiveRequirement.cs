@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
 
-namespace Content.Server.Objectives.Interfaces
+namespace Content.Shared.Objectives.Interfaces
 {
     // TODO refactor all of this to be ecs
     public interface IObjectiveRequirement

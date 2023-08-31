@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
 
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Base event raised on player entities to indicate that something changed about one of their roles.
