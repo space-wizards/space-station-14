@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -75,39 +76,23 @@ namespace Content.Shared.Maps
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
 
-        #region Weightless behavior
+        /// <summary>
+        ///     Friction override for mob mover in <see cref="SharedMoverController"/>
+        /// </summary>
+        [DataField("mobFriction")]
+        public float? MobFriction { get; private set; }
 
         /// <summary>
-        ///     Will make mobs use weightless movement on them, but not necessarily space (like ice tiles)
+        ///     No-input friction override for mob mover in <see cref="SharedMoverController"/>
         /// </summary>
-        [DataField("weightlessMovement")]
-        public bool WeightlessMovement { get; private set; }
+        [DataField("mobFrictionNoInput")]
+        public float? MobFrictionNoInput { get; private set; }
 
         /// <summary>
-        ///     If we have <see cref="WeightlessMovement"/>, what should the friction be?
+        ///     Accel override for mob mover in <see cref="SharedMoverController"/>
         /// </summary>
-        [DataField("weightlessFriction")]
-        public float? WeightlessFriction { get; private set; }
-
-        /// <summary>
-        ///     If we have <see cref="WeightlessMovement"/>, what should the no-input friction be?
-        /// </summary>
-        [DataField("weightlessFrictionNoInput")]
-        public float? WeightlessFrictionNoInput { get; private set; }
-
-        /// <summary>
-        ///     If we have <see cref="WeightlessMovement"/>, what should the modifier be?
-        /// </summary>
-        [DataField("weightlessModifier")]
-        public float? WeightlessModifier { get; private set; }
-
-        /// <summary>
-        ///     If we have <see cref="WeightlessMovement"/>, what should the acceleration be?
-        /// </summary>
-        [DataField("weightlessAcceleration")]
-        public float? WeightlessAcceleration { get; private set; }
-
-        #endregion
+        [DataField("mobAcceleration")]
+        public float? MobAcceleration { get; private set; }
 
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
