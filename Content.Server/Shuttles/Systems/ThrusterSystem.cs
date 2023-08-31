@@ -175,7 +175,7 @@ public sealed class ThrusterSystem : EntitySystem
         shuttleComponent.LinearThrust[oldDirection] -= component.Thrust;
         shuttleComponent.BaseLinearThrust[oldDirection] -= component.BaseThrust;
         DebugTools.Assert(shuttleComponent.LinearThrusters[oldDirection].Contains(uid));
-        shuttleComponent.LinearThrusters[oldDirection].Remove(uid); // actually, don't remove it
+        shuttleComponent.LinearThrusters[oldDirection].Remove(uid);
 
         shuttleComponent.LinearThrust[direction] += component.Thrust;
         shuttleComponent.BaseLinearThrust[direction] += component.BaseThrust;
