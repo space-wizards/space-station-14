@@ -39,6 +39,7 @@ namespace Content.Shared.Movement.Systems
         [Dependency] private   readonly MobStateSystem _mobState = default!;
         [Dependency] private   readonly SharedAudioSystem _audio = default!;
         [Dependency] private   readonly SharedContainerSystem _container = default!;
+        [Dependency] private   readonly SharedMapSystem _mapSystem = default!;
         [Dependency] private   readonly SharedGravitySystem _gravity = default!;
         [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
         [Dependency] private   readonly SharedTransformSystem _transform = default!;
@@ -156,14 +157,28 @@ namespace Content.Shared.Movement.Systems
                 return;
             }
 
+            // Get current tile def for things like speed/weightless mods
+            ContentTileDefinition? tileDef = null;
+
+            if (_mapManager.TryFindGridAt(xform.MapPosition, out var grid, out var gridComp)
+                && _mapSystem.TryGetTileRef(grid, gridComp, xform.Coordinates, out var tile))
+            {
+                tileDef = (ContentTileDefinition) _tileDefinitionManager[tile.Tile.TypeId];
+            }
+
             UsedMobMovement[uid] = true;
             // Specifically don't use mover.Owner because that may be different to the actual physics body being moved.
-            var weightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
+
+            // We differentiate between grav/other sources of weightless for tiles which want to use weightless accel (like ice)
+            // but don't care about requiring touching etc
+            var gravWeightless = _gravity.IsWeightless(physicsUid, physicsComponent, xform);
+            var otherWeightless = tileDef?.WeightlessMovement ?? false;
+            var weightless = gravWeightless || otherWeightless;
             var (walkDir, sprintDir) = GetVelocityInput(mover);
             var touching = false;
 
             // Handle wall-pushes.
-            if (weightless)
+            if (gravWeightless)
             {
                 if (xform.GridUid != null)
                     touching = true;
@@ -178,6 +193,11 @@ namespace Content.Shared.Movement.Systems
                     if (!touching && TryComp<MobMoverComponent>(uid, out var mobMover))
                         touching |= IsAroundCollider(PhysicsSystem, xform, mobMover, physicsUid, physicsComponent);
                 }
+            }
+            else if (otherWeightless)
+            {
+                // Default to true if we're weightless from a different source than gravity
+                touching = true;
             }
 
             // Regular movement.
@@ -203,12 +223,12 @@ namespace Content.Shared.Movement.Systems
             if (weightless)
             {
                 if (worldTotal != Vector2.Zero && touching)
-                    friction = moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
+                    friction = tileDef?.WeightlessFriction ?? moveSpeedComponent?.WeightlessFriction ?? MovementSpeedModifierComponent.DefaultWeightlessFriction;
                 else
-                    friction = moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
+                    friction = tileDef?.WeightlessFrictionNoInput ?? moveSpeedComponent?.WeightlessFrictionNoInput ?? MovementSpeedModifierComponent.DefaultWeightlessFrictionNoInput;
 
-                weightlessModifier = moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
-                accel = moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
+                weightlessModifier = tileDef?.WeightlessModifier ?? moveSpeedComponent?.WeightlessModifier ?? MovementSpeedModifierComponent.DefaultWeightlessModifier;
+                accel = tileDef?.WeightlessAcceleration ?? moveSpeedComponent?.WeightlessAcceleration ?? MovementSpeedModifierComponent.DefaultWeightlessAcceleration;
             }
             else
             {
@@ -236,7 +256,7 @@ namespace Content.Shared.Movement.Systems
                 // island solver"??. So maybe SetRotation needs an argument to avoid raising an event?
 
                 if (!weightless && MobMoverQuery.TryGetComponent(uid, out var mobMover) &&
-                    TryGetSound(weightless, uid, mover, mobMover, xform, out var sound))
+                    TryGetSound(weightless, uid, mover, mobMover, xform, out var sound, tileDef: tileDef))
                 {
                     var soundModifier = mover.Sprinting ? 3.5f : 1.5f;
 
@@ -373,7 +393,14 @@ namespace Content.Shared.Movement.Systems
 
         protected abstract bool CanSound();
 
-        private bool TryGetSound(bool weightless, EntityUid uid, InputMoverComponent mover, MobMoverComponent mobMover, TransformComponent xform, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetSound(
+            bool weightless,
+            EntityUid uid,
+            InputMoverComponent mover,
+            MobMoverComponent mobMover,
+            TransformComponent xform,
+            [NotNullWhen(true)] out SoundSpecifier? sound,
+            ContentTileDefinition? tileDef = null)
         {
             sound = null;
 
@@ -423,10 +450,15 @@ namespace Content.Shared.Movement.Systems
                 return true;
             }
 
-            return TryGetFootstepSound(uid, xform, shoes != null, out sound);
+            return TryGetFootstepSound(uid, xform, shoes != null, out sound, tileDef: tileDef);
         }
 
-        private bool TryGetFootstepSound(EntityUid uid, TransformComponent xform, bool haveShoes, [NotNullWhen(true)] out SoundSpecifier? sound)
+        private bool TryGetFootstepSound(
+            EntityUid uid,
+            TransformComponent xform,
+            bool haveShoes,
+            [NotNullWhen(true)] out SoundSpecifier? sound,
+            ContentTileDefinition? tileDef = null)
         {
             sound = null;
 
@@ -466,15 +498,18 @@ namespace Content.Shared.Movement.Systems
                 }
             }
 
-            if (!grid.TryGetTileRef(position, out var tileRef))
+            // Walking on a tile.
+            // Tile def might have been passed in already from previous methods, so use that
+            // if we have it
+            if (tileDef == null && grid.TryGetTileRef(position, out var tileRef))
             {
-                sound = null;
-                return false;
+                tileDef = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
             }
 
-            // Walking on a tile.
-            var def = (ContentTileDefinition) _tileDefinitionManager[tileRef.Tile.TypeId];
-            sound = haveShoes ? def.FootstepSounds : def.BarestepSounds;
+            if (tileDef == null)
+                return false;
+
+            sound = haveShoes ? tileDef.FootstepSounds : tileDef.BarestepSounds;
             return sound != null;
         }
     }

@@ -74,6 +74,41 @@ namespace Content.Shared.Maps
         public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
+
+        #region Weightless behavior
+
+        /// <summary>
+        ///     Will make mobs use weightless movement on them, but not necessarily space (like ice tiles)
+        /// </summary>
+        [DataField("weightlessMovement")]
+        public bool WeightlessMovement { get; private set; }
+
+        /// <summary>
+        ///     If we have <see cref="WeightlessMovement"/>, what should the friction be?
+        /// </summary>
+        [DataField("weightlessFriction")]
+        public float? WeightlessFriction { get; private set; }
+
+        /// <summary>
+        ///     If we have <see cref="WeightlessMovement"/>, what should the no-input friction be?
+        /// </summary>
+        [DataField("weightlessFrictionNoInput")]
+        public float? WeightlessFrictionNoInput { get; private set; }
+
+        /// <summary>
+        ///     If we have <see cref="WeightlessMovement"/>, what should the modifier be?
+        /// </summary>
+        [DataField("weightlessModifier")]
+        public float? WeightlessModifier { get; private set; }
+
+        /// <summary>
+        ///     If we have <see cref="WeightlessMovement"/>, what should the acceleration be?
+        /// </summary>
+        [DataField("weightlessAcceleration")]
+        public float? WeightlessAcceleration { get; private set; }
+
+        #endregion
+
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
         /// <summary>
