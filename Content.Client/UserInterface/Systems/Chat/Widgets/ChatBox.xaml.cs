@@ -32,6 +32,8 @@ public partial class ChatBox : UIWidget
         ChatInput.Input.OnTextEntered += OnTextEntered;
         ChatInput.Input.OnKeyBindDown += OnKeyBindDown;
         ChatInput.Input.OnTextChanged += OnTextChanged;
+        ChatInput.Input.OnFocusEnter += OnFocusEnter;
+        ChatInput.Input.OnFocusExit += OnFocusExit;
         ChatInput.ChannelSelector.OnChannelSelect += OnChannelSelect;
         ChatInput.FilterButton.ChatFilterPopup.OnChannelFilter += OnChannelFilter;
 
@@ -172,6 +174,16 @@ public partial class ChatBox : UIWidget
 
         // Warn typing indicator about change
         _controller.NotifyChatTextChange();
+    }
+
+    private void OnFocusEnter(LineEditEventArgs args)
+    {
+        _controller.NotifyChatFocus(true);
+    }
+
+    private void OnFocusExit(LineEditEventArgs args)
+    {
+        _controller.NotifyChatFocus(false);
     }
 
     protected override void Dispose(bool disposing)

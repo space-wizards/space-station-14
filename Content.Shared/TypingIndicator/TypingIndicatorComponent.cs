@@ -18,4 +18,8 @@ public sealed partial class TypingIndicatorComponent : Component
     [DataField("prototype", customTypeSerializer: typeof(PrototypeIdSerializer<TypingIndicatorPrototype>))]
     [AutoNetworkedField]
     public string Prototype = SharedTypingIndicatorSystem.InitialIndicatorId;
+
+    [ViewVariables(VVAccess.ReadWrite)]
+    [AutoNetworkedField]
+    public TypingStatus Status = TypingStatus.None;
 }

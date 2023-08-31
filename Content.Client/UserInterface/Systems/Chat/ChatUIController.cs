@@ -9,6 +9,7 @@ using Content.Client.Examine;
 using Content.Client.Gameplay;
 using Content.Client.Ghost;
 using Content.Client.Lobby.UI;
+using Content.Client.TypingIndicator;
 using Content.Client.UserInterface.Screens;
 using Content.Client.UserInterface.Systems.Chat.Widgets;
 using Content.Client.UserInterface.Systems.Gameplay;
@@ -54,6 +55,7 @@ public sealed class ChatUIController : UIController
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
+    [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly TransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
@@ -741,6 +743,8 @@ public sealed class ChatUIController : UIController
 
     public void SendMessage(ChatBox box, ChatSelectChannel channel)
     {
+        _typingIndicator?.OnSubmittedChatText();
+
         var text = box.ChatInput.Input.Text;
         box.ChatInput.Input.Clear();
         box.ChatInput.Input.ReleaseKeyboardFocus();
@@ -847,7 +851,12 @@ public sealed class ChatUIController : UIController
 
     public void NotifyChatTextChange()
     {
-        // _typingIndicator?.ClientChangedChatText();
+        _typingIndicator?.OnChangedChatText();
+    }
+
+    public void NotifyChatFocus(bool isFocused)
+    {
+        _typingIndicator?.OnChangedChatFocus(isFocused);
     }
 
     public void Repopulate()
