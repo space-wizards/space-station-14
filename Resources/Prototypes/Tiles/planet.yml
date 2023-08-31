@@ -117,14 +117,10 @@
   - 0.0116
   edgeSpritePriority: 2
   edgeSprites:
-    SouthEast: /Textures/Tiles/Planet/Snow/snow_single_edge.png
-    NorthEast: /Textures/Tiles/Planet/Snow/snow_single_edge.png
-    NorthWest: /Textures/Tiles/Planet/Snow/snow_single_edge.png
-    SouthWest: /Textures/Tiles/Planet/Snow/snow_single_edge.png
-    South: /Textures/Tiles/Planet/Snow/snow_double_edge.png
-    East: /Textures/Tiles/Planet/Snow/snow_double_edge.png
-    North: /Textures/Tiles/Planet/Snow/snow_double_edge.png
-    West: /Textures/Tiles/Planet/Snow/snow_double_edge.png
+    South: /Textures/Tiles/Planet/Snow/snow_double_edge_south.png
+    East: /Textures/Tiles/Planet/Snow/snow_double_edge_east.png
+    North: /Textures/Tiles/Planet/Snow/snow_double_edge_north.png
+    West: /Textures/Tiles/Planet/Snow/snow_double_edge_west.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
@@ -155,14 +151,10 @@
   sprite: /Textures/Tiles/Planet/Snow/snow_dug.png
   edgeSpritePriority: 1
   edgeSprites:
-    SouthEast: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
-    NorthEast: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
-    NorthWest: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
-    SouthWest: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
-    South: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
-    East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
-    North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
-    West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
+    South: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_south.png
+    East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_east.png
+    North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_north.png
+    West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge_west.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:

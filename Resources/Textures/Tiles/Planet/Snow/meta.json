@@ -9,19 +9,31 @@
       "name": "snow"
     },
     {
-      "name": "snow_single_edge",
+      "name": "snow_double_edge_south",
     },
     {
-      "name": "snow_double_edge",
+      "name": "snow_double_edge_east",
+    },
+    {
+      "name": "snow_double_edge_north",
+    },
+    {
+      "name": "snow_double_edge_west",
     },
     {
       "name": "snow_dug"
     },
     {
-      "name": "snow_dug_single_edge",
+      "name": "snow_dug_double_edge_south",
     },
     {
-      "name": "snow_dug_double_edge",
+      "name": "snow_dug_double_edge_east",
+    },
+    {
+      "name": "snow_dug_double_edge_north",
+    },
+    {
+      "name": "snow_dug_double_edge_west",
     },
     {
       "name": "plating"
@@ -70,18 +82,6 @@
     },
     {
       "name": "permafrost"
-    },
-    {
-      "name": "edge0",
-      "directions": 4 
-    },
-    {
-      "name": "edge1",
-      "directions": 4
-    },
-    {
-      "name": "edge2",
-      "directions": 4
     }
   ]
 }
