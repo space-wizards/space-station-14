@@ -33,3 +33,4 @@
   - type: NpcFactionMember
     factions:
     - NanoTrasen
+  - type: TypingIndicator
