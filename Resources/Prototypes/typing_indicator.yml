@@ -1,30 +1,27 @@
 - type: typingIndicator
-  id: default
-  typingState: default0
+  id: Default
+  typingIcon: TypingIconDefaultTyping
 
 - type: typingIndicator
-  id: robot
-  typingState: robot0
+  id: Robot
+  typingIcon: TypingIconRobotTyping
 
 - type: typingIndicator
-  id: alien
-  typingState: alien0
+  id: Alien
+  typingIcon: TypingIconAlienTyping
 
 - type: typingIndicator
-  id: guardian
-  typingState: guardian0
+  id: Guardian
+  typingIcon: TypingIconGuardianTyping
 
 - type: typingIndicator
-  id: holo
-  typingState: holo0
-  offset: 0, 0.0625
+  id: Holo
+  typingIcon: TypingIconHoloTyping
 
 - type: typingIndicator
-  id: lawyer
-  typingState: lawyer0
-  offset: 0, 0.125
+  id: Lawyer
+  typingIcon: TypingIconLawyerTyping
 
 - type: typingIndicator
-  id: moth
-  typingState: moth0
-  offset: 0, 0.125
+  id: Moth
+  typingIcon: TypingIconMothTyping

@@ -1,0 +1,54 @@
+- type: statusIcon
+  id: TypingIcon
+  abstract: true
+  priority: 2
+  locationPreference: Left
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconDefaultTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: default0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconRobotTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: robot0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconAlienTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: alien0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconGuardianTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: guardian0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconHoloTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: holo0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconLawyerTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: lawyer0
+
+- type: statusIcon
+  parent: TypingIcon
+  id: TypingIconMothTyping
+  icon:
+    sprite: /Textures/Effects/speech.rsi
+    state: moth0
