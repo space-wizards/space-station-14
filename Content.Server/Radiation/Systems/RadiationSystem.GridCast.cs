@@ -17,6 +17,17 @@ public partial class RadiationSystem
 {
     [Dependency] protected readonly SharedContainerSystem _container = default!;
 
+    private EntityQuery<MetaDataComponent> _testQuery;
+
+    private EntityQuery<TransformComponent> _test2Query;
+
+    public override void Initialize()
+    {
+        _testQuery = EntityManager.GetEntityQuery<MetaDataComponent>();
+        _test2Query = EntityManager.GetEntityQuery<TransformComponent>();
+    }
+
+
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -31,6 +42,7 @@ public partial class RadiationSystem
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<MapGridComponent>();
+        var blockers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
@@ -68,10 +80,7 @@ public partial class RadiationSystem
             }
 
             // Consider if the destination entity is hidden within a radiation blocking container
-            var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
-            var xforms = EntityManager.GetEntityQuery<TransformComponent>();
-
-            if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(dest.Owner, out var comps, metas, xforms))
+            if (_container.TryFindComponentsOnEntityContainerOrParent(dest.Owner, blockers, out var comps))
             {
                 rads -= comps.Sum(x => x.RadResistance);
 
@@ -129,10 +138,9 @@ public partial class RadiationSystem
             return null;
 
         // consider if the source is enclosed within a radiation blocking container
-        var metas = EntityManager.GetEntityQuery<MetaDataComponent>();
-        var xforms = EntityManager.GetEntityQuery<TransformComponent>();
+        var blockers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
-        if (_container.TryFindComponentsOnEntityContainerOrParent<RadiationBlockingContainerComponent>(sourceUid, out var comps, metas, xforms))
+        if (_container.TryFindComponentsOnEntityContainerOrParent(sourceUid, blockers, out var comps))
         {
             rads -= comps.Sum(x => x.RadResistance);
 
