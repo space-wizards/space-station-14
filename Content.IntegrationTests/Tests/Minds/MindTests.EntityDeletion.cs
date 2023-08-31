@@ -1,7 +1,7 @@
 using System.Linq;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.Console;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -27,7 +27,7 @@ public sealed partial class MindTests
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
         EntityUid playerEnt = default;
         EntityUid visitEnt = default;
@@ -83,7 +83,7 @@ public sealed partial class MindTests
         var playerMan = server.ResolveDependency<IPlayerManager>();
         var player = playerMan.ServerSessions.Single();
 
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
 
         EntityUid playerEnt = default;
         EntityUid mindId = default!;
@@ -159,7 +159,7 @@ public sealed partial class MindTests
 
         var entMan = server.ResolveDependency<IServerEntityManager>();
         var playerMan = server.ResolveDependency<IPlayerManager>();
-        var mindSystem = entMan.EntitySysManager.GetEntitySystem<MindSystem>();
+        var mindSystem = entMan.EntitySysManager.GetEntitySystem<SharedMindSystem>();
         var mind = GetMind(pair);
 
         var player = playerMan.ServerSessions.Single();

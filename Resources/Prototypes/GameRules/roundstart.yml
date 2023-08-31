@@ -6,11 +6,34 @@
   - type: GameRule
 
 - type: entity
-  id: DeathMatch
+  id: DeathMatch31
   parent: BaseGameRule
   noSpawn: true
   components:
   - type: DeathMatchRule
+    rewardSpawns:
+    - id: HealingToolbox
+    - id: ClothingOuterArmorBasicSlim
+      orGroup: loot
+    - id: ClothingHeadHelmetBasic
+      orGroup: loot
+    - id: SoapNT
+      orGroup: loot
+    - id: Bola
+      orGroup: loot
+    - id: Spear
+      orGroup: loot
+    - id: ClothingShoesGaloshes
+      orGroup: loot
+    - id: FoodPieBananaCream
+      orGroup: loot
+    - id: Stimpack
+      orGroup: loot
+  - type: KillCalloutRule
+  - type: PointManager
+  - type: RespawnDeadRule
+  - type: RespawnTracker
+    respawnDelay: 5
 
 - type: entity
   id: InactivityTimeRestart

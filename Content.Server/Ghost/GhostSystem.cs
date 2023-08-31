@@ -2,9 +2,6 @@ using System.Linq;
 using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Roles.Jobs;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -12,9 +9,12 @@ using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -30,15 +30,16 @@ namespace Content.Server.Ghost
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
-        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly SharedMindSystem _minds = default!;
+        [Dependency] private readonly SharedJobSystem _jobs = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -205,8 +206,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
+            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
+                !EntityManager.HasComponent<GhostComponent>(attached))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -221,13 +222,12 @@ namespace Content.Server.Ghost
             if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
                 || HasComp<MobStateComponent>(msg.Target))
             {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 _followerSystem.StartFollowingEntity(attached, msg.Target);
                  return;
             }
 
-            var xform = Transform(ghost.Owner);
-            xform.Coordinates = Transform(msg.Target).Coordinates;
-            xform.AttachToGridOrMap();
+            _transform.SetCoordinates(attached, Transform(msg.Target).Coordinates);
+            _transform.AttachToGridOrMap(attached);
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
