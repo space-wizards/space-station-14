@@ -1,12 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'After a long cooperative research project botanists and chemists have
-      finally discovered how to improve bruise packs and ointment. Medicated suture
-      and regenerating mesh are now made in the microwave using a combination of bruise
-      packs/ointment, plants, cloth and chemicals.', type: Add}
-  id: 4214
-  time: '2023-07-10T02:22:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Syndicate High Command can now explicitly order for the assassination
@@ -3016,3 +3008,8 @@ Entries:
       lifeforms., type: Tweak}
   id: 4713
   time: '2023-08-31T02:01:56.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Eating some foods no longer creates a plate out of thin air., type: Tweak}
+  id: 4714
+  time: '2023-08-31T02:14:54.0000000+00:00'
