@@ -112,7 +112,6 @@
     color: "#c94242"
   - type: Computer
     board: SyndicateShuttleConsoleCircuitboard
-  - type: ConsoleNuke #SS220 Nukie war declaration
 
 - type: entity
   parent: BaseComputerShuttle
@@ -589,7 +588,6 @@
     radius: 1.5
     energy: 1.6
     color: "#f71713"
-  - type: ConsoleNuke #SS220 Nukie war declaration
 
 - type: entity
   parent: BaseComputer

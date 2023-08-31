@@ -77,7 +77,7 @@ public sealed class MechGrabberSystem : EntitySystem
         component.ItemContainer.Remove(toRemove);
         var mechxform = Transform(mech);
         var xform = Transform(toRemove);
-        xform.AttachToGridOrMap();
+        _transform.AttachToGridOrMap(toRemove, xform);
 
         var offset = _transform.GetWorldPosition(mechxform) + _transform.GetWorldRotation(mechxform).RotateVec(component.DepositOffset);
         _transform.SetWorldPosition(xform, offset);

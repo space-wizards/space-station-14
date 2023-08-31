@@ -1,5 +1,6 @@
 using System.Linq;
 using Content.Server.Cargo.Components;
+using Content.Server.GameTicking.Events;
 using Content.Server.Shuttles.Components;
 using Content.Server.Shuttles.Events;
 using Content.Shared.Stacks;
@@ -35,25 +36,20 @@ public sealed partial class CargoSystem
         SubscribeLocalEvent<CargoShuttleComponent, FTLTagEvent>(OnCargoFTLTag);
 
         SubscribeLocalEvent<CargoShuttleConsoleComponent, ComponentStartup>(OnCargoShuttleConsoleStartup);
-        SubscribeLocalEvent<CargoShuttleComponent, ComponentInit>(OnCargoShuttleInit);
 
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletSellMessage>(OnPalletSale);
         SubscribeLocalEvent<CargoPalletConsoleComponent, CargoPalletAppraiseMessage>(OnPalletAppraise);
         SubscribeLocalEvent<CargoPalletConsoleComponent, BoundUIOpenedEvent>(OnPalletUIOpen);
 
         SubscribeLocalEvent<RoundRestartCleanupEvent>(OnRoundRestart);
+        SubscribeLocalEvent<RoundStartingEvent>(OnRoundStart);
+
         _cfgManager.OnValueChanged(CCVars.GridFill, SetGridFill);
     }
 
     private void ShutdownShuttle()
     {
         _cfgManager.UnsubValueChanged(CCVars.GridFill, SetGridFill);
-    }
-
-    private void OnCargoShuttleInit(EntityUid uid, CargoShuttleComponent cargo, ComponentInit args)
-    {
-        if (_cfgManager.GetCVar(CCVars.GridFill))
-            SetupCargoShuttle();
     }
 
     private void SetGridFill(bool obj)
@@ -378,13 +374,12 @@ public sealed partial class CargoSystem
     {
         Reset();
         CleanupCargoShuttle();
+    }
 
-        /*
+    private void OnRoundStart(RoundStartingEvent ev)
+    {
         if (_cfgManager.GetCVar(CCVars.GridFill))
-        {
             SetupCargoShuttle();
-        }
-        */
     }
 
     private void CleanupCargoShuttle()
@@ -415,20 +410,15 @@ public sealed partial class CargoSystem
 
     private void SetupCargoShuttle()
     {
-        EntityUid mapUid;
-        if (CargoMap == null || !_mapManager.MapExists(CargoMap.Value))
+        if (CargoMap != null && _mapManager.MapExists(CargoMap.Value))
         {
-            // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
-            CargoMap = _mapManager.CreateMap();
-            mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
-            _metaSystem.SetEntityName(mapUid, $"Trading post {_random.Next(1000):000}");
-        }
-        else
-        {
-            mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
+            return;
         }
 
-        var ftl = EnsureComp<FTLDestinationComponent>(mapUid);
+        // It gets mapinit which is okay... buuutt we still want it paused to avoid power draining.
+        CargoMap = _mapManager.CreateMap();
+        var mapUid = _mapManager.GetMapEntityId(CargoMap.Value);
+        var ftl = EnsureComp<FTLDestinationComponent>(_mapManager.GetMapEntityId(CargoMap.Value));
         ftl.Whitelist = new EntityWhitelist()
         {
             Components = new[]
@@ -436,6 +426,8 @@ public sealed partial class CargoSystem
                 _factory.GetComponentName(typeof(CargoShuttleComponent))
             }
         };
+
+        _metaSystem.SetEntityName(mapUid, $"Trading post {_random.Next(1000):000}");
 
         _console.RefreshShuttleConsoles();
     }

@@ -112,7 +112,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        if (!_shuttle.CanFTL(xform.GridUid, out var reason, uid))
+        if (!_shuttle.CanFTL(xform.GridUid, out var reason))
         {
             _popup.PopupCursor(reason, args.Session);
             return;
@@ -121,6 +121,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var dock = HasComp<MapComponent>(args.Destination) && HasComp<MapGridComponent>(args.Destination);
         var tagEv = new FTLTagEvent();
         RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
+
+        var ev = new ShuttleConsoleFTLTravelStartEvent(uid);
+        RaiseLocalEvent(ref ev);
 
         _shuttle.FTLTravel(xform.GridUid.Value, shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
     }
@@ -211,7 +214,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             RemovePilot(user, pilotComponent);
 
-            // This feels backwards; is this intended to be a toggle? 
+            // This feels backwards; is this intended to be a toggle?
             if (console == uid)
                 return false;
         }

@@ -50,7 +50,7 @@ sealed class SalvageRulerCommand : IConsoleCommand
         var first = true;
         foreach (var mapGrid in _maps.GetAllMapGrids(entityTransform.MapID))
         {
-            var aabb = _entities.GetComponent<TransformComponent>(mapGrid.Owner).WorldMatrix.TransformBox(mapGrid.LocalAABB);
+            var aabb = _entities.System<SharedTransformSystem>().GetWorldMatrix(mapGrid.Owner).TransformBox(mapGrid.LocalAABB);
             if (first)
             {
                 total = aabb;

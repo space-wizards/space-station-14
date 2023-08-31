@@ -53,4 +53,3 @@
     - type: NpcFactionMember
       factions:
       - Syndicate
-    - type: LoneNukeOperative #SS220 Nukie war declaration

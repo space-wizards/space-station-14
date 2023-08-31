@@ -1,8 +1,8 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
 using Content.Server.Shuttles.Systems;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Zombies;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using JetBrains.Annotations;
 using Robust.Shared.Utility;
 
@@ -33,7 +33,7 @@ namespace Content.Server.Objectives.Conditions
         {
             get {
                 var entMan = IoCManager.Resolve<IEntityManager>();
-                var mindSystem = entMan.System<MindSystem>();
+                var mindSystem = entMan.System<SharedMindSystem>();
 
                 if (_mind?.OwnedEntity == null
                     || !entMan.TryGetComponent<TransformComponent>(_mind.OwnedEntity, out var xform))

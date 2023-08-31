@@ -2,6 +2,7 @@ using Content.Server.Database;
 using Content.Server.Players;
 using Content.Shared.GameTicking;
 using Content.Shared.GameWindow;
+using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -145,9 +146,10 @@ namespace Content.Server.GameTicking
             return (HumanoidCharacterProfile) _prefsManager.GetPreferences(p.UserId).SelectedCharacter;
         }
 
-        public void PlayerJoinGame(IPlayerSession session)
+        public void PlayerJoinGame(IPlayerSession session, bool silent = false)
         {
-            _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
+            if (!silent)
+                _chatManager.DispatchServerMessage(session, Loc.GetString("game-ticker-player-join-game-message"));
 
             _playerGameStatuses[session.UserId] = PlayerGameStatus.JoinedGame;
             _db.AddRoundPlayers(RoundId, session.UserId);

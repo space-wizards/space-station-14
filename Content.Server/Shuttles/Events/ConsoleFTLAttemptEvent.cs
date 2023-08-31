@@ -6,4 +6,4 @@ namespace Content.Server.Shuttles.Events;
 /// <param name="Cancelled"></param>
 /// <param name="Reason"></param>
 [ByRefEvent]
-public record struct ConsoleFTLAttemptEvent(EntityUid Uid, bool Cancelled, string Reason, EntityUid Shuttle);
+public record struct ConsoleFTLAttemptEvent(EntityUid Uid, bool Cancelled, string Reason);

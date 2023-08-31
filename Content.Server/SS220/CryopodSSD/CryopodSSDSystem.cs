@@ -1,11 +1,11 @@
 // © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
 
-using Content.Server.Mind.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.Audio;
 using Content.Shared.CCVar;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.SS220.CryopodSSD;
 using Content.Shared.Verbs;
@@ -38,14 +38,14 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
         base.Initialize();
 
         _sawmill = Logger.GetSawmill("cryopodSSD");
-        
+
         _cfg.OnValueChanged(CCVars.AutoTransferToCryoDelay, SetAutoTransferDelay, true);
 
         SubscribeLocalEvent<CryopodSSDComponent, ComponentInit>(OnComponentInit);
 
         SubscribeLocalEvent<CryopodSSDComponent, GetVerbsEvent<AlternativeVerb>>(AddAlternativeVerbs);
         SubscribeLocalEvent<CryopodSSDComponent, CryopodSSDLeaveActionEvent>(OnCryopodSSDLeaveAction);
-        
+
         SubscribeLocalEvent<CryopodSSDComponent, TeleportToCryoFinished>(OnTeleportFinished);
         SubscribeLocalEvent<CryopodSSDComponent, CryopodSSDDragFinished>(OnDragFinished);
         SubscribeLocalEvent<CryopodSSDComponent, DragDropTargetEvent>(HandleDragDropOn);
@@ -67,14 +67,14 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
                 continue;
             }
 
-            TransferToCryoStorage(uid, cryopodSSDComp);           
+            TransferToCryoStorage(uid, cryopodSSDComp);
         }
     }
-    
+
     public override void Shutdown()
     {
         base.Shutdown();
-        
+
         _cfg.UnsubValueChanged(CCVars.AutoTransferToCryoDelay, SetAutoTransferDelay);
     }
 
@@ -99,8 +99,8 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
         base.EjectBody(uid, cryopodSsdComponent);
         return contained;
     }
-    
-    
+
+
     /// <summary>
     /// Tries to teleport target inside cryopod, if any available
     /// </summary>
@@ -122,7 +122,7 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
                 return true;
             }
         }
-        
+
         var cryopodSSDComponents = EntityQueryEnumerator<CryopodSSDComponent>();
 
         while (cryopodSSDComponents
@@ -132,12 +132,12 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
                 && _stationSystem.GetOwningStation(cryopodSSDUid) == station)
             {
                 var portal = Spawn("CryoStoragePortal", Transform(target).Coordinates);
-                
+
                 if (TryComp<AmbientSoundComponent>(portal, out var ambientSoundComponent))
                 {
                     _audioSystem.PlayPvs(ambientSoundComponent.Sound, portal);
                 }
-                
+
                 var doAfterArgs = new DoAfterArgs(target, cryopodSSDComp.EntryDelay, new TeleportToCryoFinished(portal), cryopodSSDUid)
                 {
                     BreakOnDamage = false,
@@ -168,14 +168,14 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
     }
 
     private void SetAutoTransferDelay(float value) => _autoTransferDelay = value;
-    
+
     private void HandleDragDropOn(EntityUid uid, CryopodSSDComponent cryopodSsdComponent, ref DragDropTargetEvent args)
     {
         if (cryopodSsdComponent.BodyContainer.ContainedEntity != null)
         {
             return;
         }
-        
+
         if (!TryComp(args.Dragged, out MindContainerComponent? mind) || !mind.HasMind)
         {
             _sawmill.Info($"{ToPrettyString(args.User)} tries to put non-playable entity into SSD cryopod {ToPrettyString(args.Dragged)}");
@@ -214,7 +214,7 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
 
         args.Handled = true;
     }
-    
+
     private void OnCryopodSSDLeaveAction(EntityUid uid, CryopodSSDComponent component, CryopodSSDLeaveActionEvent args)
     {
         if (component.BodyContainer.ContainedEntity is null)
@@ -231,13 +231,13 @@ public sealed class CryopodSSDSystem : SharedCryopodSSDSystem
         {
             return;
         }
-        
+
         var ev = new TransferredToCryoStorageEvent(uid, component.BodyContainer.ContainedEntity.Value);
 
         ev.Handled = false;
 
         RaiseLocalEvent(uid, ev, true);
-            
+
         if (!ev.Handled)
         {
             _SSDStorageConsoleSystem.TransferToCryoStorage(uid, component.BodyContainer.ContainedEntity.Value);

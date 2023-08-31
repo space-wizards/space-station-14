@@ -3,11 +3,12 @@ using Content.Server.Administration.Managers;
 using Content.Server.Afk;
 using Content.Server.Afk.Events;
 using Content.Server.GameTicking;
-using Content.Server.Roles;
+using Content.Server.Mind;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.Players;
 using Content.Shared.Players.PlayTimeTracking;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -29,6 +30,7 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
     [Dependency] private readonly IAdminManager _adminManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypes = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private readonly MindSystem _minds = default!;
     [Dependency] private readonly PlayTimeTrackingManager _tracking = default!;
 
     public override void Initialize()
@@ -109,18 +111,14 @@ public sealed class PlayTimeTrackingSystem : EntitySystem
 
     private void OnRoleRemove(RoleRemovedEvent ev)
     {
-        if (ev.Mind.Session == null)
-            return;
-
-        _tracking.QueueRefreshTrackers(ev.Mind.Session);
+        if (_minds.TryGetSession(ev.Mind, out var session))
+            _tracking.QueueRefreshTrackers(session);
     }
 
     private void OnRoleAdd(RoleAddedEvent ev)
     {
-        if (ev.Mind.Session == null)
-            return;
-
-        _tracking.QueueRefreshTrackers(ev.Mind.Session);
+        if (_minds.TryGetSession(ev.Mind, out var session))
+            _tracking.QueueRefreshTrackers(session);
     }
 
     private void OnRoundEnd(RoundRestartCleanupEvent ev)

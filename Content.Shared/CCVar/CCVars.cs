@@ -1822,34 +1822,12 @@ namespace Content.Shared.CCVar
 
         /*
          * Cryopod SSD
-        */
+         */
 
         /// <summary>
         /// Time to afk before automatic cryostorage transfer
         /// </summary>
         public static readonly CVarDef<float> AutoTransferToCryoDelay =
             CVarDef.Create("cryopodssd.auto_transfer_to_cryo_delay", 900f, CVar.SERVERONLY);
-
-        /*
-         * War features
-        */
-
-        /// <summary>
-        /// TC for solo nuke operative
-        /// </summary>
-        public static readonly CVarDef<int> LoneOperativeTC =
-            CVarDef.Create("nuke.loneoperative_tc", 100, CVar.SERVERONLY);
-
-        /// <summary>
-        /// SS220 TC for nuke operatives on war declaration
-        /// </summary>
-        public static readonly CVarDef<int> OperativeTC =
-            CVarDef.Create("nuke.operative_tc", 240, CVar.SERVERONLY);
-
-        public static readonly CVarDef<int> OperativeDefaultTime =
-            CVarDef.Create("nuke.operative_defaulttime", 5, CVar.SERVERONLY);
-
-        public static readonly CVarDef<int> OperativeAdditionalTime =
-            CVarDef.Create("nuke.operative_additionaltime", 20, CVar.SERVERONLY);
     }
 }

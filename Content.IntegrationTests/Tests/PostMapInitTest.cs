@@ -65,7 +65,8 @@ namespace Content.IntegrationTests.Tests
             "CorvaxDelta",
             "CorvaxIshimura",
             "220Delta",
-            "Frankenstein"
+            "Frankenstein",
+            "MeteorArena"
         };
 
         /// <summary>

@@ -1,13 +1,18 @@
-using Content.Server.Chat.Managers;
+using Content.Server.Administration.Commands;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Shared.CCVar;
-using Content.Shared.Damage;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs.Systems;
+using Content.Server.KillTracking;
+using Content.Server.Mind;
+using Content.Server.Points;
+using Content.Server.RoundEnd;
+using Content.Server.Station.Systems;
+using Content.Shared.Points;
+using Content.Shared.Storage;
 using Content.Server.Traitor.Uplink;
 using Robust.Server.Player;
+using Robust.Shared.Utility;
+using Content.Shared.Mobs.Systems;
+using Content.Shared.CCVar;
 using Robust.Shared.Configuration;
-using Robust.Shared.Enums;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -17,138 +22,152 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly PointSystem _point = default!;
+    [Dependency] private readonly RespawnRuleSystem _respawn = default!;
+    [Dependency] private readonly RoundEndSystem _roundEnd = default!;
+    [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
 
     private ISawmill _sawmill = default!;
     int _deathMatchStartingBalance;
-    bool _gameLobbyEnableWin;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DamageChangedEvent>(OnHealthChanged);
+        SubscribeLocalEvent<PlayerBeforeSpawnEvent>(OnBeforeSpawn);
+        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(OnSpawnComplete);
+        SubscribeLocalEvent<KillReportedEvent>(OnKillReported);
+        SubscribeLocalEvent<DeathMatchRuleComponent, PlayerPointChangedEvent>(OnPointChanged);
+        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndTextAppend);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
-        SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
-        _cfg.OnValueChanged(CCVars.GameLobbyEnableWin, SetGameLobbyEnableWin, true);
-        _cfg.OnValueChanged(CCVars.TraitorDeathMatchStartingBalance, SetDeathMatchStartingBalance, true);
-        _playerManager.PlayerStatusChanged += OnPlayerStatusChanged;
-    }
 
-    private void SetGameLobbyEnableWin(bool value) => _gameLobbyEnableWin = value;
+        _cfg.OnValueChanged(CCVars.TraitorDeathMatchStartingBalance, SetDeathMatchStartingBalance, true);
+    }
 
     private void SetDeathMatchStartingBalance(int value) => _deathMatchStartingBalance = value;
 
     public override void Shutdown()
     {
         base.Shutdown();
-        _cfg.UnsubValueChanged(CCVars.GameLobbyEnableWin, SetGameLobbyEnableWin);
         _cfg.UnsubValueChanged(CCVars.TraitorDeathMatchStartingBalance, SetDeathMatchStartingBalance);
-        _playerManager.PlayerStatusChanged -= OnPlayerStatusChanged;
     }
 
-    protected override void Started(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
+    private void OnBeforeSpawn(PlayerBeforeSpawnEvent ev)
     {
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-death-match-added-announcement"));
-    }
-
-    protected override void Ended(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, GameRuleEndedEvent args)
-    {
-        base.Ended(uid, component, gameRule, args);
-
-        component.DeadCheckTimer = null;
-        component.RestartTimer = null;
-    }
-
-    private void OnHealthChanged(DamageChangedEvent _)
-    {
-        RunDelayedCheck();
-    }
-
-    private void OnPlayerStatusChanged(object? ojb, SessionStatusEventArgs e)
-    {
-        if (e.NewStatus == SessionStatus.Disconnected)
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var tracker, out var point, out var rule))
         {
-            RunDelayedCheck();
-        }
-    }
-
-    private void RunDelayedCheck()
-    {
-        var query = EntityQueryEnumerator<DeathMatchRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var deathMatch, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleActive(uid, gameRule) || deathMatch.DeadCheckTimer != null)
+            if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            deathMatch.DeadCheckTimer = deathMatch.DeadCheckDelay;
+            var newMind = _mind.CreateMind(ev.Player.UserId, ev.Profile.Name);
+            _mind.SetUserId(newMind, ev.Player.UserId);
+
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(ev.Station, null, ev.Profile);
+            DebugTools.AssertNotNull(mobMaybe);
+            var mob = mobMaybe!.Value;
+
+            _mind.TransferTo(newMind, mob);
+            SetOutfitCommand.SetOutfit(mob, dm.Gear, EntityManager);
+            EnsureComp<KillTrackerComponent>(mob);
+            _respawn.AddToTracker(ev.Player.UserId, uid, tracker);
+
+            _point.EnsurePlayer(ev.Player.UserId, uid, point);
+
+            ev.Handled = true;
+            break;
         }
+    }
+
+    private void OnSpawnComplete(PlayerSpawnCompleteEvent ev)
+    {
+        EnsureComp<KillTrackerComponent>(ev.Mob);
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, RespawnTrackerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out _, out var tracker, out var rule))
+        {
+            if (!GameTicker.IsGameRuleActive(uid, rule))
+                continue;
+            _respawn.AddToTracker(ev.Mob, uid, tracker);
+        }
+
+        AddUplink(ev.Player);
+
+        HandleLatejoin(ev);
     }
 
     protected override void ActiveTick(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, float frameTime)
     {
         base.ActiveTick(uid, component, gameRule, frameTime);
 
+        // This is ridiculous
         if (component.SelectionStatus == DeathMatchRuleComponent.SelectionState.ReadyToSelect)
         {
-            foreach (var playerSession in _playerManager.ServerSessions)
+            foreach (var playerSession in _player.ServerSessions)
                 AddUplink(playerSession);
 
             component.SelectionStatus = DeathMatchRuleComponent.SelectionState.SelectionMade;
         }
+    }
 
-        // If the restart timer is active, that means the round is ending soon, no need to check for winners.
-        // TODO: We probably want a sane, centralized round end thingie in GameTicker, RoundEndSystem is no good...
-        if (component.RestartTimer != null)
+    private void OnKillReported(ref KillReportedEvent ev)
+    {
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
         {
-            component.RestartTimer -= frameTime;
-
-            if (component.RestartTimer > 0f)
-                return;
-
-            GameTicker.EndRound();
-            GameTicker.RestartRound();
-            return;
-        }
-
-        if (!_gameLobbyEnableWin || component.DeadCheckTimer == null)
-            return;
-
-        component.DeadCheckTimer -= frameTime;
-
-        if (component.DeadCheckTimer > 0)
-            return;
-
-        component.DeadCheckTimer = null;
-
-        IPlayerSession? winner = null;
-        foreach (var playerSession in _playerManager.ServerSessions)
-        {
-            if (playerSession.AttachedEntity is not { Valid: true } playerEntity
-                || !TryComp(playerEntity, out MobStateComponent? state))
+            if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
 
-            if (!_mobStateSystem.IsAlive(playerEntity, state))
+            // YOU SUICIDED OR GOT THROWN INTO LAVA!
+            // WHAT A GIANT FUCKING NERD! LAUGH NOW!
+            if (ev.Primary is not KillPlayerSource player)
+            {
+                _point.AdjustPointValue(ev.Entity, -1, uid, point);
+                continue;
+            }
+
+            _point.AdjustPointValue(player.PlayerId, 1, uid, point);
+
+            if (ev.Assist is KillPlayerSource assist && dm.Victor == null)
+                _point.AdjustPointValue(assist.PlayerId, 1, uid, point);
+
+            var spawns = EntitySpawnCollection.GetSpawns(dm.RewardSpawns);
+            EntityManager.SpawnEntities(Transform(ev.Entity).MapPosition, spawns);
+        }
+    }
+
+    private void OnPointChanged(EntityUid uid, DeathMatchRuleComponent component, ref PlayerPointChangedEvent args)
+    {
+        if (component.Victor != null)
+            return;
+
+        if (args.Points < component.KillCap)
+            return;
+
+        component.Victor = args.Player;
+        _roundEnd.EndRound(component.RestartDelay);
+    }
+
+    private void OnRoundEndTextAppend(RoundEndTextAppendEvent ev)
+    {
+        var query = EntityQueryEnumerator<DeathMatchRuleComponent, PointManagerComponent, GameRuleComponent>();
+        while (query.MoveNext(out var uid, out var dm, out var point, out var rule))
+        {
+            if (!GameTicker.IsGameRuleAdded(uid, rule))
                 continue;
 
-            // Found a second person alive, nothing decided yet!
-            if (winner != null)
-                return;
-
-            winner = playerSession;
+            if (dm.Victor != null && _player.TryGetPlayerData(dm.Victor.Value, out var data))
+            {
+                ev.AddLine(Loc.GetString("point-scoreboard-winner", ("player", data.UserName)));
+                ev.AddLine("");
+            }
+            ev.AddLine(Loc.GetString("point-scoreboard-header"));
+            ev.AddLine(new FormattedMessage(point.Scoreboard).ToMarkup());
         }
-
-        _chatManager.DispatchServerAnnouncement(winner == null
-            ? Loc.GetString("rule-death-match-check-winner-stalemate")
-            : Loc.GetString("rule-death-match-check-winner", ("winner", winner)));
-
-        _chatManager.DispatchServerAnnouncement(Loc.GetString("rule-restarting-in-seconds",
-            ("seconds", component.RestartDelay)));
-        component.RestartTimer = component.RestartDelay;
     }
 
     private void OnPlayersSpawned(RulePlayerJobsAssignedEvent ev)
@@ -180,7 +199,6 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
     public void AddUplink(IPlayerSession session)
     {
         if (session?.AttachedEntity is not { } user) { return; }
-        Logger.Debug(_entityManager.ToPrettyString(user));
         if (!_uplink.AddUplink(user, _deathMatchStartingBalance)) { }
     }
 }
