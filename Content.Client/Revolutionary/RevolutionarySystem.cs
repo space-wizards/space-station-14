@@ -7,23 +7,25 @@ namespace Content.Client.Revolutionary;
 /// <summary>
 /// Used for the client to get status icons from other revs.
 /// </summary>
-public sealed class RevolutionarySystem : AntagStatusIcons<RevolutionaryComponent, HeadRevolutionaryComponent>
+public sealed class RevolutionarySystem : AntagStatusIconSystem
 {
-    protected override void GetStatusIcon(EntityUid uid, RevolutionaryComponent antag, HeadRevolutionaryComponent? leader, string antagStatusIcon, string? antagLeaderStatusIcon, ref GetStatusIconsEvent args)
-    {
-        base.GetStatusIcon(uid, antag, leader, antagStatusIcon, antagLeaderStatusIcon, ref args);
-    }
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(OnGetStatusIcon);
+        SubscribeLocalEvent<RevolutionaryComponent, GetStatusIconsEvent>(GetRevIcon);
     }
-
     /// <summary>
-    /// Checks if you have the revolutionary or head rev component and gets status icons from other revs. 
+    /// Checks if the person who trigger the GetStatusIcon event is also a Rev or a HeadRev.
     /// </summary>
-    private void OnGetStatusIcon(EntityUid uid, RevolutionaryComponent component, ref GetStatusIconsEvent args)
+    private void GetRevIcon(EntityUid uid, RevolutionaryComponent comp, ref GetStatusIconsEvent args)
     {
-        GetStatusIcon(uid, component, null, component.RevStatusIcon, component.HeadRevStatusIcon, ref args);
+        if (TryComp<HeadRevolutionaryComponent>(uid, out var head))
+        {
+            GetStatusIcon(comp.RevStatusIcon, comp.HeadRevStatusIcon, ref args);
+        }
+        else
+        {
+            GetStatusIcon(comp.RevStatusIcon, null, ref args);
+        }
     }
 }

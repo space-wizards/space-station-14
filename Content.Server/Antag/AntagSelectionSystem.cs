@@ -147,10 +147,15 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
         }
     }
 
+    /// <summary>
+    /// Will take a group of entities and check if they are all alive or dead
+    /// </summary>
+    /// <param name="list">The list of the entities</param>
+    /// <param name="checkOffStation">Bool for if you want to check if someone is in space and consider them dead. (Won't check when emergency shuttle arrives just in case)</param>
+    /// <returns></returns>
     public bool IsGroupDead(List<EntityUid> list, bool checkOffStation)
     {
         var dead = 0;
-        var inRound = 0;
         foreach (var entity in list)
         {
             if (TryComp<MobStateComponent>(entity, out var state))
@@ -163,10 +168,14 @@ public sealed class AntagSelectionSystem : GameRuleSystem<GameRuleComponent>
                 {
                     dead++;
                 }
-                inRound++;
+            }
+            //If they don't have the MobStateComponent they might as well be dead.
+            else
+            {
+                dead++;
             }
         }
-        if (dead == inRound)
+        if (dead == list.Count)
             return true;
 
         else return false;

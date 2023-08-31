@@ -96,15 +96,15 @@ public sealed class RevolutionaryRuleSystem : GameRuleSystem<RevolutionaryRuleCo
             {
                 ev.AddLine(Loc.GetString("rev-won"));
             }
-            if (!commandLost && revsLost)
+            else if (!commandLost && revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-lost"));
             }
-            if (!commandLost && !revsLost)
+            else if (!commandLost && !revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-stalemate"));
             }
-            if (commandLost && revsLost)
+            else if (commandLost && revsLost)
             {
                 ev.AddLine(Loc.GetString("rev-reversestalemate"));
             }
