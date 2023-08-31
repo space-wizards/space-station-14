@@ -11,4 +11,8 @@ public sealed class ArrivalsShuttleComponent : Component
 
     [DataField("nextTransfer", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan NextTransfer;
+
+    [DataField("nextArrivalsTime", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan NextArrivalsTime;
+
 }
