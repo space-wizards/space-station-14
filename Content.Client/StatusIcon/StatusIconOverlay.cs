@@ -5,6 +5,8 @@ using Robust.Client.Graphics;
 using Robust.Shared.Enums;
 using System.Numerics;
 using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Client.StatusIcon;
 
@@ -20,6 +22,10 @@ public sealed class StatusIconOverlay : Overlay
     private readonly ShaderInstance _shader;
 
     public override OverlaySpace Space => OverlaySpace.WorldSpaceBelowFOV;
+
+    private readonly float[] _timer;
+    private readonly float[][] _frameDelays;
+    private readonly int[] _frameCounter;
 
     internal StatusIconOverlay()
     {
@@ -74,40 +80,52 @@ public sealed class StatusIconOverlay : Overlay
 
             foreach (var proto in icons)
             {
-                var texture = _sprite.Frame0(proto.Icon);
-
-                float yOffset;
-                float xOffset;
-
-                // the icons are ordered left to right, top to bottom.
-                // extra icons that don't fit are just cut off.
-                if (proto.LocationPreference == StatusIconLocationPreference.Left ||
-                    proto.LocationPreference == StatusIconLocationPreference.None && countL <= countR)
+                switch (proto.Icon)
                 {
-                    if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                    case SpriteSpecifier.Rsi animated:
                         break;
-                    accOffsetL += texture.Height;
-                    yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetL / EyeManager.PixelsPerMeter;
-                    xOffset = -(bounds.Width + sprite.Offset.X) / 2f;
+                    case SpriteSpecifier.Texture rsiTexture:
+                        var texture = _sprite.Frame0(rsiTexture);
 
-                    countL++;
-                }
-                else
-                {
-                    if (accOffsetR + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                        float yOffset;
+                        float xOffset;
+
+                        // the icons are ordered left to right, top to bottom.
+                        // extra icons that don't fit are just cut off.
+                        if (proto.LocationPreference == StatusIconLocationPreference.Left ||
+                            proto.LocationPreference == StatusIconLocationPreference.None && countL <= countR)
+                        {
+                            if (accOffsetL + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                                break;
+                            accOffsetL += texture.Height;
+                            yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetL / EyeManager.PixelsPerMeter;
+                            xOffset = -(bounds.Width + sprite.Offset.X) / 2f;
+
+                            countL++;
+                        }
+                        else
+                        {
+                            if (accOffsetR + texture.Height > sprite.Bounds.Height * EyeManager.PixelsPerMeter)
+                                break;
+                            accOffsetR += texture.Height;
+                            yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetR / EyeManager.PixelsPerMeter;
+                            xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float) texture.Width / EyeManager.PixelsPerMeter;
+
+                            countR++;
+                        }
+
+                        var position = new Vector2(xOffset, yOffset);
+                        handle.DrawTexture(texture, position);
                         break;
-                    accOffsetR += texture.Height;
-                    yOffset = (bounds.Height + sprite.Offset.Y) / 2f - (float) accOffsetR / EyeManager.PixelsPerMeter;
-                    xOffset = (bounds.Width + sprite.Offset.X) / 2f - (float) texture.Width / EyeManager.PixelsPerMeter;
-
-                    countR++;
                 }
-
-                var position = new Vector2(xOffset, yOffset);
-                handle.DrawTexture(texture, position);
             }
         }
 
         handle.UseShader(null);
+    }
+
+    protected override void FrameUpdate(FrameEventArgs args)
+    {
+        base.FrameUpdate(args);
     }
 }
