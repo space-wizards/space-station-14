@@ -410,7 +410,7 @@ public abstract class SharedActionsSystem : EntitySystem
     #region EquipHandlers
     private void OnDidEquip(EntityUid uid, ActionsComponent component, DidEquipEvent args)
     {
-        var ev = new GetItemActionsEvent(args.SlotFlags);
+        var ev = new GetItemActionsEvent(args.Equipee, args.SlotFlags);
         RaiseLocalEvent(args.Equipment, ev);
 
         if (ev.Actions.Count == 0)
@@ -421,7 +421,7 @@ public abstract class SharedActionsSystem : EntitySystem
 
     private void OnHandEquipped(EntityUid uid, ActionsComponent component, DidEquipHandEvent args)
     {
-        var ev = new GetItemActionsEvent();
+        var ev = new GetItemActionsEvent(args.User);
         RaiseLocalEvent(args.Equipped, ev);
 
         if (ev.Actions.Count == 0)

@@ -9,7 +9,6 @@
     flavors:
       - sweet
   - type: Food
-    trash: FoodPlate
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/cake.rsi
   - type: SolutionContainerManager
@@ -34,7 +33,6 @@
     flavors:
       - sweet
   - type: Food
-    trash: FoodPlateSmall
   - type: SolutionContainerManager
     solutions:
       food:
@@ -57,7 +55,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate
     - state: plain
     - state: alpha-filling
       color: blue
@@ -72,8 +69,6 @@
   components:
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: blue
@@ -87,9 +82,7 @@
   description: A plain cake, not a lie.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: plain
+    state: plain
   - type: SliceableFood
     slice: FoodCakePlainSlice
 
@@ -101,10 +94,7 @@
   id: FoodCakePlainSlice
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: plain-slice
+    state: plain-slice
 # Tastes like sweetness, cake.
 
 - type: entity
@@ -114,9 +104,7 @@
   description: A favorite desert of a certain wascally wabbit.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: carrot
+    state: carrot
   - type: SliceableFood
     slice: FoodCakeCarrotSlice
   - type: SolutionContainerManager
@@ -138,10 +126,7 @@
   description: Carrotty slice of carrot cake. Carrots are good for your eyes!
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: carrot-slice
+    state: carrot-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -163,9 +148,7 @@
   description: A squishy cake-thing.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: brain
+    state: brain
   - type: SliceableFood
     slice: FoodCakeBrainSlice
 
@@ -177,10 +160,7 @@
   description: Lemme tell you something about prions. THEY'RE DELICIOUS.
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: brain-slice
+    state: brain-slice
 # Tastes like sweetness, cake, brains.
 
 - type: entity
@@ -190,9 +170,7 @@
   description: DANGEROUSLY cheesy.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: cheese
+    state: cheese
   - type: SliceableFood
     slice: FoodCakeCheeseSlice
 
@@ -203,10 +181,7 @@
   description: Slice of pure cheestisfaction.
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: cheese-slice
+    state: cheese-slice
 # Tastes like sweetness, cream cheese.
 
 - type: entity
@@ -216,9 +191,7 @@
   description: A cake with added orange.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: orange
+    state: orange
   - type: SliceableFood
     slice: FoodCakeOrangeSlice
 
@@ -228,10 +201,7 @@
   id: FoodCakeOrangeSlice
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: orange-slice
+    state: orange-slice
 # Tastes like sweetness, cake, oranges.
 
 - type: entity
@@ -241,9 +211,7 @@
   description: A cake with added lime.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: lime
+    state: lime
   - type: SliceableFood
     slice: FoodCakeLimeSlice
 
@@ -253,10 +221,7 @@
   id: FoodCakeLimeSlice
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: lime-slice
+    state: lime-slice
 # Tastes like sweetness, cake, limes.
 
 - type: entity
@@ -266,9 +231,7 @@
   description: A cake with added lemon.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: lemon
+    state: lemon
   - type: SliceableFood
     slice: FoodCakeLemonSlice
 
@@ -278,10 +241,7 @@
   id: FoodCakeLemonSlice
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: lemon-slice
+    state: lemon-slice
 # Tastes like sweetness, cake, lemons.
 
 - type: entity
@@ -291,9 +251,7 @@
   description: A cake with added chocolate.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: chocolate
+    state: chocolate
   - type: SliceableFood
     slice: FoodCakeChocolateSlice
   - type: SolutionContainerManager
@@ -314,9 +272,7 @@
   id: FoodCakeChocolateSlice
   components:
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: chocolate-slice
+    state: chocolate-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -336,12 +292,8 @@
   id: FoodCakeApple
   description: A cake centred with apple.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: apple
+    state: apple
   - type: SliceableFood
     slice: FoodCakeAppleSlice
 
@@ -351,13 +303,8 @@
   id: FoodCakeAppleSlice
   description: A slice of heavenly cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: apple-slice
+    state: apple-slice
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -366,12 +313,8 @@
   id: FoodCakeSlime
   description: A cake made of slimes. Probably not electrified.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: slime
+    state: slime
   - type: SliceableFood
     slice: FoodCakeSlimeSlice
 
@@ -381,13 +324,8 @@
   id: FoodCakeSlimeSlice
   description: A slice of slime cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: slime-slice
+    state: slime-slice
 # Tastes like sweetness, cake, slime.
 
 - type: entity
@@ -396,12 +334,8 @@
   id: FoodCakePumpkin
   description: A hollow cake with real pumpkin.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: pumpkinspice
+    state: pumpkinspice
   - type: SliceableFood
     slice: FoodCakePumpkinSlice
   - type: SolutionContainerManager
@@ -420,13 +354,8 @@
   id: FoodCakePumpkinSlice
   description: A spicy slice of pumpkin goodness.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: pumpkinspice-slice
+    state: pumpkinspice-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -444,12 +373,8 @@
   id: FoodCakeChristmas
   description: A cake made of christmas.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: christmas
+    state: christmas
   - type: SliceableFood
     slice: FoodCakeChristmasSlice
 
@@ -458,13 +383,8 @@
   parent: FoodCakeSliceBase
   id: FoodCakeChristmasSlice
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: christmas-slice
+    state: christmas-slice
 # Tastes like sweetness, cake, christmas.
 
 - type: entity
@@ -473,12 +393,8 @@
   id: FoodCakeBirthday
   description: Happy Birthday little clown...
   components:
-  - type: Food
-    trash: FoodPlatePlastic
   - type: Sprite
-    layers:
-    - state: plate-plastic
-    - state: birthday
+    state: birthday
   - type: SliceableFood
     slice: FoodCakeBirthdaySlice
 
@@ -488,12 +404,8 @@
   id: FoodCakeBirthdaySlice
   description: A slice of your birthday.
   components:
-  - type: Food
-    trash: FoodPlateSmallPlastic
   - type: Sprite
-    layers:
-    - state: plate-small-plastic
-    - state: birthday-slice
+    state: birthday-slice
 # Tastes like sweetness, cake, christmas.
 
 - type: entity
@@ -502,12 +414,8 @@
   id: FoodCakeVanilla
   description: A vanilla frosted cake.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: vanilla
+    state: vanilla
   - type: SliceableFood
     slice: FoodCakeVanillaSlice
   - type: SolutionContainerManager #TODO Sprinkles
@@ -528,13 +436,8 @@
   id: FoodCakeVanillaSlice
   description: A slice of vanilla frosted cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: vanilla-slice
+    state: vanilla-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -554,12 +457,8 @@
   id: FoodCakeClown
   description: A funny cake with a clown face on it.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: clown
+    state: clown
   - type: SliceableFood
     slice: FoodCakeClownSlice
   - type: SolutionContainerManager #TODO Sprinkles
@@ -580,13 +479,8 @@
   id: FoodCakeClownSlice
   description: A slice of bad jokes, and silly props.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: clown-slice
+    state: clown-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -606,12 +500,8 @@
   id: FoodCakeSpaceman
   description: A spaceman's trumpet frosted cake.
   components:
-  - type: Food
-    trash: FoodPlate
   - type: Sprite
-    layers:
-    - state: plate
-    - state: trumpet
+    state: trumpet
   - type: SliceableFood
     slice: FoodCakeSpacemanSlice
   - type: SolutionContainerManager
@@ -632,13 +522,8 @@
   id: FoodCakeSpacemanSlice
   description: A spaceman's trumpet frosted cake.
   components:
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: plate-slice-shading
-    - state: trumpet-slice
+    state: trumpet-slice
   - type: SolutionContainerManager
     solutions:
       food:
@@ -663,9 +548,7 @@
   description: Extremely dense and powerful food.
   components:
   - type: Sprite
-    layers:
-    - state: plate
-    - state: suppermatter
+    state: suppermatter
   - type: SliceableFood
     slice: FoodCakeSuppermatterSlice
     TotalCount: 8
@@ -678,7 +561,6 @@
           Quantity: 48
   - type: Food
     transferAmount: 12
-    trash: FoodPlate
   - type: Item
     size: 40
   - type: PointLight
@@ -693,8 +575,7 @@
   description: A single portion of power.
   components:
   - type: Sprite
-    layers:
-    - state: suppermatter-shard
+    state: suppermatter-shard
   - type: SolutionContainerManager
     solutions:
       food:
