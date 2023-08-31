@@ -14,7 +14,6 @@ public enum TypingStatus : byte
 ///     Networked event from client.
 ///     Send to server when client changes typing status
 /// </summary>
-[Serializable, NetSerializable]
 public sealed class TypingChangedEvent : EntityEventArgs
 {
     public readonly TypingStatus Status;
