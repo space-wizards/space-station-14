@@ -15,14 +15,15 @@ namespace Content.Server.Advertise
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly ChatSystem _chat = default!;
 
-
-        // The maximum amount of time between checking advertisements
+        /// <summary>
+        /// The maximum amount of time between checking if advertisements should be displayed
+        /// </summary>
         private readonly TimeSpan _maximumNextCheckDuration = TimeSpan.FromSeconds(15);
-        // The minimum amount of time between checking advertisements
-        private readonly TimeSpan _minimumNextCheckDuration = TimeSpan.FromSeconds(1);
 
-        // The next game time the system will check advertisements
-        private TimeSpan _nextCheckTime = TimeSpan.MinValue;
+        /// <summary>
+        /// The next time the game will check if advertisements should be displayed
+        /// </summary>
+        private TimeSpan _nextCheckTime = TimeSpan.MaxValue;
 
         public override void Initialize()
         {
@@ -31,6 +32,9 @@ namespace Content.Server.Advertise
 
             SubscribeLocalEvent<ApcPowerReceiverComponent, AdvertiseEnableChangeAttemptEvent>(OnPowerReceiverEnableChangeAttempt);
             SubscribeLocalEvent<VendingMachineComponent, AdvertiseEnableChangeAttemptEvent>(OnVendingEnableChangeAttempt);
+
+            // The component inits will lower this.
+            _nextCheckTime = TimeSpan.MaxValue;
         }
 
         private void OnComponentInit(EntityUid uid, AdvertiseComponent advertise, ComponentInit args)
@@ -47,18 +51,18 @@ namespace Content.Server.Advertise
         {
             if (!Resolve(uid, ref advertise))
                 return;
+
             if (!advertise.Enabled)
                 return;
-            var minWait = Math.Max(1, advertise.MinimumWait);
-            var maxWait = Math.Max(minWait, advertise.MaximumWait);
-            var secondsToWait = _random.Next(minWait, maxWait);
-            var nextTime = _gameTiming.CurTime +
-                           TimeSpan.FromSeconds(secondsToWait);
+
+            var minDuration = Math.Max(1, advertise.MinimumWait);
+            var maxDuration = Math.Max(minDuration, advertise.MaximumWait);
+            var waitDuration = TimeSpan.FromSeconds(_random.Next(minDuration, maxDuration));
+            var nextTime = _gameTiming.CurTime + waitDuration;
+
             advertise.NextAdvertisementTime = nextTime;
-            if (nextTime < _nextCheckTime)
-            {
-                _nextCheckTime = nextTime;
-            }
+
+            _nextCheckTime = MathHelper.Min(nextTime, _nextCheckTime);
         }
 
         public void SayAdvertisement(EntityUid uid, AdvertiseComponent? advertise = null)
@@ -107,28 +111,22 @@ namespace Content.Server.Advertise
                 return;
 
             _nextCheckTime = curTime + _maximumNextCheckDuration;
-            foreach (var (transform, advertise) in EntityManager.EntityQuery<TransformComponent, AdvertiseComponent>())
+
+            var query = EntityQueryEnumerator<AdvertiseComponent>();
+            while (query.MoveNext(out var uid, out var advert))
             {
-                if (!advertise.Enabled)
+                if (!advert.Enabled)
                     continue;
 
-                if (advertise.NextAdvertisementTime > curTime)
+                // If this isn't advertising yet
+                if (advert.NextAdvertisementTime > curTime)
                 {
-                    if (advertise.NextAdvertisementTime < _nextCheckTime)
-                    {
-                        _nextCheckTime = advertise.NextAdvertisementTime;
-                    }
+                    _nextCheckTime = MathHelper.Min(advert.NextAdvertisementTime, _nextCheckTime);
                     continue;
                 }
 
-                SayAdvertisement(transform.ParentUid, advertise);
-                RefreshTimer(transform.ParentUid, advertise);
-            }
-
-            var minimumTime = curTime + _minimumNextCheckDuration;
-            if (_nextCheckTime < minimumTime)
-            {
-                _nextCheckTime = minimumTime;
+                SayAdvertisement(uid, advert);
+                RefreshTimer(uid, advert);
             }
         }
     }
