@@ -478,14 +478,4 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 
         return traitors;
     }
-
-    // TODO: remove this when objective round end isnt tied to traitors
-    /// <summary>
-    /// Manually adds a role to the list of traitors.
-    /// Use if you have custom logic for being a traitor, like ninja.
-    /// </summary>
-    public void AddToTraitors(TraitorRuleComponent rule, EntityUid mind)
-    {
-        rule.TraitorMinds.Add(mind);
-    }
 }

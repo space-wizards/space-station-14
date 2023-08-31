@@ -94,7 +94,9 @@ public sealed class NinjaGlovesSystem : SharedNinjaGlovesSystem
         if (_mind.TryGetRole<NinjaRoleComponent>(user, out var role) && !role.CalledInThreat)
         {
             var hacker = EnsureComp<CommsHackerComponent>(user);
-            _commsHacker.SetThreats(user, _ninja.RuleConfig().Threats, hacker);
+            var rule = _ninja.NinjaRule(user);
+            if (rule != null)
+                _commsHacker.SetThreats(user, rule.Threats, hacker);
         }
     }
 }

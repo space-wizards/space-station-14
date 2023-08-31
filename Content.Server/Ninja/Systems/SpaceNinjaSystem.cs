@@ -1,5 +1,4 @@
 using Content.Server.Administration.Commands;
-using Content.Server.Body.Systems;
 using Content.Server.Communications;
 using Content.Server.Chat.Managers;
 using Content.Server.StationEvents.Components;
@@ -52,7 +51,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly BatterySystem _battery = default!;
     [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly IChatManager _chatMan = default!;
-    [Dependency] private readonly InternalsSystem _internals = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
@@ -62,7 +60,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     [Dependency] private readonly SharedSubdermalImplantSystem _implants = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly StealthClothingSystem _stealthClothing = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
@@ -116,18 +113,22 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
         return newCount - oldCount;
     }
 
-    // TODO: make the gamerule entity a field on ninja role
     /// <summary>
-    /// Returns the global ninja gamerule config
+    /// Returns a ninja's gamerule config data.
+    /// If the gamerule was not started then it will be started automatically.
     /// </summary>
-    public NinjaRuleComponent RuleConfig()
+    public NinjaRuleComponent? NinjaRule(EntityUid uid, SpaceNinjaComponent? comp = null)
     {
-        var rule = EntityQuery<NinjaRuleComponent>().FirstOrDefault();
-        if (rule != null)
-            return rule;
+        if (!Resolve(uid, ref comp))
+            return null;
 
-        _gameTicker.StartGameRule("Ninja", out var ruleEntity);
-        return Comp<NinjaRuleComponent>(ruleEntity);
+        if (comp.Rule == null)
+        {
+            _gameTicker.StartGameRule("Ninja", out var rule);
+            comp.Rule = rule;
+        }
+
+        return CompOrNull<NinjaRuleComponent>(comp.Rule);
     }
 
     // TODO: can probably copy paste borg code here
@@ -182,9 +183,6 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// </summary>
     private void OnNinjaInit(EntityUid uid, SpaceNinjaComponent comp, ComponentInit args)
     {
-        // start with internals on, only when spawned by event. antag control ninja won't do this due to component add order.
-        _internals.ToggleInternals(uid, uid, true);
-
         // inject starting implants if made ninja in antag ctrl
         AddImplants(uid);
     }
@@ -195,9 +193,11 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <remarks>
     /// Could be replaced with job specials ImplantSpecial if ninja became a job somehow.
     /// </remarks>
-    private void AddImplants(EntityUid uid)
+    private void AddImplants(EntityUid uid, SpaceNinjaComponent? comp = null)
     {
-        _implants.AddImplants(uid, RuleConfig().Implants);
+        var rule = NinjaRule(uid, comp);
+        if (rule != null)
+            _implants.AddImplants(uid, rule.Implants);
     }
 
     /// <summary>
@@ -212,34 +212,21 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
     /// <summary>
     /// Set up everything for ninja to work and send the greeting message/sound.
     /// </summary>
-    /// <remarks>
-    /// Currently this adds the ninja to traitors, this should be removed when objectives are separated from traitors.
-    /// </remarks>
     private void GreetNinja(EntityUid mindId, MindComponent? mind = null)
     {
         if (!Resolve(mindId, ref mind) || mind.OwnedEntity == null || mind.Session == null)
             return;
 
         var uid = mind.OwnedEntity.Value;
-        var session = mind.Session;
+        var config = NinjaRule(uid);
+        if (config == null)
+            return;
 
-        // make sure to enable the traitor rule for the sweet greentext
-        var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
-        if (traitorRule == null)
-        {
-            // TODO: fuck me this shit is awful, see TraitorRuleSystem
-            _gameTicker.StartGameRule("Traitor", out var ruleEntity);
-            traitorRule = Comp<TraitorRuleComponent>(ruleEntity);
-        }
-
-        var config = RuleConfig();
         var role = new NinjaRoleComponent
         {
             PrototypeId = "SpaceNinja"
         };
         _role.MindAddRole(mindId, role, mind);
-        // TODO: when objectives are not tied to traitor roles, remove this
-        _traitorRule.AddToTraitors(traitorRule, mindId);
 
         // choose spider charge detonation point
         // currently based on warp points, something better could be done (but would likely require mapping work)
@@ -265,6 +252,7 @@ public sealed class SpaceNinjaSystem : SharedSpaceNinjaSystem
             }
         }
 
+        var session = mind.Session;
         _audio.PlayGlobal(config.GreetingSound, Filter.Empty().AddPlayer(session), false, AudioParams.Default);
         _chatMan.DispatchServerMessage(session, Loc.GetString("ninja-role-greeting"));
     }
