@@ -1,10 +1,9 @@
 ﻿using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.PAI;
 using Content.Shared.Examine;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
 
@@ -17,7 +16,7 @@ public sealed class ToggleableGhostRoleSystem : EntitySystem
 {
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     //todo this really shouldn't be in here but this system was converted from PAIs
     [Dependency] private readonly PAISystem _pai = default!;
 

@@ -1,4 +1,5 @@
-﻿using Robust.Server.Player;
+﻿using Content.Shared.Mind;
+using Robust.Server.Player;
 using Robust.Shared.Toolshed;
 using Robust.Shared.Toolshed.Errors;
 using Robust.Shared.Toolshed.Syntax;
@@ -11,19 +12,19 @@ namespace Content.Server.Mind.Toolshed;
 [ToolshedCommand]
 public sealed class MindCommand : ToolshedCommand
 {
-    private MindSystem? _mind;
+    private SharedMindSystem? _mind;
 
     [CommandImplementation("get")]
     public MindComponent? Get([PipedArgument] IPlayerSession session)
     {
-        _mind ??= GetSys<MindSystem>();
+        _mind ??= GetSys<SharedMindSystem>();
         return _mind.TryGetMind(session, out _, out var mind) ? mind : null;
     }
 
     [CommandImplementation("get")]
     public MindComponent? Get([PipedArgument] EntityUid ent)
     {
-        _mind ??= GetSys<MindSystem>();
+        _mind ??= GetSys<SharedMindSystem>();
         return _mind.TryGetMind(ent, out _, out var mind) ? mind : null;
     }
 
@@ -33,7 +34,7 @@ public sealed class MindCommand : ToolshedCommand
             [PipedArgument] EntityUid target,
             [CommandArgument] ValueRef<IPlayerSession> playerRef)
     {
-        _mind ??= GetSys<MindSystem>();
+        _mind ??= GetSys<SharedMindSystem>();
 
         var player = playerRef.Evaluate(ctx);
         if (player is null)

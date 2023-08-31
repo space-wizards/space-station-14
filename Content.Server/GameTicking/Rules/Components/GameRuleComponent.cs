@@ -1,4 +1,6 @@
-﻿namespace Content.Server.GameTicking.Rules.Components;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
+
+namespace Content.Server.GameTicking.Rules.Components;
 
 /// <summary>
 /// Component attached to all gamerule entities.
@@ -13,6 +15,12 @@ public sealed partial class GameRuleComponent : Component
     /// </summary>
     [DataField("active")]
     public bool Active;
+
+    /// <summary>
+    /// Game time when game rule was activated
+    /// </summary>
+    [DataField("activatedAt", customTypeSerializer:typeof(TimeOffsetSerializer))]
+    public TimeSpan ActivatedAt;
 
     /// <summary>
     /// Whether or not the gamerule finished.

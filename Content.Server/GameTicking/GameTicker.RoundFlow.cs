@@ -4,10 +4,10 @@ using Content.Server.Discord;
 using Content.Server.GameTicking.Events;
 using Content.Server.Ghost;
 using Content.Server.Maps;
-using Content.Server.Mind;
-using Content.Server.Players;
 using Content.Shared.Database;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind;
+using Content.Shared.Players;
 using Content.Shared.Preferences;
 using JetBrains.Annotations;
 using Prometheus;
@@ -117,7 +117,7 @@ namespace Content.Server.GameTicking
 
             if (CurrentPreset?.MapPool != null &&
                 _prototypeManager.TryIndex<GameMapPoolPrototype>(CurrentPreset.MapPool, out var pool) &&
-                pool.Maps.Contains(mainStationMap.ID))
+                !pool.Maps.Contains(mainStationMap.ID))
             {
                 var msg = Loc.GetString("game-ticker-start-round-invalid-map",
                     ("map", mainStationMap.MapName),
