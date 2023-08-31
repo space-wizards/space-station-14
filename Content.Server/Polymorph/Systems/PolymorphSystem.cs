@@ -266,8 +266,8 @@ namespace Content.Server.Polymorph.Systems
             var parentXform = Transform(parent);
 
             _transform.SetParent(parent, parentXform, uidXform.ParentUid);
-            parentXform.Coordinates = uidXform.Coordinates;
-            parentXform.LocalRotation = uidXform.LocalRotation;
+            _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates);
+            _transform.SetLocalRotation(parentXform, uidXform.LocalRotation);
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(parent, out var damageParent) &&
@@ -306,7 +306,7 @@ namespace Content.Server.Polymorph.Systems
                 _mindSystem.TransferTo(mindId, parent, mind: mind);
 
             // if an item polymorph was picked up, put it back down after reverting
-            Transform(parent).AttachToGridOrMap();
+            _transform.AttachToGridOrMap(parent);
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),

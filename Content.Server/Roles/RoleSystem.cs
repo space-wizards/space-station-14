@@ -30,14 +30,16 @@ public sealed class RoleSystem : EntitySystem
     private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
     {
         var name = "game-ticker-unknown-role";
+        string? playTimeTracker = null;
         if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out JobPrototype? job))
         {
             name = job.Name;
+            playTimeTracker = job.PlayTimeTracker;
         }
 
         name = Loc.GetString(name);
 
-        args.Roles.Add(new RoleInfo(component, name, false));
+        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker));
     }
 
     private void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
@@ -51,7 +53,7 @@ public sealed class RoleSystem : EntitySystem
             }
             name = Loc.GetString(name);
 
-            args.Roles.Add(new RoleInfo(component, name, true));
+            args.Roles.Add(new RoleInfo(component, name, true, null));
         });
 
         SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);
@@ -64,11 +66,12 @@ public sealed class RoleSystem : EntitySystem
     /// <param name="mindId">The mind to add the role to.</param>
     /// <param name="component">The role instance to add.</param>
     /// <typeparam name="T">The role type to add.</typeparam>
+    /// <param name="silent">Whether or not the role should be added silently</param>
     /// <returns>The instance of the role.</returns>
     /// <exception cref="ArgumentException">
     ///     Thrown if we already have a role with this type.
     /// </exception>
-    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null) where T : Component, new()
+    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null, bool silent = false) where T : Component, new()
     {
         if (!Resolve(mindId, ref mind))
             return;
@@ -81,7 +84,10 @@ public sealed class RoleSystem : EntitySystem
         AddComp(mindId, component);
         var antagonist = IsAntagonistRole<T>();
 
-        var message = new RoleAddedEvent(mindId, mind, antagonist);
+        var mindEv = new MindRoleAddedEvent();
+        RaiseLocalEvent(mindId, ref mindEv);
+
+        var message = new RoleAddedEvent(mindId, mind, antagonist, silent);
         if (mind.OwnedEntity != null)
         {
             RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
