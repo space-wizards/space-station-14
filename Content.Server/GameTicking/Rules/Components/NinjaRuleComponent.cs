@@ -1,6 +1,6 @@
 using Content.Server.Ninja.Systems;
-using Content.Server.Objectives;
 using Content.Shared.Communications;
+using Content.Shared.Objectives;
 using Robust.Shared.Audio;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;

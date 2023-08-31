@@ -1,7 +1,7 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
 using Content.Server.Roles;
 using Content.Server.Warps;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 

@@ -1,6 +1,4 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Ninja.Systems;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
