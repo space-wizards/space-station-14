@@ -1,5 +1,4 @@
 using Content.Client.Chat;
-using Content.Client.Chat.TypingIndicator;
 using Content.Client.UserInterface.Systems.Chat.Controls;
 using Content.Shared.Chat;
 using Content.Shared.Input;

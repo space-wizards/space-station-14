@@ -4,7 +4,6 @@ using System.Numerics;
 using Content.Client.Administration.Managers;
 using Content.Client.Chat;
 using Content.Client.Chat.Managers;
-using Content.Client.Chat.TypingIndicator;
 using Content.Client.Chat.UI;
 using Content.Client.Examine;
 using Content.Client.Gameplay;
@@ -54,7 +53,6 @@ public sealed class ChatUIController : UIController
 
     [UISystemDependency] private readonly ExamineSystem? _examine = default;
     [UISystemDependency] private readonly GhostSystem? _ghost = default;
-    [UISystemDependency] private readonly TypingIndicatorSystem? _typingIndicator = default;
     [UISystemDependency] private readonly ChatSystem? _chatSys = default;
     [UISystemDependency] private readonly TransformSystem _transform = default!;
 
@@ -743,8 +741,6 @@ public sealed class ChatUIController : UIController
 
     public void SendMessage(ChatBox box, ChatSelectChannel channel)
     {
-        _typingIndicator?.ClientSubmittedChatText();
-
         var text = box.ChatInput.Input.Text;
         box.ChatInput.Input.Clear();
         box.ChatInput.Input.ReleaseKeyboardFocus();
@@ -851,7 +847,7 @@ public sealed class ChatUIController : UIController
 
     public void NotifyChatTextChange()
     {
-        _typingIndicator?.ClientChangedChatText();
+        // _typingIndicator?.ClientChangedChatText();
     }
 
     public void Repopulate()
