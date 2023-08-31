@@ -100,7 +100,7 @@
     - type: DoAfter
     - type: Actions
     - type: TypingIndicator
-      prototype: robot
+      prototype: Robot
     - type: Speech
       speechSounds: Pai
     - type: MobState

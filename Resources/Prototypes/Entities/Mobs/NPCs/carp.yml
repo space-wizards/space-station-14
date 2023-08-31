@@ -67,7 +67,7 @@
           Piercing: 5
           Slash: 10
     - type: TypingIndicator
-      prototype: alien
+      prototype: Alien
     - type: NoSlip
     - type: Tag
       tags:
@@ -103,7 +103,7 @@
     - type: Sprite
       sprite: Mobs/Aliens/Carps/magic.rsi
     - type: TypingIndicator
-      prototype: guardian
+      prototype: Guardian
 
 - type: entity
   name: holocarp
@@ -126,7 +126,7 @@
           layer:
             - Opaque
     - type: TypingIndicator
-      prototype: robot
+      prototype: Robot
 
 - type: entity
   id: MobCarpSalvage

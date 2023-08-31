@@ -79,7 +79,7 @@
     - type: Speech
       speechVerb: Robotic
     - type: TypingIndicator
-      prototype: guardian
+      prototype: Guardian
     - type: Pullable
     - type: MeleeWeapon
       hidden: true
@@ -121,7 +121,7 @@
     - type: NameIdentifier
       group: Holoparasite
     - type: TypingIndicator
-      prototype: holo
+      prototype: Holo
     - type: Sprite
       layers:
         - state: tech_base
@@ -177,7 +177,7 @@
       footstepSoundCollection:
         collection: FootstepClown
     - type: TypingIndicator
-      prototype: holo
+      prototype: Holo
     - type: RandomSprite
       available:
         - enum.DamageStateVisualLayers.Base:
