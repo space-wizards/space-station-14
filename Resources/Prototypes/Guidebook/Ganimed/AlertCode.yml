@@ -1,0 +1,24 @@
+- type: guideEntry
+  id: AlertCode
+  name: guide-entry-alertcode
+  text: "/ServerInfo/Guidebook/Ganimed/AlertCodes/AlertCode.xml"
+  children:
+  - CommonAlerts
+  - SpecificAlerts
+  - CentCommAlerts
+
+- type: guideEntry
+  id: CommonAlerts
+  name: guide-entry-commonalerts
+  text: "/ServerInfo/Guidebook/Ganimed/AlertCodes/CommonAlerts.xml"
+
+- type: guideEntry
+  id: SpecificAlerts
+  name: guide-entry-specificalerts
+  text: "/ServerInfo/Guidebook/Ganimed/AlertCodes/SpecificAlerts.xml"
+
+- type: guideEntry
+  id: CentCommAlerts
+  name: guide-entry-centcommalerts
+  text: "/ServerInfo/Guidebook/Ganimed/AlertCodes/CentCommAlerts.xml"
+  
