@@ -116,7 +116,7 @@ public sealed class ObjectivesSystem : EntitySystem
                 }
             }
 
-            ev.AddLine(result);
+            ev.AddLine(result + "\n");
         }
     }
 
