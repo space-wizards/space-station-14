@@ -38,7 +38,6 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
-using Robust.Shared.Configuration;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -60,8 +59,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     [Dependency] private readonly ShuttleSystem _shuttle = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
     [Dependency] private readonly RoleSystem _roles = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     [ValidatePrototypeId<AntagPrototype>]
@@ -83,15 +80,6 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         SubscribeLocalEvent<NukeOperativeComponent, ComponentInit>(OnComponentInit);
         SubscribeLocalEvent<NukeOperativeComponent, ComponentRemove>(OnComponentRemove);
         SubscribeLocalEvent<NukeOperativeComponent, EntityZombifiedEvent>(OnOperativeZombified);
-        SubscribeLocalEvent<NukeopsRuleComponent, ComponentInit>(OnRuleInit);
-    }
-
-    private void OnRuleInit(EntityUid uid, NukeopsRuleComponent component, ComponentInit args)
-    {
-        // SS220 Nukie-Declare-War-Begin
-        var timeOfCreation = (int) _gameTicker.RoundDuration().TotalMinutes;
-        component.WhenAbleToMove = timeOfCreation + _cfg.GetCVar<int>("nuke.operative_defaulttime");
-        // SS220 Nukie-Declare-War-End
     }
 
     private void OnComponentInit(EntityUid uid, NukeOperativeComponent component, ComponentInit args)

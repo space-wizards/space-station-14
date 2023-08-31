@@ -112,7 +112,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
             return;
         }
 
-        if (!_shuttle.CanFTL(xform.GridUid, out var reason, uid))
+        if (!_shuttle.CanFTL(xform.GridUid, out var reason))
         {
             _popup.PopupCursor(reason, args.Session);
             return;
