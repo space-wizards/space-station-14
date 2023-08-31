@@ -43,7 +43,7 @@ public sealed class StickySystem : EntitySystem
     private void OnAutoStickMapInit(EntityUid uid, TryStickOnSpawnComponent component, MapInitEvent args)
     {
         StickyComponent? sticky = null;
-        if (!Resolve(uid, ref sticky))
+        if (component.Shot || !Resolve(uid, ref sticky))
             return;
 
         var stuck = false;
