@@ -1,7 +1,7 @@
 using System.Linq;
 using Content.Server.Administration;
-using Content.Server.Mind;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -24,7 +24,7 @@ namespace Content.Server.Objectives.Commands
                 return;
             }
 
-            var minds = _entities.System<MindSystem>();
+            var minds = _entities.System<SharedMindSystem>();
             if (!minds.TryGetMind(player, out _, out var mind))
             {
                 shell.WriteError(LocalizationManager.GetString("shell-target-entity-does-not-have-message", ("missing", "mind")));
