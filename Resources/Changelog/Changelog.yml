@@ -1,10 +1,4 @@
 Entries:
-- author: Vordenburg
-  changes:
-  - {message: Fixed filled gas tanks being 70 liters instead of the intended 15 liters.,
-    type: Fix}
-  id: 4208
-  time: '2023-07-09T20:20:27.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fixed some jumpskirts parents, type: Fix}
@@ -3026,3 +3020,8 @@ Entries:
   - {message: Fix trading post not spawning., type: Fix}
   id: 4707
   time: '2023-08-30T11:02:58.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Slightly improved the steel monotile sprites., type: Tweak}
+  id: 4708
+  time: '2023-08-31T01:02:35.0000000+00:00'
