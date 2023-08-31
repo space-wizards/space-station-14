@@ -1,6 +1,6 @@
 - type: statusIcon
-  id: JobIcon
+  id: SSDIcon
   icon:
-    sprite: Interface/Misc/job_icons.rsi
-    state: SeniorResearcher
+    sprite: /Textures/Effects/ssd.rsi
+    state: default0
   locationPreference: Left

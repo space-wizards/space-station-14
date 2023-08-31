@@ -1461,6 +1461,12 @@ namespace Content.Shared.CCVar
         public static readonly CVarDef<string> ICRandomSpeciesWeights =
             CVarDef.Create("ic.random_species_weights", "SpeciesWeights", CVar.SERVER);
 
+        /// <summary>
+        /// Control displaying SSD indicators near players
+        /// </summary>
+        public static readonly CVarDef<bool> ICShowSSDIndicator =
+            CVarDef.Create("ic.show_ssd_indicator", true, CVar.CLIENTONLY);
+
         /*
          * Salvage
          */
