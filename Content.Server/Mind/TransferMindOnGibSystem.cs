@@ -3,6 +3,8 @@ using Content.Server.Body.Components;
 using Content.Server.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
+using Content.Shared.Humanoid;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Mind;
 
@@ -16,6 +18,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -33,6 +36,13 @@ public sealed class TransferMindOnGibSystem : EntitySystem
             return;
 
         var ent = _random.Pick(validParts);
+        
+        if (TryComp<HumanoidAppearanceComponent>(uid, out var comp))
+        {
+            var copy = (Component) _serializationManager.CreateCopy(comp, notNullableOverride: true);
+            EntityManager.AddComponent(ent, copy);
+        } 
+        
         _mindSystem.TransferTo(mindId, ent, mind: mind);
     }
 }
