@@ -109,6 +109,9 @@ uplink-ammo-bundle-name = Набор боеприпасов
 uplink-ammo-bundle-desc = Перезаряжаю! Содержит 4 магазина для C-20r, 4 барабана для Бульдога и 2 короба патронов для L6 SAW.
 uplink-sniper-bundle-name = Набор снайпера
 uplink-sniper-bundle-desc = Неприметный чемодан, в котором находятся Христов, 10 запасных патронов и удобная маскировка.
+uplink-emp-kit-name = Набор энергетического саботажа
+uplink-emp-kit-desc = Топовая ответка для всего энергетического оружия: Станнит станнеры, шокирует шокеры, разряжает лазерные карабины! Содержит 3 ЭМИ гранаты и ЭМИ имплантер. Примечание: бесполезно против огнестрельного оружия.
+
 # Bundles
 uplink-c20r-bundle-name = { ent-ClothingBackpackDuffelSyndicateFilledSMG }
 uplink-c20r-bundle-desc = { ent-ClothingBackpackDuffelSyndicateFilledSMG.desc }

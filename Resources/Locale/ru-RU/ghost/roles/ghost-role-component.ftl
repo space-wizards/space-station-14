@@ -105,3 +105,5 @@ ghost-role-information-taxibot-name = ТаксиБот
 ghost-role-information-taxibot-description = Довозите экипаж станции до точки назначения!
 ghost-role-information-holoclown-name = Голоклоун
 ghost-role-information-holoclown-description = Слушайте владельца. Используйте свои карманы и руки, чтобы помочь.
+ghost-role-information-smile-name = Слайм Смайл
+ghost-role-information-smile-description = Наисладчайшее существо во всей обозримой вселенной. Слайм Смайл!
