@@ -1,22 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Going afk and missing evac now counts as being killed for the kill objective.,
-    type: Tweak}
-  id: 4210
-  time: '2023-07-09T22:00:08.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Ambuzol Plus can now be made as an vaccine against the zombie infection.
-      It requires zombie blood to create., type: Add}
-  - {message: 'Zombies now have unique blood. While it cannot transfer the infection,
-      consumption or injection is still ill-advised.', type: Add}
-  - {message: CBURN now get one Ambuzol Plus pill. Operatives are advised to use it
-      on themselves., type: Tweak}
-  - {message: The syndicate zombie bundle now has one Ambuzol Plus pill. Operatives
-      are advised not to fight over its use., type: Tweak}
-  id: 4211
-  time: '2023-07-09T22:01:36.0000000+00:00'
 - author: FoxHorn
   changes:
   - {message: 'Added prototype interrogator lamp for admin entity spawn panel. Perhaps
@@ -3026,3 +3008,13 @@ Entries:
       try and be the first to 31 kills., type: Add}
   id: 4709
   time: '2023-08-31T01:06:16.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: Updated traitor guidebook section., type: Tweak}
+  id: 4710
+  time: '2023-08-31T01:07:18.0000000+00:00'
+- author: Alekshhh
+  changes:
+  - {message: Changed revenant siphon damage from poison to cold, type: Tweak}
+  id: 4711
+  time: '2023-08-31T01:07:26.0000000+00:00'
