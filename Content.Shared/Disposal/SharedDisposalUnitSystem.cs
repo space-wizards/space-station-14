@@ -1,4 +1,5 @@
-﻿using Content.Shared.Body.Components;
+﻿using System.Diagnostics.CodeAnalysis;
+using Content.Shared.Body.Components;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.DragDrop;
@@ -33,6 +34,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
 
     // Percentage
     public const float PressurePerSecond = 0.05f;
+
+    public abstract bool HasDisposals([NotNullWhen(true)] EntityUid? uid);
 
     /// <summary>
     /// Gets the current pressure state of a disposals unit.
