@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Certain livestock (cows, goats, pigs, chickens, ducks) now have the
-      ability to produce offspring so long as they are properly tended to.', type: Add}
-  id: 4213
-  time: '2023-07-09T22:36:37.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'After a long cooperative research project botanists and chemists have
@@ -3016,3 +3010,9 @@ Entries:
   - {message: Foldable items are now predicted., type: Add}
   id: 4712
   time: '2023-08-31T01:56:13.0000000+00:00'
+- author: Equivocateur
+  changes:
+  - {message: Overdosing on Robust might have unintended effects on plant-based sentient
+      lifeforms., type: Tweak}
+  id: 4713
+  time: '2023-08-31T02:01:56.0000000+00:00'
