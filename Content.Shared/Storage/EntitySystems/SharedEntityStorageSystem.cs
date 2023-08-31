@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
@@ -100,6 +101,8 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         ToggleOpen(args.User, uid, component);
     }
 
+    public abstract bool ResolveStorage(EntityUid uid, [NotNullWhen(true)] ref SharedEntityStorageComponent? component);
+
     private void OnLockToggleAttempt(EntityUid uid, SharedEntityStorageComponent target, ref LockToggleAttemptEvent args)
     {
         // Cannot (un)lock open lockers.
@@ -169,7 +172,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void ToggleOpen(EntityUid user, EntityUid target, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(target, ref component))
+        if (!ResolveStorage(target, ref component))
             return;
 
         if (component.Open)
@@ -184,7 +187,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void EmptyContents(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveStorage(uid, ref component))
             return;
 
         var uidXform = Transform(uid);
@@ -197,7 +200,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void OpenStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveStorage(uid, ref component))
             return;
 
         var beforeev = new StorageBeforeOpenEvent();
@@ -215,8 +218,9 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void CloseStorage(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveStorage(uid, ref component))
             return;
+
         component.Open = false;
         Dirty(component);
 
@@ -254,7 +258,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool Insert(EntityUid toInsert, EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(container, ref component))
+        if (!ResolveStorage(container, ref component))
             return false;
 
         if (component.Open)
@@ -271,7 +275,10 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool Remove(EntityUid toRemove, EntityUid container, SharedEntityStorageComponent? component = null, TransformComponent? xform = null)
     {
-        if (!Resolve(container, ref component, ref xform, false))
+        if (!Resolve(container, ref xform, false))
+            return false;
+
+        if (!ResolveStorage(container, ref component))
             return false;
 
         RemComp<InsideEntityStorageComponent>(toRemove);
@@ -283,7 +290,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool CanInsert(EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(container, ref component))
+        if (!ResolveStorage(container, ref component))
             return false;
 
         if (component.Open)
@@ -317,7 +324,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool CanOpen(EntityUid user, EntityUid target, bool silent = false, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(target, ref component))
+        if (!ResolveStorage(target, ref component))
             return false;
 
         if (!HasComp<HandsComponent>(user))
@@ -359,7 +366,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public bool AddToContents(EntityUid toAdd, EntityUid container, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(container, ref component))
+        if (!ResolveStorage(container, ref component))
             return false;
 
         if (toAdd == container)
@@ -419,7 +426,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     private void ModifyComponents(EntityUid uid, SharedEntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveStorage(uid, ref component))
             return;
 
         if (!component.IsCollidableWhenOpen && TryComp<FixturesComponent>(uid, out var fixtures) &&
