@@ -2,6 +2,7 @@
 using Content.Server.Maps;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
+using Content.Shared.Ghost;
 using Content.Shared.Maps;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
@@ -43,6 +44,9 @@ public sealed class ThrowArtifactSystem : EntitySystem
         var lookup = _lookup.GetEntitiesInRange(uid, component.Range, LookupFlags.Dynamic | LookupFlags.Sundries);
         foreach (var ent in lookup)
         {
+            if (HasComp<GhostComponent>(ent))
+                continue;
+
             var tempXform = Transform(ent);
 
             var foo = tempXform.MapPosition.Position - xform.MapPosition.Position;

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.Anomaly.Effects.Components;
+using Content.Shared.Ghost;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
 
@@ -31,6 +32,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
 
         foreach (var ent in lookup)
         {
+            if (HasComp<GhostComponent>(ent))
+                continue;
             var foo = _xform.GetWorldPosition(ent, xformQuery) - worldPos;
             _throwing.TryThrow(ent, foo * 10, strength, uid, 0);
         }
@@ -54,6 +57,8 @@ public abstract class SharedGravityAnomalySystem : EntitySystem
 
         foreach (var ent in lookup)
         {
+            if (HasComp<GhostComponent>(ent))
+                continue;
             var foo = _xform.GetWorldPosition(ent, xformQuery) - worldPos;
             _throwing.TryThrow(ent, foo * 5, strength, uid, 0);
         }
