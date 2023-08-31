@@ -2,6 +2,7 @@ using Content.Shared.Chat;
 using Robust.Server.Player;
 using Robust.Shared.Network;
 using Robust.Shared.Player;
+using Robust.Shared.Players;
 
 namespace Content.Server.Chat.Managers
 {
@@ -16,7 +17,7 @@ namespace Content.Server.Chat.Managers
         /// <param name="colorOverride">Override the color of the message being sent.</param>
         void DispatchServerAnnouncement(string message, Color? colorOverride = null);
 
-        void DispatchServerMessage(IPlayerSession player, string message, bool suppressLog = false);
+        void DispatchServerMessage(ICommonSession player, string message, bool suppressLog = false);
 
         void TrySendOOCMessage(IPlayerSession player, string message, OOCChatType type);
 

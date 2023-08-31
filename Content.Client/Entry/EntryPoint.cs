@@ -20,7 +20,6 @@ using Content.Client.Singularity;
 using Content.Client.Stylesheets;
 using Content.Client.Viewport;
 using Content.Client.Voting;
-using Content.Shared.Administration;
 using Content.Shared.Ame;
 using Content.Shared.Gravity;
 using Content.Shared.Localizations;
@@ -28,13 +27,11 @@ using Robust.Client;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.Replays.Loading;
-using Robust.Client.Replays.Playback;
 using Robust.Client.State;
 using Robust.Client.UserInterface;
 using Robust.Shared;
 using Robust.Shared.Configuration;
 using Robust.Shared.ContentPack;
-using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Replays;
 
@@ -129,6 +126,7 @@ namespace Content.Client.Entry
             _prototypeManager.RegisterIgnore("alertLevels");
             _prototypeManager.RegisterIgnore("nukeopsRole");
             _prototypeManager.RegisterIgnore("flavor");
+            _prototypeManager.RegisterIgnore("objective");
 
             _componentFactory.GenerateNetIds();
             _adminManager.Initialize();

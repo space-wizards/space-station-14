@@ -1,6 +1,6 @@
-﻿using Content.Server.Mind;
+﻿using Content.Shared.Mind;
 
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Raised on player entities when a role is added to them.

@@ -1,4 +1,4 @@
-﻿namespace Content.Server.Roles;
+﻿namespace Content.Shared.Roles;
 
 /// <summary>
 ///     Raised on mind entities when a role is added to them.

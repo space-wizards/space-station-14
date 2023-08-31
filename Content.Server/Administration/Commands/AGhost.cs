@@ -1,7 +1,7 @@
 ﻿using Content.Server.GameTicking;
-using Content.Server.Mind;
 using Content.Shared.Administration;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 
@@ -25,7 +25,7 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            var mindSystem = _entities.System<MindSystem>();
+            var mindSystem = _entities.System<SharedMindSystem>();
             if (!mindSystem.TryGetMind(player, out var mindId, out var mind))
             {
                 shell.WriteLine("You can't ghost here!");

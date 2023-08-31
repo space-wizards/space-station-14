@@ -1,7 +1,6 @@
-﻿using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Roles;
+namespace Content.Shared.Roles;
 
 public abstract partial class AntagonistRoleComponent : Component
 {

@@ -1,7 +1,6 @@
-﻿using Content.Shared.Roles;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+﻿using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
-namespace Content.Server.Roles.Jobs;
+namespace Content.Shared.Roles.Jobs;
 
 /// <summary>
 ///     Added to mind entities to hold the data for the player's current job.

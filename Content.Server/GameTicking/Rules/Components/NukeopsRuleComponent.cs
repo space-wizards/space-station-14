@@ -1,15 +1,12 @@
 using Content.Server.NPC.Components;
 using Content.Server.StationEvents.Events;
 using Content.Shared.Dataset;
-using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Roles;
-using Robust.Server.Player;
-using Robust.Shared.Audio;
 using Robust.Shared.Map;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules.Components;
@@ -118,7 +115,7 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
-    public Dictionary<string, IPlayerSession> OperativePlayers = new();
+    public Dictionary<string, ICommonSession> OperativePlayers = new();
 
     [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>), required: true)]
     public string Faction = default!;
