@@ -39,6 +39,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
         [Dependency] private readonly MindSystem _minds = default!;
         [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public override void Initialize()
         {
@@ -205,8 +206,8 @@ namespace Content.Server.Ghost
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
         {
-            if (args.SenderSession.AttachedEntity is not {Valid: true} attached ||
-                !EntityManager.TryGetComponent(attached, out GhostComponent? ghost))
+            if (args.SenderSession.AttachedEntity is not { Valid: true } attached ||
+                !EntityManager.HasComponent<GhostComponent>(attached))
             {
                 Logger.Warning($"User {args.SenderSession.Name} tried to warp to {msg.Target} without being a ghost.");
                 return;
@@ -221,13 +222,12 @@ namespace Content.Server.Ghost
             if (TryComp(msg.Target, out WarpPointComponent? warp) && warp.Follow
                 || HasComp<MobStateComponent>(msg.Target))
             {
-                 _followerSystem.StartFollowingEntity(ghost.Owner, msg.Target);
+                 _followerSystem.StartFollowingEntity(attached, msg.Target);
                  return;
             }
 
-            var xform = Transform(ghost.Owner);
-            xform.Coordinates = Transform(msg.Target).Coordinates;
-            xform.AttachToGridOrMap();
+            _transform.SetCoordinates(attached, Transform(msg.Target).Coordinates);
+            _transform.AttachToGridOrMap(attached);
             if (TryComp(attached, out PhysicsComponent? physics))
                 _physics.SetLinearVelocity(attached, Vector2.Zero, body: physics);
         }
