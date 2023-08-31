@@ -20,7 +20,7 @@ namespace Content.Shared.Objectives
         [ViewVariables]
         public float Difficulty => _difficultyOverride ?? _conditions.Sum(c => c.Difficulty);
 
-        [DataField("conditions")]
+        [DataField("conditions", serverOnly: true)]
         private List<IObjectiveCondition> _conditions = new();
         [DataField("requirements")]
         private List<IObjectiveRequirement> _requirements = new();
