@@ -31,6 +31,7 @@
       weightlessAcceleration: 1
       weightlessFriction: 0.3
       weightlessModifier: 1.2
+    - type: CanMoveInAir
     - type: Sprite
       sprite: Objects/Tanks/Jetpacks/blue.rsi
       state: icon

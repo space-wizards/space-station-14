@@ -8,3 +8,4 @@
     bodyStatus: InAir
   - type: NoSlip
   - type: MovementAlwaysTouching
+  - type: CanMoveInAir
