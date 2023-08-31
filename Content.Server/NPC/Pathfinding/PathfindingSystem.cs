@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Content.Server.Administration.Managers;
 using Content.Server.Destructible;
 using Content.Server.NPC.HTN;
+using Content.Server.NPC.Systems;
 using Content.Shared.Administration;
 using Content.Shared.NPC;
 using Robust.Server.Player;
@@ -44,9 +45,9 @@ namespace Content.Server.NPC.Pathfinding
         [Dependency] private readonly DestructibleSystem _destructible = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FixtureSystem _fixtures = default!;
+        [Dependency] private readonly NPCSystem _npc = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-
-        private ISawmill _sawmill = default!;
+        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private readonly Dictionary<ICommonSession, PathfindingDebugMode> _subscribedSessions = new();
 
@@ -66,7 +67,6 @@ namespace Content.Server.NPC.Pathfinding
         public override void Initialize()
         {
             base.Initialize();
-            _sawmill = Logger.GetSawmill("nav");
             _playerManager.PlayerStatusChanged += OnPlayerChange;
             InitializeGrid();
             SubscribeNetworkEvent<RequestPathfindingDebugMessage>(OnBreadcrumbs);
@@ -383,7 +383,7 @@ namespace Content.Server.NPC.Pathfinding
                 return null;
             }
 
-            var localPos = xform.InvWorldMatrix.Transform(coordinates.ToMapPos(EntityManager));
+            var localPos = _transform.GetInvWorldMatrix(xform).Transform(coordinates.ToMapPos(EntityManager));
             var origin = GetOrigin(localPos);
 
             if (!TryGetChunk(origin, comp, out var chunk))
@@ -418,7 +418,7 @@ namespace Content.Server.NPC.Pathfinding
 
         public PathFlags GetFlags(EntityUid uid)
         {
-            if (!TryComp<HTNComponent>(uid, out var npc))
+            if (!_npc.TryGetNpc(uid, out var npc))
             {
                 return PathFlags.None;
             }

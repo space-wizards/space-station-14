@@ -48,6 +48,11 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.RecentlyEjected.AddRange(state.RecentlyEjected);
     }
 
+    public override bool HasDisposals(EntityUid? uid)
+    {
+        return HasComp<DisposalUnitComponent>(uid);
+    }
+
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
         return;
