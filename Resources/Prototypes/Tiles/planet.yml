@@ -154,7 +154,16 @@
   id: FloorSnowDug
   name: tiles-snow-dug
   sprite: /Textures/Tiles/Planet/Snow/snow_dug.png
-#  edgeSpritePriority: 1
+  edgeSpritePriority: 1
+  edgeSprites:
+    SouthEast: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
+    NorthEast: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
+    NorthWest: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
+    SouthWest: /Textures/Tiles/Planet/Snow/snow_dug_single_edge.png
+    South: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
+    East: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
+    North: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
+    West: /Textures/Tiles/Planet/Snow/snow_dug_double_edge.png
   isSubfloor: true
   canCrowbar: false
   footstepSounds:
