@@ -3,6 +3,7 @@ humanoid-profile-editor-name-label = Имя:
 humanoid-profile-editor-name-random-button = Сгенерировать
 humanoid-profile-editor-appearance-tab = Внешность
 humanoid-profile-editor-clothing = Отображать одежду
+humanoid-profile-editor-clothing-show = Show
 humanoid-profile-editor-sex-label = Пол:
 humanoid-profile-editor-sex-male-text = Мужской
 humanoid-profile-editor-sex-female-text = Женский

@@ -8,5 +8,5 @@ lathe-menu-amount = Кол-во:
 lathe-menu-material-display = { $material } ({ $amount } см³)
 lathe-menu-tooltip-display = { $amount } см³ материала { $material }
 lathe-menu-no-materials-message = Материалы не загружены
-lathe-menu-materials-ejection = Извлечь материалы
-lathe-menu-materials-ejection-title = Извлечь материалы
+lathe-menu-materials-title = Материалы
+lathe-menu-queue-title = Очередь производства

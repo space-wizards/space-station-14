@@ -137,6 +137,7 @@
       - id: DrinkDetFlask
       - id: ClothingHandsGlovesForensic
       - id: RubberStampDetective
+      - id: BookBusido # Corvax-Books
 
 - type: entity
   id: ClosetBombFilled
