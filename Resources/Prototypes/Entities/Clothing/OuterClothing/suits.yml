@@ -164,6 +164,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Item
+    size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
   - type: ClothingSpeedModifier
@@ -180,6 +182,8 @@
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: Item
+    size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
   - type: ClothingSpeedModifier
