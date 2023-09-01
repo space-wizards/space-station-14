@@ -1,68 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'Clown R&D got inspired by incidents of accidentally swallowed honking
-      devices and made a minor breakthrough in clown science, bike horn implanters
-      are now available for purchase at cargo.', type: Add}
-  id: 4216
-  time: '2023-07-10T02:44:19.0000000+00:00'
-- author: dribblydrone
-  changes:
-  - {message: Added nukie guidebook, type: Add}
-  id: 4217
-  time: '2023-07-10T02:54:43.0000000+00:00'
-- author: Myakot
-  changes:
-  - {message: Removed a part of bicaridine's description that talked about non-existent
-      anti-bleeding effects and advised players to overdose on bica., type: Remove}
-  id: 4218
-  time: '2023-07-10T05:49:11.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Make salvage loading a lot faster., type: Fix}
-  id: 4219
-  time: '2023-07-10T07:16:00.0000000+00:00'
-- author: metalgearsloth
-  changes:
-  - {message: Fix spawning expeditions objectives in walls., type: Fix}
-  id: 4220
-  time: '2023-07-10T07:16:10.0000000+00:00'
-- author: Velcroboy
-  changes:
-  - {message: Changed bookshelves to block vision., type: Tweak}
-  id: 4221
-  time: '2023-07-10T16:56:33.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: Removed sponge box from uplink pending rebalance, type: Remove}
-  id: 4222
-  time: '2023-07-10T18:31:11.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: 'Fixed: clown mask cannot be used for H.O.N.K. construction', type: Fix}
-  id: 4223
-  time: '2023-07-10T18:33:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Aberrant flesh now smash through obstacles while trying to reach players.,
-    type: Add}
-  id: 4224
-  time: '2023-07-11T04:02:04.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Minor tweak to mercenary item sprites, type: Tweak}
-  id: 4225
-  time: '2023-07-11T19:32:39.0000000+00:00'
-- author: notquitehadouken
-  changes:
-  - {message: Made glass tiles look different, type: Tweak}
-  id: 4226
-  time: '2023-07-11T19:34:07.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
-  id: 4227
-  time: '2023-07-11T19:34:21.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Fixed SyndieDrobe adverts., type: Fix}
@@ -3012,3 +2948,75 @@ Entries:
   - {message: Cap now spawns with laceup shoes instead of sneakers, type: Tweak}
   id: 4715
   time: '2023-08-31T02:33:40.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Dehydrated space carp's price has been lowered back to 2 telecrystals.,
+    type: Tweak}
+  id: 4716
+  time: '2023-08-31T12:41:35.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix horizontal cut shader not compiling on some systems., type: Fix}
+  id: 4717
+  time: '2023-08-31T13:26:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Snow planets can now spawn with ice, which gives you very floaty movement!',
+    type: Add}
+  - {message: 'The nukie planet now spawns with some ice, and a mini rink to let off
+      some steam', type: Add}
+  - {message: Snow now has tile edge support like grass, type: Add}
+  id: 4718
+  time: '2023-08-31T21:31:23.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Committing suicide no longer makes your body disappear., type: Fix}
+  id: 4719
+  time: '2023-09-01T00:46:05.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Borgs now have robotic speech verbs, type: Fix}
+  id: 4720
+  time: '2023-09-01T02:12:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 4721
+  time: '2023-09-01T02:30:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
+      again.', type: Fix}
+  id: 4722
+  time: '2023-09-01T02:30:40.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Spears now have a non-blunt melee sound, type: Fix}
+  id: 4723
+  time: '2023-09-01T03:08:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
+      but it''s better than being invisible', type: Fix}
+  id: 4724
+  time: '2023-09-01T03:09:22.0000000+00:00'
+- author: Nairodian
+  changes:
+  - {message: 'Added two new types of speech verbs, mumbling and stuttering. Add the
+      suffix ''..'' or ''-'' respectfully, to the end of your sentences to use them.',
+    type: Add}
+  - {message: Added several more species specific speech verbs. And grants them to
+      a whole slew of new mobs., type: Add}
+  id: 4725
+  time: '2023-09-01T03:15:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes now display material quantity in number of sheets., type: Tweak}
+  - {message: Ejecting materials from lathes now automatically stacks them., type: Tweak}
+  id: 4726
+  time: '2023-09-01T05:28:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed nukeops being able to buy job restricted items., type: Fix}
+  id: 4727
+  time: '2023-09-01T07:24:37.0000000+00:00'

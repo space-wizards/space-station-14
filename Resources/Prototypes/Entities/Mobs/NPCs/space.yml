@@ -66,6 +66,8 @@
     energy: 2
     color: "#4faffb"
   - type: GhostTakeoverAvailable
+  - type: Speech
+    speechVerb: LargeMob
 
 - type: entity
   name: space bear
@@ -284,6 +286,8 @@
     prob: 0.30
     name: ghost-role-information-space-spider-name
     description: ghost-role-information-space-spider-description
+  - type: Speech
+    speechVerb: Arachnid
 
 - type: entity
   id: MobSpiderSpaceSalvage

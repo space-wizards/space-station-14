@@ -254,11 +254,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var traitorRole = new TraitorRoleComponent
         {
             PrototypeId = traitorRule.TraitorPrototypeId,
-            Briefing = briefing
         };
 
         // Assign traitor roles
-        _roleSystem.MindAddRole(mindId, traitorRole);
+        _roleSystem.MindAddRole(mindId, new TraitorRoleComponent
+        {
+            PrototypeId = traitorRule.TraitorPrototypeId
+        });
+        // Assign briefing
+        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        {
+            Briefing = briefing
+        });
         SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
 
