@@ -1,9 +1,9 @@
-﻿using Robust.Server.Player;
+﻿using Robust.Shared.Players;
 
 namespace Content.Server.Ghost.Roles.Components;
 
 [ByRefEvent]
-public record struct TakeGhostRoleEvent(IPlayerSession Player)
+public record struct TakeGhostRoleEvent(ICommonSession Player)
 {
     public bool TookRole { get; set; }
 }

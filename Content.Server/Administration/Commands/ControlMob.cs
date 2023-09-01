@@ -1,10 +1,7 @@
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Mind;
 using Robust.Server.Player;
 using Robust.Shared.Console;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Commands
 {
@@ -45,18 +42,14 @@ namespace Content.Server.Administration.Commands
                 return;
             }
 
-            if (!_entities.HasComponent<MindContainerComponent>(target))
+            var mindSystem = _entities.System<SharedMindSystem>();
+            if (!mindSystem.TryGetMind(target, out var mindId, out var mind))
             {
                 shell.WriteLine(Loc.GetString("shell-entity-is-not-mob"));
                 return;
             }
 
-            var mind = player.ContentData()?.Mind;
-
-            DebugTools.AssertNotNull(mind);
-
-            var mindSystem = _entities.System<MindSystem>();
-            mindSystem.TransferTo(mind!, target);
+            mindSystem.TransferTo(mindId, target, mind: mind);
         }
     }
 }
