@@ -3,6 +3,7 @@ using System.Linq;
 using System.Numerics;
 using Content.Shared.Body.Components;
 using Content.Shared.Destructible;
+using Content.Shared.Foldable;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;
 using Content.Shared.Item;
@@ -128,6 +129,13 @@ public abstract class SharedEntityStorageSystem : EntitySystem
         {
             TryOpenStorage(args.Entity, uid);
         }
+    }
+
+    protected void OnFoldAttempt(EntityUid uid, SharedEntityStorageComponent component, ref FoldAttemptEvent args)
+    {
+        if (args.Cancelled)
+            return;
+        args.Cancelled = component.Open || component.Contents.ContainedEntities.Count != 0;
     }
 
     protected void AddToggleOpenVerb(EntityUid uid, SharedEntityStorageComponent component, GetVerbsEvent<InteractionVerb> args)
