@@ -53,6 +53,7 @@ namespace Content.Shared.Movement.Systems
         protected EntityQuery<RelayInputMoverComponent> RelayQuery;
         protected EntityQuery<SharedPullableComponent> PullableQuery;
         protected EntityQuery<TransformComponent> XformQuery;
+        protected EntityQuery<CanMoveInAirComponent> CanMoveInAirQuery;
 
         private const float StepSoundMoveDistanceRunning = 2;
         private const float StepSoundMoveDistanceWalking = 1.5f;
@@ -83,6 +84,7 @@ namespace Content.Shared.Movement.Systems
             RelayQuery = GetEntityQuery<RelayInputMoverComponent>();
             PullableQuery = GetEntityQuery<SharedPullableComponent>();
             XformQuery = GetEntityQuery<TransformComponent>();
+            CanMoveInAirQuery = GetEntityQuery<CanMoveInAirComponent>();
 
             InitializeFootsteps();
             InitializeInput();
@@ -150,7 +152,7 @@ namespace Content.Shared.Movement.Systems
             LerpRotation(uid, mover, frameTime);
 
             if (!canMove
-                || physicsComponent.BodyStatus != BodyStatus.OnGround && !HasComp<CanMoveInAirComponent>(uid)
+                || physicsComponent.BodyStatus != BodyStatus.OnGround && !CanMoveInAirQuery.HasComponent(uid)
                 || PullableQuery.TryGetComponent(uid, out var pullable) && pullable.BeingPulled)
             {
                 UsedMobMovement[uid] = false;

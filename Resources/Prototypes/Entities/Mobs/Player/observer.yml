@@ -59,7 +59,6 @@
   - type: MovementIgnoreGravity
   - type: Physics
     bodyType: KinematicController
-    fixedRotation: true
     bodyStatus: InAir
   - type: CanMoveInAir
   - type: Tag

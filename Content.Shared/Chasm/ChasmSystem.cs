@@ -53,17 +53,6 @@ public sealed class ChasmSystem : EntitySystem
             return;
 
         StartFalling(uid, component, args.Tripper);
-
-        // checking for strap is necessary so that buckled entities actually have the visuals and can't just
-        // unbuckle to prevent death
-        if (!TryComp<StrapComponent>(uid, out var strap))
-            return;
-
-        foreach (var ent in strap.BuckledEntities)
-        {
-            // don't play sound for any buckled ents since we'll have already played it once
-            StartFalling(uid, component, ent, playSound: false);
-        }
     }
 
     public void StartFalling(EntityUid chasm, ChasmComponent component, EntityUid tripper, bool playSound = true)
