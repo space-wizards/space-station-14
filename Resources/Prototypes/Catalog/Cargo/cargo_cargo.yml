@@ -7,3 +7,13 @@
   cost: 250
   category: Cargo
   group: market
+
+- type: cargoProduct
+  id: CargoQuartermasterHardsuit
+  icon:
+    sprite: Clothing\Head\Hardsuits\qm.rsi
+    state: icon
+  product: CrateCargoQuartermasterHardsuit
+  cost: 15000
+  category: Cargo
+  group: market

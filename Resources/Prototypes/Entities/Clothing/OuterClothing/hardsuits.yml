@@ -390,6 +390,36 @@
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitSecurityRed
 
+#Quartermaster's Hardsuit
+- type: entity
+  parent: ClothingOuterHardsuitBase
+  id: ClothingOuterHardsuitQm
+  name: quartermaster's hardsuit
+  description: A refurbished mining hardsuit, fashioned for the Quartermaster. Graphene lining provides less protection, but is much easier to move.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Hardsuits/qm.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Hardsuits/qm.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.5
+    lowPressureMultiplier: 1000
+  - type: ExplosionResistance
+    damageCoefficient: 0.5
+  - type: Armor
+    modifiers:
+      coefficients:
+        Blunt: 0.9
+        Slash: 0.9
+        Piercing: 0.8
+        Radiation: 0.5
+        Caustic: 0.8
+  - type: ClothingSpeedModifier
+    walkModifier: 0.85
+    sprintModifier: 0.9
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHelmetHardsuitQm
+
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
 - type: entity

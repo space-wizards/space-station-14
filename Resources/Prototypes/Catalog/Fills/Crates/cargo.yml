@@ -1,0 +1,7 @@
+- type: entity
+  id: CrateCargoQuartermasterHardsuit
+  parent: CrateCommandSecure
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitQm
