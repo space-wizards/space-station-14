@@ -144,6 +144,8 @@
   - type: Strap
     buckleOffset: "0, 0"
     maxBuckleDistance: 1
+  - type: Speech
+    speechVerb: Robotic
   - type: AmbientSound
     sound: "/Audio/Effects/Vehicle/vehicleengineidle.ogg"
     range: 10
@@ -249,6 +251,8 @@
     state: honkbot
   - type: Slippery
     launchForwardsMultiplier: 2
+  - type: Speech
+    speechVerb: Cluwne
   - type: StepTrigger
     intersectRatio: 0.2
   - type: Fixtures
