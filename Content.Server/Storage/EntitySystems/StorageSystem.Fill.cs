@@ -1,8 +1,10 @@
+using Content.Server.Storage.Components;
+using Content.Shared.Storage;
 using Content.Shared.Storage.Components;
 
-namespace Content.Shared.Storage.EntitySystems;
+namespace Content.Server.Storage.EntitySystems;
 
-public abstract partial class SharedStorageSystem
+public sealed partial class StorageSystem
 {
     private void OnStorageFillMapInit(EntityUid uid, StorageFillComponent component, MapInitEvent args)
     {
@@ -10,8 +12,7 @@ public abstract partial class SharedStorageSystem
             return;
 
         TryComp<StorageComponent>(uid, out var storageComp);
-        SharedEntityStorageComponent? entityStorageComp = null;
-        _entityStorage.ResolveStorage(uid, ref entityStorageComp);
+        TryComp<EntityStorageComponent>(uid, out var entityStorageComp);
 
         if (entityStorageComp == null && storageComp == null)
         {
@@ -21,13 +22,13 @@ public abstract partial class SharedStorageSystem
 
         var coordinates = Transform(uid).Coordinates;
 
-        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, _random);
+        var spawnItems = EntitySpawnCollection.GetSpawns(component.Contents, Random);
         foreach (var item in spawnItems)
         {
             var ent = EntityManager.SpawnEntity(item, coordinates);
 
             // handle depending on storage component, again this should be unified after ECS
-            if (entityStorageComp != null && _entityStorage.Insert(ent, uid))
+            if (entityStorageComp != null && EntityStorage.Insert(ent, uid))
                 continue;
 
             if (storageComp != null && Insert(uid, ent, storageComp, false))

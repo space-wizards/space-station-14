@@ -24,13 +24,13 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Storage.EntitySystems;
 
-public abstract partial class SharedStorageSystem : EntitySystem
+public abstract class SharedStorageSystem : EntitySystem
 {
-    [Dependency] private   readonly IRobustRandom _random = default!;
+    [Dependency] protected readonly IRobustRandom Random = default!;
     [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
     [Dependency] private   readonly SharedDoAfterSystem _doAfterSystem = default!;
     [Dependency] private   readonly EntityLookupSystem _entityLookupSystem = default!;
-    [Dependency] private   readonly SharedEntityStorageSystem _entityStorage = default!;
+    [Dependency] protected readonly SharedEntityStorageSystem EntityStorage = default!;
     [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private   readonly SharedHandsSystem _sharedHandsSystem = default!;
@@ -62,8 +62,6 @@ public abstract partial class SharedStorageSystem : EntitySystem
         SubscribeLocalEvent<StorageComponent, AreaPickupDoAfterEvent>(OnDoAfter);
 
         SubscribeLocalEvent<StorageComponent, StorageInteractWithItemEvent>(OnInteractWithItem);
-
-        SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
 
     private void OnComponentInit(EntityUid uid, StorageComponent storageComp, ComponentInit args)

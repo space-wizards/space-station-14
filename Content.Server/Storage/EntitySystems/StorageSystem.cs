@@ -3,6 +3,7 @@ using Content.Shared.Administration;
 using Content.Shared.Ghost;
 using Content.Shared.Lock;
 using Content.Shared.Storage;
+using Content.Shared.Storage.Components;
 using Content.Shared.Storage.EntitySystems;
 using Content.Shared.Timing;
 using Content.Shared.Verbs;
@@ -14,7 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Storage.EntitySystems;
 
-public sealed class StorageSystem : SharedStorageSystem
+public sealed partial class StorageSystem : SharedStorageSystem
 {
     [Dependency] private readonly IAdminManager _admin = default!;
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
@@ -24,6 +25,8 @@ public sealed class StorageSystem : SharedStorageSystem
         base.Initialize();
         SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
         SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
+
+        SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
 
     private void AddOpenUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
