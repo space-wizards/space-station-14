@@ -7,7 +7,6 @@ namespace Content.Shared.Containers;
 public sealed class ContainerFillSystem : EntitySystem
 {
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -40,7 +39,7 @@ public sealed class ContainerFillSystem : EntitySystem
                 if (!container.Insert(ent, EntityManager, null, xform))
                 {
                     Log.Error($"Entity {ToPrettyString(uid)} with a {nameof(ContainerFillComponent)} failed to insert an entity: {ToPrettyString(ent)}.");
-                    _transform.AttachToGridOrMap(ent);
+                    Transform(ent).AttachToGridOrMap();
                     break;
                 }
             }

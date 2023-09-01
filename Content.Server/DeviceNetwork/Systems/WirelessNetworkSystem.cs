@@ -6,8 +6,6 @@ namespace Content.Server.DeviceNetwork.Systems
     [UsedImplicitly]
     public sealed class WirelessNetworkSystem : EntitySystem
     {
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-
         public override void Initialize()
         {
             base.Initialize();
@@ -27,7 +25,7 @@ namespace Content.Server.DeviceNetwork.Systems
                 return;
 
             if (xform.MapID != args.SenderTransform.MapID
-                || (ownPosition - _transform.GetWorldPosition(xform)).Length() > sendingComponent.Range)
+                || (ownPosition - xform.WorldPosition).Length() > sendingComponent.Range)
             {
                 args.Cancel();
             }
