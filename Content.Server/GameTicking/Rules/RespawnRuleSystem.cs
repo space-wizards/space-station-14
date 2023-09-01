@@ -41,9 +41,9 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
         var query = EntityQueryEnumerator<RespawnTrackerComponent>();
         while (query.MoveNext(out _, out var respawn))
         {
-            respawn.Players.Remove(actor.PlayerSession.UserId);
+            if (respawn.Players.Remove(actor.PlayerSession.UserId))
+                QueueDel(ev.Victim);
         }
-        QueueDel(ev.Victim);
     }
 
     private void OnMobStateChanged(MobStateChangedEvent args)
