@@ -15,9 +15,9 @@ ghost-gui-toggle-fov-desc = Toggles field-of-view in order to see what players s
 ghost-gui-toggle-fov-popup = Toggled field-of-view.
 
 ghost-gui-toggle-hearing-name = Toggle Ghost Hearing
-ghost-gui-toggle-hearing-desc = Toggle between hearing all messages and hearing only nearby messages.
+ghost-gui-toggle-hearing-desc = Toggle between hearing all messages and hearing only radio & nearby messages.
 ghost-gui-toggle-hearing-popup-on = You can now hear all messages.
-ghost-gui-toggle-hearing-popup-off = You can now only hear nearby messages.
+ghost-gui-toggle-hearing-popup-off = You can now only hear radio and nearby messages.
 
 ghost-target-window-title = Ghost Warp
 ghost-target-window-current-button = Warp: {$name}

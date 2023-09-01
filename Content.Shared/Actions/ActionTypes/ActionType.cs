@@ -237,6 +237,7 @@ public abstract partial class ActionType : IEquatable<ActionType>, IComparable, 
         AutoPopulate = toClone.AutoPopulate;
         AutoRemove = toClone.AutoRemove;
         ItemIconStyle = toClone.ItemIconStyle;
+        ClientExclusive = toClone.ClientExclusive;
         CheckCanInteract = toClone.CheckCanInteract;
         UseDelay = toClone.UseDelay;
         Sound = toClone.Sound;

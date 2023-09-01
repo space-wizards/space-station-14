@@ -31,11 +31,11 @@
 - type: instantAction
   id: GhostToggleHearing
   name: ghost-gui-toggle-hearing-name
-  description: ghost-gui-toggle-hearing-name-desc
+  description: ghost-gui-toggle-hearing-desc
   checkCanInteract: false
   icon:
-    sprite: Interface/Actions/actions_crit.rsi
-    state: lastwords
+    sprite: Clothing/Ears/Headsets/base.rsi
+    state: icon
   event: !type:ToggleGhostHearingActionEvent
 
 - type: instantAction
