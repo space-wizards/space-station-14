@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Content.Server.Administration.Logs;
 using Content.Server.Atmos.EntitySystems;
@@ -200,7 +201,7 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)
     {
-        if (!Resolve(uid, ref disposal))
+        if (!ResolveDisposals(uid, ref disposal))
             return;
 
         if (!disposal.Container.Insert(toInsert))
@@ -735,6 +736,16 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
     public override bool HasDisposals(EntityUid? uid)
     {
         return HasComp<DisposalUnitComponent>(uid);
+    }
+
+    public override bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component)
+    {
+        if (component != null)
+            return true;
+
+        TryComp<DisposalUnitComponent>(uid, out var storage);
+        component = storage;
+        return component != null;
     }
 
     public override bool CanInsert(EntityUid uid, SharedDisposalUnitComponent component, EntityUid entity)
