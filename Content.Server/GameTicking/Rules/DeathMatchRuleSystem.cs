@@ -93,11 +93,10 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
             _respawn.AddToTracker(ev.Mob, uid, tracker);
+
+            if (ev.LateJoin)
+                AddUplink(ev.Player);
         }
-
-        AddUplink(ev.Player);
-
-        HandleLatejoin(ev);
     }
 
     protected override void ActiveTick(EntityUid uid, DeathMatchRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -179,20 +178,6 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
                 continue;
 
             dmPlayer.SelectionStatus = DeathMatchRuleComponent.SelectionState.ReadyToSelect;
-        }
-    }
-
-    private void HandleLatejoin(PlayerSpawnCompleteEvent ev)
-    {
-        var query = EntityQueryEnumerator<DeathMatchRuleComponent, GameRuleComponent>();
-
-        // checking the component so as not to issue uplinks in other modes
-        while (query.MoveNext(out var uid, out var dmPlayer, out var gameRule))
-        {
-            // since the DM mode allows players to join after the start of the round,
-            // they also need to be given funds to fight
-            if (ev.LateJoin)
-                AddUplink(ev.Player);
         }
     }
 
