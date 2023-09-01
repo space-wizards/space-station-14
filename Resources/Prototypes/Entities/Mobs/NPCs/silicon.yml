@@ -3,8 +3,6 @@
   abstract: true
   id: MobSiliconBase
   components:
-  - type: Sprite
-    drawdepth: Mobs
   - type: LagCompensation
   - type: Reactive
     groups:
@@ -123,8 +121,6 @@
   abstract: true
   components:
   - type: NoSlip
-  - type: Sprite
-    noRot: true
   - type: GhostTakeoverAvailable
   - type: GhostRole
     makeSentient: true
@@ -165,7 +161,6 @@
     layers:
     - state: taxibot
       map: ["enum.VehicleVisualLayers.AutoAnimate"]
-    noRot: true
   - type: GhostRole
     name: ghost-role-information-taxibot-name
     description: ghost-role-information-taxibot-description
