@@ -320,8 +320,8 @@
     id: QuartermasterIDCard
     state: pda-qm
   - type: PdaBorderColor
-    borderColor: "#e39751"
-    accentVColor: "#a23e3e"
+    borderColor: "#8e5913"
+    accentVColor: "#d6b328"
   - type: Icon
     state: pda-qm
 
@@ -335,7 +335,7 @@
     id: CargoIDCard
     state: pda-cargo
   - type: PdaBorderColor
-    borderColor: "#e39751"
+    borderColor: "#a86a16"
   - type: Icon
     state: pda-cargo
 
@@ -349,8 +349,8 @@
     id: SalvageIDCard
     state: pda-miner
   - type: PdaBorderColor
-    borderColor: "#af9366"
-    accentVColor: "#8900c9"
+    borderColor: "#786243"
+    accentVColor: "#ad2aea"
   - type: Icon
     state: pda-miner
 
