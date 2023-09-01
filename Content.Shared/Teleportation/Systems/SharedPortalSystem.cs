@@ -50,7 +50,7 @@ public abstract class SharedPortalSystem : EntitySystem
     private void OnGetVerbs(EntityUid uid, PortalComponent component, GetVerbsEvent<AlternativeVerb> args)
     {
         // Traversal altverb for ghosts to use that bypasses normal functionality
-        if (!args.CanAccess || !HasComp<SharedGhostComponent>(args.User))
+        if (!args.CanAccess || !HasComp<GhostComponent>(args.User))
             return;
 
         // Don't use the verb with unlinked or with multi-output portals
