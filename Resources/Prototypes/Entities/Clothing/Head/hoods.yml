@@ -144,6 +144,36 @@
 
 - type: entity
   parent: ClothingHeadBase
+  id: ClothingHeadHatHoodIan
+  noSpawn: true
+  name: ian hood
+  description: A hood to complete the 'Good boy' look.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/iansuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/iansuit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
+  id: ClothingHeadHatHoodCarp
+  noSpawn: true
+  name: carp hood
+  description: A gnarly hood adorned with plastic space carp teeth.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hoods/carpsuit.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hoods/carpsuit.rsi
+  - type: Tag
+    tags:
+    - HidesHair
+
+- type: entity
+  parent: ClothingHeadBase
   id: ClothingHeadHatHoodMoth
   name: moth mask
   description: A mask in the form of a moths head is usually made of lightweight materials. It mimics the shape of a moths head with large eyes and long antennae. Such masks are often used in cosplay, or when shooting movies and videos.

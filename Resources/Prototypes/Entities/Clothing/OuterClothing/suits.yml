@@ -155,3 +155,35 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitIan
+  name: ian suit
+  description: Who's a good boy?
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.1
+    sprintModifier: 1.1
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodIan
+
+- type: entity
+  parent: ClothingOuterBase
+  id: ClothingOuterSuitCarp
+  name: carp suit
+  description: A special suit designed to give the wearer the agility of a space carp.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
+  - type: ClothingSpeedModifier
+    walkModifier: 1.20
+    sprintModifier: 1.20
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodCarp
