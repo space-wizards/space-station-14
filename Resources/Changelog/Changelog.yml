@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Made glass tiles look different, type: Tweak}
-  id: 4226
-  time: '2023-07-11T19:34:07.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
@@ -3019,3 +3014,9 @@ Entries:
       a whole slew of new mobs., type: Add}
   id: 4725
   time: '2023-09-01T03:15:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes now display material quantity in number of sheets., type: Tweak}
+  - {message: Ejecting materials from lathes now automatically stacks them., type: Tweak}
+  id: 4726
+  time: '2023-09-01T05:28:08.0000000+00:00'
