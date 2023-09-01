@@ -11,7 +11,7 @@
 - type: cargoProduct
   id: CargoQuartermasterHardsuit
   icon:
-    sprite: Clothing\Head\Hardsuits\qm.rsi
+    sprite: Clothing/Head/Hardsuits/qm.rsi
     state: icon
   product: CrateCargoQuartermasterHardsuit
   cost: 15000
