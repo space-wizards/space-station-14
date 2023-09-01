@@ -1,14 +1,4 @@
 Entries:
-- author: Velcroboy
-  changes:
-  - {message: Changed bookshelves to block vision., type: Tweak}
-  id: 4221
-  time: '2023-07-10T16:56:33.0000000+00:00'
-- author: Equivocateur
-  changes:
-  - {message: Removed sponge box from uplink pending rebalance, type: Remove}
-  id: 4222
-  time: '2023-07-10T18:31:11.0000000+00:00'
 - author: lzk228
   changes:
   - {message: 'Fixed: clown mask cannot be used for H.O.N.K. construction', type: Fix}
@@ -3014,3 +3004,14 @@ Entries:
   - {message: Borgs now have robotic speech verbs, type: Fix}
   id: 4720
   time: '2023-09-01T02:12:04.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix item drops mispredicting., type: Fix}
+  id: 4721
+  time: '2023-09-01T02:30:29.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Foldable objects (folding chairs, bodybags, wheelchairs) now function
+      again.', type: Fix}
+  id: 4722
+  time: '2023-09-01T02:30:40.0000000+00:00'
