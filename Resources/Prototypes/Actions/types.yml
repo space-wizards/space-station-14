@@ -104,15 +104,6 @@
   event: !type:ToggleClothingEvent
   
 - type: instantAction
-  id: ToggleCoatHood
-  name: action-name-hood
-  description: action-description-hood
-  itemIconStyle: BigItem
-  useDelay: 1
-  event: !type:ToggleClothingEvent
-  
-
-- type: instantAction
   id: CombatModeToggle
   name: action-name-combat
   description: action-description-combat
