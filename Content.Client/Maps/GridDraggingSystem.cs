@@ -18,7 +18,6 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
     [Dependency] private readonly IInputManager _inputManager = default!;
     [Dependency] private readonly IMapManager _mapManager = default!;
     [Dependency] private readonly InputSystem _inputSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public bool Enabled { get; set; }
 
@@ -67,7 +66,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             xform.MapID == _lastMousePosition.Value.MapId)
         {
             var tickTime = _gameTiming.TickPeriod;
-            var distance = _lastMousePosition.Value.Position - _transform.GetWorldPosition(xform);
+            var distance = _lastMousePosition.Value.Position - xform.WorldPosition;
             RaiseNetworkEvent(new GridDragVelocityRequest()
             {
                 Grid = _dragging.Value,
@@ -102,7 +101,7 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             if (!_mapManager.TryFindGridAt(mousePos, out var gridUid, out var grid))
                 return;
 
-            StartDragging(gridUid, _transform.GetInvWorldMatrix(gridUid).Transform(mousePos.Position));
+            StartDragging(gridUid, Transform(gridUid).InvWorldMatrix.Transform(mousePos.Position));
         }
 
         if (!TryComp<TransformComponent>(_dragging, out var xform))
@@ -117,12 +116,11 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
             return;
         }
 
-        var localToWorld = _transform.GetWorldMatrix(xform).Transform(_localPosition);
+        var localToWorld = xform.WorldMatrix.Transform(_localPosition);
 
-        if (localToWorld.EqualsApprox(mousePos.Position, 0.01f))
-            return;
+        if (localToWorld.EqualsApprox(mousePos.Position, 0.01f)) return;
 
-        var requestedGridOrigin = mousePos.Position - _transform.GetWorldRotation(xform).RotateVec(_localPosition);
+        var requestedGridOrigin = mousePos.Position - xform.WorldRotation.RotateVec(_localPosition);
         _lastMousePosition = new MapCoordinates(requestedGridOrigin, mousePos.MapId);
 
         RaiseNetworkEvent(new GridDragRequestPosition()

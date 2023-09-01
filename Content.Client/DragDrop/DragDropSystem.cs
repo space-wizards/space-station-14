@@ -44,7 +44,6 @@ public sealed class DragDropSystem : SharedDragDropSystem
     [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private ISawmill _sawmill = default!;
 
@@ -254,7 +253,9 @@ public sealed class DragDropSystem : SharedDragDropSystem
             // keep it on top of everything
             dragSprite.DrawDepth = (int) DrawDepth.Overlays;
             if (!dragSprite.NoRotation)
-                _transform.SetWorldRotation(_dragShadow.Value, _transform.GetWorldRotation(_draggedEntity.Value));
+            {
+                Transform(_dragShadow.Value).WorldRotation = Transform(_draggedEntity.Value).WorldRotation;
+            }
 
             // drag initiated
             return;
@@ -535,7 +536,7 @@ public sealed class DragDropSystem : SharedDragDropSystem
         if (Exists(_dragShadow))
         {
             var mousePos = _eyeManager.PixelToMap(_inputManager.MouseScreenPosition);
-            _transform.SetWorldPosition(_dragShadow.Value, mousePos.Position);
+            Transform(_dragShadow.Value).WorldPosition = mousePos.Position;
         }
     }
 }

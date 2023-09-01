@@ -76,7 +76,6 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly VomitSystem _vomitSystem = default!;
     [Dependency] private readonly WeldableSystem _weldableSystem = default!;
     [Dependency] private readonly SharedContentEyeSystem _eyeSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     // All smite verbs have names so invokeverb works.
     private void AddSmiteVerbs(GetVerbsEvent<Verb> args)
@@ -131,8 +130,8 @@ public sealed partial class AdminVerbSystem
                     Filter.PvsExcept(args.Target), true, PopupType.MediumCaution);
                 var board = Spawn("ChessBoard", xform.Coordinates);
                 var session = _tabletopSystem.EnsureSession(Comp<TabletopGameComponent>(board));
-                _transform.SetCoordinates(args.Target, EntityCoordinates.FromMap(_mapManager, session.Position));
-                _transform.SetWorldRotation(xform, Angle.Zero);
+                xform.Coordinates = EntityCoordinates.FromMap(_mapManager, session.Position);
+                xform.WorldRotation = Angle.Zero;
             },
             Impact = LogImpact.Extreme,
             Message = Loc.GetString("admin-smite-chess-dimension-description")

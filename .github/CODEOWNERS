@@ -8,7 +8,7 @@
 /Content.*/Toolshed/ @moonheart08
 **/Toolshed/** @moonheart08
 *Command.cs @moonheart08
-/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf @Chief-Engineer
+/Content.*/Administration/ @moonheart08 @DrSmugleaf @Chief-Engineer
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
 /Content.*/GameTicking/ @moonheart08 @EmoGarbage404
@@ -54,18 +54,7 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
-/Content.YAMLLinter @PaulRitter @DrSmugleaf
-/Content.*/Inventory @PaulRitter
-/Content.*/Arcade @PaulRitter
-/Content.*/Conveyor @PaulRitter
-/Content.*/Decals @PaulRitter
-/Content.*/Objectives @PaulRitter
-/Content.*/MachineLinking @PaulRitter
-/Content.*/Crayon @PaulRitter
-/Content.*/Clothing @PaulRitter
-
-# Be they Fluent translations or Freemarker templates, I know them both!
-*.ftl @RemieRichards
+/Content.YAMLLinter @DrSmugleaf
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf

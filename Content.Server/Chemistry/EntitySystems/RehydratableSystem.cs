@@ -10,7 +10,6 @@ public sealed class RehydratableSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popups = default!;
     [Dependency] private readonly SolutionContainerSystem _solutions = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -37,7 +36,7 @@ public sealed class RehydratableSystem : EntitySystem
 
         var target = Spawn(randomMob, Transform(uid).Coordinates);
 
-        _transform.AttachToGridOrMap(target);
+        Transform(target).AttachToGridOrMap();
         var ev = new GotRehydratedEvent(target);
         RaiseLocalEvent(uid, ref ev);
 

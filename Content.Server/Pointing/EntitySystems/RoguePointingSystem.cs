@@ -16,7 +16,6 @@ namespace Content.Server.Pointing.EntitySystems
         [Dependency] private readonly IRobustRandom _random = default!;
         [Dependency] private readonly ExplosionSystem _explosion = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         private EntityUid? RandomNearbyPlayer(EntityUid uid, RoguePointingArrowComponent? component = null, TransformComponent? transform = null)
         {
@@ -69,24 +68,24 @@ namespace Content.Server.Pointing.EntitySystems
 
                 if (component.TurningDelay > 0)
                 {
-                    var difference = _transform.GetWorldPosition(chasing) - _transform.GetWorldPosition(transform);
+                    var difference = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
                     var angle = difference.ToAngle();
                     var adjusted = angle.Degrees + 90;
                     var newAngle = Angle.FromDegrees(adjusted);
 
-                    _transform.SetWorldRotation(transform, newAngle);
+                    transform.WorldRotation = newAngle;
 
                     UpdateAppearance(uid, component, transform);
                     continue;
                 }
 
-                _transform.SetWorldRotation(transform, _transform.GetWorldRotation(transform) + Angle.FromDegrees(20));
+                transform.WorldRotation += Angle.FromDegrees(20);
 
                 UpdateAppearance(uid, component, transform);
 
-                var toChased = _transform.GetWorldPosition(chasing) - _transform.GetWorldPosition(transform);
+                var toChased = EntityManager.GetComponent<TransformComponent>(chasing).WorldPosition - transform.WorldPosition;
 
-                _transform.SetWorldPosition(transform, _transform.GetWorldPosition(transform) + toChased * frameTime * component.ChasingSpeed);
+                transform.WorldPosition += toChased * frameTime * component.ChasingSpeed;
 
                 component.ChasingTime -= frameTime;
 
