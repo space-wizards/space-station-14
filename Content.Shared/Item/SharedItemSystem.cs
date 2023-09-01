@@ -3,6 +3,7 @@ using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Stacks;
 using Content.Shared.Verbs;
+using Content.Shared.Examine;
 using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
@@ -26,6 +27,8 @@ public abstract class SharedItemSystem : EntitySystem
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
         SubscribeLocalEvent<ItemComponent, ComponentHandleState>(OnHandleState);
+
+        SubscribeLocalEvent<ItemComponent, ExaminedEvent>(OnExamine);
     }
 
     #region Public API
@@ -127,6 +130,12 @@ public abstract class SharedItemSystem : EntitySystem
             verb.Text = Loc.GetString("pick-up-verb-get-data-text");
 
         args.Verbs.Add(verb);
+    }
+
+    private void OnExamine(EntityUid uid, ItemComponent component, ExaminedEvent args)
+    {
+        args.PushMarkup(Loc.GetString("item-component-on-examine-size",
+            ("size", component.Size)));
     }
 
     /// <summary>
