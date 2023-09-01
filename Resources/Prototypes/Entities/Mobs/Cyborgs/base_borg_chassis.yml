@@ -193,3 +193,29 @@
     enabled: false
     groups:
     - AllAccess
+
+- type: entity
+  id: BaseBorgChassisSyndicate
+  parent: BaseBorgChassis
+  abstract: true
+  components:
+    - type: NpcFactionMember
+      factions:
+        - Syndicate
+    - type: Access
+      enabled: false
+      groups:
+        - Syndicate
+    - type: SiliconLawProvider
+      laws:
+        - Syndicate1
+        - Syndicate2
+        - Syndicate3
+        - Syndicate4
+    - type: IntrinsicRadioTransmitter
+      channels:
+        - Binary
+        - Syndicate
+    - type: ActiveRadio
+      channels:
+        - Syndicate
