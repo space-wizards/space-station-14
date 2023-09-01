@@ -1,9 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
-  id: 4227
-  time: '2023-07-11T19:34:21.0000000+00:00'
 - author: PuroSlavKing
   changes:
   - {message: Fixed SyndieDrobe adverts., type: Fix}
@@ -3020,3 +3015,8 @@ Entries:
   - {message: Ejecting materials from lathes now automatically stacks them., type: Tweak}
   id: 4726
   time: '2023-09-01T05:28:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed nukeops being able to buy job restricted items., type: Fix}
+  id: 4727
+  time: '2023-09-01T07:24:37.0000000+00:00'
