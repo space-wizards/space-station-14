@@ -1,6 +1,6 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 
 namespace Content.Server.Objectives.Requirements
 {
