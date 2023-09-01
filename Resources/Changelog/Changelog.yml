@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Fix spawning expeditions objectives in walls., type: Fix}
-  id: 4220
-  time: '2023-07-10T07:16:10.0000000+00:00'
 - author: Velcroboy
   changes:
   - {message: Changed bookshelves to block vision., type: Tweak}
@@ -3014,3 +3009,8 @@ Entries:
   - {message: Committing suicide no longer makes your body disappear., type: Fix}
   id: 4719
   time: '2023-09-01T00:46:05.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: Borgs now have robotic speech verbs, type: Fix}
+  id: 4720
+  time: '2023-09-01T02:12:04.0000000+00:00'
