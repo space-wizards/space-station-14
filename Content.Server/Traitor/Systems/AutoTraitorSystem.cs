@@ -1,7 +1,7 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Traitor.Components;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Shared.Map;
 
 namespace Content.Server.Traitor.Systems;
@@ -12,7 +12,6 @@ namespace Content.Server.Traitor.Systems;
 public sealed class AutoTraitorSystem : EntitySystem
 {
     [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
