@@ -49,7 +49,7 @@
         sprite: Mobs/Effects/brute_damage.rsi
         color: "#162581"
   - type: Speech
-    speechVerb: Insect # Spiders aren't insects but I guess this works since they'd likely make similar sounds anyways.
+    speechVerb: Arachnid
     speechSounds: Arachnid # TODO: Abuse my mic more.
   - type: Vocal
     sounds:

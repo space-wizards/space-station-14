@@ -493,6 +493,7 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
+        _joints.RefreshRelay(buckleUid);
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
         var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
         _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);
