@@ -5,6 +5,7 @@ using Content.Server.Ghost.Components;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
+using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
@@ -21,6 +22,7 @@ using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
@@ -29,6 +31,7 @@ namespace Content.Server.Ghost
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -61,9 +64,15 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+        }
+
+        private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
+        {
+
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -123,10 +132,15 @@ namespace Content.Server.Ghost
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
 
+            var booAction = new InstantAction(_prototype.Index<InstantActionPrototype>(component.BooAction));
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
+            if (booAction.UseDelay != null)
+                booAction.Cooldown = (time, time + booAction.UseDelay.Value);
+            _actions.AddAction(uid, booAction, null);
+
+            var hearingAction =
+                new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostHearingAction));
+            _actions.AddAction(uid, hearingAction, null);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -135,7 +149,7 @@ namespace Content.Server.Ghost
             if (!Terminating(uid))
             {
                 // Entity can't be seen by ghosts anymore.
-                if (EntityManager.TryGetComponent(component.Owner, out VisibilityComponent? visibility))
+                if (EntityManager.TryGetComponent(uid, out VisibilityComponent? visibility))
                 {
                     _visibilitySystem.RemoveLayer(visibility, (int) VisibilityFlags.Ghost, false);
                     _visibilitySystem.AddLayer(visibility, (int) VisibilityFlags.Normal, false);
@@ -148,7 +162,12 @@ namespace Content.Server.Ghost
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
 
-                _actions.RemoveAction(uid, component.Action);
+                var booAction = new InstantAction(_prototype.Index<InstantActionPrototype>(component.BooAction));
+                _actions.RemoveAction(uid, booAction);
+
+                var hearingAction =
+                    new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostHearingAction));
+                _actions.RemoveAction(uid, hearingAction);
             }
         }
 
