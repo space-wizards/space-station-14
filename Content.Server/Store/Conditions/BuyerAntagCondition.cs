@@ -1,10 +1,9 @@
-using Content.Server.Mind.Components;
-using Content.Server.Roles;
-using Content.Server.Traitor;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Store;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
 
-namespace Content.Shared.Store.Conditions;
+namespace Content.Server.Store.Conditions;
 
 /// <summary>
 /// Allows a store entry to be filtered out based on the user's antag role.
@@ -28,18 +27,22 @@ public sealed partial class BuyerAntagCondition : ListingCondition
     public override bool Condition(ListingConditionArgs args)
     {
         var ent = args.EntityManager;
+        var minds = ent.System<SharedMindSystem>();
 
-        if (!ent.TryGetComponent<MindContainerComponent>(args.Buyer, out var mind) || mind.Mind == null)
+        if (!minds.TryGetMind(args.Buyer, out var mindId, out var mind))
             return true;
+
+        var roleSystem = ent.System<SharedRoleSystem>();
+        var roles = roleSystem.MindGetAllRoles(mindId);
 
         if (Blacklist != null)
         {
-            foreach (var role in mind.Mind.AllRoles)
+            foreach (var role in roles)
             {
-                if (role is not AntagonistRole blacklistantag)
+                if (role.Component is not AntagonistRoleComponent blacklistantag)
                     continue;
 
-                if (Blacklist.Contains(blacklistantag.Prototype.ID))
+                if (blacklistantag.PrototypeId != null && Blacklist.Contains(blacklistantag.PrototypeId))
                     return false;
             }
         }
@@ -47,12 +50,12 @@ public sealed partial class BuyerAntagCondition : ListingCondition
         if (Whitelist != null)
         {
             var found = false;
-            foreach (var role in mind.Mind.AllRoles)
+            foreach (var role in roles)
             {
-                if (role is not AntagonistRole antag)
+                if (role.Component is not AntagonistRoleComponent antag)
                     continue;
 
-                if (Whitelist.Contains(antag.Prototype.ID))
+                if (antag.PrototypeId != null && Whitelist.Contains(antag.PrototypeId))
                     found = true;
             }
             if (!found)

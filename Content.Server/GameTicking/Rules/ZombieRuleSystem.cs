@@ -4,9 +4,6 @@ using Content.Server.Actions;
 using Content.Server.Chat.Managers;
 using Content.Server.Chat.Systems;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
 using Content.Server.Popups;
 using Content.Server.Preferences.Managers;
 using Content.Server.Roles;
@@ -17,6 +14,7 @@ using Content.Server.Zombies;
 using Content.Shared.Actions.ActionTypes;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
@@ -47,7 +45,8 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
     [Dependency] private readonly ActionsSystem _action = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
 
@@ -97,10 +96,9 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
             {
                 var meta = MetaData(survivor);
                 var username = string.Empty;
-                if (TryComp<MindContainerComponent>(survivor, out var mindcomp))
+                if (_mindSystem.TryGetMind(survivor, out _, out var mind) && mind.Session != null)
                 {
-                    if (mindcomp.Mind != null && mindcomp.Mind.Session != null)
-                        username = mindcomp.Mind.Session.Name;
+                    username = mind.Session.Name;
                 }
 
                 ev.AddLine(Loc.GetString("zombie-round-end-user-was-survivor",
@@ -312,12 +310,15 @@ public sealed class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 
             prefList.Remove(zombie);
             playerList.Remove(zombie);
-            if (zombie.Data.ContentData()?.Mind is not { } mind || mind.OwnedEntity is not { } ownedEntity)
+            if (!_mindSystem.TryGetMind(zombie, out var mindId, out var mind) ||
+                mind.OwnedEntity is not { } ownedEntity)
+            {
                 continue;
+            }
 
             totalInfected++;
 
-            _mindSystem.AddRole(mind, new ZombieRole(mind, _prototypeManager.Index<AntagPrototype>(component.PatientZeroPrototypeId)));
+            _roles.MindAddRole(mindId, new ZombieRoleComponent { PrototypeId = component.PatientZeroPrototypeId });
 
             var pending = EnsureComp<PendingZombieComponent>(ownedEntity);
             pending.GracePeriod = _random.Next(component.MinInitialInfectedGrace, component.MaxInitialInfectedGrace);
