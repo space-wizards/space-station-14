@@ -44,6 +44,7 @@
     damage:
       types:
         Blunt: 10
+  - type: DoorPrying
 
 - type: entity
   name: syndicate jaws of life
@@ -78,3 +79,4 @@
     damage:
       types:
         Blunt: 14
+  - type: DoorPrying

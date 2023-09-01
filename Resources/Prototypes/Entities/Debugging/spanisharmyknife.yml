@@ -24,6 +24,7 @@
   - type: Tool
     qualities:
       - Prying
+  - type: DoorPrying
   - type: MultipleTool
     statusShowBehavior: true
     entries:

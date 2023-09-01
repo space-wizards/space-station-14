@@ -34,6 +34,7 @@ using Content.Shared.Weapons.Melee;
 using Content.Shared.Zombies;
 using Robust.Shared.Audio;
 using System.Linq;
+using Content.Shared.Doors.Prying.Components;
 
 namespace Content.Server.Zombies
 {
@@ -160,11 +161,11 @@ namespace Content.Server.Zombies
                 melee.Damage = dspec;
 
                 // humanoid zombies get to pry open doors and shit
-                var tool = EnsureComp<ToolComponent>(target);
-                tool.SpeedModifier = 0.75f;
-                tool.Qualities = new ("Prying");
-                tool.UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
-                Dirty(tool);
+                var pryComp = EnsureComp<DoorPryingComponent>(target);
+                pryComp.SpeedModifier = 0.75f;
+                pryComp.PryPowered = true;
+
+                Dirty(pryComp);
             }
 
             Dirty(melee);
@@ -230,7 +231,7 @@ namespace Content.Server.Zombies
             else
             {
                 var htn = EnsureComp<HTNComponent>(target);
-                htn.RootTask = new HTNCompoundTask() {Task = "SimpleHostileCompound"};
+                htn.RootTask = new HTNCompoundTask() { Task = "SimpleHostileCompound" };
                 htn.Blackboard.SetValue(NPCBlackboard.Owner, target);
                 _npc.WakeNPC(target, htn);
             }

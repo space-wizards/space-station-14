@@ -261,7 +261,7 @@ namespace Content.Server.Doors.Systems
             List<AtmosDirection> directions = new(4);
             for (var i = 0; i < Atmospherics.Directions; i++)
             {
-                var dir = (AtmosDirection) (1 << i);
+                var dir = (AtmosDirection)(1 << i);
                 if (airtight.AirBlockedDirection.HasFlag(dir))
                 {
                     directions.Add(dir);

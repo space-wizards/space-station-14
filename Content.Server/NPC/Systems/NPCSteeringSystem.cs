@@ -30,6 +30,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Threading;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Shared.Doors.Prying.Systems;
 
 namespace Content.Server.NPC.Systems;
 
@@ -63,6 +64,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedCombatModeSystem _combat = default!;
+    [Dependency] private readonly DoorPryingSystem _pryingSystem = default!;
 
     private EntityQuery<FixturesComponent> _fixturesQuery;
     private EntityQuery<MovementSpeedModifierComponent> _modifierQuery;
@@ -147,7 +149,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 
     private void OnDebugRequest(RequestNPCSteeringDebugEvent msg, EntitySessionEventArgs args)
     {
-        if (!_admin.IsAdmin((IPlayerSession) args.SenderSession))
+        if (!_admin.IsAdmin((IPlayerSession)args.SenderSession))
             return;
 
         if (msg.Enabled)
@@ -439,7 +441,7 @@ public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
         if (targetPoly != null &&
             steering.Coordinates.Position.Equals(Vector2.Zero) &&
             TryComp<PhysicsComponent>(uid, out var physics) &&
-            _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup) physics.CollisionMask))
+            _interaction.InRangeUnobstructed(uid, steering.Coordinates.EntityId, range: 30f, (CollisionGroup)physics.CollisionMask))
         {
             steering.CurrentPath.Clear();
             steering.CurrentPath.Enqueue(targetPoly);
