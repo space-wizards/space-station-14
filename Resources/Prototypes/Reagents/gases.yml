@@ -272,9 +272,6 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 0.5
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
         type: Local
         visualType: Medium
         messages: [ "effect-sleepy" ]
@@ -284,9 +281,6 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 1
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
         walkSpeedModifier: 0.65
         sprintSpeedModifier: 0.65
       - !type:GenericStatusEffect
@@ -294,9 +288,6 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 1.8
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
         key: ForcedSleep
         component: ForcedSleeping
         time: 3
@@ -306,9 +297,6 @@
         - !type:ReagentThreshold
           reagent: NitrousOxide
           min: 3.5
-        - !type:OrganType
-          type: Slime
-          shouldHave: false
         ignoreResistances: true
         damage:
           types:
