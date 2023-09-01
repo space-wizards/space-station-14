@@ -1,13 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: Fewer expeditions are offered to the station at a time., type: Tweak}
-  - {message: Salvage expeditions are now generally shorter., type: Tweak}
-  - {message: Adjusted some of the rewards for expeditions., type: Tweak}
-  id: 4229
-  time: '2023-07-11T23:56:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: 'Intercoms now have a menu for selecting the channel, toggling the microphone,
       and toggling the speakers.', type: Add}
   - {message: 'Intercoms now come with speakers, which allow you to hear what people
@@ -3021,3 +3014,8 @@ Entries:
     type: Tweak}
   id: 4728
   time: '2023-09-01T11:13:00.0000000+00:00'
+- author: Varen
+  changes:
+  - {message: Examining an item now shows its size., type: Add}
+  id: 4729
+  time: '2023-09-01T15:09:59.0000000+00:00'
