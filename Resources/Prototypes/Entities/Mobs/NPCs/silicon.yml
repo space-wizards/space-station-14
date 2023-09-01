@@ -203,8 +203,10 @@
     range: 10
     volume: -10
     enabled: true
+  - type: Speech
+    speechVerb: Robotic
   - type: Construction
-    graph: TaxiBot
+    graph: SupplyBot
     node: bot
   - type: UnpoweredFlashlight
     toggleAction:
