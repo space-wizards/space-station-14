@@ -2,7 +2,6 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using Content.Shared.NPC;
-using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Input;
 using Robust.Client.ResourceManagement;
@@ -21,7 +20,6 @@ namespace Content.Client.NPC
         [Dependency] private readonly IMapManager _mapManager = default!;
         [Dependency] private readonly IResourceCache _cache = default!;
         [Dependency] private readonly NPCSteeringSystem _steering = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         public PathfindingDebugMode Modes
         {
@@ -138,7 +136,6 @@ namespace Content.Client.NPC
         private readonly IInputManager _inputManager;
         private readonly IMapManager _mapManager;
         private readonly PathfindingSystem _system;
-        private readonly SharedTransformSystem _transform;
 
         public override OverlaySpace Space => OverlaySpace.ScreenSpace | OverlaySpace.WorldSpace;
 
@@ -157,7 +154,6 @@ namespace Content.Client.NPC
             _inputManager = inputManager;
             _mapManager = mapManager;
             _system = system;
-            _transform = entManager.System<TransformSystem>();
             _font = new VectorFont(cache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
         }
 
@@ -191,7 +187,7 @@ namespace Content.Client.NPC
                     if (found || !_system.Breadcrumbs.TryGetValue(grid.Owner, out var crumbs) || !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     var localAABB = invWorldMatrix.TransformBox(aabb.Enlarged(float.Epsilon - SharedPathfindingSystem.ChunkSize));
 
                     foreach (var chunk in crumbs)
@@ -275,8 +271,9 @@ namespace Content.Client.NPC
                     return;
                 }
 
-                var invGridMatrix = _transform.GetInvWorldMatrix(gridXform);
+                var invGridMatrix = gridXform.InvWorldMatrix;
                 DebugPathPoly? nearest = null;
+                var nearestDistance = float.MaxValue;
 
                 foreach (var poly in tile)
                 {
@@ -342,7 +339,7 @@ namespace Content.Client.NPC
                         continue;
                     }
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -397,7 +394,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(aabb);
 
@@ -431,7 +428,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invMatrix.TransformBox(aabb);
 
@@ -485,7 +482,7 @@ namespace Content.Client.NPC
                         !xformQuery.TryGetComponent(grid.Owner, out var gridXform))
                         continue;
 
-                    var (_, _, worldMatrix, invWorldMatrix) = _transform.GetWorldPositionRotationMatrixWithInv(gridXform);
+                    var (_, _, worldMatrix, invWorldMatrix) = gridXform.GetWorldPositionRotationMatrixWithInv();
                     worldHandle.SetTransform(worldMatrix);
                     var localAABB = invWorldMatrix.TransformBox(args.WorldBounds);
 
@@ -512,7 +509,7 @@ namespace Content.Client.NPC
                         if (!_entManager.TryGetComponent<TransformComponent>(node.GraphUid, out var graphXform))
                             continue;
 
-                        worldHandle.SetTransform(_transform.GetWorldMatrix(graphXform));
+                        worldHandle.SetTransform(graphXform.WorldMatrix);
                         worldHandle.DrawRect(node.Box, Color.Orange.WithAlpha(0.10f));
                     }
                 }
@@ -534,7 +531,7 @@ namespace Content.Client.NPC
                                 continue;
 
                             matrix = node.GraphUid;
-                            worldHandle.SetTransform(_transform.GetWorldMatrix(graphXform));
+                            worldHandle.SetTransform(graphXform.WorldMatrix);
                         }
 
                         worldHandle.DrawRect(node.Box, new Color(0f, cost / highestGScore, 1f - (cost / highestGScore), 0.10f));

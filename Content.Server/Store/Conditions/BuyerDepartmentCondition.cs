@@ -37,38 +37,35 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
             return true;
 
         var jobs = ent.System<SharedJobSystem>();
-        if (jobs.MindTryGetJob(mindId, out var job, out _))
+        jobs.MindTryGetJob(mindId, out var job, out _);
+
+        if (Blacklist != null && job?.PrototypeId != null)
         {
-            if (Blacklist != null)
+            foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            {
+                if (department.Roles.Contains(job.PrototypeId) && Blacklist.Contains(department.ID))
+                    return false;
+            }
+        }
+
+        if (Whitelist != null)
+        {
+            var found = false;
+
+            if (job?.PrototypeId != null)
             {
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    if (job.PrototypeId == null ||
-                        !department.Roles.Contains(job.PrototypeId) ||
-                        !Blacklist.Contains(department.ID))
-                        continue;
-
-                    return false;
+                    if (department.Roles.Contains(job.PrototypeId) && Whitelist.Contains(department.ID))
+                    {
+                        found = true;
+                        break;
+                    }
                 }
             }
 
-            if (Whitelist != null)
-            {
-                var found = false;
-                foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-                {
-                    if (job.PrototypeId == null ||
-                        !department.Roles.Contains(job.PrototypeId) ||
-                        !Whitelist.Contains(department.ID))
-                        continue;
-
-                    found = true;
-                    break;
-                }
-
-                if (!found)
-                    return false;
-            }
+            if (!found)
+                return false;
         }
 
         return true;
