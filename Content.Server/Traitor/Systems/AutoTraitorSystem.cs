@@ -2,7 +2,6 @@ using Content.Server.GameTicking.Rules;
 using Content.Server.Traitor.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
-using Robust.Shared.Map;
 
 namespace Content.Server.Traitor.Systems;
 
@@ -11,24 +10,14 @@ namespace Content.Server.Traitor.Systems;
 /// </summary>
 public sealed class AutoTraitorSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        SubscribeLocalEvent<AutoTraitorComponent, ComponentStartup>(OnStartup);
         SubscribeLocalEvent<AutoTraitorComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AutoTraitorComponent, MindAddedMessage>(OnMindAdded);
-    }
-
-    // workaround for #19409
-    private void OnStartup(EntityUid uid, AutoTraitorComponent comp, ComponentStartup args)
-    {
-        var map = Transform(uid).MapID;
-        if (_map.IsMapInitialized(map))
-            TryMakeTraitor(uid, comp);
     }
 
     private void OnMapInit(EntityUid uid, AutoTraitorComponent comp, MapInitEvent args)
