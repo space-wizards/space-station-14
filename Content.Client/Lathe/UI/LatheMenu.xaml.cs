@@ -153,7 +153,7 @@ public sealed partial class LatheMenu : DefaultWindow
                 var adjustedAmount = SharedLatheSystem.AdjustMaterial(amount, prototype.ApplyMaterialDiscount, component.MaterialUseMultiplier);
 
                 sb.Append(Loc.GetString("lathe-menu-tooltip-display",
-                    ("amount", FixedPoint2.New(adjustedAmount) / 100f),
+                    ("amount", MathF.Round(adjustedAmount / 100f, 2)),
                     ("material", Loc.GetString(proto.Name))));
             }
 
@@ -199,7 +199,6 @@ public sealed partial class LatheMenu : DefaultWindow
         Icon.Texture = recipe.Icon == null
             ? _spriteSystem.GetPrototypeIcon(recipe.Result).Default
             : _spriteSystem.Frame0(recipe.Icon);
-        FabricatingActiveLabel.Text = "Fabricating...";
         NameLabel.Text = $"{recipe.Name}";
     }
 }

@@ -6,13 +6,14 @@ lathe-menu-search-designs = Search designs
 lathe-menu-search-filter = Filter
 lathe-menu-amount = Amount:
 lathe-menu-material-display = {$material} ({ $amount ->
-        [1] {$amount} sheet
-        *[other] {$amount} sheets
+        [1] {NATURALFIXED($amount, 2)} sheet
+        *[other] {NATURALFIXED($amount, 2)} sheets
     })
 lathe-menu-tooltip-display = { $amount ->
-        [1] {$amount} sheet
-        *[other] {$amount} sheets
+        [1] {NATURALFIXED($amount, 2)} sheet
+        *[other] {NATURALFIXED($amount, 2)} sheets
     } of {$material}
 lathe-menu-no-materials-message = No materials loaded.
+lathe-menu-fabricating-message = Fabricating...
 lathe-menu-materials-title = Materials
 lathe-menu-queue-title = Build Queue

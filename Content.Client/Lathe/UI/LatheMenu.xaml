@@ -65,7 +65,7 @@
                 </BoxContainer>
             </BoxContainer>
         </BoxContainer>
-
+        <BoxContainer MinWidth="5"/>
         <!-- Right Col-->
         <BoxContainer
             Orientation="Vertical"
@@ -98,10 +98,10 @@
                             <gfx:StyleBoxFlat BackgroundColor="#408040" />
                         </PanelContainer.PanelOverride>
                         <Label
-                            Name="FabricatingActiveLabel"
                             RectClipContent="False"
                             HorizontalAlignment="Left"
-                            Margin="5 0 0 0">
+                            Margin="5 0 0 0"
+                            Text="{Loc 'lathe-menu-fabricating-message'}">
                         </Label>
                         <TextureRect
                             Name="Icon"
