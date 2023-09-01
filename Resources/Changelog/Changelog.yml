@@ -1,9 +1,4 @@
 Entries:
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed SyndieDrobe adverts., type: Fix}
-  id: 4228
-  time: '2023-07-11T23:56:24.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Fewer expeditions are offered to the station at a time., type: Tweak}
@@ -3020,3 +3015,9 @@ Entries:
   - {message: Fixed nukeops being able to buy job restricted items., type: Fix}
   id: 4727
   time: '2023-09-01T07:24:37.0000000+00:00'
+- author: carteblanche4me
+  changes:
+  - {message: Hardsuits could toggle on/off not only helmets but different pieces.,
+    type: Tweak}
+  id: 4728
+  time: '2023-09-01T11:13:00.0000000+00:00'
