@@ -32,6 +32,7 @@ namespace Content.Server.Ghost
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private readonly IPrototypeManager _prototype = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
         [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -65,9 +66,22 @@ namespace Content.Server.Ghost
             SubscribeNetworkEvent<GhostWarpToTargetRequestEvent>(OnGhostWarpToTargetRequest);
 
             SubscribeLocalEvent<GhostComponent, BooActionEvent>(OnActionPerform);
+            SubscribeLocalEvent<GhostComponent, ToggleGhostHearingActionEvent>(OnGhostHearingAction);
             SubscribeLocalEvent<GhostComponent, InsertIntoEntityStorageAttemptEvent>(OnEntityStorageInsertAttempt);
 
             SubscribeLocalEvent<RoundEndTextAppendEvent>(_ => MakeVisible(true));
+        }
+
+        private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
+        {
+            component.CanGhostHear = !component.CanGhostHear;
+
+            var str = component.CanGhostHear
+                ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
+                : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
+
+            _popup.PopupEntity(str, uid, uid);
+            Dirty(uid, component);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
@@ -127,10 +141,16 @@ namespace Content.Server.Ghost
             var time = _gameTiming.CurTime;
             component.TimeOfDeath = time;
 
+            var booAction = new InstantAction(_prototype.Index<InstantActionPrototype>(component.BooAction));
+
             // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
+            if (booAction.UseDelay != null)
+                booAction.Cooldown = (time, time + booAction.UseDelay.Value);
+            _actions.AddAction(uid, booAction, null);
+
+            var hearingAction =
+                new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostHearingAction));
+            _actions.AddAction(uid, hearingAction, null);
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -152,7 +172,12 @@ namespace Content.Server.Ghost
                     eye.VisibilityMask &= ~(uint) VisibilityFlags.Ghost;
                 }
 
-                _actions.RemoveAction(uid, component.Action);
+                var booAction = new InstantAction(_prototype.Index<InstantActionPrototype>(component.BooAction));
+                _actions.RemoveAction(uid, booAction);
+
+                var hearingAction =
+                    new InstantAction(_prototype.Index<InstantActionPrototype>(component.ToggleGhostHearingAction));
+                _actions.RemoveAction(uid, hearingAction);
             }
         }
 
