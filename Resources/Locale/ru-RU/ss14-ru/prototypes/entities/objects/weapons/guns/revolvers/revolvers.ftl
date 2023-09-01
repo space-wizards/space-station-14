@@ -21,3 +21,6 @@ ent-WeaponRevolverPirate = пиратский револьвер
 ent-WeaponPistolCHIMP = М.А.Р.Т.Ы.Х.
     .desc = То, что это маленький М.А.Р.Т.Ы.Х., не означает, что он не может бить как М.А.К.А.К.
     .suffix = Револьвер
+ent-WeaponPistolCHIMPUpgraded = М.А.Р.Т.Ы.Х.
+    .desc = Этот М.А.Р.Т.Ы.Х. заряжен больше обычного.
+    .suffix = Револьвер, Улучшенный

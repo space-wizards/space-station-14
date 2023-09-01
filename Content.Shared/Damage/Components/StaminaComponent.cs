@@ -40,6 +40,12 @@ public sealed class StaminaComponent : Component
     public float CritThreshold = 100f;
 
     /// <summary>
+    /// How long will this mob be stunned for?
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("stunTime")]
+    public TimeSpan StunTime = TimeSpan.FromSeconds(6);
+
+    /// <summary>
     /// To avoid continuously updating our data we track the last time we updated so we can extrapolate our current stamina.
     /// </summary>
     [DataField("nextUpdate", customTypeSerializer:typeof(TimeOffsetSerializer))]

@@ -272,6 +272,55 @@
     - sprite: Mobs/Customization/human_hair.rsi
       state: cia
 - type: marking
+  id: HumanHairClassicAfro
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicafro
+- type: marking
+  id: HumanHairClassicBigAfro
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicbigafro
+- type: marking
+  id: HumanHairClassicCia
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classiccia
+- type: marking
+  id: HumanHairClassicFloorlengthBedhead
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicfloorlength_bedhead
+- type: marking
+  id: HumanHairClassicModern
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicmodern
+- type: marking
+  id: HumanHairClassicMulder
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicmulder
+- type: marking
+  id: HumanHairClassicWisp
+  bodyPart: Hair
+  markingCategory: Hair
+  sprites:
+    - sprite: Mobs/Customization/human_hair.rsi
+      state: classicwisp
+- type: marking
   id: HumanHairCoffeehouse
   bodyPart: Hair
   markingCategory: Hair

@@ -17,6 +17,11 @@ public sealed class SpawnPointComponent : Component
     public SpawnPointType SpawnType { get; } = SpawnPointType.Unset;
 
     public JobPrototype? Job => string.IsNullOrEmpty(_jobId) ? null : _prototypeManager.Index<JobPrototype>(_jobId);
+
+    public override string ToString()
+    {
+        return $"{_jobId} {SpawnType}";
+    }
 }
 
 public enum SpawnPointType
