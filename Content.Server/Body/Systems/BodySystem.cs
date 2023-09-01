@@ -4,6 +4,7 @@ using Content.Server.Body.Components;
 using Content.Server.GameTicking;
 using Content.Server.Humanoid;
 using Content.Server.Kitchen.Components;
+using Content.Server.Mind;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Organ;
 using Content.Shared.Body.Part;
@@ -28,8 +29,7 @@ public sealed class BodySystem : SharedBodySystem
     [Dependency] private readonly HumanoidAppearanceSystem _humanoidSystem = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private readonly MindSystem _mindSystem = default!;
 
     public override void Initialize()
     {
@@ -127,7 +127,7 @@ public sealed class BodySystem : SharedBodySystem
             return;
 
         // Don't microwave animals, kids
-        _transform.AttachToGridOrMap(uid);
+        Transform(uid).AttachToGridOrMap();
         GibBody(uid, false, component);
 
         args.Handled = true;
@@ -209,7 +209,7 @@ public sealed class BodySystem : SharedBodySystem
                     else
                     {
                         cont.Remove(ent, EntityManager, force: true);
-                        _transform.SetCoordinates(ent, coordinates);
+                        Transform(ent).Coordinates = coordinates;
                         ent.RandomOffset(0.25f);
                     }
                 }
