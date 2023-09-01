@@ -1,34 +1,16 @@
 - type: entity
-  parent: Clothing
+  parent: ClothingBackpack
   id: ClothingBackpackDuffel
   name: duffel bag
   description: A large duffel bag for holding extra things.
   components:
   - type: Sprite
     sprite: Clothing/Back/Duffels/duffel.rsi
-    state: icon
-  - type: Item
-    size: 9999
-  - type: Clothing
-    quickEquip: false
-    slots:
-    - back
   - type: Storage
     capacity: 120
-  - type: ContainerContainer
-    containers:
-      storagebase: !type:Container
-        ents: []
   - type: ClothingSpeedModifier
     walkModifier: 1
     sprintModifier: 0.9
-  - type: UserInterface
-    interfaces:
-    - key: enum.StorageUiKey.Key
-      type: StorageBoundUserInterface
-  # to prevent bag open/honk spam
-  - type: UseDelay
-    delay: 0.5
 
 - type: entity
   parent: ClothingBackpackDuffel

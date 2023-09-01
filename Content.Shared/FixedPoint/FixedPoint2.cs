@@ -1,6 +1,7 @@
 using System.Globalization;
 using System.Linq;
 using Robust.Shared.Serialization;
+using Robust.Shared.Utility;
 
 namespace Content.Shared.FixedPoint
 {
@@ -13,14 +14,23 @@ namespace Content.Shared.FixedPoint
     {
         public int Value { get; private set; }
         private const int Shift = 2;
+        private const int ShiftConstant = 100; // Must be equal to pow(10, Shift)
 
         public static FixedPoint2 MaxValue { get; } = new(int.MaxValue);
         public static FixedPoint2 Epsilon { get; } = new(1);
         public static FixedPoint2 Zero { get; } = new(0);
 
+#if DEBUG
+        static FixedPoint2()
+        {
+            // ReSharper disable once CompareOfFloatsByEqualityOperator
+            DebugTools.Assert(Math.Pow(10, Shift) == ShiftConstant, "ShiftConstant must be equal to pow(10, Shift)");
+        }
+#endif
+
         private readonly double ShiftDown()
         {
-            return Value / Math.Pow(10, Shift);
+            return Value / (double) ShiftConstant;
         }
 
         private FixedPoint2(int value)
@@ -30,24 +40,27 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 New(int value)
         {
-            return new(value * (int) Math.Pow(10, Shift));
+            return new(value * ShiftConstant);
         }
 
         public static FixedPoint2 FromCents(int value) => new(value);
 
         public static FixedPoint2 New(float value)
         {
-            return new(FromFloat(value));
+            return new((int) MathF.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));
         }
 
-        private static int FromFloat(float value)
+        /// <summary>
+        /// Create the closest <see cref="FixedPoint2"/> for a float value, always rounding up.
+        /// </summary>
+        public static FixedPoint2 NewCeiling(float value)
         {
-            return (int) MathF.Round(value * MathF.Pow(10, Shift), MidpointRounding.AwayFromZero);
+            return new((int) MathF.Ceiling(value * ShiftConstant));
         }
 
         public static FixedPoint2 New(double value)
         {
-            return new((int) Math.Round(value * Math.Pow(10, Shift), MidpointRounding.AwayFromZero));
+            return new((int) Math.Round(value * ShiftConstant, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 New(string value)
@@ -72,7 +85,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint2 b)
         {
-            return new((int) MathF.Round(b.Value * a.Value / MathF.Pow(10, Shift), MidpointRounding.AwayFromZero));
+            return new((int) MathF.Round(b.Value * a.Value / (float) ShiftConstant, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator *(FixedPoint2 a, float b)
@@ -92,7 +105,7 @@ namespace Content.Shared.FixedPoint
 
         public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint2 b)
         {
-            return new((int) MathF.Round((MathF.Pow(10, Shift) * a.Value) / b.Value, MidpointRounding.AwayFromZero));
+            return new((int) MathF.Round((ShiftConstant * a.Value) / (float) b.Value, MidpointRounding.AwayFromZero));
         }
 
         public static FixedPoint2 operator /(FixedPoint2 a, float b)
@@ -253,7 +266,7 @@ namespace Content.Shared.FixedPoint
             if (value == "MaxValue")
                 Value = int.MaxValue;
             else
-                Value = FromFloat(FloatFromString(value));
+                this = New(FloatFromString(value));
         }
 
         public override readonly string ToString() => $"{ShiftDown().ToString(CultureInfo.InvariantCulture)}";

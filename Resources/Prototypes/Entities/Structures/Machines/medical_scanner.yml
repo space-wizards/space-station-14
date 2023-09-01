@@ -78,7 +78,7 @@
     board: MedicalScannerMachineCircuitboard
   - type: WiresPanel
   - type: Wires
-    BoardName: "MedicalScanner"
+    BoardName: wires-board-name-medicalscanner
     LayoutId: MedicalScanner
   - type: Appearance
   - type: Climbable
