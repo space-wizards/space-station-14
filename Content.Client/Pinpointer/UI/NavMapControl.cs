@@ -20,7 +20,6 @@ namespace Content.Client.Pinpointer.UI;
 public sealed class NavMapControl : MapGridControl
 {
     [Dependency] private readonly IEntityManager _entManager = default!;
-    private readonly SharedTransformSystem _transform;
 
     public EntityUid? MapUid;
 
@@ -53,9 +52,6 @@ public sealed class NavMapControl : MapGridControl
     public NavMapControl() : base(8f, 128f, 48f)
     {
         IoCManager.InjectDependencies(this);
-
-        _transform = _entManager.System<SharedTransformSystem>();
-
         RectClipContent = true;
         HorizontalExpand = true;
         VerticalExpand = true;
@@ -330,7 +326,7 @@ public sealed class NavMapControl : MapGridControl
 
                 if (mapPos.MapId != MapId.Nullspace)
                 {
-                    var position = _transform.GetInvWorldMatrix(xform).Transform(mapPos.Position) - offset;
+                    var position = xform.InvWorldMatrix.Transform(mapPos.Position) - offset;
                     position = Scale(new Vector2(position.X, -position.Y));
 
                     handle.DrawCircle(position, MinimapScale / 2f, value.Color);

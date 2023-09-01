@@ -13,7 +13,6 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private readonly IConGroupController _admin = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private readonly HashSet<ICommonSession> _draggers = new();
 
@@ -66,11 +65,10 @@ public sealed class GridDraggingSystem : SharedGridDraggingSystem
         if (args.SenderSession is not IPlayerSession playerSession ||
             !_admin.CanCommand(playerSession, CommandName) ||
             !Exists(msg.Grid) ||
-            Deleted(msg.Grid))
-        {
-            return;
-        }
+            Deleted(msg.Grid)) return;
 
-        _transform.SetWorldPosition(msg.Grid, msg.WorldPosition);
+        var gridXform = Transform(msg.Grid);
+
+        gridXform.WorldPosition = msg.WorldPosition;
     }
 }

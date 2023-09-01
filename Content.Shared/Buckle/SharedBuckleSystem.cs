@@ -65,7 +65,7 @@ public abstract partial class SharedBuckleSystem : EntitySystem
 
         var buckleTransform = Transform(buckleUid);
 
-        _transformSystem.SetCoordinates(buckleUid, buckleTransform, new EntityCoordinates(strapUid, strapComp.BuckleOffset));
+        buckleTransform.Coordinates = new EntityCoordinates(strapUid, strapComp.BuckleOffset);
 
         // Buckle subscribes to move for <reasons> so this might fail.
         // TODO: Make buckle not do that.

@@ -96,7 +96,7 @@
   event: !type:UseDnaScramblerImplantEvent
 
 - type: instantAction
-  id: ToggleSuitHelmet
+  id: ToggleSuitPiece
   name: action-name-hardsuit
   description: action-description-hardsuit
   itemIconStyle: BigItem

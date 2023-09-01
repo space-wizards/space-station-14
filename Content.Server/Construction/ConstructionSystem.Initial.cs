@@ -31,7 +31,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
         [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -516,7 +515,7 @@ namespace Content.Server.Construction
             var xform = Transform(structure);
             var wasAnchored = xform.Anchored;
             xform.Anchored = false;
-            _transform.SetCoordinates(structure, xform, ev.Location);
+            xform.Coordinates = ev.Location;
             xform.LocalRotation = constructionPrototype.CanRotate ? ev.Angle : Angle.Zero;
             xform.Anchored = wasAnchored;
 

@@ -53,6 +53,8 @@
   - type: MovementSpeedModifier
     baseWalkSpeed : 1.5
     baseSprintSpeed : 3.5
+  - type: Speech
+    speechVerb: Plant
   - type: Vocal
     sounds:
       Male: UnisexDiona
