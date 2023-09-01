@@ -1,10 +1,10 @@
-namespace Content.Client.Overlays;
-
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Overlays;
 using Content.Shared.StatusIcon;
 using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
+
+namespace Content.Client.Overlays;
 
 public sealed class ShowHungerIconsSystem : EquipmentHudSystem<ShowHungerIconsComponent>
 {

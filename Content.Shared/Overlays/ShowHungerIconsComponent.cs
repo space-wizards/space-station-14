@@ -1,6 +1,6 @@
-namespace Content.Shared.Overlays;
-
 using Robust.Shared.GameStates;
+
+namespace Content.Shared.Overlays;
 
 /// <summary>
 /// This component allows you to see the hungriness of mobs.
