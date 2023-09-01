@@ -8,8 +8,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateTin
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
   - type: SolutionContainerManager
@@ -36,8 +34,6 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
     sprite: Objects/Consumable/Food/Baked/pie.rsi
   - type: SolutionContainerManager
@@ -83,8 +79,6 @@
       - apple
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: orange
@@ -121,9 +115,7 @@
       - sweet
       - nutty
   - type: Sprite
-    layers:
-    - state: plate-small
-    - state: baklava-slice
+    state: baklava-slice
 # Tastes like pie, nuts.
 
 - type: entity
@@ -137,6 +129,8 @@
       - sweet
       - banana
       - creamy
+  - type: Food
+    trash: FoodPlateTin
   - type: Sprite
     layers:
     - state: tin
@@ -192,8 +186,6 @@
       - sweet
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: pink
@@ -231,8 +223,6 @@
       - sweet
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: red
@@ -270,8 +260,6 @@
       - meaty
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: brown
@@ -310,8 +298,6 @@
       - acid
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: green
@@ -346,8 +332,6 @@
       - cold
   - type: Sprite
     layers:
-    - state: plate-small
-    - state: plate-slice-shading
     - state: plain-slice
     - state: alpha-slice-filling
       color: blue
@@ -365,9 +349,7 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: plate
-    - state: amanita
+    state: amanita
   - type: SolutionContainerManager
     solutions:
       food:
@@ -391,9 +373,7 @@
     flavors:
       - mushroom
   - type: Sprite
-    layers:
-    - state: plate
-    - state: plump
+    state: plump
 # Tastes like pie, mushrooms.
 
 # Tart
@@ -407,15 +387,12 @@
   - type: FlavorProfile
     flavors:
       - sweet
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: grape
+    state: grape
   - type: Tag
     tags:
     - Fruit
+
 # Tastes like tart, grape.
 
 - type: entity
@@ -427,12 +404,8 @@
   - type: FlavorProfile
     flavors:
       - nothing
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: mime
+    state: mime
 # Tastes like nothing.
 
 - type: entity
@@ -444,12 +417,8 @@
   - type: FlavorProfile
     flavors:
       - apple
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: gapple
+    state: gapple
   - type: Tag
     tags:
     - Fruit
@@ -464,12 +433,8 @@
   - type: FlavorProfile
     flavors:
       - chocolate
-  - type: Food
-    trash: FoodPlateSmall
   - type: Sprite
-    layers:
-    - state: plate-tart
-    - state: cocolava
+    state: cocolava
   - type: SolutionContainerManager
     solutions:
       food:
