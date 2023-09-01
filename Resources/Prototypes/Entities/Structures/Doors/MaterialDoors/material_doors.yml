@@ -202,3 +202,40 @@
     closeSound:
       path: /Audio/Items/bikehorn.ogg
 
+- type: entity
+  id: WebDoor
+  name: web door
+  parent: BaseMaterialDoor
+  description: A door, leading to the lands of the spiders... or a spaced room.
+  components:
+  - type: Sprite
+    sprite: Structures/Doors/web_door.rsi
+    layers:
+    - state: closed
+      map: ["enum.DoorVisualLayers.Base"]
+  - type: Construction
+    graph: WebStructures
+    node: door
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:DoActsBehavior
+        acts: ["Destruction"]
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/woodhit.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWebSilk:
+            min: 3
+            max: 5
+  - type: Damageable
+    damageModifierSet: Web
+  - type: Door
+    closeSound:
+      path: /Audio/Effects/rustle1.ogg
+    openSound:
+      path: /Audio/Effects/rustle2.ogg

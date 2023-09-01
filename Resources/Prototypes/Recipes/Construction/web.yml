@@ -65,7 +65,6 @@
     state: icon
   objectType: Structure
   placementMode: SnapgridCenter
-  canRotate: true
   canBuildInImpassable: false
 
 - type: construction
@@ -83,3 +82,20 @@
   placementMode: SnapgridCenter
   canRotate: false
   canBuildInImpassable: false
+
+- type: construction
+  name: web door
+  id: WebDoor
+  graph: WebStructures
+  startNode: start
+  targetNode: door
+  category: construction-category-structures
+  description: A manual door made from web, normally placed right before a pit or trap.
+  icon:
+    sprite: Structures/Doors/web_door.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
