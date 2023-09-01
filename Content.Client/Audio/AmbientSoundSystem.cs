@@ -29,7 +29,6 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     protected override void QueueUpdate(EntityUid uid, AmbientSoundComponent ambience)
         => _treeSys.QueueTreeUpdate(uid, ambience);
@@ -202,7 +201,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
         }
     }
 
-    private bool Callback(
+    private static bool Callback(
         ref QueryState state,
         in ComponentTreeEntry<AmbientSoundComponent> value)
     {
@@ -212,7 +211,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
 
         var delta = xform.ParentUid == state.Player.ParentUid
             ? xform.LocalPosition - state.Player.LocalPosition
-            : _transform.GetWorldPosition(xform) - state.MapPos;
+            : xform.WorldPosition - state.MapPos;
 
         var range = delta.Length();
         if (range >= ambientComp.Range)
@@ -254,7 +253,7 @@ public sealed class AmbientSoundSystem : SharedAmbientSoundSystem
             {
                 var distance = (xform.ParentUid == playerXform.ParentUid)
                     ? xform.LocalPosition - playerXform.LocalPosition
-                    : _transform.GetWorldPosition(xform) - mapPos.Position;
+                    : xform.WorldPosition - mapPos.Position;
 
                 if (distance.LengthSquared() < comp.Range * comp.Range)
                     continue;
