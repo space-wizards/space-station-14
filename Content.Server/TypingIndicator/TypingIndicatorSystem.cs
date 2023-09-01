@@ -17,10 +17,11 @@ public sealed class TypingIndicatorSystem : SharedTypingIndicatorSystem
 
     private void OnTypingChanged(TypingChangedEvent msg, EntitySessionEventArgs args)
     {
-        if (!TryComp<TypingIndicatorComponent>(args.SenderSession.AttachedEntity, out var typingIndicator))
+        var uid = args.SenderSession.AttachedEntity;
+        if (uid == null || !TryComp<TypingIndicatorComponent>(args.SenderSession.AttachedEntity, out var typingIndicator))
             return;
 
         typingIndicator.Status = msg.Status;
-        Dirty(typingIndicator);
+        Dirty(uid.Value, typingIndicator);
     }
 }

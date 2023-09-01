@@ -32,6 +32,7 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
             return;
 
         indicator.Prototype = component.Prototype;
+        Dirty(uid, indicator);
     }
 
     private void OnGotUnequipped(EntityUid uid, TypingIndicatorClothingComponent component, GotUnequippedEvent args)
@@ -40,5 +41,6 @@ public abstract class SharedTypingIndicatorSystem : EntitySystem
             return;
 
         indicator.Prototype = InitialIndicatorId;
+        Dirty(uid, indicator);
     }
 }
