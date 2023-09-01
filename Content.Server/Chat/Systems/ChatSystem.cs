@@ -756,7 +756,8 @@ public sealed partial class ChatSystem : SharedChatSystem
             if (transformEntity.MapID != sourceMapId)
                 continue;
 
-            var observer = ghosts.HasComponent(playerEntity);
+            // some observers are set to not ghost hear, so exclude them if so
+            var observer = ghosts.TryGetComponent(playerEntity, out var ghost) && ghost.CanGhostHear;
 
             // even if they are an observer, in some situations we still need the range
             if (sourceCoords.TryDistance(EntityManager, transformEntity.Coordinates, out var distance) && distance < voiceGetRange)

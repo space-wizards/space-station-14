@@ -15,6 +15,7 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Popups;
 using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
@@ -43,6 +44,7 @@ namespace Content.Server.Ghost
         [Dependency] private readonly SharedMindSystem _minds = default!;
         [Dependency] private readonly SharedJobSystem _jobs = default!;
         [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private readonly SharedPopupSystem _popup = default!;
 
         public override void Initialize()
         {
@@ -72,7 +74,14 @@ namespace Content.Server.Ghost
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
         {
+            component.CanGhostHear = !component.CanGhostHear;
 
+            var str = component.CanGhostHear
+                ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
+                : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
+
+            _popup.PopupEntity(str, uid, uid);
+            Dirty(uid, component);
         }
 
         private void OnActionPerform(EntityUid uid, GhostComponent component, BooActionEvent args)
