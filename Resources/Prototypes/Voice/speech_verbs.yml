@@ -31,13 +31,6 @@
   priority: 10
 
 - type: speechVerb
-  id: Basic
-  speechVerbStrings:
-  - chat-speech-verb-default
-  - chat-speech-verb-basic-1
-  - chat-speech-verb-basic-2
-
-- type: speechVerb
   id: Arachnid
   speechVerbStrings:
   - chat-speech-verb-insect-1
@@ -58,7 +51,6 @@
   speechVerbStrings:
   - chat-speech-verb-robotic-1
   - chat-speech-verb-robotic-2
-  - chat-speech-verb-robotic-3
 
 - type: speechVerb
   id: Reptilian

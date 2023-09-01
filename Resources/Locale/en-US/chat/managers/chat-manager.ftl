@@ -62,9 +62,6 @@ chat-speech-verb-question = asks
 chat-speech-verb-stutter = stutters
 chat-speech-verb-mumble = mumbles
 
-chat-speech-verb-basic-1 = speaks
-chat-speech-verb-basic-2 = utters
-
 chat-speech-verb-insect-1 = chitters
 chat-speech-verb-insect-2 = chirps
 chat-speech-verb-insect-3 = clicks
@@ -83,7 +80,6 @@ chat-speech-verb-plant-3 = creaks
 
 chat-speech-verb-robotic-1 = states
 chat-speech-verb-robotic-2 = beeps
-chat-speech-verb-robotic-3 = reports
 
 chat-speech-verb-reptilian-1 = hisses
 chat-speech-verb-reptilian-2 = snorts
