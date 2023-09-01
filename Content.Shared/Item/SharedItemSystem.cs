@@ -21,7 +21,7 @@ public abstract class SharedItemSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<ItemComponent, GetVerbsEvent<InteractionVerb>>(AddPickupVerb);
-        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract);
+        SubscribeLocalEvent<ItemComponent, InteractHandEvent>(OnHandInteract, before: new []{typeof(SharedItemSystem)});
         SubscribeLocalEvent<ItemComponent, StackCountChangedEvent>(OnStackCountChanged);
 
         SubscribeLocalEvent<ItemComponent, ComponentGetState>(OnGetState);
