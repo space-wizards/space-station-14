@@ -39,7 +39,6 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var jobs = ent.System<SharedJobSystem>();
         jobs.MindTryGetJob(mindId, out var job, out _);
 
-
         if (Blacklist != null && job?.PrototypeId != null)
         {
             foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
