@@ -79,7 +79,6 @@
   - type: Sticky
     stickOnStart: true
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: poster_broken_pile
       renderingStrategy: Default
