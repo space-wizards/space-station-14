@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Aberrant flesh now smash through obstacles while trying to reach players.,
-    type: Add}
-  id: 4224
-  time: '2023-07-11T04:02:04.0000000+00:00'
 - author: Jackal298
   changes:
   - {message: Minor tweak to mercenary item sprites, type: Tweak}
@@ -3015,3 +3009,9 @@ Entries:
   - {message: Spears now have a non-blunt melee sound, type: Fix}
   id: 4723
   time: '2023-09-01T03:08:02.0000000+00:00'
+- author: mirrorcult
+  changes:
+  - {message: 'Animal parts & organs now have sprites. They aren''t, like, accurate,
+      but it''s better than being invisible', type: Fix}
+  id: 4724
+  time: '2023-09-01T03:09:22.0000000+00:00'
