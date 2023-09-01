@@ -13,7 +13,6 @@ public sealed class StandingStateSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
     [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private void FallOver(EntityUid uid, StandingStateComponent component, DropHandItemsEvent args)
     {
@@ -26,7 +25,7 @@ public sealed class StandingStateSystem : EntitySystem
         if (!TryComp(uid, out HandsComponent? handsComp))
             return;
 
-        var worldRotation = _transform.GetWorldRotation(uid).ToVec();
+        var worldRotation = EntityManager.GetComponent<TransformComponent>(uid).WorldRotation.ToVec();
         foreach (var hand in handsComp.Hands.Values)
         {
             if (hand.HeldEntity is not EntityUid held)
