@@ -39,6 +39,13 @@ public sealed partial class StickyComponent : Component
     public bool CanUnstick = true;
 
     /// <summary>
+    ///     Will make it stick on spawn
+    /// </summary>
+    [DataField("stickOnStart")]
+    [ViewVariables(VVAccess.ReadWrite)]
+    public bool StickOnStart = false;
+
+    /// <summary>
     ///     How much time does it take to unstick entity.
     ///     If zero will unstick entity immediately.
     /// </summary>

@@ -17,7 +17,7 @@
         stuck:
           True: { visible: true }
           False: { visible: false }
-        unstuck:
+        rolled:
           True: { visible: false }
           False: { visible: true }
   - type: TransferStickySurfaceOnSpawnBehavior
@@ -41,8 +41,8 @@
 
 - type: entity
   parent: PosterBase
-  id: PosterBrokenUnstuck
-  suffix: Unstuck
+  id: PosterBrokenRolled
+  suffix: Rolled
   name: broken poster
   description: "You can't make out anything from the poster's original print. It's ruined."
   components:
@@ -61,29 +61,29 @@
       - !type:DoActsBehavior
         acts: [ "Destruction" ]
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: poster_broken_pile
       renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
     - state: poster_broken
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterBrokenUnstuck
+  parent: PosterBrokenRolled
   id: PosterBrokenStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: poster_broken_pile
       renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
     - state: poster_broken
       map: ["stuck"]
@@ -91,3742 +91,3740 @@
 # Contraband
 - type: entity
   parent: PosterBase
-  id: PosterContrabandFreeTontoUnstuck
-  suffix: Unstuck
+  id: PosterContrabandFreeTontoRolled
+  suffix: Rolled
   name: "Free Tonto"
   description: "A salvaged shred of a much larger flag, colors bled together and faded from age."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster1_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandFreeTontoUnstuck
+  parent: PosterContrabandFreeTontoRolled
   id: PosterContrabandFreeTontoStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster1_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandAtmosiaDeclarationIndependenceUnstuck
-  suffix: Unstuck
+  id: PosterContrabandAtmosiaDeclarationIndependenceRolled
+  suffix: Rolled
   name: "Atmosia Declaration of Independence"
   description: "A relic of a failed rebellion."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster2_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandAtmosiaDeclarationIndependenceUnstuck
+  parent: PosterContrabandAtmosiaDeclarationIndependenceRolled
   id: PosterContrabandAtmosiaDeclarationIndependenceStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster2_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandFunPoliceUnstuck
-  suffix: Unstuck
+  id: PosterContrabandFunPoliceRolled
+  suffix: Rolled
   name: "Fun Police"
   description: "A poster condemning the station's security forces."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster3_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandFunPoliceUnstuck
+  parent: PosterContrabandFunPoliceRolled
   id: PosterContrabandFunPoliceStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster3_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandLustyExomorphUnstuck
-  suffix: Unstuck
+  id: PosterContrabandLustyExomorphRolled
+  suffix: Rolled
   name: "Lusty Exomorph"
   description: "A heretical poster depicting the titular star of an equally heretical book."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster4_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandLustyExomorphUnstuck
+  parent: PosterContrabandLustyExomorphRolled
   id: PosterContrabandLustyExomorphStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster4_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSyndicateRecruitmentUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSyndicateRecruitmentRolled
+  suffix: Rolled
   name: "Syndicate Recruitment"
   description: "See the galaxy! Shatter corrupt megacorporations! Join today!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster5_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSyndicateRecruitmentUnstuck
+  parent: PosterContrabandSyndicateRecruitmentRolled
   id: PosterContrabandSyndicateRecruitmentStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster5_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandClownUnstuck
-  suffix: Unstuck
+  id: PosterContrabandClownRolled
+  suffix: Rolled
   name: "Clown"
   description: "Honk."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster6_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandClownUnstuck
+  parent: PosterContrabandClownRolled
   id: PosterContrabandClownStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster6_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSmokeUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSmokeRolled
+  suffix: Rolled
   name: "Smoke"
   description: "A poster advertising a rival corporate brand of cigarettes."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster7_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSmokeUnstuck
+  parent: PosterContrabandSmokeRolled
   id: PosterContrabandSmokeStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster7_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandGreyTideUnstuck
-  suffix: Unstuck
+  id: PosterContrabandGreyTideRolled
+  suffix: Rolled
   name: "Grey Tide"
   description: "A rebellious poster symbolizing passenger solidarity."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster8_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandGreyTideUnstuck
+  parent: PosterContrabandGreyTideRolled
   id: PosterContrabandGreyTideStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster8_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandMissingGlovesUnstuck
-  suffix: Unstuck
+  id: PosterContrabandMissingGlovesRolled
+  suffix: Rolled
   name: "Missing Gloves"
   description: "This poster references the uproar that followed Nanotrasen's financial cuts toward insulated-glove purchases."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster9_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandMissingGlovesUnstuck
+  parent: PosterContrabandMissingGlovesRolled
   id: PosterContrabandMissingGlovesStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster9_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandHackingGuideUnstuck
-  suffix: Unstuck
+  id: PosterContrabandHackingGuideRolled
+  suffix: Rolled
   name: "Hacking Guide"
   description: "This poster details the internal workings of the common Nanotrasen airlock. Sadly, it appears out of date."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster10_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandHackingGuideUnstuck
+  parent: PosterContrabandHackingGuideRolled
   id: PosterContrabandHackingGuideStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster10_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRIPBadgerUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRIPBadgerRolled
+  suffix: Rolled
   name: "RIP Badger"
   description: "This seditious poster references Nanotrasen's genocide of a space station full of badgers."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster11_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRIPBadgerUnstuck
+  parent: PosterContrabandRIPBadgerRolled
   id: PosterContrabandRIPBadgerStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster11_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandAmbrosiaVulgarisUnstuck
-  suffix: Unstuck
+  id: PosterContrabandAmbrosiaVulgarisRolled
+  suffix: Rolled
   name: "Ambrosia Vulgaris"
   description: "This poster is lookin' pretty trippy man."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster12_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandAmbrosiaVulgarisUnstuck
+  parent: PosterContrabandAmbrosiaVulgarisRolled
   id: PosterContrabandAmbrosiaVulgarisStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster12_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandDonutCorpUnstuck
-  suffix: Unstuck
+  id: PosterContrabandDonutCorpRolled
+  suffix: Rolled
   name: "Donut Corp."
   description: "This poster is an unauthorized advertisement for Donut Corp."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster13_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandDonutCorpUnstuck
+  parent: PosterContrabandDonutCorpRolled
   id: PosterContrabandDonutCorpStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster13_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandEATUnstuck
-  suffix: Unstuck
+  id: PosterContrabandEATRolled
+  suffix: Rolled
   name: "EAT."
   description: "This poster promotes rank gluttony."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster14_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandEATUnstuck
+  parent: PosterContrabandEATRolled
   id: PosterContrabandEATStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster14_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandToolsUnstuck
-  suffix: Unstuck
+  id: PosterContrabandToolsRolled
+  suffix: Rolled
   name: "Tools"
   description: "This poster looks like an advertisement for tools, but is in fact a subliminal jab at the tools at CentCom."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster15_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandToolsUnstuck
+  parent: PosterContrabandToolsRolled
   id: PosterContrabandToolsStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster15_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandPowerUnstuck
-  suffix: Unstuck
+  id: PosterContrabandPowerRolled
+  suffix: Rolled
   name: "Power"
   description: "A poster that positions the seat of power outside Nanotrasen."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster16_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandPowerUnstuck
+  parent: PosterContrabandPowerRolled
   id: PosterContrabandPowerStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster16_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSpaceCubeUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSpaceCubeRolled
+  suffix: Rolled
   name: "Space Cube"
   description: "Ignorant of Nature's Harmonic 6 Side Space Cube Creation, the Spacemen are Dumb, Educated Singularity Stupid and Evil."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster17_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSpaceCubeUnstuck
+  parent: PosterContrabandSpaceCubeRolled
   id: PosterContrabandSpaceCubeStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster17_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCommunistStateUnstuck
-  suffix: Unstuck
+  id: PosterContrabandCommunistStateRolled
+  suffix: Rolled
   name: "Communist State"
   description: "All hail the Communist party!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster18_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandCommunistStateUnstuck
+  parent: PosterContrabandCommunistStateRolled
   id: PosterContrabandCommunistStateStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster18_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandLamarrUnstuck
-  suffix: Unstuck
+  id: PosterContrabandLamarrRolled
+  suffix: Rolled
   name: "Lamarr"
   description: "This poster depicts Lamarr. Probably made by a traitorous Research Director."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster19_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandLamarrUnstuck
+  parent: PosterContrabandLamarrRolled
   id: PosterContrabandLamarrStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster19_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBorgFancyUnstuck
-  suffix: Unstuck
+  id: PosterContrabandBorgFancyRolled
+  suffix: Rolled
   name: "Borg Fancy"
   description: "Being fancy can be for any borg, just need a suit."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster20_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandBorgFancyUnstuck
+  parent: PosterContrabandBorgFancyRolled
   id: PosterContrabandBorgFancyStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster20_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBorgFancyv2Unstuck
-  suffix: Unstuck
+  id: PosterContrabandBorgFancyv2Rolled
+  suffix: Rolled
   name: "Borg Fancy v2"
   description: "Borg Fancy, Now only taking the most fancy."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster21_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandBorgFancyv2Unstuck
+  parent: PosterContrabandBorgFancyv2Rolled
   id: PosterContrabandBorgFancyv2Stuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster21_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandKosmicheskayaStantsiyaUnstuck
-  suffix: Unstuck
+  id: PosterContrabandKosmicheskayaStantsiyaRolled
+  suffix: Rolled
   name: "Kosmicheskaya Stantsiya 13 Does Not Exist"
   description: "A poster mocking CentCom's denial of the existence of the derelict station near Space Station 13."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster22_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandKosmicheskayaStantsiyaUnstuck
+  parent: PosterContrabandKosmicheskayaStantsiyaRolled
   id: PosterContrabandKosmicheskayaStantsiyaStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster22_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRebelsUniteUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRebelsUniteRolled
+  suffix: Rolled
   name: "Rebels Unite"
   description: "A poster urging the viewer to rebel against Nanotrasen."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster23_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRebelsUniteUnstuck
+  parent: PosterContrabandRebelsUniteRolled
   id: PosterContrabandRebelsUniteStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster23_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandC20rUnstuck
-  suffix: Unstuck
+  id: PosterContrabandC20rRolled
+  suffix: Rolled
   name: "C-20r"
   description: "A poster advertising the Scarborough Arms C-20r."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster24_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandC20rUnstuck
+  parent: PosterContrabandC20rRolled
   id: PosterContrabandC20rStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster24_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandHaveaPuffUnstuck
-  suffix: Unstuck
+  id: PosterContrabandHaveaPuffRolled
+  suffix: Rolled
   name: "Have a Puff"
   description: "Who cares about lung cancer when you're high as a kite?"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster25_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandHaveaPuffUnstuck
+  parent: PosterContrabandHaveaPuffRolled
   id: PosterContrabandHaveaPuffStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster25_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRevolverUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRevolverRolled
+  suffix: Rolled
   name: "Revolver"
   description: "Because seven shots are all you need."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster26_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRevolverUnstuck
+  parent: PosterContrabandRevolverRolled
   id: PosterContrabandRevolverStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster26_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandDDayPromoUnstuck
-  suffix: Unstuck
+  id: PosterContrabandDDayPromoRolled
+  suffix: Rolled
   name: "D-Day Promo"
   description: "A promotional poster for some rapper."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster27_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandDDayPromoUnstuck
+  parent: PosterContrabandDDayPromoRolled
   id: PosterContrabandDDayPromoStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster27_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSyndicatePistolUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSyndicatePistolRolled
+  suffix: Rolled
   name: "Syndicate Pistol"
   description: "A poster advertising syndicate pistols as being 'classy as fuck'. It's covered in faded gang tags."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster28_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSyndicatePistolUnstuck
+  parent: PosterContrabandSyndicatePistolRolled
   id: PosterContrabandSyndicatePistolStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster28_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandEnergySwordsUnstuck
-  suffix: Unstuck
+  id: PosterContrabandEnergySwordsRolled
+  suffix: Rolled
   name: "Energy Swords"
   description: "All the colors of the bloody murder rainbow."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster29_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandEnergySwordsUnstuck
+  parent: PosterContrabandEnergySwordsRolled
   id: PosterContrabandEnergySwordsStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster29_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRedRumUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRedRumRolled
+  suffix: Rolled
   name: "Red Rum"
   description: "Looking at this poster makes you want to kill."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster30_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRedRumUnstuck
+  parent: PosterContrabandRedRumRolled
   id: PosterContrabandRedRumStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster30_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCC64KAdUnstuck
-  suffix: Unstuck
+  id: PosterContrabandCC64KAdRolled
+  suffix: Rolled
   name: "CC 64K Ad"
   description: "The latest portable computer from Comrade Computing, with a whole 64kB of ram!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster31_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandCC64KAdUnstuck
+  parent: PosterContrabandCC64KAdRolled
   id: PosterContrabandCC64KAdStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster31_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandPunchShitUnstuck
-  suffix: Unstuck
+  id: PosterContrabandPunchShitRolled
+  suffix: Rolled
   name: "Punch Shit"
   description: "Fight things for no reason, like a man!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster32_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandPunchShitUnstuck
+  parent: PosterContrabandPunchShitRolled
   id: PosterContrabandPunchShitStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster32_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandTheGriffinUnstuck
-  suffix: Unstuck
+  id: PosterContrabandTheGriffinRolled
+  suffix: Rolled
   name: "The Griffin"
   description: "The Griffin commands you to be the worst you can be. Will you?"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster33_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandTheGriffinUnstuck
+  parent: PosterContrabandTheGriffinRolled
   id: PosterContrabandTheGriffinStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster33_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandFreeDroneUnstuck
-  suffix: Unstuck
+  id: PosterContrabandFreeDroneRolled
+  suffix: Rolled
   name: "Free Drone"
   description: "This poster commemorates the bravery of the rogue drone; once exiled, and then ultimately destroyed by CentCom."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster35_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandFreeDroneUnstuck
+  parent: PosterContrabandFreeDroneRolled
   id: PosterContrabandFreeDroneStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster35_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBustyBackdoorExoBabes6Unstuck
-  suffix: Unstuck
+  id: PosterContrabandBustyBackdoorExoBabes6Rolled
+  suffix: Rolled
   name: "Busty Backdoor Exo Babes 6"
   description: "Get a load, or give, of these all natural Exos!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster36_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandBustyBackdoorExoBabes6Unstuck
+  parent: PosterContrabandBustyBackdoorExoBabes6Rolled
   id: PosterContrabandBustyBackdoorExoBabes6Stuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster36_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRobustSoftdrinksUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRobustSoftdrinksRolled
+  suffix: Rolled
   name: "Robust Softdrinks"
   description: "Robust Softdrinks: More robust than a toolbox to the head!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster37_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRobustSoftdrinksUnstuck
+  parent: PosterContrabandRobustSoftdrinksRolled
   id: PosterContrabandRobustSoftdrinksStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster37_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandShamblersJuiceUnstuck
-  suffix: Unstuck
+  id: PosterContrabandShamblersJuiceRolled
+  suffix: Rolled
   name: "Shambler's Juice"
   description: "~Shake me up some of that Shambler's Juice!~"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster38_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandShamblersJuiceUnstuck
+  parent: PosterContrabandShamblersJuiceRolled
   id: PosterContrabandShamblersJuiceStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster38_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandPwrGameUnstuck
-  suffix: Unstuck
+  id: PosterContrabandPwrGameRolled
+  suffix: Rolled
   name: "Pwr Game"
   description: "The POWER that gamers CRAVE! In partnership with Vlad's Salad."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster39_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandPwrGameUnstuck
+  parent: PosterContrabandPwrGameRolled
   id: PosterContrabandPwrGameStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster39_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSunkistUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSunkistRolled
+  suffix: Rolled
   name: "Sun-kist"
   description: "Drink the stars!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster40_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSunkistUnstuck
+  parent: PosterContrabandSunkistRolled
   id: PosterContrabandSunkistStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster40_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSpaceColaUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSpaceColaRolled
+  suffix: Rolled
   name: "Space Cola"
   description: "Your favorite cola, in space."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster41_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSpaceColaUnstuck
+  parent: PosterContrabandSpaceColaRolled
   id: PosterContrabandSpaceColaStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster41_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandSpaceUpUnstuck
-  suffix: Unstuck
+  id: PosterContrabandSpaceUpRolled
+  suffix: Rolled
   name: "Space-Up!"
   description: "Sucked out into space by the FLAVOR!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster42_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandSpaceUpUnstuck
+  parent: PosterContrabandSpaceUpRolled
   id: PosterContrabandSpaceUpStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster42_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandKudzuUnstuck
-  suffix: Unstuck
+  id: PosterContrabandKudzuRolled
+  suffix: Rolled
   name: "Kudzu"
   description: "A poster advertising a movie about plants. How dangerous could they possibly be?"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster43_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandKudzuUnstuck
+  parent: PosterContrabandKudzuRolled
   id: PosterContrabandKudzuStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster43_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandMaskedMenUnstuck
-  suffix: Unstuck
+  id: PosterContrabandMaskedMenRolled
+  suffix: Rolled
   name: "Masked Men"
   description: "A poster advertising a movie about some masked men."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster44_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandMaskedMenUnstuck
+  parent: PosterContrabandMaskedMenRolled
   id: PosterContrabandMaskedMenStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster44_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandUnreadableAnnouncementUnstuck
-  suffix: Unstuck
+  id: PosterContrabandUnreadableAnnouncementRolled
+  suffix: Rolled
   name: "Unreadable Announcement"
   description: "A poster announcing something by someone, oddly enough they seem to have forgotten making it readable"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster45_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandUnreadableAnnouncementUnstuck
+  parent: PosterContrabandUnreadableAnnouncementRolled
   id: PosterContrabandUnreadableAnnouncementStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster45_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandFreeSyndicateEncryptionKeyUnstuck
-  suffix: Unstuck
+  id: PosterContrabandFreeSyndicateEncryptionKeyRolled
+  suffix: Rolled
   name: "Free Syndicate Encryption Key"
   description: "A poster about traitors begging for more."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster46_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandFreeSyndicateEncryptionKeyUnstuck
+  parent: PosterContrabandFreeSyndicateEncryptionKeyRolled
   id: PosterContrabandFreeSyndicateEncryptionKeyStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster46_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBountyHuntersUnstuck
-  suffix: Unstuck
+  id: PosterContrabandBountyHuntersRolled
+  suffix: Rolled
   name: "Bounty Hunters"
   description: "A poster advertising bounty hunting services. \"I hear you got a problem.\""
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster47_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandBountyHuntersUnstuck
+  parent: PosterContrabandBountyHuntersRolled
   id: PosterContrabandBountyHuntersStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster47_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandTheBigGasTruthUnstuck
-  suffix: Unstuck
+  id: PosterContrabandTheBigGasTruthRolled
+  suffix: Rolled
   name: "The Big Gas Giant Truth"
   description: "Don't believe everything you see on a poster, patriots. All the lizards at central command don't want to answer this SIMPLE QUESTION: WHERE IS THE GAS MINER MINING FROM, CENTCOM?"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster48_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandTheBigGasTruthUnstuck
+  parent: PosterContrabandTheBigGasTruthRolled
   id: PosterContrabandTheBigGasTruthStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster48_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandWehWatchesUnstuck
-  suffix: Unstuck
+  id: PosterContrabandWehWatchesRolled
+  suffix: Rolled
   name: "Weh Watches"
   description: "A poster depicting a loveable green lizard."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster50_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandWehWatchesUnstuck
+  parent: PosterContrabandWehWatchesRolled
   id: PosterContrabandWehWatchesStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster50_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandVoteWehUnstuck
-  suffix: Unstuck
+  id: PosterContrabandVoteWehRolled
+  suffix: Rolled
   name: "Vote Weh"
   description: "A stylish, sleek, and well illustrated poster for a \"Weh\"nderful new progressive candidate coming this election season."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster51_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandVoteWehUnstuck
+  parent: PosterContrabandVoteWehRolled
   id: PosterContrabandVoteWehStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster51_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandBeachStarYamamotoUnstuck
-  suffix: Unstuck
+  id: PosterContrabandBeachStarYamamotoRolled
+  suffix: Rolled
   name: "Beach Star Yamamoto!"
   description: "A wall scroll depicting an old swimming anime with girls in small swim suits. You feel more weebish the longer you look at it."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster52_contraband
       map: ["stuck"]
       visible: false
 
-# These 3 originally from VEEGEE
 - type: entity
-  parent: PosterContrabandBeachStarYamamotoUnstuck
+  parent: PosterContrabandBeachStarYamamotoRolled
   id: PosterContrabandBeachStarYamamotoStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster52_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandHighEffectEngineeringUnstuck
-  suffix: Unstuck
+  id: PosterContrabandHighEffectEngineeringRolled
+  suffix: Rolled
   name: "High Effect Engineering"
   description: "There are 3 shards and a singularity.  The shards are singing.  The engineers are crying."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster53_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandHighEffectEngineeringUnstuck
+  parent: PosterContrabandHighEffectEngineeringRolled
   id: PosterContrabandHighEffectEngineeringStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster53_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandNuclearDeviceInformationalUnstuck
-  suffix: Unstuck
+  id: PosterContrabandNuclearDeviceInformationalRolled
+  suffix: Rolled
   name: "Nuclear Device Informational"
   description: "This poster depicts an image of an old style nuclear explosive device, as well as some helpful information on what to do if one has been set. It suggests lying on the floor and crying."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster54_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandNuclearDeviceInformationalUnstuck
+  parent: PosterContrabandNuclearDeviceInformationalRolled
   id: PosterContrabandNuclearDeviceInformationalStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster54_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRiseUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRiseRolled
+  suffix: Rolled
   name: "Rise Up"
   description: "A poster depicting a grey shirted man holding a crowbar with the word Rise written below it."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster55_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRiseUnstuck
+  parent: PosterContrabandRiseRolled
   id: PosterContrabandRiseStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster55_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandRevoltUnstuck
-  suffix: Unstuck
+  id: PosterContrabandRevoltRolled
+  suffix: Rolled
   name: "Revolt"
   description: "Revolutionist propaganda, manufactured by the Syndicate."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster56_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandRevoltUnstuck
+  parent: PosterContrabandRevoltRolled
   id: PosterContrabandRevoltStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster56_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandMothUnstuck
-  suffix: Unstuck
+  id: PosterContrabandMothRolled
+  suffix: Rolled
   name: "Syndie Moth - Nuclear Operation"
   description: "A Syndicate-commissioned poster that uses Syndie Moth™ to tell the viewer to keep the nuclear authentication disk unsecured. \"Peace was never an option!\" No good employee would listen to this nonsense."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster57_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandMothUnstuck
+  parent: PosterContrabandMothRolled
   id: PosterContrabandMothStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster57_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandCybersun600Unstuck
-  suffix: Unstuck
+  id: PosterContrabandCybersun600Rolled
+  suffix: Rolled
   name: "Cybersun: 600 Years Commemorative Poster"
   description: "An artistic poster commemorating 600 years of continual business for Cybersun Industries."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster58_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandCybersun600Unstuck
+  parent: PosterContrabandCybersun600Rolled
   id: PosterContrabandCybersun600Stuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster58_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandDonkUnstuck
-  suffix: Unstuck
+  id: PosterContrabandDonkRolled
+  suffix: Rolled
   name: "DONK CO. BRAND MICROWAVEABLE FOOD"
   description: "DONK CO. BRAND MICROWAVABLE FOOD: MADE BY STARVING COLLEGE STUDENTS, FOR STARVING COLLEGE STUDENTS."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster59_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandDonkUnstuck
+  parent: PosterContrabandDonkRolled
   id: PosterContrabandDonkStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster59_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandEnlistGorlexUnstuck
-  suffix: Unstuck
+  id: PosterContrabandEnlistGorlexRolled
+  suffix: Rolled
   name: "Enlist"
   description: "Enlist with the Gorlex Marauders today! See the galaxy, kill corpos, get paid!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster60_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandEnlistGorlexUnstuck
+  parent: PosterContrabandEnlistGorlexRolled
   id: PosterContrabandEnlistGorlexStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster60_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandInterdyneUnstuck
-  suffix: Unstuck
+  id: PosterContrabandInterdyneRolled
+  suffix: Rolled
   name: "Interdyne Pharmaceutics: For the Health of Humankind"
   description: "An advertisement for Interdyne Pharmaceutics' GeneClean clinics. 'Become the master of your own body!'"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster61_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandInterdyneUnstuck
+  parent: PosterContrabandInterdyneRolled
   id: PosterContrabandInterdyneStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster61_contraband
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterContrabandWaffleCorpUnstuck
-  suffix: Unstuck
+  id: PosterContrabandWaffleCorpRolled
+  suffix: Rolled
   name: "Make Mine a Waffle Corp: Fine Rifles, Economic Prices"
   description: "An old advertisement for Waffle Corp rifles. 'Better weapons, lower prices!'"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_contraband
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster62_contraband
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterContrabandWaffleCorpUnstuck
+  parent: PosterContrabandWaffleCorpRolled
   id: PosterContrabandWaffleCorpStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_contraband
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster62_contraband
       map: ["stuck"]
 
-# legit
 - type: entity
   parent: PosterBase
-  id: PosterLegitHereForYourSafetyUnstuck
-  suffix: Unstuck
+  id: PosterLegitHereForYourSafetyRolled
+  suffix: Rolled
   name: "Here For Your Safety"
   description: "A poster glorifying the station's security force."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster1_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitHereForYourSafetyUnstuck
+  parent: PosterLegitHereForYourSafetyRolled
   id: PosterLegitHereForYourSafetyStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster1_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitNanotrasenLogoUnstuck
-  suffix: Unstuck
+  id: PosterLegitNanotrasenLogoRolled
+  suffix: Rolled
   name: "Nanotrasen Logo"
   description: "A poster depicting the Nanotrasen logo."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster2_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitNanotrasenLogoUnstuck
+  parent: PosterLegitNanotrasenLogoRolled
   id: PosterLegitNanotrasenLogoStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster2_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitCleanlinessUnstuck
-  suffix: Unstuck
+  id: PosterLegitCleanlinessRolled
+  suffix: Rolled
   name: "Cleanliness"
   description: "A poster warning of the dangers of poor hygiene."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster3_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitCleanlinessUnstuck
+  parent: PosterLegitCleanlinessRolled
   id: PosterLegitCleanlinessStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster3_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitHelpOthersUnstuck
-  suffix: Unstuck
+  id: PosterLegitHelpOthersRolled
+  suffix: Rolled
   name: "Help Others"
   description: "A poster encouraging you to help fellow crewmembers."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster4_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitHelpOthersUnstuck
+  parent: PosterLegitHelpOthersRolled
   id: PosterLegitHelpOthersStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster4_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitBuildUnstuck
-  suffix: Unstuck
+  id: PosterLegitBuildRolled
+  suffix: Rolled
   name: "Build"
   description: "A poster glorifying the engineering team."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster5_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitBuildUnstuck
+  parent: PosterLegitBuildRolled
   id: PosterLegitBuildStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster5_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitBlessThisSpessUnstuck
-  suffix: Unstuck
+  id: PosterLegitBlessThisSpessRolled
+  suffix: Rolled
   name: "Bless This Spess"
   description: "A poster blessing this area."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster6_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitBlessThisSpessUnstuck
+  parent: PosterLegitBlessThisSpessRolled
   id: PosterLegitBlessThisSpessStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster6_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitScienceUnstuck
-  suffix: Unstuck
+  id: PosterLegitScienceRolled
+  suffix: Rolled
   name: "Science"
   description: "A poster depicting an atom."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster7_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitScienceUnstuck
+  parent: PosterLegitScienceRolled
   id: PosterLegitScienceStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster7_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitIanUnstuck
-  suffix: Unstuck
+  id: PosterLegitIanRolled
+  suffix: Rolled
   name: "Ian"
   description: "Arf arf. Yap."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster8_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitIanUnstuck
+  parent: PosterLegitIanRolled
   id: PosterLegitIanStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster8_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitObeyUnstuck
-  suffix: Unstuck
+  id: PosterLegitObeyRolled
+  suffix: Rolled
   name: "Obey"
   description: "A poster instructing the viewer to obey authority."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster9_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitObeyUnstuck
+  parent: PosterLegitObeyRolled
   id: PosterLegitObeyStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster9_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitWalkUnstuck
-  suffix: Unstuck
+  id: PosterLegitWalkRolled
+  suffix: Rolled
   name: "Walk"
   description: "A poster instructing the viewer to walk instead of running."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster10_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitWalkUnstuck
+  parent: PosterLegitWalkRolled
   id: PosterLegitWalkStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster10_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitStateLawsUnstuck
-  suffix: Unstuck
+  id: PosterLegitStateLawsRolled
+  suffix: Rolled
   name: "State Laws"
   description: "A poster instructing cyborgs to state their laws."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster11_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitStateLawsUnstuck
+  parent: PosterLegitStateLawsRolled
   id: PosterLegitStateLawsStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster11_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitLoveIanUnstuck
-  suffix: Unstuck
+  id: PosterLegitLoveIanRolled
+  suffix: Rolled
   name: "Love Ian"
   description: "Ian is love, Ian is life."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster12_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitLoveIanUnstuck
+  parent: PosterLegitLoveIanRolled
   id: PosterLegitLoveIanStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster12_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSpaceCopsUnstuck
-  suffix: Unstuck
+  id: PosterLegitSpaceCopsRolled
+  suffix: Rolled
   name: "Space Cops."
   description: "A poster advertising the television show Space Cops."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster13_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSpaceCopsUnstuck
+  parent: PosterLegitSpaceCopsRolled
   id: PosterLegitSpaceCopsStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster13_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitUeNoUnstuck
-  suffix: Unstuck
+  id: PosterLegitUeNoRolled
+  suffix: Rolled
   name: "Ue No."
   description: "This thing is all in Japanese."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster14_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitUeNoUnstuck
+  parent: PosterLegitUeNoRolled
   id: PosterLegitUeNoStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster14_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitGetYourLEGSUnstuck
-  suffix: Unstuck
+  id: PosterLegitGetYourLEGSRolled
+  suffix: Rolled
   name: "Get Your LEGS"
   description: "LEGS: Leadership, Experience, Genius, Subordination."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster15_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitGetYourLEGSUnstuck
+  parent: PosterLegitGetYourLEGSRolled
   id: PosterLegitGetYourLEGSStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster15_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitDoNotQuestionUnstuck
-  suffix: Unstuck
+  id: PosterLegitDoNotQuestionRolled
+  suffix: Rolled
   name: "Do Not Question"
   description: "A poster instructing the viewer not to ask about things they aren't meant to know."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster16_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitDoNotQuestionUnstuck
+  parent: PosterLegitDoNotQuestionRolled
   id: PosterLegitDoNotQuestionStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster16_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitWorkForAFutureUnstuck
-  suffix: Unstuck
+  id: PosterLegitWorkForAFutureRolled
+  suffix: Rolled
   name: "Work For A Future"
   description: " A poster encouraging you to work for your future."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster17_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitWorkForAFutureUnstuck
+  parent: PosterLegitWorkForAFutureRolled
   id: PosterLegitWorkForAFutureStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster17_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSoftCapPopArtUnstuck
-  suffix: Unstuck
+  id: PosterLegitSoftCapPopArtRolled
+  suffix: Rolled
   name: "Soft Cap Pop Art"
   description: "A poster reprint of some cheap pop art."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster18_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSoftCapPopArtUnstuck
+  parent: PosterLegitSoftCapPopArtRolled
   id: PosterLegitSoftCapPopArtStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster18_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyInternalsUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyInternalsRolled
+  suffix: Rolled
   name: "Safety: Internals"
   description: "A poster instructing the viewer to wear internals in the rare environments where there is no oxygen or the air has been rendered toxic."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster19_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyInternalsUnstuck
+  parent: PosterLegitSafetyInternalsRolled
   id: PosterLegitSafetyInternalsStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster19_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyEyeProtectionUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyEyeProtectionRolled
+  suffix: Rolled
   name: "Safety: Eye Protection"
   description: "A poster instructing the viewer to wear eye protection when dealing with chemicals, smoke, or bright lights."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster20_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyEyeProtectionUnstuck
+  parent: PosterLegitSafetyEyeProtectionRolled
   id: PosterLegitSafetyEyeProtectionStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster20_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyReportUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyReportRolled
+  suffix: Rolled
   name: "Safety: Report"
   description: "A poster instructing the viewer to report suspicious activity to the security force."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster21_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyReportUnstuck
+  parent: PosterLegitSafetyReportRolled
   id: PosterLegitSafetyReportStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster21_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitReportCrimesUnstuck
-  suffix: Unstuck
+  id: PosterLegitReportCrimesRolled
+  suffix: Rolled
   name: "Report Crimes"
   description: "A poster encouraging the swift reporting of crime or seditious behavior to station security."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster22_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitReportCrimesUnstuck
+  parent: PosterLegitReportCrimesRolled
   id: PosterLegitReportCrimesStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster22_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitIonRifleUnstuck
-  suffix: Unstuck
+  id: PosterLegitIonRifleRolled
+  suffix: Rolled
   name: "Ion Rifle"
   description: "A poster displaying an Ion Rifle."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster23_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitIonRifleUnstuck
+  parent: PosterLegitIonRifleRolled
   id: PosterLegitIonRifleStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster23_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitFoamForceAdUnstuck
-  suffix: Unstuck
+  id: PosterLegitFoamForceAdRolled
+  suffix: Rolled
   name: "Foam Force Ad"
   description: "Foam Force, it's Foam or be Foamed!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster24_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitFoamForceAdUnstuck
+  parent: PosterLegitFoamForceAdRolled
   id: PosterLegitFoamForceAdStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster24_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitCohibaRobustoAdUnstuck
-  suffix: Unstuck
+  id: PosterLegitCohibaRobustoAdRolled
+  suffix: Rolled
   name: "Cohiba Robusto Ad"
   description: "Cohiba Robusto, the classy cigar."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster25_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitCohibaRobustoAdUnstuck
+  parent: PosterLegitCohibaRobustoAdRolled
   id: PosterLegitCohibaRobustoAdStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster25_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegit50thAnniversaryVintageReprintUnstuck
-  suffix: Unstuck
+  id: PosterLegit50thAnniversaryVintageReprintRolled
+  suffix: Rolled
   name: "50th Anniversary Vintage Reprint"
   description: "A reprint of a poster from 2505, commemorating the 50th Anniversary of Nanoposters Manufacturing, a subsidiary of Nanotrasen."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster26_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegit50thAnniversaryVintageReprintUnstuck
+  parent: PosterLegit50thAnniversaryVintageReprintRolled
   id: PosterLegit50thAnniversaryVintageReprintStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster26_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitFruitBowlUnstuck
-  suffix: Unstuck
+  id: PosterLegitFruitBowlRolled
+  suffix: Rolled
   name: "Fruit Bowl"
   description: " Simple, yet awe-inspiring."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster27_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitFruitBowlUnstuck
+  parent: PosterLegitFruitBowlRolled
   id: PosterLegitFruitBowlStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster27_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitPDAAdUnstuck
-  suffix: Unstuck
+  id: PosterLegitPDAAdRolled
+  suffix: Rolled
   name: "PDA Ad"
   description: "A poster advertising the latest PDA from Nanotrasen suppliers."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster28_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitPDAAdUnstuck
+  parent: PosterLegitPDAAdRolled
   id: PosterLegitPDAAdStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster28_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitEnlistUnstuck
-  suffix: Unstuck
+  id: PosterLegitEnlistRolled
+  suffix: Rolled
   name: "Enlist"
   description: "Enlist in the Nanotrasen Deathsquadron reserves today!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster29_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitEnlistUnstuck
+  parent: PosterLegitEnlistRolled
   id: PosterLegitEnlistStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster29_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitNanomichiAdUnstuck
-  suffix: Unstuck
+  id: PosterLegitNanomichiAdRolled
+  suffix: Rolled
   name: "Nanomichi Ad"
   description: " A poster advertising Nanomichi brand audio cassettes."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster30_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitNanomichiAdUnstuck
+  parent: PosterLegitNanomichiAdRolled
   id: PosterLegitNanomichiAdStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster30_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegit12GaugeUnstuck
-  suffix: Unstuck
+  id: PosterLegit12GaugeRolled
+  suffix: Rolled
   name: "12 Gauge"
   description: "A poster boasting about the superiority of 12 gauge shotgun shells."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster31_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegit12GaugeUnstuck
+  parent: PosterLegit12GaugeRolled
   id: PosterLegit12GaugeStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster31_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitHighClassMartiniUnstuck
-  suffix: Unstuck
+  id: PosterLegitHighClassMartiniRolled
+  suffix: Rolled
   name: "High-Class Martini"
   description: "I told you to shake it, no stirring."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster32_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitHighClassMartiniUnstuck
+  parent: PosterLegitHighClassMartiniRolled
   id: PosterLegitHighClassMartiniStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster32_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitTheOwlUnstuck
-  suffix: Unstuck
+  id: PosterLegitTheOwlRolled
+  suffix: Rolled
   name: "The Owl"
   description: "The Owl would do his best to protect the station. Will you?"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster33_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitTheOwlUnstuck
+  parent: PosterLegitTheOwlRolled
   id: PosterLegitTheOwlStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster33_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitNoERPUnstuck
-  suffix: Unstuck
+  id: PosterLegitNoERPRolled
+  suffix: Rolled
   name: "No ERP"
   description: "This poster reminds the crew that Eroticism and Pornography are banned on Nanotrasen stations."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster34_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitNoERPUnstuck
+  parent: PosterLegitNoERPRolled
   id: PosterLegitNoERPStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster34_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitCarbonDioxideUnstuck
-  suffix: Unstuck
+  id: PosterLegitCarbonDioxideRolled
+  suffix: Rolled
   name: "Carbon Dioxide"
   description: "This informational poster teaches the viewer what carbon dioxide is."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster35_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitCarbonDioxideUnstuck
+  parent: PosterLegitCarbonDioxideRolled
   id: PosterLegitCarbonDioxideStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster35_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitDickGumshueUnstuck
-  suffix: Unstuck
+  id: PosterLegitDickGumshueRolled
+  suffix: Rolled
   name: "Dick Gumshue"
   description: "A poster advertising the escapades of Dick Gumshue, mouse detective. Encouraging crew to bring the might of justice down upon wire saboteurs."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster36_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitDickGumshueUnstuck
+  parent: PosterLegitDickGumshueRolled
   id: PosterLegitDickGumshueStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster36_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitThereIsNoGasGiantUnstuck
-  suffix: Unstuck
+  id: PosterLegitThereIsNoGasGiantRolled
+  suffix: Rolled
   name: "There Is No Gas Giant"
   description: "Nanotrasen has issued posters, like this one, to all stations reminding them that rumours of a gas giant are false."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster37_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitThereIsNoGasGiantUnstuck
+  parent: PosterLegitThereIsNoGasGiantRolled
   id: PosterLegitThereIsNoGasGiantStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster37_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitJustAWeekAwayUnstuck
-  suffix: Unstuck
+  id: PosterLegitJustAWeekAwayRolled
+  suffix: Rolled
   name: "Just a Week Away..."
-  description: " poster advertising a long delayed project, it still claims it to be 'just a week away..."
+  description: "A poster advertising a long delayed project, it still claims it to be 'just a week away...'"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster38_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitJustAWeekAwayUnstuck
+  parent: PosterLegitJustAWeekAwayRolled
   id: PosterLegitJustAWeekAwayStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster38_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSecWatchUnstuck
-  suffix: Unstuck
+  id: PosterLegitSecWatchRolled
+  suffix: Rolled
   name: "Sec is Watching You"
   description: "A poster reminding you that security is watching your every move."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster39_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSecWatchUnstuck
+  parent: PosterLegitSecWatchRolled
   id: PosterLegitSecWatchStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster39_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitAnatomyPosterUnstuck
-  suffix: Unstuck
+  id: PosterLegitAnatomyPosterRolled
+  suffix: Rolled
   name: "Anatomy of a spessman"
   description: "A poster showing the bits and bobs that makes you... you!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster40_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitAnatomyPosterUnstuck
+  parent: PosterLegitAnatomyPosterRolled
   id: PosterLegitAnatomyPosterStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster40_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitMimeUnstuck
-  suffix: Unstuck
+  id: PosterLegitMimeRolled
+  suffix: Rolled
   name: "Mime Postmodern"
   description: "A postmodern depiction of a mime, superb!"
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster41_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitMimeUnstuck
+  parent: PosterLegitMimeRolled
   id: PosterLegitMimeStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster41_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyMothDelamUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyMothDelamRolled
+  suffix: Rolled
   name: "Safety Moth - Delamination Safety Precautions"
   description: "This informational poster uses Safety Moth™ to tell the viewer to hide in lockers when the Supermatter Crystal has delaminated, to prevent hallucinations. Evacuating might be a better strategy."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster43_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyMothDelamUnstuck
+  parent: PosterLegitSafetyMothDelamRolled
   id: PosterLegitSafetyMothDelamStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster43_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyMothEpiUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyMothEpiRolled
+  suffix: Rolled
   name: "Safety Moth - Epinephrine"
   description: "This informational poster uses Safety Moth™ to inform the viewer to help injured/deceased crewmen with their epinephrine injectors. \"Prevent organ rot with this one simple trick!\""
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster44_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyMothEpiUnstuck
+  parent: PosterLegitSafetyMothEpiRolled
   id: PosterLegitSafetyMothEpiStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster44_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyMothHardhatUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyMothHardhatRolled
+  suffix: Rolled
   name: "Safety Moth - Hardhats"
   description: "This informational poster uses Safety Moth™ to tell the viewer to wear hardhats in cautious areas. \"It's like a lamp for your head!\""
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster45_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyMothHardhatUnstuck
+  parent: PosterLegitSafetyMothHardhatRolled
   id: PosterLegitSafetyMothHardhatStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster45_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyMothMethUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyMothMethRolled
+  suffix: Rolled
   name: "Safety Moth - Methamphetamine"
   description: "This informational poster uses Safety Moth™ to tell the viewer to seek CMO approval before cooking methamphetamine. \"Stay close to the target temperature, and never go over!\" ...You shouldn't ever be making this."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster46_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyMothMethUnstuck
+  parent: PosterLegitSafetyMothMethRolled
   id: PosterLegitSafetyMothMethStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster46_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitSafetyMothPipingUnstuck
-  suffix: Unstuck
+  id: PosterLegitSafetyMothPipingRolled
+  suffix: Rolled
   name: "Safety Moth - Piping"
   description: "This informational poster uses Safety Moth™ to tell atmospheric technicians correct types of piping to be used. \"Pipes, not Pumps! Proper pipe placement prevents poor performance!\""
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster47_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitSafetyMothPipingUnstuck
+  parent: PosterLegitSafetyMothPipingRolled
   id: PosterLegitSafetyMothPipingStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster47_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitVacationUnstuck
-  suffix: Unstuck
+  id: PosterLegitVacationRolled
+  suffix: Rolled
   name: "Nanotrasen Corporate Perks: Vacation"
   description: "This informational poster provides information on some of the prizes available via the NT Corporate Perks program, including a two-week vacation for two on the resort world Idyllus."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster48_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitVacationUnstuck
+  parent: PosterLegitVacationRolled
   id: PosterLegitVacationStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster48_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitPeriodicTableUnstuck
-  suffix: Unstuck
+  id: PosterLegitPeriodicTableRolled
+  suffix: Rolled
   name: "Periodic Table of the Elements"
   description: "A periodic table of the elements, from Hydrogen to Oganesson, and everything inbetween."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster49_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitPeriodicTableUnstuck
+  parent: PosterLegitPeriodicTableRolled
   id: PosterLegitPeriodicTableStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster49_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitRenaultUnstuck
-  suffix: Unstuck
+  id: PosterLegitRenaultRolled
+  suffix: Rolled
   name: "Renault Poster"
   description: "Yap."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster50_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitRenaultUnstuck
+  parent: PosterLegitRenaultRolled
   id: PosterLegitRenaultStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster50_legit
       map: ["stuck"]
 
 - type: entity
   parent: PosterBase
-  id: PosterLegitNTTGCUnstuck
-  suffix: Unstuck
+  id: PosterLegitNTTGCRolled
+  suffix: Rolled
   name: "Nanotrasen Tactical Game Cards"
   description: "An advertisement for Nanotrasen's TCG cards: BUY MORE CARDS."
   components:
   - type: Sprite
-    sprite: Structures/Wallmounts/posters.rsi
     layers:
     - state: rolled_legit
+      map: ["rolled"]
       renderingStrategy: Default
-      map: ["unstuck"]
     - state: poster51_legit
       map: ["stuck"]
       visible: false
 
 - type: entity
-  parent: PosterLegitNTTGCUnstuck
+  parent: PosterLegitNTTGCRolled
   id: PosterLegitNTTGCStuck
   suffix: Stuck
   placement:
     mode: SnapgridCenter
   components:
-  - type: TryStickOnSpawn
+  - type: Sticky
+    stickOnStart: true
   - type: Sprite
     layers:
     - state: rolled_legit
-      renderingStrategy: Default
-      map: ["unstuck"]
+      map: ["rolled"]
       visible: false
+      renderingStrategy: Default
     - state: poster51_legit
       map: ["stuck"]

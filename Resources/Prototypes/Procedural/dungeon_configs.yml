@@ -33,7 +33,7 @@
     - !type:WallMountPostGen
       spawns:
         # Posters
-        - id: RandomPosterLegit
+        - id: RandomPosterLegitStuck
           orGroup: content
         - id: ExtinguisherCabinetFilled
           prob: 0.2

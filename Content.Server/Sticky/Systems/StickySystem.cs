@@ -22,43 +22,34 @@ public sealed class StickySystem : EntitySystem
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ILogManager _log = default!;
-    private ISawmill _sawmill = default!;
 
     private const string StickerSlotId = "stickers_container";
 
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TryStickOnSpawnComponent, MapInitEvent>(OnAutoStickMapInit);
         SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(TransferStickySurfaceFromDestroyedEntity);
 
+        SubscribeLocalEvent<StickyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
-
-        _sawmill = _log.GetSawmill("sticky");
     }
 
-    private void OnAutoStickMapInit(EntityUid uid, TryStickOnSpawnComponent component, MapInitEvent args)
+    private void OnMapInit(EntityUid uid, StickyComponent component, MapInitEvent args)
     {
-        StickyComponent? sticky = null;
-        if (component.Shot || !Resolve(uid, ref sticky))
+        if (!component.StickOnStart || component.StuckTo != null)
             return;
-
+        
         var stuck = false;
-        foreach (var entity in _lookup.GetEntitiesInRange(Transform(uid).MapPosition, component.Range))
+        foreach (var entity in _lookup.GetEntitiesIntersecting(Transform(uid).MapPosition))
         {
-            // check whitelist and blacklist
-            if (sticky.Whitelist != null && !sticky.Whitelist.IsValid(entity))
-                continue;
-            if (sticky.Blacklist != null && sticky.Blacklist.IsValid(entity))
-                continue;
-
-            StickToEntity(uid, entity, null, sticky);
-            component.Shot = true;
-            stuck = true;
-            break;
+            if (TryStickToEntity(uid, entity, null, component))
+            {
+                component.StickOnStart = false;
+                stuck = true;
+                break;
+            }
         }
 
         if (!stuck)
@@ -68,7 +59,7 @@ public sealed class StickySystem : EntitySystem
             {
                 _appearance.SetData(uid, StickyVisuals.IsStuck, false, appearance);
             }
-            _sawmill.Warning($"Stickable entity '{EntityManager.ToPrettyString(uid)}' was supposed to stick on other entity nearby when spawn but couldn't find anything to stick on");
+            Log.Warning($"Stickable entity '{EntityManager.ToPrettyString(uid)}' was supposed to stick on other entity nearby when spawn but couldn't find anything to stick on");
         }
     }
 
@@ -108,9 +99,7 @@ public sealed class StickySystem : EntitySystem
             return false;
 
         // check whitelist and blacklist
-        if (component.Whitelist != null && !component.Whitelist.IsValid(target))
-            return false;
-        if (component.Blacklist != null && component.Blacklist.IsValid(target))
+        if (!CanStick(component, target))
             return false;
 
         // check if delay is not zero to start do after
@@ -214,6 +203,30 @@ public sealed class StickySystem : EntitySystem
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user), true);
+    }
+
+    public bool TryStickToEntity(EntityUid uid, EntityUid target, EntityUid? user, StickyComponent? component = null)
+    {
+        if (!Resolve(uid, ref component))
+            return false;
+
+        if (CanStick(component, target))
+        {
+            StickToEntity(uid, target, user, component);
+            return true;
+        }
+
+        return false;
+    }
+
+    public bool CanStick(StickyComponent component, EntityUid entity)
+    {
+        if (component.Whitelist != null && !component.Whitelist.IsValid(entity))
+            return false;
+        if (component.Blacklist != null && component.Blacklist.IsValid(entity))
+            return false;
+        
+        return true;
     }
 
     public void UnstickFromEntity(EntityUid uid, EntityUid? user, StickyComponent? component = null)
