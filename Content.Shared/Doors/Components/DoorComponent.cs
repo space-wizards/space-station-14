@@ -249,7 +249,7 @@ public sealed partial class DoorComponent : Component
             }
 
             var curTime = IoCManager.Resolve<IGameTiming>().CurTime;
-            return (float) (NextStateChange.Value - curTime).TotalSeconds;
+            return (float)(NextStateChange.Value - curTime).TotalSeconds;
         }
         set
         {
@@ -298,18 +298,11 @@ public sealed partial class DoorComponent : Component
     [DataField("clickOpen")]
     public bool ClickOpen = true;
 
-    /// <summary>
-    /// Whether the door can be pried open when unpowered without tools
-    /// </summary>
-    [DataField("easyPry")]
-    public bool EasyPry = false;
-
-
     [DataField("openDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int OpenDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int OpenDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 
     [DataField("closedDrawDepth", customTypeSerializer: typeof(ConstantSerializer<DrawDepthTag>))]
-    public int ClosedDrawDepth = (int) DrawDepth.DrawDepth.Doors;
+    public int ClosedDrawDepth = (int)DrawDepth.DrawDepth.Doors;
 }
 
 [Serializable, NetSerializable]

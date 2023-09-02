@@ -123,9 +123,6 @@ public sealed class DoorSystem : SharedDoorSystem
         if (args.Handled)
             return;
 
-        if (!TryComp(args.Used, out DoorPryingComponent? tool))
-            return;
-
         args.Handled = _pryingSystem.TryPry(uid, args.User, door, out _, args.Used);
     }
 

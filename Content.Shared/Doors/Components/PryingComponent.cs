@@ -1,9 +1,10 @@
 using Robust.Shared.Audio;
+using Robust.Shared.GameStates;
 
 namespace Content.Shared.Doors.Prying.Components;
 
-[RegisterComponent]
-public sealed class DoorPryingComponent : Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class DoorPryingComponent : Component
 {
     /// <summary>
     /// Whether the tool can pry open powered doors
@@ -40,7 +41,7 @@ public sealed class BeforePryEvent : CancellableEntityEventArgs
 /// Raised to determine how long the door's pry time should be modified by.
 /// Multiply PryTimeModifier by the desired amount.
 /// </summary>
-public sealed class DoorGetPryTimeModifierEvent : EntityEventArgs
+public sealed partial class DoorGetPryTimeModifierEvent : EntityEventArgs
 {
     public readonly EntityUid User;
     public float PryTimeModifier = 1.0f;

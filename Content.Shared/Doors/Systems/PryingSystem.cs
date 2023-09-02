@@ -18,7 +18,7 @@ public sealed class DoorPryingSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DoorPryingComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public sealed class DoorPryingSystem : EntitySystem
     {
         id = null;
 
-        if (!door.EasyPry)
+        if (!TryComp<PryUnpoweredComponent>(target, out _))
             return false;
 
         if (!CanPry(target, user, false))
@@ -76,7 +76,7 @@ public sealed class DoorPryingSystem : EntitySystem
 
 
         RaiseLocalEvent(target, modEv, false);
-        var doAfterArgs = new DoAfterArgs(user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), tool, target, tool)
+        var doAfterArgs = new DoAfterArgs(user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), target, target, tool)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
@@ -93,19 +93,15 @@ public sealed class DoorPryingSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
-    void OnDoAfter(EntityUid uid, DoorPryingComponent comp, DoorPryDoAfterEvent args)
+    void OnDoAfter(EntityUid uid, DoorComponent door, DoorPryDoAfterEvent args)
     {
         if (args.Cancelled)
             return;
-
-        if (args.Used is null)
+        if (args.Target is null)
             return;
 
-        DoorComponent? door = null;
-        if (!args.Target.HasValue || !Resolve(args.Target.Value, ref door))
-            return;
-
-        _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+        if (args.Used != null && TryComp<DoorPryingComponent>(args.Used.Value, out var comp))
+            _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
 
         if (door.State == DoorState.Closed)
         {
@@ -121,6 +117,6 @@ public sealed class DoorPryingSystem : EntitySystem
 }
 
 [Serializable, NetSerializable]
-public sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class DoorPryDoAfterEvent : SimpleDoAfterEvent
 {
 }
