@@ -1,4 +1,5 @@
 using Content.Shared.Atmos;
+using Content.Shared.Movement.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Map;
 using Robust.Shared.Prototypes;
@@ -29,6 +30,8 @@ namespace Content.Shared.Maps
         [DataField("sprite")] public ResPath? Sprite { get; private set; }
 
         [DataField("edgeSprites")] public Dictionary<Direction, ResPath> EdgeSprites { get; private set; } = new();
+
+        [DataField("edgeSpritePriority")] public int EdgeSpritePriority { get; private set; } = 0;
 
         [DataField("isSubfloor")] public bool IsSubFloor { get; private set; }
 
@@ -72,6 +75,25 @@ namespace Content.Shared.Maps
         public string ItemDropPrototypeName { get; private set; } = "FloorTileItemSteel";
 
         [DataField("isSpace")] public bool IsSpace { get; private set; }
+
+        /// <summary>
+        ///     Friction override for mob mover in <see cref="SharedMoverController"/>
+        /// </summary>
+        [DataField("mobFriction")]
+        public float? MobFriction { get; private set; }
+
+        /// <summary>
+        ///     No-input friction override for mob mover in <see cref="SharedMoverController"/>
+        /// </summary>
+        [DataField("mobFrictionNoInput")]
+        public float? MobFrictionNoInput { get; private set; }
+
+        /// <summary>
+        ///     Accel override for mob mover in <see cref="SharedMoverController"/>
+        /// </summary>
+        [DataField("mobAcceleration")]
+        public float? MobAcceleration { get; private set; }
+
         [DataField("sturdy")] public bool Sturdy { get; private set; } = true;
 
         /// <summary>

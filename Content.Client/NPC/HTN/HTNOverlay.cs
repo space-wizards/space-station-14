@@ -7,16 +7,14 @@ namespace Content.Client.NPC.HTN;
 
 public sealed class HTNOverlay : Overlay
 {
-    private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transform;
-    private readonly Font _font;
+    private readonly IEntityManager _entManager = default!;
+    private readonly Font _font = default!;
 
     public override OverlaySpace Space => OverlaySpace.ScreenSpace;
 
     public HTNOverlay(IEntityManager entManager, IResourceCache resourceCache)
     {
         _entManager = entManager;
-        _transform = entManager.System<SharedTransformSystem>();
         _font = new VectorFont(resourceCache.GetResource<FontResource>("/Fonts/NotoSans/NotoSans-Regular.ttf"), 10);
     }
 
@@ -32,7 +30,7 @@ public sealed class HTNOverlay : Overlay
             if (string.IsNullOrEmpty(comp.DebugText) || xform.MapID != args.MapId)
                 continue;
 
-            var worldPos = _transform.GetWorldPosition(xform);
+            var worldPos = xform.WorldPosition;
 
             if (!args.WorldAABB.Contains(worldPos))
                 continue;
