@@ -1,9 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Emagged recyclers grind people again., type: Tweak}
-  id: 4231
-  time: '2023-07-12T00:45:34.0000000+00:00'
 - author: Lank
   changes:
   - {message: Sawing off a double barrel shotgun no longer fills it with lethal shells.
@@ -3015,3 +3010,8 @@ Entries:
       and has a larger explosion.', type: Tweak}
   id: 4730
   time: '2023-09-02T00:08:25.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
+  id: 4731
+  time: '2023-09-02T04:02:36.0000000+00:00'
