@@ -17,24 +17,9 @@ namespace Content.Server.Nutrition.Components
         [DataField("useSound")]
         public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/drink.ogg");
 
-        [DataField("isOpen")]
-        internal bool DefaultToOpened;
-
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("transferAmount")]
         public FixedPoint2 TransferAmount { get; [UsedImplicitly] private set; } = FixedPoint2.New(5);
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Opened;
-
-        [DataField("openSounds")]
-        public SoundSpecifier OpenSounds = new SoundCollectionSpecifier("canOpenSounds");
-
-        [DataField("pressurized")]
-        public bool Pressurized;
-
-        [DataField("burstSound")]
-        public SoundSpecifier BurstSound = new SoundPathSpecifier("/Audio/Effects/flash_bang.ogg");
 
         /// <summary>
         /// How long it takes to drink this yourself.
