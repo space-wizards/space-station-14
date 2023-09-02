@@ -19,7 +19,6 @@ using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Inventory;
-using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Nutrition;
 using Content.Shared.Verbs;
@@ -95,8 +94,8 @@ public sealed class FoodSystem : EntitySystem
 
     public (bool Success, bool Handled) TryFeed(EntityUid user, EntityUid target, EntityUid food, FoodComponent foodComp)
     {
-        //Suppresses self-eating
-        if (food == user || TryComp<MobStateComponent>(food, out var mobState) && _mobState.IsAlive(food, mobState)) // Suppresses eating alive mobs
+        //Suppresses eating yourself and alive mobs
+        if (food == user || _mobState.IsAlive(food))
             return (false, false);
 
         // Target can't be fed or they're already eating
@@ -349,12 +348,12 @@ public sealed class FoodSystem : EntitySystem
         if (uid == ev.User ||
             !ev.CanInteract ||
             !ev.CanAccess ||
-            !TryComp<BodyComponent>(ev.User, out var body))
+            !TryComp<BodyComponent>(ev.User, out var body) ||
             !_body.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
             return;
 
         // have to kill mouse before eating it
-        if (_mobState.IsAlive(uid, mobState))
+        if (_mobState.IsAlive(uid))
             return;
 
         // only give moths eat verb for clothes since it would just fail otherwise
@@ -436,7 +435,7 @@ public sealed class FoodSystem : EntitySystem
         foreach (var item in _hands.EnumerateHeld(user, hands))
         {
             // Is utensil?
-            if (!TryComp<UtensilComponent>(item, out var utensil)
+            if (!TryComp<UtensilComponent>(item, out var utensil))
                 continue;
 
             if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?
@@ -478,7 +477,7 @@ public sealed class FoodSystem : EntitySystem
         }
 
         if (_inventory.TryGetSlotEntity(uid, "head", out var headUid) &&
-            TryComp(headUid, out blocker)
+            TryComp(headUid, out blocker) &&
             blocker.Enabled)
         {
             args.Blocker = headUid;
