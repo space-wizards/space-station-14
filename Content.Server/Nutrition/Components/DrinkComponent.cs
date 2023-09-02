@@ -27,6 +27,14 @@ public sealed partial class DrinkComponent : Component
     public bool Examinable = true;
 
     /// <summary>
+    /// If true, trying to drink when empty will not handle the event.
+    /// This means other systems such as equipping on use can run.
+    /// Example usecase is the bucket.
+    /// </summary>
+    [ViewVariables(VVAccess.ReadWrite), DataField("ignoreEmpty")]
+    public bool IgnoreEmpty;
+
+    /// <summary>
     ///     This is how many seconds it takes to force feed someone this drink.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("forceFeedDelay")]

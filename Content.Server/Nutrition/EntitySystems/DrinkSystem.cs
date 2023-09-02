@@ -252,6 +252,9 @@ public sealed class DrinkSystem : EntitySystem
         if (!_solutionContainer.TryGetSolution(item, drink.SolutionName, out var drinkSolution) ||
             drinkSolution.Volume <= 0)
         {
+            if (drink.IgnoreEmpty)
+                return false;
+
             _popup.PopupEntity(Loc.GetString("drink-component-try-use-drink-is-empty", ("entity", item)), item, user);
             return true;
         }
