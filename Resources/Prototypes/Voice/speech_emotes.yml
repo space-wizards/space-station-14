@@ -122,6 +122,26 @@
     - whistleblowing
     - whistleblowing.
     - whistleblowing!
+    #220-Localization-Start
+    - свист
+    - свист.
+    - свист!
+    - свистит
+    - свистит.
+    - свистит!
+    - свистнул
+    - свистнул.
+    - свистнул.
+    - свистнула
+    - свистнула.
+    - свистнула!
+    - присвистнул
+    - присвистнул.
+    - присвистнул!
+    - присвистнула
+    - присвистнула.
+    - присвистнула!
+    #220-Localization-End
 
 - type: emote
   id: Crying
@@ -137,6 +157,23 @@
     - cries
     - cries.
     - cries!
+    #220-Localization-Start
+    - плач
+    - плач.
+    - плач!
+    - плачет
+    - плачет.
+    - плачет!
+    - рыдает
+    - рыдает.
+    - рыдает!
+    - заплакал
+    - заплакал.
+    - заплакал!
+    - заплакала
+    - заплакала.
+    - заплакала!
+    #220-Localization-End
 
 - type: emote
   id: Squish
@@ -152,6 +189,26 @@
     - squishes
     - squishes.
     - squishes!
+    #220-Localization-Start
+    - хлюп
+    - хлюп.
+    - хлюп!
+    - хлюпает
+    - хлюпает.
+    - хлюпает!
+    - хлюпнул
+    - хлюпнул.
+    - хлюпнул!
+    - хлюпнула
+    - хлюпнула.
+    - хлюпнула!
+    - хлюпнуло
+    - хлюпнуло.
+    - хлюпнуло!
+    - хлюпнули
+    - хлюпнули.
+    - хлюпнули!
+    #220-Localization-End
 
 - type: emote
   id: Chitter
@@ -167,6 +224,14 @@
    - chittered
    - chittered.
    - chittered!
+   #220-Localization-Start
+   - жужжание
+   - жужжание.
+   - жужжание!
+   - жужжит
+   - жужжит.
+   - жужжит!
+   #220-Localization-End
 
 - type: emote
   id: Squeak
@@ -182,6 +247,14 @@
    - squeaked
    - squeaked.
    - squeaked!
+   #220-Localization-Start
+   - скрип
+   - скрип.
+   - скрип!
+   - скрипит
+   - скрипит.
+   - скрипит!
+   #220-Localization-End
 
 # hand emotes
 - type: emote
