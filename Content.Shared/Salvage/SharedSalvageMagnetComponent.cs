@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Shared.Salvage;
 
-public abstract class SharedSalvageMagnetComponent : Component
+public abstract partial class SharedSalvageMagnetComponent : Component
 {
     /// <summary>
     /// The machine part that affects the attaching and cooldown times

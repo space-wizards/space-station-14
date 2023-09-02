@@ -16,6 +16,7 @@ using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Fax;
 using Content.Shared.Interaction;
+using Content.Shared.Paper;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
@@ -37,6 +38,7 @@ public sealed class FaxSystem : EntitySystem
     [Dependency] private readonly QuickDialogSystem _quickDialog = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private const string PaperSlotId = "Paper";
 
@@ -272,7 +274,7 @@ public sealed class FaxSystem : EntitySystem
                         return;
 
                     args.Data.TryGetValue(FaxConstants.FaxPaperStampStateData, out string? stampState);
-                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<string>? stampedBy);
+                    args.Data.TryGetValue(FaxConstants.FaxPaperStampedByData, out List<StampDisplayInfo>? stampedBy);
                     args.Data.TryGetValue(FaxConstants.FaxPaperPrototypeData, out string? prototypeId);
 
                     var printout = new FaxPrintout(content, name, prototypeId, stampState, stampedBy);
@@ -461,16 +463,14 @@ public sealed class FaxSystem : EntitySystem
             // Apply stamps
             if (printout.StampState != null)
             {
-                foreach (var stampedBy in printout.StampedBy)
+                foreach (var stamp in printout.StampedBy)
                 {
-                    _paperSystem.TryStamp(printed, stampedBy, printout.StampState);
+                    _paperSystem.TryStamp(printed, stamp, printout.StampState);
                 }
             }
         }
 
-        if (TryComp<MetaDataComponent>(printed, out var metadata))
-            metadata.EntityName = printout.Name;
-
+        _metaData.SetEntityName(printed, printout.Name);
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"\"{component.FaxName}\" {ToPrettyString(uid)} printed {ToPrettyString(printed)}: {printout.Content}");
     }
 

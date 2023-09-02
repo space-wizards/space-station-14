@@ -3,13 +3,13 @@ using Robust.Shared.Audio;
 namespace Content.Server.Wires;
 
 [RegisterComponent]
-public sealed class WiresComponent : Component
+public sealed partial class WiresComponent : Component
 {
     /// <summary>
     ///     The name of this entity's internal board.
     /// </summary>
     [DataField("BoardName")]
-    public string BoardName { get; set; } = "Wires";
+    public string BoardName { get; set; } = "wires-board-name-default";
 
     /// <summary>
     ///     The layout ID of this entity's wires.
@@ -48,7 +48,7 @@ public sealed class WiresComponent : Component
     ///     layout ID is generated, or if a new wire order should be generated every time.
     /// </summary>
     [DataField("alwaysRandomize")]
-    public bool AlwaysRandomize { get; }
+    public bool AlwaysRandomize { get; private set; }
 
     /// <summary>
     ///     Per wire status, keyed by an object.

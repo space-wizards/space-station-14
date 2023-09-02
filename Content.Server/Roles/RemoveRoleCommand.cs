@@ -1,8 +1,8 @@
 ﻿using Content.Server.Administration;
-using Content.Server.Mind;
-using Content.Server.Players;
 using Content.Shared.Administration;
+using Content.Shared.Players;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Console;
 using Robust.Shared.Prototypes;
@@ -44,9 +44,10 @@ namespace Content.Server.Roles
                 return;
             }
 
-            var role = new Job(mind, _prototypeManager.Index<JobPrototype>(args[1]));
-            var mindSystem = _entityManager.System<MindSystem>();
-            mindSystem.RemoveRole(mind, role);
+            var roles = _entityManager.System<SharedRoleSystem>();
+            var jobs = _entityManager.System<SharedJobSystem>();
+            if (jobs.MindHasJobWithId(mind, args[1]))
+                roles.MindRemoveRole<JobComponent>(mind.Value);
         }
     }
 }

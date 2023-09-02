@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Doors.Electronics;
 
 [RegisterComponent, NetworkedComponent()]
-public class DoorElectronicsComponent : Component
+public partial class DoorElectronicsComponent : Component
 {
 }
 

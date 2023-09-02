@@ -6,14 +6,14 @@
   copyright: "CEV-Eris commit 28e589f0ff72a009adf17db767e90be39054f0f2"
   source: "https://github.com/discordia-space/CEV-Eris/"
 
-- files: [ "asteroid_rocks_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
+- files: [ "asteroid_red.png", "asteroid_tile.png", "elevator_shaft.png", "freezer.png", "green_circuit.png", "lino.png", "mono.png", "rock_vault.png", "showroom.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid_rocks_red and asteroid_tile taken from commit /vg/station at commit 02b9f6894af4419c9f7e699a22c402b086d8067e."
+  copyright: "vgstation13 at roughly commit e4d3ea7f69d21c3667be12b114fa935c4640cb05, asteroid_red and asteroid_tile taken from commit /vg/station at commit 02b9f6894af4419c9f7e699a22c402b086d8067e."
   source: "https://github.com/vgstation-coders/vgstation13"
   
-- files: [ "asteroid.png", "asteroid0.png", "asteroid1.png", "asteroid2.png", "asteroid3.png", "asteroid4.png", "asteroid5.png", "asteroid6.png", "asteroid7.png", "asteroid8.png", "asteroid9.png", "asteroid10.png", "asteroid_rocks.png", "asteroid_pebbles.png"]
+- files: [ "asteroid.png", "asteroid_dug.png", "asteroid0.png"]
   license: "CC-BY-SA-3.0"
-  copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae, asteroid_rocks and asteroid_pebbles modified from asteroid tiles 0-10."
+  copyright: "Taken from /tg/station at commit 6665eec76c98a4f3f89bebcd10b34b47dcc0b8ae."
   source: "https://github.com/tgstation/tgstation/"
 
 - files: ["blue_circuit.png", "cropped_parallax.png", "eighties.png", "gold.png", "grass.png", "ironsand1.png", "ironsand2.png", "ironsand3.png", "ironsand4.png", "junglegrass.png", "lattice.png", "plating.png", "reinforced.png", "silver.png", "snow.png", "wood.png"]
@@ -26,7 +26,7 @@
   copyright: "Modified from reinforced.png by github user @Flareguy"
   source: "https://github.com/space-wizards/space-station-14/pull/18676"
 
-- files: ["asteroid_plating"]
+- files: ["asteroid_plating.png, snow_plating.png"]
   license: "CC-BY-SA-3.0"
   copyright: "Modified from plating.png by github user @Flareguy"
   source: "https://github.com/space-wizards/space-station-14/"

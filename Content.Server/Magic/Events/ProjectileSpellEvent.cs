@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Magic.Events;
 
-public sealed class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
+public sealed partial class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
 {
     /// <summary>
     /// What entity should be spawned.
@@ -19,5 +19,5 @@ public sealed class ProjectileSpellEvent : WorldTargetActionEvent, ISpeakSpell
     [DataField("posData")] public MagicSpawnData Pos = new TargetCasterPos();
 
     [DataField("speech")]
-    public string? Speech { get; }
+    public string? Speech { get; private set; }
 }

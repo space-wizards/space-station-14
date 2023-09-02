@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Light.Component
 {
     [NetworkedComponent]
-    public abstract class SharedEmergencyLightComponent : Robust.Shared.GameObjects.Component
+    public abstract partial class SharedEmergencyLightComponent : Robust.Shared.GameObjects.Component
     {
         public bool Enabled { get; set; } = false;
     }

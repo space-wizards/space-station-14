@@ -7,7 +7,7 @@ namespace Content.Server.Explosion.Components.OnTrigger;
 /// After being triggered applies the specified components and runs triggers again.
 /// </summary>
 [RegisterComponent]
-public sealed class TwoStageTriggerComponent : Component
+public sealed partial class TwoStageTriggerComponent : Component
 {
     /// <summary>
     /// How long it takes for the second stage to be triggered.

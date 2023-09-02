@@ -18,7 +18,8 @@
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel
@@ -65,14 +66,15 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      160: Dead
+      120: Dead
   - type: Grammar
     attributes:
       gender: male
       proper: true
   - type: Tag
     tags:
-      - DoorBumpOpener
+    - DoorBumpOpener
+    - VimPilot
   - type: Access
     tags:
     - Chapel

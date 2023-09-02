@@ -131,6 +131,16 @@ public abstract partial class SharedBuckleSystem
 
     private void OnBuckleStandAttempt(EntityUid uid, BuckleComponent component, StandAttemptEvent args)
     {
+        //Let entities stand back up while on vehicles so that they can be knocked down when slept/stunned
+        //This prevents an exploit that allowed people to become partially invulnerable to stuns
+        //while on vehicles
+
+        if (component.BuckledTo != null)
+        {
+            var buckle = component.BuckledTo;
+            if (TryComp<VehicleComponent>(buckle, out _))
+                return;
+        }
         if (component.Buckled)
             args.Cancel();
     }
@@ -483,6 +493,7 @@ public abstract partial class SharedBuckleSystem
             Dirty(strapComp);
         }
 
+        _joints.RefreshRelay(buckleUid);
         AppearanceSystem.SetData(strapUid, StrapVisuals.State, strapComp.BuckledEntities.Count != 0);
         var audioSourceUid = userUid != buckleUid ? userUid : strapUid;
         _audioSystem.PlayPredicted(strapComp.UnbuckleSound, strapUid, audioSourceUid);

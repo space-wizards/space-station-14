@@ -1,11 +1,10 @@
 using Content.Server.Body.Components;
 using Content.Server.Ghost.Components;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Shared.Body.Components;
 using Content.Shared.Body.Events;
 using Content.Shared.Body.Organ;
-using Content.Shared.Body.Part;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Movement.Components;
 using Content.Shared.Movement.Systems;
 
@@ -14,7 +13,7 @@ namespace Content.Server.Body.Systems
     public sealed class BrainSystem : EntitySystem
     {
         [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
         public override void Initialize()
         {
@@ -40,12 +39,12 @@ namespace Content.Server.Body.Systems
 
         private void HandleMind(EntityUid newEntity, EntityUid oldEntity)
         {
-            EntityManager.EnsureComponent<MindContainerComponent>(newEntity);
-            var oldMind = EntityManager.EnsureComponent<MindContainerComponent>(oldEntity);
+            EnsureComp<MindContainerComponent>(newEntity);
+            var oldMind = EnsureComp<MindContainerComponent>(oldEntity);
 
-            EnsureComp<GhostOnMoveComponent>(newEntity);
+            var ghostOnMove = EnsureComp<GhostOnMoveComponent>(newEntity);
             if (HasComp<BodyComponent>(newEntity))
-                Comp<GhostOnMoveComponent>(newEntity).MustBeDead = true;
+                ghostOnMove.MustBeDead = true;
 
             // TODO: This is an awful solution.
             // Our greatest minds still can't figure out how to allow brains/heads to ghost without giving them the
@@ -57,10 +56,10 @@ namespace Content.Server.Body.Systems
                 _movementSpeed.ChangeBaseSpeed(newEntity, 0, 0 , 0, move);
             }
 
-            if (!_mindSystem.TryGetMind(oldEntity, out var mind, oldMind))
+            if (!_mindSystem.TryGetMind(oldEntity, out var mindId, out var mind))
                 return;
 
-            _mindSystem.TransferTo(mind, newEntity);
+            _mindSystem.TransferTo(mindId, newEntity, mind: mind);
         }
     }
 }

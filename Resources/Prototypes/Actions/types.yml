@@ -96,13 +96,13 @@
   event: !type:UseDnaScramblerImplantEvent
 
 - type: instantAction
-  id: ToggleSuitHelmet
+  id: ToggleSuitPiece
   name: action-name-hardsuit
   description: action-description-hardsuit
   itemIconStyle: BigItem
   useDelay: 1 # equip noise spam.
   event: !type:ToggleClothingEvent
-
+  
 - type: instantAction
   id: CombatModeToggle
   name: action-name-combat
@@ -181,3 +181,4 @@
   description: action-desc-honk
   icon: { sprite: Objects/Fun/bikehorn.rsi, state: icon }
   event: !type:ActivateImplantEvent
+  useDelay: 1
