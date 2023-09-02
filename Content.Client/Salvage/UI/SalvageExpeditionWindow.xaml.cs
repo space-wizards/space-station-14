@@ -237,7 +237,7 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
         else
         {
             var cooldown = _cooldown
-                ? TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionFailedCooldown))
+                ? TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionCooldown))
                 : TimeSpan.FromSeconds(_cfgManager.GetCVar(CCVars.SalvageExpeditionCooldown));
 
             NextOfferBar.Value = 1f - (float) (remaining / cooldown);

@@ -78,6 +78,8 @@ public sealed record SalvageMissionParams
     public ushort Index;
 
     [ViewVariables(VVAccess.ReadWrite)] public int Seed;
+
+    public string Difficulty = string.Empty;
 }
 
 /// <summary>

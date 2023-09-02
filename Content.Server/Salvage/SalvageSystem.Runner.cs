@@ -43,7 +43,7 @@ public sealed partial class SalvageSystem
         // TODO: This is terrible but need bluespace harnesses or something.
         var query = EntityQueryEnumerator<HumanoidAppearanceComponent, MobStateComponent, TransformComponent>();
 
-        while (query.MoveNext(out var uid, out var _, out var mobState, out var mobXform))
+        while (query.MoveNext(out var uid, out _, out var mobState, out var mobXform))
         {
             if (mobXform.MapUid != xform.MapUid)
                 continue;
@@ -114,17 +114,6 @@ public sealed partial class SalvageSystem
 
     private void OnFTLStarted(ref FTLStartedEvent ev)
     {
-        // Started a mining mission so work out exempt entities
-        if (TryComp<SalvageMiningExpeditionComponent>(
-                _mapManager.GetMapEntityId(ev.TargetCoordinates.ToMap(EntityManager, _transform).MapId),
-                out var mining))
-        {
-            var ents = new List<EntityUid>();
-            var xformQuery = GetEntityQuery<TransformComponent>();
-            MiningTax(ents, ev.Entity, mining, xformQuery);
-            mining.ExemptEntities = ents;
-        }
-
         if (!TryComp<SalvageExpeditionComponent>(ev.FromMapUid, out var expedition) ||
             !TryComp<SalvageExpeditionDataComponent>(expedition.Station, out var station))
         {
@@ -208,71 +197,6 @@ public sealed partial class SalvageSystem
             if (remaining < TimeSpan.Zero)
             {
                 QueueDel(uid);
-            }
-        }
-
-        // Structure missions
-        var structureQuery = EntityQueryEnumerator<SalvageStructureExpeditionComponent, SalvageExpeditionComponent>();
-
-        while (structureQuery.MoveNext(out var uid, out var structure, out var comp))
-        {
-            if (comp.Completed)
-                continue;
-
-            var structureAnnounce = false;
-
-            for (var i = 0; i < structure.Structures.Count; i++)
-            {
-                var objective = structure.Structures[i];
-
-                if (Deleted(objective))
-                {
-                    structure.Structures.RemoveSwap(i);
-                    structureAnnounce = true;
-                }
-            }
-
-            if (structureAnnounce)
-            {
-                Announce(uid, Loc.GetString("salvage-expedition-structure-remaining", ("count", structure.Structures.Count)));
-            }
-
-            if (structure.Structures.Count == 0)
-            {
-                comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
-            }
-        }
-
-        // Elimination missions
-        var eliminationQuery = EntityQueryEnumerator<SalvageEliminationExpeditionComponent, SalvageExpeditionComponent>();
-        while (eliminationQuery.MoveNext(out var uid, out var elimination, out var comp))
-        {
-            if (comp.Completed)
-                continue;
-
-            var announce = false;
-
-            for (var i = 0; i < elimination.Megafauna.Count; i++)
-            {
-                var mob = elimination.Megafauna[i];
-
-                if (Deleted(mob) || _mobState.IsDead(mob))
-                {
-                    elimination.Megafauna.RemoveSwap(i);
-                    announce = true;
-                }
-            }
-
-            if (announce)
-            {
-                Announce(uid, Loc.GetString("salvage-expedition-megafauna-remaining", ("count", elimination.Megafauna.Count)));
-            }
-
-            if (elimination.Megafauna.Count == 0)
-            {
-                comp.Completed = true;
-                Announce(uid, Loc.GetString("salvage-expedition-completed"));
             }
         }
     }

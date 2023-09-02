@@ -4,8 +4,6 @@ salvage-expedition-structure-remaining = {$count ->
     *[other] {$count} structures remaining.
 }
 
-salvage-expedition-megafauna-remaining = {$count} megafauna remaining.
-
 salvage-expedition-type = Mission
 salvage-expedition-window-title = Salvage expeditions
 salvage-expedition-window-difficulty = Difficulty:
