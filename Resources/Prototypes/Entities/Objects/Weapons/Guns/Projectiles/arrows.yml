@@ -2,7 +2,6 @@
   parent: BaseItem
   id: BaseArrow
   name: arrow
-  abstract: true
   description: You can feel the power of the steppe within you.
   components:
   - type: Item
@@ -20,18 +19,30 @@
         - ItemMask
         restitution: 0.3
         friction: 0.2
+      projectile:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.1"
+        hard: false
+        mask:
+        - Impassable
+        - BulletImpassable
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+  - type: ThrowingAngle
+    angle: 0
+  - type: Ammo
+    muzzleFlash: null
   - type: Tag
     tags:
     - Arrow
+  - type: Projectile
+    deleteOnCollide: false
+    damage:
+      types:
+        Piercing: 14
 
 - type: entity
   parent: BaseArrow
   id: ArrowImprovised
   description: Aren't basically all arrows technically improvised?
-  components:
-  - type: DamageOtherOnHit
-    damage:
-      types:
-        Piercing: 14

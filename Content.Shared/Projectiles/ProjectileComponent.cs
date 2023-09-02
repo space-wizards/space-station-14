@@ -15,7 +15,8 @@ public sealed partial class ProjectileComponent : Component
     /// <summary>
     /// User that shot this projectile.
     /// </summary>
-    [DataField("shooter"), AutoNetworkedField] public EntityUid Shooter;
+    [DataField("shooter"), AutoNetworkedField]
+    public EntityUid Shooter;
 
     /// <summary>
     /// Weapon used to shoot.

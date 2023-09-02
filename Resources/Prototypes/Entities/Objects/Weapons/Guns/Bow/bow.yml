@@ -15,17 +15,15 @@
     - Back
   - type: Wieldable
   - type: GunWieldBonus
-    minAngle: -20
-    maxAngle: -20
+    minAngle: -30
+    maxAngle: -70
   - type: Gun
-    minAngle: 24
-    maxAngle: 45
-    angleIncrease: 4
-    angleDecay: 16
-    fireRate: 8
-    selectedMode: FullAuto
+    minAngle: 30
+    maxAngle: 70
+    fireRate: 1
+    selectedMode: SemiAuto
     availableModes:
-    - FullAuto
+    - SemiAuto
     soundGunshot:
       path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
     soundEmpty:
@@ -52,7 +50,7 @@
 - type: entity
   id: BowImprovised
   parent: BaseBow
-  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
+  description: A weapon of war from a previous time. It still holds up
   components:
   - type: Sprite
     layers:
