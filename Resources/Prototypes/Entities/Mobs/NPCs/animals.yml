@@ -311,7 +311,7 @@
 - type: entity
   name: glockroach
   parent: MobCockroach
-  suffix: Glockroach, Admeme
+  suffix: Admeme
   id: MobGlockroach
   description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
   components:
