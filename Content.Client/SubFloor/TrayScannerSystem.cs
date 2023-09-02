@@ -43,6 +43,7 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
         var range = 0f;
         HashSet<SubFloorHideComponent> inRange;
         var scannerQuery = GetEntityQuery<TrayScannerComponent>();
+        var wearableScannerQuery = GetEntityQuery<WearableTrayScannerComponent>();
 
         // TODO: Should probably sub to player attached changes / inventory changes but inventory's
         // API is extremely skrungly. If this ever shows up on dottrace ping me and laugh.
@@ -61,12 +62,30 @@ public sealed class TrayScannerSystem : SharedTrayScannerSystem
                     canSee = true;
                     range = MathF.Max(range, sneakScanner.Range);
                 }
+
+                foreach (var ent in slot.ContainedEntities)
+                {
+                    if (!wearableScannerQuery.TryGetComponent(ent, out var sneakScanner) || !sneakScanner.Enabled)
+                        continue;
+
+                    canSee = true;
+                    range = MathF.Max(range, sneakScanner.Range);
+                }
             }
         }
 
         foreach (var hand in _hands.EnumerateHands(player.Value))
         {
             if (!scannerQuery.TryGetComponent(hand.HeldEntity, out var heldScanner) || !heldScanner.Enabled)
+                continue;
+
+            range = MathF.Max(heldScanner.Range, range);
+            canSee = true;
+        }
+
+        foreach (var hand in _hands.EnumerateHands(player.Value))
+        {
+            if (!wearableScannerQuery.TryGetComponent(hand.HeldEntity, out var heldScanner) || !heldScanner.Enabled)
                 continue;
 
             range = MathF.Max(heldScanner.Range, range);
