@@ -46,3 +46,5 @@
 - files: ["core.yml"]
   authors: Ubaser
 
+- files: ["ss220-box.yml"]
+  authors: ACJM, Emisse, TheArturZh, ZoNeSRuS
