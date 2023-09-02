@@ -4,8 +4,6 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
-using Content.Shared.Humanoid;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Mind;
 

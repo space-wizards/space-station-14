@@ -21,6 +21,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Dynamics;
 using Robust.Shared.Physics.Events;
 using Robust.Shared.Physics.Systems;
+using Content.Shared.FixedPoint;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -64,6 +65,8 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<IgniteOnCollideComponent, LandEvent>(OnIgniteLand);
 
             SubscribeLocalEvent<IgniteOnMeleeHitComponent, MeleeHitEvent>(OnMeleeHit);
+            
+            SubscribeLocalEvent<IgniteOnHeatDamageComponent, DamageChangedEvent>(OnDamageChanged);
         }
 
         private void OnMeleeHit(EntityUid uid, IgniteOnMeleeHitComponent component, MeleeHitEvent args)
@@ -76,6 +79,31 @@ namespace Content.Server.Atmos.EntitySystems
                 flammable.FireStacks += component.FireStacks;
                 Ignite(entity, args.Weapon, flammable, args.User);
             }
+        }
+
+        private void OnDamageChanged(EntityUid uid, IgniteOnHeatDamageComponent component, DamageChangedEvent args)
+        {
+            // Make sure the entity is flammable
+            if (!TryComp<FlammableComponent>(uid, out var flammable))
+                return;
+
+            // Make sure the damage delta isn't null
+            if (args.DamageDelta == null)
+                return;
+
+            // Check if its' taken any heat damage, and give the value
+            if (args.DamageDelta.DamageDict.TryGetValue("Heat", out FixedPoint2 value))
+            {
+                // Make sure the value is greater than the threshold
+                if(value <= component.Threshold)
+                    return;
+
+                // Ignite that sucker
+                flammable.FireStacks += component.FireStacks;
+                Ignite(uid, uid, flammable);
+            }
+
+            
         }
 
         private void OnIgniteLand(EntityUid uid, IgniteOnCollideComponent component, ref LandEvent args)

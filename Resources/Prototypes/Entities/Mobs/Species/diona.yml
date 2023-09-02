@@ -62,6 +62,9 @@
     soundsId: DionaBodyEmotes
   - type: Perishable
   - type: TransferMindOnGib
+  - type: IgniteOnHeatDamage
+    fireStacks: 1
+    threshold: 10
 
 - type: entity
   save: false
