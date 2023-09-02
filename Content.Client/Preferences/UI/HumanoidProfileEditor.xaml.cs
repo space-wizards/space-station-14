@@ -474,12 +474,12 @@ namespace Content.Client.Preferences.UI
 
             _previewRotateLeftButton.OnPressed += _ =>
             {
-                _previewRotation += 1;
+                _previewRotation += 7;
                 _needUpdatePreview = true;
             };
             _previewRotateRightButton.OnPressed += _ =>
             {
-                _previewRotation += 7;
+                _previewRotation += 1;
                 _needUpdatePreview = true;
             };
 
