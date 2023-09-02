@@ -1,0 +1,106 @@
+using Content.Server.Chemistry.EntitySystems;
+using Content.Server.Nutrition.Components;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Nutrition.Components;
+using Robust.Shared.GameObjects;
+
+namespace Content.Server.Nutrition.EntitySystems;
+
+/// <summary>
+/// Provides API for openable food and drinks, handles opening on use and preventing transfer when closed.
+/// </summary>
+public sealed class OpenableSystem : EntitySystem
+{
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private readonly SharedAudioSystem _audio = default!;
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
+        SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
+    }
+
+    private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
+    {
+        UpdateAppearance(uid, comp);
+    }
+
+    private void OnUse(EntityUid uid, OpenableComponent comp, UseInHandEvent args)
+    {
+        if (args.Handled)
+            return;
+
+        args.Handled = TryOpen(uid, comp);
+    }
+
+    private void OnTransferAttempt(EntityUid uid, OpenableComponent comp, SolutionTransferAttemptEvent args)
+    {
+        if (!comp.Opened)
+        {
+            // message says its just for drinks, shouldn't matter since you typically dont have a food that is openable and can be poured out
+            args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", uid)));
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the entity either does not have OpenableComponent or it is opened.
+    /// Drinks that don't have OpenableComponent are automatically open, so it returns true.
+    /// </summary>
+    public bool IsOpen(EntityUid uid, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp, false))
+            return true;
+
+        return comp.Opened;
+    }
+
+    /// <summary>
+    /// Returns true if the entity both has OpenableComponent and is not opened.
+    /// Drinks that don't have OpenableComponent are automatically open, so it returns false.
+    /// </summary>
+    public bool IsClosed(EntityUid uid, OpenableComponent? comp = null)
+    {
+        return !IsOpen(uid, comp);
+    }
+
+    /// <summary>
+    /// Update open visuals to the current value.
+    /// </summary>
+    public void UpdateAppearance(EntityUid uid, OpenableComponent? comp = null, AppearanceComponent? appearance = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return;
+
+        _appearance.SetData(uid, DrinkCanStateVisual.Opened, comp.Opened, appearance);
+    }
+
+    /// <summary>
+    /// Sets the opened field and updates open visuals.
+    /// </summary>
+    public void SetOpen(EntityUid uid, bool opened = true, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || opened == comp.Opened)
+            return;
+
+        comp.Opened = opened;
+
+        UpdateAppearance(uid, comp);
+    }
+
+    /// <summary>
+    /// If closed, opens it and plays the sound.
+    /// </summary>
+    /// <returns>Whether it got opened</returns>
+    public bool TryOpen(EntityUid uid, OpenableComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp) || comp.Opened)
+            return false;
+
+        SetOpen(uid, true, comp);
+        _audio.PlayPvs(comp.Sound, uid);
+        return true;
+    }
+}
