@@ -26,6 +26,7 @@ public class MapLoadBenchmark
     public void Setup()
     {
         ProgramShared.PathOffset = "../../../../";
+        PoolManager.Startup(null);
 
         _pair = PoolManager.GetServerClient().GetAwaiter().GetResult();
         var server = _pair.Server;
@@ -42,6 +43,7 @@ public class MapLoadBenchmark
     public async Task Cleanup()
     {
         await _pair.DisposeAsync();
+        PoolManager.Shutdown();
     }
 
     public static IEnumerable<string> MapsSource { get; set; }
