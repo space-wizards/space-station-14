@@ -1,16 +1,6 @@
 Entries:
 - author: EmoGarbage404
   changes:
-  - {message: 'Intercoms now have a menu for selecting the channel, toggling the microphone,
-      and toggling the speakers.', type: Add}
-  - {message: 'Intercoms now come with speakers, which allow you to hear what people
-      are saying.', type: Add}
-  - {message: 'Radio speakers are now much quieter, requiring you to stand next to
-      them to make out what they''re saying.', type: Tweak}
-  id: 4230
-  time: '2023-07-11T23:58:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
   - {message: Emagged recyclers grind people again., type: Tweak}
   id: 4231
   time: '2023-07-12T00:45:34.0000000+00:00'
@@ -3019,3 +3009,9 @@ Entries:
   - {message: Examining an item now shows its size., type: Add}
   id: 4729
   time: '2023-09-01T15:09:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The hot potato now does more damage over time, has a shorter timer,
+      and has a larger explosion.', type: Tweak}
+  id: 4730
+  time: '2023-09-02T00:08:25.0000000+00:00'
