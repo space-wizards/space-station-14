@@ -65,6 +65,15 @@
   - type: IgniteOnHeatDamage
     fireStacks: 1
     threshold: 10
+  - type: SplitAction
+    entityProduced: BaseDionaNymphOrgan
+    actionPrototype: DionaSplitAction
+    splitTime: 8
+    stunTime: 2.5
+    damage:
+      types:
+        Cellular: 55
+
 
 - type: entity
   save: false

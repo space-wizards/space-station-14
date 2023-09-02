@@ -1,0 +1,7 @@
+- type: instantAction
+  id: DionaSplitAction
+  icon: Mobs/Animals/nymph.rsi/icon.png
+  name: diona-split-action-name
+  description: diona-split-action-description
+  event: !type:SplitActionEvent
+  useDelay: 900 # Once every 15 minutes. They shouldn't be splitting often.
