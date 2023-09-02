@@ -281,7 +281,7 @@
     price: 40
 
 - type: entity
-  name: dropper
+  name: borgdropper
   parent: Dropper
   description: Used to transfer small amounts of chemical solution between containers. Extended for use by medical borgs.
   id: BorgDropper
