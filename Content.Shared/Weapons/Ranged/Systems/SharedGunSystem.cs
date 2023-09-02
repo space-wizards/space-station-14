@@ -350,7 +350,7 @@ public abstract partial class SharedGunSystem : EntitySystem
         EntityUid? user = null,
         bool throwItems = false)
     {
-        var shootable = EnsureComp<AmmoComponent>(ammo);
+        var shootable = EnsureShootable(ammo);
         Shoot(gunUid, gun, new List<(EntityUid? Entity, IShootable Shootable)>(1) { (ammo, shootable) }, fromCoordinates, toCoordinates, out userImpulse, user, throwItems);
     }
 
@@ -409,6 +409,20 @@ public abstract partial class SharedGunSystem : EntitySystem
         {
             Audio.PlayPvs(cartridge.EjectSound, entity, AudioParams.Default.WithVariation(SharedContentAudioSystem.DefaultVariation).WithVolume(-1f));
         }
+    }
+
+    protected IShootable EnsureShootable(EntityUid uid)
+    {
+        if (TryComp<CartridgeAmmoComponent>(uid, out var cartridge))
+            return cartridge;
+
+        return EnsureComp<AmmoComponent>(uid);
+    }
+
+    protected void RemoveShootable(EntityUid uid)
+    {
+        RemCompDeferred<CartridgeAmmoComponent>(uid);
+        RemCompDeferred<AmmoComponent>(uid);
     }
 
     protected void MuzzleFlash(EntityUid gun, AmmoComponent component, EntityUid? user = null)

@@ -50,6 +50,20 @@
     delay: 0.5
 
 - type: entity
+  name: experimental hypospray
+  suffix: Admeme
+  parent: SyndiHypo
+  description: The ultimate application of bluespace technology and rapid chemical administration.
+  id: AdminHypo
+  components:
+    - type: SolutionContainerManager
+      solutions:
+        hypospray:
+          maxVol: 3000
+    - type: UseDelay
+      delay: 0.0
+
+- type: entity
   name: chemical medipen
   parent: BaseItem
   description: A sterile injector for rapid administration of drugs to patients. This one can't be refilled.

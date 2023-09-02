@@ -38,7 +38,7 @@
   - type: Clickable
   - type: WiresPanel
   - type: Wires #we just want the panel
-    BoardName: Mech
+    BoardName: wires-board-name-mech
     LayoutId: Mech
   - type: Fixtures
     fixtures:

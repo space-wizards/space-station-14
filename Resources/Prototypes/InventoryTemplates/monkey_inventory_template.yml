@@ -8,6 +8,14 @@
     uiWindowPos: 0,0
     strippingWindowPos: 0,0
     displayName: Head
+  - name: ears
+    slotTexture: ears
+    slotFlags: EARS
+    slotGroup: MainHotbar
+    stripTime: 3
+    uiWindowPos: 1,2
+    strippingWindowPos: 1,2
+    displayName: Ears
   - name: mask
     slotTexture: mask
     slotFlags: MASK
@@ -48,8 +56,8 @@
     slotFlags: OUTERCLOTHING
     slotGroup: MainHotbar
     stripTime: 6
-    uiWindowPos: 1,2
-    strippingWindowPos: 1,2
+    uiWindowPos: 1,3
+    strippingWindowPos: 1,3
     displayName: Suit
     whitelist:
       tags:
