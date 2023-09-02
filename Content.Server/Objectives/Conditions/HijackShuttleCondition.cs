@@ -42,6 +42,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
         var agentOnShuttle = false;
         var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
         var humanoids = entMan.GetEntityQuery<HumanoidAppearanceComponent>();
+        var cuffable = entMan.GetEntityQuery<CuffableComponent>();
         foreach (var player in gridPlayers)
         {
             if (!player.AttachedEntity.HasValue ||
@@ -67,7 +68,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
                 continue;
 
             var isPersonCuffed =
-                entMan.TryGetComponent<CuffableComponent>(player.AttachedEntity.Value, out var cuffed)
+                cuffable.TryGetComponent(player.AttachedEntity.Value, out var cuffed)
                 && cuffed.CuffedHandCount > 0;
             if (isPersonCuffed) // Allow handcuffed
                 continue;
