@@ -197,3 +197,6 @@
     sprintModifier: 1.20
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodCarp
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
