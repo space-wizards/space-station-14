@@ -4,8 +4,10 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Components;
 using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 using Content.Shared.Ghost;
 using Content.Shared.Maps;
+using Content.Shared.Physics;
 using Content.Shared.Throwing;
 using Robust.Shared.Map;
+using Robust.Shared.Physics.Components;
 using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
@@ -42,9 +44,11 @@ public sealed class ThrowArtifactSystem : EntitySystem
         }
 
         var lookup = _lookup.GetEntitiesInRange(uid, component.Range, LookupFlags.Dynamic | LookupFlags.Sundries);
+        var physQuery = GetEntityQuery<PhysicsComponent>();
         foreach (var ent in lookup)
         {
-            if (HasComp<GhostComponent>(ent))
+            if (physQuery.TryGetComponent(ent, out var phys)
+                && (phys.CollisionMask & (int) CollisionGroup.GhostImpassable) != 0)
                 continue;
 
             var tempXform = Transform(ent);
