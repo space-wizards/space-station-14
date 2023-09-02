@@ -45,4 +45,5 @@
 - type: entity
   parent: BaseArrow
   id: ArrowImprovised
+  name: improvised arrow
   description: Aren't basically all arrows technically improvised?
