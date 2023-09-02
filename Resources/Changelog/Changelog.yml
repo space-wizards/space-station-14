@@ -1,10 +1,4 @@
 Entries:
-- author: Lank
-  changes:
-  - {message: Sawing off a double barrel shotgun no longer fills it with lethal shells.
-      It will instead spawn empty., type: Tweak}
-  id: 4232
-  time: '2023-07-12T00:45:43.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'The Syndicate has retrofitted the minibomb with a higher quality timer.
@@ -3015,3 +3009,8 @@ Entries:
   - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
   id: 4731
   time: '2023-09-02T04:02:36.0000000+00:00'
+- author: ThunderBear2006
+  changes:
+  - {message: The signal button now has new sprites, type: Tweak}
+  id: 4732
+  time: '2023-09-02T13:58:40.0000000+00:00'
