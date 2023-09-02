@@ -320,8 +320,8 @@
     id: QuartermasterIDCard
     state: pda-qm
   - type: PdaBorderColor
-    borderColor: "#e39751"
-    accentVColor: "#a23e3e"
+    borderColor: "#8e5913"
+    accentVColor: "#d6b328"
   - type: Icon
     state: pda-qm
 
@@ -335,7 +335,7 @@
     id: CargoIDCard
     state: pda-cargo
   - type: PdaBorderColor
-    borderColor: "#e39751"
+    borderColor: "#a86a16"
   - type: Icon
     state: pda-cargo
 
