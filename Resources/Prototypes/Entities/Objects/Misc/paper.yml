@@ -229,6 +229,8 @@
   suffix: Station Only
   components:
   - type: NukeCodePaper
+    allNukesAvailable: false
+  - type: Paper
 
 - type: entity
   name: pen
