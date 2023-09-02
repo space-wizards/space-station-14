@@ -326,7 +326,7 @@
   name: steel bench
   id: SteelBench
   parent: SeatBase
-  description: A long chair made for metro. Really standart design.
+  description: A long chair made for a metro. Really standard design.
   components:
     - type: Transform
       anchored: true
