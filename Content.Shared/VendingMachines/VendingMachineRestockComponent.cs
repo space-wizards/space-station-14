@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.VendingMachines;
 
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedVendingMachineSystem))]
-public sealed class VendingMachineRestockComponent : Component
+public sealed partial class VendingMachineRestockComponent : Component
 {
     /// <summary>
     /// The time (in seconds) that it takes to restock a machine.
@@ -47,6 +47,6 @@ public sealed class VendingMachineRestockComponent : Component
 }
 
 [Serializable, NetSerializable]
-public sealed class RestockDoAfterEvent : SimpleDoAfterEvent
+public sealed partial class RestockDoAfterEvent : SimpleDoAfterEvent
 {
 }

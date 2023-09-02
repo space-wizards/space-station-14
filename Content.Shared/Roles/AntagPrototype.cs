@@ -8,13 +8,9 @@ namespace Content.Shared.Roles
     [Prototype("antag")]
     public sealed class AntagPrototype : IPrototype
     {
-        private string _name = string.Empty;
-        private string _objective = string.Empty;
-        private string? _description = string.Empty;
-
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         /// <summary>
         ///     The name of this antag as displayed to players.

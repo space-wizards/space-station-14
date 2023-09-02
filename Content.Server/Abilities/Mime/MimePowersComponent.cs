@@ -10,7 +10,7 @@ namespace Content.Server.Abilities.Mime
     /// Lets its owner entity use mime powers, like placing invisible walls.
     /// </summary>
     [RegisterComponent]
-    public sealed class MimePowersComponent : Component
+    public sealed partial class MimePowersComponent : Component
     {
         /// <summary>
         /// Whether this component is active or not.

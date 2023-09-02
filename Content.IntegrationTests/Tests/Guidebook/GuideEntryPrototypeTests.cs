@@ -15,8 +15,8 @@ public sealed class GuideEntryPrototypeTests
     [Test]
     public async Task ValidatePrototypeContents()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-        var client = pairTracker.Pair.Client;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var client = pair.Client;
         await client.WaitIdleAsync();
         var protoMan = client.ResolveDependency<IPrototypeManager>();
         var resMan = client.ResolveDependency<IResourceManager>();
@@ -35,6 +35,6 @@ public sealed class GuideEntryPrototypeTests
             });
         });
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

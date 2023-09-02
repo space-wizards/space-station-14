@@ -9,7 +9,7 @@ namespace Content.Shared.Climbing;
 ///     upon DragDrop or Climb interactions.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(BonkSystem))]
-public sealed class BonkableComponent : Component
+public sealed partial class BonkableComponent : Component
 {
     /// <summary>
     /// Chance of bonk triggering if the user is clumsy.

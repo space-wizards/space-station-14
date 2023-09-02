@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.Ghost.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Worldgen.Components;
+using Content.Shared.Ghost;
+using Content.Shared.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
@@ -17,6 +17,7 @@ public sealed class WorldControllerSystem : EntitySystem
     [Dependency] private readonly TransformSystem _xformSys = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly ILogManager _logManager = default!;
+    [Dependency] private readonly MetaDataSystem _metaData = default!;
 
     private const int PlayerLoadRadius = 2;
 
@@ -231,8 +232,7 @@ public sealed class WorldControllerSystem : EntitySystem
     {
         var chunk = Spawn(controller.ChunkProto, MapCoordinates.Nullspace);
         StartupChunkEntity(chunk, chunkCoords, map, controller);
-        var md = MetaData(chunk);
-        md.EntityName = $"Chunk {chunkCoords.X}/{chunkCoords.Y}";
+        _metaData.SetEntityName(chunk, $"Chunk {chunkCoords.X}/{chunkCoords.Y}");
         return chunk;
     }
 

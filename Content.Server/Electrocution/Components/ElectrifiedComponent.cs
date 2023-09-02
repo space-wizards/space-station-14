@@ -6,7 +6,7 @@ namespace Content.Server.Electrocution;
 ///     Component for things that shock users on touch.
 /// </summary>
 [RegisterComponent]
-public sealed class ElectrifiedComponent : Component
+public sealed partial class ElectrifiedComponent : Component
 {
     [DataField("enabled")]
     public bool Enabled = true;

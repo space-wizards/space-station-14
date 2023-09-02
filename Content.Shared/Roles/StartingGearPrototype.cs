@@ -1,14 +1,15 @@
 using Content.Shared.Preferences;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Shared.Roles
 {
     [Prototype("startingGear")]
     public sealed class StartingGearPrototype : IPrototype
     {
-        // TODO: Custom TypeSerializer for dictionary value prototype IDs
-        [DataField("equipment")] private Dictionary<string, string> _equipment = new();
+        [DataField("equipment", customTypeSerializer: typeof(PrototypeIdValueDictionarySerializer<string, EntityPrototype>))]
+        private Dictionary<string, string> _equipment = new();
 
         /// <summary>
         /// if empty, there is no skirt override - instead the uniform provided in equipment is added.
@@ -31,7 +32,7 @@ namespace Content.Shared.Roles
 
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = string.Empty;
+        public string ID { get; private set; } = string.Empty;
 
         public string GetGear(string slot, HumanoidCharacterProfile? profile)
         {

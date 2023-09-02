@@ -27,7 +27,6 @@ namespace Content.Server.PDA
         [Dependency] private readonly RingerSystem _ringer = default!;
         [Dependency] private readonly StationSystem _station = default!;
         [Dependency] private readonly StoreSystem _store = default!;
-        [Dependency] private readonly NewsSystem _news = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
         [Dependency] private readonly UnpoweredFlashlightSystem _unpoweredFlashlight = default!;
 

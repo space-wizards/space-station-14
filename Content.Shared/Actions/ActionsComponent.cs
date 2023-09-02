@@ -7,7 +7,7 @@ namespace Content.Shared.Actions;
 [NetworkedComponent]
 [RegisterComponent]
 [Access(typeof(SharedActionsSystem))]
-public sealed class ActionsComponent : Component
+public sealed partial class ActionsComponent : Component
 {
     [ViewVariables]
     [Access(typeof(SharedActionsSystem), Other = AccessPermissions.ReadExecute)]

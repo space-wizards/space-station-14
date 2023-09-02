@@ -9,10 +9,11 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
 {
     [ViewVariables]
     private SiliconLawMenu? _menu;
+    private EntityUid _owner;
 
     public SiliconLawBoundUserInterface(EntityUid owner, Enum uiKey) : base(owner, uiKey)
     {
-
+        _owner = owner;
     }
 
     protected override void Open()
@@ -40,6 +41,6 @@ public sealed class SiliconLawBoundUserInterface : BoundUserInterface
         if (state is not SiliconLawBuiState msg)
             return;
 
-        _menu?.Update(msg);
+        _menu?.Update(_owner, msg);
     }
 }
