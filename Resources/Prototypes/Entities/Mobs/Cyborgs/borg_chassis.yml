@@ -187,7 +187,7 @@
       hasMindState: synd_sec_e
       noMindState: synd_sec
     - type: Construction
-      node: syndicate
+      node: syndicateassault
 
 - type: entity
   id: BorgChassisSyndicateMedical
@@ -216,7 +216,7 @@
       hasMindState: synd_medical_e
       noMindState: synd_medical
     - type: Construction
-      node: syndicate
+      node: syndicatemedical
 
 - type: entity
   id: BorgChassisSyndicateSaboteur
@@ -245,4 +245,4 @@
       hasMindState: synd_engi_e
       noMindState: synd_engi
     - type: Construction
-      node: syndicate
+      node: syndicateasaboteur
