@@ -41,6 +41,7 @@ namespace Content.Server.Nutrition.EntitySystems
         [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
         [Dependency] private readonly BodySystem _bodySystem = default!;
         [Dependency] private readonly StomachSystem _stomachSystem = default!;
+        [Dependency] private readonly OpenableSystem _openable = default!;
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly UtensilSystem _utensilSystem = default!;
@@ -60,7 +61,8 @@ namespace Content.Server.Nutrition.EntitySystems
             base.Initialize();
 
             // TODO add InteractNoHandEvent for entities like mice.
-            SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand);
+            // run after openable for wrapped/peelable foods
+            SubscribeLocalEvent<FoodComponent, UseInHandEvent>(OnUseFoodInHand, after: new[] { typeof(OpenableSystem) });
             SubscribeLocalEvent<FoodComponent, AfterInteractEvent>(OnFeedFood);
             SubscribeLocalEvent<FoodComponent, GetVerbsEvent<AlternativeVerb>>(AddEatVerb);
             SubscribeLocalEvent<FoodComponent, ConsumeDoAfterEvent>(OnDoAfter);
@@ -100,6 +102,12 @@ namespace Content.Server.Nutrition.EntitySystems
             // Target can't be fed or they're already eating
             if (!TryComp<BodyComponent>(target, out var body))
                 return (false, false);
+
+            if (_openable.IsClosed(food))
+            {
+                _popupSystem.PopupEntity(Loc.GetString(foodComp.ClosedPopup, ("owner", food)), user, user);
+                return (false, true);
+            }
 
             if (!_solutionContainerSystem.TryGetSolution(food, foodComp.SolutionName, out var foodSolution) || foodSolution.Name == null)
                 return (false, false);
@@ -321,19 +329,19 @@ namespace Content.Server.Nutrition.EntitySystems
         {
             //We're empty. Become trash.
             var position = Transform(food).MapPosition;
-            var finisher = EntityManager.SpawnEntity(component.TrashPrototype, position);
+            var finisher = Spawn(component.TrashPrototype, position);
 
             // If the user is holding the item
             if (user != null && _handsSystem.IsHolding(user.Value, food, out var hand))
             {
-                EntityManager.DeleteEntity(food);
+                Del(food);
 
                 // Put the trash in the user's hand
                 _handsSystem.TryPickup(user.Value, finisher, hand);
                 return;
             }
 
-            EntityManager.QueueDeleteEntity(food);
+            QueueDel(food);
         }
 
         private void AddEatVerb(EntityUid uid, FoodComponent component, GetVerbsEvent<AlternativeVerb> ev)
@@ -341,11 +349,16 @@ namespace Content.Server.Nutrition.EntitySystems
             if (uid == ev.User ||
                 !ev.CanInteract ||
                 !ev.CanAccess ||
-                !EntityManager.TryGetComponent(ev.User, out BodyComponent? body) ||
+                !TryComp<BodyComponent>(ev.User, out var body))
                 !_bodySystem.TryGetBodyOrganComponents<StomachComponent>(ev.User, out var stomachs, body))
                 return;
 
-            if (EntityManager.TryGetComponent<MobStateComponent>(uid, out var mobState) && _mobStateSystem.IsAlive(uid, mobState))
+            // have to kill mouse before eating it
+            if (_mobStateSystem.IsAlive(uid, mobState))
+                return;
+
+            // only give moths eat verb for clothes since it would just fail otherwise
+            if (!IsDigestibleBy(uid, component, stomachs))
                 return;
 
             AlternativeVerb verb = new()
@@ -423,7 +436,7 @@ namespace Content.Server.Nutrition.EntitySystems
             foreach (var item in _handsSystem.EnumerateHeld(user, hands))
             {
                 // Is utensil?
-                if (!EntityManager.TryGetComponent(item, out UtensilComponent? utensil))
+                if (!TryComp<UtensilComponent>(item, out var utensil)
                     continue;
 
                 if ((utensil.Types & component.Utensil) != 0 && // Acceptable type?
@@ -456,7 +469,7 @@ namespace Content.Server.Nutrition.EntitySystems
             IngestionBlockerComponent? blocker;
 
             if (_inventorySystem.TryGetSlotEntity(uid, "mask", out var maskUid) &&
-                EntityManager.TryGetComponent(maskUid, out blocker) &&
+                TryComp(maskUid, out blocker) &&
                 blocker.Enabled)
             {
                 args.Blocker = maskUid;
@@ -465,7 +478,7 @@ namespace Content.Server.Nutrition.EntitySystems
             }
 
             if (_inventorySystem.TryGetSlotEntity(uid, "head", out var headUid) &&
-                EntityManager.TryGetComponent(headUid, out blocker) &&
+                TryComp(headUid, out blocker)
                 blocker.Enabled)
             {
                 args.Blocker = headUid;
@@ -487,8 +500,7 @@ namespace Content.Server.Nutrition.EntitySystems
             RaiseLocalEvent(uid, attempt, false);
             if (attempt.Cancelled && attempt.Blocker != null && popupUid != null)
             {
-                var name = EntityManager.GetComponent<MetaDataComponent>(attempt.Blocker.Value).EntityName;
-                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", name)),
+                _popupSystem.PopupEntity(Loc.GetString("food-system-remove-mask", ("entity", attempt.Blocker.Value)),
                     uid, popupUid.Value);
             }
 
