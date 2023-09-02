@@ -87,8 +87,8 @@ namespace Content.Client.Preferences.UI
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
         private SpriteView _previewSpriteView => CSpriteView;
-        private TextureButton _previewRotateLeftButton => CSpriteRotateLeft;
-        private TextureButton _previewRotateRightButton => CSpriteRotateRight;
+        private Button _previewRotateLeftButton => CSpriteRotateLeft;
+        private Button _previewRotateRightButton => CSpriteRotateRight;
         private uint _previewRotation = (int) Direction.North;
         private EntityUid? _previewDummy;
 
