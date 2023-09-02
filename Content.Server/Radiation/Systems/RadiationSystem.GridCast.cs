@@ -229,9 +229,10 @@ public partial class RadiationSystem
 
     private float ApplyModForRadiationBlockingContainers(EntityUid uid, float rads)
     {
-        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, out var comps))
+        var radblockingComps = new List<RadiationBlockingContainerComponent>();
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, ref radblockingComps))
         {
-            rads -= comps.Sum(x => x.RadResistance);
+            rads -= radblockingComps.Sum(x => x.RadResistance);
 
             if (rads <= 0)
                 rads = 0;
