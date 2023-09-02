@@ -29,6 +29,7 @@ using Robust.Shared.Map.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using Robust.Shared.Utility;
 
 namespace Content.Server.Salvage;
 
@@ -214,10 +215,46 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             switch (rule)
             {
                 case RandomSpawnsLoot randomLoot:
-                    while (lootBudget > 0f)
-                    {
-                        // TODO: Pick item
+                    // Setup
+                    var probSum = 0f;
+                    var maxCost = 0f;
+                    var entries = new ValueList<RandomSpawnLootEntry>();
 
+                    foreach (var entry in randomLoot.Entries)
+                    {
+                        if (entry.Cost > lootBudget)
+                            continue;
+
+                        probSum += entry.Prob;
+                        maxCost = MathF.Max(entry.Cost, maxCost);
+                        entries.Add(entry);
+                    }
+
+                    // No loot to pick from.
+                    if (entries.Count == 0)
+                        continue;
+
+                    while (lootBudget > 0f && entries.Count > 0)
+                    {
+                        // - Pick an entry
+                        // - Remove the cost from budget
+                        // - If our remaining budget is under maxCost then start pruning unavailable entries.
+                        var loot = GetEntry(entries, probSum, random);
+                        lootBudget -= loot.Cost;
+                        await SpawnRandomLoot(grid, loot, dungeon, random);
+
+                        // Prune invalid entries.
+                        if (lootBudget < maxCost)
+                        {
+                            foreach (var entry in entries)
+                            {
+                                if (entry.Cost < lootBudget)
+                                    continue;
+
+                                entries.Remove(entry);
+                                probSum -= entry.Prob;
+                            }
+                        }
                     }
                     break;
                 default:
@@ -226,6 +263,56 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         return true;
+    }
+
+    private async Task SpawnRandomLoot(MapGridComponent grid, RandomSpawnLootEntry entry, Dungeon dungeon, Random random)
+    {
+        await SuspendIfOutOfTime();
+
+        var availableRooms = new ValueList<DungeonRoom>(dungeon.Rooms);
+        var availableTiles = new List<Vector2i>();
+
+        while (availableRooms.Count > 0)
+        {
+            availableTiles.Clear();
+            var roomIndex = random.Next(availableRooms.Count);
+            var room = availableRooms.RemoveSwap(roomIndex);
+            availableTiles.AddRange(room.Tiles);
+
+            while (availableTiles.Count > 0)
+            {
+                var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
+
+                if (!_anchorable.TileFree(grid, tile, (int) CollisionGroup.MachineLayer,
+                        (int) CollisionGroup.MachineLayer))
+                {
+                    continue;
+                }
+
+                _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                return;
+            }
+        }
+
+        // oh noooooooooooo
+    }
+
+    // TODO: Move this to RandomExtensions.
+    private RandomSpawnLootEntry GetEntry(IEnumerable<RandomSpawnLootEntry> entries, float probSum, Random random)
+    {
+        var value = random.NextFloat() * probSum;
+
+        foreach (var entry in entries)
+        {
+            value -= entry.Prob;
+
+            if (value < 0f)
+            {
+                return entry;
+            }
+        }
+
+        throw new InvalidOperationException();
     }
 
     private async Task SpawnDungeonLoot(Dungeon dungeon, SalvageBiomeModPrototype biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
@@ -259,74 +346,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
     #region Mission Specific
 
-    private async Task SetupStructure(
-        SalvageMission mission,
-        Dungeon dungeon,
-        EntityUid gridUid,
-        MapGridComponent grid,
-        Random random)
-    {
-        var structureComp = _entManager.EnsureComponent<SalvageStructureExpeditionComponent>(gridUid);
-        var availableRooms = dungeon.Rooms.ToList();
-        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        await SpawnMobsRandom(mission, dungeon, faction, grid, random);
-
-        var structureCount = _salvage.GetStructureCount(mission.Difficulty);
-        var shaggy = faction.Configs["DefenseStructure"];
-        var validSpawns = new List<Vector2i>();
-
-        // Spawn the objectives
-        for (var i = 0; i < structureCount; i++)
-        {
-            var structureRoom = availableRooms[random.Next(availableRooms.Count)];
-            validSpawns.Clear();
-            validSpawns.AddRange(structureRoom.Tiles);
-            random.Shuffle(validSpawns);
-
-            while (validSpawns.Count > 0)
-            {
-                var spawnTile = validSpawns[^1];
-                validSpawns.RemoveAt(validSpawns.Count - 1);
-
-                if (!_anchorable.TileFree(grid, spawnTile, (int) CollisionGroup.MachineLayer,
-                        (int) CollisionGroup.MachineLayer))
-                {
-                    continue;
-                }
-
-                var spawnPosition = grid.GridTileToLocal(spawnTile);
-                var uid = _entManager.SpawnEntity(shaggy, spawnPosition);
-                _entManager.AddComponent<SalvageStructureComponent>(uid);
-                structureComp.Structures.Add(uid);
-                break;
-            }
-        }
-    }
-
-    private async Task SetupElimination(
-        SalvageMission mission,
-        Dungeon dungeon,
-        EntityUid gridUid,
-        MapGridComponent grid,
-        Random random)
-    {
-        // spawn megafauna in a random place
-        var roomIndex = random.Next(dungeon.Rooms.Count);
-        var room = dungeon.Rooms[roomIndex];
-        var tile = room.Tiles.ElementAt(random.Next(room.Tiles.Count));
-        var position = grid.GridTileToLocal(tile);
-
-        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
-        var prototype = faction.Configs["Megafauna"];
-        var uid = _entManager.SpawnEntity(prototype, position);
-        // not removing ghost role since its 1 megafauna, expect that you won't be able to cheese it.
-        var eliminationComp = _entManager.EnsureComponent<SalvageEliminationExpeditionComponent>(gridUid);
-        eliminationComp.Megafauna.Add(uid);
-
-        // spawn less mobs than usual since there's megafauna to deal with too
-        await SpawnMobsRandom(mission, dungeon, faction, grid, random, 0.5f);
-    }
-
+    /*
     private async Task SpawnMobsRandom(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
     {
         // scale affects how many groups are spawned, not the size of the groups themselves
@@ -384,6 +404,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             }
         }
     }
+    */
 
     #endregion
 }
