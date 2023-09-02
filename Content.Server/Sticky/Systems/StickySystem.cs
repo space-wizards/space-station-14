@@ -28,12 +28,13 @@ public sealed class StickySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, DestructionSpawnBehavior>(OnDestructionSpawnBehavior);
 
         SubscribeLocalEvent<StickyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
         SubscribeLocalEvent<StickyComponent, AfterInteractEvent>(OnAfterInteract);
         SubscribeLocalEvent<StickyComponent, GetVerbsEvent<Verb>>(AddUnstickVerb);
+        
+        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, DestructionSpawnBehavior>(OnDestructionSpawnBehavior);
     }
 
     private void OnMapInit(EntityUid uid, StickyComponent component, MapInitEvent args)
@@ -140,6 +141,16 @@ public sealed class StickySystem : EntitySystem
             UnstickFromEntity(uid, args.Args.User, component);
 
         args.Handled = true;
+    }
+
+    private void OnDestructionSpawnBehavior(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, ref DestructionSpawnBehavior ev)
+    {
+        if (TryComp<StickyComponent>(uid, out var ownerStickyComp) &&
+            TryComp<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&
+            ownerStickyComp.StuckTo != null)
+        {
+            StickToEntity(ev.Spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);
+        }
     }
 
     private void StartUnsticking(EntityUid uid, EntityUid user, StickyComponent? component = null)
@@ -253,15 +264,5 @@ public sealed class StickySystem : EntitySystem
 
         component.StuckTo = null;
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
-    }
-
-    private void OnDestructionSpawnBehavior(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, ref DestructionSpawnBehavior ev)
-    {
-        if (TryComp<StickyComponent>(uid, out var ownerStickyComp) &&
-            TryComp<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&
-            ownerStickyComp.StuckTo != null)
-        {
-            StickToEntity(ev.Spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);
-        }
     }
 }

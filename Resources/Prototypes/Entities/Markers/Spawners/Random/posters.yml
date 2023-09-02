@@ -1,6 +1,6 @@
 - type: entity
   parent: MarkerBase
-  id: RandomPosterAnyStuck
+  id: RandomPosterAny
   name: random poster spawner
   suffix: Stuck
   components:
@@ -12,16 +12,16 @@
   - type: RandomSpawner
     offset: 0
     prototypes:
-      - RandomPosterContrabandStuck
-      - RandomPosterLegitStuck
+      - RandomPosterContraband
+      - RandomPosterLegit
     chance: 0.95
     rarePrototypes:
-      - PosterBrokenStuck
+      - PosterBroken
     rareChance: 0.05
 
 - type: entity
   parent: MarkerBase
-  id: RandomPosterContrabandStuck
+  id: RandomPosterContraband
   name: random contraband poster spawner
   suffix: Stuck
   components:
@@ -33,71 +33,71 @@
   - type: RandomSpawner
     offset: 0
     prototypes:
-      - PosterContrabandFreeTontoStuck
-      - PosterContrabandAtmosiaDeclarationIndependenceStuck
-      - PosterContrabandFunPoliceStuck
-      - PosterContrabandLustyExomorphStuck
-      - PosterContrabandSyndicateRecruitmentStuck
-      - PosterContrabandClownStuck
-      - PosterContrabandSmokeStuck
-      - PosterContrabandGreyTideStuck
-      - PosterContrabandMissingGlovesStuck
-      - PosterContrabandHackingGuideStuck
-      - PosterContrabandRIPBadgerStuck
-      - PosterContrabandAmbrosiaVulgarisStuck
-      - PosterContrabandDonutCorpStuck
-      - PosterContrabandEATStuck
-      - PosterContrabandToolsStuck
-      - PosterContrabandPowerStuck
-      - PosterContrabandSpaceCubeStuck
-      - PosterContrabandCommunistStateStuck
-      - PosterContrabandLamarrStuck
-      - PosterContrabandBorgFancyStuck
-      - PosterContrabandBorgFancyv2Stuck
-      - PosterContrabandKosmicheskayaStantsiyaStuck
-      - PosterContrabandRebelsUniteStuck
-      - PosterContrabandC20rStuck
-      - PosterContrabandHaveaPuffStuck
-      - PosterContrabandRevolverStuck
-      - PosterContrabandDDayPromoStuck
-      - PosterContrabandSyndicatePistolStuck
-      - PosterContrabandEnergySwordsStuck
-      - PosterContrabandRedRumStuck
-      - PosterContrabandCC64KAdStuck
-      - PosterContrabandPunchShitStuck
-      - PosterContrabandTheGriffinStuck
-      - PosterContrabandFreeDroneStuck
-      - PosterContrabandBustyBackdoorExoBabes6Stuck
-      - PosterContrabandRobustSoftdrinksStuck
-      - PosterContrabandShamblersJuiceStuck
-      - PosterContrabandPwrGameStuck
-      - PosterContrabandSunkistStuck
-      - PosterContrabandSpaceColaStuck
-      - PosterContrabandSpaceUpStuck
-      - PosterContrabandKudzuStuck
-      - PosterContrabandMaskedMenStuck
-      - PosterContrabandUnreadableAnnouncementStuck
-      - PosterContrabandFreeSyndicateEncryptionKeyStuck
-      - PosterContrabandBountyHuntersStuck
-      - PosterContrabandTheBigGasTruthStuck
-      - PosterContrabandWehWatchesStuck
-      - PosterContrabandVoteWehStuck
-      - PosterContrabandBeachStarYamamotoStuck
-      - PosterContrabandHighEffectEngineeringStuck
-      - PosterContrabandNuclearDeviceInformationalStuck
-      - PosterContrabandRevoltStuck
-      - PosterContrabandRiseStuck
-      - PosterContrabandMothStuck
-      - PosterContrabandCybersun600Stuck
-      - PosterContrabandDonkStuck
-      - PosterContrabandEnlistGorlexStuck
-      - PosterContrabandInterdyneStuck
-      - PosterContrabandWaffleCorpStuck
+      - PosterContrabandFreeTonto
+      - PosterContrabandAtmosiaDeclarationIndependence
+      - PosterContrabandFunPolice
+      - PosterContrabandLustyExomorph
+      - PosterContrabandSyndicateRecruitment
+      - PosterContrabandClown
+      - PosterContrabandSmoke
+      - PosterContrabandGreyTide
+      - PosterContrabandMissingGloves
+      - PosterContrabandHackingGuide
+      - PosterContrabandRIPBadger
+      - PosterContrabandAmbrosiaVulgaris
+      - PosterContrabandDonutCorp
+      - PosterContrabandEAT
+      - PosterContrabandTools
+      - PosterContrabandPower
+      - PosterContrabandSpaceCube
+      - PosterContrabandCommunistState
+      - PosterContrabandLamarr
+      - PosterContrabandBorgFancy
+      - PosterContrabandBorgFancyv2
+      - PosterContrabandKosmicheskayaStantsiya
+      - PosterContrabandRebelsUnite
+      - PosterContrabandC20r
+      - PosterContrabandHaveaPuff
+      - PosterContrabandRevolver
+      - PosterContrabandDDayPromo
+      - PosterContrabandSyndicatePistol
+      - PosterContrabandEnergySwords
+      - PosterContrabandRedRum
+      - PosterContrabandCC64KAd
+      - PosterContrabandPunchShit
+      - PosterContrabandTheGriffin
+      - PosterContrabandFreeDrone
+      - PosterContrabandBustyBackdoorExoBabes6
+      - PosterContrabandRobustSoftdrinks
+      - PosterContrabandShamblersJuice
+      - PosterContrabandPwrGame
+      - PosterContrabandSunkist
+      - PosterContrabandSpaceCola
+      - PosterContrabandSpaceUp
+      - PosterContrabandKudzu
+      - PosterContrabandMaskedMen
+      - PosterContrabandUnreadableAnnouncement
+      - PosterContrabandFreeSyndicateEncryptionKey
+      - PosterContrabandBountyHunters
+      - PosterContrabandTheBigGasTruth
+      - PosterContrabandWehWatches
+      - PosterContrabandVoteWeh
+      - PosterContrabandBeachStarYamamoto
+      - PosterContrabandHighEffectEngineering
+      - PosterContrabandNuclearDeviceInformational
+      - PosterContrabandRevolt
+      - PosterContrabandRise
+      - PosterContrabandMoth
+      - PosterContrabandCybersun600
+      - PosterContrabandDonk
+      - PosterContrabandEnlistGorlex
+      - PosterContrabandInterdyne
+      - PosterContrabandWaffleCorp
     chance: 1
 
 - type: entity
   parent: MarkerBase
-  id: RandomPosterLegitStuck
+  id: RandomPosterLegit
   name: random legit poster spawner
   suffix: Stuck
   components:
@@ -109,47 +109,47 @@
   - type: RandomSpawner
     offset: 0
     prototypes:
-      - PosterLegitHereForYourSafetyStuck
-      - PosterLegitNanotrasenLogoStuck
-      - PosterLegitCleanlinessStuck
-      - PosterLegitHelpOthersStuck
-      - PosterLegitBuildStuck
-      - PosterLegitBlessThisSpessStuck
-      - PosterLegitScienceStuck
-      - PosterLegitIanStuck
-      - PosterLegitObeyStuck
-      - PosterLegitWalkStuck
-      - PosterLegitStateLawsStuck
-      - PosterLegitLoveIanStuck
-      - PosterLegitSpaceCopsStuck
-      - PosterLegitUeNoStuck
-      - PosterLegitGetYourLEGSStuck
-      - PosterLegitDoNotQuestionStuck
-      - PosterLegitWorkForAFutureStuck
-      - PosterLegitSoftCapPopArtStuck
-      - PosterLegitSafetyInternalsStuck
-      - PosterLegitSafetyEyeProtectionStuck
-      - PosterLegitSafetyReportStuck
-      - PosterLegitReportCrimesStuck
-      - PosterLegitIonRifleStuck
-      - PosterLegitFoamForceAdStuck
-      - PosterLegitCohibaRobustoAdStuck
-      - PosterLegit50thAnniversaryVintageReprintStuck
-      - PosterLegitFruitBowlStuck
-      - PosterLegitPDAAdStuck
-      - PosterLegitEnlistStuck
-      - PosterLegitNanomichiAdStuck
-      - PosterLegit12GaugeStuck
-      - PosterLegitHighClassMartiniStuck
-      - PosterLegitTheOwlStuck
-      - PosterLegitNoERPStuck
-      - PosterLegitCarbonDioxideStuck
-      - PosterLegitDickGumshueStuck
-      - PosterLegitThereIsNoGasGiantStuck
-      - PosterLegitJustAWeekAwayStuck
-      - PosterLegitSecWatchStuck
-      - PosterLegitVacationStuck
-      - PosterLegitPeriodicTableStuck
-      - PosterLegitRenaultStuck
-      - PosterLegitNTTGCStuck
+      - PosterLegitHereForYourSafety
+      - PosterLegitNanotrasenLogo
+      - PosterLegitCleanliness
+      - PosterLegitHelpOthers
+      - PosterLegitBuild
+      - PosterLegitBlessThisSpess
+      - PosterLegitScience
+      - PosterLegitIan
+      - PosterLegitObey
+      - PosterLegitWalk
+      - PosterLegitStateLaws
+      - PosterLegitLoveIan
+      - PosterLegitSpaceCops
+      - PosterLegitUeNo
+      - PosterLegitGetYourLEGS
+      - PosterLegitDoNotQuestion
+      - PosterLegitWorkForAFuture
+      - PosterLegitSoftCapPopArt
+      - PosterLegitSafetyInternals
+      - PosterLegitSafetyEyeProtection
+      - PosterLegitSafetyReport
+      - PosterLegitReportCrimes
+      - PosterLegitIonRifle
+      - PosterLegitFoamForceAd
+      - PosterLegitCohibaRobustoAd
+      - PosterLegit50thAnniversaryVintageReprint
+      - PosterLegitFruitBowl
+      - PosterLegitPDAAd
+      - PosterLegitEnlist
+      - PosterLegitNanomichiAd
+      - PosterLegit12Gauge
+      - PosterLegitHighClassMartini
+      - PosterLegitTheOwl
+      - PosterLegitNoERP
+      - PosterLegitCarbonDioxide
+      - PosterLegitDickGumshue
+      - PosterLegitThereIsNoGasGiant
+      - PosterLegitJustAWeekAway
+      - PosterLegitSecWatch
+      - PosterLegitVacation
+      - PosterLegitPeriodicTable
+      - PosterLegitRenault
+      - PosterLegitNTTGC
     chance: 1

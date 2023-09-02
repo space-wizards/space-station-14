@@ -71,7 +71,7 @@
 
 - type: entity
   parent: PosterBrokenRolled
-  id: PosterBrokenStuck
+  id: PosterBroken
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -106,7 +106,7 @@
 
 - type: entity
   parent: PosterContrabandFreeTontoRolled
-  id: PosterContrabandFreeTontoStuck
+  id: PosterContrabandFreeTonto
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -140,7 +140,7 @@
 
 - type: entity
   parent: PosterContrabandAtmosiaDeclarationIndependenceRolled
-  id: PosterContrabandAtmosiaDeclarationIndependenceStuck
+  id: PosterContrabandAtmosiaDeclarationIndependence
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -174,7 +174,7 @@
 
 - type: entity
   parent: PosterContrabandFunPoliceRolled
-  id: PosterContrabandFunPoliceStuck
+  id: PosterContrabandFunPolice
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -208,7 +208,7 @@
 
 - type: entity
   parent: PosterContrabandLustyExomorphRolled
-  id: PosterContrabandLustyExomorphStuck
+  id: PosterContrabandLustyExomorph
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -242,7 +242,7 @@
 
 - type: entity
   parent: PosterContrabandSyndicateRecruitmentRolled
-  id: PosterContrabandSyndicateRecruitmentStuck
+  id: PosterContrabandSyndicateRecruitment
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -276,7 +276,7 @@
 
 - type: entity
   parent: PosterContrabandClownRolled
-  id: PosterContrabandClownStuck
+  id: PosterContrabandClown
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -310,7 +310,7 @@
 
 - type: entity
   parent: PosterContrabandSmokeRolled
-  id: PosterContrabandSmokeStuck
+  id: PosterContrabandSmoke
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -344,7 +344,7 @@
 
 - type: entity
   parent: PosterContrabandGreyTideRolled
-  id: PosterContrabandGreyTideStuck
+  id: PosterContrabandGreyTide
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -378,7 +378,7 @@
 
 - type: entity
   parent: PosterContrabandMissingGlovesRolled
-  id: PosterContrabandMissingGlovesStuck
+  id: PosterContrabandMissingGloves
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -412,7 +412,7 @@
 
 - type: entity
   parent: PosterContrabandHackingGuideRolled
-  id: PosterContrabandHackingGuideStuck
+  id: PosterContrabandHackingGuide
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -446,7 +446,7 @@
 
 - type: entity
   parent: PosterContrabandRIPBadgerRolled
-  id: PosterContrabandRIPBadgerStuck
+  id: PosterContrabandRIPBadger
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -480,7 +480,7 @@
 
 - type: entity
   parent: PosterContrabandAmbrosiaVulgarisRolled
-  id: PosterContrabandAmbrosiaVulgarisStuck
+  id: PosterContrabandAmbrosiaVulgaris
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -514,7 +514,7 @@
 
 - type: entity
   parent: PosterContrabandDonutCorpRolled
-  id: PosterContrabandDonutCorpStuck
+  id: PosterContrabandDonutCorp
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -548,7 +548,7 @@
 
 - type: entity
   parent: PosterContrabandEATRolled
-  id: PosterContrabandEATStuck
+  id: PosterContrabandEAT
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -582,7 +582,7 @@
 
 - type: entity
   parent: PosterContrabandToolsRolled
-  id: PosterContrabandToolsStuck
+  id: PosterContrabandTools
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -616,7 +616,7 @@
 
 - type: entity
   parent: PosterContrabandPowerRolled
-  id: PosterContrabandPowerStuck
+  id: PosterContrabandPower
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -650,7 +650,7 @@
 
 - type: entity
   parent: PosterContrabandSpaceCubeRolled
-  id: PosterContrabandSpaceCubeStuck
+  id: PosterContrabandSpaceCube
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -684,7 +684,7 @@
 
 - type: entity
   parent: PosterContrabandCommunistStateRolled
-  id: PosterContrabandCommunistStateStuck
+  id: PosterContrabandCommunistState
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -718,7 +718,7 @@
 
 - type: entity
   parent: PosterContrabandLamarrRolled
-  id: PosterContrabandLamarrStuck
+  id: PosterContrabandLamarr
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -752,7 +752,7 @@
 
 - type: entity
   parent: PosterContrabandBorgFancyRolled
-  id: PosterContrabandBorgFancyStuck
+  id: PosterContrabandBorgFancy
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -786,7 +786,7 @@
 
 - type: entity
   parent: PosterContrabandBorgFancyv2Rolled
-  id: PosterContrabandBorgFancyv2Stuck
+  id: PosterContrabandBorgFancyv2
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -820,7 +820,7 @@
 
 - type: entity
   parent: PosterContrabandKosmicheskayaStantsiyaRolled
-  id: PosterContrabandKosmicheskayaStantsiyaStuck
+  id: PosterContrabandKosmicheskayaStantsiya
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -854,7 +854,7 @@
 
 - type: entity
   parent: PosterContrabandRebelsUniteRolled
-  id: PosterContrabandRebelsUniteStuck
+  id: PosterContrabandRebelsUnite
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -888,7 +888,7 @@
 
 - type: entity
   parent: PosterContrabandC20rRolled
-  id: PosterContrabandC20rStuck
+  id: PosterContrabandC20r
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -922,7 +922,7 @@
 
 - type: entity
   parent: PosterContrabandHaveaPuffRolled
-  id: PosterContrabandHaveaPuffStuck
+  id: PosterContrabandHaveaPuff
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -956,7 +956,7 @@
 
 - type: entity
   parent: PosterContrabandRevolverRolled
-  id: PosterContrabandRevolverStuck
+  id: PosterContrabandRevolver
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -990,7 +990,7 @@
 
 - type: entity
   parent: PosterContrabandDDayPromoRolled
-  id: PosterContrabandDDayPromoStuck
+  id: PosterContrabandDDayPromo
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1024,7 +1024,7 @@
 
 - type: entity
   parent: PosterContrabandSyndicatePistolRolled
-  id: PosterContrabandSyndicatePistolStuck
+  id: PosterContrabandSyndicatePistol
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1058,7 +1058,7 @@
 
 - type: entity
   parent: PosterContrabandEnergySwordsRolled
-  id: PosterContrabandEnergySwordsStuck
+  id: PosterContrabandEnergySwords
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1092,7 +1092,7 @@
 
 - type: entity
   parent: PosterContrabandRedRumRolled
-  id: PosterContrabandRedRumStuck
+  id: PosterContrabandRedRum
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1126,7 +1126,7 @@
 
 - type: entity
   parent: PosterContrabandCC64KAdRolled
-  id: PosterContrabandCC64KAdStuck
+  id: PosterContrabandCC64KAd
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1160,7 +1160,7 @@
 
 - type: entity
   parent: PosterContrabandPunchShitRolled
-  id: PosterContrabandPunchShitStuck
+  id: PosterContrabandPunchShit
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1194,7 +1194,7 @@
 
 - type: entity
   parent: PosterContrabandTheGriffinRolled
-  id: PosterContrabandTheGriffinStuck
+  id: PosterContrabandTheGriffin
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1228,7 +1228,7 @@
 
 - type: entity
   parent: PosterContrabandFreeDroneRolled
-  id: PosterContrabandFreeDroneStuck
+  id: PosterContrabandFreeDrone
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1262,7 +1262,7 @@
 
 - type: entity
   parent: PosterContrabandBustyBackdoorExoBabes6Rolled
-  id: PosterContrabandBustyBackdoorExoBabes6Stuck
+  id: PosterContrabandBustyBackdoorExoBabes6
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1296,7 +1296,7 @@
 
 - type: entity
   parent: PosterContrabandRobustSoftdrinksRolled
-  id: PosterContrabandRobustSoftdrinksStuck
+  id: PosterContrabandRobustSoftdrinks
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1330,7 +1330,7 @@
 
 - type: entity
   parent: PosterContrabandShamblersJuiceRolled
-  id: PosterContrabandShamblersJuiceStuck
+  id: PosterContrabandShamblersJuice
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1364,7 +1364,7 @@
 
 - type: entity
   parent: PosterContrabandPwrGameRolled
-  id: PosterContrabandPwrGameStuck
+  id: PosterContrabandPwrGame
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1398,7 +1398,7 @@
 
 - type: entity
   parent: PosterContrabandSunkistRolled
-  id: PosterContrabandSunkistStuck
+  id: PosterContrabandSunkist
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1432,7 +1432,7 @@
 
 - type: entity
   parent: PosterContrabandSpaceColaRolled
-  id: PosterContrabandSpaceColaStuck
+  id: PosterContrabandSpaceCola
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1466,7 +1466,7 @@
 
 - type: entity
   parent: PosterContrabandSpaceUpRolled
-  id: PosterContrabandSpaceUpStuck
+  id: PosterContrabandSpaceUp
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1500,7 +1500,7 @@
 
 - type: entity
   parent: PosterContrabandKudzuRolled
-  id: PosterContrabandKudzuStuck
+  id: PosterContrabandKudzu
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1534,7 +1534,7 @@
 
 - type: entity
   parent: PosterContrabandMaskedMenRolled
-  id: PosterContrabandMaskedMenStuck
+  id: PosterContrabandMaskedMen
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1568,7 +1568,7 @@
 
 - type: entity
   parent: PosterContrabandUnreadableAnnouncementRolled
-  id: PosterContrabandUnreadableAnnouncementStuck
+  id: PosterContrabandUnreadableAnnouncement
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1602,7 +1602,7 @@
 
 - type: entity
   parent: PosterContrabandFreeSyndicateEncryptionKeyRolled
-  id: PosterContrabandFreeSyndicateEncryptionKeyStuck
+  id: PosterContrabandFreeSyndicateEncryptionKey
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1636,7 +1636,7 @@
 
 - type: entity
   parent: PosterContrabandBountyHuntersRolled
-  id: PosterContrabandBountyHuntersStuck
+  id: PosterContrabandBountyHunters
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1670,7 +1670,7 @@
 
 - type: entity
   parent: PosterContrabandTheBigGasTruthRolled
-  id: PosterContrabandTheBigGasTruthStuck
+  id: PosterContrabandTheBigGasTruth
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1704,7 +1704,7 @@
 
 - type: entity
   parent: PosterContrabandWehWatchesRolled
-  id: PosterContrabandWehWatchesStuck
+  id: PosterContrabandWehWatches
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1738,7 +1738,7 @@
 
 - type: entity
   parent: PosterContrabandVoteWehRolled
-  id: PosterContrabandVoteWehStuck
+  id: PosterContrabandVoteWeh
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1772,7 +1772,7 @@
 
 - type: entity
   parent: PosterContrabandBeachStarYamamotoRolled
-  id: PosterContrabandBeachStarYamamotoStuck
+  id: PosterContrabandBeachStarYamamoto
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1806,7 +1806,7 @@
 
 - type: entity
   parent: PosterContrabandHighEffectEngineeringRolled
-  id: PosterContrabandHighEffectEngineeringStuck
+  id: PosterContrabandHighEffectEngineering
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1840,7 +1840,7 @@
 
 - type: entity
   parent: PosterContrabandNuclearDeviceInformationalRolled
-  id: PosterContrabandNuclearDeviceInformationalStuck
+  id: PosterContrabandNuclearDeviceInformational
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1874,7 +1874,7 @@
 
 - type: entity
   parent: PosterContrabandRiseRolled
-  id: PosterContrabandRiseStuck
+  id: PosterContrabandRise
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1908,7 +1908,7 @@
 
 - type: entity
   parent: PosterContrabandRevoltRolled
-  id: PosterContrabandRevoltStuck
+  id: PosterContrabandRevolt
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1942,7 +1942,7 @@
 
 - type: entity
   parent: PosterContrabandMothRolled
-  id: PosterContrabandMothStuck
+  id: PosterContrabandMoth
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -1976,7 +1976,7 @@
 
 - type: entity
   parent: PosterContrabandCybersun600Rolled
-  id: PosterContrabandCybersun600Stuck
+  id: PosterContrabandCybersun600
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2010,7 +2010,7 @@
 
 - type: entity
   parent: PosterContrabandDonkRolled
-  id: PosterContrabandDonkStuck
+  id: PosterContrabandDonk
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2044,7 +2044,7 @@
 
 - type: entity
   parent: PosterContrabandEnlistGorlexRolled
-  id: PosterContrabandEnlistGorlexStuck
+  id: PosterContrabandEnlistGorlex
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2078,7 +2078,7 @@
 
 - type: entity
   parent: PosterContrabandInterdyneRolled
-  id: PosterContrabandInterdyneStuck
+  id: PosterContrabandInterdyne
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2112,7 +2112,7 @@
 
 - type: entity
   parent: PosterContrabandWaffleCorpRolled
-  id: PosterContrabandWaffleCorpStuck
+  id: PosterContrabandWaffleCorp
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2128,6 +2128,7 @@
     - state: poster62_contraband
       map: ["stuck"]
 
+# Legit
 - type: entity
   parent: PosterBase
   id: PosterLegitHereForYourSafetyRolled
@@ -2146,7 +2147,7 @@
 
 - type: entity
   parent: PosterLegitHereForYourSafetyRolled
-  id: PosterLegitHereForYourSafetyStuck
+  id: PosterLegitHereForYourSafety
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2180,7 +2181,7 @@
 
 - type: entity
   parent: PosterLegitNanotrasenLogoRolled
-  id: PosterLegitNanotrasenLogoStuck
+  id: PosterLegitNanotrasenLogo
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2214,7 +2215,7 @@
 
 - type: entity
   parent: PosterLegitCleanlinessRolled
-  id: PosterLegitCleanlinessStuck
+  id: PosterLegitCleanliness
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2248,7 +2249,7 @@
 
 - type: entity
   parent: PosterLegitHelpOthersRolled
-  id: PosterLegitHelpOthersStuck
+  id: PosterLegitHelpOthers
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2282,7 +2283,7 @@
 
 - type: entity
   parent: PosterLegitBuildRolled
-  id: PosterLegitBuildStuck
+  id: PosterLegitBuild
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2316,7 +2317,7 @@
 
 - type: entity
   parent: PosterLegitBlessThisSpessRolled
-  id: PosterLegitBlessThisSpessStuck
+  id: PosterLegitBlessThisSpess
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2350,7 +2351,7 @@
 
 - type: entity
   parent: PosterLegitScienceRolled
-  id: PosterLegitScienceStuck
+  id: PosterLegitScience
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2384,7 +2385,7 @@
 
 - type: entity
   parent: PosterLegitIanRolled
-  id: PosterLegitIanStuck
+  id: PosterLegitIan
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2418,7 +2419,7 @@
 
 - type: entity
   parent: PosterLegitObeyRolled
-  id: PosterLegitObeyStuck
+  id: PosterLegitObey
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2452,7 +2453,7 @@
 
 - type: entity
   parent: PosterLegitWalkRolled
-  id: PosterLegitWalkStuck
+  id: PosterLegitWalk
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2486,7 +2487,7 @@
 
 - type: entity
   parent: PosterLegitStateLawsRolled
-  id: PosterLegitStateLawsStuck
+  id: PosterLegitStateLaws
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2520,7 +2521,7 @@
 
 - type: entity
   parent: PosterLegitLoveIanRolled
-  id: PosterLegitLoveIanStuck
+  id: PosterLegitLoveIan
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2554,7 +2555,7 @@
 
 - type: entity
   parent: PosterLegitSpaceCopsRolled
-  id: PosterLegitSpaceCopsStuck
+  id: PosterLegitSpaceCops
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2588,7 +2589,7 @@
 
 - type: entity
   parent: PosterLegitUeNoRolled
-  id: PosterLegitUeNoStuck
+  id: PosterLegitUeNo
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2622,7 +2623,7 @@
 
 - type: entity
   parent: PosterLegitGetYourLEGSRolled
-  id: PosterLegitGetYourLEGSStuck
+  id: PosterLegitGetYourLEGS
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2656,7 +2657,7 @@
 
 - type: entity
   parent: PosterLegitDoNotQuestionRolled
-  id: PosterLegitDoNotQuestionStuck
+  id: PosterLegitDoNotQuestion
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2690,7 +2691,7 @@
 
 - type: entity
   parent: PosterLegitWorkForAFutureRolled
-  id: PosterLegitWorkForAFutureStuck
+  id: PosterLegitWorkForAFuture
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2724,7 +2725,7 @@
 
 - type: entity
   parent: PosterLegitSoftCapPopArtRolled
-  id: PosterLegitSoftCapPopArtStuck
+  id: PosterLegitSoftCapPopArt
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2758,7 +2759,7 @@
 
 - type: entity
   parent: PosterLegitSafetyInternalsRolled
-  id: PosterLegitSafetyInternalsStuck
+  id: PosterLegitSafetyInternals
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2792,7 +2793,7 @@
 
 - type: entity
   parent: PosterLegitSafetyEyeProtectionRolled
-  id: PosterLegitSafetyEyeProtectionStuck
+  id: PosterLegitSafetyEyeProtection
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2826,7 +2827,7 @@
 
 - type: entity
   parent: PosterLegitSafetyReportRolled
-  id: PosterLegitSafetyReportStuck
+  id: PosterLegitSafetyReport
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2860,7 +2861,7 @@
 
 - type: entity
   parent: PosterLegitReportCrimesRolled
-  id: PosterLegitReportCrimesStuck
+  id: PosterLegitReportCrimes
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2894,7 +2895,7 @@
 
 - type: entity
   parent: PosterLegitIonRifleRolled
-  id: PosterLegitIonRifleStuck
+  id: PosterLegitIonRifle
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2928,7 +2929,7 @@
 
 - type: entity
   parent: PosterLegitFoamForceAdRolled
-  id: PosterLegitFoamForceAdStuck
+  id: PosterLegitFoamForceAd
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2962,7 +2963,7 @@
 
 - type: entity
   parent: PosterLegitCohibaRobustoAdRolled
-  id: PosterLegitCohibaRobustoAdStuck
+  id: PosterLegitCohibaRobustoAd
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -2996,7 +2997,7 @@
 
 - type: entity
   parent: PosterLegit50thAnniversaryVintageReprintRolled
-  id: PosterLegit50thAnniversaryVintageReprintStuck
+  id: PosterLegit50thAnniversaryVintageReprint
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3030,7 +3031,7 @@
 
 - type: entity
   parent: PosterLegitFruitBowlRolled
-  id: PosterLegitFruitBowlStuck
+  id: PosterLegitFruitBowl
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3064,7 +3065,7 @@
 
 - type: entity
   parent: PosterLegitPDAAdRolled
-  id: PosterLegitPDAAdStuck
+  id: PosterLegitPDAAd
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3098,7 +3099,7 @@
 
 - type: entity
   parent: PosterLegitEnlistRolled
-  id: PosterLegitEnlistStuck
+  id: PosterLegitEnlist
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3132,7 +3133,7 @@
 
 - type: entity
   parent: PosterLegitNanomichiAdRolled
-  id: PosterLegitNanomichiAdStuck
+  id: PosterLegitNanomichiAd
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3166,7 +3167,7 @@
 
 - type: entity
   parent: PosterLegit12GaugeRolled
-  id: PosterLegit12GaugeStuck
+  id: PosterLegit12Gauge
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3200,7 +3201,7 @@
 
 - type: entity
   parent: PosterLegitHighClassMartiniRolled
-  id: PosterLegitHighClassMartiniStuck
+  id: PosterLegitHighClassMartini
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3234,7 +3235,7 @@
 
 - type: entity
   parent: PosterLegitTheOwlRolled
-  id: PosterLegitTheOwlStuck
+  id: PosterLegitTheOwl
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3268,7 +3269,7 @@
 
 - type: entity
   parent: PosterLegitNoERPRolled
-  id: PosterLegitNoERPStuck
+  id: PosterLegitNoERP
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3302,7 +3303,7 @@
 
 - type: entity
   parent: PosterLegitCarbonDioxideRolled
-  id: PosterLegitCarbonDioxideStuck
+  id: PosterLegitCarbonDioxide
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3336,7 +3337,7 @@
 
 - type: entity
   parent: PosterLegitDickGumshueRolled
-  id: PosterLegitDickGumshueStuck
+  id: PosterLegitDickGumshue
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3370,7 +3371,7 @@
 
 - type: entity
   parent: PosterLegitThereIsNoGasGiantRolled
-  id: PosterLegitThereIsNoGasGiantStuck
+  id: PosterLegitThereIsNoGasGiant
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3404,7 +3405,7 @@
 
 - type: entity
   parent: PosterLegitJustAWeekAwayRolled
-  id: PosterLegitJustAWeekAwayStuck
+  id: PosterLegitJustAWeekAway
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3438,7 +3439,7 @@
 
 - type: entity
   parent: PosterLegitSecWatchRolled
-  id: PosterLegitSecWatchStuck
+  id: PosterLegitSecWatch
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3472,7 +3473,7 @@
 
 - type: entity
   parent: PosterLegitAnatomyPosterRolled
-  id: PosterLegitAnatomyPosterStuck
+  id: PosterLegitAnatomyPoster
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3506,7 +3507,7 @@
 
 - type: entity
   parent: PosterLegitMimeRolled
-  id: PosterLegitMimeStuck
+  id: PosterLegitMime
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3540,7 +3541,7 @@
 
 - type: entity
   parent: PosterLegitSafetyMothDelamRolled
-  id: PosterLegitSafetyMothDelamStuck
+  id: PosterLegitSafetyMothDelam
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3574,7 +3575,7 @@
 
 - type: entity
   parent: PosterLegitSafetyMothEpiRolled
-  id: PosterLegitSafetyMothEpiStuck
+  id: PosterLegitSafetyMothEpi
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3608,7 +3609,7 @@
 
 - type: entity
   parent: PosterLegitSafetyMothHardhatRolled
-  id: PosterLegitSafetyMothHardhatStuck
+  id: PosterLegitSafetyMothHardhat
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3642,7 +3643,7 @@
 
 - type: entity
   parent: PosterLegitSafetyMothMethRolled
-  id: PosterLegitSafetyMothMethStuck
+  id: PosterLegitSafetyMothMeth
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3676,7 +3677,7 @@
 
 - type: entity
   parent: PosterLegitSafetyMothPipingRolled
-  id: PosterLegitSafetyMothPipingStuck
+  id: PosterLegitSafetyMothPiping
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3710,7 +3711,7 @@
 
 - type: entity
   parent: PosterLegitVacationRolled
-  id: PosterLegitVacationStuck
+  id: PosterLegitVacation
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3744,7 +3745,7 @@
 
 - type: entity
   parent: PosterLegitPeriodicTableRolled
-  id: PosterLegitPeriodicTableStuck
+  id: PosterLegitPeriodicTable
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3778,7 +3779,7 @@
 
 - type: entity
   parent: PosterLegitRenaultRolled
-  id: PosterLegitRenaultStuck
+  id: PosterLegitRenault
   suffix: Stuck
   placement:
     mode: SnapgridCenter
@@ -3812,7 +3813,7 @@
 
 - type: entity
   parent: PosterLegitNTTGCRolled
-  id: PosterLegitNTTGCStuck
+  id: PosterLegitNTTGC
   suffix: Stuck
   placement:
     mode: SnapgridCenter

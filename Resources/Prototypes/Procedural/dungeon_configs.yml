@@ -33,7 +33,7 @@
     - !type:WallMountPostGen
       spawns:
         # Posters
-        - id: RandomPosterLegitStuck
+        - id: RandomPosterLegit
           orGroup: content
         - id: ExtinguisherCabinetFilled
           prob: 0.2
@@ -116,7 +116,7 @@
     - !type:WallMountPostGen
       spawns:
         # Posters
-        - id: RandomPosterLegitStuck
+        - id: RandomPosterLegit
           orGroup: content
         - id: ExtinguisherCabinetFilled
           prob: 0.2
