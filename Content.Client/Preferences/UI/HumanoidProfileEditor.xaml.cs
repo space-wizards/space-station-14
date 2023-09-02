@@ -89,7 +89,7 @@ namespace Content.Client.Preferences.UI
         private SpriteView _previewSpriteView => CSpriteView;
         private TextureButton _previewRotateLeftButton => CSpriteRotateLeft;
         private TextureButton _previewRotateRightButton => CSpriteRotateRight;
-        private int _previewRotation = 1;
+        private uint _previewRotation = (int) Direction.North;
         private EntityUid? _previewDummy;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
@@ -474,12 +474,12 @@ namespace Content.Client.Preferences.UI
 
             _previewRotateLeftButton.OnPressed += _ =>
             {
-                _previewRotation++;
+                _previewRotation += 1;
                 _needUpdatePreview = true;
             };
             _previewRotateRightButton.OnPressed += _ =>
             {
-                _previewRotation--;
+                _previewRotation += 7;
                 _needUpdatePreview = true;
             };
 
