@@ -18,7 +18,6 @@ public sealed class DoorElectronicsSystem : EntitySystem
         base.Initialize();
         SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsUpdateConfigurationMessage>(OnChangeConfiguration);
         SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsRefreshUiMessage>(OnRefreshUi);
-        SubscribeLocalEvent<DoorElectronicsComponent, InteractUsingEvent>(OnInteractUsing);
     }
 
     public void UpdateUserInterface(EntityUid uid, DoorElectronicsComponent component)
@@ -46,14 +45,17 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsComponent component,
         DoorElectronicsUpdateConfigurationMessage args)
     {
-        if (TryComp<AccessReaderComponent>(uid, out var accessReader))
+        if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
         {
-            accessReader.AccessLists.Clear();
-            foreach (var access in args.accessList)
-            {
-                accessReader.AccessLists.Add(new HashSet<string>(){access});
-            }
+            accessReader = EntityManager.AddComponent<AccessReaderComponent>(uid);
         }
+
+        accessReader.AccessLists.Clear();
+        foreach (var access in args.accessList)
+        {
+            accessReader.AccessLists.Add(new HashSet<string>(){access});
+        }
+
         var state = new DoorElectronicsConfigurationState(args.accessList);
         _uiSystem.TrySetUiState(component.Owner,
                                 DoorElectronicsConfigurationUiKey.Key,
@@ -66,21 +68,5 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsRefreshUiMessage args)
     {
         UpdateUserInterface(uid, component);
-    }
-
-    private void OnInteractUsing(EntityUid uid, DoorElectronicsComponent component, InteractUsingEvent args)
-    {
-        if (args.Handled)
-            return;
-
-        if (!TryComp<NetworkConfiguratorComponent>(args.Used, out var networkConfigurator))
-            return;
-
-        if (!TryComp(args.User, out ActorComponent? actor))
-            return;
-
-        args.Handled = true;
-
-        _uiSystem.TryOpen(uid, DoorElectronicsConfigurationUiKey.Key, actor.PlayerSession);
     }
 }
