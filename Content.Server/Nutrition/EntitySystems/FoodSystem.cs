@@ -114,17 +114,9 @@ public sealed class FoodSystem : EntitySystem
         if (!_body.TryGetBodyOrganComponents<StomachComponent>(target, out var stomachs, body))
             return (false, false);
 
-        var forceFeed = user != target;
-
         // Check for special digestibles
         if (!IsDigestibleBy(food, foodComp, stomachs))
-        {
-            _popup.PopupEntity(
-                forceFeed
-                    ? Loc.GetString("food-system-cant-digest-other", ("entity", food))
-                    : Loc.GetString("food-system-cant-digest", ("entity", food)), user, user);
-            return (false, true);
-        }
+            return (false, false);
 
         // Check for used storage on the food item
         if (TryComp<ServerStorageComponent>(food, out var storageState) && storageState.StorageUsed != 0)
@@ -162,7 +154,7 @@ public sealed class FoodSystem : EntitySystem
         if (!TryGetRequiredUtensils(user, foodComp, out _))
             return (false, true);
 
-        if (forceFeed)
+        if (user != target)
         {
             var userName = Identity.Entity(user, EntityManager);
             _popup.PopupEntity(Loc.GetString("food-system-force-feed", ("user", userName)),
