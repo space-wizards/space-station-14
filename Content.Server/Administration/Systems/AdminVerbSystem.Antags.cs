@@ -1,9 +1,9 @@
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Zombies;
 using Content.Shared.Administration;
 using Content.Shared.Database;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 using Robust.Shared.Utility;
@@ -16,7 +16,7 @@ public sealed partial class AdminVerbSystem
     [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
     [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
     [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)
