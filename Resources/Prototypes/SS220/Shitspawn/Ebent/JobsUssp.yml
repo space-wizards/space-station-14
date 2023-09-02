@@ -30,7 +30,7 @@
 
 #Leader
 - type: entity
-  parent: LockerCaptain
+  parent: UsspCloset
   id: LockerEbentUSSPLeader
   name: "шкаф маршала СССП"
   suffix: Filled, Shitspawn, СССП
@@ -115,7 +115,7 @@
 
 #Engineer
 - type: entity
-  parent: LockerChiefEngineer
+  parent: UsspCloset
   id: LockerEbentUSSPEngineer
   name: "шкаф заслуженного инженера СССП"
   suffix: Filled, Shitspawn, СССП
@@ -200,7 +200,7 @@
 
 #Corpsman
 - type: entity
-  parent: LockerMedical
+  parent: UsspCloset
   id: LockerEbentUSSPCorpsman
   name: "шкаф полевого врача СССП"
   suffix: Filled, Shitspawn, СССП
@@ -285,7 +285,7 @@
 
 #CMO
 - type: entity
-  parent: LockerChiefMedicalOfficer
+  parent: UsspCloset
   id: LockerEbentUSSPCMO
   name: "шкаф народного врача СССП"
   suffix: Filled, Shitspawn, СССП
@@ -370,7 +370,7 @@
 
 # Trooper
 - type: entity
-  parent: LockerSyndicatePersonal
+  parent: UsspCloset
   id: LockerEbentUSSPTrooper
   name: "шкаф красноармейца"
   suffix: Filled, Shitspawn, СССП

@@ -1,0 +1,405 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  parent: ClothingBeltMilitaryWebbing
+  id: ClothingBeltWebbingSpecOpsFilled
+  suffix: Shitspawn, Ebent, СпецОпер
+  name: армейская РПС
+  description: "Идеально подходит для хранения всего: от патронов до оружия и предметов боевой необходимости."
+  components:
+  - type: StorageFill
+    contents:
+    - id: SpeedLoaderMagnum
+      amount: 2
+    - id: MagazinePistolSubMachineGun
+      amount: 2
+    - id: CombatMedipen
+
+- type: entity
+  parent: ClothingBackpackERTSecurity
+  id: ClothingBackpackSpecOpsFilled
+  suffix: Shitspawn, Ebent, СпецОпер
+  name: рюкзак офицера безопасности ОБР
+  description: Вместительный рюкзак с множеством карманов, который носят офицеры безопасности отряда быстрого реагирования.
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackBlack
+      - id: Lighter
+      - id: FlashlightSeclite
+      - id: PowerCellHyper
+      - id: WeaponSubMachineGunDrozd
+      - id: MedicatedSuture
+      - id: WeaponPulsePistol
+      - id: Stimpack
+
+- type: entity
+  parent: LockerHeadOfSecurity
+  id: LockerEbentSpecOps
+  name: "шкаф отряда специальных операций"
+  description: Стандартное хранилище NanoTrasen.
+  suffix: Ebent, Shitspawn, СпецОпер
+  components:
+  - type: AccessReader
+    access: [[ Command ]]
+  - type: StorageFill
+    contents:
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingUniformJumpsuitColorRed
+    - id: ClothingUniformJumpsuitHoS
+    - id: ClothingUniformJumpsuitSeniorOfficer
+    - id: ClothingUniformJumpsuitSec
+    - id: ClothingUniformJumpsuitTacticool
+    - id: ClothingHeadHatBeretNavyBlue
+    - id: CigPackBlack
+
+#Leader
+- type: startingGear
+  id: EbentSpecOpsLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackSpecOpsFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SpecOpsPDALeader
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltWebbingSpecOpsFilled
+    pocket1: WeaponRevolverDeckard
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentSpecOpsLeader
+  name: Спавнер Офицера Специальных Операций
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentSpecOpsLeader
+
+- type: randomHumanoidSettings
+  id: EbentSpecOpsLeader
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentSpecOpsLeaderGear ]
+
+- type: job
+  id: SpecOpsLeader
+  name: job-name-spec-ops-leader
+  description: job-description-spec-ops-leader
+  startingGear: EbentSpecOpsLeaderGear
+  playTimeTracker: SpecOpsLeader
+  setPreference: false
+  canBeAntag: false
+  accessGroups: [ AllAccess ]
+
+- type: playTimeTracker
+  id: SpecOpsLeader
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: IDCardSpecOpsLeader
+  name: ID карта ОБР
+  description: Карта, необходимая для доступа в различные области станции.
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: SpecOpsLeader
+
+- type: entity
+  parent: ERTLeaderPDA
+  name: КПК ОБР
+  description: Красный значит мощный.
+  id: SpecOpsPDALeader
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: IDCardSpecOpsLeader
+
+#Engineer
+- type: startingGear
+  id: EbentSpecOpsEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackSpecOpsFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SpecOpsPDAEngineer
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltWebbingSpecOpsFilled
+    pocket1: WeaponRevolverDeckard
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentSpecOpsEngineer
+  name: Спавнер Старшего Инженера Специальных Операций
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentSpecOpsEngineer
+
+- type: randomHumanoidSettings
+  id: EbentSpecOpsEngineer
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentSpecOpsEngineerGear ]
+
+- type: job
+  id: SpecOpsEngineer
+  name: job-name-spec-ops-engineer
+  description: job-description-spec-ops-engineer
+  startingGear: EbentSpecOpsEngineerGear
+  playTimeTracker: SpecOpsEngineer
+  setPreference: false
+  canBeAntag: false
+  accessGroups: [ AllAccess ]
+
+- type: playTimeTracker
+  id: SpecOpsEngineer
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: IDCardSpecOpsEngineer
+  name: ID карта ОБР
+  description: Карта, необходимая для доступа в различные области станции.
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: SpecOpsEngineer
+
+- type: entity
+  parent: ERTLeaderPDA
+  name: КПК ОБР
+  description: Красный значит мощный.
+  id: SpecOpsPDAEngineer
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: IDCardSpecOpsEngineer
+
+#Corpsman
+- type: startingGear
+  id: EbentSpecOpsCorpsmanGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackSpecOpsFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SpecOpsPDACorpsman
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltWebbingSpecOpsFilled
+    pocket1: WeaponRevolverDeckard
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentSpecOpsCorpsman
+  name: Спавнер Парамедика Специальных Операций
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentSpecOpsCorpsman
+
+- type: randomHumanoidSettings
+  id: EbentSpecOpsCorpsman
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentSpecOpsCorpsmanGear ]
+
+- type: job
+  id: SpecOpsCorpsman
+  name: job-name-spec-ops-corpsman
+  description: job-description-spec-ops-corpsman
+  startingGear: EbentSpecOpsCorpsmanGear
+  playTimeTracker: SpecOpsCorpsman
+  setPreference: false
+  canBeAntag: false
+  accessGroups: [ AllAccess ]
+
+- type: playTimeTracker
+  id: SpecOpsCorpsman
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: IDCardSpecOpsCorpsman
+  name: ID карта ОБР
+  description: Карта, необходимая для доступа в различные области станции.
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: SpecOpsCorpsman
+
+- type: entity
+  parent: ERTLeaderPDA
+  name: КПК ОБР
+  description: Красный значит мощный.
+  id: SpecOpsPDACorpsman
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: IDCardSpecOpsCorpsman
+
+#CMO
+- type: startingGear
+  id: EbentSpecOpsCMOGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackSpecOpsFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SpecOpsPDACMO
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltWebbingSpecOpsFilled
+    pocket1: WeaponRevolverDeckard
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentSpecOpsCMO
+  name: Спавнер Главного Врача Специальных Операций
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentSpecOpsCMO
+
+- type: randomHumanoidSettings
+  id: EbentSpecOpsCMO
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentSpecOpsCMOGear ]
+
+- type: job
+  id: SpecOpsCMO
+  name: job-name-spec-ops-cmo
+  description: job-description-spec-ops-cmo
+  startingGear: EbentSpecOpsCMOGear
+  playTimeTracker: SpecOpsCMO
+  setPreference: false
+  canBeAntag: false
+  accessGroups: [ AllAccess ]
+
+- type: playTimeTracker
+  id: SpecOpsCMO
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: IDCardSpecOpsCMO
+  name: ID карта ОБР
+  description: Карта, необходимая для доступа в различные области станции.
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: SpecOpsCMO
+
+- type: entity
+  parent: ERTLeaderPDA
+  name: КПК ОБР
+  description: Красный значит мощный.
+  id: SpecOpsPDACMO
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: IDCardSpecOpsCMO
+
+# Trooper
+- type: startingGear
+  id: EbentSpecOpsTrooperGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitERTSecurity
+    back: ClothingBackpackSpecOpsFilled
+    shoes: ClothingShoesBootsMag
+    mask: ClothingMaskGasERT
+    eyes: ClothingEyesGlassesSecurity
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitERTSecurity
+    suitstorage: YellowOxygenTankFilled
+    id: SpecOpsPDAFigher
+    ears: ClothingHeadsetAltCentCom
+    belt: ClothingBeltWebbingSpecOpsFilled
+    pocket1: WeaponRevolverDeckard
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentSpecOpsTrooper
+  name: Спавнер Рядового Специальных Операций
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentSpecOpsTrooper
+
+- type: randomHumanoidSettings
+  id: EbentSpecOpsTrooper
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentSpecOpsTrooperGear ]
+
+- type: job
+  id: SpecOpsFighter
+  name: job-name-spec-ops-fighter
+  description: job-description-spec-ops-fighter
+  startingGear: EbentSpecOpsTrooperGear
+  playTimeTracker: SpecOpsFighter
+  setPreference: false
+  canBeAntag: false
+  accessGroups: [ AllAccess ]
+
+- type: playTimeTracker
+  id: SpecOpsFighter
+
+- type: entity
+  parent: ERTLeaderIDCard
+  id: IDCardSpecOpsFighter
+  name: ID карта ОБР
+  description: Карта, необходимая для доступа в различные области станции.
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: SpecOpsFighter
+
+- type: entity
+  parent: ERTLeaderPDA
+  name: КПК ОБР
+  description: Красный значит мощный.
+  id: SpecOpsPDAFigher
+  suffix: СпецОпер, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: IDCardSpecOpsFighter

@@ -10,6 +10,7 @@
     containers:
       key_slots:
       - EncryptionKeyUSSP
+      - EncryptionKeyCommon
   - type: Sprite
     sprite: SS220/Clothing/Ears/Headsets/ussp_headset.rsi
   - type: Clothing
