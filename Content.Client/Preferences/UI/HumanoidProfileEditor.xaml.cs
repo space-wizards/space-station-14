@@ -87,8 +87,10 @@ namespace Content.Client.Preferences.UI
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
         private SpriteView _previewSpriteView => CSpriteView;
+        private TextureButton _previewRotateLeftButton => CSpriteRotateLeft;
+        private TextureButton _previewRotateRightButton => CSpriteRotateRight;
+        private int _previewRotation = 1;
         private EntityUid? _previewDummy;
-        private float _accumulatedTime;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
         private ColorSelectorSliders _rgbSkinColorSelector;
@@ -469,6 +471,18 @@ namespace Content.Client.Preferences.UI
             #endregion FlavorText
 
             #region Dummy
+
+            _previewRotateLeftButton.OnPressed += _ =>
+            {
+                _previewRotation++;
+                _needUpdatePreview = true;
+            };
+            _previewRotateRightButton.OnPressed += _ =>
+            {
+                _previewRotation--;
+                _needUpdatePreview = true;
+            };
+
             var species = Profile?.Species ?? SharedHumanoidAppearanceSystem.DefaultSpecies;
             var dollProto = _prototypeManager.Index<SpeciesPrototype>(species).DollPrototype;
 
@@ -1069,6 +1083,8 @@ namespace Content.Client.Preferences.UI
 
             if (ShowClothes.Pressed)
                 LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
+
+            _previewSpriteView.OverrideDirection = (Direction) (_previewRotation % 4 * 2);
         }
 
         public void UpdateControls()
@@ -1106,9 +1122,6 @@ namespace Content.Client.Preferences.UI
                 UpdatePreview();
                 _needUpdatePreview = false;
             }
-
-            _accumulatedTime += args.DeltaSeconds;
-            _previewSpriteView.OverrideDirection = (Direction) ((int) _accumulatedTime % 4 * 2);
         }
 
         private void UpdateJobPriorities()

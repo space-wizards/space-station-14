@@ -143,8 +143,12 @@
             </TabContainer>
         </BoxContainer>
         <!-- Right side -->
-        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <SpriteView Name="CSpriteView" Scale="8 8" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+        <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True" VerticalAlignment="Center">
+            <SpriteView Name="CSpriteView" Scale="8 8" SizeFlagsStretchRatio="1" />
+            <BoxContainer Orientation="Horizontal" HorizontalAlignment="Center">
+                <TextureButton Name="CSpriteRotateLeft" TexturePath="/Textures/Interface/VerbIcons/rotate_ccw.svg.192dpi.png" />
+                <TextureButton Name="CSpriteRotateRight" TexturePath="/Textures/Interface/VerbIcons/rotate_cw.svg.192dpi.png" />
+            </BoxContainer>
         </BoxContainer>
     </BoxContainer>
 </Control>
