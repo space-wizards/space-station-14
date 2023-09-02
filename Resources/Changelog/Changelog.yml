@@ -1,36 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Made glass tiles look different, type: Tweak}
-  id: 4226
-  time: '2023-07-11T19:34:07.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: Syndicate sponge boxes now cost 7 tc to purchase, type: Tweak}
-  id: 4227
-  time: '2023-07-11T19:34:21.0000000+00:00'
-- author: PuroSlavKing
-  changes:
-  - {message: Fixed SyndieDrobe adverts., type: Fix}
-  id: 4228
-  time: '2023-07-11T23:56:24.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Fewer expeditions are offered to the station at a time., type: Tweak}
-  - {message: Salvage expeditions are now generally shorter., type: Tweak}
-  - {message: Adjusted some of the rewards for expeditions., type: Tweak}
-  id: 4229
-  time: '2023-07-11T23:56:43.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: 'Intercoms now have a menu for selecting the channel, toggling the microphone,
-      and toggling the speakers.', type: Add}
-  - {message: 'Intercoms now come with speakers, which allow you to hear what people
-      are saying.', type: Add}
-  - {message: 'Radio speakers are now much quieter, requiring you to stand next to
-      them to make out what they''re saying.', type: Tweak}
-  id: 4230
-  time: '2023-07-11T23:58:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Emagged recyclers grind people again., type: Tweak}
@@ -3019,3 +2987,31 @@ Entries:
       a whole slew of new mobs., type: Add}
   id: 4725
   time: '2023-09-01T03:15:32.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: Lathes now display material quantity in number of sheets., type: Tweak}
+  - {message: Ejecting materials from lathes now automatically stacks them., type: Tweak}
+  id: 4726
+  time: '2023-09-01T05:28:08.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed nukeops being able to buy job restricted items., type: Fix}
+  id: 4727
+  time: '2023-09-01T07:24:37.0000000+00:00'
+- author: carteblanche4me
+  changes:
+  - {message: Hardsuits could toggle on/off not only helmets but different pieces.,
+    type: Tweak}
+  id: 4728
+  time: '2023-09-01T11:13:00.0000000+00:00'
+- author: Varen
+  changes:
+  - {message: Examining an item now shows its size., type: Add}
+  id: 4729
+  time: '2023-09-01T15:09:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The hot potato now does more damage over time, has a shorter timer,
+      and has a larger explosion.', type: Tweak}
+  id: 4730
+  time: '2023-09-02T00:08:25.0000000+00:00'
