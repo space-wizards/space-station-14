@@ -1,2 +1,2 @@
-ent-NukeOpsDeclarationOfWar = the declaration of war
-    .desc = Use to send a declaration of hostilities to the target, delaying your shuttle departure while they prepare for your assault. Such a brazen move will attract the attention of powerful benefactors within the Syndicate, who will supply your team with a massive amount of bonus telecrystals. Must be used at start of mission, or your benefactors will lose interest.
+ent-NukeOpsDeclarationOfWar = объявление войны
+    .desc = Используется для отправки объявления о начале боевых действий, что отложит вылет вашего шаттла на время подготовки к нападению. Такой дерзкий шаг привлечёт внимание могущественных покровителей Синдиката, которые снабдят вашу команду огромным количеством бонусных телекристаллов. Война должна быть объявлена в начале операции, иначе ваши покровители потеряют к ней интерес.

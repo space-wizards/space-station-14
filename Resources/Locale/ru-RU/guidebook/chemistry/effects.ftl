@@ -253,6 +253,11 @@ reagent-effect-guidebook-make-sentient =
         [1] Делает
        *[other] делают
     } употребившего разумным
+reagent-effect-guidebook-make-polymorph =
+    { $chance ->
+        [1] Превращает
+       *[other] превращают
+    } употребившего в { $entityname }
 reagent-effect-guidebook-modify-bleed-amount =
     { $chance ->
         [1]
