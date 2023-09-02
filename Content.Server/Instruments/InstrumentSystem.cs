@@ -453,4 +453,13 @@ public sealed partial class InstrumentSystem : SharedInstrumentSystem
         if (_bui.TryGetUi(uid, InstrumentUiKey.Key, out var bui))
             _bui.ToggleUi(bui, session);
     }
+
+    public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)
+    {
+        if (component is not null)
+            return true;
+
+        TryComp<InstrumentComponent>(uid, out var localComp);
+        return localComp != null;
+    }
 }

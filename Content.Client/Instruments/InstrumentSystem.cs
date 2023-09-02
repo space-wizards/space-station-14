@@ -92,9 +92,18 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
         RaiseNetworkEvent(new InstrumentSetFilteredChannelEvent(uid, channel, value));
     }
 
+    public override bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component)
+    {
+        if (component is not null)
+            return true;
+
+        TryComp<InstrumentComponent>(uid, out var localComp);
+        return localComp != null;
+    }
+
     public override void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!ResolveInstrument(uid, ref component))
             return;
 
         if (component is not InstrumentComponent instrument)
@@ -177,7 +186,7 @@ public sealed class InstrumentSystem : SharedInstrumentSystem
 
     public override void EndRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? component = null)
     {
-        if (!Resolve(uid, ref component, false))
+        if (!ResolveInstrument(uid, ref component))
             return;
 
         if (component is not InstrumentComponent instrument)

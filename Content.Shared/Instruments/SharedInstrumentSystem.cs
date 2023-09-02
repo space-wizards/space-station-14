@@ -2,10 +2,7 @@ namespace Content.Shared.Instruments;
 
 public abstract class SharedInstrumentSystem : EntitySystem
 {
-    public override void Initialize()
-    {
-
-    }
+    public abstract bool ResolveInstrument(EntityUid uid, ref SharedInstrumentComponent? component);
 
     public virtual void SetupRenderer(EntityUid uid, bool fromStateChange, SharedInstrumentComponent? instrument = null)
     {
