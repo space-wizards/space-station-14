@@ -378,3 +378,18 @@
           reagents:
             - ReagentId: Oxygen
               Quantity: 200
+
+- type: entity
+  parent: Jug
+  name: jug (Plant-B-Gone)
+  id: JugPlantBGone
+  noSpawn: true
+  components:
+    - type: Label
+      currentLabel: Plant-B-Gone
+    - type: SolutionContainerManager
+      solutions:
+        beaker:
+          reagents:
+            - ReagentId: PlantBGone
+              Quantity: 200
