@@ -35,3 +35,23 @@
     - id: PenExploding
     sound:
       path: /Audio/Effects/unwrap.ogg
+
+- type: entity
+  name: self destruct trigger
+  parent: BaseItem
+  description: A bright red button connected to some dangerous explosives. Destroy yourself and everyone in your vicinity.
+  id: ButtonExploding
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Bombs/exploding_button.rsi
+    state: button
+  - type: OnUseTimerTrigger
+    delay: 2
+  - type: ExplodeOnTrigger
+    examinable: false
+  - type: Explosive
+    explosionType: Default
+    maxIntensity: 12
+    intensitySlope: 10
+    totalIntensity: 60
+    canCreateVacuum: false

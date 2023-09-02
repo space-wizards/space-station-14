@@ -124,6 +124,15 @@ uplink-voice-mask-desc = A gas mask that lets you adjust your voice to whoever y
 uplink-radio-jammer-name = Radio Jammer
 uplink-radio-jammer-desc = This device will disrupt any nearby outgoing radio communication when activated.
 
+uplink-syndicate-edagger-module-name = Energy Dagger Cyborg Module
+uplink-syndicate-edagger-module-desc = Install a discreet energy dagger into a cyborg.
+
+uplink-syndicate-hypospray-module-name = Hypospray Cyborg Module
+uplink-syndicate-hypospray-module-desc = Install a small capacity hypospray into a cyborg.
+
+uplink-syndicate-self-destruct-module-name = Self Destruct Cyborg Module
+uplink-syndicate-self-destruct-module-desc = Give a cyborg of your choice the ability to violently destroy itself and anyone unlucky enough to be nearby.
+
 # Implants
 uplink-storage-implanter-name = Storage Implanter
 uplink-storage-implanter-desc = Hide goodies inside of yourself with new bluespace technology!
@@ -337,3 +346,4 @@ uplink-syndicate-pai-desc = A Syndicate variant of the pAI with access to the Sy
 
 uplink-bribe-name = Lobbying Bundle
 uplink-bribe-desc = A heartfelt gift that can help you sway someone's opinion. Real or counterfeit? Yes.
+

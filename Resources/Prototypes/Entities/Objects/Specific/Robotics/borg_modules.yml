@@ -398,3 +398,48 @@
     items:
     - BikeHorn
     - ClownRecorder
+
+- type: entity
+  id: BorgModuleEnergyDagger
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: energy dagger cyborg module
+  description: A malicious module that can equip a cyborg with a discreet energy dagger.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-dagger
+  - type: ItemBorgModule
+    items:
+    - EnergyDaggerGeneric
+
+- type: entity
+  id: BorgModuleHypospray
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: hypospray cyborg module
+  description: A malicious module that can equip a cyborg with a small capacity hyposrpay.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-hypospray
+  - type: ItemBorgModule
+    items: 
+    - BorgHypospray
+    - Dropper
+
+- type: entity
+  id: BorgModuleSelfDestruct
+  parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  name: self destruct borg module
+  description: A malicious module that allows a cyborg to destroy itself and anyone in the vicinity.
+  components:
+  - type: Sprite
+    layers:
+    - state: syndicate
+    - state: icon-self-destruct
+  - type: ItemBorgModule
+    items:
+    - ButtonExploding
+
+

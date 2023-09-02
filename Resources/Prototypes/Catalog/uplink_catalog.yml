@@ -479,6 +479,36 @@
   categories:
   - UplinkUtility
 
+- type: listing
+  id: UplinkSyndicateEDaggerModule
+  name: uplink-syndicate-edagger-module-name
+  description: uplink-syndicate-edagger-module-desc
+  productEntity: BorgModuleEnergyDagger
+  cost:
+    Telecrystal: 4
+  categories:
+    - UplinkUtility
+
+- type: listing
+  id: UplinkSyndicateHyposprayModule
+  name: uplink-syndicate-hypospray-module-name
+  description: uplink-syndicate-hypospray-module-desc
+  productEntity: BorgModuleHypospray
+  cost:
+    Telecrystal: 5
+  categories:
+    - UplinkUtility
+
+- type: listing
+  id: UplinkSyndicateSelfDestruct
+  name: uplink-syndicate-self-destruct-module-name
+  description: uplink-syndicate-self-destruct-module-desc
+  productEntity: BorgModuleSelfDestruct
+  cost:
+    Telecrystal: 7
+  categories:
+    - UplinkUtility
+
 # Implants
 
 - type: listing
