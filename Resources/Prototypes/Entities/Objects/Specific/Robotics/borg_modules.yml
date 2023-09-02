@@ -478,6 +478,7 @@
     - type: ItemBorgModule
       items:
         - EnergySword
+        - PinpointerNuclear
 
 - type: entity
   id: BorgModuleL6C
@@ -492,4 +493,5 @@
     - type: ItemBorgModule
       items:
         - WeaponLightMachineGunL6C
+        - PinpointerNuclear
 

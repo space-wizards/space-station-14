@@ -199,13 +199,27 @@
   parent: BaseBorgChassis
   abstract: true
   components:
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound: /Audio/Effects/metalbreak.ogg
+            - !type:EmptyContainersBehaviour
+              containers:
+                - borg_brain
+                - borg_module
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
     - type: NpcFactionMember
       factions:
         - Syndicate
     - type: Access
       enabled: false
       groups:
-        - Syndicate
+        - NuclearOperative
     - type: SiliconLawProvider
       laws:
         - Syndicate1
