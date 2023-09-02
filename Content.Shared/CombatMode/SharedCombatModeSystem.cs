@@ -29,6 +29,7 @@ public abstract class SharedCombatModeSystem : EntitySystem
     private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
     {
         if (component.CombatToggleAction == null
+            && component.CombatToggleActionId != null
             && _protoMan.TryIndex(component.CombatToggleActionId, out InstantActionPrototype? toggleProto))
         {
             component.CombatToggleAction = new(toggleProto);

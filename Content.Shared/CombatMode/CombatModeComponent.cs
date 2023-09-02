@@ -37,9 +37,8 @@ namespace Content.Shared.CombatMode
         private TargetingZone _activeZone;
 
         [DataField("combatToggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
-        public string CombatToggleActionId = "CombatModeToggle";
+        public string? CombatToggleActionId = "CombatModeToggle";
 
-        [DataField("combatToggleAction")]
         public InstantAction? CombatToggleAction;
 
         [ViewVariables(VVAccess.ReadWrite)]
