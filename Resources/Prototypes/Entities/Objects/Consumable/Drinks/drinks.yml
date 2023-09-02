@@ -40,8 +40,6 @@
   id: DrinkGlassBase
   abstract: true
   components:
-  - type: Drink
-    isOpen: true
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Glass

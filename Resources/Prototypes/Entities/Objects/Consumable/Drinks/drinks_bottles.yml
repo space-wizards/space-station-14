@@ -3,8 +3,8 @@
   id: DrinkBottleBaseFull
   abstract: true
   components:
-  - type: Drink
-    openSounds:
+  - type: Openable
+    sound:
       collection: bottleOpenSounds
   - type: SolutionContainerManager
     solutions:
@@ -130,8 +130,9 @@
         reagents:
         - ReagentId: Grenadine
           Quantity: 100
-  - type: Drink
-    isOpen: true
+  # intended use is to spike drinks so starts open
+  - type: Openable
+    opened: true
   - type: Sprite
     sprite: Objects/Consumable/Drinks/grenadinebottle.rsi
 

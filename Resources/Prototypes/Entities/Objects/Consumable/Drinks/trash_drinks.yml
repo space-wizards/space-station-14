@@ -16,7 +16,6 @@
     canChangeTransferAmount: true
     maxTransferAmount: 5
   - type: Drink
-    isOpen: true
   - type: MeleeWeapon
     soundNoDamage:
       path: "/Audio/Effects/Fluids/splat.ogg"

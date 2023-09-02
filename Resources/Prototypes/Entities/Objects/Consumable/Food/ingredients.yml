@@ -24,10 +24,11 @@
     solution: food
   - type: Drink
     solution: food
-    openSounds:
-      collection: packetOpenSounds
     useSound:
       path: /Audio/Items/eating_1.ogg
+  - type: Openable
+    sound:
+      collection: packetOpenSounds
   - type: Spillable
     solution: food
   - type: MeleeWeapon

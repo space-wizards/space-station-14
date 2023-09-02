@@ -4,9 +4,8 @@
   abstract: true
   components:
   - type: Drink
-    openSounds:
-      collection: canOpenSounds
-    pressurized: true
+  - type: Openable
+  - type: PressurizedDrink
   - type: SolutionContainerManager
     solutions:
       drink:

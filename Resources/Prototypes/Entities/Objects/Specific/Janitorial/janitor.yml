@@ -128,7 +128,6 @@
         - MobLayer
   - type: Pullable
   - type: Drink
-    isOpen: true
     solution: bucket
   - type: Appearance
   - type: SolutionContainerVisuals
@@ -373,7 +372,6 @@
       - key: enum.StorageUiKey.Key
         type: StorageBoundUserInterface
     - type: Drink
-      isOpen: true
       solution: bucket
     - type: ContainerContainer
       containers:
