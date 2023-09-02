@@ -12,16 +12,16 @@ namespace Content.Server.Nutrition.Components
     public sealed partial class FoodComponent : Component
     {
         [DataField("solution")]
-        public string SolutionName { get; set; } = "food";
+        public string SolutionName = "food";
 
         [DataField("useSound")]
-        public SoundSpecifier UseSound { get; set; } = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
+        public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/eatfood.ogg");
 
         [DataField("trash", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string? TrashPrototype { get; set; }
+        public string? TrashPrototype;
 
         [DataField("transferAmount")]
-        public FixedPoint2? TransferAmount { get; set; } = FixedPoint2.New(5);
+        public FixedPoint2? TransferAmount = FixedPoint2.New(5);
 
         /// <summary>
         /// Acceptable utensil to use
@@ -33,7 +33,7 @@ namespace Content.Server.Nutrition.Components
         /// Is utensil required to eat this food
         /// </summary>
         [DataField("utensilRequired")]
-        public bool UtensilRequired = false;
+        public bool UtensilRequired;
 
         /// <summary>
         ///     If this is set to true, food can only be eaten if you have a stomach with a
@@ -42,7 +42,7 @@ namespace Content.Server.Nutrition.Components
         ///     Whitelist the food component to allow eating of normal food.
         /// </summary>
         [DataField("requiresSpecialDigestion")]
-        public bool RequiresSpecialDigestion = false;
+        public bool RequiresSpecialDigestion;
 
         /// <summary>
         ///     Stomachs required to digest this entity.
@@ -56,6 +56,14 @@ namespace Content.Server.Nutrition.Components
         /// </summary>
         [DataField("eatMessage")]
         public string EatMessage = "food-nom";
+
+        /// <summary>
+        /// The locale id for the popup shown when the food is openable but closed. Needs a "owner" entity argument passed to it.
+        /// Defaults to the popup drink uses since its "correct".
+        /// It's still generic enough that you should change it if you make openable food, i.e. unwrap it first, peel it first.
+        /// </summary>
+        [DataField("closedPopup")]
+        public string ClosedPopup = "drink-component-try-use-drink-not-open";
 
         /// <summary>
         /// How long it takes to eat the food personally.
