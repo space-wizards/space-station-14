@@ -400,8 +400,8 @@
     - ClownRecorder
 
 - type: entity
-  id: BorgModuleEnergyDagger
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleEnergyDagger
   name: energy dagger cyborg module
   description: A malicious module that can equip a cyborg with a discreet energy dagger.
   components:
@@ -414,8 +414,8 @@
     - EnergyDaggerGeneric
 
 - type: entity
-  id: BorgModuleHypospray
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleHypospray
   name: hypospray cyborg module
   description: A malicious module that can equip a cyborg with a small capacity hyposrpay.
   components:
@@ -429,8 +429,8 @@
     - Dropper
 
 - type: entity
-  id: BorgModuleSelfDestruct
   parent: [ BaseBorgModule, BaseProviderBorgModule ]
+  id: BorgModuleSelfDestruct
   name: self destruct borg module
   description: A malicious module that allows a cyborg to destroy itself and anyone in the vicinity.
   components:
