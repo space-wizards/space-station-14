@@ -28,7 +28,7 @@ public sealed class StickySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(TransferStickySurfaceFromDestroyedEntity);
+        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(OnTransferStickySurfaceFromDestroyedEntity);
 
         SubscribeLocalEvent<StickyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
@@ -54,12 +54,9 @@ public sealed class StickySystem : EntitySystem
 
         if (!stuck)
         {
-            // entity was unable to stick on anything; draw it as unsticked
-            if (TryComp(uid, out AppearanceComponent? appearance))
-            {
-                _appearance.SetData(uid, StickyVisuals.IsStuck, false, appearance);
-            }
-            Log.Warning($"Stickable entity '{EntityManager.ToPrettyString(uid)}' was supposed to stick on other entity nearby when spawn but couldn't find anything to stick on");
+            // entity was unable to stick on anything; draw it as unstuck
+            _appearance.SetData(uid, StickyVisuals.IsStuck, false);
+            Log.Warning($"Stickable entity '{ToPrettyString(uid)}' was supposed to stick on other entity nearby when spawn but couldn't find anything to stick on");
         }
     }
 
@@ -196,10 +193,7 @@ public sealed class StickySystem : EntitySystem
         }
 
         // send information to appearance that entity is stuck
-        if (TryComp(uid, out AppearanceComponent? appearance))
-        {
-            _appearance.SetData(uid, StickyVisuals.IsStuck, true, appearance);
-        }
+        _appearance.SetData(uid, StickyVisuals.IsStuck, true);
 
         component.StuckTo = target;
         RaiseLocalEvent(uid, new EntityStuckEvent(target, user), true);
@@ -248,10 +242,7 @@ public sealed class StickySystem : EntitySystem
         _handsSystem.PickupOrDrop(user, uid);
 
         // send information to appearance that entity isn't stuck
-        if (TryComp(uid, out AppearanceComponent? appearance))
-        {
-            _appearance.SetData(uid, StickyVisuals.IsStuck, false, appearance);
-        }
+        _appearance.SetData(uid, StickyVisuals.IsStuck, false);
 
         // show message to user
         if (component.UnstickPopupSuccess != null && user != null)
@@ -264,10 +255,10 @@ public sealed class StickySystem : EntitySystem
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
 
-    public void TransferStickySurfaceFromDestroyedEntity(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+    private void OnTransferStickySurfaceFromDestroyedEntity(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
     {
-        if (EntityManager.TryGetComponent<StickyComponent>(uid, out var ownerStickyComp) &&
-            EntityManager.TryGetComponent<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&
+        if (TryComp<StickyComponent>(uid, out var ownerStickyComp) &&
+            TryComp<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&
             ownerStickyComp.StuckTo != null)
         {
             StickToEntity(ev.Spawned, ownerStickyComp.StuckTo.Value, null, spawnedStickyComp);

@@ -17,7 +17,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
 
-            SubscribeLocalEvent<TransferForensicsOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(TransferForensicsFromDestroyedEntity);
+            SubscribeLocalEvent<TransferForensicsOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(OnTransferForensicsFromDestroyedEntity);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -70,12 +70,12 @@ namespace Content.Server.Forensics
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
-        public void TransferForensicsFromDestroyedEntity(EntityUid uid, TransferForensicsOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+        private void OnTransferForensicsFromDestroyedEntity(EntityUid uid, TransferForensicsOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
         {
-            if (!EntityManager.TryGetComponent<ForensicsComponent>(uid, out var ownerForensics))
+            if (!TryComp<ForensicsComponent>(uid, out var ownerForensics))
                 return;
 
-            var spawnedForensics = EntityManager.EnsureComponent<ForensicsComponent>(ev.Spawned);
+            var spawnedForensics = EnsureComp<ForensicsComponent>(ev.Spawned);
             spawnedForensics.DNAs = ownerForensics.DNAs;
 
             if (!_random.Prob(component.FingersAndFibersTransferChance))
