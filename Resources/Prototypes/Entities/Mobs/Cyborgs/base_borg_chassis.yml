@@ -217,9 +217,6 @@
       factions:
         - Syndicate
     - type: Access
-      enabled: false
-      groups:
-        - NuclearOperative
     - type: SiliconLawProvider
       laws:
         - Syndicate1
@@ -233,3 +230,5 @@
     - type: ActiveRadio
       channels:
         - Syndicate
+    - type: NoSlip
+    - type: MovementAlwaysTouching
