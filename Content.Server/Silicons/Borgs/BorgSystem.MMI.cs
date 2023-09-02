@@ -1,5 +1,5 @@
-﻿using Content.Server.Mind.Components;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mind.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 

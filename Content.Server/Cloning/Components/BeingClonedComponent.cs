@@ -1,4 +1,4 @@
-using Content.Server.Mind;
+using Content.Shared.Mind;
 
 namespace Content.Server.Cloning.Components
 {

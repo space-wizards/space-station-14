@@ -1,7 +1,8 @@
-﻿namespace Content.Server.Roles;
+﻿using Content.Shared.Roles;
+
+namespace Content.Server.Roles;
 
 [RegisterComponent]
 public sealed partial class TraitorRoleComponent : AntagonistRoleComponent
 {
-    public string? Briefing;
 }
