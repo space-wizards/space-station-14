@@ -207,8 +207,8 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 
         private void OnWeldChanged(EntityUid uid, GasVentScrubberComponent component, WeldableChangedEvent args)
         {
-            var IsWelded = args.IsWelded;
-            component.Welded = IsWelded;
+            var isWelded = args.IsWelded;
+            component.Welded = isWelded;
             UpdateState(uid, component);
         }
     }
