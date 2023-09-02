@@ -14,12 +14,11 @@
     slots:
     - Back
   - type: Wieldable
-  - type: GunWieldBonus
-    minAngle: -30
-    maxAngle: -70
+    wieldTime: 0.5
+  - type: GunRequiresWield
   - type: Gun
-    minAngle: 30
-    maxAngle: 70
+    minAngle: 0
+    maxAngle: 5
     fireRate: 1
     selectedMode: SemiAuto
     availableModes:
@@ -35,7 +34,6 @@
         startingItem: ArrowImprovised
         insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
         ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
-        priority: 2
         whitelist:
           tags:
           - Arrow

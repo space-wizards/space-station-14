@@ -307,6 +307,7 @@ public sealed partial class GunSystem : SharedGunSystem
             var projectile = EnsureComp<ProjectileComponent>(uid);
             Projectiles.SetShooter(projectile, user.Value);
             projectile.Weapon = gunUid;
+            projectile.WasFired = true;
         }
 
         TransformSystem.SetWorldRotation(uid, direction.ToWorldAngle());

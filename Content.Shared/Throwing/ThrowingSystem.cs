@@ -106,7 +106,8 @@ public sealed class ThrowingSystem : EntitySystem
             return;
         }
 
-        if (projectileQuery.HasComponent(uid))
+        // Allow throwing if this projectile only acts as a projectile when shot, otherwise disallow
+        if (projectileQuery.TryGetComponent(uid, out var proj) && !proj.OnlyCollideWhenShot)
             return;
 
         var comp = EnsureComp<ThrownItemComponent>(uid);

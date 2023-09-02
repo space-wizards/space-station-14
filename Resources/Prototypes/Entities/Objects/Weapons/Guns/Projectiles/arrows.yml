@@ -29,6 +29,7 @@
         - BulletImpassable
   - type: EmbeddableProjectile
     sound: /Audio/Weapons/star_hit.ogg
+    embedOnThrow: false
   - type: ThrowingAngle
     angle: 0
   - type: Ammo
@@ -38,6 +39,7 @@
     - Arrow
   - type: Projectile
     deleteOnCollide: false
+    onlyCollideWhenShot: true
     damage:
       types:
         Piercing: 14
