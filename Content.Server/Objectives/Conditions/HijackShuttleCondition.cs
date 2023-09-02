@@ -41,6 +41,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
 
         var agentOnShuttle = false;
         var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
+        var humanoids = entMan.GetEntityQuery<HumanoidAppearanceComponent>();
         foreach (var player in gridPlayers)
         {
             if (!player.AttachedEntity.HasValue ||
@@ -53,7 +54,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
                 continue;
             }
 
-            var isHumanoid = entMan.HasComponent<HumanoidAppearanceComponent>(player.AttachedEntity.Value);
+            var isHumanoid = humanoids.HasComponent(player.AttachedEntity.Value);
             if (!isHumanoid) // Only humanoids count as enemies
                 continue;
 
