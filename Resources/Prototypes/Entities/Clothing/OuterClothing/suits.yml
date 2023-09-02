@@ -155,6 +155,9 @@
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/monkey.rsi
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
   parent: ClothingOuterBase
@@ -173,6 +176,9 @@
     sprintModifier: 1.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodIan
+  - type: ContainerContainer
+    containers:
+      toggleable-clothing: !type:ContainerSlot {}
 
 - type: entity
   parent: ClothingOuterBase
