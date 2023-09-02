@@ -17,10 +17,7 @@ namespace Content.Shared.Random.Helpers
             var randomY = random.NextFloat() * (maxY - minY) + minY;
             var offset = new Vector2(randomX, randomY);
 
-            var entMan = IoCManager.Resolve<IEntityManager>();
-            var comp = entMan.GetComponent<TransformComponent>(entity);
-            var transform = entMan.System<SharedTransformSystem>();
-            transform.SetLocalPosition(comp, comp.LocalPosition + offset);
+            IoCManager.Resolve<IEntityManager>().GetComponent<TransformComponent>(entity).LocalPosition += offset;
         }
 
         public static void RandomOffset(this EntityUid entity, float min, float max)

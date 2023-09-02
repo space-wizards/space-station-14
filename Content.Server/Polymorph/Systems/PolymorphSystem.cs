@@ -1,7 +1,6 @@
 using Content.Server.Actions;
 using Content.Server.Humanoid;
 using Content.Server.Inventory;
-using Content.Server.Mind;
 using Content.Server.Mind.Commands;
 using Content.Server.Nutrition;
 using Content.Server.Polymorph.Components;
@@ -11,6 +10,7 @@ using Content.Shared.Buckle;
 using Content.Shared.Damage;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Polymorph;
@@ -41,7 +41,7 @@ namespace Content.Server.Polymorph.Systems
         [Dependency] private readonly SharedHandsSystem _hands = default!;
         [Dependency] private readonly SharedPopupSystem _popup = default!;
         [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         private ISawmill _sawmill = default!;
@@ -266,8 +266,8 @@ namespace Content.Server.Polymorph.Systems
             var parentXform = Transform(parent);
 
             _transform.SetParent(parent, parentXform, uidXform.ParentUid);
-            _transform.SetCoordinates(parent, parentXform, uidXform.Coordinates);
-            _transform.SetLocalRotation(parentXform, uidXform.LocalRotation);
+            parentXform.Coordinates = uidXform.Coordinates;
+            parentXform.LocalRotation = uidXform.LocalRotation;
 
             if (proto.TransferDamage &&
                 TryComp<DamageableComponent>(parent, out var damageParent) &&
@@ -306,7 +306,7 @@ namespace Content.Server.Polymorph.Systems
                 _mindSystem.TransferTo(mindId, parent, mind: mind);
 
             // if an item polymorph was picked up, put it back down after reverting
-            _transform.AttachToGridOrMap(parent);
+            Transform(parent).AttachToGridOrMap();
 
             _popup.PopupEntity(Loc.GetString("polymorph-revert-popup-generic",
                 ("parent", Identity.Entity(uid, EntityManager)),
