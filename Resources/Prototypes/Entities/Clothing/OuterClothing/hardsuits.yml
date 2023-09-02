@@ -393,7 +393,7 @@
 #Quartermaster's Hardsuit
 - type: entity
   parent: ClothingOuterHardsuitBase
-  id: ClothingOuterHardsuitQm
+  id: ClothingOuterHardsuitQm #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   name: quartermaster's hardsuit
   description: A refurbished mining hardsuit, fashioned for the Quartermaster. Graphene lining provides less protection, but is much easier to move.
   components:
