@@ -143,10 +143,13 @@ public sealed class DrinkSystem : EntitySystem
         if (empty)
             return;
 
+        // go between Opened and Xu / put Xu on a new line
+        args.Message.AddMarkup(canOpen ? " - " : "\n");
+
         if (TryComp<ExaminableSolutionComponent>(uid, out var comp))
         {
             //provide exact measurement for beakers
-            args.Message.AddMarkup($" - {Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(uid, component)))}");
+            args.Message.AddMarkup(Loc.GetString("drink-component-on-examine-exact-volume", ("amount", DrinkVolume(uid, component))));
         }
         else
         {
@@ -158,7 +161,7 @@ public sealed class DrinkSystem : EntitySystem
                 > 33 => HalfEmptyOrHalfFull(args),
                 _ => "drink-component-on-examine-is-mostly-empty",
             };
-            args.Message.AddMarkup($" - {Loc.GetString(remainingString)}");
+            args.Message.AddMarkup(Loc.GetString(remainingString));
         }
     }
 
