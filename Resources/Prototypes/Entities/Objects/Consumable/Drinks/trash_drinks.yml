@@ -47,7 +47,9 @@
         Blunt: 4
   - type: Damageable
     damageContainer: Inorganic
-  - type: TransferForensicsOnSpawnBehavior
+  - type: Forensics
+    dnaTransferChanceFromDestroyed: 1
+    restOfTransferChanceFromDestroyed: 0.4
   - type: Destructible
     thresholds:
     - trigger:

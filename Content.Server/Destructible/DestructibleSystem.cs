@@ -124,11 +124,6 @@ namespace Content.Server.Destructible
             }
             return damageNeeded;
         }
-
-        public void RaiseSpawnAfterDestructionEvent(EntityUid spawned, EntityUid owner)
-        {
-            RaiseLocalEvent(owner, new OnSpawnFromSpawnEntitiesBehaviourEvent(spawned));
-        }
     }
 
     // Currently only used for destructible integration tests. Unless other uses are found for this, maybe this should just be removed and the tests redone.

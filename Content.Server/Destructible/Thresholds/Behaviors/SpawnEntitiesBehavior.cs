@@ -5,6 +5,7 @@ using Content.Shared.Prototypes;
 using Content.Shared.Stacks;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
+using Content.Server.Destructible.Events;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Dictionary;
 
 namespace Content.Server.Destructible.Thresholds.Behaviors
@@ -41,7 +42,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
                     system.StackSystem.SetCount(spawned, count);
 
-                    system.RaiseSpawnAfterDestructionEvent(spawned, owner);
+                    var ev = new DestructionSpawnBehavior(spawned);
+                    system.EntityManager.EventBus.RaiseLocalEvent(owner, ref ev);
                 }
                 else
                 {
@@ -49,7 +51,8 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
                     {
                         var spawned = system.EntityManager.SpawnEntity(entityId, position.Offset(getRandomVector()));
 
-                        system.RaiseSpawnAfterDestructionEvent(spawned, owner);
+                        var ev = new DestructionSpawnBehavior(spawned);
+                        system.EntityManager.EventBus.RaiseLocalEvent(owner, ref ev);
                     }
                 }
             }

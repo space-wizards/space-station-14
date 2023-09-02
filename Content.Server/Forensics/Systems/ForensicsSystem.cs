@@ -17,7 +17,7 @@ namespace Content.Server.Forensics
             SubscribeLocalEvent<FingerprintComponent, MapInitEvent>(OnFingerprintInit);
             SubscribeLocalEvent<DnaComponent, MapInitEvent>(OnDNAInit);
 
-            SubscribeLocalEvent<TransferForensicsOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(OnTransferForensicsFromDestroyedEntity);
+            SubscribeLocalEvent<ForensicsComponent, DestructionSpawnBehavior>(OnDestructionSpawnBehavior);
         }
 
         private void OnInteract(EntityUid uid, FingerprintComponent component, ContactInteractionEvent args)
@@ -70,18 +70,25 @@ namespace Content.Server.Forensics
                 component.Fingerprints.Add(fingerprint.Fingerprint ?? "");
         }
 
-        private void OnTransferForensicsFromDestroyedEntity(EntityUid uid, TransferForensicsOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+        private void OnDestructionSpawnBehavior(EntityUid uid, ForensicsComponent component, ref DestructionSpawnBehavior ev)
         {
-            if (!TryComp<ForensicsComponent>(uid, out var ownerForensics))
-                return;
+            var transferDNA = _random.Prob(component.DNATransferChanceAfterDestroy);
+            var transferRestOf = _random.Prob(component.RestOfTransferChanceAfterDestroy);
 
-            var spawnedForensics = EnsureComp<ForensicsComponent>(ev.Spawned);
-            spawnedForensics.DNAs = ownerForensics.DNAs;
-
-            if (!_random.Prob(component.FingersAndFibersTransferChance))
-                return;
-            spawnedForensics.Fingerprints = ownerForensics.Fingerprints;
-            spawnedForensics.Fibers = ownerForensics.Fibers;
+            // Ensure component only if something should be transfered
+            if (transferDNA || transferRestOf)
+            {
+                var spawnedForensics = EnsureComp<ForensicsComponent>(ev.Spawned);
+                if (transferDNA)
+                    spawnedForensics.DNAs = component.DNAs;
+                
+                if (transferRestOf)
+                {
+                    spawnedForensics.Fingerprints = component.Fingerprints;
+                    spawnedForensics.Fibers = component.Fibers;
+                }
+            }
         }
+
     }
 }

@@ -561,7 +561,9 @@
     canChangeTransferAmount: true
     minTransferAmount: 5
     maxTransferAmount: 20
-  - type: TransferForensicsOnSpawnBehavior
+  - type: Forensics
+    dnaTransferChanceFromDestroyed: 1
+    restOfTransferChanceFromDestroyed: 0.4
   - type: Destructible
     thresholds:
     - trigger:

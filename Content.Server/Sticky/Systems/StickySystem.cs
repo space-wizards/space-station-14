@@ -28,7 +28,7 @@ public sealed class StickySystem : EntitySystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, OnSpawnFromSpawnEntitiesBehaviourEvent>(OnTransferStickySurfaceFromDestroyedEntity);
+        SubscribeLocalEvent<TransferStickySurfaceOnSpawnBehaviorComponent, DestructionSpawnBehavior>(OnDestructionSpawnBehavior);
 
         SubscribeLocalEvent<StickyComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<StickyComponent, StickyDoAfterEvent>(OnStickFinished);
@@ -255,7 +255,7 @@ public sealed class StickySystem : EntitySystem
         RaiseLocalEvent(uid, new EntityUnstuckEvent(target, user), true);
     }
 
-    private void OnTransferStickySurfaceFromDestroyedEntity(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, OnSpawnFromSpawnEntitiesBehaviourEvent ev)
+    private void OnDestructionSpawnBehavior(EntityUid uid, TransferStickySurfaceOnSpawnBehaviorComponent component, ref DestructionSpawnBehavior ev)
     {
         if (TryComp<StickyComponent>(uid, out var ownerStickyComp) &&
             TryComp<StickyComponent>(ev.Spawned, out var spawnedStickyComp) &&

@@ -11,5 +11,11 @@ namespace Content.Server.Forensics
 
         [DataField("dnas")]
         public HashSet<string> DNAs = new();
+        
+        [DataField("dnaTransferChanceFromDestroyed")]
+        public float DNATransferChanceAfterDestroy = 0f;
+
+        [DataField("restOfTransferChanceFromDestroyed")]
+        public float RestOfTransferChanceAfterDestroy = 0f;
     }
 }
