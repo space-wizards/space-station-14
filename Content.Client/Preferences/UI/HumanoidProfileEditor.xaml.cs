@@ -86,17 +86,9 @@ namespace Content.Client.Preferences.UI
         private readonly List<AntagPreferenceSelector> _antagPreferences;
         private readonly List<TraitPreferenceSelector> _traitPreferences;
 
-        private Control _previewSpriteControl => CSpriteViewFront;
-        private Control _previewSpriteSideControl => CSpriteViewSide;
-
+        private SpriteView _previewSpriteView => CSpriteView;
         private EntityUid? _previewDummy;
-
-        /// <summary>
-        /// Used to avoid unnecessarily re-creating the entity.
-        /// </summary>
-        private string? _lastSpecies;
-        private SpriteView? _previewSprite;
-        private SpriteView? _previewSpriteSide;
+        private float _accumulatedTime;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
         private ColorSelectorSliders _rgbSkinColorSelector;
@@ -484,27 +476,7 @@ namespace Content.Client.Preferences.UI
                 _entMan.DeleteEntity(_previewDummy!.Value);
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _lastSpecies = species;
-
-            _previewSprite = new SpriteView
-            {
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.South,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSprite.SetEntity(_previewDummy.Value);
-            _previewSpriteControl.AddChild(_previewSprite);
-
-            _previewSpriteSide = new SpriteView
-            {
-                Scale = new Vector2(6, 6),
-                OverrideDirection = Direction.East,
-                VerticalAlignment = VAlignment.Center,
-                SizeFlagsStretchRatio = 1
-            };
-            _previewSpriteSide.SetEntity(_previewDummy.Value);
-            _previewSpriteSideControl.AddChild(_previewSpriteSide);
+            _previewSpriteView.SetEntity(_previewDummy);
             #endregion Dummy
 
             #endregion Left
@@ -724,35 +696,7 @@ namespace Content.Client.Preferences.UI
                 _entMan.DeleteEntity(_previewDummy!.Value);
 
             _previewDummy = _entMan.SpawnEntity(dollProto, MapCoordinates.Nullspace);
-            _lastSpecies = species;
-
-            if (_previewSprite == null)
-            {
-                // Front
-                _previewSprite = new SpriteView
-                {
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.South,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteControl.AddChild(_previewSprite);
-            }
-            _previewSprite.SetEntity(_previewDummy.Value);
-
-            if (_previewSpriteSide == null)
-            {
-                _previewSpriteSide = new SpriteView
-                {
-                    Scale = new Vector2(6, 6),
-                    OverrideDirection = Direction.East,
-                    VerticalAlignment = VAlignment.Center,
-                    SizeFlagsStretchRatio = 1
-                };
-                _previewSpriteSideControl.AddChild(_previewSpriteSide);
-            }
-            _previewSpriteSide.SetEntity(_previewDummy.Value);
-
+            _previewSpriteView.SetEntity(_previewDummy);
             _needUpdatePreview = true;
         }
 
@@ -1160,9 +1104,11 @@ namespace Content.Client.Preferences.UI
             if (_needUpdatePreview)
             {
                 UpdatePreview();
-
                 _needUpdatePreview = false;
             }
+
+            _accumulatedTime += args.DeltaSeconds;
+            _previewSpriteView.OverrideDirection = (Direction) ((int) _accumulatedTime % 4 * 2);
         }
 
         private void UpdateJobPriorities()

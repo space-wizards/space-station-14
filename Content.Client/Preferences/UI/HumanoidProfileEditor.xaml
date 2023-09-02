@@ -144,8 +144,7 @@
         </BoxContainer>
         <!-- Right side -->
         <BoxContainer Orientation="Vertical" VerticalExpand="True" HorizontalExpand="True">
-            <Control Name="CSpriteViewFront" VerticalExpand="True" SizeFlagsStretchRatio="1" />
-            <Control Name="CSpriteViewSide" VerticalExpand="True" SizeFlagsStretchRatio="1" />
+            <SpriteView Name="CSpriteView" Scale="8 8" VerticalExpand="True" SizeFlagsStretchRatio="1" />
         </BoxContainer>
     </BoxContainer>
 </Control>
