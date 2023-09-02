@@ -37,3 +37,13 @@
   cost: 500
   category: Hydroponics
   group: market
+  
+- type: cargoProduct
+  id: BulkPlantBGone
+  icon:
+    sprite: Objects/Specific/Chemistry/jug.rsi
+    state: jug
+  product: CratePlantBGone
+  cost: 750
+  category: Hydroponics
+  group: market
