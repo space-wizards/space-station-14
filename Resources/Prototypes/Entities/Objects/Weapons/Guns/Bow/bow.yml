@@ -1,0 +1,60 @@
+﻿- type: entity
+  name: bow
+  parent: BaseItem
+  id: BaseBow
+  description: A rooty tooty point and shooty.
+  abstract: true
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Bow/bow.rsi
+  - type: Item
+    size: 60
+  - type: Clothing
+    quickEquip: false
+    slots:
+    - Back
+  - type: Wieldable
+  - type: GunWieldBonus
+    minAngle: -20
+    maxAngle: -20
+  - type: Gun
+    minAngle: 24
+    maxAngle: 45
+    angleIncrease: 4
+    angleDecay: 16
+    fireRate: 8
+    selectedMode: FullAuto
+    availableModes:
+    - FullAuto
+    soundGunshot:
+      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
+    soundEmpty:
+      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+  - type: ItemSlots
+    slots:
+      arrow:
+        name: Arrow
+        startingItem: ArrowImprovised
+        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
+        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        priority: 2
+        whitelist:
+          tags:
+          - Arrow
+  - type: ContainerContainer
+    containers:
+      arrow: !type:ContainerSlot
+  - type: ContainerAmmoProvider
+    container: arrow
+  - type: StaticPrice
+    price: 500
+
+- type: entity
+  id: BowImprovised
+  parent: BaseBow
+  description: A rather traditionally made LMG with a pleasantly lacquered wooden pistol grip. Uses .30 rifle ammo.
+  components:
+  - type: Sprite
+    layers:
+    - state: icon
+  - type: Appearance

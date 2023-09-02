@@ -1,0 +1,37 @@
+﻿- type: entity
+  parent: BaseItem
+  id: BaseArrow
+  name: arrow
+  abstract: true
+  description: You can feel the power of the steppe within you.
+  components:
+  - type: Item
+    size: 10
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    state: arrow
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PhysShapeCircle
+          radius: 0.2
+        density: 5
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: EmbeddableProjectile
+    sound: /Audio/Weapons/star_hit.ogg
+  - type: Tag
+    tags:
+    - Arrow
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowImprovised
+  description: Aren't basically all arrows technically improvised?
+  components:
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Piercing: 14
