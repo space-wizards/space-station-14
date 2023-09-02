@@ -84,15 +84,6 @@
   parent: BaseItem
   description: A L6 SAW modified for cyborg use. Feeds .30 rifle ammo from an internal 100 round magazine.
   components:
-    - type: Sprite
-      sprite: Objects/Weapons/Guns/LMGs/l6.rsi
-      layers:
-        - state: base
-          map: [ "enum.GunVisualLayers.Base" ]
-        - state: mag-3
-          map: [ "enum.GunVisualLayers.Mag" ]
-    - type: AmmoCounter
-    - type: Appearance
     - type: Gun
       minAngle: 4
       maxAngle: 25
@@ -106,10 +97,18 @@
         path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
       soundEmpty:
         path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+    - type: Sprite
+      sprite: Objects/Weapons/Guns/LMGs/l6.rsi
+      layers:
+        - state: base
+          map: [ "enum.GunVisualLayers.Base" ]
+        - state: mag-3
+          map: [ "enum.GunVisualLayers.Mag" ]
+    - type: Item
+      size: 60
+    - type: ContainerContainer
+      containers:
+        ballistic-ammo: !type:Container
     - type: BallisticAmmoProvider
       proto: CartridgeLightRifle
       capacity: 100
-    - type: ContainerContainer
-      containers:
-        gun_magazine: !type:ContainerSlot
-        gun_chamber: !type:ContainerSlot
