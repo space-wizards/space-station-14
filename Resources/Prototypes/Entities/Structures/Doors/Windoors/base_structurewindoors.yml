@@ -118,7 +118,7 @@
     usesApcPower: true
   - type: WiresPanel
   - type: Wires
-    BoardName: "Windoor Control"
+    BoardName: wires-board-name-windoor
     LayoutId: Airlock
   - type: UserInterface
     interfaces:

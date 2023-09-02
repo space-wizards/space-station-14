@@ -91,7 +91,7 @@
   - type: WallMount
   - type: WiresPanel
   - type: Wires
-    BoardName: "APC"
+    BoardName: wires-board-name-apc
     LayoutId: APC
   - type: WiresVisuals
   - type: Damageable

@@ -6,9 +6,9 @@ namespace Content.Shared.Body.Prototypes
     public sealed class MetabolizerTypePrototype : IPrototype
     {
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [DataField("name", required: true)]
-        public string Name { get; } = default!;
+        public string Name { get; private set; } = default!;
     }
 }

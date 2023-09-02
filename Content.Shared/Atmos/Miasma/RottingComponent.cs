@@ -8,7 +8,7 @@ namespace Content.Shared.Atmos.Miasma;
 /// Tracking component for stuff that has started to rot.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class RottingComponent : Component
+public sealed partial class RottingComponent : Component
 {
     /// <summary>
     /// Whether or not the rotting should deal damage

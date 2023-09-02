@@ -17,7 +17,7 @@
   - type: Machine
     board: BoozeDispenserMachineCircuitboard
   - type: Wires
-    BoardName: "BoozeDispenser"
+    BoardName: wires-board-name-booze
     LayoutId: BoozeDispenser
   - type: GuideHelp
     guides:

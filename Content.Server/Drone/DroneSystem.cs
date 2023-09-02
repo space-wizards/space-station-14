@@ -1,8 +1,6 @@
 using Content.Server.Body.Systems;
 using Content.Server.Drone.Components;
-using Content.Server.Ghost.Components;
 using Content.Server.Ghost.Roles.Components;
-using Content.Server.Mind.Components;
 using Content.Server.Popups;
 using Content.Server.Tools.Innate;
 using Content.Server.UserInterface;
@@ -10,18 +8,18 @@ using Content.Shared.Body.Components;
 using Content.Shared.Drone;
 using Content.Shared.Emoting;
 using Content.Shared.Examine;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Tag;
 using Content.Shared.Throwing;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Drone

@@ -4,7 +4,7 @@ using Content.Shared.Shuttles.Components;
 namespace Content.Server.Shuttles.Components
 {
     [RegisterComponent]
-    public sealed class ShuttleConsoleComponent : SharedShuttleConsoleComponent
+    public sealed partial class ShuttleConsoleComponent : SharedShuttleConsoleComponent
     {
         [ViewVariables]
         public readonly List<EntityUid> SubscribedPilots = new();

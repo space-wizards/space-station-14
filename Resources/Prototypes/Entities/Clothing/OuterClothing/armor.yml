@@ -96,6 +96,8 @@
         Heat: 0.4 # this technically means it protects against fires pretty well? -heat is just for lasers and stuff, not atmos temperature
   - type: Reflect
     reflectProb: 1
+    reflects:
+      - Energy
 
 - type: entity
   parent: ClothingOuterBaseLarge

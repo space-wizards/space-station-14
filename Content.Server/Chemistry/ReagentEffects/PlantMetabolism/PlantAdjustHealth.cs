@@ -3,7 +3,7 @@ using Content.Shared.Chemistry.Reagent;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
-    public sealed class PlantAdjustHealth : PlantAdjustAttribute
+    public sealed partial class PlantAdjustHealth : PlantAdjustAttribute
     {
         public override void Effect(ReagentEffectArgs args)
         {

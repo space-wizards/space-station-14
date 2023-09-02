@@ -122,6 +122,9 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         var tagEv = new FTLTagEvent();
         RaiseLocalEvent(xform.GridUid.Value, ref tagEv);
 
+        var ev = new ShuttleConsoleFTLTravelStartEvent(uid);
+        RaiseLocalEvent(ref ev);
+
         _shuttle.FTLTravel(xform.GridUid.Value, shuttle, args.Destination, dock: dock, priorityTag: tagEv.Tag);
     }
 
@@ -211,7 +214,7 @@ public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
         {
             RemovePilot(user, pilotComponent);
 
-            // This feels backwards; is this intended to be a toggle? 
+            // This feels backwards; is this intended to be a toggle?
             if (console == uid)
                 return false;
         }
