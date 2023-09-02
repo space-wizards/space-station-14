@@ -289,7 +289,6 @@
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
-      amount: 1
   - type: Damageable
     damageContainer: Biological
     damageModifierSet: Cockroach
@@ -317,8 +316,6 @@
   description: This station is just crawling with bu- OH GOD THAT COCKROACH HAS A GUN!!!
   components:
   - type: Sprite
-    drawdepth: SmallMobs
-    sprite: Mobs/Animals/cockroach.rsi
     layers:
     - map: ["enum.DamageStateVisualLayers.Base"]
       state: glockroach
@@ -342,9 +339,6 @@
   - type: Butcherable
     spawned:
     - id: FoodMeatSlime
-      amount: 1
-    - id: WeaponPistolCobra
-      amount: 1
 
 - type: entity
   name: mallard duck #Quack
