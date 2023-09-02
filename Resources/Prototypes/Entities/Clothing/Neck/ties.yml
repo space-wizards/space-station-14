@@ -1,7 +1,29 @@
 - type: entity
   parent: ClothingNeckBase
+  id: ClothingNeckTieBlack
+  name: black tie
+  description: A neosilk black tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/blacktie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/blacktie.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieNavyBlue
+  name: navy blue tie
+  description: A neosilk navy blue tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/navybluetie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/navybluetie.rsi
+
+- type: entity
+  parent: ClothingNeckBase
   id: ClothingNeckTieRed
-  name: red-tie
+  name: red tie
   description: A neosilk clip-on red tie.
   components:
   - type: Sprite
@@ -23,7 +45,40 @@
     sprite: Clothing/Neck/Ties/dettie.rsi
   - type: Clothing
     sprite: Clothing/Neck/Ties/dettie.rsi
-    
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieCharcoalThin
+  name: thin charcoal tie
+  description: A thin neosilk charcoal tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/thincharcoaltie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/thincharcoaltie.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieBlueThin
+  name: thin blue tie
+  description: A thin neosilk blue tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/thinbluetie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/thinbluetie.rsi
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckTieRedThin
+  name: thin red tie
+  description: A thin neosilk red tie.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/thinredtie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/thinredtie.rsi
+
 - type: entity
   parent: ClothingNeckBase
   id: ClothingNeckTieSci
@@ -38,3 +93,14 @@
     tags:
     - HamsterWearable
     - WhitelistChameleon
+
+- type: entity
+  parent: ClothingNeckBase
+  id: ClothingNeckBowtie
+  name: bowtie
+  description: A tidy and smart-looking bowtie. Wearing it makes you feel like a doctor.
+  components:
+  - type: Sprite
+    sprite: Clothing/Neck/Ties/bowtie.rsi
+  - type: Clothing
+    sprite: Clothing/Neck/Ties/bowtie.rsi

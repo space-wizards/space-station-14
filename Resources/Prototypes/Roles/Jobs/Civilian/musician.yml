@@ -18,6 +18,7 @@
   id: MusicianGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitMusician
+    neck: ClothingNeckBowtie
     back: ClothingBackpackMusicianFilled
     eyes: ClothingEyesGlassesSunglasses
     shoes: ClothingShoesBootsLaceup

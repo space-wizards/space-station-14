@@ -16,6 +16,7 @@
   id: PsychologistGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitPsychologist
+    neck: ClothingNeckTieBlack
     back: ClothingBackpackMedicalFilled
     shoes: ClothingShoesLeather
     id: PsychologistPDA

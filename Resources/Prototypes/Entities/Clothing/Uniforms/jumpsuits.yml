@@ -511,7 +511,7 @@
 - type: entity
   parent: ClothingUniformBase
   id: ClothingUniformJumpsuitSecBlue
-  name: blue shirt and tie
+  name: blue security uniform
   description: I'm a little busy right now, Calhoun.
   components:
   - type: Sprite

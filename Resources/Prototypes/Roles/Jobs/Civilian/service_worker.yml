@@ -19,6 +19,7 @@
   id: ServiceWorkerGear
   equipment:
     jumpsuit: ClothingUniformJumpsuitBartender
+    neck: ClothingNeckBowtie
     back: ClothingBackpackFilled
     shoes: ClothingShoesColorBlack
     id: ServiceWorkerPDA
