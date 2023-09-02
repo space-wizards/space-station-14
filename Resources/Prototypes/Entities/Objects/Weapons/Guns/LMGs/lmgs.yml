@@ -109,3 +109,7 @@
     - type: BallisticAmmoProvider
       proto: CartridgeLightRifle
       capacity: 100
+    - type: ContainerContainer
+      containers:
+        gun_magazine: !type:ContainerSlot
+        gun_chamber: !type:ContainerSlot
