@@ -17,6 +17,8 @@ public partial class RadiationSystem
 {
     [Dependency] protected readonly SharedContainerSystem _container = default!;
 
+    private EntityQuery<RadiationBlockingContainerComponent> _radiationBlockingContainers;
+
     private void UpdateGridcast()
     {
         // should we save debug information into rays?
@@ -31,7 +33,8 @@ public partial class RadiationSystem
         var resistanceQuery = GetEntityQuery<RadiationGridResistanceComponent>();
         var transformQuery = GetEntityQuery<TransformComponent>();
         var gridQuery = GetEntityQuery<MapGridComponent>();
-        var blockers = GetEntityQuery<RadiationBlockingContainerComponent>();
+
+        _radiationBlockingContainers = GetEntityQuery<RadiationBlockingContainerComponent>();
 
         // precalculate world positions for each source
         // so we won't need to calc this in cycle over and over again
@@ -68,14 +71,8 @@ public partial class RadiationSystem
                     rads += ray.Rads;
             }
 
-            // Consider if the destination entity is hidden within a radiation blocking container
-            if (_container.TryFindComponentsOnEntityContainerOrParent(dest.Owner, blockers, out var comps))
-            {
-                rads -= comps.Sum(x => x.RadResistance);
-
-                if (rads <= 0)
-                    rads = 0;
-            }
+            // Apply modifier if the destination entity is hidden within a radiation blocking container
+            rads = ApplyModForRadiationBlockingContainers(dest.Owner, rads);
 
             receiversTotalRads.Add((dest, rads));
         }
@@ -123,19 +120,12 @@ public partial class RadiationSystem
 
         // will it even reach destination considering distance penalty
         var rads = incomingRads - slope * dist;
+
+        // Apply rad modifier if the source is enclosed within a radiation blocking container
+        rads = ApplyModForRadiationBlockingContainers(sourceUid, rads);
+
         if (rads <= MinIntensity)
             return null;
-
-        // consider if the source is enclosed within a radiation blocking container
-        var blockers = GetEntityQuery<RadiationBlockingContainerComponent>();
-
-        if (_container.TryFindComponentsOnEntityContainerOrParent(sourceUid, blockers, out var comps))
-        {
-            rads -= comps.Sum(x => x.RadResistance);
-
-            if (rads <= 0)
-                return null;
-        }
 
         // create a new radiation ray from source to destination
         // at first we assume that it doesn't hit any radiation blockers
@@ -235,5 +225,18 @@ public partial class RadiationSystem
             ray.Blockers.Add(gridUid, blockers);
 
         return ray;
+    }
+
+    private float ApplyModForRadiationBlockingContainers(EntityUid uid, float rads)
+    {
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, out var comps))
+        {
+            rads -= comps.Sum(x => x.RadResistance);
+
+            if (rads <= 0)
+                rads = 0;
+        }
+
+        return rads;
     }
 }
