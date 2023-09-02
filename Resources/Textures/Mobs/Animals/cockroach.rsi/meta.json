@@ -29,6 +29,13 @@
         ]
       ]
     },
+	{
+      "name": "cockroach_dead",
+      "directions": 1
+    },
+	{
+      "name": "cockroach_icon"
+    },
     {
       "name": "glockroach",
       "directions": 4,

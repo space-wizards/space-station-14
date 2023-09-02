@@ -65,3 +65,26 @@
       minimumEntitiesSpawned: 1
       maximumEntitiesSpawned: 1
 
+- type: entity
+  name: Cockroach Timed Spawner
+  id: CockroachTimedSpawner
+  parent: MarkerBase
+  components:
+    - type: Sprite
+      layers:
+        - state: blue
+        - sprite: Mobs/Animals/cockroach.rsi
+          state: cockroach_icon
+        - state: timed
+    - type: Timer
+    - type: TimedSpawner
+      prototypes:
+        - MobCockroach
+      # round ~90m
+      # one spawner should only spawn ~5 mice for sanity reasons
+      # therefore 18m
+      # use 50% chance for randomness and balance with halved interval
+      chance: 0.5
+      intervalSeconds: 540
+      minimumEntitiesSpawned: 1
+      maximumEntitiesSpawned: 1
