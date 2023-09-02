@@ -37,23 +37,6 @@ public sealed class BeforePryEvent : CancellableEntityEventArgs
 }
 
 /// <summary>
-/// Raised before the door prying doafter starts.
-/// Can be used to add to, or remove to the time it takes to pry open a
-/// door.
-/// </summary>
-sealed class PryTimeModifierEvent : EntityEventArgs
-{
-    public readonly EntityUid User;
-
-    public float Modifier = 1.0f;
-
-    public PryTimeModifierEvent(EntityUid user)
-    {
-        User = user;
-    }
-}
-///
-/// <summary>
 /// Raised to determine how long the door's pry time should be modified by.
 /// Multiply PryTimeModifier by the desired amount.
 /// </summary>

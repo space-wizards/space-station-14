@@ -662,9 +662,4 @@ public abstract class SharedDoorSystem : EntitySystem
     #endregion
 
     protected abstract void PlaySound(EntityUid uid, SoundSpecifier soundSpecifier, AudioParams audioParams, EntityUid? predictingPlayer, bool predicted);
-
-    [Serializable, NetSerializable]
-    protected sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
-    {
-    }
 }

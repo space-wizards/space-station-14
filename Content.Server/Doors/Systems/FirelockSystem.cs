@@ -18,6 +18,7 @@ using Microsoft.Extensions.Options;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map.Components;
 using Robust.Shared.Player;
+using Content.Shared.Doors.Prying.Components;
 
 namespace Content.Server.Doors.Systems
 {

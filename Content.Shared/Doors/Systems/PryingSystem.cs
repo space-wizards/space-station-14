@@ -4,17 +4,21 @@ using Robust.Shared.Serialization;
 using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
+using Content.Shared.Doors.Systems;
 
 namespace Content.Shared.Doors.Prying.Systems;
 public sealed class DoorPryingSystem : EntitySystem
 {
     [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
     [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedDoorSystem _doorSystem = default!;
 
     public override void Initialize()
     {
         base.Initialize();
 
+        SubscribeLocalEvent<DoorPryingComponent, DoorPryDoAfterEvent>(OnDoAfter);
     }
 
     /// <summary>
@@ -31,7 +35,6 @@ public sealed class DoorPryingSystem : EntitySystem
 
         if (!CanPry(target, user, comp.PryPowered))
         {
-            _adminLog.Add(LogType.Action, LogImpact.Low, $"darn");
             return true;
         }
 
@@ -48,6 +51,7 @@ public sealed class DoorPryingSystem : EntitySystem
 
         if (!door.EasyPry)
             return false;
+
         if (!CanPry(target, user, false))
             return true;
 
@@ -68,14 +72,16 @@ public sealed class DoorPryingSystem : EntitySystem
 
     void StartPry(EntityUid target, EntityUid user, DoorComponent door, EntityUid? tool, float toolModifier, out DoAfterId? id)
     {
-        var modEv = new PryTimeModifierEvent(user);
+        var modEv = new DoorGetPryTimeModifierEvent(user);
+
 
         RaiseLocalEvent(target, modEv, false);
-        var doAfterArgs = new DoAfterArgs(user, door.PryTime * modEv.Modifier / toolModifier, new PryDoAfterEvent(), target, target)
+        var doAfterArgs = new DoAfterArgs(user, TimeSpan.FromSeconds(door.PryTime * modEv.PryTimeModifier / toolModifier), new DoorPryDoAfterEvent(), tool, target, tool)
         {
             BreakOnDamage = true,
             BreakOnUserMove = true,
         };
+
         if (tool != null)
         {
             _adminLog.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(user)} is using {ToPrettyString(tool.Value)} to pry {ToPrettyString(target)} while it is {door.State}");
@@ -87,9 +93,34 @@ public sealed class DoorPryingSystem : EntitySystem
         _doAfterSystem.TryStartDoAfter(doAfterArgs, out id);
     }
 
+    void OnDoAfter(EntityUid uid, DoorPryingComponent comp, DoorPryDoAfterEvent args)
+    {
+        if (args.Cancelled)
+            return;
+
+        if (args.Used is null)
+            return;
+
+        DoorComponent? door = null;
+        if (!args.Target.HasValue || !Resolve(args.Target.Value, ref door))
+            return;
+
+        _audioSystem.PlayPredicted(comp.UseSound, args.Used.Value, args.User, comp.UseSound.Params.WithVariation(0.175f).AddVolume(-5f));
+
+        if (door.State == DoorState.Closed)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} open");
+            _doorSystem.StartOpening(args.Target.Value, door);
+        }
+        else if (door.State == DoorState.Open)
+        {
+            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
+            _doorSystem.StartClosing(args.Target.Value, door);
+        }
+    }
 }
 
 [Serializable, NetSerializable]
-public sealed class PryDoAfterEvent : SimpleDoAfterEvent
+public sealed class DoorPryDoAfterEvent : SimpleDoAfterEvent
 {
 }

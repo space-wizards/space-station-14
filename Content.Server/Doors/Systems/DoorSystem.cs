@@ -42,7 +42,6 @@ public sealed class DoorSystem : SharedDoorSystem
         SubscribeLocalEvent<DoorComponent, GetVerbsEvent<AlternativeVerb>>(OnDoorAltVerb);
 
         SubscribeLocalEvent<DoorComponent, BeforePryEvent>(OnBeforeDoorPry);
-        SubscribeLocalEvent<DoorComponent, PryDoAfterEvent>(OnPryFinished);
         SubscribeLocalEvent<DoorComponent, WeldableAttemptEvent>(OnWeldAttempt);
         SubscribeLocalEvent<DoorComponent, WeldableChangedEvent>(OnWeldChanged);
         SubscribeLocalEvent<DoorComponent, GotEmaggedEvent>(OnEmagged);
@@ -173,23 +172,6 @@ public sealed class DoorSystem : SharedDoorSystem
             args.Cancel();
         return;
 
-    }
-
-    private void OnPryFinished(EntityUid uid, DoorComponent door, DoAfterEvent args)
-    {
-        if (args.Cancelled)
-            return;
-
-        if (door.State == DoorState.Closed)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} open"); // TODO move to generic tool use logging in a way that includes door state
-            StartOpening(uid, door);
-        }
-        else if (door.State == DoorState.Open)
-        {
-            _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(uid)} closed"); // TODO move to generic tool use logging in a way that includes door state
-            StartClosing(uid, door);
-        }
     }
     #endregion
 
