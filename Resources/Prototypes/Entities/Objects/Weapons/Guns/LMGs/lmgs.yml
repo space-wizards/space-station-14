@@ -112,3 +112,4 @@
     - type: BallisticAmmoProvider
       proto: CartridgeLightRifle
       capacity: 100
+    - type: AmmoCounter
