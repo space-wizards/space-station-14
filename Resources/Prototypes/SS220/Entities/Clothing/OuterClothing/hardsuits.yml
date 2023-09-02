@@ -27,6 +27,7 @@
         Heat: 0.2
         Radiation: 0.25
         Caustic: 0.5
+        Stamina: 0.9
   - type: ExplosionResistance
     damageCoefficient: 0.3
   - type: ToggleableClothing

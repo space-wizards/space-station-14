@@ -213,6 +213,7 @@
   description: Black leather gloves from USSP
   suffix: Sponsor
   components:
+    - type: Insulated
     - type: Sprite
       sprite: Corvax/Sponsor/jesuisunfou/Clothing/Hands/Gloves/ussp.rsi
     - type: Clothing
@@ -241,6 +242,13 @@
       sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
     - type: Clothing
       sprite: Corvax/Sponsor/jesuisunfou/Clothing/OuterClothing/Coats/ussp.rsi
+    - type: Armor
+      modifiers:
+        coefficients:
+          Blunt: 0.7
+          Slash: 0.7
+          Piercing: 0.4
+          Heat: 0.7
 
 - type: entity
   parent: ClothingUniformBase

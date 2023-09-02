@@ -45,3 +45,25 @@
   - type: StorageFill
     contents:
     - id: WeaponRevolverPython
+ 
+#USSP
+- type: entity
+  name: "фонарик СССП"
+  description: "Надежный фонарь, используемый СССП."
+  suffix: СССП
+  parent: FlashlightSeclite
+  id: FlashlightSecliteUssp
+
+- type: entity
+  name: табельный револьвер СССП
+  suffix: СССП
+  parent: WeaponRevolverInspector
+  id: WeaponRevolverInspectorUssp
+  description: Стандартый револьвер армии СССП. Его предком является наган, но за годы он был доработан настолько, что от оригинала мало что осталось.
+
+- type: entity
+  parent: ClothingBeltMercWebbing
+  id: ClothingBeltUsspWebbing
+  name: РПС СССП
+  suffix: СССП
+  description: "Идеально подходит для хранения всего: от патронов до оружия и предметов боевой необходимости."

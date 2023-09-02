@@ -1,0 +1,460 @@
+# © SS220, An EULA/CLA with a hosting restriction, full text: https://raw.githubusercontent.com/SerbiaStrong-220/space-station-14/master/CLA.txt
+
+- type: entity
+  parent: ClothingBeltUsspWebbing
+  id: ClothingBeltUsspWebbingFilled
+  suffix: Shitspawn, Ebent, СССП
+  components:
+  - type: StorageFill
+    contents:
+    - id: SpeedLoaderMagnum
+      amount: 2
+    - id: MagazineLightRifle
+      amount: 2
+    - id: CombatMedipen
+    - id: Stimpack
+
+- type: entity
+  parent: ClothingBackpackUSSP
+  id: ClothingBackpackUSSPFilled
+  suffix: Shitspawn, СССП, Маршал
+  components:
+    - type: StorageFill
+      contents:
+      - id: Crowbar
+      - id: CigPackRed
+      - id: Lighter
+      - id: FlashlightSecliteUssp
+      - id: PowerCellHyper
+      - id: WeaponRifleAk
+
+#Leader
+- type: entity
+  parent: LockerCaptain
+  id: LockerEbentUSSPLeader
+  name: "шкаф маршала СССП"
+  suffix: Filled, Shitspawn, СССП
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckUSSPPin
+    - id: ClothingUniformJumpskirtColorRed
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesUSSPBlack
+    - id: ClothingUniformJumpsuitUSSPBlack
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingHeadHatCapUSSPBlack
+    - id: CigPackRed
+
+- type: startingGear
+  id: EbentUSSPLeaderGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackUSSPFilled
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasUssp
+    gloves: ClothingHandsGlovesLeatherUSSPBlack
+    outerClothing: ClothingOuterHardsuitUSSP
+    suitstorage: YellowOxygenTankFilled
+    id: UsspPDALeader
+    ears: ClothingHeadsetUSSP
+    belt: ClothingBeltUsspWebbingFilled
+    pocket1: WeaponRevolverInspectorUssp
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentUSSPLeader
+  name: Спавнер Маршала СССП
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentUSSPLeader
+
+- type: randomHumanoidSettings
+  id: EbentUSSPLeader
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentUSSPLeaderGear ]
+
+- type: job
+  id: USSPLeader
+  name: job-name-ussp-leader
+  description: job-description-ussp-leader
+  startingGear: EbentUSSPLeaderGear
+  playTimeTracker: USSPLeader
+  setPreference: false
+  canBeAntag: false
+  accessGroups: []
+  access: []
+
+- type: playTimeTracker
+  id: USSPLeader
+
+- type: entity
+  parent: UsspIDCard
+  id: UsspIDCardCmdLeader
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: USSPLeader
+
+- type: entity
+  parent: UsspPDA
+  id: UsspPDALeader
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: UsspIDCardCmdLeader
+
+#Engineer
+- type: entity
+  parent: LockerChiefEngineer
+  id: LockerEbentUSSPEngineer
+  name: "шкаф заслуженного инженера СССП"
+  suffix: Filled, Shitspawn, СССП
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckUSSPPin
+    - id: ClothingUniformJumpskirtColorRed
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesUSSPBlack
+    - id: ClothingUniformJumpsuitUSSPBlack
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingHeadHatCapUSSPBlack
+    - id: CigPackRed
+
+- type: startingGear
+  id: EbentUSSPEngineerGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackUSSPFilled
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasUssp
+    gloves: ClothingHandsGlovesLeatherUSSPBlack
+    outerClothing: ClothingOuterHardsuitUSSP
+    suitstorage: YellowOxygenTankFilled
+    id: UsspPDAEngineer
+    ears: ClothingHeadsetUSSP
+    belt: ClothingBeltUsspWebbingFilled
+    pocket1: WeaponRevolverInspectorUssp
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentUSSPEngineer
+  name: Спавнер заслуженного инженера СССП
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentUSSPEngineer
+
+- type: randomHumanoidSettings
+  id: EbentUSSPEngineer
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentUSSPEngineerGear ]
+
+- type: job
+  id: USSPEngineer
+  name: job-name-ussp-engineer
+  description: job-description-ussp-engineer
+  startingGear: EbentUSSPEngineerGear
+  playTimeTracker: USSPEngineer
+  setPreference: false
+  canBeAntag: false
+  accessGroups: []
+  access: []
+
+- type: playTimeTracker
+  id: USSPEngineer
+
+- type: entity
+  parent: UsspIDCard
+  id: UsspIDCardCmdEngineer
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: USSPEngineer
+
+- type: entity
+  parent: UsspPDA
+  id: UsspPDAEngineer
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: UsspIDCardCmdEngineer
+
+#Corpsman
+- type: entity
+  parent: LockerMedical
+  id: LockerEbentUSSPCorpsman
+  name: "шкаф полевого врача СССП"
+  suffix: Filled, Shitspawn, СССП
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckUSSPPin
+    - id: ClothingUniformJumpskirtColorRed
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesUSSPBlack
+    - id: ClothingUniformJumpsuitUSSPBlack
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingHeadHatCapUSSPBlack
+    - id: CigPackRed
+
+- type: startingGear
+  id: EbentUSSPCorpsmanGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackUSSPFilled
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasUssp
+    gloves: ClothingHandsGlovesLeatherUSSPBlack
+    outerClothing: ClothingOuterHardsuitUSSP
+    suitstorage: YellowOxygenTankFilled
+    id: UsspPDACorpsman
+    ears: ClothingHeadsetUSSP
+    belt: ClothingBeltUsspWebbingFilled
+    pocket1: WeaponRevolverInspectorUssp
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentUSSPCorpsman
+  name: Спавнер полевого медика СССП
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentUSSPCorpsman
+
+- type: randomHumanoidSettings
+  id: EbentUSSPCorpsman
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: GhostRole
+      name: job-name-ussp-corpsman
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ EbentUSSPCorpsmanGear ]
+
+- type: job
+  id: USSPCorpsman
+  name: job-name-ussp-corpsman
+  description: job-description-ussp-corpsman
+  startingGear: EbentUSSPCorpsmanGear
+  playTimeTracker: USSPCorpsman
+  setPreference: false
+  canBeAntag: false
+  accessGroups: []
+  access: []
+
+- type: playTimeTracker
+  id: USSPCorpsman
+
+- type: entity
+  parent: UsspIDCard
+  id: UsspIDCardCorpsman
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: USSPCorpsman
+
+- type: entity
+  parent: UsspMedicalPDA
+  id: UsspPDACorpsman
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: UsspIDCardCorpsman
+
+#CMO
+- type: entity
+  parent: LockerChiefMedicalOfficer
+  id: LockerEbentUSSPCMO
+  name: "шкаф народного врача СССП"
+  suffix: Filled, Shitspawn, СССП
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckUSSPPin
+    - id: ClothingUniformJumpskirtColorRed
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesUSSPBlack
+    - id: ClothingUniformJumpsuitUSSPBlack
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingHeadHatCapUSSPBlack
+    - id: CigPackRed
+
+- type: startingGear
+  id: EbentUSSPCMOGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackUSSPFilled
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasUssp
+    gloves: ClothingHandsGlovesLeatherUSSPBlack
+    outerClothing: ClothingOuterHardsuitUSSP
+    suitstorage: YellowOxygenTankFilled
+    id: UsspPDACMO
+    ears: ClothingHeadsetUSSP
+    belt: ClothingBeltUsspWebbingFilled
+    pocket1: WeaponRevolverInspectorUssp
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentUSSPCMO
+  name: Спавнер народного врача СССП
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentUSSPCMO
+
+- type: randomHumanoidSettings
+  id: EbentUSSPCMO
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: Loadout
+      prototypes: [ EbentUSSPCMOGear ]
+
+- type: job
+  id: USSPCMO
+  name: job-name-ussp-cmo
+  description: job-description-ussp-cmo
+  startingGear: EbentUSSPCMOGear
+  playTimeTracker: USSPCMO
+  setPreference: false
+  canBeAntag: false
+  accessGroups: []
+  access: []
+
+- type: playTimeTracker
+  id: USSPCMO
+
+- type: entity
+  parent: UsspIDCard
+  id: UsspIDCardCmdCMO
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: USSPCMO
+
+- type: entity
+  parent: UsspMedicalPDA
+  id: UsspPDACMO
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: UsspIDCardCmdCMO
+
+# Trooper
+- type: entity
+  parent: LockerSyndicatePersonal
+  id: LockerEbentUSSPTrooper
+  name: "шкаф красноармейца"
+  suffix: Filled, Shitspawn, СССП
+  components:
+  - type: AccessReader
+    access: []
+  - type: StorageFill
+    contents:
+    - id: ClothingNeckUSSPPin
+    - id: ClothingUniformJumpskirtColorRed
+    - id: ClothingUniformJumpskirtColorBlack
+    - id: ClothingShoesUSSPBlack
+    - id: ClothingUniformJumpsuitUSSPBlack
+    - id: ClothingUniformJumpsuitColorBlack
+    - id: ClothingHeadHatCapUSSPBlack
+    - id: CigPackRed
+
+- type: startingGear
+  id: EbentUSSPTrooperGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorRed
+    back: ClothingBackpackUSSPFilled
+    shoes: ClothingShoesBootsMagSyndie
+    mask: ClothingMaskGasUssp
+    gloves: ClothingHandsGlovesLeatherUSSPBlack
+    outerClothing: ClothingOuterHardsuitUSSP
+    suitstorage: YellowOxygenTankFilled
+    id: UsspPDAFighter
+    ears: ClothingHeadsetUSSP
+    belt: ClothingBeltUsspWebbingFilled
+    pocket1: WeaponRevolverInspectorUssp
+    pocket2: CombatKnife
+
+- type: entity
+  id: RandomHumanoidSpawnerEbentUSSPTrooper
+  name: Спавнер красноармейца
+  suffix: Ebent
+  components:
+    - type: Sprite
+      sprite: Markers/jobs.rsi
+      state: ertleader
+    - type: RandomHumanoidSpawner
+      settings: EbentUSSPTrooper
+
+- type: randomHumanoidSettings
+  id: EbentUSSPTrooper
+  randomizeName: true
+  speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
+  components:
+    - type: GhostRole
+      name: job-name-ussp-fighter
+    - type: GhostTakeoverAvailable
+    - type: Loadout
+      prototypes: [ EbentUSSPTrooperGear ]
+
+- type: job
+  id: USSPFighter
+  name: job-name-ussp-fighter
+  description: job-description-ussp-fighter
+  startingGear: EbentUSSPTrooperGear
+  playTimeTracker: USSPFighter
+  setPreference: false
+  canBeAntag: false
+  accessGroups: []
+  access: []
+
+- type: playTimeTracker
+  id: USSPFighter
+
+- type: entity
+  parent: UsspIDCard
+  id: UsspIDCardFighter
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: PresetIdCard
+    job: USSPFighter
+
+- type: entity
+  parent: UsspPDA
+  id: UsspPDAFighter
+  suffix: СССП, Щитспавн, Ebent
+  components:
+  - type: Pda
+    id: UsspIDCardFighter
