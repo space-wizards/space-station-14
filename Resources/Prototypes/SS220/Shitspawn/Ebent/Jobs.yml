@@ -316,9 +316,6 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
   components:
-    - type: GhostRole
-      name: job-name-iron-squad-corpsman
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadCorpsmanGear ]
 
@@ -555,9 +552,6 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
   components:
-    - type: GhostRole
-      name: job-name-iron-squad-fighter
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentIronSquadTrooperGear ]
 

@@ -250,9 +250,6 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
   components:
-    - type: GhostRole
-      name: job-name-ussp-corpsman
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentUSSPCorpsmanGear ]
 
@@ -423,9 +420,6 @@
   randomizeName: true
   speciesBlacklist: [ Arachnid, Diona, Dwarf, Reptilian, Skeleton, SlimePerson, Vox, Moth ]
   components:
-    - type: GhostRole
-      name: job-name-ussp-fighter
-    - type: GhostTakeoverAvailable
     - type: Loadout
       prototypes: [ EbentUSSPTrooperGear ]
 
