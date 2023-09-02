@@ -1,6 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Fluids.Components;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Chemistry.Reaction;
 using Content.Shared.Chemistry.Reagent;
@@ -23,6 +23,8 @@ namespace Content.Server.Fluids.EntitySystems;
 
 public sealed partial class PuddleSystem
 {
+    [Dependency] private readonly OpenableSystem _openable = default!;
+
     private void InitializeSpillable()
     {
         SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
@@ -62,7 +64,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution))
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
+        if (_openable.IsClosed(uid))
             return;
 
         var hitCount = args.HitEntities.Count;
@@ -135,7 +137,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(uid, component.SolutionName, out var solution))
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
+        if (_openable.IsClosed(uid))
             return;
 
         if (args.User != null)
@@ -156,7 +158,7 @@ public sealed partial class PuddleSystem
         if (!_solutionContainerSystem.TryGetSolution(args.Target, component.SolutionName, out var solution))
             return;
 
-        if (TryComp<DrinkComponent>(args.Target, out var drink) && (!drink.Opened))
+        if (_openable.IsClosed(args.Target))
             return;
 
         if (solution.Volume == FixedPoint2.Zero)

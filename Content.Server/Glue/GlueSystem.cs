@@ -5,7 +5,7 @@ using Content.Shared.Item;
 using Content.Shared.Glue;
 using Content.Shared.Interaction;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Robust.Shared.Timing;
@@ -15,6 +15,7 @@ namespace Content.Server.Glue;
 
 public sealed class GlueSystem : SharedGlueSystem
 {
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -40,10 +41,8 @@ public sealed class GlueSystem : SharedGlueSystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
+        if (_openable.IsClosed(uid))
             return;
-        }
 
         if (TryGlue(uid, component, target, args.User))
         {

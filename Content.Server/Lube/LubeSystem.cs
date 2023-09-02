@@ -1,6 +1,6 @@
 using Content.Server.Administration.Logs;
 using Content.Server.Chemistry.EntitySystems;
-using Content.Server.Nutrition.Components;
+using Content.Server.Nutrition.EntitySystems;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -13,6 +13,7 @@ namespace Content.Server.Lube;
 
 public sealed class LubeSystem : EntitySystem
 {
+    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -34,10 +35,8 @@ public sealed class LubeSystem : EntitySystem
         if (!args.CanReach || args.Target is not { Valid: true } target)
             return;
 
-        if (TryComp<DrinkComponent>(uid, out var drink) && !drink.Opened)
-        {
+        if (_openable.IsClosed(uid))
             return;
-        }
 
         if (TryLube(uid, component, target, args.User))
         {
