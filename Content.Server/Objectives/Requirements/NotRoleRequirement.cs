@@ -1,7 +1,7 @@
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Server.Objectives.Requirements

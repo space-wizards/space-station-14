@@ -1,25 +1,13 @@
-﻿using Content.Server.Administration.Logs;
-using Content.Server.Mind;
-using Content.Server.Roles.Jobs;
-using Content.Shared.Database;
-using Content.Shared.Roles;
-using Robust.Shared.Prototypes;
+﻿using Content.Shared.Roles;
 
 namespace Content.Server.Roles;
 
-public sealed class RoleSystem : EntitySystem
+public sealed class RoleSystem : SharedRoleSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
-
-    // TODO please lord make role entities
-    private readonly HashSet<Type> _antagTypes = new();
-
     public override void Initialize()
     {
         // TODO make roles entities
-        SubscribeLocalEvent<JobComponent, MindGetAllRolesEvent>(OnJobGetAllRoles);
+        base.Initialize();
 
         SubscribeAntagEvents<NukeopsRoleComponent>();
         SubscribeAntagEvents<SubvertedSiliconRoleComponent>();
@@ -27,141 +15,20 @@ public sealed class RoleSystem : EntitySystem
         SubscribeAntagEvents<ZombieRoleComponent>();
     }
 
-    private void OnJobGetAllRoles(EntityUid uid, JobComponent component, ref MindGetAllRolesEvent args)
-    {
-        var name = "game-ticker-unknown-role";
-        string? playTimeTracker = null;
-        if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out JobPrototype? job))
-        {
-            name = job.Name;
-            playTimeTracker = job.PlayTimeTracker;
-        }
-
-        name = Loc.GetString(name);
-
-        args.Roles.Add(new RoleInfo(component, name, false, playTimeTracker));
-    }
-
-    private void SubscribeAntagEvents<T>() where T : AntagonistRoleComponent
-    {
-        SubscribeLocalEvent((EntityUid _, T component, ref MindGetAllRolesEvent args) =>
-        {
-            var name = "game-ticker-unknown-role";
-            if (component.PrototypeId != null && _prototypes.TryIndex(component.PrototypeId, out AntagPrototype? antag))
-            {
-                name = antag.Name;
-            }
-            name = Loc.GetString(name);
-
-            args.Roles.Add(new RoleInfo(component, name, true, null));
-        });
-
-        SubscribeLocalEvent((EntityUid _, T _, ref MindIsAntagonistEvent args) => args.IsAntagonist = true);
-        _antagTypes.Add(typeof(T));
-    }
-
-    /// <summary>
-    ///     Gives this mind a new role.
-    /// </summary>
-    /// <param name="mindId">The mind to add the role to.</param>
-    /// <param name="component">The role instance to add.</param>
-    /// <typeparam name="T">The role type to add.</typeparam>
-    /// <returns>The instance of the role.</returns>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we already have a role with this type.
-    /// </exception>
-    public void MindAddRole<T>(EntityUid mindId, T component, MindComponent? mind = null) where T : Component, new()
-    {
-        if (!Resolve(mindId, ref mind))
-            return;
-
-        if (HasComp<T>(mindId))
-        {
-            throw new ArgumentException($"We already have this role: {typeof(T)}");
-        }
-
-        AddComp(mindId, component);
-        var antagonist = IsAntagonistRole<T>();
-
-        var mindEv = new MindRoleAddedEvent();
-        RaiseLocalEvent(mindId, ref mindEv);
-
-        var message = new RoleAddedEvent(mindId, mind, antagonist);
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' added to mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
-    /// <summary>
-    ///     Removes a role from this mind.
-    /// </summary>
-    /// <param name="mindId">The mind to remove the role from.</param>
-    /// <typeparam name="T">The type of the role to remove.</typeparam>
-    /// <exception cref="ArgumentException">
-    ///     Thrown if we do not have this role.
-    /// </exception>
-    public void MindRemoveRole<T>(EntityUid mindId) where T : Component
-    {
-        if (!RemComp<T>(mindId))
-        {
-            throw new ArgumentException($"We do not have this role: {typeof(T)}");
-        }
-
-        var mind = Comp<MindComponent>(mindId);
-        var antagonist = IsAntagonistRole<T>();
-        var message = new RoleRemovedEvent(mindId, mind, antagonist);
-
-        if (mind.OwnedEntity != null)
-        {
-            RaiseLocalEvent(mind.OwnedEntity.Value, message, true);
-        }
-        _adminLogger.Add(LogType.Mind, LogImpact.Low,
-            $"'Role {typeof(T).Name}' removed from mind of {_minds.MindOwnerLoggingString(mind)}");
-    }
-
-    public bool MindTryRemoveRole<T>(EntityUid mindId) where T : Component
-    {
-        if (!MindHasRole<T>(mindId))
-            return false;
-
-        MindRemoveRole<T>(mindId);
-        return true;
-    }
-
-    public bool MindHasRole<T>(EntityUid mindId) where T : Component
-    {
-        return HasComp<T>(mindId);
-    }
-
-    public List<RoleInfo> MindGetAllRoles(EntityUid mindId)
-    {
-        var ev = new MindGetAllRolesEvent(new List<RoleInfo>());
-        RaiseLocalEvent(mindId, ref ev);
-        return ev.Roles;
-    }
-
-    public bool MindIsAntagonist(EntityUid? mindId)
-    {
-        if (mindId == null)
-            return false;
-
-        var ev = new MindIsAntagonistEvent();
-        RaiseLocalEvent(mindId.Value, ref ev);
-        return ev.IsAntagonist;
-    }
-
     public string? MindGetBriefing(EntityUid? mindId)
     {
-        // TODO this should be an event
-        return CompOrNull<TraitorRoleComponent>(mindId)?.Briefing;
-    }
+        if (mindId == null)
+            return null;
 
-    public bool IsAntagonistRole<T>()
-    {
-        return _antagTypes.Contains(typeof(T));
+        var ev = new GetBriefingEvent();
+        RaiseLocalEvent(mindId.Value, ref ev);
+        return ev.Briefing;
     }
 }
+
+/// <summary>
+/// Event raised on the mind to get its briefing.
+/// Handlers can either replace or append to the briefing, whichever is more appropriate.
+/// </summary>
+[ByRefEvent]
+public record struct GetBriefingEvent(string? Briefing = null);
