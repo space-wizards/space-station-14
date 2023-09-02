@@ -31,7 +31,6 @@
     },
 	{
       "name": "cockroach_dead",
-      "directions": 1
     },
 	{
       "name": "cockroach_icon"
