@@ -90,10 +90,6 @@
 	{
 	  "name": "steel-bench",
 	  "directions": 4
-	},
-	{
-	  "name": "steel-bench-overlay",
-	  "directions": 4
 	}
   ]
 }
