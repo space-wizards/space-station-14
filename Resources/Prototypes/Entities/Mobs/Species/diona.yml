@@ -52,9 +52,9 @@
         scaled: true
         damage:
           types:
-            Blunt: 7
-            Slash: 5
-            Piercing: 8
+            Blunt: 2
+            Slash: 2
+            Piercing: 3
       - !type:PopupMessage
         type: Local
         visualType: Large
@@ -67,7 +67,7 @@
         scaled: true
         damage:
           types:
-            Poison: 11
+            Poison: 5
       - !type:PopupMessage
         type: Local
         visualType: Large

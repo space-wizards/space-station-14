@@ -121,7 +121,7 @@
   - type: SolutionContainerManager
     solutions:
       chamber:
-        maxVol: 2500 #500 shots
+        maxVol: 500 #100 shots
   - type: Sprite
     sprite: Objects/Weapons/Guns/Pistols/soaker.rsi
     layers:

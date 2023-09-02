@@ -54,7 +54,7 @@
         scaled: true
         damage:
           types:
-            Heat: 4
+            Heat: 2
       - !type:PopupMessage
         type: Local
         visualType: Large
