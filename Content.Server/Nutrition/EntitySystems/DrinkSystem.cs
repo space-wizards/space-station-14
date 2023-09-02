@@ -36,8 +36,8 @@ namespace Content.Server.Nutrition.EntitySystems;
 public sealed class DrinkSystem : EntitySystem
 {
     [Dependency] private readonly BodySystem _body = default!;
-    [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly FlavorProfileSystem _flavorProfile = default!;
+    [Dependency] private readonly FoodSystem _food = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
