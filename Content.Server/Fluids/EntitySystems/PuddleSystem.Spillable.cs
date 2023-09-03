@@ -29,7 +29,8 @@ public sealed partial class PuddleSystem
     {
         SubscribeLocalEvent<SpillableComponent, ExaminedEvent>(OnExamined);
         SubscribeLocalEvent<SpillableComponent, LandEvent>(SpillOnLand);
-        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit);
+        // openable handles the event if its closed
+        SubscribeLocalEvent<SpillableComponent, MeleeHitEvent>(SplashOnMeleeHit, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<SpillableComponent, GetVerbsEvent<Verb>>(AddSpillVerb);
         SubscribeLocalEvent<SpillableComponent, GotEquippedEvent>(OnGotEquipped);
         SubscribeLocalEvent<SpillableComponent, SolutionSpikeOverflowEvent>(OnSpikeOverflow);
@@ -56,15 +57,15 @@ public sealed partial class PuddleSystem
 
     private void SplashOnMeleeHit(EntityUid uid, SpillableComponent component, MeleeHitEvent args)
     {
+        if (args.Handled)
+            return;
+
         // When attacking someone reactive with a spillable entity,
         // splash a little on them (touch react)
         // If this also has solution transfer, then assume the transfer amount is how much we want to spill.
         // Otherwise let's say they want to spill a quarter of its max volume.
 
         if (!_solutionContainerSystem.TryGetDrainableSolution(uid, out var solution))
-            return;
-
-        if (_openable.IsClosed(uid))
             return;
 
         var hitCount = args.HitEntities.Count;
@@ -82,6 +83,7 @@ public sealed partial class PuddleSystem
         if (totalSplit == 0)
             return;
 
+        args.Handled = true;
         foreach (var hit in args.HitEntities)
         {
             if (!HasComp<ReactiveComponent>(hit))

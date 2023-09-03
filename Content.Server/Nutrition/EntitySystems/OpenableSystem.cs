@@ -2,6 +2,7 @@ using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.GameObjects;
 
 namespace Content.Server.Nutrition.EntitySystems;
@@ -21,6 +22,7 @@ public sealed class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
+        SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(OnMeleeHit);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -43,6 +45,12 @@ public sealed class OpenableSystem : EntitySystem
             // message says its just for drinks, shouldn't matter since you typically dont have a food that is openable and can be poured out
             args.Cancel(Loc.GetString("drink-component-try-use-drink-not-open", ("owner", uid)));
         }
+    }
+
+    private void OnMeleeHit(EntityUid uid, OpenableComponent comp, MeleeHitEvent args)
+    {
+        // prevent spilling drink when closed
+        args.Handled = !comp.Opened;
     }
 
     /// <summary>
