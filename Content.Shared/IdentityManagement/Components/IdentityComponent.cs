@@ -1,4 +1,5 @@
-﻿using Robust.Shared.Containers;
+﻿using Content.Shared.Humanoid.Prototypes;
+using Robust.Shared.Containers;
 using Robust.Shared.Enums;
 
 namespace Content.Shared.IdentityManagement.Components;
@@ -26,15 +27,17 @@ public sealed class IdentityRepresentation
     public string TrueName;
     public int TrueAge;
     public Gender TrueGender;
+    public SpeciesPrototype TrueSpeciesProto;
 
     public string? PresumedName;
     public string? PresumedJob;
 
-    public IdentityRepresentation(string trueName, int trueAge, Gender trueGender, string? presumedName=null, string? presumedJob=null)
+    public IdentityRepresentation(string trueName, int trueAge, Gender trueGender, SpeciesPrototype trueSpeciesProto, string? presumedName=null, string? presumedJob=null)
     {
         TrueName = trueName;
         TrueAge = trueAge;
         TrueGender = trueGender;
+        TrueSpeciesProto = trueSpeciesProto;
 
         PresumedJob = presumedJob;
         PresumedName = presumedName;
@@ -54,12 +57,13 @@ public sealed class IdentityRepresentation
     /// </summary>
     public string ToStringUnknown()
     {
-        var ageString = TrueAge switch
-        {
-            <= 30 => Loc.GetString("identity-age-young"),
-            > 30 and <= 60 => Loc.GetString("identity-age-middle-aged"),
-            > 60 => Loc.GetString("identity-age-old")
-        };
+        string ageString;
+        if (TrueAge <= TrueSpeciesProto.MaxAge)
+            ageString = Loc.GetString("identity-age-young");
+        else if (TrueAge is > 30 and <= 60)
+            ageString = Loc.GetString("identity-age-middle-aged");
+        else
+            ageString = Loc.GetString("identity-age-old");
 
         var genderString = TrueGender switch
         {

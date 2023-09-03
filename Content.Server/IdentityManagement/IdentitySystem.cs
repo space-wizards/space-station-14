@@ -3,12 +3,14 @@ using Content.Server.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
+using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.IdentityManagement;
 using Content.Shared.IdentityManagement.Components;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
 using Robust.Shared.Enums;
 using Robust.Shared.GameObjects.Components.Localization;
+using Robust.Shared.Prototypes;
 
 namespace Content.Server.IdentityManagement;
 
@@ -20,6 +22,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly IPrototypeManager _prototype = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -123,17 +126,20 @@ public class IdentitySystem : SharedIdentitySystem
     {
         int age = 18;
         Gender gender = Gender.Epicene;
+        string species = SharedHumanoidAppearanceSystem.DefaultSpecies;
 
         // Always use their actual age and gender, since that can't really be changed by an ID.
         if (Resolve(target, ref appearance, false))
         {
             gender = appearance.Gender;
             age = appearance.Age;
+            species = appearance.Species;
         }
 
+        var speciesProto = _prototype.Index<SpeciesPrototype>(species);
         var trueName = Name(target);
         if (!Resolve(target, ref inventory, false))
-            return new(trueName, age, gender, string.Empty);
+            return new(trueName, age, gender, speciesProto, string.Empty);
 
         string? presumedJob = null;
         string? presumedName = null;
@@ -146,7 +152,7 @@ public class IdentitySystem : SharedIdentitySystem
         }
 
         // If it didn't find a job, that's fine.
-        return new(trueName, age, gender, presumedName, presumedJob);
+        return new(trueName, age, gender, speciesProto, presumedName, presumedJob);
     }
 
     #endregion
