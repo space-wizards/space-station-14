@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Fixed singularity distortion render on zoom, type: Fix}
-  id: 4238
-  time: '2023-07-12T19:12:25.0000000+00:00'
 - author: JoeHammad
   changes:
   - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
@@ -3004,3 +2999,9 @@ Entries:
       of them. Who was doing this?', type: Add}
   id: 4737
   time: '2023-09-03T04:03:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
+      dioxide poisoning., type: Tweak}
+  id: 4738
+  time: '2023-09-03T06:30:26.0000000+00:00'
