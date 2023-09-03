@@ -1264,3 +1264,4 @@
   - type: Extractable
     grindableSolutionName: food
   - type: SpaceGarbage
+  - type: BadFood
