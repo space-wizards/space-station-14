@@ -1,20 +1,23 @@
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
-using Robust.Shared.GameObjects;
-using Robust.Shared.IoC;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Interactable.Components
 {
     [RegisterComponent]
-    public sealed class InteractionOutlineComponent : Component
+    public sealed partial class InteractionOutlineComponent : Component
     {
         [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
         [Dependency] private readonly IEntityManager _entMan = default!;
 
         private const float DefaultWidth = 1;
+
+        [ValidatePrototypeId<ShaderPrototype>]
         private const string ShaderInRange = "SelectionOutlineInrange";
+
+        [ValidatePrototypeId<ShaderPrototype>]
         private const string ShaderOutOfRange = "SelectionOutline";
+
         private bool _inRange;
         private ShaderInstance? _shader;
         private int _lastRenderScale;

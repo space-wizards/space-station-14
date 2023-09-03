@@ -7,7 +7,7 @@ namespace Content.Server.NPC.Components;
 /// Can be added to if pettable, see PettableFriendComponent.
 /// </summary>
 [RegisterComponent, Access(typeof(FactionExceptionSystem))]
-public sealed class FactionExceptionComponent : Component
+public sealed partial class FactionExceptionComponent : Component
 {
     /// <summary>
     /// List of entities that this NPC will refuse to attack

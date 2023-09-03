@@ -342,13 +342,13 @@ public partial class SharedGunSystem
                         component.Chambers[index] = false;
                         SetCartridgeSpent(ent, cartridge, true);
                         var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                        args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
+                        args.Ammo.Add((spawned, EnsureShootable(spawned)));
                         Del(ent);
                         continue;
                     }
 
                     component.Chambers[i] = null;
-                    args.Ammo.Add((ent, EnsureComp<AmmoComponent>(ent)));
+                    args.Ammo.Add((ent, EnsureShootable(ent)));
                 }
             }
             else if (component.AmmoSlots[index] != null)
@@ -362,13 +362,13 @@ public partial class SharedGunSystem
 
                     SetCartridgeSpent(ent.Value, cartridge, true);
                     var spawned = Spawn(cartridge.Prototype, args.Coordinates);
-                    args.Ammo.Add((spawned, EnsureComp<AmmoComponent>(spawned)));
+                    args.Ammo.Add((spawned, EnsureShootable(spawned)));
                     continue;
                 }
 
                 component.AmmoContainer.Remove(ent.Value);
                 component.AmmoSlots[index] = null;
-                args.Ammo.Add((ent.Value, EnsureComp<AmmoComponent>(ent.Value)));
+                args.Ammo.Add((ent.Value, EnsureShootable(ent.Value)));
                 TransformSystem.SetCoordinates(ent.Value, args.Coordinates);
             }
         }

@@ -5,7 +5,7 @@ namespace Content.Server.Destructible.Thresholds.Behaviors
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class GibBehavior : IThresholdBehavior
+    public sealed partial class GibBehavior : IThresholdBehavior
     {
         [DataField("recursive")] private bool _recursive = true;
 

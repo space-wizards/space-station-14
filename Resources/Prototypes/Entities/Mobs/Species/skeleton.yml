@@ -49,6 +49,7 @@
       60: 0.9
       80: 0.7
   - type: Speech
+    speechVerb: Skeleton
   - type: Vocal
     sounds:
       Male: Skeleton

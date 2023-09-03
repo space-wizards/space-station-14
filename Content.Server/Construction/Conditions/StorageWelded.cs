@@ -7,7 +7,7 @@ namespace Content.Server.Construction.Conditions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class StorageWelded : IGraphCondition
+    public sealed partial class StorageWelded : IGraphCondition
     {
         [DataField("welded")]
         public bool Welded { get; private set; } = true;

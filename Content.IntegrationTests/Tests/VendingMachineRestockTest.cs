@@ -112,8 +112,8 @@ namespace Content.IntegrationTests.Tests
         [Test]
         public async Task TestAllRestocksAreAvailableToBuy()
         {
-            await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings());
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -127,7 +127,7 @@ namespace Content.IntegrationTests.Tests
                 foreach (var proto in prototypeManager.EnumeratePrototypes<EntityPrototype>())
                 {
                     if (proto.Abstract
-                        || pairTracker.Pair.IsTestPrototype(proto)
+                        || pair.IsTestPrototype(proto)
                         || !proto.HasComponent<VendingMachineRestockComponent>())
                     {
                         continue;
@@ -177,14 +177,14 @@ namespace Content.IntegrationTests.Tests
                 });
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestCompleteRestockProcess()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -207,7 +207,7 @@ namespace Content.IntegrationTests.Tests
             VendingMachineRestockComponent restockWrongComponent = default!;
             WiresPanelComponent machineWiresPanel = default!;
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -292,14 +292,14 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DeleteMap(testMap.MapId);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestRestockBreaksOpen()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var prototypeManager = server.ResolveDependency<IPrototypeManager>();
@@ -309,7 +309,7 @@ namespace Content.IntegrationTests.Tests
 
             var damageableSystem = entitySystemManager.GetEntitySystem<DamageableSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             EntityUid restock = default;
 
@@ -356,14 +356,14 @@ namespace Content.IntegrationTests.Tests
                 mapManager.DeleteMap(testMap.MapId);
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestRestockInventoryBounds()
         {
-            await using var pairTracker = await PoolManager.GetServerClient();
-            var server = pairTracker.Pair.Server;
+            await using var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
             await server.WaitIdleAsync();
 
             var mapManager = server.ResolveDependency<IMapManager>();
@@ -372,7 +372,7 @@ namespace Content.IntegrationTests.Tests
 
             var vendingMachineSystem = entitySystemManager.GetEntitySystem<SharedVendingMachineSystem>();
 
-            var testMap = await PoolManager.CreateTestMap(pairTracker);
+            var testMap = await pair.CreateTestMap();
 
             await server.WaitAssertion(() =>
             {
@@ -402,7 +402,7 @@ namespace Content.IntegrationTests.Tests
                     "Machine's available inventory did not stay the same after a third restock.");
             });
 
-            await pairTracker.CleanReturnAsync();
+            await pair.CleanReturnAsync();
         }
     }
 }

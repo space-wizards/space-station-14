@@ -19,6 +19,7 @@
     - BaseStationEvacuation
     - BaseStationAlertLevels
     - BaseStationExpeditions
+    - BaseStationSiliconLawCrewsimov
     - BaseStationAllEventsEligible
     - BaseStationNanotrasen
   noSpawn: true
@@ -31,6 +32,17 @@
     - BaseStation
     - BaseStationAlertLevels
     - BaseStationNanotrasen
+  noSpawn: true
+  components:
+    - type: Transform
+
+- type: entity
+  id: StandardStationArena
+  parent:
+  - BaseStation
+  - BaseStationJobsSpawning
+  - BaseStationRecords
+  - BaseStationNanotrasen
   noSpawn: true
   components:
     - type: Transform

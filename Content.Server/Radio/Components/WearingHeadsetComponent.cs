@@ -6,7 +6,7 @@ namespace Content.Server.Radio.Components;
 ///     This component is used to tag players that are currently wearing an ACTIVE headset.
 /// </summary>
 [RegisterComponent]
-public sealed class WearingHeadsetComponent : Component
+public sealed partial class WearingHeadsetComponent : Component
 {
     [DataField("headset")]
     public EntityUid Headset;

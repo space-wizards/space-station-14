@@ -1,4 +1,3 @@
-using Content.Shared.DragDrop;
 using Content.Shared.Emoting;
 using Content.Shared.Hands;
 using Content.Shared.Interaction.Events;
@@ -8,28 +7,36 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Ghost
 {
     /// <summary>
-    /// System for the <see cref="SharedGhostComponent"/>.
-    /// Prevents ghosts from interacting when <see cref="SharedGhostComponent.CanGhostInteract"/> is false.
+    /// System for the <see cref="GhostComponent"/>.
+    /// Prevents ghosts from interacting when <see cref="GhostComponent.CanGhostInteract"/> is false.
     /// </summary>
     public abstract class SharedGhostSystem : EntitySystem
     {
         public override void Initialize()
         {
             base.Initialize();
-            SubscribeLocalEvent<SharedGhostComponent, UseAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, InteractionAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, EmoteAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, DropAttemptEvent>(OnAttempt);
-            SubscribeLocalEvent<SharedGhostComponent, PickupAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, UseAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, InteractionAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, EmoteAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, DropAttemptEvent>(OnAttempt);
+            SubscribeLocalEvent<GhostComponent, PickupAttemptEvent>(OnAttempt);
         }
 
-        private void OnAttempt(EntityUid uid, SharedGhostComponent component, CancellableEntityEventArgs args)
+        private void OnAttempt(EntityUid uid, GhostComponent component, CancellableEntityEventArgs args)
         {
             if (!component.CanGhostInteract)
                 args.Cancel();
         }
 
-        public void SetCanReturnToBody(EntityUid uid, bool value, SharedGhostComponent? component = null)
+        public void SetTimeOfDeath(EntityUid uid, TimeSpan value, GhostComponent? component)
+        {
+            if (!Resolve(uid, ref component))
+                return;
+
+            component.TimeOfDeath = value;
+        }
+
+        public void SetCanReturnToBody(EntityUid uid, bool value, GhostComponent? component = null)
         {
             if (!Resolve(uid, ref component))
                 return;
@@ -37,7 +44,7 @@ namespace Content.Shared.Ghost
             component.CanReturnToBody = value;
         }
 
-        public void SetCanReturnToBody(SharedGhostComponent component, bool value)
+        public void SetCanReturnToBody(GhostComponent component, bool value)
         {
             component.CanReturnToBody = value;
         }

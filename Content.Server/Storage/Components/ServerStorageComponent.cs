@@ -11,7 +11,7 @@ namespace Content.Server.Storage.Components
     /// </summary>
     [RegisterComponent]
     [ComponentReference(typeof(SharedStorageComponent))]
-    public sealed class ServerStorageComponent : SharedStorageComponent
+    public sealed partial class ServerStorageComponent : SharedStorageComponent
     {
         public string LoggerName = "Storage";
 

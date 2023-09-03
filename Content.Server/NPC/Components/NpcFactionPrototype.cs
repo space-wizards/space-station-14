@@ -11,7 +11,7 @@ namespace Content.Server.NPC.Components
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
 
         [ViewVariables(VVAccess.ReadWrite), DataField("friendly", customTypeSerializer:typeof(PrototypeIdListSerializer<NpcFactionPrototype>))]
         public List<string> Friendly = new();

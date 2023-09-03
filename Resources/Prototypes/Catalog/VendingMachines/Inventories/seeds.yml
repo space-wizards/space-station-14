@@ -31,6 +31,7 @@
     TowercapSeeds: 5
     WheatSeeds: 5
     WatermelonSeeds: 5
+    CocoaSeeds: 3
   inventoryType: RegularInventory
 
 - type: vendingMachineInventory

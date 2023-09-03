@@ -6,7 +6,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Anomaly.Effects.Components;
 
 [RegisterComponent]
-public sealed class TileSpawnAnomalyComponent : Component
+public sealed partial class TileSpawnAnomalyComponent : Component
 {
     /// <summary>
     /// The maximum radius of tiles scales with stability

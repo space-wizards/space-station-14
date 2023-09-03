@@ -6,7 +6,7 @@ namespace Content.Client.Parallax.Data;
 /// The configuration for a parallax layer.
 /// </summary>
 [DataDefinition]
-public sealed class ParallaxLayerConfig
+public sealed partial class ParallaxLayerConfig
 {
     /// <summary>
     /// The texture source for this layer.

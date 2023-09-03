@@ -3,8 +3,14 @@
   inventory:
     FoodSnackRaisins: 3
     FoodSnackChocolate: 3
-    FoodSnackPopcorn: 3
-    FoodSnackSyndi: 3
-    DrinkRamen: 3
-    DrinkHellRamen: 2
+    FoodSnackCnDs: 3
+    FoodSnackPistachios: 3
+    FoodSnackSus: 3
+    FoodSnackSemki: 3
   inventoryType: RegularInventory
+
+- type: vendingMachineInventory
+  id: GetmoreChocolateCorpEmaggedInventory
+  inventory:
+    FoodSnackSyndi: 3
+  inventoryType: EmaggedInventory

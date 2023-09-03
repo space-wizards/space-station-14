@@ -9,3 +9,6 @@ ent-CrateHydroponicsTools = Hydroponics equipment crate
 
 ent-CrateHydroponicsSeeds = Seeds crate
     .desc = Big things have small beginnings. Contains twelve different seeds.
+
+ent-CratePlantBGone = Bulk Plant-B-Gone crate
+    .desc = From Monstano. "Unwanted Weeds, Meet Your Celestial Roundup!"

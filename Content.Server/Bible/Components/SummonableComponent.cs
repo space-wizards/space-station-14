@@ -9,7 +9,7 @@ namespace Content.Server.Bible.Components
     /// This lets you summon a mob or item with an alternative verb on the item
     /// </summary>
     [RegisterComponent]
-    public sealed class SummonableComponent : Component
+    public sealed partial class SummonableComponent : Component
     {
         /// <summary>
         /// Used for a special item only the Chaplain can summon. Usually a mob, but supports regular items too.
