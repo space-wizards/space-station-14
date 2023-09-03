@@ -1,9 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: Youtool nerf, type: Add}
-  id: 4242
-  time: '2023-07-12T19:47:20.0000000+00:00'
 - author: BurninDreamer
   changes:
   - {message: 'The NTDDB has received 1,349,418 full shipments of combat knifes and
@@ -3005,3 +3000,8 @@ Entries:
   - {message: Updated Taxibot sprites., type: Tweak}
   id: 4741
   time: '2023-09-03T14:31:24.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Portable generators no longer rotate with the camera., type: Tweak}
+  id: 4742
+  time: '2023-09-03T17:55:42.0000000+00:00'
