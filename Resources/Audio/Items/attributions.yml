@@ -62,3 +62,8 @@
   license: "CC-BY-4.0"
   copyright: "User volivieri on freesound.org. Modified by Velcroboy on github."
   source: "https://freesound.org/people/volivieri/sounds/37190/"
+
+- files: ["bow_pull.ogg"]
+  license: "CC-BY-3.0"
+  copyright: "User jzdnvdoosj on freesound.org. Converted to ogg by mirrorcult"
+  source: "https://freesound.org/people/jzdnvdoosj/sounds/626262/"

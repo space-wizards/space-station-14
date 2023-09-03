@@ -15,6 +15,8 @@
     - Back
   - type: Wieldable
     wieldTime: 0.5
+    wieldSound:
+      path: /Audio/Items/bow_pull.ogg
   - type: GunRequiresWield
   - type: Gun
     minAngle: 0
@@ -24,16 +26,14 @@
     availableModes:
     - SemiAuto
     soundGunshot:
-      path: /Audio/Weapons/Guns/Gunshots/lmg.ogg
-    soundEmpty:
-      path: /Audio/Weapons/Guns/Empty/lmg_empty.ogg
+      collection: BulletMiss
+    soundEmpty: null
   - type: ItemSlots
     slots:
       arrow:
         name: Arrow
         startingItem: ArrowImprovised
-        insertSound: /Audio/Weapons/Guns/MagIn/batrifle_magin.ogg
-        ejectSound: /Audio/Weapons/Guns/MagOut/batrifle_magout.ogg
+        insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
         whitelist:
           tags:
           - Arrow
@@ -42,8 +42,6 @@
       arrow: !type:ContainerSlot
   - type: ContainerAmmoProvider
     container: arrow
-  - type: StaticPrice
-    price: 500
 
 - type: entity
   id: BowImprovised
@@ -56,6 +54,10 @@
     - state: unwielded-arrow
       map: [ arrow ]
       visible: false
+  # to elucidate whats intended here:
+  # arrow is inserted -> ItemMapper sets layer with map `arrow` to visible
+  # bow is wielded -> generic vis sets states of layers with map `arrow` and `base`
+  # arrow is removed -> itemmapper sets layer with map `arrow` to invisible
   - type: Appearance
   - type: ItemMapper
     spriteLayers:
