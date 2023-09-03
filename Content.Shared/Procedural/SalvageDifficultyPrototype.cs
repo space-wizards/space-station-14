@@ -30,4 +30,7 @@ public sealed class SalvageDifficultyPrototype : IPrototype
     /// </summary>
     [DataField("modifierBudget")]
     public float ModifierBudget;
+
+    [DataField("recommendedPlayers", required: true)]
+    public int RecommendedPlayers;
 }

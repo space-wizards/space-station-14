@@ -1472,6 +1472,12 @@ namespace Content.Shared.CCVar
             SalvageForced = CVarDef.Create("salvage.forced", "", CVar.SERVERONLY);
 
         /// <summary>
+        /// Duration for missions
+        /// </summary>
+        public static readonly CVarDef<float>
+            SalvageExpeditionDuration = CVarDef.Create("salvage.expedition_duration", 420f, CVar.REPLICATED);
+
+        /// <summary>
         /// Cooldown for missions.
         /// </summary>
         public static readonly CVarDef<float>

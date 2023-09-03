@@ -1,4 +1,5 @@
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Dataset;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
@@ -6,6 +7,7 @@ using Content.Shared.Random;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
+using Robust.Shared.Configuration;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
@@ -15,6 +17,7 @@ namespace Content.Shared.Salvage;
 
 public abstract class SharedSalvageSystem : EntitySystem
 {
+    [Dependency] protected readonly IConfigurationManager CfgManager = default!;
     [Dependency] private readonly IPrototypeManager _proto = default!;
 
     /// <summary>
@@ -65,7 +68,7 @@ public abstract class SharedSalvageSystem : EntitySystem
             mods.Add(light.Description);
         }
 
-        var duration = TimeSpan.FromMinutes(6);
+        var duration = TimeSpan.FromSeconds(CfgManager.GetCVar(CCVars.SalvageExpeditionDuration));
 
         return new SalvageMission(seed, dungeon.ID, faction.ID, biome.ID, air.ID, temp.Temperature, light.Color, duration, mods);
     }

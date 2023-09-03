@@ -161,7 +161,6 @@
   - type: SlowOnDamage
     speedModifierThresholds:
       100: 0.7
-  # less tanky, no crit
   - type: MobThresholds
     thresholds:
       0: Alive
@@ -171,8 +170,7 @@
     spawned:
     - id: FoodMeatDragon
       amount: 1
-  # half damage, spread evenly
   - type: MeleeWeapon
     damage:
       groups:
-        Brute: 15
+        Brute: 12

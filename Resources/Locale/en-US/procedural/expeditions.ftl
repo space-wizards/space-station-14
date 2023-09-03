@@ -21,7 +21,7 @@ salvage-expedition-difficulty-Moderate = Moderate
 salvage-expedition-difficulty-Hazardous = Hazardous
 salvage-expedition-difficulty-Extreme = Extreme
 
-
+salvage-expedition-difficulty-players = Recommended salvagers:
 
 # Runner
 salvage-expedition-not-all-present = Not all salvagers are aboard the shuttle!

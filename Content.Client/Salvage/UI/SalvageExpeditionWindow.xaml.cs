@@ -88,8 +88,23 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
 
             lBox.AddChild(new Label
             {
-                Text = Loc.GetString($"salvage-expedition-difficulty-Moderate"),
+                Text = Loc.GetString("salvage-expedition-difficulty-Moderate"),
                 FontColorOverride = difficultyColor,
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
+            });
+
+            lBox.AddChild(new Label
+            {
+                Text = Loc.GetString("salvage-expedition-difficulty-players"),
+                HorizontalAlignment = HAlignment.Left,
+                Margin = new Thickness(0f, 0f, 0f, 5f),
+            });
+
+            lBox.AddChild(new Label
+            {
+                Text = difficultyProto.RecommendedPlayers.ToString(),
+                FontColorOverride = StyleNano.NanoGold,
                 HorizontalAlignment = HAlignment.Left,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });

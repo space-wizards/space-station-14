@@ -132,12 +132,12 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      100: Dead
   - type: Stamina
     critThreshold: 300
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7
+      50: 0.7
   - type: Fixtures
     fixtures:
       fix1:
@@ -211,7 +211,7 @@
     hidden: true
     damage:
      groups:
-       Brute: 15
+       Brute: 12
   - type: Fixtures
     fixtures:
       fix1:
@@ -242,7 +242,7 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      80: Dead
+      100: Dead
   - type: MovementSpeedModifier
     baseSprintSpeed: 4
   - type: MeleeWeapon
@@ -252,7 +252,7 @@
        Brute: 10
   - type: SlowOnDamage
     speedModifierThresholds:
-      40: 0.7
+      50: 0.7
   - type: Fixtures
     fixtures:
       fix1:
