@@ -424,7 +424,7 @@
   - type: CanEscapeInventory
   - type: NpcFactionMember
     factions:
-    - RatPassive
+    - Mouse
   - type: Body
     prototype: Moth
   - type: TypingIndicator
