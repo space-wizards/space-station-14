@@ -1,9 +1,9 @@
 using Content.Shared.Damage;
-using Robust.Shared.Serialization;
+using Robust.Shared.GameStates;
 
-namespace Content.Shared.SplitAction;
+namespace Content.Shared.Species.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 public sealed partial class SplitActionComponent : Component
 {
     /// <summary>
@@ -12,6 +12,9 @@ public sealed partial class SplitActionComponent : Component
     [DataField("entityProduced", required: true)]
     public string EntityProduced = "";
 
+    /// <summary>
+    /// The action to use.
+    /// </summary>
     [DataField("actionPrototype", required: true)]
     public string ActionPrototype = "";
 
@@ -19,13 +22,19 @@ public sealed partial class SplitActionComponent : Component
     /// How long will it take to split off.
     /// </summary>
     [DataField("splitTime", required: true), ViewVariables(VVAccess.ReadWrite)]
-    public float splitTime = 0;
+    public float SplitTime = 0;
 
     /// <summary>
     /// How much damage the entity will take on splitting.
     /// </summary>
     [DataField("damage"), ViewVariables(VVAccess.ReadWrite)]
     public DamageSpecifier Damage = new();
+
+    /// <summary>
+    /// How much damage the entity will take on splitting.
+    /// </summary>
+    [DataField("startDelayed"), ViewVariables(VVAccess.ReadWrite)]
+    public bool StartDelayed = true;
 
     /// <summary>
     /// The text that appears when attempting to split.

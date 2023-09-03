@@ -1,5 +1,7 @@
+using Content.Shared.Species.Components;
 using Content.Shared.Actions;
 using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Timing;
 using Content.Shared.DoAfter;
 using Content.Shared.Damage;
 using Content.Shared.Popups;
@@ -7,8 +9,9 @@ using Content.Shared.Stunnable;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Network;
+using Robust.Shared.Timing;
 
-namespace Content.Shared.SplitAction;
+namespace Content.Shared.Species;
 
 public sealed partial class SplitActionSystem : EntitySystem
 {
@@ -19,6 +22,7 @@ public sealed partial class SplitActionSystem : EntitySystem
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly DamageableSystem _damageableSystem = default!;
     [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IGameTiming _gameTiming = default!;
 
     public override void Initialize()
     {
@@ -37,6 +41,9 @@ public sealed partial class SplitActionSystem : EntitySystem
             return;
 
         var splitAction = new InstantAction(actionProto);
+        if(comp.StartDelayed && splitAction.UseDelay != null)
+            splitAction.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + splitAction.UseDelay.Value);
+
         _actionsSystem.AddAction(uid, splitAction, uid);
     }
 
@@ -54,7 +61,7 @@ public sealed partial class SplitActionSystem : EntitySystem
         _stunSystem.TryParalyze(uid, comp.StunTime, true);
         _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
 
-        var doAfter = new DoAfterArgs(uid, comp.splitTime, new SplitActionDoAfterEvent(), uid)
+        var doAfter = new DoAfterArgs(uid, comp.SplitTime, new SplitActionDoAfterEvent(), uid)
         {
             BreakOnUserMove = true,
             BlockDuplicate = true,

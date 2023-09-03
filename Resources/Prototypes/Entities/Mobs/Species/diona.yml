@@ -65,6 +65,10 @@
   - type: IgniteOnHeatDamage
     fireStacks: 1
     threshold: 10
+  - type: GibAction
+    actionPrototype: DionaGibAction
+    allowedStates:
+    - Dead
   - type: SplitAction
     entityProduced: BaseDionaNymphOrgan
     actionPrototype: DionaSplitAction
