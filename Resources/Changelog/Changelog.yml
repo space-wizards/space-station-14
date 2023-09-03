@@ -1,12 +1,4 @@
 Entries:
-- author: BurninDreamer
-  changes:
-  - {message: 'The NTDDB has received 1,349,418 full shipments of combat knifes and
-      boots, expect every officer to have a knife on them from this point and on.',
-    type: Tweak}
-  - {message: Jackboots can store knives now., type: Tweak}
-  id: 4243
-  time: '2023-07-12T19:55:18.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Security staff are now being issued handguns with rubber bullets for
@@ -3005,3 +2997,9 @@ Entries:
   - {message: Portable generators no longer rotate with the camera., type: Tweak}
   id: 4742
   time: '2023-09-03T17:55:42.0000000+00:00'
+- author: Jark255
+  changes:
+  - {message: The firmware bug that wiped critical system parts of pAI alongside the
+      module itself is now fixed., type: Fix}
+  id: 4743
+  time: '2023-09-03T18:32:41.0000000+00:00'
