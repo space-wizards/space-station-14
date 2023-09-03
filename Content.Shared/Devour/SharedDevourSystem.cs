@@ -65,27 +65,18 @@ public abstract class SharedDevourSystem : EntitySystem
                     });
                     break;
                 default:
-                    if (_net.IsClient && _timing.IsFirstTimePredicted)
-                    {
-                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid,
-                            uid);
-                    }
-
+                    _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid,uid);
                     break;
             }
 
             return;
         }
 
-        if (_net.IsClient && _timing.IsFirstTimePredicted)
-        {
-            _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
-        }
+        _popupSystem.PopupClient(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
 
-        if (_net.IsServer)
+        if (component.SoundStructureDevour != null)
         {
-            if (component.SoundStructureDevour != null)
-                _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
+            _audioSystem.PlayPredicted(component.SoundStructureDevour, uid, uid, component.SoundStructureDevour.Params);
         }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
