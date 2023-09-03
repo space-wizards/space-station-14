@@ -250,7 +250,7 @@ namespace Content.Server.Physics.Controllers
             var horizIndex = vel.X > 0 ? 1 : 3; // east else west
             var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
             var horizComp = MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2);
-            var vertComp = MathF.Pow(Vector2.Dot(vel, new (0, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2);
+            var vertComp = MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2);
 
             return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
         }
