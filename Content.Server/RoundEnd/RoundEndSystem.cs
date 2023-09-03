@@ -16,7 +16,7 @@ using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Timer = Robust.Shared.Timing.Timer;
-using Content.Server.GameTicking.Rules;
+using Content.Server.SS220.GameTicking.Rules;
 
 namespace Content.Server.RoundEnd
 {
