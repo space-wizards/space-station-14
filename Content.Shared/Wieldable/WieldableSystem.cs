@@ -23,6 +23,7 @@ public sealed class WieldableSystem : EntitySystem
     [Dependency] private readonly SharedItemSystem _itemSystem = default!;
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {
@@ -219,6 +220,7 @@ public sealed class WieldableSystem : EntitySystem
 
         var ev = new ItemWieldedEvent();
         RaiseLocalEvent(uid, ref ev);
+        _appearance.SetData(uid, WieldableVisuals.Wielded, true);
 
         Dirty(component);
         args.Handled = true;
@@ -248,6 +250,8 @@ public sealed class WieldableSystem : EntitySystem
             _popupSystem.PopupEntity(Loc.GetString("wieldable-component-failed-wield-other",
                 ("user", args.User.Value), ("item", uid)), args.User.Value, Filter.PvsExcept(args.User.Value), true);
         }
+
+        _appearance.SetData(uid, WieldableVisuals.Wielded, false);
 
         Dirty(component);
         _virtualItemSystem.DeleteInHandsMatching(args.User.Value, uid);

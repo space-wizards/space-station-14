@@ -2,7 +2,7 @@
   name: bow
   parent: BaseItem
   id: BaseBow
-  description: A rooty tooty point and shooty.
+  description: The original rooty tooty point and shooty.
   abstract: true
   components:
   - type: Sprite
@@ -48,9 +48,29 @@
 - type: entity
   id: BowImprovised
   parent: BaseBow
-  description: A weapon of war from a previous time. It still holds up
   components:
   - type: Sprite
     layers:
-    - state: icon
+    - state: unwielded
+      map: [ base ]
+    - state: unwielded-arrow
+      map: [ arrow ]
+      visible: false
   - type: Appearance
+  - type: ItemMapper
+    spriteLayers:
+    - arrow
+    mapLayers:
+      arrow:
+        whitelist:
+          tags:
+          - Arrow
+  - type: GenericVisualizer
+    visuals:
+      enum.WieldableVisuals.Wielded:
+        arrow:
+          True: { state: wielded-arrow }
+          False: { state: unwielded-arrow }
+        base:
+          True: { state: wielded }
+          False: { state: unwielded }

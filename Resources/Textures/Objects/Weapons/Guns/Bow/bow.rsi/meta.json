@@ -8,13 +8,16 @@
   },
   "states": [
     {
-      "name": "icon"
+      "name": "unwielded"
     },
     {
-      "name": "nocked"
+      "name": "unwielded-arrow"
     },
     {
-      "name": "drawn"
+      "name": "wielded"
+    },
+    {
+      "name": "wielded-arrow"
     },
     {
       "name": "equipped-BACKPACK",
