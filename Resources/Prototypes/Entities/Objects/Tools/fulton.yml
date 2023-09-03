@@ -30,7 +30,7 @@
     - type: Item
       size: 30
     - type: Foldable
-      isFolded: true
+      folded: true
     - type: Clickable
     - type: InteractionOutline
     - type: FultonBeacon
