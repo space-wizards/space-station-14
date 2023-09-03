@@ -57,10 +57,11 @@ public sealed class IdentityRepresentation
     /// </summary>
     public string ToStringUnknown()
     {
+
         string ageString;
-        if (TrueAge <= TrueSpeciesProto.MaxAge)
+        if (TrueAge <= TrueSpeciesProto.MinAge)
             ageString = Loc.GetString("identity-age-young");
-        else if (TrueAge is > 30 and <= 60)
+        else if (TrueAge <= TrueSpeciesProto.YoungAge && TrueAge <= TrueSpeciesProto.OldAge)
             ageString = Loc.GetString("identity-age-middle-aged");
         else
             ageString = Loc.GetString("identity-age-old");
