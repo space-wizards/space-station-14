@@ -45,22 +45,23 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
     private readonly BiomeSystem _biome;
     private readonly DungeonSystem _dungeon;
     private readonly MetaDataSystem _metaData;
-    private readonly SalvageSystem _salvage;
 
     public readonly EntityUid Station;
     private readonly SalvageMissionParams _missionParams;
+
+    private readonly ISawmill _sawmill;
 
     public SpawnSalvageMissionJob(
         double maxTime,
         IEntityManager entManager,
         IGameTiming timing,
+        ILogManager logManager,
         IMapManager mapManager,
         IPrototypeManager protoManager,
         AnchorableSystem anchorable,
         BiomeSystem biome,
         DungeonSystem dungeon,
         MetaDataSystem metaData,
-        SalvageSystem salvage,
         EntityUid station,
         SalvageMissionParams missionParams,
         CancellationToken cancellation = default) : base(maxTime, cancellation)
@@ -73,14 +74,17 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         _biome = biome;
         _dungeon = dungeon;
         _metaData = metaData;
-        _salvage = salvage;
         Station = station;
         _missionParams = missionParams;
+        _sawmill = logManager.GetSawmill("salvage_job");
+#if !DEBUG
+        _sawmill.Level = LogLevel.Info;
+#endif
     }
 
     protected override async Task<bool> Process()
     {
-        Logger.DebugS("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
+        _sawmill.Debug("salvage", $"Spawning salvage mission with seed {_missionParams.Seed}");
         var mapId = _mapManager.CreateMap();
         var mapUid = _mapManager.GetMapEntityId(mapId);
         _mapManager.AddUninitializedMap(mapId);
@@ -152,17 +156,14 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // We'll use the dungeon rotation as the spawn angle
         var dungeonRotation = _dungeon.GetDungeonRotation(_missionParams.Seed);
 
-        Dungeon dungeon = default!;
-
         var maxDungeonOffset = minDungeonOffset + 12;
         var dungeonOffsetDistance = minDungeonOffset + (maxDungeonOffset - minDungeonOffset) * random.NextFloat();
         var dungeonOffset = new Vector2(0f, dungeonOffsetDistance);
         dungeonOffset = dungeonRotation.RotateVec(dungeonOffset);
         var dungeonMod = _prototypeManager.Index<SalvageDungeonModPrototype>(mission.Dungeon);
         var dungeonConfig = _prototypeManager.Index<DungeonConfigPrototype>(dungeonMod.Proto);
-        dungeon =
-            await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
-                _missionParams.Seed));
+        var dungeon = await WaitAsyncTask(_dungeon.GenerateDungeonAsync(dungeonConfig, mapUid, grid, (Vector2i) dungeonOffset,
+            _missionParams.Seed));
 
         // Aborty
         if (dungeon.Rooms.Count == 0)
@@ -225,7 +226,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             if (entry == null)
                 break;
 
-            await SpawnDungeonMob(grid, (SalvageMobEntry) entry, dungeon, random);
+            await SpawnRandomEntry(grid, entry, dungeon, random);
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
@@ -251,7 +252,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                         if (entry == null)
                             break;
 
-                        await SpawnRandomLoot(grid, (RandomSpawnLootEntry) entry, dungeon, random);
+                        await SpawnRandomEntry(grid, entry, dungeon, random);
                     }
                     break;
                 default:
@@ -262,7 +263,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         return true;
     }
 
-    private async Task SpawnRandomLoot(MapGridComponent grid, RandomSpawnLootEntry entry, Dungeon dungeon, Random random)
+    private async Task SpawnRandomEntry(MapGridComponent grid, IBudgetEntry entry, Dungeon dungeon, Random random)
     {
         await SuspendIfOutOfTime();
 
@@ -287,38 +288,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 }
 
                 _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
-                return;
-            }
-        }
-
-        // oh noooooooooooo
-    }
-
-    private async Task SpawnDungeonMob(MapGridComponent grid, SalvageMobEntry entry, Dungeon dungeon, Random random)
-    {
-        await SuspendIfOutOfTime();
-
-        var availableRooms = new ValueList<DungeonRoom>(dungeon.Rooms);
-        var availableTiles = new List<Vector2i>();
-
-        while (availableRooms.Count > 0)
-        {
-            availableTiles.Clear();
-            var roomIndex = random.Next(availableRooms.Count);
-            var room = availableRooms.RemoveSwap(roomIndex);
-            availableTiles.AddRange(room.Tiles);
-
-            while (availableTiles.Count > 0)
-            {
-                var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
-
-                if (!_anchorable.TileFree(grid, tile, (int) CollisionGroup.MachineLayer,
-                        (int) CollisionGroup.MachineLayer))
-                {
-                    continue;
-                }
-
-                _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
                 return;
             }
         }
