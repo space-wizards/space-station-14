@@ -102,7 +102,7 @@
   itemIconStyle: BigItem
   useDelay: 1 # equip noise spam.
   event: !type:ToggleClothingEvent
-
+  
 - type: instantAction
   id: CombatModeToggle
   name: action-name-combat
