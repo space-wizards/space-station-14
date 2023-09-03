@@ -32,7 +32,7 @@ public sealed partial class EmbeddableProjectileComponent : Component
     /// <summary>
     ///     Whether this entity will embed when thrown, or only when shot as a projectile.
     /// </summary>
-    [ViewVariables(VVAccess.ReadWrite), DataField("onThrow"), AutoNetworkedField]
+    [ViewVariables(VVAccess.ReadWrite), DataField("embedOnThrow"), AutoNetworkedField]
     public bool EmbedOnThrow = true;
 
     /// <summary>
