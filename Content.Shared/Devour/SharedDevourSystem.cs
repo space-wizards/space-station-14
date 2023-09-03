@@ -1,11 +1,13 @@
-using Content.Shared.DoAfter;
-using Content.Shared.Mobs.Components;
-using Content.Shared.Mobs;
-using Robust.Shared.Containers;
 using Content.Server.Devour.Components;
 using Content.Shared.Actions;
+using Content.Shared.DoAfter;
+using Content.Shared.Mobs;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Popups;
+using Robust.Shared.Containers;
+using Robust.Shared.Network;
 using Robust.Shared.Serialization;
+using Robust.Shared.Timing;
 
 namespace Content.Shared.Devour;
 
@@ -16,6 +18,8 @@ public abstract class SharedDevourSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
     [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
     [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+    [Dependency] private readonly INetManager _net = default!;
+    [Dependency] private readonly IGameTiming _timing = default!;
 
     public override void Initialize()
     {
@@ -61,17 +65,28 @@ public abstract class SharedDevourSystem : EntitySystem
                     });
                     break;
                 default:
-                    _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid, uid);
+                    if (_net.IsClient && _timing.IsFirstTimePredicted)
+                    {
+                        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-fail-target-alive"), uid,
+                            uid);
+                    }
+
                     break;
             }
 
             return;
         }
 
-        _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
+        if (_net.IsClient && _timing.IsFirstTimePredicted)
+        {
+            _popupSystem.PopupEntity(Loc.GetString("devour-action-popup-message-structure"), uid, uid);
+        }
 
-        if (component.SoundStructureDevour != null)
-            _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
+        if (_net.IsServer)
+        {
+            if (component.SoundStructureDevour != null)
+                _audioSystem.PlayPvs(component.SoundStructureDevour, uid, component.SoundStructureDevour.Params);
+        }
 
         _doAfterSystem.TryStartDoAfter(new DoAfterArgs(uid, component.StructureDevourTime, new DevourDoAfterEvent(), uid, target: target, used: uid)
         {
