@@ -55,13 +55,10 @@ namespace Content.Client.Options.UI.Tabs
             UIScaleOption.AddItem(Loc.GetString("ui-options-scale-200"));
             UIScaleOption.OnItemSelected += OnUIScaleChanged;
 
-
-            var themeIndex = 0;
             foreach (var gear in _prototypeManager.EnumeratePrototypes<HudThemePrototype>())
             {
                 HudThemeOption.AddItem(Loc.GetString(gear.Name));
-                hudThemeIdToIndex.Add(gear.ID, themeIndex);
-                themeIndex += 1;
+                hudThemeIdToIndex.Add(gear.ID, HudThemeOption.GetItemId(HudThemeOption.ItemCount - 1));
             }
             HudThemeOption.OnItemSelected += OnHudThemeChanged;
 
