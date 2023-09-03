@@ -79,3 +79,6 @@
     damage:
       types:
         Piercing: 25
+  - type: Construction
+    graph: ImprovisedArrow
+    node: ImprovisedArrow
