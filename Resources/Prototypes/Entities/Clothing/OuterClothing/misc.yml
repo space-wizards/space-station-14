@@ -9,7 +9,7 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apron.rsi
 
-    - type: entity
+- type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronBar
   name: apron
@@ -19,7 +19,6 @@
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
   - type: Clothing
     sprite: Clothing/OuterClothing/Misc/apronbar.rsi
-
 
 - type: entity
   parent: ClothingOuterStorageBase
