@@ -12,7 +12,7 @@
 - type: entity
   parent: ClothingOuterStorageBase
   id: ClothingOuterApronBar
-  suffix: Bar
+  suffix: Bartender
   name: apron
   description: A darker apron designed for bartenders.
   components:
