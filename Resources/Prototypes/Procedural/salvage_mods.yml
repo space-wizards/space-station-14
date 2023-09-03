@@ -58,10 +58,6 @@
 - type: salvageTemperatureMod
   id: RoomTemp
   cost: 0
-  biomes:
-    - Caves
-    #- LowDesert
-    - Grasslands
 
 - type: salvageTemperatureMod
   id: Hot
@@ -134,11 +130,6 @@
   gases:
     - 21.824779 # oxygen
     - 82.10312 # nitrogen
-  biomes:
-    - Caves
-    #- LowDesert
-    - Snow
-    - Grasslands
 
 # TODO: These are good but mobs don't entirely handle it yet.
 #- type: salvageAirMod
