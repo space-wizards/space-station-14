@@ -4,7 +4,6 @@ using Content.Server.DoAfter;
 using Content.Server.Electrocution;
 using Content.Server.EUI;
 using Content.Server.Ghost;
-using Content.Server.Mind;
 using Content.Server.Popups;
 using Content.Server.PowerCell;
 using Content.Shared.Damage;
@@ -13,12 +12,13 @@ using Content.Shared.Interaction;
 using Content.Shared.Interaction.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Medical;
+using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Timing;
 using Content.Shared.Toggleable;
-using Robust.Server.Player;
+using Robust.Shared.Players;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Medical;
@@ -42,7 +42,7 @@ public sealed class DefibrillatorSystem : EntitySystem
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -208,7 +208,7 @@ public sealed class DefibrillatorSystem : EntitySystem
         component.NextZapTime = _timing.CurTime + component.ZapDelay;
         _appearance.SetData(uid, DefibrillatorVisuals.Ready, false);
 
-        IPlayerSession? session = null;
+        ICommonSession? session = null;
 
         if (_rotting.IsRotten(target))
         {
