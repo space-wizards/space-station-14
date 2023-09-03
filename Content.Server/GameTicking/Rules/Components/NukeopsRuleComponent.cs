@@ -154,11 +154,10 @@ public sealed partial class NukeopsRuleComponent : Component
 
     /// <summary>
     ///     Players who played as an operative at some point in the round.
-    ///     Stores the session as well as the entity name
+    ///     Stores the mind as well as the entity name
     /// </summary>
-    /// todo: don't store sessions, dingus
     [DataField("operativePlayers")]
-    public Dictionary<string, ICommonSession> OperativePlayers = new();
+    public Dictionary<string, EntityUid> OperativePlayers = new();
 
     [DataField("faction", customTypeSerializer: typeof(PrototypeIdSerializer<NpcFactionPrototype>), required: true)]
     public string Faction = default!;
