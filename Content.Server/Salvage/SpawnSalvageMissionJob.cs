@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Linq;
 using System.Numerics;
 using System.Threading;
@@ -19,6 +20,7 @@ using Content.Shared.Parallax.Biomes;
 using Content.Shared.Physics;
 using Content.Shared.Procedural;
 using Content.Shared.Procedural.Loot;
+using Content.Shared.Random;
 using Content.Shared.Salvage;
 using Content.Shared.Salvage.Expeditions;
 using Content.Shared.Salvage.Expeditions.Modifiers;
@@ -180,8 +182,10 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             reservedTiles.Add(tile.GridIndices);
         }
 
+        var budgetEntries = new List<IBudgetEntry>();
+
         /*
-         * LOOT
+         * GUARANTEED LOOT
          */
 
         // We'll always add this loot if possible
@@ -202,59 +206,53 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         // Handle remaining loot
 
-        var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
-
         /*
-         * TODO: Fix all these, test it works
-         * Add difficulty selector
-         * Maybe try it with 2 difficulties
+         * MOB SPAWNS
          */
+
+        var mobBudget = difficultyProto.MobBudget;
+        var faction = _prototypeManager.Index<SalvageFactionPrototype>(mission.Faction);
+        var randomSystem = _entManager.System<RandomSystem>();
+
+        foreach (var entry in faction.MobGroups)
+        {
+            budgetEntries.Add(entry);
+        }
+
+        var probSum = budgetEntries.Sum(x => x.Prob);
+
+        while (mobBudget > 0f)
+        {
+            var entry = randomSystem.GetBudgetEntry(ref mobBudget, probSum, budgetEntries, random);
+            if (entry == null)
+                break;
+
+            await SpawnDungeonMob(grid, (SalvageMobEntry) entry, dungeon, random);
+        }
+
+        var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
 
         foreach (var rule in allLoot.LootRules)
         {
             switch (rule)
             {
                 case RandomSpawnsLoot randomLoot:
-                    // Setup
-                    var probSum = 0f;
-                    var maxCost = 0f;
-                    var entries = new ValueList<RandomSpawnLootEntry>();
+                    budgetEntries.Clear();
 
-                    foreach (var entry in randomLoot.Entries)
+                    foreach (var entry in faction.MobGroups)
                     {
-                        if (entry.Cost > lootBudget)
-                            continue;
-
-                        probSum += entry.Prob;
-                        maxCost = MathF.Max(entry.Cost, maxCost);
-                        entries.Add(entry);
+                        budgetEntries.Add(entry);
                     }
 
-                    // No loot to pick from.
-                    if (entries.Count == 0)
-                        continue;
+                    probSum = budgetEntries.Sum(x => x.Prob);
 
-                    while (lootBudget > 0f && entries.Count > 0)
+                    while (mobBudget > 0f)
                     {
-                        // - Pick an entry
-                        // - Remove the cost from budget
-                        // - If our remaining budget is under maxCost then start pruning unavailable entries.
-                        var loot = GetEntry(entries, probSum, random);
-                        lootBudget -= loot.Cost;
-                        await SpawnRandomLoot(grid, loot, dungeon, random);
+                        var entry = randomSystem.GetBudgetEntry(ref mobBudget, probSum, budgetEntries, random);
+                        if (entry == null)
+                            break;
 
-                        // Prune invalid entries.
-                        if (lootBudget < maxCost)
-                        {
-                            foreach (var entry in entries)
-                            {
-                                if (entry.Cost < lootBudget)
-                                    continue;
-
-                                entries.Remove(entry);
-                                probSum -= entry.Prob;
-                            }
-                        }
+                        await SpawnRandomLoot(grid, (RandomSpawnLootEntry) entry, dungeon, random);
                     }
                     break;
                 default:
@@ -297,22 +295,36 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         // oh noooooooooooo
     }
 
-    // TODO: Move this to RandomExtensions.
-    private RandomSpawnLootEntry GetEntry(IEnumerable<RandomSpawnLootEntry> entries, float probSum, Random random)
+    private async Task SpawnDungeonMob(MapGridComponent grid, SalvageMobEntry entry, Dungeon dungeon, Random random)
     {
-        var value = random.NextFloat() * probSum;
+        await SuspendIfOutOfTime();
 
-        foreach (var entry in entries)
+        var availableRooms = new ValueList<DungeonRoom>(dungeon.Rooms);
+        var availableTiles = new List<Vector2i>();
+
+        while (availableRooms.Count > 0)
         {
-            value -= entry.Prob;
+            availableTiles.Clear();
+            var roomIndex = random.Next(availableRooms.Count);
+            var room = availableRooms.RemoveSwap(roomIndex);
+            availableTiles.AddRange(room.Tiles);
 
-            if (value < 0f)
+            while (availableTiles.Count > 0)
             {
-                return entry;
+                var tile = availableTiles.RemoveSwap(random.Next(availableTiles.Count));
+
+                if (!_anchorable.TileFree(grid, tile, (int) CollisionGroup.MachineLayer,
+                        (int) CollisionGroup.MachineLayer))
+                {
+                    continue;
+                }
+
+                _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
+                return;
             }
         }
 
-        throw new InvalidOperationException();
+        // oh noooooooooooo
     }
 
     private async Task SpawnDungeonLoot(Dungeon dungeon, SalvageBiomeModPrototype biomeMod, SalvageLootPrototype loot, EntityUid gridUid, MapGridComponent grid, Random random, List<Vector2i> reservedTiles)
@@ -343,68 +355,4 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             }
         }
     }
-
-    #region Mission Specific
-
-    /*
-    private async Task SpawnMobsRandom(SalvageMission mission, Dungeon dungeon, SalvageFactionPrototype faction, MapGridComponent grid, Random random, float scale = 1f)
-    {
-        // scale affects how many groups are spawned, not the size of the groups themselves
-        var groupSpawns = _salvage.GetSpawnCount(mission.Difficulty) * scale;
-        var groupSum = faction.MobGroups.Sum(o => o.Prob);
-        var validSpawns = new List<Vector2i>();
-
-        for (var i = 0; i < groupSpawns; i++)
-        {
-            var roll = random.NextFloat() * groupSum;
-            var value = 0f;
-
-            foreach (var group in faction.MobGroups)
-            {
-                value += group.Prob;
-
-                if (value < roll)
-                    continue;
-
-                var mobGroupIndex = random.Next(faction.MobGroups.Count);
-                var mobGroup = faction.MobGroups[mobGroupIndex];
-
-                var spawnRoomIndex = random.Next(dungeon.Rooms.Count);
-                var spawnRoom = dungeon.Rooms[spawnRoomIndex];
-                validSpawns.Clear();
-                validSpawns.AddRange(spawnRoom.Tiles);
-                random.Shuffle(validSpawns);
-
-                foreach (var entry in EntitySpawnCollection.GetSpawns(mobGroup.Entries, random))
-                {
-                    while (validSpawns.Count > 0)
-                    {
-                        var spawnTile = validSpawns[^1];
-                        validSpawns.RemoveAt(validSpawns.Count - 1);
-
-                        if (!_anchorable.TileFree(grid, spawnTile, (int) CollisionGroup.MachineLayer,
-                                (int) CollisionGroup.MachineLayer))
-                        {
-                            continue;
-                        }
-
-                        var spawnPosition = grid.GridTileToLocal(spawnTile);
-
-                        var uid = _entManager.CreateEntityUninitialized(entry, spawnPosition);
-                        _entManager.RemoveComponent<GhostTakeoverAvailableComponent>(uid);
-                        _entManager.RemoveComponent<GhostRoleComponent>(uid);
-                        _entManager.InitializeAndStartEntity(uid);
-
-                        break;
-                    }
-                }
-
-                await SuspendIfOutOfTime();
-                break;
-            }
-        }
-    }
-    */
-
-    #endregion
 }
