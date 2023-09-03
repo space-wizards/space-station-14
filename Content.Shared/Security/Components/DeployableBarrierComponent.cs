@@ -1,4 +1,4 @@
-namespace Content.Server.Security.Components;
+namespace Content.Shared.Security.Components;
 
 [RegisterComponent]
 public sealed partial class DeployableBarrierComponent : Component
