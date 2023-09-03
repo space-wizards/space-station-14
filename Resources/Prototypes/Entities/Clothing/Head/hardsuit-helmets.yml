@@ -305,7 +305,7 @@
   parent: ClothingHeadHardsuitWithLightBase
   id: ClothingHeadHelmetHardsuitQm #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
   noSpawn: true
-  name: quartermaster's hardsuit helmet
+  name: luxury mining hardsuit helmet
   description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
   components:
   - type: Sprite
