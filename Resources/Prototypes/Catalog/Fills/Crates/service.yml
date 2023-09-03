@@ -172,6 +172,13 @@
   components:
     - type: StorageFill
       contents:
+          # Creatures
+        - id: MobCockroach
+          prob: 0.05
+        - id: MobMothroach
+          prob: 0.03
+        - id: MobMouse
+          prob: 0.05
           # Food Packaging
         - id: FoodPacketBoritosTrash
           prob: 0.1

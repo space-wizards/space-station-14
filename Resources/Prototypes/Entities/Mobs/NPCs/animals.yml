@@ -366,7 +366,7 @@
     size: 15
   - type: Clothing
     quickEquip: false
-    sprite: Nyanotrasen/Mobs/Animals/mothroach.rsi
+    sprite: Mobs/Animals/mothroach.rsi
     equippedPrefix: 0
     slots:
     - HEAD
