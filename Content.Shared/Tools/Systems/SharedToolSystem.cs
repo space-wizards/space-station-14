@@ -108,6 +108,10 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (!CanStartToolUse(tool, user, target, toolQualitiesNeeded, toolComponent))
             return false;
 
+        // SS220-Magnet-Disassembly-Fix
+        if (!CanUseToolOnTarget(tool, user, target))
+            return false;
+
         var toolEvent = new ToolDoAfterEvent(doAfterEv, target);
         var doAfterArgs = new DoAfterArgs(user, delay / toolComponent.SpeedModifier, toolEvent, tool, target: target, used: tool)
         {
@@ -193,6 +197,19 @@ public abstract partial class SharedToolSystem : EntitySystem
 
         return !beforeAttempt.Cancelled;
     }
+
+    // SS220-Magnet-Disassembly-Fix begin
+    private bool CanUseToolOnTarget(EntityUid tool, EntityUid user, EntityUid? target)
+    {
+        if (target == null)
+            return true;
+
+        var targetAttempt = new InteractedWithToolAttemptEvent(user, target, tool);
+        RaiseLocalEvent((EntityUid) target, targetAttempt, false);
+
+        return !targetAttempt.Cancelled;
+    }
+    // SS220-Magnet-Disassembly-Fix end
 
     #region DoAfterEvents
 
