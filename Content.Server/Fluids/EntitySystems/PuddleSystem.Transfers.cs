@@ -24,20 +24,26 @@ public sealed partial class PuddleSystem
             return;
         }
 
-        TryComp<DrainableSolutionComponent>(args.Target, out var drainable);
-
-        _solutionContainerSystem.TryGetDrainableSolution(args.Target, out var drainableSolution, drainable);
-
-        // Dump reagents into drain
-        if (TryComp<DrainComponent>(args.Target, out var drain) && drainable != null)
+        // Dump reagents into DumpableSolution
+        if (TryComp<DumpableSolutionComponent>(args.Target, out var dump))
         {
-            if (drainableSolution == null || solution == null)
+            _solutionContainerSystem.TryGetDumpableSolution(args.Target, out var dumpableSolution, dump);
+            if (dumpableSolution == null || solution == null)
                 return;
 
-            var split = _solutionContainerSystem.SplitSolution(uid, solution, drainableSolution.AvailableVolume);
+            bool success = true;
+            if (dump.Unlimited)
+            {
+                var split = _solutionContainerSystem.SplitSolution(uid, solution, solution.Volume);
+                dumpableSolution.AddSolution(split, _prototypeManager);
+            }
+            else
+            {
+                var split = _solutionContainerSystem.SplitSolution(uid, solution, dumpableSolution.AvailableVolume);
+                success = _solutionContainerSystem.TryAddSolution(args.Target, dumpableSolution, split);
+            }
 
-            // TODO: Drane refactor
-            if (_solutionContainerSystem.TryAddSolution(args.Target, drainableSolution, split))
+            if (success)
             {
                 _audio.PlayPvs(AbsorbentComponent.DefaultTransferSound, args.Target);
             }
@@ -48,6 +54,10 @@ public sealed partial class PuddleSystem
 
             return;
         }
+
+        TryComp<DrainableSolutionComponent>(args.Target, out var drainable);
+
+        _solutionContainerSystem.TryGetDrainableSolution(args.Target, out var drainableSolution, drainable);
 
         // Take reagents from target
         if (drainable != null)

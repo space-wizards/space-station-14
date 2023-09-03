@@ -37,6 +37,8 @@
   - type: ReagentTank
   - type: Drain
     autoDrain: false
+  - type: DumpableSolution
+    solution: drainBuffer
   - type: Damageable
     damageContainer: Inorganic
     damageModifierSet: Metallic
