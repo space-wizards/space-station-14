@@ -252,6 +252,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                         if (entry == null)
                             break;
 
+                        _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
                         await SpawnRandomEntry(grid, entry, dungeon, random);
                     }
                     break;
@@ -288,7 +289,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 }
 
                 _entManager.SpawnAtPosition(entry.Proto, grid.GridTileToLocal(tile));
-                _sawmill.Debug($"Spawning dungeon loot {entry.Proto}");
                 return;
             }
         }

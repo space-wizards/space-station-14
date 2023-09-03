@@ -158,11 +158,14 @@
   components:
   - type: GhostRole
     description: ghost-role-information-space-dragon-dungeon-description
+  - type: SlowOnDamage
+    speedModifierThresholds:
+      100: 0.7
   # less tanky, no crit
   - type: MobThresholds
     thresholds:
       0: Alive
-      300: Dead
+      200: Dead
   # less meat spawned since it's a lot easier to kill
   - type: Butcherable
     spawned:
