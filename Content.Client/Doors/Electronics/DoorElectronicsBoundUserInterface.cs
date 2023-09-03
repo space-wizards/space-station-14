@@ -54,6 +54,6 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 
     public void UpdateConfiguration(List<string> newAccessList)
     {
-        SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList, Owner));
+        SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList));
     }
 }

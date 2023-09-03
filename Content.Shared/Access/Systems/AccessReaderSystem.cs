@@ -260,6 +260,16 @@ public sealed class AccessReaderSystem : EntitySystem
         }
     }
 
+    public void SetAccesses(EntityUid uid, AccessReaderComponent component, List<string> accesses)
+    {
+        component.AccessLists.Clear();
+        foreach (var access in accesses)
+        {
+            component.AccessLists.Add(new HashSet<string>(){access});
+        }
+        RaiseLocalEvent(uid, new AccessReaderConfigurationChangedEvent());
+    }
+
     public bool FindAccessItemsInventory(EntityUid uid, out HashSet<EntityUid> items)
     {
         items = new();

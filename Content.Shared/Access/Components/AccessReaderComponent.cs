@@ -71,3 +71,10 @@ public sealed class AccessReaderComponentState : ComponentState
         AccessKeys = accessKeys;
     }
 }
+
+public sealed class AccessReaderConfigurationChangedEvent : EntityEventArgs
+{
+    public AccessReaderConfigurationChangedEvent()
+    {
+    }
+}

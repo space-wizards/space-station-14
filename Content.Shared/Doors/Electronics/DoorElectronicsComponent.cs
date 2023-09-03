@@ -12,12 +12,10 @@ public sealed partial class DoorElectronicsComponent : Component
 public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
 {
     public List<string> accessList;
-    public EntityUid actor;
 
-    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList, EntityUid _actor)
+    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList)
     {
         accessList = _accessList;
-        actor = _actor;
     }
 }
 

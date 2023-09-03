@@ -1,10 +1,11 @@
 using System.Linq;
-using Content.Shared.Access.Components;
-using Content.Shared.DeviceNetwork.Components;
-using Content.Shared.Doors;
-using Content.Shared.Doors.Electronics;
-using Content.Shared.Interaction;
 using Content.Server.Doors.Electronics;
+using Content.Shared.Access.Components;
+using Content.Shared.Access.Systems;
+using Content.Shared.DeviceNetwork.Components;
+using Content.Shared.Doors.Electronics;
+using Content.Shared.Doors;
+using Content.Shared.Interaction;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Doors.Electronics;
@@ -12,11 +13,13 @@ namespace Content.Server.Doors.Electronics;
 public sealed class DoorElectronicsSystem : EntitySystem
 {
     [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
 
     public override void Initialize()
     {
         base.Initialize();
         SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsUpdateConfigurationMessage>(OnChangeConfiguration);
+        SubscribeLocalEvent<DoorElectronicsComponent, AccessReaderConfigurationChangedEvent>(OnAccessReaderChanged);
         SubscribeLocalEvent<DoorElectronicsComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
     }
 
@@ -36,7 +39,6 @@ public sealed class DoorElectronicsSystem : EntitySystem
         }
 
         var state = new DoorElectronicsConfigurationState(accesses);
-
         _uiSystem.TrySetUiState(uid, DoorElectronicsConfigurationUiKey.Key, state);
     }
 
@@ -46,17 +48,15 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsUpdateConfigurationMessage args)
     {
         var accessReader = EnsureComp<AccessReaderComponent>(uid);
+        _accessReader.SetAccesses(uid, accessReader, args.accessList);
+    }
 
-        accessReader.AccessLists.Clear();
-        foreach (var access in args.accessList)
-        {
-            accessReader.AccessLists.Add(new HashSet<string>(){access});
-        }
-
-        var state = new DoorElectronicsConfigurationState(args.accessList);
-        _uiSystem.TrySetUiState(args.actor,
-                                DoorElectronicsConfigurationUiKey.Key,
-                                state);
+    private void OnAccessReaderChanged(
+        EntityUid uid,
+        DoorElectronicsComponent component,
+        AccessReaderConfigurationChangedEvent args)
+    {
+        UpdateUserInterface(uid, component);
     }
 
     private void OnBoundUIOpened(
