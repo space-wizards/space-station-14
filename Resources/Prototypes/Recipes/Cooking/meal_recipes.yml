@@ -962,6 +962,18 @@
     Egg: 6
 
 - type: microwaveMealRecipe
+  id: RecipeBlueberryPancake
+  name: blueberry pancake recipe
+  result: FoodBakedPancakeBb
+  time: 5
+  reagents:
+    Flour: 5
+    Milk: 5
+    Egg: 6
+  solids:
+    FoodBerries: 2
+
+- type: microwaveMealRecipe
   id: RecipeWaffles
   name: waffle recipe
   result: FoodBakedWaffle
@@ -1051,6 +1063,16 @@
     FoodPlateTin: 1
 
 - type: microwaveMealRecipe
+  id: RecipeBerryClafoutis
+  name: berry clafoutis
+  result: FoodPieClafoutis
+  time: 15
+  solids:
+    FoodDoughPie: 1
+    FoodBerries: 3
+    FoodPlateTin: 1
+
+- type: microwaveMealRecipe
   id: RecipeMeatPie
   name: meat pie recipe
   result: FoodPieMeat
@@ -1105,6 +1127,15 @@
   solids:
     FoodCakePlain: 1
     FoodOrange: 3
+
+- type: microwaveMealRecipe
+  id: RecipeBlueberryCake
+  name: blueberry cake recipe
+  result: FoodCakeBlueberry
+  time: 5
+  solids:
+    FoodCakePlain: 1
+    FoodBerries: 3
 
 - type: microwaveMealRecipe
   id: RecipeLimeCake
