@@ -1,5 +1,6 @@
 using Content.Server.Access.Systems;
 using Content.Server.Administration.Logs;
+using Content.Server.Humanoid;
 using Content.Shared.Database;
 using Content.Shared.Hands;
 using Content.Shared.Humanoid;
@@ -22,7 +23,7 @@ public class IdentitySystem : SharedIdentitySystem
     [Dependency] private readonly IdCardSystem _idCard = default!;
     [Dependency] private readonly IAdminLogManager _adminLog = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
+    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
 
     private HashSet<EntityUid> _queuedIdentityUpdates = new();
 
@@ -136,10 +137,10 @@ public class IdentitySystem : SharedIdentitySystem
             species = appearance.Species;
         }
 
-        var speciesProto = _prototype.Index<SpeciesPrototype>(species);
+        var ageString = _humanoid.GetAgeRepresentation(species, age);
         var trueName = Name(target);
         if (!Resolve(target, ref inventory, false))
-            return new(trueName, age, gender, speciesProto, string.Empty);
+            return new(trueName, gender, ageString, string.Empty);
 
         string? presumedJob = null;
         string? presumedName = null;
@@ -152,7 +153,7 @@ public class IdentitySystem : SharedIdentitySystem
         }
 
         // If it didn't find a job, that's fine.
-        return new(trueName, age, gender, speciesProto, presumedName, presumedJob);
+        return new(trueName, gender, ageString, presumedName, presumedJob);
     }
 
     #endregion
