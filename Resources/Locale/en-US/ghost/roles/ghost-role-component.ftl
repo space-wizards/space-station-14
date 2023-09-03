@@ -163,3 +163,6 @@ ghost-role-information-loneop-rules = You are a syndicate operative tasked with 
 
 ghost-role-information-behonker-name = Behonker
 ghost-role-information-behonker-description = You are an antagonist, bring death and honks to those who do not follow the honkmother.
+
+ghost-role-information-nymph-name = Diona Nymph
+ghost-role-information-nymph-description = A small, energetic being, concerned with themselves and eventually reforming.

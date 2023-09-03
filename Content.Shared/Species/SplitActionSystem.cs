@@ -37,10 +37,12 @@ public sealed partial class SplitActionSystem : EntitySystem
 
     private void OnCompInit(EntityUid uid, SplitActionComponent comp, ComponentInit args)
     {
+        // When the component is initialized, give them the action
         if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionPrototype, out var actionProto))
             return;
 
         var splitAction = new InstantAction(actionProto);
+        // See if the action should start with a delay, and give it that starting delay if so.
         if(comp.StartDelayed && splitAction.UseDelay != null)
             splitAction.Cooldown = (_gameTiming.CurTime, _gameTiming.CurTime + splitAction.UseDelay.Value);
 
@@ -49,6 +51,7 @@ public sealed partial class SplitActionSystem : EntitySystem
 
     private void OnCompRemove(EntityUid uid, SplitActionComponent comp, ComponentShutdown args)
     {
+        // Remove the action if they have it and the component is removed
         if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionPrototype, out var actionProto))
             return;
 
@@ -58,9 +61,11 @@ public sealed partial class SplitActionSystem : EntitySystem
     private void OnSplitAction(EntityUid uid, SplitActionComponent comp, SplitActionEvent args)
     {
         // TODO: Make it cancel if you don't have enough health.
+        // Stun them when they use the action for the specified time. This is to make sure they know they can't move.
         _stunSystem.TryParalyze(uid, comp.StunTime, true);
         _popupSystem.PopupClient(Loc.GetString(comp.PopupText), uid, uid);
 
+        // Create a doafter & start it
         var doAfter = new DoAfterArgs(uid, comp.SplitTime, new SplitActionDoAfterEvent(), uid)
         {
             BreakOnUserMove = true,
@@ -79,9 +84,11 @@ public sealed partial class SplitActionSystem : EntitySystem
         if (args.Cancelled || args.Handled || comp.Deleted)
             return;
 
+        // Stun them for the specified time, then damage them for the specified amount
         _stunSystem.TryParalyze(uid, comp.StunTime, true);
         _damageableSystem.TryChangeDamage(uid, comp.Damage, true);
 
+        // Spawn the entity (serverside)
         if(_net.IsServer)
             Spawn(comp.EntityProduced, Transform(uid).Coordinates);
     }

@@ -11,3 +11,11 @@
       damageRecovery:
         types:
           Asphyxiation: -1.0
+
+# Reformed Diona
+- type: entity
+  parent: MobDiona
+  id: MobDionaReformed
+  name: Reformed Diona
+  components:
+    - type: RandomHumanoidAppearance

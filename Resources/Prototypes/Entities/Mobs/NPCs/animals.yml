@@ -2475,10 +2475,16 @@
     interfaces:
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
+  - type: GhostRole
+    prob: 0.25
+    name: ghost-role-information-nymph-name
+    description: ghost-role-information-nymph-description
   - type: DamageStateVisuals
     states:
       Alive:
         Base: nymph
+      Critical:
+        Base: nymph_sleep
       Dead:
         Base: nymph_dead
   - type: Butcherable
@@ -2494,7 +2500,8 @@
   - type: MobThresholds
     thresholds:
       0: Alive
-      30: Dead
+      30: Critical
+      45: Dead
   - type: MovementSpeedModifier
     baseWalkSpeed : 2.0
     baseSprintSpeed : 4.0
@@ -2505,3 +2512,8 @@
   - type: Tag
     tags:
     - VimPilot
+  - type: Reform
+    actionPrototype: DionaReformAction
+    reformTime: 10
+    popupText: diona-reform-attempt
+    prototype: MobDionaReformed

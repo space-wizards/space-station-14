@@ -5,3 +5,7 @@ diona-split-attempt = You begin to painfully shed a nymph, stand still!
 diona-gib-action-name = Gib Yourself!
 diona-gib-action-description = Split yourself apart into 3 nymphs.
 diona-gib-action-use = {$name} splits apart in an instant!
+
+diona-reform-action-name = Reform
+diona-reform-action-description = Reform back into a whole Diona.
+diona-reform-attempt = {$name} attempts to reform!
