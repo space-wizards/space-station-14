@@ -242,28 +242,17 @@ namespace Content.Server.Physics.Controllers
 
             // this math could PROBABLY be simplified for performance
             // probably
-            var ang = Angle.FromWorldVec(vel).FlipPositive();
-            var result = Vector2.Zero;
-            switch ((int)(ang / (Math.PI / 2f)))
-            {
-                case 0: // south and east
-                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[1] / shuttle.BaseLinearThrust[1],
-                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[0] / shuttle.BaseLinearThrust[0]);
-                    break;
-                case 1: // east and north
-                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[1] / shuttle.BaseLinearThrust[1],
-                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[2] / shuttle.BaseLinearThrust[2]);
-                    break;
-                case 2: // north and west
-                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[3] / shuttle.BaseLinearThrust[3],
-                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[2] / shuttle.BaseLinearThrust[2]);
-                    break;
-                case 3: // west and south
-                    result = new ((float)Math.Sin(ang) * shuttle.LinearThrust[3] / shuttle.BaseLinearThrust[3],
-                                  (float)-Math.Cos(ang) * shuttle.LinearThrust[0] / shuttle.BaseLinearThrust[0]);
-                    break;
-            }
-            return result * shuttle.BaseMaxLinearVelocity;
+            //             __________________________________
+            //            / /    __   __ \2   /    __   __ \2
+            // O = I : _ /  |I * | 1/H | |  + |I * |  0  | |
+            //          V   \    |_ 0 _| /    \    |_1/V_| /
+
+            var horizIndex = vel.X > 0 ? 1 : 3; // east else west
+            var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
+            var horizComp = MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2);
+            var vertComp = MathF.Pow(Vector2.Dot(vel, new (0, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2);
+
+            return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
         }
 
         private void HandleShuttleMovement(float frameTime)
