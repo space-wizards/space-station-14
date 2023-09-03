@@ -1255,10 +1255,10 @@
   - type: SolutionContainerManager
     solutions:
       food:
-        maxVol: 8
+        maxVol: 7
         reagents:
         - ReagentId: Nutriment
-          Quantity: 3
+          Quantity: 2
         - ReagentId: Bungotoxin
           Quantity: 5
   - type: Extractable
