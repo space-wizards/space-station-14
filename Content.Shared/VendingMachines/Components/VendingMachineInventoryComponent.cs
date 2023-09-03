@@ -1,4 +1,6 @@
 ﻿using Content.Shared.Actions.ActionTypes;
+using Content.Shared.Whitelist;
+using Robust.Shared.Containers;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.List;
@@ -21,8 +23,16 @@ public sealed class VendingMachineInventoryComponent : Component
     [DataField("action", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
     public string? Action = "VendingThrow";
 
+    /// <summary>
+    ///
+    /// </summary>
+    [DataField("whiteList")]
+    public EntityWhitelist? Whitelist = null;
+
     [ViewVariables]
     public Dictionary<string, List<VendingMachineInventoryEntry>> Items = new();
+
+    public Container? Storage;
 
     public bool Contraband;
 }
