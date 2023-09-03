@@ -98,7 +98,6 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
             {
                 Text = Loc.GetString("salvage-expedition-difficulty-players"),
                 HorizontalAlignment = HAlignment.Left,
-                Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
             lBox.AddChild(new Label
