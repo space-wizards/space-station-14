@@ -9,11 +9,11 @@
   "states": [
     {
       "name": "bar",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "bar-knocked",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "chair",
@@ -61,11 +61,11 @@
     },
     {
       "name": "stool",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "stool-knocked",
-      "directions": 1
+      "directions": 4
     },
     {
       "name": "wooden",
