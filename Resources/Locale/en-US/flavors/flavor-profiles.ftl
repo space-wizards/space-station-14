@@ -103,6 +103,7 @@ flavor-complex-orange = like oranges
 flavor-complex-watermelon = like watermelon
 flavor-complex-garlic = like garlic
 flavor-complex-grape = like grapes
+flavor-complex-berry = like berries
 flavor-complex-meatballs = like meatballs
 flavor-complex-nettles = like nettles
 flavor-complex-jungle = like jungle

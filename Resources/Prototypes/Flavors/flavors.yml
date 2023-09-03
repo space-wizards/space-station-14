@@ -730,6 +730,11 @@
   description: flavor-complex-grape
 
 - type: flavor
+  id: berry
+  flavorType: Complex
+  description: flavor-complex-berry
+
+- type: flavor
   id: garlic
   flavorType: Complex
   description: flavor-complex-garlic

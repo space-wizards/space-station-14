@@ -1186,3 +1186,31 @@
       reagents:
       - ReagentId: JuiceGrape
         Quantity: 10
+
+- type: entity
+  name: berries
+  parent: FoodProduceBase
+  id: FoodBerries
+  description: A handful of various types of berries.
+  components:
+  - type: FlavorProfile
+    flavors:
+      - berry
+  - type: SolutionContainerManager
+    solutions:
+      food:
+        maxVol: 11
+        reagents:
+        - ReagentId: Nutriment
+          Quantity: 5
+        - ReagentId: Vitamin
+          Quantity: 4
+  - type: Sprite
+    sprite: Objects/Specific/Hydroponics/berries.rsi
+  - type: Produce
+    seedId: berries
+  - type: Extractable
+    juiceSolution:
+      reagents:
+      - ReagentId: JuiceBerry
+        Quantity: 10
