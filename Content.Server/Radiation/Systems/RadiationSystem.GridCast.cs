@@ -72,7 +72,7 @@ public partial class RadiationSystem
             }
 
             // Apply modifier if the destination entity is hidden within a radiation blocking container
-            rads = ApplyModForRadiationBlockingContainers(dest.Owner, rads);
+            rads = GetAdjustedRadiationIntensity(dest.Owner, rads);
 
             receiversTotalRads.Add((dest, rads));
         }
@@ -122,7 +122,7 @@ public partial class RadiationSystem
         var rads = incomingRads - slope * dist;
 
         // Apply rad modifier if the source is enclosed within a radiation blocking container
-        rads = ApplyModForRadiationBlockingContainers(sourceUid, rads);
+        rads = GetAdjustedRadiationIntensity(sourceUid, rads);
 
         if (rads <= MinIntensity)
             return null;
@@ -227,7 +227,7 @@ public partial class RadiationSystem
         return ray;
     }
 
-    private float ApplyModForRadiationBlockingContainers(EntityUid uid, float rads)
+    private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
     {
         var radblockingComps = new List<RadiationBlockingContainerComponent>();
         if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, ref radblockingComps))
