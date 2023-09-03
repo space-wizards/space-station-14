@@ -1,10 +1,4 @@
 Entries:
-- author: Jackal298
-  changes:
-  - {message: Returned body armor to the bartender's vending machine and bartender's
-      closet, type: Tweak}
-  id: 4237
-  time: '2023-07-12T19:09:36.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Fixed singularity distortion render on zoom, type: Fix}
@@ -3004,3 +2998,9 @@ Entries:
   - {message: Technology Disks now sell for considerably less., type: Tweak}
   id: 4736
   time: '2023-09-03T02:31:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwaves now become bloodstained if you microwave animals inside
+      of them. Who was doing this?', type: Add}
+  id: 4737
+  time: '2023-09-03T04:03:05.0000000+00:00'
