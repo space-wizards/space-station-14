@@ -1,14 +1,12 @@
 ﻿- type: entity
   parent: BaseItem
   id: BaseArrow
-  name: arrow
-  description: You can feel the power of the steppe within you.
+  abstract: true
   components:
   - type: Item
     size: 10
   - type: Sprite
     sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
-    state: arrow
   - type: Fixtures
     fixtures:
       fix1:
@@ -42,10 +40,42 @@
     onlyCollideWhenShot: true
     damage:
       types:
-        Piercing: 14
+        Piercing: 25
+
+- type: entity
+  parent: BaseArrow
+  id: ArrowRegular
+  name: arrow
+  description: You can feel the power of the steppe within you.
+  components:
+  - type: Sprite
+    layers:
+    - state: tail
+      color: red
+    - state: rod
+      color: brown
+    - state: tip
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 35
 
 - type: entity
   parent: BaseArrow
   id: ArrowImprovised
-  name: improvised arrow
-  description: Aren't basically all arrows technically improvised?
+  name: glass shard arrow
+  description: The greyshirt's preferred projectile.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Guns/Projectiles/arrows.rsi
+    layers:
+    - state: tail
+      color: white
+    - state: rod
+      color: darkgray
+    - state: tip
+      color: lightblue
+  - type: Projectile
+    damage:
+      types:
+        Piercing: 25

@@ -24,7 +24,8 @@ public sealed class StorageContainerVisualsSystem : VisualizerSystem<StorageCont
         if (!args.Sprite.LayerMapTryGet(component.FillLayer, out var fillLayer))
             return;
 
-        var closestFillSprite = ContentHelpers.RoundToNearestLevels(fraction, 1, component.MaxFillLevels + 1);
+        var closestFillSprite = Math.Min(ContentHelpers.RoundToNearestLevels(fraction, 1, component.MaxFillLevels + 1),
+            component.MaxFillLevels);
 
         if (closestFillSprite > 0)
         {

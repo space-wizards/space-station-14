@@ -6,14 +6,23 @@
   },
   "states": [
     {
-      "name": "arrow"
+      "name": "tail"
     },
     {
-      "name": "inhand-right",
-      "directions": 4
+      "name": "rod"
+    },
+    {
+      "name": "tip"
+    },
+    {
+      "name": "solution"
     },
     {
       "name": "inhand-left",
+      "directions": 4
+    },
+    {
+      "name": "inhand-right",
       "directions": 4
     }
   ]

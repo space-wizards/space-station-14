@@ -32,7 +32,7 @@
     slots:
       arrow:
         name: Arrow
-        startingItem: ArrowImprovised
+        startingItem: null
         insertSound: /Audio/Weapons/Guns/Misc/arrow_nock.ogg
         whitelist:
           tags:
