@@ -8,7 +8,6 @@
   components:
     - type: Transform
       anchored: true
-      noRot: true
     - type: Physics
       bodyType: Static
     - type: Fixtures
@@ -53,6 +52,7 @@
     - type: Sprite
       sprite: Structures/Machines/parts.rsi
       state: box_0
+      snapCardinals: true
 
 - type: entity
   id: MachineFrame
@@ -63,7 +63,6 @@
   components:
     - type: Transform
       anchored: true
-      noRot: true
     - type: Physics
       bodyType: Static
     - type: Fixtures
@@ -110,6 +109,7 @@
     - type: Sprite
       sprite: Structures/Machines/parts.rsi
       state: box_1
+      snapCardinals: true
     - type: Appearance
     - type: ItemMapper
       mapLayers:
