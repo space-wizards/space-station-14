@@ -1,5 +1,7 @@
 using Content.Server.Shuttles.Components;
 using Content.Server.Station.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Maps;
 using Content.Shared.Parallax;
 using Content.Shared.Shuttles.Systems;
 using Content.Shared.StatusEffect;
@@ -463,9 +465,19 @@ public sealed partial class ShuttleSystem
     {
         var buckleQuery = GetEntityQuery<BuckleComponent>();
         var statusQuery = GetEntityQuery<StatusEffectsComponent>();
+
+        // gib anything sitting outside aka on a lattice
+        // this is done before knocking since why knock down if they are gonna be gibbed too
+        var toGib = new ValueList<(EntityUid, BodyComponent)>();
+        GibKids(xform, ref toGib);
+
+        foreach (var (child, body) in toGib)
+        {
+            _bobby.GibBody(child, gibOrgans: false, body);
+        }
+
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
-
         KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
 
         foreach (var child in toKnock)
@@ -479,13 +491,37 @@ public sealed partial class ShuttleSystem
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
-
         while (childEnumerator.MoveNext(out var child))
         {
             if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
+        }
+    }
+
+    private void GibKids(TransformComponent xform, ref ValueList<(EntityUid, BodyComponent)> toGib)
+    {
+        var bodyQuery = GetEntityQuery<BodyComponent>();
+        var xformQuery = GetEntityQuery<TransformComponent>();
+
+        // this is not recursive so people hiding in crates are spared, sadly
+        var childEnumerator = xform.ChildEnumerator;
+        while (childEnumerator.MoveNext(out var child))
+        {
+            if (!xformQuery.TryGetComponent(child.Value, out var childXform))
+                continue;
+
+            // not something that can be gibbed
+            if (!bodyQuery.TryGetComponent(child.Value, out var body))
+                continue;
+
+            // only gib if its on lattice/space
+            var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+            if (tile != null && !tile.Value.IsSpace())
+                continue;
+
+            toGib.Add((child.Value, body));
         }
     }
 
