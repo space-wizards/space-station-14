@@ -15,7 +15,6 @@ namespace Content.Server.Glue;
 
 public sealed class GlueSystem : SharedGlueSystem
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -27,7 +26,7 @@ public sealed class GlueSystem : SharedGlueSystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<GlueComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
         SubscribeLocalEvent<GluedComponent, ComponentInit>(OnGluedInit);
         SubscribeLocalEvent<GluedComponent, GotEquippedHandEvent>(OnHandPickUp);
     }
@@ -39,9 +38,6 @@ public sealed class GlueSystem : SharedGlueSystem
             return;
 
         if (!args.CanReach || args.Target is not { Valid: true } target)
-            return;
-
-        if (_openable.IsClosed(uid))
             return;
 
         if (TryGlue(uid, component, target, args.User))

@@ -13,7 +13,6 @@ namespace Content.Server.Lube;
 
 public sealed class LubeSystem : EntitySystem
 {
-    [Dependency] private readonly OpenableSystem _openable = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
@@ -24,7 +23,7 @@ public sealed class LubeSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract);
+        SubscribeLocalEvent<LubeComponent, AfterInteractEvent>(OnInteract, after: new[] { typeof(OpenableSystem) });
     }
 
     private void OnInteract(EntityUid uid, LubeComponent component, AfterInteractEvent args)
@@ -33,9 +32,6 @@ public sealed class LubeSystem : EntitySystem
             return;
 
         if (!args.CanReach || args.Target is not { Valid: true } target)
-            return;
-
-        if (_openable.IsClosed(uid))
             return;
 
         if (TryLube(uid, component, target, args.User))

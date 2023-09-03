@@ -1,5 +1,6 @@
 using Content.Server.Chemistry.EntitySystems;
 using Content.Server.Nutrition.Components;
+using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Weapons.Melee.Events;
@@ -22,7 +23,8 @@ public sealed class OpenableSystem : EntitySystem
         SubscribeLocalEvent<OpenableComponent, ComponentInit>(OnInit);
         SubscribeLocalEvent<OpenableComponent, UseInHandEvent>(OnUse);
         SubscribeLocalEvent<OpenableComponent, SolutionTransferAttemptEvent>(OnTransferAttempt);
-        SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(OnMeleeHit);
+        SubscribeLocalEvent<OpenableComponent, MeleeHitEvent>(HandleIfClosed);
+        SubscribeLocalEvent<OpenableComponent, AfterInteractEvent>(HandleIfClosed);
     }
 
     private void OnInit(EntityUid uid, OpenableComponent comp, ComponentInit args)
@@ -47,9 +49,9 @@ public sealed class OpenableSystem : EntitySystem
         }
     }
 
-    private void OnMeleeHit(EntityUid uid, OpenableComponent comp, MeleeHitEvent args)
+    private void HandleIfClosed(EntityUid uid, OpenableComponent comp, HandledEntityEventArgs args)
     {
-        // prevent spilling drink when closed
+        // prevent spilling/pouring/whatever drinks when closed
         args.Handled = !comp.Opened;
     }
 
