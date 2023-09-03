@@ -105,7 +105,7 @@ public abstract partial class SharedFultonSystem : EntitySystem
 
     private void OnFultonInteract(EntityUid uid, FultonComponent component, AfterInteractEvent args)
     {
-        if (args.Target == null || args.Handled)
+        if (args.Target == null || args.Handled || !args.CanReach)
             return;
 
         if (TryComp<FultonBeaconComponent>(args.Target, out var beacon))
