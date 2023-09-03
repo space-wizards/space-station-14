@@ -1,43 +1,4 @@
 Entries:
-- author: Errant
-  changes:
-  - {message: 'Shotgun shell boxes have been recalled by the manufacturer, and rebranded
-      as dispensers. They no longer feature inventory space in addition to the shells
-      they contain.', type: Fix}
-  - {message: Shells can now be inserted back into dispensers. No guarantees regarding
-      the contents of dispensers loaded on-site., type: Tweak}
-  id: 4234
-  time: '2023-07-12T02:01:01.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Added chevre (goat cheese), crostini (slices of baguette), and chevre
-      chaud (chevre on top of a crostini and lightly toasted) to the game. Bon ap-petite!',
-    type: Add}
-  id: 4235
-  time: '2023-07-12T03:00:30.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Starvation will kill you again., type: Add}
-  id: 4236
-  time: '2023-07-12T05:46:38.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Returned body armor to the bartender's vending machine and bartender's
-      closet, type: Tweak}
-  id: 4237
-  time: '2023-07-12T19:09:36.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed singularity distortion render on zoom, type: Fix}
-  id: 4238
-  time: '2023-07-12T19:12:25.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
-      now has the funds to put medicated sutures and regenerative mesh in select medkits',
-    type: Tweak}
-  id: 4239
-  time: '2023-07-12T19:14:25.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
@@ -3009,3 +2970,40 @@ Entries:
   - {message: Winter coats now have hoods, type: Add}
   id: 4733
   time: '2023-09-02T17:10:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix context menu not opening if you toggled combat mode immediately
+      prior., type: Fix}
+  id: 4734
+  time: '2023-09-02T20:16:34.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
+  id: 4735
+  time: '2023-09-03T01:59:36.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Technology Disks now sell for considerably less., type: Tweak}
+  id: 4736
+  time: '2023-09-03T02:31:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwaves now become bloodstained if you microwave animals inside
+      of them. Who was doing this?', type: Add}
+  id: 4737
+  time: '2023-09-03T04:03:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
+      dioxide poisoning., type: Tweak}
+  id: 4738
+  time: '2023-09-03T06:30:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
+    type: Fix}
+  - {message: Added fultons to salvage vendor., type: Add}
+  - {message: Make fultons easy to craft temporarily to get better feedback on it
+      for expeditions., type: Tweak}
+  id: 4739
+  time: '2023-09-03T12:18:09.0000000+00:00'
