@@ -9,10 +9,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction
 {
-    public sealed class RefiningSystem : EntitySystem
+    public sealed partial class RefiningSystem : EntitySystem
     {
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
+        [Dependency] private SharedToolSystem _toolSystem = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

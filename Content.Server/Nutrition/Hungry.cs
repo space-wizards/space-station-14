@@ -9,9 +9,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
-    public sealed class Hungry : IConsoleCommand
+    public sealed partial class Hungry : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "hungry";
         public string Description => "Makes you hungry.";

@@ -15,14 +15,14 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Weather;
 
-public sealed class WeatherOverlay : Overlay
+public sealed partial class WeatherOverlay : Overlay
 {
-    [Dependency] private readonly IClyde _clyde = default!;
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly IResourceCache _cache = default!;
+    [Dependency] private IClyde _clyde = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private IResourceCache _cache = default!;
     private readonly SharedTransformSystem _transform;
     private readonly SpriteSystem _sprite;
     private readonly WeatherSystem _weather;

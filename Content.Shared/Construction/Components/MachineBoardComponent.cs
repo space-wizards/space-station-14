@@ -9,7 +9,7 @@ namespace Content.Shared.Construction.Components
     [RegisterComponent, NetworkedComponent]
     public sealed partial class MachineBoardComponent : Component
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         [DataField("requirements", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<int, MachinePartPrototype>))]
         public Dictionary<string, int> Requirements = new();

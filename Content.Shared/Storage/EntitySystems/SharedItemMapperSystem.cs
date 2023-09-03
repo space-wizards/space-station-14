@@ -11,10 +11,10 @@ namespace Content.Shared.Storage.EntitySystems
     /// if its tags/component, and overall quantity match <see cref="ItemMapperComponent.MapLayers"/>.
     /// </summary>
     [UsedImplicitly]
-    public abstract class SharedItemMapperSystem : EntitySystem
+    public abstract partial class SharedItemMapperSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
         /// <inheritdoc />
         public override void Initialize()

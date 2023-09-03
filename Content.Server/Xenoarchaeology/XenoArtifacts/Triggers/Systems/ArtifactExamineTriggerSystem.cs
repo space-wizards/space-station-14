@@ -3,9 +3,9 @@ using Content.Shared.Examine;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public sealed class ArtifactExamineTriggerSystem : EntitySystem
+public sealed partial class ArtifactExamineTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
+    [Dependency] private ArtifactSystem _artifact = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

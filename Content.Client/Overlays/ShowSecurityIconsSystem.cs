@@ -7,10 +7,10 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
-public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
+public sealed partial class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-    [Dependency] private readonly AccessReaderSystem _accessReader = default!;
+    [Dependency] private IPrototypeManager _prototypeMan = default!;
+    [Dependency] private AccessReaderSystem _accessReader = default!;
 
     [ValidatePrototypeId<StatusIconPrototype>]
     private const string JobIconForNoId = "JobIconNoId";

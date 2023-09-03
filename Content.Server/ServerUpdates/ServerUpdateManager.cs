@@ -13,14 +13,14 @@ namespace Content.Server.ServerUpdates;
 /// <summary>
 /// Responsible for restarting the server for update, when not disruptive.
 /// </summary>
-public sealed class ServerUpdateManager
+public sealed partial class ServerUpdateManager
 {
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IWatchdogApi _watchdog = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IBaseServer _server = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IWatchdogApi _watchdog = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IBaseServer _server = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     [ViewVariables]
     private bool _updateOnRoundEnd;

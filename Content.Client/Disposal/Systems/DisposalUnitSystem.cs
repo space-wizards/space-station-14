@@ -11,11 +11,11 @@ using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.Systems;
 
-public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
+public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-    [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AnimationPlayerSystem _animationSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
 
     private const string AnimationKey = "disposal_unit_animation";
 

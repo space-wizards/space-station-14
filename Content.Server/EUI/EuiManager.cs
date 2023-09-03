@@ -7,10 +7,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.EUI
 {
-    public sealed class EuiManager : IPostInjectInit
+    public sealed partial class EuiManager : IPostInjectInit
     {
-        [Dependency] private readonly IPlayerManager _players = default!;
-        [Dependency] private readonly IServerNetManager _net = default!;
+        [Dependency] private IPlayerManager _players = default!;
+        [Dependency] private IServerNetManager _net = default!;
 
         private readonly Dictionary<IPlayerSession, PlayerEuiData> _playerData =
             new();

@@ -15,7 +15,7 @@ namespace Content.Server.Administration;
 /// </summary>
 public sealed partial class QuickDialogSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     /// <summary>
     /// Contains the success/cancel actions for a dialog.

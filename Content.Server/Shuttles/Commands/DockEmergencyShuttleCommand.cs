@@ -9,9 +9,9 @@ namespace Content.Server.Shuttles.Commands;
 /// Calls in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class DockEmergencyShuttleCommand : IConsoleCommand
+public sealed partial class DockEmergencyShuttleCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntitySystemManager _sysManager = default!;
+    [Dependency] private IEntitySystemManager _sysManager = default!;
 
     public string Command => "dockemergencyshuttle";
     public string Description => Loc.GetString("emergency-shuttle-command-dock-desc");

@@ -13,11 +13,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Extinguisher;
 
-public sealed class FireExtinguisherSystem : EntitySystem
+public sealed partial class FireExtinguisherSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

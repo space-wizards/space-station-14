@@ -19,13 +19,13 @@ namespace Content.Shared.Materials;
 /// Handles interactions and logic related to <see cref="MaterialReclaimerComponent"/>,
 /// <see cref="CollideMaterialReclaimerComponent"/>, and <see cref="ActiveMaterialReclaimerComponent"/>.
 /// </summary>
-public abstract class SharedMaterialReclaimerSystem : EntitySystem
+public abstract partial class SharedMaterialReclaimerSystem : EntitySystem
 {
-    [Dependency] private readonly ISharedAdminLogManager _adminLog = default!;
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] protected readonly SharedAmbientSoundSystem AmbientSound = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedContainerSystem _container = default!;
+    [Dependency] private ISharedAdminLogManager _adminLog = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] protected SharedAmbientSoundSystem AmbientSound = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedContainerSystem _container = default!;
 
     public const string ActiveReclaimerContainerId = "active-material-reclaimer-container";
 

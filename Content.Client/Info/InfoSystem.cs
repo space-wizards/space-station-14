@@ -3,10 +3,10 @@ using Robust.Shared.Log;
 
 namespace Content.Client.Info;
 
-public sealed class InfoSystem : EntitySystem
+public sealed partial class InfoSystem : EntitySystem
 {
     public RulesMessage Rules = new RulesMessage("Server Rules", "The server did not send any rules.");
-    [Dependency] private readonly RulesManager _rules = default!;
+    [Dependency] private RulesManager _rules = default!;
 
     public override void Initialize()
     {

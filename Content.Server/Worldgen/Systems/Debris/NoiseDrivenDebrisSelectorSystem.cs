@@ -7,12 +7,12 @@ namespace Content.Server.Worldgen.Systems.Debris;
 /// <summary>
 ///     This handles selecting debris with probability decided by a noise channel.
 /// </summary>
-public sealed class NoiseDrivenDebrisSelectorSystem : BaseWorldSystem
+public sealed partial class NoiseDrivenDebrisSelectorSystem : BaseWorldSystem
 {
-    [Dependency] private readonly NoiseIndexSystem _index = default!;
-    [Dependency] private readonly TransformSystem _xformSys = default!;
-    [Dependency] private readonly ILogManager _logManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private NoiseIndexSystem _index = default!;
+    [Dependency] private TransformSystem _xformSys = default!;
+    [Dependency] private ILogManager _logManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     private ISawmill _sawmill = default!;
 

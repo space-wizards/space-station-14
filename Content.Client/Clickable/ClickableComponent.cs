@@ -9,7 +9,7 @@ namespace Content.Client.Clickable
     [RegisterComponent]
     public sealed partial class ClickableComponent : Component
     {
-        [Dependency] private readonly IClickMapManager _clickMapManager = default!;
+        [Dependency] private IClickMapManager _clickMapManager = default!;
 
         [DataField("bounds")] public DirBoundData? Bounds;
 

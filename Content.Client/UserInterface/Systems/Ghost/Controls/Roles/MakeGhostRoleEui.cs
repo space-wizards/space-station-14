@@ -9,10 +9,10 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
     [UsedImplicitly]
-    public sealed class MakeGhostRoleEui : BaseEui
+    public sealed partial class MakeGhostRoleEui : BaseEui
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
 
         private readonly MakeGhostRoleWindow _window;
 

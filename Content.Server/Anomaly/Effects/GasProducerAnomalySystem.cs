@@ -13,12 +13,12 @@ namespace Content.Server.Anomaly.Effects;
 /// <summary>
 /// This handles <see cref="GasProducerAnomalyComponent"/> and the events from <seealso cref="AnomalySystem"/>
 /// </summary>
-public sealed class GasProducerAnomalySystem : EntitySystem
+public sealed partial class GasProducerAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-    [Dependency] private readonly TransformSystem _xform = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private AtmosphereSystem _atmosphere = default!;
+    [Dependency] private TransformSystem _xform = default!;
+    [Dependency] private IMapManager _map = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

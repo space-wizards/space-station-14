@@ -5,10 +5,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.UserInterface;
 
-public sealed class IntrinsicUISystem : EntitySystem
+public sealed partial class IntrinsicUISystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private ActionsSystem _actionsSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

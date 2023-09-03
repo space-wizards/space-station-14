@@ -9,10 +9,10 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
-public sealed class PointingSystem : SharedPointingSystem
+public sealed partial class PointingSystem : SharedPointingSystem
 {
-    [Dependency] private readonly MobStateSystem _mobState = default!;
-    [Dependency] private readonly FloatingVisualizerSystem _floatingSystem = default!;
+    [Dependency] private MobStateSystem _mobState = default!;
+    [Dependency] private FloatingVisualizerSystem _floatingSystem = default!;
 
     public override void Initialize()
     {

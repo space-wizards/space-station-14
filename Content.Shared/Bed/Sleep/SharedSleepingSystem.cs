@@ -5,9 +5,9 @@ using Content.Shared.Eye.Blinding.Systems;
 
 namespace Content.Server.Bed.Sleep
 {
-    public abstract class SharedSleepingSystem : EntitySystem
+    public abstract partial class SharedSleepingSystem : EntitySystem
     {
-        [Dependency] private readonly BlindableSystem _blindableSystem = default!;
+        [Dependency] private BlindableSystem _blindableSystem = default!;
 
         public override void Initialize()
         {

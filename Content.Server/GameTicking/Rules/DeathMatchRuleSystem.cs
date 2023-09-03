@@ -13,12 +13,12 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// Manages <see cref="DeathMatchRuleComponent"/>
 /// </summary>
-public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
+public sealed partial class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponent>
 {
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public override void Initialize()
     {

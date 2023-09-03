@@ -12,10 +12,10 @@ using Robust.Shared.IoC;
 namespace Content.Server.Salvage;
 
 [AdminCommand(AdminFlags.Admin)]
-sealed class SalvageRulerCommand : IConsoleCommand
+sealed partial class SalvageRulerCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entities = default!;
-    [Dependency] private readonly IMapManager _maps = default!;
+    [Dependency] private IEntityManager _entities = default!;
+    [Dependency] private IMapManager _maps = default!;
 
     public string Command => "salvageruler";
 

@@ -7,9 +7,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 /// This handles <see cref="ChargeBatteryArtifactComponent"/>
 /// </summary>
-public sealed class ChargeBatteryArtifactSystem : EntitySystem
+public sealed partial class ChargeBatteryArtifactSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
     /// <inheritdoc/>
     public override void Initialize()
     {

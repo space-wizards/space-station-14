@@ -6,12 +6,12 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Anomaly.Effects;
 
-public abstract class SharedGravityAnomalySystem : EntitySystem
+public abstract partial class SharedGravityAnomalySystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly ThrowingSystem _throwing = default!;
-    [Dependency] private readonly SharedTransformSystem _xform = default!;
+    [Dependency] private IMapManager _map = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private ThrowingSystem _throwing = default!;
+    [Dependency] private SharedTransformSystem _xform = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

@@ -9,11 +9,11 @@ namespace Content.Shared.Maps;
 /// <summary>
 ///     This system provides various useful helper methods for turfs & tiles. Replacement for <see cref="TurfHelpers"/>
 /// </summary>
-public sealed class TurfSystem : EntitySystem
+public sealed partial class TurfSystem : EntitySystem
 {
-    [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly IMapManager _mapMan = default!;
+    [Dependency] private EntityLookupSystem _entityLookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private IMapManager _mapMan = default!;
 
     /// <summary>
     ///     Returns true if a given tile is blocked by physics-enabled entities.

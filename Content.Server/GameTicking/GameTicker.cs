@@ -35,39 +35,39 @@ namespace Content.Server.GameTicking
 {
     public sealed partial class GameTicker : SharedGameTicker
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IBanManager _banManager = default!;
-        [Dependency] private readonly IBaseServer _baseServer = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IGameMapManager _gameMapManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IBanManager _banManager = default!;
+        [Dependency] private IBaseServer _baseServer = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IConsoleHost _consoleHost = default!;
+        [Dependency] private IGameMapManager _gameMapManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
 #if EXCEPTION_TOLERANCE
-        [Dependency] private readonly IRuntimeLog _runtimeLog = default!;
+        [Dependency] private IRuntimeLog _runtimeLog = default!;
 #endif
-        [Dependency] private readonly IServerPreferencesManager _prefsManager = default!;
-        [Dependency] private readonly IServerDbManager _db = default!;
-        [Dependency] private readonly ArrivalsSystem _arrivals = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly GhostSystem _ghost = default!;
-        [Dependency] private readonly MindSystem _mind = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly PlayTimeTrackingSystem _playTimeTrackings = default!;
-        [Dependency] private readonly PvsOverrideSystem _pvsOverride = default!;
-        [Dependency] private readonly ServerUpdateManager _serverUpdates = default!;
-        [Dependency] private readonly StationJobsSystem _stationJobs = default!;
-        [Dependency] private readonly StationSpawningSystem _stationSpawning = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly UserDbDataManager _userDb = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
-        [Dependency] private readonly RoleSystem _roles = default!;
+        [Dependency] private IServerPreferencesManager _prefsManager = default!;
+        [Dependency] private IServerDbManager _db = default!;
+        [Dependency] private ArrivalsSystem _arrivals = default!;
+        [Dependency] private ChatSystem _chatSystem = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private MapLoaderSystem _map = default!;
+        [Dependency] private GhostSystem _ghost = default!;
+        [Dependency] private MindSystem _mind = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
+        [Dependency] private PlayTimeTrackingSystem _playTimeTrackings = default!;
+        [Dependency] private PvsOverrideSystem _pvsOverride = default!;
+        [Dependency] private ServerUpdateManager _serverUpdates = default!;
+        [Dependency] private StationJobsSystem _stationJobs = default!;
+        [Dependency] private StationSpawningSystem _stationSpawning = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private UserDbDataManager _userDb = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
+        [Dependency] private RoleSystem _roles = default!;
 
         [ViewVariables] private bool _initialized;
         [ViewVariables] private bool _postInitialized;

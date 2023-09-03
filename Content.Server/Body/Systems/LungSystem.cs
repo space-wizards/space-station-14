@@ -7,11 +7,11 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Body.Systems;
 
-public sealed class LungSystem : EntitySystem
+public sealed partial class LungSystem : EntitySystem
 {
-    [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private InternalsSystem _internals = default!;
+    [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
     public static string LungSolutionName = "Lung";
 

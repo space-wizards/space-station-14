@@ -12,8 +12,8 @@ namespace Content.Server.Tools;
 
 public sealed partial class ToolSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private TileSystem _tile = default!;
 
     private void InitializeLatticeCutting()
     {

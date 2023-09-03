@@ -5,11 +5,11 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Salvage;
 
-public sealed class SalvageMobRestrictionsSystem : EntitySystem
+public sealed partial class SalvageMobRestrictionsSystem : EntitySystem
 {
-    [Dependency] private readonly BodySystem _bodySystem = default!;
-    [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
+    [Dependency] private BodySystem _bodySystem = default!;
+    [Dependency] private DamageableSystem _damageableSystem = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
 
     public override void Initialize()
     {

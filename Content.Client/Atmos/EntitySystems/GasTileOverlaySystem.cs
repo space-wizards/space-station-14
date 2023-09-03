@@ -10,11 +10,11 @@ using Robust.Shared.GameStates;
 namespace Content.Client.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasTileOverlaySystem : SharedGasTileOverlaySystem
+    public sealed partial class GasTileOverlaySystem : SharedGasTileOverlaySystem
     {
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IOverlayManager _overlayMan = default!;
-        [Dependency] private readonly SpriteSystem _spriteSys = default!;
+        [Dependency] private IResourceCache _resourceCache = default!;
+        [Dependency] private IOverlayManager _overlayMan = default!;
+        [Dependency] private SpriteSystem _spriteSys = default!;
 
         private GasTileOverlay _overlay = default!;
 

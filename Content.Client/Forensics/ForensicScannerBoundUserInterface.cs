@@ -4,9 +4,9 @@ using Content.Shared.Forensics;
 
 namespace Content.Client.Forensics
 {
-    public sealed class ForensicScannerBoundUserInterface : BoundUserInterface
+    public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         [ViewVariables]
         private ForensicScannerMenu? _window;

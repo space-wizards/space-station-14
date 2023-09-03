@@ -14,12 +14,12 @@ namespace Content.Server.Sericulture;
 
 public sealed partial class SericultureSystem : EntitySystem
 {
-    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
-    [Dependency] private readonly HungerSystem _hungerSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly StackSystem _stackSystem = default!;
+    [Dependency] private ActionsSystem _actionsSystem = default!;
+    [Dependency] private DoAfterSystem _doAfterSystem = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
+    [Dependency] private HungerSystem _hungerSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private StackSystem _stackSystem = default!;
 
     public override void Initialize()
     {

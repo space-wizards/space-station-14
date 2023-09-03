@@ -9,7 +9,7 @@ namespace Content.Server.Power.Components
     [Virtual]
     public partial class BatteryComponent : Component
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
+        [Dependency] private IEntityManager _entMan = default!;
         public string SolutionName = "battery";
 
         /// <summary>

@@ -8,12 +8,12 @@ namespace Content.Server.IgnitionSource;
 /// This handles ignition, Jez basically coded this.
 /// </summary>
 ///
-public sealed class IgnitionSourceSystem : EntitySystem
+public sealed partial class IgnitionSourceSystem : EntitySystem
 {
     /// <inheritdoc/>
     ///
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
 
     public override void Initialize()
     {

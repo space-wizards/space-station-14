@@ -39,25 +39,25 @@ namespace Content.Server.Storage.EntitySystems
 {
     public sealed partial class StorageSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly IAdminManager _admin = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly ContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
-        [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
-        [Dependency] private readonly InteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _sharedInteractionSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedCombatModeSystem _combatMode = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly StackSystem _stack = default!;
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private IAdminManager _admin = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private ContainerSystem _containerSystem = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private EntityStorageSystem _entityStorage = default!;
+        [Dependency] private InteractionSystem _interactionSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
+        [Dependency] private SharedInteractionSystem _sharedInteractionSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedCombatModeSystem _combatMode = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private StackSystem _stack = default!;
+        [Dependency] private UseDelaySystem _useDelay = default!;
 
         /// <inheritdoc />
         public override void Initialize()

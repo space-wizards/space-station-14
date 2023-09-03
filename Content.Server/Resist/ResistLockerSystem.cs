@@ -9,12 +9,12 @@ using Content.Shared.Resist;
 
 namespace Content.Server.Resist;
 
-public sealed class ResistLockerSystem : EntitySystem
+public sealed partial class ResistLockerSystem : EntitySystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly LockSystem _lockSystem = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private LockSystem _lockSystem = default!;
+    [Dependency] private EntityStorageSystem _entityStorage = default!;
 
     public override void Initialize()
     {

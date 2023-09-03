@@ -8,11 +8,11 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
-public abstract class ClothingSystem : EntitySystem
+public abstract partial class ClothingSystem : EntitySystem
 {
-    [Dependency] private readonly SharedItemSystem _itemSys = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _humanoidSystem = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private SharedItemSystem _itemSys = default!;
+    [Dependency] private SharedHumanoidAppearanceSystem _humanoidSystem = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     [ValidatePrototypeId<TagPrototype>]
     private const string HairTag = "HidesHair";

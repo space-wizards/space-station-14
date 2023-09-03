@@ -8,10 +8,10 @@ using static Content.Shared.Administration.Notes.AdminMessageEuiMsg;
 
 namespace Content.Server.Administration.Notes;
 
-public sealed class AdminMessageEui : BaseEui
+public sealed partial class AdminMessageEui : BaseEui
 {
-    [Dependency] private readonly IAdminNotesManager _notesMan = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IAdminNotesManager _notesMan = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     private readonly float _closeWait;
     private AdminMessage? _message;
     private DateTime _startTime;

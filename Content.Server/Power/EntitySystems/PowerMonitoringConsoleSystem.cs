@@ -10,13 +10,13 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed class PowerMonitoringConsoleSystem : EntitySystem
+internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 {
     private float _updateTimer = 0.0f;
     private const float UpdateTime = 1.0f;
 
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
 
     public override void Update(float frameTime)
     {

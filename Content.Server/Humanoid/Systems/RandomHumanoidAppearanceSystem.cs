@@ -4,10 +4,10 @@ using Content.Shared.Preferences;
 
 namespace Content.Server.Humanoid.Systems;
 
-public sealed class RandomHumanoidAppearanceSystem : EntitySystem
+public sealed partial class RandomHumanoidAppearanceSystem : EntitySystem
 {
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

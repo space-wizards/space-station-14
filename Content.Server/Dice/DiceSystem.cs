@@ -6,11 +6,11 @@ using Robust.Shared.Random;
 namespace Content.Server.Dice;
 
 [UsedImplicitly]
-public sealed class DiceSystem : SharedDiceSystem
+public sealed partial class DiceSystem : SharedDiceSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Roll(EntityUid uid, DiceComponent? die = null)
     {

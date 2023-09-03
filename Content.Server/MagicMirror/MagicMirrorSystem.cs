@@ -10,11 +10,11 @@ using Robust.Shared.Players;
 
 namespace Content.Server.MagicMirror;
 
-public sealed class MagicMirrorSystem : EntitySystem
+public sealed partial class MagicMirrorSystem : EntitySystem
 {
-    [Dependency] private readonly MarkingManager _markings = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private MarkingManager _markings = default!;
+    [Dependency] private HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
 
     public override void Initialize()

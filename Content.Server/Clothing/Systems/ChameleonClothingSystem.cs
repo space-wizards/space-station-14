@@ -11,12 +11,12 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Clothing.Systems;
 
-public sealed class ChameleonClothingSystem : SharedChameleonClothingSystem
+public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IdentitySystem _identity = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IdentitySystem _identity = default!;
 
     public override void Initialize()
     {

@@ -12,12 +12,12 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.MoMMI
 {
-    internal sealed class MoMMILink : IMoMMILink, IPostInjectInit
+    internal sealed partial class MoMMILink : IMoMMILink, IPostInjectInit
     {
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IStatusHost _statusHost = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly ITaskManager _taskManager = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IStatusHost _statusHost = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private ITaskManager _taskManager = default!;
 
         private readonly HttpClient _httpClient = new();
 

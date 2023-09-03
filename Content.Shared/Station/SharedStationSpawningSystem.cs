@@ -6,10 +6,10 @@ using Content.Shared.Roles;
 
 namespace Content.Shared.Station;
 
-public abstract class SharedStationSpawningSystem : EntitySystem
+public abstract partial class SharedStationSpawningSystem : EntitySystem
 {
-    [Dependency] protected readonly InventorySystem InventorySystem = default!;
-    [Dependency] private   readonly SharedHandsSystem _handsSystem = default!;
+    [Dependency] protected InventorySystem InventorySystem = default!;
+    [Dependency] private   SharedHandsSystem _handsSystem = default!;
 
     /// <summary>
     /// Equips starting gear onto the given entity.

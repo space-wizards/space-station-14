@@ -10,11 +10,11 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
-public sealed class ZoomCommand : IConsoleCommand
+public sealed partial class ZoomCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IEyeManager _eyeMan = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IEyeManager _eyeMan = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
 
     public string Command => "zoom";
     public string Description => Loc.GetString("zoom-command-description");

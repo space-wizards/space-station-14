@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class RemoveObjectiveCommand : IConsoleCommand
+    public sealed partial class RemoveObjectiveCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         public string Command => "rmobjective";
         public string Description => "Removes an objective from the player's mind.";

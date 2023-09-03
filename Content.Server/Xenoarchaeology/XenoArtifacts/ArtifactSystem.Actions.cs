@@ -9,8 +9,8 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public partial class ArtifactSystem
 {
-    [Dependency] private readonly ActionsSystem _actions = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private ActionsSystem _actions = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     /// <summary>
     ///     Used to add the artifact activation action (hehe), which lets sentient artifacts activate themselves,

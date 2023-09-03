@@ -11,7 +11,7 @@ namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 [GenerateTypedNameReferences]
 public sealed partial class ObjectsTab : Control
 {
-    [Dependency] private readonly EntityManager _entityManager = default!;
+    [Dependency] private EntityManager _entityManager = default!;
 
     private readonly List<ObjectsTabEntry> _objects = new();
     private List<ObjectsTabSelection> _selections = new();

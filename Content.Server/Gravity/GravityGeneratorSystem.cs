@@ -11,13 +11,13 @@ using Content.Server.Construction;
 
 namespace Content.Server.Gravity
 {
-    public sealed class GravityGeneratorSystem : EntitySystem
+    public sealed partial class GravityGeneratorSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly AmbientSoundSystem _ambientSoundSystem = default!;
-        [Dependency] private readonly GravitySystem _gravitySystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private AmbientSoundSystem _ambientSoundSystem = default!;
+        [Dependency] private GravitySystem _gravitySystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {

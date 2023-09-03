@@ -10,9 +10,9 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 
 namespace Content.Client.Items.Systems;
 
-public sealed class ItemSystem : SharedItemSystem
+public sealed partial class ItemSystem : SharedItemSystem
 {
-    [Dependency] private readonly IResourceCache _resCache = default!;
+    [Dependency] private IResourceCache _resCache = default!;
 
     public override void Initialize()
     {

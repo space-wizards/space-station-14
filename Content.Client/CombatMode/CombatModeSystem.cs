@@ -10,13 +10,13 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.CombatMode;
 
-public sealed class CombatModeSystem : SharedCombatModeSystem
+public sealed partial class CombatModeSystem : SharedCombatModeSystem
 {
-    [Dependency] private readonly IOverlayManager _overlayManager = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IEyeManager _eye = default!;
+    [Dependency] private IOverlayManager _overlayManager = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IEyeManager _eye = default!;
     public event Action? LocalPlayerCombatModeUpdated;
 
     public override void Initialize()

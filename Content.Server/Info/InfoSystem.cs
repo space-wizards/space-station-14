@@ -6,10 +6,10 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Info;
 
-public sealed class InfoSystem : EntitySystem
+public sealed partial class InfoSystem : EntitySystem
 {
-    [Dependency] private readonly IResourceManager _res = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IResourceManager _res = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
     public override void Initialize()
     {
         base.Initialize();

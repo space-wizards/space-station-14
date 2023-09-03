@@ -13,9 +13,9 @@ namespace Content.Client.Preferences
     ///     connection.
     ///     Stores preferences on the server through <see cref="SelectCharacter" /> and <see cref="UpdateCharacter" />.
     /// </summary>
-    public sealed class ClientPreferencesManager : IClientPreferencesManager
+    public sealed partial class ClientPreferencesManager : IClientPreferencesManager
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private IClientNetManager _netManager = default!;
 
         public event Action? OnServerDataLoaded;
 

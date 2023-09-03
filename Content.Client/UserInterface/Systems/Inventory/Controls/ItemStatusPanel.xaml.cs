@@ -15,7 +15,7 @@ namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 [GenerateTypedNameReferences]
 public sealed partial class ItemStatusPanel : BoxContainer
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
 
     [ViewVariables] private EntityUid? _entity;
 

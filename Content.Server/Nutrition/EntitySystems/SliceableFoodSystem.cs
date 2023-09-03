@@ -14,11 +14,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    internal sealed class SliceableFoodSystem : EntitySystem
+    internal sealed partial class SliceableFoodSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {

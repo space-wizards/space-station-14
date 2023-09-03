@@ -12,9 +12,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Voting
 {
     [AnyCommand]
-    public sealed class CreateVoteCommand : IConsoleCommand
+    public sealed partial class CreateVoteCommand : IConsoleCommand
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         public string Command => "createvote";
         public string Description => Loc.GetString("cmd-createvote-desc");
@@ -59,9 +59,9 @@ namespace Content.Server.Voting
     }
 
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class CreateCustomCommand : IConsoleCommand
+    public sealed partial class CreateCustomCommand : IConsoleCommand
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         private const int MaxArgCount = 10;
 
@@ -210,9 +210,9 @@ namespace Content.Server.Voting
     }
 
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class CancelVoteCommand : IConsoleCommand
+    public sealed partial class CancelVoteCommand : IConsoleCommand
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         public string Command => "cancelvote";
         public string Description => Loc.GetString("cmd-cancelvote-desc");

@@ -16,17 +16,17 @@ using Robust.Shared.Timing;
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
-    public sealed class RespiratorSystem : EntitySystem
+    public sealed partial class RespiratorSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosSys = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSys = default!;
-        [Dependency] private readonly LungSystem _lungSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosSys = default!;
+        [Dependency] private BodySystem _bodySystem = default!;
+        [Dependency] private DamageableSystem _damageableSys = default!;
+        [Dependency] private LungSystem _lungSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
 
         public override void Initialize()
         {

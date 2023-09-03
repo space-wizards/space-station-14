@@ -10,12 +10,12 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
-    internal sealed class UtensilSystem : EntitySystem
+    internal sealed partial class UtensilSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly FoodSystem _foodSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private FoodSystem _foodSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
 
         public override void Initialize()
         {

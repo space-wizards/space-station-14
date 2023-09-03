@@ -17,13 +17,13 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
-public sealed class FireAlarmSystem : EntitySystem
+public sealed partial class FireAlarmSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
-    [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _access = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
+    [Dependency] private AtmosDeviceNetworkSystem _atmosDevNet = default!;
+    [Dependency] private AtmosAlarmableSystem _atmosAlarmable = default!;
+    [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private AccessReaderSystem _access = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
 
     public override void Initialize()
     {

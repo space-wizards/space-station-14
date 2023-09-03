@@ -8,9 +8,9 @@ namespace Content.Client.Voting.UI
     ///     LITERALLY just a button that opens the vote call menu.
     ///     Automatically disables itself if the client cannot call votes.
     /// </summary>
-    public sealed class VoteCallMenuButton : Button
+    public sealed partial class VoteCallMenuButton : Button
     {
-        [Dependency] private readonly IVoteManager _voteManager = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
 
         public VoteCallMenuButton()
         {

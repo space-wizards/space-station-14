@@ -21,12 +21,12 @@ namespace Content.Server.Nutrition.EntitySystems
 {
     public sealed partial class SmokingSystem
     {
-        [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly FoodSystem _foodSystem = default!;
-        [Dependency] private readonly ExplosionSystem _explosionSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private DoAfterSystem _doAfterSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private FoodSystem _foodSystem = default!;
+        [Dependency] private ExplosionSystem _explosionSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
         private void InitializeVapes()
         {
@@ -35,7 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
             SubscribeLocalEvent<VapeComponent, GotEmaggedEvent>(OnEmagged);
         }
 
-        private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args) 
+        private void OnVapeInteraction(EntityUid uid, VapeComponent comp, AfterInteractEvent args)
         {
             _solutionContainerSystem.TryGetRefillableSolution(uid, out var solution);
 
@@ -92,7 +92,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced", ("user", userName)), args.Target.Value,
                     args.Target.Value);
-                
+
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-try-use-vape-forced-user", ("target", targetName)), args.User,
                     args.User);
@@ -148,7 +148,7 @@ namespace Content.Server.Nutrition.EntitySystems
             _atmosphereSystem.Merge(environment, merger);
 
             args.Solution.RemoveAllSolution();
-            
+
             if (args.Forced)
             {
                 var targetName = Identity.Entity(args.Args.Target.Value, EntityManager);
@@ -157,7 +157,7 @@ namespace Content.Server.Nutrition.EntitySystems
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-forced", ("user", userName)), args.Args.Target.Value,
                     args.Args.Target.Value);
-                
+
                 _popupSystem.PopupEntity(
                     Loc.GetString("vape-component-vape-success-user-forced", ("target", targetName)), args.Args.User,
                     args.Args.Target.Value);

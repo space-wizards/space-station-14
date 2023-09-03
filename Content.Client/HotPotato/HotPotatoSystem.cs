@@ -2,10 +2,10 @@ using Content.Shared.HotPotato;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
-public sealed class HotPotatoSystem : SharedHotPotatoSystem
+public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Update(float frameTime)
     {

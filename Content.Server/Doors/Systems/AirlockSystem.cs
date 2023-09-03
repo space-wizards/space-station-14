@@ -12,11 +12,11 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors.Systems;
 
-public sealed class AirlockSystem : SharedAirlockSystem
+public sealed partial class AirlockSystem : SharedAirlockSystem
 {
-    [Dependency] private readonly WiresSystem _wiresSystem = default!;
-    [Dependency] private readonly PowerReceiverSystem _power = default!;
-    [Dependency] private readonly DoorBoltSystem _bolts = default!;
+    [Dependency] private WiresSystem _wiresSystem = default!;
+    [Dependency] private PowerReceiverSystem _power = default!;
+    [Dependency] private DoorBoltSystem _bolts = default!;
 
     public override void Initialize()
     {

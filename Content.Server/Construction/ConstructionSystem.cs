@@ -16,13 +16,13 @@ namespace Content.Server.Construction
     [UsedImplicitly]
     public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
-        [Dependency] private readonly ILogManager _logManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+        [Dependency] private ILogManager _logManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private ContainerSystem _container = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private SharedToolSystem _toolSystem = default!;
 
         private const string SawmillName = "Construction";
         private ISawmill _sawmill = default!;

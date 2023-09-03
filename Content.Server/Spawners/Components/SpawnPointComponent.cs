@@ -6,7 +6,7 @@ namespace Content.Server.Spawners.Components;
 [RegisterComponent]
 public sealed partial class SpawnPointComponent : Component
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("job_id")]

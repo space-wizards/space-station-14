@@ -36,7 +36,7 @@ public sealed partial class BanPanel : DefaultWindow
     // have to know how the controls are nested, which makes the code more complicated.
     private readonly List<CheckBox> _roleCheckboxes = new();
 
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
 
     private enum TabNumbers
     {

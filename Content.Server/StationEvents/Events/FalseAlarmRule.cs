@@ -8,9 +8,9 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
+public sealed partial class FalseAlarmRule : StationEventSystem<FalseAlarmRuleComponent>
 {
-    [Dependency] private readonly EventManagerSystem _event = default!;
+    [Dependency] private EventManagerSystem _event = default!;
 
     protected override void Started(EntityUid uid, FalseAlarmRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

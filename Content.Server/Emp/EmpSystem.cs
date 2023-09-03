@@ -8,9 +8,9 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
 
-public sealed class EmpSystem : SharedEmpSystem
+public sealed partial class EmpSystem : SharedEmpSystem
 {
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
 
     public const string EmpPulseEffectPrototype = "EffectEmpPulse";
 

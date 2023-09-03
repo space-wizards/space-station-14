@@ -6,9 +6,9 @@ namespace Content.Shared.Silicons.Bots;
 /// <summary>
 /// Handles emagging medibots
 /// </summary>
-public sealed class MedibotSystem : EntitySystem
+public sealed partial class MedibotSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     public override void Initialize()
     {

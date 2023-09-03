@@ -8,10 +8,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.NetworkConfigurator;
 
-public sealed class NetworkConfiguratorLinkOverlay : Overlay
+public sealed partial class NetworkConfiguratorLinkOverlay : Overlay
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
     private readonly DeviceListSystem _deviceListSystem;
 
     private Dictionary<EntityUid, Color> _colors = new();

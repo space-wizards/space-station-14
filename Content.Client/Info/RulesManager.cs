@@ -11,14 +11,14 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Info;
 
-public sealed class RulesManager : SharedRulesManager
+public sealed partial class RulesManager : SharedRulesManager
 {
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
-    [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IEntitySystemManager _sysMan = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private IStateManager _stateManager = default!;
+    [Dependency] private IClientConsoleHost _consoleHost = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IEntitySystemManager _sysMan = default!;
 
     private InfoSection rulesSection = new InfoSection("", "", false);
     private bool _shouldShowRules = false;

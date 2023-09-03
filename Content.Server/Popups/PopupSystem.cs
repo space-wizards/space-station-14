@@ -8,10 +8,10 @@ using Robust.Shared.Players;
 
 namespace Content.Server.Popups
 {
-    public sealed class PopupSystem : SharedPopupSystem
+    public sealed partial class PopupSystem : SharedPopupSystem
     {
-        [Dependency] private readonly IPlayerManager _player = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IPlayerManager _player = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         public override void PopupCursor(string message, PopupType type = PopupType.Small)
         {

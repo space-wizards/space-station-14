@@ -10,11 +10,11 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Cabinet;
 
-public abstract class SharedItemCabinetSystem : EntitySystem
+public abstract partial class SharedItemCabinetSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

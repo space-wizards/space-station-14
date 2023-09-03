@@ -7,11 +7,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles;
 
-public sealed class RoleSystem : EntitySystem
+public sealed partial class RoleSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPrototypeManager _prototypes = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IPrototypeManager _prototypes = default!;
+    [Dependency] private MindSystem _minds = default!;
 
     // TODO please lord make role entities
     private readonly HashSet<Type> _antagTypes = new();

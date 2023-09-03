@@ -6,9 +6,9 @@ using Content.Shared.PDA;
 
 namespace Content.Shared.Access.Systems;
 
-public abstract class SharedIdCardSystem : EntitySystem
+public abstract partial class SharedIdCardSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
 
     /// <summary>
     ///     Attempt to find an ID card on an entity. This will look in the entity itself, in the entity's hands, and

@@ -18,12 +18,12 @@ namespace Content.Server.Animals.Systems
     /// <summary>
     ///     Gives ability to living beings with acceptable hunger level to produce milkable reagents.
     /// </summary>
-    internal sealed class UdderSystem : EntitySystem
+    internal sealed partial class UdderSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly HungerSystem _hunger = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private HungerSystem _hunger = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {

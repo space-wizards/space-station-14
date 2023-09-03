@@ -8,10 +8,10 @@ using Content.Shared.Eye.Blinding.Components;
 
 namespace Content.Client.Eye.Blinding
 {
-    public sealed class BlindOverlay : Overlay
+    public sealed partial class BlindOverlay : Overlay
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
         [Dependency] IEntityManager _entityManager = default!;
         [Dependency] ILightManager _lightManager = default!;
 

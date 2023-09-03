@@ -7,10 +7,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.StationEvents.Events
 {
-    internal sealed class GasLeakRule : StationEventSystem<GasLeakRuleComponent>
+    internal sealed partial class GasLeakRule : StationEventSystem<GasLeakRuleComponent>
     {
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private AtmosphereSystem _atmosphere = default!;
 
         protected override void Started(EntityUid uid, GasLeakRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {

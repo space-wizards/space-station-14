@@ -8,11 +8,11 @@ using Content.Shared.Store;
 
 namespace Content.Server.Traitor.Uplink
 {
-    public sealed class UplinkSystem : EntitySystem
+    public sealed partial class UplinkSystem : EntitySystem
     {
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly StoreSystem _store = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private StoreSystem _store = default!;
 
         [ValidatePrototypeId<CurrencyPrototype>]
         public const string TelecrystalCurrencyPrototype = "Telecrystal";

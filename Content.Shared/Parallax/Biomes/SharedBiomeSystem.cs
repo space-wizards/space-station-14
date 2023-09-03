@@ -10,10 +10,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
 
-public abstract class SharedBiomeSystem : EntitySystem
+public abstract partial class SharedBiomeSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager ProtoManager = default!;
-    [Dependency] protected readonly ITileDefinitionManager TileDefManager = default!;
+    [Dependency] protected IPrototypeManager ProtoManager = default!;
+    [Dependency] protected ITileDefinitionManager TileDefManager = default!;
 
     protected const byte ChunkSize = 8;
 

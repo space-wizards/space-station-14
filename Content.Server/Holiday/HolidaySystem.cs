@@ -7,11 +7,11 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday
 {
-    public sealed class HolidaySystem : EntitySystem
+    public sealed partial class HolidaySystem : EntitySystem
     {
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
 
         [ViewVariables]
         private readonly List<HolidayPrototype> _currentHolidays = new();

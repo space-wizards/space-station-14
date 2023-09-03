@@ -11,11 +11,11 @@ using Robust.Server.Player;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
-public sealed class BanPanelCommand : LocalizedCommands
+public sealed partial class BanPanelCommand : LocalizedCommands
 {
 
-    [Dependency] private readonly IPlayerLocator _locator = default!;
-    [Dependency] private readonly EuiManager _euis = default!;
+    [Dependency] private IPlayerLocator _locator = default!;
+    [Dependency] private EuiManager _euis = default!;
 
     public override string Command => "banpanel";
 

@@ -4,9 +4,9 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices
 {
-    public sealed class ApcNetSwitchSystem : EntitySystem
+    public sealed partial class ApcNetSwitchSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
+        [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
 
         public override void Initialize()
         {

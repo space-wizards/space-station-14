@@ -12,10 +12,10 @@ using Robust.Shared.IoC;
 namespace Content.Server.Atmos.Piping.Other.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasMinerSystem : EntitySystem
+    public sealed partial class GasMinerSystem : EntitySystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private TransformSystem _transformSystem = default!;
 
         public override void Initialize()
         {

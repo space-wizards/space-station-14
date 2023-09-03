@@ -17,21 +17,21 @@ using Robust.Shared.Utility;
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
-    public sealed class VerbSystem : SharedVerbSystem
+    public sealed partial class VerbSystem : SharedVerbSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly ExamineSystem _examineSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private ExamineSystem _examineSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private IStateManager _stateManager = default!;
+        [Dependency] private EntityLookupSystem _entityLookup = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
 
         /// <summary>
         ///     When a user right clicks somewhere, how large is the box we use to get entities for the context menu?
         /// </summary>
         public const float EntityMenuLookupSize = 0.25f;
 
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
 
         /// <summary>
         ///     These flags determine what entities the user can see on the context menu.

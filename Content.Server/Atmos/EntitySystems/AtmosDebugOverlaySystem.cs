@@ -12,12 +12,12 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
+    public sealed partial class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
         /// <summary>
         ///     Players allowed to see the atmos debug overlay.

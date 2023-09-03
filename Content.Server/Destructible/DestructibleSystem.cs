@@ -22,23 +22,23 @@ using Robust.Shared.Random;
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
-    public sealed class DestructibleSystem : SharedDestructibleSystem
+    public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
-        [Dependency] public readonly IRobustRandom Random = default!;
+        [Dependency] public IRobustRandom Random = default!;
         public new IEntityManager EntityManager => base.EntityManager;
 
-        [Dependency] public readonly AtmosphereSystem AtmosphereSystem = default!;
-        [Dependency] public readonly AudioSystem AudioSystem = default!;
-        [Dependency] public readonly BodySystem BodySystem = default!;
-        [Dependency] public readonly ConstructionSystem ConstructionSystem = default!;
-        [Dependency] public readonly ExplosionSystem ExplosionSystem = default!;
-        [Dependency] public readonly StackSystem StackSystem = default!;
-        [Dependency] public readonly TriggerSystem TriggerSystem = default!;
-        [Dependency] public readonly SolutionContainerSystem SolutionContainerSystem = default!;
-        [Dependency] public readonly PuddleSystem PuddleSystem = default!;
-        [Dependency] public readonly IPrototypeManager PrototypeManager = default!;
-        [Dependency] public readonly IComponentFactory ComponentFactory = default!;
-        [Dependency] public readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] public AtmosphereSystem AtmosphereSystem = default!;
+        [Dependency] public AudioSystem AudioSystem = default!;
+        [Dependency] public BodySystem BodySystem = default!;
+        [Dependency] public ConstructionSystem ConstructionSystem = default!;
+        [Dependency] public ExplosionSystem ExplosionSystem = default!;
+        [Dependency] public StackSystem StackSystem = default!;
+        [Dependency] public TriggerSystem TriggerSystem = default!;
+        [Dependency] public SolutionContainerSystem SolutionContainerSystem = default!;
+        [Dependency] public PuddleSystem PuddleSystem = default!;
+        [Dependency] public IPrototypeManager PrototypeManager = default!;
+        [Dependency] public IComponentFactory ComponentFactory = default!;
+        [Dependency] public IAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {

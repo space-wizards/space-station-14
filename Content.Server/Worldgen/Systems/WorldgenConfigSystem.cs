@@ -17,14 +17,14 @@ namespace Content.Server.Worldgen.Systems;
 /// <summary>
 ///     This handles configuring world generation during round start.
 /// </summary>
-public sealed class WorldgenConfigSystem : EntitySystem
+public sealed partial class WorldgenConfigSystem : EntitySystem
 {
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IMapManager _map = default!;
-    [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly ISerializationManager _ser = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
+    [Dependency] private IMapManager _map = default!;
+    [Dependency] private IPrototypeManager _proto = default!;
+    [Dependency] private ISerializationManager _ser = default!;
 
     private bool _enabled;
     private string _worldgenConfig = default!;

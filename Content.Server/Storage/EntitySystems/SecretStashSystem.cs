@@ -8,11 +8,11 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems
 {
-    public sealed class SecretStashSystem : EntitySystem
+    public sealed partial class SecretStashSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
 
         public override void Initialize()
         {

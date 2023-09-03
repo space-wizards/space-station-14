@@ -5,9 +5,9 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Radiation.Systems;
 
-public sealed class RadiationSystem : EntitySystem
+public sealed partial class RadiationSystem : EntitySystem
 {
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
 
     public List<RadiationRay>? Rays;
     public Dictionary<EntityUid, Dictionary<Vector2i, float>>? ResistanceGrids;

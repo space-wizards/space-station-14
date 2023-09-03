@@ -10,13 +10,13 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Ame.EntitySystems;
 
-public sealed class AmePartSystem : EntitySystem
+public sealed partial class AmePartSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly ToolSystem _toolSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private ToolSystem _toolSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

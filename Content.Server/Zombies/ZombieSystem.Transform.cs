@@ -42,19 +42,19 @@ namespace Content.Server.Zombies
     /// </remarks>
     public sealed partial class ZombieSystem
     {
-        [Dependency] private readonly SharedHandsSystem _hands = default!;
-        [Dependency] private readonly ServerInventorySystem _inventory = default!;
-        [Dependency] private readonly NpcFactionSystem _faction = default!;
-        [Dependency] private readonly NPCSystem _npc = default!;
-        [Dependency] private readonly HumanoidAppearanceSystem _humanoidAppearance = default!;
-        [Dependency] private readonly IdentitySystem _identity = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
-        [Dependency] private readonly SharedCombatModeSystem _combat = default!;
-        [Dependency] private readonly IChatManager _chatMan = default!;
-        [Dependency] private readonly MindSystem _mind = default!;
-        [Dependency] private readonly RoleSystem _roles = default!;
-        [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private SharedHandsSystem _hands = default!;
+        [Dependency] private ServerInventorySystem _inventory = default!;
+        [Dependency] private NpcFactionSystem _faction = default!;
+        [Dependency] private NPCSystem _npc = default!;
+        [Dependency] private HumanoidAppearanceSystem _humanoidAppearance = default!;
+        [Dependency] private IdentitySystem _identity = default!;
+        [Dependency] private MovementSpeedModifierSystem _movementSpeedModifier = default!;
+        [Dependency] private SharedCombatModeSystem _combat = default!;
+        [Dependency] private IChatManager _chatMan = default!;
+        [Dependency] private MindSystem _mind = default!;
+        [Dependency] private RoleSystem _roles = default!;
+        [Dependency] private MobThresholdSystem _mobThreshold = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
 
         /// <summary>
         /// Handles an entity turning into a zombie when they die or go into crit

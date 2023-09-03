@@ -7,10 +7,10 @@ using Content.Shared.Wires;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
-internal sealed class ActivatableUIRequiresPowerSystem : EntitySystem
+internal sealed partial class ActivatableUIRequiresPowerSystem : EntitySystem
 {
-    [Dependency] private readonly ActivatableUISystem _activatableUI = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private ActivatableUISystem _activatableUI = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

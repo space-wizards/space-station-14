@@ -15,8 +15,8 @@ namespace Content.Client.Administration.UI.SetOutfit
     [GenerateTypedNameReferences]
     public sealed partial class SetOutfitMenu : DefaultWindow
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
 
         public EntityUid? TargetEntityId { get; set; }
         private StartingGearPrototype? _selectedOutfit;

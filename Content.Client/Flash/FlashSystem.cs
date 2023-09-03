@@ -6,11 +6,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Flash
 {
-    public sealed class FlashSystem : SharedFlashSystem
+    public sealed partial class FlashSystem : SharedFlashSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IOverlayManager _overlayManager = default!;
 
         public override void Initialize()
         {

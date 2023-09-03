@@ -13,8 +13,8 @@ namespace Content.Client.Options.UI.Tabs
     [GenerateTypedNameReferences]
     public sealed partial class AudioTab : Control
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IClydeAudio _clydeAudio = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IClydeAudio _clydeAudio = default!;
 
         public AudioTab()
         {

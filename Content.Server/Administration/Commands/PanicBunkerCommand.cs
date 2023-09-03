@@ -6,9 +6,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
-public sealed class PanicBunkerCommand : IConsoleCommand
+public sealed partial class PanicBunkerCommand : IConsoleCommand
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     public string Command => "panicbunker";
     public string Description => "Enables or disables the panic bunker functionality.";
@@ -22,12 +22,12 @@ public sealed class PanicBunkerCommand : IConsoleCommand
         }
 
         var enabled = _cfg.GetCVar(CCVars.PanicBunkerEnabled);
-        
+
         if (args.Length == 0)
         {
             enabled = !enabled;
         }
-        
+
         if (args.Length == 1 && !bool.TryParse(args[0], out enabled))
         {
             shell.WriteError(Loc.GetString("shell-argument-must-be-boolean"));
@@ -35,7 +35,7 @@ public sealed class PanicBunkerCommand : IConsoleCommand
         }
 
         _cfg.SetCVar(CCVars.PanicBunkerEnabled, enabled);
-        
+
         shell.WriteLine(Loc.GetString(enabled ? "panicbunker-command-enabled" : "panicbunker-command-disabled"));
     }
 }

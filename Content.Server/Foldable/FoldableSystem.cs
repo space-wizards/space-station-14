@@ -11,9 +11,9 @@ using Robust.Shared.Utility;
 namespace Content.Server.Foldable
 {
     [UsedImplicitly]
-    public sealed class FoldableSystem : SharedFoldableSystem
+    public sealed partial class FoldableSystem : SharedFoldableSystem
     {
-        [Dependency] private readonly SharedContainerSystem _container = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
 
         public override void Initialize()
         {

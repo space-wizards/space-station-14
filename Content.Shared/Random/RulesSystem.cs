@@ -7,13 +7,13 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Random;
 
-public sealed class RulesSystem : EntitySystem
+public sealed partial class RulesSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
-    [Dependency] private readonly AccessReaderSystem _reader = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private ITileDefinitionManager _tileDef = default!;
+    [Dependency] private AccessReaderSystem _reader = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public bool IsTrue(EntityUid uid, RulesPrototype rules)
     {

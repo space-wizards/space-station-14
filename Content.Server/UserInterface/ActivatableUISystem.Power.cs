@@ -6,7 +6,7 @@ namespace Content.Server.UserInterface;
 
 public sealed partial class ActivatableUISystem
 {
-    [Dependency] private readonly PowerCellSystem _cell = default!;
+    [Dependency] private PowerCellSystem _cell = default!;
 
     private void InitializePower()
     {

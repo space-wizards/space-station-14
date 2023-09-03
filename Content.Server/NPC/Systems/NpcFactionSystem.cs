@@ -7,11 +7,11 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 ///     Outlines faction relationships with each other.
 /// </summary>
-public sealed class NpcFactionSystem : EntitySystem
+public sealed partial class NpcFactionSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
+    [Dependency] private FactionExceptionSystem _factionException = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private IPrototypeManager _protoManager = default!;
 
     private ISawmill _sawmill = default!;
 

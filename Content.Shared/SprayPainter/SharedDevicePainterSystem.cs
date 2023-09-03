@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter;
 
-public abstract class SharedSprayPainterSystem : EntitySystem
+public abstract partial class SharedSprayPainterSystem : EntitySystem
 {
-    [Dependency] protected readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] protected IPrototypeManager _prototypeManager = default!;
 
     public List<string> Styles { get; private set; } = new();
     public List<AirlockGroupPrototype> Groups { get; private set; } = new();

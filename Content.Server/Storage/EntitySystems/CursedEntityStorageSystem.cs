@@ -8,10 +8,10 @@ using Content.Shared.Storage.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
-public sealed class CursedEntityStorageSystem : EntitySystem
+public sealed partial class CursedEntityStorageSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private EntityStorageSystem _entityStorage = default!;
 
     public override void Initialize()
     {

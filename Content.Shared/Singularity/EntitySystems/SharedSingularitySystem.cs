@@ -13,14 +13,14 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// The entity system primarily responsible for managing <see cref="SingularityComponent"/>s.
 /// </summary>
-public abstract class SharedSingularitySystem : EntitySystem
+public abstract partial class SharedSingularitySystem : EntitySystem
 {
 #region Dependencies
-    [Dependency] private readonly SharedAppearanceSystem _visualizer = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedEventHorizonSystem _horizons = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] protected readonly IViewVariablesManager Vvm = default!;
+    [Dependency] private SharedAppearanceSystem _visualizer = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedEventHorizonSystem _horizons = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] protected IViewVariablesManager Vvm = default!;
 #endregion Dependencies
 
     /// <summary>

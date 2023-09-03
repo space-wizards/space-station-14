@@ -6,10 +6,10 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives;
 
-public sealed class ObjectivesSystem : EntitySystem
+public sealed partial class ObjectivesSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public ObjectivePrototype? GetRandomObjective(EntityUid mindId, MindComponent mind, string objectiveGroupProto)
     {

@@ -17,13 +17,13 @@ using System.Linq;
 
 namespace Content.Server.Tools.Systems;
 
-public sealed class WeldableSystem : EntitySystem
+public sealed partial class WeldableSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ConstructionSystem _construction = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private ConstructionSystem _construction = default!;
 
     public override void Initialize()
     {

@@ -27,19 +27,19 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems
 {
-    public sealed class PlantHolderSystem : EntitySystem
+    public sealed partial class PlantHolderSystem : EntitySystem
     {
-        [Dependency] private readonly BotanySystem _botanySystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototype = default!;
-        [Dependency] private readonly MutationSystem _mutation = default!;
-        [Dependency] private readonly AppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
+        [Dependency] private BotanySystem _botanySystem = default!;
+        [Dependency] private IPrototypeManager _prototype = default!;
+        [Dependency] private MutationSystem _mutation = default!;
+        [Dependency] private AppearanceSystem _appearance = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionSystem = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private AtmosphereSystem _atmosphere = default!;
 
         public const float HydroponicsSpeedMultiplier = 1f;
         public const float HydroponicsConsumptionMultiplier = 2f;

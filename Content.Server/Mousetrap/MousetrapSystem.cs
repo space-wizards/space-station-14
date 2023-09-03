@@ -12,10 +12,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
-public sealed class MousetrapSystem : EntitySystem
+public sealed partial class MousetrapSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

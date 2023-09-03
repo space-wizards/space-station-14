@@ -5,9 +5,9 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Chat.Managers;
 
-public sealed class ChatSanitizationManager : IChatSanitizationManager
+public sealed partial class ChatSanitizationManager : IChatSanitizationManager
 {
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     private static readonly Dictionary<string, string> SmileyToEmote = new()
     {

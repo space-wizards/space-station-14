@@ -6,9 +6,9 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public sealed class ArtifactElectricityTriggerSystem : EntitySystem
+public sealed partial class ArtifactElectricityTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly ArtifactSystem _artifactSystem = default!;
+    [Dependency] private ArtifactSystem _artifactSystem = default!;
 
     public override void Initialize()
     {

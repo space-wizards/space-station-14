@@ -6,10 +6,10 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class SolutionRegenerationSystem : EntitySystem
+public sealed partial class SolutionRegenerationSystem : EntitySystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

@@ -3,9 +3,9 @@ using Content.Server.Sandbox;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class SandboxRuleSystem : GameRuleSystem<SandboxRuleComponent>
+public sealed partial class SandboxRuleSystem : GameRuleSystem<SandboxRuleComponent>
 {
-    [Dependency] private readonly SandboxSystem _sandbox = default!;
+    [Dependency] private SandboxSystem _sandbox = default!;
 
     protected override void Started(EntityUid uid, SandboxRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

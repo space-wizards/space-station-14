@@ -10,10 +10,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Disposal.Mailing;
 
-public sealed class MailingUnitSystem : EntitySystem
+public sealed partial class MailingUnitSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceNetworkSystem _deviceNetworkSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
 
     private const string MailTag = "mail";
 

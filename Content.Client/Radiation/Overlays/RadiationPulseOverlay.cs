@@ -9,11 +9,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Radiation.Overlays
 {
-    public sealed class RadiationPulseOverlay : Overlay
+    public sealed partial class RadiationPulseOverlay : Overlay
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         private const float MaxDist = 15.0f;
 

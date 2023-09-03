@@ -12,7 +12,7 @@ namespace Content.Server.Construction;
 
 public sealed partial class ConstructionSystem
 {
-    [Dependency] private readonly ExamineSystem _examineSystem = default!;
+    [Dependency] private ExamineSystem _examineSystem = default!;
 
     private void InitializeMachines()
     {

@@ -17,11 +17,11 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="PowerSwitchableGeneratorComponent"/>
 /// <seealso cref="PortableGeneratorSystem"/>
 /// <seealso cref="GeneratorSystem"/>
-public sealed class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGeneratorSystem
+public sealed partial class PowerSwitchableGeneratorSystem : SharedPowerSwitchableGeneratorSystem
 {
-    [Dependency] private readonly NodeGroupSystem _nodeGroup = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
+    [Dependency] private NodeGroupSystem _nodeGroup = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private AudioSystem _audio = default!;
 
     public override void Initialize()
     {

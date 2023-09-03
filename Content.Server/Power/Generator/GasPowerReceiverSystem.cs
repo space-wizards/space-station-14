@@ -11,10 +11,10 @@ namespace Content.Server.Power.Generator;
 /// <summary>
 /// This handles gas power receivers, allowing devices to accept power in the form of a gas.
 /// </summary>
-public sealed class GasPowerReceiverSystem : EntitySystem
+public sealed partial class GasPowerReceiverSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-    [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

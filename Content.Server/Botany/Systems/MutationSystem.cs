@@ -2,9 +2,9 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany;
 
-public sealed class MutationSystem : EntitySystem
+public sealed partial class MutationSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
 
     /// <summary>
     /// Main idea: Simulate genetic mutation using random binary flips.  Each

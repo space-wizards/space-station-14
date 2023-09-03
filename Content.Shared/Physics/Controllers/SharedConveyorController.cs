@@ -12,12 +12,12 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Physics.Controllers;
 
-public abstract class SharedConveyorController : VirtualController
+public abstract partial class SharedConveyorController : VirtualController
 {
-    [Dependency] protected readonly IMapManager MapManager = default!;
-    [Dependency] protected readonly EntityLookupSystem Lookup = default!;
-    [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-    [Dependency] private readonly SharedGravitySystem _gravity = default!;
+    [Dependency] protected IMapManager MapManager = default!;
+    [Dependency] protected EntityLookupSystem Lookup = default!;
+    [Dependency] protected SharedPhysicsSystem Physics = default!;
+    [Dependency] private SharedGravitySystem _gravity = default!;
 
     protected const string ConveyorFixture = "conveyor";
 

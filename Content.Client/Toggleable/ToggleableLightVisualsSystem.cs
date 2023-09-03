@@ -10,9 +10,9 @@ using System.Linq;
 
 namespace Content.Client.Toggleable;
 
-public sealed class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
+public sealed partial class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
 {
-    [Dependency] private readonly SharedItemSystem _itemSys = default!;
+    [Dependency] private SharedItemSystem _itemSys = default!;
 
     public override void Initialize()
     {

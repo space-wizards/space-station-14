@@ -17,13 +17,13 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Weapons.Melee.EnergySword;
 
-public sealed class EnergySwordSystem : EntitySystem
+public sealed partial class EnergySwordSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedRgbLightControllerSystem _rgbSystem = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedRgbLightControllerSystem _rgbSystem = default!;
+    [Dependency] private SharedItemSystem _item = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

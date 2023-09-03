@@ -11,7 +11,7 @@ namespace Content.Server.Weapons.Ranged.Systems;
 
 public sealed partial class GunSystem
 {
-    [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
+    [Dependency] private SolutionContainerSystem _solutionContainer = default!;
 
     protected override void InitializeSolution()
     {

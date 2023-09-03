@@ -27,10 +27,10 @@ using static Robust.Client.UserInterface.Control;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
-    public sealed class StrippableBoundUserInterface : BoundUserInterface
+    public sealed partial class StrippableBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _protoMan = default!;
-        [Dependency] private readonly IUserInterfaceManager _ui = default!;
+        [Dependency] private IPrototypeManager _protoMan = default!;
+        [Dependency] private IUserInterfaceManager _ui = default!;
         private readonly ExamineSystem _examine = default!;
         private readonly InventorySystem _inv = default!;
         private readonly SharedCuffableSystem _cuffable;

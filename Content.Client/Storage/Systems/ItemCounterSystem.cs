@@ -7,9 +7,9 @@ using Robust.Shared.Containers;
 
 namespace Content.Client.Storage.Systems;
 
-public sealed class ItemCounterSystem : SharedItemCounterSystem
+public sealed partial class ItemCounterSystem : SharedItemCounterSystem
 {
-    [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
+    [Dependency] private AppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {
@@ -31,7 +31,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
 
         if (!_appearanceSystem.TryGetData<bool>(uid, StackVisuals.Hide, out var hidden, args.Component))
             hidden = false;
-        
+
         if (comp.IsComposite)
             ProcessCompositeSprite(uid, actual, maxCount, comp.LayerStates, hidden, sprite: args.Sprite);
         else
@@ -43,7 +43,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
         if (!Resolve(uid, ref sprite)
         ||  !sprite.LayerMapTryGet(layer, out var layerKey, logError: true))
             return;
-        
+
         var activeState = ContentHelpers.RoundToEqualLevels(count, maxCount, states.Count);
         sprite.LayerSetState(layerKey, states[activeState]);
         sprite.LayerSetVisible(layerKey, !hide);
@@ -53,7 +53,7 @@ public sealed class ItemCounterSystem : SharedItemCounterSystem
     {
         if(!Resolve(uid, ref sprite))
             return;
-        
+
         var activeTill = ContentHelpers.RoundToNearestLevels(count, maxCount, layers.Count);
         for(var i = 0; i < layers.Count; ++i)
         {

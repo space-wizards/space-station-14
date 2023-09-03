@@ -11,12 +11,12 @@ using Content.Server.Body.Components;
 
 namespace Content.Server.Medical
 {
-    public sealed class HealthAnalyzerSystem : EntitySystem
+    public sealed partial class HealthAnalyzerSystem : EntitySystem
     {
-        [Dependency] private readonly PowerCellSystem _cell = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private PowerCellSystem _cell = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
         public override void Initialize()
         {

@@ -6,10 +6,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.PAI
 {
-    public sealed class PAISystem : SharedPAISystem
+    public sealed partial class PAISystem : SharedPAISystem
     {
-        [Dependency] private readonly InstrumentSystem _instrumentSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private InstrumentSystem _instrumentSystem = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {

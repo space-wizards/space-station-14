@@ -6,10 +6,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.LandMines;
 
-public sealed class LandMineSystem : EntitySystem
+public sealed partial class LandMineSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private SharedPopupSystem _popupSystem = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
 
     public override void Initialize()

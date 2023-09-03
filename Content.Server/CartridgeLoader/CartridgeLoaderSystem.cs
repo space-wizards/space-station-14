@@ -10,10 +10,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CartridgeLoader;
 
-public sealed class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
+public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
-    [Dependency] private readonly ContainerSystem _containerSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
+    [Dependency] private ContainerSystem _containerSystem = default!;
+    [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
 
     private const string ContainerName = "program-container";
 

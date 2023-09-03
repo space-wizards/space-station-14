@@ -6,7 +6,7 @@ namespace Content.Server.Explosion.EntitySystems
 {
     public sealed partial class TriggerSystem
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private DeviceLinkSystem _signalSystem = default!;
         private void InitializeSignal()
         {
             SubscribeLocalEvent<TriggerOnSignalComponent,SignalReceivedEvent>(OnSignalReceived);

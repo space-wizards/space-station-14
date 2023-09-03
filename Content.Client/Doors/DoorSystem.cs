@@ -10,11 +10,11 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Doors;
 
-public sealed class DoorSystem : SharedDoorSystem
+public sealed partial class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly AnimationPlayerSystem _animationSystem = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
+    [Dependency] private AnimationPlayerSystem _animationSystem = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
 
     public override void Initialize()
     {

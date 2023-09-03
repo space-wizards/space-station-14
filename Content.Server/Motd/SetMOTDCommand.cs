@@ -14,14 +14,14 @@ namespace Content.Server.Motd;
 /// A console command usable by any user which prints or sets the Message of the Day.
 /// </summary>
 [AdminCommand(AdminFlags.Admin)]
-public sealed class SetMotdCommand : LocalizedCommands
+public sealed partial class SetMotdCommand : LocalizedCommands
 {
-    [Dependency] private readonly IAdminLogManager _adminLogManager = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IAdminLogManager _adminLogManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public override string Command => "set-motd";
-    
+
     public override void Execute(IConsoleShell shell, string argStr, string[] args)
     {
         string motd = "";
@@ -32,7 +32,7 @@ public sealed class SetMotdCommand : LocalizedCommands
             if (player != null && _chatManager.MessageCharacterLimit(player, motd))
                 return; // check function prints its own error response
         }
-        
+
         _configurationManager.SetCVar(CCVars.MOTD, motd); // A hook in MOTDSystem broadcasts changes to the MOTD to everyone so we don't need to do it here.
         if (string.IsNullOrEmpty(motd))
         {

@@ -5,9 +5,9 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems;
 
-public sealed class DamagePopupSystem : EntitySystem
+public sealed partial class DamagePopupSystem : EntitySystem
 {
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
 
     public override void Initialize()
     {

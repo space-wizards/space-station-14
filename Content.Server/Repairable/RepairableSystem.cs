@@ -10,11 +10,11 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Repairable
 {
-    public sealed class RepairableSystem : SharedRepairableSystem
+    public sealed partial class RepairableSystem : SharedRepairableSystem
     {
-        [Dependency] private readonly SharedToolSystem _toolSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private SharedToolSystem _toolSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {

@@ -7,11 +7,11 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Traits;
 
-public sealed class TraitSystem : EntitySystem
+public sealed partial class TraitSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
-    [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ISerializationManager _serializationManager = default!;
+    [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
 
     public override void Initialize()
     {

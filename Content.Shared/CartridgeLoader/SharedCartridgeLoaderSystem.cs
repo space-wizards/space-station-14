@@ -5,10 +5,10 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.CartridgeLoader;
 
-public abstract class SharedCartridgeLoaderSystem : EntitySystem
+public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
+    [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;
+    [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
 
     public override void Initialize()
     {

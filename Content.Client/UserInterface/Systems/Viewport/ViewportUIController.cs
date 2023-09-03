@@ -10,12 +10,12 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Viewport;
 
-public sealed class ViewportUIController : UIController
+public sealed partial class ViewportUIController : UIController
 {
-    [Dependency] private readonly IEyeManager _eyeManager = default!;
-    [Dependency] private readonly IPlayerManager _playerMan = default!;
-    [Dependency] private readonly IEntityManager _entMan = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IEyeManager _eyeManager = default!;
+    [Dependency] private IPlayerManager _playerMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     public static readonly Vector2i ViewportSize = (EyeManager.PixelsPerMeter * 21, EyeManager.PixelsPerMeter * 15);
     public const int ViewportHeight = 15;

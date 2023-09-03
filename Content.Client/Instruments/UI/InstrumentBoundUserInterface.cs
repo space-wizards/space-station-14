@@ -8,13 +8,13 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Instruments.UI
 {
-    public sealed class InstrumentBoundUserInterface : BoundUserInterface
+    public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     {
-        [Dependency] public readonly IEntityManager Entities = default!;
-        [Dependency] public readonly IMidiManager MidiManager = default!;
-        [Dependency] public readonly IFileDialogManager FileDialogManager = default!;
-        [Dependency] public readonly IPlayerManager PlayerManager = default!;
-        [Dependency] public readonly ILocalizationManager Loc = default!;
+        [Dependency] public IEntityManager Entities = default!;
+        [Dependency] public IMidiManager MidiManager = default!;
+        [Dependency] public IFileDialogManager FileDialogManager = default!;
+        [Dependency] public IPlayerManager PlayerManager = default!;
+        [Dependency] public ILocalizationManager Loc = default!;
 
         public readonly InstrumentSystem Instruments = default!;
         public readonly ActionBlockerSystem ActionBlocker = default!;

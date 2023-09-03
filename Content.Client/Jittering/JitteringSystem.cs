@@ -12,9 +12,9 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Jittering
 {
-    public sealed class JitteringSystem : SharedJitteringSystem
+    public sealed partial class JitteringSystem : SharedJitteringSystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private IRobustRandom _random = default!;
 
         private readonly float[] _sign = { -1, 1 };
         private readonly string _jitterAnimationKey = "jittering";

@@ -9,10 +9,10 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Plants.Systems
 {
-    public sealed class PottedPlantHideSystem : EntitySystem
+    public sealed partial class PottedPlantHideSystem : EntitySystem
     {
-        [Dependency] private readonly SecretStashSystem _stashSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private SecretStashSystem _stashSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {

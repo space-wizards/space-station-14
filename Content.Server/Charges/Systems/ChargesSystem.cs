@@ -6,9 +6,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Charges.Systems;
 
-public sealed class ChargesSystem : SharedChargesSystem
+public sealed partial class ChargesSystem : SharedChargesSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

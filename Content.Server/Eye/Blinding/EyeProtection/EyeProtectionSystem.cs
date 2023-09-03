@@ -8,10 +8,10 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {
-    public sealed class EyeProtectionSystem : EntitySystem
+    public sealed partial class EyeProtectionSystem : EntitySystem
     {
-        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
-        [Dependency] private readonly BlindableSystem _blindingSystem = default!;
+        [Dependency] private StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private BlindableSystem _blindingSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

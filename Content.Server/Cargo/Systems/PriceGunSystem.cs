@@ -11,11 +11,11 @@ namespace Content.Server.Cargo.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class PriceGunSystem : EntitySystem
+public sealed partial class PriceGunSystem : EntitySystem
 {
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly PricingSystem _pricingSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private PricingSystem _pricingSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

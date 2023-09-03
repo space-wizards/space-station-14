@@ -4,9 +4,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Marker;
 
-public sealed class DamageMarkerSystem : SharedDamageMarkerSystem
+public sealed partial class DamageMarkerSystem : SharedDamageMarkerSystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private IGameTiming _timing = default!;
 
     public override void Initialize()
     {

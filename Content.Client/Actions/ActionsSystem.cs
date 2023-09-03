@@ -18,13 +18,13 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.Actions
 {
     [UsedImplicitly]
-    public sealed class ActionsSystem : SharedActionsSystem
+    public sealed partial class ActionsSystem : SharedActionsSystem
     {
         public delegate void OnActionReplaced(ActionType existing, ActionType action);
 
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IResourceManager _resources = default!;
-        [Dependency] private readonly ISerializationManager _serialization = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IResourceManager _resources = default!;
+        [Dependency] private ISerializationManager _serialization = default!;
 
         public event Action<ActionType>? ActionAdded;
         public event Action<ActionType>? ActionRemoved;

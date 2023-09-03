@@ -10,13 +10,13 @@ using Content.Shared.Silicons.Borgs;
 
 namespace Content.Server.Armor
 {
-    public sealed class ArmorSystem : EntitySystem
+    public sealed partial class ArmorSystem : EntitySystem
     {
         const double CoefDefaultPrice = 2; // default price of 1% protection against any type of damage
         const double FlatDefaultPrice = 10; //default price of 1 damage protection against a certain type of damage
 
-        [Dependency] private readonly ExamineSystem _examine = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
+        [Dependency] private ExamineSystem _examine = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
 
         public override void Initialize()
         {

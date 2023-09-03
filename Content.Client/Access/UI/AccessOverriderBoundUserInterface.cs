@@ -7,9 +7,9 @@ using static Content.Shared.Access.Components.AccessOverriderComponent;
 
 namespace Content.Client.Access.UI
 {
-    public sealed class AccessOverriderBoundUserInterface : BoundUserInterface
+    public sealed partial class AccessOverriderBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
         private readonly SharedAccessOverriderSystem _accessOverriderSystem = default!;
 
         private AccessOverriderWindow? _window;

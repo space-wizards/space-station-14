@@ -22,10 +22,10 @@ namespace Content.Server.Tools
 {
     public sealed partial class ToolSystem
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
-        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
 
         private readonly HashSet<EntityUid> _activeWelders = new();
 

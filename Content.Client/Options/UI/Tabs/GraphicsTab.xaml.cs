@@ -26,8 +26,8 @@ namespace Content.Client.Options.UI.Tabs
             2f
         };
 
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public GraphicsTab()
         {

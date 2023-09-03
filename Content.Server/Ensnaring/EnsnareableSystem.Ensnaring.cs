@@ -14,9 +14,9 @@ namespace Content.Server.Ensnaring;
 
 public sealed partial class EnsnareableSystem
 {
-    [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-    [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly BodySystem _body = default!;
+    [Dependency] private SharedDoAfterSystem _doAfter = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
+    [Dependency] private BodySystem _body = default!;
 
     public void InitializeEnsnaring()
     {

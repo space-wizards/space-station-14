@@ -16,11 +16,11 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Stunnable.Systems
 {
-    public sealed class StunbatonSystem : SharedStunbatonSystem
+    public sealed partial class StunbatonSystem : SharedStunbatonSystem
     {
-        [Dependency] private readonly SharedItemSystem _item = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly RiggableSystem _riggableSystem = default!;
+        [Dependency] private SharedItemSystem _item = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private RiggableSystem _riggableSystem = default!;
 
         public override void Initialize()
         {

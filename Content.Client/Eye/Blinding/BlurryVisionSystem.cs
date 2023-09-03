@@ -7,10 +7,10 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Eye.Blinding;
 
-public sealed class BlurryVisionSystem : EntitySystem
+public sealed partial class BlurryVisionSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IOverlayManager _overlayMan = default!;
     private BlurryVisionOverlay _overlay = default!;
 
     public override void Initialize()

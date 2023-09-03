@@ -9,11 +9,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
-public sealed class SeedExtractorSystem : EntitySystem
+public sealed partial class SeedExtractorSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly BotanySystem _botanySystem = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private BotanySystem _botanySystem = default!;
 
     public override void Initialize()
     {

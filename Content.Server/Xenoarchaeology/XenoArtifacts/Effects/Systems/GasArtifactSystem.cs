@@ -5,9 +5,9 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
-public sealed class GasArtifactSystem : EntitySystem
+public sealed partial class GasArtifactSystem : EntitySystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
+    [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
 
     public override void Initialize()
     {

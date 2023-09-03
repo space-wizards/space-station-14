@@ -16,14 +16,14 @@ namespace Content.Server.Singularity.EntitySystems;
 /// Primarily responsible for managing <see cref="GravityWellComponent"/>s.
 /// Handles the gravitational pulses they can emit.
 /// </summary>
-public sealed class GravityWellSystem : SharedGravityWellSystem
+public sealed partial class GravityWellSystem : SharedGravityWellSystem
 {
 #region Dependencies
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IViewVariablesManager _vvManager = default!;
-    [Dependency] private readonly EntityLookupSystem _lookup = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IViewVariablesManager _vvManager = default!;
+    [Dependency] private EntityLookupSystem _lookup = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 #endregion Dependencies
 
     /// <summary>

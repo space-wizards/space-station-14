@@ -4,9 +4,9 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Construction
 {
-    public abstract class SharedConstructionSystem : EntitySystem
+    public abstract partial class SharedConstructionSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
 
         /// <summary>
         ///     Get predicate for construction obstruction checks.

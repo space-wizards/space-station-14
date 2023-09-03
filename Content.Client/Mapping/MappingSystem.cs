@@ -10,9 +10,9 @@ namespace Content.Client.Mapping;
 
 public sealed partial class MappingSystem : EntitySystem
 {
-    [Dependency] private readonly IPlacementManager _placementMan = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileMan = default!;
-    [Dependency] private readonly ActionsSystem _actionsSystem = default!;
+    [Dependency] private IPlacementManager _placementMan = default!;
+    [Dependency] private ITileDefinitionManager _tileMan = default!;
+    [Dependency] private ActionsSystem _actionsSystem = default!;
 
     /// <summary>
     ///     The icon to use for space tiles.

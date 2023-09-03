@@ -11,10 +11,10 @@ namespace Content.Server.Motd;
 /// <summary>
 /// The system that handles broadcasting the Message Of The Day to players when they join the lobby/the MOTD changes/they ask for it to be printed.
 /// </summary>
-public sealed class MOTDSystem : EntitySystem
+public sealed partial class MOTDSystem : EntitySystem
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IConfigurationManager _configurationManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IConfigurationManager _configurationManager = default!;
 
     /// <summary>
     /// The cached value of the Message of the Day. Used for fast access.
@@ -41,7 +41,7 @@ public sealed class MOTDSystem : EntitySystem
     {
         if (string.IsNullOrEmpty(_messageOfTheDay))
             return;
-        
+
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
         _chatManager.ChatMessageToAll(ChatChannel.Server, _messageOfTheDay, wrappedMessage, source: EntityUid.Invalid, hideChat: false, recordReplay: true);
     }
@@ -53,7 +53,7 @@ public sealed class MOTDSystem : EntitySystem
     {
         if (string.IsNullOrEmpty(_messageOfTheDay))
             return;
-        
+
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
         _chatManager.ChatMessageToOne(ChatChannel.Server, _messageOfTheDay, wrappedMessage, source: EntityUid.Invalid, hideChat: false, client: player.ConnectedClient);
     }
@@ -68,7 +68,7 @@ public sealed class MOTDSystem : EntitySystem
     {
         if (string.IsNullOrEmpty(_messageOfTheDay))
             return;
-        
+
         var wrappedMessage = Loc.GetString("motd-wrap-message", ("motd", _messageOfTheDay));
         shell.WriteLine(wrappedMessage);
         if (shell.Player is IPlayerSession player)
@@ -92,7 +92,7 @@ public sealed class MOTDSystem : EntitySystem
     {
         if (val == _messageOfTheDay)
             return;
-        
+
         _messageOfTheDay = val;
         TrySendMOTD();
     }

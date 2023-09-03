@@ -8,9 +8,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AGhost : IConsoleCommand
+    public sealed partial class AGhost : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "aghost";
         public string Description => "Makes you an admin ghost.";

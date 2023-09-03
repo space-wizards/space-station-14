@@ -5,7 +5,7 @@ namespace Content.Shared.Examine
 {
     public abstract partial class ExamineSystemShared : EntitySystem
     {
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
+        [Dependency] private IComponentFactory _componentFactory = default!;
 
         public const string DefaultIconTexture = "/Textures/Interface/examine-star.png";
 

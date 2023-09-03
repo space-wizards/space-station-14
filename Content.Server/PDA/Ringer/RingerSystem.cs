@@ -14,13 +14,13 @@ using System.Linq;
 
 namespace Content.Server.PDA.Ringer
 {
-    public sealed class RingerSystem : SharedRingerSystem
+    public sealed partial class RingerSystem : SharedRingerSystem
     {
-        [Dependency] private readonly PdaSystem _pda = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private PdaSystem _pda = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private UserInterfaceSystem _ui = default!;
+        [Dependency] private AudioSystem _audio = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {

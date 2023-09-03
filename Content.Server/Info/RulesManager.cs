@@ -7,11 +7,11 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Info;
 
-public sealed class RulesManager : SharedRulesManager
+public sealed partial class RulesManager : SharedRulesManager
 {
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
 
     private static DateTime LastValidReadTime => DateTime.UtcNow - TimeSpan.FromDays(60);
 

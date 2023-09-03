@@ -4,9 +4,9 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class AddAccentClothingSystem : EntitySystem
+public sealed partial class AddAccentClothingSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
 
     public override void Initialize()
     {

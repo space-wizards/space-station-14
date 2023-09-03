@@ -33,27 +33,27 @@ namespace Content.Server.Salvage
 {
     public sealed partial class SalvageSystem : SharedSalvageSystem
     {
-        [Dependency] private readonly IChatManager _chat = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly AnchorableSystem _anchorable = default!;
-        [Dependency] private readonly BiomeSystem _biome = default!;
-        [Dependency] private readonly CargoSystem _cargo = default!;
-        [Dependency] private readonly DungeonSystem _dungeon = default!;
-        [Dependency] private readonly MapLoaderSystem _map = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly RadioSystem _radioSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
-        [Dependency] private readonly ShuttleSystem _shuttle = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _shuttleConsoles = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private IChatManager _chat = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private IGameTiming _timing = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private AnchorableSystem _anchorable = default!;
+        [Dependency] private BiomeSystem _biome = default!;
+        [Dependency] private CargoSystem _cargo = default!;
+        [Dependency] private DungeonSystem _dungeon = default!;
+        [Dependency] private MapLoaderSystem _map = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private RadioSystem _radioSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
+        [Dependency] private ShuttleSystem _shuttle = default!;
+        [Dependency] private ShuttleConsoleSystem _shuttleConsoles = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private UserInterfaceSystem _ui = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
 
         private const int SalvageLocationPlaceAttempts = 25;
 

@@ -8,9 +8,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
-public sealed class ArtifactMagnetTriggerSystem : EntitySystem
+public sealed partial class ArtifactMagnetTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
+    [Dependency] private ArtifactSystem _artifact = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

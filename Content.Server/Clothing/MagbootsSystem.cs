@@ -5,9 +5,9 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Clothing;
 
-public sealed class MagbootsSystem : SharedMagbootsSystem
+public sealed partial class MagbootsSystem : SharedMagbootsSystem
 {
-    [Dependency] private readonly AlertsSystem _alerts = default!;
+    [Dependency] private AlertsSystem _alerts = default!;
 
     public override void Initialize()
     {

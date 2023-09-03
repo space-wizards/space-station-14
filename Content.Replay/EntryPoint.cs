@@ -9,12 +9,12 @@ using Robust.Shared.ContentPack;
 namespace Content.Replay;
 
 [UsedImplicitly]
-public sealed class EntryPoint : GameClient
+public sealed partial class EntryPoint : GameClient
 {
-    [Dependency] private readonly IBaseClient _client = default!;
-    [Dependency] private readonly IStateManager _stateMan = default!;
-    [Dependency] private readonly ContentReplayPlaybackManager _contentReplayPlaybackMan = default!;
-    [Dependency] private readonly IClientConGroupController _conGrp = default!;
+    [Dependency] private IBaseClient _client = default!;
+    [Dependency] private IStateManager _stateMan = default!;
+    [Dependency] private ContentReplayPlaybackManager _contentReplayPlaybackMan = default!;
+    [Dependency] private IClientConGroupController _conGrp = default!;
 
     public override void Init()
     {

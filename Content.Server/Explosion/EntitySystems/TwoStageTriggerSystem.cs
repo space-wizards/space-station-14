@@ -4,12 +4,12 @@ using Content.Server.Explosion.Components.OnTrigger;
 
 namespace Content.Server.Explosion.EntitySystems;
 
-public sealed class TwoStageTriggerSystem : EntitySystem
+public sealed partial class TwoStageTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
-    [Dependency] private readonly TriggerSystem _triggerSystem = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private ISerializationManager _serializationManager = default!;
+    [Dependency] private TriggerSystem _triggerSystem = default!;
 
     public override void Initialize()
     {

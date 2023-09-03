@@ -5,10 +5,10 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.PowerCell;
 
-public abstract class SharedPowerCellSystem : EntitySystem
+public abstract partial class SharedPowerCellSystem : EntitySystem
 {
-    [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

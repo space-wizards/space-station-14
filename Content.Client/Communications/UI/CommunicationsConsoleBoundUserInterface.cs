@@ -4,9 +4,9 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Communications.UI
 {
-    public sealed class CommunicationsConsoleBoundUserInterface : BoundUserInterface
+    public sealed partial class CommunicationsConsoleBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
 
         [ViewVariables]
         private CommunicationsConsoleMenu? _menu;

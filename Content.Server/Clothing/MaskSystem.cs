@@ -17,15 +17,15 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Clothing
 {
-    public sealed class MaskSystem : EntitySystem
+    public sealed partial class MaskSystem : EntitySystem
     {
-        [Dependency] private readonly ActionsSystem _actionSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly InternalsSystem _internals = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly IdentitySystem _identity = default!;
-        [Dependency] private readonly ClothingSystem _clothing = default!;
+        [Dependency] private ActionsSystem _actionSystem = default!;
+        [Dependency] private AtmosphereSystem _atmos = default!;
+        [Dependency] private InternalsSystem _internals = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private IdentitySystem _identity = default!;
+        [Dependency] private ClothingSystem _clothing = default!;
 
         public override void Initialize()
         {

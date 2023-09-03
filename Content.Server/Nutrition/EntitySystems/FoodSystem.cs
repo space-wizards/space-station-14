@@ -35,23 +35,23 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles feeding attempts both on yourself and on the target.
     /// </summary>
-    public sealed class FoodSystem : EntitySystem
+    public sealed partial class FoodSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly FlavorProfileSystem _flavorProfileSystem = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly StomachSystem _stomachSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly UtensilSystem _utensilSystem = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly ReactiveSystem _reaction = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly StackSystem _stack = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private FlavorProfileSystem _flavorProfileSystem = default!;
+        [Dependency] private BodySystem _bodySystem = default!;
+        [Dependency] private StomachSystem _stomachSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private UtensilSystem _utensilSystem = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private ReactiveSystem _reaction = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private StackSystem _stack = default!;
 
         public const float MaxFeedDistance = 1.0f;
 

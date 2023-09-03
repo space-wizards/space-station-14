@@ -20,9 +20,9 @@ namespace Content.Client.Changelog
 {
     public sealed partial class ChangelogManager
     {
-        [Dependency] private readonly IResourceManager _resource = default!;
-        [Dependency] private readonly ISerializationManager _serialization = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
+        [Dependency] private IResourceManager _resource = default!;
+        [Dependency] private ISerializationManager _serialization = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
 
         public bool NewChangelogEntries { get; private set; }
         public int LastReadId { get; private set; }

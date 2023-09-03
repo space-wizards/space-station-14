@@ -16,13 +16,13 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Temperature.Systems
 {
-    public sealed class TemperatureSystem : EntitySystem
+    public sealed partial class TemperatureSystem : EntitySystem
     {
-        [Dependency] private readonly TransformSystem _transformSystem = default!;
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly AtmosphereSystem _atmosphereSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private TransformSystem _transformSystem = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private AtmosphereSystem _atmosphereSystem = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     All the components that will have their damage updated at the end of the tick.

@@ -16,7 +16,7 @@ namespace Content.Client.Power;
 [GenerateTypedNameReferences]
 public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<PowerMonitoringConsoleBoundInterfaceState>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
     private readonly SpriteSystem _spriteSystem = default!;
 
     public PowerMonitoringWindow()

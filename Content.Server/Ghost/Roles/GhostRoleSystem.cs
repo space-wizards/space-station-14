@@ -26,16 +26,16 @@ using Robust.Shared.Utility;
 namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
-    public sealed class GhostRoleSystem : EntitySystem
+    public sealed partial class GhostRoleSystem : EntitySystem
     {
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
-        [Dependency] private readonly RoleSystem _roleSystem = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private FollowerSystem _followerSystem = default!;
+        [Dependency] private TransformSystem _transform = default!;
+        [Dependency] private MindSystem _mindSystem = default!;
+        [Dependency] private RoleSystem _roleSystem = default!;
 
         private uint _nextRoleIdentifier;
         private bool _needsUpdateGhostRoleCount = true;

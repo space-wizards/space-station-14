@@ -10,9 +10,9 @@ using Robust.Shared.Random;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
-public sealed class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
+public sealed partial class BreakerFlipRule : StationEventSystem<BreakerFlipRuleComponent>
 {
-    [Dependency] private readonly ApcSystem _apcSystem = default!;
+    [Dependency] private ApcSystem _apcSystem = default!;
 
     protected override void Added(EntityUid uid, BreakerFlipRuleComponent component, GameRuleComponent gameRule, GameRuleAddedEvent args)
     {

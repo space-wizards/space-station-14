@@ -5,9 +5,9 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Movement.Systems;
 
-public sealed class ClimbSystem : SharedClimbSystem
+public sealed partial class ClimbSystem : SharedClimbSystem
 {
-    [Dependency] private readonly InteractionSystem _interactionSystem = default!;
+    [Dependency] private InteractionSystem _interactionSystem = default!;
 
     public override void Initialize()
     {

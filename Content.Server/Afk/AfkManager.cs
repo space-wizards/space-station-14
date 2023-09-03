@@ -32,13 +32,13 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
-    public sealed class AfkManager : IAfkManager, IEntityEventSubscriber
+    public sealed partial class AfkManager : IAfkManager, IEntityEventSubscriber
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IConsoleHost _consoleHost = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IConsoleHost _consoleHost = default!;
 
         private readonly Dictionary<IPlayerSession, TimeSpan> _lastActionTimes = new();
 

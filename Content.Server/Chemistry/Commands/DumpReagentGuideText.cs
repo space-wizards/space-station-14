@@ -7,10 +7,10 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class DumpReagentGuideText : IConsoleCommand
+public sealed partial class DumpReagentGuideText : IConsoleCommand
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IEntitySystemManager _entSys = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IEntitySystemManager _entSys = default!;
 
     public string Command => "dumpreagentguidetext";
     public string Description => "Dumps the guidebook text for a reagent to the console";

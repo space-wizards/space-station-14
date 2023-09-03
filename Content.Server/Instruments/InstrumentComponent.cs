@@ -8,7 +8,7 @@ namespace Content.Server.Instruments;
 [RegisterComponent, ComponentReference(typeof(SharedInstrumentComponent))]
 public sealed partial class InstrumentComponent : SharedInstrumentComponent
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
 
     [ViewVariables] public float Timer = 0f;
     [ViewVariables] public int BatchesDropped = 0;

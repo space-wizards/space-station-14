@@ -5,10 +5,10 @@ using Content.Shared.Tag;
 
 namespace Content.Shared.StepTrigger.Systems;
 
-public sealed class ShoesRequiredStepTriggerSystem : EntitySystem
+public sealed partial class ShoesRequiredStepTriggerSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly TagSystem _tagSystem = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

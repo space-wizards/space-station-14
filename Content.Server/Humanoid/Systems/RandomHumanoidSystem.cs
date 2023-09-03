@@ -11,13 +11,13 @@ namespace Content.Server.Humanoid.Systems;
 /// <summary>
 ///     This deals with spawning and setting up random humanoids.
 /// </summary>
-public sealed class RandomHumanoidSystem : EntitySystem
+public sealed partial class RandomHumanoidSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ISerializationManager _serialization = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ISerializationManager _serialization = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private HumanoidAppearanceSystem _humanoid = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

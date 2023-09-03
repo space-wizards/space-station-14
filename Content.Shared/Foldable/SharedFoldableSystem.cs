@@ -8,10 +8,10 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Foldable;
 
 [UsedImplicitly]
-public abstract class SharedFoldableSystem : EntitySystem
+public abstract partial class SharedFoldableSystem : EntitySystem
 {
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] private readonly SharedBuckleSystem _buckle = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] private SharedBuckleSystem _buckle = default!;
 
     public override void Initialize()
     {

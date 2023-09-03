@@ -21,16 +21,16 @@ namespace Content.Replay.Menu;
 /// <summary>
 /// Main menu screen for selecting and loading replays.
 /// </summary>
-public sealed class ReplayMainScreen : State
+public sealed partial class ReplayMainScreen : State
 {
-    [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly IComponentFactory _factory = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IReplayLoadManager _loadMan = default!;
-    [Dependency] private readonly IResourceCache _resourceCache = default!;
-    [Dependency] private readonly IGameController _controllerProxy = default!;
-    [Dependency] private readonly IClientRobustSerializer _serializer = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
+    [Dependency] private IResourceManager _resMan = default!;
+    [Dependency] private IComponentFactory _factory = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IReplayLoadManager _loadMan = default!;
+    [Dependency] private IResourceCache _resourceCache = default!;
+    [Dependency] private IGameController _controllerProxy = default!;
+    [Dependency] private IClientRobustSerializer _serializer = default!;
+    [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
 
     private ReplayMainMenuControl _mainMenuControl = default!;
     private SelectReplayWindow? _selectWindow;

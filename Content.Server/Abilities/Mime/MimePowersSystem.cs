@@ -14,16 +14,16 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Abilities.Mime
 {
-    public sealed class MimePowersSystem : EntitySystem
+    public sealed partial class MimePowersSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private readonly TurfSystem _turf = default!;
-        [Dependency] private readonly IMapManager _mapMan = default!;
-        [Dependency] private readonly SharedContainerSystem _container = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private EntityLookupSystem _lookupSystem = default!;
+        [Dependency] private TurfSystem _turf = default!;
+        [Dependency] private IMapManager _mapMan = default!;
+        [Dependency] private SharedContainerSystem _container = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {

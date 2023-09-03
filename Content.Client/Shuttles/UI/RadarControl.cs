@@ -22,10 +22,10 @@ namespace Content.Client.Shuttles.UI;
 /// <summary>
 /// Displays nearby grids inside of a control.
 /// </summary>
-public sealed class RadarControl : MapGridControl
+public sealed partial class RadarControl : MapGridControl
 {
-    [Dependency] private readonly IEntityManager _entManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
+    [Dependency] private IEntityManager _entManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
     private SharedTransformSystem _transform;
 
     private const float GridLinesDistance = 32f;

@@ -11,7 +11,7 @@ namespace Content.Client.Xenoarchaeology.Ui;
 [GenerateTypedNameReferences]
 public sealed partial class AnalysisConsoleMenu : FancyWindow
 {
-    [Dependency] private readonly IEntityManager _ent = default!;
+    [Dependency] private IEntityManager _ent = default!;
     public event Action? OnServerSelectionButtonPressed;
     public event Action? OnScanButtonPressed;
     public event Action? OnPrintButtonPressed;

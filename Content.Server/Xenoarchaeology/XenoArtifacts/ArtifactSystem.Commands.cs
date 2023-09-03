@@ -7,7 +7,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
 public partial class ArtifactSystem
 {
-    [Dependency] private readonly IConsoleHost _conHost = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
 
     public void InitializeCommands()
     {

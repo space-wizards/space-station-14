@@ -13,12 +13,12 @@ using Content.Shared.Popups;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class SolutionTransferSystem : EntitySystem
+    public sealed partial class SolutionTransferSystem : EntitySystem
     {
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         /// <summary>
         ///     Default transfer amounts for the set-transfer verb.

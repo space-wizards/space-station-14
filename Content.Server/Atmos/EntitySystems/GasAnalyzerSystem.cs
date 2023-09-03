@@ -14,13 +14,13 @@ using static Content.Shared.Atmos.Components.GasAnalyzerComponent;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class GasAnalyzerSystem : EntitySystem
+    public sealed partial class GasAnalyzerSystem : EntitySystem
     {
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly AtmosphereSystem _atmo = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private AtmosphereSystem _atmo = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private UserInterfaceSystem _userInterface = default!;
+        [Dependency] private TransformSystem _transform = default!;
 
         public override void Initialize()
         {

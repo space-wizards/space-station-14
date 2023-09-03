@@ -12,11 +12,11 @@ namespace Content.Server.Tools.Innate
     ///     Spawns a list unremovable tools in hands if possible. Used for drones,
     ///     borgs, or maybe even stuff like changeling armblades!
     /// </summary>
-    public sealed class InnateToolSystem : EntitySystem
+    public sealed partial class InnateToolSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly SharedHandsSystem _sharedHandsSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private SharedHandsSystem _sharedHandsSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

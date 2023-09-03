@@ -14,7 +14,7 @@ namespace Content.Client.Lathe.UI;
 [GenerateTypedNameReferences]
 public sealed partial class LatheMaterialEjector : PanelContainer
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public string Material;
     public Action<string, int>? OnEjectPressed;

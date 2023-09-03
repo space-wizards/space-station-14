@@ -9,15 +9,15 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Clothing;
 
-public abstract class SharedMagbootsSystem : EntitySystem
+public abstract partial class SharedMagbootsSystem : EntitySystem
 {
-    [Dependency] private readonly ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
-    [Dependency] private readonly ClothingSystem _clothing = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedActionsSystem _sharedActions = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedContainerSystem _sharedContainer = default!;
-    [Dependency] private readonly SharedItemSystem _item = default!;
+    [Dependency] private ClothingSpeedModifierSystem _clothingSpeedModifier = default!;
+    [Dependency] private ClothingSystem _clothing = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private SharedActionsSystem _sharedActions = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedContainerSystem _sharedContainer = default!;
+    [Dependency] private SharedItemSystem _item = default!;
 
     public override void Initialize()
     {

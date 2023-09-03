@@ -40,37 +40,37 @@ using Robust.Shared.Replays;
 
 namespace Content.Client.Entry
 {
-    public sealed class EntryPoint : GameClient
+    public sealed partial class EntryPoint : GameClient
     {
-        [Dependency] private readonly IBaseClient _baseClient = default!;
-        [Dependency] private readonly IGameController _gameController = default!;
-        [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IComponentFactory _componentFactory = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IParallaxManager _parallaxManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly IStylesheetManager _stylesheetManager = default!;
-        [Dependency] private readonly IScreenshotHook _screenshotHook = default!;
-        [Dependency] private readonly ChangelogManager _changelogManager = default!;
-        [Dependency] private readonly RulesManager _rulesManager = default!;
-        [Dependency] private readonly ViewportManager _viewportManager = default!;
-        [Dependency] private readonly IUserInterfaceManager _userInterfaceManager = default!;
-        [Dependency] private readonly IInputManager _inputManager = default!;
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IChatManager _chatManager = default!;
-        [Dependency] private readonly IClientPreferencesManager _clientPreferencesManager = default!;
-        [Dependency] private readonly EuiManager _euiManager = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly DocumentParsingManager _documentParsingManager = default!;
-        [Dependency] private readonly GhostKickManager _ghostKick = default!;
-        [Dependency] private readonly ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
-        [Dependency] private readonly JobRequirementsManager _jobRequirements = default!;
-        [Dependency] private readonly ContentLocalizationManager _contentLoc = default!;
-        [Dependency] private readonly ContentReplayPlaybackManager _playbackMan = default!;
-        [Dependency] private readonly IResourceManager _resourceManager = default!;
-        [Dependency] private readonly IReplayLoadManager _replayLoad = default!;
-        [Dependency] private readonly ILogManager _logManager = default!;
+        [Dependency] private IBaseClient _baseClient = default!;
+        [Dependency] private IGameController _gameController = default!;
+        [Dependency] private IStateManager _stateManager = default!;
+        [Dependency] private IComponentFactory _componentFactory = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IParallaxManager _parallaxManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private IStylesheetManager _stylesheetManager = default!;
+        [Dependency] private IScreenshotHook _screenshotHook = default!;
+        [Dependency] private ChangelogManager _changelogManager = default!;
+        [Dependency] private RulesManager _rulesManager = default!;
+        [Dependency] private ViewportManager _viewportManager = default!;
+        [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;
+        [Dependency] private IInputManager _inputManager = default!;
+        [Dependency] private IOverlayManager _overlayManager = default!;
+        [Dependency] private IChatManager _chatManager = default!;
+        [Dependency] private IClientPreferencesManager _clientPreferencesManager = default!;
+        [Dependency] private EuiManager _euiManager = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private DocumentParsingManager _documentParsingManager = default!;
+        [Dependency] private GhostKickManager _ghostKick = default!;
+        [Dependency] private ExtendedDisconnectInformationManager _extendedDisconnectInformation = default!;
+        [Dependency] private JobRequirementsManager _jobRequirements = default!;
+        [Dependency] private ContentLocalizationManager _contentLoc = default!;
+        [Dependency] private ContentReplayPlaybackManager _playbackMan = default!;
+        [Dependency] private IResourceManager _resourceManager = default!;
+        [Dependency] private IReplayLoadManager _replayLoad = default!;
+        [Dependency] private ILogManager _logManager = default!;
 
         public override void Init()
         {

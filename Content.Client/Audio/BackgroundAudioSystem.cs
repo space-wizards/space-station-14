@@ -11,13 +11,13 @@ using Robust.Shared.Player;
 namespace Content.Client.Audio;
 
 [UsedImplicitly]
-public sealed class BackgroundAudioSystem : EntitySystem
+public sealed partial class BackgroundAudioSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly IBaseClient _client = default!;
-    [Dependency] private readonly IConfigurationManager _configManager = default!;
-    [Dependency] private readonly ClientGameTicker _gameTicker = default!;
-    [Dependency] private readonly IStateManager _stateManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private IBaseClient _client = default!;
+    [Dependency] private IConfigurationManager _configManager = default!;
+    [Dependency] private ClientGameTicker _gameTicker = default!;
+    [Dependency] private IStateManager _stateManager = default!;
 
     private readonly AudioParams _lobbyParams = new(-5f, 1, "Master", 0, 0, 0, true, 0f);
 

@@ -8,10 +8,10 @@ namespace Content.Shared.Placeable;
 /// Tracks placed entities
 /// Subscribe to <see cref="ItemPlacedEvent"/> or <see cref="ItemRemovedEvent"/> to do things when items or placed or removed.
 /// </summary>
-public sealed class ItemPlacerSystem : EntitySystem
+public sealed partial class ItemPlacerSystem : EntitySystem
 {
-    [Dependency] private readonly PlaceableSurfaceSystem _placeableSurface = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+    [Dependency] private PlaceableSurfaceSystem _placeableSurface = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
 
     public override void Initialize()
     {

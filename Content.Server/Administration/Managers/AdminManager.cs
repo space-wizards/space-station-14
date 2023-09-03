@@ -23,17 +23,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers
 {
-    public sealed class AdminManager : IAdminManager, IPostInjectInit, IConGroupControllerImplementation
+    public sealed partial class AdminManager : IAdminManager, IPostInjectInit, IConGroupControllerImplementation
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IServerDbManager _dbManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IServerNetManager _netMgr = default!;
-        [Dependency] private readonly IConGroupController _conGroup = default!;
-        [Dependency] private readonly IResourceManager _res = default!;
-        [Dependency] private readonly IServerConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IChatManager _chat = default!;
-        [Dependency] private readonly ToolshedManager _toolshed = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IServerDbManager _dbManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IServerNetManager _netMgr = default!;
+        [Dependency] private IConGroupController _conGroup = default!;
+        [Dependency] private IResourceManager _res = default!;
+        [Dependency] private IServerConsoleHost _consoleHost = default!;
+        [Dependency] private IChatManager _chat = default!;
+        [Dependency] private ToolshedManager _toolshed = default!;
 
         private readonly Dictionary<IPlayerSession, AdminReg> _admins = new();
         private readonly HashSet<NetUserId> _promotedPlayers = new();

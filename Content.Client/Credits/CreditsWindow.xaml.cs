@@ -23,8 +23,8 @@ namespace Content.Client.Credits
     [GenerateTypedNameReferences]
     public sealed partial class CreditsWindow : DefaultWindow
     {
-        [Dependency] private readonly IResourceCache _resourceManager = default!;
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
+        [Dependency] private IResourceCache _resourceManager = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
 
         private static readonly Dictionary<string, int> PatronTierPriority = new()
         {

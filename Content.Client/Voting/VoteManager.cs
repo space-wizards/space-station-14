@@ -28,12 +28,12 @@ namespace Content.Client.Voting
         event Action CanCallStandardVotesChanged;
     }
 
-    public sealed class VoteManager : IVoteManager
+    public sealed partial class VoteManager : IVoteManager
     {
-        [Dependency] private readonly IClientNetManager _netManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IBaseClient _client = default!;
+        [Dependency] private IClientNetManager _netManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IClientConsoleHost _console = default!;
+        [Dependency] private IBaseClient _client = default!;
 
         private readonly Dictionary<StandardVoteType, TimeSpan> _standardVoteTimeouts = new();
         private readonly Dictionary<int, ActiveVote> _votes = new();

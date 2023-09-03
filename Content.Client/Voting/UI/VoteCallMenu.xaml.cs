@@ -21,10 +21,10 @@ namespace Content.Client.Voting.UI
     [GenerateTypedNameReferences]
     public sealed partial class VoteCallMenu : BaseWindow
     {
-        [Dependency] private readonly IClientConsoleHost _consoleHost = default!;
-        [Dependency] private readonly IVoteManager _voteManager = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IClientNetManager _netManager = default!;
+        [Dependency] private IClientConsoleHost _consoleHost = default!;
+        [Dependency] private IVoteManager _voteManager = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IClientNetManager _netManager = default!;
 
         public static readonly (string name, StandardVoteType type, (string name, string id)[]? secondaries)[]
             AvailableVoteTypes =

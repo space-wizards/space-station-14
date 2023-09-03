@@ -12,10 +12,10 @@ using Robust.Shared.IoC;
 namespace Content.Client.HealthOverlay
 {
     [UsedImplicitly]
-    public sealed class HealthOverlaySystem : EntitySystem
+    public sealed partial class HealthOverlaySystem : EntitySystem
     {
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         private readonly Dictionary<EntityUid, HealthOverlayGui> _guis = new();
         private EntityUid? _attachedEntity;

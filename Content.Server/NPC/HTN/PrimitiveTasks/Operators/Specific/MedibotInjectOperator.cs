@@ -13,7 +13,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
-    [Dependency] private readonly IEntityManager _entMan = default!;
+    [Dependency] private IEntityManager _entMan = default!;
     private SharedAudioSystem _audio = default!;
     private ChatSystem _chat = default!;
     private SharedInteractionSystem _interaction = default!;

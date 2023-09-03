@@ -5,9 +5,9 @@ using Timer = Robust.Shared.Timing.Timer;
 
 namespace Content.Server.GameTicking.Rules;
 
-public sealed class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRuleComponent>
+public sealed partial class MaxTimeRestartRuleSystem : GameRuleSystem<MaxTimeRestartRuleComponent>
 {
-    [Dependency] private readonly IChatManager _chatManager = default!;
+    [Dependency] private IChatManager _chatManager = default!;
 
     public override void Initialize()
     {

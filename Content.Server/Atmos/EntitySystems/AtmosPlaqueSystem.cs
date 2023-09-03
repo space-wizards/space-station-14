@@ -5,11 +5,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Atmos.EntitySystems;
 
-public sealed class AtmosPlaqueSystem : EntitySystem
+public sealed partial class AtmosPlaqueSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

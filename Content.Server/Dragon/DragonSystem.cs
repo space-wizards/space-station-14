@@ -29,15 +29,15 @@ namespace Content.Server.Dragon;
 
 public sealed partial class DragonSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ISerializationManager _serManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDef = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-    [Dependency] private readonly PopupSystem _popupSystem = default!;
-    [Dependency] private readonly MovementSpeedModifierSystem _movement = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly NPCSystem _npc = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private ISerializationManager _serManager = default!;
+    [Dependency] private ITileDefinitionManager _tileDef = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private SharedActionsSystem _actionsSystem = default!;
+    [Dependency] private PopupSystem _popupSystem = default!;
+    [Dependency] private MovementSpeedModifierSystem _movement = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private NPCSystem _npc = default!;
 
     /// <summary>
     /// Minimum distance between 2 rifts allowed.

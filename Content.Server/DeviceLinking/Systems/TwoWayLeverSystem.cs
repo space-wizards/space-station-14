@@ -6,10 +6,10 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.DeviceLinking.Systems
 {
-    public sealed class TwoWayLeverSystem : EntitySystem
+    public sealed partial class TwoWayLeverSystem : EntitySystem
     {
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private DeviceLinkSystem _signalSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         const string _leftToggleImage = "rotate_ccw.svg.192dpi.png";
         const string _rightToggleImage = "rotate_cw.svg.192dpi.png";

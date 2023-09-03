@@ -9,7 +9,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
-    public sealed class PullController : VirtualController
+    public sealed partial class PullController : VirtualController
     {
         // Parameterization for pulling:
         // Speeds. Note that the speed is mass-independent (multiplied by mass).
@@ -37,9 +37,9 @@ namespace Content.Server.Physics.Controllers
         // How much you must move for the puller movement check to actually hit.
         private const float MinimumMovementDistance = 0.005f;
 
-        [Dependency] private readonly SharedPullingSystem _pullableSystem = default!;
-        [Dependency] private readonly SharedGravitySystem _gravity = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private SharedPullingSystem _pullableSystem = default!;
+        [Dependency] private SharedGravitySystem _gravity = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
 
         // TODO: Move this stuff to pullingsystem
         /// <summary>

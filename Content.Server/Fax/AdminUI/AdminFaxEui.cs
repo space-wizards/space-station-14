@@ -8,9 +8,9 @@ using Content.Shared.Paper;
 
 namespace Content.Server.Fax.AdminUI;
 
-public sealed class AdminFaxEui : BaseEui
+public sealed partial class AdminFaxEui : BaseEui
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
     private readonly FaxSystem _faxSystem;
     private readonly FollowerSystem _followerSystem;
 

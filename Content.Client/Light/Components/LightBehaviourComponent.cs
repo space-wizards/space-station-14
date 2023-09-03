@@ -359,8 +359,8 @@ namespace Content.Client.Light.Components
     [RegisterComponent]
     public sealed partial class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
-        [Dependency] private readonly IEntityManager _entMan = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
+        [Dependency] private IEntityManager _entMan = default!;
+        [Dependency] private IRobustRandom _random = default!;
 
         private const string KeyPrefix = nameof(LightBehaviourComponent);
 

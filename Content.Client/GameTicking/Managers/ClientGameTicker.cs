@@ -14,12 +14,12 @@ using Robust.Shared.Utility;
 namespace Content.Client.GameTicking.Managers
 {
     [UsedImplicitly]
-    public sealed class ClientGameTicker : SharedGameTicker
+    public sealed partial class ClientGameTicker : SharedGameTicker
     {
-        [Dependency] private readonly IStateManager _stateManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IConfigurationManager _configManager = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private IStateManager _stateManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IConfigurationManager _configManager = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
 
         [ViewVariables] private bool _initialized;
         private Dictionary<EntityUid, Dictionary<string, uint?>>  _jobsAvailable = new();

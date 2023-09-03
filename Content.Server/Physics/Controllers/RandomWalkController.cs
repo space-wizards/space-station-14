@@ -14,12 +14,12 @@ namespace Content.Server.Physics.Controllers;
 /// The entity system responsible for managing <see cref="RandomWalkComponent"/>s.
 /// Handles updating the direction they move in when their cooldown elapses.
 /// </summary>
-internal sealed class RandomWalkController : VirtualController
+internal sealed partial class RandomWalkController : VirtualController
 {
     #region Dependencies
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly PhysicsSystem _physics = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
     #endregion Dependencies
 
     public override void Initialize()

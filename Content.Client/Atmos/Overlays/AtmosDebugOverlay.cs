@@ -11,12 +11,12 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
-    public sealed class AtmosDebugOverlay : Overlay
+    public sealed partial class AtmosDebugOverlay : Overlay
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;
 
-        [Dependency] private readonly IEntityManager _entManager = default!;
-        [Dependency] private readonly IMapManager _mapManager = default!;
+        [Dependency] private IEntityManager _entManager = default!;
+        [Dependency] private IMapManager _mapManager = default!;
 
         public override OverlaySpace Space => OverlaySpace.WorldSpace;
 

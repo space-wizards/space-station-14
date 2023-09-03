@@ -22,14 +22,14 @@ namespace Content.Client.Replay.Spectator;
 /// </remarks>
 public sealed partial class ReplaySpectatorSystem : EntitySystem
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IStateManager _stateMan = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly IBaseClient _client = default!;
-    [Dependency] private readonly SharedContentEyeSystem _eye = default!;
-    [Dependency] private readonly IReplayPlaybackManager _replayPlayback = default!;
+    [Dependency] private IPlayerManager _player = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
+    [Dependency] private IStateManager _stateMan = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private IBaseClient _client = default!;
+    [Dependency] private SharedContentEyeSystem _eye = default!;
+    [Dependency] private IReplayPlaybackManager _replayPlayback = default!;
 
     private SpectatorData? _spectatorData;
     public const string SpectateCmd = "replay_spectate";

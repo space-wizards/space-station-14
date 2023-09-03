@@ -4,9 +4,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid.Markings
 {
-    public sealed class MarkingManager
+    public sealed partial class MarkingManager
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         private readonly List<MarkingPrototype> _index = new();
         private readonly Dictionary<MarkingCategories, Dictionary<string, MarkingPrototype>> _markingDict = new();
@@ -181,7 +181,7 @@ namespace Content.Shared.Humanoid.Markings
                 alpha = 1f;
                 return false;
             }
-            
+
             alpha = sprite.LayerAlpha;
             return true;
         }

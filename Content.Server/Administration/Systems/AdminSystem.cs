@@ -15,13 +15,13 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems
 {
-    public sealed class AdminSystem : EntitySystem
+    public sealed partial class AdminSystem : EntitySystem
     {
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly JobSystem _jobs = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
-        [Dependency] private readonly RoleSystem _role = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private JobSystem _jobs = default!;
+        [Dependency] private MindSystem _minds = default!;
+        [Dependency] private RoleSystem _role = default!;
 
         private readonly Dictionary<NetUserId, PlayerInfo> _playerList = new();
 

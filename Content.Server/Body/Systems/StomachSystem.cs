@@ -7,9 +7,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class StomachSystem : EntitySystem
+    public sealed partial class StomachSystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
 
         public const string DefaultSolutionName = "stomach";
 

@@ -20,15 +20,15 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Misc;
 
-public abstract class SharedGrapplingGunSystem : EntitySystem
+public abstract partial class SharedGrapplingGunSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming Timing = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedJointSystem _joints = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly UseDelaySystem _delay = default!;
+    [Dependency] protected IGameTiming Timing = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedJointSystem _joints = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private UseDelaySystem _delay = default!;
 
     public const string GrapplingJoint = "grappling";
 

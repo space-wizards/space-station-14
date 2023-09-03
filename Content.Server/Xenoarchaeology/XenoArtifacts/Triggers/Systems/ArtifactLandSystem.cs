@@ -3,9 +3,9 @@ using Content.Shared.Throwing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
-public sealed class ArtifactLandSystem : EntitySystem
+public sealed partial class ArtifactLandSystem : EntitySystem
 {
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
+    [Dependency] private ArtifactSystem _artifact = default!;
 
     public override void Initialize()
     {

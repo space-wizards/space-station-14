@@ -21,17 +21,17 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
 
-public sealed class MindSystem : EntitySystem
+public sealed partial class MindSystem : EntitySystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly ActorSystem _actor = default!;
-    [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] private readonly GhostSystem _ghostSystem = default!;
-    [Dependency] private readonly TransformSystem _transform = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly IPlayerManager _playerManager = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private ActorSystem _actor = default!;
+    [Dependency] private MobStateSystem _mobStateSystem = default!;
+    [Dependency] private GhostSystem _ghostSystem = default!;
+    [Dependency] private TransformSystem _transform = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private IPlayerManager _playerManager = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     // This is dictionary is required to track the minds of disconnected players that may have had their entity deleted.
     private readonly Dictionary<NetUserId, EntityUid> _userMinds = new();

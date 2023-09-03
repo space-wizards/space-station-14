@@ -21,7 +21,7 @@ namespace Content.Server.Chat.Managers
     /// <summary>
     ///     Dispatches chat messages to clients.
     /// </summary>
-    internal sealed class ChatManager : IChatManager
+    internal sealed partial class ChatManager : IChatManager
     {
         private static readonly Dictionary<string, string> PatronOocColors = new()
         {
@@ -31,15 +31,15 @@ namespace Content.Server.Chat.Managers
             { "revolutionary", "#aa00ff" }
         };
 
-        [Dependency] private readonly IReplayRecordingManager _replay = default!;
-        [Dependency] private readonly IServerNetManager _netManager = default!;
-        [Dependency] private readonly IMoMMILink _mommiLink = default!;
-        [Dependency] private readonly IAdminManager _adminManager = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IServerPreferencesManager _preferencesManager = default!;
-        [Dependency] private readonly IConfigurationManager _configurationManager = default!;
-        [Dependency] private readonly INetConfigurationManager _netConfigManager = default!;
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IReplayRecordingManager _replay = default!;
+        [Dependency] private IServerNetManager _netManager = default!;
+        [Dependency] private IMoMMILink _mommiLink = default!;
+        [Dependency] private IAdminManager _adminManager = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IServerPreferencesManager _preferencesManager = default!;
+        [Dependency] private IConfigurationManager _configurationManager = default!;
+        [Dependency] private INetConfigurationManager _netConfigManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         /// <summary>
         /// The maximum length a player-sent message can be sent

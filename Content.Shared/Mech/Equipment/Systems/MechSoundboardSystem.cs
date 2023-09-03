@@ -10,10 +10,10 @@ namespace Content.Shared.Mech.Equipment.Systems;
 /// <summary>
 /// Handles everything for mech soundboard.
 /// </summary>
-public sealed class MechSoundboardSystem : EntitySystem
+public sealed partial class MechSoundboardSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
 
     public override void Initialize()
     {

@@ -15,11 +15,11 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
+    public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
     {
-        [Dependency] private readonly AmbientSoundSystem _ambient = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private AmbientSoundSystem _ambient = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

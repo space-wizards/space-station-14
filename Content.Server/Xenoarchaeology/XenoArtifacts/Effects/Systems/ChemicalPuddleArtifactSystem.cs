@@ -8,11 +8,11 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 /// This handles <see cref="ChemicalPuddleArtifactComponent"/>
 /// </summary>
-public sealed class ChemicalPuddleArtifactSystem : EntitySystem
+public sealed partial class ChemicalPuddleArtifactSystem : EntitySystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly ArtifactSystem _artifact = default!;
-    [Dependency] private readonly PuddleSystem _puddle = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private ArtifactSystem _artifact = default!;
+    [Dependency] private PuddleSystem _puddle = default!;
 
     /// <summary>
     /// The key for the node data entry containing

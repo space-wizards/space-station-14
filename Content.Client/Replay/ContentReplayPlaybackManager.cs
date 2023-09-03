@@ -28,18 +28,18 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Client.Replay;
 
-public sealed class ContentReplayPlaybackManager
+public sealed partial class ContentReplayPlaybackManager
 {
-    [Dependency] private readonly IStateManager _stateMan = default!;
-    [Dependency] private readonly IClientGameTiming _timing = default!;
-    [Dependency] private readonly IReplayLoadManager _loadMan = default!;
-    [Dependency] private readonly IGameController _controller = default!;
-    [Dependency] private readonly IClientEntityManager _entMan = default!;
-    [Dependency] private readonly IUserInterfaceManager _uiMan = default!;
-    [Dependency] private readonly IReplayPlaybackManager _playback = default!;
-    [Dependency] private readonly IClientConGroupController _conGrp = default!;
-    [Dependency] private readonly IClientAdminManager _adminMan = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IStateManager _stateMan = default!;
+    [Dependency] private IClientGameTiming _timing = default!;
+    [Dependency] private IReplayLoadManager _loadMan = default!;
+    [Dependency] private IGameController _controller = default!;
+    [Dependency] private IClientEntityManager _entMan = default!;
+    [Dependency] private IUserInterfaceManager _uiMan = default!;
+    [Dependency] private IReplayPlaybackManager _playback = default!;
+    [Dependency] private IClientConGroupController _conGrp = default!;
+    [Dependency] private IClientAdminManager _adminMan = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     /// <summary>
     /// UI state to return to when stopping a replay or loading fails.

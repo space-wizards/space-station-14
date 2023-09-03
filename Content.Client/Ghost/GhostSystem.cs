@@ -11,14 +11,14 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
-    public sealed class GhostSystem : SharedGhostSystem
+    public sealed partial class GhostSystem : SharedGhostSystem
     {
-        [Dependency] private readonly IClientConsoleHost _console = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly ILightManager _lightManager = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly ContentEyeSystem _contentEye = default!;
+        [Dependency] private IClientConsoleHost _console = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private SharedActionsSystem _actions = default!;
+        [Dependency] private ILightManager _lightManager = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private ContentEyeSystem _contentEye = default!;
 
         public int AvailableGhostRoleCount { get; private set; }
 

@@ -12,12 +12,12 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class SolutionInjectOnCollideSystem : EntitySystem
+    internal sealed partial class SolutionInjectOnCollideSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionsSystem = default!;
-        [Dependency] private readonly BloodstreamSystem _bloodstreamSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
+        [Dependency] private SolutionContainerSystem _solutionsSystem = default!;
+        [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
 
         public override void Initialize()
         {

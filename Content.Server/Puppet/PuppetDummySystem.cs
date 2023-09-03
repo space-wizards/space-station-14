@@ -9,9 +9,9 @@ using Content.Shared.Hands;
 
 namespace Content.Server.Puppet
 {
-    public sealed class PuppetDummySystem : SharedPuppetDummySystem
+    public sealed partial class PuppetDummySystem : SharedPuppetDummySystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
 
         public override void Initialize()
         {

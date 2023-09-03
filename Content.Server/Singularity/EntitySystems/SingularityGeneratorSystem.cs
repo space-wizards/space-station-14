@@ -5,10 +5,10 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
 
-public sealed class SingularityGeneratorSystem : EntitySystem
+public sealed partial class SingularityGeneratorSystem : EntitySystem
 {
     #region Dependencies
-    [Dependency] private readonly IViewVariablesManager _vvm = default!;
+    [Dependency] private IViewVariablesManager _vvm = default!;
     #endregion Dependencies
 
     public override void Initialize()

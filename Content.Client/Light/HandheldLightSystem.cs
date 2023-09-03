@@ -8,9 +8,9 @@ using Robust.Shared.Animations;
 
 namespace Content.Client.Light;
 
-public sealed class HandheldLightSystem : SharedHandheldLightSystem
+public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

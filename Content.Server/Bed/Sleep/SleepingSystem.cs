@@ -23,15 +23,15 @@ using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
-    public sealed class SleepingSystem : SharedSleepingSystem
+    public sealed partial class SleepingSystem : SharedSleepingSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly IRobustRandom _robustRandom = default!;
-        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly StatusEffectsSystem _statusEffectsSystem = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IRobustRandom _robustRandom = default!;
+        [Dependency] private ActionsSystem _actionsSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private StatusEffectsSystem _statusEffectsSystem = default!;
 
         public override void Initialize()
         {

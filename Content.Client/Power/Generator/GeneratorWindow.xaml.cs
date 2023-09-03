@@ -11,8 +11,8 @@ public sealed partial class GeneratorWindow : FancyWindow
 {
     private readonly EntityUid _entity;
 
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly ILocalizationManager _loc = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private ILocalizationManager _loc = default!;
 
     private readonly FuelGeneratorComponent? _component;
     private PortableGeneratorComponentBuiState? _lastState;

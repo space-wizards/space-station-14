@@ -12,11 +12,11 @@ namespace Content.Server.Administration.Systems;
 
 public sealed partial class AdminVerbSystem
 {
-    [Dependency] private readonly ZombieSystem _zombie = default!;
-    [Dependency] private readonly TraitorRuleSystem _traitorRule = default!;
-    [Dependency] private readonly NukeopsRuleSystem _nukeopsRule = default!;
-    [Dependency] private readonly PiratesRuleSystem _piratesRule = default!;
-    [Dependency] private readonly MindSystem _minds = default!;
+    [Dependency] private ZombieSystem _zombie = default!;
+    [Dependency] private TraitorRuleSystem _traitorRule = default!;
+    [Dependency] private NukeopsRuleSystem _nukeopsRule = default!;
+    [Dependency] private PiratesRuleSystem _piratesRule = default!;
+    [Dependency] private MindSystem _minds = default!;
 
     // All antag verbs have names so invokeverb works.
     private void AddAntagVerbs(GetVerbsEvent<Verb> args)

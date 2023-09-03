@@ -14,14 +14,14 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat
 {
-    public sealed class SuicideSystem : EntitySystem
+    public sealed partial class SuicideSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookupSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private EntityLookupSystem _entityLookupSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
 
         public bool Suicide(EntityUid victim)
         {

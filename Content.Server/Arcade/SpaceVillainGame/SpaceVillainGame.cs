@@ -11,8 +11,8 @@ namespace Content.Server.Arcade.SpaceVillain;
 /// </summary>
 public sealed partial class SpaceVillainGame
 {
-    [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
     private readonly SharedAudioSystem _audioSystem = default!;
     private readonly UserInterfaceSystem _uiSystem = default!;
     private readonly SpaceVillainArcadeSystem _svArcade = default!;

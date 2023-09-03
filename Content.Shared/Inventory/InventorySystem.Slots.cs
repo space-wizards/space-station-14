@@ -6,8 +6,8 @@ namespace Content.Shared.Inventory;
 
 public partial class InventorySystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IViewVariablesManager _vvm = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IViewVariablesManager _vvm = default!;
 
     private void InitializeSlots()
     {

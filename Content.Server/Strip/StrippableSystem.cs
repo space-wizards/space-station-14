@@ -22,16 +22,16 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Strip
 {
-    public sealed class StrippableSystem : SharedStrippableSystem
+    public sealed partial class StrippableSystem : SharedStrippableSystem
     {
-        [Dependency] private readonly SharedCuffableSystem _cuffable = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-        [Dependency] private readonly SharedPopupSystem _popup = default!;
-        [Dependency] private readonly EnsnareableSystem _ensnaring = default!;
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedCuffableSystem _cuffable = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private SharedDoAfterSystem _doAfter = default!;
+        [Dependency] private SharedPopupSystem _popup = default!;
+        [Dependency] private EnsnareableSystem _ensnaring = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
 
         // TODO: ECS popups. Not all of these have ECS equivalents yet.
 

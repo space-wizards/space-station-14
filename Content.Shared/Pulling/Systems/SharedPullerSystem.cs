@@ -10,13 +10,13 @@ using JetBrains.Annotations;
 namespace Content.Shared.Pulling.Systems
 {
     [UsedImplicitly]
-    public sealed class SharedPullerSystem : EntitySystem
+    public sealed partial class SharedPullerSystem : EntitySystem
     {
-        [Dependency] private readonly SharedPullingStateManagementSystem _why = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedPullingStateManagementSystem _why = default!;
+        [Dependency] private SharedPullingSystem _pullSystem = default!;
+        [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {

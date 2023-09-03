@@ -8,9 +8,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class MindInfoCommand : IConsoleCommand
+    public sealed partial class MindInfoCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "mindinfo";
         public string Description => "Lists info for the mind of a specific player.";

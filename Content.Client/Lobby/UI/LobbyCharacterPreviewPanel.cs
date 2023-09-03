@@ -19,11 +19,11 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
-    public sealed class LobbyCharacterPreviewPanel : Control
+    public sealed partial class LobbyCharacterPreviewPanel : Control
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
-        [Dependency] private readonly IClientPreferencesManager _preferencesManager = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
+        [Dependency] private IClientPreferencesManager _preferencesManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
 
         private EntityUid? _previewDummy;

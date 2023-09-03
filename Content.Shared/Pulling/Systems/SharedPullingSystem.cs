@@ -19,9 +19,9 @@ namespace Content.Shared.Pulling
     [UsedImplicitly]
     public abstract partial class SharedPullingSystem : EntitySystem
     {
-        [Dependency] private readonly SharedPullingStateManagementSystem _pullSm = default!;
-        [Dependency] private readonly AlertsSystem _alertsSystem = default!;
-        [Dependency] private readonly SharedJointSystem _joints = default!;
+        [Dependency] private SharedPullingStateManagementSystem _pullSm = default!;
+        [Dependency] private AlertsSystem _alertsSystem = default!;
+        [Dependency] private SharedJointSystem _joints = default!;
 
         /// <summary>
         ///     A mapping of pullers to the entity that they are pulling.

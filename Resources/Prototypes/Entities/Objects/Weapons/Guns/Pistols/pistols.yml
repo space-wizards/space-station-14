@@ -59,6 +59,7 @@
   - type: Appearance
   - type: StaticPrice
     price: 500
+  - type: AmmoCounter
 
 - type: entity
   name: viper

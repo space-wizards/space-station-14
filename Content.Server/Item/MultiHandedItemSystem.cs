@@ -4,9 +4,9 @@ using Content.Shared.Item;
 
 namespace Content.Server.Item;
 
-public sealed class MultiHandedItemSystem : SharedMultiHandedItemSystem
+public sealed partial class MultiHandedItemSystem : SharedMultiHandedItemSystem
 {
-    [Dependency] private readonly HandVirtualItemSystem _virtualItem = default!;
+    [Dependency] private HandVirtualItemSystem _virtualItem = default!;
 
     protected override void OnEquipped(EntityUid uid, MultiHandedItemComponent component, GotEquippedHandEvent args)
     {

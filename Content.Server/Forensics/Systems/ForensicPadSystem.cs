@@ -11,12 +11,12 @@ namespace Content.Server.Forensics
     /// <summary>
     /// Used to transfer fingerprints from entities to forensic pads.
     /// </summary>
-    public sealed class ForensicPadSystem : EntitySystem
+    public sealed partial class ForensicPadSystem : EntitySystem
     {
-        [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly InventorySystem _inventory = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;
+        [Dependency] private InventorySystem _inventory = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {

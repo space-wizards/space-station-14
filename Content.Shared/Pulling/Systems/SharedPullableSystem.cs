@@ -5,11 +5,11 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Pulling.Systems
 {
-    public sealed class SharedPullableSystem : EntitySystem
+    public sealed partial class SharedPullableSystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPullingSystem _pullSystem = default!;
+        [Dependency] private ActionBlockerSystem _blocker = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
+        [Dependency] private SharedPullingSystem _pullSystem = default!;
 
         public override void Initialize()
         {

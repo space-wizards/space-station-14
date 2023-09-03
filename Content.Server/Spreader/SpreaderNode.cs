@@ -11,7 +11,7 @@ namespace Content.Server.Spreader;
 /// </summary>
 public sealed partial class SpreaderNode : Node
 {
-    // [Dependency] private readonly NodeContainerSystem _nodeContainer = default!;
+    // [Dependency] private NodeContainerSystem _nodeContainer = default!;
 
     /// <inheritdoc/>
     public override IEnumerable<Node> GetReachableNodes(TransformComponent xform, EntityQuery<NodeContainerComponent> nodeQuery, EntityQuery<TransformComponent> xformQuery,

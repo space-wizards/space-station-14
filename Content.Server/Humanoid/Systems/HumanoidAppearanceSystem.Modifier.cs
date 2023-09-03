@@ -10,8 +10,8 @@ namespace Content.Server.Humanoid;
 
 public sealed partial class HumanoidAppearanceSystem
 {
-    [Dependency] private readonly IAdminManager _adminManager = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private IAdminManager _adminManager = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
     private void OnVerbsRequest(EntityUid uid, HumanoidAppearanceComponent component, GetVerbsEvent<Verb> args)
     {

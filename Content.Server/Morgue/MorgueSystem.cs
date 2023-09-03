@@ -8,10 +8,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Morgue;
 
-public sealed class MorgueSystem : EntitySystem
+public sealed partial class MorgueSystem : EntitySystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

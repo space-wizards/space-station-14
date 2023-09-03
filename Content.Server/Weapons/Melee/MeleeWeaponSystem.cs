@@ -34,18 +34,18 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Weapons.Melee;
 
-public sealed class MeleeWeaponSystem : SharedMeleeWeaponSystem
+public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly BloodstreamSystem _bloodstream = default!;
-    [Dependency] private readonly ChatSystem _chat = default!;
-    [Dependency] private readonly ContestsSystem _contests = default!;
-    [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-    [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly LagCompensationSystem _lag = default!;
-    [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly TagSystem _tag = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private BloodstreamSystem _bloodstream = default!;
+    [Dependency] private ChatSystem _chat = default!;
+    [Dependency] private ContestsSystem _contests = default!;
+    [Dependency] private DamageExamineSystem _damageExamine = default!;
+    [Dependency] private InventorySystem _inventory = default!;
+    [Dependency] private LagCompensationSystem _lag = default!;
+    [Dependency] private SharedColorFlashEffectSystem _color = default!;
+    [Dependency] private SolutionContainerSystem _solutions = default!;
+    [Dependency] private TagSystem _tag = default!;
 
     public override void Initialize()
     {

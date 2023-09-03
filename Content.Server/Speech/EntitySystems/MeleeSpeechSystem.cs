@@ -7,11 +7,11 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Speech.EntitySystems;
 
-public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
+public sealed partial class MeleeSpeechSystem : SharedMeleeSpeechSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly SharedActionsSystem _actionSystem = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private SharedActionsSystem _actionSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
     public override void Initialize()
     {
         base.Initialize();

@@ -16,10 +16,10 @@ namespace Content.Server.Database;
 /// Actual loading code is handled by separate managers such as <see cref="IServerPreferencesManager"/>.
 /// This manager is simply a centralized "is loading done" controller for other code to rely on.
 /// </remarks>
-public sealed class UserDbDataManager
+public sealed partial class UserDbDataManager
 {
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly PlayTimeTrackingManager _playTimeTracking = default!;
+    [Dependency] private IServerPreferencesManager _prefs = default!;
+    [Dependency] private PlayTimeTrackingManager _playTimeTracking = default!;
 
     private readonly Dictionary<NetUserId, UserData> _users = new();
 

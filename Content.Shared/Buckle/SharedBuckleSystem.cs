@@ -18,23 +18,23 @@ namespace Content.Shared.Buckle;
 
 public abstract partial class SharedBuckleSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly ISharedPlayerManager _playerManager = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private IGameTiming _gameTiming = default!;
+    [Dependency] private ISharedAdminLogManager _adminLogger = default!;
+    [Dependency] private ISharedPlayerManager _playerManager = default!;
 
-    [Dependency] protected readonly ActionBlockerSystem ActionBlockerSystem = default!;
-    [Dependency] private   readonly AlertsSystem _alertsSystem = default!;
-    [Dependency] private   readonly MobStateSystem _mobStateSystem = default!;
-    [Dependency] protected readonly SharedAppearanceSystem AppearanceSystem = default!;
-    [Dependency] private   readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private   readonly SharedContainerSystem _containerSystem = default!;
-    [Dependency] private   readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private   readonly SharedJointSystem _joints = default!;
-    [Dependency] private   readonly SharedPopupSystem _popupSystem = default!;
-    [Dependency] private   readonly SharedPullingSystem _pullingSystem = default!;
-    [Dependency] private   readonly SharedTransformSystem _transformSystem = default!;
-    [Dependency] private   readonly StandingStateSystem _standingSystem = default!;
+    [Dependency] protected ActionBlockerSystem ActionBlockerSystem = default!;
+    [Dependency] private   AlertsSystem _alertsSystem = default!;
+    [Dependency] private   MobStateSystem _mobStateSystem = default!;
+    [Dependency] protected SharedAppearanceSystem AppearanceSystem = default!;
+    [Dependency] private   SharedAudioSystem _audioSystem = default!;
+    [Dependency] private   SharedContainerSystem _containerSystem = default!;
+    [Dependency] private   SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private   SharedJointSystem _joints = default!;
+    [Dependency] private   SharedPopupSystem _popupSystem = default!;
+    [Dependency] private   SharedPullingSystem _pullingSystem = default!;
+    [Dependency] private   SharedTransformSystem _transformSystem = default!;
+    [Dependency] private   StandingStateSystem _standingSystem = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

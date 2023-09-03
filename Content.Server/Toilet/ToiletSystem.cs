@@ -22,15 +22,15 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Toilet
 {
-    public sealed class ToiletSystem : EntitySystem
+    public sealed partial class ToiletSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly SecretStashSystem _secretStash = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly SharedToolSystem _tool = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private BodySystem _body = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private SecretStashSystem _secretStash = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private SharedToolSystem _tool = default!;
 
         public override void Initialize()
         {

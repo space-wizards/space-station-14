@@ -20,16 +20,16 @@ namespace Content.Server.Atmos.EntitySystems;
 [UsedImplicitly]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly ITileDefinitionManager _tileDefinitionManager = default!;
-    [Dependency] private readonly IRobustRandom _robustRandom = default!;
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly InternalsSystem _internals = default!;
-    [Dependency] private readonly SharedContainerSystem _containers = default!;
-    [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly GasTileOverlaySystem _gasTileOverlaySystem = default!;
-    [Dependency] private readonly TransformSystem _transformSystem = default!;
-    [Dependency] private readonly TileSystem _tile = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;
+    [Dependency] private IRobustRandom _robustRandom = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private InternalsSystem _internals = default!;
+    [Dependency] private SharedContainerSystem _containers = default!;
+    [Dependency] private SharedPhysicsSystem _physics = default!;
+    [Dependency] private GasTileOverlaySystem _gasTileOverlaySystem = default!;
+    [Dependency] private TransformSystem _transformSystem = default!;
+    [Dependency] private TileSystem _tile = default!;
 
     private const float ExposedUpdateDelay = 1f;
     private float _exposedTimer = 0f;

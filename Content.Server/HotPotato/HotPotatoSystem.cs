@@ -9,12 +9,12 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.HotPotato;
 
-public sealed class HotPotatoSystem : SharedHotPotatoSystem
+public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
 {
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
-    [Dependency] private readonly AmbientSoundSystem _ambientSound = default!;
-    [Dependency] private readonly DamageOnHoldingSystem _damageOnHolding = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
+    [Dependency] private AmbientSoundSystem _ambientSound = default!;
+    [Dependency] private DamageOnHoldingSystem _damageOnHolding = default!;
 
     public override void Initialize()
     {

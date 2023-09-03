@@ -21,17 +21,17 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical
 {
-    public sealed class VomitSystem : EntitySystem
+    public sealed partial class VomitSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _proto = default!;
-        [Dependency] private readonly AudioSystem _audio = default!;
-        [Dependency] private readonly BodySystem _body = default!;
-        [Dependency] private readonly HungerSystem _hunger = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly PuddleSystem _puddle = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainer = default!;
-        [Dependency] private readonly StunSystem _stun = default!;
-        [Dependency] private readonly ThirstSystem _thirst = default!;
+        [Dependency] private IPrototypeManager _proto = default!;
+        [Dependency] private AudioSystem _audio = default!;
+        [Dependency] private BodySystem _body = default!;
+        [Dependency] private HungerSystem _hunger = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private PuddleSystem _puddle = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainer = default!;
+        [Dependency] private StunSystem _stun = default!;
+        [Dependency] private ThirstSystem _thirst = default!;
 
         /// <summary>
         /// Make an entity vomit, if they have a stomach.

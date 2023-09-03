@@ -8,12 +8,12 @@ using Content.Server.StationEvents.Components;
 
 namespace Content.Server.StationEvents.Events;
 
-public sealed class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleComponent>
+public sealed partial class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleComponent>
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly GameTicker _gameTicker = default!;
-    [Dependency] private readonly NukeopsRuleSystem _nukeopsRuleSystem = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private MapLoaderSystem _map = default!;
+    [Dependency] private GameTicker _gameTicker = default!;
+    [Dependency] private NukeopsRuleSystem _nukeopsRuleSystem = default!;
 
     protected override void Started(EntityUid uid, LoneOpsSpawnRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
     {

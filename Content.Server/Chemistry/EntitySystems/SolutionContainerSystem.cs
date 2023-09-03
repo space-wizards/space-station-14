@@ -37,13 +37,13 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]
-    private readonly ChemicalReactionSystem _chemistrySystem = default!;
+    private ChemicalReactionSystem _chemistrySystem = default!;
 
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     [Dependency]
-    private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly ExamineSystem _examine = default!;
+    private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private ExamineSystem _examine = default!;
 
     public override void Initialize()
     {

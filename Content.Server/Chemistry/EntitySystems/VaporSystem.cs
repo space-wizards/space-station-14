@@ -20,13 +20,13 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
-    internal sealed class VaporSystem : EntitySystem
+    internal sealed partial class VaporSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly IPrototypeManager _protoManager = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwing = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private IPrototypeManager _protoManager = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private ThrowingSystem _throwing = default!;
 
         private const float ReactTime = 0.125f;
 

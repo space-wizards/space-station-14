@@ -3,12 +3,12 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Doors.Systems;
 
-public abstract class SharedDoorBoltSystem : EntitySystem
+public abstract partial class SharedDoorBoltSystem : EntitySystem
 {
 
-    [Dependency] protected readonly SharedAppearanceSystem Appearance = default!;
-    [Dependency] protected readonly SharedAudioSystem Audio = default!;
-    [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] protected SharedAppearanceSystem Appearance = default!;
+    [Dependency] protected SharedAudioSystem Audio = default!;
+    [Dependency] protected SharedPopupSystem Popup = default!;
     public override void Initialize()
     {
         base.Initialize();

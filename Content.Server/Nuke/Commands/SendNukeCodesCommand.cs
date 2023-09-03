@@ -10,13 +10,13 @@ namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
-    public sealed class SendNukeCodesCommand : IConsoleCommand
+    public sealed partial class SendNukeCodesCommand : IConsoleCommand
     {
         public string Command => "nukecodes";
         public string Description => "Send nuke codes to a station's communication consoles";
         public string Help => "nukecodes [station EntityUid]";
 
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         public SendNukeCodesCommand()
         {

@@ -16,12 +16,12 @@ namespace Content.Server.Labels
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
     /// </summary>
     [UsedImplicitly]
-    public sealed class HandLabelerSystem : EntitySystem
+    public sealed partial class HandLabelerSystem : EntitySystem
     {
-        [Dependency] private readonly UserInterfaceSystem _userInterfaceSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly LabelSystem _labelSystem = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private LabelSystem _labelSystem = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
         public override void Initialize()
         {

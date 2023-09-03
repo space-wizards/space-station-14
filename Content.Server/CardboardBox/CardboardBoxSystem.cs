@@ -16,14 +16,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.CardboardBox;
 
-public sealed class CardboardBoxSystem : SharedCardboardBoxSystem
+public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 {
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedMoverController _mover = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly SharedStealthSystem _stealth = default!;
-    [Dependency] private readonly DamageableSystem _damageable = default!;
-    [Dependency] private readonly EntityStorageSystem _storage = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedMoverController _mover = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private SharedStealthSystem _stealth = default!;
+    [Dependency] private DamageableSystem _damageable = default!;
+    [Dependency] private EntityStorageSystem _storage = default!;
 
     public override void Initialize()
     {

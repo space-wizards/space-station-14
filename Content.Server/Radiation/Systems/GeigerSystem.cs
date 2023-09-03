@@ -12,12 +12,12 @@ using Robust.Server.Player;
 
 namespace Content.Server.Radiation.Systems;
 
-public sealed class GeigerSystem : SharedGeigerSystem
+public sealed partial class GeigerSystem : SharedGeigerSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-    [Dependency] private readonly RadiationSystem _radiation = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
+    [Dependency] private RadiationSystem _radiation = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     private static readonly float ApproxEqual = 0.01f;
 

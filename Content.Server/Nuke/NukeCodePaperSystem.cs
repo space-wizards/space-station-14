@@ -11,13 +11,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
-    public sealed class NukeCodePaperSystem : EntitySystem
+    public sealed partial class NukeCodePaperSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly ChatSystem _chatSystem = default!;
-        [Dependency] private readonly StationSystem _station = default!;
-        [Dependency] private readonly PaperSystem _paper = default!;
-        [Dependency] private readonly FaxSystem _faxSystem = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private ChatSystem _chatSystem = default!;
+        [Dependency] private StationSystem _station = default!;
+        [Dependency] private PaperSystem _paper = default!;
+        [Dependency] private FaxSystem _faxSystem = default!;
 
         public override void Initialize()
         {

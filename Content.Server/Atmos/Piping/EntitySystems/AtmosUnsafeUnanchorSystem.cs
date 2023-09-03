@@ -12,10 +12,10 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
-    public sealed class AtmosUnsafeUnanchorSystem : EntitySystem
+    public sealed partial class AtmosUnsafeUnanchorSystem : EntitySystem
     {
-        [Dependency] private readonly AtmosphereSystem _atmosphere = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
+        [Dependency] private AtmosphereSystem _atmosphere = default!;
+        [Dependency] private PopupSystem _popup = default!;
 
         public override void Initialize()
         {

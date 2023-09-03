@@ -18,7 +18,7 @@ namespace Content.Server.Chemistry.EntitySystems
 {
     public sealed partial class ChemistrySystem
     {
-        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+        [Dependency] private UseDelaySystem _useDelay = default!;
 
         private void InitializeHypospray()
         {

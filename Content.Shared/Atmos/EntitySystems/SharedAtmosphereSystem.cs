@@ -4,9 +4,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
-    public abstract class SharedAtmosphereSystem : EntitySystem
+    public abstract partial class SharedAtmosphereSystem : EntitySystem
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         protected readonly GasPrototype[] GasPrototypes = new GasPrototype[Atmospherics.TotalNumberOfGases];
 

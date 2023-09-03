@@ -11,9 +11,9 @@ namespace Content.Server.Ensnaring;
 
 public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
-    [Dependency] private readonly ContainerSystem _container = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private ContainerSystem _container = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
+    [Dependency] private PopupSystem _popup = default!;
 
     public override void Initialize()
     {

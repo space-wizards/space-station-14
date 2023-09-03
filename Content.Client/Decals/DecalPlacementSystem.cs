@@ -16,14 +16,14 @@ namespace Content.Client.Decals;
 
 // This is shit and basically a half-rewrite of PlacementManager
 // TODO refactor placementmanager so this isnt shit anymore
-public sealed class DecalPlacementSystem : EntitySystem
+public sealed partial class DecalPlacementSystem : EntitySystem
 {
-    [Dependency] private readonly IInputManager _inputManager = default!;
-    [Dependency] private readonly IOverlayManager _overlay = default!;
-    [Dependency] private readonly IPrototypeManager _protoMan = default!;
-    [Dependency] private readonly InputSystem _inputSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
-    [Dependency] private readonly SpriteSystem _sprite = default!;
+    [Dependency] private IInputManager _inputManager = default!;
+    [Dependency] private IOverlayManager _overlay = default!;
+    [Dependency] private IPrototypeManager _protoMan = default!;
+    [Dependency] private InputSystem _inputSystem = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
+    [Dependency] private SpriteSystem _sprite = default!;
 
     private string? _decalId;
     private Color _decalColor = Color.White;

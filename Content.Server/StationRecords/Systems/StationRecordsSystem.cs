@@ -34,11 +34,11 @@ namespace Content.Server.StationRecords.Systems;
 ///     depend on this general record being created. This is subject
 ///     to change.
 /// </summary>
-public sealed class StationRecordsSystem : EntitySystem
+public sealed partial class StationRecordsSystem : EntitySystem
 {
-    [Dependency] private readonly InventorySystem _inventorySystem = default!;
-    [Dependency] private readonly StationRecordKeyStorageSystem _keyStorageSystem = default!;
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+    [Dependency] private InventorySystem _inventorySystem = default!;
+    [Dependency] private StationRecordKeyStorageSystem _keyStorageSystem = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
 
     public override void Initialize()
     {

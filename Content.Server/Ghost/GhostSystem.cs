@@ -27,18 +27,18 @@ namespace Content.Server.Ghost
 {
     public sealed partial class GhostSystem : SharedGhostSystem
     {
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
-        [Dependency] private readonly SharedActionsSystem _actions = default!;
-        [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly FollowerSystem _followerSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobState = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly MindSystem _minds = default!;
-        [Dependency] private readonly JobSystem _jobs = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private IPlayerManager _playerManager = default!;
+        [Dependency] private GameTicker _ticker = default!;
+        [Dependency] private MindSystem _mindSystem = default!;
+        [Dependency] private SharedActionsSystem _actions = default!;
+        [Dependency] private VisibilitySystem _visibilitySystem = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private FollowerSystem _followerSystem = default!;
+        [Dependency] private MobStateSystem _mobState = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private MindSystem _minds = default!;
+        [Dependency] private JobSystem _jobs = default!;
 
         public override void Initialize()
         {

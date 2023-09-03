@@ -11,7 +11,7 @@ namespace Content.Server.Power.EntitySystems;
 
 public sealed partial class CableSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
 
     private void InitializeCablePlacer()
     {

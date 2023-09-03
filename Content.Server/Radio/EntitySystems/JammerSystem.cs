@@ -7,11 +7,11 @@ using Content.Shared.PowerCell.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
-public sealed class JammerSystem : EntitySystem
+public sealed partial class JammerSystem : EntitySystem
 {
-    [Dependency] private readonly PowerCellSystem _powerCell = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private PowerCellSystem _powerCell = default!;
+    [Dependency] private PopupSystem _popup = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {
@@ -38,7 +38,7 @@ public sealed class JammerSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, RadioJammerComponent comp, ActivateInWorldEvent args)
     {
-        var activated = !HasComp<ActiveRadioJammerComponent>(uid) && 
+        var activated = !HasComp<ActiveRadioJammerComponent>(uid) &&
             _powerCell.TryGetBatteryFromSlot(uid, out var battery) &&
             battery.CurrentCharge > comp.Wattage;
         if (activated)

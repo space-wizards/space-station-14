@@ -6,10 +6,10 @@ using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
-    public sealed class TrashOnEmptySystem : EntitySystem
+    public sealed partial class TrashOnEmptySystem : EntitySystem
     {
-        [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
+        [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
 
         public override void Initialize()
         {

@@ -6,9 +6,9 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Kitchen.UI
 {
-    public sealed class ReagentGrinderBoundUserInterface : BoundUserInterface
+    public sealed partial class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         [ViewVariables]
         private GrinderMenu? _menu;

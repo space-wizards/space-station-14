@@ -11,12 +11,12 @@ namespace Content.Server.Teleportation;
 /// <summary>
 /// This handles creating portals from a hand teleporter.
 /// </summary>
-public sealed class HandTeleporterSystem : EntitySystem
+public sealed partial class HandTeleporterSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-    [Dependency] private readonly LinkedEntitySystem _link = default!;
-    [Dependency] private readonly AudioSystem _audio = default!;
-    [Dependency] private readonly SharedDoAfterSystem _doafter = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
+    [Dependency] private LinkedEntitySystem _link = default!;
+    [Dependency] private AudioSystem _audio = default!;
+    [Dependency] private SharedDoAfterSystem _doafter = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

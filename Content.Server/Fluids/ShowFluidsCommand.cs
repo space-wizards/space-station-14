@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Fluids;
 
 [AdminCommand(AdminFlags.Debug)]
-public sealed class ShowFluidsCommand : IConsoleCommand
+public sealed partial class ShowFluidsCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
+    [Dependency] private IEntitySystemManager _entitySystem = default!;
     public string Command => "showfluids";
     public string Description => "Toggles seeing puddle debug overlay.";
     public string Help => $"Usage: {Command}";

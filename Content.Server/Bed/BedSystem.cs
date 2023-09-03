@@ -19,15 +19,15 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
 {
-    public sealed class BedSystem : EntitySystem
+    public sealed partial class BedSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly ActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SleepingSystem _sleepingSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private ActionsSystem _actionsSystem = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private SleepingSystem _sleepingSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {

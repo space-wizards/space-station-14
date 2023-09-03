@@ -9,7 +9,7 @@ namespace Content.Client.Cargo.Systems;
 
 public sealed partial class CargoSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     private static readonly Animation CargoTelepadBeamAnimation = new()
     {

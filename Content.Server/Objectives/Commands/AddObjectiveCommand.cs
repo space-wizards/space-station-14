@@ -8,9 +8,9 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
-    public sealed class AddObjectiveCommand : IConsoleCommand
+    public sealed partial class AddObjectiveCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entityManager = default!;
+        [Dependency] private IEntityManager _entityManager = default!;
 
         public string Command => "addobjective";
         public string Description => "Adds an objective to the player's mind.";

@@ -6,9 +6,9 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Storage.Systems;
 
-public sealed class ItemMapperSystem : SharedItemMapperSystem
+public sealed partial class ItemMapperSystem : SharedItemMapperSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

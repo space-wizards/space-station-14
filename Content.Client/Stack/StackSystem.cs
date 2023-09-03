@@ -8,10 +8,10 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Stack
 {
     [UsedImplicitly]
-    public sealed class StackSystem : SharedStackSystem
+    public sealed partial class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly AppearanceSystem _appearanceSystem = default!;
-        [Dependency] private readonly ItemCounterSystem _counterSystem = default!;
+        [Dependency] private AppearanceSystem _appearanceSystem = default!;
+        [Dependency] private ItemCounterSystem _counterSystem = default!;
 
         public override void Initialize()
         {

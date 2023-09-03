@@ -8,10 +8,10 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Damage.Systems
 {
-    public sealed class DamageOnToolInteractSystem : EntitySystem
+    public sealed partial class DamageOnToolInteractSystem : EntitySystem
     {
-        [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private DamageableSystem _damageableSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger= default!;
 
         public override void Initialize()
         {

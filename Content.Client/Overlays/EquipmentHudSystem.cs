@@ -10,9 +10,9 @@ namespace Content.Client.Overlays;
 /// This is a base system to make it easier to enable or disabling UI elements based on whether or not the player has
 /// some component, either on their controlled entity on some worn piece of equipment.
 /// </summary>
-public abstract class EquipmentHudSystem<T> : EntitySystem where T : IComponent
+public abstract partial class EquipmentHudSystem<T> : EntitySystem where T : IComponent
 {
-    [Dependency] private readonly IPlayerManager _player = default!;
+    [Dependency] private IPlayerManager _player = default!;
 
     protected bool IsActive;
     protected virtual SlotFlags TargetSlots => ~SlotFlags.POCKET;

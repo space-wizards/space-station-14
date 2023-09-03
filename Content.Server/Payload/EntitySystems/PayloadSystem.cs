@@ -13,13 +13,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Payload.EntitySystems;
 
-public sealed class PayloadSystem : EntitySystem
+public sealed partial class PayloadSystem : EntitySystem
 {
-    [Dependency] private readonly TagSystem _tagSystem = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutionSystem = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger= default!;
-    [Dependency] private readonly IComponentFactory _componentFactory = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
+    [Dependency] private TagSystem _tagSystem = default!;
+    [Dependency] private SolutionContainerSystem _solutionSystem = default!;
+    [Dependency] private IAdminLogManager _adminLogger= default!;
+    [Dependency] private IComponentFactory _componentFactory = default!;
+    [Dependency] private ISerializationManager _serializationManager = default!;
 
     public override void Initialize()
     {

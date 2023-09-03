@@ -7,9 +7,9 @@ using Robust.Shared.Console;
 namespace Content.Server.Ghost
 {
     [AnyCommand]
-    public sealed class Ghost : IConsoleCommand
+    public sealed partial class Ghost : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "ghost";
         public string Description => "Give up on life and become a ghost.";

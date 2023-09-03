@@ -7,10 +7,10 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Security.Systems
 {
-    public sealed class DeployableBarrierSystem : EntitySystem
+    public sealed partial class DeployableBarrierSystem : EntitySystem
     {
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly PullingSystem _pulling = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private PullingSystem _pulling = default!;
 
         public override void Initialize()
         {

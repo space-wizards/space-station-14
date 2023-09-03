@@ -14,15 +14,15 @@ using static Content.Server.Remotes.DoorRemoteComponent;
 
 namespace Content.Server.Remotes
 {
-    public sealed class DoorRemoteSystem : EntitySystem
+    public sealed partial class DoorRemoteSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly DoorBoltSystem _bolts = default!;
-        [Dependency] private readonly AirlockSystem _airlock = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
-        [Dependency] private readonly DoorSystem _doorSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-        // I'm so sorry [Dependency] private readonly SharedAirlockSystem _sharedAirlockSystem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private DoorBoltSystem _bolts = default!;
+        [Dependency] private AirlockSystem _airlock = default!;
+        [Dependency] private SharedPopupSystem _popupSystem = default!;
+        [Dependency] private DoorSystem _doorSystem = default!;
+        [Dependency] private SharedInteractionSystem _interactionSystem = default!;
+        // I'm so sorry [Dependency] private SharedAirlockSystem _sharedAirlockSystem = default!;
 
         public override void Initialize()
         {

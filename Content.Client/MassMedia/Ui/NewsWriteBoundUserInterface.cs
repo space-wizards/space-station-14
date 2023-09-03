@@ -9,13 +9,13 @@ using Robust.Shared.Utility;
 namespace Content.Client.MassMedia.Ui
 {
     [UsedImplicitly]
-    public sealed class NewsWriteBoundUserInterface : BoundUserInterface
+    public sealed partial class NewsWriteBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]
         private NewsWriteMenu? _menu;
 
-        [Dependency] private readonly IEntitySystemManager _entitySystem = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private IEntitySystemManager _entitySystem = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
         private ClientGameTicker? _gameTicker;
 
         [ViewVariables]

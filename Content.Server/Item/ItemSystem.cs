@@ -5,9 +5,9 @@ using Content.Shared.Stacks;
 
 namespace Content.Server.Item;
 
-public sealed class ItemSystem : SharedItemSystem
+public sealed partial class ItemSystem : SharedItemSystem
 {
-    [Dependency] private readonly StorageSystem _storage = default!;
+    [Dependency] private StorageSystem _storage = default!;
 
     protected override void OnStackCountChanged(EntityUid uid, ItemComponent component, StackCountChangedEvent args)
     {

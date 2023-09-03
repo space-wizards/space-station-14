@@ -5,9 +5,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Fluids;
 
-public sealed class PuddleSystem : SharedPuddleSystem
+public sealed partial class PuddleSystem : SharedPuddleSystem
 {
-    [Dependency] private readonly IconSmoothSystem _smooth = default!;
+    [Dependency] private IconSmoothSystem _smooth = default!;
 
     public override void Initialize()
     {

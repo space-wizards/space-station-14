@@ -22,18 +22,18 @@ using static Content.Shared.Kitchen.Components.KitchenSpikeComponent;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
-    public sealed class KitchenSpikeSystem : SharedKitchenSpikeSystem
+    public sealed partial class KitchenSpikeSystem : SharedKitchenSpikeSystem
     {
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedDoAfterSystem _doAfter = default!;
-        [Dependency] private readonly IAdminLogManager _logger = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly TransformSystem _transform = default!;
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
-        [Dependency] private readonly MetaDataSystem _metaData = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedDoAfterSystem _doAfter = default!;
+        [Dependency] private IAdminLogManager _logger = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private TransformSystem _transform = default!;
+        [Dependency] private BodySystem _bodySystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
+        [Dependency] private MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {

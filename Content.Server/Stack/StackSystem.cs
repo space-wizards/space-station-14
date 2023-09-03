@@ -15,11 +15,11 @@ namespace Content.Server.Stack
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
-    public sealed class StackSystem : SharedStackSystem
+    public sealed partial class StackSystem : SharedStackSystem
     {
-        [Dependency] private readonly ContainerSystem _container = default!;
-        [Dependency] private readonly StorageSystem _storage = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
+        [Dependency] private ContainerSystem _container = default!;
+        [Dependency] private StorageSystem _storage = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
 
         public static readonly int[] DefaultSplitAmounts = { 1, 5, 10, 20, 30, 50 };
 

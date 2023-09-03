@@ -7,10 +7,10 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Hands;
 
-public abstract class SharedHandVirtualItemSystem : EntitySystem
+public abstract partial class SharedHandVirtualItemSystem : EntitySystem
 {
-    [Dependency] private readonly INetManager _net = default!;
-    [Dependency] private readonly SharedHandsSystem _hands = default!;
+    [Dependency] private INetManager _net = default!;
+    [Dependency] private SharedHandsSystem _hands = default!;
 
     public override void Initialize()
     {

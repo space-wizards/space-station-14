@@ -3,9 +3,9 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.Traits.Assorted;
 
-public sealed class WheelchairBoundSystem : EntitySystem
+public sealed partial class WheelchairBoundSystem : EntitySystem
 {
-    [Dependency] private readonly SharedBuckleSystem _buckleSystem = default!;
+    [Dependency] private SharedBuckleSystem _buckleSystem = default!;
 
     public override void Initialize()
     {

@@ -7,11 +7,11 @@ using Content.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
 
-public sealed class SignallerSystem : EntitySystem
+public sealed partial class SignallerSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceLinkSystem _link = default!;
-    [Dependency] private readonly UseDelaySystem _useDelay = default!;
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private DeviceLinkSystem _link = default!;
+    [Dependency] private UseDelaySystem _useDelay = default!;
+    [Dependency] private IAdminLogManager _adminLogger = default!;
 
     public override void Initialize()
     {

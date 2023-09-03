@@ -4,9 +4,9 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Ensnaring.Visualizers;
 
-public sealed class EnsnareableSystem : SharedEnsnareableSystem
+public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

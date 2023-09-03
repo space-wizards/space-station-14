@@ -7,9 +7,9 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Inventory
 {
-    public sealed class ServerInventorySystem : InventorySystem
+    public sealed partial class ServerInventorySystem : InventorySystem
     {
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
+        [Dependency] private StorageSystem _storageSystem = default!;
 
         public override void Initialize()
         {

@@ -11,11 +11,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
-public sealed class LightningSystem : SharedLightningSystem
+public sealed partial class LightningSystem : SharedLightningSystem
 {
-    [Dependency] private readonly PhysicsSystem _physics = default!;
-    [Dependency] private readonly BeamSystem _beam = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private PhysicsSystem _physics = default!;
+    [Dependency] private BeamSystem _beam = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

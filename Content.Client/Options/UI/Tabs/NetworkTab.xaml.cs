@@ -13,8 +13,8 @@ namespace Content.Client.Options.UI.Tabs
     [GenerateTypedNameReferences]
     public sealed partial class NetworkTab : Control
     {
-        [Dependency] private readonly IConfigurationManager _cfg = default!;
-        [Dependency] private readonly IClientGameStateManager _stateMan = default!;
+        [Dependency] private IConfigurationManager _cfg = default!;
+        [Dependency] private IClientGameStateManager _stateMan = default!;
 
         public NetworkTab()
         {

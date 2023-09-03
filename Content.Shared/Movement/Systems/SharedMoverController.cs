@@ -30,19 +30,19 @@ namespace Content.Shared.Movement.Systems
     /// </summary>
     public abstract partial class SharedMoverController : VirtualController
     {
-        [Dependency] private   readonly IConfigurationManager _configManager = default!;
-        [Dependency] protected readonly IGameTiming Timing = default!;
-        [Dependency] private   readonly IMapManager _mapManager = default!;
-        [Dependency] private   readonly ITileDefinitionManager _tileDefinitionManager = default!;
-        [Dependency] private   readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private   readonly InventorySystem _inventory = default!;
-        [Dependency] private   readonly MobStateSystem _mobState = default!;
-        [Dependency] private   readonly SharedAudioSystem _audio = default!;
-        [Dependency] private   readonly SharedContainerSystem _container = default!;
-        [Dependency] private   readonly SharedGravitySystem _gravity = default!;
-        [Dependency] protected readonly SharedPhysicsSystem Physics = default!;
-        [Dependency] private   readonly SharedTransformSystem _transform = default!;
-        [Dependency] private   readonly TagSystem _tags = default!;
+        [Dependency] private   IConfigurationManager _configManager = default!;
+        [Dependency] protected IGameTiming Timing = default!;
+        [Dependency] private   IMapManager _mapManager = default!;
+        [Dependency] private   ITileDefinitionManager _tileDefinitionManager = default!;
+        [Dependency] private   EntityLookupSystem _lookup = default!;
+        [Dependency] private   InventorySystem _inventory = default!;
+        [Dependency] private   MobStateSystem _mobState = default!;
+        [Dependency] private   SharedAudioSystem _audio = default!;
+        [Dependency] private   SharedContainerSystem _container = default!;
+        [Dependency] private   SharedGravitySystem _gravity = default!;
+        [Dependency] protected SharedPhysicsSystem Physics = default!;
+        [Dependency] private   SharedTransformSystem _transform = default!;
+        [Dependency] private   TagSystem _tags = default!;
 
         protected EntityQuery<InputMoverComponent> MoverQuery;
         protected EntityQuery<MobMoverComponent> MobMoverQuery;

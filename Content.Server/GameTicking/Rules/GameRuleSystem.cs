@@ -4,7 +4,7 @@ namespace Content.Server.GameTicking.Rules;
 
 public abstract partial class GameRuleSystem<T> : EntitySystem where T : Component
 {
-    [Dependency] protected readonly GameTicker GameTicker = default!;
+    [Dependency] protected GameTicker GameTicker = default!;
 
     public override void Initialize()
     {

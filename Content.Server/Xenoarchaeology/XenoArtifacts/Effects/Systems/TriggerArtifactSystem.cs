@@ -7,9 +7,9 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 /// This handles <see cref="TriggerArtifactComponent"/>
 /// </summary>
-public sealed class TriggerArtifactSystem : EntitySystem
+public sealed partial class TriggerArtifactSystem : EntitySystem
 {
-    [Dependency] private readonly TriggerSystem _trigger = default!;
+    [Dependency] private TriggerSystem _trigger = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

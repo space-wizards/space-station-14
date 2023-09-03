@@ -11,7 +11,7 @@ namespace Content.Client.Info;
 [GenerateTypedNameReferences]
 public sealed partial class RulesControl : BoxContainer
 {
-    [Dependency] private readonly RulesManager _rules = default!;
+    [Dependency] private RulesManager _rules = default!;
 
     public RulesControl()
     {

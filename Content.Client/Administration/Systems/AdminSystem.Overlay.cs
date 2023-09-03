@@ -6,11 +6,11 @@ namespace Content.Client.Administration.Systems
 {
     public sealed partial class AdminSystem
     {
-        [Dependency] private readonly IOverlayManager _overlayManager = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
-        [Dependency] private readonly IClientAdminManager _adminManager = default!;
-        [Dependency] private readonly IEyeManager _eyeManager = default!;
-        [Dependency] private readonly EntityLookupSystem _entityLookup = default!;
+        [Dependency] private IOverlayManager _overlayManager = default!;
+        [Dependency] private IResourceCache _resourceCache = default!;
+        [Dependency] private IClientAdminManager _adminManager = default!;
+        [Dependency] private IEyeManager _eyeManager = default!;
+        [Dependency] private EntityLookupSystem _entityLookup = default!;
 
         private AdminNameOverlay _adminNameOverlay = default!;
 

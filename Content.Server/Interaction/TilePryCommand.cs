@@ -13,9 +13,9 @@ namespace Content.Server.Interaction
     /// <see cref="TilePryingComponent.TryPryTile"/>
     /// </summary>
     [AdminCommand(AdminFlags.Debug)]
-    sealed class TilePryCommand : IConsoleCommand
+    sealed partial class TilePryCommand : IConsoleCommand
     {
-        [Dependency] private readonly IEntityManager _entities = default!;
+        [Dependency] private IEntityManager _entities = default!;
 
         public string Command => "tilepry";
         public string Description => "Pries up all tiles in a radius around the user.";

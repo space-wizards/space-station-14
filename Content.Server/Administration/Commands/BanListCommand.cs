@@ -12,11 +12,11 @@ namespace Content.Server.Administration.Commands;
 ///     Lists someones active Ban Ids or opens a window to see them.
 /// </summary>
 [AdminCommand(AdminFlags.Ban)]
-public sealed class BanListCommand : LocalizedCommands
+public sealed partial class BanListCommand : LocalizedCommands
 {
-    [Dependency] private readonly IServerDbManager _dbManager = default!;
-    [Dependency] private readonly EuiManager _eui = default!;
-    [Dependency] private readonly IPlayerLocator _locator = default!;
+    [Dependency] private IServerDbManager _dbManager = default!;
+    [Dependency] private EuiManager _eui = default!;
+    [Dependency] private IPlayerLocator _locator = default!;
 
     public override string Command => "banlist";
 

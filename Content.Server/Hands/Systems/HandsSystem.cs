@@ -31,20 +31,20 @@ using Robust.Shared.Utility;
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
-    internal sealed class HandsSystem : SharedHandsSystem
+    internal sealed partial class HandsSystem : SharedHandsSystem
     {
-        [Dependency] private readonly InventorySystem _inventorySystem = default!;
-        [Dependency] private readonly StackSystem _stackSystem = default!;
-        [Dependency] private readonly HandVirtualItemSystem _virtualItemSystem = default!;
-        [Dependency] private readonly ActionBlockerSystem _actionBlockerSystem = default!;
-        [Dependency] private readonly SharedHandVirtualItemSystem _virtualSystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly PullingSystem _pullingSystem = default!;
-        [Dependency] private readonly ThrowingSystem _throwingSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
-        [Dependency] private readonly ISharedPlayerManager _player = default!;
-        [Dependency] private readonly IConfigurationManager _configuration = default!;
+        [Dependency] private InventorySystem _inventorySystem = default!;
+        [Dependency] private StackSystem _stackSystem = default!;
+        [Dependency] private HandVirtualItemSystem _virtualItemSystem = default!;
+        [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;
+        [Dependency] private SharedHandVirtualItemSystem _virtualSystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private PullingSystem _pullingSystem = default!;
+        [Dependency] private ThrowingSystem _throwingSystem = default!;
+        [Dependency] private StorageSystem _storageSystem = default!;
+        [Dependency] private ISharedPlayerManager _player = default!;
+        [Dependency] private IConfigurationManager _configuration = default!;
 
         public override void Initialize()
         {

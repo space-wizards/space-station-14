@@ -21,8 +21,8 @@ namespace Content.Client.Changelog
     [GenerateTypedNameReferences]
     public sealed partial class ChangelogWindow : BaseWindow
     {
-        [Dependency] private readonly ChangelogManager _changelog = default!;
-        [Dependency] private readonly IResourceCache _resourceCache = default!;
+        [Dependency] private ChangelogManager _changelog = default!;
+        [Dependency] private IResourceCache _resourceCache = default!;
 
         public ChangelogWindow()
         {

@@ -9,11 +9,11 @@ namespace Content.Client.DebugMon;
 /// <summary>
 /// This handles preventing certain debug monitors from appearing.
 /// </summary>
-public sealed class DebugMonitorSystem : EntitySystem
+public sealed partial class DebugMonitorSystem : EntitySystem
 {
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IClientAdminManager _admin = default!;
-    [Dependency] private readonly IUserInterfaceManager _userInterface = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IClientAdminManager _admin = default!;
+    [Dependency] private IUserInterfaceManager _userInterface = default!;
 
     public override void FrameUpdate(float frameTime)
     {

@@ -22,12 +22,12 @@ public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 {
 }
 
-public abstract class SharedDisposalUnitSystem : EntitySystem
+public abstract partial class SharedDisposalUnitSystem : EntitySystem
 {
-    [Dependency] protected readonly IGameTiming GameTiming = default!;
-    [Dependency] protected readonly MetaDataSystem Metadata = default!;
-    [Dependency] private   readonly MobStateSystem _mobState = default!;
-    [Dependency] protected readonly SharedJointSystem Joints = default!;
+    [Dependency] protected IGameTiming GameTiming = default!;
+    [Dependency] protected MetaDataSystem Metadata = default!;
+    [Dependency] private   MobStateSystem _mobState = default!;
+    [Dependency] protected SharedJointSystem Joints = default!;
 
     protected static TimeSpan ExitAttemptDelay = TimeSpan.FromSeconds(0.5);
 

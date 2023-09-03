@@ -7,10 +7,10 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Friends.Systems;
 
-public sealed class PettableFriendSystem : EntitySystem
+public sealed partial class PettableFriendSystem : EntitySystem
 {
-    [Dependency] private readonly FactionExceptionSystem _factionException = default!;
-    [Dependency] private readonly SharedPopupSystem _popup = default!;
+    [Dependency] private FactionExceptionSystem _factionException = default!;
+    [Dependency] private SharedPopupSystem _popup = default!;
 
     public override void Initialize()
     {

@@ -15,15 +15,15 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems
 {
-    public sealed class DamageOtherOnHitSystem : EntitySystem
+    public sealed partial class DamageOtherOnHitSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly GunSystem _guns = default!;
-        [Dependency] private readonly DamageableSystem _damageable = default!;
-        [Dependency] private readonly DamageExamineSystem _damageExamine = default!;
-        [Dependency] private readonly SharedCameraRecoilSystem _sharedCameraRecoil = default!;
-        [Dependency] private readonly SharedColorFlashEffectSystem _color = default!;
-        [Dependency] private readonly ThrownItemSystem _thrownItem = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private GunSystem _guns = default!;
+        [Dependency] private DamageableSystem _damageable = default!;
+        [Dependency] private DamageExamineSystem _damageExamine = default!;
+        [Dependency] private SharedCameraRecoilSystem _sharedCameraRecoil = default!;
+        [Dependency] private SharedColorFlashEffectSystem _color = default!;
+        [Dependency] private ThrownItemSystem _thrownItem = default!;
 
         public override void Initialize()
         {

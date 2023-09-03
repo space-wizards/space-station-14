@@ -16,14 +16,14 @@ namespace Content.Server.Mapping;
 /// <summary>
 ///     Handles autosaving maps.
 /// </summary>
-public sealed class MappingSystem : EntitySystem
+public sealed partial class MappingSystem : EntitySystem
 {
-    [Dependency] private readonly IConsoleHost _conHost = default!;
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IResourceManager _resMan = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
+    [Dependency] private IConsoleHost _conHost = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IResourceManager _resMan = default!;
+    [Dependency] private MapLoaderSystem _map = default!;
 
     // Not a comp because I don't want to deal with this getting saved onto maps ever
     /// <summary>

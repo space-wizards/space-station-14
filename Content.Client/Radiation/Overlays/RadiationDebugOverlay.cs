@@ -8,10 +8,10 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Radiation.Overlays;
 
-public sealed class RadiationDebugOverlay : Overlay
+public sealed partial class RadiationDebugOverlay : Overlay
 {
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IEntityManager _entityManager = default!;
     private readonly RadiationSystem _radiation;
 
     private readonly Font _font;

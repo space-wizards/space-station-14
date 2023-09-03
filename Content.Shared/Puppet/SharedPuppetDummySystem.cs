@@ -7,9 +7,9 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Puppet
 {
-    public abstract class SharedPuppetDummySystem : EntitySystem
+    public abstract partial class SharedPuppetDummySystem : EntitySystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
+        [Dependency] private ActionBlockerSystem _blocker = default!;
 
         public override void Initialize()
         {

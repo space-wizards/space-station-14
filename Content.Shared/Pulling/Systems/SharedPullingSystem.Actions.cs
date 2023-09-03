@@ -17,12 +17,12 @@ namespace Content.Shared.Pulling
 {
     public abstract partial class SharedPullingSystem
     {
-        [Dependency] private readonly ActionBlockerSystem _blocker = default!;
-        [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
+        [Dependency] private ActionBlockerSystem _blocker = default!;
+        [Dependency] private SharedContainerSystem _containerSystem = default!;
+        [Dependency] private SharedHandsSystem _handsSystem = default!;
+        [Dependency] private SharedInteractionSystem _interaction = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private ISharedAdminLogManager _adminLogger = default!;
 
         public bool CanPull(EntityUid puller, EntityUid pulled)
         {

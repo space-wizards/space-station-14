@@ -18,15 +18,15 @@ namespace Content.Server.Shuttles.Systems
 {
     public sealed partial class DockingSystem : EntitySystem
     {
-        [Dependency] private readonly IMapManager _mapManager = default!;
-        [Dependency] private readonly DoorBoltSystem _bolts = default!;
-        [Dependency] private readonly DoorSystem _doorSystem = default!;
-        [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
-        [Dependency] private readonly PathfindingSystem _pathfinding = default!;
-        [Dependency] private readonly ShuttleConsoleSystem _console = default!;
-        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
+        [Dependency] private IMapManager _mapManager = default!;
+        [Dependency] private DoorBoltSystem _bolts = default!;
+        [Dependency] private DoorSystem _doorSystem = default!;
+        [Dependency] private FixtureSystem _fixtureSystem = default!;
+        [Dependency] private PathfindingSystem _pathfinding = default!;
+        [Dependency] private ShuttleConsoleSystem _console = default!;
+        [Dependency] private SharedJointSystem _jointSystem = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private SharedTransformSystem _transform = default!;
 
         private ISawmill _sawmill = default!;
         private const string DockingFixture = "docking";

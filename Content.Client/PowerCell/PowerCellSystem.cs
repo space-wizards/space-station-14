@@ -5,9 +5,9 @@ using Robust.Client.GameObjects;
 namespace Content.Client.PowerCell;
 
 [UsedImplicitly]
-public sealed class PowerCellSystem : SharedPowerCellSystem
+public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
-    [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+    [Dependency] private SharedAppearanceSystem _appearance = default!;
 
     public override void Initialize()
     {

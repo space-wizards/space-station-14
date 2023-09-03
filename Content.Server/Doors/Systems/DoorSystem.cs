@@ -21,12 +21,12 @@ using Content.Shared.DoAfter;
 
 namespace Content.Server.Doors.Systems;
 
-public sealed class DoorSystem : SharedDoorSystem
+public sealed partial class DoorSystem : SharedDoorSystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLog = default!;
-    [Dependency] private readonly DoorBoltSystem _bolts = default!;
-    [Dependency] private readonly AirtightSystem _airtightSystem = default!;
-    [Dependency] private readonly SharedToolSystem _toolSystem = default!;
+    [Dependency] private IAdminLogManager _adminLog = default!;
+    [Dependency] private DoorBoltSystem _bolts = default!;
+    [Dependency] private AirtightSystem _airtightSystem = default!;
+    [Dependency] private SharedToolSystem _toolSystem = default!;
 
     public override void Initialize()
     {

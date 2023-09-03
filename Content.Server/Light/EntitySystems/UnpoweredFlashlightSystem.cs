@@ -14,13 +14,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public sealed class UnpoweredFlashlightSystem : EntitySystem
+    public sealed partial class UnpoweredFlashlightSystem : EntitySystem
     {
-        [Dependency] private readonly IRobustRandom _random = default!;
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-        [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
+        [Dependency] private IRobustRandom _random = default!;
+        [Dependency] private SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private IPrototypeManager _prototypeManager = default!;
+        [Dependency] private SharedAudioSystem _audioSystem = default!;
 
         public override void Initialize()
         {

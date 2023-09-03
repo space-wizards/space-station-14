@@ -5,11 +5,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-public sealed class RehydratableSystem : EntitySystem
+public sealed partial class RehydratableSystem : EntitySystem
 {
-    [Dependency] private readonly SharedPopupSystem _popups = default!;
-    [Dependency] private readonly SolutionContainerSystem _solutions = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private SharedPopupSystem _popups = default!;
+    [Dependency] private SolutionContainerSystem _solutions = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     public override void Initialize()
     {

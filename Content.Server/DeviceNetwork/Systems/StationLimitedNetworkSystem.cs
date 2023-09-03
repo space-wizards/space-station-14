@@ -9,9 +9,9 @@ namespace Content.Server.DeviceNetwork.Systems
     /// This system requires the StationLimitedNetworkComponent to be on the the sending entity as well as the receiving entity
     /// </summary>
     [UsedImplicitly]
-    public sealed class StationLimitedNetworkSystem : EntitySystem
+    public sealed partial class StationLimitedNetworkSystem : EntitySystem
     {
-        [Dependency] private readonly StationSystem _stationSystem = default!;
+        [Dependency] private StationSystem _stationSystem = default!;
         public override void Initialize()
         {
             base.Initialize();

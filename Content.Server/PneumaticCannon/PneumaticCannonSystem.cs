@@ -13,12 +13,12 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.PneumaticCannon;
 
-public sealed class PneumaticCannonSystem : SharedPneumaticCannonSystem
+public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
 {
-    [Dependency] private readonly AtmosphereSystem _atmos = default!;
-    [Dependency] private readonly GasTankSystem _gasTank = default!;
-    [Dependency] private readonly StunSystem _stun = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
+    [Dependency] private AtmosphereSystem _atmos = default!;
+    [Dependency] private GasTankSystem _gasTank = default!;
+    [Dependency] private StunSystem _stun = default!;
+    [Dependency] private ItemSlotsSystem _slots = default!;
 
     public override void Initialize()
     {

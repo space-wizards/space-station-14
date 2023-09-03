@@ -5,9 +5,9 @@ using Content.Shared.Smoking;
 
 namespace Content.Server.Light.EntitySystems
 {
-    public sealed class MatchboxSystem : EntitySystem
+    public sealed partial class MatchboxSystem : EntitySystem
     {
-        [Dependency] private readonly MatchstickSystem _stickSystem = default!;
+        [Dependency] private MatchstickSystem _stickSystem = default!;
 
         public override void Initialize()
         {

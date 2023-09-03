@@ -8,9 +8,9 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.StationEvents.Events
 {
-    public sealed class MeteorSwarmRule : StationEventSystem<MeteorSwarmRuleComponent>
+    public sealed partial class MeteorSwarmRule : StationEventSystem<MeteorSwarmRuleComponent>
     {
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
 
         protected override void Started(EntityUid uid, MeteorSwarmRuleComponent component, GameRuleComponent gameRule, GameRuleStartedEvent args)
         {

@@ -17,16 +17,16 @@ using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
 {
-    public sealed class PaperSystem : EntitySystem
+    public sealed partial class PaperSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedInteractionSystem _interaction = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-        [Dependency] private readonly MetaDataSystem _metaSystem = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private IAdminLogManager _adminLogger = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
+        [Dependency] private SharedInteractionSystem _interaction = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private UserInterfaceSystem _uiSystem = default!;
+        [Dependency] private MetaDataSystem _metaSystem = default!;
+        [Dependency] private SharedAudioSystem _audio = default!;
 
         public override void Initialize()
         {

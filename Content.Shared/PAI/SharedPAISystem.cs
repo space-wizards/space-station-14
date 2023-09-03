@@ -16,9 +16,9 @@ namespace Content.Shared.PAI
     /// This seems too complicated for an initial implementation, though,
     ///  and there's not always enough players and ghost roles to justify it.
     /// </summary>
-    public abstract class SharedPAISystem : EntitySystem
+    public abstract partial class SharedPAISystem : EntitySystem
     {
-        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
+        [Dependency] private SharedActionsSystem _actionsSystem = default!;
 
         public override void Initialize()
         {

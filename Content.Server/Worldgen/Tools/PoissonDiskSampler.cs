@@ -8,10 +8,10 @@ namespace Content.Server.Worldgen.Tools;
 /// <summary>
 ///     An implementation of Poisson Disk Sampling, for evenly spreading points across a given area.
 /// </summary>
-public sealed class PoissonDiskSampler
+public sealed partial class PoissonDiskSampler
 {
     public const int DefaultPointsPerIteration = 30;
-    [Dependency] private readonly IRobustRandom _random = default!;
+    [Dependency] private IRobustRandom _random = default!;
 
     /// <summary>
     ///     Samples for points within the given circle.

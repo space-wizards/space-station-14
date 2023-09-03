@@ -3,9 +3,9 @@ using Content.Server.Movement.Components;
 
 namespace Content.Server.Movement;
 
-public sealed class StressTestMovementSystem : EntitySystem
+public sealed partial class StressTestMovementSystem : EntitySystem
 {
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
+    [Dependency] private SharedTransformSystem _transform = default!;
 
     public override void Initialize()
     {

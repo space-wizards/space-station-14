@@ -26,16 +26,16 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
-    public sealed class DroneSystem : SharedDroneSystem
+    public sealed partial class DroneSystem : SharedDroneSystem
     {
-        [Dependency] private readonly BodySystem _bodySystem = default!;
-        [Dependency] private readonly PopupSystem _popupSystem = default!;
-        [Dependency] private readonly TagSystem _tagSystem = default!;
-        [Dependency] private readonly EntityLookupSystem _lookup = default!;
-        [Dependency] private readonly IGameTiming _gameTiming = default!;
-        [Dependency] private readonly InnateToolSystem _innateToolSystem = default!;
-        [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private BodySystem _bodySystem = default!;
+        [Dependency] private PopupSystem _popupSystem = default!;
+        [Dependency] private TagSystem _tagSystem = default!;
+        [Dependency] private EntityLookupSystem _lookup = default!;
+        [Dependency] private IGameTiming _gameTiming = default!;
+        [Dependency] private InnateToolSystem _innateToolSystem = default!;
+        [Dependency] private MobStateSystem _mobStateSystem = default!;
+        [Dependency] private SharedAppearanceSystem _appearance = default!;
 
         public override void Initialize()
         {

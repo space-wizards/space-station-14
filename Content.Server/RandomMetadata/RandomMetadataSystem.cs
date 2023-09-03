@@ -5,11 +5,11 @@ using Robust.Shared.Random;
 
 namespace Content.Server.RandomMetadata;
 
-public sealed class RandomMetadataSystem : EntitySystem
+public sealed partial class RandomMetadataSystem : EntitySystem
 {
-    [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IPrototypeManager _prototype = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     public override void Initialize()
     {

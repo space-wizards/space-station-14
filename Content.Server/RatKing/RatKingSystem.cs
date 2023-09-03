@@ -11,13 +11,13 @@ using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
 {
-    public sealed class RatKingSystem : EntitySystem
+    public sealed partial class RatKingSystem : EntitySystem
     {
-        [Dependency] private readonly ActionsSystem _action = default!;
-        [Dependency] private readonly AtmosphereSystem _atmos = default!;
-        [Dependency] private readonly HungerSystem _hunger = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
-        [Dependency] private readonly TransformSystem _xform = default!;
+        [Dependency] private ActionsSystem _action = default!;
+        [Dependency] private AtmosphereSystem _atmos = default!;
+        [Dependency] private HungerSystem _hunger = default!;
+        [Dependency] private PopupSystem _popup = default!;
+        [Dependency] private TransformSystem _xform = default!;
 
         public override void Initialize()
         {

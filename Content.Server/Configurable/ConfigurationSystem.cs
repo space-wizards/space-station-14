@@ -7,9 +7,9 @@ using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
 
-public sealed class ConfigurationSystem : EntitySystem
+public sealed partial class ConfigurationSystem : EntitySystem
 {
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
+    [Dependency] private UserInterfaceSystem _uiSystem = default!;
 
     public override void Initialize()
     {

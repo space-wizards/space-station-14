@@ -28,21 +28,21 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// This handles the Pirates minor antag, which is designed to coincide with other modes on occasion.
 /// </summary>
-public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
+public sealed partial class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    [Dependency] private readonly IConfigurationManager _cfg = default!;
-    [Dependency] private readonly IChatManager _chatManager = default!;
-    [Dependency] private readonly IMapManager _mapManager = default!;
-    [Dependency] private readonly IServerPreferencesManager _prefs = default!;
-    [Dependency] private readonly StationSpawningSystem _stationSpawningSystem = default!;
-    [Dependency] private readonly PricingSystem _pricingSystem = default!;
-    [Dependency] private readonly MapLoaderSystem _map = default!;
-    [Dependency] private readonly NamingSystem _namingSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
-    [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private IPrototypeManager _prototypeManager = default!;
+    [Dependency] private IRobustRandom _random = default!;
+    [Dependency] private IConfigurationManager _cfg = default!;
+    [Dependency] private IChatManager _chatManager = default!;
+    [Dependency] private IMapManager _mapManager = default!;
+    [Dependency] private IServerPreferencesManager _prefs = default!;
+    [Dependency] private StationSpawningSystem _stationSpawningSystem = default!;
+    [Dependency] private PricingSystem _pricingSystem = default!;
+    [Dependency] private MapLoaderSystem _map = default!;
+    [Dependency] private NamingSystem _namingSystem = default!;
+    [Dependency] private MindSystem _mindSystem = default!;
+    [Dependency] private SharedAudioSystem _audioSystem = default!;
+    [Dependency] private MetaDataSystem _metaData = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

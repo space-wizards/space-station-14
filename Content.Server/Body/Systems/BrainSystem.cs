@@ -10,10 +10,10 @@ using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Body.Systems
 {
-    public sealed class BrainSystem : EntitySystem
+    public sealed partial class BrainSystem : EntitySystem
     {
-        [Dependency] private readonly MovementSpeedModifierSystem _movementSpeed = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;
+        [Dependency] private MindSystem _mindSystem = default!;
 
         public override void Initialize()
         {

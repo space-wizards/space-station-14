@@ -16,11 +16,11 @@ namespace Content.Shared.Pulling
     /// Because pulling state is such a mess to get right, all writes to pulling state must go through this class.
     /// </summary>
     [UsedImplicitly]
-    public sealed class SharedPullingStateManagementSystem : EntitySystem
+    public sealed partial class SharedPullingStateManagementSystem : EntitySystem
     {
-        [Dependency] private readonly SharedJointSystem _jointSystem = default!;
-        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-        [Dependency] private readonly IGameTiming _timing = default!;
+        [Dependency] private SharedJointSystem _jointSystem = default!;
+        [Dependency] private SharedPhysicsSystem _physics = default!;
+        [Dependency] private IGameTiming _timing = default!;
 
         public override void Initialize()
         {

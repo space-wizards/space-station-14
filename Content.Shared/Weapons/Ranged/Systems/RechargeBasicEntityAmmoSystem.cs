@@ -7,13 +7,13 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
-public sealed class RechargeBasicEntityAmmoSystem : EntitySystem
+public sealed partial class RechargeBasicEntityAmmoSystem : EntitySystem
 {
-    [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly INetManager _netManager = default!;
-    [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly MetaDataSystem _metadata = default!;
+    [Dependency] private IGameTiming _timing = default!;
+    [Dependency] private INetManager _netManager = default!;
+    [Dependency] private SharedAudioSystem _audio = default!;
+    [Dependency] private SharedGunSystem _gun = default!;
+    [Dependency] private MetaDataSystem _metadata = default!;
 
     public override void Initialize()
     {

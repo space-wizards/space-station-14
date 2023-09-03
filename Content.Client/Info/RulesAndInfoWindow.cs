@@ -9,10 +9,10 @@ using Robust.Shared.ContentPack;
 
 namespace Content.Client.Info
 {
-    public sealed class RulesAndInfoWindow : DefaultWindow
+    public sealed partial class RulesAndInfoWindow : DefaultWindow
     {
-        [Dependency] private readonly IResourceCache _resourceManager = default!;
-        [Dependency] private readonly RulesManager _rules = default!;
+        [Dependency] private IResourceCache _resourceManager = default!;
+        [Dependency] private RulesManager _rules = default!;
 
         public RulesAndInfoWindow()
         {

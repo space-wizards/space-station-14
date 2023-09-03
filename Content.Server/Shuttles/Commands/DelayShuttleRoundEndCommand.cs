@@ -9,9 +9,9 @@ namespace Content.Server.Shuttles.Commands;
 /// Delays the round from ending via the shuttle call. Can still be ended via other means.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
-public sealed class DelayRoundEndCommand : IConsoleCommand
+public sealed partial class DelayRoundEndCommand : IConsoleCommand
 {
-    [Dependency] private readonly IEntitySystemManager _sysManager = default!;
+    [Dependency] private IEntitySystemManager _sysManager = default!;
 
     public string Command => "delayroundend";
     public string Description => Loc.GetString("emergency-shuttle-command-round-desc");
