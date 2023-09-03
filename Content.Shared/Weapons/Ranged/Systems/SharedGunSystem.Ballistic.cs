@@ -274,6 +274,7 @@ public abstract partial class SharedGunSystem
 /// <summary>
 /// DoAfter event for filling one ballistic ammo provider from another.
 /// </summary>
+[Serializable, NetSerializable]
 public sealed partial class AmmoFillDoAfterEvent : SimpleDoAfterEvent
 {
 }
