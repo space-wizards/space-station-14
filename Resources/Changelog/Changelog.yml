@@ -1,11 +1,4 @@
 Entries:
-- author: JoeHammad
-  changes:
-  - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
-      now has the funds to put medicated sutures and regenerative mesh in select medkits',
-    type: Tweak}
-  id: 4239
-  time: '2023-07-12T19:14:25.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
@@ -3005,3 +2998,12 @@ Entries:
       dioxide poisoning., type: Tweak}
   id: 4738
   time: '2023-09-03T06:30:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
+    type: Fix}
+  - {message: Added fultons to salvage vendor., type: Add}
+  - {message: Make fultons easy to craft temporarily to get better feedback on it
+      for expeditions., type: Tweak}
+  id: 4739
+  time: '2023-09-03T12:18:09.0000000+00:00'
