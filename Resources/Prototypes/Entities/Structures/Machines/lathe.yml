@@ -526,6 +526,10 @@
       - MagazinePistolSubMachineGunTopMounted
       - MagazineRifle
       - MagazineLightRifle
+      - MagazineBoxPistol
+      - MagazineBoxMagnum
+      - MagazineBoxRifle
+      - MagazineBoxLightRifle
       - TargetHuman
       - TargetSyndicate
       - TargetClown
