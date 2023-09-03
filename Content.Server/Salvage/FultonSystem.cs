@@ -58,7 +58,7 @@ public sealed class FultonSystem : SharedFultonSystem
             var oldCoords = xform.Coordinates;
             var offset = _random.NextVector2(1.5f);
             var localPos = TransformSystem.GetInvWorldMatrix(beaconXform.ParentUid)
-                .Transform(beaconXform.MapPosition.Position) + offset;
+                .Transform(TransformSystem.GetWorldPosition(beaconXform)) + offset;
 
             TransformSystem.SetCoordinates(uid, new EntityCoordinates(beaconXform.ParentUid, localPos));
 
