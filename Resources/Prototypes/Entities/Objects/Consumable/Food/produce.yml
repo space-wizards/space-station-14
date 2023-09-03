@@ -1263,7 +1263,5 @@
           Quantity: 5
   - type: Extractable
     grindableSolutionName: food
-  - type: Seed
-    seedId: bungo
   - type: SpaceGarbage
   - type: BadFood
