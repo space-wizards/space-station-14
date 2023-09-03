@@ -1,7 +1,7 @@
 {
   "version": 1,
   "license": "CC-BY-SA-3.0",
-  "copyright": "Taken from tgstation: https://github.com/tgstation/tgstation/commit/696dfcc59c9e65e7bbe3923d1f7e880ea384783f",
+  "copyright": "Taken from tgstation: https://github.com/tgstation/tgstation/commit/b3399ffe39f9ace645123c98323c4832412cc641",
   "size": {
     "x": 32,
     "y": 32
@@ -17,6 +17,9 @@
       "name": "produce"
     },
     {
+      "name": "pit"
+    },
+    {
       "name": "seed"
     },
     {
@@ -30,12 +33,6 @@
     },
     {
       "name": "stage-4"
-    },
-    {
-      "name": "stage-5"
-    },
-    {
-      "name": "stage-6"
     }
   ]
 }

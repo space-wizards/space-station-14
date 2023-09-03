@@ -79,3 +79,5 @@ seeds-cocoa-name = cocoa
 seeds-cocoa-display-name = cocoa plant
 seeds-berries-name = berries
 seeds-berries-display-name = berry bush
+seeds-bungo-name = bungo
+seeds-bungo-display-name = bungo plant

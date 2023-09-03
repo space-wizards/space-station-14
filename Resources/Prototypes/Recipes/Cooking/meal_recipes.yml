@@ -870,6 +870,18 @@
     FoodBanana: 1
     MonkeyCube: 1
 
+- type: microwaveMealRecipe
+  id: RecipeBungoSoup
+  name: bungo soup recipe
+  result: FoodSoupBungo
+  time: 10
+  reagents:
+    Water: 5
+  solids:
+    FoodBowlBig: 1
+    FoodBungo: 2
+    FoodChili: 1
+
 #Other
 
 - type: microwaveMealRecipe
