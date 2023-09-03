@@ -74,9 +74,12 @@ namespace Content.Server.Ghost
 
         private void OnGhostHearingAction(EntityUid uid, GhostComponent component, ToggleGhostHearingActionEvent args)
         {
-            component.CanGhostHear = !component.CanGhostHear;
+            if (HasComp<GhostHearingComponent>(uid))
+                RemComp<GhostHearingComponent>(uid);
+            else
+                AddComp<GhostHearingComponent>(uid);
 
-            var str = component.CanGhostHear
+            var str = HasComp<GhostHearingComponent>(uid)
                 ? Loc.GetString("ghost-gui-toggle-hearing-popup-on")
                 : Loc.GetString("ghost-gui-toggle-hearing-popup-off");
 

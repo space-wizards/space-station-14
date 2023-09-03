@@ -41,12 +41,6 @@ public sealed partial class GhostComponent : Component
 
     #endregion
 
-    /// <summary>
-    ///     If true, ChatSystem will send all messages to this entity.
-    /// </summary>
-    [DataField("canGhostHear"), AutoNetworkedField]
-    public bool CanGhostHear = true;
-
     [ViewVariables(VVAccess.ReadWrite), DataField("timeOfDeath", customTypeSerializer:typeof(TimeOffsetSerializer))]
     public TimeSpan TimeOfDeath = TimeSpan.Zero;
 
