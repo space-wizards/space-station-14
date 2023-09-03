@@ -27,6 +27,15 @@
   - accent-words-mouse-4
 
 - type: accent
+  id: mothroach
+  fullReplacements:
+  - accent-words-mothroach-1
+  - accent-words-mothroach-2
+  - accent-words-mothroach-3
+  - accent-words-mothroach-4
+  - accent-words-mothroach-5
+
+- type: accent
   id: mumble
   fullReplacements:
   - accent-words-mumble-1
