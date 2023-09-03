@@ -24,7 +24,7 @@
     noRot: true
   - type: Strap
     position: Stand
-    buckleOffset: "0,0.15"
+    buckleOffset: "0,-0.05"
   - type: Pullable
   - type: Damageable
     damageContainer: Inorganic
