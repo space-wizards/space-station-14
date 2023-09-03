@@ -1,6 +1,7 @@
 # Last match in file takes precedence.
 
 # Sorting by path instead of by who added it one day :(
+# this isn't how codeowners rules work pls read the first comment instead of trying to force a sorting order
 /Resources/ConfigPresets/WizardsDen/  @Chief-Engineer
 
 # Moony's Gargantuan List Of Things She Cares About, or MGLOTSCA for short.
@@ -16,13 +17,14 @@
 /Resources/ServerInfo/Guidebook/ @moonheart08 @EmoGarbage404
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
-/Resources/Prototypes/species.yml @moonheart08
-/Resources/Prototypes/Body/ @moonheart08 @DrSmugleaf # suffering
-/Resources/Prototypes/Maps/ @moonheart08 @Emisse
-/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @DrSmugleaf
-/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @DrSmugleaf
 
+/Resources/Prototypes/Maps/ @Emisse
+
+/Resources/Prototypes/Body/ @DrSmugleaf # suffering
+/Resources/Prototypes/Entities/Mobs/Player/ @DrSmugleaf
+/Resources/Prototypes/Entities/Mobs/Species/ @DrSmugleaf
 /Content.*/Body/ @DrSmugleaf
+/Content.YAMLLinter @DrSmugleaf
 
 /Content.*/Verbs/ @ElectroJr
 /Content.Client/ContextMenu/ @ElectroJr
@@ -47,8 +49,6 @@
 /Resources/Prototypes/Research/ @EmoGarbage404
 
 /Content.*/Forensics/ @ficcialfaint
-
-/Content.YAMLLinter @DrSmugleaf
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
