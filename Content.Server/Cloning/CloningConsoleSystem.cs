@@ -3,7 +3,6 @@ using Content.Server.Administration.Logs;
 using Content.Server.Cloning.Components;
 using Content.Server.DeviceLinking.Systems;
 using Content.Server.Medical.Components;
-using Content.Server.Mind;
 using Content.Server.Power.Components;
 using Content.Server.Power.EntitySystems;
 using Content.Server.UserInterface;
@@ -13,6 +12,7 @@ using Content.Shared.Database;
 using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceLinking.Events;
 using Content.Shared.IdentityManagement;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using JetBrains.Annotations;
@@ -31,7 +31,7 @@ namespace Content.Server.Cloning
         [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
         [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
         [Dependency] private readonly PowerReceiverSystem _powerReceiverSystem = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
 
         public override void Initialize()
         {

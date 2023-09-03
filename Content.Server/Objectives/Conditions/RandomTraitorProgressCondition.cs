@@ -1,8 +1,8 @@
 using System.Linq;
 using Content.Server.GameTicking.Rules;
-using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles.Jobs;
 using Robust.Shared.Random;
 using Robust.Shared.Utility;
 
@@ -51,7 +51,7 @@ namespace Content.Server.Objectives.Conditions
             {
                 var targetName = string.Empty;
                 var entities = IoCManager.Resolve<IEntityManager>();
-                var jobs = entities.System<JobSystem>();
+                var jobs = entities.System<SharedJobSystem>();
                 var jobName = jobs.MindTryGetJobName(_targetMind);
 
                 if (_targetMind == null)

@@ -8,7 +8,7 @@
 /Content.*/Toolshed/ @moonheart08
 **/Toolshed/** @moonheart08
 *Command.cs @moonheart08
-/Content.*/Administration/ @moonheart08 @PaulRitter @DrSmugleaf @Chief-Engineer
+/Content.*/Administration/ @moonheart08 @DrSmugleaf @Chief-Engineer
 /Content.*/Station/ @moonheart08
 /Content.*/Maps/ @moonheart08
 /Content.*/GameTicking/ @moonheart08 @EmoGarbage404
@@ -17,18 +17,12 @@
 /Resources/engineCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/clientCommandPerms.yml @moonheart08 @Chief-Engineer
 /Resources/Prototypes/species.yml @moonheart08
-/Resources/Prototypes/Body/ @moonheart08 @mirrorcult @DrSmugleaf # suffering
+/Resources/Prototypes/Body/ @moonheart08 @DrSmugleaf # suffering
 /Resources/Prototypes/Maps/ @moonheart08 @Emisse
-/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @mirrorcult @DrSmugleaf
-/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @mirrorcult @DrSmugleaf
+/Resources/Prototypes/Entities/Mobs/Player/ @moonheart08 @DrSmugleaf
+/Resources/Prototypes/Entities/Mobs/Species/ @moonheart08 @DrSmugleaf
 
-/Content.*/Body/ @mirrorcult @DrSmugleaf
-/Content.*/Chemistry/ @mirrorcult
-/Content.*/StatusEffect/ @mirrorcult
-/Content.*/Whitelist/ @mirrorcult
-/Resources/Prototypes/Reagents/ @mirrorcult
-/Resources/Prototypes/Recipes/Reactions @mirrorcult
-/Resources/Prototypes/Chemistry @mirrorcult
+/Content.*/Body/ @DrSmugleaf
 
 /Content.*/Verbs/ @ElectroJr
 /Content.Client/ContextMenu/ @ElectroJr
@@ -54,18 +48,7 @@
 
 /Content.*/Forensics/ @ficcialfaint
 
-/Content.YAMLLinter @PaulRitter @DrSmugleaf
-/Content.*/Inventory @PaulRitter
-/Content.*/Arcade @PaulRitter
-/Content.*/Conveyor @PaulRitter
-/Content.*/Decals @PaulRitter
-/Content.*/Objectives @PaulRitter
-/Content.*/MachineLinking @PaulRitter
-/Content.*/Crayon @PaulRitter
-/Content.*/Clothing @PaulRitter
-
-# Be they Fluent translations or Freemarker templates, I know them both!
-*.ftl @RemieRichards
+/Content.YAMLLinter @DrSmugleaf
 
 # SKREEEE
 /Content.*.Database/ @PJB3005 @DrSmugleaf
