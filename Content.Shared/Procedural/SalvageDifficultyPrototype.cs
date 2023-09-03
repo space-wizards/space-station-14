@@ -22,7 +22,7 @@ public sealed class SalvageDifficultyPrototype : IPrototype
     /// <summary>
     /// How many mobs this difficulty is allowed to spawn.
     /// </summary>
-    [DataField("lootBudget", required : true)]
+    [DataField("mobBudget", required : true)]
     public float MobBudget;
 
     /// <summary>
