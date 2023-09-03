@@ -1,10 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
-      dump dangerous chemicals in drains!, type: Add}
-  id: 4240
-  time: '2023-07-12T19:38:14.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Nuke Ops can no longer purchase dehydrated carp, type: Remove}
@@ -3007,3 +3001,8 @@ Entries:
       for expeditions., type: Tweak}
   id: 4739
   time: '2023-09-03T12:18:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
+  id: 4740
+  time: '2023-09-03T14:22:28.0000000+00:00'
