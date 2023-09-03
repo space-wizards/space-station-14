@@ -1,10 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Nuke Ops can no longer purchase dehydrated carp, type: Remove}
-  - {message: Increased the price of dehydrated carp to 3 TC., type: Tweak}
-  id: 4241
-  time: '2023-07-12T19:47:09.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Youtool nerf, type: Add}
@@ -3006,3 +3000,8 @@ Entries:
   - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
   id: 4740
   time: '2023-09-03T14:22:28.0000000+00:00'
+- author: Diebek
+  changes:
+  - {message: Updated Taxibot sprites., type: Tweak}
+  id: 4741
+  time: '2023-09-03T14:31:24.0000000+00:00'
