@@ -127,7 +127,7 @@ public sealed class FoodSystem : EntitySystem
 
         var flavors = _flavorProfile.GetLocalizedFlavorsMessage(food, user, foodSolution);
 
-        if (foodComp.UsesRemaining <= 0)
+        if (GetUsesRemaining(food, foodComp) <= 0)
         {
             _popup.PopupEntity(Loc.GetString("food-system-try-use-food-is-empty", ("entity", food)), user, user);
             DeleteAndSpawnTrash(foodComp, food, user);
@@ -298,7 +298,7 @@ public sealed class FoodSystem : EntitySystem
                 return;
             }
         }
-        else if (component.UsesRemaining > 0)
+        else if (GetUsesRemaining(uid, component) > 0)
         {
             return;
         }
@@ -497,5 +497,23 @@ public sealed class FoodSystem : EntitySystem
         }
 
         return attempt.Cancelled;
+    }
+
+    /// <summary>
+    /// Get the number of bites this food has left, based on how much food solution there is and how much of it to eat per bite.
+    /// </summary>
+    public int GetUsesRemaining(EntityUid uid, FoodComponent? comp = null)
+    {
+        if (!Resolve(uid, ref comp))
+            return 0;
+
+        if (!_solutionContainer.TryGetSolution(uid, comp.SolutionName, out var solution) || solution.Volume == 0)
+            return 0;
+
+        // eat all in 1 go, so non empty is 1 bite
+        if (comp.TransferAmount == null)
+            return 1;
+
+        return Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2) comp.TransferAmount).Float()));
     }
 }

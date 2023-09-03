@@ -77,23 +77,4 @@ public sealed partial class FoodComponent : Component
     /// </summary>
     [DataField("forceFeedDelay")]
     public float ForceFeedDelay = 3;
-
-    [ViewVariables]
-    public int UsesRemaining
-    {
-        get
-        {
-            if (!EntitySystem.Get<SolutionContainerSystem>().TryGetSolution(Owner, SolutionName, out var solution))
-            {
-                return 0;
-            }
-
-            if (TransferAmount == null)
-                return solution.Volume == 0 ? 0 : 1;
-
-            return solution.Volume == 0
-                ? 0
-                : Math.Max(1, (int) Math.Ceiling((solution.Volume / (FixedPoint2)TransferAmount).Float()));
-        }
-    }
 }
