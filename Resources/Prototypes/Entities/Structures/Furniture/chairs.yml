@@ -328,10 +328,10 @@
   parent: SeatBase
   description: A long chair made for a metro. Really standard design.
   components:
-    - type: Transform
-      anchored: true
-    - type: Anchorable
-    - type: Rotatable
-    - type: Sprite
-      state: steel-bench
+  - type: Transform
+    anchored: true
+  - type: Anchorable
+  - type: Rotatable
+  - type: Sprite
+    state: steel-bench
  
