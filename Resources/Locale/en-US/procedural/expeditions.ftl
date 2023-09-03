@@ -12,7 +12,6 @@ salvage-expedition-window-hostiles = Hostiles:
 salvage-expedition-window-duration = Duration:
 salvage-expedition-window-biome = Biome:
 salvage-expedition-window-modifiers = Modifiers:
-salvage-expedition-window-rewards = Rewards:
 salvage-expedition-window-claimed = Claimed
 salvage-expedition-window-claim = Claim
 

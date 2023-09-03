@@ -156,11 +156,6 @@ public sealed partial class SalvageExpeditionWindow : FancyWindow,
                 Margin = new Thickness(0f, 0f, 0f, 5f),
             });
 
-            lBox.AddChild(new Label()
-            {
-                Text = Loc.GetString("salvage-expedition-window-rewards")
-            });
-
             // Claim
             var claimButton = new Button()
             {
