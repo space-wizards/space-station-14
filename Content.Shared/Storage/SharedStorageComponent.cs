@@ -80,6 +80,8 @@ namespace Content.Shared.Storage
         Open,
         HasContents,
         CanLock,
-        Locked
+        Locked,
+        StorageUsed,
+        Capacity
     }
 }

@@ -6,9 +6,17 @@
   components:
   - type: Sprite
     sprite: Clothing/Belt/quiver.rsi
+    layers:
+    - state: icon
+    - map: [ "enum.StorageContainerVisualLayers.Fill" ]
+      visible: false
   - type: Clothing
   - type: Storage
     capacity: 150
     whitelist:
       tags:
       - Arrow
+  - type: Appearance
+  - type: StorageContainerVisuals
+    maxFillLevels: 3
+    fillBaseName: fill-

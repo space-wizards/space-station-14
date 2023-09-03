@@ -91,7 +91,7 @@ namespace Content.Server.Storage.EntitySystems
             storageComp.Storage = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
             storageComp.Storage.OccludesLight = storageComp.OccludesLight;
             UpdateStorageVisualization(uid, storageComp);
-            RecalculateStorageUsed(storageComp);
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
         }
 
@@ -421,7 +421,7 @@ namespace Content.Server.Storage.EntitySystems
 
         private void OnStorageItemRemoved(EntityUid uid, ServerStorageComponent storageComp, EntRemovedFromContainerMessage args)
         {
-            RecalculateStorageUsed(storageComp);
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
         }
 
@@ -437,7 +437,7 @@ namespace Content.Server.Storage.EntitySystems
                 _appearance.SetData(uid, StackVisuals.Hide, !storageComp.IsOpen);
         }
 
-        public void RecalculateStorageUsed(ServerStorageComponent storageComp)
+        public void RecalculateStorageUsed(EntityUid uid, ServerStorageComponent storageComp)
         {
             storageComp.StorageUsed = 0;
             storageComp.SizeCache.Clear();
@@ -456,6 +456,9 @@ namespace Content.Server.Storage.EntitySystems
                 storageComp.StorageUsed += size;
                 storageComp.SizeCache.Add(entity, size);
             }
+
+            _appearance.SetData(uid, StorageVisuals.StorageUsed, storageComp.StorageUsed);
+            _appearance.SetData(uid, StorageVisuals.Capacity, storageComp.StorageCapacityMax);
         }
 
         public int GetAvailableSpace(EntityUid uid, ServerStorageComponent? component = null)
@@ -488,7 +491,7 @@ namespace Content.Server.Storage.EntitySystems
             {
                 Insert(target, entity, targetComp);
             }
-            RecalculateStorageUsed(sourceComp);
+            RecalculateStorageUsed(source, sourceComp);
             UpdateStorageUI(source, sourceComp);
         }
 
@@ -608,7 +611,7 @@ namespace Content.Server.Storage.EntitySystems
             if (playSound && storageComp.StorageInsertSound is not null)
                 _audio.PlayPvs(storageComp.StorageInsertSound, uid);
 
-            RecalculateStorageUsed(storageComp);
+            RecalculateStorageUsed(uid, storageComp);
             UpdateStorageUI(uid, storageComp);
             return true;
         }
@@ -621,7 +624,7 @@ namespace Content.Server.Storage.EntitySystems
 
             var itemRemoved = storageComp.Storage?.Remove(removeEnt) == true;
             if (itemRemoved)
-                RecalculateStorageUsed(storageComp);
+                RecalculateStorageUsed(uid, storageComp);
 
             return itemRemoved;
         }
