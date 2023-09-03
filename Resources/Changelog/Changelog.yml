@@ -1,11 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: Security staff are now being issued handguns with rubber bullets for
-      station security. An extra magazine with lethals has additionally been supplied
-      in their bags., type: Add}
-  id: 4244
-  time: '2023-07-13T03:18:58.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: 'Traitorous Atmospheric Technicans no longer have a 10 telecrystal penalty,
@@ -3003,3 +2996,9 @@ Entries:
       module itself is now fixed., type: Fix}
   id: 4743
   time: '2023-09-03T18:32:41.0000000+00:00'
+- author: KingFroozy
+  changes:
+  - {message: Added Chief Engineer's Turtleneck. You can find it in their locker or
+      sew it at the Uniform Printer!, type: Add}
+  id: 4744
+  time: '2023-09-03T18:38:28.0000000+00:00'
