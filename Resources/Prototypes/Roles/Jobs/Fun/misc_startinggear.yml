@@ -111,6 +111,29 @@
   satchel: ClothingBackpackDuffelSyndicateOperative
   duffelbag: ClothingBackpackDuffelSyndicateOperative
 
+#Syndicate Operative Outfit - Lone (SS220 Lone-Nukie-Declare-War)
+- type: startingGear
+  id: SyndicateOperativeGearLone
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitOperative
+    back: ClothingBackpackDuffelSyndicateOperative
+    mask: ClothingMaskGasSyndicate
+  # eyes: Night Vision Goggles whenever they're made
+    eyes: ClothingEyesGlassesMeson
+    ears: ClothingHeadsetAltSyndicate
+    gloves: ClothingHandsGlovesCombat
+    outerClothing: ClothingOuterHardsuitSyndie
+    shoes: ClothingShoesBootsCombatFilled
+    id: AgentIDCard
+    pocket1: DoubleEmergencyOxygenTankFilled
+    pocket2: BaseUplinkRadio40TC
+    belt: ClothingBeltMilitaryWebbing
+  inhand:
+    right hand: NukeOpsDeclarationOfWar
+  innerclothingskirt: ClothingUniformJumpskirtOperative
+  satchel: ClothingBackpackDuffelSyndicateOperative
+  duffelbag: ClothingBackpackDuffelSyndicateOperative
+
 #Nuclear Operative Commander Gear
 - type: startingGear
   id: SyndicateCommanderGearFull

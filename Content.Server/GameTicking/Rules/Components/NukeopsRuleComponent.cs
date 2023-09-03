@@ -70,19 +70,19 @@ public sealed partial class NukeopsRuleComponent : Component
     ///     Time allowed for declaration of war
     /// </summary>
     [DataField("warDeclarationDelay")]
-    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(6);
+    public TimeSpan WarDeclarationDelay = TimeSpan.FromMinutes(5);
 
     /// <summary>
     ///     Delay between war declaration and nuke ops arrival on station map. Gives crew time to prepare
     /// </summary>
     [DataField("warNukieArriveDelay")]
-    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(15);
+    public TimeSpan? WarNukieArriveDelay = TimeSpan.FromMinutes(20);
 
     /// <summary>
     ///     Minimal operatives count for war declaration
     /// </summary>
     [DataField("warDeclarationMinOps")]
-    public int WarDeclarationMinOps = 4;
+    public int WarDeclarationMinOps = 1;
 
     [DataField("spawnPointProto", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string SpawnPointPrototype = "SpawnPointNukies";

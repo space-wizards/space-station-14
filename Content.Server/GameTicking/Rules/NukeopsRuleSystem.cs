@@ -52,6 +52,7 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using Content.Server.StationEvents.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
@@ -117,6 +118,28 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
     /// </summary>
     public bool TryGetRuleFromOperative(EntityUid opUid, [NotNullWhen(true)] out (NukeopsRuleComponent, GameRuleComponent)? comps)
     {
+        //fuck it, nukies and lone can't be in the same round anyway
+        var isLone = HasComp<LoneNukeOperativeComponent>(opUid); // SS220 Lone-Nukie-War
+        if (isLone)
+        {
+            var loneQuery = EntityQueryEnumerator<LoneOpsSpawnRuleComponent, GameRuleComponent>();
+            while (loneQuery.MoveNext(out var ruleEnt, out var loneops, out var gameRule))
+            {
+                var nukeopsRuleEnt = loneops.AdditionalRule;
+                if (!TryComp<GameRuleComponent>(nukeopsRuleEnt, out var nukeopsGameRule))
+                {
+                    continue;
+                }
+                if (!TryComp<NukeopsRuleComponent>(nukeopsRuleEnt, out var nukeopsComp))
+                {
+                    continue;
+                }
+
+                comps = (nukeopsComp, nukeopsGameRule);
+                return true;
+            }
+        }
+
         comps = null;
         var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var ruleEnt, out var nukeops, out var gameRule))
@@ -193,14 +216,29 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         if (!TryGetRuleFromOperative(opsUid, out var comps))
             return;
 
+        // SS220 lone-ops-war begin
+        LoneOpsSpawnRuleComponent? lone = null;
+        if (HasComp<LoneNukeOperativeComponent>(opsUid))
+        {
+            var loneOpsQuery = EntityQueryEnumerator<LoneOpsSpawnRuleComponent, GameRuleComponent>();
+            while (loneOpsQuery.MoveNext(out var ruleUid, out var loneops, out var gameRule))
+            {
+                if (loneops.ShuttleOriginMap is null)
+                    continue;
+
+                lone = loneops;
+            }
+        }
+        // SS220 lone-ops-war end
+
         var nukieRule = comps.Value.Item1;
         nukieRule.WarDeclaredTime = _gameTiming.CurTime;
         _chatSystem.DispatchGlobalAnnouncement(msg, title, colorOverride: colorOverride);
-        DistributeExtraTC(nukieRule);
+        DistributeExtraTC(nukieRule, lone);
         _warDeclaratorSystem.RefreshAllUI(comps.Value.Item1, comps.Value.Item2);
     }
 
-    private void DistributeExtraTC(NukeopsRuleComponent nukieRule)
+    private void DistributeExtraTC(NukeopsRuleComponent nukieRule, LoneOpsSpawnRuleComponent? lone = null)
     {
         var enumerator = EntityQueryEnumerator<StoreComponent>();
         while (enumerator.MoveNext(out var uid, out var component))
@@ -208,11 +246,21 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!_tag.HasTag(uid, NukeOpsUplinkTagPrototype))
                 continue;
 
-            if (!nukieRule.NukieOutpost.HasValue)
-                continue;
+            // SS220 lone-ops-war begin
+            if (lone is null)
+            {
+                if (!nukieRule.NukieOutpost.HasValue)
+                    continue;
 
-            if (Transform(uid).MapID != Transform(nukieRule.NukieOutpost.Value).MapID) // Will receive bonus TC only on their start outpost
-                continue;
+                if (Transform(uid).MapID != Transform(nukieRule.NukieOutpost.Value).MapID) // Will receive bonus TC only on their start outpost
+                    continue;
+            }
+            else
+            {
+                if (Transform(uid).MapID != lone.ShuttleOriginMap) // Will receive bonus TC only on their start map
+                    continue;
+            }
+            // SS220 lone-ops-war end
 
             _storeSystem.TryAddCurrency(new () { { TelecrystalCurrencyPrototype, nukieRule.WarTCAmountPerNukie } }, uid, component);
 
@@ -1005,6 +1053,40 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
     private void OnShuttleFTLAttempt(ref ConsoleFTLAttemptEvent ev)
     {
+        // SS220 Lone Nukie War begin
+        var loneOpsQuery = EntityQueryEnumerator<LoneOpsSpawnRuleComponent, GameRuleComponent>();
+        while (loneOpsQuery.MoveNext(out var ruleUid, out var loneops, out var gameRule))
+        {
+            var nukeopsRuleEnt = loneops.AdditionalRule;
+            if (!TryComp<NukeopsRuleComponent>(nukeopsRuleEnt, out var nukeopsComp))
+                continue;
+
+            if (nukeopsComp.WarDeclaredTime == null ||
+                nukeopsComp.WarNukieArriveDelay == null ||
+                ev.Uid != nukeopsComp.NukieShuttle)
+                continue;
+
+            if (loneops.ShuttleOriginMap == null ||
+                nukeopsComp.WarDeclaredTime == null ||
+                nukeopsComp.WarNukieArriveDelay == null ||
+                ev.Uid != nukeopsComp.NukieShuttle)
+                continue;
+
+            var mapShuttle = Transform(ev.Uid).MapID;
+
+            if (loneops.ShuttleOriginMap == mapShuttle)
+            {
+                var timeAfterDeclaration = _gameTiming.CurTime.Subtract(nukeopsComp.WarDeclaredTime.Value);
+                var timeRemain = nukeopsComp.WarNukieArriveDelay.Value.Subtract(timeAfterDeclaration);
+                if (timeRemain > TimeSpan.Zero)
+                {
+                    ev.Cancelled = true;
+                    ev.Reason = Loc.GetString("war-ops-infiltrator-unavailable", ("minutes", timeRemain.Minutes), ("seconds", timeRemain.Seconds));
+                }
+            }
+        }
+        // SS220 Lone Nukie War end
+
         var query = EntityQueryEnumerator<NukeopsRuleComponent, GameRuleComponent>();
         while (query.MoveNext(out var ruleUid, out var nukeops, out var gameRule))
         {
