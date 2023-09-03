@@ -2476,9 +2476,10 @@
     - key: enum.StrippingUiKey.Key
       type: StrippableBoundUserInterface
   - type: GhostRole
-    prob: 0.25
+    prob: 0.35
     name: ghost-role-information-nymph-name
     description: ghost-role-information-nymph-description
+  - type: GhostTakeoverAvailable
   - type: DamageStateVisuals
     states:
       Alive:
