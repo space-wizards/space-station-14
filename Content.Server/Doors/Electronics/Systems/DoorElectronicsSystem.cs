@@ -17,7 +17,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
     {
         base.Initialize();
         SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsUpdateConfigurationMessage>(OnChangeConfiguration);
-        SubscribeLocalEvent<DoorElectronicsComponent, DoorElectronicsRefreshUiMessage>(OnRefreshUi);
+        SubscribeLocalEvent<DoorElectronicsComponent, BoundUIOpenedEvent>(OnBoundUIOpened);
     }
 
     public void UpdateUserInterface(EntityUid uid, DoorElectronicsComponent component)
@@ -45,10 +45,7 @@ public sealed class DoorElectronicsSystem : EntitySystem
         DoorElectronicsComponent component,
         DoorElectronicsUpdateConfigurationMessage args)
     {
-        if (!TryComp<AccessReaderComponent>(uid, out var accessReader))
-        {
-            accessReader = EntityManager.AddComponent<AccessReaderComponent>(uid);
-        }
+        var accessReader = EnsureComp<AccessReaderComponent>(uid);
 
         accessReader.AccessLists.Clear();
         foreach (var access in args.accessList)
@@ -57,15 +54,15 @@ public sealed class DoorElectronicsSystem : EntitySystem
         }
 
         var state = new DoorElectronicsConfigurationState(args.accessList);
-        _uiSystem.TrySetUiState(component.Owner,
+        _uiSystem.TrySetUiState(args.actor,
                                 DoorElectronicsConfigurationUiKey.Key,
                                 state);
     }
 
-    private void OnRefreshUi(
+    private void OnBoundUIOpened(
         EntityUid uid,
         DoorElectronicsComponent component,
-        DoorElectronicsRefreshUiMessage args)
+        BoundUIOpenedEvent args)
     {
         UpdateUserInterface(uid, component);
     }

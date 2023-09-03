@@ -15,8 +15,6 @@ namespace Content.Client.Doors.Electronics;
 [GenerateTypedNameReferences]
 public sealed partial class DoorElectronicsConfigurationMenu : FancyWindow
 {
-    [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-
     private readonly DoorElectronicsBoundUserInterface _owner;
     private AccessLevelControl _buttonsList;
 

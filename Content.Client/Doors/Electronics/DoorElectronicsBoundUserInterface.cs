@@ -8,7 +8,6 @@ namespace Content.Client.Doors.Electronics;
 public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 {
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
-    [Dependency] private readonly IEntityManager _entityManager = default!;
 
     private DoorElectronicsConfigurationMenu? _window;
 
@@ -34,8 +33,6 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
         _window = new DoorElectronicsConfigurationMenu(this, accessLevels, _prototypeManager);
         _window.OnClose += Close;
         _window.OpenCentered();
-
-        SendMessage(new DoorElectronicsRefreshUiMessage());
     }
 
     protected override void UpdateState(BoundUserInterfaceState state)
@@ -57,6 +54,6 @@ public sealed class DoorElectronicsBoundUserInterface : BoundUserInterface
 
     public void UpdateConfiguration(List<string> newAccessList)
     {
-        SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList));
+        SendMessage(new DoorElectronicsUpdateConfigurationMessage(newAccessList, Owner));
     }
 }

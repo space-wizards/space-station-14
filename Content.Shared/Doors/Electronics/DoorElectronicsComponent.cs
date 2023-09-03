@@ -4,24 +4,20 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Doors.Electronics;
 
 [RegisterComponent, NetworkedComponent()]
-public partial class DoorElectronicsComponent : Component
+public sealed partial class DoorElectronicsComponent : Component
 {
-}
-
-[Serializable, NetSerializable]
-public sealed class DoorElectronicsRefreshUiMessage : BoundUserInterfaceMessage
-{
-
 }
 
 [Serializable, NetSerializable]
 public sealed class DoorElectronicsUpdateConfigurationMessage : BoundUserInterfaceMessage
 {
     public List<string> accessList;
+    public EntityUid actor;
 
-    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList)
+    public DoorElectronicsUpdateConfigurationMessage(List<string> _accessList, EntityUid _actor)
     {
         accessList = _accessList;
+        actor = _actor;
     }
 }
 
