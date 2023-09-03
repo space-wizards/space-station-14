@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: ExpensiveCane
+  name: шикарная трость
+  description: Великолепная трость для самообороны самых важных джентельменов Нанотрейзен.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/expensivestick.rsi
+    state: icon
+  - type: Item
+    size: 10
+    sprite: SS220/Objects/Weapons/Melee/expensivestick.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 13
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: -13
+        Stamina: 38

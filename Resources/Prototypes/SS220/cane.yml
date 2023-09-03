@@ -1,0 +1,22 @@
+- type: entity
+  parent: BaseItem
+  id: Cane
+  name: трость
+  description: Обыкновенная деревянная трость, с которой вы чуть чуть похожи на джентельмена.
+  components:
+  - type: Sprite
+    sprite: SS220/Objects/Weapons/Melee/walkingstick.rsi
+    state: icon
+  - type: Item
+    size: 10
+    sprite: SS220/Objects/Weapons/Melee/walkingstick.rsi
+  - type: MeleeWeapon
+    damage:
+      types:
+        Blunt: 7
+  - type: Wieldable
+  - type: IncreaseDamageOnWield
+    damage:
+      types:
+        Blunt: -7
+        Stamina: 14
