@@ -1,86 +1,4 @@
 Entries:
-- author: EmoGarbage404
-  changes:
-  - {message: 'Intercoms now have a menu for selecting the channel, toggling the microphone,
-      and toggling the speakers.', type: Add}
-  - {message: 'Intercoms now come with speakers, which allow you to hear what people
-      are saying.', type: Add}
-  - {message: 'Radio speakers are now much quieter, requiring you to stand next to
-      them to make out what they''re saying.', type: Tweak}
-  id: 4230
-  time: '2023-07-11T23:58:18.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Emagged recyclers grind people again., type: Tweak}
-  id: 4231
-  time: '2023-07-12T00:45:34.0000000+00:00'
-- author: Lank
-  changes:
-  - {message: Sawing off a double barrel shotgun no longer fills it with lethal shells.
-      It will instead spawn empty., type: Tweak}
-  id: 4232
-  time: '2023-07-12T00:45:43.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: 'The Syndicate has retrofitted the minibomb with a higher quality timer.
-      The fuse has been halved to five seconds, and the beeping sound is now much
-      quieter (and cooler.)', type: Tweak}
-  - {message: Changed some descriptions of explosives both in-and-out of the uplink
-      to be less weird., type: Tweak}
-  - {message: Fixed the EMP grenade's capitalization., type: Tweak}
-  id: 4233
-  time: '2023-07-12T01:52:15.0000000+00:00'
-- author: Errant
-  changes:
-  - {message: 'Shotgun shell boxes have been recalled by the manufacturer, and rebranded
-      as dispensers. They no longer feature inventory space in addition to the shells
-      they contain.', type: Fix}
-  - {message: Shells can now be inserted back into dispensers. No guarantees regarding
-      the contents of dispensers loaded on-site., type: Tweak}
-  id: 4234
-  time: '2023-07-12T02:01:01.0000000+00:00'
-- author: Bhijn and Myr
-  changes:
-  - {message: 'Added chevre (goat cheese), crostini (slices of baguette), and chevre
-      chaud (chevre on top of a crostini and lightly toasted) to the game. Bon ap-petite!',
-    type: Add}
-  id: 4235
-  time: '2023-07-12T03:00:30.0000000+00:00'
-- author: Emisse
-  changes:
-  - {message: Starvation will kill you again., type: Add}
-  id: 4236
-  time: '2023-07-12T05:46:38.0000000+00:00'
-- author: Jackal298
-  changes:
-  - {message: Returned body armor to the bartender's vending machine and bartender's
-      closet, type: Tweak}
-  id: 4237
-  time: '2023-07-12T19:09:36.0000000+00:00'
-- author: lzk228
-  changes:
-  - {message: Fixed singularity distortion render on zoom, type: Fix}
-  id: 4238
-  time: '2023-07-12T19:12:25.0000000+00:00'
-- author: JoeHammad
-  changes:
-  - {message: 'Due to a couple thousand life support patients finally dying, Nanotrasen
-      now has the funds to put medicated sutures and regenerative mesh in select medkits',
-    type: Tweak}
-  id: 4239
-  time: '2023-07-12T19:14:25.0000000+00:00'
-- author: deltanedas
-  changes:
-  - {message: Added 4 empty jugs to the chemvend. Janitors remind chemists not to
-      dump dangerous chemicals in drains!, type: Add}
-  id: 4240
-  time: '2023-07-12T19:38:14.0000000+00:00'
-- author: EmoGarbage404
-  changes:
-  - {message: Nuke Ops can no longer purchase dehydrated carp, type: Remove}
-  - {message: Increased the price of dehydrated carp to 3 TC., type: Tweak}
-  id: 4241
-  time: '2023-07-12T19:47:09.0000000+00:00'
 - author: Emisse
   changes:
   - {message: Youtool nerf, type: Add}
@@ -3019,3 +2937,71 @@ Entries:
   - {message: Examining an item now shows its size., type: Add}
   id: 4729
   time: '2023-09-01T15:09:59.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'The hot potato now does more damage over time, has a shorter timer,
+      and has a larger explosion.', type: Tweak}
+  id: 4730
+  time: '2023-09-02T00:08:25.0000000+00:00'
+- author: ficcialfaint
+  changes:
+  - {message: Dumping into disposals no longer drops items onto the ground., type: Fix}
+  id: 4731
+  time: '2023-09-02T04:02:36.0000000+00:00'
+- author: ThunderBear2006
+  changes:
+  - {message: The signal button now has new sprites, type: Tweak}
+  id: 4732
+  time: '2023-09-02T13:58:40.0000000+00:00'
+- author: Gotimanga
+  changes:
+  - {message: Winter coats now have hoods, type: Add}
+  id: 4733
+  time: '2023-09-02T17:10:19.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix context menu not opening if you toggled combat mode immediately
+      prior., type: Fix}
+  id: 4734
+  time: '2023-09-02T20:16:34.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fixed devouring as a dragon showing multiple popups., type: Fix}
+  id: 4735
+  time: '2023-09-03T01:59:36.0000000+00:00'
+- author: Lank
+  changes:
+  - {message: Technology Disks now sell for considerably less., type: Tweak}
+  id: 4736
+  time: '2023-09-03T02:31:53.0000000+00:00'
+- author: EmoGarbage404
+  changes:
+  - {message: 'Microwaves now become bloodstained if you microwave animals inside
+      of them. Who was doing this?', type: Add}
+  id: 4737
+  time: '2023-09-03T04:03:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The HAMTR and Vim now have builtin scrubbers to remove the risk of carbon
+      dioxide poisoning., type: Tweak}
+  id: 4738
+  time: '2023-09-03T06:30:26.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: 'Fix fulton parenting, also fix it not checking if the target is reachable.',
+    type: Fix}
+  - {message: Added fultons to salvage vendor., type: Add}
+  - {message: Make fultons easy to craft temporarily to get better feedback on it
+      for expeditions., type: Tweak}
+  id: 4739
+  time: '2023-09-03T12:18:09.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Added spoons and forks to the dinnerware vendor!, type: Add}
+  id: 4740
+  time: '2023-09-03T14:22:28.0000000+00:00'
+- author: Diebek
+  changes:
+  - {message: Updated Taxibot sprites., type: Tweak}
+  id: 4741
+  time: '2023-09-03T14:31:24.0000000+00:00'

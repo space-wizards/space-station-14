@@ -40,17 +40,7 @@
             "name": "mwbloody0"
         },
         {
-            "name": "mwbloody1",
-            "delays": [
-                [
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1,
-                    0.1
-                ]
-            ]
+            "name": "mwbloody1"
         },
         {
             "name": "mwbloodyo",
