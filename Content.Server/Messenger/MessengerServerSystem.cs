@@ -351,7 +351,7 @@ public sealed class MessengerServerSystem : EntitySystem
         if (!EntityManager.TryGetComponent(serverUid, out AccessReaderComponent? reader))
             return false;
 
-        if (!_accessSystem.IsAllowed(idCardUid.Value, reader))
+        if (!_accessSystem.IsAllowed(idCardUid.Value, serverUid, reader))
             return false;
 
 
