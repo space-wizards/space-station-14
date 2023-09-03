@@ -23,11 +23,11 @@ public partial record struct RandomSpawnLootEntry : IBudgetEntry
     /// Cost for this loot to spawn.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("cost")]
-    public float Cost { get; } = 1f;
+    public float Cost { get; set; } = 1f;
 
     /// <summary>
     /// Unit probability for this entry. Weighted against the entire table.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("prob")]
-    public float Prob { get; } = 1f;
+    public float Prob { get; set; } = 1f;
 }

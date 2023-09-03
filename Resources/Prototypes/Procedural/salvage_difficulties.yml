@@ -1,7 +1,7 @@
 - type: salvageDifficulty
   id: Moderate
-  lootBudget: 30
-  mobBudget: 25
+  lootBudget: 45
+  mobBudget: 35
   modifierBudget: 2
   color: "#52B4E996"
 

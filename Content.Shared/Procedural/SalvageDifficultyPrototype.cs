@@ -11,7 +11,7 @@ public sealed class SalvageDifficultyPrototype : IPrototype
     /// Color to be used in UI.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite), DataField("color")]
-    public Color Color = Robust.Shared.Maths.Color.White;
+    public Color Color = Color.White;
 
     /// <summary>
     /// How much loot this difficulty is allowed to spawn.

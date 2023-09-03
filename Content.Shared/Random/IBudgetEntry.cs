@@ -5,7 +5,7 @@ namespace Content.Shared.Random;
 /// </summary>
 public interface IBudgetEntry : IProbEntry
 {
-    float Cost { get; }
+    float Cost { get; set; }
 }
 
 /// <summary>
@@ -13,6 +13,6 @@ public interface IBudgetEntry : IProbEntry
 /// </summary>
 public interface IProbEntry
 {
-    float Prob { get; }
+    float Prob { get; set; }
 }
 

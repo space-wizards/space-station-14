@@ -5,7 +5,7 @@ namespace Content.Shared.Random;
 
 public sealed class RandomSystem : EntitySystem
 {
-    public IBudgetEntry? GetBudgetEntry(ref float budget, float probSum, ICollection<IBudgetEntry> entries, System.Random random)
+    public IBudgetEntry? GetBudgetEntry(ref float budget, ref float probSum, IList<IBudgetEntry> entries, System.Random random)
     {
         DebugTools.Assert(budget > 0f);
 
@@ -15,17 +15,21 @@ public sealed class RandomSystem : EntitySystem
         // - Pick an entry
         // - Remove the cost from budget
         // - If our remaining budget is under maxCost then start pruning unavailable entries.
+        random.Shuffle(entries);
         var budgetEntry = (IBudgetEntry) GetProbEntry(entries, probSum, random);
 
         budget -= budgetEntry.Cost;
 
         // Prune invalid entries.
-        foreach (var entry in entries)
+        for (var i = 0; i < entries.Count; i++)
         {
+            var entry = entries[i];
+
             if (entry.Cost < budget)
                 continue;
 
-            entries.Remove(entry);
+            entries.RemoveSwap(i);
+            i--;
             probSum -= entry.Prob;
         }
 

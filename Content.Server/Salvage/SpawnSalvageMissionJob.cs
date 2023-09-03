@@ -198,8 +198,6 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
             await SpawnDungeonLoot(dungeon, missionBiome, lootProto, mapUid, grid, random, reservedTiles);
         }
 
-        var lootBudget = difficultyProto.LootBudget;
-
         // Handle boss loot (when relevant).
 
         // Handle mob loot.
@@ -223,7 +221,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
 
         while (mobBudget > 0f)
         {
-            var entry = randomSystem.GetBudgetEntry(ref mobBudget, probSum, budgetEntries, random);
+            var entry = randomSystem.GetBudgetEntry(ref mobBudget, ref probSum, budgetEntries, random);
             if (entry == null)
                 break;
 
@@ -231,6 +229,7 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
         }
 
         var allLoot = _prototypeManager.Index<SalvageLootPrototype>(SharedSalvageSystem.ExpeditionsLootProto);
+        var lootBudget = difficultyProto.LootBudget;
 
         foreach (var rule in allLoot.LootRules)
         {
@@ -239,16 +238,16 @@ public sealed class SpawnSalvageMissionJob : Job<bool>
                 case RandomSpawnsLoot randomLoot:
                     budgetEntries.Clear();
 
-                    foreach (var entry in faction.MobGroups)
+                    foreach (var entry in randomLoot.Entries)
                     {
                         budgetEntries.Add(entry);
                     }
 
                     probSum = budgetEntries.Sum(x => x.Prob);
 
-                    while (mobBudget > 0f)
+                    while (lootBudget > 0f)
                     {
-                        var entry = randomSystem.GetBudgetEntry(ref mobBudget, probSum, budgetEntries, random);
+                        var entry = randomSystem.GetBudgetEntry(ref lootBudget, ref probSum, budgetEntries, random);
                         if (entry == null)
                             break;
 

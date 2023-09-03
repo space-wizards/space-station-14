@@ -5,20 +5,21 @@
     - proto: MobXenoDrone
       cost: 2
     - proto: MobXenoPraetorian
-      cost: 3
-      prob: 0.5
-    - proto: MobXenoQueen
       cost: 5
       prob: 0.1
+    - proto: MobXenoQueen
+      cost: 10
+      prob: 0.02
     - proto: MobXenoRavager
-      cost: 3
+      cost: 5
     - proto: MobXenoRouny
-      cost: 3
-      prob: 0.1
+      cost: 5
+      prob: 0.02
     - proto: MobXenoSpitter
-      cost: 1
-    - proto: WeaponTurretXeno
+      cost: 2
       prob: 0.5
+    - proto: WeaponTurretXeno
+      prob: 0.1
   configs:
     DefenseStructure: XenoWardingTower
     Megafauna: MobXenoQueen
@@ -28,12 +29,14 @@
   entries:
     - proto: MobCarpDungeon
     - proto: MobCarpHolo
-      cost: 3
-    - proto: MobCarpMagic
-      cost: 2
-    - proto: MobDragonDungeon
       cost: 5
       prob: 0.1
+    - proto: MobCarpMagic
+      cost: 5
+      prob: 0.1
+    - proto: MobDragonDungeon
+      cost: 10
+      prob: 0.02
   configs:
     DefenseStructure: CarpStatue
     Megafauna: MobDragonDungeon
