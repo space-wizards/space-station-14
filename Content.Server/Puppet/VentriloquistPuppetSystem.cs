@@ -89,6 +89,7 @@ namespace Content.Server.Puppet
             _popupSystem.PopupEntity(Loc.GetString("ventriloquist-puppet-removed-hand"), uid, uid);
             EnsureComp<MutedComponent>(uid);
             RemComp<CombatModeComponent>(uid);
+            RemComp<GhostTakeoverAvailableComponent>(uid);
         }
     }
 }
