@@ -5,7 +5,7 @@
   playTimeTracker: JobClown
   requirements:
     - !type:DepartmentTimeRequirement
-      departament: Civilian
+      department: Civilian
       time: 10800 #3 hrs            
   startingGear: ClownGear
   icon: "JobIconClown"
