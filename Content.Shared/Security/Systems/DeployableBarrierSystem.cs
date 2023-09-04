@@ -17,12 +17,11 @@ public sealed class DeployableBarrierSystem : EntitySystem
 
     public override void Initialize()
     {
-        base.Initialize();
-        SubscribeLocalEvent<DeployableBarrierComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DeployableBarrierComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DeployableBarrierComponent, LockToggledEvent>(OnLockToggled);
     }
 
-    private void OnStartup(EntityUid uid, DeployableBarrierComponent component, ComponentStartup args)
+    private void OnMapInit(EntityUid uid, DeployableBarrierComponent component, MapInitEvent args)
     {
         if (!TryComp(uid, out LockComponent? lockComponent))
             return;

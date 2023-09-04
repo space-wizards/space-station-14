@@ -5,6 +5,7 @@
   parent: BaseStructure
   components:
   - type: Transform
+    anchored: false
     noRot: true
   - type: Sprite
     sprite: Objects/Specific/Security/barrier.rsi
