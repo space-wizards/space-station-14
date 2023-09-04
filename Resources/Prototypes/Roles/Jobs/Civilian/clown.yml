@@ -4,7 +4,7 @@
   description: job-description-clown
   playTimeTracker: JobClown
   requirements:
-    - !type:OverallPlaytimeRequirement
+    - !type:DepartmentTimeRequirement
       departament: Civilian
       time: 10800 #3 hrs            
   startingGear: ClownGear
