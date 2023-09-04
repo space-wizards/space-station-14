@@ -130,26 +130,27 @@ namespace Content.Server.Atmos.EntitySystems
             if (_timer < TimerDelay) return;
             _timer -= TimerDelay;
 
-            foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
+            var query = EntityQueryEnumerator<GasTankComponent>();
+            while (query.MoveNext(out var uid, out var gasTank))
             {
                 if (gasTank.IsValveOpen && gasTank.Air != null && !gasTank.IsLowPressure)
                 {
                     var removed = RemoveAirVolume(gasTank, gasTank.ValveOutputRate * TimerDelay);
-                    var environment = _atmosphereSystem.GetContainingMixture(gasTank.Owner, false, true);
+                    var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
                     if (environment != null)
                     {
                         _atmosphereSystem.Merge(environment, removed);
                     }
                     var impulse = removed.TotalMoles * removed.Temperature;
-                    _physics.ApplyLinearImpulse(gasTank.Owner, Transform(gasTank.Owner).LocalRotation.ToWorldVec() * impulse);
-                    _physics.ApplyAngularImpulse(gasTank.Owner, _random.NextFloat(-3f, 3f));
-                    _audioSys.PlayPvs(gasTank.RuptureSound, gasTank.Owner);
+                    _physics.ApplyLinearImpulse(uid, Transform(uid).LocalRotation.ToWorldVec() * impulse);
+                    _physics.ApplyAngularImpulse(uid, _random.NextFloat(-3f, 3f));
+                    _audioSys.PlayPvs(gasTank.RuptureSound, uid);
                 }
 
                 if (gasTank.CheckUser)
                 {
                     gasTank.CheckUser = false;
-                    if (Transform(gasTank.Owner).ParentUid != gasTank.User)
+                    if (Transform(uid).ParentUid != gasTank.User)
                     {
                         DisconnectFromInternals(gasTank);
                         continue;
@@ -161,7 +162,7 @@ namespace Content.Server.Atmos.EntitySystems
                     _atmosphereSystem.React(gasTank.Air, gasTank);
                 }
                 CheckStatus(gasTank);
-                if (_ui.IsUiOpen(gasTank.Owner, SharedGasTankUiKey.Key))
+                if (_ui.IsUiOpen(uid, SharedGasTankUiKey.Key))
                 {
                     UpdateUserInterface(gasTank);
                 }
