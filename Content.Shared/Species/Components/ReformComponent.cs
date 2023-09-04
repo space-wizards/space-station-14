@@ -16,14 +16,20 @@ public sealed partial class ReformComponent : Component
     /// <summary>
     /// How long it will take to reform
     /// </summary>
-    [DataField("reformTime", required: true), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("reformTime", required: true)]
     public float ReformTime = 0;
 
     /// <summary>
     /// Whether or not the entity should start with a cooldown
     /// </summary>
-    [DataField("startDelayed"), ViewVariables(VVAccess.ReadWrite)]
+    [DataField("startDelayed")]
     public bool StartDelayed = true;
+
+    /// <summary>
+    /// Whether or not the entity should be stunned when reforming at all
+    /// </summary>
+    [DataField("shouldStun")]
+    public bool ShouldStun = true;
 
     /// <summary>
     /// The text that appears when attempting to reform

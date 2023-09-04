@@ -16,7 +16,7 @@ public sealed partial class AppearanceInfoSystem : EntitySystem
 
     private void OnCompInit(EntityUid uid, AppearanceInfoComponent comp, ComponentInit args)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoidAppearance) || comp.Fetched == true)
+        if (comp.Fetched == true || !TryComp<HumanoidAppearanceComponent>(uid, out var humanoidAppearance))
             return;
 
         comp.Appearance = humanoidAppearance;

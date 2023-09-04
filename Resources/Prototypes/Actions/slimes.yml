@@ -1,0 +1,8 @@
+- type: instantAction
+  id: SlimeReformAction
+  icon: Mobs/Species/Slime/parts.rsi/full.png
+  name: slime-reform-action-name
+  description: slime-reform-action-description
+  event: !type:ReformEvent
+  checkCanInteract: false
+  useDelay: 5 # Once every 10 minutes. Keep them dead for a fair bit before reforming.

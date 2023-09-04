@@ -98,6 +98,7 @@
 - type: entity
   id: BaseDionaNymphOrgan
   parent: MobDionaNymph
+  noSpawn: true
   name: Diona Nymph
   suffix: Organ
   description: An organ-containing Diona Nymph, in the wood.
@@ -114,6 +115,7 @@
 - type: entity
   id: OrganDionaNymphBrain
   parent: BaseDionaNymphOrgan
+  noSpawn: true
   name: Diona Nymph
   suffix: Brain
   description: Contains the brain of a formerly fully-formed Diona. Killing this would kill the Diona forever. You monster.
@@ -132,6 +134,7 @@
 - type: entity
   id: OrganDionaNymphStomach
   parent: BaseDionaNymphOrgan
+  noSpawn: true
   name: Diona Nymph
   suffix: Stomach
   description: Contains the stomach of a formerly fully-formed Diona. It doesn't taste any better for it. 
@@ -162,6 +165,7 @@
 - type: entity
   id: OrganDionaNymphLungs
   parent: BaseDionaNymphOrgan
+  noSpawn: true
   name: Diona Nymph
   suffix: Lungs
   description: Contains the lungs of a formerly fully-formed Diona. Breathtaking. 

@@ -2,3 +2,12 @@
   save: false
   parent: [BaseMobSlimePerson, BaseMob]
   id: MobSlimePerson
+
+# Reformed Diona
+- type: entity
+  parent: MobSlimePerson
+  noSpawn: true
+  id: MobSlimePersonReformed
+  name: Reformed Slime Person
+  components:
+    - type: RandomHumanoidAppearance

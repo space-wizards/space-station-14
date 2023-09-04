@@ -15,6 +15,7 @@
 # Reformed Diona
 - type: entity
   parent: MobDiona
+  noSpawn: true
   id: MobDionaReformed
   name: Reformed Diona
   components:

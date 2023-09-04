@@ -21,6 +21,13 @@
       solutions:
         stomach:
           maxVol: 50.0
+    - type: DoAfter
+    - type: Reform
+      actionPrototype: SlimeReformAction
+      reformTime: 15
+      shouldStun: false
+      popupText: slime-reform-attempt
+      prototype: MobSlimePersonReformed
 
 
 - type: entity
