@@ -1,5 +1,5 @@
 using Content.Client.Light.Components;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 
