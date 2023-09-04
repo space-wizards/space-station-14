@@ -1,4 +1,3 @@
-using Content.Shared.Humanoid;
 using Robust.Shared.GameStates;
 
 namespace Content.Shared.Humanoid;

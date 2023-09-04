@@ -10,6 +10,7 @@ using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
+using Robust.Shared.Serialization.Manager;
 
 namespace Content.Shared.Species;
 
@@ -24,6 +25,7 @@ public sealed partial class ReformSystem : EntitySystem
     [Dependency] private readonly IGameTiming _gameTiming = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     public override void Initialize()
     {
@@ -95,17 +97,23 @@ public sealed partial class ReformSystem : EntitySystem
         // If the first entity has appearanceinfo, replace the new mobs' appearanace and name with that. It will be random otherwise.
         if(TryComp<AppearanceInfoComponent>(uid, out var appearance))
         {
-            RemComp<HumanoidAppearanceComponent>(child);
-            AddComp(child, appearance.Appearance);
+            // Copy all the data
+            var newComp = EntityManager.GetComponent<HumanoidAppearanceComponent>(child);
+            var temp = (object) appearance.Appearance!;
+            _serializationManager.CopyTo(newComp, ref temp);
 
-            _metaData.SetEntityName(child, appearance.Name);
+            if (appearance.Name != null)
+                _metaData.SetEntityName(child, appearance.Name);
+
+            RemComp<HumanoidAppearanceComponent>(child);
+            EntityManager.AddComponent(child, newComp);
         }
 
         // This transfers the mind to the new entity
         if (_mindSystem.TryGetMind(uid, out var mindId, out var mind))
                 _mindSystem.TransferTo(mindId, child, mind: mind);
 
-        // Deleted the old entity
+        // Delete the old entity
         QueueDel(uid);
     }
 

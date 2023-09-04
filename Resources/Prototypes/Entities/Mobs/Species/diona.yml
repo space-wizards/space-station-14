@@ -61,7 +61,10 @@
   - type: BodyEmotes
     soundsId: DionaBodyEmotes
   - type: Perishable
+  - type: AppearanceInfo # Necessary for reforming
   - type: TransferMindOnGib
+    transferredComponents:
+    - type: AppearanceInfo
   - type: IgniteOnHeatDamage
     fireStacks: 1
     threshold: 10

@@ -1,7 +1,4 @@
-using Content.Shared.Humanoid;
 using Content.Shared.IdentityManagement;
-using Content.Shared.Species.Components;
-
 
 namespace Content.Shared.Humanoid;
 
@@ -19,8 +16,12 @@ public sealed partial class AppearanceInfoSystem : EntitySystem
         if (comp.Fetched == true || !TryComp<HumanoidAppearanceComponent>(uid, out var humanoidAppearance))
             return;
 
+        if (humanoidAppearance == null || Identity.Name(uid, EntityManager) == null)
+            return;
+
         comp.Appearance = humanoidAppearance;
         comp.Name = Identity.Name(uid, EntityManager);
+
         comp.Fetched = true;
     }
 }
