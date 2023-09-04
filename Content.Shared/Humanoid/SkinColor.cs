@@ -117,8 +117,9 @@ public static class SkinColor
     /// <returns>Tinted hue color</returns>
     public static Color TintedHues(Color color)
     {
-        var newColor = Color.ToHsv(color);
+        var newColor = Color.ToHsl(color);
         newColor.Y *= 0.1f;
+        newColor.Z = MathHelper.Lerp(0.85f, 1f, newColor.Z);
 
         return Color.FromHsv(newColor);
     }
@@ -131,7 +132,7 @@ public static class SkinColor
     public static bool VerifyTintedHues(Color color)
     {
         // tinted hues just ensures saturation is always .1, or 10% saturation at all times
-        return Color.ToHsv(color).Y != .1f;
+        return Color.ToHsl(color).Y <= .1f && Color.ToHsl(color).Y >= .85f;
     }
 
     public static bool VerifySkinColor(HumanoidSkinColor type, Color color)

@@ -57,6 +57,18 @@
 
 - type: entity
   parent: BaseGameRule
+  id: ClosetSkeleton
+  noSpawn: true
+  components:
+  - type: StationEvent
+    weight: 5
+    duration: 1
+    earliestStart: 30
+  - type: RandomClosetSpawnRule
+    prototype: MobSkeletonCloset
+
+- type: entity
+  parent: BaseGameRule
   id: Dragon
   noSpawn: true
   components:
