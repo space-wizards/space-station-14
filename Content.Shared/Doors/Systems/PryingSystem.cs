@@ -5,6 +5,7 @@ using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
 using Content.Shared.Doors.Components;
 using Content.Shared.Doors.Systems;
+using Content.Shared.Tools.Components;
 
 namespace Content.Shared.Doors.Prying.Systems;
 public sealed class DoorPryingSystem : EntitySystem
@@ -32,6 +33,12 @@ public sealed class DoorPryingSystem : EntitySystem
         if (!Resolve(tool, ref comp))
             return false;
 
+        if (comp.NeedsComponent)
+        {
+            ToolComponent? tComp = null;
+            if (!Resolve(tool, ref tComp) || !tComp.Qualities.Contains("Prying"))
+                return false;
+        }
 
         if (!CanPry(target, user, comp.PryPowered))
         {

@@ -21,3 +21,5 @@
     qualities:
       - Prying
   - type: DoorPrying
+    needsComponent: !type:Bool
+      true

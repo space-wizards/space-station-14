@@ -12,11 +12,24 @@ public sealed partial class DoorPryingComponent : Component
     [DataField("pryPowered")]
     public bool PryPowered = false;
 
+    /// <summary>
+    /// Modifier on the prying time.
+    /// Lower values result in more time.
+    /// </summary>
     [DataField("speedModifier")]
     public float SpeedModifier = 1.0f;
 
+    /// <summary>
+    /// What sound to play when prying is finished.
+    /// </summary>
     [DataField("useSound")]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
+
+    /// <summary>
+    /// Whether the tool component is needed
+    /// </summary>
+    [DataField("needsComponent")]
+    public bool NeedsComponent = false;
 }
 
 /// <summary>

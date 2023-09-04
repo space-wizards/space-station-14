@@ -156,6 +156,8 @@
   - type: StaticPrice
     price: 22
   - type: DoorPrying
+    needsComponent: !type:Bool
+      true
 
 - type: entity
   parent: Crowbar
