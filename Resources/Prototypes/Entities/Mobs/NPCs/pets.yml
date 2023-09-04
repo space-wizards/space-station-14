@@ -29,6 +29,7 @@
     spawned:
     - id: FoodMeatCorgi
       amount: 2
+    - id: MaterialHideCorgi
   - type: Tag
     tags:
     - CannotSuicide
@@ -57,6 +58,7 @@
     - id: FoodMeatCorgi
       amount: 2
     - id: SheetSteel1
+    - id: MaterialHideCorgi
 
 - type: entity
   name: Lisa
