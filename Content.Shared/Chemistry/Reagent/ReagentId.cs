@@ -10,17 +10,17 @@ namespace Content.Shared.Chemistry.Reagent;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public readonly struct ReagentId : IEquatable<ReagentId>
+public partial struct ReagentId : IEquatable<ReagentId>
 {
     // TODO rename data field.
-    [DataField("ReagentId", customTypeSerializer:typeof(PrototypeIdSerializer<ReagentPrototype>), required:true)]
-    public readonly string Prototype;
+    [DataField("ReagentId", customTypeSerializer: typeof(PrototypeIdSerializer<ReagentPrototype>), required: true)]
+    public string Prototype { get; private set; }
 
     /// <summary>
     /// Any additional data that is unique to this reagent type. E.g., for blood this could be DNA data.
     /// </summary>
     [DataField("data")]
-    public readonly ReagentData? Data;
+    public ReagentData? Data { get; private set; }
 
     public ReagentId(string prototype, ReagentData? data)
     {
@@ -80,7 +80,7 @@ public readonly struct ReagentId : IEquatable<ReagentId>
     {
         return Data?.ToString(Prototype) ?? Prototype;
     }
-    
+
     public static bool operator ==(ReagentId left, ReagentId right)
     {
         return left.Equals(right);

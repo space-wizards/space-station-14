@@ -8,14 +8,14 @@ namespace Content.Shared.Chemistry.Reagent;
 /// </summary>
 [Serializable, NetSerializable]
 [DataDefinition]
-public readonly struct ReagentQuantity : IEquatable<ReagentQuantity>
+public partial struct ReagentQuantity : IEquatable<ReagentQuantity>
 {
     [DataField("Quantity", required:true)]
-    public readonly FixedPoint2 Quantity;
+    public FixedPoint2 Quantity { get; private set; }
 
     [IncludeDataField]
     [ViewVariables]
-    public readonly ReagentId Reagent;
+    public ReagentId Reagent { get; private set; }
 
     public ReagentQuantity(string reagentId, FixedPoint2 quantity, ReagentData? data)
         : this(new ReagentId(reagentId, data), quantity)

@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Chemistry.Reagent;
 
 [ImplicitDataDefinitionForInheritors, Serializable, NetSerializable]
-public abstract class ReagentData : IEquatable<ReagentData>
+public abstract partial class ReagentData : IEquatable<ReagentData>
 {
     /// <summary>
     /// Convert to a string representation. This if for logging & debugging. This is not localized and should not be
