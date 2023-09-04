@@ -6,13 +6,13 @@ using Content.Shared.Atmos;
 
 namespace Content.Server.Botany;
 
-public sealed class MutationSystem : EntitySystem, IPostInjectInit
+public sealed class MutationSystem : EntitySystem
 {
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     private List<ReagentPrototype> _allChemicals = default!;
 
-    void IPostInjectInit.PostInject()
+    public override void Initialize()
     {
         _allChemicals = _prototypeManager.EnumeratePrototypes<ReagentPrototype>().ToList();
     }
