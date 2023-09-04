@@ -134,7 +134,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (gasTank.IsValveOpen && gasTank.Air != null && !gasTank.IsLowPressure)
                 {
-                    var removed = RemoveAirVolume(gasTank, 1f);
+                    var removed = RemoveAirVolume(gasTank, gasTank.ValveOutputRate * TimerDelay);
                     var environment = _atmosphereSystem.GetContainingMixture(gasTank.Owner, false, true);
                     if (environment != null)
                     {
@@ -142,7 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                     var impulse = removed.TotalMoles * removed.Temperature;
                     _physics.ApplyLinearImpulse(gasTank.Owner, Transform(gasTank.Owner).LocalRotation.ToWorldVec() * impulse);
-                    _physics.ApplyAngularImpulse(gasTank.Owner, _random.NextFloat(-impulse, impulse));
+                    _physics.ApplyAngularImpulse(gasTank.Owner, _random.NextFloat(-3f, 3f));
                     _audioSys.PlayPvs(gasTank.RuptureSound, gasTank.Owner);
                 }
 

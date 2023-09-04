@@ -90,5 +90,8 @@ namespace Content.Server.Atmos.Components
 
         [DataField("isValveOpen"), ViewVariables(VVAccess.ReadWrite)]
         public bool IsValveOpen = false;
+
+        [DataField("valveOutputRate"), ViewVariables(VVAccess.ReadWrite)]
+        public float ValveOutputRate = 100f;
     }
 }
