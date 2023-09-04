@@ -45,7 +45,7 @@
       toggleable-clothing: !type:ContainerSlot {}
       storagebase: !type:Container
         ents: []
- 
+
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterAtmos
@@ -228,7 +228,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
-    
+
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHydro
@@ -482,7 +482,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
 - type: entity
-  parent: ClothingOuterWinterCoat
+  parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterWeb
   name: web winter coat
   description: Feels like the inside of a cocoon, not that this would make you less afraid of being in one.
@@ -506,3 +506,5 @@
         reagents:
         - ReagentId: Fiber
           Quantity: 20
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterWeb
