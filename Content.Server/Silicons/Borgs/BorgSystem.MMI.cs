@@ -1,5 +1,5 @@
-﻿using Content.Server.Mind.Components;
-using Content.Shared.Containers.ItemSlots;
+﻿using Content.Shared.Containers.ItemSlots;
+using Content.Shared.Mind.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Robust.Shared.Containers;
 
@@ -40,8 +40,8 @@ public sealed partial class BorgSystem
         linked.LinkedMMI = uid;
         Dirty(uid, component);
 
-        if (_mind.TryGetMind(ent, out var mind))
-            _mind.TransferTo(mind, uid, true);
+        if (_mind.TryGetMind(ent, out var mindId, out var mind))
+            _mind.TransferTo(mindId, uid, true, mind: mind);
 
         _appearance.SetData(uid, MMIVisuals.BrainPresent, true);
     }
@@ -58,9 +58,11 @@ public sealed partial class BorgSystem
 
     private void OnMMILinkedMindAdded(EntityUid uid, MMILinkedComponent component, MindAddedMessage args)
     {
-        if (!_mind.TryGetMind(uid, out var mind) || component.LinkedMMI == null)
+        if (!_mind.TryGetMind(uid, out var mindId, out var mind) ||
+            component.LinkedMMI == null)
             return;
-        _mind.TransferTo(mind, component.LinkedMMI, true);
+
+        _mind.TransferTo(mindId, component.LinkedMMI, true, mind: mind);
     }
 
     private void OnMMILinkedRemoved(EntityUid uid, MMILinkedComponent component, EntGotRemovedFromContainerMessage args)
@@ -72,8 +74,8 @@ public sealed partial class BorgSystem
             return;
         RemComp(uid, component);
 
-        if (_mind.TryGetMind(linked, out var mind))
-            _mind.TransferTo(mind, uid, true);
+        if (_mind.TryGetMind(linked, out var mindId, out var mind))
+            _mind.TransferTo(mindId, uid, true, mind: mind);
 
         _appearance.SetData(linked, MMIVisuals.BrainPresent, false);
     }

@@ -1,6 +1,7 @@
 using System.Linq;
 using Content.Server.Atmos.Monitor.Components;
 using Content.Server.Atmos.Piping.Components;
+using Content.Server.DeviceLinking.Systems;
 using Content.Server.DeviceNetwork;
 using Content.Server.DeviceNetwork.Components;
 using Content.Server.DeviceNetwork.Systems;
@@ -13,6 +14,7 @@ using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Monitor.Components;
 using Content.Shared.Atmos.Piping.Unary.Components;
+using Content.Shared.DeviceLinking;
 using Content.Shared.DeviceNetwork;
 using Content.Shared.DeviceNetwork.Systems;
 using Content.Shared.Interaction;
@@ -32,14 +34,14 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // response data in its data key.
 public sealed class AirAlarmSystem : EntitySystem
 {
-    [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
-    [Dependency] private readonly DeviceListSystem _deviceListSystem = default!;
-    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNetSystem = default!;
+    [Dependency] private readonly AccessReaderSystem _access = default!;
     [Dependency] private readonly AtmosAlarmableSystem _atmosAlarmable = default!;
-    [Dependency] private readonly UserInterfaceSystem _uiSystem = default!;
-    [Dependency] private readonly AccessReaderSystem _accessSystem = default!;
+    [Dependency] private readonly AtmosDeviceNetworkSystem _atmosDevNet = default!;
+    [Dependency] private readonly DeviceNetworkSystem _deviceNet = default!;
+    [Dependency] private readonly DeviceLinkSystem _deviceLink = default!;
+    [Dependency] private readonly DeviceListSystem _deviceList = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
-    [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
+    [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
     #region Device Network API
 
@@ -57,8 +59,8 @@ public sealed class AirAlarmSystem : EntitySystem
     /// <param name="data">The data to send to the device.</param>
     public void SetData(EntityUid uid, string address, IAtmosDeviceData data)
     {
-        _atmosDevNetSystem.SetDeviceState(uid, address, data);
-        _atmosDevNetSystem.Sync(uid, address);
+        _atmosDevNet.SetDeviceState(uid, address, data);
+        _atmosDevNet.Sync(uid, address);
     }
 
     /// <summary>
@@ -66,7 +68,7 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     private void SyncAllDevices(EntityUid uid)
     {
-        _atmosDevNetSystem.Sync(uid, null);
+        _atmosDevNet.Sync(uid, null);
     }
 
     /// <summary>
@@ -75,7 +77,7 @@ public sealed class AirAlarmSystem : EntitySystem
     /// <param name="address">The address of the device.</param>
     private void SyncDevice(EntityUid uid, string address)
     {
-        _atmosDevNetSystem.Sync(uid, address);
+        _atmosDevNet.Sync(uid, address);
     }
 
     /// <summary>
@@ -85,8 +87,8 @@ public sealed class AirAlarmSystem : EntitySystem
     /// <param name="uid"></param>
     private void SyncRegisterAllDevices(EntityUid uid)
     {
-        _atmosDevNetSystem.Register(uid, null);
-        _atmosDevNetSystem.Sync(uid, null);
+        _atmosDevNet.Register(uid, null);
+        _atmosDevNet.Sync(uid, null);
     }
 
     /// <summary>
@@ -133,8 +135,7 @@ public sealed class AirAlarmSystem : EntitySystem
     /// <param name="mode">The mode to sync with the rest of the network.</param>
     private void SyncMode(EntityUid uid, AirAlarmMode mode)
     {
-        if (EntityManager.TryGetComponent(uid, out AtmosMonitorComponent? monitor)
-            && !monitor.NetEnabled)
+        if (TryComp<AtmosMonitorComponent>(uid, out var monitor) && !monitor.NetEnabled)
             return;
 
         var payload = new NetworkPayload
@@ -165,6 +166,8 @@ public sealed class AirAlarmSystem : EntitySystem
         SubscribeLocalEvent<AirAlarmComponent, AirAlarmTabSetMessage>(OnTabChange);
         SubscribeLocalEvent<AirAlarmComponent, DeviceListUpdateEvent>(OnDeviceListUpdate);
         SubscribeLocalEvent<AirAlarmComponent, BoundUIClosedEvent>(OnClose);
+        SubscribeLocalEvent<AirAlarmComponent, ComponentInit>(OnInit);
+        SubscribeLocalEvent<AirAlarmComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<AirAlarmComponent, ComponentShutdown>(OnShutdown);
         SubscribeLocalEvent<AirAlarmComponent, ActivateInWorldEvent>(OnActivate);
     }
@@ -179,7 +182,7 @@ public sealed class AirAlarmSystem : EntitySystem
                 continue;
             }
 
-            _atmosDevNetSystem.Deregister(uid, deviceNet.Address);
+            _atmosDevNet.Deregister(uid, deviceNet.Address);
         }
 
         component.ScrubberData.Clear();
@@ -220,6 +223,18 @@ public sealed class AirAlarmSystem : EntitySystem
             RemoveActiveInterface(uid);
     }
 
+    private void OnInit(EntityUid uid, AirAlarmComponent comp, ComponentInit args)
+    {
+        _deviceLink.EnsureSourcePorts(uid, comp.DangerPort, comp.WarningPort, comp.NormalPort);
+    }
+
+    private void OnMapInit(EntityUid uid, AirAlarmComponent comp, MapInitEvent args)
+    {
+        // for mapped linked air alarms, start with high so when it changes for the first time it goes from high to low
+        // without this the output would suddenly get sent a low signal after nothing which is bad
+        _deviceLink.SendSignal(uid, GetPort(comp), true);
+    }
+
     private void OnShutdown(EntityUid uid, AirAlarmComponent component, ComponentShutdown args)
     {
         _activeUserInterfaces.Remove(uid);
@@ -227,9 +242,6 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnActivate(EntityUid uid, AirAlarmComponent component, ActivateInWorldEvent args)
     {
-        if (!_interactionSystem.InRangeUnobstructed(args.User, args.Target))
-            return;
-
         if (!TryComp<ActorComponent>(args.User, out var actor))
             return;
 
@@ -242,9 +254,9 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!this.IsPowered(uid, EntityManager))
             return;
 
-        var ui = _uiSystem.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
+        var ui = _ui.GetUiOrNull(uid, SharedAirAlarmInterfaceKey.Key);
         if (ui != null)
-            _uiSystem.OpenUi(ui, actor.PlayerSession);
+            _ui.OpenUi(ui, actor.PlayerSession);
         component.ActivePlayers.Add(actor.PlayerSession.UserId);
         AddActiveInterface(uid);
         SyncAllDevices(uid);
@@ -268,12 +280,20 @@ public sealed class AirAlarmSystem : EntitySystem
 
     private void OnUpdateAlarmMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAlarmModeMessage args)
     {
-        var addr = string.Empty;
-        if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn)) addr = netConn.Address;
         if (AccessCheck(uid, args.Session.AttachedEntity, component))
+        {
+            var addr = string.Empty;
+            if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
+            {
+                addr = netConn.Address;
+            }
+
             SetMode(uid, addr, args.Mode, false);
+        }
         else
+        {
             UpdateUI(uid, component);
+        }
     }
 
     private void OnUpdateAutoMode(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateAutoModeMessage args)
@@ -293,7 +313,7 @@ public sealed class AirAlarmSystem : EntitySystem
     private void OnUpdateDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmUpdateDeviceDataMessage args)
     {
         if (AccessCheck(uid, args.Session.AttachedEntity, component)
-            && _deviceListSystem.ExistsInDeviceList(uid, args.Address))
+            && _deviceList.ExistsInDeviceList(uid, args.Address))
         {
             SetDeviceData(uid, args.Address, args.Data);
         }
@@ -302,13 +322,13 @@ public sealed class AirAlarmSystem : EntitySystem
             UpdateUI(uid, component);
         }
     }
-    
+
     private void OnCopyDeviceData(EntityUid uid, AirAlarmComponent component, AirAlarmCopyDeviceDataMessage args)
     {
         if (!AccessCheck(uid, args.Session.AttachedEntity, component))
         {
            UpdateUI(uid, component);
-            return;       
+            return;
         }
 
         switch (args.Data)
@@ -319,7 +339,7 @@ public sealed class AirAlarmSystem : EntitySystem
                     SetData(uid, addr, args.Data);
                 }
                 break;
-                
+
             case GasVentScrubberData scrubberData:
                 foreach (string addr in component.ScrubberData.Keys)
                 {
@@ -334,10 +354,14 @@ public sealed class AirAlarmSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        if (!EntityManager.TryGetComponent(uid, out AccessReaderComponent? reader) || user == null)
+        // if it has no access reader behave as if the user has AA
+        if (!TryComp<AccessReaderComponent>(uid, out var reader))
+            return true;
+
+        if (user == null)
             return false;
 
-        if (!_accessSystem.IsAllowed(user.Value, reader))
+        if (!_access.IsAllowed(user.Value, uid, reader))
         {
             _popup.PopupEntity(Loc.GetString("air-alarm-ui-access-denied"), user.Value, user.Value);
             return false;
@@ -354,8 +378,10 @@ public sealed class AirAlarmSystem : EntitySystem
         }
 
         var addr = string.Empty;
-        if (EntityManager.TryGetComponent(uid, out DeviceNetworkComponent? netConn))
+        if (TryComp<DeviceNetworkComponent>(uid, out var netConn))
+        {
             addr = netConn.Address;
+        }
 
         if (component.AutoMode)
         {
@@ -369,7 +395,30 @@ public sealed class AirAlarmSystem : EntitySystem
             }
         }
 
+        if (component.State != args.AlarmType)
+        {
+            TryComp<DeviceLinkSourceComponent>(uid, out var source);
+
+            // send low to old state's port
+            _deviceLink.SendSignal(uid, GetPort(component), false, source);
+
+            // send high to new state's port, along with updating the cached state
+            component.State = args.AlarmType;
+            _deviceLink.SendSignal(uid, GetPort(component), true, source);
+        }
+
         UpdateUI(uid, component);
+    }
+
+    private string GetPort(AirAlarmComponent comp)
+    {
+        if (comp.State == AtmosAlarmType.Danger)
+            return comp.DangerPort;
+
+        if (comp.State == AtmosAlarmType.Warning)
+            return comp.WarningPort;
+
+        return comp.NormalPort;
     }
 
     #endregion
@@ -517,7 +566,7 @@ public sealed class AirAlarmSystem : EntitySystem
     /// </summary>
     private void ForceCloseAllInterfaces(EntityUid uid)
     {
-        _uiSystem.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
+        _ui.TryCloseAll(uid, SharedAirAlarmInterfaceKey.Key);
     }
 
     private void OnAtmosUpdate(EntityUid uid, AirAlarmComponent alarm, AtmosDeviceUpdateEvent args)
@@ -585,7 +634,7 @@ public sealed class AirAlarmSystem : EntitySystem
             highestAlarm = AtmosAlarmType.Normal;
         }
 
-        _uiSystem.TrySetUiState(
+        _ui.TrySetUiState(
             uid,
             SharedAirAlarmInterfaceKey.Key,
             new AirAlarmUIState(devNet.Address, deviceCount, pressure, temperature, dataToSend, alarm.CurrentMode, alarm.CurrentTab, highestAlarm.Value, alarm.AutoMode));

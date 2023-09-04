@@ -12,7 +12,7 @@ namespace Content.Shared.Fluids.Components;
 /// Later this can be refactored into a proper Plunger component if needed.
 /// </summary>
 [RegisterComponent, Access(typeof(SharedDrainSystem))]
-public sealed class DrainComponent : Component
+public sealed partial class DrainComponent : Component
 {
     public const string SolutionName = "drainBuffer";
 

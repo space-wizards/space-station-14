@@ -4,7 +4,7 @@
 /// This is an active component for tracking <see cref="TextScreenVisualsComponent"/>
 /// </summary>
 [RegisterComponent]
-public sealed class TextScreenTimerComponent : Component
+public sealed partial class TextScreenTimerComponent : Component
 {
 
 }
