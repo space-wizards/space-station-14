@@ -51,7 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
-            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<Verb>>(OnVerb);
+            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<AlternativeVerb>>(OnGetAlternativeVerb);
         }
 
         private void OnGasShutdown(EntityUid uid, GasTankComponent component, ComponentShutdown args)
@@ -350,11 +350,11 @@ namespace Content.Server.Atmos.EntitySystems
             args.Price += _atmosphereSystem.GetPrice(component.Air);
         }
 
-        private void OnVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<Verb> args)
+        private void OnGetAlternativeVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<AlternativeVerb> args)
         {
             if (!args.CanAccess || !args.CanInteract || args.Hands == null)
                 return;
-            args.Verbs.Add(new Verb()
+            args.Verbs.Add(new AlternativeVerb()
             {
                 Text = component.IsOpen ? Loc.GetString("comp-gas-tank-close") : Loc.GetString("comp-gas-tank-open"),
                 Act = () =>
