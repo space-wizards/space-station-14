@@ -977,7 +977,8 @@
   production: 6
   yield: 6
   idealLight: 7
-  waterConsumption: 0.6
+  waterConsumption: 1
+  nutrientConsumption: 0.8
   idealHeat: 298
   chemicals:
     Vitamin:
@@ -1033,8 +1034,7 @@
   idealLight: 8
   idealHeat: 298
   growthStages: 4
-  waterConsumption: 1
-  nutrientConsumption: 0.8
+  waterConsumption: 0.6
   chemicals:
     Nutriment:
       Min: 5
