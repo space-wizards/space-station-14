@@ -106,6 +106,17 @@
 
 - type: entity
   parent: ClothingUniformBase
+  id: ClothingUniformJumpsuitChiefEngineerTurtle
+  name: chief engineer's turtleneck
+  description: A yellow turtleneck designed specifically for work in conditions of the engineering department.
+  components:
+  - type: Sprite
+    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+  - type: Clothing
+    sprite: Clothing/Uniforms/Jumpsuit/ceturtle.rsi
+
+- type: entity
+  parent: ClothingUniformBase
   id: ClothingUniformJumpsuitChaplain
   name: chaplain's jumpsuit
   description: It's a black jumpsuit, often worn by religious folk.

@@ -22,7 +22,6 @@ public sealed class TargetOutlineSystem : EntitySystem
     [Dependency] private readonly IPlayerManager _playerManager = default!;
     [Dependency] private readonly IPrototypeManager _prototypeManager = default!;
     [Dependency] private readonly SharedInteractionSystem _interactionSystem = default!;
-    [Dependency] private readonly SharedTransformSystem _transform = default!;
 
     private bool _enabled = false;
 
@@ -165,8 +164,8 @@ public sealed class TargetOutlineSystem : EntitySystem
                 valid = _interactionSystem.InRangeUnobstructed(player, entity, Range);
             else if (Range >= 0)
             {
-                var origin = _transform.GetWorldPosition(player);
-                var target = _transform.GetWorldPosition(entity);
+                var origin = Transform(player).WorldPosition;
+                var target = Transform(entity).WorldPosition;
                 valid = (origin - target).LengthSquared() <= Range;
             }
 
