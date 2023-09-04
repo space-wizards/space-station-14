@@ -1,2 +1,2 @@
-ent-CargoQuartermasterHardsuit = { ent-CrateCargoQuartermasterHardsuit }
-    .desc = { ent-CrateCargoQuartermasterHardsuit.desc }
+ent-CargoLuxuryHardsuit = { ent-CrateCargoLuxuryHardsuit }
+    .desc = { ent-CrateCargoLuxuryHardsuit.desc }

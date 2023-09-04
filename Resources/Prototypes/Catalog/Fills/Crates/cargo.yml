@@ -1,7 +1,7 @@
 - type: entity
-  id: CrateCargoQuartermasterHardsuit
-  parent: CrateCommandSecure
+  id: CrateCargoLuxuryHardsuit
+  parent: CratePirate
   components:
   - type: StorageFill
     contents:
-    - id: ClothingOuterHardsuitQm
+    - id: ClothingOuterHardsuitLuxury

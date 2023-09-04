@@ -5,7 +5,6 @@
   components:
   - type: StorageFill
     contents:
-    #DO NOT MAP QUARTERMASTER HARDSUIT LOCKER - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
       - id: ClothingNeckCloakQm
       - id: ClothingHeadsetCargo
       - id: ClothingUniformJumpsuitQMTurtleneck
