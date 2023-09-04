@@ -9,7 +9,6 @@ using Content.Shared.Examine;
 using Content.Shared.Light;
 using Content.Shared.Light.Components;
 using Robust.Server.GameObjects;
-using Robust.Shared.GameStates;
 using Color = Robust.Shared.Maths.Color;
 
 namespace Content.Server.Light.EntitySystems;
@@ -103,7 +102,7 @@ public sealed class EmergencyLightSystem : SharedEmergencyLightSystem
             if (CompOrNull<StationMemberComponent>(xform.GridUid)?.Station != ev.Station)
                 continue;
 
-            pointLight.Color = details.EmergencyLightColor;
+            _pointLight.SetColor(uid, details.EmergencyLightColor, pointLight);
             _appearance.SetData(uid, EmergencyLightVisuals.Color, details.EmergencyLightColor, appearance);
 
             if (details.ForceEnableEmergencyLights && !light.ForciblyEnabled)
