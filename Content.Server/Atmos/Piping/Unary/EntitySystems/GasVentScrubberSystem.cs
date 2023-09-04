@@ -10,6 +10,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Tools.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Piping.Unary.Visuals;
 using Content.Shared.Atmos.Monitor;
@@ -40,6 +41,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentScrubberComponent, AtmosAlarmEvent>(OnAtmosAlarm);
             SubscribeLocalEvent<GasVentScrubberComponent, PowerChangedEvent>(OnPowerChanged);
             SubscribeLocalEvent<GasVentScrubberComponent, DeviceNetworkPacketEvent>(OnPacketRecv);
+            SubscribeLocalEvent<GasVentScrubberComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
         private void OnVentScrubberUpdated(EntityUid uid, GasVentScrubberComponent scrubber, AtmosDeviceUpdateEvent args)
@@ -183,7 +185,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             _ambientSoundSystem.SetAmbience(uid, true);
-            if (!scrubber.Enabled)
+            if (scrubber.Welded)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
+            }
+            else if (!scrubber.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Off, appearance);
@@ -196,11 +203,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             {
                 _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Siphon, appearance);
             }
-            else if (scrubber.Welded)
-            {
-                _ambientSoundSystem.SetAmbience(uid, false);
-                _appearance.SetData(uid, ScrubberVisuals.State, ScrubberState.Welded, appearance);
-            }
+        }
+
+        private void OnWeldChanged(EntityUid uid, GasVentScrubberComponent component, WeldableChangedEvent args)
+        {
+            var isWelded = args.IsWelded;
+            component.Welded = isWelded;
+            UpdateState(uid, component);
         }
     }
 }

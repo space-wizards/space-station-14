@@ -6,6 +6,7 @@ using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Verbs;
+using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Melee.Components;
 using Content.Shared.Weapons.Ranged.Components;
@@ -59,7 +60,11 @@ public sealed class WieldableSystem : EntitySystem
             !wieldable.Wielded)
         {
             args.Cancelled = true;
-            args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+
+            if (!HasComp<MeleeWeaponComponent>(uid) && !HasComp<MeleeRequiresWieldComponent>(uid))
+            {
+                args.Message = Loc.GetString("wieldable-component-requires", ("item", uid));
+            }
         }
     }
 

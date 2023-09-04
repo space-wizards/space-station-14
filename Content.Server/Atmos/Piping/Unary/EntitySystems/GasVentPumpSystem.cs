@@ -11,6 +11,7 @@ using Content.Server.NodeContainer;
 using Content.Server.NodeContainer.EntitySystems;
 using Content.Server.NodeContainer.Nodes;
 using Content.Server.Power.Components;
+using Content.Server.Tools.Systems;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Monitor;
 using Content.Shared.Atmos.Piping.Unary.Components;
@@ -46,6 +47,7 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             SubscribeLocalEvent<GasVentPumpComponent, ExaminedEvent>(OnExamine);
             SubscribeLocalEvent<GasVentPumpComponent, SignalReceivedEvent>(OnSignalReceived);
             SubscribeLocalEvent<GasVentPumpComponent, GasAnalyzerScanEvent>(OnAnalyzed);
+            SubscribeLocalEvent<GasVentPumpComponent, WeldableChangedEvent>(OnWeldChanged);
         }
 
         private void OnGasVentPumpUpdated(EntityUid uid, GasVentPumpComponent vent, AtmosDeviceUpdateEvent args)
@@ -253,7 +255,12 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 return;
 
             _ambientSoundSystem.SetAmbience(uid, true);
-            if (!vent.Enabled)
+            if (vent.Welded)
+            {
+                _ambientSoundSystem.SetAmbience(uid, false);
+                _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
+            }
+            else if (!vent.Enabled)
             {
                 _ambientSoundSystem.SetAmbience(uid, false);
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Off, appearance);
@@ -265,11 +272,6 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
             else if (vent.PumpDirection == VentPumpDirection.Siphoning)
             {
                 _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.In, appearance);
-            }
-            else if (vent.Welded)
-            {
-                _ambientSoundSystem.SetAmbience(uid, false);
-                _appearance.SetData(uid, VentPumpVisuals.State, VentPumpState.Welded, appearance);
             }
         }
 
@@ -307,6 +309,13 @@ namespace Content.Server.Atmos.Piping.Unary.EntitySystems
                 gasMixDict.Add(nodeName, pipe.Air);
 
             args.GasMixtures = gasMixDict;
+        }
+
+        private void OnWeldChanged(EntityUid uid, GasVentPumpComponent component, WeldableChangedEvent args)
+        {
+            var isWelded = args.IsWelded;
+            component.Welded = isWelded;
+            UpdateState(uid, component);
         }
     }
 }

@@ -8,7 +8,6 @@ using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Throwing;
-using JetBrains.Annotations;
 using Robust.Shared.Audio;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Events;
@@ -36,6 +35,8 @@ public abstract class SharedDisposalUnitSystem : EntitySystem
     public const float PressurePerSecond = 0.05f;
 
     public abstract bool HasDisposals([NotNullWhen(true)] EntityUid? uid);
+
+    public abstract bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component);
 
     /// <summary>
     /// Gets the current pressure state of a disposals unit.

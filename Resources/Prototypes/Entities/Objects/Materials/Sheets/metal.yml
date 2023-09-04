@@ -48,7 +48,7 @@
   - type: Sprite
     state: steel_3
     layers:
-    - state: plasteel_3
+    - state: steel_3
       map: ["base"]
   - type: Item
     heldPrefix: steel
