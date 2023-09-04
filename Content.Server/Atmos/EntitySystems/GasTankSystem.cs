@@ -355,7 +355,7 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             args.Verbs.Add(new Verb()
             {
-                Text = Loc.GetString("comp-gas-tank-toggle"),
+                Text = component.IsOpen ? Loc.GetString("comp-gas-tank-close") : Loc.GetString("comp-gas-tank-open"),
                 Act = () =>
                 {
                     component.IsOpen = !component.IsOpen;
