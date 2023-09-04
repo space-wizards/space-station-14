@@ -142,7 +142,7 @@ namespace Content.Server.Atmos.EntitySystems
                         _atmosphereSystem.Merge(environment, removed);
                     }
                     var impulse = removed.TotalMoles * removed.Temperature;
-                    _physics.ApplyLinearImpulse(uid, Transform(uid).LocalRotation.ToWorldVec() * impulse);
+                    _physics.ApplyLinearImpulse(uid, _random.NextAngle().ToWorldVec() * impulse);
                     _physics.ApplyAngularImpulse(uid, _random.NextFloat(-3f, 3f));
                     _audioSys.PlayPvs(gasTank.RuptureSound, uid);
                 }
