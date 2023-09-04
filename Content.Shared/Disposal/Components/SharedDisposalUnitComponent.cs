@@ -7,7 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 namespace Content.Shared.Disposal.Components;
 
 [NetworkedComponent]
-public abstract class SharedDisposalUnitComponent : Component
+public abstract partial class SharedDisposalUnitComponent : Component
 {
     public const string ContainerId = "disposals";
 
@@ -28,7 +28,7 @@ public abstract class SharedDisposalUnitComponent : Component
     /// We'll track whatever just left disposals so we know what collision we need to ignore until they stop intersecting our BB.
     /// </summary>
     [ViewVariables, DataField("recentlyEjected")]
-    public readonly List<EntityUid> RecentlyEjected = new();
+    public List<EntityUid> RecentlyEjected = new();
 
     /// <summary>
     /// Next time the disposal unit will be pressurized.
@@ -55,7 +55,7 @@ public abstract class SharedDisposalUnitComponent : Component
     /// Removes the pressure requirement for flushing.
     /// </summary>
     [DataField("disablePressure"), ViewVariables(VVAccess.ReadWrite)]
-    public bool DisablePressure = false;
+    public bool DisablePressure;
 
     /// <summary>
     ///     Last time that an entity tried to exit this disposal unit.

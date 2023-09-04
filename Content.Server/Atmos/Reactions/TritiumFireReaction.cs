@@ -6,7 +6,7 @@ namespace Content.Server.Atmos.Reactions
 {
     [UsedImplicitly]
     [DataDefinition]
-    public sealed class TritiumFireReaction : IGasReactionEffect
+    public sealed partial class TritiumFireReaction : IGasReactionEffect
     {
         public ReactionResult React(GasMixture mixture, IGasMixtureHolder? holder, AtmosphereSystem atmosphereSystem)
         {

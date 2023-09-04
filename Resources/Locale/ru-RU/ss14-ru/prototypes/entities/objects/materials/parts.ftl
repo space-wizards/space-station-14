@@ -9,3 +9,6 @@ ent-PartRodMetal1 = металлический стержень
 ent-PartRodMetal10 = металлический стержень
     .suffix = Десять
     .desc = { ent-PartRodMetal.desc }
+ent-PartRodMetalLingering0 = металлический стержень
+    .suffix = Ноль, Постоянный
+    .desc = { ent-PartRodMetal.desc }

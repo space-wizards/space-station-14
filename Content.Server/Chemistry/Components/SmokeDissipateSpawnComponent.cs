@@ -9,7 +9,7 @@ namespace Content.Server.Chemistry.Components;
 /// When a <see cref="SmokeComponent"/> despawns this will spawn another entity in its place.
 /// </summary>
 [RegisterComponent, Access(typeof(SmokeSystem))]
-public sealed class SmokeDissipateSpawnComponent : Component
+public sealed partial class SmokeDissipateSpawnComponent : Component
 {
     [DataField("prototype", required: true, customTypeSerializer:typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string Prototype = string.Empty;

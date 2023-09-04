@@ -1,5 +1,7 @@
 ent-UtensilBase = { ent-BaseItem }
     .desc = { ent-BaseItem.desc }
+ent-UtensilBasePlastic = { ent-BaseItem }
+    .desc = { ent-BaseItem.desc }
 ent-Fork = вилка
     .desc = Столовый прибор, идеальный для нанесения ударов.
 ent-ForkPlastic = пластиковая вилка

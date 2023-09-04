@@ -5,17 +5,15 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
+    // The world if people documented their shit.
     [RegisterComponent]
-    public sealed class GasVentPumpComponent : Component
+    public sealed partial class GasVentPumpComponent : Component
     {
         [ViewVariables(VVAccess.ReadWrite)]
         public bool Enabled { get; set; } = true;
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]
@@ -122,7 +120,7 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         ///     Whether or not machine linking is enabled for this component.
         /// </summary>
         [DataField("canLink")]
-        public readonly bool CanLink = false;
+        public bool CanLink = false;
 
         [DataField("pressurizePort", customTypeSerializer: typeof(PrototypeIdSerializer<SinkPortPrototype>))]
         public string PressurizePort = "Pressurize";

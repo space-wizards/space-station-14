@@ -3,7 +3,6 @@ using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.UserInterface.Controls;
 using Robust.Client.UserInterface.CustomControls;
-using Content.Client.Items.Components;
 using Content.Client.Stylesheets;
 using Content.Client.UserInterface.Controls;
 using Content.Shared.IdentityManagement;
@@ -113,26 +112,26 @@ namespace Content.Client.Storage.UI
                 || !_entityManager.EntityExists(entity))
                 return;
 
-            _entityManager.TryGetComponent(entity, out SpriteComponent? sprite);
             _entityManager.TryGetComponent(entity, out ItemComponent? item);
             _entityManager.TryGetComponent(entity, out StackComponent? stack);
             var count = stack?.Count ?? 1;
             var size = item?.Size;
 
+            var spriteView = new SpriteView
+            {
+                HorizontalAlignment = HAlignment.Left,
+                VerticalAlignment = VAlignment.Center,
+                SetSize = new Vector2(32.0f, 32.0f),
+                OverrideDirection = Direction.South,
+            };
+            spriteView.SetEntity(entity);
             button.AddChild(new BoxContainer
             {
                 Orientation = LayoutOrientation.Horizontal,
                 SeparationOverride = 2,
                 Children =
                     {
-                        new SpriteView
-                        {
-                            HorizontalAlignment = HAlignment.Left,
-                            VerticalAlignment = VAlignment.Center,
-                            SetSize = new Vector2(32.0f, 32.0f),
-                            OverrideDirection = Direction.South,
-                            Sprite = sprite
-                        },
+                        spriteView,
                         new Label
                         {
                             HorizontalExpand = true,

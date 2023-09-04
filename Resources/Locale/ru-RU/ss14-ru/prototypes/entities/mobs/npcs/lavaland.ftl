@@ -1,0 +1,11 @@
+ent-MobWatcherBase = хранитель
+    .desc = Как будто-бы смотрит сквозь вас.
+ent-MobWatcherLavaland = { ent-MobWatcherBase }
+    .desc = { ent-MobWatcherBase.desc }
+ent-MobWatcherIcewing = морозный хранитель
+    .desc = { ent-MobWatcherBase.desc }
+ent-MobWatcherMagmawing = пылающий хранитель
+    .desc = { ent-MobWatcherBase.desc }
+ent-MobWatcherPride = хрустальный хранитель
+    .desc = Этот редкий подвид хранителей появляется только в июне.
+	.suffix = ПРАЙД

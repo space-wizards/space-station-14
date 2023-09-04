@@ -406,7 +406,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="toInsert"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the entity was inserted</returns>
-    public virtual bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
+    public bool TryInsert(EntityUid uid, EntityUid? toInsert, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -429,7 +429,7 @@ public abstract class SharedMechSystem : EntitySystem
     /// <param name="uid"></param>
     /// <param name="component"></param>
     /// <returns>Whether or not the pilot was ejected.</returns>
-    public virtual bool TryEject(EntityUid uid, MechComponent? component = null)
+    public bool TryEject(EntityUid uid, MechComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return false;
@@ -485,7 +485,7 @@ public abstract class SharedMechSystem : EntitySystem
 ///     on both success and failure
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class RemoveBatteryEvent : SimpleDoAfterEvent
+public sealed partial class RemoveBatteryEvent : SimpleDoAfterEvent
 {
 }
 
@@ -494,7 +494,7 @@ public sealed class RemoveBatteryEvent : SimpleDoAfterEvent
 ///     on both success and failure
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechExitEvent : SimpleDoAfterEvent
+public sealed partial class MechExitEvent : SimpleDoAfterEvent
 {
 }
 
@@ -502,6 +502,6 @@ public sealed class MechExitEvent : SimpleDoAfterEvent
 ///     Event raised when a person enters a mech, on both success and failure
 /// </summary>
 [Serializable, NetSerializable]
-public sealed class MechEntryEvent : SimpleDoAfterEvent
+public sealed partial class MechEntryEvent : SimpleDoAfterEvent
 {
 }

@@ -188,7 +188,7 @@ public sealed class GeneralCriminalRecordsConsoleSystem : EntitySystem
     {
         if (TryComp<AccessReaderComponent>(console, out var accessReaderComponent) && !HasComp<EmaggedComponent>(console))
         {
-            return _accessReaderSystem.IsAllowed(user, accessReaderComponent);
+            return _accessReaderSystem.IsAllowed(user, console);
         }
         return true;
     }

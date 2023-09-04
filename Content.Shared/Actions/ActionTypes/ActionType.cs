@@ -6,7 +6,7 @@ namespace Content.Shared.Actions.ActionTypes;
 
 [ImplicitDataDefinitionForInheritors]
 [Serializable, NetSerializable]
-public abstract class ActionType : IEquatable<ActionType>, IComparable, ICloneable
+public abstract partial class ActionType : IEquatable<ActionType>, IComparable, ICloneable
 {
     /// <summary>
     ///     Icon representing this action in the UI.

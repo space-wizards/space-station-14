@@ -7,6 +7,7 @@ guide-entry-shuttle-craft = Шаттлостроение
 guide-entry-networking = Сетевые соединения
 guide-entry-network-configurator = Конфигуратор сетей
 guide-entry-power = Электропитание
+guide-entry-portable-generator = Портативные генераторы
 guide-entry-ame = Двигатель антиматерии (ДАМ)
 guide-entry-singularity = Сингулярный двигатель
 guide-entry-teg = Термо-электрический генератор (ТЭГ)

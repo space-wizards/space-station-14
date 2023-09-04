@@ -167,6 +167,8 @@
     - type: Sprite
       sprite: Corvax/Structures/Storage/kvass.rsi
       state: kvass
+    - type: ReagentTank
+      transferAmount: 100
 
 - type: entity
   parent: KvassTank

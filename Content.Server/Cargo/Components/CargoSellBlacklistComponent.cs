@@ -4,6 +4,6 @@
 ///     Marks an entity as unable to be sold through the cargo shuttle.
 /// </summary>
 [RegisterComponent]
-public sealed class CargoSellBlacklistComponent : Component
+public sealed partial class CargoSellBlacklistComponent : Component
 {
 }

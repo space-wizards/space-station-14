@@ -192,7 +192,7 @@ public sealed class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
         if (!TryComp(target, out AccessReaderComponent? reader) || user == null)
             return true;
 
-        if (_accessSystem.IsAllowed(user.Value, reader))
+        if (_accessSystem.IsAllowed(user.Value, target, reader))
             return true;
 
         _audioSystem.PlayPvs(component.SoundNoAccess, user.Value, AudioParams.Default.WithVolume(-2f).WithPitchScale(1.2f));

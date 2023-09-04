@@ -4,7 +4,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Tools.Components
 {
     [NetworkedComponent]
-    public abstract class SharedWelderComponent : Component
+    public abstract partial class SharedWelderComponent : Component
     {
         public bool Lit { get; set; }
     }

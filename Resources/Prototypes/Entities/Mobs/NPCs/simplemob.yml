@@ -1,8 +1,8 @@
 - type: entity
   save: false
-  abstract: true
-  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  id: BaseSimpleMob
   suffix: AI
+  abstract: true
   components:
   - type: LagCompensation
   - type: Tag
@@ -15,14 +15,8 @@
       Acidic: [Touch, Ingestion]
   - type: InputMover
   - type: MobMover
-  - type: HTN
-    rootTask:
-      task: IdleCompound
   - type: Input
     context: "human"
-  - type: NpcFactionMember
-    factions:
-    - SimpleNeutral
   - type: MovementSpeedModifier
     baseWalkSpeed : 4
     baseSprintSpeed : 4
@@ -59,26 +53,10 @@
         - MobMask
         layer:
         - MobLayer
-  - type: SolutionContainerManager
-  - type: Bloodstream
-    bloodlossDamage:
-      types:
-        Bloodloss:
-          1
-    bloodlossHealDamage:
-      types:
-        Bloodloss:
-          -1
   - type: Damageable
     damageContainer: Biological
   - type: RadiationReceiver
   - type: AtmosExposed
-  - type: Flammable
-    fireSpread: true
-    canResistFire: true
-    damage:
-      types:
-        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: Temperature
     heatDamageThreshold: 360
     coldDamageThreshold: 0
@@ -113,7 +91,6 @@
       behaviors:
       - !type:GibBehavior { }
   - type: HeatResistance
-  - type: CombatMode
   - type: Internals
   - type: StatusIcon
   - type: StatusEffects
@@ -124,11 +101,45 @@
     - ForcedSleep
     - TemporaryBlindness
     - Pacified
-  - type: Body
-    prototype: Animal
   - type: InjectableSolution
     solution: chemicals
   - type: Examiner
+  - type: Appearance
+  - type: RotationVisuals
+    defaultRotation: 0
+    horizontalRotation: 0
+  - type: Actions
+  - type: DoAfter
+  - type: Polymorphable
+  - type: Pullable
+  - type: Buckle
+  - type: StandingState
+  - type: Alerts
+
+- type: entity
+  save: false
+  abstract: true
+  parent: BaseSimpleMob
+  id: SimpleSpaceMobBase # Mob without barotrauma, freezing and asphyxiation (for space carps!?)
+  suffix: AI
+  components:
+  - type: NpcFactionMember
+    factions:
+    - SimpleNeutral
+  - type: HTN
+    rootTask:
+      task: IdleCompound
+  - type: SolutionContainerManager
+  - type: Bloodstream
+    bloodlossDamage:
+      types:
+        Bloodloss:
+          1
+    bloodlossHealDamage:
+      types:
+        Bloodloss:
+          -1
+  - type: CombatMode
   - type: MeleeWeapon
     hidden: true
     angle: 0
@@ -136,22 +147,19 @@
     damage:
       groups:
         Brute: 5
-  - type: Appearance
-  - type: RotationVisuals
-    defaultRotation: 0
-    horizontalRotation: 0
+  - type: Body
+    prototype: Animal
+  - type: Flammable
+    fireSpread: true
+    canResistFire: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
   - type: FireVisuals
     sprite: Mobs/Effects/onfire.rsi
     normalState: Generic_mob_burning
-  - type: Actions
-  - type: DoAfter
   - type: Climbing
   - type: Flashable
-  - type: Polymorphable
-  - type: Pullable
-  - type: Buckle
-  - type: StandingState
-  - type: Alerts
   - type: NameIdentifier
     group: GenericNumber
   - type: SlowOnDamage

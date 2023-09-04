@@ -87,3 +87,5 @@ ent-SyringeAmbuzol = шприц амбузола
     .desc = { ent-BaseSyringe.desc }
 ent-SyringeRomerol = шприц ромерола
     .desc = { ent-BaseSyringe.desc }
+ent-HealingToolbox = лечащий ящик для инструментов
+    .desc = Мощный ящик для инструментов, наполняющий вас робастной энергией. Может залечивать ваши раны и наполнять вас жаждой крови.

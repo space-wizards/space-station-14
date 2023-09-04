@@ -1,7 +1,7 @@
 apc-menu-title = ЛКП
 apc-menu-breaker-label = Главный рубильник
 apc-menu-breaker-button = Переключить
-apc-menu-power-label = Заряд батареи
+apc-menu-power-label = Нагрузка
 apc-menu-external-label = Внешнее питание
 apc-menu-charge-label = Заряд { $percent }
 

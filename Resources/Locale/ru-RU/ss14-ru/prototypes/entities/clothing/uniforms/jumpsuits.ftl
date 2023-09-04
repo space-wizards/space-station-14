@@ -219,3 +219,7 @@ ent-ClothingUniformJumpsuitSeniorOfficer = комбинезон инструкт
     .desc = Признак мастерства и престижа отдела службы безопасности.
 ent-ClothingUniformJumpsuitQMTurtleneck = водолазка квартирмейстера
     .desc = Водолазка с высоким воротом для тяжёлой работы в условиях отдела снабжения.
+ent-ClothingUniformJumpsuitChiefEngineerTurtle = водолазка старшего инженера
+    .desc = Водолазка с высоким воротом для тяжёлой работы в условиях инженерного отдела.
+ent-ClothingUniformJumpsuitWeb = паутинная юбка-комбинезон
+    .desc = Четко показывает ваше единство с паутинами.

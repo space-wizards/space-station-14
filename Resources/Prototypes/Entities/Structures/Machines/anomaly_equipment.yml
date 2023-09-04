@@ -38,7 +38,7 @@
   - type: Appearance
   - type: WiresPanel
   - type: Wires
-    BoardName: "Vessel"
+    BoardName: wires-board-name-vessel
     LayoutId: Vessel
   - type: AmbientSound
     enabled: false
@@ -175,7 +175,7 @@
   - type: WiresPanel
   - type: WiresVisuals
   - type: Wires
-    BoardName: "Ape"
+    BoardName: wires-board-name-ape
     LayoutId: Ape
   - type: GenericVisualizer
     visuals:
@@ -264,7 +264,7 @@
     doAfterDelay: 5
   - type: WiresPanel
   - type: Wires
-    BoardName: "AnomalyGenerator"
+    BoardName: wires-board-name-anomalygenerator
     LayoutId: AnomalyGenerator
   - type: Destructible
     thresholds:

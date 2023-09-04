@@ -57,3 +57,5 @@ ent-ClothingBackpackSalvageFilled = { ent-ClothingBackpackSalvage }
 ent-ClothingBackpackPirateFilled = { ent-ClothingBackpackSatchelLeather }
     .suffix = Заполненный, Пират
     .desc = { ent-ClothingBackpackSatchelLeather.desc }
+ent-ClothingBackpackSecurityFilledDetective = { ent-ClothingBackpackSecurity }
+	.desc = { ent-ClothingBackpackSecurity.desc }

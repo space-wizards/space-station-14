@@ -56,3 +56,7 @@ ent-BorgModuleGardening = садовый модуль киборга
     .desc =  { ent-BaseBorgModule.desc }
 ent-BorgModuleClowning = клоунский модуль киборга
     .desc =  { ent-BaseBorgModule.desc }
+ent-BorgModuleConstruction = строительный модуль киборга
+    .desc =  { ent-BaseBorgModule.desc }
+ent-BorgModuleHarvesting = собирательский модуль киборга
+    .desc =  { ent-BaseBorgModule.desc }
