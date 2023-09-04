@@ -7,12 +7,16 @@ using Content.Server.Popups;
 using Content.Shared.Botany;
 using Content.Shared.Examine;
 using Content.Shared.Hands.EntitySystems;
+using Content.Shared.Physics;
 using Content.Shared.Popups;
 using Content.Shared.Random.Helpers;
 using Content.Shared.Slippery;
 using Content.Shared.StepTrigger.Components;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
+using Robust.Shared.Physics;
+using Robust.Shared.Physics.Components;
+using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -29,6 +33,8 @@ public sealed partial class BotanySystem : EntitySystem
     [Dependency] private readonly IRobustRandom _robustRandom = default!;
     [Dependency] private readonly SolutionContainerSystem _solutionContainerSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
+    [Dependency] private readonly FixtureSystem _fixtureSystem = default!;
+    [Dependency] private readonly CollisionWakeSystem _colWakeSystem = default!;
 
     public override void Initialize()
     {
@@ -187,6 +193,14 @@ public sealed partial class BotanySystem : EntitySystem
                 var slippery = EnsureComp<SlipperyComponent>(entity);
                 EntityManager.Dirty(slippery);
                 EnsureComp<StepTriggerComponent>(entity);
+                // Need a fixture with a slip layer in order to actually do the slipping
+                var fixtures = EnsureComp<FixturesComponent>(entity);
+                var body = EnsureComp<PhysicsComponent>(entity);
+                var shape = fixtures.Fixtures["fix1"].Shape;
+                _fixtureSystem.TryCreateFixture(entity, shape, "slips", 1, false, (int) CollisionGroup.SlipLayer, manager: fixtures, body: body);
+                // Need to disable collision wake so that mobs can collide with and slip on it
+                var collisionWake = EnsureComp<CollisionWakeComponent>(entity);
+                _colWakeSystem.SetEnabled(entity, false, collisionWake);
             }
         }
 

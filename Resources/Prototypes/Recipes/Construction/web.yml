@@ -1,13 +1,13 @@
 - type: construction
   name: web wall
   id: WallWeb
-  graph: WallWeb
+  graph: WebStructures
   startNode: start
   targetNode: wall
   category: construction-category-structures
   description: A fairly weak yet silky smooth wall.
   icon:
-    sprite: /Textures/Structures/Walls/web.rsi
+    sprite: Structures/Walls/web.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
@@ -19,17 +19,83 @@
 - type: construction
   name: web table
   id: TableWeb
-  graph: TableWeb
+  graph: WebStructures
   startNode: start
   targetNode: table
-  category: construction-category-structures
+  category: construction-category-furniture
   description: Essential for any serious web development.
   icon:
-    sprite: /Textures/Structures/Furniture/Web/table.rsi
+    sprite: Structures/Furniture/Tables/web.rsi
     state: full
   objectType: Structure
   placementMode: SnapgridCenter
   canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: web bed
+  id: WebBed
+  graph: WebStructures
+  startNode: start
+  targetNode: bed
+  category: construction-category-furniture
+  description: Fun fact, you eating spiders in your sleep is false.
+  icon:
+    sprite: Structures/Web/bed.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+  conditions:
+    - !type:TileNotBlocked
+
+- type: construction
+  name: web chair
+  id: ChairWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: chair
+  category: construction-category-furniture
+  description: You want to get serious about web development? Get this chair!
+  icon:
+    sprite: Structures/Web/chair.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canBuildInImpassable: false
+
+- type: construction
+  name: web crate
+  id: CrateWeb
+  graph: WebStructures
+  startNode: start
+  targetNode: crate
+  category: construction-category-storage
+  description: For containment of food and other things. Not as durable as a normal crate, and can't be welded shut.
+  icon:
+    sprite: Structures/Storage/Crates/web.rsi
+    state: icon
+  objectType: Structure
+  placementMode: SnapgridCenter
+  canRotate: false
+  canBuildInImpassable: false
+
+- type: construction
+  name: web door
+  id: WebDoor
+  graph: WebStructures
+  startNode: start
+  targetNode: door
+  category: construction-category-structures
+  description: A manual door made from web, normally placed right before a pit or trap.
+  icon:
+    sprite: Structures/Doors/web_door.rsi
+    state: closed
+  objectType: Structure
+  placementMode: SnapgridCenter
   canBuildInImpassable: false
   conditions:
     - !type:TileNotBlocked
