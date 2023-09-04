@@ -1,9 +1,4 @@
 Entries:
-- author: IProduceWidgets
-  changes:
-  - {message: Syndie fire axe description is more clear., type: Tweak}
-  id: 4246
-  time: '2023-07-13T06:19:24.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Stamps are quieter than before., type: Fix}
@@ -3002,3 +2997,8 @@ Entries:
     type: Add}
   id: 4745
   time: '2023-09-03T21:27:19.0000000+00:00'
+- author: Flareguy
+  changes:
+  - {message: Changed a bunch of events to be more common., type: Tweak}
+  id: 4746
+  time: '2023-09-04T03:38:23.0000000+00:00'
