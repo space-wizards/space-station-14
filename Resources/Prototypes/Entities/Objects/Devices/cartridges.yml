@@ -1,6 +1,6 @@
 - type: entity
   parent: BaseItem
-  id: BaseCartridge
+  id: BaseDeviceCartridge
   abstract: true
   components:
   - type: Sprite
@@ -11,7 +11,7 @@
       sprite: Interface/Misc/program_icons.rsi # but some of them can use sprites from other directories 
 
 - type: entity
-  parent: BaseCartridge
+  parent: BaseDeviceCartridge
   id: NotekeeperCartridge
   name: notekeeper cartridge
   description: A program for keeping notes
@@ -26,7 +26,7 @@
   - type: NotekeeperCartridge
 
 - type: entity
-  parent: BaseCartridge
+  parent: BaseDeviceCartridge
   id: NewsReadCartridge
   name: News Cartridge
   description: A program for reading news
@@ -40,7 +40,7 @@
   - type: NewsReadCartridge
 
 - type: entity
-  parent: BaseCartridge
+  parent: BaseDeviceCartridge
   id: CrewManifestCartridge
   name: Crew Manifest Cartridge
   description: A program for listing your fellow crewmembers
@@ -54,7 +54,7 @@
   - type: CrewManifestCartridge
 
 - type: entity
-  parent: BaseCartridge
+  parent: BaseDeviceCartridge
   id: NetProbeCartridge
   name: NetProbe cartridge
   description: A program for getting the address and frequency of network devices
