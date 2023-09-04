@@ -1,41 +1,36 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Content.Server.Database;
 using Content.Shared.GameTicking;
 using Content.Shared.Humanoid;
 using Content.Shared.Preferences;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using NUnit.Framework;
 using Robust.Shared.Configuration;
 using Robust.Shared.Enums;
-using Robust.Shared.IoC;
 using Robust.Shared.Maths;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization.Manager;
 
-namespace Content.Tests.Server.Preferences
+namespace Content.IntegrationTests.Tests.Preferences
 {
     [TestFixture]
-    public sealed class ServerDbSqliteTests : ContentUnitTest
+    public sealed class ServerDbSqliteTests
     {
+        [TestPrototypes]
         private const string Prototypes = @"
 - type: dataset
-  id: names_first_male
+  id: sqlite_test_names_first_male
   values:
   - Aaden
 
 - type: dataset
-  id: names_first_female
+  id: sqlite_test_names_first_female
   values:
   - Aaliyah
 
 - type: dataset
-  id: names_last
+  id: sqlite_test_names_last
   values:
   - Ackerley";
 
@@ -69,50 +64,54 @@ namespace Content.Tests.Server.Preferences
             );
         }
 
-        private static ServerDbSqlite GetDb()
+        private static ServerDbSqlite GetDb(IConfigurationManager cfgManager)
         {
             var builder = new DbContextOptionsBuilder<SqliteServerDbContext>();
             var conn = new SqliteConnection("Data Source=:memory:");
             conn.Open();
             builder.UseSqlite(conn);
-            return new ServerDbSqlite(() => builder.Options, true, IoCManager.Resolve<IConfigurationManager>(), true);
+            return new ServerDbSqlite(() => builder.Options, true, cfgManager, true);
         }
 
         [Test]
         public async Task TestUserDoesNotExist()
         {
-            var db = GetDb();
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
             // Database should be empty so a new GUID should do it.
             Assert.Null(await db.GetPlayerPreferencesAsync(NewUserId()));
+
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestInitPrefs()
         {
-            var db = GetDb();
+            var pair = await PoolManager.GetServerClient();
+            var db = GetDb(pair.Server.ResolveDependency<IConfigurationManager>());
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
             const int slot = 0;
             var originalProfile = CharlieCharlieson();
             await db.InitPrefsAsync(username, originalProfile);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(prefs.Characters.Single(p => p.Key == slot).Value.MemberwiseEquals(originalProfile));
+            await pair.CleanReturnAsync();
         }
 
         [Test]
         public async Task TestDeleteCharacter()
         {
-            var db = GetDb();
+            var pair = await PoolManager.GetServerClient();
+            var server = pair.Server;
+            var db = GetDb(server.ResolveDependency<IConfigurationManager>());
             var username = new NetUserId(new Guid("640bd619-fc8d-4fe2-bf3c-4a5fb17d6ddd"));
-            IoCManager.Resolve<ISerializationManager>().Initialize();
-            var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
-            prototypeManager.Initialize();
-            prototypeManager.LoadFromStream(new StringReader(Prototypes));
             await db.InitPrefsAsync(username, new HumanoidCharacterProfile());
             await db.SaveCharacterSlotAsync(username, CharlieCharlieson(), 1);
             await db.SaveSelectedCharacterIndexAsync(username, 1);
             await db.SaveCharacterSlotAsync(username, null, 1);
             var prefs = await db.GetPlayerPreferencesAsync(username);
             Assert.That(!prefs.Characters.Any(p => p.Key != 0));
+            await pair.CleanReturnAsync();
         }
 
         private static NetUserId NewUserId()
