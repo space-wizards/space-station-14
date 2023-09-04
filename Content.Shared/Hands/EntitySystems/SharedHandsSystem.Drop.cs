@@ -37,7 +37,7 @@ public abstract partial class SharedHandsSystem : EntitySystem
         if (hand.Container?.ContainedEntity is not {} held)
             return false;
 
-        if (_container.CanRemove(held, hand.Container))
+        if (!_container.CanRemove(held, hand.Container))
             return false;
 
         if (checkActionBlocker && !_actionBlocker.CanDrop(uid))
