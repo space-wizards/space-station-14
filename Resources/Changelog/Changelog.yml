@@ -1,9 +1,4 @@
 Entries:
-- author: Ilya246
-  changes:
-  - {message: The atmos fireaxe and the syndicate fire axe can now pry plating., type: Add}
-  id: 4261
-  time: '2023-07-17T07:47:20.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: 'Nanotrasen has decided to supply their librarians with the famous game
@@ -2992,3 +2987,8 @@ Entries:
       times., type: Tweak}
   id: 4760
   time: '2023-09-04T14:16:10.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: All bots now uses robot typing indicator, type: Tweak}
+  id: 4761
+  time: '2023-09-04T14:21:53.0000000+00:00'
