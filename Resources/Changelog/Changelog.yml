@@ -1,9 +1,4 @@
 Entries:
-- author: Nairodian
-  changes:
-  - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
-  id: 4257
-  time: '2023-07-16T07:05:31.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Added collectible toy figurines based on the jobs & legends surrounding
@@ -2996,3 +2991,10 @@ Entries:
       ores.', type: Tweak}
   id: 4756
   time: '2023-09-04T12:57:52.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: 'Radiation collectors now need an inserted gas tank filled with plasma
+      to function. The plasma gas will turn into tritium over time, so replace it
+      with fresh plasma as needed.', type: Tweak}
+  id: 4757
+  time: '2023-09-04T13:11:58.0000000+00:00'
