@@ -246,6 +246,9 @@ namespace Content.Shared.Containers.ItemSlots
         /// </remarks>
         public bool CanInsert(EntityUid uid, EntityUid usedUid, EntityUid? user, ItemSlot slot, bool swap = false, EntityUid? popup = null)
         {
+            if (slot.ContainerSlot == null)
+                return false;
+
             if (slot.Locked)
                 return false;
 
@@ -265,7 +268,7 @@ namespace Content.Shared.Containers.ItemSlots
             if (ev.Cancelled)
                 return false;
 
-            return slot.ContainerSlot?.CanInsertIfEmpty(usedUid, EntityManager) ?? false;
+            return _containers.CanInsert(usedUid, slot.ContainerSlot, assumeEmpty: true);
         }
 
         /// <summary>

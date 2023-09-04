@@ -341,7 +341,7 @@ namespace Content.IntegrationTests.Tests.Interaction.Click
             EntityUid target = default;
             EntityUid item = default;
             EntityUid containerEntity = default;
-            IContainer container = null;
+            BaseContainer container = null;
 
             await server.WaitAssertion(() =>
             {
