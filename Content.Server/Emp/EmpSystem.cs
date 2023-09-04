@@ -27,16 +27,29 @@ public sealed class EmpSystem : SharedEmpSystem
         SubscribeLocalEvent<EmpDisabledComponent, SurveillanceCameraSetActiveAttemptEvent>(OnCameraSetActive);
     }
 
+    /// <summary>
+    ///   Triggers an EMP pulse at the given location, raising <see cref="EmpPulseEvent"/> on all entities in range.
+    /// </summary>
+    /// <param name="coordinates">The location to trigger the EMP pulse at.</param>
+    /// <param name="range">The range of the EMP pulse.</param>
+    /// <param name="energyConsumption">The amount of energy consumed by the EMP pulse.</param>
+    /// <param name="duration">The duration of the EMP effects.</param>
     public void EmpPulse(MapCoordinates coordinates, float range, float energyConsumption, float duration)
     {
         foreach (var uid in _lookup.GetEntitiesInRange(coordinates, range))
         {
-            DoEmp(uid, energyConsumption, duration);
+            DoEmpEffects(uid, energyConsumption, duration);
         }
         Spawn(EmpPulseEffectPrototype, coordinates);
     }
 
-    public void DoEmp(EntityUid uid, float energyConsumption, float duration)
+    /// <summary>
+    ///    Applies the effects of an EMP pulse onto an entity by raising a <see cref="EmpPulseEvent"/> on it.
+    /// </summary>
+    /// <param name="uid">The entity to apply the EMP effects on.</param>
+    /// <param name="energyConsumption">The amount of energy consumed by the EMP.</param>
+    /// <param name="duration">The duration of the EMP effects.</param>
+    public void DoEmpEffects(EntityUid uid, float energyConsumption, float duration)
     {
         var ev = new EmpPulseEvent(energyConsumption, false, false, TimeSpan.FromSeconds(duration));
         RaiseLocalEvent(uid, ref ev);
