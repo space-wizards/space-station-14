@@ -4,6 +4,7 @@ using Content.Server.Shuttles.Components;
 using Content.Shared.Cuffs.Components;
 using Content.Shared.Humanoid;
 using Content.Shared.Mind;
+using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Interfaces;
 using Robust.Shared.Player;
@@ -43,6 +44,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
         var gridPlayers = Filter.BroadcastGrid(shuttleGridId).Recipients;
         var humanoids = entMan.GetEntityQuery<HumanoidAppearanceComponent>();
         var cuffable = entMan.GetEntityQuery<CuffableComponent>();
+        entMan.EntityQuery<MobStateComponent>();
         foreach (var player in gridPlayers)
         {
             if (!player.AttachedEntity.HasValue ||
@@ -75,7 +77,6 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
 
             return false;
         }
-        // TODO: Allow pets?
 
         return agentOnShuttle;
     }
