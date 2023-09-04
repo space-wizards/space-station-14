@@ -73,8 +73,8 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded));
 
-            solution.TryGetReagent("Water", out var water);
-            solution.TryGetReagent("Oil", out var oil);
+            var water = solution.GetTotalPrototypeQuantity("Water");
+            var oil = solution.GetTotalPrototypeQuantity("Oil");
             Assert.Multiple(() =>
             {
                 Assert.That(water, Is.EqualTo(waterQuantity));
@@ -118,8 +118,8 @@ public sealed class SolutionSystemTests
             Assert.That(containerSystem
                 .TryAddSolution(beaker, solution, oilAdded), Is.False);
 
-            solution.TryGetReagent("Water", out var water);
-            solution.TryGetReagent("Oil", out var oil);
+            var water = solution.GetTotalPrototypeQuantity("Water");
+            var oil = solution.GetTotalPrototypeQuantity("Oil");
             Assert.Multiple(() =>
             {
                 Assert.That(water, Is.EqualTo(waterQuantity));
@@ -168,15 +168,15 @@ public sealed class SolutionSystemTests
             {
                 Assert.That(solution.Volume, Is.EqualTo(FixedPoint2.New(threshold)));
 
-                solution.TryGetReagent("Water", out var waterMix);
-                solution.TryGetReagent("Oil", out var oilMix);
+                var waterMix = solution.GetTotalPrototypeQuantity("Water");
+                var oilMix = solution.GetTotalPrototypeQuantity("Oil");
                 Assert.That(waterMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1))));
                 Assert.That(oilMix, Is.EqualTo(FixedPoint2.New(threshold / (ratio + 1) * ratio)));
 
                 Assert.That(overflowingSolution.Volume, Is.EqualTo(FixedPoint2.New(80)));
 
-                overflowingSolution.TryGetReagent("Water", out var waterOverflow);
-                overflowingSolution.TryGetReagent("Oil", out var oilOverFlow);
+                var waterOverflow = overflowingSolution.GetTotalPrototypeQuantity("Water");
+                var oilOverFlow = overflowingSolution.GetTotalPrototypeQuantity("Oil");
                 Assert.That(waterOverflow, Is.EqualTo(waterQuantity - waterMix));
                 Assert.That(oilOverFlow, Is.EqualTo(oilQuantity - oilMix));
             });
