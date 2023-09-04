@@ -57,7 +57,7 @@ namespace Content.Server.Power.EntitySystems
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid, access))
             {
                 component.HasAccess = true;
             }
@@ -82,7 +82,7 @@ namespace Content.Server.Power.EntitySystems
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, access))
+            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid, access))
             {
                 ApcToggleBreaker(uid, component);
             }
