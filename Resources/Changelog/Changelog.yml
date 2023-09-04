@@ -1,10 +1,4 @@
 Entries:
-- author: onoira
-  changes:
-  - {message: Nanotrasen has applied a new finish to all station bookshelves allowing
-      labels to stick properly., type: Fix}
-  id: 4266
-  time: '2023-07-17T19:31:12.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: CentCom PDAs have the right ID cards now., type: Fix}
@@ -2996,3 +2990,8 @@ Entries:
       phalanximine., type: Add}
   id: 4765
   time: '2023-09-04T20:11:41.0000000+00:00'
+- author: Fromoriss
+  changes:
+  - {message: Added cute and fluffy moth plushie!, type: Add}
+  id: 4766
+  time: '2023-09-04T20:18:03.0000000+00:00'
