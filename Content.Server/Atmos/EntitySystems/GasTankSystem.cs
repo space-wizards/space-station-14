@@ -134,9 +134,8 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (gasTank.IsOpen && gasTank.Air != null && !gasTank.IsLowPressure)
                 {
-                    var prev = gasTank.Air.TotalMoles;
-                    var removed = prev - RemoveAirVolume(gasTank, 1f).TotalMoles;
-                    _physics.ApplyLinearImpulse(gasTank.Owner, 100f * Transform(gasTank.Owner).LocalRotation.ToWorldVec() * removed);
+                    var removed = RemoveAirVolume(gasTank, 1f);
+                    _physics.ApplyLinearImpulse(gasTank.Owner, 100f * Transform(gasTank.Owner).LocalRotation.ToWorldVec() * removed.TotalMoles);
                     _physics.ApplyAngularImpulse(gasTank.Owner, _random.NextFloat(-10f, 10f));
                     _audioSys.PlayPvs(gasTank.RuptureSound, gasTank.Owner);
                 }
