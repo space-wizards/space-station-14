@@ -34,10 +34,10 @@ public abstract partial class SharedHandsSystem : EntitySystem
     /// </summary>
     public bool CanDropHeld(EntityUid uid, Hand hand, bool checkActionBlocker = true)
     {
-        if (hand.HeldEntity == null)
+        if (hand.Container?.ContainedEntity is not {} held)
             return false;
 
-        if (!hand.Container!.CanRemove(hand.HeldEntity.Value, EntityManager))
+        if (_container.CanRemove(held, hand.Container))
             return false;
 
         if (checkActionBlocker && !_actionBlocker.CanDrop(uid))

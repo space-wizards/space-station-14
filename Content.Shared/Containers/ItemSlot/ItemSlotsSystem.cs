@@ -328,16 +328,16 @@ namespace Content.Shared.Containers.ItemSlots
 
         public bool CanEject(EntityUid uid, EntityUid? user, ItemSlot slot)
         {
-            if (slot.Locked || slot.Item == null)
+            if (slot.Locked || slot.ContainerSlot?.ContainedEntity is not {} item)
                 return false;
 
-            var ev = new ItemSlotEjectAttemptEvent(uid, slot.Item.Value, user, slot);
+            var ev = new ItemSlotEjectAttemptEvent(uid, item, user, slot);
             RaiseLocalEvent(uid, ref ev);
-            RaiseLocalEvent(slot.Item.Value, ref ev);
+            RaiseLocalEvent(item, ref ev);
             if (ev.Cancelled)
                 return false;
 
-            return slot.ContainerSlot?.CanRemove(slot.Item.Value, EntityManager) ?? false;
+            return _containers.CanRemove(item, slot.ContainerSlot);
         }
 
         /// <summary>
