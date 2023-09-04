@@ -9,7 +9,7 @@ namespace Content.Server.Alert.Click
     /// </summary>
 	[UsedImplicitly]
     [DataDefinition]
-    public sealed class Unbuckle : IAlertClick
+    public sealed partial class Unbuckle : IAlertClick
     {
         public void AlertClicked(EntityUid player)
         {

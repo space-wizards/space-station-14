@@ -204,7 +204,7 @@
   - type: Sprite
     sprite: Structures/Storage/Crates/plasma.rsi
   - type: AccessReader
-    access: [["Engineering"]]
+    access: [["Engineering"], ["Research"], ["Chemistry"]]
 
 - type: entity
   parent: CrateBaseSecure

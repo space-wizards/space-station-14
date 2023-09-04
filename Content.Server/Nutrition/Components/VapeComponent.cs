@@ -8,8 +8,8 @@ using Content.Shared.Atmos;
 /// </summary>
 namespace Content.Server.Nutrition.Components
 {
-    [RegisterComponent, Access(typeof(SmokingSystem))] 
-    public sealed class VapeComponent : Component
+    [RegisterComponent, Access(typeof(SmokingSystem))]
+    public sealed partial class VapeComponent : Component
     {
         [DataField("delay")]
         [ViewVariables(VVAccess.ReadWrite)]

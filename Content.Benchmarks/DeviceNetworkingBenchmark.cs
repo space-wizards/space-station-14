@@ -59,8 +59,9 @@ public class DeviceNetworkingBenchmark
     public async Task SetupAsync()
     {
         ProgramShared.PathOffset = "../../../../";
+        PoolManager.Startup(typeof(DeviceNetworkingBenchmark).Assembly);
         _pair = await PoolManager.GetServerClient();
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
         await server.WaitPost(() =>
         {
@@ -91,14 +92,15 @@ public class DeviceNetworkingBenchmark
     public async Task Cleanup()
     {
         await _pair.DisposeAsync();
+        PoolManager.Shutdown();
     }
 
     [Benchmark(Baseline = true, Description = "Entity Events")]
     public async Task EventSentBaseline()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             foreach (var entity in _targetEntities)
             {
@@ -113,9 +115,9 @@ public class DeviceNetworkingBenchmark
     [Benchmark(Description = "Device Net Broadcast No Connection Checks")]
     public async Task DeviceNetworkBroadcastNoConnectionChecks()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceEntity, null, _payload, 100);
         });
@@ -127,9 +129,9 @@ public class DeviceNetworkingBenchmark
     [Benchmark(Description = "Device Net Broadcast Wireless Connection Checks")]
     public async Task DeviceNetworkBroadcastWirelessConnectionChecks()
     {
-        var server = _pair.Pair.Server;
+        var server = _pair.Server;
 
-        _pair.Pair.Server.Post(() =>
+        _pair.Server.Post(() =>
         {
             _deviceNetworkSystem.QueuePacket(_sourceWirelessEntity, null, _payload, 100);
         });

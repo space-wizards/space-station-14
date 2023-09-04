@@ -2,9 +2,10 @@
 using System.IO;
 using System.Linq;
 using Content.Server.GameTicking;
-using Content.Server.Mind.Components;
 using Content.Shared.CCVar;
 using Content.Shared.GameTicking;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Robust.Client;
 using Robust.Server.Player;
 using Robust.Shared.Exceptions;
@@ -38,7 +39,7 @@ public sealed partial class TestPair : IAsyncDisposable
             await Server.WaitPost(() => Server.EntMan.DeleteEntity(TestMap.MapUid));
             TestMap = null;
         }
-   
+
         var usageTime = Watch.Elapsed;
         Watch.Restart();
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Test borrowed pair {Id} for {usageTime.TotalMilliseconds} ms");
@@ -80,7 +81,7 @@ public sealed partial class TestPair : IAsyncDisposable
     {
         if (State != PairState.InUse)
             throw new Exception($"{nameof(CleanReturnAsync)}: Unexpected state. Pair: {Id}. State: {State}.");
-        
+
         await _testOut.WriteLineAsync($"{nameof(CleanReturnAsync)}: Return of pair {Id} started");
         State = PairState.CleanDisposed;
         await OnCleanDispose();
@@ -106,7 +107,7 @@ public sealed partial class TestPair : IAsyncDisposable
                 throw new Exception($"{nameof(DisposeAsync)}: Unexpected state. Pair: {Id}. State: {State}.");
         }
     }
-    
+
     public async Task CleanPooledPair(PoolSettings settings, TextWriter testOut)
     {
         Settings = default!;
@@ -160,7 +161,7 @@ public sealed partial class TestPair : IAsyncDisposable
         await ReallyBeIdle();
         await testOut.WriteLineAsync($"Recycling: {Watch.Elapsed.TotalMilliseconds} ms: Done recycling");
     }
-    
+
     public void ValidateSettings(PoolSettings settings)
     {
         var cfg = Server.CfgMan;
@@ -211,8 +212,9 @@ public sealed partial class TestPair : IAsyncDisposable
         Assert.That(entMan.HasComponent<MindContainerComponent>(session.AttachedEntity));
         var mindCont = entMan.GetComponent<MindContainerComponent>(session.AttachedEntity!.Value);
         Assert.NotNull(mindCont.Mind);
-        Assert.Null(mindCont.Mind?.VisitingEntity);
-        Assert.That(mindCont.Mind!.OwnedEntity, Is.EqualTo(session.AttachedEntity!.Value));
-        Assert.That(mindCont.Mind.UserId, Is.EqualTo(session.UserId));
+        Assert.True(entMan.TryGetComponent(mindCont.Mind, out MindComponent? mind));
+        Assert.Null(mind!.VisitingEntity);
+        Assert.That(mind.OwnedEntity, Is.EqualTo(session.AttachedEntity!.Value));
+        Assert.That(mind.UserId, Is.EqualTo(session.UserId));
     }
 }

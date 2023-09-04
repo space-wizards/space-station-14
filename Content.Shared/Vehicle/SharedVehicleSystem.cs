@@ -13,7 +13,7 @@ using Content.Shared.Tag;
 using Content.Shared.Audio;
 using Content.Shared.Buckle;
 using Content.Shared.Hands;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;
@@ -370,6 +370,6 @@ public enum VehicleVisuals : byte
 /// <summary>
 /// Raised when someone honks a vehicle horn
 /// </summary>
-public sealed class HonkActionEvent : InstantActionEvent
+public sealed partial class HonkActionEvent : InstantActionEvent
 {
 }

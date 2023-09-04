@@ -14,7 +14,6 @@ public sealed class ParacusiaSystem : SharedParacusiaSystem
     [Dependency] private readonly IPlayerManager _player = default!;
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
-    [Dependency] private readonly CameraRecoilSystem _camera = default!;
 
     public override void Initialize()
     {

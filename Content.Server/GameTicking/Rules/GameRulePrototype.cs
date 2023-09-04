@@ -7,9 +7,9 @@ namespace Content.Server.GameTicking.Rules;
 public sealed class GameRulePrototype : IPrototype
 {
     [IdDataField]
-    public string ID { get; } = default!;
+    public string ID { get; private set; } = default!;
 
     [DataField("config", required: true)]
-    public GameRuleConfiguration Configuration { get; } = default!;
+    public GameRuleConfiguration Configuration { get; private set; } = default!;
 }
 */

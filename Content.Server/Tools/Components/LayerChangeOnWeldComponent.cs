@@ -5,7 +5,7 @@ namespace Content.Server.Tools.Components;
 
 [RegisterComponent]
 [Access(typeof(WeldableSystem))]
-public sealed class LayerChangeOnWeldComponent : Component
+public sealed partial class LayerChangeOnWeldComponent : Component
 {
     [DataField("unWeldedLayer")]
     [ViewVariables]

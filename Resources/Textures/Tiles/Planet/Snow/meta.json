@@ -9,36 +9,37 @@
       "name": "snow"
     },
     {
-      "name": "snow_corner",
-      "directions": 8
+      "name": "snow_double_edge_south",
     },
     {
-      "name": "snow_surround",
-      "directions": 4
+      "name": "snow_double_edge_east",
     },
     {
-      "name": "gravsnow"
+      "name": "snow_double_edge_north",
     },
     {
-      "name": "gravsnow_corner",
-      "directions": 8
+      "name": "snow_double_edge_west",
     },
     {
-      "name": "gravsnow_surround",
-      "directions": 4
+      "name": "snow_dug"
+    },
+    {
+      "name": "snow_dug_double_edge_south",
+    },
+    {
+      "name": "snow_dug_double_edge_east",
+    },
+    {
+      "name": "snow_dug_double_edge_north",
+    },
+    {
+      "name": "snow_dug_double_edge_west",
     },
     {
       "name": "plating"
     },
     {
-      "name": "platingdrift",
-      "directions": 4
-    },
-    {
       "name": "ice"
-    },
-    {
-      "name": "snowwhite"
     },
     {
       "name": "snow0"
@@ -80,22 +81,7 @@
       "name": "snow12"
     },
     {
-      "name": "snowplating"
-    },
-    {
       "name": "permafrost"
-    },
-    {
-      "name": "edge0",
-      "directions": 4
-    },
-    {
-      "name": "edge1",
-      "directions": 4
-    },
-    {
-      "name": "edge2",
-      "directions": 4
     }
   ]
 }
