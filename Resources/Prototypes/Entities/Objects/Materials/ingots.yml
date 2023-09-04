@@ -11,7 +11,6 @@
     size: 30
   - type: StaticPrice
     price: 0
-  - type: ItemStatus
   - type: Tag
     tags:
     - Ingot

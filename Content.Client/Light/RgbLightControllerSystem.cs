@@ -4,7 +4,7 @@ using Content.Shared.Clothing;
 using Content.Shared.Hands;
 using Content.Shared.Inventory.Events;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Client.GameObjects;
 using Robust.Shared.GameStates;
 using Robust.Shared.Map.Components;

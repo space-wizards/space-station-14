@@ -83,6 +83,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -173,6 +174,7 @@
       range: 5
       sound:
         path: /Audio/Ambience/Objects/gas_vent.ogg
+    - type: Weldable
 
 - type: entity
   parent: GasUnaryBase
@@ -239,7 +241,7 @@
       key: enum.ThermomachineUiKey.Key
     - type: WiresPanel
     - type: Wires
-      BoardName: "Thermomachine"
+      BoardName: wires-board-name-thermomachine
       LayoutId: Thermomachine
     - type: WiresVisuals
     - type: NodeContainer

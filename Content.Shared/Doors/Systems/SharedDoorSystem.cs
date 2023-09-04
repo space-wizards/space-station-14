@@ -509,9 +509,9 @@ public abstract partial class SharedDoorSystem : EntitySystem
         return AccessType switch
         {
             // Some game modes modify access rules.
-            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, access),
+            AccessTypes.AllowAllIdExternal => !isExternal || _accessReaderSystem.IsAllowed(user.Value, uid, access),
             AccessTypes.AllowAllNoExternal => !isExternal,
-            _ => _accessReaderSystem.IsAllowed(user.Value, access)
+            _ => _accessReaderSystem.IsAllowed(user.Value, uid, access)
         };
     }
 

@@ -1,5 +1,5 @@
 using Content.Client.Light.EntitySystems;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Robust.Shared.Audio;
 
 namespace Content.Client.Light.Components;

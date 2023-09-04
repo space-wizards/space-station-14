@@ -3,11 +3,12 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Tag;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
 using JetBrains.Annotations;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
@@ -22,7 +23,7 @@ namespace Content.Server.Light.EntitySystems
         [Dependency] private readonly TagSystem _tagSystem = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedPointLightSystem _lights = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public override void Initialize()
         {
@@ -63,8 +64,8 @@ namespace Content.Server.Light.EntitySystems
                     case ExpendableLightState.Fading:
                         component.CurrentState = ExpendableLightState.Dead;
                         var meta = MetaData(component.Owner);
-                        meta.EntityName = Loc.GetString(component.SpentName);
-                        meta.EntityDescription = Loc.GetString(component.SpentDesc);
+                        _metaData.SetEntityName(component.Owner, Loc.GetString(component.SpentName), meta);
+                        _metaData.SetEntityDescription(component.Owner, Loc.GetString(component.SpentDesc), meta);
 
                         _tagSystem.AddTag(component.Owner, "Trash");
 
@@ -159,7 +160,7 @@ namespace Content.Server.Light.EntitySystems
             }
 
             component.CurrentState = ExpendableLightState.BrandNew;
-            _lights.EnsureLight(uid);
+            EntityManager.EnsureComponent<PointLightComponent>(uid);
         }
 
         private void OnExpLightUse(EntityUid uid, ExpendableLightComponent component, UseInHandEvent args)

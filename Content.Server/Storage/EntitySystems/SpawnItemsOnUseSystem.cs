@@ -65,6 +65,10 @@ namespace Content.Server.Storage.EntitySystems
             if (args.Handled)
                 return;
 
+            // If starting with zero or less uses, this component is a no-op
+            if (component.Uses <= 0)
+                return;
+
             var coords = Transform(args.User).Coordinates;
             var spawnEntities = GetSpawns(component.Items, _random);
             EntityUid? entityToPlaceInHands = null;
@@ -79,7 +83,9 @@ namespace Content.Server.Storage.EntitySystems
                 SoundSystem.Play(component.Sound.GetSound(), Filter.Pvs(uid), uid);
 
             component.Uses--;
-            if (component.Uses == 0)
+
+            // Delete entity only if component was successfully used
+            if (component.Uses <= 0)
             {
                 args.Handled = true;
                 EntityManager.DeleteEntity(uid);

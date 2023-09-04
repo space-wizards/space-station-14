@@ -28,8 +28,11 @@ Emitter lasers and containment field can cause damage, avoid touching them when 
 ## Radition collectors
 <Box>
 <GuideEntityEmbed Entity="RadiationCollector"/>
+<GuideEntityEmbed Entity="PlasmaTank"/>
 </Box>
-They connect to HV cables and generate power from nearby radiation sources when turned on.
+They connect to HV cables and generate power from nearby radiation sources when turned on. 
+Radiation collectors require a tank full of gaseous plasma in order to operate.
+Continous radiation exposure will gradually convert the stored plasma into tritium, so replace depleted plasma tanks with fresh ones to maintain a high power output.
 
 ## Particle accelerator
 

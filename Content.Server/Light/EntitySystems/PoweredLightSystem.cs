@@ -4,7 +4,6 @@ using Content.Server.DeviceNetwork.Systems;
 using Content.Server.Ghost;
 using Content.Server.Light.Components;
 using Content.Server.Power.Components;
-using Content.Server.Power.EntitySystems;
 using Content.Server.Temperature.Components;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
@@ -12,8 +11,9 @@ using Content.Shared.Database;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
+using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
@@ -30,20 +30,18 @@ namespace Content.Server.Light.EntitySystems
     /// </summary>
     public sealed class PoweredLightSystem : EntitySystem
     {
-        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly DamageableSystem _damageableSystem = default!;
-        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
-        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
-        [Dependency] private readonly PowerReceiverSystem _power = default!;
         [Dependency] private readonly SharedAmbientSoundSystem _ambientSystem = default!;
-        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
-        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly LightBulbSystem _bulbSystem = default!;
+        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly IAdminLogManager _adminLogger= default!;
+        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
+        [Dependency] private readonly DeviceLinkSystem _signalSystem = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
         [Dependency] private readonly SharedDoAfterSystem _doAfterSystem = default!;
-        [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
-        [Dependency] private readonly SharedPointLightSystem _light = default!;
-        [Dependency] private readonly SharedPopupSystem _popupSystem = default!;
+        [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
 
         private static readonly TimeSpan ThunkDelay = TimeSpan.FromSeconds(2);
         public const string LightBulbContainer = "light_bulb";
@@ -243,14 +241,6 @@ namespace Content.Server.Light.EntitySystems
         }
         #endregion
 
-        /// <summary>
-        /// Supply factor (0-1) as input x, returns linear light scale (0-1).
-        /// </summary>
-        private float LightCurve(float x)
-        {
-            return (float)(1/0.8*(x-0.2));
-        }
-
         private void UpdateLight(EntityUid uid,
             PoweredLightComponent? light = null,
             ApcPowerReceiverComponent? powerReceiver = null,
@@ -275,10 +265,9 @@ namespace Content.Server.Light.EntitySystems
             switch (lightBulb.State)
             {
                 case LightBulbState.Normal:
-                    float factor = LightCurve(_power.SupplyFactor(uid, powerReceiver));
-                    if (factor > 0 && light.On)
+                    if (powerReceiver.Powered && light.On)
                     {
-                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius*factor, lightBulb.LightEnergy*factor, lightBulb.LightSoftness);
+                        SetLight(uid, true, lightBulb.Color, light, lightBulb.LightRadius, lightBulb.LightEnergy, lightBulb.LightSoftness);
                         _appearance.SetData(uid, PoweredLightVisuals.BulbState, PoweredLightState.On, appearance);
                         var time = _gameTiming.CurTime;
                         if (time > light.LastThunk + ThunkDelay)
@@ -395,18 +384,18 @@ namespace Content.Server.Light.EntitySystems
             light.CurrentLit = value;
             _ambientSystem.SetAmbience(uid, value);
 
-            if (_light.TryGetLight(uid, out var pointLight))
+            if (EntityManager.TryGetComponent(uid, out PointLightComponent? pointLight))
             {
-                _light.SetEnabled(uid, value, pointLight);
+                pointLight.Enabled = value;
 
                 if (color != null)
-                    _light.SetColor(uid, color.Value, pointLight);
+                    pointLight.Color = color.Value;
                 if (radius != null)
-                    _light.SetRadius(uid, radius.Value, pointLight);
+                    pointLight.Radius = (float) radius;
                 if (energy != null)
-                    _light.SetEnergy(uid, energy.Value, pointLight);
+                    pointLight.Energy = (float) energy;
                 if (softness != null)
-                    _light.SetSoftness(uid, softness.Value, pointLight);
+                    pointLight.Softness = (float) softness;
             }
         }
 
