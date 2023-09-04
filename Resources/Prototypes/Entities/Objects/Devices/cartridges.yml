@@ -1,12 +1,21 @@
-﻿- type: entity
+- type: entity
   parent: BaseItem
-  id: NotekeeperCartridge
-  name: notekeeper cartridge
-  description: A program for keeping notes
+  id: BaseCartridge
+  abstract: true
   components:
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
+  - type: Cartridge
+    icon:
+      sprite: Interface/Misc/program_icons.rsi # but some of them can use sprites from other directories 
+
+- type: entity
+  parent: BaseCartridge
+  id: NotekeeperCartridge
+  name: notekeeper cartridge
+  description: A program for keeping notes
+  components:
   - type: UIFragment
     ui: !type:NotekeeperUi
   - type: Cartridge
@@ -17,7 +26,7 @@
   - type: NotekeeperCartridge
 
 - type: entity
-  parent: NotekeeperCartridge
+  parent: BaseCartridge
   id: NewsReadCartridge
   name: News Cartridge
   description: A program for reading news
@@ -27,12 +36,11 @@
   - type: Cartridge
     programName: news-read-program-name
     icon:
-      sprite: Interface/Misc/program_icons.rsi
       state: news_read
   - type: NewsReadCartridge
 
 - type: entity
-  parent: NotekeeperCartridge
+  parent: BaseCartridge
   id: CrewManifestCartridge
   name: Crew Manifest Cartridge
   description: A program for listing your fellow crewmembers
@@ -42,12 +50,11 @@
   - type: Cartridge
     programName: crew-manifest-program-name
     icon:
-      sprite: Interface/Misc/program_icons.rsi
       state: crew_manifest
   - type: CrewManifestCartridge
 
 - type: entity
-  parent: NotekeeperCartridge
+  parent: BaseCartridge
   id: NetProbeCartridge
   name: NetProbe cartridge
   description: A program for getting the address and frequency of network devices
@@ -59,4 +66,4 @@
     icon:
       sprite: Structures/Machines/server.rsi
       state: server
-  - type: Netprobecartridge 
+  - type: NetprobeCartridge 
