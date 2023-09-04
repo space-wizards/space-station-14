@@ -1,14 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Stamps are quieter than before., type: Fix}
-  id: 4247
-  time: '2023-07-13T06:20:39.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: 'Added head, arm, and leg tiger stripe markings for lizards.', type: Add}
-  id: 4248
-  time: '2023-07-13T06:22:15.0000000+00:00'
 - author: metalgearsloth
   changes:
   - {message: Numerous NPC steering improvements so they flicker a lot less., type: Fix}
@@ -3002,3 +2992,13 @@ Entries:
   - {message: Changed a bunch of events to be more common., type: Tweak}
   id: 4746
   time: '2023-09-04T03:38:23.0000000+00:00'
+- author: qwerltaz
+  changes:
+  - {message: Air vents and scrubbers can be welded to stop gas flow., type: Add}
+  id: 4747
+  time: '2023-09-04T04:23:39.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix crusher showing popups on 1-handed swings., type: Fix}
+  id: 4748
+  time: '2023-09-04T04:24:32.0000000+00:00'
