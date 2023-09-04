@@ -100,10 +100,7 @@ public sealed class DoAfterCancellationTests : InteractionTest
         await SpawnTarget(WeldableTests.Locker);
         var comp = Comp<WeldableComponent>();
 
-        Assert.Multiple(() =>
-        {
-            Assert.That(comp.IsWelded, Is.False);
-        });
+        Assert.That(comp.IsWelded, Is.False);
 
         await Interact(Weld, awaitDoAfters: false);
         await RunTicks(1);
