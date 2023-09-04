@@ -549,7 +549,7 @@
   color: "#c8ff75"
   plantMetabolism:
     - !type:PlantAdjustToxins
-      amount: 4
+      amount: 6
     - !type:PlantPhalanximine {}
   metabolisms:
     Medicine:
