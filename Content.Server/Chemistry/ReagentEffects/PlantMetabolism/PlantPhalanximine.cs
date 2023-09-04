@@ -1,10 +1,7 @@
 using Content.Server.Botany.Components;
-using Content.Server.Botany.Systems;
 using Content.Shared.Chemistry.Reagent;
 using JetBrains.Annotations;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Random;
-using Robust.Shared.Toolshed.TypeParsers;
 
 namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
 {
@@ -19,10 +16,8 @@ namespace Content.Server.Chemistry.ReagentEffects.PlantMetabolism
                                     plantHolderComp.Seed.Immutable)
                 return;
 
-
-            var plantHolder = args.EntityManager.System<PlantHolderSystem>();
-            var random = IoCManager.Resolve<IRobustRandom>();
             if (args.Source == null) return;
+
             var source = args.Source;
             //Need at least 5u, had to do it like this because plant metabolism is weird
             if (source.TryGetReagent("Phalanximine", out var quantity) && quantity >= 4.00)
