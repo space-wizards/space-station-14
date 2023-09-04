@@ -6,9 +6,6 @@
   - type: Sprite
     sprite: Objects/Devices/cartridge.rsi
     state: cart-y
-  - type: Cartridge
-    icon:
-      sprite: Interface/Misc/program_icons.rsi # but some of them can use sprites from other directories 
 
 - type: entity
   parent: BaseDeviceCartridge
@@ -36,6 +33,7 @@
   - type: Cartridge
     programName: news-read-program-name
     icon:
+      sprite: Interface/Misc/program_icons.rsi
       state: news_read
   - type: NewsReadCartridge
 
@@ -50,6 +48,7 @@
   - type: Cartridge
     programName: crew-manifest-program-name
     icon:
+      sprite: Interface/Misc/program_icons.rsi
       state: crew_manifest
   - type: CrewManifestCartridge
 
