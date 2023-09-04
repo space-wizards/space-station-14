@@ -65,4 +65,4 @@
     icon:
       sprite: Structures/Machines/server.rsi
       state: server
-  - type: NetprobeCartridge 
+  - type: NetProbeCartridge 
