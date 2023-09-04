@@ -9,7 +9,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Chemistry.ReagentEffects
 {
     [UsedImplicitly]
-    public sealed class AdjustReagent : ReagentEffect
+    public sealed partial class AdjustReagent : ReagentEffect
     {
         /// <summary>
         ///     The reagent ID to remove. Only one of this and <see cref="Group"/> should be active.

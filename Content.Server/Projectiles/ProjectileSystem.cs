@@ -30,7 +30,7 @@ public sealed class ProjectileSystem : SharedProjectileSystem
     private void OnStartCollide(EntityUid uid, ProjectileComponent component, ref StartCollideEvent args)
     {
         // This is so entities that shouldn't get a collision are ignored.
-        if (args.OurFixture.ID != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
+        if (args.OurFixtureId != ProjectileFixture || !args.OtherFixture.Hard || component.DamagedEntity)
             return;
 
         var target = args.OtherEntity;
@@ -43,12 +43,12 @@ public sealed class ProjectileSystem : SharedProjectileSystem
             return;
         }
 
-        var ev = new ProjectileHitEvent(target);
+        var ev = new ProjectileHitEvent(component.Damage, target, component.Shooter);
         RaiseLocalEvent(uid, ref ev);
 
         var otherName = ToPrettyString(target);
         var direction = args.OurBody.LinearVelocity.Normalized();
-        var modifiedDamage = _damageableSystem.TryChangeDamage(target, component.Damage, component.IgnoreResistances, origin: component.Shooter);
+        var modifiedDamage = _damageableSystem.TryChangeDamage(target, ev.Damage, component.IgnoreResistances, origin: component.Shooter);
         var deleted = Deleted(target);
 
         if (modifiedDamage is not null && EntityManager.EntityExists(component.Shooter))

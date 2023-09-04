@@ -4,7 +4,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed class RiggableComponent : Component
+public sealed partial class RiggableComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     [DataField("isRigged")]

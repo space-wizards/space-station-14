@@ -5,7 +5,7 @@ using Content.Shared.Atmos;
 namespace Content.Server.Nutrition.Components // Vapes are very nutritious.
 {
     [RegisterComponent, Access(typeof(SmokingSystem))]
-    public sealed class VapeComponent : Component
+    public sealed partial class VapeComponent : Component
     {
         [DataField("delay")]
         [ViewVariables(VVAccess.ReadWrite)]

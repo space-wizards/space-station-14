@@ -14,7 +14,7 @@ namespace Content.Shared.PAI
     /// All logic in PAISystem.
     /// </summary>
     [RegisterComponent, NetworkedComponent]
-    public sealed class PAIComponent : Component
+    public sealed partial class PAIComponent : Component
     {
         /// <summary>
         /// The last person who activated this PAI.

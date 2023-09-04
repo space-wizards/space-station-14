@@ -2,12 +2,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Content.Server.GameTicking.Presets;
-using Content.Server.Ghost.Components;
 using Content.Server.Maps;
 using Content.Shared.CCVar;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
 using Content.Shared.Database;
+using Content.Shared.Ghost;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using JetBrains.Annotations;
 using Robust.Server.Player;
@@ -192,8 +193,11 @@ namespace Content.Server.GameTicking
             }
         }
 
-        public bool OnGhostAttempt(Mind.Mind mind, bool canReturnGlobal, bool viaCommand = false)
+        public bool OnGhostAttempt(EntityUid mindId, bool canReturnGlobal, bool viaCommand = false, MindComponent? mind = null)
         {
+            if (!Resolve(mindId, ref mind))
+                return false;
+
             var playerEntity = mind.CurrentEntity;
 
             if (playerEntity != null && viaCommand)
@@ -210,7 +214,7 @@ namespace Content.Server.GameTicking
             {
                 if (mind.Session != null) // Logging is suppressed to prevent spam from ghost attempts caused by movement attempts
                 {
-                    _chatManager.DispatchServerMessage(mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
+                    _chatManager.DispatchServerMessage((IPlayerSession) mind.Session, Loc.GetString("comp-mind-ghosting-prevented"),
                         true);
                 }
 
@@ -222,7 +226,7 @@ namespace Content.Server.GameTicking
 
             if (mind.VisitingEntity != default)
             {
-                _mind.UnVisit(mind);
+                _mind.UnVisit(mindId, mind: mind);
             }
 
             var position = Exists(playerEntity)
@@ -263,28 +267,27 @@ namespace Content.Server.GameTicking
             // Try setting the ghost entity name to either the character name or the player name.
             // If all else fails, it'll default to the default entity prototype name, "observer".
             // However, that should rarely happen.
-            var meta = MetaData(ghost);
-            if(!string.IsNullOrWhiteSpace(mind.CharacterName))
-                meta.EntityName = mind.CharacterName;
+            if (!string.IsNullOrWhiteSpace(mind.CharacterName))
+                _metaData.SetEntityName(ghost, mind.CharacterName);
             else if (!string.IsNullOrWhiteSpace(mind.Session?.Name))
-                meta.EntityName = mind.Session.Name;
+                _metaData.SetEntityName(ghost, mind.Session.Name);
 
             var ghostComponent = Comp<GhostComponent>(ghost);
 
             if (mind.TimeOfDeath.HasValue)
             {
-                ghostComponent.TimeOfDeath = mind.TimeOfDeath!.Value;
+                _ghost.SetTimeOfDeath(ghost, mind.TimeOfDeath!.Value, ghostComponent);
             }
 
             if (playerEntity != null)
                 _adminLogger.Add(LogType.Mind, $"{EntityManager.ToPrettyString(playerEntity.Value):player} ghosted{(!canReturn ? " (non-returnable)" : "")}");
 
-            _ghosts.SetCanReturnToBody(ghostComponent, canReturn);
+            _ghost.SetCanReturnToBody(ghostComponent, canReturn);
 
             if (canReturn)
-                _mind.Visit(mind, ghost);
+                _mind.Visit(mindId, ghost, mind);
             else
-                _mind.TransferTo(mind, ghost);
+                _mind.TransferTo(mindId, ghost, mind: mind);
             return true;
         }
 
@@ -309,11 +312,11 @@ namespace Content.Server.GameTicking
 
     public sealed class GhostAttemptHandleEvent : HandledEntityEventArgs
     {
-        public Mind.Mind Mind { get; }
+        public MindComponent Mind { get; }
         public bool CanReturnGlobal { get; }
         public bool Result { get; set; }
 
-        public GhostAttemptHandleEvent(Mind.Mind mind, bool canReturnGlobal)
+        public GhostAttemptHandleEvent(MindComponent mind, bool canReturnGlobal)
         {
             Mind = mind;
             CanReturnGlobal = canReturnGlobal;

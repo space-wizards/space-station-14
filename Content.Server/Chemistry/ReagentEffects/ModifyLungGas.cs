@@ -5,7 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.ReagentEffects;
 
-public sealed class ModifyLungGas : ReagentEffect
+public sealed partial class ModifyLungGas : ReagentEffect
 {
     [DataField("ratios", required: true)]
     private Dictionary<Gas, float> _ratios = default!;

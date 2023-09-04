@@ -1,6 +1,6 @@
 using Content.Server.Instruments;
-using Content.Server.Mind.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Mind.Components;
 using Content.Shared.PAI;
 using Robust.Server.GameObjects;
 

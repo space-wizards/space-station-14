@@ -1,7 +1,7 @@
 namespace Content.Shared.Spider;
 
 [RegisterComponent]
-public sealed class IgnoreSpiderWebComponent : Component
+public sealed partial class IgnoreSpiderWebComponent : Component
 {
 
 }

@@ -7,7 +7,7 @@ namespace Content.Shared.Silicons.Borgs.Components;
 /// that can be inserted into a borg to transfer a mind.
 /// </summary>
 [RegisterComponent, NetworkedComponent, Access(typeof(SharedBorgSystem))]
-public sealed class BorgBrainComponent : Component
+public sealed partial class BorgBrainComponent : Component
 {
 
 }

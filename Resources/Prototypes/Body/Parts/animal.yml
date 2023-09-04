@@ -8,6 +8,9 @@
   name: "animal body part"
   abstract: true
   components:
+  # yes these sprites dont make sense i dont care its better than them being invisible
+  - type: Sprite
+    sprite: Mobs/Species/Reptilian/parts.rsi
   - type: Damageable
     damageContainer: Biological
   - type: BodyPart
@@ -28,42 +31,56 @@
       - ReagentId: Blood
         Quantity: 10
 
-# For primates mainly
 - type: entity
   id: HandsAnimal
-  name: "animal hands"
+  name: animal hands
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: l_hand
+    - state: r_hand
   - type: BodyPart
     partType: Hand
     symmetry: Left
 
 - type: entity
   id: LegsAnimal
-  name: "animal legs"
+  name: animal legs
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: l_leg
+    - state: r_leg
   - type: BodyPart
     partType: Leg
   - type: MovementBodyPart
 
 - type: entity
   id: FeetAnimal
-  name: "animal feet"
+  name: animal feet
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: r_foot
+    - state: l_foot
   - type: BodyPart
     partType: Foot
 
 - type: entity
   id: TorsoAnimal
-  name: "animal torso"
+  name: animal torso
   parent: PartAnimal
   noSpawn: true
   components:
+  - type: Sprite
+    layers:
+    - state: torso_m
   - type: BodyPart
     partType: Torso
   - type: Damageable
