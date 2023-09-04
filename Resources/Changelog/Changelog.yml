@@ -1,10 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Added collectible toy figurines based on the jobs & legends surrounding
-      the station. Find them in your local Good Clean Fun vendor today!, type: Add}
-  id: 4258
-  time: '2023-07-16T07:07:47.0000000+00:00'
 - author: Zumorica
   changes:
   - {message: Added instrument bands. Choose a person as your band "leader" and your
@@ -2998,3 +2992,8 @@ Entries:
       with fresh plasma as needed.', type: Tweak}
   id: 4757
   time: '2023-09-04T13:11:58.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Emagging disposal units both works again and makes them silent., type: Tweak}
+  id: 4758
+  time: '2023-09-04T14:11:35.0000000+00:00'
