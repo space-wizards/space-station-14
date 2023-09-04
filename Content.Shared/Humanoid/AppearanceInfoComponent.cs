@@ -12,13 +12,13 @@ public sealed partial class AppearanceInfoComponent : Component
     /// What mob states the action will appear in
     /// </summary>
     [DataField("appearance"), ViewVariables(VVAccess.ReadWrite)]
-    public HumanoidAppearanceComponent Appearance;
+    public HumanoidAppearanceComponent? Appearance;
 
     /// <summary>
     /// The action to use.
     /// </summary>
     [DataField("name"), ViewVariables(VVAccess.ReadWrite)]
-    public string Name;
+    public string Name = "Urist McHands";
 
     /// <summary>
     /// Whether the component has already gotten the appearance data or not- so it doesn't fetch it again.

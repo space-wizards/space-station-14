@@ -95,15 +95,14 @@ public sealed partial class ReformSystem : EntitySystem
         var child = Spawn(comp.Prototype, Transform(uid).Coordinates);
 
         // If the first entity has appearanceinfo, replace the new mobs' appearanace and name with that. It will be random otherwise.
-        if(TryComp<AppearanceInfoComponent>(uid, out var appearance))
+        if(TryComp<AppearanceInfoComponent>(uid, out var appearance) && appearance.Appearance != null)
         {
             // Copy all the data
             var newComp = EntityManager.GetComponent<HumanoidAppearanceComponent>(child);
             var temp = (object) appearance.Appearance!;
             _serializationManager.CopyTo(newComp, ref temp);
 
-            if (appearance.Name != null)
-                _metaData.SetEntityName(child, appearance.Name);
+            _metaData.SetEntityName(child, appearance.Name);
 
             RemComp<HumanoidAppearanceComponent>(child);
             EntityManager.AddComponent(child, newComp);

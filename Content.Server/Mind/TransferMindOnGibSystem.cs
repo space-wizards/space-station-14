@@ -44,6 +44,7 @@ public sealed class TransferMindOnGibSystem : EntitySystem
                 continue;
 
             var newComp = (Component) _serializationManager.CreateCopy(component.Component, notNullableOverride: true);
+            newComp.Owner = ent;
             EntityManager.AddComponent(ent, newComp);
         }
 

@@ -1,4 +1,4 @@
-﻿using Content.Shared.Ghost;
+using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement.Components;
 
 namespace Content.Shared.IdentityManagement;
@@ -17,7 +17,7 @@ public static class Identity
     {
         var uidName = ent.GetComponent<MetaDataComponent>(uid).EntityName;
 
-        if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity))
+        if (!ent.TryGetComponent<IdentityComponent>(uid, out var identity) || identity.IdentityEntitySlot == null) // What the fuck why is this running an error
             return uidName;
 
         var ident = identity.IdentityEntitySlot.ContainedEntity;
