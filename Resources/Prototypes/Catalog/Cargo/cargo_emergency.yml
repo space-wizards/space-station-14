@@ -77,3 +77,23 @@
   cost: 800
   category: Emergency
   group: market
+
+- type: cargoProduct
+  id: EmergencyCane
+  icon:
+    sprite: Objects/Weapons/Melee/white_cane.rsi
+    state: icon
+  product: CrateBlindSupport
+  cost: 300
+  category: Emergency
+  group: market
+
+- type: cargoProduct
+  id: EmergencyWheelchair
+  icon:
+    sprite: Objects/Vehicles/wheelchair.rsi
+    state: vehicle
+  product: CrateWheelchair
+  cost: 300
+  category: Emergency
+  group: market

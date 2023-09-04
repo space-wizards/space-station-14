@@ -115,3 +115,21 @@
         amount: 2
       - id: ClothingMaskGas
         amount: 2
+
+- type: entity
+  id: CrateBlindSupport
+  parent: CrateGenericSteel
+  components:
+    - type: StorageFill
+      contents:
+        - id: WhiteCane
+          amount: 3
+
+- type: entity
+  id: CrateWheelchair
+  parent: CrateLivestock
+  components:
+    - type: StorageFill
+      contents:
+        - id: VehicleWheelchair
+          amount: 1
