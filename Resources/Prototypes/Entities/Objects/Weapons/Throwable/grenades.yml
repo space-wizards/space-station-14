@@ -189,6 +189,11 @@
   - type: OnUseTimerTrigger
     delay: 3
     beepInterval: 0.69
+  - type: SoundOnTrigger
+    removeOnTrigger: true
+    sound:
+      path: /Audio/Effects/Grenades/Supermatter/whitehole_start.ogg
+      volume: 5
   - type: TwoStageTrigger
     triggerDelay: 11.14
     components:
@@ -217,7 +222,7 @@
         sound:
           path: /Audio/Effects/Grenades/Supermatter/supermatter_end.ogg
           params:
-            volume: 5
+            volume: 15
       - type: DeleteOnTrigger
 
 - type: entity

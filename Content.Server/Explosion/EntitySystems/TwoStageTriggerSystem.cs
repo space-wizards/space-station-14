@@ -30,12 +30,10 @@ public sealed class TwoStageTriggerSystem : EntitySystem
             return;
 
         component.Triggered = true;
-        if (!component.ComponentsIsLoaded)
-            LoadComponents(uid, component);
         component.NextTriggerTime = _timing.CurTime + component.TriggerDelay;
     }
 
-    public void LoadComponents(EntityUid uid, TwoStageTriggerComponent component)
+    private void LoadComponents(EntityUid uid, TwoStageTriggerComponent component)
     {
         foreach (var (name, entry) in component.SecondStageComponents)
         {
@@ -59,8 +57,11 @@ public sealed class TwoStageTriggerSystem : EntitySystem
         var enumerator = EntityQueryEnumerator<TwoStageTriggerComponent>();
         while (enumerator.MoveNext(out var uid, out var component))
         {
-            if (component.NextTriggerTime == null)
+            if (!component.Triggered)
                 continue;
+
+            if (!component.ComponentsIsLoaded)
+                LoadComponents(uid, component);
 
             if (_timing.CurTime < component.NextTriggerTime)
                 continue;
