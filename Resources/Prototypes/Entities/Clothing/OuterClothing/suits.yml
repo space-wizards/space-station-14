@@ -171,9 +171,6 @@
     size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/iansuit.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 1.1
-    sprintModifier: 1.1
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodIan
   - type: ContainerContainer
@@ -184,7 +181,7 @@
   parent: ClothingOuterBase
   id: ClothingOuterSuitCarp
   name: carp suit
-  description: A special suit designed to give the wearer the agility of a space carp.
+  description: A special suit that makes you look just like a space carp, if your eyesight is bad.
   components:
   - type: Sprite
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
@@ -192,9 +189,6 @@
     size: 30
   - type: Clothing
     sprite: Clothing/OuterClothing/Suits/carpsuit.rsi
-  - type: ClothingSpeedModifier
-    walkModifier: 1.20
-    sprintModifier: 1.20
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodCarp
   - type: ContainerContainer
