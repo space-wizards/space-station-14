@@ -89,7 +89,7 @@ namespace Content.Client.Preferences.UI
         private SpriteView _previewSpriteView => CSpriteView;
         private Button _previewRotateLeftButton => CSpriteRotateLeft;
         private Button _previewRotateRightButton => CSpriteRotateRight;
-        private uint _previewRotation = (int) Direction.North;
+        private Direction _previewRotation = Direction.North;
         private EntityUid? _previewDummy;
 
         private BoxContainer _rgbSkinColorContainer => CRgbSkinColorContainer;
@@ -474,12 +474,12 @@ namespace Content.Client.Preferences.UI
 
             _previewRotateLeftButton.OnPressed += _ =>
             {
-                _previewRotation += 7;
+                _previewRotation = _previewRotation.TurnCw();
                 _needUpdatePreview = true;
             };
             _previewRotateRightButton.OnPressed += _ =>
             {
-                _previewRotation += 1;
+                _previewRotation = _previewRotation.TurnCcw();
                 _needUpdatePreview = true;
             };
 
@@ -1084,7 +1084,7 @@ namespace Content.Client.Preferences.UI
             if (ShowClothes.Pressed)
                 LobbyCharacterPreviewPanel.GiveDummyJobClothes(_previewDummy!.Value, Profile);
 
-            _previewSpriteView.OverrideDirection = (Direction) (_previewRotation % 4 * 2);
+            _previewSpriteView.OverrideDirection = (Direction) ((int) _previewRotation % 4 * 2);
         }
 
         public void UpdateControls()
