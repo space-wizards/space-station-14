@@ -1,13 +1,4 @@
 Entries:
-- author: eclips_e
-  changes:
-  - {message: 'Nanotrasen has decided to supply their librarians with the famous game
-      Crypts and Carps'' character sheets, and have advised people to avoid calling
-      it by a similarly named board game that starts with D.', type: Add}
-  - {message: 'You can now put in and take out objects from and into tabletop games
-      (chess, battlemaps, more).', type: Add}
-  id: 4262
-  time: '2023-07-17T09:03:18.0000000+00:00'
 - author: Emisse
   changes:
   - {message: 'Saline can now be made with water and salt, it can treat dehydration
@@ -2992,3 +2983,8 @@ Entries:
   - {message: All bots now uses robot typing indicator, type: Tweak}
   id: 4761
   time: '2023-09-04T14:21:53.0000000+00:00'
+- author: DrTeaSpoon
+  changes:
+  - {message: Plant mutations can now alter plant gas and chemical production., type: Add}
+  id: 4762
+  time: '2023-09-04T16:24:39.0000000+00:00'
