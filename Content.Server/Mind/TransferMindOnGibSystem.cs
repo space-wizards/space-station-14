@@ -4,7 +4,6 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Tag;
 using Robust.Shared.Random;
-using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Mind;
 
@@ -18,7 +17,6 @@ public sealed class TransferMindOnGibSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly TagSystem _tag = default!;
     [Dependency] private readonly SharedMindSystem _mindSystem = default!;
-    [Dependency] private readonly ISerializationManager _serializationManager = default!;
 
     /// <inheritdoc/>
     public override void Initialize()
@@ -26,28 +24,16 @@ public sealed class TransferMindOnGibSystem : EntitySystem
         SubscribeLocalEvent<TransferMindOnGibComponent, BeingGibbedEvent>(OnGib);
     }
 
-    private void OnGib(EntityUid uid, TransferMindOnGibComponent comp, BeingGibbedEvent args)
+    private void OnGib(EntityUid uid, TransferMindOnGibComponent component, BeingGibbedEvent args)
     {
         if (!_mindSystem.TryGetMind(uid, out var mindId, out var mind))
             return;
 
-        var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, comp.TargetTag)).ToHashSet();
+        var validParts = args.GibbedParts.Where(p => _tag.HasTag(p, component.TargetTag)).ToHashSet();
         if (!validParts.Any())
             return;
 
         var ent = _random.Pick(validParts);
-
-        foreach (var component in comp.TransferredComponents.Values)
-        {
-            var typeComp = component.Component.GetType();
-            if (!HasComp(uid, typeComp) || HasComp(ent, typeComp))
-                continue;
-
-            var newComp = (Component) _serializationManager.CreateCopy(component.Component, notNullableOverride: true);
-            newComp.Owner = ent;
-            EntityManager.AddComponent(ent, newComp);
-        }
-
         _mindSystem.TransferTo(mindId, ent, mind: mind);
     }
 }
