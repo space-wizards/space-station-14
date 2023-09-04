@@ -1,9 +1,4 @@
 Entries:
-- author: metalgearsloth
-  changes:
-  - {message: Numerous NPC steering improvements so they flicker a lot less., type: Fix}
-  id: 4249
-  time: '2023-07-13T14:48:06.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'The Syndicate has found a way to compress their ballistic turrets into
@@ -3002,3 +2997,8 @@ Entries:
   - {message: Fix crusher showing popups on 1-handed swings., type: Fix}
   id: 4748
   time: '2023-09-04T04:24:32.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Fix NPCs not juking properly if you stand on top of them., type: Fix}
+  id: 4749
+  time: '2023-09-04T04:34:20.0000000+00:00'
