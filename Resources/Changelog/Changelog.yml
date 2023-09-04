@@ -1,12 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'The Syndicate has found a way to compress their ballistic turrets into
-      a toolbox, reducing it''s performance in the process. Atmos technician, station
-      engineer and scientist traitors can now purchase the disposable turret from
-      the uplink.', type: Add}
-  id: 4250
-  time: '2023-07-14T04:48:59.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: All bounties will last for at least 10 to 15 minutes., type: Tweak}
@@ -3002,3 +2994,8 @@ Entries:
   - {message: Fix NPCs not juking properly if you stand on top of them., type: Fix}
   id: 4749
   time: '2023-09-04T04:34:20.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: Fixed steel stack sprite, type: Fix}
+  id: 4750
+  time: '2023-09-04T04:48:00.0000000+00:00'
