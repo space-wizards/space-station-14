@@ -1,3 +1,4 @@
+using System.Numerics;
 using Content.Server.Atmos.Components;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
@@ -15,6 +16,9 @@ using Robust.Server.Player;
 using Robust.Shared.Audio;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
+using Robust.Shared.Random;
+using Content.Shared.Verbs;
+using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
@@ -28,6 +32,8 @@ namespace Content.Server.Atmos.EntitySystems
         [Dependency] private readonly SharedContainerSystem _containers = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly UserInterfaceSystem _ui = default!;
+        [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly IRobustRandom _random = default!;
 
         private const float TimerDelay = 0.5f;
         private float _timer = 0f;
@@ -45,6 +51,7 @@ namespace Content.Server.Atmos.EntitySystems
             SubscribeLocalEvent<GasTankComponent, GasTankToggleInternalsMessage>(OnGasTankToggleInternals);
             SubscribeLocalEvent<GasTankComponent, GasAnalyzerScanEvent>(OnAnalyzed);
             SubscribeLocalEvent<GasTankComponent, PriceCalculationEvent>(OnGasTankPrice);
+            SubscribeLocalEvent<GasTankComponent, GetVerbsEvent<Verb>>(OnVerb);
         }
 
         private void OnGasShutdown(EntityUid uid, GasTankComponent component, ComponentShutdown args)
@@ -125,6 +132,14 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
+                if (gasTank.IsOpen && gasTank.Air != null && !gasTank.IsLowPressure)
+                {
+                    var prev = gasTank.Air.TotalMoles;
+                    var removed = prev - RemoveAirVolume(gasTank, 1f).TotalMoles;
+                    _physics.ApplyLinearImpulse(gasTank.Owner, 100f * Transform(gasTank.Owner).LocalRotation.ToWorldVec() * removed);
+                    _physics.ApplyAngularImpulse(gasTank.Owner, _random.NextFloat(-10f, 10f));
+                }
+
                 if (gasTank.CheckUser)
                 {
                     gasTank.CheckUser = false;
@@ -135,7 +150,10 @@ namespace Content.Server.Atmos.EntitySystems
                     }
                 }
 
-                _atmosphereSystem.React(gasTank.Air, gasTank);
+                if (gasTank.Air != null)
+                {
+                    _atmosphereSystem.React(gasTank.Air, gasTank);
+                }
                 CheckStatus(gasTank);
                 if (_ui.IsUiOpen(gasTank.Owner, SharedGasTankUiKey.Key))
                 {
@@ -329,6 +347,20 @@ namespace Content.Server.Atmos.EntitySystems
         private void OnGasTankPrice(EntityUid uid, GasTankComponent component, ref PriceCalculationEvent args)
         {
             args.Price += _atmosphereSystem.GetPrice(component.Air);
+        }
+
+        private void OnVerb(EntityUid uid, GasTankComponent component, GetVerbsEvent<Verb> args)
+        {
+            if (!args.CanAccess || !args.CanInteract || args.Hands == null)
+                return;
+            args.Verbs.Add(new Verb()
+            {
+                Text = Loc.GetString("comp-gas-tank-toggle"),
+                Act = () =>
+                {
+                    component.IsOpen = !component.IsOpen;
+                }
+            });
         }
     }
 }

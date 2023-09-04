@@ -17,3 +17,5 @@ gas-tank-window-tank-pressure-text = Pressure: {$tankPressure} kPA
 gas-tank-window-internal-text = Internals: {$status}
 gas-tank-window-internal-connected = [color=green]Connected[/color]
 gas-tank-window-internal-disconnected = [color=red]Disconnected[/color]
+
+comp-gas-tank-toggle = Toggle 
