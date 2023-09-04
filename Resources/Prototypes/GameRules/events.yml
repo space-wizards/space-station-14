@@ -127,7 +127,7 @@
   components:
   - type: StationEvent
     earliestStart: 30
-    weight: 10
+    weight: 7.5
     minimumPlayers: 10 #Enough to hopefully have at least one engineering guy
     startAnnouncement: station-event-meteor-swarm-start-announcement
     endAnnouncement: station-event-meteor-swarm-end-announcement
@@ -176,7 +176,7 @@
       path: /Audio/Announcements/power_off.ogg
       params:
        volume: -4
-    startDelay: 12
+    startDelay: 24
     duration: 60
     maxDuration: 120
   - type: PowerGridCheckRule
