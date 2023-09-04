@@ -1,11 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: Nanotrasen released a new software update for their medibots making
-      them actually inject people again. They also got equipped with new wheels that
-      can be locked with a wrench., type: Tweak}
-  id: 4252
-  time: '2023-07-15T19:59:46.0000000+00:00'
 - author: notquitehadouken
   changes:
   - {message: Make minibomb a little louder., type: Tweak}
@@ -3000,3 +2993,8 @@ Entries:
       each bullet., type: Tweak}
   id: 4751
   time: '2023-09-04T04:49:49.0000000+00:00'
+- author: qwerltaz
+  changes:
+  - {message: Anomalies and artifacts cannot push observers anymore., type: Fix}
+  id: 4752
+  time: '2023-09-04T04:52:11.0000000+00:00'
