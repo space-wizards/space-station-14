@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public sealed partial class FlyBySoundSystem : SharedFlyBySoundSystem
 {
     [Dependency] private IPlayerManager _player = default!;

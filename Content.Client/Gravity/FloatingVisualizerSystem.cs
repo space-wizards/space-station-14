@@ -7,6 +7,7 @@ using Robust.Shared.Animations;
 namespace Content.Client.Gravity;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class FloatingVisualizerSystem : SharedFloatingVisualizerSystem
 {
     [Dependency] private AnimationPlayerSystem AnimationSystem = default!;

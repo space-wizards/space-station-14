@@ -14,6 +14,7 @@ namespace Content.Client.Store.Ui;
 ///     Used as sub-window in Uplink UI
 /// </summary>
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class StoreWithdrawWindow : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

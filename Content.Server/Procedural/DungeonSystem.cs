@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Procedural;
 
+[InjectDependencies]
 public sealed partial class DungeonSystem : SharedDungeonSystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;

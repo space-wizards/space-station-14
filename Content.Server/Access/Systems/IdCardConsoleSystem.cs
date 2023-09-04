@@ -17,6 +17,7 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class IdCardConsoleSystem : SharedIdCardConsoleSystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

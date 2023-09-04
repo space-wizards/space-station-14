@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Power.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class CableSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.RCD.Systems;
 
+[InjectDependencies]
 public sealed partial class RCDAmmoSystem : EntitySystem
 {
     [Dependency] private SharedChargesSystem _charges = default!;

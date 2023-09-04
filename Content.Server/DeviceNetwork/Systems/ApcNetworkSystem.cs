@@ -8,6 +8,7 @@ using Content.Server.Power.Nodes;
 namespace Content.Server.DeviceNetwork.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ApcNetworkSystem : EntitySystem
     {
         [Dependency] private NodeContainerSystem _nodeContainer = default!;

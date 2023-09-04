@@ -6,6 +6,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Server)]
+[InjectDependencies]
 public sealed partial class PanicBunkerCommand : IConsoleCommand
 {
     [Dependency] private IConfigurationManager _cfg = default!;

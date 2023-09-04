@@ -4,6 +4,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.DeviceNetwork.Systems.Devices
 {
+    [InjectDependencies]
     public sealed partial class ApcNetSwitchSystem : EntitySystem
     {
         [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;

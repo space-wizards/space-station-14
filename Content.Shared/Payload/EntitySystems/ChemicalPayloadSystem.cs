@@ -4,6 +4,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Payload.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ChemicalPayloadSystem : EntitySystem
 {
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;

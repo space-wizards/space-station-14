@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.BarSign;
 
+[InjectDependencies]
 public sealed partial class BarSignSystem : VisualizerSystem<BarSignComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

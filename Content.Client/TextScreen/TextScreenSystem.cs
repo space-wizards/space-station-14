@@ -9,6 +9,7 @@ namespace Content.Client.TextScreen;
 /// <summary>
 ///     The TextScreenSystem draws text in the game world using 3x5 sprite states for each character.
 /// </summary>
+[InjectDependencies]
 public sealed partial class TextScreenSystem : VisualizerSystem<TextScreenVisualsComponent>
 {
     [Dependency] private IGameTiming _gameTiming = default!;

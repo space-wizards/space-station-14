@@ -7,6 +7,7 @@ using static Robust.Client.GameObjects.SpriteComponent;
 namespace Content.Client.Clickable
 {
     [RegisterComponent]
+    [InjectDependencies]
     public sealed partial class ClickableComponent : Component
     {
         [Dependency] private IClickMapManager _clickMapManager = default!;

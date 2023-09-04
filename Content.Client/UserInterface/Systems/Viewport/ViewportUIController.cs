@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Viewport;
 
+[InjectDependencies]
 public sealed partial class ViewportUIController : UIController
 {
     [Dependency] private IEyeManager _eyeManager = default!;

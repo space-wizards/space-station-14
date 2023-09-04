@@ -21,6 +21,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Lobby.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     internal sealed partial class LobbyGui : UIScreen
     {
         [Dependency] private IClientConsoleHost _consoleHost = default!;

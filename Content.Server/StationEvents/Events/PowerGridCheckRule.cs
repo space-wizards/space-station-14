@@ -15,6 +15,7 @@ using Content.Server.StationEvents.Components;
 namespace Content.Server.StationEvents.Events
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class PowerGridCheckRule : StationEventSystem<PowerGridCheckRuleComponent>
     {
         [Dependency] private ApcSystem _apcSystem = default!;

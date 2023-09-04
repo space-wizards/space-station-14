@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
+[InjectDependencies]
 public sealed partial class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

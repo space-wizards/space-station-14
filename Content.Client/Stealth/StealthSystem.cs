@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Stealth;
 
+[InjectDependencies]
 public sealed partial class StealthSystem : SharedStealthSystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;

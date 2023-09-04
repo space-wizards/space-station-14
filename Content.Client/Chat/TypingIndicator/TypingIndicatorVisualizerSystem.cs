@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chat.TypingIndicator;
 
+[InjectDependencies]
 public sealed partial class TypingIndicatorVisualizerSystem : VisualizerSystem<TypingIndicatorComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

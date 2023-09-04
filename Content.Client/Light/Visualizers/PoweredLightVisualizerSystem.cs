@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Light.Visualizers;
 
+[InjectDependencies]
 public sealed partial class PoweredLightVisualizerSystem : VisualizerSystem<PoweredLightVisualsComponent>
 {
     [Dependency] private IRobustRandom _random = default!;

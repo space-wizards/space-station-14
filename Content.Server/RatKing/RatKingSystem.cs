@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
 {
+    [InjectDependencies]
     public sealed partial class RatKingSystem : EntitySystem
     {
         [Dependency] private ActionsSystem _action = default!;

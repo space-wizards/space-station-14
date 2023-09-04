@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Controls;
 
+[InjectDependencies]
 public sealed partial class MenuButton : ContainerButton
 {
     [Dependency] private IInputManager _inputManager = default!;

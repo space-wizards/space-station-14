@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+[InjectDependencies]
 public sealed partial class RandomInstrumentArtifactSystem : EntitySystem
 {
     [Dependency] private InstrumentSystem _instrument = default!;

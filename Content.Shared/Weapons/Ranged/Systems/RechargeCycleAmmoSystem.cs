@@ -6,6 +6,7 @@ namespace Content.Shared.Weapons.Ranged.Systems;
 /// <summary>
 /// Recharges ammo whenever the gun is cycled.
 /// </summary>
+[InjectDependencies]
 public sealed partial class RechargeCycleAmmoSystem : EntitySystem
 {
     [Dependency] private SharedGunSystem _gun = default!;

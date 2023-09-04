@@ -9,6 +9,7 @@ using Robust.Shared.Players;
 
 namespace Content.Client.Sandbox
 {
+    [InjectDependencies]
     public sealed partial class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private IClientAdminManager _adminManager = default!;

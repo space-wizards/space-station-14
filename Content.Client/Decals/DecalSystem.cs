@@ -8,6 +8,7 @@ using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Client.Decals
 {
+    [InjectDependencies]
     public sealed partial class DecalSystem : SharedDecalSystem
     {
         [Dependency] private IOverlayManager _overlayManager = default!;

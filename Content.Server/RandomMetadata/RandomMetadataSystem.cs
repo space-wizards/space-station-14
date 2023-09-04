@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.RandomMetadata;
 
+[InjectDependencies]
 public sealed partial class RandomMetadataSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

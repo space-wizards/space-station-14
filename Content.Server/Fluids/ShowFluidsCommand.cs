@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Fluids;
 
 [AdminCommand(AdminFlags.Debug)]
+[InjectDependencies]
 public sealed partial class ShowFluidsCommand : IConsoleCommand
 {
     [Dependency] private IEntitySystemManager _entitySystem = default!;

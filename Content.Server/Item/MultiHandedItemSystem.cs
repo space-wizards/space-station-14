@@ -4,6 +4,7 @@ using Content.Shared.Item;
 
 namespace Content.Server.Item;
 
+[InjectDependencies]
 public sealed partial class MultiHandedItemSystem : SharedMultiHandedItemSystem
 {
     [Dependency] private HandVirtualItemSystem _virtualItem = default!;

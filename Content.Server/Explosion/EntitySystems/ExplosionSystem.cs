@@ -26,6 +26,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Explosion.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ExplosionSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

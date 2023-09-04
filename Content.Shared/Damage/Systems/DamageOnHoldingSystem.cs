@@ -4,6 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class DamageOnHoldingSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;

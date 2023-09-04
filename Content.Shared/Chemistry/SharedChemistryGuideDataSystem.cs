@@ -7,6 +7,7 @@ namespace Content.Shared.Chemistry;
 /// <summary>
 /// This handles the chemistry guidebook and caching it.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedChemistryGuideDataSystem : EntitySystem
 {
     [Dependency] protected IPrototypeManager PrototypeManager = default!;

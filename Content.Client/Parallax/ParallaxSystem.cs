@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Parallax;
 
+[InjectDependencies]
 public sealed partial class ParallaxSystem : SharedParallaxSystem
 {
     [Dependency] private IMapManager _map = default!;

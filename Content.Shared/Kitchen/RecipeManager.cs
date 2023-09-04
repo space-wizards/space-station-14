@@ -3,6 +3,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Kitchen
 {
+    [InjectDependencies]
     public sealed partial class RecipeManager
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

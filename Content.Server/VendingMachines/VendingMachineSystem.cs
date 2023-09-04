@@ -26,6 +26,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.VendingMachines
 {
+    [InjectDependencies]
     public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
     {
         [Dependency] private IRobustRandom _random = default!;

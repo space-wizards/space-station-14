@@ -2,6 +2,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany;
 
+[InjectDependencies]
 public sealed partial class MutationSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;

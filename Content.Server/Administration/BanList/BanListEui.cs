@@ -9,6 +9,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration.BanList;
 
+[InjectDependencies]
 public sealed partial class BanListEui : BaseEui
 {
     [Dependency] private IAdminManager _admins = default!;

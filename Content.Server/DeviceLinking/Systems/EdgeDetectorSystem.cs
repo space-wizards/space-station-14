@@ -4,6 +4,7 @@ using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEv
 
 namespace Content.Server.DeviceLinking.Systems;
 
+[InjectDependencies]
 public sealed partial class EdgeDetectorSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _deviceLink = default!;

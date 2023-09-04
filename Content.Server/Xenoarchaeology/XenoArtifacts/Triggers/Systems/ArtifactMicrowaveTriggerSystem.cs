@@ -3,6 +3,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactMicrowaveTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifact = default!;

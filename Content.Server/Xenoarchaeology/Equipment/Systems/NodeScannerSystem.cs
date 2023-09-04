@@ -7,6 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Xenoarchaeology.Equipment.Systems;
 
+[InjectDependencies]
 public sealed partial class NodeScannerSystem : EntitySystem
 {
     [Dependency] private UseDelaySystem _useDelay = default!;

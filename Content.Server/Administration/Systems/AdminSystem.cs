@@ -15,6 +15,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Systems
 {
+    [InjectDependencies]
     public sealed partial class AdminSystem : EntitySystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

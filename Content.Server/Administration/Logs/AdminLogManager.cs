@@ -15,6 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Administration.Logs;
 
+[InjectDependencies]
 public sealed partial class AdminLogManager : SharedAdminLogManager, IAdminLogManager
 {
     [Dependency] private IConfigurationManager _configuration = default!;

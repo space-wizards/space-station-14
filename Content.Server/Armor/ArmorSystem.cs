@@ -10,6 +10,7 @@ using Content.Shared.Silicons.Borgs;
 
 namespace Content.Server.Armor
 {
+    [InjectDependencies]
     public sealed partial class ArmorSystem : EntitySystem
     {
         const double CoefDefaultPrice = 2; // default price of 1% protection against any type of damage

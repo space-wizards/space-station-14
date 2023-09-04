@@ -8,6 +8,7 @@ using Robust.Shared.Enums;
 
 namespace Content.Client.NPC;
 
+[InjectDependencies]
 public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 {
     [Dependency] private IOverlayManager _overlay = default!;

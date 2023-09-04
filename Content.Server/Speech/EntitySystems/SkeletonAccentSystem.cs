@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SkeletonAccentSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

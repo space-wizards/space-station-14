@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Spreader;
 
+[InjectDependencies]
 public sealed partial class KudzuSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

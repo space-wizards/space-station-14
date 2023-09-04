@@ -16,6 +16,7 @@ using Robust.Shared.Enums;
 
 namespace Content.Server.Sandbox
 {
+    [InjectDependencies]
     public sealed partial class SandboxSystem : SharedSandboxSystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

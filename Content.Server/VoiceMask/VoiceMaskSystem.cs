@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.VoiceMask;
 
+[InjectDependencies]
 public sealed partial class VoiceMaskSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _uiSystem = default!;

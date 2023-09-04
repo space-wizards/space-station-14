@@ -18,6 +18,7 @@ namespace Content.Server.SprayPainter;
 /// A system for painting airlocks and pipes using enginner painter
 /// </summary>
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

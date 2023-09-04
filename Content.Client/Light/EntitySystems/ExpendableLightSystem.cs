@@ -5,6 +5,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Light.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ExpendableLightSystem : VisualizerSystem<ExpendableLightComponent>
 {
     [Dependency] private PointLightSystem _pointLightSystem = default!;

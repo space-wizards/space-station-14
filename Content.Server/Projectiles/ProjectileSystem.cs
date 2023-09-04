@@ -13,6 +13,7 @@ using Content.Shared.Effects;
 
 namespace Content.Server.Projectiles;
 
+[InjectDependencies]
 public sealed partial class ProjectileSystem : SharedProjectileSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

@@ -11,6 +11,7 @@ public sealed partial class EnsnareableDoAfterEvent : SimpleDoAfterEvent
 {
 }
 
+[InjectDependencies]
 public abstract partial class SharedEnsnareableSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _speedModifier = default!;

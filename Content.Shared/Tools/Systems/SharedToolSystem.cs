@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tools;
 
+[InjectDependencies]
 public abstract partial class SharedToolSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;

@@ -9,6 +9,7 @@ namespace Content.Server.Arcade.SpaceVillain;
 /// <summary>
 /// A Class to handle all the game-logic of the SpaceVillain-game.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SpaceVillainGame
 {
     [Dependency] private IEntityManager _entityManager = default!;

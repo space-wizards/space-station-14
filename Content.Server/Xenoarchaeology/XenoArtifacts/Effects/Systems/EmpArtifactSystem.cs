@@ -4,6 +4,7 @@ using Content.Server.Xenoarchaeology.XenoArtifacts.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+[InjectDependencies]
 public sealed partial class EmpArtifactSystem : EntitySystem
 {
     [Dependency] private EmpSystem _emp = default!;

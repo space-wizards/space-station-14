@@ -12,6 +12,7 @@ using Content.Shared.Preferences;
 
 namespace Content.Server.Implants;
 
+[InjectDependencies]
 public sealed partial class SubdermalImplantSystem : SharedSubdermalImplantSystem
 {
     [Dependency] private CuffableSystem _cuffable = default!;

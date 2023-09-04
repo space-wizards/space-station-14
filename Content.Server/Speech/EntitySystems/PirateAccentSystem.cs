@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace Content.Server.Speech.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class PirateAccentSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

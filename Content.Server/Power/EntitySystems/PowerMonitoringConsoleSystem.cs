@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 internal sealed partial class PowerMonitoringConsoleSystem : EntitySystem
 {
     private float _updateTimer = 0.0f;

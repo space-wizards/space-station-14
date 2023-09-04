@@ -9,6 +9,7 @@ namespace Content.Server.SurveillanceCamera;
 /// <summary>
 ///     This handles speech for surveillance camera monitors.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SurveillanceCameraSpeakerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audioSystem = default!;

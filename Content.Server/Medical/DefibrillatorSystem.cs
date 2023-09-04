@@ -26,6 +26,7 @@ namespace Content.Server.Medical;
 /// <summary>
 /// This handles interactions and logic relating to <see cref="DefibrillatorComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class DefibrillatorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

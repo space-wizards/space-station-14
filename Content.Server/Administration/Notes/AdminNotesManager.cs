@@ -16,6 +16,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Administration.Notes;
 
+[InjectDependencies]
 public sealed partial class AdminNotesManager : IAdminNotesManager, IPostInjectInit
 {
     [Dependency] private IAdminManager _admins = default!;

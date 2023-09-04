@@ -26,6 +26,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Drone
 {
+    [InjectDependencies]
     public sealed partial class DroneSystem : SharedDroneSystem
     {
         [Dependency] private BodySystem _bodySystem = default!;

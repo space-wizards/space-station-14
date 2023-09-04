@@ -6,6 +6,7 @@ using Robust.Shared.Placement;
 
 namespace Content.Server.Placement;
 
+[InjectDependencies]
 public sealed partial class PlacementLoggerSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

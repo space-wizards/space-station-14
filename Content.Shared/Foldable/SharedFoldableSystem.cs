@@ -8,6 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Foldable;
 
 [UsedImplicitly]
+[InjectDependencies]
 public abstract partial class SharedFoldableSystem : EntitySystem
 {
     [Dependency] protected SharedAppearanceSystem Appearance = default!;

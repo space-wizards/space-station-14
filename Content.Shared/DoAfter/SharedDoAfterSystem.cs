@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.DoAfter;
 
+[InjectDependencies]
 public abstract partial class SharedDoAfterSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;

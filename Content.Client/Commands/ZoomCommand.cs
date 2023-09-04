@@ -10,6 +10,7 @@ using Robust.Shared.Console;
 namespace Content.Client.Commands;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ZoomCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entManager = default!;

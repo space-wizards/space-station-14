@@ -21,6 +21,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Cargo.Systems;
 
+[InjectDependencies]
 public sealed partial class CargoSystem : SharedCargoSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Fluids;
 
+[InjectDependencies]
 public sealed partial class PuddleOverlay : Overlay
 {
     [Dependency] private IMapManager _mapManager = default!;

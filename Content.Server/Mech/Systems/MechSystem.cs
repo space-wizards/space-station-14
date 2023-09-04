@@ -24,6 +24,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Mech.Systems;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class MechSystem : SharedMechSystem
 {
     [Dependency] private AtmosphereSystem _atmosphere = default!;

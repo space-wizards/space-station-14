@@ -5,6 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Returns true if the active hand is unoccupied.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ActiveHandFreePrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

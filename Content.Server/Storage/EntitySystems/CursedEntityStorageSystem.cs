@@ -8,6 +8,7 @@ using Content.Shared.Storage.Components;
 
 namespace Content.Server.Storage.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class CursedEntityStorageSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

@@ -19,6 +19,7 @@ using Content.Shared.Database;
 
 namespace Content.Server.MassMedia.Systems;
 
+[InjectDependencies]
 public sealed partial class NewsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

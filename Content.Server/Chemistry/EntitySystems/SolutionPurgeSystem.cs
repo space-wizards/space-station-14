@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SolutionPurgeSystem : EntitySystem
 {
     [Dependency] private SolutionContainerSystem _solutionContainer = default!;

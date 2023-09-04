@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Hands;
 
+[InjectDependencies]
 public sealed partial class HandsUIController : UIController, IOnStateEntered<GameplayState>, IOnSystemChanged<HandsSystem>
 {
     [Dependency] private IEntityManager _entities = default!;

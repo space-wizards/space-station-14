@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
+[InjectDependencies]
 public sealed partial class MedibotInjectOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entMan = default!;

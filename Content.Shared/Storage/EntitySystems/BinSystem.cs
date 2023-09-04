@@ -14,6 +14,7 @@ namespace Content.Shared.Storage.EntitySystems;
 /// <summary>
 /// This handles <see cref="BinComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class BinSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

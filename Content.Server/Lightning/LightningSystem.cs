@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lightning;
 
+[InjectDependencies]
 public sealed partial class LightningSystem : SharedLightningSystem
 {
     [Dependency] private PhysicsSystem _physics = default!;

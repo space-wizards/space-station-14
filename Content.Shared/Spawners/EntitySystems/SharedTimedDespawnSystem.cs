@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Spawners.EntitySystems;
 
+[InjectDependencies]
 public abstract partial class SharedTimedDespawnSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

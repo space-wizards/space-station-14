@@ -20,6 +20,7 @@ namespace Content.Client.Construction
     /// The client-side implementation of the construction system, which is used for constructing entities in game.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ConstructionSystem : SharedConstructionSystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

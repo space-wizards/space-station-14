@@ -14,6 +14,7 @@ namespace Content.Shared.Chunking;
 ///     This system just exists to provide some utility functions for other systems that chunk data that needs to be
 ///     sent to players. In particular, see <see cref="GetChunksForSession"/>.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ChunkingSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;

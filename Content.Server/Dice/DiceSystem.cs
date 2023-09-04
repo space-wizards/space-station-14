@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Dice;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class DiceSystem : SharedDiceSystem
 {
     [Dependency] private IRobustRandom _random = default!;

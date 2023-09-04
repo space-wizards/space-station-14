@@ -14,6 +14,7 @@ using Content.Shared.FixedPoint;
 namespace Content.Client.Store.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class StoreMenu : DefaultWindow
 {
     [Dependency] private IEntityManager _entityManager = default!;

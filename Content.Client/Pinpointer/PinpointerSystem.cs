@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Pinpointer;
 
+[InjectDependencies]
 public sealed partial class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private IEyeManager _eyeManager = default!;

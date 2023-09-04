@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Chemistry.Visualizers;
 
+[InjectDependencies]
 public sealed partial class SolutionContainerVisualsSystem : VisualizerSystem<SolutionContainerVisualsComponent>
 {
     [Dependency] private IPrototypeManager _prototype = default!;

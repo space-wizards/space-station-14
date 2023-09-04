@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Objectives;
 
+[InjectDependencies]
 public sealed partial class ObjectivesSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Botany.Systems;
 
+[InjectDependencies]
 public sealed partial class SeedExtractorSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

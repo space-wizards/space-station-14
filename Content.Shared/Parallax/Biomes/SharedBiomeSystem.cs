@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Parallax.Biomes;
 
+[InjectDependencies]
 public abstract partial class SharedBiomeSystem : EntitySystem
 {
     [Dependency] protected IPrototypeManager ProtoManager = default!;

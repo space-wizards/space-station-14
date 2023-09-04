@@ -3,6 +3,7 @@ using Content.Server.Sandbox;
 
 namespace Content.Server.GameTicking.Rules;
 
+[InjectDependencies]
 public sealed partial class SandboxRuleSystem : GameRuleSystem<SandboxRuleComponent>
 {
     [Dependency] private SandboxSystem _sandbox = default!;

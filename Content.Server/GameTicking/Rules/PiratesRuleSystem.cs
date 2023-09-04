@@ -28,6 +28,7 @@ namespace Content.Server.GameTicking.Rules;
 /// <summary>
 /// This handles the Pirates minor antag, which is designed to coincide with other modes on occasion.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

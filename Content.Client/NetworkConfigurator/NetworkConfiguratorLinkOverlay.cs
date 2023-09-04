@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.NetworkConfigurator;
 
+[InjectDependencies]
 public sealed partial class NetworkConfiguratorLinkOverlay : Overlay
 {
     [Dependency] private IEntityManager _entityManager = default!;

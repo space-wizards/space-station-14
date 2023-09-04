@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lube;
 
+[InjectDependencies]
 public sealed partial class LubedSystem : EntitySystem
 {
     [Dependency] private MetaDataSystem _metaData = default!;

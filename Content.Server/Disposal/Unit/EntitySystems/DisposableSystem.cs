@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Disposal.Unit.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class DisposableSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

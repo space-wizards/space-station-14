@@ -4,6 +4,7 @@ using Content.Server.Explosion.Components.OnTrigger;
 
 namespace Content.Server.Explosion.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class TwoStageTriggerSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _factory = default!;

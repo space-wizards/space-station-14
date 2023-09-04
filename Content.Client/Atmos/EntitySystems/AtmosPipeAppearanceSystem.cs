@@ -10,6 +10,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations;
 namespace Content.Client.Atmos.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

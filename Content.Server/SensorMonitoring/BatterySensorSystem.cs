@@ -4,6 +4,7 @@ using Content.Server.Power.Components;
 
 namespace Content.Server.SensorMonitoring;
 
+[InjectDependencies]
 public sealed partial class BatterySensorSystem : EntitySystem
 {
     public const string DeviceNetworkCommandSyncData = "bat_sync_data";

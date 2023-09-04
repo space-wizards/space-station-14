@@ -14,6 +14,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.NPC.Systems;
 
+[InjectDependencies]
 public sealed partial class NPCJukeSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

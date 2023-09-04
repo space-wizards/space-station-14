@@ -25,6 +25,7 @@ namespace Content.Shared.Vehicle;
 /// Nothing for a system but these need to be put somewhere in
 /// Content.Shared
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedVehicleSystem : EntitySystem
 {
     [Dependency] private INetManager _netManager = default!;

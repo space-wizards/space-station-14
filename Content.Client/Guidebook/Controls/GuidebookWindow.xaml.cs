@@ -14,6 +14,7 @@ using Robust.Shared.ContentPack;
 namespace Content.Client.Guidebook.Controls;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class GuidebookWindow : FancyWindow, ILinkClickHandler
 {
     [Dependency] private IResourceManager _resourceManager = default!;

@@ -5,6 +5,7 @@ using Content.Shared.Smoking;
 
 namespace Content.Server.Light.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class MatchboxSystem : EntitySystem
     {
         [Dependency] private MatchstickSystem _stickSystem = default!;

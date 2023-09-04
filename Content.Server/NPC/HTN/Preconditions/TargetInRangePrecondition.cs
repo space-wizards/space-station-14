@@ -5,6 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Is the specified key within the specified range of us.
 /// </summary>
+[InjectDependencies]
 public sealed partial class TargetInRangePrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

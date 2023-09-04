@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.AlertLevel;
 
+[InjectDependencies]
 public sealed partial class AlertLevelDisplaySystem : EntitySystem
 {
     [Dependency] private StationSystem _stationSystem = default!;

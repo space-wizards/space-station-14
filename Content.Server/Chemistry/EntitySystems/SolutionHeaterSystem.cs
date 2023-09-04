@@ -8,6 +8,7 @@ using Content.Shared.Placeable;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SolutionHeaterSystem : EntitySystem
 {
     [Dependency] private PowerReceiverSystem _powerReceiver = default!;

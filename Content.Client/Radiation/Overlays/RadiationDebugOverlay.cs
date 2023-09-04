@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Radiation.Overlays;
 
+[InjectDependencies]
 public sealed partial class RadiationDebugOverlay : Overlay
 {
     [Dependency] private IMapManager _mapManager = default!;

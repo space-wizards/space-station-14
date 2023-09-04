@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.DeviceLinking.Systems;
 
+[InjectDependencies]
 public sealed partial class SignalTimerSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

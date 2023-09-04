@@ -6,6 +6,7 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Server.StationEvents.Events;
 
+[InjectDependencies]
 public sealed partial class MassHallucinationsRule : StationEventSystem<MassHallucinationsRuleComponent>
 {
     [Dependency] private ParacusiaSystem _paracusia = default!;

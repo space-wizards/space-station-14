@@ -18,6 +18,7 @@ using YamlDotNet.RepresentationModel;
 namespace Content.Client.Actions
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ActionsSystem : SharedActionsSystem
     {
         public delegate void OnActionReplaced(ActionType existing, ActionType action);

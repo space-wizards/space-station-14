@@ -18,6 +18,7 @@ namespace Content.Server.Atmos.EntitySystems;
 ///     This is our SSAir equivalent, if you need to interact with or query atmos in any way, go through this.
 /// </summary>
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class AtmosphereSystem : SharedAtmosphereSystem
 {
     [Dependency] private IMapManager _mapManager = default!;

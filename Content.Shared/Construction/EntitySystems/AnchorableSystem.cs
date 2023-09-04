@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Construction.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class AnchorableSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

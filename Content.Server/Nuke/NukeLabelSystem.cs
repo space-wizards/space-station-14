@@ -3,6 +3,7 @@ namespace Content.Server.Nuke;
 /// <summary>
 ///     This handles labelling an entity with a nuclear bomb label.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NukeLabelSystem : EntitySystem
 {
     [Dependency] private NukeSystem _nuke = default!;

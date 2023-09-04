@@ -24,6 +24,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Communications
 {
+    [InjectDependencies]
     public sealed partial class CommunicationsConsoleSystem : EntitySystem
     {
         [Dependency] private AccessReaderSystem _accessReaderSystem = default!;

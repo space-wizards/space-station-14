@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
+[InjectDependencies]
 public sealed partial class SurveillanceCameraSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

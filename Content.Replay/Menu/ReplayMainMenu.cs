@@ -21,6 +21,7 @@ namespace Content.Replay.Menu;
 /// <summary>
 /// Main menu screen for selecting and loading replays.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ReplayMainScreen : State
 {
     [Dependency] private IResourceManager _resMan = default!;

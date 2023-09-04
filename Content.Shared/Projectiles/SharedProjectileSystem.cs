@@ -17,6 +17,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Projectiles;
 
+[InjectDependencies]
 public abstract partial class SharedProjectileSystem : EntitySystem
 {
     public const string ProjectileFixture = "projectile";

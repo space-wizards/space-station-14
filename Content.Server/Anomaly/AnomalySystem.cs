@@ -19,6 +19,7 @@ namespace Content.Server.Anomaly;
 /// <summary>
 /// This handles logic and interactions relating to <see cref="AnomalyComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private IConfigurationManager _configuration = default!;

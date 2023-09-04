@@ -7,6 +7,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Shared.Random;
 
+[InjectDependencies]
 public sealed partial class RulesSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

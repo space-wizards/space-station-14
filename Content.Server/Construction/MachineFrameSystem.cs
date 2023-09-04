@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Construction;
 
+[InjectDependencies]
 public sealed partial class MachineFrameSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _factory = default!;

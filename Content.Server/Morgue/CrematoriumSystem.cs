@@ -18,6 +18,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;
 
+[InjectDependencies]
 public sealed partial class CrematoriumSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

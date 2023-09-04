@@ -2,6 +2,7 @@ using Content.Shared.HotPotato;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
 
+[InjectDependencies]
 public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private IGameTiming _timing = default!;

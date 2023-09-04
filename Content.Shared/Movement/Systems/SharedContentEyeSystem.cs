@@ -13,6 +13,7 @@ namespace Content.Shared.Movement.Systems;
 /// <summary>
 /// Lets specific sessions scroll and set their zoom directly.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedContentEyeSystem : EntitySystem
 {
     [Dependency] private ISharedAdminManager _admin = default!;

@@ -14,6 +14,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Power;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class PowerMonitoringWindow : DefaultWindow, IComputerWindow<PowerMonitoringConsoleBoundInterfaceState>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -8,6 +8,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Damage.Systems
 {
+    [InjectDependencies]
     public sealed partial class DamageOnToolInteractSystem : EntitySystem
     {
         [Dependency] private DamageableSystem _damageableSystem = default!;

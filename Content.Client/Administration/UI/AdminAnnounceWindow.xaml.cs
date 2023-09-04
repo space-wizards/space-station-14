@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Administration.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class AdminAnnounceWindow : DefaultWindow
     {
         [Dependency] private ILocalizationManager _localization = default!;

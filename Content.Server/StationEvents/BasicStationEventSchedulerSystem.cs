@@ -11,6 +11,7 @@ namespace Content.Server.StationEvents
     ///     game presets use.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class BasicStationEventSchedulerSystem : GameRuleSystem<BasicStationEventSchedulerComponent>
     {
         [Dependency] private IRobustRandom _random = default!;

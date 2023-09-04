@@ -8,6 +8,7 @@ namespace Content.Shared.Construction
     /// <summary>
     /// Deals with machine parts and machine boards.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class MachinePartSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototype = default!;

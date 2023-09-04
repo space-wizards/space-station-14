@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Movement.Systems;
 
+[InjectDependencies]
 public sealed partial class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private GasTankSystem _gasTank = default!;

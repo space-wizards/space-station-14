@@ -23,6 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Bwoink;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class AHelpUIController: UIController, IOnSystemChanged<BwoinkSystem>
 {
     [Dependency] private IClientAdminManager _adminManager = default!;

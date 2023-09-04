@@ -78,6 +78,7 @@ public sealed class AirAlarmModeFactory
 }
 
 // like a tiny little EntitySystem
+[InjectDependencies]
 public abstract partial class AirAlarmModeExecutor : IAirAlarmMode
 {
     [Dependency] public IEntityManager EntityManager = default!;

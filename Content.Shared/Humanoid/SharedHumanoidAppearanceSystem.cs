@@ -18,6 +18,7 @@ namespace Content.Shared.Humanoid;
 ///     you still need a local copy so that players can set up their
 ///     characters.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private INetManager _netManager = default!;

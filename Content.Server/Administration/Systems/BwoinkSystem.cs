@@ -23,6 +23,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Administration.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

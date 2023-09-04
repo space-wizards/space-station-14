@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class DamageContactsSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

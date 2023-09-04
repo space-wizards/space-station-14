@@ -16,6 +16,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Stunnable.Systems
 {
+    [InjectDependencies]
     public sealed partial class StunbatonSystem : SharedStunbatonSystem
     {
         [Dependency] private SharedItemSystem _item = default!;

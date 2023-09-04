@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class RehydratableSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popups = default!;

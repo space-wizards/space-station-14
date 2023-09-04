@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Emoting.Systems;
 
+[InjectDependencies]
 public sealed partial class BodyEmotesSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

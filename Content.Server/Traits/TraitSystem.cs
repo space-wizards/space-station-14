@@ -7,6 +7,7 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Traits;
 
+[InjectDependencies]
 public sealed partial class TraitSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

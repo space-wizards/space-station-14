@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Research.UI;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class ResearchConsoleMenu : FancyWindow
 {
     public Action<string>? OnTechnologyCardPressed;

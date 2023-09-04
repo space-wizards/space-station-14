@@ -33,6 +33,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Nutrition.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class DrinkSystem : EntitySystem
 {
     [Dependency] private BodySystem _body = default!;

@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Body.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedBodySystem : EntitySystem
 {
     protected const string BodyContainerId = "BodyContainer";

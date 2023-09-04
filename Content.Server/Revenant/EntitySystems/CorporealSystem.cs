@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Revenant.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class CorporealSystem : SharedCorporealSystem
 {
     [Dependency] private VisibilitySystem _visibilitySystem = default!;

@@ -18,6 +18,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
+[InjectDependencies]
 public sealed partial class BanCommand : LocalizedCommands
 {
 

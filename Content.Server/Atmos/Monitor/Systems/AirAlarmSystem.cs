@@ -32,6 +32,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 // data key. In response, a packet will be transmitted
 // with the response type as its command, and the
 // response data in its data key.
+[InjectDependencies]
 public sealed partial class AirAlarmSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _access = default!;

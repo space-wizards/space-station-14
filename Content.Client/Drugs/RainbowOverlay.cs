@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Drugs;
 
+[InjectDependencies]
 public sealed partial class RainbowOverlay : Overlay
 {
     [Dependency] private IEntityManager _entityManager = default!;

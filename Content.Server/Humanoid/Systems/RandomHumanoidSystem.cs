@@ -11,6 +11,7 @@ namespace Content.Server.Humanoid.Systems;
 /// <summary>
 ///     This deals with spawning and setting up random humanoids.
 /// </summary>
+[InjectDependencies]
 public sealed partial class RandomHumanoidSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

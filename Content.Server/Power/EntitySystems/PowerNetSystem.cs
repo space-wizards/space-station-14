@@ -14,6 +14,7 @@ namespace Content.Server.Power.EntitySystems
     ///     Manages power networks, power state, and all power components.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class PowerNetSystem : EntitySystem
     {
         [Dependency] private AppearanceSystem _appearance = default!;

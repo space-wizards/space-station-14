@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.CartridgeLoader;
 
+[InjectDependencies]
 public abstract partial class SharedCartridgeLoaderSystem : EntitySystem
 {
     [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;

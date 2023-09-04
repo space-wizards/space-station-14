@@ -6,6 +6,7 @@ using Robust.Shared.Console;
 namespace Content.Client.UserInterface.Systems.EscapeMenu;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class OptionsUIController : UIController
 {
     [Dependency] private IConsoleHost _con = default!;

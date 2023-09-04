@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Storage.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class EntityStorageSystem : SharedEntityStorageSystem
 {
     [Dependency] private ConstructionSystem _construction = default!;

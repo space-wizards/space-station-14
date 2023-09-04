@@ -13,6 +13,7 @@ using static Content.Shared.Administration.PermissionsEuiMsg;
 
 namespace Content.Server.Administration.UI
 {
+    [InjectDependencies]
     public sealed partial class PermissionsEui : BaseEui
     {
         [Dependency] private IPlayerManager _playerManager = default!;

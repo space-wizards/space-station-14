@@ -8,6 +8,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Access.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedAccessOverriderSystem : EntitySystem
     {
         [Dependency] private ItemSlotsSystem _itemSlotsSystem = default!;

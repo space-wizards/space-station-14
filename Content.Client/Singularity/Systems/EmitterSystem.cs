@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Singularity.Systems;
 
+[InjectDependencies]
 public sealed partial class EmitterSystem : SharedEmitterSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

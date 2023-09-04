@@ -6,6 +6,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.LandMines;
 
+[InjectDependencies]
 public sealed partial class LandMineSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popupSystem = default!;

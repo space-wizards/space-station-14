@@ -7,6 +7,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.CardboardBox;
 
+[InjectDependencies]
 public sealed partial class CardboardBoxSystem : SharedCardboardBoxSystem
 {
     [Dependency] private EntityLookupSystem _entityLookup = default!;

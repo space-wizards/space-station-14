@@ -5,6 +5,7 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactInteractionTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifactSystem = default!;

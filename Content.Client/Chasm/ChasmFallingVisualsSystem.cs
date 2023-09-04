@@ -8,6 +8,7 @@ namespace Content.Client.Chasm;
 /// <summary>
 ///     Handles the falling animation for entities that fall into a chasm.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ChasmFallingVisualsSystem : EntitySystem
 {
     [Dependency] private AnimationPlayerSystem _anim = default!;

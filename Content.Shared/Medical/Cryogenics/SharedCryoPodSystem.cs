@@ -16,6 +16,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Medical.Cryogenics;
 
+[InjectDependencies]
 public abstract partial class SharedCryoPodSystem: EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearanceSystem = default!;

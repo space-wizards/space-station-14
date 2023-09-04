@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class MatchstickSystem : EntitySystem
     {
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

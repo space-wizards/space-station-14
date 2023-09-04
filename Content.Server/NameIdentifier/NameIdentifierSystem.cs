@@ -9,6 +9,7 @@ namespace Content.Server.NameIdentifier;
 /// <summary>
 ///     Handles unique name identifiers for entities e.g. `monkey (MK-912)`
 /// </summary>
+[InjectDependencies]
 public sealed partial class NameIdentifierSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

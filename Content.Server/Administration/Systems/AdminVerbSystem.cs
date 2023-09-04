@@ -39,6 +39,7 @@ namespace Content.Server.Administration.Systems
     /// <summary>
     ///     System to provide various global admin/debug verbs
     /// </summary>
+    [InjectDependencies]
     public sealed partial class AdminVerbSystem : EntitySystem
     {
         [Dependency] private IConGroupController _groupController = default!;

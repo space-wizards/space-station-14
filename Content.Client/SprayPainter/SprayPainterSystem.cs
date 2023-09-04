@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Content.Client.SprayPainter;
 
+[InjectDependencies]
 public sealed partial class SprayPainterSystem : SharedSprayPainterSystem
 {
     [Dependency] private IResourceCache _resourceCache = default!;

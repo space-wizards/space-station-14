@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.CombatMode
 {
+    [InjectDependencies]
     public sealed partial class ColoredScreenBorderOverlay : Overlay
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

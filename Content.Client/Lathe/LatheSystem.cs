@@ -6,6 +6,7 @@ using Content.Shared.Research.Prototypes;
 
 namespace Content.Client.Lathe;
 
+[InjectDependencies]
 public sealed partial class LatheSystem : SharedLatheSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

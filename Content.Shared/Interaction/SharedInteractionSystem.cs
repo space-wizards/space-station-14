@@ -49,6 +49,7 @@ namespace Content.Shared.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedInteractionSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

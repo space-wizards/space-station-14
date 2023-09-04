@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class SolutionInjectOnCollideSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _protoManager = default!;

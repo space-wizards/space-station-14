@@ -8,6 +8,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Mech.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class MechMenu : FancyWindow
 {
     [Dependency] private IEntityManager _ent = default!;

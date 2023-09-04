@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Extinguisher;
 
+[InjectDependencies]
 public sealed partial class FireExtinguisherSystem : EntitySystem
 {
     [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;

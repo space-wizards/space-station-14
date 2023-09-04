@@ -4,6 +4,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Containers;
 
+[InjectDependencies]
 public sealed partial class ContainerFillSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _containerSystem = default!;

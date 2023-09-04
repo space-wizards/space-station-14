@@ -21,6 +21,7 @@ namespace Content.Server.Cargo.Systems;
 /// <summary>
 /// This handles calculating the price of items, and implements two basic methods of pricing materials.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PricingSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _factory = default!;

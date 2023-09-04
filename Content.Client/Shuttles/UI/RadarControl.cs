@@ -22,6 +22,7 @@ namespace Content.Client.Shuttles.UI;
 /// <summary>
 /// Displays nearby grids inside of a control.
 /// </summary>
+[InjectDependencies]
 public sealed partial class RadarControl : MapGridControl
 {
     [Dependency] private IEntityManager _entManager = default!;

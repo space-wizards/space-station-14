@@ -11,6 +11,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Beam;
 
+[InjectDependencies]
 public sealed partial class BeamSystem : SharedBeamSystem
 {
     [Dependency] private FixtureSystem _fixture = default!;

@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Administration.UI.Notes;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class NoteEdit : FancyWindow
 {
     [Dependency] private IGameTiming _gameTiming = default!;

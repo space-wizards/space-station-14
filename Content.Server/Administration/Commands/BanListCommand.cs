@@ -12,6 +12,7 @@ namespace Content.Server.Administration.Commands;
 ///     Lists someones active Ban Ids or opens a window to see them.
 /// </summary>
 [AdminCommand(AdminFlags.Ban)]
+[InjectDependencies]
 public sealed partial class BanListCommand : LocalizedCommands
 {
     [Dependency] private IServerDbManager _dbManager = default!;

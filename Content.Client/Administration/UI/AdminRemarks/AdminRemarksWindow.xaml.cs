@@ -10,6 +10,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Administration.UI.AdminRemarks;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AdminRemarksWindow : FancyWindow
 {
     [Dependency] private IEntitySystemManager _entitySystem = default!;

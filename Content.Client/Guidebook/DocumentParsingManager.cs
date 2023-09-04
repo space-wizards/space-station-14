@@ -11,6 +11,7 @@ namespace Content.Client.Guidebook;
 /// <summary>
 ///     This manager should be used to convert documents (shitty rich-text / pseudo-xaml) into UI Controls
 /// </summary>
+[InjectDependencies]
 public sealed partial class DocumentParsingManager
 {
     [Dependency] private IReflectionManager _reflectionManager = default!;

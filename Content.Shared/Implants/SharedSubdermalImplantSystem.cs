@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Implants;
 
+[InjectDependencies]
 public abstract partial class SharedSubdermalImplantSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

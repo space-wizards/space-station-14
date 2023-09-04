@@ -7,6 +7,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Audio;
 
+[InjectDependencies]
 public sealed partial class ClientGlobalSoundSystem : SharedGlobalSoundSystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;

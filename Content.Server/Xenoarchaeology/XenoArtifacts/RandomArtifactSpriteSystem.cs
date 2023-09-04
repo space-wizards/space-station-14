@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
+[InjectDependencies]
 public sealed partial class RandomArtifactSpriteSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

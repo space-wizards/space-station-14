@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class GhostRoleRulesWindow : DefaultWindow
     {
         [Dependency] private IConfigurationManager _cfg = IoCManager.Resolve<IConfigurationManager>();

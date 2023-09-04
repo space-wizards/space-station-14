@@ -3,6 +3,7 @@ using Robust.Client.UserInterface.Controls;
 
 namespace Content.Client.Changelog
 {
+    [InjectDependencies]
     public sealed partial class ChangelogButton : Button
     {
         [Dependency] private ChangelogManager _changelogManager = default!;

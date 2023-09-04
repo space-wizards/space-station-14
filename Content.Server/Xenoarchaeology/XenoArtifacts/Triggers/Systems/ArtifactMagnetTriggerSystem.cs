@@ -8,6 +8,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
+[InjectDependencies]
 public sealed partial class ArtifactMagnetTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifact = default!;

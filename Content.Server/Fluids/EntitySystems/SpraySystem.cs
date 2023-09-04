@@ -15,6 +15,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SpraySystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;

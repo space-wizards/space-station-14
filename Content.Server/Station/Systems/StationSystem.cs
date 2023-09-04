@@ -24,6 +24,7 @@ namespace Content.Server.Station.Systems;
 /// For jobs, look at StationJobSystem. For spawning, look at StationSpawningSystem.
 /// </summary>
 [PublicAPI]
+[InjectDependencies]
 public sealed partial class StationSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;

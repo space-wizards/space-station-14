@@ -9,6 +9,7 @@ using static Robust.Client.UserInterface.Controls.BaseButton;
 namespace Content.Client.Administration.UI.Notes;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AdminNotesLinePopup : Popup
 {
     public event Action<int, NoteType>? OnEditPressed;

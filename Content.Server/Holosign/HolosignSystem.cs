@@ -6,6 +6,7 @@ using Content.Server.PowerCell;
 
 namespace Content.Server.Holosign;
 
+[InjectDependencies]
 public sealed partial class HolosignSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _powerCell = default!;

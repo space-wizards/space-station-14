@@ -9,6 +9,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Plants.Systems
 {
+    [InjectDependencies]
     public sealed partial class PottedPlantHideSystem : EntitySystem
     {
         [Dependency] private SecretStashSystem _stashSystem = default!;

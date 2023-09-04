@@ -18,6 +18,7 @@ using Content.Shared.Database;
 
 namespace Content.Server.Atmos.Portable
 {
+    [InjectDependencies]
     public sealed partial class PortableScrubberSystem : EntitySystem
     {
         [Dependency] private GasVentScrubberSystem _scrubberSystem = default!;

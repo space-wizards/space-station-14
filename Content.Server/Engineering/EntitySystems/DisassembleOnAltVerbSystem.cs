@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class DisassembleOnAltVerbSystem : EntitySystem
     {
         [Dependency] private SharedHandsSystem _handsSystem = default!;

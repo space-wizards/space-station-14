@@ -3,6 +3,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.GhostKick;
 
+[InjectDependencies]
 public sealed partial class GhostKickUserOnTriggerSystem : EntitySystem
 {
     [Dependency] private GhostKickManager _ghostKickManager = default!;

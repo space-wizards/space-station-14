@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Lathe.UI;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class LatheMenu : DefaultWindow
 {
     [Dependency] private IEntityManager _entityManager = default!;

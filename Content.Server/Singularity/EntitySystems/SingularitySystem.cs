@@ -19,6 +19,7 @@ namespace Content.Server.Singularity.EntitySystems;
 /// Handles their accumulation of energy upon consuming entities (see <see cref="EventHorizonComponent"/>) and gradual dissipation.
 /// Also handles synchronizing server-side components with the singuarities level.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SingularitySystem : SharedSingularitySystem
 {
 #region Dependencies

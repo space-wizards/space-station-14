@@ -16,6 +16,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Temperature.Systems
 {
+    [InjectDependencies]
     public sealed partial class TemperatureSystem : EntitySystem
     {
         [Dependency] private TransformSystem _transformSystem = default!;

@@ -32,6 +32,7 @@ namespace Content.Server.Station.Systems;
 /// Also provides helpers for spawning in the player's mob.
 /// </summary>
 [PublicAPI]
+[InjectDependencies]
 public sealed partial class StationSpawningSystem : SharedStationSpawningSystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

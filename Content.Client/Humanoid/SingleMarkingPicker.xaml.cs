@@ -8,6 +8,7 @@ using Robust.Client.Utility;
 namespace Content.Client.Humanoid;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class SingleMarkingPicker : BoxContainer
 {
     [Dependency] private MarkingManager _markingManager = default!;

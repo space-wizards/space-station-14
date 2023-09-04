@@ -21,6 +21,7 @@ using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Client.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private IEyeManager _eyeManager = default!;

@@ -17,6 +17,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
+[InjectDependencies]
 public sealed partial class FireAlarmSystem : EntitySystem
 {
     [Dependency] private AtmosDeviceNetworkSystem _atmosDevNet = default!;

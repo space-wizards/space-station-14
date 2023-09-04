@@ -5,6 +5,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Movement.Systems;
 
+[InjectDependencies]
 public sealed partial class SlowContactsSystem : EntitySystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;

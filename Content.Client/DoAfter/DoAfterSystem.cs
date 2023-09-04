@@ -11,6 +11,7 @@ namespace Content.Client.DoAfter;
 /// Handles events that need to happen after a certain amount of time where the event could be cancelled by factors
 /// such as moving.
 /// </summary>
+[InjectDependencies]
 public sealed partial class DoAfterSystem : SharedDoAfterSystem
 {
     [Dependency] private IOverlayManager _overlay = default!;

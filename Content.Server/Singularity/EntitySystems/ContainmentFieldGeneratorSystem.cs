@@ -15,6 +15,7 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ContainmentFieldGeneratorSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

@@ -9,6 +9,7 @@ using Content.Shared.Rejuvenate;
 namespace Content.Server.Nutrition.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ThirstSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

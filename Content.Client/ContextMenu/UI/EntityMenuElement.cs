@@ -8,6 +8,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.ContextMenu.UI
 {
+    [InjectDependencies]
     public sealed partial class EntityMenuElement : ContextMenuElement
     {
         [Dependency] private IClientAdminManager _adminManager = default!;

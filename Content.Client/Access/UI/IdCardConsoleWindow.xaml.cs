@@ -12,6 +12,7 @@ using static Content.Shared.Access.Components.IdCardConsoleComponent;
 namespace Content.Client.Access.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class IdCardConsoleWindow : DefaultWindow
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

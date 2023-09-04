@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Tools
 {
     // TODO move tool system to shared, and make it a friend of Tool Component.
+    [InjectDependencies]
     public sealed partial class ToolSystem : SharedToolSystem
     {
         [Dependency] private ITileDefinitionManager _tileDefinitionManager = default!;

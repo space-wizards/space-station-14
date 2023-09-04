@@ -9,6 +9,7 @@ using System.Numerics;
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ExplosionDebugOverlay : Overlay
 {
     [Dependency] private IEntityManager _entityManager = default!;

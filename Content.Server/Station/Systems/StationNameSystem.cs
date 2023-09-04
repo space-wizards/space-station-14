@@ -5,6 +5,7 @@ namespace Content.Server.Station.Systems;
 /// <summary>
 /// This handles naming stations.
 /// </summary>
+[InjectDependencies]
 public sealed partial class StationNameSystem : EntitySystem
 {
     [Dependency] private StationSystem _station = default!;

@@ -35,6 +35,7 @@ using Content.Server.Temperature.Components;
 
 namespace Content.Server.Medical;
 
+[InjectDependencies]
 public sealed partial class CryoPodSystem: SharedCryoPodSystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

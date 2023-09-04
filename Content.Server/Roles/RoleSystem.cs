@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Roles;
 
+[InjectDependencies]
 public sealed partial class RoleSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

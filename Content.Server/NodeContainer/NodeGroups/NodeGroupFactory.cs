@@ -18,6 +18,7 @@ namespace Content.Server.NodeContainer.NodeGroups
         INodeGroup MakeNodeGroup(NodeGroupID id);
     }
 
+    [InjectDependencies]
     public sealed partial class NodeGroupFactory : INodeGroupFactory
     {
         [Dependency] private IReflectionManager _reflectionManager = default!;

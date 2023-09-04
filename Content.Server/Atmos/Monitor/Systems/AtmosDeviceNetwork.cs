@@ -8,6 +8,7 @@ namespace Content.Server.Atmos.Monitor.Systems;
 ///     Generic device network commands useful for atmos devices,
 ///     as well as some helper commands.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AtmosDeviceNetworkSystem : EntitySystem
 {
     /// <summary>

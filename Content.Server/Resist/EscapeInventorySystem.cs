@@ -13,6 +13,7 @@ using Content.Server.Storage.Components;
 
 namespace Content.Server.Resist;
 
+[InjectDependencies]
 public sealed partial class EscapeInventorySystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

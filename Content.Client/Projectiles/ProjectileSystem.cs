@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Projectiles;
 
+[InjectDependencies]
 public sealed partial class ProjectileSystem : SharedProjectileSystem
 {
     [Dependency] private AnimationPlayerSystem _player = default!;

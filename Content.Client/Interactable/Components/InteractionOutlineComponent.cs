@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Interactable.Components
 {
     [RegisterComponent]
+    [InjectDependencies]
     public sealed partial class InteractionOutlineComponent : Component
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

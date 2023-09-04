@@ -18,6 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Lobby
 {
+    [InjectDependencies]
     public sealed partial class LobbyState : Robust.Client.State.State
     {
         [Dependency] private IBaseClient _baseClient = default!;

@@ -8,6 +8,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Mind.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class MindInfoCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entities = default!;

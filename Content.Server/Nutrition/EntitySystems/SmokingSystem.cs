@@ -19,6 +19,7 @@ using System.Linq;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class SmokingSystem : EntitySystem
     {
         [Dependency] private ReactiveSystem _reactiveSystem = default!;

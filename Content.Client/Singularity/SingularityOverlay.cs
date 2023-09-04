@@ -7,6 +7,7 @@ using System.Numerics;
 
 namespace Content.Client.Singularity
 {
+    [InjectDependencies]
     public sealed partial class SingularityOverlay : Overlay, IEntityEventSubscriber
     {
         [Dependency] private IEntityManager _entMan = default!;

@@ -6,6 +6,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactElectricityTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifactSystem = default!;

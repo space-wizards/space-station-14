@@ -19,6 +19,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Bed
 {
+    [InjectDependencies]
     public sealed partial class BedSystem : EntitySystem
     {
         [Dependency] private DamageableSystem _damageableSystem = default!;

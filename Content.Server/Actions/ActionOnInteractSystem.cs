@@ -9,6 +9,7 @@ namespace Content.Server.Actions;
 /// <summary>
 ///     This System handled interactions for the <see cref="ActionOnInteractComponent"/>.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ActionOnInteractSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

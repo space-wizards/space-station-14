@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.PowerCell;
 
+[InjectDependencies]
 public abstract partial class SharedPowerCellSystem : EntitySystem
 {
     [Dependency] private ItemSlotsSystem _itemSlots = default!;

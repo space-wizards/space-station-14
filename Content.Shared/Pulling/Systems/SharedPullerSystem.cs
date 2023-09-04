@@ -10,6 +10,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Pulling.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class SharedPullerSystem : EntitySystem
     {
         [Dependency] private SharedPullingStateManagementSystem _why = default!;

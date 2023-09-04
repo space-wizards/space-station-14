@@ -9,6 +9,7 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Server.Maps;
 
 /// <inheritdoc />
+[InjectDependencies]
 public sealed partial class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private IConGroupController _admin = default!;

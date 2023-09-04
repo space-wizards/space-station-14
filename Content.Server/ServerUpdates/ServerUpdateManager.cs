@@ -13,6 +13,7 @@ namespace Content.Server.ServerUpdates;
 /// <summary>
 /// Responsible for restarting the server for update, when not disruptive.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ServerUpdateManager
 {
     [Dependency] private IGameTiming _gameTiming = default!;

@@ -5,6 +5,7 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Salvage;
 
+[InjectDependencies]
 public sealed partial class SalvageMobRestrictionsSystem : EntitySystem
 {
     [Dependency] private BodySystem _bodySystem = default!;

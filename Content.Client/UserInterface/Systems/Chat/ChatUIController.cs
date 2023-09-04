@@ -36,6 +36,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.Chat;
 
+[InjectDependencies]
 public sealed partial class ChatUIController : UIController
 {
     [Dependency] private IClientAdminManager _admin = default!;

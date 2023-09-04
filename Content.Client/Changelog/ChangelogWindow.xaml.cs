@@ -19,6 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Changelog
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class ChangelogWindow : BaseWindow
     {
         [Dependency] private ChangelogManager _changelog = default!;

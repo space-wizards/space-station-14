@@ -17,6 +17,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Misc;
 
+[InjectDependencies]
 public abstract partial class SharedTetherGunSystem : EntitySystem
 {
     [Dependency] private   INetManager _netManager = default!;

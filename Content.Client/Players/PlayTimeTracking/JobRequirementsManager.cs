@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Players.PlayTimeTracking;
 
+[InjectDependencies]
 public sealed partial class JobRequirementsManager
 {
     [Dependency] private IBaseClient _client = default!;

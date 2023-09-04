@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Radio.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class IntercomMenu : FancyWindow
 {
     [Dependency] private IPrototypeManager _prototype = default!;

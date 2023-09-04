@@ -5,6 +5,7 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Damage.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedGodmodeSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageable = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.HealthExaminable;
 
+[InjectDependencies]
 public sealed partial class HealthExaminableSystem : EntitySystem
 {
     [Dependency] private ExamineSystemShared _examineSystem = default!;

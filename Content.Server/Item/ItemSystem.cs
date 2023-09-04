@@ -5,6 +5,7 @@ using Content.Shared.Stacks;
 
 namespace Content.Server.Item;
 
+[InjectDependencies]
 public sealed partial class ItemSystem : SharedItemSystem
 {
     [Dependency] private StorageSystem _storage = default!;

@@ -17,6 +17,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class SetOutfitCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entities = default!;

@@ -25,6 +25,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Parallax;
 
+[InjectDependencies]
 public sealed partial class BiomeSystem : SharedBiomeSystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;

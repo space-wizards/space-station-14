@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 namespace Content.Shared.Nutrition.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedCreamPieSystem : EntitySystem
     {
         [Dependency] private SharedStunSystem _stunSystem = default!;

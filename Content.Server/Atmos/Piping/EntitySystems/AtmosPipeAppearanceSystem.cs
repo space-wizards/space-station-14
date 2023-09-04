@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Atmos.Piping.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class AtmosPipeAppearanceSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

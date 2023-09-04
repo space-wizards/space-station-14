@@ -9,6 +9,7 @@ namespace Content.Shared.Maps;
 /// <summary>
 ///     This system provides various useful helper methods for turfs & tiles. Replacement for <see cref="TurfHelpers"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class TurfSystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _entityLookup = default!;

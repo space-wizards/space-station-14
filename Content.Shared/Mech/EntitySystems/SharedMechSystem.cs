@@ -28,6 +28,7 @@ namespace Content.Shared.Mech.EntitySystems;
 /// <summary>
 /// Handles all of the interactions, UI handling, and items shennanigans for <see cref="MechComponent"/>
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedMechSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

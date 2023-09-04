@@ -7,6 +7,7 @@ namespace Content.Server.Chat.TypingIndicator;
 // Server-side typing system
 // It receives networked typing events from clients
 // And sync typing indicator using appearance component
+[InjectDependencies]
 public sealed partial class TypingIndicatorSystem : SharedTypingIndicatorSystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;

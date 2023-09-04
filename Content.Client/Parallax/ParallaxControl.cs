@@ -11,6 +11,7 @@ namespace Content.Client.Parallax;
 /// <summary>
 ///     Renders the parallax background as a UI control.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ParallaxControl : Control
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Kitchen.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SharpSystem : EntitySystem
 {
     [Dependency] private BodySystem _bodySystem = default!;

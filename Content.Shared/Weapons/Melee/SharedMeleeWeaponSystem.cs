@@ -30,6 +30,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Weapons.Melee;
 
+[InjectDependencies]
 public abstract partial class SharedMeleeWeaponSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;

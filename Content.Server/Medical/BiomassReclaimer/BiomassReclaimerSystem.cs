@@ -30,6 +30,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Medical.BiomassReclaimer
 {
+    [InjectDependencies]
     public sealed partial class BiomassReclaimerSystem : EntitySystem
     {
         [Dependency] private IConfigurationManager _configManager = default!;

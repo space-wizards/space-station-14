@@ -5,6 +5,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.PowerCell;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

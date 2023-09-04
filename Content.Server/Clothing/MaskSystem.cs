@@ -17,6 +17,7 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Clothing
 {
+    [InjectDependencies]
     public sealed partial class MaskSystem : EntitySystem
     {
         [Dependency] private ActionsSystem _actionSystem = default!;

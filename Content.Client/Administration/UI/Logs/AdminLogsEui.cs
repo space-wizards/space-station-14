@@ -11,6 +11,7 @@ using static Content.Shared.Administration.Logs.AdminLogsEuiMsg;
 namespace Content.Client.Administration.UI.Logs;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class AdminLogsEui : BaseEui
 {
     [Dependency] private IClyde _clyde = default!;

@@ -29,6 +29,7 @@ namespace Content.Server.Light.EntitySystems
     /// <summary>
     ///     System for the PoweredLightComponents
     /// </summary>
+    [InjectDependencies]
     public sealed partial class PoweredLightSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

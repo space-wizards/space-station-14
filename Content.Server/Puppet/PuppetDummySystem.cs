@@ -9,6 +9,7 @@ using Content.Shared.Hands;
 
 namespace Content.Server.Puppet
 {
+    [InjectDependencies]
     public sealed partial class PuppetDummySystem : SharedPuppetDummySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

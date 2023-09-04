@@ -24,6 +24,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems;
 
+[InjectDependencies]
 public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -21,6 +21,7 @@ using Content.Shared.DoAfter;
 
 namespace Content.Server.Doors.Systems;
 
+[InjectDependencies]
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private IAdminLogManager _adminLog = default!;

@@ -4,6 +4,7 @@ using Content.Shared.Preferences;
 
 namespace Content.Server.Humanoid.Systems;
 
+[InjectDependencies]
 public sealed partial class RandomHumanoidAppearanceSystem : EntitySystem
 {
     [Dependency] private HumanoidAppearanceSystem _humanoid = default!;

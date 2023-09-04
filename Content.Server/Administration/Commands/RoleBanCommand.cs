@@ -10,6 +10,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
+[InjectDependencies]
 public sealed partial class RoleBanCommand : IConsoleCommand
 {
     [Dependency] private IPlayerLocator _locator = default!;

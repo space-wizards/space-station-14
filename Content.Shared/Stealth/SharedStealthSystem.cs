@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Stealth;
 
+[InjectDependencies]
 public abstract partial class SharedStealthSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

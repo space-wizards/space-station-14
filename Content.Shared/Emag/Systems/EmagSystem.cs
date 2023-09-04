@@ -18,6 +18,7 @@ namespace Content.Shared.Emag.Systems;
 /// 3. Have some check for if this actually needs to be emagged or is already emagged (to stop charge waste)
 /// 4. Past the check, add all the effects you desire and HANDLE THE EVENT ARGUMENT so a charge is spent
 /// 5. Optionally, set Repeatable on the event to true if you don't want the emagged component to be added
+[InjectDependencies]
 public sealed partial class EmagSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

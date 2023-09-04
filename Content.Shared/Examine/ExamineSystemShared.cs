@@ -15,6 +15,7 @@ using static Content.Shared.Interaction.SharedInteractionSystem;
 
 namespace Content.Shared.Examine
 {
+    [InjectDependencies]
     public abstract partial class ExamineSystemShared : EntitySystem
     {
         [Dependency] private SharedContainerSystem _containerSystem = default!;

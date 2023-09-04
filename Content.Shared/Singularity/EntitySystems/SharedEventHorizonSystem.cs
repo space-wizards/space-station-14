@@ -13,6 +13,7 @@ namespace Content.Shared.Singularity.EntitySystems;
 /// <summary>
 /// The entity system primarily responsible for managing <see cref="EventHorizonComponent"/>s.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedEventHorizonSystem : EntitySystem
 {
 

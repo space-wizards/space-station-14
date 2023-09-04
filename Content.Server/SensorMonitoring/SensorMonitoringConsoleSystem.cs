@@ -20,6 +20,7 @@ using ConsoleUIState = Content.Shared.SensorMonitoring.SensorMonitoringConsoleBo
 
 namespace Content.Server.SensorMonitoring;
 
+[InjectDependencies]
 public sealed partial class SensorMonitoringConsoleSystem : EntitySystem
 {
     // TODO: THIS THING IS HEAVILY WIP AND NOT READY FOR GENERAL USE BY PLAYERS.

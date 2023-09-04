@@ -23,6 +23,7 @@ using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Bed.Sleep
 {
+    [InjectDependencies]
     public sealed partial class SleepingSystem : SharedSleepingSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

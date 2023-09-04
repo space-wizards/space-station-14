@@ -15,6 +15,7 @@ namespace Content.Server.Anomaly.Effects;
 /// <summary>
 /// This handles <see cref="ProjectileAnomalyComponent"/> and the events from <seealso cref="AnomalySystem"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class ProjectileAnomalySystem : EntitySystem
 {
     [Dependency] private TransformSystem _xform = default!;

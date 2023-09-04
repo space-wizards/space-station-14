@@ -2,6 +2,7 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Speech.EntitySystems;
 
+[InjectDependencies]
 public abstract partial class SharedStutteringSystem : EntitySystem
 {
     [ValidatePrototypeId<StatusEffectPrototype>]

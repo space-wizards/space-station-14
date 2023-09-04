@@ -5,6 +5,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Light.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class LightBehaviorSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

@@ -9,6 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Devour;
 
+[InjectDependencies]
 public abstract partial class SharedDevourSystem : EntitySystem
 {
     [Dependency] protected SharedAudioSystem _audioSystem = default!;

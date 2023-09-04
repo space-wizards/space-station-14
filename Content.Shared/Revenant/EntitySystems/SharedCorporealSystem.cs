@@ -12,6 +12,7 @@ namespace Content.Shared.Revenant.EntitySystems;
 /// Additionally applies a few visual effects.
 /// Used for status effect.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedCorporealSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

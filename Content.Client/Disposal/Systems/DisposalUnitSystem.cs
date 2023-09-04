@@ -11,6 +11,7 @@ using static Content.Shared.Disposal.Components.SharedDisposalUnitComponent;
 
 namespace Content.Client.Disposal.Systems;
 
+[InjectDependencies]
 public sealed partial class DisposalUnitSystem : SharedDisposalUnitSystem
 {
     [Dependency] private AppearanceSystem _appearanceSystem = default!;

@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+[InjectDependencies]
 public sealed partial class TemperatureArtifactSystem : EntitySystem
 {
     [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

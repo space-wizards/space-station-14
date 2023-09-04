@@ -8,6 +8,7 @@ using static Content.Shared.Administration.Notes.AdminMessageEuiMsg;
 
 namespace Content.Server.Administration.Notes;
 
+[InjectDependencies]
 public sealed partial class AdminMessageEui : BaseEui
 {
     [Dependency] private IAdminNotesManager _notesMan = default!;

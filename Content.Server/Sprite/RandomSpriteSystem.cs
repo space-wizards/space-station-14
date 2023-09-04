@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Sprite;
 
+[InjectDependencies]
 public sealed partial class RandomSpriteSystem: SharedRandomSpriteSystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

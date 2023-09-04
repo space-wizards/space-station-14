@@ -20,6 +20,7 @@ namespace Content.Shared.Containers.ItemSlots
     /// <summary>
     ///     A class that handles interactions related to inserting/ejecting items into/from an item slot.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class ItemSlotsSystem : EntitySystem
     {
         [Dependency] private IGameTiming _timing = default!;

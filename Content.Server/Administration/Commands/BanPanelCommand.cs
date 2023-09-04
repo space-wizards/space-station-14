@@ -11,6 +11,7 @@ using Robust.Server.Player;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
+[InjectDependencies]
 public sealed partial class BanPanelCommand : LocalizedCommands
 {
 

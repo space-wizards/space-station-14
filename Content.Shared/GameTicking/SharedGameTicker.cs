@@ -6,6 +6,7 @@ using Robust.Shared.Serialization.Markdown.Value;
 
 namespace Content.Shared.GameTicking
 {
+    [InjectDependencies]
     public abstract partial class SharedGameTicker : EntitySystem
     {
         [Dependency] private IReplayRecordingManager _replay = default!;

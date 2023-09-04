@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Content.Client.CrewManifest.UI;
 
+[InjectDependencies]
 public sealed partial class CrewManifestListing : BoxContainer
 {
     [Dependency] private IConfigurationManager _configManager = default!;

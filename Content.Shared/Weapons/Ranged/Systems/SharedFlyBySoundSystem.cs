@@ -11,6 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedFlyBySoundSystem : EntitySystem
 {
     [Dependency] private FixtureSystem _fixtures = default!;

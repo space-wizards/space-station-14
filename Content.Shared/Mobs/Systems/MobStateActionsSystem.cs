@@ -8,6 +8,7 @@ namespace Content.Shared.Mobs.Systems;
 /// <summary>
 ///     Adds and removes defined actions when a mob's <see cref="MobState"/> changes.
 /// </summary>
+[InjectDependencies]
 public sealed partial class MobStateActionsSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

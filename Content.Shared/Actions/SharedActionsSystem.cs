@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace Content.Shared.Actions;
 
+[InjectDependencies]
 public abstract partial class SharedActionsSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;

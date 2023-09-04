@@ -15,6 +15,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GasReyclerSystem : EntitySystem
     {
         [Dependency] private AppearanceSystem _appearance = default!;

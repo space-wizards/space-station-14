@@ -14,6 +14,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Entry
 {
+    [InjectDependencies]
     public sealed partial class EntryPoint : GameShared
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

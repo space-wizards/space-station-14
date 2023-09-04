@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Holiday
 {
+    [InjectDependencies]
     public sealed partial class HolidaySystem : EntitySystem
     {
         [Dependency] private IConfigurationManager _configManager = default!;

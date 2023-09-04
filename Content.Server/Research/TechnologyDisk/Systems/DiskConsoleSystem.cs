@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Research.TechnologyDisk.Systems;
 
+[InjectDependencies]
 public sealed partial class DiskConsoleSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

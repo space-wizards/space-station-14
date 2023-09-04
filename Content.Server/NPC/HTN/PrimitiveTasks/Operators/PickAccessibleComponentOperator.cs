@@ -9,6 +9,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Picks a nearby component that is accessible.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PickAccessibleComponentOperator : HTNOperator
 {
     [Dependency] private IComponentFactory _factory = default!;

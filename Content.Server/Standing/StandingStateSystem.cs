@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Standing;
 
+[InjectDependencies]
 public sealed partial class StandingStateSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

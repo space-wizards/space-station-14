@@ -4,6 +4,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.DetailExaminable
 {
+    [InjectDependencies]
     public sealed partial class DetailExaminableSystem : EntitySystem
     {
         [Dependency] private ExamineSystemShared _examineSystem = default!;

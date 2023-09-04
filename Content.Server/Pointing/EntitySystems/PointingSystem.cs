@@ -27,6 +27,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class PointingSystem : SharedPointingSystem
     {
         [Dependency] private IReplayRecordingManager _replay = default!;

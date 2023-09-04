@@ -22,6 +22,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Melee;
 
+[InjectDependencies]
 public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private IEyeManager _eyeManager = default!;

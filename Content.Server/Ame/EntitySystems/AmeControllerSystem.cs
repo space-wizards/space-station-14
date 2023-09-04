@@ -20,6 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ame.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class AmeControllerSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

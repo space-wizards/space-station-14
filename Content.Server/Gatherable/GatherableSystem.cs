@@ -10,6 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Gatherable;
 
+[InjectDependencies]
 public sealed partial class GatherableSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Content.Client.Toggleable;
 
+[InjectDependencies]
 public sealed partial class ToggleableLightVisualsSystem : VisualizerSystem<ToggleableLightVisualsComponent>
 {
     [Dependency] private SharedItemSystem _itemSys = default!;

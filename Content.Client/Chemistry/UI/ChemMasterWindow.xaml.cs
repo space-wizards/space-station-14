@@ -19,6 +19,7 @@ namespace Content.Client.Chemistry.UI
     /// Client-side UI used to control a <see cref="SharedChemMasterComponent"/>
     /// </summary>
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class ChemMasterWindow : FancyWindow
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

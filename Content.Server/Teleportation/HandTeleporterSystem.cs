@@ -11,6 +11,7 @@ namespace Content.Server.Teleportation;
 /// <summary>
 /// This handles creating portals from a hand teleporter.
 /// </summary>
+[InjectDependencies]
 public sealed partial class HandTeleporterSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

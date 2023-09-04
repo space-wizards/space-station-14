@@ -24,6 +24,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Polymorph.Systems
 {
+    [InjectDependencies]
     public sealed partial class PolymorphSystem : EntitySystem
     {
         [Dependency] private IComponentFactory _compFact = default!;

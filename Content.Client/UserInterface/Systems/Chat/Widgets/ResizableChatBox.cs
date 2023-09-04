@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.UserInterface.Systems.Chat.Widgets;
 
+[InjectDependencies]
 public sealed partial class ResizableChatBox : ChatBox
 {
         public ResizableChatBox()

@@ -19,6 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Friction
 {
+    [InjectDependencies]
     public sealed partial class TileFrictionController : VirtualController
     {
         [Dependency] private IConfigurationManager _configManager = default!;

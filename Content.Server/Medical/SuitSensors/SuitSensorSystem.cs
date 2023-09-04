@@ -20,6 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.SuitSensors
 {
+    [InjectDependencies]
     public sealed partial class SuitSensorSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

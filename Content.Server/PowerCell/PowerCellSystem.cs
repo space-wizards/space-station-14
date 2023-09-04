@@ -21,6 +21,7 @@ namespace Content.Server.PowerCell;
 /// <summary>
 /// Handles Power cells
 /// </summary>
+[InjectDependencies]
 public sealed partial class PowerCellSystem : SharedPowerCellSystem
 {
     [Dependency] private IGameTiming _timing = default!;

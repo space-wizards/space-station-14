@@ -3,6 +3,7 @@ using Content.Shared.Weapons.Ranged.Components;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public sealed partial class UseDelayOnShootSystem : EntitySystem
 {
     [Dependency] private UseDelaySystem _delay = default!;

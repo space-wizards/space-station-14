@@ -15,6 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
+[InjectDependencies]
 public sealed partial class InternalsSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoManager = default!;

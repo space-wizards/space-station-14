@@ -21,6 +21,7 @@ using static Robust.Shared.Input.Binding.PointerInputCmdHandler;
 namespace Content.Client.Tabletop
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class TabletopSystem : SharedTabletopSystem
     {
         [Dependency] private IInputManager _inputManager = default!;

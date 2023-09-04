@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Content.Shared.SubFloor;
 
+[InjectDependencies]
 public abstract partial class SharedTrayScannerSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

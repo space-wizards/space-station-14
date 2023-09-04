@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Atmos.Miasma;
 
+[InjectDependencies]
 public sealed partial class RottingSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

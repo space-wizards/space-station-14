@@ -3,6 +3,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Emp;
 
+[InjectDependencies]
 public sealed partial class EmpSystem : SharedEmpSystem
 {
     [Dependency] private IRobustRandom _random = default!;

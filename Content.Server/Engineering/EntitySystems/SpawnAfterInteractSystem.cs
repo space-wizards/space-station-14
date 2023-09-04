@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Engineering.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class SpawnAfterInteractSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

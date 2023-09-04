@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Interaction;
 
+[InjectDependencies]
 public sealed partial class InteractionPopupSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;

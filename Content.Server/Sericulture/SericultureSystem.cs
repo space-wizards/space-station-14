@@ -12,6 +12,7 @@ using Content.Server.Stack;
 
 namespace Content.Server.Sericulture;
 
+[InjectDependencies]
 public sealed partial class SericultureSystem : EntitySystem
 {
     [Dependency] private ActionsSystem _actionsSystem = default!;

@@ -10,6 +10,7 @@ using Content.Shared.Movement.Systems;
 
 namespace Content.Server.Body.Systems
 {
+    [InjectDependencies]
     public sealed partial class BrainSystem : EntitySystem
     {
         [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;

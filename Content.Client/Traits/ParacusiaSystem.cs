@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Traits;
 
+[InjectDependencies]
 public sealed partial class ParacusiaSystem : SharedParacusiaSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -5,6 +5,7 @@ using Content.Shared.Storage.Components;
 
 namespace Content.Server.Morgue;
 
+[InjectDependencies]
 public sealed partial class EntityStorageLayingDownOverrideSystem : EntitySystem
 {
     [Dependency] private StandingStateSystem _standing = default!;

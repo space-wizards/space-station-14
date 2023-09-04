@@ -6,6 +6,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.CharacterInfo;
 
+[InjectDependencies]
 public sealed partial class CharacterInfoSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _players = default!;

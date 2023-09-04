@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Payload.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class PayloadSystem : EntitySystem
 {
     [Dependency] private TagSystem _tagSystem = default!;

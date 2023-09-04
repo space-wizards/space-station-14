@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class StorageFillVisualizerSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

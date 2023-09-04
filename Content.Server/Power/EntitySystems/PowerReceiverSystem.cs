@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Power.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class PowerReceiverSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

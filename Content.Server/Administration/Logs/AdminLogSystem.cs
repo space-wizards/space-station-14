@@ -7,6 +7,7 @@ namespace Content.Server.Administration.Logs;
 ///     For system events that the manager needs to know about.
 ///     <see cref="IAdminLogManager"/> for admin log usage.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AdminLogSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogs = default!;

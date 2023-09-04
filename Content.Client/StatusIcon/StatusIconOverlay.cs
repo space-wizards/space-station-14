@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.StatusIcon;
 
+[InjectDependencies]
 public sealed partial class StatusIconOverlay : Overlay
 {
     [Dependency] private IEntityManager _entity = default!;

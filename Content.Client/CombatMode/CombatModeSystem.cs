@@ -10,6 +10,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.CombatMode;
 
+[InjectDependencies]
 public sealed partial class CombatModeSystem : SharedCombatModeSystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;

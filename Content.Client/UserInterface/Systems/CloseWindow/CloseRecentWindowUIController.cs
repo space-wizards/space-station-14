@@ -9,6 +9,7 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Client.UserInterface.Systems.Info;
 
+[InjectDependencies]
 public sealed partial class CloseRecentWindowUIController : UIController
 {
     [Dependency] private IInputManager _inputManager = default!;

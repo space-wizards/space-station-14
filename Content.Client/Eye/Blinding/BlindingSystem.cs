@@ -15,6 +15,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Eye.Blinding;
 
+[InjectDependencies]
 public sealed partial class BlindingSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;

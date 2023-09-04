@@ -7,6 +7,7 @@ namespace Content.Server.Power.Components
     /// </summary>
     [RegisterComponent]
     [Virtual]
+    [InjectDependencies]
     public partial class BatteryComponent : Component
     {
         [Dependency] private IEntityManager _entMan = default!;

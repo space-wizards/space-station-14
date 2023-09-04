@@ -11,6 +11,7 @@ namespace Content.Server.Cargo.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
+[InjectDependencies]
 public sealed partial class PriceGunSystem : EntitySystem
 {
     [Dependency] private UseDelaySystem _useDelay = default!;

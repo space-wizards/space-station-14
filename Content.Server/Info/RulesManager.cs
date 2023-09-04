@@ -7,6 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Info;
 
+[InjectDependencies]
 public sealed partial class RulesManager : SharedRulesManager
 {
     [Dependency] private IServerDbManager _dbManager = default!;

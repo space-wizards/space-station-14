@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ToggleableClothingSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _containerSystem = default!;

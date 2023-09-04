@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Fluids.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class PuddleDebugDebugOverlaySystem : SharedPuddleDebugOverlaySystem
 {
     [Dependency] private IGameTiming _timing = default!;

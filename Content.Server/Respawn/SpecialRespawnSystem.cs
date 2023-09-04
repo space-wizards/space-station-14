@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Respawn;
 
+[InjectDependencies]
 public sealed partial class SpecialRespawnSystem : SharedSpecialRespawnSystem
 {
     [Dependency] private IMapManager _mapManager = default!;

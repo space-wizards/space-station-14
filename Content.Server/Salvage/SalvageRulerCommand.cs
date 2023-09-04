@@ -12,6 +12,7 @@ using Robust.Shared.IoC;
 namespace Content.Server.Salvage;
 
 [AdminCommand(AdminFlags.Admin)]
+[InjectDependencies]
 sealed partial class SalvageRulerCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entities = default!;

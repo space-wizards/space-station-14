@@ -9,6 +9,7 @@ using Robust.Shared.Map.Components;
 
 namespace Content.Server.Weather;
 
+[InjectDependencies]
 public sealed partial class WeatherSystem : SharedWeatherSystem
 {
     [Dependency] private IConsoleHost _console = default!;

@@ -25,6 +25,7 @@ namespace Content.Server.Chemistry.EntitySystems
     /// <seealso cref="ChemMasterComponent"/>
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ChemMasterSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

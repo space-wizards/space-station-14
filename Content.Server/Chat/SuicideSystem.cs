@@ -14,6 +14,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chat
 {
+    [InjectDependencies]
     public sealed partial class SuicideSystem : EntitySystem
     {
         [Dependency] private DamageableSystem _damageableSystem = default!;

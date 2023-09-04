@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Administration.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class BwoinkSystem : SharedBwoinkSystem
     {
         [Dependency] private IGameTiming _timing = default!;

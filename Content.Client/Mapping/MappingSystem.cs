@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Mapping;
 
+[InjectDependencies]
 public sealed partial class MappingSystem : EntitySystem
 {
     [Dependency] private IPlacementManager _placementMan = default!;

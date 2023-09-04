@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Content.Server.Arcade.BlockGame;
 
+[InjectDependencies]
 public sealed partial class BlockGame
 {
     [Dependency] private IEntityManager _entityManager = default!;

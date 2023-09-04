@@ -10,6 +10,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Movement.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedJetpackSystem : EntitySystem
 {
     [Dependency] private   MovementSpeedModifierSystem _movementSpeedModifier = default!;

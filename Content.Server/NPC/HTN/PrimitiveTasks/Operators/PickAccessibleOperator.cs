@@ -8,6 +8,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Chooses a nearby coordinate and puts it into the resulting key.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PickAccessibleOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

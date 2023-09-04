@@ -5,6 +5,7 @@ using Content.Shared.ActionBlocker;
 
 namespace Content.Server.Body.Systems;
 
+[InjectDependencies]
 public sealed partial class ThermalRegulatorSystem : EntitySystem
 {
     [Dependency] private TemperatureSystem _tempSys = default!;

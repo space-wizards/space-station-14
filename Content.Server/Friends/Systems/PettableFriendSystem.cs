@@ -7,6 +7,7 @@ using Content.Shared.Popups;
 
 namespace Content.Server.Friends.Systems;
 
+[InjectDependencies]
 public sealed partial class PettableFriendSystem : EntitySystem
 {
     [Dependency] private FactionExceptionSystem _factionException = default!;

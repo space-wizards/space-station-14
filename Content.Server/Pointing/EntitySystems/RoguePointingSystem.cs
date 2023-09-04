@@ -11,6 +11,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Server.Pointing.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class RoguePointingSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

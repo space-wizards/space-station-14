@@ -7,6 +7,7 @@ using Content.Shared.DeviceLinking;
 
 namespace Content.Server.DeviceLinking.Systems;
 
+[InjectDependencies]
 public sealed partial class DeviceLinkSystem : SharedDeviceLinkSystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;

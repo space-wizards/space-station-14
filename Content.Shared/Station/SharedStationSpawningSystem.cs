@@ -6,6 +6,7 @@ using Content.Shared.Roles;
 
 namespace Content.Shared.Station;
 
+[InjectDependencies]
 public abstract partial class SharedStationSpawningSystem : EntitySystem
 {
     [Dependency] protected InventorySystem InventorySystem = default!;

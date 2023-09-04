@@ -21,6 +21,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Doors.Systems
 {
+    [InjectDependencies]
     public sealed partial class FirelockSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

@@ -4,6 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Weapons.Marker;
 
+[InjectDependencies]
 public sealed partial class DamageMarkerSystem : SharedDamageMarkerSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -25,6 +25,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class StaminaSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

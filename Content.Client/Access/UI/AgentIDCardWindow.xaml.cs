@@ -12,6 +12,7 @@ using System.Numerics;
 namespace Content.Client.Access.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class AgentIDCardWindow : DefaultWindow
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

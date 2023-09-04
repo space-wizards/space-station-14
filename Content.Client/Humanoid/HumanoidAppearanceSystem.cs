@@ -12,6 +12,7 @@ using static Content.Shared.Humanoid.HumanoidAppearanceState;
 
 namespace Content.Client.Humanoid;
 
+[InjectDependencies]
 public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

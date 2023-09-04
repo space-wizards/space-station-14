@@ -4,6 +4,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Pinpointer;
 
+[InjectDependencies]
 public sealed partial class StationMapSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _ui = default!;

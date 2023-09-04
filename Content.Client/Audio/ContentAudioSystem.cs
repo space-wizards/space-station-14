@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Audio;
 
+[InjectDependencies]
 public sealed partial class ContentAudioSystem : SharedContentAudioSystem
 {
     // Need how much volume to change per tick and just remove it when it drops below "0"

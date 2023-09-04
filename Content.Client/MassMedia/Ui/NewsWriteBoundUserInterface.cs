@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.MassMedia.Ui
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class NewsWriteBoundUserInterface : BoundUserInterface
     {
         [ViewVariables]

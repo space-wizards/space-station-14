@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.GameTicking.Managers
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ClientGameTicker : SharedGameTicker
     {
         [Dependency] private IStateManager _stateManager = default!;

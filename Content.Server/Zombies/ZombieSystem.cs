@@ -24,6 +24,7 @@ using Content.Shared.Humanoid;
 
 namespace Content.Server.Zombies
 {
+    [InjectDependencies]
     public sealed partial class ZombieSystem : SharedZombieSystem
     {
         [Dependency] private IGameTiming _timing = default!;

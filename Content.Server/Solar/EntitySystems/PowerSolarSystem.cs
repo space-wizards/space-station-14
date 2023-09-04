@@ -14,6 +14,7 @@ namespace Content.Server.Solar.EntitySystems
     ///     Responsible for maintaining the solar-panel sun angle and updating <see cref='SolarPanelComponent'/> coverage.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class PowerSolarSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _robustRandom = default!;

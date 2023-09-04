@@ -10,6 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
 {
+    [InjectDependencies]
     public sealed partial class AgentIDCardSystem : SharedAgentIdCardSystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

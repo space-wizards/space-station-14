@@ -32,6 +32,7 @@ namespace Content.Server.Afk
     }
 
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class AfkManager : IAfkManager, IEntityEventSubscriber
     {
         [Dependency] private IEntityManager _entityManager = default!;

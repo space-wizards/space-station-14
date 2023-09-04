@@ -33,6 +33,7 @@ using Robust.Shared.Exceptions;
 
 namespace Content.Server.GameTicking
 {
+    [InjectDependencies]
     public sealed partial class GameTicker : SharedGameTicker
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

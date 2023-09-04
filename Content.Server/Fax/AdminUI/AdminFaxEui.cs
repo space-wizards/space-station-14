@@ -8,6 +8,7 @@ using Content.Shared.Paper;
 
 namespace Content.Server.Fax.AdminUI;
 
+[InjectDependencies]
 public sealed partial class AdminFaxEui : BaseEui
 {
     [Dependency] private IEntityManager _entityManager = default!;

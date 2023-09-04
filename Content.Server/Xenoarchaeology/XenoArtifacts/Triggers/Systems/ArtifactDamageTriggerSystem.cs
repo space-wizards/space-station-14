@@ -3,6 +3,7 @@ using Content.Shared.Damage;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactDamageTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifact = default!;

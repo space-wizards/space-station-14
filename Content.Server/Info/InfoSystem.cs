@@ -6,6 +6,7 @@ using Robust.Shared.Log;
 
 namespace Content.Server.Info;
 
+[InjectDependencies]
 public sealed partial class InfoSystem : EntitySystem
 {
     [Dependency] private IResourceManager _res = default!;

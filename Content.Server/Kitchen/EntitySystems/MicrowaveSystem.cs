@@ -29,6 +29,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Kitchen.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class MicrowaveSystem : EntitySystem
     {
         [Dependency] private BodySystem _bodySystem = default!;

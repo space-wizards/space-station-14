@@ -22,6 +22,7 @@ public sealed partial class DisposalDoAfterEvent : SimpleDoAfterEvent
 {
 }
 
+[InjectDependencies]
 public abstract partial class SharedDisposalUnitSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;

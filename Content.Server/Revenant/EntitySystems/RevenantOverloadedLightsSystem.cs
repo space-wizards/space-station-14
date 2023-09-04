@@ -7,6 +7,7 @@ namespace Content.Server.Revenant.EntitySystems;
 /// <summary>
 /// This handles...
 /// </summary>
+[InjectDependencies]
 public sealed partial class RevenantOverloadedLightsSystem : SharedRevenantOverloadedLightsSystem
 {
     [Dependency] private BeamSystem _beam = default!;

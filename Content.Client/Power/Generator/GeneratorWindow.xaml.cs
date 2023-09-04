@@ -7,6 +7,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Power.Generator;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class GeneratorWindow : FancyWindow
 {
     private readonly EntityUid _entity;

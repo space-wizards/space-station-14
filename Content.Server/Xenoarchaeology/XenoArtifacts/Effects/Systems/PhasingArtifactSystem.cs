@@ -11,6 +11,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 ///     Handles allowing activated artifacts to phase through walls.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PhasingArtifactSystem : EntitySystem
 {
     [Dependency] private SharedPhysicsSystem _physics = default!;

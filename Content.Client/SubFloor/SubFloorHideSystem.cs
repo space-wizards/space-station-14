@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.SubFloor;
 
+[InjectDependencies]
 public sealed partial class SubFloorHideSystem : SharedSubFloorHideSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

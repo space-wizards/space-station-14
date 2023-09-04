@@ -17,6 +17,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Crayon;
 
+[InjectDependencies]
 public sealed partial class CrayonSystem : SharedCrayonSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

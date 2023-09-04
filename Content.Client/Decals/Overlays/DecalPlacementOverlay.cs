@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Decals.Overlays;
 
+[InjectDependencies]
 public sealed partial class DecalPlacementOverlay : Overlay
 {
     [Dependency] private IEyeManager _eyeManager = default!;

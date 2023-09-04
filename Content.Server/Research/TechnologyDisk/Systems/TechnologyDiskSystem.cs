@@ -13,6 +13,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Research.TechnologyDisk.Systems;
 
+[InjectDependencies]
 public sealed partial class TechnologyDiskSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popup = default!;

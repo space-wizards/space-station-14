@@ -4,6 +4,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Weapons.Misc;
 
+[InjectDependencies]
 public sealed partial class TetherGunSystem : SharedTetherGunSystem
 {
     [Dependency] private PowerCellSystem _cell = default!;

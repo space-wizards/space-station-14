@@ -29,6 +29,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.GameTicking.Rules;
 
+[InjectDependencies]
 public sealed partial class ZombieRuleSystem : GameRuleSystem<ZombieRuleComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

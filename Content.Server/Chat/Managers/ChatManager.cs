@@ -21,6 +21,7 @@ namespace Content.Server.Chat.Managers
     /// <summary>
     ///     Dispatches chat messages to clients.
     /// </summary>
+    [InjectDependencies]
     internal sealed partial class ChatManager : IChatManager
     {
         private static readonly Dictionary<string, string> PatronOocColors = new()

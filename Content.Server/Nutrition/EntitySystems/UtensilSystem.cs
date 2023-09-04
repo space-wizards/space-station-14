@@ -10,6 +10,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles usage of the utensils on the food items
     /// </summary>
+    [InjectDependencies]
     internal sealed partial class UtensilSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _robustRandom = default!;

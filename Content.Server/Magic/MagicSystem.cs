@@ -33,6 +33,7 @@ namespace Content.Server.Magic;
 /// <summary>
 /// Handles learning and using spells (actions)
 /// </summary>
+[InjectDependencies]
 public sealed partial class MagicSystem : EntitySystem
 {
     [Dependency] private ISerializationManager _seriMan = default!;

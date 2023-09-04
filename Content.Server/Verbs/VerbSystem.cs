@@ -10,6 +10,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Verbs
 {
+    [InjectDependencies]
     public sealed partial class VerbSystem : SharedVerbSystem
     {
         [Dependency] private ISharedAdminLogManager _adminLogger = default!;

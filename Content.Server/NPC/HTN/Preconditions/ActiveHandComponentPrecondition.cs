@@ -6,6 +6,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Returns true if the active hand entity has the specified components.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ActiveHandComponentPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

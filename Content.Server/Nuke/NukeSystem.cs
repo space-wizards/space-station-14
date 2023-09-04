@@ -20,6 +20,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Nuke;
 
+[InjectDependencies]
 public sealed partial class NukeSystem : EntitySystem
 {
     [Dependency] private AlertLevelSystem _alertLevel = default!;

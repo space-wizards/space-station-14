@@ -15,6 +15,7 @@ using Content.Shared.CCVar;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts;
 
+[InjectDependencies]
 public sealed partial class ArtifactSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;

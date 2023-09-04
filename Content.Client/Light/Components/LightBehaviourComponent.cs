@@ -357,6 +357,7 @@ namespace Content.Client.Light.Components
     /// A component which applies a specific behaviour to a PointLightComponent on its owner.
     /// </summary>
     [RegisterComponent]
+    [InjectDependencies]
     public sealed partial class LightBehaviourComponent : SharedLightBehaviourComponent, ISerializationHooks
     {
         [Dependency] private IEntityManager _entMan = default!;

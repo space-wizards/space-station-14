@@ -23,6 +23,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Stunnable;
 
+[InjectDependencies]
 public abstract partial class SharedStunSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _blocker = default!;

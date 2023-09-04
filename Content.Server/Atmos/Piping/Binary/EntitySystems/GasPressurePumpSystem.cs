@@ -19,6 +19,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GasPressurePumpSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;

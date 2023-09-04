@@ -48,6 +48,7 @@ namespace Content.Server.Explosion.EntitySystems
     public readonly record struct ActiveTimerTriggerEvent(EntityUid Triggered, EntityUid? User);
 
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class TriggerSystem : EntitySystem
     {
         [Dependency] private ExplosionSystem _explosions = default!;

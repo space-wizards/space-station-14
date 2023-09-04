@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems
 {
+    [InjectDependencies]
     public sealed partial class DamageOtherOnHitSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

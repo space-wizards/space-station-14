@@ -9,6 +9,7 @@ using Content.Shared.Weapons.Melee.Events;
 
 namespace Content.Server.HotPotato;
 
+[InjectDependencies]
 public sealed partial class HotPotatoSystem : SharedHotPotatoSystem
 {
     [Dependency] private SharedHandsSystem _hands = default!;

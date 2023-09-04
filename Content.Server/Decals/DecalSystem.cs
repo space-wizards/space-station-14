@@ -23,6 +23,7 @@ using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Server.Decals
 {
+    [InjectDependencies]
     public sealed partial class DecalSystem : SharedDecalSystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

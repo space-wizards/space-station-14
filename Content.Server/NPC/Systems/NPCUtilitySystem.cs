@@ -29,6 +29,7 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 /// Handles utility queries for NPCs.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NPCUtilitySystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

@@ -5,6 +5,7 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.CombatMode.Pacification;
 
+[InjectDependencies]
 public sealed partial class PacificationSystem : EntitySystem
 {
     [Dependency] private AlertsSystem _alertsSystem = default!;

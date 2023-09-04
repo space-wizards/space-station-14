@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ExpendableLightSystem : EntitySystem
     {
         [Dependency] private SharedItemSystem _item = default!;

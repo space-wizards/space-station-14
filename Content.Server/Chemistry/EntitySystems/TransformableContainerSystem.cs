@@ -5,6 +5,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class TransformableContainerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

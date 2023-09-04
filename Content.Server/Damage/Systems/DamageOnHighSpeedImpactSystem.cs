@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class DamageOnHighSpeedImpactSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;

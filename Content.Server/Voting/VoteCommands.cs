@@ -12,6 +12,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Voting
 {
     [AnyCommand]
+    [InjectDependencies]
     public sealed partial class CreateVoteCommand : IConsoleCommand
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -59,6 +60,7 @@ namespace Content.Server.Voting
     }
 
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class CreateCustomCommand : IConsoleCommand
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;
@@ -210,6 +212,7 @@ namespace Content.Server.Voting
     }
 
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class CancelVoteCommand : IConsoleCommand
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

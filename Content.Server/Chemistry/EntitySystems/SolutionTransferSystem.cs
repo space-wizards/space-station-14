@@ -13,6 +13,7 @@ using Content.Shared.Popups;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class SolutionTransferSystem : EntitySystem
     {
         [Dependency] private SharedPopupSystem _popupSystem = default!;

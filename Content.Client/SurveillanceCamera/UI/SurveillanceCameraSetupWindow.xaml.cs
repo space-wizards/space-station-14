@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.SurveillanceCamera.UI;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class SurveillanceCameraSetupWindow : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

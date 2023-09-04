@@ -12,6 +12,7 @@ namespace Content.Server.GhostKick;
 // Basically we boot the client off the server without telling them, so the game shits itself.
 // Hilariously isn't it?
 
+[InjectDependencies]
 public sealed partial class GhostKickManager
 {
     [Dependency] private IServerNetManager _netManager = default!;

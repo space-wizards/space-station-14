@@ -9,6 +9,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Ensnaring;
 
+[InjectDependencies]
 public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
     [Dependency] private ContainerSystem _container = default!;

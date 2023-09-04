@@ -22,6 +22,7 @@ namespace Content.Server.StationEvents.Events;
 /// <summary>
 ///     An abstract entity system inherited by all station events for their behavior.
 /// </summary>
+[InjectDependencies]
 public abstract partial class StationEventSystem<T> : GameRuleSystem<T> where T : Component
 {
     [Dependency] protected IAdminLogManager AdminLogManager = default!;

@@ -6,6 +6,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Administration.Systems
 {
+    [InjectDependencies]
     public sealed partial class AdminSystem : EntitySystem
     {
         public event Action<List<PlayerInfo>>? PlayerListChanged;

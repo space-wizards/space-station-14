@@ -6,6 +6,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.PAI
 {
+    [InjectDependencies]
     public sealed partial class PAISystem : SharedPAISystem
     {
         [Dependency] private InstrumentSystem _instrumentSystem = default!;

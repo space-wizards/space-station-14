@@ -28,6 +28,7 @@ using Robust.Shared.Serialization.Markdown.Mapping;
 
 namespace Content.Client.Replay;
 
+[InjectDependencies]
 public sealed partial class ContentReplayPlaybackManager
 {
     [Dependency] private IStateManager _stateMan = default!;

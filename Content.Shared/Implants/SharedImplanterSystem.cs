@@ -11,6 +11,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Implants;
 
+[InjectDependencies]
 public abstract partial class SharedImplanterSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;

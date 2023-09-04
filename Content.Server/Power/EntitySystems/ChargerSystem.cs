@@ -14,6 +14,7 @@ using Robust.Server.Containers;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 internal sealed partial class ChargerSystem : EntitySystem
 {
     [Dependency] private ContainerSystem _container = default!;

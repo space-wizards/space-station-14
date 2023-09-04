@@ -36,6 +36,7 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <summary>
 /// Handles solutions on floors. Also handles the spreader logic for where the solution overflows a specified volume.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PuddleSystem : SharedPuddleSystem
 {
     [Dependency] private IAdminLogManager _adminLogger= default!;

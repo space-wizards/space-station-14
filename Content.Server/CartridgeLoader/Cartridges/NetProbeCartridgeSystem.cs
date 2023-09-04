@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
+[InjectDependencies]
 public sealed partial class NetProbeCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;

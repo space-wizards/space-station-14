@@ -5,6 +5,7 @@ using Robust.Shared.Reflection;
 
 namespace Content.Client.Sprite;
 
+[InjectDependencies]
 public sealed partial class RandomSpriteSystem : SharedRandomSpriteSystem
 {
     [Dependency] private IReflectionManager _reflection = default!;

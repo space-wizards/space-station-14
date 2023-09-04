@@ -8,6 +8,7 @@ namespace Content.Server.IgnitionSource;
 /// This handles ignition, Jez basically coded this.
 /// </summary>
 ///
+[InjectDependencies]
 public sealed partial class IgnitionSourceSystem : EntitySystem
 {
     /// <inheritdoc/>

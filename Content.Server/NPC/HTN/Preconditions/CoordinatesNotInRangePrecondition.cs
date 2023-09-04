@@ -5,6 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Is the specified coordinate not in range of us.
 /// </summary>
+[InjectDependencies]
 public sealed partial class CoordinatesNotInRangePrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

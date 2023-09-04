@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Physics.Controllers
 {
+    [InjectDependencies]
     public sealed partial class MoverController : SharedMoverController
     {
         [Dependency] private IMapManager _mapManager = default!;

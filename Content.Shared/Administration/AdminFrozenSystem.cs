@@ -12,6 +12,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Shared.Administration;
 
+[InjectDependencies]
 public sealed partial class AdminFrozenSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _blocker = default!;

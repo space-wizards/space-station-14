@@ -14,6 +14,7 @@ namespace Content.Server.Power.Generator;
 /// Implements logic for portable generators (the PACMAN). Primarily UI & power switching behavior.
 /// </summary>
 /// <seealso cref="PortableGeneratorComponent"/>
+[InjectDependencies]
 public sealed partial class PortableGeneratorSystem : SharedPortableGeneratorSystem
 {
     [Dependency] private UserInterfaceSystem _uiSystem = default!;

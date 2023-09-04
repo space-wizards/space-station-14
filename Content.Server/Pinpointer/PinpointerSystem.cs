@@ -8,6 +8,7 @@ using Content.Shared.IdentityManagement;
 
 namespace Content.Server.Pinpointer;
 
+[InjectDependencies]
 public sealed partial class PinpointerSystem : SharedPinpointerSystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;

@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Alert;
 
+[InjectDependencies]
 public abstract partial class AlertsSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

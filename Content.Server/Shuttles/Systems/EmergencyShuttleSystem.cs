@@ -30,6 +30,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Shuttles.Systems;
 
+[InjectDependencies]
 public sealed partial class EmergencyShuttleSystem : EntitySystem
 {
     /*

@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Decals.UI;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class PaletteColorPicker : DefaultWindow
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -14,6 +14,7 @@ using Content.Shared.Verbs;
 
 namespace Content.Server.Forensics
 {
+    [InjectDependencies]
     public sealed partial class ForensicScannerSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

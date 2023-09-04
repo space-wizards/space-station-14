@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.GameTicking.Rules;
 
+[InjectDependencies]
 public sealed partial class SecretRuleSystem : GameRuleSystem<SecretRuleComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

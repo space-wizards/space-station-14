@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Flash
 {
+    [InjectDependencies]
     public sealed partial class FlashSystem : SharedFlashSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

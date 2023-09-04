@@ -9,6 +9,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Nutrition
 {
     [AdminCommand(AdminFlags.Debug)]
+    [InjectDependencies]
     public sealed partial class Hungry : IConsoleCommand
     {
         [Dependency] private IEntityManager _entities = default!;

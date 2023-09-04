@@ -28,6 +28,7 @@ namespace Content.Shared.Movement.Systems
     ///     Handles player and NPC mob movement.
     ///     NPCs are handled server-side only.
     /// </summary>
+    [InjectDependencies]
     public abstract partial class SharedMoverController : VirtualController
     {
         [Dependency] private   IConfigurationManager _configManager = default!;

@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Access.Systems;
 
+[InjectDependencies]
 public sealed partial class AccessReaderSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

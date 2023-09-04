@@ -4,6 +4,7 @@ using Content.Shared.Traits.Assorted;
 
 namespace Content.Shared.Drunk;
 
+[InjectDependencies]
 public abstract partial class SharedDrunkSystem : EntitySystem
 {
     [ValidatePrototypeId<StatusEffectPrototype>]

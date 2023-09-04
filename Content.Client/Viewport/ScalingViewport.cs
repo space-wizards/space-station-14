@@ -18,6 +18,7 @@ namespace Content.Client.Viewport
     /// <summary>
     ///     Viewport control that has a fixed viewport size and scales it appropriately.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class ScalingViewport : Control, IViewportControl
     {
         [Dependency] private IClyde _clyde = default!;

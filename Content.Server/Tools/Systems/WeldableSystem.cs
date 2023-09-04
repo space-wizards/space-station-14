@@ -17,6 +17,7 @@ using System.Linq;
 
 namespace Content.Server.Tools.Systems;
 
+[InjectDependencies]
 public sealed partial class WeldableSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

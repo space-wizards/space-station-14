@@ -4,6 +4,7 @@ using Content.Server.DeviceLinking.Systems;
 
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SignalControlledValveSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _signal = default!;

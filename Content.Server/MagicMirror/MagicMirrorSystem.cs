@@ -10,6 +10,7 @@ using Robust.Shared.Players;
 
 namespace Content.Server.MagicMirror;
 
+[InjectDependencies]
 public sealed partial class MagicMirrorSystem : EntitySystem
 {
     [Dependency] private MarkingManager _markings = default!;

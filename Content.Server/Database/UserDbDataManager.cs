@@ -16,6 +16,7 @@ namespace Content.Server.Database;
 /// Actual loading code is handled by separate managers such as <see cref="IServerPreferencesManager"/>.
 /// This manager is simply a centralized "is loading done" controller for other code to rely on.
 /// </remarks>
+[InjectDependencies]
 public sealed partial class UserDbDataManager
 {
     [Dependency] private IServerPreferencesManager _prefs = default!;

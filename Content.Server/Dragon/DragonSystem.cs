@@ -27,6 +27,7 @@ using Robust.Shared.Serialization.Manager;
 
 namespace Content.Server.Dragon;
 
+[InjectDependencies]
 public sealed partial class DragonSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

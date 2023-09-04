@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Forensics
 {
+    [InjectDependencies]
     public sealed partial class ForensicsSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

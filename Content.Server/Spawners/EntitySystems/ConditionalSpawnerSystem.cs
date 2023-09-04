@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Spawners.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ConditionalSpawnerSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _robustRandom = default!;

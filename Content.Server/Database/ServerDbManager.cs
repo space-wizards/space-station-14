@@ -279,6 +279,7 @@ namespace Content.Server.Database
         #endregion
     }
 
+    [InjectDependencies]
     public sealed partial class ServerDbManager : IServerDbManager
     {
         public static readonly Counter DbReadOpsMetric = Metrics.CreateCounter(

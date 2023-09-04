@@ -8,6 +8,7 @@ using static Content.Shared.Chemistry.Components.MovespeedModifierMetabolismComp
 namespace Content.Shared.Chemistry
 {
     // TODO CONVERT THIS TO A STATUS EFFECT!!!!!!!!!!!!!!!!!!!!!!!!
+    [InjectDependencies]
     public sealed partial class MetabolismMovespeedModifierSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

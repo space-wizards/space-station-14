@@ -9,6 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Standing
 {
+    [InjectDependencies]
     public sealed partial class StandingStateSystem : EntitySystem
     {
         [Dependency] private SharedAppearanceSystem _appearance = default!;

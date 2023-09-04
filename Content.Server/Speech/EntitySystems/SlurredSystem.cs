@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SlurredSystem : SharedSlurredSystem
 {
     [Dependency] private StatusEffectsSystem _statusEffectsSystem = default!;

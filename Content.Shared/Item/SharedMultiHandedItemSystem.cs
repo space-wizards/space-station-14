@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Item;
 
+[InjectDependencies]
 public abstract partial class SharedMultiHandedItemSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

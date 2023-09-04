@@ -11,6 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Anomaly.Effects;
 
+[InjectDependencies]
 public sealed partial class ElectricityAnomalySystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

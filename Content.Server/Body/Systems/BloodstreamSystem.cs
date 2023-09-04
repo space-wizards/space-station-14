@@ -26,6 +26,7 @@ using Content.Shared.Speech.EntitySystems;
 
 namespace Content.Server.Body.Systems;
 
+[InjectDependencies]
 public sealed partial class BloodstreamSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

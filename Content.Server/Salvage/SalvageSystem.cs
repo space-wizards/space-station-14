@@ -31,6 +31,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Salvage
 {
+    [InjectDependencies]
     public sealed partial class SalvageSystem : SharedSalvageSystem
     {
         [Dependency] private IChatManager _chat = default!;

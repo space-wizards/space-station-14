@@ -17,6 +17,7 @@ namespace Content.Server.Nutrition.EntitySystems;
 /// <summary>
 /// This handles logic and interactions relating to <see cref="FatExtractorComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class FatExtractorSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

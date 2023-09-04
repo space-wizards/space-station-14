@@ -13,6 +13,7 @@ using static Content.Client.IoC.StaticIoC;
 namespace Content.Client.UserInterface.Systems.Inventory.Controls;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class ItemStatusPanel : BoxContainer
 {
     [Dependency] private IEntityManager _entityManager = default!;

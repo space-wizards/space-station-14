@@ -10,6 +10,7 @@ using Content.Shared.Doors.Systems;
 
 namespace Content.Server.StationEvents.Events;
 
+[InjectDependencies]
 public sealed partial class SolarFlareRule : StationEventSystem<SolarFlareRuleComponent>
 {
     [Dependency] private PoweredLightSystem _poweredLight = default!;

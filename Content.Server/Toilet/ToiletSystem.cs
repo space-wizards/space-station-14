@@ -22,6 +22,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Toilet
 {
+    [InjectDependencies]
     public sealed partial class ToiletSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

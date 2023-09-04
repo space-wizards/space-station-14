@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class CableVisSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

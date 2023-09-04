@@ -19,6 +19,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Doors.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedDoorSystem : EntitySystem
 {
     [Dependency] protected IGameTiming GameTiming = default!;

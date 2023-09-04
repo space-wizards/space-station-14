@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Speech.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class MeleeSpeechSystem : SharedMeleeSpeechSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

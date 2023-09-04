@@ -27,6 +27,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Botany.Systems
 {
+    [InjectDependencies]
     public sealed partial class PlantHolderSystem : EntitySystem
     {
         [Dependency] private BotanySystem _botanySystem = default!;

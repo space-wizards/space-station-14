@@ -16,6 +16,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Options.UI.Tabs
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class KeyRebindTab : Control
     {
         // List of key functions that must be registered as toggle instead.

@@ -8,6 +8,7 @@ using Content.Shared.Store;
 
 namespace Content.Server.Traitor.Uplink
 {
+    [InjectDependencies]
     public sealed partial class UplinkSystem : EntitySystem
     {
         [Dependency] private InventorySystem _inventorySystem = default!;

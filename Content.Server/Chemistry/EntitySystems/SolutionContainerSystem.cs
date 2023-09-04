@@ -34,6 +34,7 @@ public sealed class SolutionChangedEvent : EntityEventArgs
 /// Part of Chemistry system deal with SolutionContainers
 /// </summary>
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class SolutionContainerSystem : EntitySystem
 {
     [Dependency]

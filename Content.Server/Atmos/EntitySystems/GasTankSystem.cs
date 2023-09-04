@@ -19,6 +19,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GasTankSystem : EntitySystem
     {
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

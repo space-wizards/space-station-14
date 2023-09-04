@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Admin)]
+[InjectDependencies]
 public sealed partial class BanExemptionUpdateCommand : LocalizedCommands
 {
     [Dependency] private IServerDbManager _dbManager = default!;
@@ -62,6 +63,7 @@ public sealed partial class BanExemptionUpdateCommand : LocalizedCommands
 }
 
 [AdminCommand(AdminFlags.Admin)]
+[InjectDependencies]
 public sealed partial class BanExemptionGetCommand : LocalizedCommands
 {
     [Dependency] private IServerDbManager _dbManager = default!;

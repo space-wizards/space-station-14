@@ -10,6 +10,7 @@ using Robust.Shared.Input.Binding;
 
 namespace Content.Shared.Hands.EntitySystems;
 
+[InjectDependencies]
 public abstract partial class SharedHandsSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

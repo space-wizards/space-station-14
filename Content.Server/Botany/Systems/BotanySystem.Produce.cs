@@ -4,6 +4,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Botany.Systems;
 
+[InjectDependencies]
 public sealed partial class BotanySystem
 {
     public void ProduceGrown(EntityUid uid, ProduceComponent produce)

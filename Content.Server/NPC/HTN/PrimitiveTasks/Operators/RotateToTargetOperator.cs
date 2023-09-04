@@ -2,6 +2,7 @@ using Content.Shared.Interaction;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
+[InjectDependencies]
 public sealed partial class RotateToTargetOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entityManager = default!;

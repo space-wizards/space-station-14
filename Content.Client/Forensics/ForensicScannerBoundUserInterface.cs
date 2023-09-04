@@ -4,6 +4,7 @@ using Content.Shared.Forensics;
 
 namespace Content.Client.Forensics
 {
+    [InjectDependencies]
     public sealed partial class ForensicScannerBoundUserInterface : BoundUserInterface
     {
         [Dependency] private IGameTiming _gameTiming = default!;

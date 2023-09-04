@@ -24,6 +24,7 @@ using static Content.Shared.Disposal.Components.SharedDisposalTaggerComponent;
 
 namespace Content.Server.Disposal.Tube
 {
+    [InjectDependencies]
     public sealed partial class DisposalTubeSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

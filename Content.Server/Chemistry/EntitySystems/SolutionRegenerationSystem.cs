@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SolutionRegenerationSystem : EntitySystem
 {
     [Dependency] private SolutionContainerSystem _solutionContainer = default!;

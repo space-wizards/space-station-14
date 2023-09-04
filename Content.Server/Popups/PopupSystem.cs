@@ -8,6 +8,7 @@ using Robust.Shared.Players;
 
 namespace Content.Server.Popups
 {
+    [InjectDependencies]
     public sealed partial class PopupSystem : SharedPopupSystem
     {
         [Dependency] private IPlayerManager _player = default!;

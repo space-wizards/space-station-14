@@ -19,6 +19,7 @@ namespace Content.Client.Guidebook;
 /// <summary>
 ///     This system handles the help-verb and interactions with various client-side entities that are embedded into guidebooks.
 /// </summary>
+[InjectDependencies]
 public sealed partial class GuidebookSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

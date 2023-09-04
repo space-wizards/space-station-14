@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Clothing.Systems;
 
 // All valid items for chameleon are calculated on client startup and stored in dictionary.
+[InjectDependencies]
 public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

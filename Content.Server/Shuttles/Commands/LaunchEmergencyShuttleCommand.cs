@@ -9,6 +9,7 @@ namespace Content.Server.Shuttles.Commands;
 /// Early launches in the emergency shuttle.
 /// </summary>
 [AdminCommand(AdminFlags.Fun)]
+[InjectDependencies]
 public sealed partial class LaunchEmergencyShuttleCommand : IConsoleCommand
 {
     [Dependency] private IEntitySystemManager _sysManager = default!;

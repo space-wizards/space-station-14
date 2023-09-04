@@ -19,6 +19,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 
 namespace Content.Client.Lobby.UI
 {
+    [InjectDependencies]
     public sealed partial class LobbyCharacterPreviewPanel : Control
     {
         [Dependency] private IEntityManager _entityManager = default!;

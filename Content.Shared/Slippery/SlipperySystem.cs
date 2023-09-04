@@ -14,6 +14,7 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Slippery;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class SlipperySystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

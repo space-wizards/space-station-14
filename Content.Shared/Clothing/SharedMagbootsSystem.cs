@@ -9,6 +9,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Clothing;
 
+[InjectDependencies]
 public abstract partial class SharedMagbootsSystem : EntitySystem
 {
     [Dependency] private ClothingSpeedModifierSystem _clothingSpeedModifier = default!;

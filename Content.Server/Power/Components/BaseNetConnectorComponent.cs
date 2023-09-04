@@ -12,6 +12,7 @@ namespace Content.Server.Power.Components
         public string? NodeId { get; }
     }
 
+    [InjectDependencies]
     public abstract partial class BaseNetConnectorComponent<TNetType> : Component, IBaseNetConnectorComponent<TNetType>
         where TNetType : class
     {

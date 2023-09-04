@@ -26,6 +26,7 @@ using Content.Shared.Item;
 namespace Content.Client.Examine
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;

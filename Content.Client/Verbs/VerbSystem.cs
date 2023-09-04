@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Verbs
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class VerbSystem : SharedVerbSystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

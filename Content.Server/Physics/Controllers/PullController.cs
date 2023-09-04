@@ -9,6 +9,7 @@ using Robust.Shared.Physics.Controllers;
 
 namespace Content.Server.Physics.Controllers
 {
+    [InjectDependencies]
     public sealed partial class PullController : VirtualController
     {
         // Parameterization for pulling:

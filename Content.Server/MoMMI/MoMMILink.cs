@@ -12,6 +12,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.MoMMI
 {
+    [InjectDependencies]
     internal sealed partial class MoMMILink : IMoMMILink, IPostInjectInit
     {
         [Dependency] private IConfigurationManager _configurationManager = default!;

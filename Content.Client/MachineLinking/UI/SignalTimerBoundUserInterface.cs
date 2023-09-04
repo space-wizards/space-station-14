@@ -4,6 +4,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.MachineLinking.UI;
 
+[InjectDependencies]
 public sealed partial class SignalTimerBoundUserInterface : BoundUserInterface
 {
     [Dependency] private IGameTiming _gameTiming = default!;

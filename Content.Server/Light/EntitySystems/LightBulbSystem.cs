@@ -8,6 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Light.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class LightBulbSystem : EntitySystem
     {
         [Dependency] private SharedAppearanceSystem _appearance = default!;

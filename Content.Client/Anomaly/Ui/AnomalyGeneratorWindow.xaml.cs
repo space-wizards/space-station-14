@@ -9,6 +9,7 @@ using FancyWindow = Content.Client.UserInterface.Controls.FancyWindow;
 namespace Content.Client.Anomaly.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AnomalyGeneratorWindow : FancyWindow
 {
     [Dependency] private IEntityManager _entityManager = default!;

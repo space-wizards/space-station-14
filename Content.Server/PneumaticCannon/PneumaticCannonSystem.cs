@@ -13,6 +13,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.PneumaticCannon;
 
+[InjectDependencies]
 public sealed partial class PneumaticCannonSystem : SharedPneumaticCannonSystem
 {
     [Dependency] private AtmosphereSystem _atmos = default!;

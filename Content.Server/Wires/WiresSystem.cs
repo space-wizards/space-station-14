@@ -20,6 +20,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Wires;
 
+[InjectDependencies]
 public sealed partial class WiresSystem : SharedWiresSystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;

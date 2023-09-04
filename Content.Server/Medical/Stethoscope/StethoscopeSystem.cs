@@ -15,6 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Medical
 {
+    [InjectDependencies]
     public sealed partial class StethoscopeSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

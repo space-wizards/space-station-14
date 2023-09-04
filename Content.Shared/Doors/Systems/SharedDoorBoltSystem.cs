@@ -3,6 +3,7 @@ using Content.Shared.Popups;
 
 namespace Content.Shared.Doors.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedDoorBoltSystem : EntitySystem
 {
 

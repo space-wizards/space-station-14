@@ -9,6 +9,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Pointing;
 
+[InjectDependencies]
 public sealed partial class PointingSystem : SharedPointingSystem
 {
     [Dependency] private MobStateSystem _mobState = default!;

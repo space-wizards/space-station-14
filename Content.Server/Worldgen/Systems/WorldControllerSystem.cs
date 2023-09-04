@@ -12,6 +12,7 @@ namespace Content.Server.Worldgen.Systems;
 /// <summary>
 ///     This handles putting together chunk entities and notifying them about important changes.
 /// </summary>
+[InjectDependencies]
 public sealed partial class WorldControllerSystem : EntitySystem
 {
     [Dependency] private TransformSystem _xformSys = default!;

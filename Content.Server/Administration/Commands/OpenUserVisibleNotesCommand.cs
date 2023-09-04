@@ -8,6 +8,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Administration.Commands;
 
 [AnyCommand]
+[InjectDependencies]
 public sealed partial class OpenUserVisibleNotesCommand : IConsoleCommand
 {
     [Dependency] private IConfigurationManager _configuration = default!;

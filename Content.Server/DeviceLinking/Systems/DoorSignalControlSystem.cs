@@ -9,6 +9,7 @@ using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEv
 namespace Content.Server.DeviceLinking.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class DoorSignalControlSystem : EntitySystem
     {
         [Dependency] private DoorBoltSystem _bolts = default!;

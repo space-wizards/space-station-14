@@ -6,6 +6,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Atmos.EntitySystems
 {
+    [InjectDependencies]
     public abstract partial class SharedGasTileOverlaySystem : EntitySystem
     {
         public const byte ChunkSize = 8;

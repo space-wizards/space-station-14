@@ -11,6 +11,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.UserInterface;
 
+[InjectDependencies]
 public sealed partial class ActivatableUISystem : EntitySystem
 {
     [Dependency] private IAdminManager _adminManager = default!;

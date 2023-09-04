@@ -6,6 +6,7 @@ using System.Linq;
 
 namespace Content.Server.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class DamageOnHitSystem : EntitySystem
 {
     [Dependency] private DamageableSystem _damageableSystem = default!;

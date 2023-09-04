@@ -11,6 +11,7 @@ using System.Linq;
 
 namespace Content.Server.Gateway.Systems;
 
+[InjectDependencies]
 public sealed partial class GatewaySystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

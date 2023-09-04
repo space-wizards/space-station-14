@@ -28,6 +28,7 @@ namespace Content.Server.Shuttles.Systems;
 /// <summary>
 /// If enabled spawns players on a separate arrivals station before they can transfer to the main station.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ArrivalsSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfgManager = default!;

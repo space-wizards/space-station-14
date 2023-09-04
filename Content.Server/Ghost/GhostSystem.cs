@@ -25,6 +25,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
 {
+    [InjectDependencies]
     public sealed partial class GhostSystem : SharedGhostSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

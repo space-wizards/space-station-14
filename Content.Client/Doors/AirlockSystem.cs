@@ -6,6 +6,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+[InjectDependencies]
 public sealed partial class AirlockSystem : SharedAirlockSystem
 {
     [Dependency] private AppearanceSystem _appearanceSystem = default!;

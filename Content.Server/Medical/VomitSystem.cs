@@ -21,6 +21,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Medical
 {
+    [InjectDependencies]
     public sealed partial class VomitSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _proto = default!;

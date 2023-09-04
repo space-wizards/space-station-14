@@ -3,6 +3,7 @@ using Content.Shared.Examine;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactExamineTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifact = default!;

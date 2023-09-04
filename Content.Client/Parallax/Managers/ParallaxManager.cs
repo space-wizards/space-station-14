@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Parallax.Managers;
 
+[InjectDependencies]
 public sealed partial class ParallaxManager : IParallaxManager
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Launcher
 {
+    [InjectDependencies]
     public sealed partial class LauncherConnecting : Robust.Client.State.State
     {
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;

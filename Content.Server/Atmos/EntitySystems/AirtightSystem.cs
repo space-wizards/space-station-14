@@ -9,6 +9,7 @@ using Content.Shared.Destructible;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class AirtightSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

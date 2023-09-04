@@ -13,6 +13,7 @@ using static Content.Shared.Storage.EntitySpawnCollection;
 
 namespace Content.Server.Storage.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class SpawnItemsOnUseSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

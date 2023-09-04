@@ -14,6 +14,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Abilities.Mime
 {
+    [InjectDependencies]
     public sealed partial class MimePowersSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

@@ -12,6 +12,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Server.Implants;
 
+[InjectDependencies]
 public sealed partial class ImplanterSystem : SharedImplanterSystem
 {
     [Dependency] private PopupSystem _popup = default!;

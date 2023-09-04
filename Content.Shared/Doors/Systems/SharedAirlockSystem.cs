@@ -4,6 +4,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Doors.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedAirlockSystem : EntitySystem
 {
     [Dependency] protected SharedAppearanceSystem Appearance = default!;

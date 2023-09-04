@@ -7,6 +7,7 @@ namespace Content.Server.Motd;
 /// A command that can be used by any player to print the Message of the Day.
 /// </summary>
 [AnyCommand]
+[InjectDependencies]
 public sealed partial class GetMotdCommand : LocalizedCommands
 {
     [Dependency] private IEntityManager _entityManager = default!;

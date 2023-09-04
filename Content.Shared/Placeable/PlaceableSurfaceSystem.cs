@@ -6,6 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Placeable
 {
+    [InjectDependencies]
     public sealed partial class PlaceableSurfaceSystem : EntitySystem
     {
         [Dependency] private SharedHandsSystem _handsSystem = default!;

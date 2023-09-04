@@ -7,6 +7,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 namespace Content.Client.Mech;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class MechSystem : SharedMechSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

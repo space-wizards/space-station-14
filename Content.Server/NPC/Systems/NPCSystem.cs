@@ -12,6 +12,7 @@ namespace Content.Server.NPC.Systems
     /// <summary>
     ///     Handles NPCs running every tick.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class NPCSystem : EntitySystem
     {
         [Dependency] private IConfigurationManager _configurationManager = default!;

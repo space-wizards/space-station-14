@@ -21,6 +21,7 @@ namespace Content.Server.Chemistry.EntitySystems
     /// <seealso cref="ReagentDispenserComponent"/>
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ReagentDispenserSystem : EntitySystem
     {
         [Dependency] private AudioSystem _audioSystem = default!;

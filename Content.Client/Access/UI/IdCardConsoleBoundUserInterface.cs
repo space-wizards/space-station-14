@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 using static Content.Shared.Access.Components.IdCardConsoleComponent;
 namespace Content.Client.Access.UI
 {
+    [InjectDependencies]
     public sealed partial class IdCardConsoleBoundUserInterface : BoundUserInterface
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

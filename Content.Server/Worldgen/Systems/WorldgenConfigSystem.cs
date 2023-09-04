@@ -17,6 +17,7 @@ namespace Content.Server.Worldgen.Systems;
 /// <summary>
 ///     This handles configuring world generation during round start.
 /// </summary>
+[InjectDependencies]
 public sealed partial class WorldgenConfigSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;

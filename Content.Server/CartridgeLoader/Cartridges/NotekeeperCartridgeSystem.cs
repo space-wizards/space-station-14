@@ -3,6 +3,7 @@ using Content.Shared.CartridgeLoader.Cartridges;
 
 namespace Content.Server.CartridgeLoader.Cartridges;
 
+[InjectDependencies]
 public sealed partial class NotekeeperCartridgeSystem : EntitySystem
 {
     [Dependency] private CartridgeLoaderSystem _cartridgeLoaderSystem = default!;

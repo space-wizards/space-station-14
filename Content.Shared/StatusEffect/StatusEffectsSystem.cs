@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.StatusEffect
 {
+    [InjectDependencies]
     public sealed partial class StatusEffectsSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

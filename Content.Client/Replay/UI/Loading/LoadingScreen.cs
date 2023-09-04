@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Replay.UI.Loading;
 
 [Virtual]
+[InjectDependencies]
 public partial class LoadingScreen<TResult> : State
 {
     [Dependency] private IResourceCache _resourceCache = default!;

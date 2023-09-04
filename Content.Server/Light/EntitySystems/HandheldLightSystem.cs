@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class HandheldLightSystem : SharedHandheldLightSystem
     {
         [Dependency] private ActionsSystem _actions = default!;

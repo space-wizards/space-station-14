@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Clothing.EntitySystems;
 
+[InjectDependencies]
 public abstract partial class SharedChameleonClothingSystem : EntitySystem
 {
     [Dependency] private IComponentFactory _factory = default!;

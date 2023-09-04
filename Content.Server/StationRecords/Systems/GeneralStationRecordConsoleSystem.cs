@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace Content.Server.StationRecords.Systems;
 
+[InjectDependencies]
 public sealed partial class GeneralStationRecordConsoleSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _userInterface = default!;

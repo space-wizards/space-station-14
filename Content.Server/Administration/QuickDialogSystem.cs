@@ -13,6 +13,7 @@ namespace Content.Server.Administration;
 /// <summary>
 /// This handles the server portion of quick dialogs, including opening them.
 /// </summary>
+[InjectDependencies]
 public sealed partial class QuickDialogSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;

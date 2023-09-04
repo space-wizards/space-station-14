@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.DeviceLinking;
 
+[InjectDependencies]
 public abstract partial class SharedDeviceLinkSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

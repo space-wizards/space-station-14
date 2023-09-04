@@ -19,6 +19,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Voting.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class VoteCallMenu : BaseWindow
     {
         [Dependency] private IClientConsoleHost _consoleHost = default!;

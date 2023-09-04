@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+[InjectDependencies]
 public sealed partial class ThrowArtifactSystem : EntitySystem
 {
     [Dependency] private IMapManager _map = default!;

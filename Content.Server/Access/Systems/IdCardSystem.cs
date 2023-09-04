@@ -13,6 +13,7 @@ using System.Linq;
 
 namespace Content.Server.Access.Systems
 {
+    [InjectDependencies]
     public sealed partial class IdCardSystem : SharedIdCardSystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

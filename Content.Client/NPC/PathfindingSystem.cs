@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.NPC
 {
+    [InjectDependencies]
     public sealed partial class PathfindingSystem : SharedPathfindingSystem
     {
         [Dependency] private IEyeManager _eyeManager = default!;

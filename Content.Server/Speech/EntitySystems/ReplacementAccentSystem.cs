@@ -11,6 +11,7 @@ namespace Content.Server.Speech.EntitySystems
     /// <summary>
     /// Replaces text in messages, either with full replacements or word replacements.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class ReplacementAccentSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _proto = default!;

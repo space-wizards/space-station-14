@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Atmos.Piping.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class AtmosDeviceSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

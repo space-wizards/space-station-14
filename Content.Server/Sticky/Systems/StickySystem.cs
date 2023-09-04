@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Sticky.Systems;
 
+[InjectDependencies]
 public sealed partial class StickySystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

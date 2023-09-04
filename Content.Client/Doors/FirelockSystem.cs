@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Doors;
 
+[InjectDependencies]
 public sealed partial class FirelockSystem : EntitySystem
 {
     [Dependency] protected SharedAppearanceSystem _appearanceSystem = default!;

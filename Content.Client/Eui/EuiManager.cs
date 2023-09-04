@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Eui
 {
+    [InjectDependencies]
     public sealed partial class EuiManager
     {
         [Dependency] private IClientNetManager _net = default!;

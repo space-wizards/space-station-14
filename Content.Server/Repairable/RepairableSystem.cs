@@ -10,6 +10,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Repairable
 {
+    [InjectDependencies]
     public sealed partial class RepairableSystem : SharedRepairableSystem
     {
         [Dependency] private SharedToolSystem _toolSystem = default!;

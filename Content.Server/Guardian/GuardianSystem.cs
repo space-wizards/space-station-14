@@ -23,6 +23,7 @@ namespace Content.Server.Guardian
     /// <summary>
     /// A guardian has a host it's attached to that it fights for. A fighting spirit.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class GuardianSystem : EntitySystem
     {
         [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

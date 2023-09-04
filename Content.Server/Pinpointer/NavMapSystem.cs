@@ -12,6 +12,7 @@ namespace Content.Server.Pinpointer;
 /// <summary>
 /// Handles data to be used for in-grid map displays.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NavMapSystem : SharedNavMapSystem
 {
     [Dependency] private TagSystem _tags = default!;

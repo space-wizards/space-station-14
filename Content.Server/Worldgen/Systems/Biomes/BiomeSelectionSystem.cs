@@ -9,6 +9,7 @@ namespace Content.Server.Worldgen.Systems.Biomes;
 /// <summary>
 ///     This handles biome selection, evaluating which biome to apply to a chunk based on noise channels.
 /// </summary>
+[InjectDependencies]
 public sealed partial class BiomeSelectionSystem : BaseWorldSystem
 {
     [Dependency] private NoiseIndexSystem _noiseIdx = default!;

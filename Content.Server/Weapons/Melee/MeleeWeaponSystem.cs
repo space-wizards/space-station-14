@@ -34,6 +34,7 @@ using Content.Shared.Damage.Systems;
 
 namespace Content.Server.Weapons.Melee;
 
+[InjectDependencies]
 public sealed partial class MeleeWeaponSystem : SharedMeleeWeaponSystem
 {
     [Dependency] private IRobustRandom _random = default!;

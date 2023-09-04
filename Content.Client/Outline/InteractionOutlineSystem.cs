@@ -15,6 +15,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Client.Outline;
 
+[InjectDependencies]
 public sealed partial class InteractionOutlineSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configManager = default!;

@@ -3,6 +3,7 @@ using Content.Server.Movement.Components;
 
 namespace Content.Server.Movement;
 
+[InjectDependencies]
 public sealed partial class StressTestMovementSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;

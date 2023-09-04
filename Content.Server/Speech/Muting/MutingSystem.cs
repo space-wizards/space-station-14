@@ -9,6 +9,7 @@ using Content.Shared.Speech;
 
 namespace Content.Server.Speech.Muting
 {
+    [InjectDependencies]
     public sealed partial class MutingSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

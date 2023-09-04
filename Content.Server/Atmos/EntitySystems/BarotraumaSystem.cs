@@ -11,6 +11,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class BarotraumaSystem : EntitySystem
     {
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

@@ -7,6 +7,7 @@ using Content.Shared.Swab;
 
 namespace Content.Server.Botany.Systems;
 
+[InjectDependencies]
 public sealed partial class BotanySwabSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

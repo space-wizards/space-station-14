@@ -16,6 +16,7 @@ namespace Content.Server.Power.Generator;
 /// <seealso cref="FuelGeneratorComponent"/>
 /// <seealso cref="ChemicalFuelGeneratorAdapterComponent"/>
 /// <seealso cref="SolidFuelGeneratorAdapterComponent"/>
+[InjectDependencies]
 public sealed partial class GeneratorSystem : SharedGeneratorSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;

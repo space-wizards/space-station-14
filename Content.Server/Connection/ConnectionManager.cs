@@ -21,6 +21,7 @@ namespace Content.Server.Connection
     /// <summary>
     ///     Handles various duties like guest username assignment, bans, connection logs, etc...
     /// </summary>
+    [InjectDependencies]
     public sealed partial class ConnectionManager : IConnectionManager
     {
         [Dependency] private IServerDbManager _dbManager = default!;

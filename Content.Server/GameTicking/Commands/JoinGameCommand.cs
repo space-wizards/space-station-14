@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.GameTicking.Commands
 {
     [AnyCommand]
+    [InjectDependencies]
     sealed partial class JoinGameCommand : IConsoleCommand
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

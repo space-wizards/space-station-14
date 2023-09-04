@@ -6,6 +6,7 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Server.Speech.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class RatvarianLanguageSystem : SharedRatvarianLanguageSystem
 {
     [Dependency] private StatusEffectsSystem _statusEffects = default!;

@@ -24,6 +24,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.Atmos.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class FlammableSystem : EntitySystem
     {
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;

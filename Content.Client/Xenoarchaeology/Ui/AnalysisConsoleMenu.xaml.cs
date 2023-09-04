@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Xenoarchaeology.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AnalysisConsoleMenu : FancyWindow
 {
     [Dependency] private IEntityManager _ent = default!;

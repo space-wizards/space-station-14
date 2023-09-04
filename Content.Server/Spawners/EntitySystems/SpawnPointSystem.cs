@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Spawners.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SpawnPointSystem : EntitySystem
 {
     [Dependency] private GameTicker _gameTicker = default!;

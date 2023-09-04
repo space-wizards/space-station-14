@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Cargo.UI;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class BountyEntry : BoxContainer
 {
     [Dependency] private IGameTiming _timing = default!;

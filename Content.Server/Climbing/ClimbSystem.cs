@@ -33,6 +33,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Climbing;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;

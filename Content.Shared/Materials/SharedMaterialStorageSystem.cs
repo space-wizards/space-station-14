@@ -13,6 +13,7 @@ namespace Content.Shared.Materials;
 /// This handles storing materials and modifying their amounts
 /// <see cref="MaterialStorageComponent"/>
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedMaterialStorageSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

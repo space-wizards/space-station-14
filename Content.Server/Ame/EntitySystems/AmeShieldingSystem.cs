@@ -4,6 +4,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Ame.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class AmeShieldingSystem : EntitySystem
 {
     [Dependency] private AppearanceSystem _appearanceSystem = default!;

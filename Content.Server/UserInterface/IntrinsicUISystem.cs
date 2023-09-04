@@ -5,6 +5,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.UserInterface;
 
+[InjectDependencies]
 public sealed partial class IntrinsicUISystem : EntitySystem
 {
     [Dependency] private ActionsSystem _actionsSystem = default!;

@@ -8,6 +8,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Server.StationEvents.Events
 {
+    [InjectDependencies]
     public sealed partial class MeteorSwarmRule : StationEventSystem<MeteorSwarmRuleComponent>
     {
         [Dependency] private SharedPhysicsSystem _physics = default!;

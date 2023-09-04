@@ -5,6 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Instruments;
 
+[InjectDependencies]
 public sealed partial class SwappableInstrumentSystem : EntitySystem
 {
     [Dependency] private SharedInstrumentSystem _sharedInstrument = default!;

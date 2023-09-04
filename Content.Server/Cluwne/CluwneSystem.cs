@@ -17,6 +17,7 @@ using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Cluwne;
 
+[InjectDependencies]
 public sealed partial class CluwneSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popupSystem = default!;

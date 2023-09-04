@@ -17,6 +17,7 @@ namespace Content.Server.Mobs;
 /// <summary>
 ///     Handles performing crit-specific actions.
 /// </summary>
+[InjectDependencies]
 public sealed partial class CritMobActionsSystem : EntitySystem
 {
     [Dependency] private ChatSystem _chat = default!;

@@ -15,6 +15,7 @@ using Robust.Shared.Player;
 
 namespace Content.Shared.Wieldable;
 
+[InjectDependencies]
 public sealed partial class WieldableSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfter = default!;

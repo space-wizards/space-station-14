@@ -5,6 +5,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Tag;
 
+[InjectDependencies]
 public sealed partial class TagSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

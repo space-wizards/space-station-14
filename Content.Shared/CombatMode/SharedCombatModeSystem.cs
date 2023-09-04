@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode;
 
+[InjectDependencies]
 public abstract partial class SharedCombatModeSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;

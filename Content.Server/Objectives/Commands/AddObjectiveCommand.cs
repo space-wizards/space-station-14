@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class AddObjectiveCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entityManager = default!;

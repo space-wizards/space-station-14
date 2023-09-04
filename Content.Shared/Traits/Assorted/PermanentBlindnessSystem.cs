@@ -9,6 +9,7 @@ namespace Content.Shared.Traits.Assorted;
 /// <summary>
 /// This handles permanent blindness, both the examine and the actual effect.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PermanentBlindnessSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;

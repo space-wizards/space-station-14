@@ -12,6 +12,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Notes;
 
+[InjectDependencies]
 public sealed partial class AdminNotesSystem : EntitySystem, IPostInjectInit
 {
     [Dependency] private IConsoleHost _console = default!;

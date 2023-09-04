@@ -12,6 +12,7 @@ namespace Content.Server.Power.EntitySystems;
 /// <summary>
 ///  Handles sabotaged/rigged objects
 /// </summary>
+[InjectDependencies]
 public sealed partial class RiggableSystem : EntitySystem
 {
     [Dependency] private SolutionContainerSystem _solutionsSystem = default!;

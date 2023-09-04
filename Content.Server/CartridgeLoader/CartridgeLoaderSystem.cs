@@ -10,6 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Content.Server.CartridgeLoader;
 
+[InjectDependencies]
 public sealed partial class CartridgeLoaderSystem : SharedCartridgeLoaderSystem
 {
     [Dependency] private ContainerSystem _containerSystem = default!;

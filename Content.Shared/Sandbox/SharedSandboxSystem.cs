@@ -3,6 +3,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Sandbox
 {
+    [InjectDependencies]
     public abstract partial class SharedSandboxSystem : EntitySystem
     {
         [Dependency] protected IPrototypeManager PrototypeManager = default!;

@@ -8,6 +8,7 @@ namespace Content.Server.Worldgen.Tools;
 /// <summary>
 ///     An implementation of Poisson Disk Sampling, for evenly spreading points across a given area.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PoissonDiskSampler
 {
     public const int DefaultPointsPerIteration = 30;

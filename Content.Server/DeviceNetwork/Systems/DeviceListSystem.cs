@@ -10,6 +10,7 @@ using Robust.Shared.Map.Events;
 namespace Content.Server.DeviceNetwork.Systems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class DeviceListSystem : SharedDeviceListSystem
 {
     private ISawmill _sawmill = default!;

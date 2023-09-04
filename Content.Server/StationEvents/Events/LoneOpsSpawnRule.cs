@@ -8,6 +8,7 @@ using Content.Server.StationEvents.Components;
 
 namespace Content.Server.StationEvents.Events;
 
+[InjectDependencies]
 public sealed partial class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleComponent>
 {
     [Dependency] private IMapManager _mapManager = default!;

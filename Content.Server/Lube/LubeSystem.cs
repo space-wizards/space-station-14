@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Lube;
 
+[InjectDependencies]
 public sealed partial class LubeSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

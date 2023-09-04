@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Throwing;
 
+[InjectDependencies]
 public sealed partial class ThrowingSystem : EntitySystem
 {
     public const float ThrowAngularImpulse = 5f;

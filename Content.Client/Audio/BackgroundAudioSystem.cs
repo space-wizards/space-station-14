@@ -11,6 +11,7 @@ using Robust.Shared.Player;
 namespace Content.Client.Audio;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class BackgroundAudioSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

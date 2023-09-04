@@ -2,6 +2,7 @@
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Triggers.Systems;
 
+[InjectDependencies]
 public sealed partial class ArtifactAnchorTriggerSystem : EntitySystem
 {
     [Dependency] private ArtifactSystem _artifact = default!;

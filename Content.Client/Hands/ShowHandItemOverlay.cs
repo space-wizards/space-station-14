@@ -11,6 +11,7 @@ using Robust.Shared.Map;
 
 namespace Content.Client.Hands
 {
+    [InjectDependencies]
     public sealed partial class ShowHandItemOverlay : Overlay
     {
         [Dependency] private IConfigurationManager _cfg = default!;

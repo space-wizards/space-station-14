@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 namespace Content.Client.Info;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class RulesControl : BoxContainer
 {
     [Dependency] private RulesManager _rules = default!;

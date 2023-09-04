@@ -8,6 +8,7 @@ using Content.Shared.Eui;
 
 namespace Content.Server.Administration.UI
 {
+    [InjectDependencies]
     public sealed partial class AdminAnnounceEui : BaseEui
     {
         [Dependency] private IAdminManager _adminManager = default!;

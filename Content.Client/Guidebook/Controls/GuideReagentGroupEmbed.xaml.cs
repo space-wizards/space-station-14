@@ -15,6 +15,7 @@ namespace Content.Client.Guidebook.Controls;
 ///     Control for embedding a reagent into a guidebook.
 /// </summary>
 [UsedImplicitly, GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class GuideReagentGroupEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private IPrototypeManager _prototype = default!;

@@ -23,6 +23,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Administration.Managers
 {
+    [InjectDependencies]
     public sealed partial class AdminManager : IAdminManager, IPostInjectInit, IConGroupControllerImplementation
     {
         [Dependency] private IPlayerManager _playerManager = default!;

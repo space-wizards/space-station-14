@@ -14,6 +14,7 @@ using static Robust.Client.UserInterface.Controls.BoxContainer;
 namespace Content.Client.Humanoid;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class MarkingPicker : Control
 {
     [Dependency] private MarkingManager _markingManager = default!;

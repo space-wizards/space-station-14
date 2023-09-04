@@ -23,6 +23,7 @@ namespace Content.Server.Interaction
     /// Governs interactions during clicking on entities
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class InteractionSystem : SharedInteractionSystem
     {
         [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;

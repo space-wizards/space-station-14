@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.StationEvents.Events;
 
+[InjectDependencies]
 public sealed partial class ImmovableRodRule : StationEventSystem<ImmovableRodRuleComponent>
 {
     [Dependency] private SharedTransformSystem _transform = default!;

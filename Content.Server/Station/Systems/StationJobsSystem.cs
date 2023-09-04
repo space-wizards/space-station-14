@@ -18,6 +18,7 @@ namespace Content.Server.Station.Systems;
 /// Manages job slots for stations.
 /// </summary>
 [PublicAPI]
+[InjectDependencies]
 public sealed partial class StationJobsSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;

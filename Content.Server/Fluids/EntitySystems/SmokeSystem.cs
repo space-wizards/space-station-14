@@ -26,6 +26,7 @@ namespace Content.Server.Fluids.EntitySystems;
 /// <summary>
 /// Handles non-atmos solution entities similar to puddles.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SmokeSystem : EntitySystem
 {
     // If I could do it all again this could probably use a lot more of puddles.

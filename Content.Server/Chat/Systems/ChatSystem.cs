@@ -37,6 +37,7 @@ namespace Content.Server.Chat.Systems;
 ///     ChatSystem is responsible for in-simulation chat handling, such as whispering, speaking, emoting, etc.
 ///     ChatSystem depends on ChatManager to actually send the messages.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ChatSystem : SharedChatSystem
 {
     [Dependency] private IReplayRecordingManager _replay = default!;

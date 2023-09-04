@@ -9,6 +9,7 @@ using Content.Shared.Resist;
 
 namespace Content.Server.Resist;
 
+[InjectDependencies]
 public sealed partial class ResistLockerSystem : EntitySystem
 {
     [Dependency] private SharedDoAfterSystem _doAfterSystem = default!;

@@ -36,6 +36,7 @@ using Robust.Shared.Serialization;
 namespace Content.Shared.Cuffs
 {
     // TODO remove all the IsServer() checks.
+    [InjectDependencies]
     public abstract partial class SharedCuffableSystem : EntitySystem
     {
         [Dependency] private IComponentFactory _componentFactory = default!;

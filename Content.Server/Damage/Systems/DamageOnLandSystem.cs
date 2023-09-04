@@ -4,6 +4,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Server.Damage.Systems
 {
+    [InjectDependencies]
     public sealed partial class DamageOnLandSystem : EntitySystem
     {
         [Dependency] private DamageableSystem _damageableSystem = default!;

@@ -12,6 +12,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class AtmosDebugOverlaySystem : SharedAtmosDebugOverlaySystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

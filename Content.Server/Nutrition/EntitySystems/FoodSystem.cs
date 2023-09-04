@@ -35,6 +35,7 @@ namespace Content.Server.Nutrition.EntitySystems
     /// <summary>
     /// Handles feeding attempts both on yourself and on the target.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class FoodSystem : EntitySystem
     {
         [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;

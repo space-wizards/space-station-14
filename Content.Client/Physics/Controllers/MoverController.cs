@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Physics.Controllers
 {
+    [InjectDependencies]
     public sealed partial class MoverController : SharedMoverController
     {
         [Dependency] private IGameTiming _timing = default!;

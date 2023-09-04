@@ -11,6 +11,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.Info;
 
+[InjectDependencies]
 public sealed partial class RulesManager : SharedRulesManager
 {
     [Dependency] private IConfigurationManager _configManager = default!;

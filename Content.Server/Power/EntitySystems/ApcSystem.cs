@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Power.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class ApcSystem : EntitySystem
     {
         [Dependency] private AccessReaderSystem _accessReader = default!;

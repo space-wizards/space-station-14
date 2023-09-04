@@ -31,6 +31,7 @@ namespace Content.Client.ContextMenu.UI
     ///     a list of entities near the mouse position, add them to the context menu grouped by prototypes, and remove
     ///     them from the menu as they move out of sight.
     /// </remarks>
+    [InjectDependencies]
     public sealed partial class EntityMenuUIController : UIController, IOnStateEntered<GameplayState>, IOnStateExited<GameplayState>
     {
         [Dependency] private IEntitySystemManager _systemManager = default!;

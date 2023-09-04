@@ -8,6 +8,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Shared.Mobs.Systems;
 
+[InjectDependencies]
 public sealed partial class MobThresholdSystem : EntitySystem
 {
     [Dependency] private MobStateSystem _mobStateSystem = default!;

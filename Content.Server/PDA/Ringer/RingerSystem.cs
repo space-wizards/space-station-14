@@ -14,6 +14,7 @@ using System.Linq;
 
 namespace Content.Server.PDA.Ringer
 {
+    [InjectDependencies]
     public sealed partial class RingerSystem : SharedRingerSystem
     {
         [Dependency] private PdaSystem _pda = default!;

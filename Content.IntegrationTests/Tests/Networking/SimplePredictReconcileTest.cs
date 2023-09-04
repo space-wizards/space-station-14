@@ -387,6 +387,7 @@ namespace Content.IntegrationTests.Tests.Networking
             await pair.CleanReturnAsync();
         }
 
+        [InjectDependencies]
         public sealed partial class PredictionTestEntitySystem : EntitySystem
         {
             public bool Allow { get; set; } = true;

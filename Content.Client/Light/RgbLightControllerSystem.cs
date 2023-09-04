@@ -13,6 +13,7 @@ using static Robust.Client.GameObjects.SpriteComponent;
 
 namespace Content.Client.Light
 {
+    [InjectDependencies]
     public sealed partial class RgbLightControllerSystem : SharedRgbLightControllerSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

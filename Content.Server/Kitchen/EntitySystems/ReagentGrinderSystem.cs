@@ -23,6 +23,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Kitchen.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class ReagentGrinderSystem : EntitySystem
     {
         [Dependency] private IGameTiming _timing = default!;

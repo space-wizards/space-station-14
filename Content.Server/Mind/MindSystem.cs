@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Mind;
 
+[InjectDependencies]
 public sealed partial class MindSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

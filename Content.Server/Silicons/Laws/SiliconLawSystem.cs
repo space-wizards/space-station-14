@@ -25,6 +25,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Silicons.Laws;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private IChatManager _chatManager = default!;

@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Zombies;
 
+[InjectDependencies]
 public sealed partial class ZombieSystem : SharedZombieSystem
 {
     [Dependency] private IPlayerManager _player = default!;

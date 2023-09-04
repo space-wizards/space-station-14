@@ -30,6 +30,7 @@ using SharedGunSystem = Content.Shared.Weapons.Ranged.Systems.SharedGunSystem;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public sealed partial class GunSystem : SharedGunSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

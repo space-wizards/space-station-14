@@ -8,6 +8,7 @@ namespace Content.Client.Computer
     /// NOTE: Despite the name, ComputerBoundUserInterface does not and will not care about things like power.
     /// </summary>
     [Virtual]
+    [InjectDependencies]
     public partial class ComputerBoundUserInterface<TWindow, TState> : ComputerBoundUserInterfaceBase where TWindow : BaseWindow, IComputerWindow<TState>, new() where TState : BoundUserInterfaceState
     {
         [Dependency] private IDynamicTypeFactory _dynamicTypeFactory = default!;

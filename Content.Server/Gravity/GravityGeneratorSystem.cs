@@ -11,6 +11,7 @@ using Content.Server.Construction;
 
 namespace Content.Server.Gravity
 {
+    [InjectDependencies]
     public sealed partial class GravityGeneratorSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

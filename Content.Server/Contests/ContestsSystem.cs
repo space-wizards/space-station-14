@@ -16,6 +16,7 @@ namespace Content.Server.Contests
     /// Roller should be the entity with an advantage from being bigger/healthier/more skilled, etc.
     /// </summary>
     ///
+    [InjectDependencies]
     public sealed partial class ContestsSystem : EntitySystem
     {
         [Dependency] private MobThresholdSystem _mobThresholdSystem = default!;

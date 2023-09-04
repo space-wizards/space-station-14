@@ -11,6 +11,7 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 /// Handles combat for NPCs.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NPCCombatSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

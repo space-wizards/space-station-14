@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 
+[InjectDependencies]
 public sealed partial class RandomTeleportArtifactSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

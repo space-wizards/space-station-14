@@ -6,6 +6,7 @@ using Robust.Shared.Containers;
 namespace Content.Client.Silicons.Borgs;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;

@@ -6,6 +6,7 @@ using Robust.Shared.Toolshed;
 namespace Content.Server.Administration.Toolshed;
 
 [ToolshedCommand, AdminCommand(AdminFlags.Admin)]
+[InjectDependencies]
 public sealed partial class AdminsCommand : ToolshedCommand
 {
     [Dependency] private IAdminManager _admin = default!;

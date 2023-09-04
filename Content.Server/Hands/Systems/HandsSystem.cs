@@ -31,6 +31,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Hands.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class HandsSystem : SharedHandsSystem
     {
         [Dependency] private InventorySystem _inventorySystem = default!;

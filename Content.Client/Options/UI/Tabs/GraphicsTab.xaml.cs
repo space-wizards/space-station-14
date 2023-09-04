@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Options.UI.Tabs
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class GraphicsTab : Control
     {
         private static readonly float[] UIScaleOptions =

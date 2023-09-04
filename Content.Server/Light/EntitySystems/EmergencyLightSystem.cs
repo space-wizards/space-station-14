@@ -15,6 +15,7 @@ using Color = Robust.Shared.Maths.Color;
 namespace Content.Server.Light.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class EmergencyLightSystem : SharedEmergencyLightSystem
     {
         [Dependency] private AmbientSoundSystem _ambient = default!;

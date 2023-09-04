@@ -7,6 +7,7 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Body.Systems;
 
+[InjectDependencies]
 public sealed partial class LungSystem : EntitySystem
 {
     [Dependency] private InternalsSystem _internals = default!;

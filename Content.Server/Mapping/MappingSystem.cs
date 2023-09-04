@@ -16,6 +16,7 @@ namespace Content.Server.Mapping;
 /// <summary>
 ///     Handles autosaving maps.
 /// </summary>
+[InjectDependencies]
 public sealed partial class MappingSystem : EntitySystem
 {
     [Dependency] private IConsoleHost _conHost = default!;

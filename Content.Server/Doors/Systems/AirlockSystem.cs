@@ -12,6 +12,7 @@ using Content.Shared.Wires;
 
 namespace Content.Server.Doors.Systems;
 
+[InjectDependencies]
 public sealed partial class AirlockSystem : SharedAirlockSystem
 {
     [Dependency] private WiresSystem _wiresSystem = default!;

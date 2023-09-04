@@ -11,6 +11,7 @@ using Range = Robust.Client.UserInterface.Controls.Range;
 namespace Content.Client.Options.UI.Tabs
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class AudioTab : Control
     {
         [Dependency] private IConfigurationManager _cfg = default!;

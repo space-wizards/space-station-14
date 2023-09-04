@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Item;
 
+[InjectDependencies]
 public abstract partial class SharedItemSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

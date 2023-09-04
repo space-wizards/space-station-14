@@ -6,6 +6,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Chat;
 
+[InjectDependencies]
 public abstract partial class SharedChatSystem : EntitySystem
 {
     public const char RadioCommonPrefix = ';';

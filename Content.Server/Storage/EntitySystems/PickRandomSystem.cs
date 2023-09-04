@@ -9,6 +9,7 @@ using System.Linq;
 namespace Content.Server.Storage.EntitySystems;
 
 // TODO: move this to shared for verb prediction if/when storage is in shared
+[InjectDependencies]
 public sealed partial class PickRandomSystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;

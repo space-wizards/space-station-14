@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Access.Systems;
 
+[InjectDependencies]
 public sealed partial class IdExaminableSystem : EntitySystem
 {
     [Dependency] private ExamineSystemShared _examineSystem = default!;

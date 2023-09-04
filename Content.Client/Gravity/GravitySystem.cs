@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Gravity;
 
+[InjectDependencies]
 public sealed partial class GravitySystem : SharedGravitySystem
 {
     [Dependency] private AppearanceSystem _appearanceSystem = default!;

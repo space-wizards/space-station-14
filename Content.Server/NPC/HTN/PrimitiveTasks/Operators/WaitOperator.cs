@@ -3,6 +3,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 /// <summary>
 /// Waits the specified amount of time. Removes the key when finished.
 /// </summary>
+[InjectDependencies]
 public sealed partial class WaitOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

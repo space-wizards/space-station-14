@@ -18,6 +18,7 @@ namespace Content.Shared.ActionBlocker
     /// Utility methods to check if a specific entity is allowed to perform an action.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ActionBlockerSystem : EntitySystem
     {
         [Dependency] private SharedContainerSystem _container = default!;

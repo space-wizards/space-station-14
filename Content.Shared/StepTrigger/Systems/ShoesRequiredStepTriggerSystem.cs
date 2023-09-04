@@ -5,6 +5,7 @@ using Content.Shared.Tag;
 
 namespace Content.Shared.StepTrigger.Systems;
 
+[InjectDependencies]
 public sealed partial class ShoesRequiredStepTriggerSystem : EntitySystem
 {
     [Dependency] private InventorySystem _inventory = default!;

@@ -18,6 +18,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Changelog
 {
+    [InjectDependencies]
     public sealed partial class ChangelogManager
     {
         [Dependency] private IResourceManager _resource = default!;

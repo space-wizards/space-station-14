@@ -8,6 +8,7 @@ using static Content.Shared.Decals.DecalGridComponent;
 
 namespace Content.Shared.Decals
 {
+    [InjectDependencies]
     public abstract partial class SharedDecalSystem : EntitySystem
     {
         [Dependency] protected IPrototypeManager PrototypeManager = default!;

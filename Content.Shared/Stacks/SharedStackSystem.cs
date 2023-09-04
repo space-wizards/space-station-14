@@ -14,6 +14,7 @@ using Robust.Shared.Timing;
 namespace Content.Shared.Stacks
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedStackSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Research.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ResearchSystem : SharedResearchSystem
     {
         [Dependency] private IAdminLogManager _adminLog = default!;

@@ -2,6 +2,7 @@ using Content.Shared.Hands.Components;
 
 namespace Content.Shared.Inventory;
 
+[InjectDependencies]
 public partial class InventorySystem
 {
 

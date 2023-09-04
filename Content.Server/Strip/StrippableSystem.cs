@@ -22,6 +22,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Strip
 {
+    [InjectDependencies]
     public sealed partial class StrippableSystem : SharedStrippableSystem
     {
         [Dependency] private SharedCuffableSystem _cuffable = default!;

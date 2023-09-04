@@ -25,6 +25,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Blocking;
 
+[InjectDependencies]
 public sealed partial class BlockingSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

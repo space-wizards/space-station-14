@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Chemistry.Reaction
 {
+    [InjectDependencies]
     public sealed partial class ChemicalReactionSystem : EntitySystem
     {
         /// <summary>

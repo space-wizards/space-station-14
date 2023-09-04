@@ -13,6 +13,7 @@ using Robust.Shared.Configuration;
 namespace Content.Client.Administration.UI.Notes;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AdminNotesControl : Control
 {
     [Dependency] private IEntitySystemManager _entitySystem = default!;

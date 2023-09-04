@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Salvage;
 
+[InjectDependencies]
 public abstract partial class SharedSalvageSystem : EntitySystem
 {
     [Dependency] private ILocalizationManager _loc = default!;

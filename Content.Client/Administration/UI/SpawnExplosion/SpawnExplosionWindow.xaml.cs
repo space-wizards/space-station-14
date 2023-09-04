@@ -15,6 +15,7 @@ namespace Content.Client.Administration.UI.SpawnExplosion;
 
 [GenerateTypedNameReferences]
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class SpawnExplosionWindow : DefaultWindow
 {
     [Dependency] private IClientConsoleHost _conHost = default!;

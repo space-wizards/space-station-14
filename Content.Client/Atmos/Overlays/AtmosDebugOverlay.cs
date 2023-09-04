@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 
 namespace Content.Client.Atmos.Overlays
 {
+    [InjectDependencies]
     public sealed partial class AtmosDebugOverlay : Overlay
     {
         private readonly AtmosDebugOverlaySystem _atmosDebugOverlaySystem;

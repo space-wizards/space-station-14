@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Nuke
 {
+    [InjectDependencies]
     public sealed partial class NukeCodePaperSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

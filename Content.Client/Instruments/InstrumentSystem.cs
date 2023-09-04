@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Instruments;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private IClientNetManager _netManager = default!;

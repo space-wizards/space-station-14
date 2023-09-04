@@ -20,6 +20,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Medical;
 
+[InjectDependencies]
 public sealed partial class HealingSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

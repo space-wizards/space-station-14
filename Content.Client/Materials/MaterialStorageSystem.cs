@@ -3,6 +3,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Materials;
 
+[InjectDependencies]
 public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;

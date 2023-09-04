@@ -9,6 +9,7 @@ using SignalReceivedEvent = Content.Server.DeviceLinking.Events.SignalReceivedEv
 
 namespace Content.Server.DeviceLinking.Systems;
 
+[InjectDependencies]
 public sealed partial class LogicGateSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _deviceLink = default!;

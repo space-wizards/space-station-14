@@ -6,6 +6,7 @@ using static Content.Server.Chat.Systems.ChatSystem;
 
 namespace Content.Server.SurveillanceCamera;
 
+[InjectDependencies]
 public sealed partial class SurveillanceCameraMicrophoneSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _xforms = default!;

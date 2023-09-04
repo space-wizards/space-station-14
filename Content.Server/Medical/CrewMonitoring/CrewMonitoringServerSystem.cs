@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Medical.CrewMonitoring;
 
+[InjectDependencies]
 public sealed partial class CrewMonitoringServerSystem : EntitySystem
 {
     [Dependency] private SuitSensorSystem _sensors = default!;

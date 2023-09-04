@@ -16,6 +16,7 @@ namespace Content.Server.Labels
     /// A hand labeler system that lets an object apply labels to objects with the <see cref="LabelComponent"/> .
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class HandLabelerSystem : EntitySystem
     {
         [Dependency] private UserInterfaceSystem _userInterfaceSystem = default!;

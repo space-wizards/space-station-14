@@ -21,6 +21,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Hands.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class HandsSystem : SharedHandsSystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

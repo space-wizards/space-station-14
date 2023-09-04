@@ -10,6 +10,7 @@ namespace Content.Server.Nuke.Commands
 {
     [UsedImplicitly]
     [AdminCommand(AdminFlags.Fun)]
+    [InjectDependencies]
     public sealed partial class SendNukeCodesCommand : IConsoleCommand
     {
         public string Command => "nukecodes";

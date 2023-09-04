@@ -5,6 +5,7 @@ using Robust.Client.Player;
 
 namespace Content.Client.Drunk;
 
+[InjectDependencies]
 public sealed partial class DrunkSystem : SharedDrunkSystem
 {
     [Dependency] private IPlayerManager _player = default!;

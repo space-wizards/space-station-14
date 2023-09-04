@@ -11,6 +11,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Maps;
 
 /// <inheritdoc />
+[InjectDependencies]
 public sealed partial class GridDraggingSystem : SharedGridDraggingSystem
 {
     [Dependency] private IEyeManager _eyeManager = default!;

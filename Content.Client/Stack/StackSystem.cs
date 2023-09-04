@@ -8,6 +8,7 @@ using Robust.Client.GameObjects;
 namespace Content.Client.Stack
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class StackSystem : SharedStackSystem
     {
         [Dependency] private AppearanceSystem _appearanceSystem = default!;

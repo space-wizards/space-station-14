@@ -10,6 +10,7 @@ using System.Linq;
 
 namespace Content.Server.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public sealed partial class BatteryWeaponFireModesSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

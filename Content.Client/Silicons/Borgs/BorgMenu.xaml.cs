@@ -12,6 +12,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.Silicons.Borgs;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class BorgMenu : FancyWindow
 {
     [Dependency] private IEntityManager _entity = default!;

@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Light;
 
+[InjectDependencies]
 public abstract partial class SharedHandheldLightSystem : EntitySystem
 {
     [Dependency] private SharedItemSystem _itemSys = default!;

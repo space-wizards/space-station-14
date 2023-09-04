@@ -11,6 +11,7 @@ using Content.Client.Entry;
 namespace Content.Client.Options.UI.Tabs
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class NetworkTab : Control
     {
         [Dependency] private IConfigurationManager _cfg = default!;

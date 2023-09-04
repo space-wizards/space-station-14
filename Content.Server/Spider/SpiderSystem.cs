@@ -7,6 +7,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Spider;
 
+[InjectDependencies]
 public sealed partial class SpiderSystem : SharedSpiderSystem
 {
     [Dependency] private PopupSystem _popup = default!;

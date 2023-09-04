@@ -18,6 +18,7 @@ namespace Content.Server.Animals.Systems
     /// <summary>
     ///     Gives ability to living beings with acceptable hunger level to produce milkable reagents.
     /// </summary>
+    [InjectDependencies]
     internal sealed partial class UdderSystem : EntitySystem
     {
         [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;

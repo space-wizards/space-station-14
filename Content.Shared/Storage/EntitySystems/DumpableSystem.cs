@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class DumpableSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

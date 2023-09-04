@@ -12,6 +12,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Trinary.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class PressureControlledValveSystem : EntitySystem
     {
         [Dependency] private AtmosphereSystem _atmosphereSystem = default!;

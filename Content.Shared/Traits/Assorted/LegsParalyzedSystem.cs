@@ -7,6 +7,7 @@ using Content.Shared.Throwing;
 
 namespace Content.Shared.Traits.Assorted;
 
+[InjectDependencies]
 public sealed partial class LegsParalyzedSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movementSpeedModifierSystem = default!;

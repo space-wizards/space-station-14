@@ -22,6 +22,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Destructible
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class DestructibleSystem : SharedDestructibleSystem
     {
         [Dependency] public IRobustRandom Random = default!;

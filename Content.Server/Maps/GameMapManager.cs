@@ -10,6 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Maps;
 
+[InjectDependencies]
 public sealed partial class GameMapManager : IGameMapManager
 {
     [Dependency] private IEntityManager _entityManager = default!;

@@ -5,6 +5,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Movement.Systems;
 
+[InjectDependencies]
 public sealed partial class ClimbSystem : SharedClimbSystem
 {
     [Dependency] private InteractionSystem _interactionSystem = default!;

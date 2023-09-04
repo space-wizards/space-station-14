@@ -20,6 +20,7 @@ namespace Content.Client.Replay.Spectator;
 /// exist, where should the observer go? This attempts to maintain their position and eye rotation or just re-spawns
 /// them as needed.
 /// </remarks>
+[InjectDependencies]
 public sealed partial class ReplaySpectatorSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;

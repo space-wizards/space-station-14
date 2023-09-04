@@ -25,6 +25,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Storage.EntitySystems;
 
+[InjectDependencies]
 public abstract partial class SharedEntityStorageSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

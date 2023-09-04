@@ -39,6 +39,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.GameTicking.Rules;
 
+[InjectDependencies]
 public sealed partial class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

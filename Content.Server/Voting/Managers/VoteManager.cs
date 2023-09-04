@@ -24,6 +24,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Voting.Managers
 {
+    [InjectDependencies]
     public sealed partial class VoteManager : IVoteManager
     {
         [Dependency] private IServerNetManager _netManager = default!;

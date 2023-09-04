@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Body.Systems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class RespiratorSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

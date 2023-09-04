@@ -33,6 +33,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.Systems;
 
+[InjectDependencies]
 public sealed partial class NPCSteeringSystem : SharedNPCSteeringSystem
 {
     /*

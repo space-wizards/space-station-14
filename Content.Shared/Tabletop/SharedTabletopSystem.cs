@@ -12,6 +12,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Tabletop
 {
+    [InjectDependencies]
     public abstract partial class SharedTabletopSystem : EntitySystem
     {
         [Dependency] protected ActionBlockerSystem ActionBlockerSystem = default!;

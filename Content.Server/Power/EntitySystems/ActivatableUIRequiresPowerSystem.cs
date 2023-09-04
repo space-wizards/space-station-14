@@ -7,6 +7,7 @@ using Content.Shared.Wires;
 namespace Content.Server.Power.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 internal sealed partial class ActivatableUIRequiresPowerSystem : EntitySystem
 {
     [Dependency] private ActivatableUISystem _activatableUI = default!;

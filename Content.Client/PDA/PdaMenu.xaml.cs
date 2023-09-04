@@ -13,6 +13,7 @@ using Robust.Shared.Timing;
 namespace Content.Client.PDA
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class PdaMenu : PdaWindow
     {
         [Dependency] private IGameTiming _gameTiming = default!;

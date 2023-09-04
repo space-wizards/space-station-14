@@ -4,6 +4,7 @@ using Content.Shared.Cluwne;
 
 namespace Content.Server.Weapons.Melee.WeaponRandom;
 
+[InjectDependencies]
 public sealed partial class WeaponRandomSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

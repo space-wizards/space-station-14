@@ -10,6 +10,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Ame.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class AmePartSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

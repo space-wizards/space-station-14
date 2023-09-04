@@ -17,6 +17,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Popups
 {
+    [InjectDependencies]
     public sealed partial class PopupSystem : SharedPopupSystem
     {
         [Dependency] private IConfigurationManager _configManager = default!;

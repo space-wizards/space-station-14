@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 namespace Content.Shared.Chemistry
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ReactiveSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

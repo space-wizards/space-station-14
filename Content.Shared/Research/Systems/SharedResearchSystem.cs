@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Research.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedResearchSystem : EntitySystem
 {
     [Dependency] protected IPrototypeManager PrototypeManager = default!;

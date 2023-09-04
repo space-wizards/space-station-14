@@ -7,6 +7,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Security.Systems
 {
+    [InjectDependencies]
     public sealed partial class DeployableBarrierSystem : EntitySystem
     {
         [Dependency] private SharedAppearanceSystem _appearance = default!;

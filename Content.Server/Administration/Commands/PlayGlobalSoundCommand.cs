@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Fun)]
+[InjectDependencies]
 public sealed partial class PlayGlobalSoundCommand : IConsoleCommand
 {
     [Dependency] private IEntityManager _entManager = default!;

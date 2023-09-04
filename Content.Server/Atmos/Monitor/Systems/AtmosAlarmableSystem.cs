@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Atmos.Monitor.Systems;
 
+[InjectDependencies]
 public sealed partial class AtmosAlarmableSystem : EntitySystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;

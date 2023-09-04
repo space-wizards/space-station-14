@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Eye.Blinding;
 
+[InjectDependencies]
 public sealed partial class BlurryVisionSystem : EntitySystem
 {
     [Dependency] private IPlayerManager _player = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Physics.Components;
 
 namespace Content.Server.Power.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class ExtensionCableSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

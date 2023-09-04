@@ -9,6 +9,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.PowerSink
 {
+    [InjectDependencies]
     public sealed partial class PowerSinkSystem : EntitySystem
     {
         /// <summary>

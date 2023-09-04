@@ -6,6 +6,7 @@ using Content.Shared.Weapons.Ranged.Events;
 
 namespace Content.Server.Weapons.Ranged.Systems
 {
+    [InjectDependencies]
     public sealed partial class ChemicalAmmoSystem : EntitySystem
     {
         [Dependency] private SolutionContainerSystem _solutionSystem = default!;

@@ -37,6 +37,7 @@ using static Content.Shared.Storage.SharedStorageComponent;
 
 namespace Content.Server.Storage.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class StorageSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

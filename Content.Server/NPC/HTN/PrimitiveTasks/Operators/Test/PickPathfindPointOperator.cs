@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Test;
 
+[InjectDependencies]
 public sealed partial class PickPathfindPointOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

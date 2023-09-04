@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
 
+[InjectDependencies]
 public sealed partial class AutoEmoteSystem : EntitySystem
 {
     [Dependency] private IGameTiming _gameTiming = default!;

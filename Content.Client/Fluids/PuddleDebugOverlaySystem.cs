@@ -4,6 +4,7 @@ using Robust.Client.Graphics;
 
 namespace Content.Client.Fluids;
 
+[InjectDependencies]
 public sealed partial class PuddleDebugOverlaySystem : SharedPuddleDebugOverlaySystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;

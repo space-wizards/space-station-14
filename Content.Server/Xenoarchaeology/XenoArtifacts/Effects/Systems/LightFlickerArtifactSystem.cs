@@ -9,6 +9,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 /// This handles...
 /// </summary>
+[InjectDependencies]
 public sealed partial class LightFlickerArtifactSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

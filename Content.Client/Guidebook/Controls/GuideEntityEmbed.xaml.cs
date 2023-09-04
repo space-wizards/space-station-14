@@ -25,6 +25,7 @@ namespace Content.Client.Guidebook.Controls;
 ///     examination, interactions, and captions.
 /// </summary>
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class GuideEntityEmbed : BoxContainer, IDocumentTag
 {
     [Dependency] private IEntityManager _entityManager = default!;

@@ -10,6 +10,7 @@ using Robust.Shared.Random;
 namespace Content.Client.Explosion;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ExplosionOverlay : Overlay
 {
     [Dependency] private IRobustRandom _robustRandom = default!;

@@ -5,6 +5,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Radiation.Systems;
 
+[InjectDependencies]
 public sealed partial class RadiationSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

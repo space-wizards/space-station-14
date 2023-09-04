@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.SprayPainter;
 
+[InjectDependencies]
 public abstract partial class SharedSprayPainterSystem : EntitySystem
 {
     [Dependency] protected IPrototypeManager _prototypeManager = default!;

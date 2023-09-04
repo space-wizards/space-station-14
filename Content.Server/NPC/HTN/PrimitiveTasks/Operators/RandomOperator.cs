@@ -4,6 +4,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators;
 
+[InjectDependencies]
 public sealed partial class RandomOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

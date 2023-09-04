@@ -16,6 +16,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Shuttles.Systems
 {
+    [InjectDependencies]
     public sealed partial class DockingSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

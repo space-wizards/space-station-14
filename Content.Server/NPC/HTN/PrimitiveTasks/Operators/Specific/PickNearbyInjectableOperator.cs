@@ -11,6 +11,7 @@ using Content.Shared.Emag.Components;
 
 namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Specific;
 
+[InjectDependencies]
 public sealed partial class PickNearbyInjectableOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

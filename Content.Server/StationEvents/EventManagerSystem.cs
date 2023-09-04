@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
 
+[InjectDependencies]
 public sealed partial class EventManagerSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;

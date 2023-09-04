@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Administration.Notes;
 
+[InjectDependencies]
 public sealed partial class UserNotesEui : BaseEui
 {
     [Dependency] private IAdminNotesManager _notesMan = default!;

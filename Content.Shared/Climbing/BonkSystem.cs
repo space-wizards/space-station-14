@@ -13,6 +13,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Climbing;
 
+[InjectDependencies]
 public sealed partial class BonkSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;

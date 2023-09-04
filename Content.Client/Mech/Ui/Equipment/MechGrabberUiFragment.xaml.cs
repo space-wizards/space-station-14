@@ -6,6 +6,7 @@ using Robust.Client.UserInterface.XAML;
 namespace Content.Client.Mech.Ui.Equipment;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class MechGrabberUiFragment : BoxContainer
 {
     [Dependency] private IEntityManager _entity = default!;

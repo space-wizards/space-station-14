@@ -6,6 +6,7 @@ using Content.Shared.Objectives;
 
 namespace Content.Server.CharacterInfo;
 
+[InjectDependencies]
 public sealed partial class CharacterInfoSystem : EntitySystem
 {
     [Dependency] private JobSystem _jobs = default!;

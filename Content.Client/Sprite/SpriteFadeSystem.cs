@@ -6,6 +6,7 @@ using Robust.Client.State;
 
 namespace Content.Client.Sprite;
 
+[InjectDependencies]
 public sealed partial class SpriteFadeSystem : EntitySystem
 {
     /*

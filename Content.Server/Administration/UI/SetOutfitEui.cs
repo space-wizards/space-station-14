@@ -7,6 +7,7 @@ using JetBrains.Annotations;
 namespace Content.Server.Administration.UI
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class SetOutfitEui : BaseEui
     {
         [Dependency] private IAdminManager _adminManager = default!;

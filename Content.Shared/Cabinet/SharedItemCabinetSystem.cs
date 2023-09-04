@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Cabinet;
 
+[InjectDependencies]
 public abstract partial class SharedItemCabinetSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

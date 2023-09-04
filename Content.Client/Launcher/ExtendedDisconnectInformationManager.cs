@@ -12,6 +12,7 @@ namespace Content.Client.Launcher;
 /// But honestly, given that content might have additional flags (i.e. hide disconnect button for bans)?
 /// This is responsible for collecting any extended disconnect information.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ExtendedDisconnectInformationManager
 {
     [Dependency] private IClientNetManager _clientNetManager = default!;

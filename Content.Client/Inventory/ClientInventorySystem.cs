@@ -20,6 +20,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ClientInventorySystem : InventorySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

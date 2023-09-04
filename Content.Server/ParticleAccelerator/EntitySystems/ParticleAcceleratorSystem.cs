@@ -9,6 +9,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.ParticleAccelerator.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ParticleAcceleratorSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

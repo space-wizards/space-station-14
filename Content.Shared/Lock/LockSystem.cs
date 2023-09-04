@@ -19,6 +19,7 @@ namespace Content.Shared.Lock;
 /// Handles (un)locking and examining of Lock components
 /// </summary>
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class LockSystem : EntitySystem
 {
     [Dependency] private AccessReaderSystem _accessReader = default!;

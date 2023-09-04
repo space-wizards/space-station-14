@@ -20,6 +20,7 @@ namespace Content.Shared.Radio.EntitySystems;
 /// <summary>
 ///     This system manages encryption keys & key holders for use with radio channels.
 /// </summary>
+[InjectDependencies]
 public sealed partial class EncryptionKeySystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoManager = default!;

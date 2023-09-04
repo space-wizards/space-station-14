@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Doors;
 
+[InjectDependencies]
 public sealed partial class DoorSystem : SharedDoorSystem
 {
     [Dependency] private AnimationPlayerSystem _animationSystem = default!;

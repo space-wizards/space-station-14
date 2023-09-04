@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Access.Systems
 {
+    [InjectDependencies]
     public sealed partial class PresetIdCardSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

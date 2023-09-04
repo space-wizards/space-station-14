@@ -4,6 +4,7 @@ using Robust.Shared.IoC;
 
 namespace Content.Client.Stylesheets
 {
+    [InjectDependencies]
     public sealed partial class StylesheetManager : IStylesheetManager
     {
         [Dependency] private IUserInterfaceManager _userInterfaceManager = default!;

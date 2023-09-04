@@ -29,6 +29,7 @@ namespace Content.Client.DragDrop;
 /// Handles clientside drag and drop logic
 /// </summary>
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class DragDropSystem : SharedDragDropSystem
 {
     [Dependency] private IStateManager _stateManager = default!;

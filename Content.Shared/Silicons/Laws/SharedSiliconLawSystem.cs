@@ -8,6 +8,7 @@ namespace Content.Shared.Silicons.Laws;
 /// <summary>
 /// This handles getting and displaying the laws for silicons.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedSiliconLawSystem : EntitySystem
 {
     [Dependency] private SharedPopupSystem _popup = default!;

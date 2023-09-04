@@ -11,6 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Parallax;
 
+[InjectDependencies]
 public sealed partial class ParallaxOverlay : Overlay
 {
     [Dependency] private IEntityManager _entManager = default!;

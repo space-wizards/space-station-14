@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Traitor.Uplink.SurplusBundle;
 
+[InjectDependencies]
 public sealed partial class SurplusBundleSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

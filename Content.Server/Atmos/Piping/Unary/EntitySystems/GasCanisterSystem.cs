@@ -20,6 +20,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class GasCanisterSystem : EntitySystem
 {
     [Dependency] private AtmosphereSystem _atmos = default!;

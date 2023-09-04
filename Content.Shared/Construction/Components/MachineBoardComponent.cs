@@ -7,6 +7,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Construction.Components
 {
     [RegisterComponent, NetworkedComponent]
+    [InjectDependencies]
     public sealed partial class MachineBoardComponent : Component
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Clothing;
 
+[InjectDependencies]
 public sealed partial class ClothingSpeedModifierSystem : EntitySystem
 {
     [Dependency] private MovementSpeedModifierSystem _movementSpeed = default!;

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace Content.Server.Discord;
 
+[InjectDependencies]
 public sealed partial class DiscordWebhook : IPostInjectInit
 {
     [Dependency] private ILogManager _log = default!;

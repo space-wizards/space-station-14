@@ -89,6 +89,7 @@ namespace Content.Client.Power
 
     }
 
+    [InjectDependencies]
     public sealed partial class SolarControlNotARadar : Control
     {
         // This is used for client-side prediction of the panel rotation.

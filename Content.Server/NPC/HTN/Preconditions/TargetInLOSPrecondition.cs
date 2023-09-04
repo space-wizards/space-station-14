@@ -2,6 +2,7 @@ using Content.Server.Interaction;
 
 namespace Content.Server.NPC.HTN.Preconditions;
 
+[InjectDependencies]
 public sealed partial class TargetInLOSPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

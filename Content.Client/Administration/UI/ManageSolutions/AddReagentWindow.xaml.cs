@@ -16,6 +16,7 @@ namespace Content.Client.Administration.UI.ManageSolutions
     ///     cref="EditSolutionsWindow"/>
     /// </summary>
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class AddReagentWindow : DefaultWindow
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

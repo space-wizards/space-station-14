@@ -8,6 +8,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Weather;
 
+[InjectDependencies]
 public abstract partial class SharedWeatherSystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;

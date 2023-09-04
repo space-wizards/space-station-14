@@ -6,6 +6,7 @@ using Content.Shared.PDA;
 
 namespace Content.Shared.Access.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedIdCardSystem : EntitySystem
 {
     [Dependency] private InventorySystem _inventorySystem = default!;

@@ -29,6 +29,7 @@ using Timer = Robust.Shared.Timing.Timer;
 namespace Content.Server.Singularity.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class EmitterSystem : SharedEmitterSystem
     {
         [Dependency] private IRobustRandom _random = default!;

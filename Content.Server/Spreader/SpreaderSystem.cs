@@ -19,6 +19,7 @@ namespace Content.Server.Spreader;
 /// <summary>
 /// Handles generic spreading logic, where one anchored entity spreads to neighboring tiles.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SpreaderSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

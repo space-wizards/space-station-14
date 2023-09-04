@@ -8,6 +8,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.VendingMachines;
 
+[InjectDependencies]
 public abstract partial class SharedVendingMachineSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;

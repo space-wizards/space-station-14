@@ -3,6 +3,7 @@ using Content.Shared.StatusEffect;
 
 namespace Content.Shared.Eye.Blinding.Systems;
 
+[InjectDependencies]
 public sealed partial class TemporaryBlindnessSystem : EntitySystem
 {
     [ValidatePrototypeId<StatusEffectPrototype>]

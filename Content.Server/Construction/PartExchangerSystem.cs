@@ -14,6 +14,7 @@ using Robust.Shared.Collections;
 
 namespace Content.Server.Construction;
 
+[InjectDependencies]
 public sealed partial class PartExchangerSystem : EntitySystem
 {
     [Dependency] private ConstructionSystem _construction = default!;

@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Storage.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class BluespaceLockerSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class RemoveObjectiveCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entityManager = default!;

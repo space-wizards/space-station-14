@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.SubFloor;
 
+[InjectDependencies]
 public sealed partial class TrayScannerSystem : SharedTrayScannerSystem
 {
     [Dependency] private IGameTiming _timing = default!;

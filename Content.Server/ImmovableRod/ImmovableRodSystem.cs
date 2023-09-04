@@ -11,6 +11,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.ImmovableRod;
 
+[InjectDependencies]
 public sealed partial class ImmovableRodSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

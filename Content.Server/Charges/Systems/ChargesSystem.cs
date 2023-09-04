@@ -6,6 +6,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Charges.Systems;
 
+[InjectDependencies]
 public sealed partial class ChargesSystem : SharedChargesSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -7,6 +7,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Botany.Systems;
 
+[InjectDependencies]
 public sealed partial class LogSystem : EntitySystem
 {
     [Dependency] private SharedHandsSystem _handsSystem = default!;

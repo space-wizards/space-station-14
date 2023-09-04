@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.SurveillanceCamera;
 
+[InjectDependencies]
 public sealed partial class SurveillanceCameraMonitorSystem : EntitySystem
 {
     [Dependency] private SurveillanceCameraSystem _surveillanceCameras = default!;

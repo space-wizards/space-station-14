@@ -18,6 +18,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeContainerSystem"/>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class NodeGroupSystem : EntitySystem
     {
         [Dependency] private IPlayerManager _playerManager = default!;

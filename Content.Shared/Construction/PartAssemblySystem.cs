@@ -8,6 +8,7 @@ namespace Content.Shared.Construction;
 /// <summary>
 /// This handles <see cref="PartAssemblyComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class PartAssemblySystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;

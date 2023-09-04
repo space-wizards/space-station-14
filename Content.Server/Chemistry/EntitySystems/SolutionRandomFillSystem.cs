@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class SolutionRandomFillSystem : EntitySystem
 {
     [Dependency] private SolutionContainerSystem _solutionsSystem = default!;

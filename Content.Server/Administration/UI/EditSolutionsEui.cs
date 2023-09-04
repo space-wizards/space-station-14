@@ -10,6 +10,7 @@ namespace Content.Server.Administration.UI
     ///     Admin Eui for displaying and editing the reagents in a solution.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class EditSolutionsEui : BaseEui
     {
         [Dependency] private IEntityManager _entityManager = default!;

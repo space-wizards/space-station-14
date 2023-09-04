@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.BarSign.Systems
 {
+    [InjectDependencies]
     public sealed partial class BarSignSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

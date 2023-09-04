@@ -41,6 +41,7 @@ namespace Content.Server.Power.Generation.Teg;
 /// <seealso cref="TegCirculatorComponent"/>
 /// <seealso cref="TegNodeGroup"/>
 /// <seealso cref="TegSensorData"/>
+[InjectDependencies]
 public sealed partial class TegSystem : EntitySystem
 {
     /// <summary>

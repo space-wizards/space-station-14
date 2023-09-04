@@ -17,6 +17,7 @@ using static Content.Shared.Paper.SharedPaperComponent;
 
 namespace Content.Server.Paper
 {
+    [InjectDependencies]
     public sealed partial class PaperSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

@@ -11,6 +11,7 @@ namespace Content.Server.Mining;
 /// <summary>
 /// This handles creating ores when the entity is destroyed.
 /// </summary>
+[InjectDependencies]
 public sealed partial class MiningSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

@@ -38,6 +38,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Cloning
 {
+    [InjectDependencies]
     public sealed partial class CloningSystem : EntitySystem
     {
         [Dependency] private DeviceLinkSystem _signalSystem = default!;

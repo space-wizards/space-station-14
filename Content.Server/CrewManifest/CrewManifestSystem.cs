@@ -16,6 +16,7 @@ using Robust.Shared.Console;
 
 namespace Content.Server.CrewManifest;
 
+[InjectDependencies]
 public sealed partial class CrewManifestSystem : EntitySystem
 {
     [Dependency] private StationSystem _stationSystem = default!;
@@ -225,6 +226,7 @@ public sealed partial class CrewManifestSystem : EntitySystem
 }
 
 [AdminCommand(AdminFlags.Admin)]
+[InjectDependencies]
 public sealed partial class CrewManifestCommand : IConsoleCommand
 {
     public string Command => "crewmanifest";

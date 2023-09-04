@@ -6,6 +6,7 @@ using Robust.Server.Player;
 
 namespace Content.Server.Arcade.BlockGame;
 
+[InjectDependencies]
 public sealed partial class BlockGameArcadeSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _uiSystem = default!;

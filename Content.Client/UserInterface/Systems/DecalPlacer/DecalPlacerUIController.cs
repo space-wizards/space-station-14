@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.UserInterface.Systems.DecalPlacer;
 
+[InjectDependencies]
 public sealed partial class DecalPlacerUIController : UIController, IOnStateExited<GameplayState>, IOnSystemChanged<SandboxSystem>
 {
     [Dependency] private IPrototypeManager _prototypes = default!;

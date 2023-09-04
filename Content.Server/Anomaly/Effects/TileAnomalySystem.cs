@@ -12,6 +12,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
+[InjectDependencies]
 public sealed partial class TileAnomalySystem : EntitySystem
 {
     [Dependency] private IMapManager _map = default!;

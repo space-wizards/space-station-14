@@ -10,6 +10,7 @@ namespace Content.Server.Pinpointer;
 /// <summary>
 /// This handles logic and interaction relating to <see cref="ProximityBeeperComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class ProximityBeeperSystem : EntitySystem
 {
     [Dependency] private IGameTiming _timing = default!;

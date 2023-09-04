@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.Ensnaring.Visualizers;
 
+[InjectDependencies]
 public sealed partial class EnsnareableSystem : SharedEnsnareableSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

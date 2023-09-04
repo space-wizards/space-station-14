@@ -10,6 +10,7 @@ namespace Content.Server.Weapons.Melee.Balloon;
 /// <summary>
 /// This handles popping ballons when attacked with <see cref="BalloonPopperComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class BalloonPopperSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

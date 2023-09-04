@@ -26,6 +26,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Ghost.Roles
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GhostRoleSystem : EntitySystem
     {
         [Dependency] private EuiManager _euiManager = default!;

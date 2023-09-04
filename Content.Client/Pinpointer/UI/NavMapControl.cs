@@ -17,6 +17,7 @@ namespace Content.Client.Pinpointer.UI;
 /// <summary>
 /// Displays the nav map data of the specified grid.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NavMapControl : MapGridControl
 {
     [Dependency] private IEntityManager _entManager = default!;

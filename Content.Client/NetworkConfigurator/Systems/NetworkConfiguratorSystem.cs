@@ -18,6 +18,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.NetworkConfigurator.Systems;
 
+[InjectDependencies]
 public sealed partial class NetworkConfiguratorSystem : SharedNetworkConfiguratorSystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;

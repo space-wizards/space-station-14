@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Movement.Systems;
 
+[InjectDependencies]
 public sealed partial class JetpackSystem : SharedJetpackSystem
 {
     [Dependency] private IGameTiming _timing = default!;

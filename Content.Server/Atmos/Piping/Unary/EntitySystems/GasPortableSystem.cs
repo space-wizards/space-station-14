@@ -13,6 +13,7 @@ using Robust.Shared.Map;
 namespace Content.Server.Atmos.Piping.Unary.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GasPortableSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

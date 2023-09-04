@@ -23,6 +23,7 @@ using Robust.Server.GameObjects;
 namespace Content.Server.Atmos.Piping.Binary.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class GasVolumePumpSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

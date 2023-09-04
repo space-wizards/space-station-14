@@ -8,6 +8,7 @@ using Content.Shared.Eye.Blinding.Components;
 
 namespace Content.Client.Eye.Blinding
 {
+    [InjectDependencies]
     public sealed partial class BlindOverlay : Overlay
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

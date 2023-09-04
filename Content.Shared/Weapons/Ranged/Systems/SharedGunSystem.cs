@@ -32,6 +32,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Weapons.Ranged.Systems;
 
+[InjectDependencies]
 public abstract partial class SharedGunSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _actionBlockerSystem = default!;

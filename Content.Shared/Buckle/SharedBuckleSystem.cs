@@ -16,6 +16,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Buckle;
 
+[InjectDependencies]
 public abstract partial class SharedBuckleSystem : EntitySystem
 {
     [Dependency] private INetManager _netManager = default!;

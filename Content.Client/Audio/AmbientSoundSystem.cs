@@ -15,12 +15,14 @@ using System.Numerics;
 using Robust.Client.GameObjects;
 
 namespace Content.Client.Audio;
+
 //TODO: This is using a incomplete version of the whole "only play nearest sounds" algo, that breaks down a bit should the ambient sound cap get hit.
 //TODO: This'll be fixed when GetEntitiesInRange produces consistent outputs.
 
 /// <summary>
 /// Samples nearby <see cref="AmbientSoundComponent"/> and plays audio.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AmbientSoundSystem : SharedAmbientSoundSystem
 {
     [Dependency] private AmbientSoundTreeSystem _treeSys = default!;

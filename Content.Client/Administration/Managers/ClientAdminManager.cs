@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Administration.Managers
 {
+    [InjectDependencies]
     public sealed partial class ClientAdminManager : IClientAdminManager, IClientConGroupImplementation, IPostInjectInit, ISharedAdminManager
     {
         [Dependency] private IPlayerManager _player = default!;

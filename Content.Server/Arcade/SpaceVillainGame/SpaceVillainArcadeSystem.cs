@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Arcade.SpaceVillain;
 
+[InjectDependencies]
 public sealed partial class SpaceVillainArcadeSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Anomaly;
 
+[InjectDependencies]
 public abstract partial class SharedAnomalySystem : EntitySystem
 {
     [Dependency] protected IGameTiming Timing = default!;

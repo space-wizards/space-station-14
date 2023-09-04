@@ -11,6 +11,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
+    [InjectDependencies]
     public sealed partial class GhostSystem : SharedGhostSystem
     {
         [Dependency] private IClientConsoleHost _console = default!;

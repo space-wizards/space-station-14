@@ -20,6 +20,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     internal sealed partial class VaporSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

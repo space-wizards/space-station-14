@@ -6,6 +6,7 @@ using Content.Shared.Tag;
 
 namespace Content.Server.Nutrition.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class TrashOnEmptySystem : EntitySystem
     {
         [Dependency] private SolutionContainerSystem _solutionContainerSystem = default!;

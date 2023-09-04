@@ -9,6 +9,7 @@ namespace Content.Server.Anomaly.Effects;
 /// <summary>
 /// This handles <see cref="PyroclasticAnomalyComponent"/> and the events from <seealso cref="AnomalySystem"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class PyroclasticAnomalySystem : EntitySystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;

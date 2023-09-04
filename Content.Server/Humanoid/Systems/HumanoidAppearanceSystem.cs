@@ -10,6 +10,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Humanoid;
 
+[InjectDependencies]
 public sealed partial class HumanoidAppearanceSystem : SharedHumanoidAppearanceSystem
 {
     [Dependency] private MarkingManager _markingManager = default!;

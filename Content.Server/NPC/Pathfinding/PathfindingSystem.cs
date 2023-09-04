@@ -26,6 +26,7 @@ namespace Content.Server.NPC.Pathfinding
     /// This system handles pathfinding graph updates as well as dispatches to the pathfinder
     /// (90% of what it's doing is graph updates so not much point splitting the 2 roles)
     /// </summary>
+    [InjectDependencies]
     public sealed partial class PathfindingSystem : SharedPathfindingSystem
     {
         /*

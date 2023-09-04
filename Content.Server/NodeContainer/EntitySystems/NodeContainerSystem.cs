@@ -11,6 +11,7 @@ namespace Content.Server.NodeContainer.EntitySystems
     /// </summary>
     /// <seealso cref="NodeGroupSystem"/>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class NodeContainerSystem : EntitySystem
     {
         [Dependency] private NodeGroupSystem _nodeGroupSystem = default!;

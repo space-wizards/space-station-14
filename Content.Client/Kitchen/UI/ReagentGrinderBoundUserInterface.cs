@@ -6,6 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Client.Kitchen.UI
 {
+    [InjectDependencies]
     public sealed partial class ReagentGrinderBoundUserInterface : BoundUserInterface
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

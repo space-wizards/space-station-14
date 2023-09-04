@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Speech
 {
+    [InjectDependencies]
     public sealed partial class SpeechSoundSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

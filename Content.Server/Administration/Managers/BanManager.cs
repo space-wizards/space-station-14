@@ -19,6 +19,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Administration.Managers;
 
+[InjectDependencies]
 public sealed partial class BanManager : IBanManager, IPostInjectInit
 {
     [Dependency] private IServerDbManager _db = default!;

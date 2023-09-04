@@ -12,6 +12,7 @@ namespace Content.Server.Maps;
 /// <summary>
 ///     Handles server-side tile manipulation like prying/deconstructing tiles.
 /// </summary>
+[InjectDependencies]
 public sealed partial class TileSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

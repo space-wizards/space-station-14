@@ -6,6 +6,7 @@ namespace Content.Server.NPC.HTN.PrimitiveTasks.Operators.Interactions;
 /// <summary>
 /// Drops the active hand entity underneath us.
 /// </summary>
+[InjectDependencies]
 public sealed partial class DropOperator : HTNOperator
 {
     [Dependency] private IEntityManager _entManager = default!;

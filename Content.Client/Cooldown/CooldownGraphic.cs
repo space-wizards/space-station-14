@@ -5,6 +5,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Cooldown
 {
+    [InjectDependencies]
     public sealed partial class CooldownGraphic : Control
     {
         [Dependency] private IGameTiming _gameTiming = default!;

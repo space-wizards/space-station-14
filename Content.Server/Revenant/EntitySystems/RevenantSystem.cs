@@ -26,6 +26,7 @@ using Content.Shared.Revenant.Components;
 
 namespace Content.Server.Revenant.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class RevenantSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

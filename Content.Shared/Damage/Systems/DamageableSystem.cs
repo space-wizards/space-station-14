@@ -13,6 +13,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Damage
 {
+    [InjectDependencies]
     public sealed partial class DamageableSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

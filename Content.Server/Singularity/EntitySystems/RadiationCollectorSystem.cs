@@ -10,6 +10,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Singularity.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class RadiationCollectorSystem : EntitySystem
     {
         [Dependency] private IGameTiming _gameTiming = default!;

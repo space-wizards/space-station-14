@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Medical.CrewMonitoring
 {
+    [InjectDependencies]
     public sealed partial class CrewMonitoringConsoleSystem : EntitySystem
     {
         [Dependency] private PowerCellSystem _cell = default!;

@@ -14,6 +14,7 @@ using Content.Server.StationEvents.Components;
 namespace Content.Server.StationEvents.Events;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class VentClogRule : StationEventSystem<VentClogRuleComponent>
 {
     [Dependency] private SmokeSystem _smoke = default!;

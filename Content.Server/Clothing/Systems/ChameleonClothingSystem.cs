@@ -11,6 +11,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Clothing.Systems;
 
+[InjectDependencies]
 public sealed partial class ChameleonClothingSystem : SharedChameleonClothingSystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

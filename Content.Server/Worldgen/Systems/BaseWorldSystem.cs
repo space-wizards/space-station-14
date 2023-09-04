@@ -9,6 +9,7 @@ namespace Content.Server.Worldgen.Systems;
 ///     Exists primarily for convenience and to avoid code duplication.
 /// </summary>
 [PublicAPI]
+[InjectDependencies]
 public abstract partial class BaseWorldSystem : EntitySystem
 {
     [Dependency] private WorldControllerSystem _worldController = default!;

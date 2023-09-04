@@ -27,6 +27,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Silicons.Borgs;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class BorgSystem : SharedBorgSystem
 {
     [Dependency] private IAdminLogManager _adminLog = default!;

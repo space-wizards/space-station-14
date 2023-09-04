@@ -7,6 +7,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Shared.Movement.Systems
 {
+    [InjectDependencies]
     public sealed partial class MovementSpeedModifierSystem : EntitySystem
     {
         [Dependency] private IGameTiming _timing = default!;

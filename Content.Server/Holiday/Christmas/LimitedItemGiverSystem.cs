@@ -10,6 +10,7 @@ namespace Content.Server.Holiday.Christmas;
 /// <summary>
 /// This handles handing out items from item givers.
 /// </summary>
+[InjectDependencies]
 public sealed partial class LimitedItemGiverSystem : EntitySystem
 {
     [Dependency] private HandsSystem _hands = default!;

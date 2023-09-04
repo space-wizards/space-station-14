@@ -12,6 +12,7 @@ namespace Content.Shared.Lathe;
 /// <summary>
 /// This handles...
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedLatheSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _proto = default!;

@@ -20,6 +20,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.PDA
 {
+    [InjectDependencies]
     public sealed partial class PdaSystem : SharedPdaSystem
     {
         [Dependency] private CartridgeLoaderSystem _cartridgeLoader = default!;

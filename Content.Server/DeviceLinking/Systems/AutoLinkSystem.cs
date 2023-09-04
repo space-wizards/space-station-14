@@ -5,6 +5,7 @@ namespace Content.Server.DeviceLinking.Systems;
 /// <summary>
 /// This handles automatically linking autolinked entities at round-start.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AutoLinkSystem : EntitySystem
 {
     [Dependency] private DeviceLinkSystem _deviceLinkSystem = default!;

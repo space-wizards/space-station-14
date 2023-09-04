@@ -3,6 +3,7 @@ using Robust.Shared.Log;
 
 namespace Content.Client.Info;
 
+[InjectDependencies]
 public sealed partial class InfoSystem : EntitySystem
 {
     public RulesMessage Rules = new RulesMessage("Server Rules", "The server did not send any rules.");

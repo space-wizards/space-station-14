@@ -9,6 +9,7 @@ namespace Content.Server.Worldgen.Systems.Debris;
 /// <summary>
 ///     This handles populating simple structures, simply using a loot table for each tile.
 /// </summary>
+[InjectDependencies]
 public sealed partial class SimpleFloorPlanPopulatorSystem : BaseWorldSystem
 {
     [Dependency] private IRobustRandom _random = default!;

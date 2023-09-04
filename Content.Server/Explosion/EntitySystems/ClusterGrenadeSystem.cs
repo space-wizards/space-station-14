@@ -10,6 +10,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Explosion.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ClusterGrenadeSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

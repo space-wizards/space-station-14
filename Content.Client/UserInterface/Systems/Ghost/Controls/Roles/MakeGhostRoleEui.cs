@@ -9,6 +9,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.UserInterface.Systems.Ghost.Controls.Roles
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class MakeGhostRoleEui : BaseEui
     {
         [Dependency] private IPlayerManager _playerManager = default!;

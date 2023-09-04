@@ -16,6 +16,7 @@ namespace Content.Server.Materials;
 /// <summary>
 /// This handles <see cref="SharedMaterialStorageSystem"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class MaterialStorageSystem : SharedMaterialStorageSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

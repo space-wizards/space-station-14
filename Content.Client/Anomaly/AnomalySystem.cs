@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Anomaly;
 
+[InjectDependencies]
 public sealed partial class AnomalySystem : SharedAnomalySystem
 {
     [Dependency] private IGameTiming _timing = default!;

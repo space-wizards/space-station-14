@@ -9,6 +9,7 @@ namespace Content.Client.DebugMon;
 /// <summary>
 /// This handles preventing certain debug monitors from appearing.
 /// </summary>
+[InjectDependencies]
 public sealed partial class DebugMonitorSystem : EntitySystem
 {
     [Dependency] private IConfigurationManager _cfg = default!;

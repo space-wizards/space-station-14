@@ -15,6 +15,7 @@ namespace Content.Server.Stack
     ///     This is a good example for learning how to code in an ECS manner.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class StackSystem : SharedStackSystem
     {
         [Dependency] private ContainerSystem _container = default!;

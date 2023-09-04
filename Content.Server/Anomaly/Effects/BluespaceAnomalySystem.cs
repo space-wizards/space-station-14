@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Anomaly.Effects;
 
+[InjectDependencies]
 public sealed partial class BluespaceAnomalySystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

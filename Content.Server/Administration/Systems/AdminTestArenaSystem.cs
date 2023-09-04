@@ -9,6 +9,7 @@ namespace Content.Server.Administration.Systems;
 /// <summary>
 /// This handles the administrative test arena maps, and loading them.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AdminTestArenaSystem : EntitySystem
 {
     [Dependency] private IMapManager _mapManager = default!;

@@ -15,6 +15,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.UserInterface;
 
 [AdminCommand(AdminFlags.Debug)]
+[InjectDependencies]
 public sealed partial class StatValuesCommand : IConsoleCommand
 {
     [Dependency] private EuiManager _eui = default!;

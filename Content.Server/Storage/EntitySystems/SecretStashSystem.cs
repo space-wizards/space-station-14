@@ -8,6 +8,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Server.Storage.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class SecretStashSystem : EntitySystem
     {
         [Dependency] private PopupSystem _popupSystem = default!;

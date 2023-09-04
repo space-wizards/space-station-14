@@ -9,6 +9,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.StationEvents;
 
+[InjectDependencies]
 public sealed partial class RampingStationEventSchedulerSystem : GameRuleSystem<RampingStationEventSchedulerComponent>
 {
     [Dependency] private IConfigurationManager _cfg = default!;

@@ -14,6 +14,7 @@ namespace Content.Client.IconSmoothing
     ///     Entity system implementing the logic for <see cref="IconSmoothComponent"/>
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class IconSmoothSystem : EntitySystem
     {
         [Dependency] private IMapManager _mapManager = default!;

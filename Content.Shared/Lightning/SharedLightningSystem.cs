@@ -2,6 +2,7 @@
 
 namespace Content.Shared.Lightning;
 
+[InjectDependencies]
 public abstract partial class SharedLightningSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

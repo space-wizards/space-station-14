@@ -7,6 +7,7 @@ using Robust.Shared.Network;
 
 namespace Content.Shared.Hands;
 
+[InjectDependencies]
 public abstract partial class SharedHandVirtualItemSystem : EntitySystem
 {
     [Dependency] private INetManager _net = default!;

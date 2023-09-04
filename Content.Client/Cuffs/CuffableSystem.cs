@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Cuffs;
 
+[InjectDependencies]
 public sealed partial class CuffableSystem : SharedCuffableSystem
 {
     [Dependency] private ActionBlockerSystem _actionBlocker = default!;

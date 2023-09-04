@@ -14,6 +14,7 @@ namespace Content.Server.Ame;
 /// Node group class for handling the Antimatter Engine's console and parts.
 /// </summary>
 [NodeGroup(NodeGroupID.AMEngine)]
+[InjectDependencies]
 public sealed partial class AmeNodeGroup : BaseNodeGroup
 {
     [Dependency] private IChatManager _chat = default!;

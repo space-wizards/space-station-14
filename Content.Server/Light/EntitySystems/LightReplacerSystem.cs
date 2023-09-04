@@ -12,6 +12,7 @@ using Robust.Shared.Containers;
 namespace Content.Server.Light.EntitySystems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class LightReplacerSystem : EntitySystem
 {
     [Dependency] private PoweredLightSystem _poweredLight = default!;

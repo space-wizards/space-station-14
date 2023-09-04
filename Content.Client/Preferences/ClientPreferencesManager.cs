@@ -13,6 +13,7 @@ namespace Content.Client.Preferences
     ///     connection.
     ///     Stores preferences on the server through <see cref="SelectCharacter" /> and <see cref="UpdateCharacter" />.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class ClientPreferencesManager : IClientPreferencesManager
     {
         [Dependency] private IClientNetManager _netManager = default!;

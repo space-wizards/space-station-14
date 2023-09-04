@@ -7,6 +7,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Shuttles.Systems
 {
+    [InjectDependencies]
     public sealed partial class ShuttleConsoleSystem : SharedShuttleConsoleSystem
     {
         [Dependency] private IInputManager _input = default!;

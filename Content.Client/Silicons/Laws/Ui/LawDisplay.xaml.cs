@@ -12,6 +12,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.Silicons.Laws.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class LawDisplay : Control
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

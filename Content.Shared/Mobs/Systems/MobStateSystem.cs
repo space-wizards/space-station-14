@@ -8,6 +8,7 @@ using Robust.Shared.Physics.Systems;
 namespace Content.Shared.Mobs.Systems;
 
 [Virtual]
+[InjectDependencies]
 public partial class MobStateSystem : EntitySystem
 {
     [Dependency] private ActionBlockerSystem _blocker = default!;

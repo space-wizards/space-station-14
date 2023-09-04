@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 namespace Content.Client.Administration.UI.SpawnExplosion;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class SpawnExplosionEui : BaseEui
 {
     [Dependency] private IOverlayManager _overlayManager = default!;

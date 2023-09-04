@@ -2,6 +2,7 @@ using Content.Shared.Physics;
 
 namespace Content.Shared.Audio;
 
+[InjectDependencies]
 public abstract partial class SharedContentAudioSystem : EntitySystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

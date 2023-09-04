@@ -7,6 +7,7 @@ using Robust.Shared.Random;
 
 namespace Content.Shared.Spider;
 
+[InjectDependencies]
 public abstract partial class SharedSpiderSystem : EntitySystem
 {
     [Dependency] private SharedActionsSystem _action = default!;

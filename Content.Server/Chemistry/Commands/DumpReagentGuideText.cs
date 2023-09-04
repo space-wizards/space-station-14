@@ -7,6 +7,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Chemistry.Commands;
 
 [AdminCommand(AdminFlags.Debug)]
+[InjectDependencies]
 public sealed partial class DumpReagentGuideText : IConsoleCommand
 {
     [Dependency] private IPrototypeManager _prototype = default!;

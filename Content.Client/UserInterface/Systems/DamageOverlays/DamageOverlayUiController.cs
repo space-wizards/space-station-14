@@ -14,6 +14,7 @@ using Robust.Client.UserInterface.Controllers;
 namespace Content.Client.UserInterface.Systems.DamageOverlays;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class DamageOverlayUiController : UIController
 {
     [Dependency] private IOverlayManager _overlayManager = default!;

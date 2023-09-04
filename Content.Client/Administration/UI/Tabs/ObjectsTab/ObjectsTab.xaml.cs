@@ -9,6 +9,7 @@ using Robust.Shared.Map.Components;
 namespace Content.Client.Administration.UI.Tabs.ObjectsTab;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class ObjectsTab : Control
 {
     [Dependency] private EntityManager _entityManager = default!;

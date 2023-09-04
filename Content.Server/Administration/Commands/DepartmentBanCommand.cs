@@ -10,6 +10,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Administration.Commands;
 
 [AdminCommand(AdminFlags.Ban)]
+[InjectDependencies]
 public sealed partial class DepartmentBanCommand : IConsoleCommand
 {
     [Dependency] private IPrototypeManager _protoManager = default!;

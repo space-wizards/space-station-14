@@ -7,6 +7,7 @@ using static Content.Shared.Configurable.ConfigurationComponent;
 
 namespace Content.Server.Configurable;
 
+[InjectDependencies]
 public sealed partial class ConfigurationSystem : EntitySystem
 {
     [Dependency] private UserInterfaceSystem _uiSystem = default!;

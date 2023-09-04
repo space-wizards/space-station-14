@@ -4,6 +4,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.IdentityManagement;
 
+[InjectDependencies]
 public abstract partial class SharedIdentitySystem : EntitySystem
 {
     [Dependency] private SharedContainerSystem _container = default!;

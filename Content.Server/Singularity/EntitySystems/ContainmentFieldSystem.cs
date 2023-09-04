@@ -9,6 +9,7 @@ using Robust.Shared.Physics.Events;
 
 namespace Content.Server.Singularity.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ContainmentFieldSystem : EntitySystem
 {
     [Dependency] private ThrowingSystem _throwing = default!;

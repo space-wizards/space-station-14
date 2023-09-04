@@ -19,6 +19,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.NPC.HTN;
 
+[InjectDependencies]
 public sealed partial class HTNSystem : EntitySystem
 {
     [Dependency] private IAdminManager _admin = default!;

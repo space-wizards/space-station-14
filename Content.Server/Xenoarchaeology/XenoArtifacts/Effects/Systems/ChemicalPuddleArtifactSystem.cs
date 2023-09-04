@@ -8,6 +8,7 @@ namespace Content.Server.Xenoarchaeology.XenoArtifacts.Effects.Systems;
 /// <summary>
 /// This handles <see cref="ChemicalPuddleArtifactComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class ChemicalPuddleArtifactSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

@@ -5,6 +5,7 @@ using Content.Shared.Movement.Events;
 
 namespace Content.Shared.Pulling.Systems
 {
+    [InjectDependencies]
     public sealed partial class SharedPullableSystem : EntitySystem
     {
         [Dependency] private ActionBlockerSystem _blocker = default!;

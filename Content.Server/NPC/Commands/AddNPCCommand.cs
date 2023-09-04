@@ -6,6 +6,7 @@ using Robust.Shared.Console;
 namespace Content.Server.NPC.Commands
 {
     [AdminCommand(AdminFlags.Fun)]
+    [InjectDependencies]
     public sealed partial class AddNPCCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entities = default!;

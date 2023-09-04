@@ -9,6 +9,7 @@ namespace Content.Shared.Humanoid
     /// <summary>
     /// Figure out how to name a humanoid with these extensions.
     /// </summary>
+    [InjectDependencies]
     public sealed partial class NamingSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

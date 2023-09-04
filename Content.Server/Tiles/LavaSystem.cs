@@ -4,6 +4,7 @@ using Content.Shared.StepTrigger.Systems;
 
 namespace Content.Server.Tiles;
 
+[InjectDependencies]
 public sealed partial class LavaSystem : EntitySystem
 {
     [Dependency] private FlammableSystem _flammable = default!;

@@ -7,6 +7,7 @@ namespace Content.Server.NPC.Systems;
 /// <summary>
 ///     Outlines faction relationships with each other.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NpcFactionSystem : EntitySystem
 {
     [Dependency] private FactionExceptionSystem _factionException = default!;

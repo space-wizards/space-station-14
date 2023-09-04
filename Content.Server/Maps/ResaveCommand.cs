@@ -14,6 +14,7 @@ namespace Content.Server.Maps;
 /// Loads every map and resaves it into the data folder.
 /// </summary>
 [AdminCommand(AdminFlags.Mapping)]
+[InjectDependencies]
 public sealed partial class ResaveCommand : LocalizedCommands
 {
     [Dependency] private IEntityManager _entManager = default!;

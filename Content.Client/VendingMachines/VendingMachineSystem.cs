@@ -4,6 +4,7 @@ using Robust.Client.GameObjects;
 
 namespace Content.Client.VendingMachines;
 
+[InjectDependencies]
 public sealed partial class VendingMachineSystem : SharedVendingMachineSystem
 {
     [Dependency] private AnimationPlayerSystem _animationPlayer = default!;

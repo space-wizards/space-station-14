@@ -17,6 +17,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Follower;
 
+[InjectDependencies]
 public sealed partial class FollowerSystem : EntitySystem
 {
     [Dependency] private SharedTransformSystem _transform = default!;

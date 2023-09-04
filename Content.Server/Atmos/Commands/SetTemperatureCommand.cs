@@ -11,6 +11,7 @@ using Robust.Shared.Maths;
 namespace Content.Server.Atmos.Commands
 {
     [AdminCommand(AdminFlags.Debug)]
+    [InjectDependencies]
     public sealed partial class SetTemperatureCommand : IConsoleCommand
     {
         [Dependency] private IEntityManager _entities = default!;

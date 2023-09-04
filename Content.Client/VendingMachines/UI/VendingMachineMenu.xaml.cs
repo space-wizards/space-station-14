@@ -11,6 +11,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Client.VendingMachines.UI
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class VendingMachineMenu : DefaultWindow
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

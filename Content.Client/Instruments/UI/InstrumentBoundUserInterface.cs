@@ -8,6 +8,7 @@ using Robust.Client.UserInterface;
 
 namespace Content.Client.Instruments.UI
 {
+    [InjectDependencies]
     public sealed partial class InstrumentBoundUserInterface : BoundUserInterface
     {
         [Dependency] public IEntityManager Entities = default!;

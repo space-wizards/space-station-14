@@ -5,6 +5,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Damage.Systems;
 
+[InjectDependencies]
 public sealed partial class DamagePopupSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popupSystem = default!;

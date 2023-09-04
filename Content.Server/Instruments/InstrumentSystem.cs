@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Instruments;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class InstrumentSystem : SharedInstrumentSystem
 {
     [Dependency] private IGameTiming _timing = default!;

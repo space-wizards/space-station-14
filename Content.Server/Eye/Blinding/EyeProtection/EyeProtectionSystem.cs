@@ -8,6 +8,7 @@ using Content.Shared.Tools.Components;
 
 namespace Content.Server.Eye.Blinding.EyeProtection
 {
+    [InjectDependencies]
     public sealed partial class EyeProtectionSystem : EntitySystem
     {
         [Dependency] private StatusEffectsSystem _statusEffectsSystem = default!;

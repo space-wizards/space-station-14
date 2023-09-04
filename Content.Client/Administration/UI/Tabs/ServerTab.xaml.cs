@@ -7,6 +7,7 @@ using Robust.Shared.Configuration;
 namespace Content.Client.Administration.UI.Tabs
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class ServerTab : Control
     {
         [Dependency] private IConfigurationManager _config = default!;

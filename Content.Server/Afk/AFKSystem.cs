@@ -13,6 +13,7 @@ namespace Content.Server.Afk;
 /// <summary>
 /// Actively checks for AFK players regularly and issues an event whenever they go afk.
 /// </summary>
+[InjectDependencies]
 public sealed partial class AFKSystem : EntitySystem
 {
     [Dependency] private IAfkManager _afkManager = default!;

@@ -11,6 +11,7 @@ namespace Content.Client.Explosion;
 ///     This system is responsible for showing the client-side explosion effects (light source & fire-overlay). The
 ///     fire overlay code is just a bastardized version of the atmos plasma fire overlay and uses the same texture.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ExplosionOverlaySystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _protoMan = default!;

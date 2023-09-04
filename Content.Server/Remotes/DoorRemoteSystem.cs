@@ -14,6 +14,7 @@ using static Content.Server.Remotes.DoorRemoteComponent;
 
 namespace Content.Server.Remotes
 {
+    [InjectDependencies]
     public sealed partial class DoorRemoteSystem : EntitySystem
     {
         [Dependency] private IAdminLogManager _adminLogger = default!;

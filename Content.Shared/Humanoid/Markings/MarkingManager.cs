@@ -4,6 +4,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Humanoid.Markings
 {
+    [InjectDependencies]
     public sealed partial class MarkingManager
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

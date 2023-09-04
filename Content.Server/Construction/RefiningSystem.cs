@@ -9,6 +9,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Construction
 {
+    [InjectDependencies]
     public sealed partial class RefiningSystem : EntitySystem
     {
         [Dependency] private SharedToolSystem _toolSystem = default!;

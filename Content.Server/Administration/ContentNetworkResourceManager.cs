@@ -7,6 +7,7 @@ using Robust.Shared.Upload;
 
 namespace Content.Server.Administration;
 
+[InjectDependencies]
 public sealed partial class ContentNetworkResourceManager
 {
     [Dependency] private IServerDbManager _serverDb = default!;

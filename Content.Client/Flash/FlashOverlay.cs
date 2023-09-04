@@ -13,6 +13,7 @@ using SixLabors.ImageSharp.PixelFormats;
 
 namespace Content.Client.Flash
 {
+    [InjectDependencies]
     public sealed partial class FlashOverlay : Overlay
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

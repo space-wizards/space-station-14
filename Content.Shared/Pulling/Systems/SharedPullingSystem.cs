@@ -17,6 +17,7 @@ using Robust.Shared.Players;
 namespace Content.Shared.Pulling
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedPullingSystem : EntitySystem
     {
         [Dependency] private SharedPullingStateManagementSystem _pullSm = default!;

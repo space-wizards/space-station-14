@@ -12,6 +12,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Mousetrap;
 
+[InjectDependencies]
 public sealed partial class MousetrapSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popupSystem = default!;

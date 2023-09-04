@@ -5,6 +5,7 @@ using Robust.Shared.Configuration;
 
 namespace Content.Server.Chat.Managers;
 
+[InjectDependencies]
 public sealed partial class ChatSanitizationManager : IChatSanitizationManager
 {
     [Dependency] private IConfigurationManager _configurationManager = default!;

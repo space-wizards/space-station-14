@@ -24,6 +24,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Materials;
 
 /// <inheritdoc/>
+[InjectDependencies]
 public sealed partial class MaterialReclaimerSystem : SharedMaterialReclaimerSystem
 {
     [Dependency] private AppearanceSystem _appearance = default!;

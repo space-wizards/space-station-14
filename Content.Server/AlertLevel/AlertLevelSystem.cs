@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.AlertLevel;
 
+[InjectDependencies]
 public sealed partial class AlertLevelSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototypeManager = default!;

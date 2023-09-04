@@ -21,6 +21,7 @@ namespace Content.Server.Players.PlayTimeTracking;
 /// <summary>
 /// Connects <see cref="PlayTimeTrackingManager"/> to the simulation state. Reports trackers and such.
 /// </summary>
+[InjectDependencies]
 public sealed partial class PlayTimeTrackingSystem : EntitySystem
 {
     [Dependency] private IAfkManager _afk = default!;

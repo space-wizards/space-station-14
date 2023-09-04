@@ -6,6 +6,7 @@ namespace Content.Server.Worldgen.Systems;
 /// <summary>
 ///     This handles loading in objects based on distance from player, using some metadata on chunks.
 /// </summary>
+[InjectDependencies]
 public sealed partial class LocalityLoaderSystem : BaseWorldSystem
 {
     [Dependency] private TransformSystem _xformSys = default!;

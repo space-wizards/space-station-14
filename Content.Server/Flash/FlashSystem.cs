@@ -25,6 +25,7 @@ using InventoryComponent = Content.Shared.Inventory.InventoryComponent;
 
 namespace Content.Server.Flash
 {
+    [InjectDependencies]
     internal sealed partial class FlashSystem : SharedFlashSystem
     {
         [Dependency] private AppearanceSystem _appearance = default!;

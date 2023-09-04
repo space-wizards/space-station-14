@@ -17,6 +17,7 @@ using IncrementalUIState = Content.Shared.SensorMonitoring.SensorMonitoringIncre
 namespace Content.Client.SensorMonitoring;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class SensorMonitoringWindow : FancyWindow, IComputerWindow<ConsoleUIState>
 {
     [Dependency] private IGameTiming _gameTiming = default!;

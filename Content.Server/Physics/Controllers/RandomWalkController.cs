@@ -14,6 +14,7 @@ namespace Content.Server.Physics.Controllers;
 /// The entity system responsible for managing <see cref="RandomWalkComponent"/>s.
 /// Handles updating the direction they move in when their cooldown elapses.
 /// </summary>
+[InjectDependencies]
 internal sealed partial class RandomWalkController : VirtualController
 {
     #region Dependencies

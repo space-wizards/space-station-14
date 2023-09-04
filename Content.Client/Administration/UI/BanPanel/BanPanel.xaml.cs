@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Administration.UI.BanPanel;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class BanPanel : DefaultWindow
 {
     public event Action<string?, (IPAddress, int)?, bool, byte[]?, bool, uint, string, NoteSeverity, string[]?>? BanSubmitted;

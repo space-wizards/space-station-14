@@ -7,6 +7,7 @@ using Content.Shared.Inventory.Events;
 
 namespace Content.Server.Inventory
 {
+    [InjectDependencies]
     public sealed partial class ServerInventorySystem : InventorySystem
     {
         [Dependency] private StorageSystem _storageSystem = default!;

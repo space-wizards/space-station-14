@@ -5,6 +5,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Returns true if an entity is held in the active hand.
 /// </summary>
+[InjectDependencies]
 public sealed partial class ActiveHandEntityPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

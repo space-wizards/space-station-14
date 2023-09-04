@@ -15,6 +15,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Client.Weather;
 
+[InjectDependencies]
 public sealed partial class WeatherOverlay : Overlay
 {
     [Dependency] private IClyde _clyde = default!;

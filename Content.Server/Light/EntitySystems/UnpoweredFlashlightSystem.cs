@@ -14,6 +14,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Light.EntitySystems
 {
+    [InjectDependencies]
     public sealed partial class UnpoweredFlashlightSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

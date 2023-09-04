@@ -12,6 +12,7 @@ using Robust.Shared.Physics.Systems;
 
 namespace Content.Shared.Physics.Controllers;
 
+[InjectDependencies]
 public abstract partial class SharedConveyorController : VirtualController
 {
     [Dependency] protected IMapManager MapManager = default!;

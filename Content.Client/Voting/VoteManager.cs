@@ -28,6 +28,7 @@ namespace Content.Client.Voting
         event Action CanCallStandardVotesChanged;
     }
 
+    [InjectDependencies]
     public sealed partial class VoteManager : IVoteManager
     {
         [Dependency] private IClientNetManager _netManager = default!;

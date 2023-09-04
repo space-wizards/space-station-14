@@ -10,6 +10,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Advertise
 {
+    [InjectDependencies]
     public sealed partial class AdvertiseSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

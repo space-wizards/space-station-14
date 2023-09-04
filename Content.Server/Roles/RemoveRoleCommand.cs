@@ -9,6 +9,7 @@ using Robust.Shared.Prototypes;
 namespace Content.Server.Roles
 {
     [AdminCommand(AdminFlags.Admin)]
+    [InjectDependencies]
     public sealed partial class RemoveRoleCommand : IConsoleCommand
     {
         [Dependency] private IPrototypeManager _prototypeManager = default!;

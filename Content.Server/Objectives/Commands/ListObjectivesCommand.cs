@@ -8,6 +8,7 @@ using Robust.Shared.Console;
 namespace Content.Server.Objectives.Commands
 {
     [AdminCommand(AdminFlags.Logs)]
+    [InjectDependencies]
     public sealed partial class ListObjectivesCommand : LocalizedCommands
     {
         [Dependency] private IEntityManager _entities = default!;

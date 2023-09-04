@@ -6,7 +6,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
-
+[InjectDependencies]
 public sealed partial class ChemistryGuideDataSystem : SharedChemistryGuideDataSystem
 {
     [Dependency] private IPlayerManager _player = default!;

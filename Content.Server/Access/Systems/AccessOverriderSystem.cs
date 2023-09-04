@@ -14,6 +14,7 @@ using Content.Shared.DoAfter;
 namespace Content.Server.Access.Systems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class AccessOverriderSystem : SharedAccessOverriderSystem
 {
     [Dependency] private UserInterfaceSystem _userInterface = default!;

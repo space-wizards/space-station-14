@@ -16,6 +16,7 @@ namespace Content.Client.UserInterface.Controls.FancyTree;
 ///     Functionally similar to <see cref="Tree"/>, but with collapsible sections,
 /// </summary>
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class FancyTree : Control
 {
     [Dependency] private IResourceCache _resCache = default!;

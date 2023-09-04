@@ -8,6 +8,7 @@ using Robust.Shared.Utility;
 namespace Content.Client.Anomaly.Ui;
 
 [GenerateTypedNameReferences]
+[InjectDependencies]
 public sealed partial class AnomalyScannerMenu : FancyWindow
 {
     [Dependency] private IGameTiming _timing = default!;

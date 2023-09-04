@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Drunk;
 
+[InjectDependencies]
 public sealed partial class DrunkOverlay : Overlay
 {
     [Dependency] private IEntityManager _entityManager = default!;

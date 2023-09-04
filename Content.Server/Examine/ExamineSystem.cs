@@ -10,6 +10,7 @@ using Robust.Shared.Utility;
 namespace Content.Server.Examine
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class ExamineSystem : ExamineSystemShared
     {
         [Dependency] private VerbSystem _verbSystem = default!;

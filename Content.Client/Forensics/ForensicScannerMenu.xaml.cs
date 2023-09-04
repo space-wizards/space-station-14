@@ -8,6 +8,7 @@ using Content.Shared.Forensics;
 namespace Content.Client.Forensics
 {
     [GenerateTypedNameReferences]
+    [InjectDependencies]
     public sealed partial class ForensicScannerMenu : DefaultWindow
     {
         [Dependency] private IGameTiming _gameTiming = default!;

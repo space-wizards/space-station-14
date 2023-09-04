@@ -13,6 +13,7 @@ using Content.Shared.Interaction.Components;
 
 namespace Content.Server.Glue;
 
+[InjectDependencies]
 public sealed partial class GlueSystem : SharedGlueSystem
 {
     [Dependency] private SharedAudioSystem _audio = default!;

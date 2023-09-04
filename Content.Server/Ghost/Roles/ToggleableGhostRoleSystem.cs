@@ -13,6 +13,7 @@ namespace Content.Server.Ghost.Roles;
 /// <summary>
 /// This handles logic and interaction related to <see cref="ToggleableGhostRoleComponent"/>
 /// </summary>
+[InjectDependencies]
 public sealed partial class ToggleableGhostRoleSystem : EntitySystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

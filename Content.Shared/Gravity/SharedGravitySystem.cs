@@ -11,6 +11,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.Gravity
 {
+    [InjectDependencies]
     public abstract partial class SharedGravitySystem : EntitySystem
     {
         [Dependency] protected IGameTiming Timing = default!;

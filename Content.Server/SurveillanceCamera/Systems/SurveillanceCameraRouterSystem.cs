@@ -13,6 +13,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.SurveillanceCamera;
 
+[InjectDependencies]
 public sealed partial class SurveillanceCameraRouterSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;

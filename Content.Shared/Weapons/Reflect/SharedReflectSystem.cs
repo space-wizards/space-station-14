@@ -23,6 +23,7 @@ namespace Content.Shared.Weapons.Reflect;
 /// <summary>
 /// This handles reflecting projectiles and hitscan shots.
 /// </summary>
+[InjectDependencies]
 public abstract partial class SharedReflectSystem : EntitySystem
 {
     [Dependency] private INetManager _netManager = default!;

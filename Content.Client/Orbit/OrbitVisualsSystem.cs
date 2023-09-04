@@ -8,6 +8,7 @@ using Robust.Shared.Random;
 
 namespace Content.Client.Orbit;
 
+[InjectDependencies]
 public sealed partial class OrbitVisualsSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _robustRandom = default!;

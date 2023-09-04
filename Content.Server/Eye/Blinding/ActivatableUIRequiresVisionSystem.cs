@@ -8,6 +8,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Eye.Blinding;
 
+[InjectDependencies]
 public sealed partial class ActivatableUIRequiresVisionSystem : EntitySystem
 {
     [Dependency] private PopupSystem _popupSystem = default!;

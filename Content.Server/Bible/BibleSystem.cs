@@ -19,6 +19,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Bible
 {
+    [InjectDependencies]
     public sealed partial class BibleSystem : EntitySystem
     {
         [Dependency] private IRobustRandom _random = default!;

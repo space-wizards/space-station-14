@@ -8,6 +8,7 @@ using Robust.Shared.Player;
 
 namespace Content.Server.Weapons.Melee.ItemToggle;
 
+[InjectDependencies]
 public sealed partial class ItemToggleSystem : EntitySystem
 {
     [Dependency] private SharedItemSystem _item = default!;

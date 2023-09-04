@@ -32,6 +32,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Electrocution;
 
+[InjectDependencies]
 public sealed partial class ElectrocutionSystem : SharedElectrocutionSystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

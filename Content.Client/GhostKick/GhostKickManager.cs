@@ -6,6 +6,7 @@ using Robust.Shared.Network;
 
 namespace Content.Client.GhostKick;
 
+[InjectDependencies]
 public sealed partial class GhostKickManager
 {
     private bool _fakeLossEnabled;

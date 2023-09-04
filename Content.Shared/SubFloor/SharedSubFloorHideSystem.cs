@@ -13,6 +13,7 @@ namespace Content.Shared.SubFloor
     ///     Entity system backing <see cref="SubFloorHideComponent"/>.
     /// </summary>
     [UsedImplicitly]
+    [InjectDependencies]
     public abstract partial class SharedSubFloorHideSystem : EntitySystem
     {
         [Dependency] protected IMapManager MapManager = default!;

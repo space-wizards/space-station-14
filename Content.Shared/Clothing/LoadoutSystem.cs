@@ -9,6 +9,7 @@ namespace Content.Shared.Clothing;
 /// <summary>
 /// Assigns a loadout to an entity based on the startingGear prototype
 /// </summary>
+[InjectDependencies]
 public sealed partial class LoadoutSystem : EntitySystem
 {
     // Shared so we can predict it for placement manager.

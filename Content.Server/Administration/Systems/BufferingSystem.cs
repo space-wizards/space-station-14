@@ -6,6 +6,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Administration.Systems;
 
+[InjectDependencies]
 public sealed partial class BufferingSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

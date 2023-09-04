@@ -27,6 +27,7 @@ using static Robust.Client.UserInterface.Control;
 namespace Content.Client.Inventory
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class StrippableBoundUserInterface : BoundUserInterface
     {
         [Dependency] private IPrototypeManager _protoMan = default!;

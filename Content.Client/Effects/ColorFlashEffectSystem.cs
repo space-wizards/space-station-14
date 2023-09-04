@@ -7,6 +7,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Effects;
 
+[InjectDependencies]
 public sealed partial class ColorFlashEffectSystem : SharedColorFlashEffectSystem
 {
     [Dependency] private IGameTiming _timing = default!;

@@ -34,6 +34,7 @@ namespace Content.Server.StationRecords.Systems;
 ///     depend on this general record being created. This is subject
 ///     to change.
 /// </summary>
+[InjectDependencies]
 public sealed partial class StationRecordsSystem : EntitySystem
 {
     [Dependency] private InventorySystem _inventorySystem = default!;

@@ -9,6 +9,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Client.Radiation.Overlays
 {
+    [InjectDependencies]
     public sealed partial class RadiationPulseOverlay : Overlay
     {
         [Dependency] private IEntityManager _entityManager = default!;

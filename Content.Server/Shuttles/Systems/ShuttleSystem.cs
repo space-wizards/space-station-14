@@ -19,6 +19,7 @@ using Robust.Shared.Random;
 namespace Content.Server.Shuttles.Systems;
 
 [UsedImplicitly]
+[InjectDependencies]
 public sealed partial class ShuttleSystem : SharedShuttleSystem
 {
     [Dependency] private IMapManager _mapManager = default!;

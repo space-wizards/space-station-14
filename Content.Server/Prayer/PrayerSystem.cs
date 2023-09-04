@@ -13,12 +13,14 @@ using Content.Shared.Verbs;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Prayer;
+
 /// <summary>
 /// System to handle subtle messages and praying
 /// </summary>
 /// <remarks>
 /// Rain is a professional developer and this did not take 2 PRs to fix subtle messages
 /// </remarks>
+[InjectDependencies]
 public sealed partial class PrayerSystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

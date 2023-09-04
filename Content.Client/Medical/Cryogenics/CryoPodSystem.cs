@@ -7,6 +7,7 @@ using DrawDepth = Content.Shared.DrawDepth.DrawDepth;
 
 namespace Content.Client.Medical.Cryogenics;
 
+[InjectDependencies]
 public sealed partial class CryoPodSystem: SharedCryoPodSystem
 {
     [Dependency] private SharedAppearanceSystem _appearance = default!;

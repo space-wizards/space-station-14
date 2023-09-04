@@ -13,6 +13,7 @@ using Robust.Shared.Player;
 
 namespace Content.Client.Weather;
 
+[InjectDependencies]
 public sealed partial class WeatherSystem : SharedWeatherSystem
 {
     [Dependency] private IOverlayManager _overlayManager = default!;

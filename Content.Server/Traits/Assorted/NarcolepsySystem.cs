@@ -7,6 +7,7 @@ namespace Content.Server.Traits.Assorted;
 /// <summary>
 /// This handles narcolepsy, causing the affected to fall asleep uncontrollably at a random interval.
 /// </summary>
+[InjectDependencies]
 public sealed partial class NarcolepsySystem : EntitySystem
 {
     [ValidatePrototypeId<StatusEffectPrototype>]

@@ -22,6 +22,7 @@ using Robust.Shared.Timing;
 namespace Content.Server.Lathe
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class LatheSystem : SharedLatheSystem
     {
         [Dependency] private IGameTiming _timing = default!;

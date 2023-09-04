@@ -6,6 +6,7 @@ namespace Content.Server.NPC.HTN.Preconditions;
 /// <summary>
 /// Gets ammo for this NPC's selected gun; either active hand or itself.
 /// </summary>
+[InjectDependencies]
 public sealed partial class GunAmmoPrecondition : HTNPrecondition
 {
     [Dependency] private IEntityManager _entManager = default!;

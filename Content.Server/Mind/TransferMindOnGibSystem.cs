@@ -11,6 +11,7 @@ namespace Content.Server.Mind;
 /// to a different entity when they gib.
 /// used for skeletons.
 /// </summary>
+[InjectDependencies]
 public sealed partial class TransferMindOnGibSystem : EntitySystem
 {
     [Dependency] private IRobustRandom _random = default!;

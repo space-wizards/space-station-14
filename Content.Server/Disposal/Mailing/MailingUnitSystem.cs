@@ -10,6 +10,7 @@ using Robust.Server.GameObjects;
 
 namespace Content.Server.Disposal.Mailing;
 
+[InjectDependencies]
 public sealed partial class MailingUnitSystem : EntitySystem
 {
     [Dependency] private DeviceNetworkSystem _deviceNetworkSystem = default!;

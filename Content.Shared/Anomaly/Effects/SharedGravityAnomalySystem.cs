@@ -6,6 +6,7 @@ using Robust.Shared.Map;
 
 namespace Content.Shared.Anomaly.Effects;
 
+[InjectDependencies]
 public abstract partial class SharedGravityAnomalySystem : EntitySystem
 {
     [Dependency] private IMapManager _map = default!;

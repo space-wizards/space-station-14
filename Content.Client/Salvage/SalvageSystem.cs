@@ -6,6 +6,7 @@ using Robust.Shared.GameStates;
 
 namespace Content.Client.Salvage;
 
+[InjectDependencies]
 public sealed partial class SalvageSystem : SharedSalvageSystem
 {
     [Dependency] private IPlayerManager _playerManager = default!;

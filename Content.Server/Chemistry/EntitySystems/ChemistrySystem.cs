@@ -9,6 +9,7 @@ using Content.Shared.Mobs.Systems;
 
 namespace Content.Server.Chemistry.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class ChemistrySystem : EntitySystem
 {
     [Dependency] private IAdminLogManager _adminLogger = default!;

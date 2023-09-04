@@ -40,6 +40,7 @@ using Robust.Shared.Replays;
 
 namespace Content.Client.Entry
 {
+    [InjectDependencies]
     public sealed partial class EntryPoint : GameClient
     {
         [Dependency] private IBaseClient _baseClient = default!;

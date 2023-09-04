@@ -21,6 +21,7 @@ using Robust.Shared.Utility;
 
 namespace Content.Server.Body.Systems;
 
+[InjectDependencies]
 public sealed partial class BodySystem : SharedBodySystem
 {
     [Dependency] private GameTicker _ticker = default!;

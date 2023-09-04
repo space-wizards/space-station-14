@@ -8,6 +8,7 @@ namespace Content.Client.UserInterface.Controls;
 /// <summary>
 /// Handles generic grid-drawing data, with zoom and dragging.
 /// </summary>
+[InjectDependencies]
 public abstract partial class MapGridControl : Control
 {
     [Dependency] protected IGameTiming Timing = default!;

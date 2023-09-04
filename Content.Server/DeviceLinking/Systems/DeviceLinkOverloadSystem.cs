@@ -6,6 +6,7 @@ using Robust.Shared.Audio;
 
 namespace Content.Server.DeviceLinking.Systems;
 
+[InjectDependencies]
 public sealed partial class DeviceLinkOverloadSystem : EntitySystem
 {
     [Dependency] private AudioSystem _audioSystem = default!;

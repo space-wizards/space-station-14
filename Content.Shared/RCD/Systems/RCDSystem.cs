@@ -20,6 +20,7 @@ using Robust.Shared.Timing;
 
 namespace Content.Shared.RCD.Systems;
 
+[InjectDependencies]
 public sealed partial class RCDSystem : EntitySystem
 {
     [Dependency] private ISharedAdminLogManager _adminLogger = default!;

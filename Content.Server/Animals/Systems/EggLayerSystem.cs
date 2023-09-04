@@ -12,6 +12,7 @@ using Robust.Shared.Random;
 
 namespace Content.Server.Animals.Systems;
 
+[InjectDependencies]
 public sealed partial class EggLayerSystem : EntitySystem
 {
     [Dependency] private IPrototypeManager _prototype = default!;

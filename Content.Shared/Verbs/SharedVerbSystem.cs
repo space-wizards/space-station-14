@@ -5,6 +5,7 @@ using Robust.Shared.Containers;
 
 namespace Content.Shared.Verbs
 {
+    [InjectDependencies]
     public abstract partial class SharedVerbSystem : EntitySystem
     {
         [Dependency] private SharedInteractionSystem _interactionSystem = default!;

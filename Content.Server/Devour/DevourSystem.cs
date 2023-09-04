@@ -8,6 +8,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Server.Devour;
 
+[InjectDependencies]
 public sealed partial class DevourSystem : SharedDevourSystem
 {
     [Dependency] private BloodstreamSystem _bloodstreamSystem = default!;

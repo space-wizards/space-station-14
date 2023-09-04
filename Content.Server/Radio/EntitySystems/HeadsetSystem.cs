@@ -10,6 +10,7 @@ using Robust.Shared.Network;
 
 namespace Content.Server.Radio.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class HeadsetSystem : SharedHeadsetSystem
 {
     [Dependency] private INetManager _netMan = default!;

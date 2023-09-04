@@ -8,6 +8,7 @@ using Robust.Shared.Map;
 
 namespace Content.Server.Emp;
 
+[InjectDependencies]
 public sealed partial class EmpSystem : SharedEmpSystem
 {
     [Dependency] private EntityLookupSystem _lookup = default!;

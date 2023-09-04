@@ -8,6 +8,7 @@ using Robust.Shared.Prototypes;
 
 namespace Content.Server.Research.Disk
 {
+    [InjectDependencies]
     public sealed partial class ResearchDiskSystem : EntitySystem
     {
         [Dependency] private IPrototypeManager _prototype = default!;

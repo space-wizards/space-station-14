@@ -18,6 +18,7 @@ using Robust.Shared.Player;
 namespace Content.Server.Nutrition.EntitySystems
 {
     [UsedImplicitly]
+    [InjectDependencies]
     public sealed partial class CreamPieSystem : SharedCreamPieSystem
     {
         [Dependency] private SolutionContainerSystem _solutions = default!;

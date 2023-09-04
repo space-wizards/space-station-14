@@ -7,6 +7,7 @@ using Content.Shared.PowerCell.Components;
 
 namespace Content.Server.Radio.EntitySystems;
 
+[InjectDependencies]
 public sealed partial class JammerSystem : EntitySystem
 {
     [Dependency] private PowerCellSystem _powerCell = default!;

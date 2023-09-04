@@ -12,6 +12,7 @@ namespace Content.Server.Roles.Jobs;
 /// <summary>
 ///     Handles the job data on mind entities.
 /// </summary>
+[InjectDependencies]
 public sealed partial class JobSystem : EntitySystem
 {
     [Dependency] private IChatManager _chat = default!;

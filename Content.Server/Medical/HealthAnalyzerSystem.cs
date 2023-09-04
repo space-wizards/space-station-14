@@ -11,6 +11,7 @@ using Content.Server.Body.Components;
 
 namespace Content.Server.Medical
 {
+    [InjectDependencies]
     public sealed partial class HealthAnalyzerSystem : EntitySystem
     {
         [Dependency] private PowerCellSystem _cell = default!;
