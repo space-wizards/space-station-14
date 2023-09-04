@@ -62,7 +62,7 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
             if (!isHumanoid) // Only humanoids count as enemies
                 continue;
 
-            var isAntagonist = roleSystem.MindHasRole<AntagonistRoleComponent>(mindId);
+            var isAntagonist = roleSystem.MindIsAntagonist(mindId);
             if (isAntagonist) // Allow antagonist
                 continue;
 
