@@ -227,9 +227,8 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
         if (!Random(p))
             return;
 
-        var rng = IoCManager.Resolve<IRobustRandom>();
         float amount = _robustRandom.NextFloat(min, max);
-        Gas gas = rng.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
+        Gas gas = _robustRandom.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
         if (gasses.ContainsKey(gas))
         {
             gasses[gas] += amount;
@@ -248,8 +247,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
         if (!Random(p))
             return;
 
-        var rng = IoCManager.Resolve<IRobustRandom>();
-        ReagentPrototype selected_chemical = rng.Pick(_allChemicals);
+        ReagentPrototype selected_chemical = _robustRandom.Pick(_allChemicals);
         if (selected_chemical != null)
         {
             string chemical_id = selected_chemical.ID;
@@ -288,8 +286,7 @@ public sealed class MutationSystem : EntitySystem, IPostInjectInit
                 Color.Purple,
                 Color.Pink
             };
-            var rng = IoCManager.Resolve<IRobustRandom>();
-            return rng.Pick(colors);
+            return _robustRandom.Pick(colors);
         }
         return color;
     }
