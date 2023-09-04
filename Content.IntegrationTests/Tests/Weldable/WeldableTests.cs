@@ -1,5 +1,5 @@
 using Content.IntegrationTests.Tests.Interaction;
-using Content.Server.Tools.Components;
+using Content.Shared.Tools.Components;
 
 namespace Content.IntegrationTests.Tests.Weldable;
 
@@ -18,7 +18,6 @@ public sealed class WeldableTests : InteractionTest
 
         Assert.Multiple(() =>
         {
-            Assert.That(comp.Weldable, Is.True);
             Assert.That(comp.IsWelded, Is.False);
         });
 
