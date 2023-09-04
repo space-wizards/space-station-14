@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: CentCom PDAs have the right ID cards now., type: Fix}
-  id: 4267
-  time: '2023-07-17T19:31:35.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: explosive banana peel is now easier to spot in dark, type: Tweak}
@@ -2995,3 +2990,8 @@ Entries:
   - {message: Added cute and fluffy moth plushie!, type: Add}
   id: 4766
   time: '2023-09-04T20:18:03.0000000+00:00'
+- author: DrSmugleaf
+  changes:
+  - {message: Fix deployable barriers., type: Fix}
+  id: 4767
+  time: '2023-09-04T22:33:40.0000000+00:00'
