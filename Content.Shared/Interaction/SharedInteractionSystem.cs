@@ -912,7 +912,7 @@ namespace Content.Shared.Interaction
             UseDelayComponent? delayComponent = null;
             if (checkUseDelay
                 && TryComp(used, out delayComponent)
-                && delayComponent.ActiveDelay)
+                && _useDelay.IsDelayed(used, delayComponent))
                 return false;
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -936,7 +936,7 @@ namespace Content.Shared.Interaction
                 return false;
 
             DoContactInteraction(user, used, activateMsg);
-            _useDelay.BeginDelay(used, delayComponent);
+            _useDelay.ResetDelay(used, delayComponent);
             if (!activateMsg.WasLogged)
                 _adminLogger.Add(LogType.InteractActivate, LogImpact.Low, $"{ToPrettyString(user):user} activated {ToPrettyString(used):used}");
             return true;
@@ -961,7 +961,7 @@ namespace Content.Shared.Interaction
 
             if (checkUseDelay
                 && TryComp(used, out delayComponent)
-                && delayComponent.ActiveDelay)
+                && _useDelay.IsDelayed(used, delayComponent))
                 return true; // if the item is on cooldown, we consider this handled.
 
             if (checkCanInteract && !_actionBlockerSystem.CanInteract(user, used))
@@ -975,7 +975,7 @@ namespace Content.Shared.Interaction
             if (useMsg.Handled)
             {
                 DoContactInteraction(user, used, useMsg);
-                _useDelay.BeginDelay(used, delayComponent);
+                _useDelay.ResetDelay(used, delayComponent);
                 return true;
             }
 

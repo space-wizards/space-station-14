@@ -77,7 +77,7 @@ namespace Content.Server.Chemistry.EntitySystems
             if (!EligibleEntity(target, _entMan))
                 return false;
 
-            if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.ActiveDelay(uid, delayComp))
+            if (TryComp(uid, out UseDelayComponent? delayComp) && _useDelay.IsDelayed(uid, delayComp))
                 return false;
 
             string? msgFormat = null;
@@ -118,7 +118,7 @@ namespace Content.Server.Chemistry.EntitySystems
             // Medipens and such use this system and don't have a delay, requiring extra checks
             // BeginDelay function returns if item is already on delay
             if (delayComp is not null)
-                _useDelay.BeginDelay(uid, delayComp);
+                _useDelay.ResetDelay(uid, delayComp);
 
             // Get transfer amount. May be smaller than component.TransferAmount if not enough room
             var realTransferAmount = FixedPoint2.Min(component.TransferAmount, targetSolution.AvailableVolume);

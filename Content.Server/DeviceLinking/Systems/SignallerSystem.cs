@@ -41,12 +41,12 @@ public sealed class SignallerSystem : EntitySystem
     {
         // if on cooldown, do nothing
         var hasUseDelay = TryComp<UseDelayComponent>(uid, out var useDelay);
-        if (hasUseDelay && _useDelay.ActiveDelay(uid, useDelay))
+        if (hasUseDelay && _useDelay.IsDelayed(uid, useDelay))
             return;
 
         // set cooldown to prevent clocks
         if (hasUseDelay)
-            _useDelay.BeginDelay(uid, useDelay);
+            _useDelay.ResetDelay(uid, useDelay);
 
         _link.InvokePort(uid, component.Port);
         args.Handled = true;

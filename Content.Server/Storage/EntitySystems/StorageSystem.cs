@@ -682,12 +682,12 @@ namespace Content.Server.Storage.EntitySystems
                 return;
 
             // prevent spamming bag open / honkerton honk sound
-            silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.ActiveDelay(uid, useDelay);
+            silent |= TryComp<UseDelayComponent>(uid, out var useDelay) && _useDelay.IsDelayed(uid, useDelay);
             if (!silent)
             {
                 _audio.PlayPvs(storageComp.StorageOpenSound, uid);
                 if (useDelay != null)
-                    _useDelay.BeginDelay(uid, useDelay);
+                    _useDelay.ResetDelay(uid, useDelay);
             }
 
             _logManager.GetSawmill(storageComp.LoggerName)

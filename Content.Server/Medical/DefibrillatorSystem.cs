@@ -64,13 +64,13 @@ public sealed class DefibrillatorSystem : EntitySystem
 
     private void OnUseInHand(EntityUid uid, DefibrillatorComponent component, UseInHandEvent args)
     {
-        if (args.Handled || _useDelay.ActiveDelay(uid))
+        if (args.Handled || _useDelay.IsDelayed(uid))
             return;
 
         if (!TryToggle(uid, component, args.User))
             return;
         args.Handled = true;
-        _useDelay.BeginDelay(uid);
+        _useDelay.ResetDelay(uid);
     }
 
     private void OnPowerCellSlotEmpty(EntityUid uid, DefibrillatorComponent component, ref PowerCellSlotEmptyEvent args)

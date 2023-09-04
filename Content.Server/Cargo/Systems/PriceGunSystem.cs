@@ -26,11 +26,10 @@ public sealed class PriceGunSystem : EntitySystem
 
     private void OnUtilityVerb(EntityUid uid, PriceGunComponent component, GetVerbsEvent<UtilityVerb> args)
     {
-
-        if (!args.CanAccess || !args.CanInteract)
+        if (!args.CanAccess || !args.CanInteract || args.Using == null)
             return;
 
-        if (TryComp(args.Using, out UseDelayComponent? useDelay) && useDelay.ActiveDelay)
+        if (_useDelay.IsDelayed(args.Using.Value))
             return;
 
         var price = _pricingSystem.GetPrice(args.Target);
@@ -40,7 +39,7 @@ public sealed class PriceGunSystem : EntitySystem
             Act = () =>
             {
                 _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
-                _useDelay.BeginDelay(uid, useDelay);
+                _useDelay.ResetDelay(uid);
             },
             Text = Loc.GetString("price-gun-verb-text"),
             Message = Loc.GetString("price-gun-verb-message", ("object", Identity.Entity(args.Target, EntityManager)))
@@ -48,18 +47,19 @@ public sealed class PriceGunSystem : EntitySystem
 
         args.Verbs.Add(verb);
     }
+
     private void OnAfterInteract(EntityUid uid, PriceGunComponent component, AfterInteractEvent args)
     {
         if (!args.CanReach || args.Target == null || args.Handled)
             return;
 
-        if (TryComp(args.Used, out UseDelayComponent? useDelay) && useDelay.ActiveDelay)
+        if (TryComp(uid, out UseDelayComponent? useDelay) && _useDelay.IsDelayed(uid, useDelay))
             return;
 
         var price = _pricingSystem.GetPrice(args.Target.Value);
 
         _popupSystem.PopupEntity(Loc.GetString("price-gun-pricing-result", ("object", Identity.Entity(args.Target.Value, EntityManager)), ("price", $"{price:F2}")), args.User, args.User);
-        _useDelay.BeginDelay(uid, useDelay);
+        _useDelay.ResetDelay(uid, useDelay);
         args.Handled = true;
     }
 }

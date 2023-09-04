@@ -104,7 +104,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         if (!_solutionSystem.TryGetSolution(used, AbsorbentComponent.SolutionName, out var absorberSoln))
             return;
 
-        if (_useDelay.ActiveDelay(used))
+        if (_useDelay.IsDelayed(used))
             return;
 
         // If it's a puddle try to grab from
@@ -204,10 +204,10 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         }
 
         _audio.PlayPvs(component.TransferSound, target);
-        _useDelay.BeginDelay(used);
+        _useDelay.ResetDelay(used);
         return true;
         _audio.PlayPvs(component.TransferSound, target);
-        _useDelay.BeginDelay(used);
+        _useDelay.ResetDelay(used);
         return true;
     }
 
@@ -251,7 +251,7 @@ public sealed class AbsorbentSystem : SharedAbsorbentSystem
         _solutionSystem.UpdateChemicals(used, absorberSoln);
         _solutionSystem.UpdateChemicals(target, puddleSolution);
         _audio.PlayPvs(absorber.PickupSound, target);
-        _useDelay.BeginDelay(used);
+        _useDelay.ResetDelay(used);
 
         var userXform = Transform(user);
         var targetPos = _transform.GetWorldPosition(target);

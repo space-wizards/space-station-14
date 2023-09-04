@@ -61,13 +61,13 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
             // At least show the visuals.
             component.Projectile = shotUid.Value;
-            Dirty(component);
+            Dirty(uid, component);
             var visuals = EnsureComp<JointVisualsComponent>(shotUid.Value);
             visuals.Sprite =
                 new SpriteSpecifier.Rsi(new ResPath("Objects/Weapons/Guns/Launchers/grappling_gun.rsi"), "rope");
             visuals.OffsetA = new Vector2(0f, 0.5f);
             visuals.Target = uid;
-            Dirty(visuals);
+            Dirty(shotUid.Value, visuals);
         }
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -115,10 +115,10 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
 
     private void OnGunActivate(EntityUid uid, GrapplingGunComponent component, ActivateInWorldEvent args)
     {
-        if (!Timing.IsFirstTimePredicted || _delay.ActiveDelay(uid))
+        if (!Timing.IsFirstTimePredicted || _delay.IsDelayed(uid))
             return;
 
-        _delay.BeginDelay(uid);
+        _delay.ResetDelay(uid);
         _audio.PlayPredicted(component.CycleSound, uid, args.User);
 
         TryComp<AppearanceComponent>(uid, out var appearance);
@@ -133,7 +133,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
             }
 
             component.Projectile = null;
-            Dirty(component);
+            Dirty(uid, component);
         }
     }
 
@@ -157,7 +157,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         }
 
         component.Reeling = value;
-        Dirty(component);
+        Dirty(uid, component);
     }
 
     public override void Update(float frameTime)
@@ -200,7 +200,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
                 _physics.WakeBody(jointComp.Relay.Value);
             }
 
-            Dirty(jointComp);
+            Dirty(uid, jointComp);
 
             if (distance.MaxLength.Equals(distance.MinLength))
             {
@@ -221,7 +221,7 @@ public abstract class SharedGrapplingGunSystem : EntitySystem
         joint.MinLength = 0.35f;
         // Setting velocity directly for mob movement fucks this so need to make them aware of it.
         // joint.Breakpoint = 4000f;
-        Dirty(jointComp);
+        Dirty(uid, jointComp);
     }
 
     [Serializable, NetSerializable]

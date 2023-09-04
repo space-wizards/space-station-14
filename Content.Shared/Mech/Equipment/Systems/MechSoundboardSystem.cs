@@ -1,8 +1,5 @@
-using Content.Shared.Mech;
 using Content.Shared.Mech.Equipment.Components;
-using Content.Shared.Mech.Equipment.Systems;
 using Content.Shared.Timing;
-using Robust.Shared.Audio;
 using System.Linq;
 
 namespace Content.Shared.Mech.Equipment.Systems;
@@ -46,12 +43,11 @@ public sealed class MechSoundboardSystem : EntitySystem
         if (msg.Sound >= comp.Sounds.Count)
             return;
 
-        if (_useDelay.ActiveDelay(uid))
+        if (_useDelay.IsDelayed(uid))
             return;
 
         // honk!!!!!
-        var mech = equipment.EquipmentOwner.Value;
-        _useDelay.BeginDelay(uid);
+        _useDelay.ResetDelay(uid);
         _audio.PlayPvs(comp.Sounds[msg.Sound], uid);
     }
 }

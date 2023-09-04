@@ -10,6 +10,8 @@ using Content.Server.Atmos.Components;
 using Content.Shared.Examine;
 using Content.Server.Atmos;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using Content.Shared.Timing;
 
 namespace Content.Server.Singularity.EntitySystems
 {
@@ -19,6 +21,9 @@ namespace Content.Server.Singularity.EntitySystems
         [Dependency] private readonly PopupSystem _popupSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedContainerSystem _containerSystem = default!;
+        [Dependency] private readonly UseDelaySystem _useDelay = default!;
+
+        private const string GasTankContainer = "gas_tank";
 
         public override void Initialize()
         {
@@ -32,12 +37,11 @@ namespace Content.Server.Singularity.EntitySystems
         private bool TryGetLoadedGasTank(EntityUid uid, [NotNullWhen(true)] out GasTankComponent? gasTankComponent)
         {
             gasTankComponent = null;
-            var container = _containerSystem.EnsureContainer<ContainerSlot>(uid, "GasTank");
 
-            if (container.ContainedEntity == null)
+            if (!_containerSystem.TryGetContainer(uid, GasTankContainer, out var container) || container.ContainedEntities.Count == 0)
                 return false;
 
-            if (!EntityManager.TryGetComponent(container.ContainedEntity, out gasTankComponent))
+            if (!EntityManager.TryGetComponent(container.ContainedEntities.First(), out gasTankComponent))
                 return false;
 
             return true;
@@ -45,13 +49,10 @@ namespace Content.Server.Singularity.EntitySystems
 
         private void OnInteractHand(EntityUid uid, RadiationCollectorComponent component, InteractHandEvent args)
         {
-            var curTime = _gameTiming.CurTime;
-
-            if (curTime < component.CoolDownEnd)
+            if (!_useDelay.TryUseDelay(uid))
                 return;
 
             ToggleCollector(uid, args.User, component);
-            component.CoolDownEnd = curTime + component.Cooldown;
         }
 
         private void OnRadiation(EntityUid uid, RadiationCollectorComponent component, OnIrradiatedEvent args)
