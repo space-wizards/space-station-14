@@ -1,7 +1,7 @@
 fulton-folded = Маяк требует развёртывания
-fulton-examine = {$time} секунд до извлечения
-fulton-linked = Связанный маяк
+fulton-examine = {$time} секунд до перемещения
+fulton-linked = Маяк привязан
 fulton-not-found = Маяк не найден
-fulton-invalid = Фултон невозможен
-fulton-fultoned = Фултон уже завершён
-fulton-remove = Извлечь фултон
+fulton-invalid = Невозможно поместить фултон
+fulton-fultoned = Фултон уже помещен
+fulton-remove = Убрать фултон
