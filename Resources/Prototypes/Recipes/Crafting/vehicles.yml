@@ -1,0 +1,12 @@
+- type: construction
+  name: wheelchair
+  id: wheelchair
+  graph: Wheelchair
+  startNode: start
+  targetNode: wheelchair
+  category: construction-category-utilities
+  objectType: Item
+  description: A chair with big wheels. It looks like you can move in these on your own.
+  icon:
+    sprite: Objects/Vehicles/wheelchair.rsi
+    state: vehicle

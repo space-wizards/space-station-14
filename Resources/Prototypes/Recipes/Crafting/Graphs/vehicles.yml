@@ -1,0 +1,16 @@
+- type: constructionGraph
+  id: Wheelchair
+  start: start
+  graph:
+  - node: start
+    edges:
+    - to: wheelchair
+      steps:
+      - material: Steel
+        amount: 4
+        doAfter: 4
+      - material: MetalRod
+        amount: 6
+        doAfter: 3
+  - node: wheelchair
+    entity: VehicleWheelchair

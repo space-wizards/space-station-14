@@ -465,6 +465,9 @@
             - MobMask
           layer:
             - TableLayer
+    - type: Construction
+      graph: Wheelchair
+      node: wheelchair
 
 - type: entity
   parent: VehicleWheelchair
