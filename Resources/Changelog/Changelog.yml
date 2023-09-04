@@ -1,11 +1,4 @@
 Entries:
-- author: Emisse
-  changes:
-  - {message: 'Saline can now be made with water and salt, it can treat dehydration
-      and bloodloss. Salt now makes you dehydrated and no longer fills your belly.
-      Just flavor!', type: Add}
-  id: 4263
-  time: '2023-07-17T10:02:42.0000000+00:00'
 - author: Dygon
   changes:
   - {message: Dionas don't starve extremely fast anymore, type: Fix}
@@ -2988,3 +2981,12 @@ Entries:
   - {message: Plant mutations can now alter plant gas and chemical production., type: Add}
   id: 4762
   time: '2023-09-04T16:24:39.0000000+00:00'
+- author: router
+  changes:
+  - {message: Shuttles no longer go hog wild whenever they're above their former maximum
+      velocity of 20., type: Fix}
+  - {message: 'Upgraded thrusters now contribute to a direction-specific thrust factor,
+      calculated by dividing total thrust over thrust if every thruster was T1. The
+      maximum speed with T4 parts is 67.5.', type: Add}
+  id: 4763
+  time: '2023-09-04T19:33:47.0000000+00:00'
