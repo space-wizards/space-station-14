@@ -1,9 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: Dionas don't starve extremely fast anymore, type: Fix}
-  id: 4264
-  time: '2023-07-17T19:18:12.0000000+00:00'
 - author: EmoGarbage404
   changes:
   - {message: Artifact containers weigh less., type: Tweak}
@@ -2990,3 +2985,13 @@ Entries:
       maximum speed with T4 parts is 67.5.', type: Add}
   id: 4763
   time: '2023-09-04T19:33:47.0000000+00:00'
+- author: PixelTK
+  changes:
+  - {message: Arachnids no longer have two additional hands as well as their damage
+      modifiers., type: Remove}
+  - {message: 'Arachnids can now craft more structures, unique clothes, and cloth
+      using their webs.', type: Add}
+  - {message: Arachnids now get more hungry when spinning webs., type: Tweak}
+  - {message: Moths can now eat silk., type: Tweak}
+  id: 4764
+  time: '2023-09-04T20:02:54.0000000+00:00'
