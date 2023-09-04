@@ -336,9 +336,6 @@ public abstract partial class SharedDoorSystem : EntitySystem
             return;
 
         SetState(uid, DoorState.Closing, door);
-
-        if (door.CloseSound != null)
-            PlaySound(uid, door.CloseSound, AudioParams.Default.WithVolume(-5), user, predicted);
     }
 
     /// <summary>
