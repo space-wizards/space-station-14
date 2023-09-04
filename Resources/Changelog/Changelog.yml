@@ -1,14 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: In an effort to reduce the amount of manpower lost during Syndicate
-      missions operators can now order deathrattle implants from the uplink. These
-      implants send your coordinates to the syndicate radio when going into a critical
-      state and upon dying., type: Add}
-  - {message: Tracking implants now relay the location of an implanted person to the
-      security channel when they go into a critical state., type: Tweak}
-  id: 4255
-  time: '2023-07-16T02:59:47.0000000+00:00'
 - author: Slava0135
   changes:
   - {message: fixed chameleon menu not working, type: Fix}
@@ -2999,3 +2989,9 @@ Entries:
   - {message: Fixed gravitational wells of supermatter and whitehole grenade, type: Fix}
   id: 4754
   time: '2023-09-04T12:23:49.0000000+00:00'
+- author: JustTNE
+  changes:
+  - {message: The ChemMaster 4000 has been upgraded to allow drag-and-drop insertion
+      of reagents!, type: Tweak}
+  id: 4755
+  time: '2023-09-04T12:53:13.0000000+00:00'
