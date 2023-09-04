@@ -157,7 +157,7 @@ public sealed class NPCJukeSystem : EntitySystem
                     return;
 
                 // If we get whacky boss mobs might need nearestpos that's more of a PITA
-                // so will just use this fior now.
+                // so will just use this for now.
                 var obstacleDirection = _transform.GetWorldPosition(melee.Target) - args.WorldPosition;
 
                 if (obstacleDirection == Vector2.Zero)
