@@ -52,7 +52,6 @@
   - type: InputMover
   - type: InteractionOutline
   - type: Vehicle
-  - type: Tag
   - type: Pullable
   - type: Physics
     bodyType: KinematicController
