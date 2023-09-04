@@ -1,9 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: fixed chameleon menu not working, type: Fix}
-  id: 4256
-  time: '2023-07-16T07:04:51.0000000+00:00'
 - author: Nairodian
   changes:
   - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
@@ -2995,3 +2990,9 @@ Entries:
       of reagents!, type: Tweak}
   id: 4755
   time: '2023-09-04T12:53:13.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: 'Rebalanced the conversion rates of gold, silver, uranium, and bananium
+      ores.', type: Tweak}
+  id: 4756
+  time: '2023-09-04T12:57:52.0000000+00:00'
