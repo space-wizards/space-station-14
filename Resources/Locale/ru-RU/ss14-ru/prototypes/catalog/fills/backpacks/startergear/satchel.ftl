@@ -48,3 +48,5 @@ ent-ClothingBackpackSatchelDrone = { ent-ClothingBackpackSatchel }
     .desc = { ent-ClothingBackpackSatchel.desc }
 ent-ClothingBackpackSatchelMimeFilled = { ent-ClothingBackpackSatchelMime }
     .desc = { ent-ClothingBackpackSatchelMime.desc }
+ent-ClothingBackpackSatchelSecurityFilledDetective = { ent-ClothingBackpackSatchelSecurity }
+	.desc = { ent-ClothingBackpackSatchelSecurity.desc }

@@ -1,0 +1,16 @@
+war-declarator-not-nukeops = Устройство издает писк, но ничего не происходит...
+war-declarator-ui-header = Объявление Войны
+war-declarator-ui-war-button = ОБЪЯВИТЬ ВОЙНУ!
+war-declarator-conditions-small-crew = Меньше, чем { $min } оперативников
+war-declarator-conditions-left-outpost = Шаттл покинул форпост Синдиката
+war-declarator-conditions-time-out = Время на объявление войны прошло
+war-declarator-conditions-delay = Отправление шаттла временно заблокировано
+war-declarator-conditions-ready = Шаттл готов покидать форпост!
+war-declarator-conditions-unknown = Неизвестно
+war-declarator-boost-possible = Объявление возможно
+war-declarator-boost-impossible = Объявление невозможно
+war-declarator-boost-declared = Объявление успешно объявлено!
+war-declarator-boost-declared-delay = Война объявлена! Отправление шаттла временно заблокировано
+war-declarator-boost-timer = Оставшееся время: {$minutes} минут и {$seconds} секунд
+war-declarator-default-message = Периферийная оперативная группа Синдиката объявила о своих намерениях полностью уничтожить станцию с использованием тактического ядерного оружия и бросает вызов всему экипажу, который вмешается.
+war-declarator-message-placeholder = Укажите собственный текст объявления войны здесь...

@@ -1,3 +1,40 @@
+# titles that get displayed in the wire hacking window
+wires-board-name-default = Провода
+wires-board-name-booze = РаздатчикАлко
+wires-board-name-soda = РаздатчикБезалко
+wires-board-name-thermomachine = Термомашина
+wires-board-name-pa = Ускоритель Частиц Мк.2
+wires-board-name-highsec = Контроль ВысЗащ
+wires-board-name-vessel = Корабль
+wires-board-name-smes = СМЭС
+wires-board-name-substation = Подстанция
+wires-board-name-apc = ЛКП
+wires-board-name-autolathe = Автолат
+wires-board-name-protolathe = Протолат
+wires-board-name-airalarm = ВоздСиг
+wires-board-name-firealarm = ПожСиг
+wires-board-name-arcade = Аркада
+wires-board-name-ape = М.А.К.А.К.
+wires-board-name-anomalygenerator = ГенераторАномалий
+wires-board-name-cloningpod = КапсулаКлонирования
+wires-board-name-cryopod = Криопод
+wires-board-name-chemdispenser = ХимРаздатчик
+wires-board-name-chemmaster = ХимМастер
+wires-board-name-generator = Генератор
+wires-board-name-vendingmachine = ВендоМат
+wires-board-name-intercom = Интерком
+wires-board-name-hydroponicstray = ГидропонныйЛоток
+wires-board-name-telecomserver = ТелекомСервер
+wires-board-name-medicalscanner = МедСканер
+wires-board-name-reclaimer = Переработчик
+wires-board-name-minigravitygenerator = МиниГравГенератор
+wires-board-name-dawinstrument = ЗвукСтанция
+wires-board-name-airlock = Контроль ВоздСиг
+wires-board-name-firelock = Контроль ПожСиг
+wires-board-name-windoor = Контроль Окон
+wires-board-name-mech = Мех
+wires-board-name-fatextractor = ЖирГенератор
+
 # names that get displayed in the wire hacking hud & admin logs.
 
 wire-name-access = ДСТП
