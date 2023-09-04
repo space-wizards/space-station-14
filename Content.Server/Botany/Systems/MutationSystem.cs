@@ -227,6 +227,7 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(p))
             return;
 
+        // Add a random amount of a random gas to this gas dictionary
         float amount = _robustRandom.NextFloat(min, max);
         Gas gas = _robustRandom.Pick(Enum.GetValues(typeof(Gas)).Cast<Gas>().ToList());
         if (gasses.ContainsKey(gas))
@@ -237,7 +238,6 @@ public sealed class MutationSystem : EntitySystem
         {
             gasses.Add(gas, amount);
         }
-
     }
 
     private void MutateChemicals(ref Dictionary<string, SeedChemQuantity> chemicals, int max, int bits, int totalbits, float mult)
@@ -247,6 +247,7 @@ public sealed class MutationSystem : EntitySystem
         if (!Random(p))
             return;
 
+        // Add a random amount of a random chemical to this set of chemicals
         ReagentPrototype selected_chemical = _robustRandom.Pick(_allChemicals);
         if (selected_chemical != null)
         {
