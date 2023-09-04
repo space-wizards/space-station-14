@@ -119,12 +119,6 @@ public abstract partial class SharedEntityStorageComponent : Component
     /// </summary>
     [ViewVariables]
     public Container Contents = default!;
-
-    /// <summary>
-    /// Whether or not the storage has been welded shut
-    /// </summary>
-    [DataField("isWeldedShut"), ViewVariables(VVAccess.ReadWrite)]
-    public bool IsWeldedShut;
 }
 
 [Serializable, NetSerializable]
@@ -140,16 +134,13 @@ public sealed class EntityStorageComponentState : ComponentState
 
     public float EnteringRange;
 
-    public bool IsWeldedShut;
-
-    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange, bool isWeldedShut)
+    public EntityStorageComponentState(bool open, int capacity, bool isCollidableWhenOpen, bool openOnMove, float enteringRange)
     {
         Open = open;
         Capacity = capacity;
         IsCollidableWhenOpen = isCollidableWhenOpen;
         OpenOnMove = openOnMove;
         EnteringRange = enteringRange;
-        IsWeldedShut = isWeldedShut;
     }
 }
 

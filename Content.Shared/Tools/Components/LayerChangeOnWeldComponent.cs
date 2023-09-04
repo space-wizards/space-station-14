@@ -1,9 +1,10 @@
-using Content.Server.Tools.Systems;
 using Content.Shared.Physics;
+using Content.Shared.Tools.Systems;
+using Robust.Shared.GameStates;
 
-namespace Content.Server.Tools.Components;
+namespace Content.Shared.Tools.Components;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent]
 [Access(typeof(WeldableSystem))]
 public sealed partial class LayerChangeOnWeldComponent : Component
 {

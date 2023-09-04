@@ -55,7 +55,7 @@ public abstract partial class SharedDisposalUnitComponent : Component
     /// Removes the pressure requirement for flushing.
     /// </summary>
     [DataField("disablePressure"), ViewVariables(VVAccess.ReadWrite)]
-    public bool DisablePressure = false;
+    public bool DisablePressure;
 
     /// <summary>
     ///     Last time that an entity tried to exit this disposal unit.

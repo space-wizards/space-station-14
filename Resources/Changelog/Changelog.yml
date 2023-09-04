@@ -1,58 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Quartermaster airlock now has command sprite, type: Tweak}
-  id: 4254
-  time: '2023-07-16T02:21:32.0000000+00:00'
-- author: Dygon
-  changes:
-  - {message: In an effort to reduce the amount of manpower lost during Syndicate
-      missions operators can now order deathrattle implants from the uplink. These
-      implants send your coordinates to the syndicate radio when going into a critical
-      state and upon dying., type: Add}
-  - {message: Tracking implants now relay the location of an implanted person to the
-      security channel when they go into a critical state., type: Tweak}
-  id: 4255
-  time: '2023-07-16T02:59:47.0000000+00:00'
-- author: Slava0135
-  changes:
-  - {message: fixed chameleon menu not working, type: Fix}
-  id: 4256
-  time: '2023-07-16T07:04:51.0000000+00:00'
-- author: Nairodian
-  changes:
-  - {message: Dwarves now have access to all the same tattoos that humans do., type: Tweak}
-  id: 4257
-  time: '2023-07-16T07:05:31.0000000+00:00'
-- author: Flareguy
-  changes:
-  - {message: Added collectible toy figurines based on the jobs & legends surrounding
-      the station. Find them in your local Good Clean Fun vendor today!, type: Add}
-  id: 4258
-  time: '2023-07-16T07:07:47.0000000+00:00'
-- author: Zumorica
-  changes:
-  - {message: Added instrument bands. Choose a person as your band "leader" and your
-      instrument playback will be synced with them! You can even become a one-man
-      band by playing multiple instruments at once and syncing them together., type: Add}
-  - {message: 'Added MIDI channel filtering to instruments. You can now choose which
-      channels your instrument will play! Useful with instrument bands, so each person
-      can play a different "track" of the song, if the MIDI file supports it.', type: Add}
-  - {message: Fixed some cases where custom instruments (such as the gilded bike horn)
-      would sound like a piano instead., type: Fix}
-  - {message: Fixed user soundfonts not being loaded., type: Fix}
-  id: 4259
-  time: '2023-07-16T19:12:53.0000000+00:00'
-- author: Partmedia
-  changes:
-  - {message: Failing to butcher now gives proper player feedback., type: Tweak}
-  id: 4260
-  time: '2023-07-17T03:54:39.0000000+00:00'
-- author: Ilya246
-  changes:
-  - {message: The atmos fireaxe and the syndicate fire axe can now pry plating., type: Add}
-  id: 4261
-  time: '2023-07-17T07:47:20.0000000+00:00'
 - author: eclips_e
   changes:
   - {message: 'Nanotrasen has decided to supply their librarians with the famous game
@@ -2999,3 +2945,50 @@ Entries:
       improve morale., type: Add}
   id: 4753
   time: '2023-09-04T05:16:36.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Fixed gravitational wells of supermatter and whitehole grenade, type: Fix}
+  id: 4754
+  time: '2023-09-04T12:23:49.0000000+00:00'
+- author: JustTNE
+  changes:
+  - {message: The ChemMaster 4000 has been upgraded to allow drag-and-drop insertion
+      of reagents!, type: Tweak}
+  id: 4755
+  time: '2023-09-04T12:53:13.0000000+00:00'
+- author: liltenhead
+  changes:
+  - {message: 'Rebalanced the conversion rates of gold, silver, uranium, and bananium
+      ores.', type: Tweak}
+  id: 4756
+  time: '2023-09-04T12:57:52.0000000+00:00'
+- author: chromiumboy
+  changes:
+  - {message: 'Radiation collectors now need an inserted gas tank filled with plasma
+      to function. The plasma gas will turn into tritium over time, so replace it
+      with fresh plasma as needed.', type: Tweak}
+  id: 4757
+  time: '2023-09-04T13:11:58.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Emagging disposal units both works again and makes them silent., type: Tweak}
+  id: 4758
+  time: '2023-09-04T14:11:35.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Armed nuclear bombs now have warning lights. Set off a nuke and watch
+      the light spin!!!, type: Tweak}
+  id: 4759
+  time: '2023-09-04T14:14:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: A fracture in bluespace is now causing spacemen that hitchhike on shuttles
+      to be gibbed before and after FTL travel. Keep legs inside the vehicle at all
+      times., type: Tweak}
+  id: 4760
+  time: '2023-09-04T14:16:10.0000000+00:00'
+- author: lzk228
+  changes:
+  - {message: All bots now uses robot typing indicator, type: Tweak}
+  id: 4761
+  time: '2023-09-04T14:21:53.0000000+00:00'

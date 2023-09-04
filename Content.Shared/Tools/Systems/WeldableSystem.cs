@@ -1,29 +1,28 @@
-using Content.Server.Administration.Logs;
-using Content.Server.Construction;
-using Content.Server.Tools.Components;
-using Content.Server.Wires;
-using Content.Shared.Construction.Steps;
+using Content.Shared.Administration.Logs;
 using Content.Shared.Database;
-using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Interaction;
-using Content.Shared.Tools;
 using Content.Shared.Tools.Components;
-using Content.Shared.Tools.Systems;
-using Content.Shared.Wires;
 using Robust.Shared.Physics;
 using Robust.Shared.Physics.Systems;
-using System.Linq;
+using LayerChangeOnWeldComponent = Content.Shared.Tools.Components.LayerChangeOnWeldComponent;
 
-namespace Content.Server.Tools.Systems;
+namespace Content.Shared.Tools.Systems;
 
 public sealed class WeldableSystem : EntitySystem
 {
-    [Dependency] private readonly IAdminLogManager _adminLogger = default!;
+    [Dependency] private readonly ISharedAdminLogManager _adminLogger = default!;
     [Dependency] private readonly SharedToolSystem _toolSystem = default!;
     [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedPhysicsSystem _physics = default!;
-    [Dependency] private readonly ConstructionSystem _construction = default!;
+
+    public bool IsWelded(EntityUid uid, WeldableComponent? component = null)
+    {
+        if (!Resolve(uid, ref component, false))
+            return false;
+
+        return component.IsWelded;
+    }
 
     public override void Initialize()
     {
@@ -43,12 +42,14 @@ public sealed class WeldableSystem : EntitySystem
     private void OnInteractUsing(EntityUid uid, WeldableComponent component, InteractUsingEvent args)
     {
         // If any construction graph edges has its conditions meet and requires welding, then this construction takes priority
-        if (_construction.GetCurrentNode(uid)?.Edges.Any(x => _construction.CheckConditions(uid, x.Conditions)
-            && x.Steps.Any(y => (y as ToolConstructionGraphStep)?.Tool == "Welding")) == true)
+        /* TODO: Whatever this is is not the way to do what you think you want to do.
+        if (Enumerable.Any<ConstructionGraphEdge>(_construction.GetCurrentNode(uid)?.Edges, x => _construction.CheckConditions(uid, x.Conditions)
+                                                                                                                               && Enumerable.Any<ConstructionGraphStep>(x.Steps, y => (y as ToolConstructionGraphStep)?.Tool == "Welding")) == true)
         {
             args.Handled = false;
             return;
         }
+        */
 
         if (args.Handled)
             return;
@@ -61,13 +62,9 @@ public sealed class WeldableSystem : EntitySystem
         if (!Resolve(uid, ref component))
             return false;
 
-        // Basic checks
-        if (!component.Weldable)
-            return false;
-
         // Other component systems
         var attempt = new WeldableAttemptEvent(user, tool);
-        RaiseLocalEvent(uid, attempt, true);
+        RaiseLocalEvent(uid, attempt);
         if (attempt.Cancelled)
             return false;
 
@@ -100,16 +97,13 @@ public sealed class WeldableSystem : EntitySystem
         if (!CanWeld(uid, args.Used.Value, args.User, component))
             return;
 
-        component.IsWelded = !component.IsWelded;
-        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded), true);
-
-        UpdateAppearance(uid, component);
+        SetWeldedState(uid, !component.IsWelded, component);
 
         // Log success
         _adminLogger.Add(LogType.Action, LogImpact.Low, $"{ToPrettyString(args.User):user} {(!component.IsWelded ? "un" : "")}welded {ToPrettyString(uid):target}");
     }
 
-    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, WeldableChangedEvent args)
+    private void OnWeldChanged(EntityUid uid, LayerChangeOnWeldComponent component, ref WeldableChangedEvent args)
     {
         if (!TryComp<FixturesComponent>(uid, out var fixtures))
             return;
@@ -139,51 +133,31 @@ public sealed class WeldableSystem : EntitySystem
         _appearance.SetData(uid, WeldableVisuals.IsWelded, component.IsWelded, appearance);
     }
 
-    public void ForceWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)
+    public void SetWeldedState(EntityUid uid, bool state, WeldableComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
 
+        if (component.IsWelded == state)
+            return;
+
         component.IsWelded = state;
+        var ev = new WeldableChangedEvent(component.IsWelded);
 
-        RaiseLocalEvent(uid, new WeldableChangedEvent(component.IsWelded));
-
+        RaiseLocalEvent(uid, ref ev);
         UpdateAppearance(uid, component);
+        Dirty(uid, component);
     }
 
     public void SetWeldingTime(EntityUid uid, TimeSpan time, WeldableComponent? component = null)
     {
         if (!Resolve(uid, ref component))
             return;
+
+        if (component.WeldingTime.Equals(time))
+            return;
+
         component.WeldingTime = time;
-    }
-}
-
-/// <summary>
-///     Checks that entity can be weld/unweld.
-///     Raised twice: before do_after and after to check that entity still valid.
-/// </summary>
-public sealed class WeldableAttemptEvent : CancellableEntityEventArgs
-{
-    public readonly EntityUid User;
-    public readonly EntityUid Tool;
-
-    public WeldableAttemptEvent(EntityUid user, EntityUid tool)
-    {
-        User = user;
-        Tool = tool;
-    }
-}
-
-/// <summary>
-///     Raised when <see cref="WeldableComponent.IsWelded"/> has changed.
-/// </summary>
-public sealed class WeldableChangedEvent : EntityEventArgs
-{
-    public readonly bool IsWelded;
-
-    public WeldableChangedEvent(bool isWelded)
-    {
-        IsWelded = isWelded;
+        Dirty(uid, component);
     }
 }
