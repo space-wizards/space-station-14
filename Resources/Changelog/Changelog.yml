@@ -1,9 +1,4 @@
 Entries:
-- author: notquitehadouken
-  changes:
-  - {message: Make minibomb a little louder., type: Tweak}
-  id: 4253
-  time: '2023-07-16T01:59:10.0000000+00:00'
 - author: lzk228
   changes:
   - {message: Quartermaster airlock now has command sprite, type: Tweak}
@@ -2998,3 +2993,9 @@ Entries:
   - {message: Anomalies and artifacts cannot push observers anymore., type: Fix}
   id: 4752
   time: '2023-09-04T04:52:11.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: The Syndicate is now offering carp suit bundles to its operatives to
+      improve morale., type: Add}
+  id: 4753
+  time: '2023-09-04T05:16:36.0000000+00:00'
