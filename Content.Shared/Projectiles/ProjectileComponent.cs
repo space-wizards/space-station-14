@@ -56,5 +56,6 @@ public sealed partial class ProjectileComponent : Component
     /// <summary>
     ///     If this projectile was fired from a gun or not.
     /// </summary>
+    [DataField("wasFired")]
     public bool WasFired;
 }
