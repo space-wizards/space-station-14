@@ -7,6 +7,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
 
@@ -61,8 +62,8 @@ public sealed partial class HijackShuttleCondition : IObjectiveCondition
             if (!isHumanoid) // Only humanoids count as enemies
                 continue;
 
-            var isPersonTraitor = roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
-            if (isPersonTraitor) // Allow traitors
+            var isAntagonist = roleSystem.MindHasRole<AntagonistRoleComponent>(mindId);
+            if (isAntagonist) // Allow antagonist
                 continue;
 
             var isPersonIncapacitated = mobStateSystem.IsIncapacitated(player.AttachedEntity.Value);
