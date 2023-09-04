@@ -88,7 +88,7 @@ namespace Content.Server.Atmos.Components
         [DataField("toggleAction", required: true)]
         public InstantAction ToggleAction = new();
 
-        [DataField("isOpen"), ViewVariables(VVAccess.ReadWrite)]
-        public bool IsOpen = false;
+        [DataField("isValveOpen"), ViewVariables(VVAccess.ReadWrite)]
+        public bool IsValveOpen = false;
     }
 }

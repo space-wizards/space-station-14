@@ -132,7 +132,7 @@ namespace Content.Server.Atmos.EntitySystems
 
             foreach (var gasTank in EntityManager.EntityQuery<GasTankComponent>())
             {
-                if (gasTank.IsOpen && gasTank.Air != null && !gasTank.IsLowPressure)
+                if (gasTank.IsValveOpen && gasTank.Air != null && !gasTank.IsLowPressure)
                 {
                     var removed = RemoveAirVolume(gasTank, 1f);
                     var environment = _atmosphereSystem.GetContainingMixture(gasTank.Owner, false, true);
@@ -360,10 +360,10 @@ namespace Content.Server.Atmos.EntitySystems
                 return;
             args.Verbs.Add(new AlternativeVerb()
             {
-                Text = component.IsOpen ? Loc.GetString("comp-gas-tank-close") : Loc.GetString("comp-gas-tank-open"),
+                Text = component.IsValveOpen ? Loc.GetString("comp-gas-tank-close-valve") : Loc.GetString("comp-gas-tank-open-valve"),
                 Act = () =>
                 {
-                    component.IsOpen = !component.IsOpen;
+                    component.IsValveOpen = !component.IsValveOpen;
                 }
             });
         }
