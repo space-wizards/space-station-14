@@ -117,6 +117,8 @@
       - id: BoxEncryptionKeyService
       - id: ClothingBackpackIan
         prob: 0.5
+      - id: ClothingOuterSuitIan
+        prob: 0.25
       - id: AccessConfigurator
 
 - type: entity
