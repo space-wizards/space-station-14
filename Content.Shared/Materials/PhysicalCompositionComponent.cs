@@ -27,4 +27,5 @@ public sealed partial class PhysicalCompositionComponent : Component
     /// </summary>
     [DataField("chemicalComposition", customTypeSerializer: typeof(PrototypeIdDictionarySerializer<FixedPoint2, ReagentPrototype>))]
     public Dictionary<string, FixedPoint2> ChemicalComposition = new();
+    // TODO use ReagentQuantity[]
 }
