@@ -260,6 +260,6 @@ public sealed class AccessOverriderSystem : SharedAccessOverriderSystem
             return true;
 
         var privilegedId = component.PrivilegedIdSlot.Item;
-        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, reader);
+        return privilegedId != null && _accessReader.IsAllowed(privilegedId.Value, uid, reader);
     }
 }

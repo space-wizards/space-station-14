@@ -210,9 +210,10 @@ namespace Content.Client.ContextMenu.UI
             menu.InvalidateMeasure();
         }
 
-        private void OnCombatModeUpdated()
+        private void OnCombatModeUpdated(bool inCombatMode)
         {
-            Close();
+            if (inCombatMode)
+                Close();
         }
 
         public void OnSystemLoaded(CombatModeSystem system)

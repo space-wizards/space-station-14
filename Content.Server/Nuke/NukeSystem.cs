@@ -29,6 +29,7 @@ public sealed class NukeSystem : EntitySystem
     [Dependency] private readonly IRobustRandom _random = default!;
     [Dependency] private readonly ITileDefinitionManager _tileDefManager = default!;
     [Dependency] private readonly ItemSlotsSystem _itemSlots = default!;
+    [Dependency] private readonly PointLightSystem _pointLight = default!;
     [Dependency] private readonly PopupSystem _popups = default!;
     [Dependency] private readonly ServerGlobalSoundSystem _sound = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
@@ -455,6 +456,9 @@ public sealed class NukeSystem : EntitySystem
 
         _sound.PlayGlobalOnStation(uid, _audio.GetSound(component.ArmSound));
 
+        // turn on the spinny light
+        _pointLight.SetEnabled(uid, true);
+
         _itemSlots.SetLock(uid, component.DiskSlot, true);
         if (!nukeXform.Anchored)
         {
@@ -493,6 +497,9 @@ public sealed class NukeSystem : EntitySystem
         // disable sound and reset it
         component.PlayedAlertSound = false;
         component.AlertAudioStream?.Stop();
+
+        // turn off the spinny light
+        _pointLight.SetEnabled(uid, false);
 
         // start bomb cooldown
         _itemSlots.SetLock(uid, component.DiskSlot, false);

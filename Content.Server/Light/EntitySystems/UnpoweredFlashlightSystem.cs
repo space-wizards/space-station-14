@@ -3,7 +3,7 @@ using Content.Shared.Actions;
 using Content.Shared.Decals;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Light;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Mind.Components;
 using Content.Shared.Toggleable;
 using Content.Shared.Verbs;
