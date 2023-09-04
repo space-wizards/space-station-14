@@ -77,8 +77,18 @@ public sealed partial class ShuttleSystem
     /// </summary>
     public const float FTLDestinationMass = 500f;
 
+    private EntityQuery<BodyComponent> _bodyQuery;
+    private EntityQuery<BuckleComponent> _buckleQuery;
+    private EntityQuery<StatusEffectsComponent> _statusQuery;
+    private EntityQuery<TransformComponent> _xformQuery;
+
     private void InitializeFTL()
     {
+        _bodyQuery = GetEntityQuery<BodyComponent>();
+        _buckleQuery = GetEntityQuery<BuckleComponent>();
+        _statusQuery = GetEntityQuery<StatusEffectsComponent>();
+        _xformQuery = GetEntityQuery<TransformComponent>();
+
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
 
@@ -463,9 +473,6 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        var buckleQuery = GetEntityQuery<BuckleComponent>();
-        var statusQuery = GetEntityQuery<StatusEffectsComponent>();
-
         // gib anything sitting outside aka on a lattice
         // this is done before knocking since why knock down if they are gonna be gibbed too
         var toGib = new ValueList<(EntityUid, BodyComponent)>();
@@ -478,22 +485,22 @@ public sealed partial class ShuttleSystem
 
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
-        KnockOverKids(xform, buckleQuery, statusQuery, ref toKnock);
+        KnockOverKids(xform, ref toKnock);
 
         foreach (var child in toKnock)
         {
-            if (!statusQuery.TryGetComponent(child, out var status)) continue;
+            if (!_statusQuery.TryGetComponent(child, out var status)) continue;
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
         }
     }
 
-    private void KnockOverKids(TransformComponent xform, EntityQuery<BuckleComponent> buckleQuery, EntityQuery<StatusEffectsComponent> statusQuery, ref ValueList<EntityUid> toKnock)
+    private void KnockOverKids(TransformComponent xform, ref ValueList<EntityUid> toKnock)
     {
         // Not recursive because probably not necessary? If we need it to be that's why this method is separate.
         var childEnumerator = xform.ChildEnumerator;
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
+            if (!_buckleQuery.TryGetComponent(child.Value, out var buckle) || buckle.Buckled)
                 continue;
 
             toKnock.Add(child.Value);
@@ -502,18 +509,15 @@ public sealed partial class ShuttleSystem
 
     private void GibKids(TransformComponent xform, ref ValueList<(EntityUid, BodyComponent)> toGib)
     {
-        var bodyQuery = GetEntityQuery<BodyComponent>();
-        var xformQuery = GetEntityQuery<TransformComponent>();
-
         // this is not recursive so people hiding in crates are spared, sadly
         var childEnumerator = xform.ChildEnumerator;
         while (childEnumerator.MoveNext(out var child))
         {
-            if (!xformQuery.TryGetComponent(child.Value, out var childXform))
+            if (!_xformQuery.TryGetComponent(child.Value, out var childXform))
                 continue;
 
             // not something that can be gibbed
-            if (!bodyQuery.TryGetComponent(child.Value, out var body))
+            if (!_bodyQuery.TryGetComponent(child.Value, out var body))
                 continue;
 
             // only gib if its on lattice/space
