@@ -13,7 +13,7 @@ using Content.Shared.Tag;
 using Content.Shared.Audio;
 using Content.Shared.Buckle;
 using Content.Shared.Hands;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Popups;
 using Robust.Shared.Network;
 using Robust.Shared.Physics.Systems;

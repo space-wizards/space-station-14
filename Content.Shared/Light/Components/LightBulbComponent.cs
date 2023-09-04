@@ -2,15 +2,14 @@ using Robust.Shared.Audio;
 using Robust.Shared.GameStates;
 using Robust.Shared.Serialization;
 
-namespace Content.Shared.Light.Component;
+namespace Content.Shared.Light.Components;
 
 /// <summary>
 /// Component that represents a light bulb. Can be broken, or burned, which turns them mostly useless.
 /// TODO: Breaking and burning should probably be moved to another component eventually.
 /// </summary>
-[RegisterComponent]
-[NetworkedComponent]
-public sealed partial class LightBulbComponent : Robust.Shared.GameObjects.Component
+[RegisterComponent, NetworkedComponent]
+public sealed partial class LightBulbComponent : Component
 {
     /// <summary>
     /// The color of the lightbulb and the light it produces.

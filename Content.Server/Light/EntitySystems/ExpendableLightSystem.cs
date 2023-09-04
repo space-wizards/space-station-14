@@ -3,7 +3,7 @@ using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.Tag;
 using Content.Shared.Temperature;
 using Content.Shared.Verbs;
