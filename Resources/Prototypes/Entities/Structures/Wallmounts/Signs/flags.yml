@@ -35,3 +35,102 @@
   components:
   - type: Sprite
     state: syndie_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: LGBTQFlag
+  name: LGBTQ flag
+  description: "Be gay do crime flag"
+  components:
+  - type: Sprite
+    state: lgbtq_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: PirateFlag
+  name: Pirate flag
+  description: "Raise the jolly roger, scallywags!"
+  components:
+  - type: Sprite
+    state: pirate_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: BlackFlag
+  name: black flag
+  description: "Just black flag"
+  components:
+  - type: Sprite
+    state: black_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: BlueFlag
+  name: blue flag
+  description: "Just blue flag"
+  components:
+  - type: Sprite
+    state: blue_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: BrownFlag
+  name: brown flag
+  description: "Just brown flag"
+  components:
+  - type: Sprite
+    state: brown_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: GreenFlag
+  name: green flag
+  description: "Just green flag"
+  components:
+  - type: Sprite
+    state: green_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: GrayFlag
+  name: gray flag
+  description: "Just gray flag"
+  components:
+  - type: Sprite
+    state: gray_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: OrangeFlag
+  name: orange flag
+  description: "Just orange flag"
+  components:
+  - type: Sprite
+    state: orange_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: PurpleFlag
+  name: purple flag
+  description: "Just purple flag"
+  components:
+  - type: Sprite
+    state: purple_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: RedFlag
+  name: red flag
+  description: "Just red flag"
+  components:
+  - type: Sprite
+    state: red_flag
+    
+- type: entity
+  parent: BaseFlag
+  id: YellowFlag
+  name: yellow flag
+  description: "Just yellow flag"
+  components:
+  - type: Sprite
+    state: yellow_flag

@@ -1,0 +1,167 @@
+- type: entity
+  parent: BaseItem
+  id: BlankHandyFlag
+  name: blank handy flag
+  description: "Some piece of white cloth wound on a stick. Definitely not handy flag of France."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
+
+- type: entity
+  parent: BaseItem
+  id: NTHandyFlag
+  name: Nanotrasen handy flag
+  description: "Glory to NT! Wait, they really made a handy flag for a corporation?"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/NT_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/NT_handy_flag.rsi
+
+- type: entity
+  parent: BaseItem
+  id: SyndieHandyFlag
+  name: Syndicate handy flag
+  description: "For truly rebel patriots. Death to NT!"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/syndie_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: LGBTQHandyFlag
+  name: LGBTQ handy flag
+  description: "Be gay do crime handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: PirateHandyFlag
+  name: Pirate handy flag
+  description: "Holding it in your hands, show these carp that you're not kidding."
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/pirate_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/pirate_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: BlackHandyFlag
+  name: black handy flag
+  description: "Just black handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/black_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/black_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: BlueHandyFlag
+  name: blue handy flag
+  description: "Just black handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/blue_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/blue_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: BrownHandyFlag
+  name: brown handy flag
+  description: "Just brown handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/brown_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/brown_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: GrayHandyFlag
+  name: gray handy flag
+  description: "Just gray handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/gray_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/gray_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: GreenHandyFlag
+  name: green handy flag
+  description: "Just green handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/green_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/green_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: OrangeHandyFlag
+  name: orange handy flag
+  description: "Just orange handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/orange_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/orange_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: PurpleHandyFlag
+  name: purple handy flag
+  description: "Just purple handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/purple_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/purple_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: RedHandyFlag
+  name: red handy flag
+  description: "Just red handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/red_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/red_handy_flag.rsi
+    
+- type: entity
+  parent: BaseItem
+  id: YellowHandyFlag
+  name: yellow handy flag
+  description: "Just yellow handy flag"
+  components:
+  - type: Sprite
+    sprite: Objects/Misc/Handy_Flags/yellow_handy_flag.rsi
+    state: icon
+  - type: Item
+    sprite: Objects/Misc/Handy_Flags/yellow_handy_flag.rsi

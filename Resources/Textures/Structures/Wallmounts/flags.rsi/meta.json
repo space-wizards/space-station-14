@@ -15,6 +15,39 @@
     },
     {
       "name": "syndie_flag"
+    },
+	{
+      "name": "lgbtq_flag"
+    },
+	{
+      "name": "pirate_flag"
+    },
+	{
+      "name": "black_flag"
+    },
+	{
+      "name": "blue_flag"
+    },
+	{
+      "name": "brown_flag"
+    },
+	{
+      "name": "green_flag"
+    },
+	{
+      "name": "gray_flag"
+    },
+	{
+      "name": "orange_flag"
+    },
+	{
+      "name": "purple_flag"
+    },
+	{
+      "name": "red_flag"
+    },
+	{
+      "name": "yellow_flag"
     }
   ]
 }
