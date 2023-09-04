@@ -12,7 +12,7 @@ using Content.Server.Station.Systems;
 using Content.Server.Store.Components;
 using Content.Server.Store.Systems;
 using Content.Shared.Access.Components;
-using Content.Shared.Light.Component;
+using Content.Shared.Light.Components;
 using Content.Shared.PDA;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;

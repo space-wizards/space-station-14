@@ -79,7 +79,7 @@
         damage:
           types:
             Poison: 4
-      - !type:ChemVomit 
+      - !type:ChemVomit
         probability: 0.25
 
 - type: reagent

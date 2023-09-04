@@ -45,7 +45,7 @@
       toggleable-clothing: !type:ContainerSlot {}
       storagebase: !type:Container
         ents: []
- 
+
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterAtmos
@@ -228,7 +228,7 @@
     sprite: Clothing/OuterClothing/WinterCoats/coathos.rsi
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHatHoodWinterHOS
-    
+
 - type: entity
   parent: ClothingOuterWinterCoatToggleable
   id: ClothingOuterWinterHydro
@@ -481,4 +481,30 @@
   - type: Clothing
     sprite: Clothing/OuterClothing/WinterCoats/coatnomi.rsi
 
-
+- type: entity
+  parent: ClothingOuterWinterCoatToggleable
+  id: ClothingOuterWinterWeb
+  name: web winter coat
+  description: Feels like the inside of a cocoon, not that this would make you less afraid of being in one.
+  components:
+  - type: Sprite
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+  - type: Clothing
+    sprite: Clothing/OuterClothing/WinterCoats/coatweb.rsi
+  - type: Construction
+    graph: WebObjects
+    node: coat
+  - type: FlavorProfile
+    flavors:
+      - cobwebs
+    ignoreReagents:
+      - Fiber
+  - type: SolutionContainerManager
+    solutions: # 15 (3 (fiber count of web) * 5 (to craft)) + 5 (magical crafting bonus)
+      food:
+        maxVol: 20
+        reagents:
+        - ReagentId: Fiber
+          Quantity: 20
+  - type: ToggleableClothing
+    clothingPrototype: ClothingHeadHatHoodWinterWeb

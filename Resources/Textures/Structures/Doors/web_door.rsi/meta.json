@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Made by PixelTheKermit (github) for SS14",
+  "size": {"x": 32, "y": 32},
+  "states":
+  [
+    {
+	  "name": "closed",
+      "directions": 1
+	},
+	{
+      "name": "closing",
+      "directions": 1,
+      "delays":
+	  [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+	  ]
+	},
+	{
+	  "name": "open",
+      "directions": 1
+	},
+	{
+      "name": "opening",
+      "directions": 1,
+      "delays": [
+        [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ]
+	  ]
+	}
+  ]
+}
