@@ -1,0 +1,328 @@
+﻿#
+# You can use this Desmos sheet to calculate fuel burn rate values:
+# https://www.desmos.com/calculator/qcektq5dqs
+#
+
+- type: entity
+  abstract: true
+  id: PortableGeneratorBase
+  parent: [ BaseMachine, ConstructibleMachine ]
+  components:
+    # Basic properties
+    - type: Transform
+      anchored: False
+    - type: Physics
+      bodyType: Dynamic
+    - type: StaticPrice
+      price: 500
+    - type: AmbientSound
+      range: 5
+      volume: -5
+      sound:
+        path: /Audio/Ambience/Objects/engine_hum.ogg
+      enabled: false
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.40,-0.40,0.40,0.40"
+          # It has wheels
+          density: 45
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+
+    # Visuals
+    - type: Appearance
+    - type: Sprite
+      sprite: Structures/Power/Generation/portable_generator.rsi
+      noRot: true
+
+    # Construction, interaction
+    - type: WiresPanel
+    - type: Wires
+      BoardName: wires-board-name-generator
+      LayoutId: Generator
+    - type: UserInterface
+      interfaces:
+        - key: enum.GeneratorComponentUiKey.Key
+          type: PortableGeneratorBoundUserInterface
+    - type: ActivatableUI
+      key: enum.GeneratorComponentUiKey.Key
+    - type: Electrified
+      onHandInteract: false
+      onInteractUsing: false
+      onBump: false
+      requirePower: true
+      highVoltageNode: output
+
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+    - type: GuideHelp
+      guides: [ PortableGenerator, Power ]
+
+    # Core functionality
+    - type: PortableGenerator
+      startSoundEmpty: { collection: GeneratorTugEmpty }
+      startSound: { collection: GeneratorTug }
+    - type: FuelGenerator
+    - type: PowerSupplier
+      supplyRate: 3000
+      supplyRampRate: 500
+      supplyRampTolerance: 500
+      enabled: false
+
+- type: entity
+  abstract: true
+  parent: PortableGeneratorBase
+  id: PortableGeneratorSwitchableBase
+  components:
+    - type: PowerSwitchableGenerator
+      switchSound:
+        path: /Audio/Machines/button.ogg
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output_hv:
+          !type:CableDeviceNode
+          nodeGroupID: HVPower
+        output_mv:
+          !type:CableDeviceNode
+          nodeGroupID: MVPower
+          enabled: false
+
+- type: entity
+  name: P.A.C.M.A.N.-type portable generator
+  description: |-
+    A flexible backup generator for powering a variety of equipment.
+    Runs off solid plasma sheets and is rated for up to 30 kW.
+  parent: PortableGeneratorSwitchableBase
+  id: PortableGeneratorPacman
+  suffix: Plasma, 30 kW
+  components:
+    - type: Sprite
+      layers:
+        - state: portgen0
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen_on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen0on }
+            False: { state: portgen0 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
+
+    - type: Machine
+      board: PortableGeneratorPacmanMachineCircuitboard
+    - type: FuelGenerator
+      minTargetPower: 5000
+      maxTargetPower: 30000
+      targetPower: 30000
+      optimalPower: 30000
+      # 15 minutes at max output
+      optimalBurnRate: 0.0333333
+      # a decent curve that goes up to about an hour at 5 kW.
+      fuelEfficiencyConstant: 0.75
+    - type: SolidFuelGeneratorAdapter
+      fuelMaterial: Plasma
+      multiplier: 0.01
+    - type: MaterialStorage
+      storageLimit: 3000
+      materialWhiteList: [Plasma]
+    - type: PortableGenerator
+      startChance: 0.8
+    - type: UpgradePowerSupplier
+      powerSupplyMultiplier: 1.25
+      scaling: Exponential
+    - type: GeneratorExhaustGas
+      gasType: CarbonDioxide
+      # 2 moles of gas for every sheet of plasma.
+      moleRatio: 2
+
+- type: entity
+  name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator
+  description: |-
+    An advanced generator for powering departments.
+    Runs off uranium sheets and is rated for up to 50 kW.
+  parent: PortableGeneratorSwitchableBase
+  id: PortableGeneratorSuperPacman
+  suffix: Uranium, 50 kW
+  components:
+    - type: Sprite
+      layers:
+        - state: portgen1
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen_on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen1on }
+            False: { state: portgen1 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
+
+    - type: Machine
+      board: PortableGeneratorSuperPacmanMachineCircuitboard
+    - type: FuelGenerator
+      minTargetPower: 10000
+      maxTargetPower: 50000
+      targetPower: 50000
+      optimalPower: 50000
+      # 30 minutes at full power
+      optimalBurnRate: 0.016666666
+      # Barely save any fuel from reducing power output
+      fuelEfficiencyConstant: 0.1
+    - type: SolidFuelGeneratorAdapter
+      fuelMaterial: Uranium
+      multiplier: 0.01
+    - type: MaterialStorage
+      storageLimit: 3000
+      materialWhiteList: [Uranium]
+    - type: PortableGenerator
+    - type: UpgradePowerSupplier
+      powerSupplyMultiplier: 1.25
+      scaling: Exponential
+
+- type: entity
+  name: J.R.P.A.C.M.A.N.-type portable generator
+  description: |-
+    A small generator capable of powering individual rooms, in case of emergencies.
+    Runs off welding fuel and is rated for up to 5 kW.
+    Rated ages 3 and up.
+  parent: PortableGeneratorBase
+  id: PortableGeneratorJrPacman
+  suffix: Welding Fuel, 5 kW
+  components:
+    - type: AmbientSound
+      range: 4
+      volume: -8
+
+    - type: Fixtures
+      fixtures:
+        fix1:
+          shape:
+            !type:PhysShapeAabb
+            bounds: "-0.30,-0.30,0.30,0.30"
+          # It has wheels
+          density: 30
+          mask:
+            - MachineMask
+          layer:
+            - MachineLayer
+
+    - type: Sprite
+      layers:
+        - state: portgen3
+          map: [ "enum.GeneratorVisualLayers.Body" ]
+        - state: portgen3on_unlit
+          map: [ "enum.GeneratorVisualLayers.Unlit" ]
+          shader: unshaded
+          visible: false
+    - type: GenericVisualizer
+      visuals:
+        enum.GeneratorVisuals.Running:
+          enum.GeneratorVisualLayers.Body:
+            True: { state: portgen3on }
+            False: { state: portgen3 }
+          enum.GeneratorVisualLayers.Unlit:
+            True: { visible: true }
+            False: { visible: false }
+
+    - type: Machine
+      board: PortableGeneratorJrPacmanMachineCircuitboard
+    - type: FuelGenerator
+      targetPower: 2000
+      minTargetPower: 1000
+      optimalPower: 5000
+      maxTargetPower: 5000
+      # 7.5 minutes at full tank.
+      optimalBurnRate: 0.11111111
+      # Shallow curve that allows you to just barely eek out 12 minutes at lowest.
+      fuelEfficiencyConstant: 0.3
+    - type: ChemicalFuelGeneratorAdapter
+      solution: tank
+      reagent: WeldingFuel
+    - type: SolutionContainerManager
+      solutions:
+        tank:
+          maxVol: 50
+    - type: RefillableSolution
+      solution: tank
+    - type: PortableGenerator
+      # Unreliable bugger
+      startChance: 0.5
+    - type: NodeContainer
+      examinable: true
+      nodes:
+        output:
+          !type:CableDeviceNode
+          nodeGroupID: Apc
+    - type: PowerSupplier
+      # No ramping needed on this bugger.
+      voltage: Apc
+      supplyRampTolerance: 2000
+    - type: GeneratorExhaustGas
+      gasType: CarbonDioxide
+      # Full tank is 25 moles of gas
+      moleRatio: 0.5
+    - type: Explosive
+      explosionType: Default
+      tileBreakScale: 0
+    - type: Destructible
+      thresholds:
+        - trigger:
+            !type:DamageTrigger
+            damage: 200
+          behaviors:
+            - !type:DoActsBehavior
+              acts: [ "Destruction" ]
+        - trigger:
+            !type:DamageTrigger
+            damage: 100
+          behaviors:
+            - !type:SpillBehavior
+              solution: tank
+            - !type:PlaySoundBehavior
+              sound:
+                path: /Audio/Effects/metalbreak.ogg
+            - !type:ChangeConstructionNodeBehavior
+              node: machineFrame
+            - !type:DoActsBehavior
+              acts: ["Destruction"]
+        - trigger:
+            !type:DamageTypeTrigger
+            damageType: Piercing
+            damage: 75
+          behaviors:
+            - !type:SolutionExplosionBehavior
+              solution: tank

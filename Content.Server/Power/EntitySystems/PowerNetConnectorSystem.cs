@@ -39,7 +39,7 @@ public sealed class PowerNetConnectorSystem : EntitySystem
         BaseNetConnectorInit(component);
     }
 
-    public void BaseNetConnectorInit<T>(BaseNetConnectorComponent<T> component)
+    public void BaseNetConnectorInit<T>(BaseNetConnectorComponent<T> component) where T : class
     {
         if (component.NeedsNet)
         {

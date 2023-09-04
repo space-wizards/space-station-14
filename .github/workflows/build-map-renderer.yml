@@ -1,0 +1,57 @@
+﻿name: Build & Test Map Renderer
+
+on:
+  push:
+    branches: [ master, staging, trying ]
+  merge_group:
+  pull_request:
+    types: [ opened, reopened, synchronize, ready_for_review ]
+    branches: [ master ]
+
+jobs:
+  build:
+    if: github.actor != 'PJBot' && github.event.pull_request.draft == false
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout Master
+        uses: actions/checkout@v3.6.0
+
+      - name: Setup Submodule
+        run: |
+          git submodule update --init --recursive
+
+      - name: Pull engine updates
+        uses: space-wizards/submodule-dependency@v0.1.5
+
+      - name: Update Engine Submodules
+        run: |
+          cd RobustToolbox/
+          git submodule update --init --recursive
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v3.2.0
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build Project
+        run: dotnet build Content.MapRenderer --configuration Release --no-restore /p:WarningsAsErrors=nullable /m
+
+      - name: Run Map Renderer
+        run: dotnet run --project Content.MapRenderer Dev
+
+  ci-success:
+    name: Build & Test Debug
+    needs:
+      - build
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI succeeded
+        run: exit 0

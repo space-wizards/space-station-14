@@ -297,10 +297,12 @@ namespace Content.Server.Kitchen.EntitySystems
             ));
         }
 
-        public void SetAppearance(EntityUid uid, MicrowaveVisualState state, MicrowaveComponent component)
+        public void SetAppearance(EntityUid uid, MicrowaveVisualState state, MicrowaveComponent? component = null, AppearanceComponent? appearanceComponent = null)
         {
+            if (!Resolve(uid, ref component, ref appearanceComponent, false))
+                return;
             var display = component.Broken ? MicrowaveVisualState.Broken : state;
-            _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display);
+            _appearance.SetData(uid, PowerDeviceVisuals.VisualState, display, appearanceComponent);
         }
 
         public static bool HasContents(MicrowaveComponent component)

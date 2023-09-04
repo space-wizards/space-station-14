@@ -297,14 +297,13 @@ namespace Content.Server.Power.EntitySystems
             while (enumerator.MoveNext(out var uid, out var apcReceiver))
             {
                 var powered = apcReceiver.Powered;
-                if (apcReceiver.LastPowerReceived == apcReceiver.NetworkLoad.ReceivingPower)
+                if (powered == apcReceiver.PoweredLastUpdate)
                     continue;
 
                 if (metaQuery.GetComponent(uid).EntityPaused)
                     continue;
 
                 apcReceiver.PoweredLastUpdate = powered;
-                apcReceiver.LastPowerReceived = apcReceiver.NetworkLoad.ReceivingPower;
                 var ev = new PowerChangedEvent(apcReceiver.Powered, apcReceiver.NetworkLoad.ReceivingPower);
 
                 RaiseLocalEvent(apcReceiver.Owner, ref ev);
@@ -395,11 +394,7 @@ namespace Content.Server.Power.EntitySystems
                 }
             }
 
-            foreach (var consumer in net.Consumers)
-            {
-                netNode.Loads.Add(consumer.NetworkLoad.Id);
-                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
-            }
+            DoReconnectBasePowerNet(net, netNode);
 
             var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
 
@@ -420,17 +415,7 @@ namespace Content.Server.Power.EntitySystems
             netNode.BatteryLoads.Clear();
             netNode.BatterySupplies.Clear();
 
-            foreach (var consumer in net.Consumers)
-            {
-                netNode.Loads.Add(consumer.NetworkLoad.Id);
-                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
-            }
-
-            foreach (var supplier in net.Suppliers)
-            {
-                netNode.Supplies.Add(supplier.NetworkSupply.Id);
-                supplier.NetworkSupply.LinkedNetwork = netNode.Id;
-            }
+            DoReconnectBasePowerNet(net, netNode);
 
             var batteryQuery = GetEntityQuery<PowerNetworkBatteryComponent>();
 
@@ -446,6 +431,22 @@ namespace Content.Server.Power.EntitySystems
                 var battery = batteryQuery.GetComponent(discharger.Owner);
                 netNode.BatterySupplies.Add(battery.NetworkBattery.Id);
                 battery.NetworkBattery.LinkedNetworkDischarging = netNode.Id;
+            }
+        }
+
+        private void DoReconnectBasePowerNet<TNetType>(BasePowerNet<TNetType> net, PowerState.Network netNode)
+            where TNetType : IBasePowerNet
+        {
+            foreach (var consumer in net.Consumers)
+            {
+                netNode.Loads.Add(consumer.NetworkLoad.Id);
+                consumer.NetworkLoad.LinkedNetwork = netNode.Id;
+            }
+
+            foreach (var supplier in net.Suppliers)
+            {
+                netNode.Supplies.Add(supplier.NetworkSupply.Id);
+                supplier.NetworkSupply.LinkedNetwork = netNode.Id;
             }
         }
     }

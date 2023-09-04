@@ -1,20 +1,20 @@
-using Content.Server.Morgue.Components;
-using Content.Shared.Morgue;
-using Robust.Server.GameObjects;
-using Robust.Shared.Player;
-using Content.Server.Storage.Components;
-using Content.Shared.Verbs;
-using Content.Shared.Database;
-using Content.Shared.Interaction.Events;
-using Content.Server.Players;
 using Content.Server.GameTicking;
-using Content.Shared.Popups;
+using Content.Server.Morgue.Components;
+using Content.Server.Storage.Components;
 using Content.Server.Storage.EntitySystems;
+using Content.Shared.Database;
 using Content.Shared.Examine;
+using Content.Shared.IdentityManagement;
+using Content.Shared.Interaction.Events;
+using Content.Shared.Mind;
+using Content.Shared.Morgue;
+using Content.Shared.Popups;
 using Content.Shared.Standing;
 using Content.Shared.Storage;
-using Content.Shared.IdentityManagement;
 using Content.Shared.Storage.Components;
+using Content.Shared.Verbs;
+using Robust.Server.GameObjects;
+using Robust.Shared.Player;
 
 namespace Content.Server.Morgue;
 
@@ -26,6 +26,7 @@ public sealed class CrematoriumSystem : EntitySystem
     [Dependency] private readonly EntityStorageSystem _entityStorage = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly StandingStateSystem _standing = default!;
+    [Dependency] private readonly SharedMindSystem _minds = default!;
 
     public override void Initialize()
     {
@@ -141,9 +142,9 @@ public sealed class CrematoriumSystem : EntitySystem
         args.SetHandled(SuicideKind.Heat);
 
         var victim = args.Victim;
-        if (TryComp(victim, out ActorComponent? actor) && actor.PlayerSession.ContentData()?.Mind is { } mind)
+        if (TryComp(victim, out ActorComponent? actor) && _minds.TryGetMind(victim, out var mindId, out var mind))
         {
-            _ticker.OnGhostAttempt(mind, false);
+            _ticker.OnGhostAttempt(mindId, false, mind: mind);
 
             if (mind.OwnedEntity is { Valid: true } entity)
             {
