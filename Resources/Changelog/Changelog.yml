@@ -1,9 +1,4 @@
 Entries:
-- author: lzk228
-  changes:
-  - {message: Quartermaster airlock now has command sprite, type: Tweak}
-  id: 4254
-  time: '2023-07-16T02:21:32.0000000+00:00'
 - author: Dygon
   changes:
   - {message: In an effort to reduce the amount of manpower lost during Syndicate
@@ -2999,3 +2994,8 @@ Entries:
       improve morale., type: Add}
   id: 4753
   time: '2023-09-04T05:16:36.0000000+00:00'
+- author: AlexMorgan3817
+  changes:
+  - {message: Fixed gravitational wells of supermatter and whitehole grenade, type: Fix}
+  id: 4754
+  time: '2023-09-04T12:23:49.0000000+00:00'
