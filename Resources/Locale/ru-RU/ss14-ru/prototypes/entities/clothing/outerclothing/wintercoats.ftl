@@ -64,3 +64,5 @@ ent-ClothingOuterWinterMusician = зимнее пальто музыканта
     .desc = Безразмерный пластилиновый космический фрак, который заставит людей спрашивать: "Вы меня знаете?".
 ent-ClothingOuterWinterCoatToggleable = зимнее пальто с капюшоном
     .desc = { ent-ClothingOuterWinterCoat.desc }
+ent-ClothingOuterWinterWeb = паутинное пальто
+    .desc = Ощущается как большой кокон. Не то, чтобы это помогало вам с фобией.

@@ -1,5 +1,7 @@
 ent-CrateGenericSteel = стальной ящик
     .desc = { ent-CrateBaseWeldable.desc }
+ent-CrateWeb = паутинный ящик
+    .desc = { ent-CrateGeneric.desc }
 ent-CratePlastic = пластиковый ящик
     .desc = { ent-CrateBaseWeldable.desc }
 ent-CrateFreezer = холодильник

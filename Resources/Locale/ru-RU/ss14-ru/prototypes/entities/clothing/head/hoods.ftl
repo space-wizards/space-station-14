@@ -79,3 +79,5 @@ ent-ClothingHeadHatHoodWinterSyndie = капюшон зимнего пальто
     .desc = { ent-ClothingHeadHatHoodWinterBase.desc }
 ent-ClothingHeadHatHoodWinterWarden = капюшон зимнего пальто смотрителя
     .desc = { ent-ClothingHeadHatHoodWinterBase.desc }
+ent-ClothingHeadHatHoodWinterWeb = капюшон паутинного пальто
+    .desc = { ent-ClothingHeadHatHoodWinterBase.desc }
