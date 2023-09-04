@@ -16,9 +16,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
         public bool IsDirty { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
         [DataField("outlet")]
         public string OutletName { get; set; } = "pipe";
 
