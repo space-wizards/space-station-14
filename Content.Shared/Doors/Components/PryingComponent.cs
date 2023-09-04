@@ -12,11 +12,24 @@ public sealed partial class DoorPryingComponent : Component
     [DataField("pryPowered")]
     public bool PryPowered = false;
 
+    /// <summary>
+    /// How is the prying time impacted.
+    /// Lower values will result in more time.
+    /// </summary>
     [DataField("speedModifier")]
     public float SpeedModifier = 1.0f;
 
+    /// <summary>
+    /// Sound to play for prying a door open
+    /// </summary>
     [DataField("useSound")]
     public SoundSpecifier UseSound = new SoundPathSpecifier("/Audio/Items/crowbar.ogg");
+
+    /// <summary>
+    /// Whether the entity with the component can pry open a door.
+    /// </summary>
+    [DataField("enabled")]
+    public bool Enabled = true;
 }
 
 /// <summary>
@@ -49,5 +62,18 @@ public sealed partial class DoorGetPryTimeModifierEvent : EntityEventArgs
     public DoorGetPryTimeModifierEvent(EntityUid user)
     {
         User = user;
+    }
+}
+
+/// <summar>
+/// Raised to enable or disable prying for a specific entity with the component.
+/// </summary>
+public sealed partial class DoorPryingToggleEvent : EntityEventArgs
+{
+    public bool Enabled;
+
+    public DoorPryingToggleEvent(bool enabled)
+    {
+        Enabled = enabled;
     }
 }

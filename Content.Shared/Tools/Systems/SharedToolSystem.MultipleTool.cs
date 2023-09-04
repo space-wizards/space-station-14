@@ -2,6 +2,7 @@ using System.Linq;
 using Content.Shared.Interaction;
 using Content.Shared.Tools.Components;
 using Robust.Shared.GameStates;
+using Content.Shared.Doors.Prying.Components;
 
 namespace Content.Shared.Tools;
 
@@ -27,7 +28,7 @@ public abstract partial class SharedToolSystem : EntitySystem
     private void OnMultipleToolStartup(EntityUid uid, MultipleToolComponent multiple, ComponentStartup args)
     {
         // Only set the multiple tool if we have a tool component.
-        if(EntityManager.TryGetComponent(uid, out ToolComponent? tool))
+        if (EntityManager.TryGetComponent(uid, out ToolComponent? tool))
             SetMultipleTool(uid, multiple, tool);
     }
 
@@ -52,7 +53,7 @@ public abstract partial class SharedToolSystem : EntitySystem
         if (multiple.Entries.Length == 0)
             return false;
 
-        multiple.CurrentEntry = (uint) ((multiple.CurrentEntry + 1) % multiple.Entries.Length);
+        multiple.CurrentEntry = (uint)((multiple.CurrentEntry + 1) % multiple.Entries.Length);
         SetMultipleTool(uid, multiple, playSound: true, user: user);
 
         return true;
@@ -78,6 +79,12 @@ public abstract partial class SharedToolSystem : EntitySystem
         var current = multiple.Entries[multiple.CurrentEntry];
         tool.UseSound = current.Sound;
         tool.Qualities = current.Behavior;
+
+        var ev = new DoorPryingToggleEvent(false);
+        if (tool.Qualities.Contains("Prying"))
+            ev.Enabled = true;
+
+        RaiseLocalEvent(uid, ev);//This is a horrible solution on my part but I cannot come up with anything other than remaking the toolsystem to decouple it from prying.
 
         if (playSound && current.ChangeSound != null)
             _audioSystem.PlayPredicted(current.ChangeSound, uid, user);

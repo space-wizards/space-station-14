@@ -19,6 +19,7 @@ public sealed class DoorPryingSystem : EntitySystem
         base.Initialize();
 
         SubscribeLocalEvent<DoorComponent, DoorPryDoAfterEvent>(OnDoAfter);
+        SubscribeLocalEvent<DoorPryingComponent, DoorPryingToggleEvent>(OnToggle);
     }
 
     /// <summary>
@@ -29,7 +30,7 @@ public sealed class DoorPryingSystem : EntitySystem
         id = null;
 
         DoorPryingComponent? comp = null;
-        if (!Resolve(tool, ref comp))
+        if (!Resolve(tool, ref comp) || !comp.Enabled)
             return false;
 
 
@@ -113,6 +114,11 @@ public sealed class DoorPryingSystem : EntitySystem
             _adminLog.Add(LogType.Action, LogImpact.Medium, $"{ToPrettyString(args.User)} pried {ToPrettyString(args.Target.Value)} closed");
             _doorSystem.StartClosing(args.Target.Value, door);
         }
+    }
+
+    void OnToggle(EntityUid uid, DoorPryingComponent comp, DoorPryingToggleEvent args)
+    {
+        comp.Enabled = args.Enabled;
     }
 }
 
