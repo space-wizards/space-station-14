@@ -9,7 +9,7 @@
   group: market
 
 - type: cargoProduct
-  id: CargoQuartermasterHardsuit
+  id: CargoLuxuryHardsuit
   icon:
     sprite: Clothing/Head/Hardsuits/luxury.rsi
     state: icon
