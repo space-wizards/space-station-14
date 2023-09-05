@@ -1,6 +1,7 @@
 using Content.Shared.Actions;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Item;
+using Content.Shared.Light.Components;
 using Content.Shared.Toggleable;
 using Robust.Shared.Audio;
 using Robust.Shared.GameStates;

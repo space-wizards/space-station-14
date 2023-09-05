@@ -1,6 +1,6 @@
 using Content.Server.Administration.Managers;
-using Content.Server.Ghost.Components;
 using Content.Shared.ActionBlocker;
+using Content.Shared.Ghost;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction;

@@ -76,8 +76,12 @@ internal sealed class PowerMonitoringConsoleSystem : EntitySystem
             }
             foreach (PowerSupplierComponent pcc in netQ.Suppliers)
             {
-                sources.Add(LoadOrSource(pcc, pcc.MaxSupply, false));
-                totalSources += pcc.MaxSupply;
+                var supply = pcc.Enabled
+                    ? pcc.MaxSupply
+                    : 0f;
+
+                sources.Add(LoadOrSource(pcc, supply, false));
+                totalSources += supply;
             }
             foreach (BatteryDischargerComponent pcc in netQ.Dischargers)
             {

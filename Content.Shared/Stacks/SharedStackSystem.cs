@@ -3,7 +3,6 @@ using Content.Shared.Examine;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
-using Content.Shared.Item;
 using Content.Shared.Popups;
 using JetBrains.Annotations;
 using Robust.Shared.GameStates;
@@ -229,6 +228,17 @@ namespace Content.Shared.Stacks
         }
 
         /// <summary>
+        /// Gets the amount of items in a stack. If it cannot be stacked, returns 1.
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public int GetCount(EntityUid uid, StackComponent? component = null)
+        {
+            return Resolve(uid, ref component, false) ? component.Count : 1;
+        }
+
+        /// <summary>
         /// Gets the max count for a given entity prototype
         /// </summary>
         /// <param name="entityId"></param>
@@ -326,6 +336,10 @@ namespace Content.Shared.Stacks
 
         private void OnStackStarted(EntityUid uid, StackComponent component, ComponentStartup args)
         {
+            // on client, lingering stacks that start at 0 need to be darkened
+            // on server this does nothing
+            SetCount(uid, component.Count, component);
+
             if (!TryComp(uid, out AppearanceComponent? appearance))
                 return;
 
@@ -336,7 +350,7 @@ namespace Content.Shared.Stacks
 
         private void OnStackGetState(EntityUid uid, StackComponent component, ref ComponentGetState args)
         {
-            args.State = new StackComponentState(component.Count, GetMaxCount(component));
+            args.State = new StackComponentState(component.Count, component.MaxCountOverride, component.Lingering);
         }
 
         private void OnStackHandleState(EntityUid uid, StackComponent component, ref ComponentHandleState args)
@@ -345,6 +359,7 @@ namespace Content.Shared.Stacks
                 return;
 
             component.MaxCountOverride = cast.MaxCount;
+            component.Lingering = cast.Lingering;
             // This will change the count and call events.
             SetCount(uid, cast.Count, component);
         }

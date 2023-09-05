@@ -47,14 +47,14 @@ public sealed class TransformableContainerSystem : EntitySystem
         var reagentId = solution.GetPrimaryReagentId();
 
         //If biggest reagent didn't changed - don't change anything at all
-        if (component.CurrentReagent != null && component.CurrentReagent.ID == reagentId)
+        if (component.CurrentReagent != null && component.CurrentReagent.ID == reagentId?.Prototype)
         {
             return;
         }
 
         //Only reagents with spritePath property can change appearance of transformable containers!
-        if (!string.IsNullOrWhiteSpace(reagentId)
-            && _prototypeManager.TryIndex(reagentId, out ReagentPrototype? proto))
+        if (!string.IsNullOrWhiteSpace(reagentId?.Prototype)
+            && _prototypeManager.TryIndex(reagentId.Value.Prototype, out ReagentPrototype? proto))
         {
             var metadata = MetaData(owner);
             var val = Loc.GetString("transformable-container-component-glass", ("name", proto.LocalizedName));

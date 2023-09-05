@@ -84,7 +84,18 @@ public sealed class HealingSystem : EntitySystem
         var total = healed?.Total ?? FixedPoint2.Zero;
 
         // Re-verify that we can heal the damage.
-        _stacks.Use(args.Used.Value, 1);
+
+        if (TryComp<StackComponent>(args.Used.Value, out var stackComp))
+        {
+            _stacks.Use(args.Used.Value, 1, stackComp);
+
+            if (_stacks.GetCount(args.Used.Value, stackComp) <= 0)
+                dontRepeat = true;
+        }
+        else
+        {
+            QueueDel(args.Used.Value);
+        }
 
         if (uid != args.User)
         {
@@ -154,7 +165,7 @@ public sealed class HealingSystem : EntitySystem
         if (user != target && !_interactionSystem.InRangeUnobstructed(user, target, popup: true))
             return false;
 
-        if (!TryComp<StackComponent>(uid, out var stack) || stack.Count < 1)
+        if (TryComp<StackComponent>(uid, out var stack) && stack.Count < 1)
             return false;
 
         if (!TryComp<BloodstreamComponent>(target, out var bloodstream))
@@ -166,11 +177,8 @@ public sealed class HealingSystem : EntitySystem
             return false;
         }
 
-        if (component.HealingBeginSound != null)
-        {
-            _audio.PlayPvs(component.HealingBeginSound, uid,
+        _audio.PlayPvs(component.HealingBeginSound, uid,
                 AudioHelpers.WithVariation(0.125f, _random).WithVolume(-5f));
-        }
 
         var isNotSelf = user != target;
 

@@ -94,7 +94,7 @@ namespace Content.Client.Tabletop
             }
 
             // Map mouse position to EntityCoordinates
-            var coords = _viewport.ScreenToMap(_inputManager.MouseScreenPosition.Position);
+            var coords = _viewport.PixelToMap(_inputManager.MouseScreenPosition.Position);
 
             // Clamp coordinates to viewport
             var clampedCoords = ClampPositionToViewport(coords, _viewport);

@@ -12,6 +12,6 @@ namespace Content.Shared.Tag
     {
         [ViewVariables]
         [IdDataField]
-        public string ID { get; } = default!;
+        public string ID { get; private set; } = default!;
     }
 }

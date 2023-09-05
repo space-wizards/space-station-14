@@ -79,6 +79,16 @@ namespace Content.Server.Atmos.EntitySystems
         }
 
         /// <summary>
+        ///     Add 'dQ' Joules of energy into 'mixture'.
+        /// </summary>
+        public void AddHeat(GasMixture mixture, float dQ)
+        {
+            var c = GetHeatCapacity(mixture);
+            float dT = dQ / c;
+            mixture.Temperature += dT;
+        }
+
+        /// <summary>
         ///     Merges the <see cref="giver"/> gas mixture into the <see cref="receiver"/> gas mixture.
         ///     The <see cref="giver"/> gas mixture is not modified by this method.
         /// </summary>

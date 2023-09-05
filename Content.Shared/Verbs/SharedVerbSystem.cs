@@ -66,7 +66,7 @@ namespace Content.Shared.Verbs
             else if (_interactionSystem.InRangeUnobstructed(user, target))
             {
                 // Note that being in a container does not count as an obstruction for InRangeUnobstructed
-                // Therefore, we need extra checks to ensure the item is actually accessible: 
+                // Therefore, we need extra checks to ensure the item is actually accessible:
                 if (ContainerSystem.IsInSameOrParentContainer(user, target))
                     canAccess = true;
                 else
@@ -81,15 +81,23 @@ namespace Content.Shared.Verbs
             EntityUid? @using = null;
             if (TryComp(user, out HandsComponent? hands) && (force || _actionBlockerSystem.CanUseHeldEntity(user)))
             {
-                @using = hands.ActiveHandEntity;
-
-                // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
-                // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
-                // their sprite.
-
-                if (TryComp(@using, out HandVirtualItemComponent? pull))
+                // if we don't actually have any hands, pass in a null value for the events.
+                if (hands.Count == 0)
                 {
-                    @using = pull.BlockingEntity;
+                    hands = null;
+                }
+                else
+                {
+                    @using = hands.ActiveHandEntity;
+
+                    // Check whether the "Held" entity is a virtual pull entity. If yes, set that as the entity being "Used".
+                    // This allows you to do things like buckle a dragged person onto a surgery table, without click-dragging
+                    // their sprite.
+
+                    if (TryComp(@using, out HandVirtualItemComponent? pull))
+                    {
+                        @using = pull.BlockingEntity;
+                    }
                 }
             }
 

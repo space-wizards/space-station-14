@@ -62,6 +62,9 @@
   - type: Battery
     maxCharge: 360
     startingCharge: 360
+  - type: Tag
+    tags:
+      - PowerCellSmall
 
 - type: entity
   id: PowerCellSmallPrinted

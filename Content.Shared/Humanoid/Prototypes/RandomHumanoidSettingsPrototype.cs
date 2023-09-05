@@ -21,17 +21,17 @@ public sealed class RandomHumanoidSettingsPrototype : IPrototype, IInheritingPro
     ///     Whether the humanoid's name should take from the randomized profile or not.
     /// </summary>
     [DataField("randomizeName")]
-    public bool RandomizeName { get; } = true;
+    public bool RandomizeName { get; private set; } = true;
 
     /// <summary>
     ///     Species that will be ignored by the randomizer.
     /// </summary>
     [DataField("speciesBlacklist")]
-    public HashSet<string> SpeciesBlacklist { get; } = new();
+    public HashSet<string> SpeciesBlacklist { get; private set; } = new();
 
     /// <summary>
     ///     Extra components to add to this entity.
     /// </summary>
     [DataField("components")]
-    public ComponentRegistry? Components { get; }
+    public ComponentRegistry? Components { get; private set; }
 }

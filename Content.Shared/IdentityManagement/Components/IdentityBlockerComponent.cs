@@ -4,7 +4,7 @@ using Robust.Shared.GameStates;
 namespace Content.Shared.IdentityManagement.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class IdentityBlockerComponent : Component
+public sealed partial class IdentityBlockerComponent : Component
 {
     public bool Enabled = true;
 }

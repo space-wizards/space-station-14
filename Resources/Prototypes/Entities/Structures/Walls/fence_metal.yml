@@ -1,0 +1,327 @@
+﻿- type: entity
+  parent: BaseStructure
+  id: BaseFenceMetal
+  name: chain link fence
+  description: A metal piece of fencing cordoning off something likely very important.
+  abstract: true
+  components:
+  - type: MeleeSound
+    soundGroups:
+      Brute:
+        path:
+          "/Audio/Weapons/grille_hit.ogg"
+  - type: Tag
+    tags:
+    - RCDDeconstructWhitelist
+  - type: Sprite
+    sprite: Structures/Walls/fence.rsi
+    drawdepth: WallTops
+  - type: Physics
+    bodyType: Static
+  - type: Transform
+    anchored: true
+  - type: Damageable
+    damageContainer: Inorganic
+    damageModifierSet: FlimsyMetallic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 150
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 3
+            max: 5
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Climbable
+    delay: 5.0
+    startClimbSound:
+      collection: FenceRattle
+    finishClimbSound:
+      collection: FenceRattle
+  - type: PowerConsumer
+    showInMonitor: false
+  - type: Electrified
+    requirePower: true
+    noWindowInTile: true
+    highVoltageNode: high
+    mediumVoltageNode: medium
+    lowVoltageNode: low
+  - type: NodeContainer
+    nodes:
+      high:
+        !type:CableDeviceNode
+        nodeGroupID: HVPower
+      medium:
+        !type:CableDeviceNode
+        nodeGroupID: MVPower
+      low:
+        !type:CableDeviceNode
+        nodeGroupID: Apc
+  - type: Appearance
+  - type: GenericVisualizer
+    visuals:
+      enum.ElectrifiedVisuals.IsPowered:
+        enum.ElectrifiedLayers.Powered:
+          True: { visible: True }
+          False: { visible: False }
+  - type: AnimationPlayer
+
+- type: entity
+  parent: BaseFenceMetal
+  id: FenceMetalBroken
+  name: broken chain link fence
+  description: Someone got real mad at an inanimate object.
+  components:
+  - type: Sprite
+    layers:
+    - state: straight_broken
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Physics
+    canCollide: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 50
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Effects/metalbreak.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 1
+            max: 1
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: FenceMetal
+    node: broken
+
+- type: entity
+  parent: BaseFenceMetal
+  id: FenceMetalStraight
+  suffix: Straight
+  components:
+  - type: Icon
+    sprite: Structures/Walls/fence.rsi
+    state: icon_straight
+  - type: Sprite
+    layers:
+    - state: straight
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.10,-0.5,0.10,0.5"
+        density: 1000
+        mask:
+        - FullTileMask
+        layer:
+        - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 200
+      behaviors:
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+    - trigger:
+        !type:DamageTrigger
+        damage: 100
+      behaviors:
+      - !type:PlaySoundBehavior
+        sound:
+          path: /Audio/Items/wirecutter.ogg
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          PartRodMetal1:
+            min: 2
+            max: 4
+      - !type:ChangeConstructionNodeBehavior
+        node: broken
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: Construction
+    graph: FenceMetal
+    node: straight
+
+- type: entity
+  parent: BaseFenceMetal
+  id: FenceMetalCorner
+  suffix: Corner
+  components:
+  - type: Sprite
+    layers:
+    - state: corner
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Fixtures
+    fixtures:
+      # needs two shapes to properly handle a triangle corner without weirdness
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.1,0.1,0.5"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+      fix2:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,-0.1,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
+  - type: Construction
+    graph: FenceMetal
+    node: corner
+
+- type: entity
+  parent: BaseFenceMetal
+  id: FenceMetalEnd
+  suffix: End
+  components:
+  - type: Icon
+    sprite: Structures/Walls/fence.rsi
+    state: icon_end
+  - type: Sprite
+    layers:
+    - state: end
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: ["enum.ElectrifiedLayers.Powered"]
+      shader: unshaded
+      visible: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.1,-0.5,0.1,0.0"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: InteractionPopup
+    interactSuccessString: fence-rattle-success
+    messagePerceivedByOthers: fence-rattle-success
+    interactSuccessSound:
+      collection: FenceRattle
+  - type: Construction
+    graph: FenceMetal
+    node: end
+
+- type: entity
+  parent: BaseFenceMetal
+  id: FenceMetalGate
+  name: chain link fence gate
+  description: You could use the door instead of vaulting over--if you're a COWARD, that is.
+  components:
+  - type: Sprite
+    layers:
+    - state: end
+      map: ["enum.DoorVisualLayers.Base"]
+    - state: electrified
+      sprite: Effects/electricity.rsi
+      map: [ "enum.ElectrifiedLayers.Powered" ]
+      shader: unshaded
+      visible: false
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.5,-0.1,0.5,0.1"
+        density: 1000
+        mask:
+        - TableMask
+        layer:
+        - TableLayer
+  - type: InteractionOutline
+  - type: Door
+    openSpriteState: door_opened
+    closedSpriteState: door_closed
+    canPry: false
+    occludes: false
+    changeAirtight: false
+    bumpOpen: false
+    clickOpen: true
+    canCrush: false
+    closeTimeOne: 0
+    closeTimeTwo: 0
+    openTimeOne: 0
+    openTimeTwo: 0
+    openingAnimationTime: 0
+    closingAnimationTime: 0
+    openSound:
+      path: /Audio/Effects/door_open.ogg
+    closeSound:
+      path: /Audio/Effects/door_close.ogg
+  - type: Construction
+    graph: FenceMetal
+    node: gate

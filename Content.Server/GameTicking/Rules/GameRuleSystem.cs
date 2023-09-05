@@ -2,7 +2,7 @@ using Content.Server.GameTicking.Rules.Components;
 
 namespace Content.Server.GameTicking.Rules;
 
-public abstract class GameRuleSystem<T> : EntitySystem where T : Component
+public abstract partial class GameRuleSystem<T> : EntitySystem where T : Component
 {
     [Dependency] protected readonly GameTicker GameTicker = default!;
 

@@ -1,9 +1,10 @@
-﻿using Content.Server.Anomaly.Components;
+using Content.Server.Anomaly.Components;
 using Content.Server.Atmos.EntitySystems;
 using Content.Server.Audio;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Materials;
 using Content.Server.Radio.EntitySystems;
+using Content.Server.Station.Systems;
 using Content.Shared.Anomaly;
 using Content.Shared.Anomaly.Components;
 using Content.Shared.DoAfter;
@@ -28,6 +29,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
     [Dependency] private readonly ExplosionSystem _explosion = default!;
     [Dependency] private readonly MaterialStorageSystem _material = default!;
     [Dependency] private readonly SharedPointLightSystem _pointLight = default!;
+    [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly RadioSystem _radio = default!;
     [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
@@ -71,7 +73,7 @@ public sealed partial class AnomalySystem : SharedAnomalySystem
         if (!TryComp<AnomalousParticleComponent>(args.OtherEntity, out var particle))
             return;
 
-        if (args.OtherFixture.ID != particle.FixtureId)
+        if (args.OtherFixtureId != particle.FixtureId)
             return;
 
         // small function to randomize because it's easier to read like this

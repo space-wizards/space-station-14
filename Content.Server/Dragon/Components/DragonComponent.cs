@@ -11,7 +11,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Dragon
 {
     [RegisterComponent]
-    public sealed class DragonComponent : Component
+    public sealed partial class DragonComponent : Component
     {
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Content.Server.Dragon
             };
     }
 
-    public sealed class DragonDevourActionEvent : EntityTargetActionEvent {}
+    public sealed partial class DragonDevourActionEvent : EntityTargetActionEvent {}
 
-    public sealed class DragonSpawnRiftActionEvent : InstantActionEvent {}
+    public sealed partial class DragonSpawnRiftActionEvent : InstantActionEvent {}
 }

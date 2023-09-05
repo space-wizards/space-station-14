@@ -1,0 +1,16 @@
+- type: entity
+  parent: BaseItem
+  id: WeaponMeleeNeedle
+  name: official security anti-inflatable armament
+  description: A specialty weapon used in the destruction of unique syndicate morale-boosting equipment.
+  components:
+  - type: Sprite
+    sprite: Objects/Weapons/Melee/needle.rsi
+    state: icon
+  - type: MeleeWeapon
+    damage:
+      types:
+        Piercing: 1
+  - type: Item
+    size: 1
+  - type: BalloonPopper

@@ -48,20 +48,6 @@
       map: ["enum.GunVisualLayers.Mag"]
 
 - type: entity
-  id: MagazineRifleHighVelocity
-  name: "magazine (.20 rifle high-velocity)"
-  parent: BaseMagazineRifle
-  components:
-  - type: BallisticAmmoProvider
-    proto: CartridgeRifleHighVelocity
-  - type: Sprite
-    layers:
-    - state: high_velocity
-      map: ["enum.GunVisualLayers.Base"]
-    - state: mag-1
-      map: ["enum.GunVisualLayers.Mag"]
-
-- type: entity
   id: MagazineRiflePractice
   name: "magazine (.20 rifle practice)"
   parent: BaseMagazineRifle

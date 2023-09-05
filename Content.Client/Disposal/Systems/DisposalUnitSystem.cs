@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Content.Shared.Disposal;
 using Content.Shared.Disposal.Components;
 using Content.Shared.DragDrop;
@@ -46,6 +47,21 @@ public sealed class DisposalUnitSystem : SharedDisposalUnitSystem
         component.Engaged = state.Engaged;
         component.RecentlyEjected.Clear();
         component.RecentlyEjected.AddRange(state.RecentlyEjected);
+    }
+
+    public override bool HasDisposals(EntityUid? uid)
+    {
+        return HasComp<DisposalUnitComponent>(uid);
+    }
+
+    public override bool ResolveDisposals(EntityUid uid, [NotNullWhen(true)] ref SharedDisposalUnitComponent? component)
+    {
+        if (component != null)
+            return true;
+
+        TryComp<DisposalUnitComponent>(uid, out var storage);
+        component = storage;
+        return component != null;
     }
 
     public override void DoInsertDisposalUnit(EntityUid uid, EntityUid toInsert, EntityUid user, SharedDisposalUnitComponent? disposal = null)

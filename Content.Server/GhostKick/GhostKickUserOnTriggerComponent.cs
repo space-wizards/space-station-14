@@ -1,7 +1,7 @@
 ﻿namespace Content.Server.GhostKick;
 
 [RegisterComponent]
-public sealed class GhostKickUserOnTriggerComponent : Component
+public sealed partial class GhostKickUserOnTriggerComponent : Component
 {
 
 }

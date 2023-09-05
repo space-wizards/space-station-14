@@ -27,7 +27,7 @@ namespace Content.Shared.Humanoid.Markings;
 /// </remarks>
 [DataDefinition]
 [Serializable, NetSerializable]
-public sealed class MarkingSet
+public sealed partial class MarkingSet
 {
     /// <summary>
     ///     Every single marking in this set.
