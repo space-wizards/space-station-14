@@ -37,7 +37,7 @@ public sealed class LoneOpsSpawnRule : StationEventSystem<LoneOpsSpawnRuleCompon
         component.AdditionalRule = nukeopsEntity;
         var nukeopsComp = EntityManager.GetComponent<NukeopsRuleComponent>(nukeopsEntity);
         nukeopsComp.SpawnOutpost = false;
-        nukeopsComp.EndsRound = false;
+        nukeopsComp.RoundEndBehavior = RoundEndBehavior.Nothing;
         _gameTicker.StartGameRule(nukeopsEntity);
     }
 

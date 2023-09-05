@@ -32,9 +32,10 @@ public sealed partial class NukeopsRuleComponent : Component
 
     /// <summary>
     /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
+    /// 
     /// </summary>
-    [DataField("endsRound")]
-    public bool EndsRound = true;
+    [DataField("roundEndBehavior")]
+    public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
 
     /// <summary>
     /// Whether or not to spawn the nuclear operative outpost. Used by LoneOpsSpawn event.
@@ -204,4 +205,22 @@ public enum WinCondition : byte
     AllNukiesDead,
     SomeNukiesAlive,
     AllNukiesAlive
+}
+
+public enum RoundEndBehavior : byte
+{
+    /// <summary>
+    /// Instantly end round
+    /// </summary>
+    InstantEnd,
+
+    /// <summary>
+    /// Call shuttle with custom announcement
+    /// </summary>
+    ShuttleCall,
+
+    /// <summary>
+    /// Do nothing
+    /// </summary>
+    Nothing
 }

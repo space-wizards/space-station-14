@@ -465,15 +465,41 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
         }
     }
 
-    private void SetWinType(EntityUid uid, WinType type, NukeopsRuleComponent? component = null)
+    private void SetWinType(EntityUid uid, WinType type, NukeopsRuleComponent? component = null, bool endRound = true)
     {
         if (!Resolve(uid, ref component))
             return;
 
         component.WinType = type;
 
-        if (type == WinType.CrewMajor || type == WinType.OpsMajor)
+        if (endRound && (type == WinType.CrewMajor || type == WinType.OpsMajor))
             _roundEndSystem.EndRound();
+    }
+
+    private void DoRoundEndBehavior(NukeopsRuleComponent component)
+    {
+        switch (component.RoundEndBehavior)
+        {
+            case RoundEndBehavior.InstantEnd:
+                _roundEndSystem.EndRound();
+                break;
+            case RoundEndBehavior.ShuttleCall:
+                // Prevent it being called multiple times
+                component.RoundEndBehavior = RoundEndBehavior.Nothing;
+
+                // Check that shuttle is called or not. We should dispatch only announcement if it's already called
+                if (_roundEndSystem.IsRoundEndRequested())
+                {
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("nuke-ops-no-more-threat-announcement"),
+                        colorOverride: Color.Gold);
+                }
+                else
+                {
+                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, "nuke-ops-no-more-threat-announcement-shuttle-call");
+                }
+                
+                break;
+        }
     }
 
     private void CheckRoundShouldEnd()
@@ -484,7 +510,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
             if (!GameTicker.IsGameRuleAdded(uid, gameRule))
                 continue;
 
-            if (!nukeops.EndsRound || nukeops.WinType == WinType.CrewMajor || nukeops.WinType == WinType.OpsMajor)
+            if (nukeops.RoundEndBehavior == RoundEndBehavior.Nothing || nukeops.WinType == WinType.CrewMajor || nukeops.WinType == WinType.OpsMajor)
                 continue;
 
             // If there are any nuclear bombs that are active, immediately return. We're not over yet.
@@ -537,7 +563,8 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 ? WinCondition.NukiesAbandoned
                 : WinCondition.AllNukiesDead);
 
-            SetWinType(uid, WinType.CrewMajor, nukeops);
+            SetWinType(uid, WinType.CrewMajor, nukeops, false);
+            DoRoundEndBehavior(nukeops);
         }
     }
 
@@ -738,7 +765,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
 
         foreach (var (nukeops, gameRule) in EntityQuery<NukeopsRuleComponent, GameRuleComponent>())
         {
-            if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || !nukeops.EndsRound)
+            if (nukeops.OperativeMindPendingData.TryGetValue(uid, out var role) || !nukeops.SpawnOutpost || nukeops.RoundEndBehavior == RoundEndBehavior.Nothing)
             {
                 role ??= nukeops.OperativeRoleProto;
                 _roles.MindAddRole(mindId, new NukeopsRoleComponent { PrototypeId = role });

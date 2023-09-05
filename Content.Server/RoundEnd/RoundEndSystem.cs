@@ -90,7 +90,12 @@ namespace Content.Server.RoundEnd
             return _cooldownTokenSource == null;
         }
 
-        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, bool autoCall = false)
+        public bool IsRoundEndRequested()
+        {
+            return _countdownTokenSource != null;
+        }
+
+        public void RequestRoundEnd(EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement")
         {
             var duration = DefaultCountdownDuration;
 
@@ -105,10 +110,10 @@ namespace Content.Server.RoundEnd
                 }
             }
 
-            RequestRoundEnd(duration, requester, checkCooldown, autoCall);
+            RequestRoundEnd(duration, requester, checkCooldown, text);
         }
 
-        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, bool autoCall = false)
+        public void RequestRoundEnd(TimeSpan countdownTime, EntityUid? requester = null, bool checkCooldown = true, string text = "round-end-system-shuttle-called-announcement")
         {
             if (_gameTicker.RunLevel != GameRunLevel.InRound) return;
 
@@ -141,26 +146,13 @@ namespace Content.Server.RoundEnd
                units = "eta-units-minutes";
             }
 
-            if (autoCall)
-            {
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-auto-called-announcement",
-                    ("time", time),
-                    ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
-                    false,
-                    null,
-                    Color.Gold);
-            }
-            else
-            {
-                _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("round-end-system-shuttle-called-announcement",
-                    ("time", time),
-                    ("units", Loc.GetString(units))),
-                    Loc.GetString("Station"),
-                    false,
-                    null,
-                    Color.Gold);
-            }
+            _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(text,
+                ("time", time),
+                ("units", Loc.GetString(units))),
+                Loc.GetString("Station"),
+                false,
+                null,
+                Color.Gold);
 
             SoundSystem.Play("/Audio/Announcements/shuttlecalled.ogg", Filter.Broadcast());
 
@@ -260,7 +252,7 @@ namespace Content.Server.RoundEnd
             {
                 if (!_shuttle.EmergencyShuttleArrived && ExpectedCountdownEnd is null)
                 {
-                    RequestRoundEnd(null, false, true);
+                    RequestRoundEnd(null, false, "round-end-system-shuttle-auto-called-announcement");
                     AutoCalledBefore = true;
                 }
 
