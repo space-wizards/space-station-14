@@ -63,7 +63,6 @@
   - type: FireVisuals
     sprite: Effects/fire.rsi
     normalState: 1
-  - type: Occluder #Wood isn't transparent
 
 #Structure-Mounted Barricade
 - type: entity
