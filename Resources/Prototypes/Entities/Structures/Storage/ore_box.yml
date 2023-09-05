@@ -49,6 +49,8 @@
           False: { visible: true }
   - type: Storage
     capacity: 525
+    storageOpenSound: /Audio/Effects/closetopen.ogg
+    storageCloseSound: /Audio/Effects/closetclose.ogg
     whitelist:
       tags:
       - Ore
