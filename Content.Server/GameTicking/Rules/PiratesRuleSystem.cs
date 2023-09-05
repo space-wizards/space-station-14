@@ -4,13 +4,13 @@ using Content.Server.Administration.Commands;
 using Content.Server.Cargo.Systems;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking.Rules.Components;
-using Content.Server.Mind;
 using Content.Server.Preferences.Managers;
 using Content.Server.Spawners.Components;
 using Content.Server.Station.Components;
 using Content.Server.Station.Systems;
 using Content.Shared.CCVar;
 using Content.Shared.Humanoid;
+using Content.Shared.Mind;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
 using Robust.Server.GameObjects;
@@ -40,7 +40,7 @@ public sealed class PiratesRuleSystem : GameRuleSystem<PiratesRuleComponent>
     [Dependency] private readonly PricingSystem _pricingSystem = default!;
     [Dependency] private readonly MapLoaderSystem _map = default!;
     [Dependency] private readonly NamingSystem _namingSystem = default!;
-    [Dependency] private readonly MindSystem _mindSystem = default!;
+    [Dependency] private readonly SharedMindSystem _mindSystem = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
 

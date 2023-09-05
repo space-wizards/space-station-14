@@ -1,6 +1,7 @@
-﻿using Content.Server.Mind;
-using Content.Server.Objectives.Interfaces;
-using Content.Server.Roles;
+﻿using Content.Server.Roles;
+using Content.Shared.Mind;
+using Content.Shared.Objectives.Interfaces;
+using Content.Shared.Roles;
 using JetBrains.Annotations;
 
 namespace Content.Server.Objectives.Requirements
@@ -11,7 +12,7 @@ namespace Content.Server.Objectives.Requirements
     {
         public bool CanBeAssigned(EntityUid mindId, MindComponent mind)
         {
-            var roleSystem = IoCManager.Resolve<IEntityManager>().System<RoleSystem>();
+            var roleSystem = IoCManager.Resolve<IEntityManager>().System<SharedRoleSystem>();
             return roleSystem.MindHasRole<TraitorRoleComponent>(mindId);
         }
     }

@@ -277,6 +277,19 @@
     jumpsuit: ClothingUniformJumpsuitJacketMonkey
     id: BartenderIDCard
 
+# DeathMatch Gear
+
+- type: startingGear
+  id: DeathMatchGear
+  equipment:
+    jumpsuit: ClothingUniformJumpsuitColorWhite
+    shoes: ClothingShoesBootsJack
+    ears: ClothingHeadsetGrey
+    gloves: ClothingHandsGlovesFingerless
+  innerclothingskirt: ClothingUniformJumpskirtColorWhite
+  inhand:
+    left hand: WeaponMeleeToolboxRobust
+
 #Brigmedic
 
 - type: startingGear

@@ -16,7 +16,6 @@ namespace Content.Client.Shuttles.UI;
 public class DockingControl : Control
 {
     private readonly IEntityManager _entManager;
-    private readonly SharedTransformSystem _transform;
     private readonly IMapManager _mapManager;
 
     private float _range = 8f;
@@ -47,7 +46,6 @@ public class DockingControl : Control
     public DockingControl()
     {
         _entManager = IoCManager.Resolve<IEntityManager>();
-        _transform = _entManager.System<SharedTransformSystem>();
         _mapManager = IoCManager.Resolve<IMapManager>();
         _rangeSquared = _range * _range;
         MinSize = new Vector2(SizeFull, SizeFull);
@@ -80,10 +78,7 @@ public class DockingControl : Control
 
         if (Coordinates == null ||
             Angle == null ||
-            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform))
-        {
-            return;
-        }
+            !_entManager.TryGetComponent<TransformComponent>(GridEntity, out var gridXform)) return;
 
         var rotation = Matrix3.CreateRotation(-Angle.Value + Math.PI);
         var matrix = Matrix3.CreateTranslation(-Coordinates.Value.Position);
@@ -145,8 +140,8 @@ public class DockingControl : Control
             ScalePosition(rotation.Transform(new Vector2(0.5f, -0.5f)))), Color.Green);
 
         // Draw nearby grids
-        var worldPos = _transform.GetWorldMatrix(gridXform).Transform(Coordinates.Value.Position);
-        var gridInvMatrix = _transform.GetInvWorldMatrix(gridXform);
+        var worldPos = gridXform.WorldMatrix.Transform(Coordinates.Value.Position);
+        var gridInvMatrix = gridXform.InvWorldMatrix;
         Matrix3.Multiply(in gridInvMatrix, in matrix, out var invMatrix);
 
         // TODO: Getting some overdraw so need to fix that.
@@ -162,7 +157,7 @@ public class DockingControl : Control
             if (!_entManager.TryGetComponent<FixturesComponent>(grid.Owner, out var gridFixtures))
                 continue;
 
-            var gridMatrix = _transform.GetWorldMatrix(grid.Owner);
+            var gridMatrix = xformQuery.GetComponent(grid.Owner).WorldMatrix;
 
             Matrix3.Multiply(in gridMatrix, in invMatrix, out var matty);
 

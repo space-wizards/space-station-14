@@ -140,7 +140,7 @@ public partial class SharedBodySystem
             container.Remove(organId.Value);
 
         if (TryComp(organId, out TransformComponent? transform))
-            _transform.AttachToGridOrMap(organId.Value, transform);
+            transform.AttachToGridOrMap();
 
         organ.Owner.RandomOffset(0.25f);
 
@@ -165,7 +165,7 @@ public partial class SharedBodySystem
             return false;
 
         if (TryComp(organId.Value, out TransformComponent? transform))
-            _transform.SetCoordinates(organId.Value, transform, dropAt);
+            transform.Coordinates = dropAt;
 
         return true;
     }

@@ -6,17 +6,19 @@ using Content.Server.NPC.Systems;
 using Content.Server.Objectives;
 using Content.Server.PDA.Ringer;
 using Content.Server.Roles;
-using Content.Server.Roles.Jobs;
 using Content.Server.Shuttles.Components;
 using Content.Server.Traitor.Uplink;
 using Content.Shared.CCVar;
 using Content.Shared.Dataset;
+using Content.Shared.Mind;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.PDA;
 using Content.Shared.Preferences;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Robust.Server.Player;
 using Robust.Shared.Configuration;
+using Robust.Shared.Players;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
@@ -30,14 +32,13 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
     [Dependency] private readonly IConfigurationManager _cfg = default!;
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IGameTiming _gameTiming = default!;
-    [Dependency] private readonly IComponentFactory _component = default!;
     [Dependency] private readonly NpcFactionSystem _npcFaction = default!;
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly UplinkSystem _uplink = default!;
     [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
     [Dependency] private readonly MindSystem _mindSystem = default!;
-    [Dependency] private readonly RoleSystem _roleSystem = default!;
-    [Dependency] private readonly JobSystem _jobs = default!;
+    [Dependency] private readonly SharedRoleSystem _roleSystem = default!;
+    [Dependency] private readonly SharedJobSystem _jobs = default!;
     [Dependency] private readonly ObjectivesSystem _objectives = default!;
 
     private int PlayersPerTraitor => _cfg.GetCVar(CCVars.TraitorPlayersPerTraitor);
@@ -50,7 +51,9 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         SubscribeLocalEvent<RoundStartAttemptEvent>(OnStartAttempt);
         SubscribeLocalEvent<RulePlayerJobsAssignedEvent>(OnPlayersSpawned);
         SubscribeLocalEvent<PlayerSpawnCompleteEvent>(HandleLatejoin);
-        SubscribeLocalEvent<RoundEndTextAppendEvent>(OnRoundEndText);
+
+        SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextGetInfoEvent>(OnObjectivesTextGetInfo);
+        SubscribeLocalEvent<TraitorRuleComponent, ObjectivesTextPrependEvent>(OnObjectivesTextPrepend);
     }
 
     protected override void ActiveTick(EntityUid uid, TraitorRuleComponent component, GameRuleComponent gameRule, float frameTime)
@@ -202,7 +205,7 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         return results;
     }
 
-    public bool MakeTraitor(IPlayerSession traitor)
+    public bool MakeTraitor(ICommonSession traitor)
     {
         var traitorRule = EntityQuery<TraitorRuleComponent>().FirstOrDefault();
         if (traitorRule == null)
@@ -253,11 +256,18 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         var traitorRole = new TraitorRoleComponent
         {
             PrototypeId = traitorRule.TraitorPrototypeId,
-            Briefing = briefing
         };
 
         // Assign traitor roles
-        _roleSystem.MindAddRole(mindId, traitorRole);
+        _roleSystem.MindAddRole(mindId, new TraitorRoleComponent
+        {
+            PrototypeId = traitorRule.TraitorPrototypeId
+        });
+        // Assign briefing
+        _roleSystem.MindAddRole(mindId, new RoleBriefingComponent
+        {
+            Briefing = briefing
+        });
         SendTraitorBriefing(mindId, traitorRule.Codewords, code);
         traitorRule.TraitorMinds.Add(mindId);
 
@@ -359,90 +369,15 @@ public sealed class TraitorRuleSystem : GameRuleSystem<TraitorRuleComponent>
         }
     }
 
-    private void OnRoundEndText(RoundEndTextAppendEvent ev)
+    private void OnObjectivesTextGetInfo(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextGetInfoEvent args)
     {
-        var query = EntityQueryEnumerator<TraitorRuleComponent, GameRuleComponent>();
-        while (query.MoveNext(out var uid, out var traitor, out var gameRule))
-        {
-            if (!GameTicker.IsGameRuleAdded(uid, gameRule))
-                continue;
+        args.Minds = comp.TraitorMinds;
+        args.AgentName = Loc.GetString("traitor-round-end-agent-name");
+    }
 
-            var result = Loc.GetString("traitor-round-end-result", ("traitorCount", traitor.TraitorMinds.Count));
-
-            result += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", traitor.Codewords))) +
-                      "\n";
-
-            foreach (var mindId in traitor.TraitorMinds)
-            {
-                if (!TryComp(mindId, out MindComponent? mind))
-                    continue;
-
-                var name = mind.CharacterName;
-                _mindSystem.TryGetSession(mindId, out var session);
-                var username = session?.Name;
-
-                var objectives = mind.AllObjectives.ToArray();
-                if (objectives.Length == 0)
-                {
-                    if (username != null)
-                    {
-                        if (name == null)
-                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor", ("user", username));
-                        else
-                            result += "\n" + Loc.GetString("traitor-user-was-a-traitor-named", ("user", username),
-                                ("name", name));
-                    }
-                    else if (name != null)
-                        result += "\n" + Loc.GetString("traitor-was-a-traitor-named", ("name", name));
-
-                    continue;
-                }
-
-                if (username != null)
-                {
-                    if (name == null)
-                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives",
-                            ("user", username));
-                    else
-                        result += "\n" + Loc.GetString("traitor-user-was-a-traitor-with-objectives-named",
-                            ("user", username), ("name", name));
-                }
-                else if (name != null)
-                    result += "\n" + Loc.GetString("traitor-was-a-traitor-with-objectives-named", ("name", name));
-
-                foreach (var objectiveGroup in objectives.GroupBy(o => o.Prototype.Issuer))
-                {
-                    result += "\n" + Loc.GetString($"preset-traitor-objective-issuer-{objectiveGroup.Key}");
-
-                    foreach (var objective in objectiveGroup)
-                    {
-                        foreach (var condition in objective.Conditions)
-                        {
-                            var progress = condition.Progress;
-                            if (progress > 0.99f)
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "traitor-objective-condition-success",
-                                    ("condition", condition.Title),
-                                    ("markupColor", "green")
-                                );
-                            }
-                            else
-                            {
-                                result += "\n- " + Loc.GetString(
-                                    "traitor-objective-condition-fail",
-                                    ("condition", condition.Title),
-                                    ("progress", (int) (progress * 100)),
-                                    ("markupColor", "red")
-                                );
-                            }
-                        }
-                    }
-                }
-            }
-
-            ev.AddLine(result);
-        }
+    private void OnObjectivesTextPrepend(EntityUid uid, TraitorRuleComponent comp, ref ObjectivesTextPrependEvent args)
+    {
+        args.Text += "\n" + Loc.GetString("traitor-round-end-codewords", ("codewords", string.Join(", ", comp.Codewords)));
     }
 
     public List<(EntityUid Id, MindComponent Mind)> GetOtherTraitorMindsAliveAndConnected(MindComponent ourMind)

@@ -18,7 +18,6 @@ namespace Content.Server.Solar.EntitySystems
     {
         [Dependency] private readonly IRobustRandom _robustRandom = default!;
         [Dependency] private readonly SharedPhysicsSystem _physicsSystem = default!;
-        [Dependency] private readonly SharedTransformSystem _transform = default!;
 
         /// <summary>
         /// Maximum panel angular velocity range - used to stop people rotating panels fast enough that the lag prevention becomes noticable
@@ -112,7 +111,7 @@ namespace Content.Server.Solar.EntitySystems
                 foreach (var (panel, xform) in EntityManager.EntityQuery<SolarPanelComponent, TransformComponent>())
                 {
                     TotalPanelPower += panel.MaxSupply * panel.Coverage;
-                    _transform.SetWorldRotation(xform, TargetPanelRotation);
+                    xform.WorldRotation = TargetPanelRotation;
                     _updateQueue.Enqueue(panel);
                 }
             }
@@ -135,7 +134,7 @@ namespace Content.Server.Solar.EntitySystems
             // directly downwards (abs(theta) = pi) = coverage -1
             // as TowardsSun + = CCW,
             // panelRelativeToSun should - = CW
-            var panelRelativeToSun = _transform.GetWorldRotation(xform) - TowardsSun;
+            var panelRelativeToSun = xform.WorldRotation - TowardsSun;
             // essentially, given cos = X & sin = Y & Y is 'downwards',
             // then for the first 90 degrees of rotation in either direction,
             // this plots the lower-right quadrant of a circle.
@@ -153,7 +152,7 @@ namespace Content.Server.Solar.EntitySystems
             if (coverage > 0)
             {
                 // Determine if the solar panel is occluded, and zero out coverage if so.
-                var ray = new CollisionRay(_transform.GetWorldPosition(xform), TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
+                var ray = new CollisionRay(xform.WorldPosition, TowardsSun.ToWorldVec(), (int) CollisionGroup.Opaque);
                 var rayCastResults = _physicsSystem.IntersectRayWithPredicate(
                     xform.MapID,
                     ray,

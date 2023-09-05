@@ -1,6 +1,6 @@
-using Content.Server.Mind;
-using Content.Server.Roles.Jobs;
+using Content.Shared.Mind;
 using Content.Shared.Roles;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Store;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype.Set;
@@ -30,45 +30,42 @@ public sealed partial class BuyerDepartmentCondition : ListingCondition
         var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
 
         var ent = args.EntityManager;
-        var minds = ent.System<MindSystem>();
+        var minds = ent.System<SharedMindSystem>();
 
         // this is for things like surplus crate
         if (!minds.TryGetMind(args.Buyer, out var mindId, out _))
             return true;
 
-        var jobs = ent.System<JobSystem>();
-        if (jobs.MindTryGetJob(mindId, out var job, out _))
+        var jobs = ent.System<SharedJobSystem>();
+        jobs.MindTryGetJob(mindId, out var job, out _);
+
+        if (Blacklist != null && job?.PrototypeId != null)
         {
-            if (Blacklist != null)
+            foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
+            {
+                if (department.Roles.Contains(job.PrototypeId) && Blacklist.Contains(department.ID))
+                    return false;
+            }
+        }
+
+        if (Whitelist != null)
+        {
+            var found = false;
+
+            if (job?.PrototypeId != null)
             {
                 foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
                 {
-                    if (job.PrototypeId == null ||
-                        !department.Roles.Contains(job.PrototypeId) ||
-                        !Blacklist.Contains(department.ID))
-                        continue;
-
-                    return false;
+                    if (department.Roles.Contains(job.PrototypeId) && Whitelist.Contains(department.ID))
+                    {
+                        found = true;
+                        break;
+                    }
                 }
             }
 
-            if (Whitelist != null)
-            {
-                var found = false;
-                foreach (var department in prototypeManager.EnumeratePrototypes<DepartmentPrototype>())
-                {
-                    if (job.PrototypeId == null ||
-                        !department.Roles.Contains(job.PrototypeId) ||
-                        !Whitelist.Contains(department.ID))
-                        continue;
-
-                    found = true;
-                    break;
-                }
-
-                if (!found)
-                    return false;
-            }
+            if (!found)
+                return false;
         }
 
         return true;

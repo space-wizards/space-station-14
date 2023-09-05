@@ -1,8 +1,6 @@
 using Content.Server.Administration;
 using Content.Server.Chat.Managers;
 using Content.Server.GameTicking;
-using Content.Server.Mind;
-using Content.Server.Mind.Components;
 using Content.Server.Radio.Components;
 using Content.Server.Roles;
 using Content.Server.Station.Systems;
@@ -13,6 +11,9 @@ using Content.Shared.Chat;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Examine;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
+using Content.Shared.Roles;
 using Content.Shared.Silicons.Laws;
 using Content.Shared.Silicons.Laws.Components;
 using Content.Shared.Stunnable;
@@ -29,13 +30,13 @@ public sealed class SiliconLawSystem : SharedSiliconLawSystem
 {
     [Dependency] private readonly IChatManager _chatManager = default!;
     [Dependency] private readonly IPrototypeManager _prototype = default!;
-    [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly SharedMindSystem _mind = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly StationSystem _station = default!;
     [Dependency] private readonly UserInterfaceSystem _userInterface = default!;
     [Dependency] private readonly SharedStunSystem _stunSystem = default!;
     [Dependency] private readonly IEntityManager _entityManager = default!;
-    [Dependency] private readonly RoleSystem _roles = default!;
+    [Dependency] private readonly SharedRoleSystem _roles = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

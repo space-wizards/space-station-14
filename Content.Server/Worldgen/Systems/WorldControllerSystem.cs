@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using Content.Server.Mind.Components;
 using Content.Server.Worldgen.Components;
 using Content.Shared.Ghost;
+using Content.Shared.Mind.Components;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Map;
