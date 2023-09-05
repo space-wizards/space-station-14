@@ -35,6 +35,12 @@ public sealed partial class NukeopsRuleComponent : Component
     /// </summary>
     [DataField("roundEndBehavior")]
     public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
+    
+    /// <summary>
+    /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("roundEndTextSender")]
+    public string RoundEndTextSender = "comms-console-announcement-title-centcom";
 
     /// <summary>
     /// Text for shuttle call if RoundEndBehavior is ShuttleCall.

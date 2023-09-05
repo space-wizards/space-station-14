@@ -149,7 +149,7 @@ namespace Content.Server.RoundEnd
             _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(text,
                 ("time", time),
                 ("units", Loc.GetString(units))),
-                Loc.GetString(name),
+                name,
                 false,
                 null,
                 Color.Gold);

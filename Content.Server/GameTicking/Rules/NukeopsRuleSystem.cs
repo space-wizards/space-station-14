@@ -491,11 +491,13 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 if (_roundEndSystem.IsRoundEndRequested())
                 {
                     _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(component.RoundEndTextAnnouncement),
+                        Loc.GetString(component.RoundEndTextSender)
                         colorOverride: Color.Gold);
                 }
                 else
                 {
-                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall, "Central Command");
+                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall,
+                        Loc.GetString(component.RoundEndTextSender));
                 }
                 
                 break;
