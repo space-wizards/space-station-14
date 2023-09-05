@@ -8,7 +8,7 @@
 ///     has contacted with a hot object (lit welder, lighter, etc).
 /// </summary>
 [RegisterComponent]
-public sealed class ArtifactHeatTriggerComponent : Component
+public sealed partial class ArtifactHeatTriggerComponent : Component
 {
     /// <summary>
     ///     Minimal surrounding gas temperature to trigger artifact.

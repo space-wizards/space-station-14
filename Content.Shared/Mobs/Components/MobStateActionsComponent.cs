@@ -10,7 +10,7 @@ namespace Content.Shared.Mobs.Components;
 /// </remarks>
 /// <see cref="MobStateActionsSystem"/>
 [RegisterComponent]
-public sealed class MobStateActionsComponent : Component
+public sealed partial class MobStateActionsComponent : Component
 {
     /// <summary>
     ///     Specifies a list of actions that should be available if a mob is in a given state.

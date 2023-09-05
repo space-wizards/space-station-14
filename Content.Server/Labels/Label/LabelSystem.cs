@@ -18,6 +18,7 @@ namespace Content.Server.Labels
     {
         [Dependency] private readonly ItemSlotsSystem _itemSlotsSystem = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
+        [Dependency] private readonly MetaDataSystem _metaData = default!;
 
         public const string ContainerName = "paper_label";
 
@@ -53,7 +54,7 @@ namespace Content.Server.Labels
                     return;
 
                 // Remove label
-                metadata.EntityName = label.OriginalName;
+                _metaData.SetEntityName(uid, label.OriginalName, metadata);
                 label.CurrentLabel = null;
                 label.OriginalName = null;
 
@@ -63,7 +64,7 @@ namespace Content.Server.Labels
             // Update label
             label.OriginalName ??= metadata.EntityName;
             label.CurrentLabel = text;
-            metadata.EntityName = $"{label.OriginalName} ({text})";
+            _metaData.SetEntityName(uid, $"{label.OriginalName} ({text})", metadata);
         }
 
         private void OnComponentInit(EntityUid uid, PaperLabelComponent component, ComponentInit args)

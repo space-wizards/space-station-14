@@ -5,7 +5,7 @@ using Robust.Shared.Collections;
 namespace Content.Server.SensorMonitoring;
 
 [RegisterComponent]
-public sealed class SensorMonitoringConsoleComponent : Component
+public sealed partial class SensorMonitoringConsoleComponent : Component
 {
     /// <summary>
     /// Used to assign network IDs for sensors and sensor streams.
@@ -16,7 +16,7 @@ public sealed class SensorMonitoringConsoleComponent : Component
     /// If enabled, additional data streams are shown intended to only be visible for debugging.
     /// </summary>
     [ViewVariables(VVAccess.ReadWrite)]
-    [DataField("debug_streams")]
+    [DataField("debugStreams")]
     public bool DebugStreams = false;
 
     [ViewVariables(VVAccess.ReadWrite)]

@@ -9,7 +9,7 @@ namespace Content.Server.Guardian
     /// Given to guardian users upon establishing a guardian link with the entity
     /// </summary>
     [RegisterComponent]
-    public sealed class GuardianHostComponent : Component
+    public sealed partial class GuardianHostComponent : Component
     {
         /// <summary>
         /// Guardian hosted within the component
@@ -36,5 +36,5 @@ namespace Content.Server.Guardian
         };
     }
 
-    public sealed class GuardianToggleActionEvent : InstantActionEvent { };
+    public sealed partial class GuardianToggleActionEvent : InstantActionEvent { };
 }

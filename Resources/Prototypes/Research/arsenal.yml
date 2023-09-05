@@ -8,7 +8,7 @@
     state: icon
   discipline: Arsenal
   tier: 1
-  cost: 10000
+  cost: 5000
   recipeUnlocks:
   - WeaponProtoKineticAccelerator
   # These are roundstart but not replenishable for salvage
@@ -73,7 +73,7 @@
     state: beanbag
   discipline: Arsenal
   tier: 1
-  cost: 7500
+  cost: 5000
   recipeUnlocks:
   - ShellShotgunBeanbag
   - CartridgePistolRubber

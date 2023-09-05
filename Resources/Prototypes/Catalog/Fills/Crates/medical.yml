@@ -63,8 +63,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitBurnFilled
-        amount: 4
+    - id: MedkitBurnFilled
 
 - type: entity
   id: CrateEmergencyToxinKit
@@ -72,8 +71,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitToxinFilled
-        amount: 4
+    - id: MedkitToxinFilled
 
 - type: entity
   id: CrateEmergencyO2Kit
@@ -81,8 +79,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitOxygenFilled
-        amount: 4
+    - id: MedkitOxygenFilled
 
 - type: entity
   id: CrateEmergencyBruteKit
@@ -90,8 +87,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitBruteFilled
-        amount: 4
+    - id: MedkitBruteFilled
 
 - type: entity
   id: CrateEmergencyAdvancedKit
@@ -99,8 +95,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitAdvancedFilled
-        amount: 4
+    - id: MedkitAdvancedFilled
 
 - type: entity
   id: CrateEmergencyRadiationKit
@@ -108,8 +103,7 @@
   components:
   - type: StorageFill
     contents:
-      - id: MedkitRadiationFilled
-        amount: 4
+    - id: MedkitRadiationFilled
 
 - type: entity
   id: CrateBodyBags

@@ -7,7 +7,7 @@ namespace Content.Shared.Chemistry.Components;
 ///     Think pouring this or draining from a water tank.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class DrainableSolutionComponent : Component
+public sealed partial class DrainableSolutionComponent : Component
 {
     /// <summary>
     /// Solution name that can be drained.

@@ -8,7 +8,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Shared.Singularity.Components;
 
 [RegisterComponent, NetworkedComponent]
-public sealed class ContainmentFieldGeneratorComponent : Component
+public sealed partial class ContainmentFieldGeneratorComponent : Component
 {
         private int _powerBuffer;
 

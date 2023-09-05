@@ -5,6 +5,7 @@ gun-selector-verb = Change to {$mode}
 gun-selected-mode = Selected {$mode}
 gun-disabled = You can't use guns!
 gun-clumsy = The gun blows up in your face!
+gun-set-fire-mode = Set to {$mode}
 
 # SelectiveFire
 gun-SemiAuto = semi-auto
@@ -33,6 +34,8 @@ gun-chamber-bolt-closed = Closed bolt
 gun-chamber-bolt-opened = Opened bolt
 gun-chamber-bolt-close = Close bolt
 gun-chamber-bolt-open = Open bolt
+gun-chamber-bolt-closed-state = open
+gun-chamber-bolt-open-state = closed
 gun-chamber-rack = Rack
 
 # MagazineAmmoProvider

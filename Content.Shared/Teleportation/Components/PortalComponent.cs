@@ -8,7 +8,7 @@ namespace Content.Shared.Teleportation.Components;
 ///     Relies on <see cref="LinkedEntityComponent"/> being set up.
 /// </summary>
 [RegisterComponent, NetworkedComponent]
-public sealed class PortalComponent : Component
+public sealed partial class PortalComponent : Component
 {
     /// <summary>
     ///     Sound played on arriving to this portal, centered on the destination.
@@ -35,7 +35,7 @@ public sealed class PortalComponent : Component
     /// <remarks>
     ///     Shouldn't be able to teleport people to centcomm or the eshuttle from the station
     /// </remarks>
-    [DataField("canTeleportToOtherMaps")]
+    [DataField("canTeleportToOtherMaps"), ViewVariables(VVAccess.ReadWrite)]
     public bool CanTeleportToOtherMaps = false;
 
     /// <summary>

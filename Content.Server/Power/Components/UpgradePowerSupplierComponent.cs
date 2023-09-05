@@ -5,7 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 namespace Content.Server.Power.Components;
 
 [RegisterComponent]
-public sealed class UpgradePowerSupplierComponent : Component
+public sealed partial class UpgradePowerSupplierComponent : Component
 {
     [ViewVariables(VVAccess.ReadWrite)]
     public float BaseSupplyRate;

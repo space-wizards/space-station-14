@@ -57,6 +57,7 @@
     # It fires processing on behalf of its connected circulators.
     - type: AtmosDevice
     - type: TegGenerator
+      powerFactor: 0.025
 
     - type: DeviceNetwork
       deviceNetId: AtmosDevices
@@ -91,6 +92,8 @@
       enabled: false
       sound:
         path: /Audio/Ambience/Objects/vending_machine_hum.ogg
+    - type: GuideHelp
+      guides: [ TEG, Power ]
 
 - type: entity
   id: TegCirculator
@@ -146,6 +149,8 @@
     - type: Rotatable
     - type: Anchorable
     - type: Pullable
+    - type: GuideHelp
+      guides: [ TEG, Power ]
 
     # functionality
     - type: NodeContainer
@@ -166,8 +171,6 @@
 
     - type: AtmosUnsafeUnanchor
     - type: TegCirculator
-      light_color_fast: '#AA00FF'
-      light_color_slow: '#FF3300'
 
 - # Spawned by the client-side circulator examine code to indicate the inlet/outlet direction.
   type: entity

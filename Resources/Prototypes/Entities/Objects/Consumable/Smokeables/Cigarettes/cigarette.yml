@@ -148,7 +148,7 @@
         reagents:
           - ReagentId: Nicotine
             Quantity: 10
-          - ReagentId: Dylovene
+          - ReagentId: Dermaline
             Quantity: 10
 
 - type: entity
