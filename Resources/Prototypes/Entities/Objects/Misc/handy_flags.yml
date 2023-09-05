@@ -39,6 +39,8 @@
   id: LGBTQHandyFlag
   name: LGBTQ handheld flag
   description: "Be gay do crime handheld flag"
+  name: LGBTQ handy flag
+  description: "The be gay do crime handy flag."
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
@@ -51,6 +53,8 @@
   id: PirateHandyFlag
   name: Pirate handheld flag
   description: "Holding it in your hands, show these carp that you're not kidding."
+  name: pirate handy flag
+  description: Hold it in your hands to show these carp that you're not kidding.
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/pirate_handy_flag.rsi
@@ -63,6 +67,8 @@
   id: BlackHandyFlag
   name: black handheld flag
   description: "Just a black handheld flag"
+  name: black handy flag
+  description: Just a black handy flag.
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/black_handy_flag.rsi
