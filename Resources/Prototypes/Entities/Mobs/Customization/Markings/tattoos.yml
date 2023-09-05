@@ -139,7 +139,7 @@
     state: tattoo_eye_l
 
 - type: marking
-  id: TattooElbowProsteticArm
+  id: TattooElbowProstheticArm
   bodyPart: LArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -150,10 +150,10 @@
       fallbackColor: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: prostetic_arm
+    state: prosthetic_arm
 
 - type: marking
-  id: TattooElbowProsteticArmRight
+  id: TattooElbowProstheticArmRight
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -164,7 +164,7 @@
       fallbackColor: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: prostetic_arm_r
+    state: prosthetic_arm_r
 
 - type: marking
   id: TattooShoulderProsteticArm
@@ -178,10 +178,10 @@
       fallbackColor: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: prostetic_arm_shoulder
+    state: prosthetic_arm_shoulder
 
 - type: marking
-  id: TattooShoulderProsteticArmRight
+  id: TattooShoulderProstheticArmRight
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -192,4 +192,4 @@
       fallbackColor: "#FFFFFF"
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
-    state: prostetic_arm_shoulder_r
+    state: prosthetic_arm_shoulder_r
