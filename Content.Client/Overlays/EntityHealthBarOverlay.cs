@@ -11,6 +11,9 @@ using static Robust.Shared.Maths.Color;
 
 namespace Content.Client.Overlays;
 
+/// <summary>
+/// Overlay that shows a health bar on mobs.
+/// </summary>
 public sealed class EntityHealthBarOverlay : Overlay
 {
     private readonly IEntityManager _entManager;

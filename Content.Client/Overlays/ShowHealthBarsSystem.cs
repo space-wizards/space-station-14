@@ -5,6 +5,9 @@ using System.Linq;
 
 namespace Content.Client.Overlays;
 
+/// <summary>
+/// Adds a health bar overlay.
+/// </summary>
 public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
 {
     [Dependency] private readonly IOverlayManager _overlayMan = default!;

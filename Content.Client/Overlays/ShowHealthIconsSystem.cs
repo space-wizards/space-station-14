@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace Content.Client.Overlays;
 
+/// <summary>
+/// Shows a healthy icon on mobs.
+/// </summary>
 public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
