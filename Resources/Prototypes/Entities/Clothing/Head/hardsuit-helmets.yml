@@ -300,6 +300,25 @@
         Piercing: 0.9
         Heat: 0.9
 
+#Luxury Mining Hardsuit
+- type: entity
+  parent: ClothingHeadHardsuitWithLightBase
+  id: ClothingHeadHelmetHardsuitLuxury #DO NOT MAP - https://github.com/space-wizards/space-station-14/pull/19738#issuecomment-1703486738
+  noSpawn: true
+  name: luxury mining hardsuit helmet
+  description: A refurbished mining hardsuit helmet, fitted with satin cushioning and an extra (non-functioning) antenna, because you're that extra.
+  components:
+  - type: Sprite
+    sprite: Clothing/Head/Hardsuits/luxury.rsi
+  - type: Clothing
+    sprite: Clothing/Head/Hardsuits/luxury.rsi
+  - type: PressureProtection
+    highPressureMultiplier: 0.525
+    lowPressureMultiplier: 1000
+  - type: PointLight
+    radius: 7
+    energy: 3
+
 #ANTAG HARDSUITS
 #Blood-red Hardsuit
 - type: entity
