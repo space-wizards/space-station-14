@@ -184,7 +184,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         if (component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
+            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel", component.ShowHidden);
         }
     }
 
@@ -196,7 +196,7 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         if(component.Channels.Count > 0)
         {
             args.PushMarkup(Loc.GetString("examine-encryption-channels-prefix"));
-            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel");
+            AddChannelsExamine(component.Channels, component.DefaultChannel, args, _protoManager, "examine-encryption-channel", true);
         }
     }
 
@@ -205,21 +205,22 @@ public sealed partial class EncryptionKeySystem : EntitySystem
     /// </summary>
     /// <param name="channels">HashSet of channels in headset, encryptionkey or etc.</param>
     /// <param name="protoManager">IPrototypeManager for getting prototypes of channels with their variables.</param>
-    /// <param name="channelFTLPattern">String that provide id of pattern in .ftl files to format channel with variables of it.</param>
-    public void AddChannelsExamine(HashSet<string> channels, string? defaultChannel, ExaminedEvent examineEvent, IPrototypeManager protoManager, string channelFTLPattern)
+    /// <param name="channelLocale">Locale id to format channel with variables of it.</param>
+    /// <param name="showHidden">If true hidden channels will be shown.</param>
+    public void AddChannelsExamine(HashSet<string> channels, string? defaultChannel, ExaminedEvent examineEvent, IPrototypeManager protoManager, string channelLocale, bool showHidden)
     {
         RadioChannelPrototype? proto;
         foreach (var id in channels)
         {
             proto = _protoManager.Index<RadioChannelPrototype>(id);
-            if (proto.Hidden)
+            if (proto.Hidden && !showHidden)
                 continue;
 
             var key = id == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()
                 : $"{SharedChatSystem.RadioChannelPrefix}{proto.KeyCode}";
 
-            examineEvent.PushMarkup(Loc.GetString(channelFTLPattern,
+            examineEvent.PushMarkup(Loc.GetString(channelLocale,
                 ("color", proto.Color),
                 ("key", key),
                 ("id", proto.LocalizedName),

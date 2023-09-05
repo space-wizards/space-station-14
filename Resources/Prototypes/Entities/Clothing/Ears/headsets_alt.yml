@@ -138,6 +138,8 @@
   - type: Headset
   - type: EncryptionKeyHolder
     keySlots: 5
+    # its already valid so no use hiding the sus channel
+    showHidden: true
   - type: ContainerFill
     containers:
       key_slots:

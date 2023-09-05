@@ -53,4 +53,10 @@ public sealed partial class EncryptionKeyHolderComponent : Component
     /// </summary>
     [ViewVariables]
     public string? DefaultChannel;
+
+    /// <summary>
+    /// Whether to show hidden radio channels when examined.
+    /// </summary>
+    [DataField("showHidden"), ViewVariables(VVAccess.ReadWrite)]
+    public bool ShowHidden;
 }
