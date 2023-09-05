@@ -133,7 +133,7 @@ namespace Content.Server.Atmos.EntitySystems
             var query = EntityQueryEnumerator<GasTankComponent>();
             while (query.MoveNext(out var uid, out var gasTank))
             {
-                if (gasTank.IsValveOpen && gasTank.Air != null && !gasTank.IsLowPressure)
+                if (gasTank.IsValveOpen && !gasTank.IsLowPressure)
                 {
                     ReleaseGas(uid, gasTank);
                 }
