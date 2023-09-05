@@ -1652,7 +1652,6 @@
   time: 5
   solids:
     FoodSpaceshroom: 1
-<<<<<<< HEAD
 
 #cannabis    
 - type: microwaveMealRecipe
@@ -1676,5 +1675,3 @@
     FoodCannabisButter: 2
     FoodSnackChocolateBar: 2
     FoodEgg: 3
-=======
->>>>>>> master
