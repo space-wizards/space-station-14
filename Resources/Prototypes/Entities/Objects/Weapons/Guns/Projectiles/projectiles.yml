@@ -378,6 +378,8 @@
   - type: TimedDespawn
     lifetime: 0.4
 
+# APE & CHIMP projectiles
+
 - type: entity
   parent: BaseBullet
   id: AnomalousParticleDelta
@@ -407,7 +409,8 @@
   - type: Projectile
     damage:
       types:
-        Heat: 5
+        Heat: 3
+        Radiation: 0.25
   - type: TimedDespawn
     lifetime: 3
 
@@ -487,7 +490,8 @@
     impactEffect: BulletImpactEffectKinetic
     damage:
       types:
-        Heat: 20
+        Heat: 10
+        Radiation: 5
 
 # Launcher projectiles (grenade / rocket)
 - type: entity
