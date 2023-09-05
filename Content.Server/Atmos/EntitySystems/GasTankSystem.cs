@@ -208,7 +208,7 @@ namespace Content.Server.Atmos.EntitySystems
         public bool CanConnectToInternals(GasTankComponent component)
         {
             var internals = GetInternalsComponent(component);
-            return internals != null && internals.BreathToolEntity != null;
+            return internals != null && internals.BreathToolEntity != null && !component.IsValveOpen;
         }
 
         public void ConnectToInternals(GasTankComponent component)
@@ -366,7 +366,8 @@ namespace Content.Server.Atmos.EntitySystems
                 Act = () =>
                 {
                     component.IsValveOpen = !component.IsValveOpen;
-                }
+                },
+                Disabled = component.IsConnected,
             });
         }
     }
