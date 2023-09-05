@@ -35,4 +35,10 @@ public sealed class RadioChannelPrototype : IPrototype
     /// </summary>
     [DataField("longRange")]
     public bool LongRange;
+
+    /// <summary>
+    /// Hidden radio channels cannot be seen in by examining a headset, only by taking them out.
+    /// </summary>
+    [DataField("hidden")]
+    public bool Hidden;
 }
