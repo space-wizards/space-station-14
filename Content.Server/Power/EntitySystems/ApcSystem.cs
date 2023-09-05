@@ -8,22 +8,20 @@ using Content.Shared.APC;
 using Content.Shared.Emag.Components;
 using Content.Shared.Emag.Systems;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Shared.Audio;
 using Robust.Shared.Timing;
 
 namespace Content.Server.Power.EntitySystems
 {
-    [UsedImplicitly]
-    internal sealed class ApcSystem : EntitySystem
+    public sealed class ApcSystem : EntitySystem
     {
         [Dependency] private readonly AccessReaderSystem _accessReader = default!;
-        [Dependency] private readonly UserInterfaceSystem _ui = default!;
-        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly PopupSystem _popup = default!;
         [Dependency] private readonly SharedAppearanceSystem _appearance = default!;
         [Dependency] private readonly SharedAudioSystem _audio = default!;
+        [Dependency] private readonly UserInterfaceSystem _ui = default!;
 
         public override void Initialize()
         {
@@ -50,23 +48,18 @@ namespace Content.Server.Power.EntitySystems
         {
             UpdateApcState(uid, component);
         }
+
         //Update the HasAccess var for UI to read
         private void OnBoundUiOpen(EntityUid uid, ApcComponent component, BoundUIOpenedEvent args)
         {
-            TryComp<AccessReaderComponent>(uid, out var access);
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid, access))
-            {
-                component.HasAccess = true;
-            }
-            else
-            {
-                component.HasAccess = false;
-            }
+            // TODO: this should be per-player not stored on the apc
+            component.HasAccess = _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid);
             UpdateApcState(uid, component);
         }
+
         private void OnToggleMainBreaker(EntityUid uid, ApcComponent component, ApcToggleMainBreakerMessage args)
         {
             var attemptEv = new ApcToggleMainBreakerAttemptEvent();
@@ -78,11 +71,10 @@ namespace Content.Server.Power.EntitySystems
                 return;
             }
 
-            TryComp<AccessReaderComponent>(uid, out var access);
             if (args.Session.AttachedEntity == null)
                 return;
 
-            if (access == null || _accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid, access))
+            if (_accessReader.IsAllowed(args.Session.AttachedEntity.Value, uid))
             {
                 ApcToggleBreaker(uid, component);
             }
