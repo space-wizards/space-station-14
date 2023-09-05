@@ -69,6 +69,7 @@
   frequency: 1213
   color: "#8f4a4b"
   longRange: true
+  hidden: true
 
 - type: radioChannel
   id: Handheld
