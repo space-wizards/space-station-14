@@ -33,6 +33,7 @@
   desc: reagent-desc-atf
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 2 
   color: "#2bd558"
   metabolisms:
     Medicine:
@@ -59,6 +60,7 @@
   desc: reagent-desc-rezocillin
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 3
   color: "#7e916e"
   metabolisms:
     Medicine:
@@ -85,6 +87,7 @@
   desc: reagent-desc-thrivenin
   physicalDesc: reagent-physical-desc-translucent
   flavor: medicine
+  pricePerUnit: 10
   color: "#ffaa00"
   metabolisms:
     Medicine:
@@ -93,15 +96,17 @@
         damage:
           types:
             Cellular: -1.35
-            Brute: -2
-            Poison: -1.25 
-            Radiation: -1.33
-            Heat: -1.33
+            Poison: -0.75
+            Radiation: -1.5
+            Heat: -1.5
+          groups:
+            Brute: -3.25
       - !type:HealthChange
         conditions:
         - !type:ReagentThreshold
           min: 26
         damage:
           types: 
-            Cellular: 3.626
+            Cellular: 2.5
+            Asphyxiation: 4.5
 
