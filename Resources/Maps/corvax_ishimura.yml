@@ -50076,13 +50076,6 @@ entities:
     - pos: 47.81577,10.405572
       parent: 89
       type: Transform
-- proto: ClothingNeckMantleQM
-  entities:
-  - uid: 5840
-    components:
-    - pos: -72.47551,-17.448103
-      parent: 89
-      type: Transform
 - proto: ClothingNeckMantleRD
   entities:
   - uid: 167
@@ -50160,13 +50153,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingOuterDiscoAssBlazer
-  entities:
-  - uid: 10313
-    components:
-    - pos: -39.54277,32.313835
-      parent: 89
-      type: Transform
 - proto: ClothingOuterHardsuitEVA
   entities:
   - uid: 17929
@@ -50219,14 +50205,19 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-  - uid: 10382
+  - uid: 10313
     components:
-    - pos: -19.437286,28.49617
+    - pos: -39.54277,32.313835
       parent: 89
       type: Transform
   - uid: 14034
     components:
     - pos: 21.516169,28.729609
+      parent: 89
+      type: Transform
+  - uid: 10382
+    components:
+    - pos: -19.437286,28.49617
       parent: 89
       type: Transform
   - uid: 14280
@@ -50332,15 +50323,13 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingShoesGreenLizardskin
+- proto: ClothingShoesLeather
   entities:
   - uid: 10311
     components:
     - pos: -42.542587,28.46403
       parent: 89
       type: Transform
-- proto: ClothingShoesLeather
-  entities:
   - uid: 14045
     components:
     - flags: InContainer
@@ -50417,17 +50406,6 @@ entities:
     - flags: InContainer
       type: MetaData
     - parent: 18343
-      type: Transform
-    - canCollide: False
-      type: Physics
-    - type: InsideEntityStorage
-- proto: ClothingUniformJumpskirtPsychologist
-  entities:
-  - uid: 12829
-    components:
-    - flags: InContainer
-      type: MetaData
-    - parent: 10908
       type: Transform
     - canCollide: False
       type: Physics
@@ -50509,6 +50487,11 @@ entities:
     - type: InsideEntityStorage
 - proto: ClothingUniformJumpsuitPsychologist
   entities:
+  - uid: 10314
+    components:
+    - pos: -39.995895,29.48571
+      parent: 89
+      type: Transform
   - uid: 12832
     components:
     - flags: InContainer
@@ -50518,13 +50501,6 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingUniformJumpsuitSuperstarCop
-  entities:
-  - uid: 10314
-    components:
-    - pos: -39.995895,29.48571
-      parent: 89
-      type: Transform
 - proto: ComfyChair
   entities:
   - uid: 83
@@ -95131,7 +95107,6 @@ entities:
           - 12848
           - 12827
           - 12828
-          - 12829
           - 12832
           - 12849
         paper_label: !type:ContainerSlot
@@ -108033,34 +108008,6 @@ entities:
     - pos: -126.426926,-8.5456085
       parent: 89
       type: Transform
-- proto: ShippingContainerConarex
-  entities:
-  - uid: 19846
-    components:
-    - pos: -65.5,-9.5
-      parent: 89
-      type: Transform
-- proto: ShippingContainerInterdyne
-  entities:
-  - uid: 6525
-    components:
-    - pos: -60.5,-9.5
-      parent: 89
-      type: Transform
-- proto: ShippingContainerNakamura
-  entities:
-  - uid: 19836
-    components:
-    - pos: -65.5,-10.5
-      parent: 89
-      type: Transform
-- proto: ShippingContainerNanotrasen
-  entities:
-  - uid: 14887
-    components:
-    - pos: -65.5,-12.5
-      parent: 89
-      type: Transform
 - proto: ShuttersNormal
   entities:
   - uid: 7385
@@ -110744,13 +110691,6 @@ entities:
   - uid: 922
     components:
     - pos: 48.5,12.5
-      parent: 89
-      type: Transform
-- proto: SpawnMobGorillaLargo
-  entities:
-  - uid: 5817
-    components:
-    - pos: -74.5,-15.5
       parent: 89
       type: Transform
 - proto: SpawnMobMcGriff
