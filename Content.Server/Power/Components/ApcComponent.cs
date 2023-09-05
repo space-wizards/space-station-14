@@ -18,6 +18,12 @@ public sealed partial class ApcComponent : BaseApcNetComponent
 
     [DataField("lastExternalState")]
     public ApcExternalPowerState LastExternalState;
+
+    /// <summary>
+    /// Time the ui was last updated automatically.
+    /// Done after every <see cref="VisualsChangeDelay"/> to show the latest load.
+    /// If charge state changes it will be instantly updated.
+    /// </summary>
     [DataField("lastUiUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastUiUpdate;
 

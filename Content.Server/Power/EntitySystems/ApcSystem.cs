@@ -38,6 +38,19 @@ public sealed class ApcSystem : EntitySystem
         SubscribeLocalEvent<ApcComponent, EmpPulseEvent>(OnEmpPulse);
     }
 
+    public override void Update(float deltaTime)
+    {
+        var query = EntityQueryEnumerator<ApcComponent, PowerNetworkBatteryComponent, ServerUserInterfaceComponent>();
+        while (query.MoveNext(out var uid, out var apc, out var battery, out var ui))
+        {
+            if (apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+            {
+                apc.LastUiUpdate = _gameTiming.CurTime;
+                UpdateUIState(uid, apc, battery, ui);
+            }
+        }
+    }
+
     // Change the APC's state only when the battery state changes, or when it's first created.
     private void OnBatteryChargeChanged(EntityUid uid, ApcComponent component, ref ChargeChangedEvent args)
     {
@@ -123,11 +136,9 @@ public sealed class ApcSystem : EntitySystem
         }
 
         var extPowerState = CalcExtPowerState(uid, battery.NetworkBattery);
-        if (extPowerState != apc.LastExternalState
-            || apc.LastUiUpdate + ApcComponent.VisualsChangeDelay < _gameTiming.CurTime)
+        if (extPowerState != apc.LastExternalState)
         {
             apc.LastExternalState = extPowerState;
-            apc.LastUiUpdate = _gameTiming.CurTime;
             UpdateUIState(uid, apc, battery);
         }
     }
