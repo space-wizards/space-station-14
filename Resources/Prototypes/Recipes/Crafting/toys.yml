@@ -10,3 +10,16 @@
   icon:
     sprite: Mobs/Ghosts/revenant.rsi
     state: icon
+
+- type: construction
+  name: ian suit
+  id: ClothingOuterSuitIan
+  graph: ClothingOuterSuitIan
+  startNode: start
+  targetNode: suit
+  category: construction-category-misc
+  objectType: Item
+  description: Make yourself look just like Ian!
+  icon:
+    sprite: Clothing/OuterClothing/Suits/iansuit.rsi
+    state: icon

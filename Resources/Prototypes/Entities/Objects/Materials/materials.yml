@@ -333,10 +333,9 @@
     equippedPrefix: corgi2
     slots:
     - HEAD
-  - type: Butcherable
-    butcheringType: Knife
-    spawned:
-    - id: ClothingOuterSuitIan
+  - type: Tag
+    tags:
+    - HideCorgi
 
 - type: entity
   parent: MaterialBase
