@@ -372,6 +372,7 @@ namespace Content.Server.Atmos.EntitySystems
                 Act = () =>
                 {
                     component.IsValveOpen = !component.IsValveOpen;
+                    _audioSys.PlayPvs(component.ValveSound, uid);
                 },
                 Disabled = component.IsConnected,
             });

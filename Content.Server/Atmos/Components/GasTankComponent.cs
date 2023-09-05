@@ -101,5 +101,12 @@ namespace Content.Server.Atmos.Components
         /// </summary>
         [DataField("valveOutputRate"), ViewVariables(VVAccess.ReadWrite)]
         public float ValveOutputRate = 100f;
+
+        [DataField("valveSound"), ViewVariables(VVAccess.ReadWrite)]
+        public SoundSpecifier ValveSound =
+            new SoundCollectionSpecifier("valveSqueak")
+            {
+                Params = AudioParams.Default.WithVolume(-5f),
+            };
     }
 }
