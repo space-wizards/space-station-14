@@ -139,7 +139,7 @@
     state: tattoo_eye_l
 
 - type: marking
-  id: TatooElbowProsteticArm
+  id: TattooElbowProsteticArm
   bodyPart: LArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -153,7 +153,7 @@
     state: prostetic_arm
 
 - type: marking
-  id: TatooElbowProsteticArmRight
+  id: TattooElbowProsteticArmRight
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -167,7 +167,7 @@
     state: prostetic_arm_r
 
 - type: marking
-  id: TatooShoulderProsteticArm
+  id: TattooShoulderProsteticArm
   bodyPart: LArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
@@ -181,7 +181,7 @@
     state: prostetic_arm_shoulder
 
 - type: marking
-  id: TatooShoulderProsteticArmRight
+  id: TattooShoulderProsteticArmRight
   bodyPart: RArm
   markingCategory: Arms
   speciesRestriction: [Human, Dwarf]
