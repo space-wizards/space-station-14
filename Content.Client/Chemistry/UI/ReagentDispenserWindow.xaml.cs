@@ -48,17 +48,17 @@ namespace Content.Client.Chemistry.UI
         /// Update the button grid of reagents which can be dispensed.
         /// </summary>
         /// <param name="inventory">Reagents which can be dispensed by this dispenser</param>
-        public void UpdateReagentsList(List<string> inventory)
+        public void UpdateReagentsList(List<ReagentId> inventory)
         {
-            if (ChemicalList == null) return;
-            if (inventory == null) return;
+            if (ChemicalList == null)
+                return;
 
             ChemicalList.Children.Clear();
 
             foreach (var entry in inventory
-                .OrderBy(r => {_prototypeManager.TryIndex(r, out ReagentPrototype? p); return p?.LocalizedName;}))
+                .OrderBy(r => {_prototypeManager.TryIndex(r.Prototype, out ReagentPrototype? p); return p?.LocalizedName;}))
             {
-                var localizedName = _prototypeManager.TryIndex(entry, out ReagentPrototype? p)
+                var localizedName = _prototypeManager.TryIndex(entry.Prototype, out ReagentPrototype? p)
                     ? p.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
@@ -123,7 +123,7 @@ namespace Content.Client.Chemistry.UI
         /// <param name="state">State data for the dispenser.</param>
         /// <param name="highlightedReagentId">Prototype ID of the reagent whose dispense button is currently being mouse hovered,
         /// or null if no button is being hovered.</param>
-        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, string? highlightedReagentId = null)
+        public void UpdateContainerInfo(ReagentDispenserBoundUserInterfaceState state, ReagentId? highlightedReagentId = null)
         {
             ContainerInfo.Children.Clear();
 
@@ -147,22 +147,22 @@ namespace Content.Client.Chemistry.UI
                 }
             });
 
-            foreach (var reagent in state.OutputContainer.Contents)
+            foreach (var (reagent, quantity) in state.OutputContainer.Reagents!)
             {
                 // Try get to the prototype for the given reagent. This gives us its name.
-                var localizedName = _prototypeManager.TryIndex(reagent.Id, out ReagentPrototype? p)
+                var localizedName = _prototypeManager.TryIndex(reagent.Prototype, out ReagentPrototype? p)
                     ? p.LocalizedName
                     : Loc.GetString("reagent-dispenser-window-reagent-name-not-found-text");
 
                 var nameLabel = new Label {Text = $"{localizedName}: "};
                 var quantityLabel = new Label
                 {
-                    Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", reagent.Quantity)),
+                    Text = Loc.GetString("reagent-dispenser-window-quantity-label-text", ("quantity", quantity)),
                     StyleClasses = {StyleNano.StyleClassLabelSecondaryColor},
                 };
 
                 // Check if the reagent is being moused over. If so, color it green.
-                if (reagent.Id == highlightedReagentId) {
+                if (reagent == highlightedReagentId) {
                     nameLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                     quantityLabel.SetOnlyStyleClass(StyleNano.StyleClassPowerStateGood);
                 }
@@ -181,9 +181,9 @@ namespace Content.Client.Chemistry.UI
     }
 
     public sealed class DispenseReagentButton : Button {
-        public string ReagentId { get; }
+        public ReagentId ReagentId { get; }
 
-        public DispenseReagentButton(string reagentId, string text)
+        public DispenseReagentButton(ReagentId reagentId, string text)
         {
             ReagentId = reagentId;
             Text = text;

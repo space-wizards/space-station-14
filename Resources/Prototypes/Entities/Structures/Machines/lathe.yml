@@ -707,6 +707,8 @@
       - ClothingUniformJumpsuitSalvageSpecialist
       - ClothingUniformJumpsuitChiefEngineer
       - ClothingUniformJumpskirtChiefEngineer
+      - ClothingUniformJumpsuitChiefEngineerTurtle
+      - ClothingUniformJumpskirtChiefEngineerTurtle
       - ClothingUniformJumpsuitChaplain
       - ClothingUniformJumpskirtChaplain
       - ClothingUniformJumpsuitChef
@@ -835,10 +837,10 @@
         - SheetPlasma30
         - SheetPGlass30
         - SheetRPGlass30
-        - SheetUranium1
-        - IngotGold1
-        - IngotSilver1
-        - MaterialBananium1
+        - SheetUranium30
+        - IngotGold30
+        - IngotSilver30
+        - MaterialBananium10
 
 - type: entity
   parent: BaseLathe

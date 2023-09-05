@@ -7,5 +7,6 @@
         ".addon": "json",
         "*.elua": "lua",
         "string": "cpp"
-    }
+    },
+    "dotnet.defaultSolution": "SpaceStation14.sln"
 }
