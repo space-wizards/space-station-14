@@ -58,6 +58,8 @@
     key: enum.BorgUiKey.Key
   - type: SiliconLawBound
   - type: EmagSiliconLaw
+    sound:
+      path: /Audio/Ambience/Antag/emag_borg.ogg
     stunTime: 5
     emagLaws:
     - Syndicate1
