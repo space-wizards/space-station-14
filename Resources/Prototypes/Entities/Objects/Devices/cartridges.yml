@@ -69,10 +69,10 @@
   components:
     - type: Sprite
       sprite: Objects/Devices/cartridge.rsi
-      state: cart-y
+      state: cart-log
     - type: Icon
       sprite: Objects/Devices/cartridge.rsi
-      state: cart-y
+      state: cart-log
     - type: UIFragment
       ui: !type:LogProbeUi
     - type: Cartridge
