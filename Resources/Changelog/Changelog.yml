@@ -1,9 +1,4 @@
 Entries:
-- author: deltanedas
-  changes:
-  - {message: Fixed nukies' nuke being anchored., type: Fix}
-  id: 4271
-  time: '2023-07-17T19:37:34.0000000+00:00'
 - author: Dygon
   changes:
   - {message: 'Using cells extracted from a changeling the Syndicate has found a way
@@ -2996,3 +2991,8 @@ Entries:
     type: Add}
   id: 4770
   time: '2023-09-05T17:20:05.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Constructed hydroponics trays now start empty., type: Tweak}
+  id: 4771
+  time: '2023-09-05T20:15:06.0000000+00:00'
