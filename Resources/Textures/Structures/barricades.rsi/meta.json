@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "license": "CC-BY-SA-3.0",
+  "copyright": "Taken from /vg/station at commit https://github.com/vgstation-coders/vgstation13/commit/fa615ead9d02b879b2ed0461f36622affb32088f",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "barricade",
+      "directions": 1
+    },
+	{
+	  "name": "barricade_full",
+	  "directions": 1
+	},
+	{
+	  "name": "barricade_directional",
+	  "directions": 4
+	}
+  ]
+}

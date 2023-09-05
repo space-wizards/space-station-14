@@ -1,0 +1,110 @@
+#None of these besides the full barricade are constructible yet since I can't understand code, and they need to do stuff like go over airlocks / windows.
+#They should probably use the barricade kit from /vg/station or something if you want to make them constructible. You should also probably port their HP values and stuff if you do that.
+
+#Base barricade
+#A lot of components here are intentionally ommitted in case someone wants to make barricades that are made out of things other than wood.
+- type: entity
+  id: BaseBarricade
+  description: A barricade made out of wood planks. It looks like it can take a few solid hits.
+  parent: BaseStructure
+  name: wooden barricade
+  abstract: true
+  components:
+  - type: InteractionOutline
+  - type: Sprite
+    sprite: Structures/barricades.rsi
+    state: barricade_full
+    drawdepth: BlastDoors
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb {}
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Damageable
+    damageModifierSet: Wood
+    damageContainer: Inorganic
+  - type: Destructible
+    thresholds:
+    - trigger:
+        !type:DamageTrigger
+        damage: 60
+      behaviors:
+      - !type:SpawnEntitiesBehavior
+        spawn:
+          MaterialWoodPlank1:
+            min: 3
+            max: 3
+      - !type:DoActsBehavior
+        acts: [ "Destruction" ]
+  - type: AtmosExposed
+  
+#Regular Barricade
+- type: entity
+  id: Barricade
+  parent: BaseBarricade
+  components:
+  - type: Construction
+    graph: BarricadeGraph
+    node: barricadefull
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: 1
+  - type: Occluder #Wood isn't transparent
+
+#Structure-Mounted Barricade
+- type: entity
+  id: BarricadeBlock
+  parent: Barricade
+  components:
+  - type: Sprite
+    sprite: Structures/barricades.rsi
+    state: barricade
+
+#Directional Barricade
+- type: entity
+  id: BarricadeDirectional
+  parent: BaseBarricade
+  placement:
+    mode: SnapgridCenter
+#A bunch of this is taken straight from dirwindows and I might have fucked something up. Probably not though
+  components:
+  - type: Sprite
+    sprite: Structures/barricades.rsi
+    state: barricade_directional
+  - type: Physics
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape:
+          !type:PhysShapeAabb
+          bounds: "-0.49,-0.39,0.49,-0.36"
+        mask:
+        - FullTileMask
+        layer:
+        - WallLayer
+  - type: Tag
+    tags:
+    - Wooden
+  - type: Flammable
+    fireSpread: true
+    damage:
+      types:
+        Heat: 1 #per second, scales with number of fire 'stacks'
+  - type: Appearance
+  - type: FireVisuals
+    sprite: Effects/fire.rsi
+    normalState: 1
