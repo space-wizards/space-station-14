@@ -30,17 +30,16 @@ namespace Content.Client.Storage
 
             if (_window == null)
             {
-                _window = new StorageWindow(EntMan)
-                {
-                    Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName
-                };
+                // TODO: This is a bit of a mess but storagecomponent got moved to shared and cleaned up a bit.
+                var controller = IoCManager.Resolve<IUserInterfaceManager>().GetUIController<StorageUIController>();
+                _window = controller.EnsureStorageWindow(Owner);
+                _window.Title = EntMan.GetComponent<MetaDataComponent>(Owner).EntityName;
 
                 _window.EntityList.GenerateItem += _window.GenerateButton;
                 _window.EntityList.ItemPressed += InteractWithItem;
                 _window.StorageContainerButton.OnPressed += TouchedContainerButton;
 
                 _window.OnClose += Close;
-                _window.OpenCenteredLeft();
 
                 if (EntMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
                 {
@@ -115,14 +114,13 @@ namespace Content.Client.Storage
 
             if (_window != null)
             {
+                _window.Orphan();
                 _window.EntityList.GenerateItem -= _window.GenerateButton;
                 _window.EntityList.ItemPressed -= InteractWithItem;
                 _window.StorageContainerButton.OnPressed -= TouchedContainerButton;
                 _window.OnClose -= Close;
+                _window = null;
             }
-
-            _window?.Dispose();
-            _window = null;
         }
     }
 }

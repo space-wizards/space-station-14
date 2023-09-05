@@ -29,7 +29,6 @@ namespace Content.Server.Construction
         [Dependency] private readonly ActionBlockerSystem _actionBlocker = default!;
         [Dependency] private readonly SharedHandsSystem _handsSystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookupSystem = default!;
-        [Dependency] private readonly StorageSystem _storageSystem = default!;
 
         // --- WARNING! LEGACY CODE AHEAD! ---
         // This entire file contains the legacy code for initial construction.
@@ -210,10 +209,7 @@ namespace Content.Server.Construction
                             // Dump out any stored entities in used entity
                             if (TryComp<StorageComponent>(entity, out var storage))
                             {
-                                foreach (var storedEntity in storage.Container.ContainedEntities.ToArray())
-                                {
-                                    _storageSystem.RemoveAndDrop(entity, storedEntity, storage);
-                                }
+                                _container.EmptyContainer(storage.Container);
                             }
 
                             if (string.IsNullOrEmpty(arbitraryStep.Store))

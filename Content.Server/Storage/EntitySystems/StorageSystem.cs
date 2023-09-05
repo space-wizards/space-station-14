@@ -23,13 +23,13 @@ public sealed partial class StorageSystem : SharedStorageSystem
     public override void Initialize()
     {
         base.Initialize();
-        SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddOpenUiVerb);
+        SubscribeLocalEvent<StorageComponent, GetVerbsEvent<ActivationVerb>>(AddUiVerb);
         SubscribeLocalEvent<StorageComponent, BoundUIClosedEvent>(OnBoundUIClosed);
 
         SubscribeLocalEvent<StorageFillComponent, MapInitEvent>(OnStorageFillMapInit);
     }
 
-    private void AddOpenUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
+    private void AddUiVerb(EntityUid uid, StorageComponent component, GetVerbsEvent<ActivationVerb> args)
     {
         var silent = false;
         if (!args.CanAccess || !args.CanInteract || TryComp<LockComponent>(uid, out var lockComponent) && lockComponent.Locked)
@@ -52,7 +52,17 @@ public sealed partial class StorageSystem : SharedStorageSystem
 
         ActivationVerb verb = new()
         {
-            Act = () => OpenStorageUI(uid, args.User, component, silent)
+            Act = () =>
+            {
+                if (uiOpen)
+                {
+                    _uiSystem.TryClose(uid, StorageComponent.StorageUiKey.Key, actor.PlayerSession);
+                }
+                else
+                {
+                    OpenStorageUI(uid, args.User, component, silent);
+                }
+            }
         };
         if (uiOpen)
         {

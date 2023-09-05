@@ -7,7 +7,10 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
+    /// <summary>
+    /// Handles generic storage with window, such as backpacks.
+    /// </summary>
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
     public sealed partial class StorageComponent : Component
     {
         // TODO: This fucking sucks
@@ -17,8 +20,7 @@ namespace Content.Shared.Storage
         [ViewVariables]
         public Container Container = default!;
 
-        public readonly Dictionary<EntityUid, int> SizeCache = new();
-
+        // TODO: Make area insert its own component.
         [DataField("quickInsert")]
         public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
 
@@ -31,27 +33,53 @@ namespace Content.Shared.Storage
         [DataField("areaInsertRadius")]
         public int AreaInsertRadius = 1;
 
+        /// <summary>
+        /// Whitelist for entities that can go into the storage.
+        /// </summary>
         [DataField("whitelist")]
         public EntityWhitelist? Whitelist;
 
+        /// <summary>
+        /// Blacklist for entities that can go into storage.
+        /// </summary>
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist;
 
+        /// <summary>
+        /// How much storage is currently being used by contained entities.
+        /// </summary>
         [ViewVariables, DataField("storageUsed"), AutoNetworkedField]
         public int StorageUsed;
 
+        /// <summary>
+        /// Maximum capacity for storage.
+        /// </summary>
         [DataField("capacity"), AutoNetworkedField]
         public int StorageCapacityMax = 10000;
 
-        [DataField("storageOpenSound")]
-        public SoundSpecifier? StorageOpenSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
-
+        /// <summary>
+        /// Sound played whenever an entity is inserted into storage.
+        /// </summary>
         [DataField("storageInsertSound")]
-        public SoundSpecifier? StorageInsertSound { get; set; } = new SoundCollectionSpecifier("storageRustle");
+        public SoundSpecifier? StorageInsertSound = new SoundCollectionSpecifier("storageRustle");
 
-        [DataField("storageRemoveSound")] public SoundSpecifier? StorageRemoveSound;
+        /// <summary>
+        /// Sound played whenever an entity is removed from storage.
+        /// </summary>
+        [DataField("storageRemoveSound")]
+        public SoundSpecifier? StorageRemoveSound;
 
-        [DataField("storageCloseSound")] public SoundSpecifier? StorageCloseSound;
+        /// <summary>
+        /// Sound played whenever the storage window is opened.
+        /// </summary>
+        [DataField("storageOpenSound")]
+        public SoundSpecifier? StorageOpenSound = new SoundCollectionSpecifier("storageRustle");
+
+        /// <summary>
+        /// Sound played whenever the storage window is closed.
+        /// </summary>
+        [DataField("storageCloseSound")]
+        public SoundSpecifier? StorageCloseSound;
 
         [Serializable, NetSerializable]
         public sealed class StorageInsertItemMessage : BoundUserInterfaceMessage

@@ -19,7 +19,7 @@ namespace Content.Client.Storage.UI
     /// <summary>
     /// GUI class for client storage component
     /// </summary>
-    public sealed class StorageWindow : DefaultWindow
+    public sealed class StorageWindow : FancyWindow
     {
         private readonly IEntityManager _entityManager;
 
@@ -42,7 +42,7 @@ namespace Content.Client.Storage.UI
                 MouseFilter = MouseFilterMode.Pass,
             };
 
-            Contents.AddChild(StorageContainerButton);
+            ContentsContainer.AddChild(StorageContainerButton);
 
             var innerContainerButton = new PanelContainer
             {
@@ -55,6 +55,7 @@ namespace Content.Client.Storage.UI
             {
                 Orientation = LayoutOrientation.Vertical,
                 MouseFilter = MouseFilterMode.Ignore,
+                Margin = new Thickness(5),
             };
 
             StorageContainerButton.AddChild(vBox);
