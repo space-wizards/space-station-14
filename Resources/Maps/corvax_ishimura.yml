@@ -49747,13 +49747,6 @@ entities:
     - pos: 28.012087,-0.31451952
       parent: 89
       type: Transform
-- proto: ClothingHandsGlovesAerostatic
-  entities:
-  - uid: 10380
-    components:
-    - pos: -19.437286,27.58992
-      parent: 89
-      type: Transform
 - proto: ClothingHandsGlovesBoxingBlue
   entities:
   - uid: 7449
@@ -49766,6 +49759,11 @@ entities:
   - uid: 7749
     components:
     - pos: -5.452837,46.534424
+      parent: 89
+      type: Transform
+  - uid: 10380
+    components:
+    - pos: -19.437286,27.58992
       parent: 89
       type: Transform
 - proto: ClothingHandsGlovesColorBlue
@@ -50113,13 +50111,6 @@ entities:
     - pos: 33.025974,20.611238
       parent: 89
       type: Transform
-- proto: ClothingOuterAerostaticBomberJacket
-  entities:
-  - uid: 10382
-    components:
-    - pos: -19.437286,28.49617
-      parent: 89
-      type: Transform
 - proto: ClothingOuterArmorRiot
   entities:
   - uid: 1048
@@ -50230,6 +50221,11 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
+  - uid: 10382
+    components:
+    - pos: -19.437286,28.49617
+      parent: 89
+      type: Transform
   - uid: 14034
     components:
     - pos: 21.516169,28.729609
@@ -50247,7 +50243,7 @@ entities:
     - pos: -34.433907,24.100704
       parent: 89
       type: Transform
-- proto: ClothingShoesAerostatic
+- proto: ClothingShoesBootsSalvage
   entities:
   - uid: 10381
     components:
@@ -50438,15 +50434,13 @@ entities:
     - canCollide: False
       type: Physics
     - type: InsideEntityStorage
-- proto: ClothingUniformJumpsuitAerostatic
+- proto: ClothingUniformJumpsuitChemistry
   entities:
   - uid: 10383
     components:
     - pos: -19.499786,29.230545
       parent: 89
       type: Transform
-- proto: ClothingUniformJumpsuitChemistry
-  entities:
   - uid: 722
     components:
     - flags: InContainer
