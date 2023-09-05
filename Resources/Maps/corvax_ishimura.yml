@@ -50064,8 +50064,6 @@ entities:
     - pos: 37.506054,-12.610011
       parent: 89
       type: Transform
-- proto: ClothingNeckHorrific
-  entities:
   - uid: 10312
     components:
     - pos: -39.61603,28.938139
