@@ -495,7 +495,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
                 else
                 {
-                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall);
+                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall, "Central Command");
                 }
                 
                 break;
