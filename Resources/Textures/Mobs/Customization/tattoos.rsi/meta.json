@@ -46,6 +46,22 @@
     {
       "name": "tattoo_eye_l",
       "directions": 4
+    },
+    {
+      "name": "prostetic_hand",
+      "directions": 4
+    },
+    {
+      "name": "prostetic_hand_r",
+      "directions": 4
+    },
+    {
+      "name": "prostetic_hand_shoulder",
+      "directions": 4
+    },
+    {
+      "name": "prostetic_hand_shoulder_r",
+      "directions": 4
     }
   ]
 }
