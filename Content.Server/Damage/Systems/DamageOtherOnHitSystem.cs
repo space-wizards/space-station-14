@@ -9,6 +9,7 @@ using Content.Shared.Database;
 using Content.Shared.Effects;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Throwing;
+using Content.Shared.SS220.Damage;
 using Robust.Shared.Physics.Components;
 using Robust.Shared.Physics.Systems;
 using Robust.Shared.Player;
@@ -33,7 +34,15 @@ namespace Content.Server.Damage.Systems
 
         private void OnDoHit(EntityUid uid, DamageOtherOnHitComponent component, ThrowDoHitEvent args)
         {
+            // SS220-Stunbaton-rework begin
+            var hitEv = new GetDamageOtherOnHitEvent(uid, args.Target, component.Damage, component.IgnoreResistances);
+            RaiseLocalEvent(uid, hitEv);
+
+            if (hitEv.Handled)
+                return;
+
             var dmg = _damageable.TryChangeDamage(args.Target, component.Damage, component.IgnoreResistances, origin: args.Component.Thrower);
+            // SS220-Stunbaton-rework end
 
             // Log damage only for mobs. Useful for when people throw spears at each other, but also avoids log-spam when explosions send glass shards flying.
             if (dmg != null && HasComp<MobStateComponent>(args.Target))

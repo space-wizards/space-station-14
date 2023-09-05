@@ -11,6 +11,7 @@ using Content.Shared.Item;
 using Content.Shared.Popups;
 using Content.Shared.Stunnable;
 using Content.Shared.Toggleable;
+using Content.Shared.Weapons.Melee.Events;
 using Robust.Shared.Audio;
 using Robust.Shared.Player;
 
@@ -29,17 +30,18 @@ namespace Content.Server.Stunnable.Systems
             SubscribeLocalEvent<StunbatonComponent, UseInHandEvent>(OnUseInHand);
             SubscribeLocalEvent<StunbatonComponent, ExaminedEvent>(OnExamined);
             SubscribeLocalEvent<StunbatonComponent, SolutionChangedEvent>(OnSolutionChange);
-            SubscribeLocalEvent<StunbatonComponent, StaminaDamageOnHitAttemptEvent>(OnStaminaHitAttempt);
+            SubscribeLocalEvent<StunbatonComponent, GetHeavyDamageModifierEvent>(MeleeAttackRateEvent);
         }
 
-        private void OnStaminaHitAttempt(EntityUid uid, StunbatonComponent component, ref StaminaDamageOnHitAttemptEvent args)
+        // SS220-Stunbaton-rework begin
+        private void MeleeAttackRateEvent(EntityUid uid, StunbatonComponent component, ref GetHeavyDamageModifierEvent args)
         {
+            args.DamageModifier=1;
+
             if (!component.Activated ||
-                !TryComp<BatteryComponent>(uid, out var battery) || !battery.TryUseCharge(component.EnergyPerUse))
-            {
-                args.Cancelled = true;
+                 !TryComp<BatteryComponent>(uid, out var battery) || !battery.TryUseCharge(component.EnergyPerUse))
                 return;
-            }
+        // SS220-Stunbaton-rework end
 
             if (battery.CurrentCharge < component.EnergyPerUse)
             {
@@ -47,6 +49,7 @@ namespace Content.Server.Stunnable.Systems
                 TurnOff(uid, component);
             }
         }
+
 
         private void OnUseInHand(EntityUid uid, StunbatonComponent comp, UseInHandEvent args)
         {

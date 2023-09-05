@@ -15,15 +15,40 @@
     damage:
       types:
         Blunt: 7
+        Stamina: 55
     bluntStaminaDamageFactor: 2.0
     angle: 60
     animation: WeaponArcSlash
+    soundHit:
+      path: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnHit
-    damage: 55
+    damage: 0
     sound: /Audio/Weapons/egloves.ogg
   - type: StaminaDamageOnCollide
-    damage: 55
+    damage: 0
     sound: /Audio/Weapons/egloves.ogg
+    # SS220-Stunbaton-rework throwing angles
+  - type: ThrowingAngle
+    angle: 225
+  - type: Fixtures
+    fixtures:
+      fix1:
+        shape: !type:PolygonShape
+          vertices:
+            - -0.40,-0.30
+            - -0.30,-0.40
+            - 0.40,0.30
+            - 0.30,0.40
+        density: 20
+        mask:
+        - ItemMask
+        restitution: 0.3
+        friction: 0.2
+  - type: DamageOtherOnHit
+    damage:
+      types:
+        Blunt: 7
+        Stamina: 55
   - type: Battery
     maxCharge: 1000
     startingCharge: 1000
