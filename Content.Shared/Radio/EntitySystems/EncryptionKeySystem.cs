@@ -212,6 +212,8 @@ public sealed partial class EncryptionKeySystem : EntitySystem
         foreach (var id in channels)
         {
             proto = _protoManager.Index<RadioChannelPrototype>(id);
+            if (proto.Hidden)
+                continue;
 
             var key = id == SharedChatSystem.CommonChannel
                 ? SharedChatSystem.RadioCommonPrefix.ToString()
