@@ -490,12 +490,12 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 // Check that shuttle is called or not. We should dispatch only announcement if it's already called
                 if (_roundEndSystem.IsRoundEndRequested())
                 {
-                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString("nuke-ops-no-more-threat-announcement"),
+                    _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(component.RoundEndTextAnnouncement),
                         colorOverride: Color.Gold);
                 }
                 else
                 {
-                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, "nuke-ops-no-more-threat-announcement-shuttle-call");
+                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall);
                 }
                 
                 break;

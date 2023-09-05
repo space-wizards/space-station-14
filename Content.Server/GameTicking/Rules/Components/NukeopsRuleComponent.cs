@@ -31,11 +31,22 @@ public sealed partial class NukeopsRuleComponent : Component
     public int MaxOperatives = 5;
 
     /// <summary>
-    /// Whether or not all of the nuclear operatives dying will end the round. Used by LoneOpsSpawn event.
-    /// 
+    /// What will happen if all of the nuclear operatives will die. Used by LoneOpsSpawn event.
     /// </summary>
     [DataField("roundEndBehavior")]
     public RoundEndBehavior RoundEndBehavior = RoundEndBehavior.ShuttleCall;
+
+    /// <summary>
+    /// Text for shuttle call if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("roundEndTextShuttleCall")]
+    public string RoundEndTextShuttleCall = "nuke-ops-no-more-threat-announcement-shuttle-call";
+
+    /// <summary>
+    /// Text for announcement if RoundEndBehavior is ShuttleCall. Used if shuttle is already called
+    /// </summary>
+    [DataField("roundEndTextAnnouncement")]
+    public string RoundEndTextAnnouncement = "nuke-ops-no-more-threat-announcement";
 
     /// <summary>
     /// Whether or not to spawn the nuclear operative outpost. Used by LoneOpsSpawn event.
