@@ -48,7 +48,7 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitAtmos
+        - to: modsuitAtmos
           steps:
             - tag: AtmosModBoots
               name: An Atmos suit
@@ -80,7 +80,7 @@
                 sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitAtmos
+    - node: modsuitAtmos
       entity: ClothingOuterModsuitAtmos
 
 - type: constructionGraph
@@ -89,131 +89,40 @@
   graph:
     - node: start
       edges:
-        - to: ModsuitMedical
+        - to: modsuitMedical
           steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
             - tag: MedicalModBoots
               name: A Medical suit
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Boots
               doAfter: 1
             - tag: MedicalModGauntlets
               name: Medical Gauntlets
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Gauntlets
               doAfter: 1
             - tag: MedicalModChestplate
               name: Medical Chestplate
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Chestplate
               doAfter: 1
             - tag: MedicalModHelmet
               name: Medical Helmet
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Helmet
               doAfter: 1
             - tag: MedicalModHardsuitcore
               name: Medical hardsuit core
               icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularmedical.rsi
+                sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
                 state: Hardsuit-core
               doAfter: 1
-    - node: ModsuitMedical
+    - node: modsuitMedical
       entity: ClothingOuterModsuitMedical
-
-- type: constructionGraph
-  id: ModsuitRND
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: ModsuitRND
-          steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
-            - tag: RNDModBoots
-              name: A RND suit
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Boots
-              doAfter: 1
-            - tag: RNDModGauntlets
-              name: RND Gauntlets
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Gauntlets
-              doAfter: 1
-            - tag: RNDModChestplate
-              name: RND Chestplate
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Chestplate
-              doAfter: 1
-            - tag: RNDModHelmet
-              name: RND Helmet
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Helmet
-              doAfter: 1
-            - tag: RNDModHardsuitcore
-              name: RND hardsuit core
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/regularrnd.rsi
-                state: Hardsuit-core
-              doAfter: 1
-    - node: ModsuitRND
-      entity: ClothingOuterModsuitRND
-
-- type: constructionGraph
-  id: ModsuitEngineer
-  start: start
-  graph:
-    - node: start
-      edges:
-        - to: ModsuitEngineer
-          steps:
-            - material: Cloth
-              amount: 5
-              doAfter: 1
-            - tag: EngineerModBoots
-              name: An Engineer suit
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Boots
-              doAfter: 1
-            - tag: EngineerModGauntlets
-              name: Engineer Gauntlets
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Gauntlets
-              doAfter: 1
-            - tag: EngineerModChestplate
-              name: Engineer Chestplate
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Chestplate
-              doAfter: 1
-            - tag: EngineerModHelmet
-              name: Engineer Helmet
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Helmet
-              doAfter: 1
-            - tag: EngineerModHardsuitcore
-              name: Engineer hardsuit core
-              icon:
-                sprite: Clothing/Objects/Specific/Modsuits/Construction/engineering.rsi
-                state: Hardsuit-core
-              doAfter: 1
-    - node: ModsuitEngineer
-      entity: ClothingOuterModsuitEngineer
 
 - type: constructionGraph
   id: ModsuitRND

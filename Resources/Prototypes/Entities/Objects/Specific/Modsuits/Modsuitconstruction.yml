@@ -1,4 +1,4 @@
-- type: entity # оболочки хыть хыть
+- type: entity # оболочки
   parent: BaseItem
   id: FullMetalJacket
   name: FullMetalJacket #цельнометаллическая оболочка
@@ -68,6 +68,22 @@
     sprite: Objects/Specific/Modsuits/Construction/armor.rsi
     state: workjacket
 # Оболочки конец
+
+- type: Tag
+  id: AtmosModBoots
+
+- type: Tag
+  id: AtmosModChestplate
+
+- type: Tag
+  id: AtmosModGauntlets
+
+- type: Tag
+  id: AtmosModHardsuitcore
+
+- type: Tag
+  id: AtmosModHelmet
+
 - type: entity
   parent: BaseItem
   id: AtmosModBoots
@@ -80,7 +96,8 @@
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: boots
   - type: Tag
-    id: AtmosModBoots
+    tags:
+    - AtmosModBoots
 
 - type: entity
   parent: BaseItem
@@ -94,7 +111,8 @@
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Chestplate
   - type: Tag
-    id: AtmosModChestplate
+    tags:
+    - AtmosModChestplate
     
 - type: entity
   parent: BaseItem
@@ -108,7 +126,8 @@
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Gauntlets
   - type: Tag
-    id: AtmosModGauntlets
+    tags:
+    - AtmosModGauntlets
 
 - type: entity
   parent: BaseItem
@@ -122,7 +141,8 @@
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Hardsuit-core
   - type: Tag
-    id: AtmosModHardsuitcore
+    tags:
+    - AtmosModHardsuitcore
 
 - type: entity
   parent: BaseItem
@@ -136,7 +156,8 @@
     sprite: Objects/Specific/Modsuits/Construction/atmospheric_tech.rsi
     state: Helmet
   - type: Tag
-    id: AtmosModHelmet
+    tags:
+    - AtmosModHelmet
 
 - type: entity
   parent: BaseItem
@@ -521,6 +542,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
     state: boots
+  - type: Tag
+    tags:
+    - MedicalModBoots
 
 - type: entity
   parent: BaseItem
@@ -533,6 +557,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
     state: Chestplate
+  - type: Tag
+    tags:
+    - MedicalModBoots
 
 - type: entity
   parent: BaseItem
@@ -545,6 +572,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
     state: Gauntlets
+  - type: Tag
+    tags:
+    - MedicalModBoots
 
 - type: entity
   parent: BaseItem
@@ -557,6 +587,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
     state: Hardsuit-core
+  - type: Tag
+    tags:
+    - MedicalModBoots
 
 - type: entity
   parent: BaseItem
@@ -569,6 +602,9 @@
   - type: Sprite
     sprite: Objects/Specific/Modsuits/Construction/regularmedical.rsi
     state: Helmet
+  - type: Tag
+    tags:
+    - MedicalModBoots
 
 - type: entity
   parent: BaseItem

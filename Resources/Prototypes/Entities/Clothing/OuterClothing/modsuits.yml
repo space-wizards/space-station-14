@@ -137,6 +137,9 @@
     sprintModifier: 0.75 #0.7
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitAtmos
+  - type: Construction
+    graph: ModsuitAtmos
+    node: modsuitAtmos
 
 - type: entity
   parent: ClothingOuterModsuitEngineeringPlus
@@ -203,6 +206,9 @@
     autoRot: true
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetModsuitMedical
+  - type: Construction
+    graph: ModsuitMedical
+    node: modsuitMedical
 
 - type: entity
   parent: ClothingOuterModsuitEngineering
