@@ -80,6 +80,9 @@
         clownedon: # Not 'creampied' bc I can already see Skyrat complaining about conflicts.
           True: {visible: true}
           False: {visible: false}
+  - type: RotationVisuals
+    defaultRotation: 90
+    horizontalRotation: 90
   - type: HumanoidAppearance
     species: Human
   - type: SlowOnDamage
