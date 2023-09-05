@@ -1,11 +1,4 @@
 Entries:
-- author: Flareguy
-  changes:
-  - {message: Buffed the E-Pen to do 18 damage per hit., type: Tweak}
-  - {message: The Jetpack & Energy Pen in the syndicate uplink now only cost 2tc.,
-    type: Tweak}
-  id: 4270
-  time: '2023-07-17T19:37:11.0000000+00:00'
 - author: deltanedas
   changes:
   - {message: Fixed nukies' nuke being anchored., type: Fix}
@@ -2997,3 +2990,9 @@ Entries:
       bugs.', type: Fix}
   id: 4769
   time: '2023-09-05T16:20:55.0000000+00:00'
+- author: Slava0135
+  changes:
+  - {message: 'Gas tanks now have valves, which can be used to vent their contents.',
+    type: Add}
+  id: 4770
+  time: '2023-09-05T17:20:05.0000000+00:00'
