@@ -104,7 +104,7 @@ namespace Content.Server.GameTicking
             RaiseLocalEvent(new RulePlayerJobsAssignedEvent(assignedJobs.Keys.Select(x => _playerManager.GetSessionByUserId(x)).ToArray(), profiles, force));
         }
 
-        private void SpawnPlayer(IPlayerSession player, EntityUid station, string? jobId = null, bool lateJoin = true, bool silent = false)
+        private void SpawnPlayer(IPlayerSession player, EntityUid station, string? jobId = null, bool silent = false, bool lateJoin = true)
         {
             var character = GetPlayerProfile(player);
 
@@ -193,7 +193,7 @@ namespace Content.Server.GameTicking
 
             _playTimeTrackings.PlayerRolesChanged(player);
 
-            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character);
+            var mobMaybe = _stationSpawning.SpawnPlayerCharacterOnStation(station, job, character, lateJoin: lateJoin);
             DebugTools.AssertNotNull(mobMaybe);
             var mob = mobMaybe!.Value;
 
@@ -277,7 +277,7 @@ namespace Content.Server.GameTicking
         /// <param name="station">The station they're spawning on</param>
         /// <param name="jobId">An optional job for them to spawn as</param>
         /// <param name="silent">Whether or not the player should be greeted upon joining</param>
-        public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null, bool silent = false)
+        public void MakeJoinGame(IPlayerSession player, EntityUid station, string? jobId = null, bool silent = false, bool latejoin = true)
         {
             if (!_playerGameStatuses.ContainsKey(player.UserId))
                 return;
@@ -285,7 +285,7 @@ namespace Content.Server.GameTicking
             if (!_userDb.IsLoadComplete(player))
                 return;
 
-            SpawnPlayer(player, station, jobId, silent: silent);
+            SpawnPlayer(player, station, jobId, lateJoin: latejoin, silent: silent); //SS220 deathmatch-no-latejoin-spawnpoints
         }
 
         /// <summary>

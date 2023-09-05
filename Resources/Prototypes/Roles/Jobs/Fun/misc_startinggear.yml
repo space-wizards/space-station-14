@@ -308,7 +308,11 @@
     jumpsuit: ClothingUniformJumpsuitColorWhite
     shoes: ClothingShoesBootsJack
     ears: ClothingHeadsetGrey
-    gloves: ClothingHandsGlovesFingerless
+    #SS220 deathmatch loadout begin
+    gloves: ClothingHandsGlovesCombat
+    id: CaptainPDA
+    back: ClothingBackpackFilled
+    #SS220 deathmatch loadout end
   innerclothingskirt: ClothingUniformJumpskirtColorWhite
   inhand:
     left hand: WeaponMeleeToolboxRobust

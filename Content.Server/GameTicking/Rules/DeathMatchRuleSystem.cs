@@ -78,6 +78,7 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             _respawn.AddToTracker(ev.Player.UserId, uid, tracker);
 
             _point.EnsurePlayer(ev.Player.UserId, uid, point);
+            AddUplink(ev.Player);
 
             ev.Handled = true;
             break;
@@ -93,9 +94,6 @@ public sealed class DeathMatchRuleSystem : GameRuleSystem<DeathMatchRuleComponen
             if (!GameTicker.IsGameRuleActive(uid, rule))
                 continue;
             _respawn.AddToTracker(ev.Mob, uid, tracker);
-
-            if (ev.LateJoin)
-                AddUplink(ev.Player);
         }
     }
 

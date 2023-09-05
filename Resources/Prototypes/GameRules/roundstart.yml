@@ -33,6 +33,7 @@
   - type: PointManager
   - type: RespawnDeadRule
   - type: RespawnTracker
+    respawnAsLatejoin: false
     respawnDelay: 5
 
 - type: entity

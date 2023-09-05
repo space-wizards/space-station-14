@@ -62,7 +62,7 @@
   description: death-match-description
   maxPlayers: 15
   showInVote: true
-  supportedMaps: DeathMatchMapPool
+  #supportedMaps: DeathMatchMapPool #SS220 DeathMatch on default maps
   rules:
     - DeathMatch31
 

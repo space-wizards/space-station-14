@@ -85,7 +85,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
 
                 if (session.GetMind() is { } mind && TryComp<MindComponent>(mind, out var mindComp) && mindComp.OwnedEntity.HasValue)
                     QueueDel(mindComp.OwnedEntity.Value);
-                GameTicker.MakeJoinGame(session, station, silent: true);
+                GameTicker.MakeJoinGame(session, station, silent: true, latejoin: tracker.RespawnAsLatejoin);
                 tracker.RespawnQueue.Remove(player);
             }
         }
@@ -130,7 +130,7 @@ public sealed class RespawnRuleSystem : GameRuleSystem<RespawnDeadRuleComponent>
                 return false;
 
             QueueDel(player);
-            GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true);
+            GameTicker.MakeJoinGame(actor.PlayerSession, station, silent: true, latejoin: component.RespawnAsLatejoin);
             return false;
         }
 

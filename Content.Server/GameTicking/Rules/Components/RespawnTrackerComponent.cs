@@ -27,4 +27,8 @@ public sealed partial class RespawnTrackerComponent : Component
     /// </summary>
     [DataField("respawnQueue")]
     public Dictionary<NetUserId, TimeSpan> RespawnQueue = new();
+
+    //SS220 deathmatch-no-latejoin-spawnpoints
+    [DataField("respawnAsLatejoin")]
+    public bool RespawnAsLatejoin = true;
 }

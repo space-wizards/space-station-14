@@ -32,12 +32,12 @@ public sealed class SpawnPointSystem : EntitySystem
             if (args.Station != null && _stationSystem.GetOwningStation(uid, xform) != args.Station)
                 continue;
 
-            if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin)
+            if (_gameTicker.RunLevel == GameRunLevel.InRound && spawnPoint.SpawnType == SpawnPointType.LateJoin && args.AllowLatejoinSpawnpoints)
             {
                 possiblePositions.Add(xform.Coordinates);
             }
 
-            if (_gameTicker.RunLevel != GameRunLevel.InRound &&
+            if ((_gameTicker.RunLevel != GameRunLevel.InRound || !args.AllowLatejoinSpawnpoints) &&
                 spawnPoint.SpawnType == SpawnPointType.Job &&
                 (args.Job == null || spawnPoint.Job?.ID == args.Job.PrototypeId))
             {
