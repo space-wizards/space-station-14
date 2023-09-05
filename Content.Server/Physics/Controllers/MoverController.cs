@@ -232,6 +232,29 @@ namespace Content.Server.Physics.Controllers
             component.CurTickBraking += brake * fraction;
         }
 
+        /// <summary>
+        /// Helper function to extrapolate max velocity for a given Vector2 (really, its angle) and shuttle.
+        /// </summary>
+        private Vector2 ObtainMaxVel(Vector2 vel, ShuttleComponent shuttle)
+        {
+            if (vel.Length() == 0f)
+                return Vector2.Zero;
+
+            // this math could PROBABLY be simplified for performance
+            // probably
+            //             __________________________________
+            //            / /    __   __ \2   /    __   __ \2
+            // O = I : _ /  |I * | 1/H | |  + |I * |  0  | |
+            //          V   \    |_ 0 _| /    \    |_1/V_| /
+
+            var horizIndex = vel.X > 0 ? 1 : 3; // east else west
+            var vertIndex = vel.Y > 0 ? 2 : 0; // north else south
+            var horizComp = MathF.Pow(Vector2.Dot(vel, new (shuttle.BaseLinearThrust[horizIndex] / shuttle.LinearThrust[horizIndex], 0f)), 2);
+            var vertComp = MathF.Pow(Vector2.Dot(vel, new (0f, shuttle.BaseLinearThrust[vertIndex] / shuttle.LinearThrust[vertIndex])), 2);
+
+            return shuttle.BaseMaxLinearVelocity * vel * MathF.ReciprocalSqrtEstimate(horizComp + vertComp);
+        }
+
         private void HandleShuttleMovement(float frameTime)
         {
             var newPilots = new Dictionary<EntityUid, (ShuttleComponent Shuttle, List<(EntityUid PilotUid, PilotComponent Pilot, InputMoverComponent Mover, TransformComponent ConsoleXform)>)>();
@@ -478,19 +501,27 @@ namespace Content.Server.Physics.Controllers
                         totalForce += impulse;
                     }
 
-                    totalForce = shuttleNorthAngle.RotateVec(totalForce);
-
                     var forceMul = frameTime * body.InvMass;
-                    var maxVelocity = (ShuttleComponent.MaxLinearVelocity - body.LinearVelocity.Length()) / forceMul;
 
-                    if (maxVelocity != 0f)
-                    {
-                        // Don't overshoot
-                        if (totalForce.Length() > maxVelocity)
-                            totalForce = totalForce.Normalized() * maxVelocity;
+                    var localVel = (-shuttleNorthAngle).RotateVec(body.LinearVelocity);
+                    var maxVelocity = ObtainMaxVel(localVel, shuttle); // max for current travel dir
+                    var maxWishVelocity = ObtainMaxVel(totalForce, shuttle);
+                    var properAccel = (maxWishVelocity - localVel) / forceMul;
 
-                        PhysicsSystem.ApplyForce(shuttleUid, totalForce, body: body);
-                    }
+                    var finalForce = Vector2.Dot(totalForce, properAccel.Normalized()) * properAccel.Normalized();
+
+                    if (localVel.Length() >= maxVelocity.Length() && Vector2.Dot(totalForce, localVel) > 0f)
+                        finalForce = Vector2.Zero; // burn would be faster if used as such
+
+                    if (finalForce.Length() > properAccel.Length())
+                        finalForce = properAccel; // don't overshoot
+
+                    //Logger.Info($"shuttle: maxVelocity {maxVelocity} totalForce {totalForce} finalForce {finalForce} forceMul {forceMul} properAccel {properAccel}");
+
+                    finalForce = shuttleNorthAngle.RotateVec(finalForce);
+
+                    if (finalForce.Length() > 0f)
+                        PhysicsSystem.ApplyForce(shuttleUid, finalForce, body: body);
                 }
 
                 if (MathHelper.CloseTo(angularInput, 0f))

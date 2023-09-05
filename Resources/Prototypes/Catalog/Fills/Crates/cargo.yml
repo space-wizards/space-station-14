@@ -1,0 +1,7 @@
+- type: entity
+  id: CrateCargoLuxuryHardsuit
+  parent: CratePirate
+  components:
+  - type: StorageFill
+    contents:
+    - id: ClothingOuterHardsuitLuxury

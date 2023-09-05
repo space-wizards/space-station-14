@@ -1,7 +1,7 @@
 using Content.Server.EUI;
-using Content.Server.Mind;
 using Content.Shared.Cloning;
 using Content.Shared.Eui;
+using Content.Shared.Mind;
 
 namespace Content.Server.Cloning
 {

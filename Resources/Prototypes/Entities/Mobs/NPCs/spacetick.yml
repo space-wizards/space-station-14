@@ -83,6 +83,8 @@
   - type: GhostTakeoverAvailable
   - type: ReplacementAccent
     accent: genericAggressive
+  - type: Speech
+    speechVerb: SmallMob
 
 - type: entity
   id: MobTickSalvage
