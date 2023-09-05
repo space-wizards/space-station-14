@@ -3,44 +3,41 @@ using Content.Shared.Overlays;
 using Robust.Client.Graphics;
 using System.Linq;
 
-namespace Content.Client.Overlays
+namespace Content.Client.Overlays;
+
+public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
 {
-    public sealed class ShowHealthBarsSystem : EquipmentHudSystem<ShowHealthBarsComponent>
+    [Dependency] private readonly IOverlayManager _overlayMan = default!;
+
+    private EntityHealthBarOverlay _overlay = default!;
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IOverlayManager _overlayMan = default!;
+        base.Initialize();
 
-        private EntityHealthBarOverlay _overlay = default!;
+        _overlay = new(EntityManager);
+    }
 
-        public override void Initialize()
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)
+    {
+        base.UpdateInternal(component);
+
+        foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
         {
-            base.Initialize();
-
-            _overlay = new(EntityManager);
+            _overlay.DamageContainers.Add(damageContainerId);
         }
 
-        protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthBarsComponent> component)
+        if (!_overlayMan.HasOverlay(_overlay.GetType()))
         {
-            base.UpdateInternal(component);
-
-            foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
-            {
-                if (_overlay.DamageContainers.Contains(damageContainerId))
-                {
-                    continue;
-                }
-
-                _overlay.DamageContainers.Add(damageContainerId);
-            }
-
             _overlayMan.AddOverlay(_overlay);
         }
+    }
 
-        protected override void DeactivateInternal()
-        {
-            base.DeactivateInternal();
+    protected override void DeactivateInternal()
+    {
+        base.DeactivateInternal();
 
-            _overlay.DamageContainers.Clear();
-            _overlayMan.RemoveOverlay(_overlay);
-        }
+        _overlay.DamageContainers.Clear();
+        _overlayMan.RemoveOverlay(_overlay);
     }
 }

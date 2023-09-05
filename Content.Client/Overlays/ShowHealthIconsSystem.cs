@@ -6,78 +6,71 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 using System.Linq;
 
-namespace Content.Client.Overlays
+namespace Content.Client.Overlays;
+
+public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
 {
-    public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsComponent>
+    [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
+
+    public HashSet<string> DamageContainers = new();
+
+    public override void Initialize()
     {
-        [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
-        [Dependency] private readonly IEntityManager _entManager = default!;
+        base.Initialize();
 
-        public List<string> DamageContainers = new();
+        SubscribeLocalEvent<DamageableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
 
-        public override void Initialize()
+    }
+
+    protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthIconsComponent> component)
+    {
+        base.UpdateInternal(component);
+
+        foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
         {
-            base.Initialize();
-
-            SubscribeLocalEvent<DamageableComponent, GetStatusIconsEvent>(OnGetStatusIconsEvent);
-
+            DamageContainers.Add(damageContainerId);
         }
+    }
 
-        protected override void UpdateInternal(RefreshEquipmentHudEvent<ShowHealthIconsComponent> component)
+    protected override void DeactivateInternal()
+    {
+        base.DeactivateInternal();
+
+        DamageContainers.Clear();
+    }
+
+    private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent args)
+    {
+        if (!IsActive)
+            return;
+
+        var healthIcons = DecideHealthIcon(uid, damageableComponent);
+
+        args.StatusIcons.AddRange(healthIcons);
+    }
+
+    private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid, DamageableComponent damageableComponent)
+    {
+        var result = new List<StatusIconPrototype>();
+        if (damageableComponent.DamageContainerID == null ||
+            !DamageContainers.Contains(damageableComponent.DamageContainerID))
         {
-            base.UpdateInternal(component);
-
-            foreach (var damageContainerId in component.Components.SelectMany(x => x.DamageContainers))
-            {
-                if (DamageContainers.Contains(damageContainerId))
-                {
-                    continue;
-                }
-
-                DamageContainers.Add(damageContainerId);
-            }
-        }
-
-        protected override void DeactivateInternal()
-        {
-            base.DeactivateInternal();
-
-            DamageContainers.Clear();
-        }
-
-        private void OnGetStatusIconsEvent(EntityUid uid, DamageableComponent damageableComponent, ref GetStatusIconsEvent @event)
-        {
-            if (!IsActive)
-                return;
-
-            var healthIcons = DecideHealthIcon(uid, damageableComponent);
-
-            @event.StatusIcons.AddRange(healthIcons);
-        }
-
-        private IReadOnlyList<StatusIconPrototype> DecideHealthIcon(EntityUid uid, DamageableComponent damageableComponent)
-        {
-            var result = new List<StatusIconPrototype>();
-            if (damageableComponent.DamageContainerID == null ||
-                !DamageContainers.Contains(damageableComponent.DamageContainerID))
-            {
-                return result;
-            }
-
-            if (_entManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
-                metaDataComponent.Flags.HasFlag(MetaDataFlags.InContainer))
-            {
-                return result;
-            }
-
-            // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
-            if (damageableComponent?.DamageContainerID == "Biological" &&
-                (_prototypeMan.TryIndex<StatusIconPrototype>("HealthIcon_Fine", out var healthyIcon)))
-            {
-                result.Add(healthyIcon);
-            }
-
             return result;
         }
+
+        if (EntityManager.TryGetComponent<MetaDataComponent>(uid, out var metaDataComponent) &&
+            (metaDataComponent.Flags & MetaDataFlags.InContainer) == MetaDataFlags.InContainer)
+        {
+            return result;
+        }
+
+        // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
+        if (damageableComponent?.DamageContainerID == "Biological" &&
+            _prototypeMan.TryIndex<StatusIconPrototype>("HealthIcon_Fine", out var healthyIcon))
+        {
+            result.Add(healthyIcon);
+        }
+
+        return result;
     }
 }

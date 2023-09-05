@@ -7,6 +7,7 @@ using Content.Shared.StatusIcon.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Client.Overlays;
+
 public sealed class ShowSecurityIconsSystem : EquipmentHudSystem<ShowSecurityIconsComponent>
 {
     [Dependency] private readonly IPrototypeManager _prototypeMan = default!;
