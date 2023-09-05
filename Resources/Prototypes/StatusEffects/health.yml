@@ -1,5 +1,5 @@
 - type: statusIcon
-  id: HealthIcon_Fine
+  id: HealthIconFine
   priority: 1
   icon:
     sprite: Interface/Misc/health_icons.rsi

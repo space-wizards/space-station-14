@@ -17,6 +17,9 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
     public HashSet<string> DamageContainers = new();
 
+    [ValidatePrototypeId<StatusIconPrototype>]
+    private const string HealthIconFine = "HealthIconFine";
+
     public override void Initialize()
     {
         base.Initialize();
@@ -69,7 +72,7 @@ public sealed class ShowHealthIconsSystem : EquipmentHudSystem<ShowHealthIconsCo
 
         // Here you could check health status, diseases, mind status, etc. and pick a good icon, or multiple depending on whatever.
         if (damageableComponent?.DamageContainerID == "Biological" &&
-            _prototypeMan.TryIndex<StatusIconPrototype>("HealthIcon_Fine", out var healthyIcon))
+            _prototypeMan.TryIndex<StatusIconPrototype>(HealthIconFine, out var healthyIcon))
         {
             result.Add(healthyIcon);
         }
