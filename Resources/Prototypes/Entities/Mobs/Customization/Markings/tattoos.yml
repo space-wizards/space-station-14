@@ -137,3 +137,59 @@
   sprites:
   - sprite: Mobs/Customization/tattoos.rsi
     state: tattoo_eye_l
+
+- type: marking
+  id: TatooElbowProsteticArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: prostetic_arm
+
+- type: marking
+  id: TatooElbowProsteticArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: prostetic_arm_r
+
+- type: marking
+  id: TatooShoulderProsteticArm
+  bodyPart: LArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: prostetic_arm_shoulder
+
+- type: marking
+  id: TatooShoulderProsteticArmRight
+  bodyPart: RArm
+  markingCategory: Arms
+  speciesRestriction: [Human, Dwarf]
+  coloring:
+    default:
+      type:
+        !type:TattooColoring
+      fallbackColor: "#FFFFFF"
+  sprites:
+  - sprite: Mobs/Customization/tattoos.rsi
+    state: prostetic_arm_shoulder_r

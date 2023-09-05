@@ -48,19 +48,19 @@
       "directions": 4
     },
     {
-      "name": "prostetic_hand",
+      "name": "prostetic_arm",
       "directions": 4
     },
     {
-      "name": "prostetic_hand_r",
+      "name": "prostetic_arm_r",
       "directions": 4
     },
     {
-      "name": "prostetic_hand_shoulder",
+      "name": "prostetic_arm_shoulder",
       "directions": 4
     },
     {
-      "name": "prostetic_hand_shoulder_r",
+      "name": "prostetic_arm_shoulder_r",
       "directions": 4
     }
   ]

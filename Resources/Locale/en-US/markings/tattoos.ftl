@@ -28,4 +28,14 @@ marking-TattooEyeRight = Right Eye
 marking-TattooEyeLeft-eyeleft = Left Eye
 marking-TattooEyeLeft = Left Eye
 
+marking-TatooShoulderProsteticArmRight = Right Arm Prostetic (Shoulder)
+marking-TatooShoulderProsteticArmRight-tatooshoulderprosteticarmright = Right Arm Prostetic (Shoulder)
 
+marking-TatooShoulderProsteticArm = Left Arm Prostetic (Shoulder)
+marking-TatooShoulderProsteticArm-tatooshoulderprosteticarm = Left Arm Prostetic (Shoulder)
+
+marking-TatooElbowProsteticArm = Left Arm Prostetic (Elbow)
+marking-TatooElbowProsteticArm-tatooelbowprosteticarm = Left Arm Prostetic (Elbow)
+
+marking-TatooElbowProsteticArmRight = Right Arm Prostetic (Elbow)
+marking-TatooElbowProsteticArmRight-tatooelbowprosteticarmright = Right Arm Prostetic (Elbow)
