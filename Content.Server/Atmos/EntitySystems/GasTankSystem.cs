@@ -135,16 +135,7 @@ namespace Content.Server.Atmos.EntitySystems
             {
                 if (gasTank.IsValveOpen && gasTank.Air != null && !gasTank.IsLowPressure)
                 {
-                    var removed = RemoveAirVolume(gasTank, gasTank.ValveOutputRate * TimerDelay);
-                    var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
-                    if (environment != null)
-                    {
-                        _atmosphereSystem.Merge(environment, removed);
-                    }
-                    var impulse = removed.TotalMoles * removed.Temperature;
-                    _physics.ApplyLinearImpulse(uid, _random.NextAngle().ToWorldVec() * impulse);
-                    _physics.ApplyAngularImpulse(uid, _random.NextFloat(-3f, 3f));
-                    _audioSys.PlayPvs(gasTank.RuptureSound, uid);
+                    ReleaseGas(uid, gasTank);
                 }
 
                 if (gasTank.CheckUser)
@@ -167,6 +158,20 @@ namespace Content.Server.Atmos.EntitySystems
                     UpdateUserInterface(gasTank);
                 }
             }
+        }
+
+        private void ReleaseGas(EntityUid uid, GasTankComponent component)
+        {
+            var removed = RemoveAirVolume(component, component.ValveOutputRate * TimerDelay);
+            var environment = _atmosphereSystem.GetContainingMixture(uid, false, true);
+            if (environment != null)
+            {
+                _atmosphereSystem.Merge(environment, removed);
+            }
+            var impulse = removed.TotalMoles * removed.Temperature;
+            _physics.ApplyLinearImpulse(uid, _random.NextAngle().ToWorldVec() * impulse);
+            _physics.ApplyAngularImpulse(uid, _random.NextFloat(-3f, 3f));
+            _audioSys.PlayPvs(component.RuptureSound, uid);
         }
 
         private void ToggleInternals(GasTankComponent component)
