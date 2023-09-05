@@ -76,7 +76,7 @@ namespace Content.Shared.DrawDepth
 
         Mobs = DrawDepthTag.Default + 4,
 		
-		OverMobs = DrawDepthTag.Default + 5,
+        OverMobs = DrawDepthTag.Default + 5,
 
         Doors = DrawDepthTag.Default + 6,
 
