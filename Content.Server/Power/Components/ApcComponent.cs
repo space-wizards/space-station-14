@@ -13,12 +13,12 @@ public sealed partial class ApcComponent : BaseApcNetComponent
 
     [DataField("lastChargeState")]
     public ApcChargeState LastChargeState;
-    [DataField("lastChargeStateTime", customTypeSerializer: typeof(TimeOffsetSerializer)]
+    [DataField("lastChargeStateTime", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastChargeStateTime;
 
     [DataField("lastExternalState")]
     public ApcExternalPowerState LastExternalState;
-    [DataField("lastUiUpdate", customTypeSerializer: typeof(TimeOffsetSerializer)]
+    [DataField("lastUiUpdate", customTypeSerializer: typeof(TimeOffsetSerializer))]
     public TimeSpan LastUiUpdate;
 
     [DataField("enabled")]
