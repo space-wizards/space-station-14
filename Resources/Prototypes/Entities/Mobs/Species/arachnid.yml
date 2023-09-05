@@ -1,7 +1,7 @@
 - type: entity
   save: false
   name: Urist McWeb
-  parent: BaseMobOrganic
+  parent: BaseMobSpeciesOrganic
   id: BaseMobArachnid
   abstract: true
   components:
@@ -115,12 +115,9 @@
         amount: 5
 
 - type: entity
-  save: false
-  name: Urist McFluff
-  parent: MobHumanDummy
+  parent: BaseSpeciesDummy
   id: MobArachnidDummy
   noSpawn: true
-  description: A dummy arachnid meant to be used in character setup. # Hey! It's not dumb :(
   components:
   - type: Inventory
     templateId: arachnid
