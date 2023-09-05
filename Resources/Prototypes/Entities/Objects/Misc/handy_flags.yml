@@ -1,8 +1,8 @@
 - type: entity
   parent: BaseItem
   id: BlankHandyFlag
-  name: blank handy flag
-  description: "Some piece of white cloth wound on a stick. Definitely not handy flag of France."
+  name: blank handheld flag
+  description: "Some piece of white cloth wound on a stick. Definitely not handheld flag of France."
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/blank_handy_flag.rsi
@@ -13,8 +13,8 @@
 - type: entity
   parent: BaseItem
   id: NTHandyFlag
-  name: Nanotrasen handy flag
-  description: "Glory to NT! Wait, they really made a handy flag for a corporation?"
+  name: Nanotrasen handheld flag
+  description: "Glory to NT! Wait, they really made a handheld flag for a corporation?"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/NT_handy_flag.rsi
@@ -25,7 +25,7 @@
 - type: entity
   parent: BaseItem
   id: SyndieHandyFlag
-  name: Syndicate handy flag
+  name: Syndicate handheld flag
   description: "For truly rebel patriots. Death to NT!"
   components:
   - type: Sprite
@@ -37,8 +37,8 @@
 - type: entity
   parent: BaseItem
   id: LGBTQHandyFlag
-  name: LGBTQ handy flag
-  description: "Be gay do crime handy flag"
+  name: LGBTQ handheld flag
+  description: "Be gay do crime handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
@@ -49,7 +49,7 @@
 - type: entity
   parent: BaseItem
   id: PirateHandyFlag
-  name: Pirate handy flag
+  name: Pirate handheld flag
   description: "Holding it in your hands, show these carp that you're not kidding."
   components:
   - type: Sprite
@@ -61,8 +61,8 @@
 - type: entity
   parent: BaseItem
   id: BlackHandyFlag
-  name: black handy flag
-  description: "Just black handy flag"
+  name: black handheld flag
+  description: "Just a black handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/black_handy_flag.rsi
@@ -73,8 +73,8 @@
 - type: entity
   parent: BaseItem
   id: BlueHandyFlag
-  name: blue handy flag
-  description: "Just black handy flag"
+  name: blue handheld flag
+  description: "Just a blue handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/blue_handy_flag.rsi
@@ -85,8 +85,8 @@
 - type: entity
   parent: BaseItem
   id: BrownHandyFlag
-  name: brown handy flag
-  description: "Just brown handy flag"
+  name: brown handheld flag
+  description: "Just a brown handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/brown_handy_flag.rsi
@@ -97,8 +97,8 @@
 - type: entity
   parent: BaseItem
   id: GrayHandyFlag
-  name: gray handy flag
-  description: "Just gray handy flag"
+  name: gray handheld flag
+  description: "Just a gray handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/gray_handy_flag.rsi
@@ -109,8 +109,8 @@
 - type: entity
   parent: BaseItem
   id: GreenHandyFlag
-  name: green handy flag
-  description: "Just green handy flag"
+  name: green handheld flag
+  description: "Just a green handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/green_handy_flag.rsi
@@ -121,8 +121,8 @@
 - type: entity
   parent: BaseItem
   id: OrangeHandyFlag
-  name: orange handy flag
-  description: "Just orange handy flag"
+  name: orange handheld flag
+  description: "Just a orange handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/orange_handy_flag.rsi
@@ -133,8 +133,8 @@
 - type: entity
   parent: BaseItem
   id: PurpleHandyFlag
-  name: purple handy flag
-  description: "Just purple handy flag"
+  name: purple handheld flag
+  description: "Just a purple handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/purple_handy_flag.rsi
@@ -145,8 +145,8 @@
 - type: entity
   parent: BaseItem
   id: RedHandyFlag
-  name: red handy flag
-  description: "Just red handy flag"
+  name: red handheld flag
+  description: "Just a red handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/red_handy_flag.rsi
@@ -157,8 +157,8 @@
 - type: entity
   parent: BaseItem
   id: YellowHandyFlag
-  name: yellow handy flag
-  description: "Just yellow handy flag"
+  name: yellow handheld flag
+  description: "Just a yellow handheld flag"
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/yellow_handy_flag.rsi
