@@ -110,6 +110,7 @@ namespace Content.Server.Atmos.EntitySystems
                 args.PushMarkup(Loc.GetString("comp-gas-tank-examine", ("pressure", Math.Round(component.Air?.Pressure ?? 0))));
             if (component.IsConnected)
                 args.PushMarkup(Loc.GetString("comp-gas-tank-connected"));
+            args.PushMarkup(Loc.GetString(component.IsValveOpen ? "comp-gas-tank-examine-open-valve" : "comp-gas-tank-examine-closed-valve"));
         }
 
         private void OnActionToggle(EntityUid uid, GasTankComponent component, ToggleActionEvent args)
