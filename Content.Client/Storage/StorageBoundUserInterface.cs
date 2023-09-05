@@ -41,11 +41,22 @@ namespace Content.Client.Storage
 
                 _window.OnClose += Close;
                 _window.OpenCenteredLeft();
+
+                if (EntMan.TryGetComponent<StorageComponent>(Owner, out var storageComp))
+                {
+                    BuildEntityList(Owner, storageComp);
+                }
+
             }
             else
             {
                 _window.Open();
             }
+        }
+
+        public void BuildEntityList(EntityUid uid, StorageComponent component)
+        {
+            _window?.BuildEntityList(uid, component);
         }
 
         public void InteractWithItem(BaseButton.ButtonEventArgs args, ListData cData)
@@ -93,17 +104,7 @@ namespace Content.Client.Storage
 
         public void TouchedContainerButton(BaseButton.ButtonEventArgs args)
         {
-            SendMessage(new StorageInsertItemMessage());
-        }
-
-        protected override void UpdateState(BoundUserInterfaceState state)
-        {
-            base.UpdateState(state);
-
-            if (_window == null || state is not StorageBoundUserInterfaceState cast)
-                return;
-
-            _window?.BuildEntityList(cast);
+            SendPredictedMessage(new StorageInsertItemMessage());
         }
 
         protected override void Dispose(bool disposing)

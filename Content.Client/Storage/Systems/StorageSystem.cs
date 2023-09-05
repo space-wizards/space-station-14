@@ -7,11 +7,24 @@ namespace Content.Client.Storage.Systems;
 // TODO kill this is all horrid.
 public sealed class StorageSystem : SharedStorageSystem
 {
+    public event Action<EntityUid, StorageComponent>? StorageUpdated;
+
     public override void Initialize()
     {
         base.Initialize();
 
         SubscribeNetworkEvent<AnimateInsertingEntitiesEvent>(HandleAnimatingInsertingEntities);
+        SubscribeLocalEvent<StorageComponent, AfterAutoHandleStateEvent>(OnStorageAfter);
+    }
+
+    private void OnStorageAfter(EntityUid uid, StorageComponent component, ref AfterAutoHandleStateEvent args)
+    {
+        UpdateUI(uid, component);
+    }
+
+    public override void UpdateUI(EntityUid uid, StorageComponent component)
+    {
+        StorageUpdated?.Invoke(uid, component);
     }
 
     /// <summary>

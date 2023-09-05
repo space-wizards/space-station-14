@@ -135,13 +135,4 @@ public sealed partial class StorageSystem : SharedStorageSystem
             }
         }
     }
-
-    public override void UpdateStorageUI(EntityUid uid, StorageComponent storageComp)
-    {
-        var state = new StorageComponent.StorageBoundUserInterfaceState((List<EntityUid>) storageComp.Container.ContainedEntities, storageComp.StorageUsed, storageComp.StorageCapacityMax);
-        var bui = _uiSystem.GetUiOrNull(uid, StorageComponent.StorageUiKey.Key);
-
-        if (bui != null)
-            UserInterfaceSystem.SetUiState(bui, state);
-    }
 }

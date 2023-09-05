@@ -165,7 +165,7 @@ namespace Content.Server.Stack
             if (_container.TryGetContainingContainer(uid, out var container) &&
                 TryComp<StorageComponent>(container.Owner, out var storage))
             {
-                _storage.UpdateStorageUI(container.Owner, storage);
+                _storage.UpdateUI(container.Owner, storage);
             }
 
             Hands.PickupOrDrop(userUid, split);

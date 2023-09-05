@@ -7,7 +7,7 @@ using Robust.Shared.Serialization;
 
 namespace Content.Shared.Storage
 {
-    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState]
+    [RegisterComponent, NetworkedComponent, AutoGenerateComponentState(true)]
     public sealed partial class StorageComponent : Component
     {
         // TODO: This fucking sucks
@@ -18,8 +18,6 @@ namespace Content.Shared.Storage
         public Container Container = default!;
 
         public readonly Dictionary<EntityUid, int> SizeCache = new();
-
-        private bool _occludesLight = true;
 
         [DataField("quickInsert")]
         public bool QuickInsert; // Can insert storables by "attacking" them with the storage entity
@@ -39,9 +37,10 @@ namespace Content.Shared.Storage
         [DataField("blacklist")]
         public EntityWhitelist? Blacklist;
 
+        [ViewVariables, DataField("storageUsed"), AutoNetworkedField]
         public int StorageUsed;
 
-        [DataField("capacity")]
+        [DataField("capacity"), AutoNetworkedField]
         public int StorageCapacityMax = 10000;
 
         [DataField("storageOpenSound")]
@@ -53,21 +52,6 @@ namespace Content.Shared.Storage
         [DataField("storageRemoveSound")] public SoundSpecifier? StorageRemoveSound;
 
         [DataField("storageCloseSound")] public SoundSpecifier? StorageCloseSound;
-
-        [Serializable, NetSerializable]
-        public sealed class StorageBoundUserInterfaceState : BoundUserInterfaceState
-        {
-            public readonly List<EntityUid> StoredEntities;
-            public readonly int StorageSizeUsed;
-            public readonly int StorageCapacityMax;
-
-            public StorageBoundUserInterfaceState(List<EntityUid> storedEntities, int storageSizeUsed, int storageCapacityMax)
-            {
-                StoredEntities = storedEntities;
-                StorageSizeUsed = storageSizeUsed;
-                StorageCapacityMax = storageCapacityMax;
-            }
-        }
 
         [Serializable, NetSerializable]
         public sealed class StorageInsertItemMessage : BoundUserInterfaceMessage

@@ -72,10 +72,13 @@ public abstract class SharedStorageSystem : EntitySystem
         storageComp.Container = _containerSystem.EnsureContainer<Container>(uid, "storagebase");
         UpdateStorageVisualization(uid, storageComp);
         RecalculateStorageUsed(storageComp);
-        UpdateStorageUI(uid, storageComp);
+        UpdateUI(uid, storageComp);
     }
 
-    public virtual void UpdateStorageUI(EntityUid uid, StorageComponent storageComp) {}
+    public virtual void UpdateUI(EntityUid uid, StorageComponent component)
+    {
+
+    }
 
     public virtual void OpenStorageUI(EntityUid uid, EntityUid entity, StorageComponent? storageComp = null, bool silent = false) { }
 
@@ -96,7 +99,7 @@ public abstract class SharedStorageSystem : EntitySystem
             {
                 Text = Loc.GetString("storage-component-transfer-verb"),
                 IconEntity = args.Using,
-                Act = () => TransferEntities(uid, args.Target, component, lockComponent, targetStorage, targetLock)
+                Act = () => TransferEntities(uid, args.Target, args.User, component, lockComponent, targetStorage, targetLock)
             };
 
             args.Verbs.Add(verb);
@@ -152,7 +155,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// around a click.
     /// </summary>
     /// <returns></returns>
-    private async void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
+    private void AfterInteract(EntityUid uid, StorageComponent storageComp, AfterInteractEvent args)
     {
         if (!args.CanReach)
             return;
@@ -347,7 +350,7 @@ public abstract class SharedStorageSystem : EntitySystem
     private void OnStorageItemRemoved(EntityUid uid, StorageComponent storageComp, EntRemovedFromContainerMessage args)
     {
         RecalculateStorageUsed(storageComp);
-        UpdateStorageUI(uid, storageComp);
+        UpdateUI(uid, storageComp);
     }
 
     protected void UpdateStorageVisualization(EntityUid uid, StorageComponent storageComp)
@@ -391,7 +394,7 @@ public abstract class SharedStorageSystem : EntitySystem
     /// <summary>
     ///     Move entities from one storage to another.
     /// </summary>
-    public void TransferEntities(EntityUid source, EntityUid target,
+    public void TransferEntities(EntityUid source, EntityUid target, EntityUid? user = null,
         StorageComponent? sourceComp = null, LockComponent? sourceLock = null,
         StorageComponent? targetComp = null, LockComponent? targetLock = null)
     {
@@ -408,10 +411,10 @@ public abstract class SharedStorageSystem : EntitySystem
 
         foreach (var entity in entities.ToList())
         {
-            Insert(target, entity, targetComp);
+            Insert(target, entity, user, targetComp);
         }
         RecalculateStorageUsed(sourceComp);
-        UpdateStorageUI(source, sourceComp);
+        UpdateUI(source, sourceComp);
     }
 
     /// <summary>
@@ -468,7 +471,7 @@ public abstract class SharedStorageSystem : EntitySystem
     ///     Inserts into the storage container
     /// </summary>
     /// <returns>true if the entity was inserted, false otherwise</returns>
-    public bool Insert(EntityUid uid, EntityUid insertEnt, StorageComponent? storageComp = null, bool playSound = true)
+    public bool Insert(EntityUid uid, EntityUid insertEnt, EntityUid? user = null, StorageComponent? storageComp = null, bool playSound = true)
     {
         if (!Resolve(uid, ref storageComp) || !CanInsert(uid, insertEnt, out _, storageComp))
             return false;
@@ -528,10 +531,11 @@ public abstract class SharedStorageSystem : EntitySystem
         }
 
         if (playSound && storageComp.StorageInsertSound is not null)
-            Audio.PlayPvs(storageComp.StorageInsertSound, uid);
+            Audio.PlayPredicted(storageComp.StorageInsertSound, uid, user);
 
         RecalculateStorageUsed(storageComp);
-        UpdateStorageUI(uid, storageComp);
+        UpdateUI(uid, storageComp);
+        Dirty(uid, storageComp);
         return true;
     }
 
@@ -586,7 +590,7 @@ public abstract class SharedStorageSystem : EntitySystem
         if (!Resolve(uid, ref storageComp) || !_sharedInteractionSystem.InRangeUnobstructed(player, uid))
             return false;
 
-        if (!Insert(uid, toInsert, storageComp))
+        if (!Insert(uid, toInsert, player, storageComp))
         {
             Popup(uid, player, "comp-storage-cant-insert", storageComp);
             return false;
