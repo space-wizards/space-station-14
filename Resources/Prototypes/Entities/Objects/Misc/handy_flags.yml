@@ -62,7 +62,7 @@
   parent: BaseItem
   id: BlackHandyFlag
   name: black handy flag
-  description: "Just black handy flag"
+  description: Just a black handy flag.
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/black_handy_flag.rsi
