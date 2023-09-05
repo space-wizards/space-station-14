@@ -55,3 +55,8 @@
 /Content.Shared.Database/Log*.cs @PJB3005 @DrSmugleaf @Chief-Engineer
 /Pow3r/ @PJB3005
 /Content.Server/Power/Pow3r/ @PJB3005
+
+# notafet
+/Content.*/Atmos/ @Partmedia
+/Content.*/Botany/ @Partmedia
+
