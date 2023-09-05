@@ -38,7 +38,7 @@
   parent: BaseItem
   id: LGBTQHandyFlag
   name: LGBTQ handy flag
-  description: "Be gay do crime handy flag"
+  description: "The be gay do crime handy flag."
   components:
   - type: Sprite
     sprite: Objects/Misc/Handy_Flags/lgbtq_handy_flag.rsi
