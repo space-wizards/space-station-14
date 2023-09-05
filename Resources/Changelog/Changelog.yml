@@ -1,11 +1,4 @@
 Entries:
-- author: Slava0135
-  changes:
-  - {message: Cybersun Industries rediscovered the art of creating artefacts of unbelievable
-      power - holy hand grenades - to be used by syndicate chaplain agents for 20
-      TC, type: Add}
-  id: 4269
-  time: '2023-07-17T19:36:37.0000000+00:00'
 - author: Flareguy
   changes:
   - {message: Buffed the E-Pen to do 18 damage per hit., type: Tweak}
@@ -2998,3 +2991,9 @@ Entries:
       suit is too expensive to stock on every station.', type: Add}
   id: 4768
   time: '2023-09-05T03:42:09.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: 'Magnets can no longer be deconstructed while active, preventing a few
+      bugs.', type: Fix}
+  id: 4769
+  time: '2023-09-05T16:20:55.0000000+00:00'
