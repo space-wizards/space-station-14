@@ -15,6 +15,23 @@ public sealed partial class MechAirFilterComponent : Component
     public HashSet<Gas> Gases = new();
 
     /// <summary>
+    /// Gases that will be filtered when above <see cref="OverflowPressure"/>.
+    /// Replaces <see cref="Gases"/> when overflowing.
+    /// </summary>
+    /// <remarks>
+    /// This is intended for nitrogen to be removed at full pressure so as more
+    /// air is replaced oxygen doesn't tend towards 0 as more nitrogen is added
+    /// but not breathed by the animal.
+    /// </remarks>
+    [DataField("overflowGases", required: true)]
+    public HashSet<Gas> OverflowGases = new();
+
+    /// <summary>
+    /// Pressure to filter <see cref="OverflowGases"/> at.
+    /// </summary>
+    public float OverflowPressure = 100f;
+
+    /// <summary>
     /// Target volume to transfer every second.
     /// </summary>
     [DataField("transferRate")]

@@ -55,7 +55,6 @@ public sealed partial class MechSystem
         if (MathHelper.CloseToPercent(removed.TotalMoles, 0f))
             return;
 
-
         var coordinates = Transform(uid).MapPosition;
         GasMixture? destination = null;
         if (_map.TryFindGridAt(coordinates, out _, out var grid))
@@ -64,9 +63,12 @@ public sealed partial class MechSystem
             destination = _atmosphere.GetTileMixture(tile.GridUid, null, tile.GridIndices, true);
         }
 
+        // only scrub OverflowGases when above OverflowPressure
+        var overflow = mechAir.Air.Pressure > filter.OverflowPressure;
+
         if (destination != null)
         {
-            _atmosphere.ScrubInto(removed, destination, filter.Gases);
+            _atmosphere.ScrubInto(removed, destination, overflow ? filter.OverflowGases : filter.Gases);
         }
         else
         {
