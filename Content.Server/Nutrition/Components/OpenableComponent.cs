@@ -18,6 +18,13 @@ public sealed partial class OpenableComponent : Component
     public bool Opened;
 
     /// <summary>
+    /// If this is false you cant press Z to open it.
+    /// Requires an OpenBehavior damage threshold or other logic to open.
+    /// </summary>
+    [DataField("openableByHand"), ViewVariables(VVAccess.ReadWrite)]
+    public bool OpenableByHand = true;
+
+    /// <summary>
     /// Sound played when opening.
     /// </summary>
     [DataField("sound")]

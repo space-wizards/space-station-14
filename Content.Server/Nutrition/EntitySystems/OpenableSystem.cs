@@ -34,7 +34,7 @@ public sealed class OpenableSystem : EntitySystem
 
     private void OnUse(EntityUid uid, OpenableComponent comp, UseInHandEvent args)
     {
-        if (args.Handled)
+        if (args.Handled || !comp.OpenableByHand)
             return;
 
         args.Handled = TryOpen(uid, comp);
