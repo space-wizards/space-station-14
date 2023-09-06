@@ -55,6 +55,12 @@ public sealed partial class NukeopsRuleComponent : Component
     public string RoundEndTextAnnouncement = "nuke-ops-no-more-threat-announcement";
 
     /// <summary>
+    /// Time to emergency shuttle to arrive if RoundEndBehavior is ShuttleCall.
+    /// </summary>
+    [DataField("evacShuttleTime")]
+    public TimeSpan EvacShuttleTime = TimeSpan.FromMinutes(10);
+
+    /// <summary>
     /// Whether or not to spawn the nuclear operative outpost. Used by LoneOpsSpawn event.
     /// </summary>
     [DataField("spawnOutpost")]

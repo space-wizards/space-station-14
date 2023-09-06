@@ -487,7 +487,7 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 // Prevent it being called multiple times
                 component.RoundEndBehavior = RoundEndBehavior.Nothing;
 
-                // Check that shuttle is called or not. We should dispatch only announcement if it's already called
+                // Check is shuttle called or not. We should only dispatch announcement if it's already called
                 if (_roundEndSystem.IsRoundEndRequested())
                 {
                     _chatSystem.DispatchGlobalAnnouncement(Loc.GetString(component.RoundEndTextAnnouncement),
@@ -496,10 +496,9 @@ public sealed class NukeopsRuleSystem : GameRuleSystem<NukeopsRuleComponent>
                 }
                 else
                 {
-                    _roundEndSystem.RequestRoundEnd(TimeSpan.FromMinutes(5), null, false, component.RoundEndTextShuttleCall,
+                    _roundEndSystem.RequestRoundEnd(component.EvacShuttleTime, null, false, component.RoundEndTextShuttleCall,
                         Loc.GetString(component.RoundEndTextSender));
                 }
-                
                 break;
         }
     }
