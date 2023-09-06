@@ -8,9 +8,9 @@
           steps:
             - material: Steel
               amount: 5
-              doAfter: 5
             - material: Cable
               amount: 2
+              doAfter: 5
 
 
     - node: cratesecure
