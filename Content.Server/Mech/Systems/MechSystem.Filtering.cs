@@ -56,7 +56,7 @@ public sealed partial class MechSystem
             return;
 
         // when oxygen gets too low start removing overflow gases (nitrogen) to maintain oxygen ratio
-        var oxygen = mechAir.Air.GetMoles(filter.Oxygen);
+        var oxygen = mechAir.Air.GetMoles(filter.Oxygen) / mechAir.Air.TotalMoles;
         var gases = oxygen >= filter.TargetOxygen ? filter.Gases : filter.OverflowGases;
 
         var coordinates = Transform(uid).MapPosition;

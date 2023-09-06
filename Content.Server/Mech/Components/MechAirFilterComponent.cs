@@ -22,10 +22,10 @@ public sealed partial class MechAirFilterComponent : Component
     public HashSet<Gas> OverflowGases = new();
 
     /// <summary>
-    /// Minimum oxygen by volume before it will start removing <see cref="OverflowGases"/>.
+    /// Minimum oxygen fraction before it will start removing <see cref="OverflowGases"/>.
     /// </summary>
     [DataField("targetOxygen"), ViewVariables(VVAccess.ReadWrite)]
-    public float TargetOxygen = MechAirComponent.GasMixVolume * 0.21f;
+    public float TargetOxygen = 0.21f;
 
     /// <summary>
     /// Gas to consider oxygen for <see cref="TargetOxygen"/> and <see cref="OverflowGases"/> logic.
