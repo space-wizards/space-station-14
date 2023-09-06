@@ -1,9 +1,4 @@
 Entries:
-- author: crazybrain
-  changes:
-  - {message: Fixed the warden's armored winter coat sprite., type: Fix}
-  id: 4273
-  time: '2023-07-17T22:52:47.0000000+00:00'
 - author: PJB3005
   changes:
   - {message: The Particle Accelerator should reliably scan parts again., type: Fix}
@@ -2991,3 +2986,8 @@ Entries:
   - {message: Revert 25% click attack buff., type: Tweak}
   id: 4772
   time: '2023-09-06T08:30:23.0000000+00:00'
+- author: deltanedas
+  changes:
+  - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
+  id: 4773
+  time: '2023-09-06T18:18:14.0000000+00:00'
