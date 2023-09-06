@@ -1,5 +1,4 @@
 using Content.Shared.Revolutionary.Components;
-using Content.Shared.Administration.Logs;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Mindshield.Components;
 using Content.Shared.Popups;
@@ -30,8 +29,7 @@ public sealed class SharedRevolutionarySystem : EntitySystem
         }
         else if (HasComp<HeadRevolutionaryComponent>(uid))
         {
-            RemComp<MindShieldComponent>(uid);
-            _popupSystem.PopupEntity(Loc.GetString("head-rev-break-mindshield"), uid);
+            RemCompDeferred<MindShieldComponent>(uid);
         }
     }
 }

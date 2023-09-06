@@ -19,7 +19,7 @@ public sealed class RevolutionarySystem : AntagStatusIconSystem
     }
 
     /// <summary>
-    /// Checks if the person who trigger the GetStatusIcon event is also a Rev or a HeadRev.
+    /// Checks if the person who triggers the GetStatusIcon event is also a Rev or a HeadRev.
     /// </summary>
     private void GetRevIcon(EntityUid uid, RevolutionaryComponent comp, ref GetStatusIconsEvent args)
     {
