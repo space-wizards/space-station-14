@@ -183,7 +183,7 @@ public sealed class LockSystem : EntitySystem
         if (!Resolve(uid, ref reader, false))
             return true;
 
-        if (_accessReader.IsAllowed(user, reader))
+        if (_accessReader.IsAllowed(user, uid, reader))
             return true;
 
         if (!quiet)

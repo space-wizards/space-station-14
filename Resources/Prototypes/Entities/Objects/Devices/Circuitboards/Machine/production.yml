@@ -435,7 +435,7 @@
     - type: Sprite
       state: service
     - type: MachineBoard
-      prototype: hydroponicsTray
+      prototype: HydroponicsTrayEmpty
       materialRequirements:
         # replacing the console screen
         Glass: 5
@@ -599,14 +599,14 @@
           ExamineName: Woodwind Instrument
 
 - type: entity
-  id: GeneratorPlasmaMachineCircuitboard
+  id: PortableGeneratorPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: generator (plasma) machine board
+  name: P.A.C.M.A.N.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
     - type: MachineBoard
-      prototype: GeneratorPlasma
+      prototype: PortableGeneratorPacman
       requirements:
         Capacitor: 1
       materialRequirements:
@@ -643,18 +643,37 @@
       Glass: 2
 
 - type: entity
-  id: GeneratorUraniumMachineCircuitboard
+  id: PortableGeneratorSuperPacmanMachineCircuitboard
   parent: BaseMachineCircuitboard
-  name: generator (uranium) machine board
+  name: S.U.P.E.R.P.A.C.M.A.N.-type portable generator machine board
   components:
     - type: Sprite
       state: engineering
     - type: MachineBoard
-      prototype: GeneratorUranium
+      prototype: PortableGeneratorSuperPacman
       requirements:
         Capacitor: 2
       materialRequirements:
         CableHV: 10
+    - type: PhysicalComposition
+      materialComposition:
+        Glass: 200
+      chemicalComposition:
+        Silicon: 20
+
+- type: entity
+  id: PortableGeneratorJrPacmanMachineCircuitboard
+  parent: BaseMachineCircuitboard
+  name: J.R.P.A.C.M.A.N.-type portable generator machine board
+  components:
+    - type: Sprite
+      state: engineering
+    - type: MachineBoard
+      prototype: PortableGeneratorJrPacman
+      requirements:
+        Capacitor: 1
+      materialRequirements:
+        Cable: 10
     - type: PhysicalComposition
       materialComposition:
         Glass: 200

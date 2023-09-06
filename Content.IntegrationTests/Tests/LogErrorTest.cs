@@ -12,9 +12,9 @@ public sealed class LogErrorTest
     [Test]
     public async Task TestLogErrorCausesTestFailure()
     {
-        await using var pairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
-        var server = pairTracker.Pair.Server;
-        var client = pairTracker.Pair.Client;
+        await using var pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        var server = pair.Server;
+        var client = pair.Client;
 
         var cfg = server.ResolveDependency<IConfigurationManager>();
         var logmill = server.ResolveDependency<ILogManager>().RootSawmill;
@@ -29,6 +29,6 @@ public sealed class LogErrorTest
         await server.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
         await client.WaitPost(() => Assert.Throws<AssertionException>(() => logmill.Error("test")));
 
-        await pairTracker.CleanReturnAsync();
+        await pair.CleanReturnAsync();
     }
 }

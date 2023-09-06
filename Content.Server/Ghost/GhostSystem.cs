@@ -3,8 +3,7 @@ using System.Numerics;
 using Content.Server.GameTicking;
 using Content.Server.Ghost.Components;
 using Content.Server.Mind;
-using Content.Server.Mind.Components;
-using Content.Server.Players;
+using Content.Server.Roles.Jobs;
 using Content.Server.Visible;
 using Content.Server.Warps;
 using Content.Shared.Actions;
@@ -12,11 +11,13 @@ using Content.Shared.Administration;
 using Content.Shared.Examine;
 using Content.Shared.Follower;
 using Content.Shared.Ghost;
+using Content.Shared.Mind;
+using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
+using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage.Components;
-using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
 using Robust.Shared.Console;
@@ -26,19 +27,20 @@ using Robust.Shared.Timing;
 
 namespace Content.Server.Ghost
 {
-    [UsedImplicitly]
-    public sealed class GhostSystem : SharedGhostSystem
+    public sealed partial class GhostSystem : SharedGhostSystem
     {
         [Dependency] private readonly IGameTiming _gameTiming = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
         [Dependency] private readonly GameTicker _ticker = default!;
-        [Dependency] private readonly MindSystem _mindSystem = default!;
+        [Dependency] private readonly SharedMindSystem _mindSystem = default!;
         [Dependency] private readonly SharedActionsSystem _actions = default!;
         [Dependency] private readonly VisibilitySystem _visibilitySystem = default!;
         [Dependency] private readonly EntityLookupSystem _lookup = default!;
         [Dependency] private readonly FollowerSystem _followerSystem = default!;
         [Dependency] private readonly MobStateSystem _mobState = default!;
         [Dependency] private readonly SharedPhysicsSystem _physics = default!;
+        [Dependency] private readonly MindSystem _minds = default!;
+        [Dependency] private readonly JobSystem _jobs = default!;
 
         public override void Initialize()
         {
@@ -93,13 +95,13 @@ namespace Content.Server.Ghost
             if (EntityManager.HasComponent<VisitingMindComponent>(uid))
                 return;
 
-            if (!EntityManager.TryGetComponent<MindContainerComponent>(uid, out var mind) || !mind.HasMind || mind.Mind.IsVisitingEntity)
+            if (!_minds.TryGetMind(uid, out var mindId, out var mind) || mind.IsVisitingEntity)
                 return;
 
             if (component.MustBeDead && (_mobState.IsAlive(uid) || _mobState.IsCritical(uid)))
                 return;
 
-            _ticker.OnGhostAttempt(mind.Mind, component.CanReturn);
+            _ticker.OnGhostAttempt(mindId, component.CanReturn, mind: mind);
         }
 
         private void OnGhostStartup(EntityUid uid, GhostComponent component, ComponentStartup args)
@@ -200,7 +202,7 @@ namespace Content.Server.Ghost
                 return;
             }
 
-            _mindSystem.UnVisit(actor.PlayerSession.ContentData()!.Mind);
+            _mindSystem.UnVisit(actor.PlayerSession);
         }
 
         private void OnGhostWarpToTargetRequest(GhostWarpToTargetRequestEvent msg, EntitySessionEventArgs args)
@@ -261,7 +263,8 @@ namespace Content.Server.Ghost
 
                     TryComp<MindContainerComponent>(attached, out var mind);
 
-                    string playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({mind?.Mind?.CurrentJob?.Name ?? "Unknown"})";
+                    var jobName = _jobs.MindTryGetJobName(mind?.Mind);
+                    var playerInfo = $"{EntityManager.GetComponent<MetaDataComponent>(attached).EntityName} ({jobName})";
 
                     if (_mobState.IsAlive(attached) || _mobState.IsCritical(attached))
                         yield return new GhostWarp(attached, playerInfo, false);

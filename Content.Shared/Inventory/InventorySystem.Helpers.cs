@@ -1,11 +1,43 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.Hands.Components;
 using Robust.Shared.Prototypes;
 
 namespace Content.Shared.Inventory;
 
 public partial class InventorySystem
 {
+    /// <summary>
+    /// Yields all entities in hands or inventory slots with the specific flags.
+    /// </summary>
+    public IEnumerable<EntityUid> GetHandOrInventoryEntities(EntityUid user, SlotFlags flags = SlotFlags.All)
+    {
+        if (TryComp<HandsComponent>(user, out var handsComp))
+        {
+            foreach (var hand in handsComp.Hands.Values)
+            {
+                if (hand.HeldEntity == null)
+                    continue;
+
+                yield return hand.HeldEntity.Value;
+            }
+        }
+
+        if (TryComp<InventoryComponent>(user, out var inventoryComp))
+        {
+            var slotEnumerator = new ContainerSlotEnumerator(user, inventoryComp.TemplateId,
+                _prototypeManager, this, flags);
+
+            while (slotEnumerator.MoveNext(out var slot))
+            {
+                if (slot.ContainedEntity == null)
+                    continue;
+
+                yield return slot.ContainedEntity.Value;
+            }
+        }
+    }
+
     /// <summary>
     ///     Returns the definition of the inventory slot that the given entity is currently in..
     /// </summary>

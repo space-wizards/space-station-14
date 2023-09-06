@@ -5,6 +5,7 @@ using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototy
 
 namespace Content.Server.Atmos.Piping.Unary.Components
 {
+    // The world if people documented their shit.
     [RegisterComponent]
     public sealed partial class GasVentPumpComponent : Component
     {
@@ -13,9 +14,6 @@ namespace Content.Server.Atmos.Piping.Unary.Components
 
         [ViewVariables]
         public bool IsDirty { get; set; } = false;
-
-        [ViewVariables(VVAccess.ReadWrite)]
-        public bool Welded { get; set; } = false;
 
         [ViewVariables(VVAccess.ReadWrite)]
         [DataField("inlet")]

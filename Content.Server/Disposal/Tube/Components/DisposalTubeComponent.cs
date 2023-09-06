@@ -14,8 +14,6 @@ namespace Content.Server.Disposal.Tube.Components
     {
         [DataField("containerId")] public string ContainerId { get; set; } = "DisposalTube";
 
-        [Dependency] private readonly IEntityManager _entMan = default!;
-
         public static readonly TimeSpan ClangDelay = TimeSpan.FromSeconds(0.5);
         public TimeSpan LastClang;
 

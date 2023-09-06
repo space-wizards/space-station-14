@@ -5,7 +5,6 @@ using Content.Client.Construction;
 using Content.Client.Examine;
 using Content.IntegrationTests.Pair;
 using Content.Server.Body.Systems;
-using Content.Server.Mind;
 using Content.Server.Players;
 using Content.Server.Stack;
 using Content.Server.Tools;
@@ -14,6 +13,7 @@ using Content.Shared.DoAfter;
 using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
+using Content.Shared.Mind;
 using Robust.Client.Input;
 using Robust.Client.UserInterface;
 using Robust.Server.GameObjects;
@@ -41,11 +41,11 @@ public abstract partial class InteractionTest
 {
     protected virtual string PlayerPrototype => "InteractionTestMob";
 
-    protected TestPair PairTracker = default!;
-    protected TestMapData MapData => PairTracker.TestMap!;
+    protected TestPair Pair = default!;
+    protected TestMapData MapData => Pair.TestMap!;
 
-    protected RobustIntegrationTest.ServerIntegrationInstance Server => PairTracker.Server;
-    protected RobustIntegrationTest.ClientIntegrationInstance Client => PairTracker.Client;
+    protected RobustIntegrationTest.ServerIntegrationInstance Server => Pair.Server;
+    protected RobustIntegrationTest.ClientIntegrationInstance Client => Pair.Client;
 
     protected MapId MapId => MapData.MapId;
 
@@ -141,7 +141,7 @@ public abstract partial class InteractionTest
     [SetUp]
     public virtual async Task Setup()
     {
-        PairTracker = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
+        Pair = await PoolManager.GetServerClient(new PoolSettings { Connected = true });
 
         // server dependencies
         SEntMan = Server.ResolveDependency<IEntityManager>();
@@ -173,7 +173,7 @@ public abstract partial class InteractionTest
         CLogger = Client.ResolveDependency<ILogManager>().RootSawmill;
 
         // Setup map.
-        await PairTracker.CreateTestMap();
+        await Pair.CreateTestMap();
         PlayerCoords = MapData.GridCoords.Offset(new Vector2(0.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
         TargetCoords = MapData.GridCoords.Offset(new Vector2(1.5f, 0.5f)).WithEntityId(MapData.MapUid, Transform, SEntMan);
         await SetTile(Plating, grid: MapData.MapGrid);
@@ -192,7 +192,7 @@ public abstract partial class InteractionTest
         {
             // Fuck you mind system I want an hour of my life back
             // Mind system is a time vampire
-            SEntMan.System<MindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
+            SEntMan.System<SharedMindSystem>().WipeMind(ServerSession.ContentData()?.Mind);
 
             old = cPlayerMan.LocalPlayer.ControlledEntity;
             Player = SEntMan.SpawnEntity(PlayerPrototype, PlayerCoords);
@@ -226,7 +226,7 @@ public abstract partial class InteractionTest
         });
 
         // Final player asserts/checks.
-        await PairTracker.ReallyBeIdle(5);
+        await Pair.ReallyBeIdle(5);
         Assert.Multiple(() =>
         {
             Assert.That(cPlayerMan.LocalPlayer.ControlledEntity, Is.EqualTo(Player));
@@ -238,7 +238,7 @@ public abstract partial class InteractionTest
     public async Task TearDownInternal()
     {
         await Server.WaitPost(() => MapMan.DeleteMap(MapId));
-        await PairTracker.CleanReturnAsync();
+        await Pair.CleanReturnAsync();
         await TearDown();
     }
 

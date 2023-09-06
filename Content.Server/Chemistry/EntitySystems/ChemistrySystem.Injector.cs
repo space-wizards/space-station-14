@@ -42,7 +42,7 @@ public sealed partial class ChemistrySystem
         if (!args.CanAccess || !args.CanInteract || args.Hands == null)
             return;
 
-        if (!EntityManager.TryGetComponent<ActorComponent?>(args.User, out var actor))
+        if (!EntityManager.TryGetComponent(args.User, out ActorComponent? actor))
             return;
 
         // Add specific transfer verbs according to the container's size
@@ -312,7 +312,7 @@ public sealed partial class ChemistrySystem
 
         // Move units from attackSolution to targetSolution
         Solution removedSolution;
-        if (TryComp<StackComponent>(targetEntity, out var stack)) 
+        if (TryComp<StackComponent>(targetEntity, out var stack))
             removedSolution = _solutions.SplitStackSolution(injector, solution, realTransferAmount, stack.Count);
         else
           removedSolution = _solutions.SplitSolution(injector, solution, realTransferAmount);

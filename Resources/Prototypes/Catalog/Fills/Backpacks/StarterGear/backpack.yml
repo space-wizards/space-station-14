@@ -28,6 +28,18 @@
       - id: BoxSurvivalSecurity
       - id: Flash
       - id: MagazinePistol
+      
+- type: entity
+  noSpawn: true
+  parent: ClothingBackpackSecurity
+  id: ClothingBackpackSecurityFilledDetective
+  components:
+  - type: StorageFill
+    contents:
+      - id: BoxSurvivalSecurity
+      - id: Flash
+      - id: ForensicPad
+      - id: ForensicScanner
 
 - type: entity
   noSpawn: true

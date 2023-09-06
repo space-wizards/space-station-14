@@ -9,7 +9,7 @@ public sealed partial class WiresComponent : Component
     ///     The name of this entity's internal board.
     /// </summary>
     [DataField("BoardName")]
-    public string BoardName { get; set; } = "Wires";
+    public string BoardName { get; set; } = "wires-board-name-default";
 
     /// <summary>
     ///     The layout ID of this entity's wires.
