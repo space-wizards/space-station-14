@@ -197,7 +197,7 @@ namespace Content.Client.Construction
             var comp = EntityManager.GetComponent<ConstructionGhostComponent>(ghost.Value);
             comp.Prototype = prototype;
             EntityManager.GetComponent<TransformComponent>(ghost.Value).LocalRotation = dir.ToAngle();
-            _ghosts.Add(ghost.Value.GetHashCode(), ghost.Value);
+            _ghosts.Add(ghost.Value.Id, ghost.Value);
             var sprite = EntityManager.GetComponent<SpriteComponent>(ghost.Value);
             sprite.Color = new Color(48, 255, 48, 128);
 
@@ -264,7 +264,7 @@ namespace Content.Client.Construction
             }
 
             var transform = EntityManager.GetComponent<TransformComponent>(ghostId);
-            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.GetHashCode());
+            var msg = new TryStartStructureConstructionMessage(GetNetCoordinates(transform.Coordinates), ghostComp.Prototype.ID, transform.LocalRotation, ghostId.Id);
             RaiseNetworkEvent(msg);
         }
 

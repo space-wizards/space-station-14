@@ -50,7 +50,7 @@ public abstract partial class InteractionTest
 
             var comp = CEntMan.GetComponent<ConstructionGhostComponent>(clientTarget!.Value);
             ClientTarget = clientTarget;
-            ConstructionGhostId = comp.Owner.GetHashCode();
+            ConstructionGhostId = comp.Owner.Id;
         });
 
         await RunTicks(1);
