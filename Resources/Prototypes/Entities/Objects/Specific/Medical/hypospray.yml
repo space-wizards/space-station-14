@@ -18,6 +18,7 @@
   - type: ExaminableSolution
     solution: hypospray
   - type: Hypospray
+    onlyMobs: false
   - type: UseDelay
     delay: 0.5
   - type: StaticPrice
