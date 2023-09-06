@@ -12,6 +12,12 @@ namespace Content.Shared.Silicons.Laws.Components;
 public sealed partial class EmagSiliconLawComponent : Component
 {
     /// <summary>
+    /// The sound effect that plays when the borg is emagged.
+    /// </summary>
+    [DataField("emagSound"), ViewVariables(VVAccess.ReadWrite)]
+    public SoundSpecifier? EmagSound;
+	
+    /// <summary>
     /// The name of the person who emagged this law provider.
     /// </summary>
     [DataField("ownerName"), ViewVariables(VVAccess.ReadWrite)]
