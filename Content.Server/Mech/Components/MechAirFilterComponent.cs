@@ -29,11 +29,12 @@ public sealed partial class MechAirFilterComponent : Component
     /// <summary>
     /// Pressure to filter <see cref="OverflowGases"/> at.
     /// </summary>
+    [DataField("overflowPressure"), ViewVariables(VVAccess.ReadWrite)]
     public float OverflowPressure = 100f;
 
     /// <summary>
     /// Target volume to transfer every second.
     /// </summary>
-    [DataField("transferRate")]
+    [DataField("transferRate"), ViewVariables(VVAccess.ReadWrite)]
     public float TransferRate = MechAirComponent.GasMixVolume * 0.2f;
 }
