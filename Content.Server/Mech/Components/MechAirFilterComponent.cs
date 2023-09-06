@@ -40,6 +40,6 @@ public sealed partial class MechAirFilterComponent : Component
     /// <summary>
     /// Target volume to transfer every second.
     /// </summary>
-    [DataField("transferRate")]
+    [DataField("transferRate"), ViewVariables(VVAccess.ReadWrite)]
     public float TransferRate = MechAirComponent.GasMixVolume * 0.1f;
 }
