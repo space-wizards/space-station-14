@@ -1,14 +1,4 @@
 Entries:
-- author: Dygon
-  changes:
-  - {message: 'Using cells extracted from a changeling the Syndicate has found a way
-      to safely alter the DNA of their operators, agents can now purchase the DNA
-      scrambler implanter from the uplink.', type: Add}
-  - {message: 'The Syndicate succeeded in making their EMP devices even smaller, agents
-      can now purchase the EMP implanter from the uplink.', type: Add}
-  - {message: EMP grenades are now cheaper to purchase, type: Tweak}
-  id: 4272
-  time: '2023-07-17T19:48:10.0000000+00:00'
 - author: crazybrain
   changes:
   - {message: Fixed the warden's armored winter coat sprite., type: Fix}
@@ -2996,3 +2986,8 @@ Entries:
   - {message: Constructed hydroponics trays now start empty., type: Tweak}
   id: 4771
   time: '2023-09-05T20:15:06.0000000+00:00'
+- author: metalgearsloth
+  changes:
+  - {message: Revert 25% click attack buff., type: Tweak}
+  id: 4772
+  time: '2023-09-06T08:30:23.0000000+00:00'
