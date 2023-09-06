@@ -324,9 +324,6 @@ namespace Content.Server.Construction
                 }
             }
 
-            // TODO: Is this call necessary?
-            UpdatePathfinding(newUid, newConstruction);
-
             // If the new entity has the *same* construction graph, stay on the same node.
             // If not, we effectively restart the construction graph, so the new entity can be completed.
             if (construction.Graph == newConstruction.Graph)
