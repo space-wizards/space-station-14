@@ -147,9 +147,9 @@ namespace Content.Server.Chemistry.EntitySystems
         {
             // TODO: Does checking for BodyComponent make sense as a "can be hypospray'd" tag?
             // In SS13 the hypospray ONLY works on mobs, NOT beakers or anything else.
+            // But this is 14, we dont do what SS13 does just because SS13 does it.
 
-            return entMan.HasComponent<SolutionContainerManagerComponent>(entity)
-                && entMan.HasComponent<MobStateComponent>(entity);
+            return entMan.HasComponent<SolutionContainerManagerComponent>(entity);
         }
     }
 }
