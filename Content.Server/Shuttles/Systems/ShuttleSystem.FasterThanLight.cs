@@ -81,6 +81,7 @@ public sealed partial class ShuttleSystem
     private EntityQuery<BuckleComponent> _buckleQuery;
     private EntityQuery<StatusEffectsComponent> _statusQuery;
     private EntityQuery<TransformComponent> _xformQuery;
+    private EntityQuery<PhysicsComponent> _physicsQuery;
 
     private void InitializeFTL()
     {
@@ -88,6 +89,7 @@ public sealed partial class ShuttleSystem
         _buckleQuery = GetEntityQuery<BuckleComponent>();
         _statusQuery = GetEntityQuery<StatusEffectsComponent>();
         _xformQuery = GetEntityQuery<TransformComponent>();
+        _physicsQuery = GetEntityQuery<PhysicsComponent>();
 
         SubscribeLocalEvent<StationGridAddedEvent>(OnStationGridAdd);
     }
@@ -473,16 +475,6 @@ public sealed partial class ShuttleSystem
     /// </summary>
     private void DoTheDinosaur(TransformComponent xform)
     {
-        // gib anything sitting outside aka on a lattice
-        // this is done before knocking since why knock down if they are gonna be gibbed too
-        var toGib = new ValueList<(EntityUid, BodyComponent)>();
-        GibKids(xform, ref toGib);
-
-        foreach (var (child, body) in toGib)
-        {
-            _bobby.GibBody(child, gibOrgans: false, body);
-        }
-
         // Get enumeration exceptions from people dropping things if we just paralyze as we go
         var toKnock = new ValueList<EntityUid>();
         KnockOverKids(xform, ref toKnock);
@@ -491,6 +483,9 @@ public sealed partial class ShuttleSystem
         {
             if (!_statusQuery.TryGetComponent(child, out var status)) continue;
             _stuns.TryParalyze(child, _hyperspaceKnockdownTime, true, status);
+
+            // If the guy we knocked down is on a spaced tile, throw them too
+            TossIfSpaced(child);
         }
     }
 
@@ -507,26 +502,42 @@ public sealed partial class ShuttleSystem
         }
     }
 
-    private void GibKids(TransformComponent xform, ref ValueList<(EntityUid, BodyComponent)> toGib)
+    /// <summary>
+    /// Throws people who are standing on a spaced tile, tries to throw them towards a neighbouring space tile
+    /// </summary>
+    private void TossIfSpaced(EntityUid tossed)
     {
-        // this is not recursive so people hiding in crates are spared, sadly
-        var childEnumerator = xform.ChildEnumerator;
-        while (childEnumerator.MoveNext(out var child))
+
+        if (!_xformQuery.TryGetComponent(tossed, out var childXform))
+            return;
+
+        if (!_physicsQuery.TryGetComponent(tossed, out var phys))
+            return;
+
+        // only toss if its on lattice/space
+        var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
+
+        if (tile != null && tile.Value.IsSpace() && _mapManager.TryGetGrid(tile.Value.GridUid, out var grid))
         {
-            if (!_xformQuery.TryGetComponent(child.Value, out var childXform))
-                continue;
+            Vector2 direction = -Vector2.UnitY;
 
-            // not something that can be gibbed
-            if (!_bodyQuery.TryGetComponent(child.Value, out var body))
-                continue;
+            foreach (Direction tileDirection in Enum.GetValues(typeof(Direction)))
+            {
+                var otherTile = grid.GetTileRef(tile.Value.GridIndices + DirectionExtensions.ToIntVec(tileDirection));
+                if (otherTile.IsSpace())
+                {
+                    direction = DirectionExtensions.ToVec(tileDirection);
+                    break;
+                }
+            }
 
-            // only gib if its on lattice/space
-            var tile = childXform.Coordinates.GetTileRef(EntityManager, _mapManager);
-            if (tile != null && !tile.Value.IsSpace())
-                continue;
-
-            toGib.Add((child.Value, body));
+            // Mass independant yeeting.
+            var impulseVector = direction.Normalized() * 500.0f * phys.Mass;
+            _physics.ApplyLinearImpulse(tossed, impulseVector, body: phys);
         }
+
+
+
     }
 
     /// <summary>
