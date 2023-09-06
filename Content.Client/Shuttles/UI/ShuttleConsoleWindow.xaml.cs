@@ -32,19 +32,19 @@ public sealed partial class ShuttleConsoleWindow : FancyWindow,
     /// <summary>
     /// Stored by grid entityid then by states
     /// </summary>
-    private readonly Dictionary<EntityUid, List<DockingInterfaceState>> _docks = new();
+    private readonly Dictionary<NetEntity, List<DockingInterfaceState>> _docks = new();
 
-    private readonly Dictionary<BaseButton, EntityUid> _destinations = new();
+    private readonly Dictionary<BaseButton, NetEntity> _destinations = new();
 
     /// <summary>
     /// Next FTL state change.
     /// </summary>
     public TimeSpan FTLTime;
 
-    public Action<EntityUid>? UndockPressed;
-    public Action<EntityUid>? StartAutodockPressed;
-    public Action<EntityUid>? StopAutodockPressed;
-    public Action<EntityUid>? DestinationPressed;
+    public Action<NetEntity>? UndockPressed;
+    public Action<NetEntity>? StartAutodockPressed;
+    public Action<NetEntity>? StopAutodockPressed;
+    public Action<NetEntity>? DestinationPressed;
 
     public ShuttleConsoleWindow()
     {

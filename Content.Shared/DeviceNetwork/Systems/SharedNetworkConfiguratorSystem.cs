@@ -29,7 +29,7 @@ public abstract class SharedNetworkConfiguratorSystem : EntitySystem
             return;
         }
 
-        comp.ActiveDeviceList = GetEntity(state.ActiveDeviceList);
+        comp.ActiveDeviceList = EnsureEntity<NetworkConfiguratorComponent>(state.ActiveDeviceList, uid);
         comp.LinkModeActive = state.LinkModeActive;
     }
 }

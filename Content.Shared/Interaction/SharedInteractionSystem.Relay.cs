@@ -21,7 +21,7 @@ public abstract partial class SharedInteractionSystem
         if (args.Current is not InteractionRelayComponentState state)
             return;
 
-        component.RelayEntity = GetEntity(state.RelayEntity);
+        component.RelayEntity = EnsureEntity<InteractionRelayComponent>(state.RelayEntity, uid);
     }
 
     public void SetRelay(EntityUid uid, EntityUid? relayEntity, InteractionRelayComponent? component = null)

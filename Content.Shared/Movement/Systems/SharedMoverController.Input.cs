@@ -87,7 +87,7 @@ namespace Content.Shared.Movement.Systems
 
             component.RelativeRotation = state.RelativeRotation;
             component.TargetRelativeRotation = state.TargetRelativeRotation;
-            component.RelativeEntity = GetEntity(state.RelativeEntity);
+            component.RelativeEntity = EnsureEntity<InputMoverComponent>(state.RelativeEntity, uid);
             component.LerpTarget = state.LerpAccumulator;
         }
 

@@ -41,7 +41,7 @@ public partial class SharedBodySystem
         if (args.Current is not BodyPartComponentState state)
             return;
 
-        part.Body = GetEntity(state.Body);
+        part.Body = EnsureEntity<BodyPartComponent>(state.Body, uid);
         part.ParentSlot = state.ParentSlot; // TODO use containers. This is broken and does not work.
         part.Children = state.Children; // TODO use containers. This is broken and does not work.
         part.Organs = state.Organs; // TODO end my suffering.

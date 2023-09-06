@@ -49,7 +49,7 @@ namespace Content.Shared.Throwing
                 return;
             }
 
-            component.Thrower = GetEntity(state.Thrower.Value);
+            component.Thrower = EnsureEntity<ThrownItemComponent>(state.Thrower.Value, uid);
         }
 
         private void ThrowItem(EntityUid uid, ThrownItemComponent component, ThrownEvent args)

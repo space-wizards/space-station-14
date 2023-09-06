@@ -25,7 +25,7 @@ public sealed class SharedPreventCollideSystem : EntitySystem
         if (args.Current is not PreventCollideComponentState state)
             return;
 
-        component.Uid = GetEntity(state.Uid);
+        component.Uid = EnsureEntity<PreventCollideComponent>(state.Uid, uid);
     }
 
     private void OnPreventCollide(EntityUid uid, PreventCollideComponent component, ref PreventCollideEvent args)

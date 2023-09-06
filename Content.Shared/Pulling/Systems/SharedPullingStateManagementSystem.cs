@@ -41,7 +41,7 @@ namespace Content.Shared.Pulling
             if (args.Current is not PullableComponentState state)
                 return;
 
-            var puller = GetEntity(state.Puller);
+            var puller = EnsureEntity<SharedPullableComponent>(state.Puller, uid);
 
             if (!puller.HasValue)
             {

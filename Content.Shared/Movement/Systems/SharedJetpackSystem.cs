@@ -62,7 +62,7 @@ public abstract class SharedJetpackSystem : EntitySystem
         if (args.Current is not JetpackUserComponentState state)
             return;
 
-        component.Jetpack = GetEntity(state.Jetpack);
+        component.Jetpack = EnsureEntity<JetpackUserComponent>(state.Jetpack, uid);
     }
 
     private void OnJetpackUserGetState(EntityUid uid, JetpackUserComponent component, ref ComponentGetState args)

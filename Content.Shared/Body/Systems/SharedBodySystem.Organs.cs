@@ -53,7 +53,7 @@ public partial class SharedBodySystem
         if (args.Current is not OrganComponentState state)
             return;
 
-        organ.Body = GetEntity(state.Body);
+        organ.Body = EnsureEntity<OrganComponent>(state.Body, uid);
         organ.ParentSlot = state.Parent;
     }
 

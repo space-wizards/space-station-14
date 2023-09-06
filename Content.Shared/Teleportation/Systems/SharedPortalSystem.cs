@@ -85,7 +85,7 @@ public abstract class SharedPortalSystem : EntitySystem
     private void OnHandleState(EntityUid uid, PortalTimeoutComponent component, ref ComponentHandleState args)
     {
         if (args.Current is PortalTimeoutComponentState state)
-            component.EnteredPortal = GetEntity(state.EnteredPortal);
+            component.EnteredPortal = EnsureEntity<PortalTimeoutComponent>(state.EnteredPortal, uid);
     }
 
     private bool ShouldCollide(string ourId, string otherId, Fixture our, Fixture other)

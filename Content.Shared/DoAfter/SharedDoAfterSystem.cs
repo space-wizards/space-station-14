@@ -120,13 +120,13 @@ public abstract partial class SharedDoAfterSystem : EntitySystem
 
             // Networking yay (if you have an easier way dear god please).
             newDoAfter.UserPosition = GetCoordinates(newDoAfter.NetUserPosition);
-            newDoAfter.InitialItem = GetEntity(newDoAfter.NetInitialItem);
+            newDoAfter.InitialItem = EnsureEntity<DoAfterComponent>(newDoAfter.NetInitialItem, uid);
 
             var doAfterArgs = newDoAfter.Args;
-            doAfterArgs.Target = GetEntity(doAfterArgs.NetTarget);
-            doAfterArgs.Used = GetEntity(doAfterArgs.NetUsed);
-            doAfterArgs.User = GetEntity(doAfterArgs.NetUser);
-            doAfterArgs.EventTarget = GetEntity(doAfterArgs.NetEventTarget);
+            doAfterArgs.Target = EnsureEntity<DoAfterComponent>(doAfterArgs.NetTarget, uid);
+            doAfterArgs.Used = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUsed, uid);
+            doAfterArgs.User = EnsureEntity<DoAfterComponent>(doAfterArgs.NetUser, uid);
+            doAfterArgs.EventTarget = EnsureEntity<DoAfterComponent>(doAfterArgs.NetEventTarget, uid);
         }
 
         comp.NextId = state.NextId;

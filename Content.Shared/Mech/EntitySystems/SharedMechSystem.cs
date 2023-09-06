@@ -85,7 +85,7 @@ public abstract class SharedMechSystem : EntitySystem
         component.MaxIntegrity = state.MaxIntegrity;
         component.Energy = state.Energy;
         component.MaxEnergy = state.MaxEnergy;
-        component.CurrentSelectedEquipment = GetEntity(state.CurrentSelectedEquipment);
+        component.CurrentSelectedEquipment = EnsureEntity<MechComponent>(state.CurrentSelectedEquipment, uid);
         component.Broken = state.Broken;
     }
 
@@ -102,7 +102,7 @@ public abstract class SharedMechSystem : EntitySystem
         if (args.Current is not MechPilotComponentState state)
             return;
 
-        component.Mech = GetEntity(state.Mech);
+        component.Mech = EnsureEntity<MechPilotComponent>(state.Mech, uid);
     }
 
     #endregion
