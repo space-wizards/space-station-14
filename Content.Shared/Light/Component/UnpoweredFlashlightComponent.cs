@@ -1,6 +1,7 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Decals;
 using Robust.Shared.Audio;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Light.Component;
 
@@ -16,8 +17,10 @@ public sealed partial class UnpoweredFlashlightComponent : Robust.Shared.GameObj
 
     [ViewVariables] public bool LightOn = false;
 
-    [DataField("toggleAction", required: true)]
-    public InstantAction ToggleAction = new();
+    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ToggleActionId = "ActionToggleLight";
+
+    [DataField("toggleAction")] public EntityUid? ToggleAction;
 
     /// <summary>
     ///  <see cref="ColorPalettePrototype"/> ID that determines the list

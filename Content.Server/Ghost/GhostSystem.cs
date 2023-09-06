@@ -16,7 +16,6 @@ using Content.Shared.Mind.Components;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Movement.Events;
-using Content.Shared.Roles.Jobs;
 using Content.Shared.Storage.Components;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -48,6 +47,7 @@ namespace Content.Server.Ghost
 
             SubscribeLocalEvent<GhostComponent, ComponentStartup>(OnGhostStartup);
             SubscribeLocalEvent<GhostComponent, ComponentShutdown>(OnGhostShutdown);
+            SubscribeLocalEvent<GhostComponent, MapInitEvent>(OnGhostMapInit);
 
             SubscribeLocalEvent<GhostComponent, ExaminedEvent>(OnGhostExamine);
 
@@ -121,13 +121,7 @@ namespace Content.Server.Ghost
                 eye.VisibilityMask |= (uint) VisibilityFlags.Ghost;
             }
 
-            var time = _gameTiming.CurTime;
-            component.TimeOfDeath = time;
-
-            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
-            if (component.Action.UseDelay != null)
-                component.Action.Cooldown = (time, time + component.Action.UseDelay.Value);
-            _actions.AddAction(uid, component.Action, null);
+            component.TimeOfDeath = _gameTiming.CurTime;
         }
 
         private void OnGhostShutdown(EntityUid uid, GhostComponent component, ComponentShutdown args)
@@ -151,6 +145,22 @@ namespace Content.Server.Ghost
 
                 _actions.RemoveAction(uid, component.Action);
             }
+        }
+
+        private void OnGhostMapInit(EntityUid uid, GhostComponent component, MapInitEvent args)
+        {
+            // TODO ghost: remove once ghosts are persistent and aren't deleted when returning to body
+            var time = _gameTiming.CurTime;
+            var action = _actions.AddAction(uid, ref component.Action, component.ActionId);
+            if (action?.UseDelay != null)
+            {
+                action.Cooldown = (time, time + action.UseDelay.Value);
+                Dirty(component.Action!.Value, action);
+            }
+
+            _actions.AddAction(uid, ref component.ToggleLightingAction, component.ToggleLightingActionId);
+            _actions.AddAction(uid, ref component.ToggleFoVAction, component.ToggleFoVActionId);
+            _actions.AddAction(uid, ref component.ToggleGhostsAction, component.ToggleGhostsActionId);
         }
 
         private void OnGhostExamine(EntityUid uid, GhostComponent component, ExaminedEvent args)

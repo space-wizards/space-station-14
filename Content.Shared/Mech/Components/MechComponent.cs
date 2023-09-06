@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.FixedPoint;
 using Content.Shared.Whitelist;
 using Robust.Shared.Containers;
@@ -142,11 +141,11 @@ public sealed partial class MechComponent : Component
     public List<string> StartingEquipment = new();
 
     #region Action Prototypes
-    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("mechCycleAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechCycleAction = "MechCycleEquipment";
-    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("mechUiAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechUiAction = "MechOpenUI";
-    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("mechEjectAction", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string MechEjectAction = "MechEject";
     #endregion
 

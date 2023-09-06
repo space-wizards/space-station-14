@@ -1,5 +1,6 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
 
 namespace Content.Shared.Movement.Components;
 
@@ -9,8 +10,10 @@ public sealed partial class JetpackComponent : Component
     [ViewVariables(VVAccess.ReadWrite), DataField("moleUsage")]
     public float MoleUsage = 0.012f;
 
-    [DataField("toggleAction", required: true)]
-    public InstantAction ToggleAction = new();
+    [DataField("toggleActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+    public string? ToggleActionId = "ActionToggleJetpack";
+
+    [DataField("toggleAction")] public EntityUid? ToggleAction;
 
     [ViewVariables(VVAccess.ReadWrite), DataField("acceleration")]
     public float Acceleration = 1f;

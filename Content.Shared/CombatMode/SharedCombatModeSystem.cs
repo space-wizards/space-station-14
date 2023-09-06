@@ -1,10 +1,8 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Popups;
 using Content.Shared.Targeting;
 using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
-using Robust.Shared.Serialization;
 using Robust.Shared.Timing;
 
 namespace Content.Shared.CombatMode;
@@ -28,20 +26,12 @@ public abstract class SharedCombatModeSystem : EntitySystem
 
     private void OnStartup(EntityUid uid, CombatModeComponent component, ComponentStartup args)
     {
-        if (component.CombatToggleAction == null
-            && _protoMan.TryIndex(component.CombatToggleActionId, out InstantActionPrototype? toggleProto))
-        {
-            component.CombatToggleAction = new(toggleProto);
-        }
-
-        if (component.CombatToggleAction != null)
-            _actionsSystem.AddAction(uid, component.CombatToggleAction, null);
+        _actionsSystem.AddAction(uid, ref component.CombatToggleAction, component.CombatToggleActionId);
     }
 
     private void OnShutdown(EntityUid uid, CombatModeComponent component, ComponentShutdown args)
     {
-        if (component.CombatToggleAction != null)
-            _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
+        _actionsSystem.RemoveAction(uid, component.CombatToggleAction);
     }
 
     private void OnActionPerform(EntityUid uid, CombatModeComponent component, ToggleCombatActionEvent args)

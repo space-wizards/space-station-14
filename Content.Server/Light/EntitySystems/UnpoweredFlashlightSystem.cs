@@ -45,7 +45,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnGetActions(EntityUid uid, UnpoweredFlashlightComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleAction, component.ToggleActionId);
         }
 
         private void AddToggleLightVerbs(EntityUid uid, UnpoweredFlashlightComponent component, GetVerbsEvent<ActivationVerb> args)
@@ -66,7 +66,7 @@ namespace Content.Server.Light.EntitySystems
 
         private void OnMindAdded(EntityUid uid, UnpoweredFlashlightComponent component, MindAddedMessage args)
         {
-            _actionsSystem.AddAction(uid, component.ToggleAction, null);
+            _actionsSystem.AddAction(uid, ref component.ToggleAction, component.ToggleActionId);
         }
 
         private void OnGotEmagged(EntityUid uid, UnpoweredFlashlightComponent component, ref GotEmaggedEvent args)

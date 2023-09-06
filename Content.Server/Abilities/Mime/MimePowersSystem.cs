@@ -1,16 +1,15 @@
 using Content.Server.Popups;
+using Content.Server.Speech.Muting;
 using Content.Shared.Actions;
+using Content.Shared.Actions.Events;
 using Content.Shared.Alert;
 using Content.Shared.Coordinates.Helpers;
-using Content.Shared.Physics;
-using Content.Shared.Doors.Components;
 using Content.Shared.Maps;
 using Content.Shared.Mobs.Components;
-using Robust.Shared.Physics.Components;
-using Robust.Shared.Timing;
-using Content.Server.Speech.Muting;
+using Content.Shared.Physics;
 using Robust.Shared.Containers;
 using Robust.Shared.Map;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -53,7 +52,7 @@ namespace Content.Server.Abilities.Mime
         private void OnComponentInit(EntityUid uid, MimePowersComponent component, ComponentInit args)
         {
             EnsureComp<MutedComponent>(uid);
-            _actionsSystem.AddAction(uid, component.InvisibleWallAction, uid);
+            _actionsSystem.AddAction(uid, ref component.InvisibleWallAction, component.InvisibleWallActionId, uid);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
         }
 
@@ -139,11 +138,7 @@ namespace Content.Server.Abilities.Mime
             AddComp<MutedComponent>(uid);
             _alertsSystem.ClearAlert(uid, AlertType.VowBroken);
             _alertsSystem.ShowAlert(uid, AlertType.VowOfSilence);
-            _actionsSystem.AddAction(uid, mimePowers.InvisibleWallAction, uid);
+            _actionsSystem.AddAction(uid, ref mimePowers.InvisibleWallAction, mimePowers.InvisibleWallActionId, uid);
         }
-    }
-
-    public sealed partial class InvisibleWallActionEvent : InstantActionEvent
-    {
     }
 }

@@ -2,12 +2,10 @@ using Content.Client.Movement.Systems;
 using Content.Shared.Actions;
 using Content.Shared.Ghost;
 using Content.Shared.Popups;
-using JetBrains.Annotations;
 using Robust.Client.Console;
 using Robust.Client.GameObjects;
 using Robust.Client.Graphics;
 using Robust.Client.Player;
-using Robust.Shared.GameStates;
 
 namespace Content.Client.Ghost
 {
@@ -81,9 +79,9 @@ namespace Content.Client.Ghost
                 sprite.Visible = GhostVisibility;
             }
 
-            _actions.AddAction(uid, component.ToggleLightingAction, null);
-            _actions.AddAction(uid, component.ToggleFoVAction, null);
-            _actions.AddAction(uid, component.ToggleGhostsAction, null);
+            _actions.AddAction(uid, ref component.ToggleLightingAction, component.ToggleGhostsActionId);
+            _actions.AddAction(uid, ref component.ToggleFoVAction, component.ToggleFoVActionId);
+            _actions.AddAction(uid, ref component.ToggleGhostsAction, component.ToggleGhostsActionId);
         }
 
         private void OnToggleLighting(EntityUid uid, GhostComponent component, ToggleLightingActionEvent args)

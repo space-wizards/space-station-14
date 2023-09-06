@@ -24,6 +24,16 @@
       provided_container: !type:Container { }
 
 - type: entity
+  id: ActionBorgSwapModule
+  name: action-name-swap-module
+  description: action-desc-swap-module
+  components:
+  - type: InstantAction
+    itemIconStyle: BigItem
+    useDelay: 0.5
+    event: !type:BorgModuleActionSelectedEvent
+
+- type: entity
   id: BaseBorgModuleCargo
   parent: BaseBorgModule
   abstract: true

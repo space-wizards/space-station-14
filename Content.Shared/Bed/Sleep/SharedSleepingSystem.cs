@@ -1,13 +1,19 @@
-using Content.Shared.Speech;
 using Content.Shared.Actions;
 using Content.Shared.Bed.Sleep;
 using Content.Shared.Eye.Blinding.Systems;
+using Content.Shared.Speech;
+using Robust.Shared.Prototypes;
+using Robust.Shared.Timing;
 
 namespace Content.Server.Bed.Sleep
 {
     public abstract class SharedSleepingSystem : EntitySystem
     {
+        [Dependency] private readonly IGameTiming _gameTiming = default!;
+        [Dependency] private readonly SharedActionsSystem _actionsSystem = default!;
         [Dependency] private readonly BlindableSystem _blindableSystem = default!;
+
+        [ValidatePrototypeId<EntityPrototype>] private const string WakeActionId = "ActionWake";
 
         public override void Initialize()
         {
@@ -22,11 +28,15 @@ namespace Content.Server.Bed.Sleep
         private void OnSleepUnpaused(EntityUid uid, SleepingComponent component, ref EntityUnpausedEvent args)
         {
             component.CoolDownEnd += args.PausedTime;
-            Dirty(component);
+            Dirty(uid, component);
         }
 
         private void OnStartup(EntityUid uid, SleepingComponent component, ComponentStartup args)
         {
+            component.WakeAction = Spawn(WakeActionId);
+            _actionsSystem.SetCooldown(component.WakeAction, _gameTiming.CurTime, _gameTiming.CurTime + TimeSpan.FromSeconds(15));
+            _actionsSystem.AddAction(uid, component.WakeAction.Value, null);
+
             var ev = new SleepStateChangedEvent(true);
             RaiseLocalEvent(uid, ev);
             _blindableSystem.UpdateIsBlind(uid);
@@ -34,6 +44,8 @@ namespace Content.Server.Bed.Sleep
 
         private void OnShutdown(EntityUid uid, SleepingComponent component, ComponentShutdown args)
         {
+            _actionsSystem.RemoveAction(uid, component.WakeAction);
+
             var ev = new SleepStateChangedEvent(false);
             RaiseLocalEvent(uid, ev);
             _blindableSystem.UpdateIsBlind(uid);

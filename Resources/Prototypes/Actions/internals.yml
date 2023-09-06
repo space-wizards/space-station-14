@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: ToggleInternals
+  name: action-name-internals-toggle
+  description: action-description-internals-toggle
+  components:
+  - type: InstantAction
+    icon:
+      sprite: Interface/Alerts/internals.rsi
+      state: internal2
+    iconOn:
+      sprite: Interface/Alerts/internals.rsi
+      state: internal1
+    event: !type:ToggleActionEvent
+    useDelay: 1

@@ -1,12 +1,12 @@
-using Content.Server.Inventory;
-using Content.Server.Popups;
 using Content.Server.Body.Systems;
+using Content.Server.Popups;
 using Content.Shared.Actions;
 using Content.Shared.Audio;
 using Content.Shared.Damage;
 using Content.Shared.DoAfter;
 using Content.Shared.Examine;
 using Content.Shared.Guardian;
+using Content.Shared.Hands.Components;
 using Content.Shared.Hands.EntitySystems;
 using Content.Shared.Interaction;
 using Content.Shared.Interaction.Events;
@@ -16,7 +16,6 @@ using Robust.Server.GameObjects;
 using Robust.Shared.Containers;
 using Robust.Shared.Player;
 using Robust.Shared.Utility;
-using Content.Shared.Hands.Components;
 
 namespace Content.Server.Guardian
 {
@@ -90,7 +89,7 @@ namespace Content.Server.Guardian
         private void OnHostInit(EntityUid uid, GuardianHostComponent component, ComponentInit args)
         {
             component.GuardianContainer = uid.EnsureContainer<ContainerSlot>("GuardianContainer");
-            _actionSystem.AddAction(uid, component.Action, null);
+            _actionSystem.AddAction(uid, ref component.Action, component.ActionId);
         }
 
         private void OnHostShutdown(EntityUid uid, GuardianHostComponent component, ComponentShutdown args)

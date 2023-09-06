@@ -1,14 +1,11 @@
 using Content.Server.Actions;
 using Content.Server.DoAfter;
 using Content.Server.Popups;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
+using Content.Server.Stack;
 using Content.Shared.DoAfter;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
-using Robust.Shared.Prototypes;
 using Content.Shared.Sericulture;
-using Content.Server.Stack;
 
 namespace Content.Server.Sericulture;
 
@@ -16,7 +13,6 @@ public sealed partial class SericultureSystem : EntitySystem
 {
     [Dependency] private readonly ActionsSystem _actionsSystem = default!;
     [Dependency] private readonly DoAfterSystem _doAfterSystem = default!;
-    [Dependency] private readonly IPrototypeManager _protoManager = default!;
     [Dependency] private readonly HungerSystem _hungerSystem = default!;
     [Dependency] private readonly PopupSystem _popupSystem = default!;
     [Dependency] private readonly StackSystem _stackSystem = default!;
@@ -33,18 +29,12 @@ public sealed partial class SericultureSystem : EntitySystem
 
     private void OnCompInit(EntityUid uid, SericultureComponent comp, ComponentInit args)
     {
-        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
-            return;
-
-        _actionsSystem.AddAction(uid, new InstantAction(actionProto), uid);
+        _actionsSystem.AddAction(uid, ref comp.Action, comp.ActionProto, uid);
     }
 
     private void OnCompRemove(EntityUid uid, SericultureComponent comp, ComponentShutdown args)
     {
-        if (!_protoManager.TryIndex<InstantActionPrototype>(comp.ActionProto, out var actionProto))
-            return;
-
-        _actionsSystem.RemoveAction(uid, new InstantAction(actionProto));
+        _actionsSystem.RemoveAction(uid, comp.Action);
     }
 
     private void OnSericultureStart(EntityUid uid, SericultureComponent comp, SericultureActionEvent args)
@@ -96,6 +86,4 @@ public sealed partial class SericultureSystem : EntitySystem
 
         return false;
     }
-
-    public sealed partial class SericultureActionEvent : InstantActionEvent { }
 }

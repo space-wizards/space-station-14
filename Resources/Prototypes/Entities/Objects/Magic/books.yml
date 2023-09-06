@@ -19,9 +19,8 @@
   parent: BaseSpellbook
   components:
     - type: Spellbook
-      instantSpells:
+      spells:
         FlashRune: -1
-      worldSpells:
         SpawnMagicarpSpell: -1
 
 - type: entity
@@ -34,7 +33,7 @@
       layers:
         - state: bookforcewall
     - type: Spellbook
-      instantSpells:
+      spells:
         ForceWall: -1
 
 - type: entity
@@ -47,7 +46,7 @@
       layers:
         - state: spellbook
     - type: Spellbook
-      worldSpells:
+      spells:
         Blink: -1
 
 - type: entity
@@ -60,7 +59,7 @@
     layers:
     - state: spellbook
   - type: Spellbook
-    entitySpells:
+    spells:
       Smite: -1
 
 - type: entity
@@ -73,7 +72,7 @@
       layers:
         - state: bookknock
     - type: Spellbook
-      instantSpells:
+      spells:
         Knock: -1
 
 - type: entity
@@ -86,7 +85,7 @@
     layers:
     - state: bookfireball
   - type: Spellbook
-    worldSpells:
+    spells:
       Fireball: -1
 
 - type: entity
@@ -99,7 +98,7 @@
     layers:
     - state: spell_default
   - type: Spellbook
-    instantSpells:
+    spells:
       FlashRune: -1
       ExplosionRune: -1
       IgniteRune: -1

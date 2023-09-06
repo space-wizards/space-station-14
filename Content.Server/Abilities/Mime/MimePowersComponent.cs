@@ -1,8 +1,6 @@
-using Content.Shared.Actions.ActionTypes;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom;
 using Robust.Shared.Serialization.TypeSerializers.Implementations.Custom.Prototype;
-using Robust.Shared.Utility;
 
 namespace Content.Server.Abilities.Mime
 {
@@ -22,18 +20,12 @@ namespace Content.Server.Abilities.Mime
         /// The wall prototype to use.
         /// </summary>
         [DataField("wallPrototype", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
-        public string WallPrototype = "WallInvisible";
+        public string WallPrototype = "ActionMimeInvisibleWall";
 
-        [DataField("invisibleWallAction")]
-        public InstantAction InvisibleWallAction = new()
-        {
-            UseDelay = TimeSpan.FromSeconds(30),
-            Icon = new SpriteSpecifier.Texture(new("Structures/Walls/solid.rsi/full.png")),
-            DisplayName = "mime-invisible-wall",
-            Description = "mime-invisible-wall-desc",
-            Priority = -1,
-            Event = new InvisibleWallActionEvent(),
-        };
+        [DataField("invisibleWallActionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
+        public string? InvisibleWallActionId;
+
+        [DataField("invisibleWallAction")] public EntityUid? InvisibleWallAction;
 
         // The vow zone lies below
         public bool VowBroken = false;

@@ -7,8 +7,8 @@ using Content.Server.UserInterface;
 using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Atmos.Components;
-using Content.Shared.Toggleable;
 using Content.Shared.Examine;
+using Content.Shared.Toggleable;
 using JetBrains.Annotations;
 using Robust.Server.GameObjects;
 using Robust.Server.Player;
@@ -94,7 +94,7 @@ namespace Content.Server.Atmos.EntitySystems
 
         private void OnGetActions(EntityUid uid, GasTankComponent component, GetItemActionsEvent args)
         {
-            args.Actions.Add(component.ToggleAction);
+            args.AddAction(ref component.ToggleAction, component.ToggleActionId);
         }
 
         private void OnExamined(EntityUid uid, GasTankComponent component, ExaminedEvent args)

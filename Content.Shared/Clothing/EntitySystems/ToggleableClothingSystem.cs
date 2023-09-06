@@ -1,5 +1,4 @@
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.Components;
 using Content.Shared.DoAfter;
 using Content.Shared.IdentityManagement;
@@ -10,7 +9,6 @@ using Content.Shared.Popups;
 using Content.Shared.Strip;
 using Content.Shared.Verbs;
 using Robust.Shared.Containers;
-using Robust.Shared.Network;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
@@ -60,7 +58,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (!args.CanAccess || !args.CanInteract || component.ClothingUid == null || component.Container == null)
             return;
 
-        var text = component.VerbText ?? component.ToggleAction?.DisplayName;
+        var text = component.VerbText ?? (component.ToggleAction == null ? null : Name(component.ToggleAction.Value));
         if (text == null)
             return;
 
@@ -179,8 +177,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
         // automatically be deleted.
 
         // remove action.
-        if (component.ToggleAction?.AttachedEntity != null)
-            _actionsSystem.RemoveAction(component.ToggleAction.AttachedEntity.Value, component.ToggleAction);
+        if (_actionsSystem.TryGetActionData(component.ToggleAction, out var action) &&
+            action.AttachedEntity != null)
+        {
+            _actionsSystem.RemoveAction(action.AttachedEntity.Value, component.ToggleAction);
+        }
 
         if (component.ClothingUid != null)
             QueueDel(component.ClothingUid.Value);
@@ -200,8 +201,11 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
 
         // remove action.
-        if (toggleComp.ToggleAction?.AttachedEntity != null)
-            _actionsSystem.RemoveAction(toggleComp.ToggleAction.AttachedEntity.Value, toggleComp.ToggleAction);
+        if (_actionsSystem.TryGetActionData(toggleComp.ToggleAction, out var action) &&
+            action.AttachedEntity != null)
+        {
+            _actionsSystem.RemoveAction(action.AttachedEntity.Value, toggleComp.ToggleAction);
+        }
 
         RemComp(component.AttachedUid, toggleComp);
     }
@@ -259,8 +263,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
         if (component.ClothingUid == null || (args.SlotFlags & component.RequiredFlags) != component.RequiredFlags)
             return;
 
-        if (component.ToggleAction != null)
-            args.Actions.Add(component.ToggleAction);
+        args.AddAction(ref component.ToggleAction, component.ActionId);
     }
 
     private void OnInit(EntityUid uid, ToggleableClothingComponent component, ComponentInit args)
@@ -280,11 +283,7 @@ public sealed class ToggleableClothingSystem : EntitySystem
             return;
         }
 
-        if (component.ToggleAction == null
-            && _proto.TryIndex(component.ActionId, out InstantActionPrototype? act))
-        {
-            component.ToggleAction = new(act);
-        }
+        component.ToggleAction ??= Spawn(component.ActionId);
 
         if (component.ClothingUid != null && component.ToggleAction != null)
         {
@@ -300,9 +299,9 @@ public sealed class ToggleableClothingSystem : EntitySystem
             component.Container.Insert(component.ClothingUid.Value, EntityManager, ownerTransform: xform);
         }
 
-        if (component.ToggleAction != null)
+        if (_actionsSystem.TryGetActionData(component.ToggleAction, out var action))
         {
-            component.ToggleAction.EntityIcon = component.ClothingUid;
+            action.EntityIcon = component.ClothingUid;
             _actionsSystem.Dirty(component.ToggleAction);
         }
     }

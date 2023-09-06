@@ -1,0 +1,14 @@
+﻿- type: entity
+  id: ActionRevertPolymorph
+  name: polymorph-revert-action-name
+  description: polymorph-revert-action-description
+  components:
+  - type: InstantAction
+    event: !type:RevertPolymorphActionEvent
+
+- type: entity
+  id: ActionPolymorph
+  components:
+  - type: InstantAction
+    event: !type:PolymorphActionEvent
+    itemIconStyle: NoItem

@@ -1,6 +1,6 @@
 ﻿using Content.Shared.Actions;
 
-namespace Content.Server.Magic.Events;
+namespace Content.Shared.Magic.Events;
 
 public sealed partial class SmiteSpellEvent : EntityTargetActionEvent, ISpeakSpell
 {

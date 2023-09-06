@@ -1004,10 +1004,7 @@
     wilhelmProbability: 0.001
   # TODO: Remove CombatMode when Prototype Composition is added
   - type: CombatMode
-    combatToggleAction:
-      enabled: false
-      autoPopulate: false
-      name: action-name-combat
+    combatToggleActionId: CombatModeToggleOff
   - type: Bloodstream
     bloodMaxVolume: 50
   - type: CanEscapeInventory

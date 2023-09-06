@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.Inventory;
 using Robust.Shared.Containers;
@@ -20,9 +19,9 @@ public sealed partial class ToggleableClothingComponent : Component
     /// <summary>
     ///     Action used to toggle the clothing on or off.
     /// </summary>
-    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<InstantActionPrototype>))]
+    [DataField("actionId", customTypeSerializer: typeof(PrototypeIdSerializer<EntityPrototype>))]
     public string ActionId = "ToggleSuitPiece";
-    public InstantAction? ToggleAction = null;
+    public EntityUid? ToggleAction = null;
 
     /// <summary>
     ///     Default clothing entity prototype to spawn into the clothing container.

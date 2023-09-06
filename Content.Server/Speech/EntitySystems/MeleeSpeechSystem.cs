@@ -1,8 +1,8 @@
 using Content.Server.Administration.Logs;
 using Content.Shared.Actions;
+using Content.Shared.Database;
 using Content.Shared.Speech.Components;
 using Content.Shared.Speech.EntitySystems;
-using Content.Shared.Database;
 using Robust.Server.GameObjects;
 
 namespace Content.Server.Speech.EntitySystems;
@@ -22,13 +22,11 @@ public sealed class MeleeSpeechSystem : SharedMeleeSpeechSystem
     }
     private void OnComponentInit(EntityUid uid, MeleeSpeechComponent component, ComponentInit args)
     {
-        if (component.ConfigureAction != null)
-            _actionSystem.AddAction(uid, component.ConfigureAction, uid);
+        _actionSystem.AddAction(uid, ref component.ConfigureAction, component.ConfigureActionId, uid);
     }
     private void OnGetActions(EntityUid uid, MeleeSpeechComponent component, GetItemActionsEvent args)
     {
-        if (component.ConfigureAction != null)
-            args.Actions.Add(component.ConfigureAction);
+        args.AddAction(ref component.ConfigureAction, component.ConfigureActionId);
     }
     private void OnBattlecryChanged(EntityUid uid, MeleeSpeechComponent comp, MeleeSpeechBattlecryChangedMessage args)
     {

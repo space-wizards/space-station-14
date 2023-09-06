@@ -86,7 +86,7 @@ public abstract class SharedMagbootsSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, MagbootsComponent component, GetItemActionsEvent args)
     {
-        args.Actions.Add(component.ToggleAction);
+        args.AddAction(ref component.ToggleAction, component.ToggleActionId);
     }
 }
 

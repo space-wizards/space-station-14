@@ -21,18 +21,17 @@ public abstract class SharedDevourSystem : EntitySystem
     {
         base.Initialize();
 
-        SubscribeLocalEvent<DevourerComponent, ComponentStartup>(OnStartup);
+        SubscribeLocalEvent<DevourerComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<DevourerComponent, DevourActionEvent>(OnDevourAction);
     }
 
-    protected void OnStartup(EntityUid uid, DevourerComponent component, ComponentStartup args)
+    protected void OnMapInit(EntityUid uid, DevourerComponent component, MapInitEvent args)
     {
         //Devourer doesn't actually chew, since he sends targets right into his stomach.
         //I did it mom, I added ERP content into upstream. Legally!
         component.Stomach = _containerSystem.EnsureContainer<Container>(uid, "stomach");
 
-        if (component.DevourAction != null)
-            _actionsSystem.AddAction(uid, component.DevourAction, null);
+        _actionsSystem.AddAction(uid, ref component.DevourAction, component.DevourActionId);
     }
 
     /// <summary>

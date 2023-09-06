@@ -9,6 +9,7 @@ using Content.Server.Nutrition.EntitySystems;
 using Content.Server.Popups;
 using Content.Server.VoiceMask;
 using Content.Shared.Actions;
+using Content.Shared.Clothing;
 using Content.Shared.Clothing.Components;
 using Content.Shared.Clothing.EntitySystems;
 using Content.Shared.IdentityManagement.Components;
@@ -38,8 +39,8 @@ namespace Content.Server.Clothing
 
         private void OnGetActions(EntityUid uid, MaskComponent component, GetItemActionsEvent args)
         {
-            if (component.ToggleAction != null && !args.InHands)
-                args.Actions.Add(component.ToggleAction);
+            if (!args.InHands)
+                args.AddAction(ref component.ToggleAction, component.ToggleActionId);
         }
 
         private void OnToggleMask(EntityUid uid, MaskComponent mask, ToggleMaskEvent args)

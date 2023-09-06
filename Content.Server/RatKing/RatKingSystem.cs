@@ -1,13 +1,11 @@
 using Content.Server.Actions;
 using Content.Server.Atmos.EntitySystems;
-using Content.Server.Nutrition.Components;
 using Content.Server.Popups;
-using Content.Shared.Actions;
 using Content.Shared.Atmos;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Nutrition.EntitySystems;
+using Content.Shared.RatKing;
 using Robust.Server.GameObjects;
-using Robust.Shared.Player;
 
 namespace Content.Server.RatKing
 {
@@ -31,8 +29,8 @@ namespace Content.Server.RatKing
 
         private void OnStartup(EntityUid uid, RatKingComponent component, ComponentStartup args)
         {
-            _action.AddAction(uid, component.ActionRaiseArmy, null);
-            _action.AddAction(uid, component.ActionDomain, null);
+            _action.AddAction(uid, ref component.ActionRaiseArmy, component.ActionRaiseArmyId);
+            _action.AddAction(uid, ref component.ActionDomain, component.ActionDomainId);
         }
 
         /// <summary>
@@ -86,14 +84,4 @@ namespace Content.Server.RatKing
             tileMix?.AdjustMoles(Gas.Miasma, component.MolesMiasmaPerDomain);
         }
     }
-
-    public sealed partial class RatKingRaiseArmyActionEvent : InstantActionEvent
-    {
-
-    }
-
-    public sealed partial class RatKingDomainActionEvent : InstantActionEvent
-    {
-
-    }
-};
+}

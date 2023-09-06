@@ -1,4 +1,3 @@
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Hands;
 using Content.Shared.Inventory;
 using Content.Shared.Inventory.Events;
@@ -18,7 +17,8 @@ namespace Content.Shared.Actions;
 /// </remarks>
 public sealed class GetItemActionsEvent : EntityEventArgs
 {
-    public SortedSet<ActionType> Actions = new();
+    private IEntityManager _entities;
+    public readonly SortedSet<EntityUid> Actions = new();
 
     /// <summary>
     /// User equipping the item.
@@ -35,10 +35,24 @@ public sealed class GetItemActionsEvent : EntityEventArgs
     /// </summary>
     public bool InHands => SlotFlags == null;
 
-    public GetItemActionsEvent(EntityUid user, SlotFlags? slotFlags = null)
+    public GetItemActionsEvent(IEntityManager entities, EntityUid user, SlotFlags? slotFlags = null)
     {
+        _entities = entities;
         User = user;
         SlotFlags = slotFlags;
+    }
+
+    public void AddAction(ref EntityUid? actionId, string? prototypeId)
+    {
+        if (_entities.Deleted(actionId))
+        {
+            if (string.IsNullOrWhiteSpace(prototypeId))
+                return;
+
+            actionId = _entities.Spawn(prototypeId);
+        }
+
+        Actions.Add(actionId.Value);
     }
 }
 
@@ -48,22 +62,22 @@ public sealed class GetItemActionsEvent : EntityEventArgs
 [Serializable, NetSerializable]
 public sealed class RequestPerformActionEvent : EntityEventArgs
 {
-    public readonly ActionType Action;
+    public readonly EntityUid Action;
     public readonly EntityUid? EntityTarget;
     public readonly EntityCoordinates? EntityCoordinatesTarget;
 
-    public RequestPerformActionEvent(InstantAction action)
+    public RequestPerformActionEvent(EntityUid action)
     {
         Action = action;
     }
 
-    public RequestPerformActionEvent(EntityTargetAction action, EntityUid entityTarget)
+    public RequestPerformActionEvent(EntityUid action, EntityUid entityTarget)
     {
         Action = action;
         EntityTarget = entityTarget;
     }
 
-    public RequestPerformActionEvent(WorldTargetAction action, EntityCoordinates entityCoordinatesTarget)
+    public RequestPerformActionEvent(EntityUid action, EntityCoordinates entityCoordinatesTarget)
     {
         Action = action;
         EntityCoordinatesTarget = entityCoordinatesTarget;

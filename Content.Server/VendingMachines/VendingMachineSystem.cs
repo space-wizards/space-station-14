@@ -8,7 +8,6 @@ using Content.Server.UserInterface;
 using Content.Shared.Access.Components;
 using Content.Shared.Access.Systems;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
 using Content.Shared.Destructible;
 using Content.Shared.DoAfter;
@@ -89,11 +88,7 @@ namespace Content.Server.VendingMachines
                 TryUpdateVisualState(uid, component);
             }
 
-            if (component.Action != null)
-            {
-                var action = new InstantAction(PrototypeManager.Index<InstantActionPrototype>(component.Action));
-                _action.AddAction(uid, action, uid);
-            }
+            _action.AddAction(uid, ref component.Action, component.ActionId, uid);
         }
 
         private void OnActivatableUIOpenAttempt(EntityUid uid, VendingMachineComponent component, ActivatableUIOpenAttemptEvent args)

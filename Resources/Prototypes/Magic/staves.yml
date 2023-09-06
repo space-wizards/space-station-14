@@ -14,13 +14,8 @@
     - state: nothing-unshaded
       shader: unshaded
   - type: ActionOnInteract
-    entityActions:
-    - whitelist: { components: [ PointLight ] }
-      charges: 25
-      sound: /Audio/Magic/blink.ogg
-      event: !type:ChangeComponentsSpellEvent
-        toAdd:
-        - type: RgbLightController
+    actionIds:
+    - ActionRgbLight
   - type: Item
     inhandVisuals:
       left:
@@ -35,3 +30,14 @@
   - type: PointLight
     enabled: true
     radius: 2
+
+- type: entity
+  id: ActionRgbLight
+  components:
+  - type: EntityTargetAction
+    whitelist: { components: [ PointLight ] }
+    charges: 25
+    sound: /Audio/Magic/blink.ogg
+    event: !type:ChangeComponentsSpellEvent
+      toAdd:
+      - type: RgbLightController

@@ -1,10 +1,12 @@
-﻿- type: instantAction
+﻿- type: entity
   id: ViewLaws
   name: action-name-view-laws
   description: action-description-view-laws
-  itemIconStyle: NoItem
-  icon:
-    sprite: Interface/Actions/actions_borg.rsi
-    state: state-laws
-  event: !type:ToggleLawsScreenEvent
-  useDelay: 0.5
+  components:
+  - type: InstantAction
+    itemIconStyle: NoItem
+    icon:
+      sprite: Interface/Actions/actions_borg.rsi
+      state: state-laws
+    event: !type:ToggleLawsScreenEvent
+    useDelay: 0.5

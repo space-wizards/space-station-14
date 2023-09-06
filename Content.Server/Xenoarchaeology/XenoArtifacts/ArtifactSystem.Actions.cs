@@ -1,7 +1,5 @@
 ﻿using Content.Server.Actions;
 using Content.Server.Popups;
-using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Xenoarchaeology.XenoArtifacts;
 using Robust.Shared.Prototypes;
 
@@ -11,6 +9,8 @@ public partial class ArtifactSystem
 {
     [Dependency] private readonly ActionsSystem _actions = default!;
     [Dependency] private readonly PopupSystem _popup = default!;
+
+    [ValidatePrototypeId<EntityPrototype>] private const string ArtifactActivateActionId = "ArtifactActivate";
 
     /// <summary>
     ///     Used to add the artifact activation action (hehe), which lets sentient artifacts activate themselves,
@@ -26,18 +26,12 @@ public partial class ArtifactSystem
 
     private void OnStartup(EntityUid uid, ArtifactComponent component, ComponentStartup args)
     {
-        if (_prototype.TryIndex<InstantActionPrototype>("ArtifactActivate", out var proto))
-        {
-            _actions.AddAction(uid, new InstantAction(proto), null);
-        }
+        _actions.AddAction(uid, Spawn(ArtifactActivateActionId), null);
     }
 
     private void OnRemove(EntityUid uid, ArtifactComponent component, ComponentRemove args)
     {
-        if (_prototype.TryIndex<InstantActionPrototype>("ArtifactActivate", out var proto))
-        {
-            _actions.RemoveAction(uid, new InstantAction(proto));
-        }
+        _actions.RemoveAction(uid, ArtifactActivateActionId);
     }
 
     private void OnSelfActivate(EntityUid uid, ArtifactComponent component, ArtifactSelfActivateEvent args)
@@ -52,4 +46,3 @@ public partial class ArtifactSystem
         args.Handled = true;
     }
 }
-

@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Content.Shared.Actions;
-using Content.Shared.Actions.ActionTypes;
 using Content.Shared.Damage;
-using Content.Shared.Damage.Prototypes;
 using Content.Shared.Examine;
 using Content.Shared.Hands;
 using Content.Shared.Hands.Components;
@@ -80,11 +78,7 @@ public sealed partial class BlockingSystem : EntitySystem
 
     private void OnGetActions(EntityUid uid, BlockingComponent component, GetItemActionsEvent args)
     {
-        if (component.BlockingToggleAction == null && _proto.TryIndex(component.BlockingToggleActionId, out InstantActionPrototype? act))
-            component.BlockingToggleAction = new(act);
-
-        if (component.BlockingToggleAction != null)
-            args.Actions.Add(component.BlockingToggleAction);
+        args.AddAction(ref component.BlockingToggleAction, component.BlockingToggleActionId);
     }
 
     private void OnToggleAction(EntityUid uid, BlockingComponent component, ToggleActionEvent args)
