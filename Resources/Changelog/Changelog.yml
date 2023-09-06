@@ -1,9 +1,4 @@
 Entries:
-- author: PJB3005
-  changes:
-  - {message: The Particle Accelerator should reliably scan parts again., type: Fix}
-  id: 4274
-  time: '2023-07-18T05:57:59.0000000+00:00'
 - author: PrPleGoo
   changes:
   - {message: Added onion goggles for the chef. It displays hunger icons for hungry/overfed
@@ -2991,3 +2986,9 @@ Entries:
   - {message: Fixes crates requiring to be welded to deconstruct them., type: Fix}
   id: 4773
   time: '2023-09-06T18:18:14.0000000+00:00'
+- author: potato1234x
+  changes:
+  - {message: Added back the old glass tiles while keeping the new ones as a fancier
+      alternative., type: Add}
+  id: 4774
+  time: '2023-09-06T21:41:53.0000000+00:00'
