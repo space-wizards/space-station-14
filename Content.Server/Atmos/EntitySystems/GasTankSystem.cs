@@ -73,7 +73,6 @@ namespace Content.Server.Atmos.EntitySystems
 
             component.OutputPressure = pressure;
 
-            // Why isn't this working?
             UpdateUserInterface(component, true);
         }
 
