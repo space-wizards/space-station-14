@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "license": "CC-0",
+  "copyright": "adapted from public domain paintings by @terezi4real github",
+  "size": {
+    "x": 32,
+    "y": 32
+  },
+  "states": [
+    {
+      "name": "theempty"
+    },
+    {
+      "name": "thebeardedman"
+    },
+    {
+      "name": "thebuilding"
+    },
+    {
+      "name": "thechild"
+    },
+    {
+      "name": "thedancer"
+    },
+    {
+      "name": "thedragon"
+    },
+    {
+      "name": "thehome"
+    },
+    {
+      "name": "thehorse"
+    },
+    {
+      "name": "theking"
+    },
+    {
+      "name": "thelady"
+    },
+    {
+      "name": "thelonely"
+    },
+    {
+      "name": "themother"
+    },
+    {
+      "name": "themythicalbeast"
+    },
+    {
+      "name": "theofficer"
+    },
+    {
+      "name": "theship"
+    },
+    {
+      "name": "thetemple"
+    },
+    {
+      "name": "thetiger"
+    },
+    {
+      "name": "thetree"
+    },
+    {
+      "name": "thewarrior"
+    },
+    {
+      "name": "thewoman"
+    },
+    {
+      "name": "thesailboat"
+    }
+  ]
+}

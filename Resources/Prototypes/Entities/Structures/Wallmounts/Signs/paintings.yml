@@ -10,6 +10,17 @@
     sprite: Structures/Wallmounts/paintings.rsi
 
 - type: entity
+  parent: BaseSign
+  id: PaintingClassicBase
+  abstract: true
+  components:
+  - type: WallMount
+    arc: 360
+  - type: Sprite
+    drawdepth: WallTops
+    sprite: Structures/Wallmounts/paintingsclassic.rsi
+
+- type: entity
   parent: PaintingBase
   id: PaintingEmpty
   name: Empty Frame
@@ -187,4 +198,202 @@
   description: This painting is a sad clown! It sparks joy.
   components:
   - type: Sprite
-    state: painting19  
+    state: painting19
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicEmptyCanvas
+  name: empty canvas
+  description: an empty painting canvas. the possibilities are endless.
+  components:
+  - type: Sprite
+    state: theempty
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicBeardedMan
+  name: the bearded man
+  description: this painting depicts a bearded man, you feel scholarly.
+  components:
+  - type: Sprite
+    state: thebeardedman
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicBuilding
+  name: the building
+  description: this painting depicts the spire of a church, you feel determined.
+  components:
+  - type: Sprite
+    state: thebuilding
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicChild
+  name: the child
+  description: this painting depicts a child, its paint and frame are weathered and chipped.
+  components:
+  - type: Sprite
+    state: thechild
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicDancer
+  name: the dancer
+  description: this painting depicts a dancing person, you feel jovial.
+  components:
+  - type: Sprite
+    state: thedancer
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicDragon
+  name: the dragon
+  description: this painting is titled 'the dragon' but you cant quite make it out...
+  components:
+  - type: Sprite
+    state: thedragon
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicHome
+  name: the home
+  description: this painting depicts a quaint home in a forest, you feel calm.
+  components:
+  - type: Sprite
+    state: thehome
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicHorse
+  name: the horse
+  description: this painting depicts a horse. nice.
+  components:
+  - type: Sprite
+    state: thehorse
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicKing
+  name: the king
+  description: this painting depicts a king, you feel stoic.
+  components:
+  - type: Sprite
+    state: theking
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicLady
+  name: the lady
+  description: this painting depicts a noble woman, her smile comforts you.
+  components:
+  - type: Sprite
+    state: thelady
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicLady
+  name: the lonely
+  description: this painting depicts a wanderer. you feel lonely.
+  components:
+  - type: Sprite
+    state: thelonely
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicMother
+  name: the mother
+  description: this painting depicts a mother, her hand is posed in a long forgotten religious symbol.
+  components:
+  - type: Sprite
+    state: themother
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicMother
+  name: the mother
+  description: this painting depicts a mother, her hand is posed in a long forgotten religious symbol.
+  components:
+  - type: Sprite
+    state: themother
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicBeast
+  name: the beast
+  description: this painting depicts a disgusting beast, you can barely tell where it begins and ends.
+  components:
+  - type: Sprite
+    state: themythicalbeast
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicOfficer
+  name: the officer
+  description: there is a small plaque at the bottom, but the text has been defaced.
+  components:
+  - type: Sprite
+    state: theofficer
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicSailboat
+  name: the sailboat
+  description: this painting depicts a sailboat, you feel at peace.
+  components:
+  - type: Sprite
+    state: thesailboat
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicShip
+  name: the ship
+  description: this painting depicts a regal ship sailing through choppy waters, it is filled with intricate detail.
+  components:
+  - type: Sprite
+    state: theship
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicTemple
+  name: the temple
+  description: this painting depicts a temple, standing tall in a desert, you feel warm.
+  components:
+  - type: Sprite
+    state: thetemple
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicTiger
+  name: the tiger
+  description: this painting depicts a tiger, you feel ferocious.
+  components:
+  - type: Sprite
+    state: thetiger
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicTree
+  name: the tree
+  description: this painting depicts a tree, it stands alone against an empty sky.
+  components:
+  - type: Sprite
+    state: thetree
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicWarrior
+  name: the warrior
+  description: this painting depicts an ancient warrior, you feel strong.
+  components:
+  - type: Sprite
+    state: thewarrior
+
+- type: entity
+  parent: PaintingClassicBase
+  id: PaintingClassicWoman
+  name: the woman
+  description: this painting depicts a woman, her smile tugs at your cheeks to return it.
+  components:
+  - type: Sprite
+    state: thewoman
