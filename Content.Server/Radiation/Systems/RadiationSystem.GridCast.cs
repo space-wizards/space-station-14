@@ -230,7 +230,7 @@ public partial class RadiationSystem
     private float GetAdjustedRadiationIntensity(EntityUid uid, float rads)
     {
         var radblockingComps = new List<RadiationBlockingContainerComponent>();
-        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, ref radblockingComps))
+        if (_container.TryFindComponentsOnEntityContainerOrParent(uid, _radiationBlockingContainers, radblockingComps))
         {
             rads -= radblockingComps.Sum(x => x.RadResistance);
 
