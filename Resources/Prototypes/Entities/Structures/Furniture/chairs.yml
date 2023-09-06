@@ -330,6 +330,8 @@
   components:
   - type: Transform
     anchored: true
+  - type: Physics
+    bodyType: Static
   - type: Anchorable
   - type: Rotatable
   - type: Sprite
