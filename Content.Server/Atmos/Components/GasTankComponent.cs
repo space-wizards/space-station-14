@@ -48,6 +48,12 @@ namespace Content.Server.Atmos.Components
         public float OutputPressure = DefaultOutputPressure;
 
         /// <summary>
+        ///     The maximum allowed output pressure.
+        /// </summary>
+        [DataField("maxOutputPressure"), ViewVariables(VVAccess.ReadWrite)]
+        public float MaxOutputPressure = 3 * DefaultOutputPressure;
+
+        /// <summary>
         ///     Tank is connected to internals.
         /// </summary>
         [ViewVariables]
