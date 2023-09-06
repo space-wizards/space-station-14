@@ -12,6 +12,7 @@ using Content.Shared.ActionBlocker;
 using Content.Shared.CCVar;
 using Content.Shared.Chat;
 using Content.Shared.Database;
+using Content.Shared.Humanoid;
 using Content.Shared.Ghost;
 using Content.Shared.IdentityManagement;
 using Content.Shared.Interaction;
@@ -380,6 +381,10 @@ public sealed partial class ChatSystem : SharedChatSystem
         }
 
         name = FormattedMessage.EscapeText(name);
+		
+        if (TryComp<HumanoidAppearanceComponent>(source, out var comp))
+            name = $"[color={comp.SpeakerColor.ToHex()}]{name}[/color]";
+		
         var speech = GetSpeechVerb(source, message);
         var wrappedMessage = Loc.GetString(speech.Bold ? "chat-manager-entity-say-bold-wrap-message" : "chat-manager-entity-say-wrap-message",
             ("entityName", name),

@@ -1,4 +1,5 @@
 using Content.Shared.Examine;
+using Content.Shared.Decals;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.Humanoid.Prototypes;

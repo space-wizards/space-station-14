@@ -70,6 +70,9 @@ public sealed partial class HumanoidAppearanceComponent : Component
 
     [DataField("eyeColor")]
     public Color EyeColor = Color.Brown;
+	
+    [DataField("speakerColor")]
+    public Color SpeakerColor = Color.White;
 
     /// <summary>
     ///     Hair color of this humanoid. Used to avoid looping through all markings
@@ -97,6 +100,7 @@ public sealed partial class HumanoidAppearanceState : ComponentState
     public readonly string Species;
     public readonly Color SkinColor;
     public readonly Color EyeColor;
+    public readonly Color SpeakerColor;
 
     public HumanoidAppearanceState(
         MarkingSet currentMarkings,
@@ -108,7 +112,8 @@ public sealed partial class HumanoidAppearanceState : ComponentState
         int age,
         string species,
         Color skinColor,
-        Color eyeColor)
+        Color eyeColor,
+        Color speakerColor)
     {
         Markings = currentMarkings;
         PermanentlyHidden = permanentlyHidden;
@@ -120,6 +125,7 @@ public sealed partial class HumanoidAppearanceState : ComponentState
         Species = species;
         SkinColor = skinColor;
         EyeColor = eyeColor;
+        SpeakerColor = speakerColor;
     }
 
     [DataDefinition]

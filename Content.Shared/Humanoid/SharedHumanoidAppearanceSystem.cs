@@ -3,6 +3,7 @@ using Content.Shared.Humanoid.Prototypes;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 using System.Linq;
+using Content.Shared.Decals;
 using Content.Shared.Preferences;
 using Robust.Shared.GameObjects.Components.Localization;
 using Robust.Shared.Network;
@@ -68,7 +69,8 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
             component.Age,
             component.Species,
             component.SkinColor,
-            component.EyeColor);
+            component.EyeColor,
+            component.SpeakerColor);
     }
 
     /// <summary>
@@ -342,6 +344,12 @@ public abstract class SharedHumanoidAppearanceSystem : EntitySystem
         }
 
         humanoid.Age = profile.Age;
+		
+        // const string paletteId = "Material";
+        // var colors = _prototypeManager.Index<ColorPalettePrototype>(paletteId).Colors.Values.ToArray();
+        // var colorIdx = Math.Abs(profile.Name.GetHashCode() % colors.Length);
+        // humanoid.SpeakerColor = colors[colorIdx];
+		humanoid.SpeakerColor = profile.Appearance.EyeColor;
 
         Dirty(humanoid);
     }
